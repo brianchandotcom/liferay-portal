@@ -24,6 +24,7 @@ describe('The SLAInfo component should', () => {
 		beforeAll(async () => {
 			fetch.mockResolvedValue({
 				json: () => Promise.resolve({items: [], totalCount: 0}),
+				ok: true,
 			});
 
 			const renderResult = render(
@@ -61,6 +62,7 @@ describe('The SLAInfo component should', () => {
 		beforeAll(async () => {
 			fetch.mockResolvedValue({
 				json: () => Promise.resolve({items: [], totalCount: 1}),
+				ok: true,
 			});
 
 			const renderResult = render(
@@ -98,6 +100,7 @@ describe('The SLAInfo component should', () => {
 		beforeAll(async () => {
 			fetch.mockResolvedValue({
 				json: () => Promise.resolve({items: [], totalCount: 2}),
+				ok: true,
 			});
 
 			const renderResult = render(

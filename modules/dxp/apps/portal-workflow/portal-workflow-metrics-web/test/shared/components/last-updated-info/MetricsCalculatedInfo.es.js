@@ -24,6 +24,7 @@ describe('MetricsCalculatedInfo', () => {
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve(date),
+			ok: true,
 		});
 
 		const {findByText} = render(

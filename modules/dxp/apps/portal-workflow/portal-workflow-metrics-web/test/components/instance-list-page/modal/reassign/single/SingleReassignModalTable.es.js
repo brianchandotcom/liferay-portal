@@ -79,6 +79,7 @@ describe('The SingleReassignModalTable component should', () => {
 	it('Render with statuses Completed and Overdue', () => {
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+			ok: true,
 		});
 
 		const {container} = render(
@@ -182,6 +183,7 @@ describe('The AssigneeInput component should', () => {
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+			ok: true,
 		});
 
 		render(
@@ -213,6 +215,7 @@ describe('The AssigneeInput component should', () => {
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+			ok: true,
 		});
 
 		render(
@@ -239,6 +242,7 @@ describe('The AssigneeInput component should', () => {
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+			ok: true,
 		});
 
 		render(
@@ -272,6 +276,7 @@ describe('The AssigneeInput component should', () => {
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+			ok: true,
 		});
 
 		render(

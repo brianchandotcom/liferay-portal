@@ -91,6 +91,7 @@ describe('The InstanceDetailsModal component should', () => {
 		beforeAll(async () => {
 			fetch.mockResolvedValueOnce({
 				json: () => Promise.resolve(data),
+				ok: true,
 			});
 
 			renderComponent();
@@ -175,6 +176,7 @@ describe('The InstanceDetailsModal component should', () => {
 						slaStatus: 'Untracked',
 						taskNames: ['Review'],
 					}),
+				ok: true,
 			});
 
 			renderComponent();

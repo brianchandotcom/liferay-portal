@@ -46,6 +46,7 @@ describe('The workload by assignee page body should', () => {
 
 		fetch.mockResolvedValue({
 			json: () => Promise.resolve({items, totalCount: 2}),
+			ok: true,
 			text: () => Promise.resolve(),
 		});
 

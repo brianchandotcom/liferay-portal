@@ -43,6 +43,7 @@ describe('The process list page component having data should', () => {
 
 	fetch.mockResolvedValueOnce({
 		json: () => Promise.resolve(data),
+		ok: true,
 	});
 
 	const routeParams = {

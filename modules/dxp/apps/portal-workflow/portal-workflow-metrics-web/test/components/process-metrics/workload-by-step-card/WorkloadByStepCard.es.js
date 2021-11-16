@@ -46,6 +46,7 @@ describe('The WorkloadByStepCard component should', () => {
 	beforeAll(async () => {
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve(data),
+			ok: true,
 		});
 
 		const renderResult = render(

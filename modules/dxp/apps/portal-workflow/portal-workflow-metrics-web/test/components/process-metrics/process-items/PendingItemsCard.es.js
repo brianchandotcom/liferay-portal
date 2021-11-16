@@ -32,6 +32,7 @@ describe('The pending items card component should', () => {
 	beforeEach(async () => {
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve(data),
+			ok: true,
 		});
 
 		const wrapper = ({children}) => <MockRouter>{children}</MockRouter>;

@@ -69,6 +69,7 @@ describe('The PerformanceByStepPage component having data should', () => {
 
 		fetch.mockResolvedValue({
 			json: () => Promise.resolve(data),
+			ok: true,
 			text: () => Promise.resolve(),
 		});
 

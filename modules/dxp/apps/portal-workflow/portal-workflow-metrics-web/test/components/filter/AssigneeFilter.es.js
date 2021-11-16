@@ -33,6 +33,7 @@ describe('The assignee filter component should', () => {
 	beforeEach(async () => {
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items, totalCount: items.length}),
+			ok: true,
 		});
 
 		render(<AssigneeFilter processId={12345} />, {

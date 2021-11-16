@@ -90,6 +90,7 @@ describe('The completion velocity card component should', () => {
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve(data),
+			ok: true,
 		});
 
 		const renderResult = render(

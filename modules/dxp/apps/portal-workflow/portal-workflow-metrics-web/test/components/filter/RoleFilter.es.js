@@ -33,6 +33,7 @@ describe('The role filter component should', () => {
 	beforeEach(async () => {
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve({items, totalCount: items.length}),
+			ok: true,
 		});
 
 		render(<RoleFilter processId={12345} />, {

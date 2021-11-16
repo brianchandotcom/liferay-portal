@@ -88,10 +88,12 @@ describe('The performance by step card component should', () => {
 			fetch
 				.mockResolvedValueOnce({
 					json: () => Promise.resolve(processVersions),
+					ok: true,
 				})
 				.mockResolvedValue({
 					json: () =>
 						Promise.resolve({items, totalCount: items.length}),
+					ok: true,
 				});
 
 			const wrapper = ({children}) => (
@@ -135,9 +137,11 @@ describe('The performance by step card component should', () => {
 			fetch
 				.mockResolvedValueOnce({
 					json: () => Promise.resolve(processVersions),
+					ok: true,
 				})
 				.mockResolvedValue({
 					json: () => Promise.resolve({items: [], totalCount: 0}),
+					ok: true,
 				});
 
 			const wrapper = ({children}) => (

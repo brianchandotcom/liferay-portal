@@ -625,13 +625,51 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136954. It checks that stars can be added and removed from a document."
-	@ignore = "true"
 	@priority = "5"
 	test CanRevokeStarsFromDocument {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-136954 CanRevokeStarsFromDocument pending implementation
+		Ratings.configureRatingType(
+			applications = "document",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		AssertTextEquals(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "(1 Vote)");
+
+		Ratings.revokeStackedStarsRating();
+
+		AssertTextNotPresent(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "(1 Vote)");
 	}
 
 	@description = "This is a test for LPS-136956. It checks that stars can be added and removed from a KB article."

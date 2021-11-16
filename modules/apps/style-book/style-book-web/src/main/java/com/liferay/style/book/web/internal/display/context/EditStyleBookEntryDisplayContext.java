@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
@@ -225,7 +226,8 @@ public class EditStyleBookEntryDisplayContext {
 		int total =
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesCount(
-					_getPreviewItemsGroupId(), layoutTypes);
+					_getPreviewItemsGroupId(), layoutTypes,
+					WorkflowConstants.STATUS_APPROVED);
 
 		return JSONUtil.put(
 			"itemSelectorURL",
@@ -258,7 +260,8 @@ public class EditStyleBookEntryDisplayContext {
 				List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageTemplateEntries(
-							_getPreviewItemsGroupId(), layoutTypes, 0,
+							_getPreviewItemsGroupId(), layoutTypes,
+							WorkflowConstants.STATUS_APPROVED, 0,
 							Math.min(total, 4),
 							new LayoutPageTemplateEntryModifiedDateComparator(
 								false));

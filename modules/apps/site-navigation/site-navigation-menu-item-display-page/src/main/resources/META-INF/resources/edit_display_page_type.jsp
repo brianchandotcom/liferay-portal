@@ -62,29 +62,8 @@ String itemSubtype = displayPageTypeSiteNavigationMenuTypeDisplayContext.getItem
 	</div>
 </div>
 
-<%
-String eventName = liferayPortletResponse.getNamespace() + "selectInfoItem";
-
-ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteNavigationMenuItemTypeDisplayPageWebKeys.ITEM_SELECTOR);
-
-InfoItemItemSelectorCriterion itemSelectorCriterion = new InfoItemItemSelectorCriterion();
-
-itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new InfoItemItemSelectorReturnType());
-itemSelectorCriterion.setItemType(displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassName());
-
-PortletURL infoItemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), liferayPortletResponse.getNamespace() + "selectInfoItem", itemSelectorCriterion);
-%>
-
 <clay:button
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"eventName", eventName
-		).put(
-			"getItemTypeURL", displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemTypeURL(liferayPortletResponse)
-		).put(
-			"itemSelectorURL", infoItemSelectorURL.toString()
-		).build()
-	%>'
+	additionalProps="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getChooseInfoItemButtonContext(request, liferayPortletResponse) %>"
 	cssClass="mb-4"
 	displayType="secondary"
 	id='<%= liferayPortletResponse.getNamespace() + "chooseInfoItem" %>'

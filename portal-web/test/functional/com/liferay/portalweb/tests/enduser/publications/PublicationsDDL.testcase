@@ -144,11 +144,6 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Dynamic Data Lists Record",
-			changeDescription = "Test Test deleted a Dynamic Data Lists Record in Guest",
-			changeTitle = "${changeTitle}");
-
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
@@ -379,11 +374,6 @@ definition {
 		var changeTitle = JSONDDL.getRecordId(
 			ddlListName = "List Name Edit",
 			groupName = "Guest");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Dynamic Data Lists Record",
-			changeDescription = "Test Test modified a Dynamic Data Lists Record in Guest",
-			changeTitle = "${changeTitle}");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Lists Record",
@@ -627,11 +617,6 @@ definition {
 			changeTitle = "${changeTitle}",
 			changeType = "Added",
 			changeUser = "Test Test");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Dynamic Data Lists Record",
-			changeDescription = "Test Test added a Dynamic Data Lists Record in Guest",
-			changeTitle = "${changeTitle}");
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Lists Record Set",

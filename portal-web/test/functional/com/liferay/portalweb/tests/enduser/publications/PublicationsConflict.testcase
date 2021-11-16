@@ -318,11 +318,6 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Web Content Article",
-			changeDescription = "Test Test deleted a Web Content Article in Guest",
-			changeTitle = "WC WebContent Title");
-
 		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
@@ -358,11 +353,6 @@ definition {
 			changeTitle = "WC WebContent Title 2 Edit",
 			changeType = "Added",
 			changeUser = "Test Test");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Web Content Article",
-			changeDescription = "Test Test added a Web Content Article in Guest",
-			changeTitle = "WC WebContent Title 2 Edit");
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
 

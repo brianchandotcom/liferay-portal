@@ -487,11 +487,6 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Form Record",
-			changeDescription = "Test Test added a Form Record in Guest",
-			changeTitle = "${changeTitle}");
-
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");

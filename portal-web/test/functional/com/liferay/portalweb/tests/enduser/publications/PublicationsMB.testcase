@@ -178,21 +178,6 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Message Boards Message",
-			changeDescription = "Test Test added a Message Boards Message in Guest",
-			changeTitle = "MB Thread Message Subject");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Message Boards Message",
-			changeDescription = "Test Test added a Message Boards Message in Guest",
-			changeTitle = "RE: MB Thread Message Subject");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Message Boards Thread",
-			changeDescription = "Test Test added a Message Boards Thread in Guest",
-			changeTitle = "MB Thread Message Subject");
-
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");

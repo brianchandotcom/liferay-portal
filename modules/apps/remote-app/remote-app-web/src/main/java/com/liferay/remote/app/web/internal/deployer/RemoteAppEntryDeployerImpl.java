@@ -16,6 +16,7 @@ package com.liferay.remote.app.web.internal.deployer;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -122,7 +123,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 				remoteAppEntry.isInstanceable()
 			).put(
 				"javax.portlet.display-name",
-				remoteAppEntry.getName(LocaleUtil.US)
+				remoteAppEntry.getName(
+					LanguageUtil.getLanguageId(LocaleUtil.US))
 			).put(
 				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).put(

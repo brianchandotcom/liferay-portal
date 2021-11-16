@@ -106,9 +106,26 @@ public class EditRemoteAppEntryDisplayContext {
 		return customElementURLs;
 	}
 
+	public String getDescription() {
+		if (_remoteAppEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		return _remoteAppEntry.getDescription(
+			LanguageUtil.getLanguageId(themeDisplay.getLocale()));
+	}
+
 	public String getName() {
-		return BeanParamUtil.getString(
-			_remoteAppEntry, _portletRequest, "name");
+		if (_remoteAppEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		return _remoteAppEntry.getName(
+			LanguageUtil.getLanguageId(themeDisplay.getLocale()));
 	}
 
 	public List<SelectOption> getPortletCategoryNameSelectOptions()
@@ -191,7 +208,8 @@ public class EditRemoteAppEntryDisplayContext {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		return _remoteAppEntry.getName(themeDisplay.getLocale());
+		return _remoteAppEntry.getName(
+			LanguageUtil.getLanguageId(themeDisplay.getLocale()));
 	}
 
 	public boolean isEditingRemoteAppEntryType(String type) {

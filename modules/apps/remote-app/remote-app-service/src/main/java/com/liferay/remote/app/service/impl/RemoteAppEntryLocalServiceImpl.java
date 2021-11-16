@@ -35,13 +35,17 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
@@ -50,14 +54,19 @@ import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException
 import com.liferay.remote.app.exception.RemoteAppEntryFriendlyURLMappingException;
 import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntryLocalization;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -84,9 +93,9 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, boolean instanceable,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			Map<Locale, String> descriptionMap, String friendlyURLMapping,
+			boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -115,26 +124,36 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setInstanceable(instanceable);
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		_addRemoteAppEntryLocalizedFields(
+			remoteAppEntry.getCompanyId(), remoteAppEntry.getRemoteAppEntryId(),
+			nameMap, descriptionMap);
 
 		_addResources(remoteAppEntry);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
-		return remoteAppEntry;
+		// Workflow
+
+		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String friendlyURLMapping, String iFrameURL,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			long userId, Map<Locale, String> descriptionMap,
+			String friendlyURLMapping, String iFrameURL, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		_validateFriendlyURLMapping(friendlyURLMapping);
@@ -155,18 +174,27 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setInstanceable(instanceable);
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		_addRemoteAppEntryLocalizedFields(
+			remoteAppEntry.getCompanyId(), remoteAppEntry.getRemoteAppEntryId(),
+			nameMap, descriptionMap);
 
 		_addResources(remoteAppEntry);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
-		return remoteAppEntry;
+		// Workflow
+
+		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
 	@Override
@@ -277,8 +305,9 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			Map<Locale, String> descriptionMap, String friendlyURLMapping,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -300,11 +329,15 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		_updateRemoteAppEntryLocalizations(
+			remoteAppEntry.getCompanyId(), remoteAppEntry.getRemoteAppEntryId(),
+			nameMap, descriptionMap);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
@@ -314,9 +347,10 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
+			long remoteAppEntryId, Map<Locale, String> descriptionMap,
+			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		_validateFriendlyURLMapping(friendlyURLMapping);
@@ -330,20 +364,117 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
+		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		_updateRemoteAppEntryLocalizations(
+			remoteAppEntry.getCompanyId(), remoteAppEntry.getRemoteAppEntryId(),
+			nameMap, descriptionMap);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
 		return remoteAppEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException {
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
+
+		if (status == remoteAppEntry.getStatus()) {
+			return remoteAppEntry;
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		remoteAppEntry.setStatus(status);
+		remoteAppEntry.setStatusByUserId(user.getUserId());
+		remoteAppEntry.setStatusByUserName(user.getFullName());
+		remoteAppEntry.setStatusDate(new Date());
+
+		return remoteAppEntryPersistence.update(remoteAppEntry);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private List<RemoteAppEntryLocalization> _addRemoteAppEntryLocalizedFields(
+			long companyId, long remoteAppEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		Set<Locale> localeSet = new HashSet<>();
+
+		localeSet.addAll(nameMap.keySet());
+
+		if (descriptionMap != null) {
+			localeSet.addAll(descriptionMap.keySet());
+		}
+
+		List<RemoteAppEntryLocalization> remoteAppEntryLocalizations =
+			new ArrayList<>();
+
+		for (Locale locale : localeSet) {
+			String name = nameMap.get(locale);
+
+			String description = null;
+
+			if (descriptionMap != null) {
+				description = descriptionMap.get(locale);
+			}
+
+			if (Validator.isNull(name) && Validator.isNull(description)) {
+				continue;
+			}
+
+			remoteAppEntryLocalizations.add(
+				_addRemoteAppEntryLocalizedFields(
+					companyId, remoteAppEntryId, name, description,
+					LocaleUtil.toLanguageId(locale)));
+		}
+
+		return remoteAppEntryLocalizations;
+	}
+
+	private RemoteAppEntryLocalization _addRemoteAppEntryLocalizedFields(
+			long companyId, long remoteAppEntryId, String name,
+			String description, String languageId)
+		throws PortalException {
+
+		RemoteAppEntryLocalization remoteAppEntryLocalization =
+			remoteAppEntryLocalizationPersistence.
+				fetchByRemoteAppEntryId_LanguageId(
+					remoteAppEntryId, languageId);
+
+		if (remoteAppEntryLocalization == null) {
+			long remoteAppEntryLocalizationId = counterLocalService.increment();
+
+			remoteAppEntryLocalization =
+				remoteAppEntryLocalizationPersistence.create(
+					remoteAppEntryLocalizationId);
+
+			remoteAppEntryLocalization.setCompanyId(companyId);
+			remoteAppEntryLocalization.setRemoteAppEntryId(remoteAppEntryId);
+			remoteAppEntryLocalization.setName(name);
+			remoteAppEntryLocalization.setDescription(description);
+			remoteAppEntryLocalization.setLanguageId(languageId);
+		}
+		else {
+			remoteAppEntryLocalization.setName(name);
+			remoteAppEntryLocalization.setDescription(description);
+		}
+
+		return remoteAppEntryLocalizationPersistence.update(
+			remoteAppEntryLocalization);
 	}
 
 	private void _addResources(RemoteAppEntry remoteAppEntry)
@@ -416,6 +547,60 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 
 		return remoteAppEntries;
+	}
+
+	private RemoteAppEntry _startWorkflowInstance(
+			long userId, RemoteAppEntry remoteAppEntry)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(remoteAppEntry.getCompanyId());
+		serviceContext.setScopeGroupId(WorkflowConstants.DEFAULT_GROUP_ID);
+		serviceContext.setUserId(userId);
+
+		Map<String, Serializable> workflowContext = Collections.singletonMap(
+			WorkflowConstants.CONTEXT_URL,
+			Optional.ofNullable(
+				remoteAppEntry.getCustomElementURLs()
+			).orElse(
+				remoteAppEntry.getIFrameURL()
+			));
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			remoteAppEntry.getCompanyId(), WorkflowConstants.DEFAULT_GROUP_ID,
+			userId, RemoteAppEntry.class.getName(),
+			remoteAppEntry.getRemoteAppEntryId(), remoteAppEntry,
+			serviceContext, workflowContext);
+	}
+
+	private List<RemoteAppEntryLocalization> _updateRemoteAppEntryLocalizations(
+			long companyId, long remoteAppEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		List<RemoteAppEntryLocalization> oldRemoteAppEntryLocalizations =
+			new ArrayList<>(
+				remoteAppEntryLocalizationPersistence.findByRemoteAppEntryId(
+					remoteAppEntryId));
+
+		List<RemoteAppEntryLocalization> newRemoteAppEntryLocalizations =
+			_addRemoteAppEntryLocalizedFields(
+				companyId, remoteAppEntryId, nameMap, descriptionMap);
+
+		oldRemoteAppEntryLocalizations.removeAll(
+			newRemoteAppEntryLocalizations);
+
+		for (RemoteAppEntryLocalization oldRemoteAppEntryLocalization :
+				oldRemoteAppEntryLocalizations) {
+
+			remoteAppEntryLocalizationPersistence.remove(
+				oldRemoteAppEntryLocalization);
+		}
+
+		return newRemoteAppEntryLocalizations;
 	}
 
 	private void _validateCustomElement(

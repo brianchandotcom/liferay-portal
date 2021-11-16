@@ -33,7 +33,7 @@ public class RemoteAppClayDataSetEntry {
 	}
 
 	public String getName() {
-		return _remoteAppEntry.getName(_locale);
+		return _remoteAppEntry.getName(LanguageUtil.getLanguageId(_locale));
 	}
 
 	public long getRemoteAppEntryId() {

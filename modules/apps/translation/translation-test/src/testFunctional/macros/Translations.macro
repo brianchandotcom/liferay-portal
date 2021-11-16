@@ -155,6 +155,9 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${uploadInvalidFile}");
 		}
+		else if (isSet(dependencyfile)) {
+			UploadDependencyFile.uploadFile(fileName = "${fileName}");
+		}
 		else {
 			Translations.uploadTranslationsFile(
 				fileName = "${fileName}",

@@ -1344,6 +1344,21 @@ definition {
 		WebContent.viewCP(
 			webContentContent = "Webコンテンツ",
 			webContentTitle = "Webコンテンツのタイトル");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			dependencyfile = "true",
+			fileName = "WebContentTitle-en_US-de_DE.xlf",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.viewCP(
+			webContentContent = "Internetinhalt",
+			webContentTitle = "TiteldesWebinhalts");
 	}
 
 	macro exportDefaultSiteIntoNewSite {

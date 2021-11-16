@@ -8,11 +8,29 @@
 			minCount = 1
 		/>
 
-		<#list entries as entry>
+		<#if serviceLocator??>
 			<#assign
-				maxCount = liferay.max(maxCount, entry.getAssetCount())
-				minCount = liferay.min(minCount, entry.getAssetCount())
+				assetTagService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetTagService")
 			/>
+		</#if>
+
+		<#list entries as entry>
+			<#if assetTagService??>
+				<#if classNameId <= 0>
+					<#assign assetCount = assetTagService.getVisibleAssetsTagsCount(scopeGroupId, entry.getName()) />
+				<#else>
+					<#assign assetCount = assetTagService.getVisibleAssetsTagsCount(scopeGroupId, classNameId, entry.getName()) />
+				</#if>
+			<#else>
+				<#assign assetCount = entry.getAssetCount() />
+			</#if>
+
+			<#if (assetCount > 0) || getterUtil.getBoolean(showZeroAssetCount)>
+				<#assign
+					maxCount = liferay.max(maxCount, assetCount)
+					minCount = liferay.min(minCount, assetCount)
+				/>
+			</#if>
 		</#list>
 
 		<#assign multiplier = 1 />
@@ -22,30 +40,42 @@
 		</#if>
 
 		<#list entries as entry>
-			<li class="taglib-asset-tags-summary">
-				<#assign popularity = (maxCount - (maxCount - (entry.getAssetCount() - minCount))) * multiplier />
-
-				<#if popularity < 1>
-					<#assign displayType = "success" />
-				<#elseif (popularity >= 1) && (popularity < 2)>
-					<#assign displayType = "warning" />
+			<#if assetTagService??>
+				<#if classNameId <= 0>
+					<#assign assetCount = assetTagService.getVisibleAssetsTagsCount(scopeGroupId, entry.getName()) />
 				<#else>
-					<#assign displayType = "danger" />
+					<#assign assetCount = assetTagService.getVisibleAssetsTagsCount(scopeGroupId, classNameId, entry.getName()) />
 				</#if>
+			<#else>
+				<#assign assetCount = entry.getAssetCount() />
+			</#if>
 
-				<#assign tagURL = renderResponse.createRenderURL() />
+			<#if (assetCount > 0) || getterUtil.getBoolean(showZeroAssetCount)>
+				<li class="taglib-asset-tags-summary">
+					<#assign popularity = (maxCount - (maxCount - (assetCount - minCount))) * multiplier />
 
-				${tagURL.setParameter("resetCur", "true")}
-				${tagURL.setParameter("tag", entry.getName())}
-
-				<a class="label label-${displayType} tag" href="${tagURL}">
-					<span class="label-item label-item-expand">${entry.getName()}</span>
-
-					<#if entry.getAssetCount()?? && getterUtil.getBoolean(showAssetCount)>
-						<span class="label-item label-item-after tag-asset-count">(${entry.getAssetCount()})</span>
+					<#if popularity < 1>
+						<#assign displayType = "success" />
+					<#elseif (popularity >= 1) && (popularity < 2)>
+						<#assign displayType = "warning" />
+					<#else>
+						<#assign displayType = "danger" />
 					</#if>
-				</a>
-			</li>
+
+					<#assign tagURL = renderResponse.createRenderURL() />
+
+					${tagURL.setParameter("resetCur", "true")}
+					${tagURL.setParameter("tag", entry.getName())}
+
+					<a class="label label-${displayType} tag" href="${tagURL}">
+						<span class="label-item label-item-expand">${entry.getName()}</span>
+
+						<#if assetCount?? && getterUtil.getBoolean(showAssetCount)>
+							<span class="label-item label-item-after tag-asset-count">(${assetCount})</span>
+						</#if>
+					</a>
+				</li>
+			</#if>
 		</#list>
 	</ul>
 

@@ -206,6 +206,10 @@ export default ({
 
 	const getNodeId = useCallback(
 		(modelKey) => {
+			if (!contextView) {
+				return modelKey;
+			}
+
 			const stack = [contextView.everything];
 
 			while (stack.length > 0) {
@@ -340,7 +344,7 @@ export default ({
 
 	const contextViewRef = useRef(null);
 
-	if (contextViewRef.current === null) {
+	if (contextView && contextViewRef.current === null) {
 		contextViewRef.current = JSON.parse(JSON.stringify(contextView));
 
 		for (let i = 0; i < rootDisplayClasses.length; i++) {
@@ -430,6 +434,10 @@ export default ({
 						model.modelClassNameId === modelClassNameId &&
 						model.modelClassPK === modelClassPK
 					) {
+						if (!contextView) {
+							return model;
+						}
+
 						modelKey = Number(keys[i]);
 
 						break;
@@ -439,6 +447,20 @@ export default ({
 				if (modelKey === null) {
 					return rootNode;
 				}
+			}
+
+			if (!contextView) {
+				const keys = Object.keys(modelsRef.current);
+
+				for (let i = 0; i < keys.length; i++) {
+					const model = modelsRef.current[keys[i]];
+
+					if (model.nodeId === nodeId) {
+						return model;
+					}
+				}
+
+				return rootNode;
 			}
 
 			let node = null;
@@ -509,7 +531,7 @@ export default ({
 
 			return node;
 		},
-		[changes, getModels]
+		[changes, contextView, getModels]
 	);
 
 	const initialNode = getNode(entryFromURL);

@@ -302,7 +302,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			return "nestedFieldArray.value_boolean";
 		}
 		else if (Objects.equals(objectField.getType(), "String")) {
-			return "nestedFieldArray.value_text";
+			return "nestedFieldArray.value_keyword_lowercase";
 		}
 
 		return "";

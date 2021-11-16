@@ -15,10 +15,18 @@
 package com.liferay.asset.tags.navigation.web.internal.portlet;
 
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.navigation.web.internal.display.context.AssetTagsNavigationDisplayContext;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +61,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AssetTagsCloudPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new AssetTagsNavigationDisplayContext(
+				_portal.getHttpServletRequest(renderRequest), renderRequest));
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.asset.tags.navigation.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

@@ -17,28 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<AssetTag> assetTags = null;
-
-if (showAssetCount && (classNameId > 0)) {
-	assetTags = AssetTagServiceUtil.getTags(PortalUtil.getSiteGroupId(scopeGroupId), classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
-}
-else {
-	assetTags = AssetTagServiceUtil.getGroupTags(PortalUtil.getSiteGroupId(scopeGroupId), 0, maxAssetTags, new AssetTagCountComparator());
-}
-
-assetTags = ListUtil.sort(assetTags);
+AssetTagsNavigationDisplayContext assetTagsNavigationDisplayContext = (AssetTagsNavigationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-ddm:template-renderer
 	className="<%= AssetTag.class.getName() %>"
 	contextObjects='<%=
 		HashMapBuilder.<String, Object>put(
+			"assetTagsNavigationDisplayContext", assetTagsNavigationDisplayContext
+		).put(
 			"scopeGroupId", Long.valueOf(scopeGroupId)
 		).build()
 	%>'
 	displayStyle="<%= displayStyle %>"
 	displayStyleGroupId="<%= displayStyleGroupId %>"
-	entries="<%= assetTags %>"
+	entries="<%= assetTagsNavigationDisplayContext.getAssetTags() %>"
 >
 	<liferay-asset:asset-tags-navigation
 		classNameId="<%= classNameId %>"

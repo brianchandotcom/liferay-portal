@@ -21,6 +21,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -267,6 +269,8 @@ public class BundleSiteInitializerTest {
 			"TESTVOC0001", commerceChannel.getExternalReferenceCode());
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
+
+		_assertCommerceNotificationTemplate(commerceChannel, group);
 	}
 
 	private void _assertCommerceInventoryWarehouse(Group group) {
@@ -278,6 +282,29 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(commerceInventoryWarehouse);
 		Assert.assertEquals(
 			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
+	}
+
+	private void _assertCommerceNotificationTemplate(
+			CommerceChannel commerceChannel, Group group)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				group.getCompanyId(), "C_TestBundleSiteInitializer");
+
+		List<CommerceNotificationTemplate> commerceNotificationTemplates =
+			_commerceNotificationTemplateLocalService.
+				getCommerceNotificationTemplates(
+					commerceChannel.getGroupId(),
+					objectDefinition.getClassName() + "#create", true);
+
+		CommerceNotificationTemplate commerceNotificationTemplate =
+			commerceNotificationTemplates.get(0);
+
+		Assert.assertNotNull(commerceNotificationTemplate);
+		Assert.assertEquals(
+			"Test Notification Template",
+			commerceNotificationTemplate.getName());
 	}
 
 	private void _assertCPDefinitions(Group group) throws Exception {
@@ -558,6 +585,10 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
+
+	@Inject
+	private CommerceNotificationTemplateLocalService
+		_commerceNotificationTemplateLocalService;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;

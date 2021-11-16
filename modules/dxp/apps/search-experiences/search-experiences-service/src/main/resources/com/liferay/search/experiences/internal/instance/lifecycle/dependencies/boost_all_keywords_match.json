@@ -4,36 +4,34 @@
 	},
 	"elementDefinition": {
 		"category": "boost",
-		"icon": "thumbs-up",
-		"sxpBlueprint": {
-			"configuration": {
-				"queryConfiguration": {
-					"queryEntries": [
-						{
-							"clauses": [
-								{
-									"context": "query",
-									"occur": "should",
-									"query": {
-										"wrapper": {
-											"query": {
-												"multi_match": {
-													"boost": "${configuration.boost}",
-													"fields": "${configuration.fields}",
-													"operator": "and",
-													"query": "${configuration.keywords}",
-													"type": "${configuration.type}"
-												}
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"wrapper": {
+										"query": {
+											"multi_match": {
+												"boost": "${configuration.boost}",
+												"fields": "${configuration.fields}",
+												"operator": "and",
+												"query": "${configuration.keywords}",
+												"type": "${configuration.type}"
 											}
 										}
 									}
 								}
-							]
-						}
-					]
-				}
+							}
+						]
+					}
+				]
 			}
 		},
+		"icon": "thumbs-up",
 		"uiConfiguration": {
 			"fieldSets": [
 				{

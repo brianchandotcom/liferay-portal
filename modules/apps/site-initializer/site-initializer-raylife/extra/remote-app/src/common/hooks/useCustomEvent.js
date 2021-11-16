@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 export const useCustomEvent = (event) => {
 	const dispatch = (data) => {
 		window.dispatchEvent(

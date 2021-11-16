@@ -23,9 +23,9 @@
 				padding: 8px 12px;
 
 				&.selected {
+					background-color: $color-brand-primary-lighten-6;
 					border-color: $color-action-primary-default;
 					border-radius: 4px;
-					background-color: $color-brand-primary-lighten-6;
 				}
 
 				input {
@@ -36,8 +36,8 @@
 
 				.image {
 					align-items: center;
-					border-radius: 4px;
 					border: 1px solid $color-neutral-2;
+					border-radius: 4px;
 					display: flex;
 					height: 27px;
 					justify-content: center;
@@ -63,14 +63,14 @@
 			flex-direction: row;
 
 			.payment-method-option {
-				box-sizing: border-box;
-				margin: 12px 16px 0 0;
+				background-color: $color-neutral-white;
 				border: 1px solid $color-action-neutral-default;
 				border-radius: 4px;
-				width: 208px;
-				height: 84px;
+				box-sizing: border-box;
 				cursor: pointer;
-				background-color: $color-neutral-white;
+				height: 84px;
+				margin: 12px 16px 0 0;
+				width: 208px;
 
 				&.selected {
 					border: 1px solid $color-action-primary-default;
@@ -85,24 +85,24 @@
 				}
 
 				.card-container {
+					align-items: center;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
-					align-items: center;
 					padding: 16px 16px 0;
 
 					.card-content {
 						text-align: center;
 
 						.card-title {
-							font-weight: 700;
 							font-size: 14px;
+							font-weight: 700;
 						}
 
 						.card-description {
-							font-weight: 500;
-							font-size: 11px;
 							color: $color-action-neutral-default;
+							font-size: 11px;
+							font-weight: 500;
 						}
 					}
 				}
@@ -110,20 +110,20 @@
 		}
 
 		.no-options {
-			font-weight: 500;
-			font-size: 11px;
 			color: $color-action-neutral-default;
+			font-size: 11px;
+			font-weight: 500;
 		}
 
 		.agree-check {
-			margin-top: 12px;
-			display: flex;
 			align-items: center;
+			display: flex;
+			margin-top: 12px;
 
 			input {
+				height: 16px;
 				margin-right: 12px;
 				width: 16px;
-				height: 16px;
 			}
 		}
 
@@ -132,17 +132,17 @@
 			justify-content: flex-end;
 
 			a {
-				width: 163px;
 				height: 48px;
+				width: 163px;
 			}
 		}
 
 		.option-message {
-			text-align: end;
+			color: #606167;
 			font-size: 11px;
 			font-weight: 500;
-			color: #606167;
 			margin-top: 8px !important;
+			text-align: end;
 		}
 	}
 }

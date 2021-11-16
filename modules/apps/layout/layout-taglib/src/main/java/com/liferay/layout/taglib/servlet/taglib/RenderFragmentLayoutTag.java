@@ -168,6 +168,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			String data = layoutPageTemplateStructure.getData(
 				_getSegmentsExperienceIds());
 
+			if (Validator.isNull(data)) {
+				return _layoutStructure;
+			}
+
 			String masterLayoutData = _getMasterLayoutData(httpServletRequest);
 
 			if (Validator.isNull(masterLayoutData)) {

@@ -26,34 +26,38 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout
 
 <liferay-util:dynamic-include key="com.liferay.layout,taglib#/render_fragment_layout/page.jsp#pre" />
 
-<%
-try {
-	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
-%>
-
-	<liferay-util:buffer
-		var="content"
-	>
-		<liferay-layout:render-layout-structure
-			fieldValues="<%= fieldValues %>"
-			layoutStructure="<%= layoutStructure %>"
-			mainItemId="<%= mainItemId %>"
-			mode="<%= mode %>"
-			showPreview="<%= showPreview %>"
-		/>
-	</liferay-util:buffer>
+<c:if test="<%= layoutStructure != null %>">
 
 	<%
-	LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor = ServletContextUtil.getLayoutAdaptiveMediaProcessor();
+	try {
+		request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
 	%>
 
-	<%= layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(content) %>
+		<liferay-util:buffer
+			var="content"
+		>
+			<liferay-layout:render-layout-structure
+				fieldValues="<%= fieldValues %>"
+				layoutStructure="<%= layoutStructure %>"
+				mainItemId="<%= mainItemId %>"
+				mode="<%= mode %>"
+				showPreview="<%= showPreview %>"
+			/>
+		</liferay-util:buffer>
 
-<%
-}
-finally {
-	request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
-}
-%>
+		<%
+		LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor = ServletContextUtil.getLayoutAdaptiveMediaProcessor();
+		%>
+
+		<%= layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(content) %>
+
+	<%
+	}
+	finally {
+		request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
+	}
+	%>
+
+</c:if>
 
 <liferay-util:dynamic-include key="com.liferay.layout,taglib#/render_fragment_layout/page.jsp#post" />

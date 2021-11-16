@@ -24,6 +24,7 @@ definition {
 
 	@description = "This is a use case for LPS-75977. Redirect on expire"
 	@priority = "5"
+	@uitest
 	test RedirectOnExpire {
 		property custom.properties = "session.timeout=2${line.separator}session.timeout.redirect.on.expire=true";
 		property test.name.skip.portal.instance = "SessionTimeout#RedirectOnExpire";
@@ -66,6 +67,7 @@ definition {
 
 	@description = "This is a use cae for LRQA-7765. Remember me checked"
 	@priority = "4"
+	@uitest
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";
 		property web.xml.timeout = "2";

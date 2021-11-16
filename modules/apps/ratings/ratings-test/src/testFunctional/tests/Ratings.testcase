@@ -812,13 +812,46 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136960. It checks that stars can be added and removed from a MB thread."
-	@ignore = "true"
 	@priority = "5"
 	test CanRevokeStarsFromMB {
-		property portal.acceptance = "false";
+		Ratings.configureRatingType(
+			applications = "MBMessage",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
 
-		// TODO LPS-136960 CanRevokeStarsFromMB pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		AssertTextEquals(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "(1 Vote)");
+
+		Ratings.revokeStackedStarsRating();
+
+		AssertTextNotPresent(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "(1 Vote)");
 	}
 
 	@priority = "3"

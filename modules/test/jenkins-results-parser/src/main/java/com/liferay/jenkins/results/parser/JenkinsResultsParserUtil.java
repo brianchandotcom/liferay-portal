@@ -4462,21 +4462,10 @@ public class JenkinsResultsParserUtil {
 					propertyOptSet2.size(), propertyOptSet1.size());
 			}
 
-			int propertyOptRegexCount1 = 0;
-
-			for (String propertyOpt : propertyOptSet1) {
-				if (propertyOpt.contains(".+")) {
-					propertyOptRegexCount1++;
-				}
-			}
-
-			int propertyOptRegexCount2 = 0;
-
-			for (String propertyOpt : propertyOptSet2) {
-				if (propertyOpt.contains(".+")) {
-					propertyOptRegexCount2++;
-				}
-			}
+			int propertyOptRegexCount1 = _countPropertyOptRegexes(
+				propertyOptSet1);
+			int propertyOptRegexCount2 = _countPropertyOptRegexes(
+				propertyOptSet2);
 
 			if (propertyOptRegexCount1 != propertyOptRegexCount2) {
 				return Integer.compare(
@@ -4489,6 +4478,18 @@ public class JenkinsResultsParserUtil {
 			}
 
 			return propertyName2.compareTo(propertyName1);
+		}
+
+		private int _countPropertyOptRegexes(Set<String> propertyOptSet) {
+			int count = 0;
+
+			for (String propertyOpt : propertyOptSet) {
+				if (propertyOpt.contains(".+")) {
+					count++;
+				}
+			}
+
+			return count;
 		}
 
 	}

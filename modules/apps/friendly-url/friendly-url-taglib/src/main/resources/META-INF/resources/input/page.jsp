@@ -35,11 +35,13 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 </c:if>
 
 <div class="form-group friendly-url">
-	<label for="<portlet:namespace /><%= name %>">
-		<liferay-ui:message key="friendly-url" />
+	<c:if test='<%= (boolean)request.getAttribute("liferay-friendly-url:input:showLabel") %>'>
+		<label for="<portlet:namespace /><%= name %>">
+			<liferay-ui:message key="friendly-url" />
 
-		<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(friendlyURLMaxLength), "<em>/news</em>"}, false) %>' />
-	</label>
+			<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(friendlyURLMaxLength), "<em>/news</em>"}, false) %>' />
+		</label>
+	</c:if>
 
 	<c:choose>
 		<c:when test="<%= localizable %>">

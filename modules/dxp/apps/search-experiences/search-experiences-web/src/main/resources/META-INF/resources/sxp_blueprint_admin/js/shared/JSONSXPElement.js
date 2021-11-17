@@ -43,10 +43,10 @@ function JSONSXPElement({
 	const [collapse, setCollapse] = useState(collapseAll);
 
 	const description = getLocalizedText(
-		sxpElementTemplateJSON.description,
+		sxpElementTemplateJSON.description_i18n,
 		locale
 	);
-	const title = getLocalizedText(sxpElementTemplateJSON.title, locale);
+	const title = getLocalizedText(sxpElementTemplateJSON.title_i18n, locale);
 
 	useEffect(() => {
 		setCollapse(collapseAll);

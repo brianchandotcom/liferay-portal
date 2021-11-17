@@ -79,10 +79,10 @@ function SXPElement({
 	const [active, setActive] = useState(false);
 
 	const description = getLocalizedText(
-		sxpElementTemplateJSON.description,
+		sxpElementTemplateJSON.description_i18n,
 		locale
 	);
-	const title = getLocalizedText(sxpElementTemplateJSON.title, locale);
+	const title = getLocalizedText(sxpElementTemplateJSON.title_i18n, locale);
 
 	const fieldSets = cleanUIConfigurationJSON(uiConfigurationJSON).fieldSets;
 

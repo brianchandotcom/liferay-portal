@@ -81,18 +81,14 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 							{sxpElementTemplateJSON, uiConfigurationJSON},
 							index
 						) => {
-							const description =
-								sxpElementTemplateJSON.description ||
-								getLocalizedText(
-									sxpElementTemplateJSON.description_i18n,
-									locale
-								);
-							const title =
-								sxpElementTemplateJSON.title ||
-								getLocalizedText(
-									sxpElementTemplateJSON.title_i18n,
-									locale
-								);
+							const description = getLocalizedText(
+								sxpElementTemplateJSON.description_i18n,
+								locale
+							);
+							const title = getLocalizedText(
+								sxpElementTemplateJSON.title_i18n,
+								locale
+							);
 
 							return (
 								<ClayList.Item

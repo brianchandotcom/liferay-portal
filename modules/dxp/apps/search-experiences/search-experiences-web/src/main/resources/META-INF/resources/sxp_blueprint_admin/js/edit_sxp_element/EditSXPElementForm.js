@@ -79,11 +79,11 @@ function EditSXPElementForm({
 		initialConfiguration.sxpElementTemplateJSON = {};
 	}
 
-	initialConfiguration.sxpElementTemplateJSON.title = renameKeys(
+	initialConfiguration.sxpElementTemplateJSON.title_i18n = renameKeys(
 		initialTitle,
 		(str) => str.replace('-', '_')
 	);
-	initialConfiguration.sxpElementTemplateJSON.description = renameKeys(
+	initialConfiguration.sxpElementTemplateJSON.description_i18n = renameKeys(
 		initialDescription,
 		(str) => str.replace('-', '_')
 	);

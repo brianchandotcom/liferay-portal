@@ -2,7 +2,7 @@ import ClayCard from '@clayui/card';
 import RoundedSkeleton from '~/common/components/skeleton/rounded-skeleton';
 import TextSkeleton from '~/common/components/skeleton/text-skeleton';
 
-const ProjectCard = () => {
+const ProjectCardSkeleton = () => {
 
   return (
     <ClayCard className="m-0 project-card">
@@ -27,4 +27,4 @@ const ProjectCard = () => {
   );
 };
 
-export default ProjectCard;
+export default ProjectCardSkeleton;

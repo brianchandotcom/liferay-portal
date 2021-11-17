@@ -9,6 +9,7 @@ import {REACT_APP_LIFERAY_API} from '~/common/utils';
 import Banner from '../components/Banner';
 import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
+import BannerSkeleton from '../components/skeleton/BannerSkeleton';
 import ProjectCardSkeleton from '../components/skeleton/ProjectCardSkeleton';
 import {status} from '../utils/constants';
 
@@ -112,7 +113,11 @@ const Home = () => {
 					'pb-2': withManyProjects,
 				})}
 			>
-				<Banner userName={data?.userAccount.name || ''} />
+				{!isLoadingUser & !isLoadingKoroneiki ? (
+					<Banner userName={data?.userAccount.name || ''} />
+				) : (
+					<BannerSkeleton />
+				)}
 			</div>
 			<div
 				className={classNames('mx-auto', {
@@ -135,7 +140,7 @@ const Home = () => {
 					)}
 					{!isLoadingUser & !isLoadingKoroneiki ? (
 						<div
-							className={classNames('d-flex', 'flex-wrap', {
+							className={classNames('d-flex flex-wrap', {
 								'home-projects': !withManyProjects,
 								'home-projects-sm pt-2': withManyProjects,
 							})}

@@ -781,6 +781,10 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String[] getTemplate();
 
+	protected String limitColumnLength(String column, int length) {
+		return StringBundler.concat(column, "\\(", length, "\\)");
+	}
+
 	protected String replaceTemplate(String template) {
 		if (Validator.isNull(template)) {
 			return null;
@@ -869,13 +873,13 @@ public abstract class BaseDB implements DB {
 
 		StringBuffer sb = new StringBuffer();
 
-		String replacement = "\\(" + stringIndexMaxLength + "\\)";
-
 		while (matcher.find()) {
 			int length = Integer.valueOf(matcher.group(2));
 
 			if (length > stringIndexMaxLength) {
-				matcher.appendReplacement(sb, matcher.group(1) + replacement);
+				matcher.appendReplacement(
+					sb,
+					limitColumnLength(matcher.group(1), stringIndexMaxLength));
 			}
 			else {
 				matcher.appendReplacement(sb, matcher.group(1));

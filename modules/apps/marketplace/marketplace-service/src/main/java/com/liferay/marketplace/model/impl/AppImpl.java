@@ -20,11 +20,11 @@ import com.liferay.marketplace.internal.bundle.BundleManagerUtil;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public class AppImpl extends AppBaseImpl {
 				}
 			}
 			else if (Validator.isNotNull(module.getContextName())) {
-				if (!DeployManagerUtil.isDeployed(module.getContextName())) {
+				if (!PluginPackageUtil.isInstalled(module.getContextName())) {
 					return false;
 				}
 			}

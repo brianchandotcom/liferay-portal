@@ -29,7 +29,6 @@ import com.liferay.marketplace.util.comparator.AppTitleComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,6 +46,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -157,10 +157,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		// Deployed apps
 
-		List<PluginPackage> pluginPackages =
-			DeployManagerUtil.getInstalledPluginPackages();
+		for (PluginPackage pluginPackage :
+				PluginPackageUtil.getInstalledPluginPackages()) {
 
-		for (PluginPackage pluginPackage : pluginPackages) {
 			List<Module> modules = modulePersistence.findByContextName(
 				pluginPackage.getContext());
 

@@ -27,7 +27,6 @@ import com.liferay.exportimport.resources.importer.internal.constants.ResourcesI
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -48,6 +47,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.search.index.IndexStatusManager;
 
 import java.net.URL;
@@ -183,7 +183,7 @@ public class ImporterFactory {
 			pluginPackageProperties.isUpdateModeEnabled());
 
 		PluginPackage pluginPackage =
-			DeployManagerUtil.getInstalledPluginPackage(
+			PluginPackageUtil.getInstalledPluginPackage(
 				servletContext.getServletContextName());
 
 		importer.setVersion(pluginPackage.getVersion());

@@ -120,11 +120,35 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 	</liferay-ui:error>
 
 	<liferay-ui:error embed="<%= false %>" key="notImportedRowsCount">
-		<liferay-ui:message arguments='<%= (int)SessionErrors.get(renderRequest, "notImportedRowsCount") %>' key="x-rows-were-not-imported" translateArguments="<%= false %>" />
+
+		<%
+		int notImportedRowsCount = (int)SessionErrors.get(renderRequest, "notImportedRowsCount");
+		%>
+
+		<c:choose>
+			<c:when test="<%= notImportedRowsCount > 1 %>">
+				<liferay-ui:message arguments="<%= notImportedRowsCount %>" key="x-rows-were-not-imported" translateArguments="<%= false %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="1-row-was-not-imported" />
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:error>
 
 	<liferay-ui:success key="importedRowsCount">
-		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "importedRowsCount") %>' key="x-rows-were-imported-successfully" translateArguments="<%= false %>" />
+
+		<%
+		int importedRowsCount = (int)SessionMessages.get(renderRequest, "importedRowsCount");
+		%>
+
+		<c:choose>
+			<c:when test="<%= importedRowsCount > 1 %>">
+				<liferay-ui:message arguments="<%= importedRowsCount %>" key="x-rows-were-imported-successfully" translateArguments="<%= false %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="1-row-was-imported-successfully" />
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:success>
 
 	<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />

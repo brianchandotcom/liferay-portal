@@ -1,69 +1,78 @@
-import {useState} from 'react';
-import {LiferayTheme} from '../services/liferay';
-import {getAccountFlagByFilter} from '../services/liferay/graphql/account-flags';
-import {getUserAccountById} from '../services/liferay/graphql/user-accounts';
+import { useState } from 'react';
+import { LiferayTheme } from '../services/liferay';
+import { getAccountFlagByFilter } from '../services/liferay/graphql/account-flags';
+import { PARAMS_KEYS } from '../services/liferay/search-params';
 import useGraphQL from './useGraphQL';
 
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
+const PROJECT_PAGE_KEY = 'projects';
 
-const onboardingPageRedirection = (userAccount, accountFlags) => {
+const validateExternalReferenceCode = (accountBriefs, externalReferenceCode) => {
+	const accountBrief = accountBriefs.find((accountBrief) => accountBrief.externalReferenceCode === externalReferenceCode);
+	
+	return accountBrief;
+}
+
+const onboardingPageGuard = (userAccount, accountFlags, externalReferenceCode) => {
 	return {
-		pageKey: 'onboarding',
+		location: `${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
 		validate:
 			!accountFlags.length &&
 			userAccount.roleBriefs.find(
-				({name}) => name === 'Account Administrator'
-			),
+				({ name }) => name === 'Account Administrator'
+			) && validateExternalReferenceCode(userAccount.accountBriefs, externalReferenceCode)
 	};
 };
 
-const overviewPageRedirection = (userAccount) => {
-	return {
-		pageKey: 'project-overview',
-		validate: userAccount.accountBriefs.length === 1,
-	};
-};
+const overviewPageGuard = (userAccount, _accountFlags, externalReferenceCode) => {
+	const isValidExternalReferenceCode = validateExternalReferenceCode(userAccount.accountBriefs, externalReferenceCode);
+	const validation = isValidExternalReferenceCode || userAccount.accountBriefs.length === 1;
 
-const projectsPageRedirection = (userAccount) => {
+	const getExternalReferenceCode = () => {
+		if (isValidExternalReferenceCode) {
+			return externalReferenceCode;
+		} else if (userAccount.accountBriefs.length === 1) {
+			return userAccount.accountBriefs[0].externalReferenceCode;
+		}
+	};
+
 	return {
-		pageKey: 'projects-list',
-		validate: userAccount.accountBriefs.length !== 1,
+		location: `${liferaySiteName}/${PROJECT_PAGE_KEY}?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${getExternalReferenceCode()}`,
+		validate: validation,
 	};
 };
 
 const usePageGuard = (
 	externalReferenceCode,
-	pageRedirect,
-	otherRedirections
+	userAccount,
+	guard,
+	alternativeGuard
 ) => {
 	const [isLoading, setLoading] = useState(true);
-	const {data, isLoading: isLoadingGraphQL} = useGraphQL([
-		getUserAccountById(LiferayTheme.getUserId()),
+	const { data: accountFlags, isLoading: isLoadingGraphQL } = useGraphQL(
 		getAccountFlagByFilter({
 			accountKey: externalReferenceCode,
 			name: 'onboarding',
-			userUuid: LiferayTheme.getUserId(),
+			userUuid: userAccount.externalReferenceCode,
 			value: 1,
 		}),
-	]);
+	);
 
 	if (!isLoadingGraphQL) {
 		setLoading(isLoadingGraphQL);
 
-		if (
-			!externalReferenceCode ||
-			!pageRedirect(data.userAccount, data.accountFlags).validate
-		) {
-			otherRedirections.forEach((redirection) => {
-				const {pageKey, validate} = redirection(
-					data.userAccount,
-					data.accountFlags
-				);
+		if (!validateExternalReferenceCode(userAccount.accountBriefs, externalReferenceCode) || !guard(userAccount, accountFlags, externalReferenceCode).validate) {
+			const { location, validate: alternativeValidate } = alternativeGuard(
+				userAccount,
+				accountFlags,
+				externalReferenceCode
+			);
 
-				if (validate) {
-					window.location.href = `${liferaySiteName}/${pageKey}`;
-				}
-			});
+			if (alternativeValidate) {
+				window.location.href = location;
+			} else {
+				window.location.href = `${liferaySiteName}/${PROJECT_PAGE_KEY}`;
+			}
 		}
 	}
 
@@ -74,7 +83,6 @@ const usePageGuard = (
 
 export {
 	usePageGuard,
-	onboardingPageRedirection,
-	overviewPageRedirection,
-	projectsPageRedirection,
+	onboardingPageGuard,
+	overviewPageGuard
 };

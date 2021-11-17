@@ -522,6 +522,150 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor."
+	@priority = "5"
+	test ViewExperienceInViewMode {
+		task ("Add a Button fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a new experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a Heading fragment below the Button then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the page and view the new experience shown in experience selector") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.openExperienceMenu();
+
+			MenuItem.viewPresent(menuItem = "New Experience");
+		}
+
+		task ("Open the preview modal and View the new experience shown in experience selector") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openPreviewMode();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "WCPreview#PREVIEW_TITLE");
+
+			Click(
+				key_fieldLabel = "Experience",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			MenuItem.viewPresent(menuItem = "New Experience");
+		}
+
+		task ("Back to view page mode and view the new experience still shown in experience selector") {
+			IFrame.closeFrame();
+
+			PageEditor.clickBack();
+
+			ContentPages.openExperienceMenu();
+
+			MenuItem.viewPresent(menuItem = "New Experience");
+		}
+	}
+
+	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
+	@priority = "5"
+	test ViewExperienceSelectedInPreviewPageDraft {
+		task ("Add a Button fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a new experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a Heading fragment below the Button then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Edit the inline text of Button in Default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Edited Text");
+		}
+
+		task ("Edit the inline text of Heading in new experience") {
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Edited Heading Example");
+		}
+
+		task ("Navigate to preview draft page via Page Tree") {
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Preview Draft",
+				pageName = "Test Page Name");
+		}
+
+		task ("Change to new experience and view the new experience shown in experience selector") {
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ContentPages.changeExperience(experienceName = "New Experience");
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("Open the preview modal and View the new experience selected in experience selector") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openPreviewMode();
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("Back to view page mode and view the new experience still selected in experience selector") {
+			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+
+			PageEditor.clickBack();
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+	}
+
 	@description = "This is a test for LPS-122148. Only the inline text items from current experience shown in Page Content panel."
 	@priority = "5"
 	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {

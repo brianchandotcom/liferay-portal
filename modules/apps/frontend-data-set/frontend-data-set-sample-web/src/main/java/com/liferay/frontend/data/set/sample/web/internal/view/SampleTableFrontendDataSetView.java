@@ -43,31 +43,32 @@ public class SampleTableFrontendDataSetView
 	public FrontendDataSetTableSchema getFrontendDataSetTableSchema(
 		Locale locale) {
 
-		FrontendDataSetTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.create();
+		FrontendDataSetTableSchemaBuilder frontendDataSetTableSchemaBuilder =
+			_frontendDataSetTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField("id", "id");
-		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
+		frontendDataSetTableSchemaBuilder.addFrontendDataSetTableSchemaField(
+			"id", "id");
+		frontendDataSetTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"title", "Title");
-		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
+		frontendDataSetTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"description", "Description");
-		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
+		frontendDataSetTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"date", "Date");
 
-		FrontendDataSetTableSchemaField statusClayTableSchemaField =
-			clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
-				"status", "status");
+		FrontendDataSetTableSchemaField statusFrontendDataSetTableSchemaField =
+			frontendDataSetTableSchemaBuilder.
+				addFrontendDataSetTableSchemaField("status", "status");
 
-		statusClayTableSchemaField.setContentRenderer("status");
+		statusFrontendDataSetTableSchemaField.setContentRenderer("status");
 
-		clayTableSchemaBuilder.addFrontendDataSetTableSchemaField(
+		frontendDataSetTableSchemaBuilder.addFrontendDataSetTableSchemaField(
 			"creator.name", "author");
 
-		return clayTableSchemaBuilder.build();
+		return frontendDataSetTableSchemaBuilder.build();
 	}
 
 	@Reference
 	private FrontendDataSetTableSchemaBuilderFactory
-		_clayTableSchemaBuilderFactory;
+		_frontendDataSetTableSchemaBuilderFactory;
 
 }

@@ -176,13 +176,13 @@ public class JenkinsResultsParserUtilTest
 			"disable-dev-shm-usage disable-gpu password-store=basic",
 			JenkinsResultsParserUtil.getProperty(
 				properties, "portal.test.properties", "browser.chrome.bin.args",
-				"master"));
+				"unix", "master"));
 
 		testEquals(
 			"/opt/google/chrome-stable-86/google-chrome",
 			JenkinsResultsParserUtil.getProperty(
 				properties, "portal.test.properties",
-				"browser.chrome.bin.file[86.0]", "master"));
+				"browser.chrome.bin.file[86.0]", "unix", "master"));
 
 		testEquals(
 			"chrome,edge,firefox,internetexplorer,safari",
@@ -192,7 +192,7 @@ public class JenkinsResultsParserUtilTest
 			"/opt/java/zulu8",
 			JenkinsResultsParserUtil.getProperty(
 				properties, "portal.test.properties",
-				"java.jdk.home[8][x64][zulu]", "master"));
+				"java.jdk.home[8][x64][zulu]", "unix", "master"));
 
 		testEquals(
 			"/opt/dev/projects/github/liferay-release-tool-ee",

@@ -157,12 +157,15 @@ definition {
 		}
 
 		task ("Add page") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			Portlet.addPG(portletName = "Asset Publisher");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Asset Publisher");
 		}
 
 		task ("Add custom abstract via AP") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
 			Blogs.addWithCustomAbstractViaAP(
 				entryAbstractDescription = "${entryAbstractDescription}",
 				entryContent = "Blogs Entry Content",
@@ -194,21 +197,22 @@ definition {
 			Form.save();
 		}
 
+		task ("Add Form page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page");
+		}
+
 		task ("Add a Form widget to a page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Form Page");
-
-			Navigator.gotoPage(pageName = "Form Page");
-
-			Portlet.addPG(
-				pageName = "Form Page",
-				portletName = "Form");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Form");
 		}
 
 		task ("Configure the Form to display the form created above") {
+			Navigator.gotoPage(pageName = "Form Page");
+
 			FormPortletNavigator.gotoSelectForm();
 
 			FormPortletConfiguration.selectForm(formName = "${formName}");
@@ -298,17 +302,16 @@ definition {
 		task ("Add public page") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Asset Publisher Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Asset Publisher Page");
 		}
 
 		task ("Add PG") {
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-			Portlet.addPG(portletName = "Asset Publisher");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
 		}
 
 		task ("Send alert inside url") {
@@ -332,20 +335,21 @@ definition {
 	@priority = "4"
 	test ViewLookAndFeel {
 		task ("Add public page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = '''<script>alert(123);</script>''');
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = '''<script>alert(123);</script>''');
 		}
 
 		task ("Add PG") {
-			Navigator.gotoPage(pageName = '''<script>alert(123);</script>''');
-
-			Portlet.addPG(portletName = "Blogs");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = '''<script>alert(123);</script>''',
+				widgetName = "Blogs");
 		}
 
 		task ("Assert name was interpreted correctly") {
+			Navigator.gotoPage(pageName = '''<script>alert(123);</script>''');
+
 			Portlet.gotoPortletOptions(
 				portletName = "Blogs",
 				portletOption = "Look and Feel Configuration");
@@ -370,19 +374,13 @@ definition {
 		property test.name.skip.portal.instance = "XSS#ViewMobileDeviceFamilies";
 
 		task ("Add device family CP") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Mobile Device Families");
+			MobileDevice.openMobileDeviceAdmin(siteURLKey = "guest");
 
 			MobileDevice.addDeviceFamilyCP(deviceFamilyName = '''<script>alert(123);</script>''');
 		}
 
 		task ("Disable mobile device rules are inherited from public pages") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			SitePages.openPagesAdmin(siteURLKey = "guest");
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "Configure",
@@ -446,21 +444,13 @@ definition {
 		}
 
 		task ("Move entry to recycle bin") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Blogs");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			BlogsNavigator.moveToRecycleBinCP(entryTitle = "${entryTitle}");
 		}
 
 		task ("Restory blogs entry from recycle bin") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Recycle Bin",
-				portlet = "Recycle Bin");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 			RecycleBin.restoreCP(
 				assetName = "${entryTitle}",
@@ -487,19 +477,13 @@ definition {
 	@priority = "4"
 	test ViewRoles {
 		task ("Add role") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.add(roleTitle = '''<script>alert(123);</script>''');
 		}
 
 		task ("Assert role has the correct values") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.viewCP(
 				roleKey = '''<script>alert(123);</script>''',
@@ -538,19 +522,13 @@ definition {
 		var siteName = '''<script>alert(123);</script>''';
 
 		task ("Add blank CP") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addBlankCP(siteName = "${siteName}");
 		}
 
 		task ("Search for CP and assert name didnt corrupt") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Search.searchCP(searchTerm = "${siteName}");
 
@@ -612,45 +590,41 @@ definition {
 	@priority = "5"
 	test ViewWebContent {
 		task ("Add CP") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Web Content");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = '''<script>alert(123);</script>''');
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = '''<script>alert(123);</script>''');
 		}
 
 		task ("Assert correct title") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
 			WebContent.viewTitle(
 				webContentTitle = '''<script>alert(123);</script>''',
 				webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 		}
 
+		task ("Add Web Content Display Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Web Content Display Page");
+		}
+
 		task ("Add WC display widget") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+
 			Navigator.openURL();
 
-			Click(locator1 = "Icon#EDIT_PENCIL");
-
-			PageEditor.addWidget(
-				portletName = "Web Content Display",
-				targetFragmentName = "Container");
+			Navigator.gotoPage(pageName = "Web Content Display Page");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = '''<script>alert(123);</script>''');
 		}
 
 		task ("Assert can change WC name") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Web Content");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			WebContentNavigator.gotoEditCP(
 				webContentTitle = '''<script>alert(123);</script>''',
@@ -691,21 +665,20 @@ definition {
 		}
 
 		task ("Add CP to main wiki node") {
-			Navigator.openURL();
+			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Wiki");
-
-			WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-			WikiPage.addCP(
+			JSONWiki.addWikiPage(
+				groupName = "Guest",
+				wikiNodeName = "Main",
 				wikiPageContent = "Wiki Page Content",
-				wikiPageTitle = "Wiki Page Title");
+				wikiPageName = "Wiki Page Title");
 		}
 
 		task ("Assert correct name showed") {
-			WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
+			WikiNavigator.openToWikiPage(
+				siteURLKey = "guest",
+				wikiNodeName = "Main",
+				wikiPageTitle = "Wiki Page Title");
 
 			WikiPage.viewNotPresentInPageBody(elementValue = "XSS");
 		}

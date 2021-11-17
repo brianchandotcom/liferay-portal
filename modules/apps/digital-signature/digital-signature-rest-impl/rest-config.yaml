@@ -6,4 +6,5 @@ application:
     name: "HeadlessDigitalSignature"
 author: "José Abelenda"
 clientDir: "../digital-signature-rest-client/src/main/java"
+forcePredictableSchemaPropertyName: true
 testDir: "../digital-signature-rest-test/src/testIntegration/java"

@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-128810. The user cannot modify experiences at view mode."
+	@description = "This is a test for LPS-142290. The user cannot modify experiences at view mode."
 	@priority = "4"
 	test CannotModifyExperienceAtViewMode {
 		task ("Add a Button fragment to a content page") {
@@ -82,7 +82,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-128810. The user cannot modify experiences on preview draft page."
+	@description = "This is a test for LPS-142290. The user cannot modify experiences on preview draft page."
 	@priority = "4"
 	test CannotModifyExperiencesOnPreviewDraftPage {
 		task ("Add a Button fragment to a content page") {
@@ -135,7 +135,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-128810. The user can switch experiences at view mode."
+	@description = "This is a test for LPS-142290. The user can switch experiences at view mode."
 	@priority = "4"
 	test SwitchExperienceAtViewMode {
 		task ("Add a Button fragment to a content page") {
@@ -244,7 +244,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-128810. The user can switch experiences on preview draft page."
+	@description = "This is a test for LPS-142290. The user can switch experiences on preview draft page."
 	@priority = "4"
 	test SwitchExperienceOnPreviewDraftPage {
 		task ("Add a Button fragment to a content page") {

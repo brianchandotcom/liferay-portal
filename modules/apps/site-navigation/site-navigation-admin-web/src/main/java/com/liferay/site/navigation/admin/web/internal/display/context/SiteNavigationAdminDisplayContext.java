@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -106,24 +105,20 @@ public class SiteNavigationAdminDisplayContext {
 			_siteNavigationMenuItemTypeRegistry.
 				getSiteNavigationMenuItemTypes();
 
-		siteNavigationMenuItemTypes = ListUtil.filter(
-			siteNavigationMenuItemTypes,
-			siteNavigationMenuItemType ->
-				siteNavigationMenuItemType.isAvailable(
-					siteNavigationMenuItemTypeContext));
-
-		siteNavigationMenuItemTypes = ListUtil.sort(
-			siteNavigationMenuItemTypes,
-			Comparator.comparing(
-				siteNavigationMenuItemType ->
-					siteNavigationMenuItemType.getLabel(
-						themeDisplay.getLocale())));
-
 		Stream<SiteNavigationMenuItemType> stream =
 			siteNavigationMenuItemTypes.stream();
 
 		return DropdownItemListBuilder.addAll(
-			stream.map(
+			stream.filter(
+				siteNavigationMenuItemType ->
+					siteNavigationMenuItemType.isAvailable(
+						siteNavigationMenuItemTypeContext)
+			).sorted(
+				Comparator.comparing(
+					siteNavigationMenuItemType ->
+						siteNavigationMenuItemType.getLabel(
+							themeDisplay.getLocale()))
+			).map(
 				siteNavigationMenuItemType -> _getDropdownItem(
 					siteNavigationMenuItemType, themeDisplay)
 			).collect(

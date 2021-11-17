@@ -126,7 +126,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 	return (
 		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>
-				{Liferay.Language.get('select-destination')}
+				{Liferay.Language.get('create-page-template')}
 			</ClayModal.Header>
 			<ClayModal.Body>
 				{error && error.other && (

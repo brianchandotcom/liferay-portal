@@ -25,7 +25,7 @@ public class BatchPlannerLogDisplay {
 		String action, String batchEngineExportTaskERC,
 		String batchEngineImportTaskERC, long batchPlannerLogId,
 		Date createDate, boolean export, String internalClassName,
-		Date modifiedDate, int processedItemsCount, String status, String title,
+		Date modifiedDate, int processedItemsCount, int status, String title,
 		int totalItemsCount, long userId) {
 
 		_action = action;
@@ -75,7 +75,7 @@ public class BatchPlannerLogDisplay {
 		return _processedItemsCount;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return _status;
 	}
 
@@ -163,7 +163,7 @@ public class BatchPlannerLogDisplay {
 			return this;
 		}
 
-		public Builder status(String status) {
+		public Builder status(int status) {
 			_status = status;
 
 			return this;
@@ -196,7 +196,7 @@ public class BatchPlannerLogDisplay {
 		private String _internalClassName;
 		private Date _modifiedDate;
 		private int _processedItemsCount;
-		private String _status;
+		private int _status;
 		private String _title;
 		private int _totalItemsCount;
 		private long _userId;
@@ -212,7 +212,7 @@ public class BatchPlannerLogDisplay {
 	private String _internalClassName;
 	private Date _modifiedDate;
 	private int _processedItemsCount;
-	private String _status;
+	private int _status;
 	private String _title;
 	private int _totalItemsCount;
 	private long _userId;

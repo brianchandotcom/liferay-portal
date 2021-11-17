@@ -21,6 +21,14 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
  */
 public class BatchPlannerLogConstants {
 
+	public static final String LABEL_COMPLETED = "completed";
+
+	public static final String LABEL_FAILED = "failed";
+
+	public static final String LABEL_QUEUED = "queued";
+
+	public static final String LABEL_RUNNING = "running";
+
 	public static final int STATUS_COMPLETED = 3;
 
 	public static final int STATUS_FAILED = 4;
@@ -56,6 +64,37 @@ public class BatchPlannerLogConstants {
 		throw new IllegalArgumentException(
 			"Invalid batch engine task execute status " +
 				batchEngineTaskExecuteStatus);
+	}
+
+	public static String getStatusCssClass(int status) {
+		if (status == STATUS_COMPLETED) {
+			return "text-success";
+		}
+		else if (status == STATUS_FAILED) {
+			return "text-danger";
+		}
+		else if ((status == STATUS_QUEUED) || (status == STATUS_RUNNING)) {
+			return "text-info";
+		}
+
+		throw new IllegalArgumentException("Invalid status " + status);
+	}
+
+	public static String getStatusLabel(int status) {
+		if (status == STATUS_COMPLETED) {
+			return LABEL_COMPLETED;
+		}
+		else if (status == STATUS_FAILED) {
+			return LABEL_FAILED;
+		}
+		else if (status == STATUS_QUEUED) {
+			return LABEL_QUEUED;
+		}
+		else if (status == STATUS_RUNNING) {
+			return LABEL_RUNNING;
+		}
+
+		throw new IllegalArgumentException("Invalid status " + status);
 	}
 
 }

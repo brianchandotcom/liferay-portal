@@ -14,10 +14,12 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
+import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerLogServiceUtil;
@@ -149,7 +151,9 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			builder.action(
 				LanguageUtil.get(httpServletRequest, "export")
 			).status(
-				batchEngineExportTask.getExecuteStatus()
+				BatchPlannerLogConstants.getStatus(
+					BatchEngineTaskExecuteStatus.valueOf(
+						batchEngineExportTask.getExecuteStatus()))
 			);
 		}
 		else {
@@ -163,7 +167,9 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			).processedItemsCount(
 				batchEngineImportTask.getProcessedItemsCount()
 			).status(
-				batchEngineImportTask.getExecuteStatus()
+				BatchPlannerLogConstants.getStatus(
+					BatchEngineTaskExecuteStatus.valueOf(
+						batchEngineImportTask.getExecuteStatus()))
 			).totalItemsCount(
 				batchEngineImportTask.getTotalItemsCount()
 			);

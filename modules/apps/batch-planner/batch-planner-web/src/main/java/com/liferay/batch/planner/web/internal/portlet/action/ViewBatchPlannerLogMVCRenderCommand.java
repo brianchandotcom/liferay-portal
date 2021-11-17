@@ -91,7 +91,7 @@ public class ViewBatchPlannerLogMVCRenderCommand implements MVCRenderCommand {
 		).batchEngineImportTaskERC(
 			batchPlannerLog.getBatchEngineImportTaskERC()
 		).status(
-			String.valueOf(batchPlannerLog.getStatus())
+			batchPlannerLog.getStatus()
 		).createDate(
 			batchPlannerLog.getCreateDate()
 		).export(

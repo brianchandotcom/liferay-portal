@@ -90,6 +90,16 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#EXPORT_MODAL_DISABLED");
 
+		if (isSet(viewNoExperiencesSelector)) {
+			AssertElementNotPresent(
+				key_fieldLabel = "Select Experiences",
+				locator1 = "FormFields#LABEL");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Default",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
 		if (isSet(exportFileFormat)) {
 			Select(
 				locator1 = "Select#EXPORT_FILE_FORMAT",

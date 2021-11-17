@@ -189,6 +189,18 @@ public class CommerceOrderItemServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static CommerceOrderItem importCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId,
+			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
+			int shippedQuantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().importCommerceOrderItem(
+			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
+			decimalQuantity, shippedQuantity, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CommerceOrderItem> searchCommerceOrderItems(
 				long commerceOrderId, long parentCommerceOrderItemId,
@@ -230,6 +242,17 @@ public class CommerceOrderItemServiceUtil {
 
 		return getService().updateCommerceOrderItem(
 			commerceOrderItemId, quantity, commerceContext, serviceContext);
+	}
+
+	public static CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCommerceOrderItem(
+			commerceOrderItemId, cpMeasurementUnitId, quantity, commerceContext,
+			serviceContext);
 	}
 
 	public static CommerceOrderItem updateCommerceOrderItem(

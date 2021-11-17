@@ -218,6 +218,10 @@ public interface CPMeasurementUnitLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit fetchCPMeasurementUnit(long CPMeasurementUnitId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchCPMeasurementUnit(long companyId, String key)
+		throws PortalException;
+
 	/**
 	 * Returns the cp measurement unit matching the UUID and group.
 	 *
@@ -245,6 +249,10 @@ public interface CPMeasurementUnitLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit getCPMeasurementUnit(long CPMeasurementUnitId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit getCPMeasurementUnit(long companyId, String key)
 		throws PortalException;
 
 	/**
@@ -289,7 +297,7 @@ public interface CPMeasurementUnitLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, String[] keys, int type);
+		long companyId, String[] keys);
 
 	/**
 	 * Returns all the cp measurement units matching the UUID and company.

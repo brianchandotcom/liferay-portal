@@ -719,6 +719,71 @@ public class CPMeasurementUnitUtil {
 	}
 
 	/**
+	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching cp measurement unit
+	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
+	 */
+	public static CPMeasurementUnit findByC_K(long companyId, String key)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPMeasurementUnitException {
+
+		return getPersistence().findByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	public static CPMeasurementUnit fetchByC_K(long companyId, String key) {
+		return getPersistence().fetchByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	public static CPMeasurementUnit fetchByC_K(
+		long companyId, String key, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_K(companyId, key, useFinderCache);
+	}
+
+	/**
+	 * Removes the cp measurement unit where companyId = &#63; and key = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the cp measurement unit that was removed
+	 */
+	public static CPMeasurementUnit removeByC_K(long companyId, String key)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPMeasurementUnitException {
+
+		return getPersistence().removeByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns the number of cp measurement units where companyId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the number of matching cp measurement units
+	 */
+	public static int countByC_K(long companyId, String key) {
+		return getPersistence().countByC_K(companyId, key);
+	}
+
+	/**
 	 * Returns all the cp measurement units where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -903,81 +968,6 @@ public class CPMeasurementUnitUtil {
 	 */
 	public static int countByC_T(long companyId, int type) {
 		return getPersistence().countByC_T(companyId, type);
-	}
-
-	/**
-	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit findByC_K_T(
-			long companyId, String key, int type)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().findByC_K_T(companyId, key, type);
-	}
-
-	/**
-	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByC_K_T(
-		long companyId, String key, int type) {
-
-		return getPersistence().fetchByC_K_T(companyId, key, type);
-	}
-
-	/**
-	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByC_K_T(
-		long companyId, String key, int type, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_K_T(
-			companyId, key, type, useFinderCache);
-	}
-
-	/**
-	 * Removes the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the cp measurement unit that was removed
-	 */
-	public static CPMeasurementUnit removeByC_K_T(
-			long companyId, String key, int type)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().removeByC_K_T(companyId, key, type);
-	}
-
-	/**
-	 * Returns the number of cp measurement units where companyId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the number of matching cp measurement units
-	 */
-	public static int countByC_K_T(long companyId, String key, int type) {
-		return getPersistence().countByC_K_T(companyId, key, type);
 	}
 
 	/**

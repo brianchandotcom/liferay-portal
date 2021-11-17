@@ -498,6 +498,18 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getSubscriptionCommerceOrderItems(commerceOrderId);
 	}
 
+	public static CommerceOrderItem importCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId,
+			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
+			int shippedQuantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().importCommerceOrderItem(
+			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
+			decimalQuantity, shippedQuantity, serviceContext);
+	}
+
 	public static CommerceOrderItem incrementShippedQuantity(
 			long commerceOrderItemId, int shippedQuantity)
 		throws PortalException {
@@ -571,6 +583,17 @@ public class CommerceOrderItemLocalServiceUtil {
 
 		return getService().updateCommerceOrderItem(
 			commerceOrderItemId, bookedQuantityId);
+	}
+
+	public static CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCommerceOrderItem(
+			commerceOrderItemId, cpMeasurementUnitId, quantity, commerceContext,
+			serviceContext);
 	}
 
 	public static CommerceOrderItem updateCommerceOrderItem(

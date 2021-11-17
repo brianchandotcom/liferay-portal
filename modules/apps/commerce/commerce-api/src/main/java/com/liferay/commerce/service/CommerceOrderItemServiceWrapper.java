@@ -213,6 +213,19 @@ public class CommerceOrderItemServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrderItem importCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId,
+			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
+			int shippedQuantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.importCommerceOrderItem(
+			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
+			decimalQuantity, shippedQuantity, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.model.CommerceOrderItem> searchCommerceOrderItems(
 				long commerceOrderId, long parentCommerceOrderItemId,
@@ -257,6 +270,18 @@ public class CommerceOrderItemServiceWrapper
 
 		return _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItemId, quantity, commerceContext, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.updateCommerceOrderItem(
+			commerceOrderItemId, cpMeasurementUnitId, quantity, commerceContext,
+			serviceContext);
 	}
 
 	@Override

@@ -155,6 +155,12 @@ public interface CommerceOrderItemService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public CommerceOrderItem importCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId,
+			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
+			int shippedQuantity, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrderItem> searchCommerceOrderItems(
 			long commerceOrderId, long parentCommerceOrderItemId,
@@ -175,6 +181,11 @@ public interface CommerceOrderItemService extends BaseService {
 
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, int quantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 

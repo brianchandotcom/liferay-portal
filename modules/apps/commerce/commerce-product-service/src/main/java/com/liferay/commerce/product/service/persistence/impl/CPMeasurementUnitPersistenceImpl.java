@@ -1959,6 +1959,253 @@ public class CPMeasurementUnitPersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"cpMeasurementUnit.companyId = ?";
 
+	private FinderPath _finderPathFetchByC_K;
+	private FinderPath _finderPathCountByC_K;
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching cp measurement unit
+	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
+	 */
+	@Override
+	public CPMeasurementUnit findByC_K(long companyId, String key)
+		throws NoSuchCPMeasurementUnitException {
+
+		CPMeasurementUnit cpMeasurementUnit = fetchByC_K(companyId, key);
+
+		if (cpMeasurementUnit == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", key=");
+			sb.append(key);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPMeasurementUnitException(sb.toString());
+		}
+
+		return cpMeasurementUnit;
+	}
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	@Override
+	public CPMeasurementUnit fetchByC_K(long companyId, String key) {
+		return fetchByC_K(companyId, key, true);
+	}
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	@Override
+	public CPMeasurementUnit fetchByC_K(
+		long companyId, String key, boolean useFinderCache) {
+
+		key = Objects.toString(key, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, key};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(_finderPathFetchByC_K, finderArgs);
+		}
+
+		if (result instanceof CPMeasurementUnit) {
+			CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)result;
+
+			if ((companyId != cpMeasurementUnit.getCompanyId()) ||
+				!Objects.equals(key, cpMeasurementUnit.getKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_CPMEASUREMENTUNIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_K_COMPANYID_2);
+
+			boolean bindKey = false;
+
+			if (key.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				sb.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKey) {
+					queryPos.add(StringUtil.toLowerCase(key));
+				}
+
+				List<CPMeasurementUnit> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_K, finderArgs, list);
+					}
+				}
+				else {
+					CPMeasurementUnit cpMeasurementUnit = list.get(0);
+
+					result = cpMeasurementUnit;
+
+					cacheResult(cpMeasurementUnit);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPMeasurementUnit)result;
+		}
+	}
+
+	/**
+	 * Removes the cp measurement unit where companyId = &#63; and key = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the cp measurement unit that was removed
+	 */
+	@Override
+	public CPMeasurementUnit removeByC_K(long companyId, String key)
+		throws NoSuchCPMeasurementUnitException {
+
+		CPMeasurementUnit cpMeasurementUnit = findByC_K(companyId, key);
+
+		return remove(cpMeasurementUnit);
+	}
+
+	/**
+	 * Returns the number of cp measurement units where companyId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the number of matching cp measurement units
+	 */
+	@Override
+	public int countByC_K(long companyId, String key) {
+		key = Objects.toString(key, "");
+
+		FinderPath finderPath = _finderPathCountByC_K;
+
+		Object[] finderArgs = new Object[] {companyId, key};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPMEASUREMENTUNIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_K_COMPANYID_2);
+
+			boolean bindKey = false;
+
+			if (key.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				sb.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKey) {
+					queryPos.add(StringUtil.toLowerCase(key));
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_K_COMPANYID_2 =
+		"cpMeasurementUnit.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_K_KEY_2 =
+		"lower(cpMeasurementUnit.key) = ?";
+
+	private static final String _FINDER_COLUMN_C_K_KEY_3 =
+		"(cpMeasurementUnit.key IS NULL OR cpMeasurementUnit.key = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
 	private FinderPath _finderPathCountByC_T;
@@ -2497,276 +2744,6 @@ public class CPMeasurementUnitPersistenceImpl
 		"cpMeasurementUnit.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_T_TYPE_2 =
-		"cpMeasurementUnit.type = ?";
-
-	private FinderPath _finderPathFetchByC_K_T;
-	private FinderPath _finderPathCountByC_K_T;
-
-	/**
-	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByC_K_T(long companyId, String key, int type)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_K_T(
-			companyId, key, type);
-
-		if (cpMeasurementUnit == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCPMeasurementUnitException(sb.toString());
-		}
-
-		return cpMeasurementUnit;
-	}
-
-	/**
-	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByC_K_T(
-		long companyId, String key, int type) {
-
-		return fetchByC_K_T(companyId, key, type, true);
-	}
-
-	/**
-	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByC_K_T(
-		long companyId, String key, int type, boolean useFinderCache) {
-
-		key = Objects.toString(key, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, key, type};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_K_T, finderArgs);
-		}
-
-		if (result instanceof CPMeasurementUnit) {
-			CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)result;
-
-			if ((companyId != cpMeasurementUnit.getCompanyId()) ||
-				!Objects.equals(key, cpMeasurementUnit.getKey()) ||
-				(type != cpMeasurementUnit.getType())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_CPMEASUREMENTUNIT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_K_T_COMPANYID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_K_T_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_C_K_T_KEY_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_K_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindKey) {
-					queryPos.add(StringUtil.toLowerCase(key));
-				}
-
-				queryPos.add(type);
-
-				List<CPMeasurementUnit> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_K_T, finderArgs, list);
-					}
-				}
-				else {
-					CPMeasurementUnit cpMeasurementUnit = list.get(0);
-
-					result = cpMeasurementUnit;
-
-					cacheResult(cpMeasurementUnit);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CPMeasurementUnit)result;
-		}
-	}
-
-	/**
-	 * Removes the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the cp measurement unit that was removed
-	 */
-	@Override
-	public CPMeasurementUnit removeByC_K_T(long companyId, String key, int type)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = findByC_K_T(companyId, key, type);
-
-		return remove(cpMeasurementUnit);
-	}
-
-	/**
-	 * Returns the number of cp measurement units where companyId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the number of matching cp measurement units
-	 */
-	@Override
-	public int countByC_K_T(long companyId, String key, int type) {
-		key = Objects.toString(key, "");
-
-		FinderPath finderPath = _finderPathCountByC_K_T;
-
-		Object[] finderArgs = new Object[] {companyId, key, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_CPMEASUREMENTUNIT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_K_T_COMPANYID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_K_T_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_C_K_T_KEY_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_K_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindKey) {
-					queryPos.add(StringUtil.toLowerCase(key));
-				}
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_K_T_COMPANYID_2 =
-		"cpMeasurementUnit.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_K_T_KEY_2 =
-		"lower(cpMeasurementUnit.key) = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_K_T_KEY_3 =
-		"(cpMeasurementUnit.key IS NULL OR cpMeasurementUnit.key = '') AND ";
-
-	private static final String _FINDER_COLUMN_C_K_T_TYPE_2 =
 		"cpMeasurementUnit.type = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_P_T;
@@ -3384,10 +3361,9 @@ public class CPMeasurementUnitPersistenceImpl
 			cpMeasurementUnit);
 
 		finderCache.putResult(
-			_finderPathFetchByC_K_T,
+			_finderPathFetchByC_K,
 			new Object[] {
-				cpMeasurementUnit.getCompanyId(), cpMeasurementUnit.getKey(),
-				cpMeasurementUnit.getType()
+				cpMeasurementUnit.getCompanyId(), cpMeasurementUnit.getKey()
 			},
 			cpMeasurementUnit);
 	}
@@ -3477,13 +3453,12 @@ public class CPMeasurementUnitPersistenceImpl
 
 		args = new Object[] {
 			cpMeasurementUnitModelImpl.getCompanyId(),
-			cpMeasurementUnitModelImpl.getKey(),
-			cpMeasurementUnitModelImpl.getType()
+			cpMeasurementUnitModelImpl.getKey()
 		};
 
-		finderCache.putResult(_finderPathCountByC_K_T, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByC_K, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_K_T, args, cpMeasurementUnitModelImpl);
+			_finderPathFetchByC_K, args, cpMeasurementUnitModelImpl);
 	}
 
 	/**
@@ -4027,6 +4002,16 @@ public class CPMeasurementUnitPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_finderPathFetchByC_K = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "key_"}, true);
+
+		_finderPathCountByC_K = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "key_"}, false);
+
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
 			new String[] {
@@ -4045,22 +4030,6 @@ public class CPMeasurementUnitPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "type_"}, false);
-
-		_finderPathFetchByC_K_T = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_K_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "key_", "type_"}, true);
-
-		_finderPathCountByC_K_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "key_", "type_"}, false);
 
 		_finderPathWithPaginationFindByC_P_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_T",

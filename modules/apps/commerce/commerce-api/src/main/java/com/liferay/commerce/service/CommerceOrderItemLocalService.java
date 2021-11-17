@@ -393,6 +393,13 @@ public interface CommerceOrderItemLocalService
 	public List<CommerceOrderItem> getSubscriptionCommerceOrderItems(
 		long commerceOrderId);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderItem importCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId,
+			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
+			int shippedQuantity, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommerceOrderItem incrementShippedQuantity(
 			long commerceOrderItemId, int shippedQuantity)
 		throws PortalException;
@@ -437,6 +444,11 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long bookedQuantityId)
 		throws NoSuchOrderItemException;
+
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(

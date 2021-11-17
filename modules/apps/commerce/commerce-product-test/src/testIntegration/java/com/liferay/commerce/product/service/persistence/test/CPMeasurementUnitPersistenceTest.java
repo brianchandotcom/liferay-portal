@@ -246,21 +246,20 @@ public class CPMeasurementUnitPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_K(0L, "null");
+
+		_persistence.countByC_K(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_T() throws Exception {
 		_persistence.countByC_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByC_T(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_K_T() throws Exception {
-		_persistence.countByC_K_T(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
-
-		_persistence.countByC_K_T(0L, "null", 0);
-
-		_persistence.countByC_K_T(0L, (String)null, 0);
 	}
 
 	@Test
@@ -599,11 +598,6 @@ public class CPMeasurementUnitPersistenceTest {
 			ReflectionTestUtil.invoke(
 				cpMeasurementUnit, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "key_"));
-		Assert.assertEquals(
-			Integer.valueOf(cpMeasurementUnit.getType()),
-			ReflectionTestUtil.<Integer>invoke(
-				cpMeasurementUnit, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected CPMeasurementUnit addCPMeasurementUnit() throws Exception {

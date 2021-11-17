@@ -1,4 +1,6 @@
-import { actionTypes } from "./actions";
+export const actionTypes = {
+    UPDATE_ASSETS_PATH: 'UPDATE_ASSETS_PATH',
+};
 
 const reducer = (state, action) => {
     if (!action) {
@@ -6,10 +8,10 @@ const reducer = (state, action) => {
     }
 
     switch (action.type) {
-        case actionTypes.CHANGE_STEP: {
+        case actionTypes.UPDATE_ASSETS_PATH: {
             return {
                 ...state,
-                step: action.payload,
+                assetsPath: action.payload,
             };
         }
         default: {

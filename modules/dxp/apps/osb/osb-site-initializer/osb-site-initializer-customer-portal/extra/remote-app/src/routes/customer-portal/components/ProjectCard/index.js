@@ -1,7 +1,8 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import BaseButton from '~/common/components/BaseButton';
-import StatusTag from './StatusTag';
+import StatusTag from '../StatusTag';
+import ProjectCardSkeleton from './Skeleton';
 
 const getCurrentEndDate = (currentEndDate) => {
 	const date = new Date(currentEndDate);
@@ -57,5 +58,7 @@ const ProjectCard = ({ code, isSmall, onClick, region, sla, status, title }) => 
 		</ClayCard>
 	);
 };
+
+ProjectCard.Skeleton = ProjectCardSkeleton;
 
 export default ProjectCard;

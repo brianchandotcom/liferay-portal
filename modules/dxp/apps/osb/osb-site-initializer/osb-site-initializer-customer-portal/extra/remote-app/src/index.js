@@ -9,15 +9,11 @@ import CustomerPortal from '~/routes/customer-portal';
 import Onboarding from '~/routes/onboarding';
 
 const CustomerPortalApplication = ({ liferaywebdavurl, route }) => {
-	const SearchParams = new URLSearchParams(window.location.search);
-
-	const routeEntry = SearchParams.get('customer_dev_application') || route;
-
-	if (routeEntry === "portal") {
+	if (route === "portal") {
 		return <CustomerPortal assetsPath={liferaywebdavurl} />;
 	}
 
-	if (routeEntry === 'onboarding') {
+	if (route === 'onboarding') {
 		return <Onboarding assetsPath={liferaywebdavurl} />;
 	}
 };

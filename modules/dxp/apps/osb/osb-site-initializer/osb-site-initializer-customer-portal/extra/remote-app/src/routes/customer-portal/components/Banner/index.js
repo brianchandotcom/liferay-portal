@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { AppContext } from "../context";
+import { AppContext } from "../../context";
+import BannerSkeleton from "./Skeleton";
 
 const Banner = ({ userName }) => {
-  const [state] = useContext(AppContext);
+  const [{ assetsPath }] = useContext(AppContext);
 
   return (
     <div className="banner d-flex flex-column ml-5 rounded-left">
@@ -16,10 +17,12 @@ const Banner = ({ userName }) => {
         </div>
       </div>
 
-      <img className="position-absolute" src={`${state.assetsPath}/assets/banner_background_customer_portal.svg`} />
+      <img className="position-absolute" src={`${assetsPath}/assets/banner_background_customer_portal.svg`} />
     </div>
 
   );
 };
+
+Banner.Skeleton = BannerSkeleton;
 
 export default Banner;

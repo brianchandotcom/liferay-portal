@@ -1,15 +1,15 @@
-import {ClayIconSpriteContext} from '@clayui/icon';
+import { ClayIconSpriteContext } from '@clayui/icon';
 import React from 'react';
 
 const getIconSpriteMap = () => {
 	try {
 		// eslint-disable-next-line no-undef
-		if (!Liferay.themeDisplay) {
+		if (!Liferay.ThemeDisplay) {
 			new Error('themeDisplay is not defined');
 		}
 
 		// eslint-disable-next-line no-undef
-		return `${Liferay.themeDisplay.getPathThemeImages()}/clay/icons.svg`;
+		return `${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`;
 	}
 	catch (error) {
 		console.warn(error.message);
@@ -19,7 +19,7 @@ const getIconSpriteMap = () => {
 	}
 };
 
-const ClayProvider = ({children}) => {
+const ClayProvider = ({ children }) => {
 	return (
 		<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
 			{children}

@@ -1,12 +1,12 @@
 const getUserId = () => {
 	try {
 		// eslint-disable-next-line no-undef
-		if (!Liferay.themeDisplay) {
+		if (!Liferay.ThemeDisplay) {
 			new Error('themeDisplay is not defined');
 		}
 
 		// eslint-disable-next-line no-undef
-		return Liferay.themeDisplay.getUserId();
+		return Liferay.ThemeDisplay.getUserId();
 	}
 	catch (error) {
 		console.warn(error.message);
@@ -17,12 +17,12 @@ const getLiferaySiteName = () => {
 	let siteName = '/web/customer-portal';
 	try {
 		// eslint-disable-next-line no-undef
-		if (!themeDisplay) {
+		if (!Liferay.ThemeDisplay) {
 			new Error('themeDisplay is not defined');
 		}
 
 		// eslint-disable-next-line no-undef
-		const {pathname} = new URL(themeDisplay.getCanonicalURL());
+		const { pathname } = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 		const pathSplit = pathname.split('/').filter(Boolean);
 		siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
 	}

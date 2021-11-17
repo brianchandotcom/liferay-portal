@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-import useGraphQL from '~/common/hooks/useGraphql';
+import useGraphQL from '~/common/hooks/useGraphQL';
 import {LiferayTheme} from '~/common/services/liferay';
 import {getKoroneikiAccountsByFilter} from '~/common/services/liferay/graphql/koroneiki-accounts';
 import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
@@ -9,8 +9,6 @@ import {REACT_APP_LIFERAY_API} from '~/common/utils';
 import Banner from '../components/Banner';
 import ProjectCard from '../components/ProjectCard';
 import SearchProject from '../components/SearchProject';
-import BannerSkeleton from '../components/skeleton/BannerSkeleton';
-import ProjectCardSkeleton from '../components/skeleton/ProjectCardSkeleton';
 import {status} from '../utils/constants';
 
 const PROJECT_THRESHOLD_COUNT = 4;
@@ -114,7 +112,7 @@ const Home = () => {
 				{!isLoadingUser & !isLoadingKoroneiki ? (
 					<Banner userName={data?.userAccount.name || ''} />
 				) : (
-					<BannerSkeleton />
+					<Banner.Skeleton />
 				)}
 			</div>
 			<div
@@ -154,9 +152,9 @@ const Home = () => {
 						</div>
 					) : (
 						<div className="d-flex flex-wrap home-projects">
-							<ProjectCardSkeleton />
+							<ProjectCard.Skeleton />
 
-							<ProjectCardSkeleton />
+							<ProjectCard.Skeleton />
 						</div>
 					)}
 				</div>

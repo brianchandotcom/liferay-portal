@@ -1,5 +1,5 @@
 import ClayLabel from '@clayui/label';
-import { status } from '../utils/constants';
+import { status } from '../../utils/constants';
 
 const StatusTag = ({ currentStatus }) => {
     switch (currentStatus) {

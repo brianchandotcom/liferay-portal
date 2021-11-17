@@ -53,7 +53,8 @@ public class PendingCommerceOrderItemClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"formattedQuantity", "quantity");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
 

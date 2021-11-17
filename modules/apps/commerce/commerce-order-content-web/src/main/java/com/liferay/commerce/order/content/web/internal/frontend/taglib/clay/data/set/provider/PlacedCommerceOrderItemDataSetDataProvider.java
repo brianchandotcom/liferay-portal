@@ -28,6 +28,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
@@ -288,22 +289,23 @@ public class PlacedCommerceOrderItemDataSetDataProvider
 
 			orderItems.add(
 				new OrderItem(
-					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getCommerceOrderId(),
-					commerceOrderItem.getSku(),
+					_formatDiscountAmount(commerceOrderItemPrice, locale), null,
+					_commerceOrderItemQuantityFormatter.format(
+						commerceOrderItem, locale),
+					_formatSubscriptionPeriod(commerceOrderItem, locale),
 					commerceOrderItem.getName(locale),
 					_getCommerceOrderOptions(commerceOrderItem, locale),
+					commerceOrderItem.getCommerceOrderId(),
+					commerceOrderItem.getCommerceOrderItemId(),
 					_getChildOrderItems(commerceOrderItem, httpServletRequest),
 					commerceOrderItem.getParentCommerceOrderItemId(),
 					_formatUnitPrice(commerceOrderItemPrice, locale),
 					_formatPromoPrice(commerceOrderItemPrice, locale),
-					_formatDiscountAmount(commerceOrderItemPrice, locale),
-					commerceOrderItem.getQuantity(),
-					_formatFinalPrice(commerceOrderItemPrice, locale),
+					commerceOrderItem.getShippedQuantity(),
+					commerceOrderItem.getSku(),
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
 						commerceOrderItem.getCPInstanceId()),
-					commerceOrderItem.getShippedQuantity(), null,
-					_formatSubscriptionPeriod(commerceOrderItem, locale)));
+					_formatFinalPrice(commerceOrderItemPrice, locale)));
 		}
 
 		return orderItems;
@@ -311,6 +313,10 @@ public class PlacedCommerceOrderItemDataSetDataProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PlacedCommerceOrderItemDataSetDataProvider.class);
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

@@ -1,1 +1,13 @@
-<div class="selected-user">Select User</div>
+[#assign clayIconSVG = themeDisplay.getCDNBaseURL() +
+"/o/admin-theme/images/clay/icons.svg" /]
+
+<div class="d-flex align-items-center customer-portal-select-user">
+	<div id="customer-portal-user-icon-application-wrapper" class="mr rounded-circle skeleton">
+		<img id="customer-portal-user-icon-application" class="rounded-circle sticker-lg" />
+	</div>
+	<div id="customer-portal-user-name-application" class="font-weight-bold mr rounded-sm skeleton text-paragraph text-truncate ">
+	</div>
+	<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+		<use xlink:href="${clayIconSVG}#caret-bottom" />
+	</svg>
+</div>

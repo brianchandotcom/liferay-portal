@@ -1,0 +1,37 @@
+.customer-portal-select-user #customer-portal-user-name-application {
+	width: 94px;
+	height: 24px;
+}
+
+.customer-portal-select-user .lexicon-icon-caret-bottom {
+	fill: var(--color-neutral-5);
+	width: 24px;
+	height: 24px;
+}
+
+.customer-portal-select-user .mr {
+	margin-right: 0.75rem;
+}
+
+.customer-portal-select-user .skeleton {
+	background: #f7f8f9;
+	background-image: linear-gradient(
+		to right,
+		#f8f8f8 0%,
+		rgba(206, 206, 206, 0.1) 20%,
+		#f8f8f8 40%,
+		#f8f8f8 100%
+	);
+	animation: shimmer-customer-portal-select-user 1s linear infinite;
+	background-repeat: no-repeat;
+	background-size: 450px 400px;
+}
+
+@keyframes shimmer-customer-portal-select-user {
+	0% {
+		background-position: -450px 0;
+	}
+	100% {
+		background-position: 450px 0;
+	}
+}

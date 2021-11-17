@@ -118,12 +118,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 			workbook.write(byteArrayOutputStream);
 
-			resourceResponse.setContentType(
-				ContentTypes.APPLICATION_VND_MS_EXCEL);
-			resourceResponse.setProperty(
-				"Content-Disposition",
-				"attachment; filename=\"ContentDashboardItemsData.xls\"");
-
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
 				"ContentDashboardItemsData.xls",

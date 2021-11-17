@@ -15,20 +15,86 @@
 package com.liferay.commerce.report.internal.exporter;
 
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import java.util.Collection;
 import java.util.Map;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
+@Component(enabled = false, service = CommerceReportExporter.class)
 public class CommerceReportExporterImpl implements CommerceReportExporter {
 
+	@Override
 	public byte[] export(
 		Collection<?> beanCollection, Map<String, Object> parameters) {
 
-		return null;
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		try {
+			JasperPrint jasperPrint = _getJasperPrint(
+				beanCollection, parameters);
+
+			JasperExportManager.exportReportToPdfStream(
+				jasperPrint, byteArrayOutputStream);
+		}
+		catch (JRException jrException) {
+			_log.error(jrException, jrException);
+		}
+
+		return byteArrayOutputStream.toByteArray();
 	}
+
+	private JasperPrint _getJasperPrint(
+		Collection<?> beanCollection, Map<String, Object> parameters) {
+
+		JasperDesign jasperDesign;
+		JasperReport jasperReport;
+		JasperPrint jasperPrint = null;
+
+		ClassLoader classLoader =
+			CommerceReportExporterImpl.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/commerce/internal/template/CommerceOrder.jrxml")) {
+
+			jasperDesign = JRXmlLoader.load(inputStream);
+
+			jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+			JRBeanCollectionDataSource jrBeanCollectionDataSource =
+				new JRBeanCollectionDataSource(beanCollection);
+
+			jasperPrint = JasperFillManager.fillReport(
+				jasperReport, parameters, jrBeanCollectionDataSource);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return jasperPrint;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceReportExporterImpl.class);
 
 }

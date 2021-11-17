@@ -17,8 +17,8 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.report.exporter.CommerceReportExporter;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.JasperReportHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -168,7 +168,7 @@ public class ExportCommerceOrderPdfMVCResourceCommand
 
 		PortletResponseUtil.write(
 			resourceResponse,
-			_jasperReportHelper.exportPdf(
+			_commerceReportExporter.export(
 				commerceOrder.getCommerceOrderItems(), parameters.build()));
 	}
 
@@ -176,7 +176,7 @@ public class ExportCommerceOrderPdfMVCResourceCommand
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private JasperReportHelper _jasperReportHelper;
+	private CommerceReportExporter _commerceReportExporter;
 
 	@Reference
 	private Portal _portal;

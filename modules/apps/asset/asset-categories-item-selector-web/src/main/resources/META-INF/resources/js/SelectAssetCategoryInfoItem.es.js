@@ -39,7 +39,13 @@ function visit(nodes, callback) {
 	});
 }
 
-function SelectAssetCategory({itemSelectedEventName, namespace, nodes}) {
+function SelectAssetCategory({
+	categoriesMultipleSelectionEnabled,
+	itemSelectedEventName,
+	multiSelection,
+	namespace,
+	nodes,
+}) {
 	const flattenedNodes = useMemo(() => {
 		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
 			return nodes[0].children;
@@ -55,18 +61,22 @@ function SelectAssetCategory({itemSelectedEventName, namespace, nodes}) {
 			return;
 		}
 
-		let data;
+		let data = [];
 
 		visit(nodes, (node) => {
 			if (selectedNodeIds.has(node.id)) {
-				data = {
+				data.push({
 					className: node.className,
 					classNameId: node.classNameId,
 					classPK: node.id,
 					title: node.name,
-				};
+				});
 			}
 		});
+
+		if (!multiSelection) {
+			data = data[0];
+		}
 
 		Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
 			data,
@@ -110,7 +120,10 @@ function SelectAssetCategory({itemSelectedEventName, namespace, nodes}) {
 							<Treeview
 								NodeComponent={Treeview.Card}
 								filter={getFilter(filterQuery)}
-								multiSelection={false}
+								multiSelection={
+									categoriesMultipleSelectionEnabled &&
+									multiSelection
+								}
 								nodes={flattenedNodes}
 								onSelectedNodesChange={handleSelectionChange}
 							/>

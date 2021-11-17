@@ -24,14 +24,15 @@ import java.util.List;
 public class OrderItem {
 
 	public OrderItem(
-		String deliveryGroup, String discount, ImageField image, String name,
-		String options, long orderId, long orderItemId,
-		List<OrderItem> orderItems, long parentOrderItemId, String price,
-		int quantity, String requestedDeliveryDate, String sku,
+		String deliveryGroup, String discount, String formattedQuantity,
+		ImageField image, String name, String options, long orderId,
+		long orderItemId, List<OrderItem> orderItems, long parentOrderItemId,
+		String price, String requestedDeliveryDate, String sku,
 		String subscriptionDuration, String subscriptionPeriod, String total) {
 
 		_deliveryGroup = deliveryGroup;
 		_discount = discount;
+		_formattedQuantity = formattedQuantity;
 		_image = image;
 		_name = name;
 		_options = options;
@@ -40,7 +41,6 @@ public class OrderItem {
 		_orderItems = orderItems;
 		_parentOrderItemId = parentOrderItemId;
 		_price = price;
-		_quantity = quantity;
 		_requestedDeliveryDate = requestedDeliveryDate;
 		_sku = sku;
 		_subscriptionDuration = subscriptionDuration;
@@ -54,6 +54,10 @@ public class OrderItem {
 
 	public String getDiscount() {
 		return _discount;
+	}
+
+	public String getFormattedQuantity() {
+		return _formattedQuantity;
 	}
 
 	public ImageField getImage() {
@@ -88,10 +92,6 @@ public class OrderItem {
 		return _price;
 	}
 
-	public int getQuantity() {
-		return _quantity;
-	}
-
 	public String getRequestedDeliveryDate() {
 		return _requestedDeliveryDate;
 	}
@@ -114,6 +114,7 @@ public class OrderItem {
 
 	private final String _deliveryGroup;
 	private final String _discount;
+	private final String _formattedQuantity;
 	private final ImageField _image;
 	private final String _name;
 	private final String _options;
@@ -122,7 +123,6 @@ public class OrderItem {
 	private final List<OrderItem> _orderItems;
 	private final long _parentOrderItemId;
 	private final String _price;
-	private final int _quantity;
 	private final String _requestedDeliveryDate;
 	private final String _sku;
 	private final String _subscriptionDuration;

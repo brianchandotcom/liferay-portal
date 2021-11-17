@@ -22,28 +22,28 @@ import java.util.List;
 public class OrderItem {
 
 	public OrderItem(
-		long orderItemId, long orderId, String sku, String name, String options,
-		List<OrderItem> orderItems, long parentOrderItemId, String price,
-		String promoPrice, String discount, int quantity, String total,
-		String thumbnail, int shippedQuantity, String[] errorMessages,
-		String formattedSubscriptionPeriod) {
+		String discount, String[] errorMessages, String formattedQuantity,
+		String formattedSubscriptionPeriod, String name, String options,
+		long orderId, long orderItemId, List<OrderItem> orderItems,
+		long parentOrderItemId, String price, String promoPrice,
+		int shippedQuantity, String sku, String thumbnail, String total) {
 
-		_orderItemId = orderItemId;
-		_orderId = orderId;
-		_sku = sku;
+		_discount = discount;
+		_errorMessages = errorMessages;
+		_formattedQuantity = formattedQuantity;
+		_formattedSubscriptionPeriod = formattedSubscriptionPeriod;
 		_name = name;
 		_options = options;
+		_orderId = orderId;
+		_orderItemId = orderItemId;
 		_orderItems = orderItems;
 		_parentOrderItemId = parentOrderItemId;
 		_price = price;
 		_promoPrice = promoPrice;
-		_discount = discount;
-		_quantity = quantity;
-		_total = total;
-		_thumbnail = thumbnail;
 		_shippedQuantity = shippedQuantity;
-		_errorMessages = errorMessages;
-		_formattedSubscriptionPeriod = formattedSubscriptionPeriod;
+		_sku = sku;
+		_thumbnail = thumbnail;
+		_total = total;
 	}
 
 	public String getDiscount() {
@@ -52,6 +52,10 @@ public class OrderItem {
 
 	public String[] getErrorMessages() {
 		return _errorMessages;
+	}
+
+	public String getFormattedQuantity() {
+		return _formattedQuantity;
 	}
 
 	public String getFormattedSubscriptionPeriod() {
@@ -90,10 +94,6 @@ public class OrderItem {
 		return _promoPrice;
 	}
 
-	public int getQuantity() {
-		return _quantity;
-	}
-
 	public int getShippedQuantity() {
 		return _shippedQuantity;
 	}
@@ -112,6 +112,7 @@ public class OrderItem {
 
 	private final String _discount;
 	private final String[] _errorMessages;
+	private final String _formattedQuantity;
 	private final String _formattedSubscriptionPeriod;
 	private final String _name;
 	private final String _options;
@@ -121,7 +122,6 @@ public class OrderItem {
 	private final long _parentOrderItemId;
 	private final String _price;
 	private final String _promoPrice;
-	private final int _quantity;
 	private final int _shippedQuantity;
 	private final String _sku;
 	private final String _thumbnail;

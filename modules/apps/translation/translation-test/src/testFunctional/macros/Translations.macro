@@ -561,6 +561,12 @@ definition {
 		}
 	}
 
+	macro viewNoEntryDefault {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No entries were found.");
+	}
+
 	macro viewNoTranslationEntry {
 		AssertElementNotPresent(
 			ey_rowEntry = "${title}",

@@ -23,6 +23,7 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		else {
 			SiteTemplates.tearDownCP();
 

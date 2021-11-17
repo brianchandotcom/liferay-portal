@@ -139,6 +139,7 @@ definition {
     
     
     macro viewPageNumber {
+	macro viewPageNumber {
 		for (var pageNumber : list "${pageNumberList}") {
 			var key_pageNumber = "${pageNumber}";
 

@@ -164,8 +164,6 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 
 		KaleoFormsManageFieldSets.viewPageNumber(pageNumberList = "2");
-
-		
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No Field Sets were found-."

@@ -19,6 +19,41 @@ import React, {useState} from 'react';
 
 import {useConstants} from '../contexts/ConstantsContext';
 
+function getNamespacedInfoItem(
+	portletNamespace,
+	selectedItem,
+	siteNavigationMenuId
+) {
+	if (!selectedItem) {
+		return;
+	}
+
+	let infoItem = {
+		...selectedItem,
+	};
+
+	let value;
+
+	if (typeof selectedItem.value === 'string') {
+		try {
+			value = JSON.parse(selectedItem.value);
+		}
+		catch (error) {}
+	}
+	else if (selectedItem.value && typeof selectedItem.value === 'object') {
+		value = selectedItem.value;
+	}
+
+	if (value) {
+		delete infoItem.value;
+		infoItem = {...value};
+	}
+
+	infoItem.siteNavigationMenuId = siteNavigationMenuId;
+
+	return Liferay.Util.ns(portletNamespace, infoItem);
+}
+
 export function AddItemDropDown({trigger}) {
 	const [active, setActive] = useState(false);
 	const {addSiteNavigationMenuItemOptions, portletNamespace} = useConstants();
@@ -38,52 +73,14 @@ export function AddItemDropDown({trigger}) {
 							onClick={() => {
 								if (data.itemSelector) {
 									Liferay.Util.openSelectionModal({
-										onSelect: (selectedItem) => {
-											if (!selectedItem) {
-												return;
-											}
-
-											let infoItem = {
-												...selectedItem,
-											};
-
-											let value;
-
-											if (
-												typeof selectedItem.value ===
-												'string'
-											) {
-												try {
-													value = JSON.parse(
-														selectedItem.value
-													);
-												}
-												catch (error) {}
-											}
-											else if (
-												selectedItem.value &&
-												typeof selectedItem.value ===
-													'object'
-											) {
-												value = selectedItem.value;
-											}
-
-											if (value) {
-												delete infoItem.value;
-												infoItem = {...value};
-											}
-
-											infoItem.siteNavigationMenuId =
-												data.siteNavigationMenuId;
-
-											const namespacedInfoItem = Liferay.Util.ns(
-												portletNamespace,
-												infoItem
-											);
-
+										onSelect: (selection) => {
 											fetch(data.addItemURL, {
 												body: objectToFormData(
-													namespacedInfoItem
+													getNamespacedInfoItem(
+														portletNamespace,
+														selection,
+														data.siteNavigationMenuId
+													)
 												),
 												method: 'POST',
 											}).then(() => {

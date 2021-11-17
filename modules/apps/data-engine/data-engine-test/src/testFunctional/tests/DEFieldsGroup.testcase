@@ -26,6 +26,15 @@ definition {
 		}
 	}
 
+	@description = "Verify that is possible to Collapse a Fields Group"
+	@ignore = "true"
+	@priority = "3"
+	test CanBeCollapsed {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to create Fields Group by adding a field from the sidebar into a field that is on the builder."
 	@priority = "5"
 	test CanBeCreated {
@@ -145,6 +154,15 @@ definition {
 			fieldGroupDepth = "1",
 			fieldGroupLabel = "Copy of Fields Group",
 			fieldsLabelList = "Copy of Text,Copy of Numeric");
+	}
+
+	@description = "Verify that the Web Content data persists upon editing the related Structure by creating a Fields Group"
+	@ignore = "true"
+	@priority = "4"
+	test CanDataBeEditedInNewFieldsGroup {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to delete a field inside a Fields Group."
@@ -533,6 +551,51 @@ definition {
 			fieldName = "Date");
 	}
 
+	@description = "Verify that inputted data on a Fields Group persists"
+	@ignore = "true"
+	@priority = "5"
+	test CanInputData {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
+	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test CanInputDataOnDuplicatedField {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
+	@description = "Verify that is possible to edit data inputted on a Fields Group"
+	@ignore = "true"
+	@priority = "5"
+	test CanInputtedDataBeEdited {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
+	@description = "Verify that is possible to remove data from fields inside a Fields Group"
+	@ignore = "true"
+	@priority = "3"
+	test CanInputtedDataBeRemoved {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
+	@description = "Verify that is possible to remove duplicated repeatable Fields Group"
+	@ignore = "true"
+	@priority = "4"
+	test CanRemoveDuplicatedField {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to remove a field from the Fields Group."
 	@priority = "4"
 	test CanRemoveField {
@@ -604,6 +667,24 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Numeric");
 
 		DataEngine.assertFieldNotPresent(fieldsGroupLabel = "Fields Group");
+	}
+
+	@description = "Verify that Options chosen for a Grid field inside a Fields Group persists"
+	@ignore = "true"
+	@priority = "5"
+	test CanSelectGridOptionsInFieldsGroup {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
+	}
+
+	@description = "Verify that Options chosen for Fields with Options inside a Fields Group persists"
+	@ignore = "true"
+	@priority = "5"
+	test CanSelectOptionsInFieldsGroup {
+
+		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+
 	}
 
 }

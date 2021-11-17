@@ -3704,10 +3704,22 @@ definition {
 	Then they find the panel closed"
 	@ignore = "true"
 	@priority = "3"
-	test PageAuditClosed {
+	test CheckPageAuditClosedAfterLogout {
+		task ("Open Content Performance panel") {
+			PageAudit.openPanelBeforeConfiguration();
 
-		// TODO LPS-132406 PageAuditClosed pending implementation
+			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
 
+		task ("Logout and login") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
 	}
 
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
@@ -3909,10 +3921,20 @@ definition {
 	Then they find the panel open"
 	@ignore = "true"
 	@priority = "3"
-	test PageAuditOpen {
+	test CheckPageAuditOpenAfterNavigation {
+		task ("Open Content Performance panel") {
+			PageAudit.openPanelBeforeConfiguration();
 
-		// TODO LPS-132406 PageAuditOpen pending implementation
+			PageAudit.connectToGooglePageAudit();
+		}
 
+		task ("Logout and login") {
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
 	}
 
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"

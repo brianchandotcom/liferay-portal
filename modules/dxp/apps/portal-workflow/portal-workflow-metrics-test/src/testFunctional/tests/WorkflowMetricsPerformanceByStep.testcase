@@ -744,7 +744,6 @@ definition {
 	@description = "LPS-130215 - Verify that when a specific version is chosen, the page only considers closed instances that are in the version chosen"
 	@priority = "4"
 	test PageConsidersClosedInstancesInChosenVersion {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#PageConsidersClosedInstancesInChosenVersion";
 
 		var documentTitle1 = "Blogs Entry Title 1";

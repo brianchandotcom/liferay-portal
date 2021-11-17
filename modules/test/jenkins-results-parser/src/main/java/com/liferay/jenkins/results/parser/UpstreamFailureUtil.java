@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -345,10 +346,27 @@ public class UpstreamFailureUtil {
 			TopLevelBuild topLevelBuild)
 		throws IllegalStateException {
 
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		String portalDirectory = buildProperties.getProperty(
+			JenkinsResultsParserUtil.combine(
+				"portal.dir[", topLevelBuild.getBranchName(), "]"));
+
+		String baseGitRepositoryName = portalDirectory.replaceAll(
+			"(?:.*)(liferay-portal.*)", "$1");
+
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				topLevelBuild.getBranchName(), (File)null,
-				topLevelBuild.getBaseGitRepositoryName());
+				baseGitRepositoryName);
 
 		List<String> buildResultJSONURLs =
 			JenkinsResultsParserUtil.getBuildResultJsonURLs(

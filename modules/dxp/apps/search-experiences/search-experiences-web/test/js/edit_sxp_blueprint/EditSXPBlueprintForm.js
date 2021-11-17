@@ -14,11 +14,11 @@ import React from 'react';
 
 import EditSXPBlueprintForm from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/EditSXPBlueprintForm';
 const Toasts = require('../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
-import {getSXPElementOutput} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
+import {getUIConfigurationValues} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {
 	ENTITY_JSON,
 	INITIAL_CONFIGURATION,
-	SELECTED_SXP_ELEMENTS,
+	QUERY_SXP_ELEMENTS,
 } from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -61,9 +61,7 @@ function renderEditSXPBlueprintForm(props) {
 			entityJSON={ENTITY_JSON}
 			initialConfiguration={INITIAL_CONFIGURATION}
 			initialDescription={{}}
-			initialSXPElementInstances={{
-				queryConfiguration: {queryEntries: []},
-			}}
+			initialSXPElementInstances={[]}
 			initialTitle={{
 				en_US: 'Test Title',
 			}}
@@ -84,26 +82,23 @@ describe('EditSXPBlueprintForm', () => {
 
 	it('renders the query elements', async () => {
 		const {container, findByText} = renderEditSXPBlueprintForm({
-			initialConfiguration: {
-				...INITIAL_CONFIGURATION,
-				queryConfiguration: {
-					applyIndexerClauses: true,
-					queryEntries: SELECTED_SXP_ELEMENTS.map(
-						getSXPElementOutput
+			initialSXPElementInstances: QUERY_SXP_ELEMENTS.map(
+				(sxpElement) => ({
+					sxpElement,
+					type: 10,
+					uiConfigurationValues: getUIConfigurationValues(
+						sxpElement.elementDefinition.uiConfiguration
 					),
-				},
-			},
-			initialSXPElementInstances: {
-				queryConfiguration: {queryEntries: SELECTED_SXP_ELEMENTS},
-			},
+				})
+			),
 		});
 
 		await findByText('query-settings');
 
 		const {getByText} = within(container.querySelector('.builder'));
 
-		SELECTED_SXP_ELEMENTS.map((sxpElement) =>
-			getByText(sxpElement.sxpElementTemplateJSON.title_i18n['en_US'])
+		QUERY_SXP_ELEMENTS.map((sxpElement) =>
+			getByText(sxpElement.title_i18n['en_US'])
 		);
 	});
 
@@ -138,18 +133,15 @@ describe('EditSXPBlueprintForm', () => {
 			getAllByLabelText,
 			getAllByText,
 		} = renderEditSXPBlueprintForm({
-			initialConfiguration: {
-				...INITIAL_CONFIGURATION,
-				queryConfiguration: {
-					applyIndexerClauses: true,
-					queryEntries: SELECTED_SXP_ELEMENTS.map(
-						getSXPElementOutput
+			initialSXPElementInstances: QUERY_SXP_ELEMENTS.map(
+				(sxpElement) => ({
+					sxpElement,
+					type: 10,
+					uiConfigurationValues: getUIConfigurationValues(
+						sxpElement.elementDefinition.uiConfiguration
 					),
-				},
-			},
-			initialSXPElementInstances: {
-				queryConfiguration: {queryEntries: SELECTED_SXP_ELEMENTS},
-			},
+				})
+			),
 		});
 
 		await findByText('query-settings');

@@ -20,7 +20,7 @@ import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {DEFAULT_ERROR} from '../utils/constants';
+import {DEFAULT_ERROR, SXP_ELEMENT_TYPE} from '../utils/constants';
 import {
 	BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION,
 	DEFAULT_ADVANCED_CONFIGURATION,
@@ -34,7 +34,16 @@ import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
 import {getSXPBlueprintForm, getSXPElementOutput} from '../utils/utils';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
-	getSXPBlueprintForm
+	(sxpElement) => {
+		const translatedSXPElement = getSXPBlueprintForm(sxpElement);
+
+		return {
+			configurationEntry: getSXPElementOutput(translatedSXPElement),
+			sxpElement,
+			type: sxpElement.type || SXP_ELEMENT_TYPE.QUERY,
+			uiConfigurationValues: translatedSXPElement.uiConfigurationValues,
+		};
+	}
 );
 
 const FrameworkCard = ({
@@ -141,12 +150,6 @@ const AddModal = ({
 		parameters: DEFAULT_PARAMETER_CONFIGURATION,
 		queryConfiguration: {
 			applyIndexerClauses: framework === FRAMEWORK_TYPES.ALL,
-			queryEntries:
-				framework === FRAMEWORK_TYPES.BASELINE
-					? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS.map(
-							getSXPElementOutput
-					  )
-					: [],
 		},
 		sortConfiguration: DEFAULT_SORT_CONFIGURATION,
 	});
@@ -158,14 +161,10 @@ const AddModal = ({
 			body: JSON.stringify({
 				configuration: _getConfiguration(),
 				description_i18n: {[defaultLocale]: descriptionInputValue},
-				elementInstances: {
-					queryConfiguration: {
-						queryEntries:
-							framework === FRAMEWORK_TYPES.BASELINE
-								? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
-								: [],
-					},
-				},
+				elementInstances:
+					framework === FRAMEWORK_TYPES.BASELINE
+						? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
+						: [],
 				title_i18n: {[defaultLocale]: inputValue},
 			}),
 

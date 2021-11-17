@@ -25,3 +25,4 @@ export const DEFAULT_ERROR = Liferay.Language.get(
 export const SXP_ELEMENT_PREFIX = {
 	QUERY: 'querySXPElement',
 };
+export const SXP_ELEMENT_TYPE = {QUERY: 10};

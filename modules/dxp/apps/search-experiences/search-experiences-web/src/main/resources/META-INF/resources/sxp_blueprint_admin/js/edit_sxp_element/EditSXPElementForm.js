@@ -171,13 +171,9 @@ function EditSXPElementForm({
 		}
 
 		const {
-			category,
-			description, //eslint-disable-line
 			description_i18n,
-			icon,
-			title, //eslint-disable-line
 			title_i18n,
-			...partialSXPBlueprint
+			...restOfSXPElementTemplateJSON
 		} = parseSXPElementTemplateJSON;
 
 		try {
@@ -198,14 +194,8 @@ function EditSXPElementForm({
 						body: JSON.stringify({
 							description_i18n,
 							elementDefinition: {
-								category,
-								icon,
-								sxpBlueprint: {
-									queryConfiguration: {
-										queryEntries: [partialSXPBlueprint],
-									},
-								},
 								uiConfiguration: parseUIConfigurationJSON,
+								...restOfSXPElementTemplateJSON,
 							},
 							title_i18n,
 							type,
@@ -230,14 +220,8 @@ function EditSXPElementForm({
 					body: JSON.stringify({
 						description_i18n,
 						elementDefinition: {
-							category,
-							icon,
-							sxpBlueprint: {
-								queryConfiguration: {
-									queryEntries: [partialSXPBlueprint],
-								},
-							},
 							uiConfiguration: parseUIConfigurationJSON,
+							...restOfSXPElementTemplateJSON,
 						},
 						title_i18n,
 						type,
@@ -286,14 +270,8 @@ function EditSXPElementForm({
 				body: JSON.stringify({
 					description_i18n,
 					elementDefinition: {
-						category,
-						icon,
-						sxpBlueprint: {
-							queryConfiguration: {
-								queryEntries: [partialSXPBlueprint],
-							},
-						},
 						uiConfiguration: parseUIConfigurationJSON,
+						...restOfSXPElementTemplateJSON,
 					},
 					title_i18n,
 					type,

@@ -544,36 +544,35 @@ export function getUIConfigurationValues(uiConfigurationJSON) {
 }
 
 /**
- * Function for getting formatting SXP element into expected sxpElementTemplateJSON,
+ * Function for formatting SXP element into expected sxpElementTemplateJSON,
  * uiConfigurationJSON, and uiConfigurationValues.
  *
  * @param {object} querySXPElement Object of SXP Element from REST API
  * @return {object}
  */
-export function getSXPBlueprintForm({
-	description,
-	description_i18n,
-	elementDefinition,
+export const getSXPBlueprintForm = ({
 	title,
+	description,
 	title_i18n,
-}) {
+	description_i18n,
+	elementDefinition = {},
+}) => {
+	const {uiConfiguration, ...restOfElementDefinition} = elementDefinition;
+
 	return {
 		sxpElementTemplateJSON: {
-			category: elementDefinition?.category,
-			description,
-			description_i18n,
-			icon: elementDefinition?.icon,
-			...elementDefinition?.sxpBlueprint?.configuration
-				?.queryConfiguration?.queryEntries[0],
-			title,
-			title_i18n,
+			description_i18n: description_i18n || {
+				[Liferay.ThemeDisplay.getDefaultLanguageId()]: description,
+			},
+			title_i18n: title_i18n || {
+				[Liferay.ThemeDisplay.getDefaultLanguageId()]: title,
+			},
+			...restOfElementDefinition,
 		},
-		uiConfigurationJSON: elementDefinition?.uiConfiguration || {},
-		uiConfigurationValues: getUIConfigurationValues(
-			elementDefinition?.uiConfiguration
-		),
+		uiConfigurationJSON: uiConfiguration,
+		uiConfigurationValues: getUIConfigurationValues(uiConfiguration),
 	};
-}
+};
 
 /**
  * Function for transforming the framework configuration's `clause_contributor`

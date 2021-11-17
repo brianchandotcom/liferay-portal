@@ -26,6 +26,7 @@ import {INPUT_TYPES} from '../utils/inputTypes';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
 import {
 	cleanUIConfigurationJSON,
+	getSXPBlueprintForm,
 	getSXPElementOutput,
 	getUIConfigurationValues,
 	isDefined,
@@ -47,7 +48,7 @@ import SettingsTab from './settings_tab/index';
 const TABS = {
 	'query-builder': Liferay.Language.get('query-builder'),
 	'clause-contributors': Liferay.Language.get('clause-contributors'),
-	'settings': Liferay.Language.get('settings'),
+	settings: Liferay.Language.get('settings'),
 };
 /* eslint-enable sort-keys */
 
@@ -55,7 +56,7 @@ function EditSXPBlueprintForm({
 	entityJSON,
 	initialConfiguration = {},
 	initialDescription = {},
-	initialSXPElementInstances = {},
+	initialSXPElementInstances = [],
 	initialTitle = {},
 	sxpBlueprintId,
 }) {
@@ -73,9 +74,7 @@ function EditSXPBlueprintForm({
 
 	const formRef = useRef();
 
-	const sxpElementIdCounterRef = useRef(
-		initialSXPElementInstances.queryConfiguration?.queryEntries?.length || 0
-	);
+	const sxpElementIdCounterRef = useRef(initialSXPElementInstances.length || 0);
 
 	const _getFormInput = (key) => {
 		for (const pair of new FormData(formRef.current).entries()) {
@@ -101,7 +100,6 @@ function EditSXPBlueprintForm({
 		frameworkConfig,
 		highlightConfig,
 		parameterConfig,
-		selectedQuerySXPElements,
 		sortConfig,
 	}) => ({
 		advanced: advancedConfig ? JSON.parse(advancedConfig) : {},
@@ -114,26 +112,61 @@ function EditSXPBlueprintForm({
 		parameters: parameterConfig ? JSON.parse(parameterConfig) : {},
 		queryConfiguration: {
 			applyIndexerClauses,
-			queryEntries: selectedQuerySXPElements.map(getSXPElementOutput),
 		},
 		sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
 	});
 
-	const _getSelectedSXPElements = (values) => ({
-		queryConfiguration: {
-			queryEntries: values.selectedQuerySXPElements.map((item) =>
-				item.uiConfigurationJSON
+	const _getSelectedSXPElements = (values) =>
+		values.selectedQuerySXPElements.map(
+			({
+				id, // eslint-disable-line
+				sxpElementTemplateJSON,
+				uiConfigurationJSON,
+				uiConfigurationValues,
+				...props
+			}) => {
+				const configurationEntry = getSXPElementOutput({
+					sxpElementTemplateJSON,
+					uiConfigurationJSON,
+					uiConfigurationValues,
+				});
+
+				// Check if sxpElementTemplateJSON is a custom JSON (if so, use
+				// updated sxpElementTemplateJSON stored in uiConfigurationValues)
+
+				const newSXPElementTemplateJSON = uiConfigurationJSON
+					? sxpElementTemplateJSON
+					: configurationEntry;
+
+				// Isolate title_i18n and description_i18n from sxpElementTemplateJSON
+
+				const {
+					description_i18n,
+					title_i18n,
+					...restOfSXPElementTemplateJSON
+				} = newSXPElementTemplateJSON;
+
+				// Add uiConfigurationJSON back into elementDefinition if available
+
+				const elementDefinition = uiConfigurationJSON
 					? {
-							sxpElementTemplateJSON: item.sxpElementTemplateJSON,
-							uiConfigurationJSON: item.uiConfigurationJSON,
-							uiConfigurationValues: item.uiConfigurationValues,
-					  } // Removes ID field
-					: {
-							sxpElementTemplateJSON: getSXPElementOutput(item),
+							...restOfSXPElementTemplateJSON,
+							uiConfiguration: uiConfigurationJSON,
 					  }
-			),
-		},
-	});
+					: restOfSXPElementTemplateJSON;
+
+				return {
+					configurationEntry,
+					sxpElement: {
+						description_i18n,
+						elementDefinition,
+						title_i18n,
+					},
+					uiConfigurationValues,
+					...props,
+				};
+			}
+		);
 
 	const _handleFormikSubmit = async (values) => {
 		let configuration;
@@ -173,6 +206,7 @@ function EditSXPBlueprintForm({
 					'/o/search-experiences-rest/v1.0/sxp-blueprints/validate',
 					{
 						body: JSON.stringify({
+							configuration,
 							description_i18n: {
 								[defaultLocale]: _getFormInput('description'),
 							},
@@ -369,13 +403,14 @@ function EditSXPBlueprintForm({
 				null,
 				'\t'
 			),
-			selectedQuerySXPElements:
-				initialSXPElementInstances?.queryConfiguration?.queryEntries.map(
-					(selectedSXPElement, index) => ({
-						...selectedSXPElement,
-						id: index,
-					})
-				) || [],
+			selectedQuerySXPElements: initialSXPElementInstances.map(
+				({sxpElement, uiConfigurationValues, ...props}, index) => ({
+					...getSXPBlueprintForm(sxpElement),
+					id: index,
+					uiConfigurationValues,
+					...props,
+				})
+			),
 			sortConfig: JSON.stringify(
 				initialConfiguration.sortConfiguration,
 				null,
@@ -446,9 +481,11 @@ function EditSXPBlueprintForm({
 		}));
 
 		let configuration;
+		let elementInstances;
 
 		try {
 			configuration = _getConfiguration(formik.values);
+			elementInstances = _getSelectedSXPElements(formik.values);
 		}
 		catch (error) {
 			setPreviewInfo({
@@ -489,6 +526,7 @@ function EditSXPBlueprintForm({
 			{
 				body: JSON.stringify({
 					configuration,
+					elementInstances,
 
 					// TO DO: Enable when preview attributes available
 
@@ -725,7 +763,7 @@ EditSXPBlueprintForm.propTypes = {
 	entityJSON: PropTypes.object,
 	initialConfiguration: PropTypes.object,
 	initialDescription: PropTypes.object,
-	initialSXPElementInstances: PropTypes.object,
+	initialSXPElementInstances: PropTypes.arrayOf(PropTypes.object),
 	initialTitle: PropTypes.object,
 	sxpBlueprintId: PropTypes.string,
 };

@@ -237,15 +237,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132406: Given the AB Testing Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
-	@ignore = "true"
-	@priority = "3"
-	test ABTestingClosed {
-
-		// TODO LPS-132406 ABTestingClosed pending implementation
-
-	}
-
 	@description = "LPS-119475: When a user accesses the AB testing panel while a click goal test is running, the Change clickable element button don't show and the ID element box isn't enabled for edition, but the eye button will work normally"
 	@priority = "3"
 	test AssertChangeClickableIDBoxNotEnabled {

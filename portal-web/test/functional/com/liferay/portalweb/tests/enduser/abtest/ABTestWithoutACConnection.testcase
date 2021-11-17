@@ -38,6 +38,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-132406: Given the AB Testing Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
+	@ignore = "true"
+	@priority = "3"
+	test CheckABTestingClosedAfterLogout {
+		task ("Open Content Performance panel") {
+			ABTest.openABTestPanel();
+
+			AssertElementPresent(
+				key_title = "Connect to Liferay Analytics Cloud",
+				locator1 = "Header#H4_TITLE");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementNotPresent(
+				key_title = "Connect to Liferay Analytics Cloud",
+				locator1 = "Header#H4_TITLE");
+		}
+	}
+
 	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
 	@priority = "3"
 	test CheckABTestIconDXP {

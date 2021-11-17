@@ -509,6 +509,8 @@ definition {
 
 		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
 			ACSettings.deleteDataSource();
+			
+			Refresh();
 		}
 	}
 

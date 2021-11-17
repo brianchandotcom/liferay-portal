@@ -87,11 +87,15 @@ public class MillerColumnsDisplayContext {
 	}
 
 	public JSONArray getLayoutColumnsJSONArray() throws Exception {
-		JSONArray layoutColumnsJSONArray = JSONUtil.put(
-			_getFirstLayoutColumnJSONArray());
+		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (_layoutsAdminDisplayContext.isFirstColumn()) {
-			return layoutColumnsJSONArray;
+		if (_layoutsAdminDisplayContext.isShowPrivateLayouts()) {
+			layoutColumnsJSONArray = JSONUtil.put(
+				_getFirstLayoutColumnJSONArray());
+
+			if (_layoutsAdminDisplayContext.isFirstColumn()) {
+				return layoutColumnsJSONArray;
+			}
 		}
 
 		JSONArray layoutSetBranchesJSONArray = _getLayoutSetBranchesJSONArray();

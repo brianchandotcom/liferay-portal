@@ -627,23 +627,11 @@ definition {
 	@description = "This is a test for LPS-136954. It checks that stars can be added and removed from a document."
 	@priority = "5"
 	test CanRevokeStarsFromDocument {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		Ratings.configureRatingType(
 			applications = "document",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
 			siteURLKey = "guest");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

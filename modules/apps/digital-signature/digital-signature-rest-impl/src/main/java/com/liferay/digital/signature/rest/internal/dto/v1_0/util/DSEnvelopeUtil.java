@@ -34,7 +34,7 @@ public class DSEnvelopeUtil {
 				dsRecipient = _getDSRecipients(dsEnvelope.getDSRecipients());
 				emailBlurb = dsEnvelope.getEmailBlurb();
 				emailSubject = dsEnvelope.getEmailSubject();
-				id = dsEnvelope.getDSEnvelopeId();
+				dsEnvelopeId = dsEnvelope.getDSEnvelopeId();
 				name = dsEnvelope.getName();
 				senderEmailAddress = dsEnvelope.getSenderEmailAddress();
 				status = dsEnvelope.getStatus();
@@ -48,7 +48,7 @@ public class DSEnvelopeUtil {
 		return new com.liferay.digital.signature.model.DSEnvelope() {
 			{
 				dsDocuments = _getDSDocuments(dsEnvelope.getDsDocument());
-				dsEnvelopeId = dsEnvelope.getId();
+				dsEnvelopeId = dsEnvelope.getDsEnvelopeId();
 				dsRecipients = _getDSRecipients(dsEnvelope.getDsRecipient());
 				emailBlurb = dsEnvelope.getEmailBlurb();
 				emailSubject = dsEnvelope.getEmailSubject();

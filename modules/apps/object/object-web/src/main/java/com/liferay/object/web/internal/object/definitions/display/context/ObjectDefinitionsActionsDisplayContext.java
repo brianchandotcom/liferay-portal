@@ -30,6 +30,7 @@ import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
@@ -56,6 +57,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -255,6 +258,28 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			objectActionExecutor.getSettings());
+
+		if (StringUtil.equals(
+				objectActionExecutor.getKey(),
+				ObjectActionExecutorConstants.KEY_WEBHOOK)) {
+
+			List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+			Stream<DDMFormField> stream = ddmFormFields.stream();
+
+			Optional<DDMFormField> ddmFormFieldOptional = stream.filter(
+				ddmFormField -> ddmFormField.getName(
+				).equals(
+					"url"
+				)
+			).findFirst();
+
+			if (ddmFormFieldOptional.isPresent()) {
+				DDMFormField ddmFormField = ddmFormFieldOptional.get();
+
+				ddmFormField.setProperty("required", true);
+			}
+		}
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();

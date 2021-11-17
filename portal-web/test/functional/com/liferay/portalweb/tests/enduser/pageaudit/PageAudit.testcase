@@ -1058,6 +1058,29 @@ definition {
 		}
 	}
 
+	@description = "LPS-132406: Given the Page Audit Panel
+	When the users leave the page because the session expires or s/he does log out
+	Then they find the panel closed"
+	@ignore = "true"
+	@priority = "3"
+	test CheckPageAuditClosedAfterLogout {
+		task ("Open Content Performance panel") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
+	}
+
 	@description = "LPS-137227 Given a content page	When a user with permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInContentPageWithEditBlogsPermission {
@@ -2897,6 +2920,27 @@ definition {
 		}
 	}
 
+	@description = "LPS-132406: Given the Page Audit Panel
+	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
+	Then they find the panel open"
+	@ignore = "true"
+	@priority = "3"
+	test CheckPageAuditOpenAfterNavigation {
+		task ("Open Content Performance panel") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			PageAudit.connectToGooglePageAudit();
+		}
+
+		task ("Logout and login") {
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
+	}
+
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
 	When the page is blocked from indexing
 	Then the users will see a text with a link to the configuration section: Change the robots.txt setting from the Configuration section of this page"
@@ -3696,29 +3740,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
-		}
-	}
-
-	@description = "LPS-132406: Given the Page Audit Panel
-	When the users leave the page because the session expires or s/he does log out
-	Then they find the panel closed"
-	@ignore = "true"
-	@priority = "3"
-	test CheckPageAuditClosedAfterLogout {
-		task ("Open Content Performance panel") {
-			PageAudit.openPanelBeforeConfiguration();
-
-			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
-		}
-
-		task ("Logout and login") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("Check if panel is closed") {
-			AssertElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 		}
 	}
 

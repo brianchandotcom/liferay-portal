@@ -38,6 +38,14 @@ definition {
 		}
 	}
 
+	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
+	@priority = "3"
+	test CheckABTestIconDXP {
+		task ("Assert 'AB Test' icon is present") {
+			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
+		}
+	}
+
 	@description = "LPS-132406: Given the AB Testing Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
 	@ignore = "true"
 	@priority = "3"
@@ -60,14 +68,6 @@ definition {
 			AssertElementNotPresent(
 				key_title = "Connect to Liferay Analytics Cloud",
 				locator1 = "Header#H4_TITLE");
-		}
-	}
-
-	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
-	@priority = "3"
-	test CheckABTestIconDXP {
-		task ("Assert 'AB Test' icon is present") {
-			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
 	}
 

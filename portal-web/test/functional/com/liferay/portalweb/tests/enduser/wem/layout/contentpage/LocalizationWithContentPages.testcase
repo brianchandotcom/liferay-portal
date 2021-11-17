@@ -132,7 +132,7 @@ definition {
 		task ("Preview the localized draft content page in a new tab") {
 			SitePages.gotoPageMenuItem(
 				menuItem = "Previsualitza l'esborrany",
-				pageName = "Test Page Name");
+				pageName = "Content Page Name");
 
 			SelectWindow.selectPopUp(locator1 = "null");
 

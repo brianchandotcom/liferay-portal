@@ -201,6 +201,93 @@ definition {
 		}
 	}
 
+	@description = "Cannot reset changes as user without permissions."
+	@priority = "3"
+	test CannotResetChangesAsUserWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.component.names = "Site and Page Templates";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Add a site based on template") {
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View Home page is shown") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Page.viewDefaultSiteTemplatePagesPG(
+				pageName = "Home",
+				siteName = "Site Name");
+		}
+
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
+
+		task ("Add a Blogs widget to home page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			PageEditor.addWidget(portletName = "Blogs");
+		}
+
+		task ("Publish the page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View info icon is not shown") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			SiteTemplates.viewNoInfoMessage();
+		}
+
+		task ("Delete new site by Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
 	@description = "The user can change the page layout template of a widget page."
 	@priority = "5"
 	test ChangeLayoutTemplate {
@@ -372,95 +459,6 @@ definition {
 				pageName = "Test Page Name");
 
 			PortletEntry.viewLocale(locale = "en-US");
-		}
-	}
-
-	@description = "View no information message displayed to non admin user."
-	@priority = "3"
-	test ViewNoInfoMessageWhenChangingSiteTemplateAsUser {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site and Page Templates";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add a site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-		}
-
-		task ("Add a site based on template") {
-			Site.openSitesAdmin();
-
-			Site.addCP(
-				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteType = "Site Template");
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = "Site Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
-		}
-
-		task ("View Home page is shown") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			Page.viewDefaultSiteTemplatePagesPG(
-				pageName = "Home",
-				siteName = "Site Name");
-		}
-
-		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-		}
-
-		task ("Add a Blogs widget to home page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			PageEditor.addWidget(portletName = "Blogs");
-		}
-
-		task ("Publish the page") {
-			PageEditor.clickPublish();
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
-		}
-
-		task ("View information message is not shown") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			SiteTemplates.viewNoInfoMessage();
-		}
-
-		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-		}
-
-		task ("Delete new site") {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 

@@ -136,6 +136,115 @@ components:
                 - message
                 - status
             type: object
+        MappedProduct:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                availability:
+                    $ref: "#/components/schemas/Availability"
+                id:
+                    example: 33130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                options:
+                    additionalProperties:
+                        type: string
+                    example:
+                        color: yellow
+                        optionKey: optionValueKey
+                        size: xs
+                    type: object
+                price:
+                    $ref: "#/components/schemas/Price"
+                productConfiguration:
+                    $ref: "#/components/schemas/ProductConfiguration"
+                productExternalReferenceCode:
+                    example: exampleERC
+                    type: string
+                productId:
+                    example: 33131
+                    format: int64
+                    minimum: 0
+                    type: integer
+                productName:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    readOnly: true
+                    type: object
+                productOptions:
+                    items:
+                        $ref: "#/components/schemas/ProductOption"
+                    type: array
+                quantity:
+                    example: 1
+                    format: int32
+                    minimum: 0
+                    type: integer
+                sequence:
+                    example: 1
+                    type: string
+                sku:
+                    example: SKU01
+                    type: string
+                skuExternalReferenceCode:
+                    example: SKU0111
+                    type: string
+                skuId:
+                    example: 33135
+                    format: int64
+                    minimum: 0
+                    type: integer
+                thumbnail:
+                    example: simple
+                    readOnly: true
+                    type: string
+                type:
+                    enum:
+                        - diagram
+                        - external
+                        - sku
+                    example: sku
+                    type: string
+                urls:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: product-url-us
+                        hr_HR: product-url-hr
+                        hu_HU: product-url-hu
+                    type: object
+            type: object
+        Pin:
+            properties:
+                id:
+                    example: 33130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                mappedProduct:
+                    $ref: "#/components/schemas/MappedProduct"
+                positionX:
+                    example: 33.54
+                    format: double
+                    type: number
+                positionY:
+                    example: 33.54
+                    format: double
+                    type: number
+                sequence:
+                    example: 1
+                    type: string
+            type: object
         Price:
             properties:
                 currency:
@@ -946,6 +1055,230 @@ paths:
                         Unexpected error
             summary: Gets a list of Images related to a Product.
             tags: ["Attachment"]
+    /channels/{channelId}/products/{productId}/mapped-products:
+        get:
+            operationId: getChannelProductMappedProductsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          The Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MappedProduct"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MappedProduct"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a list of mapped product.
+            tags: ["MappedProduct"]
+    /channels/{channelId}/products/{productId}/pins:
+        get:
+            operationId: getChannelProductPinsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          The Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Pin"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Pin"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a list of pin.
+            tags: ["Pin"]
     /channels/{channelId}/products/{productId}/product-options:
         get:
             operationId: getChannelProductOptionsPage

@@ -162,10 +162,23 @@ public class OracleDBTest extends BaseDBTestCase {
 				"create index IX on Test (cola, colb[$COLUMN_LENGTH:4000$]);"));
 
 		Assert.assertEquals(
+			"create index IX on Test (cola,substr(colb,1,256));",
+			method.invoke(
+				db,
+				"create index IX on Test (cola,colb[$COLUMN_LENGTH:4000$]);"));
+
+		Assert.assertEquals(
 			"create index IX on Test (substr(cola,1,256), substr(colb,1,256));",
 			method.invoke(
 				db,
 				"create index IX on Test (cola[$COLUMN_LENGTH:4000$], " +
+					"colb[$COLUMN_LENGTH:4000$]);"));
+
+		Assert.assertEquals(
+			"create index IX on Test (substr(cola,1,256),substr(colb,1,256));",
+			method.invoke(
+				db,
+				"create index IX on Test (cola[$COLUMN_LENGTH:4000$]," +
 					"colb[$COLUMN_LENGTH:4000$]);"));
 
 		Assert.assertEquals(
@@ -254,10 +267,23 @@ public class OracleDBTest extends BaseDBTestCase {
 				"create index IX on Test (cola, colb[$COLUMN_LENGTH:4000$]);"));
 
 		Assert.assertEquals(
+			"create index IX on Test (cola,colb);",
+			method.invoke(
+				db,
+				"create index IX on Test (cola,colb[$COLUMN_LENGTH:4000$]);"));
+
+		Assert.assertEquals(
 			"create index IX on Test (cola, colb);",
 			method.invoke(
 				db,
 				"create index IX on Test (cola[$COLUMN_LENGTH:4000$], " +
+					"colb[$COLUMN_LENGTH:4000$]);"));
+
+		Assert.assertEquals(
+			"create index IX on Test (cola,colb);",
+			method.invoke(
+				db,
+				"create index IX on Test (cola[$COLUMN_LENGTH:4000$]," +
 					"colb[$COLUMN_LENGTH:4000$]);"));
 
 		Assert.assertEquals(

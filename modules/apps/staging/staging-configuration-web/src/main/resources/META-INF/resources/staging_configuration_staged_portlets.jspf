@@ -25,21 +25,42 @@
 				<liferay-ui:message key="page-versioning-help" />
 			</div>
 
-			<div class="custom-distance">
-				<liferay-staging:checkbox
-					checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>'
-					label="enabled-on-public-pages"
-					name="branchingPublic"
-				/>
-			</div>
+			<%
+			boolean privateLayoutsEnabled = liveGroup.isPrivateLayoutsEnabled();
 
-			<div class="custom-distance">
-				<liferay-staging:checkbox
-					checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>'
-					label="enabled-on-private-pages"
-					name="branchingPrivate"
-				/>
-			</div>
+			if (stagingGroup != null) {
+				privateLayoutsEnabled = stagingGroup.isPrivateLayoutsEnabled();
+			}
+			%>
+
+			<c:choose>
+				<c:when test="<%= privateLayoutsEnabled %>">
+					<div class="custom-distance">
+						<liferay-staging:checkbox
+							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>'
+							label="enabled-on-public-pages"
+							name="branchingPublic"
+						/>
+					</div>
+
+					<div class="custom-distance">
+						<liferay-staging:checkbox
+							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>'
+							label="enabled-on-private-pages"
+							name="branchingPrivate"
+						/>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="custom-distance">
+						<liferay-staging:checkbox
+							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>'
+							label="enabled"
+							name="branchingPublic"
+						/>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</c:if>
 

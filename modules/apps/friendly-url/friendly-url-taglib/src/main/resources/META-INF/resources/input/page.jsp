@@ -19,6 +19,7 @@
 <%
 boolean disabled = (boolean)request.getAttribute("liferay-friendly-url:input:disabled");
 int friendlyURLMaxLength = (int)request.getAttribute("liferay-friendly-url:input:friendlyURLMaxLength");
+boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:input:localizable");
 String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 %>
@@ -27,6 +28,7 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 	className='<%= (String)request.getAttribute("liferay-friendly-url:input:className") %>'
 	classPK='<%= (long)request.getAttribute("liferay-friendly-url:input:classPK") %>'
 	elementId="<%= portletDisplay.getNamespace() + name %>"
+	localizable="<%= localizable %>"
 />
 
 <div class="form-group friendly-url">
@@ -37,7 +39,7 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 	</label>
 
 	<c:choose>
-		<c:when test='<%= (boolean)request.getAttribute("liferay-friendly-url:input:localizable") %>'>
+		<c:when test="<%= localizable %>">
 			<liferay-ui:input-localized
 				defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
 				disabled="<%= disabled %>"

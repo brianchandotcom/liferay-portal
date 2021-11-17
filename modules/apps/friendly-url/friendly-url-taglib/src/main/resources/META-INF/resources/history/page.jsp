@@ -20,6 +20,7 @@
 String defaultLanguageId = (String)request.getAttribute("liferay-friendly-url:history:defaultLanguageId");
 String elementId = (String)request.getAttribute("liferay-friendly-url:history:elementId");
 String friendlyURLEntryURL = (String)request.getAttribute("liferay-friendly-url:history:friendlyURLEntryURL");
+boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:history:localizable");
 %>
 
 <liferay-util:html-top
@@ -38,6 +39,8 @@ String friendlyURLEntryURL = (String)request.getAttribute("liferay-friendly-url:
 				"elementId", elementId
 			).put(
 				"friendlyURLEntryURL", friendlyURLEntryURL
+			).put(
+				"localizable", localizable
 			).build()
 		%>'
 	/>

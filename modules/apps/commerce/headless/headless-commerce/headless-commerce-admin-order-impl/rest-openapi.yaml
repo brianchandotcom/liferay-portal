@@ -536,6 +536,11 @@ components:
                 customFields:
                     additionalProperties: true
                     type: object
+                decimalQuantity:
+                    example: 10.1
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
                 deliveryGroup:
                     example: separate package
                     type: string
@@ -602,6 +607,9 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                formattedQuantity:
+                    readOnly: true
+                    type: string
                 id:
                     example: 30130
                     format: int64
@@ -671,6 +679,9 @@ components:
                 subscription:
                     example: true
                     type: boolean
+                unitOfMeasure:
+                    example: pc
+                    type: string
                 unitPrice:
                     example: 101
                     format: bigdecimal

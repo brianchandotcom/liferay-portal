@@ -78,7 +78,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testServeResourceExcel() throws Exception {
+	public void testServeResource() throws Exception {
 		String originalUserName = System.getProperty("user.name");
 
 		System.setProperty("user.name", "test");

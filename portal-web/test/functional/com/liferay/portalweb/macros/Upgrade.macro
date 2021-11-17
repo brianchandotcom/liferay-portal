@@ -1263,7 +1263,7 @@ definition {
 			operation = "unzip",
 			titleTranslation = "Webコンテンツのタイトル",
 			translationFileName = "WebContentTitle-en_US-ja_JP",
-			translationZipFileName = "WebContentTitle-en_US.zip",
+			translationZipFileName = "WebContentTitle-en_US",
 			webContentContent = "WebContent",
 			webContentDescription = "",
 			webContentTitle = "WebContentTitle");

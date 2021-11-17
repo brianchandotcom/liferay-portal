@@ -2406,7 +2406,7 @@ definition {
 			wikiPageTitle = "Wiki Page Title After Upgrade");
 	}
 
-	macro viewAndDeleteAutoTaggedBlogsEntry {
+	macro editTagsAndDeleteAutoTaggedBlogsEntry {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "digital-transformation-or-digital-experience-?",
 			layoutName = "test-page",
@@ -2454,7 +2454,7 @@ definition {
 			entryTitle = "Digital Transformation or Digital Experience?");
 	}
 
-	macro viewAndDeleteAutoTaggedDM {
+	macro editTagsAndDeleteAutoTaggedDM {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "${dmDocumentTitle}",
 			groupName = "Site Name",
@@ -2493,7 +2493,7 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
 	}
 
-	macro viewAndDeleteAutoTaggedWebContent {
+	macro editTagsAndDeleteAutoTaggedWebContent {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");

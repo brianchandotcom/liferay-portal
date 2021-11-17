@@ -23,7 +23,7 @@ definition {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewAndDeleteAutoTaggedWebContent();
+		Upgrade.editTagsAndDeleteAutoTaggedWebContent();
 
 		Upgrade.addAutoTaggedWebContent();
 	}
@@ -33,7 +33,7 @@ definition {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndDeleteAutoTaggedWebContent();
+		Upgrade.editTagsAndDeleteAutoTaggedWebContent();
 
 		Upgrade.addAutoTaggedWebContent();
 	}

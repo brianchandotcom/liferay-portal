@@ -9,7 +9,7 @@ const PROJECT_PAGE_KEY = 'projects';
 
 const validateExternalReferenceCode = (accountBriefs, externalReferenceCode) => {
 	const accountBrief = accountBriefs.find((accountBrief) => accountBrief.externalReferenceCode === externalReferenceCode);
-	
+
 	return accountBrief;
 }
 

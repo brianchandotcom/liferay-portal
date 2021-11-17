@@ -57,6 +57,10 @@ public class DSEnvelope implements Serializable {
 		return ObjectMapperUtil.readValue(DSEnvelope.class, json);
 	}
 
+	public static DSEnvelope unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(DSEnvelope.class, json);
+	}
+
 	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
@@ -142,6 +146,34 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DSDocument[] dsDocument;
 
+	@Schema(description = "The envelope's Id.")
+	public String getDsEnvelopeId() {
+		return dsEnvelopeId;
+	}
+
+	public void setDsEnvelopeId(String dsEnvelopeId) {
+		this.dsEnvelopeId = dsEnvelopeId;
+	}
+
+	@JsonIgnore
+	public void setDsEnvelopeId(
+		UnsafeSupplier<String, Exception> dsEnvelopeIdUnsafeSupplier) {
+
+		try {
+			dsEnvelopeId = dsEnvelopeIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The envelope's Id.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String dsEnvelopeId;
+
 	@Schema
 	@Valid
 	public DSRecipient[] getDsRecipient() {
@@ -226,32 +258,6 @@ public class DSEnvelope implements Serializable {
 	@GraphQLField(description = "The envelope's email subject.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailSubject;
-
-	@Schema(description = "The envelope's Id.")
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The envelope's Id.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String id;
 
 	@Schema(description = "The envelope's name.")
 	public String getName() {
@@ -413,6 +419,20 @@ public class DSEnvelope implements Serializable {
 			sb.append("]");
 		}
 
+		if (dsEnvelopeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dsEnvelopeId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsEnvelopeId));
+
+			sb.append("\"");
+		}
+
 		if (dsRecipient != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -457,20 +477,6 @@ public class DSEnvelope implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(emailSubject));
-
-			sb.append("\"");
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(id));
 
 			sb.append("\"");
 		}

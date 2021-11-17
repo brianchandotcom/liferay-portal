@@ -67,11 +67,11 @@ public interface DSEnvelopeResource {
 		throws Exception;
 
 	public DSEnvelope getDSEnvelope(
-			Long companyId, Long groupId, String envelopeId)
+			Long companyId, Long groupId, String dsEnvelopeId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getDSEnvelopeHttpResponse(
-			Long companyId, Long groupId, String envelopeId)
+			Long companyId, Long groupId, String dsEnvelopeId)
 		throws Exception;
 
 	public static class Builder {
@@ -224,7 +224,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}");
+						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
@@ -309,7 +309,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}");
+						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
@@ -391,7 +391,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}/batch");
+						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/batch");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
@@ -403,11 +403,11 @@ public interface DSEnvelopeResource {
 		}
 
 		public DSEnvelope getDSEnvelope(
-				Long companyId, Long groupId, String envelopeId)
+				Long companyId, Long groupId, String dsEnvelopeId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getDSEnvelopeHttpResponse(
-				companyId, groupId, envelopeId);
+				companyId, groupId, dsEnvelopeId);
 
 			String content = httpResponse.getContent();
 
@@ -447,7 +447,7 @@ public interface DSEnvelopeResource {
 		}
 
 		public HttpInvoker.HttpResponse getDSEnvelopeHttpResponse(
-				Long companyId, Long groupId, String envelopeId)
+				Long companyId, Long groupId, String dsEnvelopeId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -474,11 +474,11 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}/{envelopeId}");
+						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
-			httpInvoker.path("envelopeId", envelopeId);
+			httpInvoker.path("dsEnvelopeId", dsEnvelopeId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

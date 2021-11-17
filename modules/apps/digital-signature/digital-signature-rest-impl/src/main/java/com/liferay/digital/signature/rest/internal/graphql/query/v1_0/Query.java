@@ -79,20 +79,20 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(companyId: ___, envelopeId: ___, groupId: ___){dateCreated, dateModified, dsDocument, dsRecipient, emailBlurb, emailSubject, id, name, senderEmailAddress, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(companyId: ___, dsEnvelopeId: ___, groupId: ___){dateCreated, dateModified, dsDocument, dsRecipient, emailBlurb, emailSubject, dsEnvelopeId, name, senderEmailAddress, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves an envelope.")
 	public DSEnvelope dSEnvelope(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("envelopeId") String envelopeId)
+			@GraphQLName("dsEnvelopeId") String dsEnvelopeId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dsEnvelopeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dsEnvelopeResource -> dsEnvelopeResource.getDSEnvelope(
-				companyId, groupId, envelopeId));
+				companyId, groupId, dsEnvelopeId));
 	}
 
 	@GraphQLName("DSEnvelopePage")

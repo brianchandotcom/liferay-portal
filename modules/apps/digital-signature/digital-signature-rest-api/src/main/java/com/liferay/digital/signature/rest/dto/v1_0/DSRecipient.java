@@ -51,6 +51,10 @@ public class DSRecipient implements Serializable {
 		return ObjectMapperUtil.readValue(DSRecipient.class, json);
 	}
 
+	public static DSRecipient unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(DSRecipient.class, json);
+	}
+
 	@Schema(description = "The recipient's Id.")
 	public String getDsRecipientId() {
 		return dsRecipientId;

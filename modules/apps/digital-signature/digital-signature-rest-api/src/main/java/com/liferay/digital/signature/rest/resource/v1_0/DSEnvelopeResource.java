@@ -71,7 +71,7 @@ public interface DSEnvelopeResource {
 		throws Exception;
 
 	public DSEnvelope getDSEnvelope(
-			Long companyId, Long groupId, String envelopeId)
+			Long companyId, Long groupId, String dsEnvelopeId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

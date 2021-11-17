@@ -51,6 +51,10 @@ public class DSDocument implements Serializable {
 		return ObjectMapperUtil.readValue(DSDocument.class, json);
 	}
 
+	public static DSDocument unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(DSDocument.class, json);
+	}
+
 	@Schema(description = "The document's data.")
 	public String getData() {
 		return data;

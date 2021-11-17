@@ -49,7 +49,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -180,9 +179,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		DSEnvelope dsEnvelope = randomDSEnvelope();
 
+		dsEnvelope.setDsEnvelopeId(regex);
 		dsEnvelope.setEmailBlurb(regex);
 		dsEnvelope.setEmailSubject(regex);
-		dsEnvelope.setId(regex);
 		dsEnvelope.setName(regex);
 		dsEnvelope.setSenderEmailAddress(regex);
 		dsEnvelope.setStatus(regex);
@@ -193,9 +192,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		dsEnvelope = DSEnvelopeSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, dsEnvelope.getDsEnvelopeId());
 		Assert.assertEquals(regex, dsEnvelope.getEmailBlurb());
 		Assert.assertEquals(regex, dsEnvelope.getEmailSubject());
-		Assert.assertEquals(regex, dsEnvelope.getId());
 		Assert.assertEquals(regex, dsEnvelope.getName());
 		Assert.assertEquals(regex, dsEnvelope.getSenderEmailAddress());
 		Assert.assertEquals(regex, dsEnvelope.getStatus());
@@ -203,17 +202,16 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	@Test
 	public void testGetDSEnvelopesPage() throws Exception {
-		Page<DSEnvelope> page = dsEnvelopeResource.getDSEnvelopesPage(
-			testGetDSEnvelopesPage_getCompanyId(),
-			testGetDSEnvelopesPage_getGroupId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long companyId = testGetDSEnvelopesPage_getCompanyId();
 		Long irrelevantCompanyId =
 			testGetDSEnvelopesPage_getIrrelevantCompanyId();
 		Long groupId = testGetDSEnvelopesPage_getGroupId();
 		Long irrelevantGroupId = testGetDSEnvelopesPage_getIrrelevantGroupId();
+
+		Page<DSEnvelope> page = dsEnvelopeResource.getDSEnvelopesPage(
+			companyId, groupId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantCompanyId != null) && (irrelevantGroupId != null)) {
 			DSEnvelope irrelevantDSEnvelope =
@@ -239,7 +237,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			companyId, groupId, randomDSEnvelope());
 
 		page = dsEnvelopeResource.getDSEnvelopesPage(
-			companyId, groupId, Pagination.of(1, 2));
+			companyId, groupId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -337,73 +335,34 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	@Test
 	public void testGetDSEnvelope() throws Exception {
-		DSEnvelope postDSEnvelope = testGetDSEnvelope_addDSEnvelope();
-
-		DSEnvelope getDSEnvelope = dsEnvelopeResource.getDSEnvelope(
-			null, null, null);
-
-		assertEquals(postDSEnvelope, getDSEnvelope);
-		assertValid(getDSEnvelope);
-	}
-
-	protected DSEnvelope testGetDSEnvelope_addDSEnvelope() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLGetDSEnvelope() throws Exception {
-		DSEnvelope dsEnvelope = testGraphQLDSEnvelope_addDSEnvelope();
-
-		Assert.assertTrue(
-			equals(
-				dsEnvelope,
-				DSEnvelopeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"dSEnvelope",
-								new HashMap<String, Object>() {
-									{
-										put("companyId", null);
-										put("groupId", null);
-										put("envelopeId", null);
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/dSEnvelope"))));
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGraphQLGetDSEnvelopeNotFound() throws Exception {
-		Long irrelevantCompanyId = RandomTestUtil.randomLong();
-		Long irrelevantGroupId = RandomTestUtil.randomLong();
-		String irrelevantEnvelopeId =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"dSEnvelope",
-						new HashMap<String, Object>() {
-							{
-								put("companyId", irrelevantCompanyId);
-								put("groupId", irrelevantGroupId);
-								put("envelopeId", irrelevantEnvelopeId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+		Assert.assertTrue(true);
 	}
 
-	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope()
-		throws Exception {
+	protected void assertContains(
+		DSEnvelope dsEnvelope, List<DSEnvelope> dsEnvelopes) {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean contains = false;
+
+		for (DSEnvelope item : dsEnvelopes) {
+			if (equals(dsEnvelope, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			dsEnvelopes + " does not contain " + dsEnvelope, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -467,15 +426,19 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			valid = false;
 		}
 
-		if (dsEnvelope.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("dsDocument", additionalAssertFieldName)) {
 				if (dsEnvelope.getDsDocument() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dsEnvelopeId", additionalAssertFieldName)) {
+				if (dsEnvelope.getDsEnvelopeId() == null) {
 					valid = false;
 				}
 
@@ -564,7 +527,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (Field field :
+		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope.
 						class)) {
@@ -581,12 +544,13 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		return graphQLFields;
 	}
 
-	protected List<GraphQLField> getGraphQLFields(Field... fields)
+	protected List<GraphQLField> getGraphQLFields(
+			java.lang.reflect.Field... fields)
 		throws Exception {
 
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (Field field : fields) {
+		for (java.lang.reflect.Field field : fields) {
 			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 				vulcanGraphQLField = field.getAnnotation(
 					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
@@ -655,6 +619,17 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dsEnvelopeId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						dsEnvelope1.getDsEnvelopeId(),
+						dsEnvelope2.getDsEnvelopeId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dsRecipient", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						dsEnvelope1.getDsRecipient(),
@@ -681,16 +656,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				if (!Objects.deepEquals(
 						dsEnvelope1.getEmailSubject(),
 						dsEnvelope2.getEmailSubject())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						dsEnvelope1.getId(), dsEnvelope2.getId())) {
 
 					return false;
 				}
@@ -765,14 +730,16 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		return false;
 	}
 
-	protected Field[] getDeclaredFields(Class clazz) throws Exception {
-		Stream<Field> stream = Stream.of(
+	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
+		throws Exception {
+
+		Stream<java.lang.reflect.Field> stream = Stream.of(
 			ReflectionUtil.getDeclaredFields(clazz));
 
 		return stream.filter(
 			field -> !field.isSynthetic()
 		).toArray(
-			Field[]::new
+			java.lang.reflect.Field[]::new
 		);
 	}
 
@@ -894,6 +861,14 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dsEnvelopeId")) {
+			sb.append("'");
+			sb.append(String.valueOf(dsEnvelope.getDsEnvelopeId()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dsRecipient")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -910,14 +885,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		if (entityFieldName.equals("emailSubject")) {
 			sb.append("'");
 			sb.append(String.valueOf(dsEnvelope.getEmailSubject()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("id")) {
-			sb.append("'");
-			sb.append(String.valueOf(dsEnvelope.getId()));
 			sb.append("'");
 
 			return sb.toString();
@@ -993,13 +960,14 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				dsEnvelopeId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				emailBlurb =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
 				emailSubject =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
-				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				senderEmailAddress = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

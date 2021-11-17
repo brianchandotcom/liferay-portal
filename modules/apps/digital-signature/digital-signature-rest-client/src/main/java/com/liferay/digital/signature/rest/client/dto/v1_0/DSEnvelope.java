@@ -98,6 +98,27 @@ public class DSEnvelope implements Cloneable, Serializable {
 
 	protected DSDocument[] dsDocument;
 
+	public String getDsEnvelopeId() {
+		return dsEnvelopeId;
+	}
+
+	public void setDsEnvelopeId(String dsEnvelopeId) {
+		this.dsEnvelopeId = dsEnvelopeId;
+	}
+
+	public void setDsEnvelopeId(
+		UnsafeSupplier<String, Exception> dsEnvelopeIdUnsafeSupplier) {
+
+		try {
+			dsEnvelopeId = dsEnvelopeIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String dsEnvelopeId;
+
 	public DSRecipient[] getDsRecipient() {
 		return dsRecipient;
 	}
@@ -160,25 +181,6 @@ public class DSEnvelope implements Cloneable, Serializable {
 	}
 
 	protected String emailSubject;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String id;
 
 	public String getName() {
 		return name;

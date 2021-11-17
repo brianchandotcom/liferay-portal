@@ -112,6 +112,20 @@ public class DSEnvelopeSerDes {
 			sb.append("]");
 		}
 
+		if (dsEnvelope.getDsEnvelopeId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dsEnvelopeId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsEnvelope.getDsEnvelopeId()));
+
+			sb.append("\"");
+		}
+
 		if (dsEnvelope.getDsRecipient() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -156,20 +170,6 @@ public class DSEnvelopeSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(dsEnvelope.getEmailSubject()));
-
-			sb.append("\"");
-		}
-
-		if (dsEnvelope.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(dsEnvelope.getId()));
 
 			sb.append("\"");
 		}
@@ -262,6 +262,14 @@ public class DSEnvelopeSerDes {
 			map.put("dsDocument", String.valueOf(dsEnvelope.getDsDocument()));
 		}
 
+		if (dsEnvelope.getDsEnvelopeId() == null) {
+			map.put("dsEnvelopeId", null);
+		}
+		else {
+			map.put(
+				"dsEnvelopeId", String.valueOf(dsEnvelope.getDsEnvelopeId()));
+		}
+
 		if (dsEnvelope.getDsRecipient() == null) {
 			map.put("dsRecipient", null);
 		}
@@ -282,13 +290,6 @@ public class DSEnvelopeSerDes {
 		else {
 			map.put(
 				"emailSubject", String.valueOf(dsEnvelope.getEmailSubject()));
-		}
-
-		if (dsEnvelope.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(dsEnvelope.getId()));
 		}
 
 		if (dsEnvelope.getName() == null) {
@@ -359,6 +360,11 @@ public class DSEnvelopeSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "dsEnvelopeId")) {
+				if (jsonParserFieldValue != null) {
+					dsEnvelope.setDsEnvelopeId((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "dsRecipient")) {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setDsRecipient(
@@ -379,11 +385,6 @@ public class DSEnvelopeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "emailSubject")) {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setEmailSubject((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					dsEnvelope.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

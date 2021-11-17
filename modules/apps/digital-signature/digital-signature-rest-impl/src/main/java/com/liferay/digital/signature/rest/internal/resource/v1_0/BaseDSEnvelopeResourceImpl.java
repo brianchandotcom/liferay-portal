@@ -41,13 +41,6 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.io.Serializable;
 
 import java.util.Collections;
@@ -60,16 +53,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -80,7 +63,7 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
+@javax.ws.rs.Path("/v1.0")
 public abstract class BaseDSEnvelopeResourceImpl
 	implements DSEnvelopeResource, EntityModelResource,
 			   VulcanBatchEngineTaskItemDelegate<DSEnvelope> {
@@ -88,27 +71,45 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}'  -u 'test@liferay.com:test'
 	 */
-	@GET
-	@Override
-	@Parameters(
+	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "companyId"),
-			@Parameter(in = ParameterIn.PATH, name = "groupId"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "groupId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
 		}
 	)
-	@Path("/envelopes/{companyId}/{groupId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DSEnvelope")})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
 	public Page<DSEnvelope> getDSEnvelopesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("companyId") Long
-				companyId,
-			@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-				groupId,
-			@Context Pagination pagination)
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyId")
+			Long companyId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("groupId")
+			Long groupId,
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -117,25 +118,37 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}' -d $'{"dsDocument": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "id": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(
+	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "companyId"),
-			@Parameter(in = ParameterIn.PATH, name = "groupId")
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "groupId"
+			)
 		}
 	)
-	@Path("/envelopes/{companyId}/{groupId}")
-	@POST
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DSEnvelope")})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
 	public DSEnvelope postDSEnvelope(
-			@NotNull @Parameter(hidden = true) @PathParam("companyId") Long
-				companyId,
-			@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-				groupId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyId")
+			Long companyId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("groupId")
+			Long groupId,
 			DSEnvelope dsEnvelope)
 		throws Exception {
 
@@ -145,29 +158,45 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}/batch' -d $'{"dsDocument": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "id": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/batch' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Consumes("application/json")
-	@Override
-	@Parameters(
+	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "companyId"),
-			@Parameter(in = ParameterIn.PATH, name = "groupId"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "groupId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
 		}
 	)
-	@Path("/envelopes/{companyId}/{groupId}/batch")
-	@POST
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DSEnvelope")})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}/batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
 	public Response postDSEnvelopeBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("companyId") Long
-				companyId,
-			@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-				groupId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyId")
+			Long companyId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("groupId")
+			Long groupId,
 			DSEnvelope dsEnvelope,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -190,28 +219,47 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-signature/v1.0/envelopes/{companyId}/{groupId}/{envelopeId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}'  -u 'test@liferay.com:test'
 	 */
-	@GET
-	@Operation(description = "Retrieves an envelope.")
-	@Override
-	@Parameters(
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves an envelope."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "companyId"),
-			@Parameter(in = ParameterIn.PATH, name = "groupId"),
-			@Parameter(in = ParameterIn.PATH, name = "envelopeId")
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "groupId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "dsEnvelopeId"
+			)
 		}
 	)
-	@Path("/envelopes/{companyId}/{groupId}/{envelopeId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DSEnvelope")})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
 	public DSEnvelope getDSEnvelope(
-			@NotNull @Parameter(hidden = true) @PathParam("companyId") Long
-				companyId,
-			@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-				groupId,
-			@NotNull @Parameter(hidden = true) @PathParam("envelopeId") String
-				envelopeId)
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyId")
+			Long companyId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("groupId")
+			Long groupId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("dsEnvelopeId")
+			String dsEnvelopeId)
 		throws Exception {
 
 		return new DSEnvelope();
@@ -379,9 +427,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), entityModel);
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid filter " + filterString, exception);
-			}
+			_log.error("Invalid filter " + filterString, exception);
 		}
 
 		return null;

@@ -584,6 +584,13 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "${spURL}");
 	}
 
+	@description = "Go to SAML Admin Portlet"
+	macro goToSAMLAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+	}
+
 	macro loginIfProductMenuNotOpened {
 		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
 			Navigator.gotoLoginPage();

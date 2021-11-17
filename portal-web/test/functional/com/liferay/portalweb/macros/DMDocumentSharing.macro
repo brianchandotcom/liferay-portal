@@ -87,7 +87,9 @@ definition {
 	}
 
 	macro removeCollaborator {
-		DMDocumentSharing._manageCollaborators();
+		if (!(isSet(sharedByMe))) {
+			DMDocumentSharing._manageCollaborators();
+		}
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 

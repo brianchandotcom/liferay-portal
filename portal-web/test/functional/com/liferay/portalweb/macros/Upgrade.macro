@@ -1915,7 +1915,9 @@ definition {
 
 		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "DM Document Title 1");
 
-		DMDocumentSharing.removeCollaborator(collaboratorList = "user1fn");
+		DMDocumentSharing.removeCollaborator(
+			collaboratorList = "user1fn",
+			sharedByMe = "true");
 
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
@@ -1923,7 +1925,9 @@ definition {
 
 		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "Blogs Entry Title");
 
-		DMDocumentSharing.removeCollaborator(collaboratorList = "user2fn");
+		DMDocumentSharing.removeCollaborator(
+			collaboratorList = "user2fn",
+			sharedByMe = "true");
 
 		User.logoutPG();
 

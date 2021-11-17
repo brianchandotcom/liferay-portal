@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {MoreInfoButton} from '~/common/components/fragments/Buttons/MoreInfo';
 import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
 import {Radio} from '~/common/components/fragments/Forms/Radio';
+import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
 import {TIP_EVENT} from '~/common/utils/events';
 import useFormActions from '~/routes/get-a-quote/hooks/useFormActions';
 import {useProductQuotes} from '~/routes/get-a-quote/hooks/useProductQuotes';
@@ -10,8 +11,17 @@ import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
 import {useTriggerContext} from '~/routes/get-a-quote/hooks/useTriggerContext';
 import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
 
+const getSelectedProductName = () => {
+	try {
+		return JSON.parse(Storage.getItem(STORAGE_KEYS.PRODUCT))?.productName;
+	}
+	catch (error) {
+		return '';
+	}
+};
+
 export const FormBasicProductQuote = ({form}) => {
-	const {control} = useFormContext();
+	const {control, setValue} = useFormContext();
 	const {selectedStep} = useStepWizard();
 	const {productQuotes} = useProductQuotes();
 	const {onNext, onPrevious, onSave} = useFormActions(
@@ -20,7 +30,18 @@ export const FormBasicProductQuote = ({form}) => {
 		AVAILABLE_STEPS.BUSINESS
 	);
 
+	const defaultProductId = productQuotes.find(
+		({title}) => title === getSelectedProductName()
+	)?.id;
+
 	const {isSelected, updateState} = useTriggerContext();
+
+	useEffect(() => {
+		if (defaultProductId && !form.basics.productQuote) {
+			setValue('basics.productQuote', defaultProductId);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [defaultProductId, form.basics.productQuote]);
 
 	return (
 		<div className="card">
@@ -31,7 +52,7 @@ export const FormBasicProductQuote = ({form}) => {
 					<fieldset className="content-column" id="productQuote">
 						<Controller
 							control={control}
-							defaultValue=""
+							defaultValue={defaultProductId}
 							name="basics.productQuote"
 							render={({field}) =>
 								productQuotes.map((quote) => (

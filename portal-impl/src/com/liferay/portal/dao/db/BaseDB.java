@@ -629,12 +629,9 @@ public abstract class BaseDB implements DB {
 					}
 				}
 
-				String preparedIndexesSQL =
-					prepareMaxStringIndexLengthLimitation(indexesSQL);
-
 				addIndexes(
 					connection,
-					_applyMaxStringIndexLengthLimitation(preparedIndexesSQL),
+					_applyMaxStringIndexLengthLimitation(indexesSQL),
 					validIndexNames);
 			});
 	}
@@ -784,10 +781,6 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String[] getTemplate();
 
-	protected String prepareMaxStringIndexLengthLimitation(String template) {
-		return template;
-	}
-
 	protected String replaceTemplate(String template) {
 		if (Validator.isNull(template)) {
 			return null;
@@ -814,8 +807,6 @@ public abstract class BaseDB implements DB {
 
 			sb.append(_templates.get(matched));
 		}
-
-		template = prepareMaxStringIndexLengthLimitation(template);
 
 		if (sb == null) {
 			return _applyMaxStringIndexLengthLimitation(template);
@@ -872,47 +863,22 @@ public abstract class BaseDB implements DB {
 
 		Matcher matcher = _columnLengthPattern.matcher(template);
 
+		if (stringIndexMaxLength < 0) {
+			return matcher.replaceAll(StringPool.BLANK);
+		}
+
 		StringBuffer sb = new StringBuffer();
 
+		String replacement = "\\(" + stringIndexMaxLength + "\\)";
+
 		while (matcher.find()) {
-			if (stringIndexMaxLength < 0) {
-				matcher.appendReplacement(sb, matcher.group(1));
+			int length = Integer.valueOf(matcher.group(1));
+
+			if (length > stringIndexMaxLength) {
+				matcher.appendReplacement(sb, replacement);
 			}
 			else {
-				String column = matcher.group(1);
-				String lastColumn = matcher.group(4);
-
-				StringBundler replacementSB = new StringBundler(4);
-
-				if (lastColumn.length() > 0) {
-					replacementSB.append(column);
-					replacementSB.append(stringIndexMaxLength);
-					replacementSB.append("\\)");
-				}
-				else {
-					replacementSB.append(column);
-					replacementSB.append("\\(");
-					replacementSB.append(stringIndexMaxLength);
-					replacementSB.append("\\)");
-				}
-
-				int length = Integer.valueOf(matcher.group(2));
-
-				if (length > stringIndexMaxLength) {
-					matcher.appendReplacement(sb, replacementSB.toString());
-				}
-				else {
-					if (lastColumn.length() > 0) {
-						if (column.startsWith("(")) {
-							lastColumn = "(" + lastColumn;
-						}
-
-						matcher.appendReplacement(sb, lastColumn);
-					}
-					else {
-						matcher.appendReplacement(sb, column);
-					}
-				}
+				matcher.appendReplacement(sb, StringPool.BLANK);
 			}
 		}
 
@@ -936,7 +902,7 @@ public abstract class BaseDB implements DB {
 	private static final Log _log = LogFactoryUtil.getLog(BaseDB.class);
 
 	private static final Pattern _columnLengthPattern = Pattern.compile(
-		"(\\S+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]([:]?)(\\w*)");
+		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _templatePattern;
 
 	static {

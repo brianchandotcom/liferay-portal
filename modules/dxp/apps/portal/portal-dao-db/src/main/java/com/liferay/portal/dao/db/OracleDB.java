@@ -16,7 +16,6 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -151,62 +148,6 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	protected String prepareMaxStringIndexLengthLimitation(String template) {
-		if (!template.contains("[$COLUMN_LENGTH:")) {
-			return template;
-		}
-
-		int stringIndexMaxLength = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH,
-				new Filter(DBType.ORACLE.getName())),
-			-1);
-
-		Matcher matcher = _columnLengthPattern.matcher(template);
-
-		StringBuffer sb = new StringBuffer();
-
-		StringBundler replacementSB;
-
-		while (matcher.find()) {
-			if (stringIndexMaxLength < 0) {
-				replacementSB = new StringBundler(1);
-
-				replacementSB.append(matcher.group(1));
-			}
-			else {
-				String column = matcher.group(1);
-				String length = matcher.group(2);
-
-				replacementSB = new StringBundler(6);
-
-				if (column.startsWith("(")) {
-					replacementSB.append("\\(substr\\(");
-					replacementSB.append(column.substring(1));
-					replacementSB.append(",1,[\\$COLUMN_LENGTH:");
-					replacementSB.append(length);
-					replacementSB.append("\\$\\]:");
-					replacementSB.append(column.substring(1));
-				}
-				else {
-					replacementSB.append("substr\\(");
-					replacementSB.append(column);
-					replacementSB.append(",1,[\\$COLUMN_LENGTH:");
-					replacementSB.append(length);
-					replacementSB.append("\\$\\]:");
-					replacementSB.append(column);
-				}
-			}
-
-			matcher.appendReplacement(sb, replacementSB.toString());
-		}
-
-		matcher.appendTail(sb);
-
-		return sb.toString();
-	}
-
-	@Override
 	protected String replaceTemplate(String template) {
 
 		// LPS-12048
@@ -310,8 +251,6 @@ public class OracleDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 
-	private static final Pattern _columnLengthPattern = Pattern.compile(
-		"(\\S+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _varchar2CharPattern = Pattern.compile(
 		"VARCHAR2\\((\\d+) CHAR\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _varcharPattern = Pattern.compile(

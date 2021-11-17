@@ -2347,15 +2347,6 @@ definition {
 
 	}
 
-	@description = "LPS-139803 - Verify if the Object Entry Title is displayed on a Display Page"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewObjectEntryTitleOnDisplayPage {
-
-		// TODO LPS-141622 CanViewObjectEntryTitleOnDisplayPage pending implementation
-
-	}
-
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Item Selector of a fragment on a Display Page"
 	@ignore = "Test Stub"
 	@priority = "4"

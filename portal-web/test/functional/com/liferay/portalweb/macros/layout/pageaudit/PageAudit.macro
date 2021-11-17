@@ -68,16 +68,25 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro disableGooglePageSpeedViaSiteSettings {
-		ProductMenu.gotoPortlet(
+	macro disableGooglePageSpeedViaInstanceSettings {
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
-			portlet = "Site Settings");
+			panel = "Control Panel",
+			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Site Scope");
-		
+		if (!(isSet(scope))) {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Virtual Instance Scope");
+		}
+		else {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "${scope}");
+		}
+
 		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
@@ -99,24 +108,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro disableGooglePageSpeedViaInstanceSettings {
-		ApplicationsMenu.gotoPortlet(
+	macro disableGooglePageSpeedViaSiteSettings {
+		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+			portlet = "Site Settings");
 
-		if (!(isSet(scope))) {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Virtual Instance Scope");
-		}
-		else {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "${scope}");
-		}
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "Site Scope");
 
 		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
 			Click.javaScriptClick(

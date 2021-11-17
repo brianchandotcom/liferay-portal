@@ -3402,40 +3402,6 @@ definition {
 
 	}
 
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@priority = "4"
-	test MobileStrategyAtSiteSettings {
-		property portal.acceptance = "true";
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
-		}
-
-		task ("Open Page Audit panel and run it") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-		}
-
-		task ("Assert if mobile failure are shown") {
-			AssertElementPresent(
-				failingCheckName = "Small Tap Targets",
-				locator1 = "PageAudit#FAILING_CHECK_NAME");
-
-			AssertElementPresent(
-				failingCheckName = "Illegible Font Sizes",
-				locator1 = "PageAudit#FAILING_CHECK_NAME");
-		}
-	}
-
 	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
 	When the value is Mobile
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
@@ -3482,6 +3448,40 @@ definition {
 				configurationScope = "Site Scope");
 
 			PageAudit.resetDefaultValues();
+		}
+	}
+
+	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@priority = "4"
+	test MobileStrategyAtSiteSettings {
+		property portal.acceptance = "true";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failure are shown") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 	}
 

@@ -33,7 +33,9 @@ import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrde
 import com.liferay.commerce.order.web.internal.servlet.taglib.ui.constants.CommerceOrderScreenNavigationConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
@@ -58,6 +60,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.math.BigDecimal;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -91,6 +95,7 @@ public class CommerceOrderEditDisplayContext {
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
 			CommerceShipmentService commerceShipmentService,
+			CPMeasurementUnitService cpMeasurementUnitService,
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -106,6 +111,7 @@ public class CommerceOrderEditDisplayContext {
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
 		_commerceShipmentService = commerceShipmentService;
+		_cpMeasurementUnitService = cpMeasurementUnitService;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -428,6 +434,26 @@ public class CommerceOrderEditDisplayContext {
 		).buildPortletURL();
 	}
 
+	public List<CPMeasurementUnit> getCPMeasurementUnits()
+		throws PortalException {
+
+		return _cpMeasurementUnitService.getCPMeasurementUnits(
+			_commerceOrderRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	public BigDecimal getDecimalQuantity(CommerceOrderItem commerceOrderItem) {
+		BigDecimal decimalQuantity = commerceOrderItem.getDecimalQuantity();
+
+		if ((decimalQuantity == null) ||
+			decimalQuantity.equals(BigDecimal.ZERO)) {
+
+			return BigDecimal.valueOf(commerceOrderItem.getQuantity());
+		}
+
+		return decimalQuantity;
+	}
+
 	public String getDescriptiveCommerceAddress(CommerceAddress commerceAddress)
 		throws PortalException {
 
@@ -705,5 +731,6 @@ public class CommerceOrderEditDisplayContext {
 		_commercePaymentMethodGroupRelLocalService;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
+	private final CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

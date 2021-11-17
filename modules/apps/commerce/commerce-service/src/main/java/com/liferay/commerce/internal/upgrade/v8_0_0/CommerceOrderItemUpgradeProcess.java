@@ -16,17 +16,15 @@ package com.liferay.commerce.internal.upgrade.v8_0_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v8_0_0.util.CommerceOrderItemTable;
-import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-
-import java.util.List;
 
 /**
  * @author Luca Pellizzon
@@ -35,9 +33,11 @@ public class CommerceOrderItemUpgradeProcess
 	extends BaseCommerceServiceUpgradeProcess {
 
 	public CommerceOrderItemUpgradeProcess(
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
+		UserLocalService userLocalService) {
 
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -56,28 +56,27 @@ public class CommerceOrderItemUpgradeProcess
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong("companyId");
 
-				List<CPMeasurementUnit> cpMeasurementUnits =
-					_cpMeasurementUnitLocalService.getCPMeasurementUnits(
-						companyId, new String[] {"pc"},
-						CPMeasurementUnitConstants.TYPE_PIECE);
+				CPMeasurementUnit cpMeasurementUnit =
+					_cpMeasurementUnitLocalService.fetchCPMeasurementUnit(
+						companyId, "pc");
 
-				if (cpMeasurementUnits.isEmpty()) {
+				if (cpMeasurementUnit == null) {
 					ServiceContext serviceContext = new ServiceContext();
 
 					serviceContext.setCompanyId(companyId);
 					serviceContext.setLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(companyId));
+					serviceContext.setScopeGroupId(0);
+					serviceContext.setUserId(
+						_userLocalService.getDefaultUserId(companyId));
 
 					_cpMeasurementUnitLocalService.importDefaultValues(
 						serviceContext);
 
-					cpMeasurementUnits =
-						_cpMeasurementUnitLocalService.getCPMeasurementUnits(
-							companyId, new String[] {"pc"},
-							CPMeasurementUnitConstants.TYPE_PIECE);
+					cpMeasurementUnit =
+						_cpMeasurementUnitLocalService.getCPMeasurementUnit(
+							companyId, "pc");
 				}
-
-				CPMeasurementUnit cpMeasurementUnit = cpMeasurementUnits.get(0);
 
 				runSQL(
 					StringBundler.concat(
@@ -90,5 +89,6 @@ public class CommerceOrderItemUpgradeProcess
 	}
 
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+	private final UserLocalService _userLocalService;
 
 }

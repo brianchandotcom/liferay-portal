@@ -50,7 +50,7 @@ public class FrontendDataSetFilterRegistryImpl
 		if (frontendDataSetFilterServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No Frontend Data Set filter is associated with " +
+					"No frontend data set filter is associated with " +
 						frontendDataSetName);
 			}
 

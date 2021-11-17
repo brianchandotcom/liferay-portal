@@ -50,7 +50,7 @@ public class FrontendDataSetViewRegistryImpl
 		if (frontendDataSetViewServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No Frontend Data Set view is associated with " +
+					"No frontend data set view is associated with " +
 						frontendDataSetName);
 			}
 

@@ -510,12 +510,12 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",
-			title = "Translation");
+			title = "Translation of Translation to es-ES");
 
 		AssertClick(
-			key_rowEntry = "Translation",
+			key_rowEntry = "Translation of Translation to es-ES",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "Translation");
+			value1 = "Translation of Translation to es-ES");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
@@ -48,6 +49,13 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return AssetTag.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		return HashMapBuilder.<String, Object>put(
+			"assetTagService", _assetTagService
+		).build();
 	}
 
 	@Override
@@ -106,7 +114,14 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 			"/dependencies/portlet-display-templates.xml";
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetTagService(AssetTagService assetTagService) {
+		_assetTagService = assetTagService;
+	}
+
 	@Reference
 	protected Portal portal;
+
+	private AssetTagService _assetTagService;
 
 }

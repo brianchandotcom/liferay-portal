@@ -8,12 +8,6 @@
 			minCount = 1
 		/>
 
-		<#if serviceLocator??>
-			<#assign
-				assetTagService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetTagService")
-			/>
-		</#if>
-
 		<#list entries as entry>
 			<#if assetTagService??>
 				<#if classNameId <= 0>

@@ -536,7 +536,7 @@ public class TestrayAttachmentRecorder {
 
 						String regex =
 							"(screenshots/(?:after|before|screenshot)\\d+)" +
-								".jpg";
+								"\\.jpg";
 
 						JenkinsResultsParserUtil.write(
 							poshiReportHTMLFile,

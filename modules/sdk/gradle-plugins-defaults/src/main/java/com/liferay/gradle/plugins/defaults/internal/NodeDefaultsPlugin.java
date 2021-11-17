@@ -69,6 +69,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 			nodeExtension.setGlobal(false);
 			nodeExtension.setNodeVersion("6.6.0");
+			nodeExtension.setNpmVersion("6.4.1");
 		}
 		else if (PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion)) {
 			NodeExtension nodeExtension = GradleUtil.getExtension(

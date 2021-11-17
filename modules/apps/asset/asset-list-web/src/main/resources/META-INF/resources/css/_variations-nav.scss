@@ -1,0 +1,65 @@
+@import 'cadmin-variables';
+
+.sortable-list-item {
+	$self: &;
+
+	border: 2px solid transparent;
+	padding-left: 0.25rem;
+
+	&.list-group-item {
+		background-color: transparent;
+		border-radius: 4px;
+		padding: 2px 0;
+	}
+
+	&__drag-icon {
+		padding-left: 0 !important;
+		width: 16px;
+
+		svg {
+			margin-top: 0;
+		}
+	}
+
+	&__label {
+		flex: 1;
+
+		&.autofit-col {
+			padding-left: 0.25rem;
+		}
+
+		a {
+			font-weight: 400;
+		}
+	}
+
+	&.active {
+		background-color: rgba($cadmin-primary, 0.04);
+
+		#{$self}__label {
+			a {
+				color: $cadmin-primary;
+				font-weight: 600;
+			}
+		}
+	}
+
+	&:hover:not(.active) {
+		background-color: rgba($cadmin-dark, 0.04);
+	}
+}
+
+.sortable-list-dropdown-item {
+	border-color: $cadmin-gray-300;
+}
+
+.more-actions {
+	&__button {
+		color: $cadmin-gray-600;
+
+		&--active {
+			background-color: rgba($cadmin-dark, 0.03);
+			color: $cadmin-gray-900;
+		}
+	}
+}

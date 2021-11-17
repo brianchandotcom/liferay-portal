@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import SortableListItemMoreActions from './SortableListItemMoreActions';
@@ -30,6 +30,8 @@ const SortableListItem = ({
 	sortableListItem,
 	totalItems,
 }) => {
+	const [showDragIcon, setShowDragIcon] = useState(false);
+
 	const ref = useRef(null);
 
 	const [, drop] = useDrop({
@@ -91,30 +93,41 @@ const SortableListItem = ({
 	drag(drop(ref));
 
 	const style = {
-		backgroundColor: isItemBeingDragged ? 'var(--light)' : '',
-		border: isItemBeingDragged ? '1px solid var(--primary)' : '',
+		backgroundColor: isItemBeingDragged ? 'var(--gray-200)' : '',
+		borderColor: isItemBeingDragged ? '#80ACFF' : 'transparent',
+		color: isItemBeingDragged ? 'var(--gray-500)' : '',
 		cursor: 'grab',
-		opacity: isDragging ? 0 : 1,
+		opacity: isDragging ? 0.6 : 1,
 	};
 
 	const handleReorder = ({direction, index}) => {
 		handleItemMove({direction, index, saveAfterMove: true});
 	};
 
+	const handleOnMouseEnter = () => {
+		setShowDragIcon(true);
+	};
+
+	const handleOnMouseLeave = () => {
+		setShowDragIcon(false);
+	};
+
 	return (
 		<ClayList.Item
 			active={sortableListItem.active}
-			className="align-items-center justify-content-between"
+			className="align-items-center justify-content-start sortable-list-item"
 			flex
 			id={`sortableListItem-id-${sortableListItem.assetListEntrySegmentsEntryRelId}`}
+			onMouseEnter={handleOnMouseEnter}
+			onMouseLeave={handleOnMouseLeave}
 			ref={ref}
 			style={style}
 		>
-			<ClayList.ItemField>
-				<ClayIcon symbol="drag" />
+			<ClayList.ItemField className="sortable-list-item__drag-icon">
+				{showDragIcon && <ClayIcon symbol="drag" />}
 			</ClayList.ItemField>
 
-			<ClayList.ItemField>
+			<ClayList.ItemField className="sortable-list-item__label">
 				<ClayList.ItemTitle>
 					<ClayLink href={sortableListItem.editAssetListEntryURL}>
 						{sortableListItem.label}
@@ -122,7 +135,7 @@ const SortableListItem = ({
 				</ClayList.ItemTitle>
 			</ClayList.ItemField>
 
-			<ClayList.ItemField shrink>
+			<ClayList.ItemField className="sortable-list-item__more-icon">
 				<SortableListItemMoreActions
 					index={index}
 					itemIsDeleteable={

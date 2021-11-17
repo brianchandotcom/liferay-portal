@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const DropDownItem = ({
-	cssClasses = '',
+	cssClasses,
 	deleteAction = false,
 	direction,
 	disabled,
@@ -33,17 +33,19 @@ const DropDownItem = ({
 	};
 
 	return (
-		<ClayDropDown.Item className={cssClasses}>
+		<ClayDropDown.Item
+			className={`${cssClasses} sortable-list-dropdown-item`}
+		>
 			<ClayButton
 				block
-				className="align-items-center d-flex justify-content-between"
+				className="align-items-center d-flex font-weight-normal text-secondary"
 				disabled={disabled}
 				displayType={null}
 				onClick={handleClick}
 				small
 			>
+				<ClayIcon className="mr-3 mt-0" symbol={icon} />
 				{text}
-				<ClayIcon symbol={icon} />
 			</ClayButton>
 		</ClayDropDown.Item>
 	);

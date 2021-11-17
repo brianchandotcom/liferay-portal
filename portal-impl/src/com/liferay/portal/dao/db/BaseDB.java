@@ -906,7 +906,7 @@ public abstract class BaseDB implements DB {
 	private static final Log _log = LogFactoryUtil.getLog(BaseDB.class);
 
 	private static final Pattern _columnLengthPattern = Pattern.compile(
-		"([^(\\s]+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
+		"([^,(\\s]+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _templatePattern;
 
 	static {

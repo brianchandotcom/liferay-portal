@@ -23,7 +23,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.batch.planner.model.BatchPlannerPlan" %><%@
+<%@ page import="com.liferay.batch.planner.constants.BatchPlannerLogConstants" %><%@
+page import="com.liferay.batch.planner.model.BatchPlannerPlan" %><%@
 page import="com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil" %><%@
 page import="com.liferay.batch.planner.web.internal.display.BatchPlannerLogDisplay" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerLogDisplayContext" %><%@

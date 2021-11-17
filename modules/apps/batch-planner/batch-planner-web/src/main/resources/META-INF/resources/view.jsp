@@ -75,6 +75,14 @@ SearchContainer<BatchPlannerLogDisplay> batchPlannerLogDisplaySearchContainer = 
 				name="user"
 				value="<%= PortalUtil.getUserEmailAddress(batchPlannerLogDisplay.getUserId()) %>"
 			/>
+
+			<liferay-ui:search-container-column-text
+				name="status"
+			>
+				<h6 class="text-uppercase <%= BatchPlannerLogConstants.getStatusCssClass(batchPlannerLogDisplay.getStatus()) %>">
+					<liferay-ui:message key="<%= BatchPlannerLogConstants.getStatusLabel(batchPlannerLogDisplay.getStatus()) %>" />
+				</h6>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

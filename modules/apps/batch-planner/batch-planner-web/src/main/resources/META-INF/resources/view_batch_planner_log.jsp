@@ -161,7 +161,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="6"
 						>
-							<%= batchPlannerLogDisplay.getStatus() %>
+							<%= LanguageUtil.get(request, BatchPlannerLogConstants.getStatusLabel(batchPlannerLogDisplay.getStatus())) %>
 						</clay:col>
 					</clay:row>
 				</clay:content-col>

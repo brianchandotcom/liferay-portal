@@ -45,7 +45,7 @@ const formatValue = (value) => {
 		return JSON.parse(value);
 	}
 
-	return `$${currencyIntl.format(value)}`;
+	return `$${currencyIntl.format(value || 0)}`;
 };
 
 const buildList = (items = []) => {
@@ -61,14 +61,14 @@ const buildList = (items = []) => {
 						?.currentSrc;
 
 			return `<tr>
-			<td>
-				<img alt="icon" src="${imageSrc}" />
-				${title}
-			</td>
-			<td class="text-right">${
-				typeof formattedValue === 'string' ? formattedValue : ''
-			}</td>
-			</tr>`;
+			  <td class="d-flex">
+				  <img alt="icon" src="${imageSrc}" />
+				  <span class="ml-1">${title}</span>
+			  </td>
+			  <td class="text-right">${
+					typeof formattedValue === 'string' ? formattedValue : ''
+				}</td>
+			  </tr>`;
 		})
 		.join('');
 };
@@ -79,7 +79,10 @@ const main = async () => {
 		fetchHeadless(`o/c/quotecomparisons/${productId}`),
 	]);
 
-	const quoteDate = new Date(application.dateCreated);
+	const quoteDate = application.dateCreated
+		? new Date(application.dateCreated)
+		: new Date();
+
 	const quoteDateNextYear = new Date(
 		new Date(quoteDate).setFullYear(quoteDate.getFullYear() + 1)
 	);
@@ -94,7 +97,7 @@ const main = async () => {
 	);
 	setValueToElement(
 		fragmentElement.querySelector('#congrats-price'),
-		`$${Number(quoteComparison.price).toLocaleString('en-US')}`
+		`$${Number(quoteComparison.price || 0).toLocaleString('en-US')}`
 	);
 	setValueToElement(
 		fragmentElement.querySelector('#congrats-info-date'),

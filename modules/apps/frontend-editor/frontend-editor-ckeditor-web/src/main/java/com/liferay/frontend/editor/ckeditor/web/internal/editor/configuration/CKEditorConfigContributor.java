@@ -60,8 +60,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		);
 
 		String extraPlugins =
-			"addimages,autogrow,autolink,filebrowser,itemselector,lfrpopup," +
-				"media,stylescombo,videoembed";
+			"addimages,autogrow,autolink,colordialog,filebrowser," +
+				"itemselector,lfrpopup,media,stylescombo,videoembed";
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(

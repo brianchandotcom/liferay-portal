@@ -625,15 +625,6 @@ definition {
 			value1 = "No items were found.");
 	}
 
-	@description = "LPS-135649 - Verify it is possible to distinguish between Custom Object entries on My Workflow Tasks"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanDistinguishBetweenObjectEntriesOnMyWorkflowTasks {
-
-		// TODO LPS-141634 CanDistinguishBetweenObjectEntriesOnMyWorkflowTasks pending implementation
-
-	}
-
 	@description = "LPS-135390 - Verify it is not possible to view and access the Object Admin portlet without the Access in Control Panel permission"
 	@ignore = "Test Stub"
 	@priority = "5"

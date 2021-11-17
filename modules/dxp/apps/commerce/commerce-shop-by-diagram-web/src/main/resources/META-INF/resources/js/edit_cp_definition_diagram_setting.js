@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
+import {State} from '@liferay/frontend-js-state-web';
 import {fetch} from 'frontend-js-web';
+import {imageSelectorImageAtom} from 'item-selector-taglib';
 
 export const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -19,7 +21,7 @@ export const HEADERS = new Headers({
 const DIAGRAMS_ENDPOINT = '/o/headless-commerce-admin-catalog/v1.0/diagrams/';
 
 export default function ({diagramId, namespace}) {
-	const type = document.getElementById(`${namespace}type`);
+	const inputType = document.getElementById(`${namespace}type`);
 
 	const handleSelectChange = () => {
 		const url = new URL(
@@ -29,48 +31,33 @@ export default function ({diagramId, namespace}) {
 
 		fetch(url, {
 			body: JSON.stringify({
-				type: type.value,
+				type: inputType.value,
 			}),
 			headers: HEADERS,
 			method: 'PATCH',
 		});
 	};
 
-	type.addEventListener('change', handleSelectChange);
+	inputType.addEventListener('change', handleSelectChange);
+
+	function handleDiagramImageChanged({fileEntryId, src}) {
+		// eslint-disable-next-line no-console
+		console.log(fileEntryId, src);
+
+		// TODO:fetch then window.location.reload();
+
+	}
+
+	const {dispose: unsubscribeImageSelector} = State.subscribe(
+		imageSelectorImageAtom,
+		handleDiagramImageChanged
+	);
 
 	return {
 		dispose() {
-			type.removeEventListener('change', handleSelectChange);
+			inputType.removeEventListener('change', handleSelectChange);
+
+			unsubscribeImageSelector();
 		},
 	};
-}
-
-export function updateDiagramColor(diagramId, color) {
-	const url = new URL(
-		DIAGRAMS_ENDPOINT + diagramId,
-		themeDisplay.getPortalURL()
-	);
-
-	fetch(url, {
-		body: JSON.stringify({
-			color,
-		}),
-		headers: HEADERS,
-		method: 'PATCH',
-	});
-}
-
-export function updateDiagramRadius(diagramId, radius) {
-	const url = new URL(
-		DIAGRAMS_ENDPOINT + diagramId,
-		themeDisplay.getPortalURL()
-	);
-
-	fetch(url, {
-		body: JSON.stringify({
-			radius,
-		}),
-		headers: HEADERS,
-		method: 'PATCH',
-	});
 }

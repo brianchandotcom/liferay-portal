@@ -12,11 +12,13 @@
 		"@clayui/table": "3.40.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
+		"@liferay/frontend-js-state-web": "*",
 		"classnames": "2.3.1",
 		"commerce-frontend-js": "*",
 		"d3": "5.9.3",
 		"frontend-js-web": "*",
 		"frontend-taglib-clay": "*",
+		"item-selector-taglib": "*",
 		"prop-types": "15.7.2"
 	},
 	"jest": {

@@ -107,45 +107,38 @@ public class PortalClassPathUtil {
 			classLoader = currentThread.getContextClassLoader();
 		}
 
-		File[] files = _listClassPathFiles(
-			classLoader, CentralizedThreadLocal.class.getName());
+		StringBundler sb = new StringBundler(8);
 
-		StringBundler bootstrapClassPathSB = new StringBundler(
-			files.length * 2);
+		sb.append(
+			_buildClassPath(classLoader, ServletException.class.getName()));
 
-		for (File file : files) {
-			String absolutePath = file.getAbsolutePath();
-
-			if (absolutePath.contains("petra")) {
-				bootstrapClassPathSB.append(absolutePath);
-				bootstrapClassPathSB.append(File.pathSeparator);
-			}
-		}
-
-		if (bootstrapClassPathSB.index() > 0) {
-			bootstrapClassPathSB.setIndex(bootstrapClassPathSB.index() - 1);
-		}
-
-		StringBundler runtimeClassPathSB = new StringBundler(4);
-
-		runtimeClassPathSB.append(
+		sb.append(File.pathSeparator);
+		sb.append(
 			_buildClassPath(
-				classLoader, ServletException.class.getName(),
-				CentralizedThreadLocal.class.getName(),
+				classLoader, CentralizedThreadLocal.class.getName()));
+
+		String bootstrapClassPath = sb.toString();
+
+		sb.append(File.pathSeparator);
+		sb.append(
+			_buildClassPath(
+				classLoader,
 				"com.liferay.shielded.container.ShieldedContainerInitializer"));
 
 		if (servletContext != null) {
-			runtimeClassPathSB.append(File.pathSeparator);
-			runtimeClassPathSB.append(servletContext.getRealPath(""));
-			runtimeClassPathSB.append("/WEB-INF/classes");
+			sb.append(File.pathSeparator);
+			sb.append(servletContext.getRealPath(""));
+			sb.append("/WEB-INF/classes");
 		}
+
+		String portalClassPath = sb.toString();
 
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(_processArgs);
-		builder.setBootstrapClassPath(bootstrapClassPathSB.toString());
+		builder.setBootstrapClassPath(bootstrapClassPath);
 		builder.setReactClassLoader(classLoader);
-		builder.setRuntimeClassPath(runtimeClassPathSB.toString());
+		builder.setRuntimeClassPath(portalClassPath);
 
 		_portalProcessConfig = builder.build();
 	}

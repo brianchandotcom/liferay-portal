@@ -19,8 +19,8 @@ task buildExtraRemoteApp
 task forceDeploy
 task zipExtraRemoteApp(type: Zip)
 
+String extraRemoteAppName = "com.liferay.site.initializer.raylife.extra.remote.app"
 String extraRemoteAppVersion = "20211117.1615"
-String repositoryURL = "https://repository.liferay.com/nexus/content/repositories/liferay-public-releases"
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
@@ -33,7 +33,7 @@ artifacts {
 }
 
 dependencies {
-	extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra.remote.app", version: extraRemoteAppVersion
+	extraRemoteApp ext: "zip", group: "com.liferay", name: extraRemoteAppName, version: extraRemoteAppVersion
 }
 
 forceDeploy {
@@ -85,8 +85,8 @@ uploadExtraRemoteApp {
 				version = dateString
 			}
 
-			if (repositoryURL.endsWith("liferay-private-releases")) {
-				repository(url: repositoryURL) {
+			if (project.path.startsWith(":dxp:")) {
+				repository(url: "https://repository.liferay.com/nexus/content/repositories/liferay-private-releases") {
 					authentication password: System.properties["repository.private.password"], userName: System.properties["repository.private.username"]
 				}
 			}

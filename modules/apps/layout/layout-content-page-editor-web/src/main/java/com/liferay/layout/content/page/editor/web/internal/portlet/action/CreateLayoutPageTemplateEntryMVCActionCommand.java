@@ -14,12 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -93,18 +91,24 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 						segmentsExperienceId, sourceLayout, name,
 						layoutPageTemplateCollectionId, serviceContext);
 
-			Layout layout = _layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
+			PortletURL portletURL = _portal.getControlPanelPortletURL(
+				_portal.getHttpServletRequest(actionRequest),
+				themeDisplay.getScopeGroup(),
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0, 0,
+				PortletRequest.RENDER_PHASE);
 
-			String url = _http.setParameter(
-				_portal.getLayoutFullURL(
-					layout.fetchDraftLayout(), themeDisplay),
-				"p_l_back_url",
-				_getBackURL(actionRequest, sourceLayout, themeDisplay));
-
-			url = _http.addParameter(url, "p_l_mode", Constants.EDIT);
-
-			jsonObject.put("url", url);
+			jsonObject.put(
+				"url",
+				PortletURLBuilder.create(
+					portletURL
+				).setTabs1(
+					"page-templates"
+				).setParameter(
+					"layoutPageTemplateCollectionId",
+					layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
+				).setParameter(
+					"orderByType", "desc"
+				).buildString());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -165,27 +169,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private String _getBackURL(
-			ActionRequest actionRequest, Layout layout,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		String url = _portal.getLayoutFullURL(layout, themeDisplay);
-
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		url = _http.addParameter(url, "p_l_back_url", portletURL.toString());
-
-		return _http.addParameter(url, "p_l_mode", Constants.EDIT);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateLayoutPageTemplateEntryMVCActionCommand.class);
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

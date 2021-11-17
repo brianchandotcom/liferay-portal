@@ -232,7 +232,7 @@ definition {
 	@description = "Verify that a calendar event on draft can be approved"
 	@priority = "4"
 	test CalendarWithDraftStatusCanBecomeApproved {
-		property portal.upstream = "quarantine";
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -245,7 +245,7 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
-			calendarName = "Liferay DXP",
+			calendarName = "${siteName}",
 			eventTitle = "Event Title Draft",
 			eventType = "Regular");
 
@@ -276,7 +276,7 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
-			calendarName = "Liferay DXP",
+			calendarName = "${siteName}",
 			eventTitle = "Event Title Draft",
 			eventType = "Regular");
 

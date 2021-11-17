@@ -22,6 +22,30 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 	}
 
+	@description = "LPS-132406: Given the Content Performance Panel
+	When the users leave the page because the session expires or s/he does log out
+	Then they find the panel closed"
+
+	@ignore = "true"
+	@priority = "3"
+	test ContentPerformanceClosed {
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+
+			AssertElementPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
+		}
+
+		task ("Logout and login") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
+		}
+	}
+
 	@description = "LPS-108856: When user opens Content Performance panel and AC is not connected, a Dont show me this again button is displayed"
 	@ignore = "true"
 	@priority = "3"

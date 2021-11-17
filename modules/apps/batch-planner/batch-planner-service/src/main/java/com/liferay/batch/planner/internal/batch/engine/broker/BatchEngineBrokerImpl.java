@@ -189,8 +189,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_batchPlannerLogLocalService.addBatchPlannerLog(
 				batchPlannerPlan.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), null,
-				String.valueOf(importTask.getId()), null,
-				(int)file.length(),
+				String.valueOf(importTask.getId()), null, (int)file.length(),
 				BatchPlannerLogConstants.STATUS_QUEUED);
 		}
 		finally {

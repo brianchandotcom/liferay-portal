@@ -32,9 +32,10 @@ export const downloadFileFromBlob = (blob) => {
 	fileLink.href = file;
 
 	const today = new Date();
-	const filename = `content-dashboard-report-${today.toLocaleDateString(
+	const filename = `ContentDashboardItemsData-${today.toLocaleDateString(
 		'en-US'
-	)}`;
+	)}.xls`;
+
 	fileLink.download = filename;
 
 	fileLink.click();

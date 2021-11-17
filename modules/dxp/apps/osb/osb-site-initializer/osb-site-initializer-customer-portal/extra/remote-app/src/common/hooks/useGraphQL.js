@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {REACT_APP_LIFERAY_API} from '../utils';
+import { useEffect, useState } from 'react';
+import { REACT_APP_LIFERAY_API } from '../utils';
 
 const getData = (data) => {
 	const currentData = {};
@@ -53,7 +53,7 @@ const useGraphQL = (queries) => {
 				method: 'POST',
 			});
 
-			const {data} = await response.json();
+			const { data } = await response.json();
 
 			setData(getData(data));
 			setLoading(false);

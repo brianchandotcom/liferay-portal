@@ -1,20 +1,17 @@
 export const actionTypes = {
-	UPDATE_PROJECT: 'UPDATE_PROJECT',
-	UPDATE_USER_ACCOUNT: 'UPDATE_USER_ACCOUNT',
+	UPDATE_ASSETS_PATH: 'UPDATE_ASSETS_PATH',
 };
 
 const reducer = (state, action) => {
+	if (!action) {
+		return state;
+	}
+
 	switch (action.type) {
-		case actionTypes.UPDATE_USER_ACCOUNT: {
+		case actionTypes.UPDATE_ASSETS_PATH: {
 			return {
 				...state,
-				userAccount: action.payload,
-			};
-		}
-		case actionTypes.UPDATE_PROJECT: {
-			return {
-				...state,
-				project: action.payload,
+				assetsPath: action.payload,
 			};
 		}
 		default: {

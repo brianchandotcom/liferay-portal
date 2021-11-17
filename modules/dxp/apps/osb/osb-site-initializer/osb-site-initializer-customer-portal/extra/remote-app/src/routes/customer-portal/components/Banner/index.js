@@ -9,8 +9,7 @@ const Banner = ({userName}) => {
 		<div className="banner d-flex flex-column ml-5 rounded-left">
 			<div className="d-flex flex-column h-100 justify-content-between m-3 p-5 text-neutral-10">
 				<div className="display-4 font-weight-normal">
-					{`Welcome, `}
-
+					Welcome,{' '}
 					<span className="font-weight-bolder">{userName}!</span>
 				</div>
 

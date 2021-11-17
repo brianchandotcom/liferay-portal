@@ -17,8 +17,9 @@
  * @type {import('../../../types/LayoutTypes').LayoutTypes}
  */
 export const LAYOUT_TYPES = {
-	content: '0',
+	content: '-1',
 	conversion: '4',
 	display: '1',
 	master: '3',
+	pageTemplate: '0',
 };

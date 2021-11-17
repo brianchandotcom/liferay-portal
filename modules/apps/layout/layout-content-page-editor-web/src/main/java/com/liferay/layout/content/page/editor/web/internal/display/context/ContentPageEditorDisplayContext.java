@@ -1850,7 +1850,7 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		if (layoutPageTemplateEntry == null) {
-			_layoutType = LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
+			_layoutType = -1;
 		}
 		else {
 			_layoutType = layoutPageTemplateEntry.getType();

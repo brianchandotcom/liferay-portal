@@ -23,15 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.plugin.RemotePluginPackageRepository;
 import com.liferay.portal.kernel.plugin.Screenshot;
 import com.liferay.portal.kernel.plugin.Version;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -44,29 +40,20 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.MalformedURLException;
-
 import java.text.DateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Jorge Ferrer
@@ -87,24 +74,12 @@ public class PluginPackageUtil {
 		return _pluginPackageUtil._getInstalledPluginPackages();
 	}
 
-	public static PluginPackage getLatestAvailablePluginPackage(
-			String groupId, String artifactId)
-		throws PortalException {
-
-		return _pluginPackageUtil._getLatestAvailablePluginPackage(
-			groupId, artifactId);
-	}
-
 	public static boolean isCurrentVersionSupported(List<String> versions) {
 		return _pluginPackageUtil._isCurrentVersionSupported(versions);
 	}
 
 	public static boolean isInstalled(String context) {
 		return _pluginPackageUtil._isInstalled(context);
-	}
-
-	public static boolean isUpdateAvailable() {
-		return _pluginPackageUtil._isUpdateAvailable();
 	}
 
 	public static PluginPackage readPluginPackageProperties(
@@ -135,10 +110,6 @@ public class PluginPackageUtil {
 		_pluginPackageUtil._registerInstalledPluginPackage(pluginPackage);
 	}
 
-	public static RepositoryReport reloadRepositories() throws PortalException {
-		return _pluginPackageUtil._reloadRepositories();
-	}
-
 	public static void unregisterInstalledPluginPackage(
 			PluginPackage pluginPackage)
 		throws PortalException {
@@ -161,92 +132,12 @@ public class PluginPackageUtil {
 			preliminaryContext);
 	}
 
-	private PluginPackage _findLatestVersion(
-		List<PluginPackage> pluginPackages) {
-
-		PluginPackage latestPluginPackage = null;
-
-		for (PluginPackage pluginPackage : pluginPackages) {
-			if ((latestPluginPackage == null) ||
-				pluginPackage.isLaterVersionThan(latestPluginPackage)) {
-
-				latestPluginPackage = pluginPackage;
-			}
-		}
-
-		return latestPluginPackage;
-	}
-
-	private List<PluginPackage> _getAvailablePluginPackages(
-			String groupId, String artifactId)
-		throws PortalException {
-
-		List<PluginPackage> pluginPackages = new ArrayList<>();
-
-		String[] repositoryURLs = _getRepositoryURLs();
-
-		for (String repositoryURL : repositoryURLs) {
-			RemotePluginPackageRepository repository = _getRepository(
-				repositoryURL);
-
-			List<PluginPackage> curPluginPackages =
-				repository.findPluginsByGroupIdAndArtifactId(
-					groupId, artifactId);
-
-			if (curPluginPackages != null) {
-				pluginPackages.addAll(curPluginPackages);
-			}
-		}
-
-		return pluginPackages;
-	}
-
 	private PluginPackage _getInstalledPluginPackage(String context) {
 		return _installedPluginPackages.getPluginPackage(context);
 	}
 
 	private List<PluginPackage> _getInstalledPluginPackages() {
 		return _installedPluginPackages.getSortedPluginPackages();
-	}
-
-	private PluginPackage _getLatestAvailablePluginPackage(
-			String groupId, String artifactId)
-		throws PortalException {
-
-		List<PluginPackage> pluginPackages = _getAvailablePluginPackages(
-			groupId, artifactId);
-
-		return _findLatestVersion(pluginPackages);
-	}
-
-	private RemotePluginPackageRepository _getRepository(String repositoryURL)
-		throws PortalException {
-
-		RemotePluginPackageRepository repository = _repositoryCache.get(
-			repositoryURL);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		return _loadRepository(repositoryURL);
-	}
-
-	private String[] _getRepositoryURLs() throws PluginPackageException {
-		try {
-			String[] trusted = PropsValues.PLUGIN_REPOSITORIES_TRUSTED;
-			String[] untrusted = PropsValues.PLUGIN_REPOSITORIES_UNTRUSTED;
-
-			return ArrayUtil.append(trusted, untrusted);
-		}
-		catch (Exception exception) {
-			throw new PluginPackageException(
-				"Unable to read repository list", exception);
-		}
-	}
-
-	private String[] _getSupportedTypes() {
-		return PropsValues.PLUGIN_TYPES;
 	}
 
 	private boolean _isCurrentVersionSupported(List<String> versions) {
@@ -263,31 +154,6 @@ public class PluginPackageUtil {
 		return false;
 	}
 
-	private boolean _isIgnored(PluginPackage pluginPackage) {
-		String packageId = pluginPackage.getPackageId();
-
-		String[] pluginPackagesIgnored =
-			PropsValues.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED;
-
-		for (String curPluginPackagesIgnored : pluginPackagesIgnored) {
-			if (curPluginPackagesIgnored.endsWith(StringPool.STAR)) {
-				String prefix = curPluginPackagesIgnored.substring(
-					0, curPluginPackagesIgnored.length() - 2);
-
-				if (packageId.startsWith(prefix)) {
-					return true;
-				}
-			}
-			else {
-				if (packageId.equals(curPluginPackagesIgnored)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isInstalled(String context) {
 		PluginPackage pluginPackage = _installedPluginPackages.getPluginPackage(
 			context);
@@ -297,197 +163,6 @@ public class PluginPackageUtil {
 		}
 
 		return false;
-	}
-
-	private boolean _isUpdateAvailable() {
-		if (!PropsValues.PLUGIN_NOTIFICATIONS_ENABLED) {
-			return false;
-		}
-
-		if (_updateAvailable != null) {
-			return _updateAvailable.booleanValue();
-		}
-		else if (!_settingUpdateAvailable) {
-			_settingUpdateAvailable = true;
-
-			Thread indexerThread = new Thread(
-				new UpdateAvailableRunner(), PluginPackageUtil.class.getName());
-
-			indexerThread.setPriority(Thread.MIN_PRIORITY);
-
-			indexerThread.start();
-		}
-
-		return false;
-	}
-
-	private RemotePluginPackageRepository _loadRepository(String repositoryURL)
-		throws PluginPackageException, PortalException {
-
-		StringBundler sb = new StringBundler(8);
-
-		if (!repositoryURL.startsWith(Http.HTTP_WITH_SLASH) &&
-			!repositoryURL.startsWith(Http.HTTPS_WITH_SLASH)) {
-
-			sb.append(Http.HTTP_WITH_SLASH);
-		}
-
-		sb.append(repositoryURL);
-		sb.append(StringPool.SLASH);
-		sb.append(PluginPackage.REPOSITORY_XML_FILE_NAME_PREFIX);
-		sb.append(StringPool.DASH);
-		sb.append(ReleaseInfo.getVersion());
-		sb.append(StringPool.PERIOD);
-		sb.append(PluginPackage.REPOSITORY_XML_FILE_NAME_EXTENSION);
-
-		String pluginsXmlURL = sb.toString();
-
-		try {
-			Http.Options options = new Http.Options();
-
-			options.setLocation(pluginsXmlURL);
-			options.setPost(false);
-
-			byte[] bytes = HttpUtil.URLtoByteArray(options);
-
-			Http.Response response = options.getResponse();
-
-			int responseCode = response.getResponseCode();
-
-			if (responseCode != HttpServletResponse.SC_OK) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"A repository for version " + ReleaseInfo.getVersion() +
-							" was not found. Checking general repository");
-				}
-
-				sb.setIndex(0);
-
-				sb.append(repositoryURL);
-				sb.append(StringPool.SLASH);
-				sb.append(PluginPackage.REPOSITORY_XML_FILE_NAME_PREFIX);
-				sb.append(StringPool.PERIOD);
-				sb.append(PluginPackage.REPOSITORY_XML_FILE_NAME_EXTENSION);
-
-				pluginsXmlURL = sb.toString();
-
-				options = new Http.Options();
-
-				options.setLocation(pluginsXmlURL);
-				options.setPost(false);
-
-				bytes = HttpUtil.URLtoByteArray(options);
-
-				response = options.getResponse();
-
-				responseCode = response.getResponseCode();
-
-				if (responseCode != HttpServletResponse.SC_OK) {
-					throw new PluginPackageException(
-						StringBundler.concat(
-							"Unable to download file ", pluginsXmlURL,
-							" because of response code ", responseCode));
-				}
-			}
-
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				RemotePluginPackageRepository repository = _parseRepositoryXml(
-					new String(bytes), repositoryURL);
-
-				_repositoryCache.put(repositoryURL, repository);
-
-				_updateAvailable = null;
-
-				return repository;
-			}
-
-			throw new PluginPackageException("Download returned 0 bytes");
-		}
-		catch (MalformedURLException malformedURLException) {
-			_repositoryCache.remove(repositoryURL);
-
-			throw new PluginPackageException(
-				"Invalid URL " + pluginsXmlURL, malformedURLException);
-		}
-		catch (IOException ioException) {
-			_repositoryCache.remove(repositoryURL);
-
-			throw new PluginPackageException(
-				"Unable to communicate with repository " + repositoryURL,
-				ioException);
-		}
-		catch (DocumentException documentException) {
-			_repositoryCache.remove(repositoryURL);
-
-			throw new PluginPackageException(
-				"Unable to parse plugin list for repository " + repositoryURL,
-				documentException);
-		}
-	}
-
-	private RemotePluginPackageRepository _parseRepositoryXml(
-			String xml, String repositoryURL)
-		throws DocumentException, PortalException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Loading plugin repository ", repositoryURL, ":\n", xml));
-		}
-
-		RemotePluginPackageRepository pluginPackageRepository =
-			new RemotePluginPackageRepository(repositoryURL);
-
-		if (xml == null) {
-			return pluginPackageRepository;
-		}
-
-		List<String> supportedPluginTypes = Arrays.asList(_getSupportedTypes());
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		Properties settings = _readProperties(
-			rootElement.element("settings"), "setting");
-
-		pluginPackageRepository.setSettings(settings);
-
-		List<Element> pluginPackageElements = rootElement.elements(
-			"plugin-package");
-
-		for (Element pluginPackageElement : pluginPackageElements) {
-			PluginPackage pluginPackage = _readPluginPackageXml(
-				pluginPackageElement);
-
-			if (!_isCurrentVersionSupported(
-					pluginPackage.getLiferayVersions())) {
-
-				continue;
-			}
-
-			boolean containsSupportedTypes = false;
-
-			List<String> pluginTypes = pluginPackage.getTypes();
-
-			for (String pluginType : pluginTypes) {
-				if (supportedPluginTypes.contains(pluginType)) {
-					containsSupportedTypes = true;
-
-					break;
-				}
-			}
-
-			if (!containsSupportedTypes) {
-				continue;
-			}
-
-			pluginPackage.setRepository(pluginPackageRepository);
-
-			pluginPackageRepository.addPluginPackage(pluginPackage);
-		}
-
-		return pluginPackageRepository;
 	}
 
 	private Date _readDate(String text) {
@@ -684,8 +359,6 @@ public class PluginPackageUtil {
 			properties.getProperty("change-log"));
 		String pageURL = GetterUtil.getString(
 			properties.getProperty("page-url"));
-		String downloadURL = GetterUtil.getString(
-			properties.getProperty("download-url"));
 		List<String> requiredDeploymentContexts = ListUtil.fromArray(
 			StringUtil.split(
 				properties.getProperty("required-deployment-contexts")));
@@ -706,7 +379,6 @@ public class PluginPackageUtil {
 		pluginPackage.setChangeLog(changeLog);
 		//pluginPackage.setScreenshots(null);
 		pluginPackage.setPageURL(pageURL);
-		pluginPackage.setDownloadURL(downloadURL);
 		//pluginPackage.setDeploymentSettings(null);
 		pluginPackage.setRequiredDeploymentContexts(requiredDeploymentContexts);
 
@@ -910,8 +582,6 @@ public class PluginPackageUtil {
 			_readScreenshots(pluginPackageElement.element("screenshots")));
 		pluginPackage.setPageURL(
 			_readText(pluginPackageElement.elementText("page-url")));
-		pluginPackage.setDownloadURL(
-			_readText(pluginPackageElement.elementText("download-url")));
 		pluginPackage.setDeploymentSettings(
 			_readProperties(
 				pluginPackageElement.element("deployment-settings"),
@@ -973,37 +643,6 @@ public class PluginPackageUtil {
 		throws PortalException {
 
 		_installedPluginPackages.addPluginPackage(pluginPackage);
-
-		_updateAvailable = null;
-	}
-
-	private RepositoryReport _reloadRepositories() throws PortalException {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Reloading repositories");
-		}
-
-		RepositoryReport repositoryReport = new RepositoryReport();
-
-		String[] repositoryURLs = _getRepositoryURLs();
-
-		for (String repositoryURL : repositoryURLs) {
-			try {
-				_loadRepository(repositoryURL);
-
-				repositoryReport.addSuccess(repositoryURL);
-			}
-			catch (PluginPackageException pluginPackageException) {
-				repositoryReport.addError(
-					repositoryURL, pluginPackageException);
-
-				_log.error(
-					StringBundler.concat(
-						"Unable to load repository ", repositoryURL, " ",
-						pluginPackageException.toString()));
-			}
-		}
-
-		return repositoryReport;
 	}
 
 	private void _unregisterInstalledPluginPackage(PluginPackage pluginPackage)
@@ -1031,75 +670,5 @@ public class PluginPackageUtil {
 
 	private final LocalPluginPackageRepository _installedPluginPackages =
 		new LocalPluginPackageRepository();
-	private final Map<String, RemotePluginPackageRepository> _repositoryCache =
-		new HashMap<>();
-	private boolean _settingUpdateAvailable;
-	private Boolean _updateAvailable;
-
-	private class UpdateAvailableRunner implements Runnable {
-
-		@Override
-		public void run() {
-			try {
-				setUpdateAvailable();
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception.getMessage());
-				}
-			}
-		}
-
-		protected void setUpdateAvailable() throws Exception {
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Checking for available updates");
-			}
-
-			for (PluginPackage pluginPackage :
-					_installedPluginPackages.getPluginPackages()) {
-
-				if (_isIgnored(pluginPackage)) {
-					continue;
-				}
-
-				PluginPackage availablePluginPackage =
-					PluginPackageUtil.getLatestAvailablePluginPackage(
-						pluginPackage.getGroupId(),
-						pluginPackage.getArtifactId());
-
-				if (availablePluginPackage == null) {
-					continue;
-				}
-
-				Version availablePluginPackageVersion = Version.getInstance(
-					availablePluginPackage.getVersion());
-
-				if (availablePluginPackageVersion.isLaterVersionThan(
-						pluginPackage.getVersion())) {
-
-					_updateAvailable = Boolean.TRUE;
-
-					break;
-				}
-			}
-
-			if (_updateAvailable == null) {
-				_updateAvailable = Boolean.FALSE;
-			}
-
-			_settingUpdateAvailable = false;
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Finished checking for available updates in " +
-						stopWatch.getTime() + " ms");
-			}
-		}
-
-	}
 
 }

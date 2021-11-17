@@ -114,12 +114,6 @@
 		};
 
 		Liferay.Data.notices = [
-			<c:if test="<%= permissionChecker.isOmniadmin() && PortalUtil.isUpdateAvailable() %>">
-				{
-					message: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager() %>"><liferay-ui:message key="updates-are-available-for-liferay" /></a>'
-				},
-			</c:if>
-
 			<c:if test="<%= ShutdownUtil.isInProcess() %>">
 				{
 					title: '<liferay-ui:message key="maintenance-alert" /> <span class="mx-2"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>',

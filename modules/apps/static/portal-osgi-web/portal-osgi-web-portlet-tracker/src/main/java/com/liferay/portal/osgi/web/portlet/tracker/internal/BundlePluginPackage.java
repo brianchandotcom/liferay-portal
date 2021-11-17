@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.plugin.RemotePluginPackageRepository;
 import com.liferay.portal.kernel.plugin.Screenshot;
 import com.liferay.portal.kernel.plugin.Version;
 
@@ -50,11 +49,6 @@ public class BundlePluginPackage implements PluginPackage {
 	}
 
 	@Override
-	public String getArtifactURL() {
-		return _bundle.getLocation();
-	}
-
-	@Override
 	public String getAuthor() {
 		return _headers.get(Constants.BUNDLE_VENDOR);
 	}
@@ -72,11 +66,6 @@ public class BundlePluginPackage implements PluginPackage {
 	@Override
 	public Properties getDeploymentSettings() {
 		return null;
-	}
-
-	@Override
-	public String getDownloadURL() {
-		return _headers.get(Constants.BUNDLE_UPDATELOCATION);
 	}
 
 	@Override
@@ -127,16 +116,6 @@ public class BundlePluginPackage implements PluginPackage {
 	@Override
 	public String getRecommendedDeploymentContext() {
 		return null;
-	}
-
-	@Override
-	public RemotePluginPackageRepository getRepository() {
-		return null;
-	}
-
-	@Override
-	public String getRepositoryURL() {
-		return _headers.get(Constants.BUNDLE_UPDATELOCATION);
 	}
 
 	@Override
@@ -201,10 +180,6 @@ public class BundlePluginPackage implements PluginPackage {
 	}
 
 	@Override
-	public void setDownloadURL(String downloadURL) {
-	}
-
-	@Override
 	public void setLicenses(List<License> licenses) {
 	}
 
@@ -230,10 +205,6 @@ public class BundlePluginPackage implements PluginPackage {
 
 	@Override
 	public void setRecommendedDeploymentContext(String deploymentContext) {
-	}
-
-	@Override
-	public void setRepository(RemotePluginPackageRepository repository) {
 	}
 
 	@Override

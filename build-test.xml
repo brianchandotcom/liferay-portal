@@ -8467,8 +8467,6 @@ ${update.properties}</echo>
 
 liferay.home=${liferay.home}
 
-plugin.notifications.enabled=false
-
 jdbc.default.jndi.name=
 
 jdbc.default.driverClassName=${database.driver}

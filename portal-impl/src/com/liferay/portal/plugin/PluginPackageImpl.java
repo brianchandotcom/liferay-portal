@@ -18,9 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.plugin.RemotePluginPackageRepository;
 import com.liferay.portal.kernel.plugin.Screenshot;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -39,25 +37,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 public class PluginPackageImpl
 	implements Comparable<PluginPackage>, PluginPackage, Serializable {
-
-	public static final String STATUS_ALL = "all";
-
-	public static final String STATUS_INSTALLATION_IN_PROCESS =
-		"installationInProcess";
-
-	public static final String STATUS_NEWER_VERSION_INSTALLED =
-		"newerVersionInstalled";
-
-	public static final String STATUS_NOT_INSTALLED = "notInstalled";
-
-	public static final String STATUS_NOT_INSTALLED_OR_OLDER_VERSION_INSTALLED =
-		"notInstalledOrOlderVersionInstalled";
-
-	public static final String STATUS_OLDER_VERSION_INSTALLED =
-		"olderVersionInstalled";
-
-	public static final String STATUS_SAME_VERSION_INSTALLED =
-		"sameVersionInstalled";
 
 	public PluginPackageImpl(String moduleId) {
 		_moduleId = ModuleId.getInstance(moduleId);
@@ -83,8 +62,6 @@ public class PluginPackageImpl
 		EqualsBuilder equalsBuilder = new EqualsBuilder();
 
 		equalsBuilder.append(getModuleId(), pluginPackage.getModuleId());
-		equalsBuilder.append(
-			getRepositoryURL(), pluginPackage.getRepositoryURL());
 
 		return equalsBuilder.isEquals();
 	}
@@ -92,11 +69,6 @@ public class PluginPackageImpl
 	@Override
 	public String getArtifactId() {
 		return _moduleId.getArtifactId();
-	}
-
-	@Override
-	public String getArtifactURL() {
-		return getRepositoryURL() + _moduleId.getArtifactPath();
 	}
 
 	@Override
@@ -117,29 +89,6 @@ public class PluginPackageImpl
 	@Override
 	public Properties getDeploymentSettings() {
 		return _deploymentSettings;
-	}
-
-	@Override
-	public String getDownloadURL() {
-		RemotePluginPackageRepository remotePluginPackageRepository =
-			getRepository();
-
-		if (remotePluginPackageRepository != null) {
-			Properties settings = remotePluginPackageRepository.getSettings();
-
-			String useDownloadURL = settings.getProperty(
-				RemotePluginPackageRepository.SETTING_USE_DOWNLOAD_URL);
-
-			if (!GetterUtil.getBoolean(useDownloadURL, true)) {
-				return getArtifactURL();
-			}
-		}
-
-		if (Validator.isNotNull(_downloadURL)) {
-			return _downloadURL;
-		}
-
-		return getArtifactURL();
 	}
 
 	@Override
@@ -199,20 +148,6 @@ public class PluginPackageImpl
 	}
 
 	@Override
-	public RemotePluginPackageRepository getRepository() {
-		return _repository;
-	}
-
-	@Override
-	public String getRepositoryURL() {
-		if (_repository != null) {
-			return _repository.getRepositoryURL();
-		}
-
-		return RemotePluginPackageRepository.LOCAL_URL;
-	}
-
-	@Override
 	public List<String> getRequiredDeploymentContexts() {
 		return _requiredDeploymentContexts;
 	}
@@ -247,7 +182,6 @@ public class PluginPackageImpl
 		HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
 
 		hashCodeBuilder.append(getModuleId());
-		hashCodeBuilder.append(getRepositoryURL());
 
 		return hashCodeBuilder.hashCode();
 	}
@@ -288,11 +222,6 @@ public class PluginPackageImpl
 	}
 
 	@Override
-	public void setDownloadURL(String downloadURL) {
-		_downloadURL = downloadURL;
-	}
-
-	@Override
 	public void setLicenses(List<License> licenses) {
 		_licenses = licenses;
 	}
@@ -327,11 +256,6 @@ public class PluginPackageImpl
 		String recommendedDeploymentContext) {
 
 		_recommendedDeploymentContext = recommendedDeploymentContext;
-	}
-
-	@Override
-	public void setRepository(RemotePluginPackageRepository repository) {
-		_repository = repository;
 	}
 
 	@Override
@@ -371,7 +295,6 @@ public class PluginPackageImpl
 	private String _changeLog = StringPool.BLANK;
 	private String _context;
 	private Properties _deploymentSettings;
-	private String _downloadURL;
 	private List<License> _licenses = new ArrayList<>();
 	private List<String> _liferayVersions = new ArrayList<>();
 	private String _longDescription = StringPool.BLANK;
@@ -380,7 +303,6 @@ public class PluginPackageImpl
 	private String _name;
 	private String _pageURL;
 	private String _recommendedDeploymentContext;
-	private RemotePluginPackageRepository _repository;
 	private List<String> _requiredDeploymentContexts = Collections.emptyList();
 	private List<Screenshot> _screenshots = new ArrayList<>();
 	private String _shortDescription = StringPool.BLANK;

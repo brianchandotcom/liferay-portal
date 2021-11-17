@@ -14,14 +14,11 @@
 
 package com.liferay.portal.plugin;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.PluginPackageNameAndContextComparator;
-import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -53,10 +50,6 @@ public class LocalPluginPackageRepository {
 		return _pluginPackages.get(context);
 	}
 
-	public List<PluginPackage> getPluginPackages() {
-		return new ArrayList<>(_pluginPackages.values());
-	}
-
 	public List<PluginPackage> getSortedPluginPackages() {
 		List<PluginPackage> pluginPackages = new ArrayList<>();
 
@@ -75,23 +68,6 @@ public class LocalPluginPackageRepository {
 				addPluginPackage(pluginPackage);
 			}
 		}
-	}
-
-	public void registerPluginPackageInstallation(String deploymentContext) {
-		PluginPackage pluginPackage = getPluginPackage(deploymentContext);
-
-		if (pluginPackage == null) {
-			String moduleId = StringBundler.concat(
-				deploymentContext, StringPool.SLASH, deploymentContext,
-				StringPool.SLASH, Version.UNKNOWN, "/war");
-
-			pluginPackage = new PluginPackageImpl(moduleId);
-
-			pluginPackage.setName(deploymentContext);
-			pluginPackage.setContext(deploymentContext);
-		}
-
-		registerPluginPackageInstallation(pluginPackage);
 	}
 
 	public void removePluginPackage(PluginPackage pluginPackage)

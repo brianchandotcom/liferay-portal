@@ -207,7 +207,6 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.LayoutTypeImpl;
-import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
@@ -6541,11 +6540,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isUpdateAvailable() {
-		return PluginPackageUtil.isUpdateAvailable();
 	}
 
 	@Override

@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
@@ -1035,17 +1034,6 @@ public class ThemeDisplay
 		return _urlSignOut;
 	}
 
-	@JSON(include = false)
-	public PortletURL getURLUpdateManager() {
-		if (_urlUpdateManager == null) {
-			_urlUpdateManager = PortalUtil.getControlPanelPortletURL(
-				getRequest(), PortletKeys.MARKETPLACE_STORE,
-				PortletRequest.RENDER_PHASE);
-		}
-
-		return _urlUpdateManager;
-	}
-
 	/**
 	 * The user for which the current request is being handled. Note, that an
 	 * administrative user can impersonate another user.
@@ -1996,7 +1984,6 @@ public class ThemeDisplay
 	private transient PortletURL _urlPublishToLive;
 	private String _urlSignIn = StringPool.BLANK;
 	private String _urlSignOut = StringPool.BLANK;
-	private transient PortletURL _urlUpdateManager;
 	private User _user;
 	private boolean _widget;
 

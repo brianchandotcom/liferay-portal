@@ -2467,20 +2467,6 @@ public interface PropsKeys {
 	public static final String PHONE_NUMBER_FORMAT_USA_REGEXP =
 		"phone.number.format.usa.regexp";
 
-	public static final String PLUGIN_NOTIFICATIONS_ENABLED =
-		"plugin.notifications.enabled";
-
-	public static final String PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED =
-		"plugin.notifications.packages.ignored";
-
-	public static final String PLUGIN_REPOSITORIES_TRUSTED =
-		"plugin.repositories.trusted";
-
-	public static final String PLUGIN_REPOSITORIES_UNTRUSTED =
-		"plugin.repositories.untrusted";
-
-	public static final String PLUGIN_TYPES = "plugin.types";
-
 	public static final String POLLER_NOTIFICATIONS_TIMEOUT =
 		"poller.notifications.timeout";
 

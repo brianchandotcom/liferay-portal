@@ -1992,10 +1992,6 @@ public class PortalUtil {
 		return _portal.isSystemRole(roleName);
 	}
 
-	public static boolean isUpdateAvailable() {
-		return _portal.isUpdateAvailable();
-	}
-
 	public static boolean isValidResourceId(String resourceId) {
 		return _portal.isValidResourceId(resourceId);
 	}

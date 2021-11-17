@@ -2138,25 +2138,6 @@ public class PropsValues {
 	public static String PHONE_NUMBER_FORMAT_USA_REGEXP = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.PHONE_NUMBER_FORMAT_USA_REGEXP));
 
-	public static final boolean PLUGIN_NOTIFICATIONS_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_ENABLED));
-
-	public static final String[] PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED =
-		StringUtil.splitLines(
-			PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED));
-
-	public static final String[] PLUGIN_REPOSITORIES_TRUSTED =
-		StringUtil.splitLines(
-			PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_TRUSTED));
-
-	public static final String[] PLUGIN_REPOSITORIES_UNTRUSTED =
-		StringUtil.splitLines(
-			PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_UNTRUSTED));
-
-	public static final String[] PLUGIN_TYPES = PropsUtil.getArray(
-		PropsKeys.PLUGIN_TYPES);
-
 	public static final long POLLER_NOTIFICATIONS_TIMEOUT =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.POLLER_NOTIFICATIONS_TIMEOUT));

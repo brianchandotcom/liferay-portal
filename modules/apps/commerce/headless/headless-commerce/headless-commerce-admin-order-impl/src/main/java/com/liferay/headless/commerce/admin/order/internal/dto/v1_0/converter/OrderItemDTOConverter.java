@@ -17,7 +17,10 @@ package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -55,11 +58,15 @@ public class OrderItemDTOConverter
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
+		CPMeasurementUnit cpMeasurementUnit =
+			_cpMeasurementUnitService.getCPMeasurementUnit(
+				commerceOrderItem.getCPMeasurementUnitId());
 
 		return new OrderItem() {
 			{
 				bookedQuantityId = commerceOrderItem.getBookedQuantityId();
 				customFields = expandoBridge.getAttributes();
+				decimalQuantity = commerceOrderItem.getDecimalQuantity();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountAmount = commerceOrderItem.getDiscountAmount();
 				discountPercentageLevel1 =
@@ -89,6 +96,8 @@ public class OrderItemDTOConverter
 				finalPrice = commerceOrderItem.getFinalPrice();
 				finalPriceWithTaxAmount =
 					commerceOrderItem.getFinalPriceWithTaxAmount();
+				formattedQuantity = _commerceOrderItemQuantityFormatter.format(
+					commerceOrderItem, dtoConverterContext.getLocale());
 				id = commerceOrderItem.getCommerceOrderItemId();
 				name = LanguageUtils.getLanguageIdMap(
 					commerceOrderItem.getNameMap());
@@ -109,6 +118,7 @@ public class OrderItemDTOConverter
 					cpInstance);
 				skuId = _getSkuId(cpInstance);
 				subscription = commerceOrderItem.isSubscription();
+				unitOfMeasure = cpMeasurementUnit.getKey();
 				unitPrice = commerceOrderItem.getUnitPrice();
 				unitPriceWithTaxAmount =
 					commerceOrderItem.getUnitPriceWithTaxAmount();
@@ -133,6 +143,13 @@ public class OrderItemDTOConverter
 	}
 
 	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

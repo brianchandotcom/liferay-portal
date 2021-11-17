@@ -1125,7 +1125,6 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-13519."
-	@ignore = "true"
 	@priority = "5"
 	test ViewWorkflowSubmissionsFromDifferentUsers {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

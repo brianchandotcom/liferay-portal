@@ -916,7 +916,7 @@ definition {
 		}
 
 		task ("View the header title") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name *");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name");
 		}
 
 		task ("Navigate to staging site via Product Menu") {
@@ -944,7 +944,7 @@ definition {
 		}
 
 		task ("View the header title") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name *");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name");
 		}
 	}
 

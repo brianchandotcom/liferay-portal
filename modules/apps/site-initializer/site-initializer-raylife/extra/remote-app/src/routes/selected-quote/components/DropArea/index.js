@@ -64,8 +64,18 @@ const DropArea = ({
 			const fileName = currentFile.name;
 			const fileType = currentFile.type;
 
+			const currentFileExist = filesRef.current.some(
+				(file) => file.name === fileName
+			);
+
+			if (currentFileExist) {
+				alert(`File ${fileName} already exists!`);
+
+				continue;
+			}
+
 			if (!validateExtensions(fileType, type)) {
-				alert('Invalid file! ' + fileName);
+				alert(`Invalid file ${fileName}!`);
 
 				continue;
 			}
@@ -135,6 +145,11 @@ const DropArea = ({
 			_setShowUpload(true);
 
 			return setShowBadgeInfo(false);
+		}
+
+		if (countFiles === 0 && type !== 'image') {
+			_setWidth(widthContainer);
+			_setHeight(heightContainer);
 		}
 
 		_setShowUpload(true);

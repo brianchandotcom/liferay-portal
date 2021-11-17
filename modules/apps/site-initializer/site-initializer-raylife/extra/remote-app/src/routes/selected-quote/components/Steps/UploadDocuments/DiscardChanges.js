@@ -38,37 +38,35 @@ const DiscardChanges = ({checked, expanded, hasError}) => {
 
 	return (
 		<div className="panel-right">
-			{checked && !hasError && (
-				<div className="change-link">
-					{!expanded ? (
-						<a
-							onClick={() => {
-								dispatch({
-									payload: {
-										panelKey: 'uploadDocuments',
-										value: true,
-									},
-									type: ACTIONS.SET_EXPANDED,
-								});
+			<div className="change-link">
+				{checked && !hasError && !expanded && (
+					<span
+						onClick={() => {
+							dispatch({
+								payload: {
+									panelKey: 'uploadDocuments',
+									value: true,
+								},
+								type: ACTIONS.SET_EXPANDED,
+							});
 
-								dispatch({
-									payload: {
-										panelKey: 'uploadDocuments',
-										value: true,
-									},
-									type: ACTIONS.SET_STEP_CHECKED,
-								});
-							}}
-						>
-							Change
-						</a>
-					) : (
-						showDiscardChanges && (
-							<a onClick={onDiscardChanges}>Discard Changes</a>
-						)
-					)}
-				</div>
-			)}
+							dispatch({
+								payload: {
+									panelKey: 'uploadDocuments',
+									value: false,
+								},
+								type: ACTIONS.SET_STEP_CHECKED,
+							});
+						}}
+					>
+						Change
+					</span>
+				)}
+
+				{!checked && expanded && showDiscardChanges && (
+					<span onClick={onDiscardChanges}>Discard Changes</span>
+				)}
+			</div>
 
 			<CheckButton
 				checked={checked}

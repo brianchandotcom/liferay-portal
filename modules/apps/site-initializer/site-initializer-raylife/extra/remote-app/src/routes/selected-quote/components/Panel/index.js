@@ -8,9 +8,12 @@ const Panel = ({
 	PanelMiddle = () => null,
 	PanelRight = () => null,
 	title = '',
+	hasError = false,
 }) => {
 	const [{panel}] = useContext(SelectedQuoteContext);
 	const {checked, expanded = false} = panel[id];
+
+	const show = expanded || hasError;
 
 	return (
 		<div className="panel-container">
@@ -24,10 +27,10 @@ const Panel = ({
 
 			<div
 				className={classNames('panel-content', {
-					show: expanded,
+					show,
 				})}
 			>
-				{expanded && children}
+				{show && children}
 			</div>
 		</div>
 	);

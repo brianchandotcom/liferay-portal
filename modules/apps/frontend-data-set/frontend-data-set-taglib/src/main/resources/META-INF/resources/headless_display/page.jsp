@@ -86,7 +86,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_trac
 	props.put("showManagementBar", showManagementBar);
 	props.put("showPagination", showPagination);
 	props.put("showSearch", showSearch);
-	props.put("sorting", sortItemList);
+	props.put("sorting", frontendDataSetSortItemList);
 
 	if (Validator.isNotNull(style)) {
 		props.put("style", style);

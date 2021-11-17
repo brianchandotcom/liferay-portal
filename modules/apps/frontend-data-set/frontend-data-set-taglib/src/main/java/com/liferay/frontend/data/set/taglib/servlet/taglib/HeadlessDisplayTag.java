@@ -17,12 +17,12 @@ package com.liferay.frontend.data.set.taglib.servlet.taglib;
 import com.liferay.frontend.data.set.filter.FrontendDataSetFilterSerializer;
 import com.liferay.frontend.data.set.model.FrontendDataSetActionDropdownItem;
 import com.liferay.frontend.data.set.model.FrontendDataSetPaginationEntry;
+import com.liferay.frontend.data.set.model.FrontendDataSetSortItem;
+import com.liferay.frontend.data.set.model.FrontendDataSetSortItemList;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.view.FrontendDataSetViewSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,6 +101,10 @@ public class HeadlessDisplayTag extends IncludeTag {
 		return _frontendDataSetActionDropdownItems;
 	}
 
+	public List<FrontendDataSetSortItem> getFrontendDataSetSortItemList() {
+		return _frontendDataSetSortItemList;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -139,10 +143,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 	public String getSelectionType() {
 		return _selectionType;
-	}
-
-	public List<SortItem> getSortItemList() {
-		return _sortItemList;
 	}
 
 	public String getStyle() {
@@ -191,6 +191,12 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 		_frontendDataSetActionDropdownItems =
 			frontendDataSetActionDropdownItems;
+	}
+
+	public void setFrontendDataSetSortItemList(
+		FrontendDataSetSortItemList frontendDataSetSortItemList) {
+
+		_frontendDataSetSortItemList = frontendDataSetSortItemList;
 	}
 
 	public void setId(String id) {
@@ -258,10 +264,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_showSearch = showSearch;
 	}
 
-	public void setSortItemList(SortItemList sortItemList) {
-		_sortItemList = sortItemList;
-	}
-
 	public void setStyle(String style) {
 		_style = style;
 	}
@@ -282,6 +284,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_frontendDataSetFiltersContext = null;
 		_frontendDataSetFilterSerializer = null;
 		_frontendDataSetPaginationEntries = null;
+		_frontendDataSetSortItemList = new FrontendDataSetSortItemList();
 		_frontendDataSetViewsContext = null;
 		_frontendDataSetViewSerializer = null;
 		_id = null;
@@ -298,7 +301,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_showManagementBar = true;
 		_showPagination = true;
 		_showSearch = true;
-		_sortItemList = new SortItemList();
 		_style = "default";
 	}
 
@@ -346,6 +348,9 @@ public class HeadlessDisplayTag extends IncludeTag {
 				"frontendDataSetPaginationEntries",
 			_frontendDataSetPaginationEntries);
 		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:frontendDataSetSortItemList",
+			_frontendDataSetSortItemList);
+		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:id", _id);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:itemsPerPage", _itemsPerPage);
@@ -379,8 +384,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 			_showPagination);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:showSearch", _showSearch);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:sortItemList", _sortItemList);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:style", _style);
 	}
@@ -467,6 +470,8 @@ public class HeadlessDisplayTag extends IncludeTag {
 	private FrontendDataSetFilterSerializer _frontendDataSetFilterSerializer;
 	private List<FrontendDataSetPaginationEntry>
 		_frontendDataSetPaginationEntries;
+	private FrontendDataSetSortItemList _frontendDataSetSortItemList =
+		new FrontendDataSetSortItemList();
 	private Object _frontendDataSetViewsContext;
 	private FrontendDataSetViewSerializer _frontendDataSetViewSerializer;
 	private String _id;
@@ -483,7 +488,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 	private boolean _showManagementBar = true;
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;
-	private SortItemList _sortItemList = new SortItemList();
 	private String _style = "default";
 
 }

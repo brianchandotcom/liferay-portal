@@ -46,6 +46,12 @@
 			<type>java.util.List</type>
 		</attribute>
 		<attribute>
+			<name>frontendDataSetSortItemList</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
+		</attribute>
+		<attribute>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -110,11 +116,6 @@
 		</attribute>
 		<attribute>
 			<name>showSearch</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>sortItemList</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

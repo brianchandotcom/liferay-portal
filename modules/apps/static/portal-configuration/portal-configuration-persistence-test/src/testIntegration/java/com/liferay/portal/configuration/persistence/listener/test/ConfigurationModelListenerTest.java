@@ -98,26 +98,41 @@ public class ConfigurationModelListenerTest {
 	public void testOnAfterDelete() throws Exception {
 		String pid = StringUtil.randomString(20);
 
-		AtomicBoolean called = new AtomicBoolean();
+		AtomicBoolean called1 = new AtomicBoolean();
+		AtomicBoolean called2 = new AtomicBoolean();
 
-		ConfigurationModelListener configurationModelListener =
+		ConfigurationModelListener configurationModelListener1 =
 			new ConfigurationModelListener() {
 
 				@Override
 				public void onAfterDelete(String pid) {
-					called.set(true);
+					called1.set(true);
+				}
+
+			};
+
+		ConfigurationModelListener configurationModelListener2 =
+			new ConfigurationModelListener() {
+
+				@Override
+				public void onAfterDelete(String pid) {
+					called2.set(true);
 				}
 
 			};
 
 		_serviceRegistration = _registerConfigurationModelListener(
-			configurationModelListener, pid);
+			configurationModelListener1, pid);
+
+		_serviceRegistration = _registerConfigurationModelListener(
+			configurationModelListener2, pid);
 
 		_configuration = _getConfiguration(pid);
 
 		_configuration.delete();
 
-		Assert.assertTrue(called.get());
+		Assert.assertTrue(called1.get());
+		Assert.assertTrue(called2.get());
 		Assert.assertFalse(_hasPid(pid));
 	}
 
@@ -130,9 +145,10 @@ public class ConfigurationModelListenerTest {
 				_TEST_KEY, _TEST_VALUE
 			).build();
 
-		AtomicBoolean called = new AtomicBoolean();
+		AtomicBoolean called1 = new AtomicBoolean();
+		AtomicBoolean called2 = new AtomicBoolean();
 
-		ConfigurationModelListener configurationModelListener =
+		ConfigurationModelListener configurationModelListener1 =
 			new ConfigurationModelListener() {
 
 				@Override
@@ -141,19 +157,37 @@ public class ConfigurationModelListenerTest {
 
 					Assert.assertEquals(_TEST_VALUE, properties.get(_TEST_KEY));
 
-					called.set(true);
+					called1.set(true);
+				}
+
+			};
+
+		ConfigurationModelListener configurationModelListener2 =
+			new ConfigurationModelListener() {
+
+				@Override
+				public void onAfterSave(
+					String pid, Dictionary<String, Object> properties) {
+
+					Assert.assertEquals(_TEST_VALUE, properties.get(_TEST_KEY));
+
+					called2.set(true);
 				}
 
 			};
 
 		_serviceRegistration = _registerConfigurationModelListener(
-			configurationModelListener, pid);
+			configurationModelListener1, pid);
+
+		_serviceRegistration = _registerConfigurationModelListener(
+			configurationModelListener2, pid);
 
 		_configuration = _getConfiguration(pid);
 
 		_configuration.update(testProperties);
 
-		Assert.assertTrue(called.get());
+		Assert.assertTrue(called1.get());
+		Assert.assertTrue(called2.get());
 	}
 
 	@Test

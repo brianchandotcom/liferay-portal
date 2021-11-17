@@ -38,9 +38,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.IOException;
@@ -193,8 +193,13 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			cpDefinition.getCPDefinitionId());
 		commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
 
-		commerceOrderImporterItemImpl.setJSON(
-			GetterUtil.getString(commerceWishListItem.getJson(), "[]"));
+		String json = commerceWishListItem.getJson();
+
+		if (Validator.isNull(json)) {
+			json = "[]";
+		}
+
+		commerceOrderImporterItemImpl.setJSON(json);
 
 		commerceOrderImporterItemImpl.setQuantity(1);
 

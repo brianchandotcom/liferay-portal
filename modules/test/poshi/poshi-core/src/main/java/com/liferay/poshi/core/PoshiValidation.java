@@ -1503,8 +1503,8 @@ public class PoshiValidation {
 
 			if (childElementName.equals("command")) {
 				List<String> possibleAttributeNames = Arrays.asList(
-					"description", "ignore", "known-issues", "line-number",
-					"name", "priority");
+					"annotations", "description", "ignore", "known-issues",
+					"line-number", "name", "priority");
 
 				validateHasChildElements(childElement, filePath);
 				validateHasRequiredPropertyElements(childElement, filePath);

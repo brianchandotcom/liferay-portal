@@ -6,7 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
 
-	//This is a comment
+	// This is a comment
 
 	/*This is a multiline
 		comment.*/
@@ -61,13 +61,13 @@ definition {
 	@priority = "5"
 	test AddUser {
 
-		//This is a comment
+		// This is a comment
 
 		/*This is a multiline
 			comment.*/
 
-		//End with a ;
-		//End with a }
+		// End with a ;
+		// End with a }
 
 		property portal.release = "false";
 
@@ -104,7 +104,7 @@ definition {
 
 				echo("Please enter a unique ID.");
 
-				//This is a comment
+				// This is a comment
 
 			}
 			else if (isSet(duplicate)) {
@@ -113,11 +113,11 @@ definition {
 			else {
 				Alert.viewSuccessMessage();
 
-				//This is a comment
+				// This is a comment
 
 			}
 
-			//This is a comment
+			// This is a comment
 
 		}
 

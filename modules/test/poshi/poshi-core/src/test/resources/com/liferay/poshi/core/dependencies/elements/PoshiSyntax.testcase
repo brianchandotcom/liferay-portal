@@ -3,7 +3,7 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
-	<!-- This is a comment -->
+	<!-- This is a comment-->
 
 	<!--This is a multiline
 		comment.-->
@@ -61,14 +61,14 @@
 	</command>
 
 	<command name="AddUser" priority="5">
-		<!-- This is a comment -->
+		<!-- This is a comment-->
 
 		<!--This is a multiline
 			comment.-->
 
-		<!-- End with a ; -->
+		<!-- End with a ;-->
 
-		<!-- End with a } -->
+		<!-- End with a }-->
 
 		<property name="portal.release" value="false" />
 
@@ -110,7 +110,7 @@
 
 					<echo message="Please enter a unique ID." />
 
-					<!-- This is a comment -->
+					<!-- This is a comment-->
 				</then>
 				<elseif>
 					<isset var="duplicate" />
@@ -121,11 +121,11 @@
 				<else>
 					<execute macro="Alert#viewSuccessMessage" />
 
-					<!-- This is a comment -->
+					<!-- This is a comment-->
 				</else>
 			</if>
 
-			<!-- This is a comment -->
+			<!-- This is a comment-->
 		</for>
 
 		<for list="Breadcrumb: 1, Breadcrumb: 2" param="breadcrumbName">

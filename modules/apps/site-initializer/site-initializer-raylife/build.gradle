@@ -19,6 +19,9 @@ task buildExtraRemoteApp
 task forceDeploy
 task zipExtraRemoteApp(type: Zip)
 
+String extraRemoteAppVersion = "20211117.1615"
+String repositoryURL = "https://repository.liferay.com/nexus/content/repositories/liferay-public-releases"
+
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
 dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
@@ -30,7 +33,7 @@ artifacts {
 }
 
 dependencies {
-	extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra.remote.app", version: "20211117.1615"
+	extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra.remote.app", version: extraRemoteAppVersion
 }
 
 forceDeploy {
@@ -65,7 +68,7 @@ uploadExtraRemoteApp {
 
 		String content = buildGradleFile.getText("UTF-8")
 
-		content = content.replaceFirst(~/extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra.remote.app", version: "(\w+\.\w+)"/) {
+		content = content.replaceFirst(~/String extraRemoteAppVersion = "(\w+\.\w+)"/) {
 			String all, String versionString ->
 
 			all.replace versionString, dateString
@@ -80,6 +83,12 @@ uploadExtraRemoteApp {
 				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra.remote.app"
 				groupId = "com.liferay"
 				version = dateString
+			}
+
+			if (repositoryURL.endsWith("liferay-private-releases")) {
+				repository(url: repositoryURL) {
+					authentication password: System.properties["repository.private.password"], userName: System.properties["repository.private.username"]
+				}
 			}
 		}
 	}

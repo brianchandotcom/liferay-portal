@@ -23,6 +23,7 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.base.CPSpecificationOptionLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -78,6 +80,8 @@ public class CPSpecificationOptionLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+
+		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 
 		key = _friendlyURLNormalizer.normalize(key);
 
@@ -220,6 +224,8 @@ public class CPSpecificationOptionLocalServiceImpl
 		CPSpecificationOption cpSpecificationOption =
 			cpSpecificationOptionPersistence.findByPrimaryKey(
 				cpSpecificationOptionId);
+
+		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 
 		key = _friendlyURLNormalizer.normalize(key);
 

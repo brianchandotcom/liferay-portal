@@ -31,7 +31,8 @@ public class ProcessExecutorPathsImpl implements ProcessExecutorPaths {
 
 	@Override
 	public Path getLibPath() {
-		return Paths.get(_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR));
+		return Paths.get(
+			_props.get(PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR));
 	}
 
 	private final Props _props;

@@ -26,7 +26,7 @@ definition {
 
 	@description = "This ensures that the user can export an available language for multiple experiences."
 	@priority = "5"
-	test CanExportAnAvailableLanguageForMultiPleExperiences {
+	test CanExportAnAvailableLanguageForMultipleExperiences {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "TranslationContentPage",

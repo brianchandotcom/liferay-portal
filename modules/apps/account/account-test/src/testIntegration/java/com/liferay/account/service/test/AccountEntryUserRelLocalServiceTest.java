@@ -668,7 +668,7 @@ public class AccountEntryUserRelLocalServiceTest {
 			accountEntryId, TestPropsValues.getUserId(), _userInfo.screenName,
 			_userInfo.emailAddress, _userInfo.locale, _userInfo.firstName,
 			_userInfo.middleName, _userInfo.lastName, _userInfo.prefixId,
-			_userInfo.suffixId);
+			_userInfo.suffixId, null);
 	}
 
 	private AccountEntryUserRel _addPersonTypeAccountEntryUserRel(
@@ -682,7 +682,7 @@ public class AccountEntryUserRelLocalServiceTest {
 				accountEntryId, TestPropsValues.getUserId(),
 				userInfo.screenName, userInfo.emailAddress, userInfo.locale,
 				userInfo.firstName, userInfo.middleName, userInfo.lastName,
-				userInfo.prefixId, userInfo.suffixId);
+				userInfo.prefixId, userInfo.suffixId, null);
 	}
 
 	private void _assertPersonTypeAccountEntryUser(

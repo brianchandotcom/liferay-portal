@@ -85,7 +85,8 @@ public class UserSearchPermissionFilterContributorTest {
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0,
+			null);
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry.getAccountEntryId(), organization.getOrganizationId());

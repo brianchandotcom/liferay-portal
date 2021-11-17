@@ -398,7 +398,7 @@ definition {
 
 	@description = "This is for COMMERCE-2658. Can be Drag and Drop fragments on a Minium site page."
 	@priority = "4"
-	test FragmentsCanBeAdd {
+	test FragmentsCanBeDragAndDroppedToMiniumSitePage {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");

@@ -89,6 +89,11 @@
 	<td>//*[contains(@class, 'clay-popover-bottom show')]//*[contains(@class,'text-secondary') and contains(.,'${key_impact}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_POPOVER_ITEM</td>
+	<td>//*[contains(@class, 'clay-popover-bottom show')]//*[contains(@class,'popover-body')]//*[contains(@class,'list-group-item')]</td>
+	<td></td>
+</tr>
 <!--SIDE PANEL COMPONENT VIEW-->
 <tr>
 	<td>VIOLATION_PANEL_COMPONENT_TITLE</td>

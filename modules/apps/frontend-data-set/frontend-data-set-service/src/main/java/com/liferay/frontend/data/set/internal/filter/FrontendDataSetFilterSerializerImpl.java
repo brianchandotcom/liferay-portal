@@ -76,21 +76,19 @@ public class FrontendDataSetFilterSerializerImpl
 					frontendDataSetFilterContextContributor :
 						frontendDataSetFilterContextContributors) {
 
-				Map<String, Object> filterContext =
+				Map<String, Object> frontendDataSetFilterContext =
 					frontendDataSetFilterContextContributor.
 						getFrontendDataSetFilterContext(
 							frontendDataSetFilter, locale);
 
-				if (filterContext == null) {
+				if (frontendDataSetFilterContext == null) {
 					continue;
 				}
 
-				for (Map.Entry<String, Object> filterContextEntry :
-						filterContext.entrySet()) {
+				for (Map.Entry<String, Object> entry :
+						frontendDataSetFilterContext.entrySet()) {
 
-					jsonObject.put(
-						filterContextEntry.getKey(),
-						filterContextEntry.getValue());
+					jsonObject.put(entry.getKey(), entry.getValue());
 				}
 			}
 

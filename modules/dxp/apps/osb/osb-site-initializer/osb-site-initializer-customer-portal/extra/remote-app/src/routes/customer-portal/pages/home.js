@@ -28,8 +28,7 @@ const Home = () => {
 					name: userAccount.name,
 				})
 			);
-		}
-		else {
+		} else {
 			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
 		}
 	}, [userAccount]);

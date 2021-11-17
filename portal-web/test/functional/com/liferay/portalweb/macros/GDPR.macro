@@ -121,6 +121,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro anonymizeSingleEntryCP {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Anonymize",
+			rowEntry = "${rowEntry}");
+
+		AssertConfirm(value1 = "Are you sure you want to anonymize this entity?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro anonymizeSingleEntryViaInfoPanel {
 		LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
 

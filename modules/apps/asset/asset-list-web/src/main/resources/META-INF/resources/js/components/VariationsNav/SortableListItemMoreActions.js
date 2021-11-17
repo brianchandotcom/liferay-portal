@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -30,19 +31,21 @@ const SortableListItemMoreActions = ({
 
 	const dropDownItems = [
 		{
+			cssClasses: 'pl-3 py-1',
 			direction: -1,
 			disabled: !index,
 			icon: 'angle-up',
 			text: 'Prioritize',
 		},
 		{
+			cssClasses: 'pl-3 py-1',
 			direction: 1,
 			disabled: index + 1 === totalItems,
 			icon: 'angle-down',
 			text: 'Deprioritize',
 		},
 		{
-			cssClasses: 'border-top mt-4',
+			cssClasses: 'border-top pl-3 py-1',
 			deleteAction: true,
 			disabled: !itemIsDeleteable,
 			icon: 'trash',
@@ -63,11 +66,15 @@ const SortableListItemMoreActions = ({
 	return (
 		<ClayDropDown
 			active={show}
+			className="more-actions"
 			onActiveChange={setShow}
 			trigger={
 				<ClayButtonWithIcon
+					className={classnames('more-actions__button', {
+						'more-actions__button--active': show,
+					})}
 					displayType="unstyled"
-					symbol={show ? 'times' : 'ellipsis-v'}
+					symbol="ellipsis-v"
 				/>
 			}
 		>

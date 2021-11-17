@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -80,35 +79,35 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceExcel() throws Exception {
-		FileEntry fileEntry = _addFileEntry();
+		String originalUserName = System.getProperty("user.name");
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		System.setProperty("user.name", "test");
 
-		dlFileEntry.setModifiedDate(new Date(1634902652000L));
+		try {
+			FileEntry fileEntry = _addFileEntry();
 
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		ByteArrayOutputStream generatedByteArrayOutputStream = _serveResource(
-			FileEntry.class.getName(), _group.getGroupId());
+			dlFileEntry.setModifiedDate(new Date(1634902652000L));
 
-		byte[] expectedFileByteArray = FileUtil.getBytes(
-			getClass(), "expected.xls");
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
-		byte[] generatedFileByteArray =
-			generatedByteArrayOutputStream.toByteArray();
+			ByteArrayOutputStream generatedByteArrayOutputStream =
+				_serveResource(FileEntry.class.getName(), _group.getGroupId());
 
-		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
-			_group);
+			byte[] expectedFileByteArray = FileUtil.getBytes(
+				getClass(), "expected.xls");
 
-		User user = themeDisplay.getUser();
+			byte[] generatedFileByteArray =
+				generatedByteArrayOutputStream.toByteArray();
 
-		Assert.assertEquals(
-			new String(expectedFileByteArray),
-			new String(
-				generatedFileByteArray
-			).replace(
-				user.getFullName(), "Test Test"
-			));
+			Assert.assertEquals(
+				new String(expectedFileByteArray),
+				new String(generatedFileByteArray));
+		}
+		finally {
+			System.setProperty("user.name", originalUserName);
+		}
 	}
 
 	private FileEntry _addFileEntry() throws Exception {

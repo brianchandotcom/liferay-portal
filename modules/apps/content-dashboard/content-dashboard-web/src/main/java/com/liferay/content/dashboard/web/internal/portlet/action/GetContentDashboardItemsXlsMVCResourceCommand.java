@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.Searcher;
 
@@ -52,7 +52,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -86,18 +85,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		User user = themeDisplay.getUser();
-
 		Sheet sheet = workbook.createSheet("Content Dashboard Data");
-
-		HSSFWorkbook hssfWorkbook = (HSSFWorkbook)workbook;
-
-		hssfWorkbook.createInformationProperties();
-
-		SummaryInformation summaryInformation =
-			hssfWorkbook.getSummaryInformation();
-
-		summaryInformation.setAuthor(user.getFullName());
 
 		Locale locale = _portal.getLocale(resourceRequest);
 
@@ -372,9 +360,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		String[] keys = {"displayDate", "creationDate", "languagesTranslated"};
 
 		for (String key : keys) {
-			String cellValue = specificInformationJSONObject.get(
-				key
-			).toString();
+			Object object = specificInformationJSONObject.get(key);
+			String cellValue = null;
+
+			if (key.equals("languagesTranslated")) {
+				cellValue = StringUtil.merge((String[])object);
+			}
+			else {
+				cellValue = object.toString();
+			}
 
 			cellIndex = _createCell(cellIndex, row, cellValue);
 		}

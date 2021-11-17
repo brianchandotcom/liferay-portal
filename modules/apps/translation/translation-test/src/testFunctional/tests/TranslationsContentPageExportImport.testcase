@@ -1,6 +1,8 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Translations Management";
@@ -19,6 +21,133 @@ definition {
 		}
 		else {
 			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that the user can export an available language for multiple experiences."
+	@priority = "5"
+	test CanExportAnAvailableLanguageForMultiPleExperiences {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		for (var num : list "1,2") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage",
+				siteName = "Guest");
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience${num}",
+				segmentName = "Anyone");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			experienceList = "NewAnyoneExperience1,NewAnyoneExperience2",
+			languageList = "Spanish (Spain)");
+
+		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
+
+		for (var translationFileName : list "TranslationContentPage (NewAnyoneExperience1)-en_US-es_ES,TranslationContentPage (NewAnyoneExperience2)-en_US-es_ES") {
+			Translations.assertUnzippedFileNameFromTempFolder(translationFileName = "${translationFileName}");
+		}
+	}
+
+	@description = "This ensures that the user can export multiple available languages for a single experience."
+	@priority = "5"
+	test CanExportMultipleAvailableLanguagesForExperience {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			experienceList = "NewAnyoneExperience",
+			languageList = "Japanese (Japan),Spanish (Spain)");
+
+		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
+
+		for (var translationFileName : list "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES") {
+			Translations.assertUnzippedFileNameFromTempFolder(translationFileName = "${translationFileName}");
+		}
+	}
+
+	@description = "This ensures that the user can export multiple available languages for multiple experiences."
+	@priority = "5"
+	test CanExportMultipleAvailableLanguagesForMultipleExperiences {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan),Spanish (Spain)");
+
+		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
+
+		for (var translationFileName : list "TranslationContentPage-en_US-ja_JP,TranslationContentPage-en_US-es_ES,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES") {
+			Translations.assertUnzippedFileNameFromTempFolder(translationFileName = "${translationFileName}");
 		}
 	}
 

@@ -45,6 +45,10 @@ public class HistoryTag extends IncludeTag {
 		return _elementId;
 	}
 
+	public boolean isLocalizable() {
+		return _localizable;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -55,6 +59,10 @@ public class HistoryTag extends IncludeTag {
 
 	public void setElementId(String elementId) {
 		_elementId = elementId;
+	}
+
+	public void setLocalizable(boolean localizable) {
+		_localizable = localizable;
 	}
 
 	@Override
@@ -71,6 +79,7 @@ public class HistoryTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_elementId = null;
+		_localizable = true;
 	}
 
 	@Override
@@ -90,6 +99,8 @@ public class HistoryTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:history:friendlyURLEntryURL",
 			_getFriendlyURLEntryURL(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:history:localizable", isLocalizable());
 	}
 
 	private String _getDefaultLanguageId(
@@ -126,5 +137,6 @@ public class HistoryTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _elementId;
+	private boolean _localizable = true;
 
 }

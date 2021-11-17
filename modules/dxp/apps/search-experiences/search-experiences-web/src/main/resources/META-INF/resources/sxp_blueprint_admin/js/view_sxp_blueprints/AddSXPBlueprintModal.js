@@ -159,14 +159,10 @@ const AddModal = ({
 				configuration: _getConfiguration(),
 				description: descriptionInputValue,
 				description_i18n: {[defaultLocale]: descriptionInputValue},
-				elementInstances: {
-					queryConfiguration: {
-						queryEntries:
-							framework === FRAMEWORK_TYPES.BASELINE
-								? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
-								: [],
-					},
-				},
+				elementInstances:
+					framework === FRAMEWORK_TYPES.BASELINE
+						? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
+						: [],
 				title: inputValue,
 				title_i18n: {[defaultLocale]: inputValue},
 			}),

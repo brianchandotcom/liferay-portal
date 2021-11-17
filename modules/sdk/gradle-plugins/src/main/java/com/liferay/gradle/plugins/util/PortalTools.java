@@ -40,6 +40,8 @@ public class PortalTools {
 
 	public static final String PORTAL_VERSION_7_2_X = "7.2.x";
 
+	public static final String PORTAL_VERSION_7_3_X = "7.3.x";
+
 	public static final String PORTAL_VERSION_PROPERTY_NAME = "portal.version";
 
 	public static void addPortalToolDependencies(

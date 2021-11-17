@@ -45,6 +45,8 @@ import com.liferay.portal.search.searcher.Searcher;
 
 import java.io.ByteArrayOutputStream;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -118,9 +120,12 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 			workbook.write(byteArrayOutputStream);
 
+			LocalDate now = LocalDate.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM_dd_yyyy");
+
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				"ContentDashboardItemsData.xls",
+				"ContentDashboardItemsData"+now.format(formatter)+".xls",
 				byteArrayOutputStream.toByteArray(),
 				ContentTypes.APPLICATION_VND_MS_EXCEL);
 		}

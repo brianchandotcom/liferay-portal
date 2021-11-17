@@ -14,12 +14,17 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
 
-export default function FriendlyURLHistory({elementId, ...restProps}) {
+export default function FriendlyURLHistory({
+	elementId,
+	localizable = false,
+	...restProps
+}) {
 	const [showModal, setShowModal] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState();
 
@@ -35,12 +40,16 @@ export default function FriendlyURLHistory({elementId, ...restProps}) {
 		<>
 			<ClayButtonWithIcon
 				borderless
-				className="btn-url-history"
+				className={classNames('btn-url-history', {
+					['btn-url-history-localizable']: localizable,
+				})}
 				displayType="secondary"
 				onClick={() => {
-					setSelectedLanguageId(
-						Liferay.component(elementId).getSelectedLanguageId()
-					);
+					if (localizable) {
+						setSelectedLanguageId(
+							Liferay.component(elementId).getSelectedLanguageId()
+						);
+					}
 					setShowModal(true);
 				}}
 				outline

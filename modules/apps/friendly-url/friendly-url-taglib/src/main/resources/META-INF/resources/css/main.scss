@@ -4,9 +4,13 @@
 
 .btn-url-history {
 	position: absolute;
-	right: 3.15rem;
+	right: 0.25rem;
 	top: 3.5rem;
 	z-index: 5;
+
+	&-localizable {
+		right: 3.15rem;
+	}
 
 	&-wrapper {
 		position: relative;

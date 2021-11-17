@@ -158,12 +158,14 @@ public class LayoutsAdminDisplayContext {
 						httpServletRequest, "public-collection-page"));
 			}
 		).add(
+			() -> isShowPrivateLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(getSelectLayoutPageTemplateEntryURL(true));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "private-page"));
 			}
 		).add(
+			() -> isShowPrivateLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					getSelectLayoutCollectionURL(
@@ -1608,6 +1610,23 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
+	public boolean isShowPrivateLayouts() {
+		if (_showPrivateLayouts != null) {
+			return _showPrivateLayouts;
+		}
+
+		Group group = getSelGroup();
+
+		if (group.isPrivateLayoutsEnabled()) {
+			_showPrivateLayouts = true;
+		}
+		else {
+			_showPrivateLayouts = false;
+		}
+
+		return _showPrivateLayouts;
+	}
+
 	public boolean isShowPublicLayouts() {
 		Group selGroup = getSelGroup();
 
@@ -1619,6 +1638,10 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowUserPrivateLayouts() throws PortalException {
+		if (!isShowPrivateLayouts()) {
+			return false;
+		}
+
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isUser()) {
@@ -1983,6 +2006,7 @@ public class LayoutsAdminDisplayContext {
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
+	private Boolean _showPrivateLayouts;
 	private final StagingGroupHelper _stagingGroupHelper;
 	private String _tabs1;
 	private String _themeId;

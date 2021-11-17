@@ -2500,6 +2500,26 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "dxp");
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.viewNoTag(tagName = "dxp");
+
+		AssetCategorization.viewTag(tagName = "new tag");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
 		WebContent.deleteCP(
 			siteURLKey = "site-name",
 			webContentTitle = "Digital Transformation or Digital Experience?");

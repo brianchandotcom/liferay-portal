@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -122,14 +123,8 @@ public class SiteNavigationAdminDisplayContext {
 
 		return DropdownItemList.of(
 			stream.map(
-				siteNavigationMenuItemType -> {
-					DropdownItem dropdownItem = new DropdownItem();
-
-					_applyDropdownItem(
-						dropdownItem, siteNavigationMenuItemType, themeDisplay);
-
-					return dropdownItem;
-				}
+				siteNavigationMenuItemType -> _getDropdownItem(
+					siteNavigationMenuItemType, themeDisplay)
 			).toArray(
 				DropdownItem[]::new
 			));
@@ -404,42 +399,6 @@ public class SiteNavigationAdminDisplayContext {
 		return _updatePermission;
 	}
 
-	private void _applyDropdownItem(
-		DropdownItem dropdownItem,
-		SiteNavigationMenuItemType siteNavigationMenuItemType,
-		ThemeDisplay themeDisplay) {
-
-		dropdownItem.setData(
-			HashMapBuilder.<String, Object>put(
-				"addItemURL",
-				() -> {
-					if (!siteNavigationMenuItemType.isItemSelector()) {
-						return null;
-					}
-
-					RenderRequest renderRequest =
-						(RenderRequest)_httpServletRequest.getAttribute(
-							JavaConstants.JAVAX_PORTLET_REQUEST);
-					RenderResponse renderResponse =
-						(RenderResponse)_httpServletRequest.getAttribute(
-							JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-					PortletURL addURL = siteNavigationMenuItemType.getAddURL(
-						renderRequest, renderResponse);
-
-					return addURL.toString();
-				}
-			).put(
-				"href", _getAddURL(siteNavigationMenuItemType)
-			).put(
-				"itemSelector", siteNavigationMenuItemType.isItemSelector()
-			).put(
-				"siteNavigationMenuId", getSiteNavigationMenuId()
-			).build());
-		dropdownItem.setLabel(
-			siteNavigationMenuItemType.getLabel(themeDisplay.getLocale()));
-	}
-
 	private String _getAddURL(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {
 
@@ -492,6 +451,42 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return addURL.toString();
+	}
+
+	private DropdownItem _getDropdownItem(
+		SiteNavigationMenuItemType siteNavigationMenuItemType,
+		ThemeDisplay themeDisplay) {
+
+		return DropdownItemBuilder.setData(
+			HashMapBuilder.<String, Object>put(
+				"addItemURL",
+				() -> {
+					if (!siteNavigationMenuItemType.isItemSelector()) {
+						return null;
+					}
+
+					RenderRequest renderRequest =
+						(RenderRequest)_httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_REQUEST);
+					RenderResponse renderResponse =
+						(RenderResponse)_httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+					PortletURL addURL = siteNavigationMenuItemType.getAddURL(
+						renderRequest, renderResponse);
+
+					return addURL.toString();
+				}
+			).put(
+				"href", _getAddURL(siteNavigationMenuItemType)
+			).put(
+				"itemSelector", siteNavigationMenuItemType.isItemSelector()
+			).put(
+				"siteNavigationMenuId", getSiteNavigationMenuId()
+			).build()
+		).setLabel(
+			siteNavigationMenuItemType.getLabel(themeDisplay.getLocale())
+		).build();
 	}
 
 	private JSONArray _getSiteNavigationMenuItemsJSONArray(

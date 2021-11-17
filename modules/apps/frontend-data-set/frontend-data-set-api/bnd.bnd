@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.frontend.data.set.constants,\
 	com.liferay.frontend.data.set.filter,\
 	com.liferay.frontend.data.set.model,\
+	com.liferay.frontend.data.set.util,\
 	com.liferay.frontend.data.set.view,\
 	com.liferay.frontend.data.set.view.cards,\
 	com.liferay.frontend.data.set.view.list,\

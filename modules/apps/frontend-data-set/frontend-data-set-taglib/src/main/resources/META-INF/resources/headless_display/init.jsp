@@ -19,9 +19,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.frontend.data.set.model.FrontendDataSetActionDropdownItem" %><%@
 page import="com.liferay.frontend.data.set.model.FrontendDataSetPaginationEntry" %><%@
+page import="com.liferay.frontend.data.set.model.FrontendDataSetSortItemList" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -48,6 +48,7 @@ List<FrontendDataSetActionDropdownItem> frontendDataSetActionDropdownItems = (Li
 Object frontendDataSetDisplayViewsContext = request.getAttribute("frontend-data-set:headless-display:frontendDataSetDisplayViewsContext");
 Object frontendDataSetFiltersContext = request.getAttribute("frontend-data-set:headless-display:frontendDataSetFiltersContext");
 List<FrontendDataSetPaginationEntry> frontendDataSetPaginationEntries = (List<FrontendDataSetPaginationEntry>)request.getAttribute("frontend-data-set:headless-display:frontendDataSetPaginationEntries");
+FrontendDataSetSortItemList frontendDataSetSortItemList = (FrontendDataSetSortItemList)request.getAttribute("frontend-data-set:headless-display:frontendDataSetSortItemList");
 String id = (String)request.getAttribute("frontend-data-set:headless-display:id");
 int itemsPerPage = (int)request.getAttribute("frontend-data-set:headless-display:itemsPerPage");
 String namespace = (String)request.getAttribute("frontend-data-set:headless-display:namespace");
@@ -61,6 +62,5 @@ String selectionType = (String)request.getAttribute("frontend-data-set:headless-
 boolean showManagementBar = (boolean)request.getAttribute("frontend-data-set:headless-display:showManagementBar");
 boolean showPagination = (boolean)request.getAttribute("frontend-data-set:headless-display:showPagination");
 boolean showSearch = (boolean)request.getAttribute("frontend-data-set:headless-display:showSearch");
-SortItemList sortItemList = (SortItemList)request.getAttribute("frontend-data-set:headless-display:sortItemList");
 String style = (String)request.getAttribute("frontend-data-set:headless-display:style");
 %>

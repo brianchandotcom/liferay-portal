@@ -480,6 +480,23 @@ public class LayoutsTreeDisplayContext {
 		return false;
 	}
 
+	public boolean isShowPrivateLayouts() {
+		if (_showPrivateLayouts != null) {
+			return _showPrivateLayouts;
+		}
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (group.isPrivateLayoutsEnabled()) {
+			_showPrivateLayouts = true;
+		}
+		else {
+			_showPrivateLayouts = false;
+		}
+
+		return _showPrivateLayouts;
+	}
+
 	public boolean isSiteNavigationMenu() {
 		if (_getSiteNavigationMenuId() > 0) {
 			return true;
@@ -528,6 +545,14 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private JSONArray _getPagesOptionGroupJSONArray() {
+		if (!isShowPrivateLayouts()) {
+			return JSONUtil.putAll(
+				_getOptionJSONObject(
+					LanguageUtil.get(
+						_themeDisplay.getLocale(), "pages-hierarchy"),
+					ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT));
+		}
+
 		return JSONUtil.putAll(
 			_getOptionJSONObject(
 				LanguageUtil.get(_themeDisplay.getLocale(), _PUBLIC_PAGES_KEY),
@@ -573,6 +598,10 @@ public class LayoutsTreeDisplayContext {
 		if (Objects.equals(
 				_getPageTypeSelectedOption(),
 				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT)) {
+
+			if (!isShowPrivateLayouts()) {
+				return LanguageUtil.get(_themeDisplay.getLocale(), "pages");
+			}
 
 			return LanguageUtil.get(
 				_themeDisplay.getLocale(), _PUBLIC_PAGES_KEY);
@@ -829,6 +858,7 @@ public class LayoutsTreeDisplayContext {
 	private Boolean _pageHierarchySelectedOption;
 	private String _pageTypeSelectedOption;
 	private Long _selectedSiteNavigationMenuItemId;
+	private Boolean _showPrivateLayouts;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;

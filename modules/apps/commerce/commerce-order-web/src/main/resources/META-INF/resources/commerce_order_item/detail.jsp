@@ -15,7 +15,6 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-<!-- test order_details.jsp -->
 
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -62,10 +61,24 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 			</c:if>
 		</liferay-ui:error>
 
-		<aui:input bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" name="quantity">
-			<aui:validator name="min">1</aui:validator>
+		<aui:input name="decimalQuantity" type="text" value="<%= commerceOrderEditDisplayContext.getDecimalQuantity(commerceOrderItem) %>">
+			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />
 		</aui:input>
+
+		<aui:select label="measurement-units" name="cpMeasurementUnitId" showEmptyOption="<%= true %>">
+
+			<%
+			for (CPMeasurementUnit cpMeasurementUnit : commerceOrderEditDisplayContext.getCPMeasurementUnits()) {
+			%>
+
+				<aui:option label="<%= cpMeasurementUnit.getName(locale) %>" selected="<%= commerceOrderItem.getCPMeasurementUnitId() == cpMeasurementUnit.getCPMeasurementUnitId() %>" value="<%= cpMeasurementUnit.getCPMeasurementUnitId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
 
 		<c:if test="<%= !commerceOrder.isOpen() %>">
 			<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getUnitPrice()) %>">

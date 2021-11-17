@@ -173,7 +173,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		long commerceOrderItemId = ParamUtil.getLong(
 			actionRequest, "commerceOrderItemId");
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "decimalQuantity");
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
@@ -190,8 +191,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItem(
-					commerceOrderItemId, quantity, commerceContext,
-					serviceContext);
+					commerceOrderItemId, decimalQuantity.intValue(),
+					commerceContext, serviceContext);
 		}
 		else {
 			BigDecimal price = (BigDecimal)ParamUtil.getNumber(
@@ -199,7 +200,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
-					commerceOrderItemId, quantity, price);
+					commerceOrderItemId, decimalQuantity, price);
 		}
 
 		int requestedDeliveryDateMonth = ParamUtil.getInteger(

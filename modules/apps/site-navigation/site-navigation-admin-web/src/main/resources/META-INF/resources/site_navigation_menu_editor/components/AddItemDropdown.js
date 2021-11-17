@@ -54,9 +54,30 @@ function getNamespacedInfoItem(
 	return Liferay.Util.ns(portletNamespace, infoItem);
 }
 
+function getNamespacedInfoItems(
+	portletNamespace,
+	selectedItems,
+	siteNavigationMenuId
+) {
+	if (!selectedItems.length) {
+		return;
+	}
+
+	const infoItems = {
+		items: JSON.stringify(selectedItems),
+		siteNavigationMenuId,
+	};
+
+	return Liferay.Util.ns(portletNamespace, infoItems);
+}
+
 export function AddItemDropDown({trigger}) {
 	const [active, setActive] = useState(false);
-	const {addSiteNavigationMenuItemOptions, portletNamespace} = useConstants();
+	const {
+		addSiteNavigationMenuItemOptions,
+		categoriesMultipleSelectionEnabled,
+		portletNamespace,
+	} = useConstants();
 
 	return (
 		<>
@@ -73,14 +94,29 @@ export function AddItemDropDown({trigger}) {
 							onClick={() => {
 								if (data.itemSelector) {
 									Liferay.Util.openSelectionModal({
+										buttonAddLabel:
+											categoriesMultipleSelectionEnabled &&
+											data.multiSelection
+												? Liferay.Language.get('select')
+												: null,
+										multiple:
+											categoriesMultipleSelectionEnabled &&
+											data.multiSelection,
 										onSelect: (selection) => {
 											fetch(data.addItemURL, {
 												body: objectToFormData(
-													getNamespacedInfoItem(
-														portletNamespace,
-														selection,
-														data.siteNavigationMenuId
-													)
+													categoriesMultipleSelectionEnabled &&
+														data.multiSelection
+														? getNamespacedInfoItems(
+																portletNamespace,
+																selection,
+																data.siteNavigationMenuId
+														  )
+														: getNamespacedInfoItem(
+																portletNamespace,
+																selection,
+																data.siteNavigationMenuId
+														  )
 												),
 												method: 'POST',
 											}).then(() => {

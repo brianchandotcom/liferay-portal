@@ -2403,15 +2403,40 @@ definition {
 	}
 
 	macro viewAndDeleteAutoTaggedBlogsEntry {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
-			entryTitle = "Digital Transformation or Digital Experience?");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "digital-transformation-or-digital-experience-?",
+			layoutName = "test-page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Digital Transformation or Digital Experience?",
 			tagName = "DXP");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "dxp");
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "digital-transformation-or-digital-experience-?",
+			layoutName = "test-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewNoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "DXP");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "new tag");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 

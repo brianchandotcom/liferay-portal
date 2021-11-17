@@ -95,6 +95,8 @@ definition {
 	@description = "Verify that the user can only choose one Workflow."
 	@priority = "4"
 	test CanOnlyChooseOneWorkflow {
+		property test.name.skip.portal.instance = "KaleoFormsNewProcess#CanOnlyChooseOneWorkflow";
+
 		KaleoFormsAdmin.addProcess();
 
 		KaleoFormsAdmin.addProcessDetails(
@@ -197,6 +199,8 @@ definition {
 	@description = "Verify that a workflow added on the creation of a new process appears on Process Builder tab."
 	@priority = "4"
 	test NewProcessAppearsOnProcessBuilder {
+		property test.name.skip.portal.instance = "KaleoFormsNewProcess#NewProcessAppearsOnProcessBuilder";
+
 		KaleoFormsAdmin.addProcess();
 
 		KaleoFormsAdmin.addProcessDetails(

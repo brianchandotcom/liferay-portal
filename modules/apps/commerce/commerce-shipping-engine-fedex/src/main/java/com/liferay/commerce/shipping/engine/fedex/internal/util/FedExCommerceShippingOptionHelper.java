@@ -54,7 +54,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.Dimensions;
-import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
@@ -137,11 +136,9 @@ public class FedExCommerceShippingOptionHelper {
 		}
 
 		_dimensionCPMeasurementUnit = _getCPMeasurementUnit(
-			CPMeasurementUnitConstants.TYPE_DIMENSION, LinearUnits._CM,
-			LinearUnits._IN);
+			LinearUnits._CM, LinearUnits._IN);
 		_weightCPMeasurementUnit = _getCPMeasurementUnit(
-			CPMeasurementUnitConstants.TYPE_WEIGHT, WeightUnits._KG,
-			WeightUnits._LB);
+			WeightUnits._KG, WeightUnits._LB);
 
 		_linearUnits = LinearUnits.fromValue(
 			StringUtil.toUpperCase(_dimensionCPMeasurementUnit.getKey()));
@@ -438,12 +435,12 @@ public class FedExCommerceShippingOptionHelper {
 		return contact;
 	}
 
-	private CPMeasurementUnit _getCPMeasurementUnit(int type, String... keys)
+	private CPMeasurementUnit _getCPMeasurementUnit(String... keys)
 		throws Exception {
 
 		List<CPMeasurementUnit> cpMeasurementUnits =
 			_cpMeasurementUnitLocalService.getCPMeasurementUnits(
-				_commerceOrder.getCompanyId(), keys, type);
+				_commerceOrder.getCompanyId(), keys);
 
 		if (cpMeasurementUnits.isEmpty()) {
 			throw new CommerceShippingEngineException.MustSetMeasurementUnit(

@@ -47,6 +47,24 @@ const AppContextProvider = ({assetsPath, children}) => {
 			);
 	}, []);
 
+	useEffect(() => {
+		const onUserAccountLoading = ({detail: userAccountData}) =>
+			dispatch({
+				payload: userAccountData,
+				type: actionTypes.UPDATE_USER_ACCOUNT,
+			});
+		window.addEventListener(
+			CUSTOM_EVENTS.USER_ACCOUNT,
+			onUserAccountLoading
+		);
+
+		return () =>
+			window.removeEventListener(
+				CUSTOM_EVENTS.USER_ACCOUNT,
+				onUserAccountLoading
+			);
+	}, []);
+
 	return (
 		<AppContext.Provider value={[state, dispatch]}>
 			{children}

@@ -6,4 +6,5 @@ application:
     name: "Liferay.Data.Engine.REST"
 author: "Jeyvison Nascimento"
 clientDir: "../data-engine-rest-client/src/main/java"
+forcePredictableOperationId: true
 testDir: "../data-engine-rest-test/src/testIntegration/java"

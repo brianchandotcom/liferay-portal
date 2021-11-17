@@ -40,6 +40,7 @@ const FriendlyURLHistoryModal = ({
 	elementId,
 	friendlyURLEntryURL,
 	initialLanguageId,
+	localizable,
 	observer,
 }) => {
 	const [languageId, setLanguageId] = useState();
@@ -121,7 +122,7 @@ const FriendlyURLHistoryModal = ({
 		) {
 			setLoading(false);
 		}
-	}, [friendlyURLEntryLocalizations, loading, languageId]);
+	}, [friendlyURLEntryLocalizations, languageId, loading]);
 
 	const sendRequest = useCallback(
 		(url, friendlyURLEntryId, method = 'GET') => {
@@ -177,18 +178,32 @@ const FriendlyURLHistoryModal = ({
 				'POST'
 			).then(({success} = {}) => {
 				if (isMounted() && success) {
-					getFriendlyUrlLocalizations();
+					if (localizable) {
+						getFriendlyUrlLocalizations();
 
-					const inputComponent = Liferay.component(elementId);
+						const inputLocalizableComponent = Liferay.component(
+							elementId
+						);
 
-					if (inputComponent.getSelectedLanguageId() === languageId) {
-						inputComponent.updateInput(urlTitle);
+						if (
+							inputLocalizableComponent.getSelectedLanguageId() ===
+							languageId
+						) {
+							inputLocalizableComponent.updateInput(urlTitle);
+						}
+						else {
+							inputLocalizableComponent.updateInputLanguage(
+								urlTitle,
+								languageId
+							);
+						}
 					}
 					else {
-						inputComponent.updateInputLanguage(
-							urlTitle,
-							languageId
+						const urlTitleInput = document.getElementById(
+							elementId
 						);
+
+						urlTitleInput.value = urlTitle;
 					}
 				}
 				else {
@@ -202,6 +217,7 @@ const FriendlyURLHistoryModal = ({
 			getFriendlyUrlLocalizations,
 			isMounted,
 			languageId,
+			localizable,
 			sendRequest,
 		]
 	);
@@ -221,16 +237,18 @@ const FriendlyURLHistoryModal = ({
 					<ClayLoadingIndicator />
 				) : (
 					<>
-						<div className="language-selector-container">
-							<LanguageSelector
-								defaultLanguageId={defaultLanguageId}
-								languageIds={availableLanguages}
-								onChange={(value) => {
-									setLanguageId(value);
-								}}
-								selectedLanguageId={languageId}
-							/>
-						</div>
+						{localizable && (
+							<div className="language-selector-container">
+								<LanguageSelector
+									defaultLanguageId={defaultLanguageId}
+									languageIds={availableLanguages}
+									onChange={(value) => {
+										setLanguageId(value);
+									}}
+									selectedLanguageId={languageId}
+								/>
+							</div>
+						)}
 
 						<div className="active-url">
 							<div className="active-url-tite">
@@ -240,17 +258,17 @@ const FriendlyURLHistoryModal = ({
 							<p className="active-url-text">
 								{
 									friendlyURLEntryLocalizations[languageId]
-										.current.urlTitle
+										?.current?.urlTitle
 								}
 							</p>
 						</div>
 
-						<ClayList
-							className="show-quick-actions-one-line"
-							showQuickActionsOnHover
-						>
-							{friendlyURLEntryLocalizations[languageId].history
-								.length > 0 && (
+						{friendlyURLEntryLocalizations[languageId]?.history
+							.length > 0 && (
+							<ClayList
+								className="show-quick-actions-one-line"
+								showQuickActionsOnHover
+							>
 								<>
 									<ClayList.Header>
 										{Liferay.Language.get(
@@ -305,8 +323,8 @@ const FriendlyURLHistoryModal = ({
 										)
 									)}
 								</>
-							)}
-						</ClayList>
+							</ClayList>
+						)}
 					</>
 				)}
 			</ClayModal.Body>

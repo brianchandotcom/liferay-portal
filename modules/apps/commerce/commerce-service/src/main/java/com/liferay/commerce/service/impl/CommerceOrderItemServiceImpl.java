@@ -575,6 +575,32 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
+			long commerceOrderItemId, BigDecimal decimalQuantity,
+			BigDecimal unitPrice)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.UPDATE);
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(
+				commerceOrderItem.getCommerceOrderId());
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), commerceOrder.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
+			getUserId(), commerceOrderItemId, decimalQuantity, unitPrice);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
 			long commerceOrderItemId, int quantity, BigDecimal unitPrice)
 		throws PortalException {
 
@@ -595,8 +621,7 @@ public class CommerceOrderItemServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
-			getPermissionChecker().getUserId(), commerceOrderItemId, quantity,
-			unitPrice);
+			getUserId(), commerceOrderItemId, quantity, unitPrice);
 	}
 
 	@Override

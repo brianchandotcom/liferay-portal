@@ -358,7 +358,7 @@ definition {
 
 		Translations.openTranslationAdmin(siteURLKey = "test-site-name");
 
-		Translations.viewNoEntryDefault();
+		Translations.viewEmptyState();
 	}
 
 	@description = "This test covers LPS-127980. This ensures that the newly added field can be translated after updating the WC structure."

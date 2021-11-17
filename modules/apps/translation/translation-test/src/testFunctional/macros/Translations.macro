@@ -516,6 +516,12 @@ definition {
 		}
 	}
 
+	macro viewEmptyState {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No entries were found.");
+	}
+
 	macro viewEnabledFieldTranslationButtons {
 		for (var fieldName : list "${fieldNameList}") {
 			AssertVisible(
@@ -559,12 +565,6 @@ definition {
 				locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
 				value1 = "${failFileName}");
 		}
-	}
-
-	macro viewNoEntryDefault {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No entries were found.");
 	}
 
 	macro viewNoTranslationEntry {

@@ -67,7 +67,7 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 					getNavigation()
 				).buildString()
 			).setIcon(
-				"times-circle"
+				"trash"
 			).setLabel(
 				LanguageUtil.get(httpServletRequest, "delete")
 			).setQuickAction(

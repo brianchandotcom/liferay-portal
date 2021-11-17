@@ -38,9 +38,6 @@ definition {
 	@description = "This is a test for LPS-128810. The user cannot modify experiences at view mode."
 	@priority = "4"
 	test CannotModifyExperienceAtViewMode {
-		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
-		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
-
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -88,9 +85,6 @@ definition {
 	@description = "This is a test for LPS-128810. The user cannot modify experiences on preview draft page."
 	@priority = "4"
 	test CannotModifyExperiencesOnPreviewDraftPage {
-		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
-		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
-
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -144,9 +138,6 @@ definition {
 	@description = "This is a test for LPS-128810. The user can switch experiences at view mode."
 	@priority = "4"
 	test SwitchExperienceAtViewMode {
-		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
-		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
-
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -256,9 +247,6 @@ definition {
 	@description = "This is a test for LPS-128810. The user can switch experiences on preview draft page."
 	@priority = "4"
 	test SwitchExperienceOnPreviewDraftPage {
-		property osgi.module.configuration.file.names = "com.liferay.product.navigation.control.menu.web.internal.configuration.FFProductNavigationControlMenuConfiguration.config:com.liferay.segments.web.internal.configuration.FFSegmentsConfiguration.config";
-		property osgi.module.configurations = "layoutExperienceSelectorEnabled=&quot;true&quot;:layoutExperienceSelectorEnabled=&quot;true&quot;";
-
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

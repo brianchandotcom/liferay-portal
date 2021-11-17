@@ -701,6 +701,16 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static CommerceOrderItem updateCommerceOrderItemUnitPrice(
+			long userId, long commerceOrderItemId,
+			java.math.BigDecimal decimalQuantity,
+			java.math.BigDecimal unitPrice)
+		throws PortalException {
+
+		return getService().updateCommerceOrderItemUnitPrice(
+			userId, commerceOrderItemId, decimalQuantity, unitPrice);
+	}
+
+	public static CommerceOrderItem updateCommerceOrderItemUnitPrice(
 			long userId, long commerceOrderItemId, int quantity,
 			java.math.BigDecimal unitPrice)
 		throws PortalException {

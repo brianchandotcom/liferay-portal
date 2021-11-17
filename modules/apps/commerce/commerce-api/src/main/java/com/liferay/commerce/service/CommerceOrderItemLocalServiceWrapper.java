@@ -805,6 +805,18 @@ public class CommerceOrderItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemUnitPrice(
+				long userId, long commerceOrderItemId,
+				java.math.BigDecimal decimalQuantity,
+				java.math.BigDecimal unitPrice)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
+			userId, commerceOrderItemId, decimalQuantity, unitPrice);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemUnitPrice(
 				long userId, long commerceOrderItemId, int quantity,
 				java.math.BigDecimal unitPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {

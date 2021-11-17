@@ -532,6 +532,13 @@ public class CommerceOrderItemWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPMeasurementUnit
+		fetchCPMeasurementUnit() {
+
+		return model.fetchCPMeasurementUnit();
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CProduct fetchCProduct() {
 		return model.fetchCProduct();
 	}

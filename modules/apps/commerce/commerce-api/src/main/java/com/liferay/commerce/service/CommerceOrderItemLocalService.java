@@ -516,6 +516,11 @@ public interface CommerceOrderItemLocalService
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
+			long userId, long commerceOrderItemId, BigDecimal decimalQuantity,
+			BigDecimal unitPrice)
+		throws PortalException;
+
+	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
 			long userId, long commerceOrderItemId, int quantity,
 			BigDecimal unitPrice)
 		throws PortalException;

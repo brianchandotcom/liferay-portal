@@ -395,6 +395,17 @@ public class CommerceOrderItemServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemUnitPrice(
+				long commerceOrderItemId, java.math.BigDecimal decimalQuantity,
+				java.math.BigDecimal unitPrice)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.updateCommerceOrderItemUnitPrice(
+			commerceOrderItemId, decimalQuantity, unitPrice);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemUnitPrice(
 				long commerceOrderItemId, int quantity,
 				java.math.BigDecimal unitPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {

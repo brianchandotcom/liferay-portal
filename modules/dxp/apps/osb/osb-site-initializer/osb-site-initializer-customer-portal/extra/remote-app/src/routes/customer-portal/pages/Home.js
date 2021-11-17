@@ -49,13 +49,13 @@ const Home = () => {
 			}),
 		]) || [];
 
-	const getStatus = (slaCurrent, slaExpired, slaFuture) => {
-		if (slaCurrent.length) {
+	const getStatus = (slaCurrent, slaFuture) => {
+		if (slaCurrent) {
 			return status.active;
-		} else if (slaExpired.length) {
-			return status.expired;
-		} else if (slaFuture.length) {
+		} else if (slaFuture) {
 			return status.future;
+		} else {
+			return status.expired;
 		}
 	};
 
@@ -70,7 +70,6 @@ const Home = () => {
 				region,
 				slaCurrent,
 				slaCurrentEndDate,
-				slaExpired,
 				slaFuture,
 			}) => ({
 				code,
@@ -83,10 +82,9 @@ const Home = () => {
 				sla: {
 					current: slaCurrent,
 					currentEndDate: slaCurrentEndDate,
-					expired: slaExpired,
 					future: slaFuture,
 				},
-				status: getStatus(slaCurrent, slaExpired, slaFuture),
+				status: getStatus(slaCurrent, slaFuture),
 				title: accountBriefs.find(
 					({externalReferenceCode}) =>
 						externalReferenceCode === accountKey

@@ -43,10 +43,10 @@ const overviewPageGuard = (userAccount, _accountFlags, externalReferenceCode) =>
 };
 
 const usePageGuard = (
-	externalReferenceCode,
 	userAccount,
 	guard,
-	alternativeGuard
+	alternativeGuard,
+	externalReferenceCode
 ) => {
 	const [isLoading, setLoading] = useState(true);
 	const { data: accountFlags, isLoading: isLoadingGraphQL } = useGraphQL(

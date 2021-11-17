@@ -1,23 +1,23 @@
-import {useContext} from 'react';
+import { useContext } from 'react';
 import BaseButton from '~/common/components/BaseButton';
 import {
-	onboardingPageRedirection,
-	overviewPageRedirection,
-	projectsPageRedirection,
+	onboardingPageGuard,
+	overviewPageGuard,
 	usePageGuard,
 } from '~/common/hooks/usePageGuard';
 import Layout from '../../components/Layout';
-import {AppContext} from '../../context';
-import {actionTypes} from '../../context/reducer';
-import {steps} from '../../utils/constants';
+import { AppContext } from '../../context';
+import { actionTypes } from '../../context/reducer';
+import { steps } from '../../utils/constants';
 import WelcomeSkeleton from './Skeleton';
 
-const Welcome = ({externalReferenceCode}) => {
-	const [state, dispatch] = useContext(AppContext);
-	const {isLoading} = usePageGuard(
-		externalReferenceCode,
-		onboardingPageRedirection,
-		[overviewPageRedirection, projectsPageRedirection]
+const Welcome = ({ userAccount }) => {
+	const [{ assetsPath, externalReferenceCode }, dispatch] = useContext(AppContext);
+	const { isLoading } = usePageGuard(
+		userAccount,
+		onboardingPageGuard,
+		overviewPageGuard,
+		externalReferenceCode
 	);
 
 	if (isLoading) {
@@ -52,7 +52,7 @@ const Welcome = ({externalReferenceCode}) => {
 				className="mb-4 pb-1"
 				draggable={false}
 				height={300}
-				src={`${state.assetsPath}/assets/intro_onboarding.svg`}
+				src={`${assetsPath}/assets/intro_onboarding.svg`}
 				width={391.58}
 			/>
 
@@ -63,5 +63,7 @@ const Welcome = ({externalReferenceCode}) => {
 		</Layout>
 	);
 };
+
+Welcome.Skeleton = WelcomeSkeleton;
 
 export default Welcome;

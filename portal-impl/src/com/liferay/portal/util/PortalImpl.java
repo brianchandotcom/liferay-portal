@@ -2515,6 +2515,10 @@ public class PortalImpl implements Portal {
 		return fullNameGenerator.getFullName(firstName, middleName, lastName);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getGlobalLibDir() {
 		return PropsValues.LIFERAY_LIB_GLOBAL_DIR;

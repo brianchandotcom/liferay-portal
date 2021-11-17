@@ -1532,6 +1532,10 @@ public class PropsValues {
 	public static final String LIFERAY_HOME = PropsUtil.get(
 		PropsKeys.LIFERAY_HOME);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String LIFERAY_LIB_GLOBAL_DIR = PropsUtil.get(
 		PropsKeys.LIFERAY_LIB_GLOBAL_DIR);
 

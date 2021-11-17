@@ -564,159 +564,6 @@ definition {
 			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 		}
 	}
-	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
-	@priority = "4"
-	test ViewExperienceSelectedInPreviewPageDraft {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				type = "content");
-		}
-
-		task ("Add a Button fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-		}
-
-		task ("Add a new experience") {
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Add a Heading fragment below the Button then publish") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				targetFragmentName = "Button");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Edit the inline text of Button in Default experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
-		
-			PageEditor.editFragmentText(
-				fragmentName = "Button",
-				id = "link",
-				text = "Edited Text");
-		}
-
-		task ("Edit the inline text of Heading in new experience") {
-			PageEditor.changeExperience(newExperience = "New Experience");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Edited Heading Example");
-		}
-
-		task ("Navigate to preview draft page via Page Tree") {
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.gotoPageEllipsisItem(
-				item = "Preview Draft",
-				pageName = "Test Page Name");
-		}
-
-		task ("Change to new experience and view the new experience shown in experience selector") {
-			SelectWindow.selectPopUp(locator1 = "null");
-
-			ContentPages.changeExperience(experienceName = "New Experience");
-
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
-		}
-
-		task ("Open the preview modal and View the new experience selected in experience selector") {				
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openPreviewMode();
-
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
-		}
-
-		task ("Back to view page mode and view the new experience still selected in experience selector") {
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
-
-			PageEditor.clickBack();
-
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
-		}
-	}
-	
-	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor in staging site."
-	@priority = "4"
-	test ViewExperienceInViewMode {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				type = "content");
-		}
-
-		task ("Add a Button fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-		}
-
-		task ("Add a new experience") {
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Add a Heading fragment below the Button then publish") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				targetFragmentName = "Button");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Change to new experience at view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
-				
-			ContentPages.changeExperience(experienceName = "New Experience");
-		}
-
-		task ("View the new experience shown in experience selector") {
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
-		}
-
-		task ("Open the preview modal and View the new experience selected in experience selector") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openPreviewMode();
-
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
-		}
-
-		task ("Back to view page mode and view the new experience still selected in experience selector") {
-			IFrame.closeFrame();
-
-			PageEditor.clickBack();
-
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
-		}
-	}
 
 	@description = "This is a test for LPS-112030. Can return to a specific interaction state via Undo History list in Staging site."
 	@priority = "3"
@@ -1682,6 +1529,160 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(0, 0, 255, 1)");
+		}
+	}
+
+	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor in staging site."
+	@priority = "4"
+	test ViewExperienceInViewMode {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a new experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a Heading fragment below the Button then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Change to new experience at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			ContentPages.changeExperience(experienceName = "New Experience");
+		}
+
+		task ("View the new experience shown in experience selector") {
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("Open the preview modal and View the new experience selected in experience selector") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openPreviewMode();
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("Back to view page mode and view the new experience still selected in experience selector") {
+			IFrame.closeFrame();
+
+			PageEditor.clickBack();
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+	}
+
+	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
+	@priority = "4"
+	test ViewExperienceSelectedInPreviewPageDraft {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a new experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a Heading fragment below the Button then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Edit the inline text of Button in Default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Edited Text");
+		}
+
+		task ("Edit the inline text of Heading in new experience") {
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Edited Heading Example");
+		}
+
+		task ("Navigate to preview draft page via Page Tree") {
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Preview Draft",
+				pageName = "Test Page Name");
+		}
+
+		task ("Change to new experience and view the new experience shown in experience selector") {
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ContentPages.changeExperience(experienceName = "New Experience");
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("Open the preview modal and View the new experience selected in experience selector") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openPreviewMode();
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+		}
+
+		task ("Back to view page mode and view the new experience still selected in experience selector") {
+			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+
+			PageEditor.clickBack();
+
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
 		}
 	}
 

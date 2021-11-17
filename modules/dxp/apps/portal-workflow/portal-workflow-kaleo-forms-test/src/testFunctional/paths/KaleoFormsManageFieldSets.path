@@ -19,13 +19,30 @@
 <tr>
 	<td>SORTED_UP_ICON</td>
 	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
+
+
+
+
+
+
+
+
+
+
+<tr>
+	<td>PAGINATION_NUMBER</td>
+	<td>//*[contains(@class, 'page-link') and contains(text(), '${key_pageNumber}')]</td>
 	<td></td>
 </tr>
 </tbody>
 </table>
 </body>
+<<<<<<< HEAD
 </html>
 </tbody>
 </table>
 </body>
 </html> 
+=======
+</html>
+>>>>>>> 3475fb3 (LRQA-70713 Add NavigateToTheNextPage test)

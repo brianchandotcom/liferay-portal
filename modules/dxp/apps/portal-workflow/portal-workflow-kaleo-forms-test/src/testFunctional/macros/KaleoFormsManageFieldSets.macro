@@ -107,3 +107,43 @@ definition {
 	}
 
 }
+	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    macro viewPageNumber {
+		for (var pageNumber : list "${pageNumberList}") {
+			var key_pageNumber = "${pageNumber}";
+
+			AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#PAGINATION_NUMBER");
+		}
+	}
+
+}

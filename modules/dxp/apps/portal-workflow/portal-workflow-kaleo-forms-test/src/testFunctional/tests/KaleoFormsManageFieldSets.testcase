@@ -155,12 +155,17 @@ definition {
 	}
 
 	@description = "Verify that the user can navigate to the next page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test NavigateToTheNextPage {
+		Pagination.changePagination(itemsPerPage = "4");
 
-		// TODO LRQA-70713 NavigateToTheNextPage pending implementation
+		KaleoFormsAdmin.viewNextFieldSetPage();
 
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+
+		KaleoFormsManageFieldSets.viewPageNumber(pageNumberList = "2");
+
+		
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No Field Sets were found-."

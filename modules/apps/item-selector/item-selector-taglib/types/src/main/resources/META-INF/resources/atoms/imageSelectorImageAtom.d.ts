@@ -13,12 +13,13 @@
  */
 
 export declare const STR_NULL_IMAGE_FILE_ENTRY_ID = '0';
-declare const imageSelectorCoverImageAtom: {
+declare const imageSelectorImageAtom: {
 	readonly 'default': {
 		readonly fileEntryId: string;
+		readonly paramName: string;
 		readonly src: string;
 	};
 	readonly 'key': string;
 	readonly 'Liferay.State.ATOM': true;
 };
-export default imageSelectorCoverImageAtom;
+export default imageSelectorImageAtom;

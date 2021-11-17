@@ -15,7 +15,7 @@
 import {State} from '@liferay/frontend-js-state-web';
 import {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
-	imageSelectorCoverImageAtom,
+	imageSelectorImageAtom,
 } from 'item-selector-taglib';
 
 const CSS_INVISIBLE = 'invisible';
@@ -135,8 +135,12 @@ export default class Blogs {
 		);
 
 		this._imageSelectorCoverImageSubscription = State.subscribe(
-			imageSelectorCoverImageAtom,
-			(data) => this._updateCaption(data)
+			imageSelectorImageAtom,
+			({paramName, ...data}) => {
+				if (paramName === 'coverImageFileEntry') {
+					this._updateCaption(data);
+				}
+			}
 		);
 
 		const publishButton = this._getElementById('publishButton');

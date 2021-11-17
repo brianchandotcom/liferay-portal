@@ -17,5 +17,5 @@ export {default as ItemSelectorRepositoryEntryBrowser} from './repository_entry_
 
 export {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
-	default as imageSelectorCoverImageAtom,
-} from './atoms/imageSelectorCoverImageAtom';
+	default as imageSelectorImageAtom,
+} from './atoms/imageSelectorImageAtom';

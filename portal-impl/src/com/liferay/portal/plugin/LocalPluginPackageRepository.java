@@ -57,25 +57,6 @@ public class LocalPluginPackageRepository {
 		return new ArrayList<>(_pluginPackages.values());
 	}
 
-	public List<PluginPackage> getPluginPackages(
-		String groupId, String artifactId) {
-
-		List<PluginPackage> pluginPackages = new ArrayList<>();
-
-		for (PluginPackage pluginPackage : _pluginPackages.values()) {
-			String pluginPackageGroupId = pluginPackage.getGroupId();
-			String pluginPackageArtifactId = pluginPackage.getArtifactId();
-
-			if (pluginPackageGroupId.equals(groupId) &&
-				pluginPackageArtifactId.equals(artifactId)) {
-
-				pluginPackages.add(pluginPackage);
-			}
-		}
-
-		return pluginPackages;
-	}
-
 	public List<PluginPackage> getSortedPluginPackages() {
 		List<PluginPackage> pluginPackages = new ArrayList<>();
 
@@ -117,10 +98,6 @@ public class LocalPluginPackageRepository {
 		throws PortalException {
 
 		_pluginPackages.remove(pluginPackage.getContext());
-	}
-
-	public void removePluginPackage(String context) {
-		_pluginPackages.remove(context);
 	}
 
 	public void unregisterPluginPackageInstallation(String context) {

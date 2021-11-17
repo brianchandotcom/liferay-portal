@@ -1317,6 +1317,129 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
+	macro editTagsAndDeleteAutoTaggedBlogsEntry {
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "digital-transformation-or-digital-experience-?",
+			layoutName = "test-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "DXP");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "dxp");
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "digital-transformation-or-digital-experience-?",
+			layoutName = "test-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewNoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "DXP");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "new tag");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+
+		BlogsEntry.viewNoPG(
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+	}
+
+	macro editTagsAndDeleteAutoTaggedDM {
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "${tagName}");
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		Button.clickPublish();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertNoAutoTag(tagName = "${tagName}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "new tag");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
+	}
+
+	macro editTagsAndDeleteAutoTaggedWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.viewTag(tagName = "dxp");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "dxp");
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.viewNoTag(tagName = "dxp");
+
+		AssetCategorization.viewTag(tagName = "new tag");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "site-name",
+			webContentTitle = "Digital Transformation or Digital Experience?");
+	}
+
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -2404,129 +2527,6 @@ definition {
 		WikiPage.viewPagePG(
 			wikiPageContent = "Wiki Page Content After Upgrade",
 			wikiPageTitle = "Wiki Page Title After Upgrade");
-	}
-
-	macro editTagsAndDeleteAutoTaggedBlogsEntry {
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "digital-transformation-or-digital-experience-?",
-			layoutName = "test-page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewAutoTag(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			tagName = "DXP");
-
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		Panel.expandPanel(panel = "Categorization");
-
-		AssetCategorization.removeTag(tagName = "dxp");
-
-		AssetCategorization.addTag(tagName = "new tag");
-
-		PortletEntry.publish();
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "digital-transformation-or-digital-experience-?",
-			layoutName = "test-page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewNoTag(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			tagName = "DXP");
-
-		BlogsEntry.viewAutoTag(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			tagName = "new tag");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
-
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
-			entryTitle = "Digital Transformation or Digital Experience?");
-
-		BlogsEntry.viewNoPG(
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
-			entryTitle = "Digital Transformation or Digital Experience?");
-	}
-
-	macro editTagsAndDeleteAutoTaggedDM {
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
-
-		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		Panel.expandPanel(panel = "Categorization");
-
-		AssetCategorization.removeTag(tagName = "${tagName}");
-
-		AssetCategorization.addTag(tagName = "new tag");
-
-		Button.clickPublish();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
-
-		AutoTagging.assertNoAutoTag(tagName = "${tagName}");
-
-		AutoTagging.assertAutoTagPresent(tagName = "new tag");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
-	}
-
-	macro editTagsAndDeleteAutoTaggedWebContent {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
-
-		Panel.expandPanel(panel = "Categorization");
-
-		AssetCategorization.viewTag(tagName = "dxp");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
-
-		Panel.expandPanel(panel = "Categorization");
-
-		AssetCategorization.removeTag(tagName = "dxp");
-
-		AssetCategorization.addTag(tagName = "new tag");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
-
-		Panel.expandPanel(panel = "Categorization");
-
-		AssetCategorization.viewNoTag(tagName = "dxp");
-
-		AssetCategorization.viewTag(tagName = "new tag");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContent.deleteCP(
-			siteURLKey = "site-name",
-			webContentTitle = "Digital Transformation or Digital Experience?");
 	}
 
 	macro viewAndDeleteFormEntry {

@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.delivery.catalog.internal.graphql.query.v1
 
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductSpecification;
@@ -23,6 +25,8 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.CategoryResource;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.MappedProductResource;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductSpecificationResource;
@@ -73,6 +77,22 @@ public class Query {
 
 		_categoryResourceComponentServiceObjects =
 			categoryResourceComponentServiceObjects;
+	}
+
+	public static void setMappedProductResourceComponentServiceObjects(
+		ComponentServiceObjects<MappedProductResource>
+			mappedProductResourceComponentServiceObjects) {
+
+		_mappedProductResourceComponentServiceObjects =
+			mappedProductResourceComponentServiceObjects;
+	}
+
+	public static void setPinResourceComponentServiceObjects(
+		ComponentServiceObjects<PinResource>
+			pinResourceComponentServiceObjects) {
+
+		_pinResourceComponentServiceObjects =
+			pinResourceComponentServiceObjects;
 	}
 
 	public static void setProductResourceComponentServiceObjects(
@@ -180,6 +200,58 @@ public class Query {
 			categoryResource -> new CategoryPage(
 				categoryResource.getChannelProductCategoriesPage(
 					channelId, productId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductMappedProducts(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public MappedProductPage channelProductMappedProducts(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mappedProductResource -> new MappedProductPage(
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, accountId, search,
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						mappedProductResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductPins(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public PinPage channelProductPins(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pinResourceComponentServiceObjects, this::_populateResourceContext,
+			pinResource -> new PinPage(
+				pinResource.getChannelProductPinsPage(
+					channelId, productId, accountId, search,
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(pinResource, sortsString))));
 	}
 
 	/**
@@ -366,6 +438,72 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Category> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("MappedProductPage")
+	public class MappedProductPage {
+
+		public MappedProductPage(Page mappedProductPage) {
+			actions = mappedProductPage.getActions();
+
+			items = mappedProductPage.getItems();
+			lastPage = mappedProductPage.getLastPage();
+			page = mappedProductPage.getPage();
+			pageSize = mappedProductPage.getPageSize();
+			totalCount = mappedProductPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<MappedProduct> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("PinPage")
+	public class PinPage {
+
+		public PinPage(Page pinPage) {
+			actions = pinPage.getActions();
+
+			items = pinPage.getItems();
+			lastPage = pinPage.getLastPage();
+			page = pinPage.getPage();
+			pageSize = pinPage.getPageSize();
+			totalCount = pinPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Pin> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -591,6 +729,34 @@ public class Query {
 		categoryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			MappedProductResource mappedProductResource)
+		throws Exception {
+
+		mappedProductResource.setContextAcceptLanguage(_acceptLanguage);
+		mappedProductResource.setContextCompany(_company);
+		mappedProductResource.setContextHttpServletRequest(_httpServletRequest);
+		mappedProductResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		mappedProductResource.setContextUriInfo(_uriInfo);
+		mappedProductResource.setContextUser(_user);
+		mappedProductResource.setGroupLocalService(_groupLocalService);
+		mappedProductResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(PinResource pinResource)
+		throws Exception {
+
+		pinResource.setContextAcceptLanguage(_acceptLanguage);
+		pinResource.setContextCompany(_company);
+		pinResource.setContextHttpServletRequest(_httpServletRequest);
+		pinResource.setContextHttpServletResponse(_httpServletResponse);
+		pinResource.setContextUriInfo(_uriInfo);
+		pinResource.setContextUser(_user);
+		pinResource.setGroupLocalService(_groupLocalService);
+		pinResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(ProductResource productResource)
 		throws Exception {
 
@@ -668,6 +834,10 @@ public class Query {
 		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CategoryResource>
 		_categoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MappedProductResource>
+		_mappedProductResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PinResource>
+		_pinResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>
 		_productResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductOptionResource>

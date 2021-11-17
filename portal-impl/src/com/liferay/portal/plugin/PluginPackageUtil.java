@@ -112,13 +112,6 @@ public class PluginPackageUtil {
 			groupId, artifactId);
 	}
 
-	public static PluginPackage getLatestInstalledPluginPackage(
-		String groupId, String artifactId) {
-
-		return _pluginPackageUtil._getLatestInstalledPluginPackage(
-			groupId, artifactId);
-	}
-
 	public static PluginPackage getPluginPackageByModuleId(
 			String moduleId, String repositoryURL)
 		throws PortalException {
@@ -142,12 +135,6 @@ public class PluginPackageUtil {
 
 	public static String[] getRepositoryURLs() {
 		return _pluginPackageUtil._getRepositoryURLs();
-	}
-
-	public static String[] getStatusAndInstalledVersion(
-		PluginPackage pluginPackage) {
-
-		return _pluginPackageUtil._getStatusAndInstalledVersion(pluginPackage);
 	}
 
 	public static String[] getSupportedTypes() {
@@ -342,13 +329,6 @@ public class PluginPackageUtil {
 		return _findLatestVersion(pluginPackages);
 	}
 
-	private PluginPackage _getLatestInstalledPluginPackage(
-		String groupId, String artifactId) {
-
-		return _installedPluginPackages.getLatestPluginPackage(
-			groupId, artifactId);
-	}
-
 	private PluginPackage _getPluginPackageByModuleId(
 			String moduleId, String repositoryURL)
 		throws PortalException {
@@ -405,38 +385,6 @@ public class PluginPackageUtil {
 			throw new PluginPackageException(
 				"Unable to read repository list", exception);
 		}
-	}
-
-	private String[] _getStatusAndInstalledVersion(
-		PluginPackage pluginPackage) {
-
-		PluginPackage installedPluginPackage =
-			_installedPluginPackages.getLatestPluginPackage(
-				pluginPackage.getGroupId(), pluginPackage.getArtifactId());
-
-		String status = null;
-		String installedVersion = null;
-
-		if (installedPluginPackage == null) {
-			status = PluginPackageImpl.STATUS_NOT_INSTALLED;
-		}
-		else {
-			installedVersion = installedPluginPackage.getVersion();
-
-			if (installedPluginPackage.isLaterVersionThan(pluginPackage)) {
-				status = PluginPackageImpl.STATUS_NEWER_VERSION_INSTALLED;
-			}
-			else if (installedPluginPackage.isPreviousVersionThan(
-						pluginPackage)) {
-
-				status = PluginPackageImpl.STATUS_OLDER_VERSION_INSTALLED;
-			}
-			else {
-				status = PluginPackageImpl.STATUS_SAME_VERSION_INSTALLED;
-			}
-		}
-
-		return new String[] {status, installedVersion};
 	}
 
 	private String[] _getSupportedTypes() {

@@ -49,27 +49,6 @@ public class LocalPluginPackageRepository {
 		_pluginPackages.put(pluginPackage.getContext(), pluginPackage);
 	}
 
-	public PluginPackage getLatestPluginPackage(
-		String groupId, String artifactId) {
-
-		PluginPackage latestPluginPackage = null;
-
-		for (PluginPackage pluginPackage : _pluginPackages.values()) {
-			String pluginPackageGroupId = pluginPackage.getGroupId();
-			String pluginPackageArtifactId = pluginPackage.getArtifactId();
-
-			if (pluginPackageGroupId.equals(groupId) &&
-				pluginPackageArtifactId.equals(artifactId) &&
-				((latestPluginPackage == null) ||
-				 pluginPackage.isLaterVersionThan(latestPluginPackage))) {
-
-				latestPluginPackage = pluginPackage;
-			}
-		}
-
-		return latestPluginPackage;
-	}
-
 	public PluginPackage getPluginPackage(String context) {
 		return _pluginPackages.get(context);
 	}

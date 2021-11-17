@@ -129,15 +129,17 @@ definition {
 				value1 = "${threadBody}");
 		}
 		else {
-			if ("${bold}" == "true") {
-				FormFields.toggleCKEditorContentStyle(optionTool = "Bold");
-			}
-
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
 				locator1 = "CKEditor#BODY",
 				value1 = "${threadBody}");
+
+			if ("${bold}" == "true") {
+				SelectFrame();
+
+				FormFields.toggleCKEditorContentStyle(optionTool = "Bold");
+			}
 		}
 
 		SelectFrame(value1 = "relative=top");

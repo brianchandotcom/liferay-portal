@@ -18,9 +18,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import imageSelectorCoverImageAtom, {
+import imageSelectorImageAtom, {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
-} from '../../atoms/imageSelectorCoverImageAtom';
+} from '../../atoms/imageSelectorImageAtom';
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
 import ChangeImageControls from './ChangeImageControls';
@@ -250,11 +250,10 @@ const ImageSelector = ({
 	};
 
 	useEffect(() => {
-		const isCoverImageSelector = paramName === 'coverImageFileEntry';
-
-		if (isCoverImageSelector) {
-			State.write(imageSelectorCoverImageAtom, image);
-		}
+		State.write(imageSelectorImageAtom, {
+			...image,
+			paramName,
+		});
 	}, [image, paramName]);
 
 	useEffect(() => {

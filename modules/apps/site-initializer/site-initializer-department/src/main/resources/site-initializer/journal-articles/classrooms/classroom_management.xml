@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="4yJnBIV5" name="CourseName" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Project Manager Certificate]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="MczeHQtp" name="CourseVideoThumbnail" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/thumb_video_management.jpg$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="Jaz7WIYP" name="Module1FieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="yYPMyXOv" name="Module1" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="c8d1TMpg" name="Module1Name" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Product Strategy]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="U6CTDaeL" name="Module1Description" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="0hAxBORo" name="Module1VideoURL" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_URL:/site-initializer/documents/video_management.mp4$]]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="HCY5k4eO" name="Module2FieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="xYK5O47l" name="Module2" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="luGDcrXu" name="Module2Name" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Agile Product Development]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="vLB1NckH" name="Module2Description" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="rortlNxV" name="Module2VideoURL" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_URL:/site-initializer/documents/video_management.mp4$]]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="gJssL0y7" name="Module3FieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="iCZAis4U" name="Module3" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="QnjR2RWP" name="Module3Name" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Refining Products]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="VtcTUzve" name="Module3Description" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="tbnC2EPp" name="Module3VideoURL" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_URL:/site-initializer/documents/video_management.mp4$]]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

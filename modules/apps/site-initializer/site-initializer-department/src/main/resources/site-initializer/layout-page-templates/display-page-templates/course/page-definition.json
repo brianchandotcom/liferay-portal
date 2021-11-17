@@ -1,0 +1,2173 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "brandColor1",
+						"borderWidth": "0",
+						"paddingBottom": "7",
+						"paddingLeft": "2",
+						"paddingRight": "2",
+						"paddingTop": "5"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "0",
+								"paddingBottom": "4",
+								"paddingLeft": "0",
+								"paddingRight": "0",
+								"paddingTop": "0"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 8,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 4,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingTop": "2"
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingTop": "0"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"marginTop": "0",
+												"paddingTop": "3"
+											},
+											"id": "tablet"
+										}
+									],
+									"gutters": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1,
+												"reverseOrder": true,
+												"verticalAlignment": "top"
+											}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 5
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Category"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontFamily": "fontFamilySansSerif",
+														"marginBottom": "2"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-heading"
+													},
+													"fragmentConfig": {
+														"displayLevel": "4",
+														"headingLevel": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Name",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ShortDescription",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "fontSizeLg",
+														"marginBottom": "4",
+														"marginRight": "8"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													]
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-button"
+													},
+													"fragmentConfig": {
+														"buttonSize": "lg",
+														"buttonType": "primary"
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																}
+															}
+														}
+													]
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 7
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "brandColor2",
+														"borderWidth": "0",
+														"marginBottom": "3",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingBottom": "2",
+																"paddingLeft": "2",
+																"paddingRight": "2",
+																"paddingTop": "2"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "3",
+																"marginLeft": "0",
+																"paddingBottom": "2",
+																"paddingLeft": "2",
+																"paddingRight": "2",
+																"paddingTop": "2"
+															},
+															"id": "tablet"
+														}
+													],
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 1,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-video-map"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-video",
+																	"value": {
+																		"html": {
+																			"mapping": {
+																				"fieldKey": "Video",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															]
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"paddingBottom": "8",
+						"paddingLeft": "2",
+						"paddingRight": "2",
+						"paddingTop": "8"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingBottom": "0",
+								"paddingLeft": "0",
+								"paddingRight": "0",
+								"paddingTop": "5"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 10,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 10,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "0"
+									},
+									"id": "tablet"
+								}
+							],
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "7"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginBottom": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"gutters": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 8
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-heading"
+													},
+													"fragmentConfig": {
+														"displayLevel": "0",
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Course Program"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontFamily": "fontFamilySansSerif",
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ProgramDescription",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "fontSizeLg",
+														"marginRight": "8",
+														"textColor": ""
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													]
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "darkColor",
+														"borderWidth": "0",
+														"marginRight": "4",
+														"paddingBottom": "5",
+														"paddingLeft": "5",
+														"paddingRight": "5",
+														"paddingTop": "5",
+														"textColor": "whiteColor"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingLeft": "4",
+																"paddingRight": "4"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"marginRight": "0",
+																"paddingBottom": "4",
+																"paddingLeft": "5",
+																"paddingRight": "5",
+																"paddingTop": "4"
+															},
+															"id": "tablet"
+														}
+													],
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 2,
+														"marginTop": 0,
+														"paddingBottom": 4,
+														"paddingLeft": 4,
+														"paddingRight": 4,
+														"paddingTop": 4,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															},
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Duration:&nbsp;&nbsp;"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "Duration",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															},
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Max Retakes:&nbsp;&nbsp;"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "MaxRetakes",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															},
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Pass Percentage:&nbsp;&nbsp;"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "PassPercentage",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															},
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Lessons:&nbsp;&nbsp;"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "NumberOfLessons",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															},
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Quizzes:&nbsp;&nbsp;"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold"
+																	}
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "department-text-block"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "Quizzes",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							},
+							{
+								"definition": {
+									"gutters": true,
+									"modulesPerRow": 3,
+									"numberOfColumns": 3,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginBottom": "5",
+														"marginRight": "4"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "5",
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													],
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 4,
+														"marginLeft": 0,
+														"marginRight": 2,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Module 1"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-heading"
+															},
+															"fragmentConfig": {
+																"displayLevel": "0",
+																"headingLevel": "h5"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module1Name",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module1NumberOfLessons",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"textColor": "secondaryColor"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module1Duration",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "4",
+																"textColor": "secondaryColor"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module2Description",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif"
+															}
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginBottom": "5",
+														"marginRight": "4"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													],
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 4,
+														"marginLeft": 0,
+														"marginRight": 2,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Module 2"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-heading"
+															},
+															"fragmentConfig": {
+																"displayLevel": "0",
+																"headingLevel": "h5"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module2Name",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module2NumberOfLessons",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"textColor": "secondaryColor"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module2Duration",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "4",
+																"textColor": "secondaryColor"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module2Description",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif"
+															}
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginBottom": "5",
+														"marginRight": "4"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginRight": "0"
+															},
+															"id": "tablet"
+														}
+													],
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 4,
+														"marginLeft": 0,
+														"marginRight": 2,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Module 3"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "1"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-heading"
+															},
+															"fragmentConfig": {
+																"displayLevel": "0",
+																"headingLevel": "h5"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module3Name",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module3NumberOfLessons",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"textColor": "secondaryColor"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module3Duration",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"marginBottom": "4",
+																"textColor": "secondaryColor"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "Module2Description",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif"
+															}
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "brandColor3",
+						"borderWidth": "0",
+						"marginBottom": "9",
+						"paddingBottom": "9",
+						"paddingLeft": "2",
+						"paddingRight": "2",
+						"paddingTop": "9"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "5",
+								"paddingBottom": "7",
+								"paddingLeft": "2",
+								"paddingRight": "2",
+								"paddingTop": "6"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"align": "Center",
+						"borderWidth": 0,
+						"contentDisplay": "FlexColumn",
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "department-text-block"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "500+ hiring companies including"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"fontSize": "fontSizeLg",
+								"fontWeight": "fontWeightBold",
+								"marginBottom": "5",
+								"textAlign": "center"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "4"
+									},
+									"id": "tablet"
+								}
+							]
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "department-image"
+							},
+							"fragmentConfig": {
+								"imageSize": "w-100"
+							},
+							"fragmentFields": [
+								{
+									"id": "image-square",
+									"value": {
+										"fragmentImage": {
+											"description": {
+												"value_i18n": {
+													"en_US": ""
+												}
+											},
+											"fragmentImageClassPKReference": {
+												"classPKReferences": {
+													"en_US": {
+														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/logos.svg$]"
+													}
+												},
+												"fragmentImageConfiguration": {
+													"landscapeMobile": "auto",
+													"portraitMobile": "auto",
+													"tablet": "auto"
+												}
+											}
+										},
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"maxWidth": "100%",
+								"width": "920px"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "department-text-block"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"maxWidth": "100%",
+								"textAlign": "center",
+								"width": "575px"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "4"
+									},
+									"id": "tablet"
+								}
+							]
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "department-button"
+							},
+							"fragmentConfig": {
+								"buttonSize": "lg",
+								"buttonType": "primary"
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										}
+									}
+								}
+							]
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginBottom": "7"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "5"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "department-heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "0",
+								"headingLevel": "h5"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Teachers"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"fontWeight": "fontWeightBold",
+								"marginBottom": "7"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.asset.list.model.AssetListEntry",
+									"classPK": "[$ASSET_LIST_ENTRY_ID:TEACHERS$]"
+								},
+								"collectionType": "Collection"
+							},
+							"listItemStyle": "",
+							"listStyle": "",
+							"numberOfColumns": 4,
+							"numberOfItems": 4,
+							"numberOfItemsPerPage": 5,
+							"templateKey": ""
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "department-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-100"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "Image",
+																	"itemReference": {
+																		"contextSource": "CollectionItem"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+															"value_i18n": {
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "4"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "department-heading"
+											},
+											"fragmentConfig": {
+												"displayLevel": "0",
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+															"value_i18n": {
+															}
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "Name",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "2"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "department-text-block"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+															"value_i18n": {
+															}
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "Info",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5"
+											}
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-1"
+		}
+	}
+}

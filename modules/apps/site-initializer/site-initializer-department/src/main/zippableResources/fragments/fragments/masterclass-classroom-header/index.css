@@ -1,0 +1,60 @@
+.department-classroom-header {
+	align-items: center;
+	display: flex;
+	font-family: var(--font-family-sans-serif);
+	justify-content: space-between;
+	padding: 0;
+	z-index: 2;
+}
+
+.department-classroom-header .nav-item .nav-link {
+	color: inherit;
+	padding: 0;
+}
+
+.department-classroom-header .nav-item a:hover,
+.department-classroom-header .nav-item a:focus {
+	color: inherit;
+}
+
+.department-classroom-header .small {
+	font-size: 0.8rem;
+	font-weight: var(--font-weight-bold);
+	letter-spacing: 1px;
+}
+
+.navbar-collapse {
+	flex-grow: 0;
+}
+
+.department-classroom-header .course-name {
+	border-left: 1px solid var(--gray-900);
+	font-weight: var(--font-weight-bold);
+	margin-bottom: 4px;
+}
+
+@media (min-width: 992px) {
+	.department-navbar-user {
+		padding: var(--spacer-4) 0;
+	}
+}
+
+@media (max-width: 992px) {
+	.department-classroom-header {
+		height: 72px;
+	}
+
+	.department-classroom-header.open .dropdown-item {
+		color: initial;
+		font-size: initial;
+		font-weight: var(--font-weight-bold);
+		padding: var(--spacer-2) 0;
+	}
+
+}
+
+@media (max-width: 575px) {
+	.department-classroom-header .course-name {
+		font-size: 16px;
+	}
+}

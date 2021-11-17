@@ -1,0 +1,73 @@
+[#assign
+	navUserClass = ""
+	privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() + "/" + themeDisplay.getUser().getFirstName()
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+	publicSiteNavbarClass =""
+	userName = themeDisplay.getUser().getFirstName()
+/]
+
+[#if !themeDisplay.isSignedIn()]
+	[#assign publicSiteNavbarClass = "logged-in" /]
+[/#if]
+
+<nav class="department-classroom-header">
+		<div class="align-items-center d-flex">
+					<a class="d-inline-flex mr-2 mr-md-3 site-logo" href="${publicFriendlyURL}">
+			<img alt="" class="navbar-logo" data-lfr-editable-id="imageLogo" data-lfr-editable-type="image" src="[resources:department_symbol.svg]" width="26" />
+		</a>
+
+		<h5 class="course-name pl-2 pl-md-3" data-lfr-editable-id="courseName" data-lfr-editable-type="text">
+			Course Name
+		</h5>
+		</div>
+<div id="navbarSupportedContent">
+
+			<ul class="department-navbar-user navbar-nav">
+				[#if themeDisplay.isSignedIn()]
+					<li class="dropdown nav-item">
+						<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="liferay-dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
+							<img alt="" class="btn btn-monospaced" src="[resources:icon_user_logged.svg]" />
+
+							<span class="font-weight-bold ml-1">${userName}</span>
+						</a>
+
+						<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
+							<li>
+								<a class="dropdown-item" href="${publicFriendlyURL}/my-learning">
+									My Learning
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="${publicFriendlyURL}/notifications">
+									Notifications
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="${publicFriendlyURL}/account-settings">
+									Account Settings
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="${publicFriendlyURL}">
+									Home
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}?referer=${publicFriendlyURL}">
+									Sign Out
+								</a>
+							</li>
+						</ul>
+					</li>
+				[#else]
+					<li class="nav-item">
+						<a class="nav-link" href="${publicFriendlyURL}/sign-in">
+							<img alt="" class="btn btn-monospaced p-1" src="[resources:icon_user_not_logged.svg]" />
+
+							<span class="small text-uppercase">Sign In</span>
+						</a>
+					</li>
+				[/#if]
+			</ul>
+		</div>
+</nav>

@@ -1,0 +1,33 @@
+.department-link {
+	color: inherit;
+}
+
+.department-link a {
+	border-radius: 0;
+	color: inherit;
+	font-family: var(--font-family-sans-serif);
+	font-weight: var(--font-weight-bolder);
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.link-arrow {
+	display: inline-block;
+	margin-left: var(--spacer-2);
+	transform: translate(0px, -1px);
+}
+
+.department-link:hover .link-arrow {
+	transform: translate(4px, -1px);
+	transition: all 0.15s ease-in-out;
+}
+
+.link-lg {
+	font-size: 13px;
+	padding: 0;
+}
+
+.link-sm {
+	font-size: 11.5px;
+	padding: 0;
+}

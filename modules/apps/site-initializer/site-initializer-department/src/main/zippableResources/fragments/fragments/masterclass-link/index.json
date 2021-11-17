@@ -1,0 +1,28 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "lg",
+					"label": "size",
+					"name": "linkSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

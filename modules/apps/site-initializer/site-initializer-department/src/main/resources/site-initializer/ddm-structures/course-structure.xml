@@ -1,0 +1,1141 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Course</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
+							"direction": "[vertical]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Name",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Name"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Name",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
+							"direction": "[vertical]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "ShortDescription",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Short Description"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "ShortDescription",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
+							"direction": "[vertical]",
+							"displayStyle": "multiline",
+							"fieldNamespace": "",
+							"fieldReference": "ProgramDescription",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Program Description"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "ProgramDescription",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "",
+							"fieldReference": "VideoThumbnail",
+							"indexType": "text",
+							"label": {
+								"en_US": "Video Thumbnail"
+							},
+							"localizable": true,
+							"name": "VideoThumbnail",
+							"objectFieldName": "",
+							"predefinedValue": {
+								"en_US": "{}"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "Video",
+							"indexType": "text",
+							"label": {
+								"en_US": "Video"
+							},
+							"localizable": true,
+							"name": "Video",
+							"objectFieldName": "",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						},
+						{
+							"collapsible": false,
+							"ddmStructureId": "",
+							"ddmStructureLayoutId": "",
+							"fieldReference": "Features",
+							"label": {
+								"en_US": "Features"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": false,
+							"name": "Features",
+							"nestedFields": [
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "NumberOfLessons",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Number of Lessons"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "NumberOfLessons",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Quizzes",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Quizzes"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Quizzes",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Duration",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Duration"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Duration",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "MaxRetakes",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Max Retakes"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "MaxRetakes",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "PassPercentage",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Pass Percentage"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "PassPercentage",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								}
+							],
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "fieldset",
+							"upgradedStructure": false
+						},
+						{
+							"collapsible": false,
+							"ddmStructureId": "",
+							"ddmStructureLayoutId": "",
+							"fieldReference": "Module1",
+							"label": {
+								"en_US": "Module 1"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": false,
+							"name": "Module1",
+							"nestedFields": [
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "multiline",
+									"fieldNamespace": "",
+									"fieldReference": "Module1Description",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 1 Description"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module1Description",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module1Name",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 1 Name"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module1Name",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module1Duration",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 1 Duration"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module1Duration",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module1NumberOfLessons",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 1 Number of Lessons"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module1NumberOfLessons",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								}
+							],
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "fieldset",
+							"upgradedStructure": false
+						},
+						{
+							"collapsible": false,
+							"ddmStructureId": "",
+							"ddmStructureLayoutId": "",
+							"fieldReference": "Module2",
+							"label": {
+								"en_US": "Module 2"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": false,
+							"name": "Module2",
+							"nestedFields": [
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "multiline",
+									"fieldNamespace": "",
+									"fieldReference": "Module2Description",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 2 Description"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module2Description",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module2Name",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 2 Name"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module2Name",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module2Duration",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 2 Duration"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module2Duration",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module2NumberOfLessons",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 2 Number of Lessons"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module2NumberOfLessons",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								}
+							],
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "fieldset",
+							"upgradedStructure": false
+						},
+						{
+							"collapsible": false,
+							"ddmStructureId": "",
+							"ddmStructureLayoutId": "",
+							"fieldReference": "Module3",
+							"label": {
+								"en_US": "Module 3"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": false,
+							"name": "Module3",
+							"nestedFields": [
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "multiline",
+									"fieldNamespace": "",
+									"fieldReference": "Module3Description",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 3 Description"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module3Description",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module3Name",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 3 Name"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module3Name",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module3Duration",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 3 Duration"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module3Duration",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"autocomplete": false,
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataSourceType": "",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": "[]",
+									"ddmDataProviderInstanceOutput": "[]",
+									"direction": "[vertical]",
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Module3NumberOfLessons",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Module 3 Number of Lessons"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Module3NumberOfLessons",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								}
+							],
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "fieldset",
+							"upgradedStructure": false
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

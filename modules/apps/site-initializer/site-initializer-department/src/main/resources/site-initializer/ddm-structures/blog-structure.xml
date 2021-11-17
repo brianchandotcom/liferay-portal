@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Blog</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[vertical]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Title",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Title"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Title",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[vertical]",
+							"displayStyle": "multiline",
+							"fieldNamespace": "",
+							"fieldReference": "Subtitle",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Subtitle"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Subtitle",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "",
+							"fieldReference": "MainImage",
+							"indexType": "text",
+							"label": {
+								"en_US": "Main Image"
+							},
+							"localizable": true,
+							"name": "MainImage",
+							"objectFieldName": "",
+							"predefinedValue": {
+								"en_US": "{}"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[vertical]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "ImageAuthor",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Image Author"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "ImageAuthor",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "Body",
+							"indexType": "text",
+							"label": {
+								"en_US": "Body"
+							},
+							"localizable": true,
+							"name": "Body",
+							"objectFieldName": "",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

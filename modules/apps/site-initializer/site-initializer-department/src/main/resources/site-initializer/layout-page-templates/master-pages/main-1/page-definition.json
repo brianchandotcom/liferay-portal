@@ -1,0 +1,410 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "brandColor1",
+						"borderWidth": "0",
+						"paddingLeft": "2",
+						"paddingRight": "2"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "department-navbar"
+									},
+									"fragmentConfig": {
+										"position": "static"
+									},
+									"fragmentFields": [
+										{
+											"id": "imageLogo",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"backgroundColor": "brandColor1"
+									},
+									"widgetInstances": [
+										{
+											"widgetConfig": {
+												"displayDepth": "0",
+												"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+												"displayStyleGroupId": "[$GROUP_ID$]",
+												"expandedLevels": "auto",
+												"rootMenuItemLevel": "0",
+												"rootMenuItemType": "absolute",
+												"siteNavigationMenuName": "Main Navigation",
+												"siteNavigationMenuType": "-1"
+											},
+											"widgetInstanceId": "nav",
+											"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+										}
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+							{
+								"key": "BASIC_COMPONENT-button"
+							},
+							{
+								"key": "BASIC_COMPONENT-card"
+							},
+							{
+								"key": "BASIC_COMPONENT-dropdown"
+							},
+							{
+								"key": "BASIC_COMPONENT-external-video"
+							},
+							{
+								"key": "BASIC_COMPONENT-html"
+							},
+							{
+								"key": "BASIC_COMPONENT-heading"
+							},
+							{
+								"key": "BASIC_COMPONENT-image"
+							},
+							{
+								"key": "BASIC_COMPONENT-paragraph"
+							},
+							{
+								"key": "BASIC_COMPONENT-separator"
+							},
+							{
+								"key": "BASIC_COMPONENT-slider"
+							},
+							{
+								"key": "BASIC_COMPONENT-social"
+							},
+							{
+								"key": "BASIC_COMPONENT-spacer"
+							},
+							{
+								"key": "BASIC_COMPONENT-tabs"
+							},
+							{
+								"key": "BASIC_COMPONENT-video"
+							},
+							{
+								"key": "COOKIE_BANNER-cookie-banner-simple"
+							},
+							{
+								"key": "DIALECT-dialect-button"
+							},
+							{
+								"key": "DIALECT-dialect-nav"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-slider"
+							},
+							{
+								"key": "FOOTERS-footer-nav-dark"
+							},
+							{
+								"key": "FOOTERS-footer-nav-light"
+							},
+							{
+								"key": "NAVIGATION_BARS-header-dark"
+							},
+							{
+								"key": "NAVIGATION_BARS-header-light"
+							},
+							{
+								"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+							}
+						]
+					}
+				},
+				"type": "DropZone"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"paddingLeft": "2",
+						"paddingRight": "2"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "department-footer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "imageLogoFooter",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialLinkin",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialFacebook",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "footerText",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialInstagram",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialLinkinLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													},
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialYoutubeLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													},
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialFacebookLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													},
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialYoutube",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "socialInstagramLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													},
+													"value_i18n": {
+													}
+												}
+											}
+										}
+									],
+									"widgetInstances": [
+										{
+											"widgetConfig": {
+												"displayDepth": "0",
+												"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+												"displayStyleGroupId": "[$GROUP_ID$]",
+												"expandedLevels": "auto",
+												"rootMenuItemLevel": "0",
+												"rootMenuItemType": "absolute",
+												"siteNavigationMenuName": "Main Navigation",
+												"siteNavigationMenuType": "-1"
+											},
+											"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+										}
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	}
+}

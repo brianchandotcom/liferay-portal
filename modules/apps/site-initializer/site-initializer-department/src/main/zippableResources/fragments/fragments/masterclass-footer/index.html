@@ -1,0 +1,43 @@
+[#assign
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+/]
+
+<nav class="department-footer pb-lg-8 py-4">
+	<div class="align-items-center department-footer-border row">
+		<div class="col-12 col-lg">
+			<a class="d-inline-flex site-logo" href="${publicFriendlyURL}">
+				<img alt="" class="navbar-logo" data-lfr-editable-id="imageLogoFooter" data-lfr-editable-type="image" src="[resources:department_logo.svg]" width="162" />
+			</a>
+		</div>
+
+		<div class="col-12 col-lg-auto py-3 py-lg-0 small">
+			<lfr-widget-nav></lfr-widget-nav>
+		</div>
+	</div>
+
+	<div class="align-items-center row">
+		<div class="col-12 col-lg mb-2 mb-lg-0">
+			<small data-lfr-editable-id="footerText" data-lfr-editable-type="text">
+				© 2021 Liferay. All Rights Reserved
+			</small>
+		</div>
+
+		<div class="col-12 col-lg-auto department-footer-social">
+			<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialInstagramLink" data-lfr-editable-type="link" href="#">
+				<img alt="Instagram link" data-lfr-editable-id="socialInstagram" data-lfr-editable-type="image" src="[resources:social_icon_instagram.svg]" />
+			</a>
+
+			<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialFacebookLink" data-lfr-editable-type="link" href="#">
+				<img alt="Facebook link" data-lfr-editable-id="socialFacebook" data-lfr-editable-type="image" src="[resources:social_icon_facebook.svg]" />
+			</a>
+
+			<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialLinkinLink" data-lfr-editable-type="link" href="#">
+				<img alt="Linkin link" data-lfr-editable-id="socialLinkin" data-lfr-editable-type="image" src="[resources:social_icon_linkin.svg]" />
+			</a>
+
+			<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialYoutubeLink" data-lfr-editable-type="link" href="#">
+				<img alt="Youtube link" data-lfr-editable-id="socialYoutube" data-lfr-editable-type="image" src="[resources:social_icon_youtube.svg]" />
+			</a>
+		</div>
+	</div>
+</nav>

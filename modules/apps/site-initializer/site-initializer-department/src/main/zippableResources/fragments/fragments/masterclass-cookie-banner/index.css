@@ -1,0 +1,19 @@
+.cookie-banner {
+	background-color: var(--gray-300);
+	transition: opacity 1s ease;
+	z-index: 100;
+}
+
+body:not(.has-edit-mode-menu) .banner-fixed-bottom {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+}
+
+body:not(.has-edit-mode-menu) .banner-fixed-top {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+}

@@ -1,0 +1,239 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.asset.list.model.AssetListEntry",
+							"classPK": "[$ASSET_LIST_ENTRY_ID:CLASSROOMS$]"
+						},
+						"collectionType": "Collection"
+					},
+					"listItemStyle": "",
+					"listStyle": "",
+					"numberOfColumns": 3,
+					"numberOfItems": 5,
+					"numberOfItemsPerPage": 5,
+					"templateKey": ""
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionItemConfig": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentLink": {
+										"href": {
+											"mapping": {
+												"fieldKey": "displayPageURL",
+												"itemReference": {
+													"contextSource": "CollectionItem"
+												}
+											}
+										}
+									},
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"marginBottom": "5",
+										"shadow": "boxShadow"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginRight": "0"
+											},
+											"id": "tablet"
+										}
+									],
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 4,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0"
+											},
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "CourseVideoThumbnail",
+																			"itemReference": {
+																				"contextSource": "CollectionItem"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																}
+															}
+														}
+													]
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "whiteColor",
+														"borderWidth": "0",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4"
+													},
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 2,
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"paddingTop": 2,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-heading"
+															},
+															"fragmentConfig": {
+																"displayLevel": "0",
+																"headingLevel": "h3"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "CourseName",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "3"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "department-link"
+															},
+															"fragmentConfig": {
+																"linkSize": "sm"
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"mapping": {
+																						"fieldKey": "displayPageURL",
+																						"itemReference": {
+																							"contextSource": "CollectionItem"
+																						}
+																					}
+																				}
+																			},
+																			"value_i18n": {
+																			}
+																		}
+																	}
+																}
+															]
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "CollectionItem"
+					}
+				],
+				"type": "Collection"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "private-area"
+		},
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

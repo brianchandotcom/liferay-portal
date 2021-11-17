@@ -1,0 +1,271 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginBottom": "7",
+						"marginTop": "8"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 8,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 10,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "department-heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "0",
+								"headingLevel": "h3"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Courses"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"fontWeight": "fontWeightNormal",
+								"marginBottom": "6"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.asset.list.model.AssetListEntry",
+									"classPK": "[$ASSET_LIST_ENTRY_ID:COURSES$]"
+								},
+								"collectionType": "Collection"
+							},
+							"listItemStyle": "",
+							"listStyle": "",
+							"numberOfColumns": 3,
+							"numberOfItems": 5,
+							"numberOfItemsPerPage": 5,
+							"templateKey": ""
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0",
+												"marginBottom": "5",
+												"marginRight": "4"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginRight": "0"
+													},
+													"id": "tablet"
+												}
+											],
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 4,
+												"marginLeft": 0,
+												"marginRight": 2,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Category"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontFamily": "fontFamilySansSerif",
+														"marginBottom": "2",
+														"textColor": "secondaryColor"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-heading"
+													},
+													"fragmentConfig": {
+														"displayLevel": "0",
+														"headingLevel": "h2"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Name",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ShortDescription",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "fontSizeLg",
+														"marginBottom": "3",
+														"textColor": ""
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "department-link"
+													},
+													"fragmentConfig": {
+														"linkSize": "lg"
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
+																	"value_i18n": {
+																	}
+																}
+															}
+														}
+													]
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-1"
+		}
+	}
+}

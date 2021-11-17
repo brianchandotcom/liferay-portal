@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="2D8LdBbz" name="Title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Meet the Steve Jobs of the marketing industry]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="rDvJ4CN6" name="Subtitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[The subtitle summarizes the publication in a few short sentences aimed at motivating to continue reading.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="bMNTozJr" name="MainImage" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/blog_02.jpg$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="wAbSpc0d" name="ImageAuthor" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Photo by fauxels from Pexels.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="f65XxYew" name="Body" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ultricies lacus sed turpis tincidunt id. Est ante in nibh mauris cursus mattis molestie a iaculis. Ut tortor pretium viverra suspendisse potenti nullam ac tortor. Amet est placerat in egestas erat imperdiet sed euismod nisi. Sagittis nisl rhoncus mattis rhoncus. Consectetur purus ut faucibus pulvinar elementum integer enim. Convallis tellus id interdum velit. Blandit volutpat maecenas volutpat blandit. Facilisis leo vel fringilla est. Aliquam purus sit amet luctus venenatis lectus magna fringilla.</p>
+		<h3>Analyze your audience well</h3>
+		<p>Aliquam malesuada bibendum arcu vitae. Sapien pellentesque habitant morbi tristique senectus. Tempus egestas sed sed risus pretium quam vulputate. Nisl pretium fusce id velit ut. Id semper risus in hendrerit gravida rutrum. Aliquet bibendum enim facilisis gravida neque convallis a cras. Consequat id porta nibh venenatis. Diam in arcu cursus euismod quis viverra nibh cras pulvinar. Eget dolor morbi non arcu risus quis varius quam quisque.</p>
+		<p>Orci eu lobortis elementum nibh tellus molestie nunc non blandit. Lacus vel facilisis volutpat est velit. Curabitur vitae nunc sed velit dignissim sodales. Nibh sit amet commodo nulla. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique senectus. Mattis pellentesque id nibh tortor id aliquet lectus. Leo in vitae turpis massa sed elementum tempus egestas. Commodo ullamcorper a lacus vestibulum sed arcu non odio euismod. Ut venenatis tellus in metus vulputate eu scelerisque.</p>
+		<h3>Focus on relevant content</h3>
+		<p>Nec nam aliquam sem et. Sem integer vitae justo eget magna fermentum iaculis eu non. Elementum integer enim neque volutpat ac tincidunt vitae. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Aliquam sem fringilla ut morbi. Dolor morbi non arcu risus. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat in.</p>
+		<p>Metus dictum at tempor commodo ullamcorper a lacus vestibulum sed. Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices. Pellentesque habitant morbi tristique senectus. Amet venenatis urna cursus eget nunc scelerisque viverra mauris. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Sed elementum tempus egestas sed. Odio euismod lacinia at quis risus sed. Mauris augue neque gravida in fermentum et sollicitudin.</p>
+		<h3>Surprise your readers</h3>
+		<p>In fermentum posuere urna nec tincidunt praesent. Euismod lacinia at quis risus sed vulputate odio ut enim. Volutpat lacus laoreet non curabitur. Faucibus interdum posuere lorem ipsum dolor sit amet consectetur. Ridiculus mus mauris vitae ultricies leo integer malesuada. Sodales ut etiam sit amet nisl. Mi proin sed libero enim sed faucibus turpis in eu.</p>
+		<p>Velit sed ullamcorper morbi tincidunt ornare massa. Cursus eget nunc scelerisque viverra. In fermentum et sollicitudin ac orci phasellus egestas tellus. Augue eget arcu dictum varius duis at. Consequat nisl vel pretium lectus quam id leo in vitae. Proin libero nunc consequat interdum varius sit amet. Quisque id diam vel quam elementum pulvinar etiam. Vestibulum rhoncus est pellentesque elit. Scelerisque eu ultrices vitae auctor eu augue. Ullamcorper eget nulla facilisi etiam dignissim. Diam donec adipiscing tristique risus nec feugiat in fermentum posuere. Vulputate dignissim suspendisse in est ante in nibh. At ultrices mi tempus imperdiet nulla malesuada.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

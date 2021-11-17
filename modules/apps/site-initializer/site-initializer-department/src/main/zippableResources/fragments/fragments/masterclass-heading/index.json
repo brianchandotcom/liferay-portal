@@ -1,0 +1,73 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "h1",
+					"label": "heading-level",
+					"name": "headingLevel",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "h1"
+							},
+							{
+								"value": "h2"
+							},
+							{
+								"value": "h3"
+							},
+							{
+								"value": "h4"
+							},
+							{
+								"value": "h5"
+							},
+							{
+								"value": "h6"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "0",
+					"label": "display-level",
+					"name": "displayLevel",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "0"
+							},
+							{
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
+								"value": "3"
+							},
+							{
+								"value": "4"
+							},
+							{
+								"value": "5"
+							},
+							{
+								"value": "6"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

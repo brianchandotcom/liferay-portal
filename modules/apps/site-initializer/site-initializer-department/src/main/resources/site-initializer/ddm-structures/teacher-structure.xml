@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Teacher</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
+							"direction": "[vertical]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Name",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Name"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Name",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "",
+							"fieldReference": "Image",
+							"indexType": "text",
+							"label": {
+								"en_US": "Image"
+							},
+							"localizable": true,
+							"name": "Image",
+							"objectFieldName": "",
+							"predefinedValue": {
+								"en_US": "{}"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image",
+							"visibilityExpression": ""
+						},
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
+							"direction": "[vertical]",
+							"displayStyle": "multiline",
+							"fieldNamespace": "",
+							"fieldReference": "Info",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Info"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Info",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

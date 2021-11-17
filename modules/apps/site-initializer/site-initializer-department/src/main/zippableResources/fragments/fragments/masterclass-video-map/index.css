@@ -1,0 +1,9 @@
+.component-video p {
+	line-height: 0;
+	margin-bottom: 0;
+}
+
+.component-video video {
+	height: auto;
+	max-width: 100%;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="rCTyJOHy" name="Name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Brooklyn Simmons]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="Nlg7yI6d" name="Image" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/teacher_brooklyn_simmons.jpg$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="gypbP4JG" name="Info" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.]]></dynamic-content>
+	</dynamic-element>
+</root>

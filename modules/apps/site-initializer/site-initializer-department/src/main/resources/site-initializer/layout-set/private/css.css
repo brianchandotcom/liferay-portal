@@ -1,0 +1,136 @@
+/*----- TYPOGRAPHY -----*/
+
+/*Montserrat*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap');
+
+/*Source Serif*/
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@0;1&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: inherit;
+	font-weight: inherit;
+	line-height: 1.25;
+	margin-bottom: var(--spacer-3);
+}
+
+/*-----GENERAL-----*/
+
+body {
+	line-height: 1.65;
+}
+
+p {
+	margin-bottom: var(--spacer-3);
+}
+
+a,
+a:hover {
+	color: var(--primary);
+}
+
+.container-fluid, 
+.container-fluid-max-xl {
+	position: relative;
+}
+
+/*-----COMPONENTS-----*/
+
+/*Buttons*/
+
+.department-btn.btn {
+	border-radius: 0;
+	font-family: var(--font-family-sans-serif);
+	font-weight: var(--font-weight-bolder);
+	letter-spacing: 2px;
+	padding: var(--spacer-2) var(--spacer-3);
+	text-transform: uppercase;
+}
+
+.department-btn.btn-lg {
+	font-size: 12px;
+}
+
+.department-btn.btn-link {
+	padding: 0;
+}
+
+.department-btn.btn-link a {
+	color: inherit;
+}
+
+.department-btn.btn-nm {
+	font-size: 11px;
+}
+
+.department-btn .link-arrow {
+	display: inline-block;
+	margin-left: var(--spacer-2);
+	transform: translate(0, -1px);
+}
+
+.department-btn:hover .link-arrow {
+    transform: translate(4px, -1px);
+	transition: all 0.15s ease-in-out;
+}
+
+.portlet-boundary .btn  {
+	border-radius: 0;
+}
+
+/*Form Controls*/
+
+.form-control {
+	background-color: var(--white);
+	border: var(--white);
+	border-radius: 0;
+	font-family: var(--font-family-sans-serif);
+	height: auto;
+}
+
+.form-control-nm {
+	padding: var(--spacer) var(--spacer-5);
+}
+
+.form-control-lg {
+	padding: var(--spacer) var(--spacer-5);
+}
+
+
+/*Navigation Menu*/
+
+.list-menu ul {
+	font-family: var(--font-family-sans-serif);
+    list-style: none;
+	padding-left: 0;
+}
+
+.list-menu .lfr-nav-item a {
+	display: block;
+	padding: var(--spacer-2) var(--spacer-5);
+	text-decoration: none;
+	width: 100%;
+}
+
+.list-menu .lfr-nav-item a:hover {
+	color: var(--primary);
+}
+
+.list-menu .lfr-nav-item {
+	color: var(--secondary);
+}
+
+.list-menu .lfr-nav-item.active a {
+	background-color: var(--gray-200);
+	color: var(--primary);
+}
+
+.dropdown-item:hover {
+	background-color: var(--brand-color-2);
+}

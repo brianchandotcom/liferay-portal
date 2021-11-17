@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="20NosvcP" name="Name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Project Manager Certification]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="8HFRNkw7" name="ShortDescription" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[This is a short description to introduce the key aspects of the course.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="xa29z3C8" name="ProgramDescription" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="1pCS00XC" name="VideoThumbnail" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/thumb_video_management.jpg$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="UQIv4nRI" name="Video" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>
+<video controls=""><source src="[$DOCUMENT_URL:/site-initializer/documents/video_management.mp4$]" type="video/mp4" /></video>
+</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="jSnynw83" name="FeaturesFieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="g4XtKzw3" name="Features" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="uikm0Vgm" name="NumberOfLessons" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[9]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="HtZkz1TZ" name="Quizzes" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[3]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="kDGj9Ehy" name="Duration" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[4 weeks]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="dZKl0npa" name="MaxRetakes" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="cRGhBAb7" name="PassPercentage" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[90%]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="lG30GnjH" name="Module1FieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="0yH8J30n" name="Module1" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="uhmsaSqS" name="Module1Description" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="52l34J8D" name="Module1Name" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Exploration & Strategy]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="jvTFfCuc" name="Module1Duration" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[1 week]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="qYVkHEGy" name="Module1NumberOfLessons" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[2 lessons]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="Uw4M7Qj0" name="Module2FieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="3RgF98i4" name="Module2" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="8j0ae9kk" name="Module2Description" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="1p8AXQxS" name="Module2Name" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Agile Product Development]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="DZr5UmkG" name="Module2Duration" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[1 week]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="KhvnhwGK" name="Module2NumberOfLessons" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[3 lessons]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="SxTtR5AV" name="Module3FieldSet" type="fieldset">
+		<dynamic-element index-type="none" instance-id="um46jj2d" name="Module3" type="fieldset" />
+		<dynamic-element index-type="keyword" instance-id="6MnRQsKD" name="Module3Description" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="l17Ounw6" name="Module3Name" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Refining Products]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="CQRGFie1" name="Module3Duration" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[2 weeks]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="PwjzeQAp" name="Module3NumberOfLessons" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[4 lessons]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

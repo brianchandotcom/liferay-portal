@@ -1,0 +1,114 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "static",
+					"label": "position",
+					"name": "position",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "static"
+							},
+							{
+								"value": "relative"
+							},
+							{
+								"value": "fixed"
+							},
+							{
+								"value": "absolute"
+							},
+							{
+								"value": "sticky"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "top",
+					"name": "positionTop",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "right",
+					"name": "positionRight",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "bottom",
+					"name": "positionBottom",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "left",
+					"name": "positionLeft",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "z index",
+					"name": "zIndex",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "number"
+						}
+					}
+				}
+			]
+		}
+	]
+}

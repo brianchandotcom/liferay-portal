@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "normal",
+					"label": "Fixed Style",
+					"name": "fixedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "none",
+								"value": ""
+							},
+							{
+								"label": "Top",
+								"value": "banner-fixed-top"
+							},
+							{
+								"label": "Bottom",
+								"value": "banner-fixed-bottom"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

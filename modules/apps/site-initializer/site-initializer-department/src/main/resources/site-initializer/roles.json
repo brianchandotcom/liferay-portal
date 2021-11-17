@@ -1,0 +1,52 @@
+[
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.portal.kernel.model.Group"
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com_liferay_layout_admin_web_portlet_GroupPagesPortlet"
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.portal.kernel.model.Layout"
+			}
+		],
+		"name": "Student",
+		"scope": 3,
+		"type": 2
+	},
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.portal.kernel.model.Group"
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com_liferay_layout_admin_web_portlet_GroupPagesPortlet"
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.portal.kernel.model.Layout"
+			}
+		],
+		"name": "Teacher",
+		"scope": 3,
+		"type": 2
+	}
+]

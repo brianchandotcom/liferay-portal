@@ -1,5 +1,5 @@
 export const actionTypes = {
-    UPDATE_ASSETS_PATH: 'UPDATE_ASSETS_PATH',
+    UPDATE_USER_ACCOUNT: 'UPDATE_USER_ACCOUNT',
 };
 
 const reducer = (state, action) => {
@@ -8,10 +8,10 @@ const reducer = (state, action) => {
     }
 
     switch (action.type) {
-        case actionTypes.UPDATE_ASSETS_PATH: {
+        case actionTypes.UPDATE_USER_ACCOUNT: {
             return {
                 ...state,
-                assetsPath: action.payload,
+                userAccount: action.payload,
             };
         }
         default: {

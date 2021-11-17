@@ -1,7 +1,15 @@
+import { useContext } from "react";
+import { AppContext } from '../context';
 import Home from "./Home";
 
 const Pages = () => {
-  return (<Home />);
+  const [{ userAccount }] = useContext(AppContext);
+
+  if (userAccount) {
+    return <Home userAccount={userAccount} />;
+  } else {
+    return <Home.Skeleton />;
+  }
 };
 
 export default Pages;

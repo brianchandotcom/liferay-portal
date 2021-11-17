@@ -1,47 +1,25 @@
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import useGraphQL from '~/common/hooks/useGraphQL';
 import {LiferayTheme} from '~/common/services/liferay';
 import {getKoroneikiAccountsByFilter} from '~/common/services/liferay/graphql/koroneiki-accounts';
-import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {REACT_APP_LIFERAY_API} from '~/common/utils';
-import Banner from '../components/Banner';
-import ProjectCard from '../components/ProjectCard';
-import SearchProject from '../components/SearchProject';
-import {status} from '../utils/constants';
+import {PARAMS_KEYS} from '~/common/services/liferay/search-params';
+import Banner from '../../components/Banner';
+import ProjectCard from '../../components/ProjectCard';
+import SearchProject from '../../components/SearchProject';
+import {status} from '../../utils/constants';
+import HomeSkeleton from './Skeleton';
 
 const PROJECT_THRESHOLD_COUNT = 4;
+const liferaySiteName = LiferayTheme.getLiferaySiteName();
 
-const Home = () => {
+const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
-	const {data, isLoading: isLoadingUser} = useGraphQL([
-		getUserAccountById(LiferayTheme.getUserId()),
-	]);
-
-	useEffect(() => {
-		if (data) {
-			Storage.setItem(
-				STORAGE_KEYS.USER_APPLICATION,
-				JSON.stringify({
-					accountKey: data.userAccount.accountKey,
-					image:
-						data.userAccount.image &&
-						`${REACT_APP_LIFERAY_API}${data.userAccount.image}`,
-					name: data.userAccount.name,
-				})
-			);
-		} else {
-			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
-		}
-	}, [data]);
-
-	const accountBriefs = data?.userAccount.accountBriefs || [];
 
 	const {data: koroneikiAccountsData, isLoading: isLoadingKoroneiki} =
 		useGraphQL([
 			getKoroneikiAccountsByFilter({
-				accountKeys: accountBriefs.map(
+				accountKeys: userAccount.accountBriefs.map(
 					({externalReferenceCode}) => externalReferenceCode
 				),
 			}),
@@ -83,7 +61,7 @@ const Home = () => {
 					future: slaFuture,
 				},
 				status: getStatus(slaCurrent, slaFuture),
-				title: accountBriefs.find(
+				title: userAccount.accountBriefs.find(
 					({externalReferenceCode}) =>
 						externalReferenceCode === accountKey
 				).name,
@@ -95,11 +73,9 @@ const Home = () => {
 			? project.title.toLowerCase().includes(keyword.toLowerCase())
 			: true
 	);
-	const nextPage = (project) =>
-		Storage.setItem(
-			STORAGE_KEYS.KORONEIKI_APPLICATION,
-			JSON.stringify(project)
-		);
+	const nextPage = (project) => {
+		window.location.href = `${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.externalReferenceCode}`;
+	};
 	const withManyProjects = projects.length > PROJECT_THRESHOLD_COUNT;
 
 	return (
@@ -109,11 +85,7 @@ const Home = () => {
 					'pb-2': withManyProjects,
 				})}
 			>
-				{!isLoadingUser & !isLoadingKoroneiki ? (
-					<Banner userName={data?.userAccount.name || ''} />
-				) : (
-					<Banner.Skeleton />
-				)}
+				<Banner userName={userAccount.name} />
 			</div>
 			<div
 				className={classNames('mx-auto', {
@@ -134,7 +106,7 @@ const Home = () => {
 							</h5>
 						</div>
 					)}
-					{!isLoadingUser & !isLoadingKoroneiki ? (
+					{!isLoadingKoroneiki ? (
 						<div
 							className={classNames('d-flex flex-wrap', {
 								'home-projects': !withManyProjects,
@@ -162,5 +134,7 @@ const Home = () => {
 		</>
 	);
 };
+
+Home.Skeleton = HomeSkeleton;
 
 export default Home;

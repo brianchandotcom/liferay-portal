@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
-import java.io.File;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -102,13 +100,6 @@ public class DeployManagerImpl implements DeployManager {
 		if (ServerDetector.isTomcat()) {
 			DeployUtil.redeployTomcat(context);
 		}
-	}
-
-	@Override
-	public void undeploy(String context) throws Exception {
-		File deployDir = new File(getDeployDir(), context);
-
-		DeployUtil.undeploy(ServerDetector.getServerId(), deployDir);
 	}
 
 }

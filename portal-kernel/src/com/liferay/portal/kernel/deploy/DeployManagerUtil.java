@@ -90,10 +90,6 @@ public class DeployManagerUtil {
 		_deployManager = null;
 	}
 
-	public static void undeploy(String context) throws Exception {
-		_deployManager.undeploy(context);
-	}
-
 	public void setDeployManager(DeployManager deployManager) {
 		_deployManager = deployManager;
 	}

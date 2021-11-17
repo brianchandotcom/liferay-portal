@@ -1317,13 +1317,6 @@ public interface PropsKeys {
 
 	public static final String HOT_DEPLOY_LISTENERS = "hot.deploy.listeners";
 
-	public static final String HOT_UNDEPLOY_ENABLED = "hot.undeploy.enabled";
-
-	public static final String HOT_UNDEPLOY_INTERVAL = "hot.undeploy.interval";
-
-	public static final String HOT_UNDEPLOY_ON_REDEPLOY =
-		"hot.undeploy.on.redeploy";
-
 	public static final String HTTP_HEADER_VERSION_VERBOSITY =
 		"http.header.version.verbosity";
 

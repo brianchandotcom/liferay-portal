@@ -1157,16 +1157,6 @@ public class PropsValues {
 		HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_REGEXP = PropsUtil.get(
 			PropsKeys.HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_REGEXP);
 
-	public static final boolean HOT_UNDEPLOY_ENABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.HOT_UNDEPLOY_ENABLED));
-
-	public static final int HOT_UNDEPLOY_INTERVAL = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.HOT_UNDEPLOY_INTERVAL));
-
-	public static final boolean HOT_UNDEPLOY_ON_REDEPLOY =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.HOT_UNDEPLOY_ON_REDEPLOY));
-
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = PropsUtil.get(
 		PropsKeys.HTTP_HEADER_VERSION_VERBOSITY);
 

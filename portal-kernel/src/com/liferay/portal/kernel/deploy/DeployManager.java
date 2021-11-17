@@ -53,6 +53,4 @@ public interface DeployManager {
 
 	public void redeploy(String context) throws Exception;
 
-	public void undeploy(String context) throws Exception;
-
 }

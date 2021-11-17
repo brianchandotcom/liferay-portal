@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
@@ -449,8 +448,6 @@ public class HookHotDeployListener
 
 			HotDeployUtil.fireUndeployEvent(
 				new HotDeployEvent(servletContext, portletClassLoader));
-
-			DeployManagerUtil.undeploy(servletContextName);
 
 			return;
 		}

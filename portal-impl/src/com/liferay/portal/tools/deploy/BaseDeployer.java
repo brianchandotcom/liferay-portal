@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -56,7 +55,6 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.webserver.DynamicResourceServlet;
@@ -999,28 +997,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			File srcFile, File mergeDir, File deployDir, String displayName,
 			boolean overwrite, PluginPackage pluginPackage)
 		throws Exception {
-
-		boolean undeployOnRedeploy = false;
-
-		try {
-			undeployOnRedeploy = PrefsPropsUtil.getBoolean(
-				PropsKeys.HOT_UNDEPLOY_ON_REDEPLOY,
-				PropsValues.HOT_UNDEPLOY_ON_REDEPLOY);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			// This will only happen when running the deploy tool in Ant in the
-			// classical way where the WAR file is actually massaged and
-			// packaged.
-
-		}
-
-		if (undeployOnRedeploy) {
-			DeployUtil.undeploy(appServerType, deployDir);
-		}
 
 		if (!overwrite && UpToDateTask.isUpToDate(srcFile, deployDir)) {
 			if (_log.isInfoEnabled()) {

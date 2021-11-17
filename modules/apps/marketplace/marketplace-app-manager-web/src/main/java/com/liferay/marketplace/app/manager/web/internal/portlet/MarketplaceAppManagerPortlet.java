@@ -26,7 +26,6 @@ import com.liferay.marketplace.service.AppService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.PluginSetting;
@@ -242,14 +241,6 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 		if (remoteAppId > 0) {
 			_appService.uninstallApp(remoteAppId);
-		}
-		else {
-			String[] contextNames = StringUtil.split(
-				ParamUtil.getString(actionRequest, "contextNames"));
-
-			for (String contextName : contextNames) {
-				DeployManagerUtil.undeploy(contextName);
-			}
 		}
 
 		SessionMessages.add(actionRequest, "triggeredPortletUndeploy");

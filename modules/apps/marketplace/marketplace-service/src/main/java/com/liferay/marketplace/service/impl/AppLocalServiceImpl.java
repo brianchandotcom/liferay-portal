@@ -310,19 +310,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			if (module.isBundle()) {
 				BundleManagerUtil.uninstallBundle(
 					module.getBundleSymbolicName(), module.getBundleVersion());
-
-				continue;
-			}
-
-			if (hasDependentApp(module)) {
-				continue;
-			}
-
-			try {
-				DeployManagerUtil.undeploy(module.getContextName());
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
 			}
 		}
 	}
@@ -474,25 +461,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 			return null;
 		}
-	}
-
-	protected boolean hasDependentApp(Module module) throws PortalException {
-		List<Module> modules = modulePersistence.findByContextName(
-			module.getContextName());
-
-		for (Module curModule : modules) {
-			if (curModule.getAppId() == module.getAppId()) {
-				continue;
-			}
-
-			App app = appPersistence.findByPrimaryKey(curModule.getAppId());
-
-			if (app.isInstalled()) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected void validate(String title, String version)

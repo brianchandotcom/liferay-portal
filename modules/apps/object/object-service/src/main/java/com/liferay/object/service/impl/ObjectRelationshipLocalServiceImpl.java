@@ -318,7 +318,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		objectField.setDBTableName(dbTableName);
 
-		objectField.setIndexed(false);
+		objectField.setIndexed(true);
 		objectField.setIndexedAsKeyword(false);
 		objectField.setIndexedLanguageId(null);
 		objectField.setLabelMap(

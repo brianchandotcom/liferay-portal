@@ -28,6 +28,7 @@ import {
 	cleanUIConfigurationJSON,
 	getSXPElementOutput,
 	getUIConfigurationValues,
+	isDefined,
 } from '../utils/utils';
 import {
 	validateBoost,
@@ -256,7 +257,10 @@ function EditSXPBlueprintForm({
 				},
 				index
 			) => {
-				if (!sxpElementTemplateJSON.enabled) {
+				if (
+					isDefined(sxpElementTemplateJSON.enabled) &&
+					!sxpElementTemplateJSON.enabled
+				) {
 					return;
 				}
 

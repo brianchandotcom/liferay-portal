@@ -170,6 +170,37 @@ definition {
 	}
 
 	@priority = "3"
+	test EnableBlacklistedComponentAfterShutdown {
+		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedComponentAfterShutdown";
+
+		OSGiConfig.deployOSGiConfigFile(
+			OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
+			OSGiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
+
+		Pause(locator1 = "10000");
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "scr:info authenticator.LDAPAuth");
+
+		GogoShell.viewNoOutput(outputContent = "ACTIVE");
+
+		Portlet.shutdownServer();
+
+		OSGiConfig.deleteOSGiConfigFile(OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+
+		Portlet.startServer(
+			deleteLiferayHome = "false",
+			keepOSGiState = "true");
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "scr:info authenticator.LDAPAuth");
+
+		GogoShell.viewOutput(outputContent = "ACTIVE");
+	}
+
+	@priority = "3"
 	test EnableBlacklistedComponentAtRuntime {
 		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedComponentAtRuntime";
 

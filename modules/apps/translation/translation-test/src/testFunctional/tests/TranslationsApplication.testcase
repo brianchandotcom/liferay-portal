@@ -301,6 +301,66 @@ definition {
 			webContentTitle = "wc webcontentタイトル");
 	}
 
+	@description = "This test covers LPS-142411. It ensures that a translation entry is not shown after deleting translated content page with new experience."
+	@priority = "4"
+	test EntryIsNotShownAfterDeletingTranslatedPage {
+		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		JSONSegmentsentry.addSegment(
+			fieldName = "Email Address",
+			groupName = "Test Site Name",
+			operator = "contains",
+			segmentName = "Segment Email Address",
+			text = "test@liferay.com");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addExperience(
+			experienceName = "Segment Email Experience",
+			segmentName = "Segment Email Address");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateFragmentField(
+			experienceName = "Segment Email Experience",
+			fieldName = "element-text",
+			fragmentText = "経験をテストする");
+
+		PortletEntry.publish();
+
+		JSONLayout.deletePublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name");
+
+		Translations.openTranslationAdmin(siteURLKey = "test-site-name");
+
+		Translations.viewNoEntryDefault();
+	}
+
 	@description = "This test covers LPS-127980. This ensures that the newly added field can be translated after updating the WC structure."
 	@priority = "4"
 	@refactorneeded

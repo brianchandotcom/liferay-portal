@@ -2451,13 +2451,38 @@ definition {
 	}
 
 	macro viewAndDeleteAutoTaggedDM {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "${tagName}");
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		Button.clickPublish();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertNoAutoTag(tagName = "${tagName}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "new tag");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 

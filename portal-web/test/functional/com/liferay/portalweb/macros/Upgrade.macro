@@ -2496,10 +2496,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssertTextEquals(
-			key_tagName = "dxp",
-			locator1 = "AssetCategorization#TAG",
-			value1 = "dxp");
+		AssetCategorization.viewTag(tagName = "dxp");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

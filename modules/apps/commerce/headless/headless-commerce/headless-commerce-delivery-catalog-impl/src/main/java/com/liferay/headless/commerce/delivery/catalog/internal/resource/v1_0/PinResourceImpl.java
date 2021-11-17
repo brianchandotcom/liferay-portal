@@ -14,17 +14,157 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.commerce.account.exception.NoSuchAccountException;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
+import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverter;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * @author Andrea Sbarra
+ * @author Ivica Cardic
  */
 @Component(
 	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/pin.properties",
 	scope = ServiceScope.PROTOTYPE, service = PinResource.class
 )
 public class PinResourceImpl extends BasePinResourceImpl {
+
+	@Override
+	public Page<Pin> getChannelProductPinsPage(
+			Long channelId, Long productId, Long accountId, String search,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with ID " + productId);
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
+
+		accountId = _getAccountId(accountId, commerceChannel);
+
+		_commerceProductViewPermission.check(
+			PermissionThreadLocal.getPermissionChecker(), accountId,
+			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+			contextUser.getUserId(), 0, accountId);
+
+		return Page.of(
+			_toPins(
+				commerceContext,
+				_csDiagramPinService.getCSDiagramPins(
+					cpDefinition.getCPDefinitionId(),
+					pagination.getStartPosition(),
+					pagination.getEndPosition())),
+			pagination,
+			_csDiagramPinService.getCSDiagramPinsCount(
+				cpDefinition.getCPDefinitionId()));
+	}
+
+	private Long _getAccountId(Long accountId, CommerceChannel commerceChannel)
+		throws Exception {
+
+		int countUserCommerceAccounts =
+			_commerceAccountHelper.countUserCommerceAccounts(
+				contextUser.getUserId(), commerceChannel.getGroupId());
+
+		if (countUserCommerceAccounts > 1) {
+			if (accountId == null) {
+				throw new NoSuchAccountException();
+			}
+		}
+		else {
+			long[] commerceAccountIds =
+				_commerceAccountHelper.getUserCommerceAccountIds(
+					contextUser.getUserId(), commerceChannel.getGroupId());
+
+			if (commerceAccountIds.length == 0) {
+				CommerceAccount commerceAccount =
+					_commerceAccountLocalService.getGuestCommerceAccount(
+						contextUser.getCompanyId());
+
+				commerceAccountIds = new long[] {
+					commerceAccount.getCommerceAccountId()
+				};
+			}
+
+			return commerceAccountIds[0];
+		}
+
+		return accountId;
+	}
+
+	private Pin _toPin(CommerceContext commerceContext, long csDiagramPinId)
+		throws Exception {
+
+		return _pinDTOConverter.toDTO(
+			new PinDTOConverterContext(
+				commerceContext, csDiagramPinId,
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
+	private List<Pin> _toPins(
+		CommerceContext commerceContext, List<CSDiagramPin> csDiagramPins) {
+
+		return TransformUtil.transform(
+			csDiagramPins,
+			csDiagramPin -> _toPin(
+				commerceContext, csDiagramPin.getCSDiagramPinId()));
+	}
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
+
+	@Reference
+	private CommerceProductViewPermission _commerceProductViewPermission;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CSDiagramPinService _csDiagramPinService;
+
+	@Reference
+	private PinDTOConverter _pinDTOConverter;
+
 }

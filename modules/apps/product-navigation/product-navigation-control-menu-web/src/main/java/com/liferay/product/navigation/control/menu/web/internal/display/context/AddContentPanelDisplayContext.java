@@ -166,6 +166,7 @@ public class AddContentPanelDisplayContext {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+		assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
 		assetEntryQuery.setClassNameIds(_getAvailableClassNameIds());
 		assetEntryQuery.setEnd(_getDelta());
 		assetEntryQuery.setGroupIds(

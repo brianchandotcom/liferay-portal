@@ -125,6 +125,41 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142323. Verifies the side panel shows the violation occurrence when clicked from pop up."
+	@priority = "4"
+	test CanDisplayViolationDetailsInSidePanel {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Verifies there are violations on the page") {
+			VerifyElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			VerifyElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task ("Click on the icon next to the highlighted violation") {
+			Click(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task ("Click on the listed rule violation from the pop up") {
+			Click(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_ITEM");
+		}
+
+		task ("Assert the side panel displays the violation occurrence") {
+			AssertElementPresent(
+				key_text = "Occurrence 1",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_TITLE");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-142322. Verifies side panel displays information about a violation rule."
 	@priority = "4"
 	test CanDisplayViolationRuleDetails {

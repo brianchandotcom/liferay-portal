@@ -11,7 +11,6 @@ import {
 	ACTIONS,
 	SelectedQuoteContext,
 } from '../../../context/SelectedQuoteContextProvider';
-
 import {
 	createDocumentInFolder,
 	createFolderIfNotExist,
@@ -19,6 +18,8 @@ import {
 } from '../../../services/DocumentsAndMedia';
 
 import UploadFiles from './UploadFiles';
+
+import {sectionsHasError} from './utils/upload';
 
 const dropAreaProps = {
 	heightContainer: '120px',
@@ -44,10 +45,7 @@ const UploadDocuments = () => {
 		setSections(
 			sections.map((section) => {
 				if (section.title === _section.title) {
-					return {
-						...section,
-						error: value,
-					};
+					section.error = value;
 				}
 
 				return section;
@@ -132,7 +130,6 @@ const UploadDocuments = () => {
 				section.title,
 				true
 			);
-
 			if (section.required && section.files.length === 0) {
 				onSetError(section, true);
 
@@ -159,8 +156,7 @@ const UploadDocuments = () => {
 					);
 
 					setFilePropertyValue(fileEntry.id, 'documentId', data.id);
-				}
-				catch (error) {
+				} catch (error) {
 					console.error(error);
 				}
 			}
@@ -170,18 +166,20 @@ const UploadDocuments = () => {
 
 		setLoading(false);
 
-		dispatch({
-			payload: {panelKey: 'selectPaymentMethod', value: true},
-			type: ACTIONS.SET_EXPANDED,
-		});
-		dispatch({
-			payload: {panelKey: 'uploadDocuments', value: false},
-			type: ACTIONS.SET_EXPANDED,
-		});
-		dispatch({
-			payload: {panelKey: 'uploadDocuments', value: true},
-			type: ACTIONS.SET_STEP_CHECKED,
-		});
+		if (!sectionsHasError(sections)) {
+			dispatch({
+				payload: {panelKey: 'selectPaymentMethod', value: true},
+				type: ACTIONS.SET_EXPANDED,
+			});
+			dispatch({
+				payload: {panelKey: 'uploadDocuments', value: false},
+				type: ACTIONS.SET_EXPANDED,
+			});
+			dispatch({
+				payload: {panelKey: 'uploadDocuments', value: true},
+				type: ACTIONS.SET_STEP_CHECKED,
+			});
+		}
 
 		smoothScroll();
 	};

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Panel from '../components/Panel';
 import CheckButton from '../components/Panel/CheckButton';
 import ViewFilesPanel from '../components/Panel/ViewFilesPanel';
@@ -7,12 +7,22 @@ import {CreateAnAccount} from '../components/Steps/CreateAnAccount';
 import PaymentMethod from '../components/Steps/PaymentMethod';
 import UploadDocuments from '../components/Steps/UploadDocuments';
 import DiscardChanges from '../components/Steps/UploadDocuments/DiscardChanges';
+import {sectionsHasError} from '../components/Steps/UploadDocuments/utils/upload';
+
 import SelectedQuoteContextProvider, {
 	SelectedQuoteContext,
 } from '../context/SelectedQuoteContextProvider';
 
 const SelectedQuote = () => {
 	const [{sections}] = useContext(SelectedQuoteContext);
+	const [hasError, setHasError] = useState(false);
+
+	useEffect(() => {
+		if (sections) {
+			setHasError(sectionsHasError(sections));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [sections]);
 
 	return (
 		<div className="selected-quote">
@@ -37,6 +47,7 @@ const SelectedQuote = () => {
 					)}
 					PanelRight={DiscardChanges}
 					changeable
+					hasError={hasError}
 					id="uploadDocuments"
 					title="2. Upload Documents"
 				>

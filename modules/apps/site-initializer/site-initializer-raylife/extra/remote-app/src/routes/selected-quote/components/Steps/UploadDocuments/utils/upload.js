@@ -20,3 +20,7 @@ export const validateExtensions = (fileType, type) => {
 
 	return validExtensions.includes(fileType);
 };
+
+export const sectionsHasError = (sections) => {
+	return sections.some((section) => section.error);
+};

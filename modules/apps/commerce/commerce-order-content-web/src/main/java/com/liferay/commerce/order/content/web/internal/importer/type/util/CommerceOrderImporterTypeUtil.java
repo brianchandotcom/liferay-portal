@@ -199,6 +199,8 @@ public class CommerceOrderImporterTypeUtil {
 							commerceOrderValidatorResult.getLocalizedMessage(),
 						String.class));
 			}
+
+			commerceOrderImporterItems.add(commerceOrderImporterItemImpl);
 		}
 
 		// Delete temporary commerce order

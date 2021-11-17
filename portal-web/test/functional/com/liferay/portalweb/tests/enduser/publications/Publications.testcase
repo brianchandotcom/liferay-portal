@@ -330,6 +330,8 @@ definition {
 
 	@priority = "4"
 	test IsLocalizedInPublicationsAdmin {
+		property test.name.skip.portal.instance = "Publications#IsLocalizedInPublicationsAdmin";
+
 		User.openUsersAdmin();
 
 		User.editDisplaySettingsCP(

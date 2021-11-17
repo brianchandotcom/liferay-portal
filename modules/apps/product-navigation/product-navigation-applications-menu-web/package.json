@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.39.0",
-		"@clayui/drop-down": "3.39.0",
-		"@clayui/icon": "3.39.0",
-		"@clayui/label": "3.39.0",
-		"@clayui/layout": "3.39.0",
-		"@clayui/sticker": "3.39.0",
+		"@clayui/button": "3.40.0",
+		"@clayui/drop-down": "3.40.0",
+		"@clayui/icon": "3.40.0",
+		"@clayui/label": "3.40.0",
+		"@clayui/layout": "3.40.0",
+		"@clayui/sticker": "3.40.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

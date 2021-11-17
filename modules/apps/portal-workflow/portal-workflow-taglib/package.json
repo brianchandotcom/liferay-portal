@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/label": "3.39.0",
-		"@clayui/link": "3.39.0",
-		"@clayui/modal": "3.39.0",
-		"@clayui/tooltip": "3.39.0",
+		"@clayui/label": "3.40.0",
+		"@clayui/link": "3.40.0",
+		"@clayui/modal": "3.40.0",
+		"@clayui/tooltip": "3.40.0",
 		"react": "16.12.0",
 		"react-flow-renderer": "9.1.0"
 	},

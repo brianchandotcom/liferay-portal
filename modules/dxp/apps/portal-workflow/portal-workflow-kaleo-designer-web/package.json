@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.39.0",
-		"@clayui/icon": "3.39.0",
-		"@clayui/label": "3.39.0",
-		"@clayui/toolbar": "3.39.0",
+		"@clayui/button": "3.40.0",
+		"@clayui/icon": "3.40.0",
+		"@clayui/label": "3.40.0",
+		"@clayui/toolbar": "3.40.0",
 		"dagre": "0.8.2",
 		"react": "16.12.0",
 		"react-flow-renderer": "9.1.0"

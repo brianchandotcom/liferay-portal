@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.39.0",
-		"@clayui/icon": "3.39.0",
-		"@clayui/layout": "3.39.0",
+		"@clayui/button": "3.40.0",
+		"@clayui/icon": "3.40.0",
+		"@clayui/layout": "3.40.0",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},

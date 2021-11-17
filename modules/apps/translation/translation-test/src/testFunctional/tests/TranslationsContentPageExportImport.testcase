@@ -204,7 +204,8 @@ definition {
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",
-			languageList = "Spanish (Spain)");
+			languageList = "Spanish (Spain)",
+			viewNoExperiencesSelector = "true");
 
 		Translations.assertFileNameFromTempFolder(pageName = "Translation Content Page");
 	}

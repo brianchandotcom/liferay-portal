@@ -61,6 +61,7 @@ export default function FriendlyURLHistory({
 					{...restProps}
 					elementId={elementId}
 					initialLanguageId={selectedLanguageId}
+					localizable={localizable}
 					observer={observer}
 					onModalClose={onClose}
 				/>

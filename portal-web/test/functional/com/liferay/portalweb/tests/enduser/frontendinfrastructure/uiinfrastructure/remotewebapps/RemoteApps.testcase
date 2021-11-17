@@ -85,22 +85,35 @@ definition {
 		property portal.acceptance = "true";
 
 		var customElementType = "Custom Element";
+		var IFrameType = "IFrame";
 
 		RemoteApps.goToRemoteAppsPortlet();
 
 		LexiconEntry.gotoAdd();
 
-		AssertNotVisible(locator1 = "RemoteAppsEntry#HTML_ELEMENT_INPUT");
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${IFrameType}");
 
-		AssertNotVisible(locator1 = "RemoteAppsEntry#CSS_ELEMENT_INPUT");
+		AssertNotVisible(
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
+
+		AssertNotVisible(
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
 
 		Select(
 			locator1 = "Select#TYPE",
 			value1 = "${customElementType}");
 
-		AssertVisible(locator1 = "RemoteAppsEntry#HTML_ELEMENT_INPUT");
+		AssertVisible(
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
 
-		AssertVisible(locator1 = "RemoteAppsEntry#CSS_ELEMENT_INPUT");
+		AssertVisible(
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
 	}
 
 }

@@ -20,16 +20,6 @@
 	<td>//input[contains(@id,'customElementURLs')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>HTML_ELEMENT_INPUT</td>
-	<td>//input[contains(@id,'customElementHTMLElementName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CSS_ELEMENT_INPUT</td>
-	<td>//input[contains(@id,'customElementCSSURLs')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

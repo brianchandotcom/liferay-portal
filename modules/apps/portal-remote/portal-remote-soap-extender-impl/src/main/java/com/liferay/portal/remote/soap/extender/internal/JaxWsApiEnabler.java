@@ -82,8 +82,6 @@ public class JaxWsApiEnabler {
 
 		deactivate();
 
-		BusFactory.clearDefaultBusForAnyThread(_bus);
-
 		activate(bundleContext, properties);
 	}
 
@@ -131,6 +129,10 @@ public class JaxWsApiEnabler {
 			ServiceReference<Bus> serviceReference, Bus bus) {
 
 			_serviceRegistration.unregister();
+
+			BusFactory.setDefaultBus(null);
+
+			BusFactory.clearDefaultBusForAnyThread(_bus);
 
 			_bus = null;
 		}

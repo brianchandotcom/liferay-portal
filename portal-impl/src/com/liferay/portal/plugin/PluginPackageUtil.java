@@ -162,10 +162,6 @@ public class PluginPackageUtil {
 		return _pluginPackageUtil._isIgnored(pluginPackage);
 	}
 
-	public static boolean isInstallationInProcess(String context) {
-		return _pluginPackageUtil._isInstallationInProcess(context);
-	}
-
 	public static boolean isInstalled(String context) {
 		return _pluginPackageUtil._isInstalled(context);
 	}
@@ -481,16 +477,6 @@ public class PluginPackageUtil {
 					return true;
 				}
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _isInstallationInProcess(String context) {
-		if (_installedPluginPackages.getInstallingPluginPackage(context) !=
-				null) {
-
-			return true;
 		}
 
 		return false;

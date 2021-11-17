@@ -45,15 +45,8 @@ public class LocalPluginPackageRepository {
 			return;
 		}
 
-		_pendingPackages.remove(pluginPackage.getContext());
-		_pendingPackages.remove(pluginPackage.getModuleId());
-
 		_pluginPackages.remove(pluginPackage.getContext());
 		_pluginPackages.put(pluginPackage.getContext(), pluginPackage);
-	}
-
-	public PluginPackage getInstallingPluginPackage(String context) {
-		return _pendingPackages.get(context);
 	}
 
 	public PluginPackage getLatestPluginPackage(
@@ -122,14 +115,6 @@ public class LocalPluginPackageRepository {
 				addPluginPackage(pluginPackage);
 			}
 		}
-
-		String key = pluginPackage.getContext();
-
-		if (key == null) {
-			key = pluginPackage.getModuleId();
-		}
-
-		_pendingPackages.put(key, pluginPackage);
 	}
 
 	public void registerPluginPackageInstallation(String deploymentContext) {
@@ -161,13 +146,11 @@ public class LocalPluginPackageRepository {
 
 	public void unregisterPluginPackageInstallation(String context) {
 		_pluginPackages.remove(context);
-		_pendingPackages.remove(context);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocalPluginPackageRepository.class);
 
-	private final Map<String, PluginPackage> _pendingPackages = new HashMap<>();
 	private final Map<String, PluginPackage> _pluginPackages = new HashMap<>();
 
 }

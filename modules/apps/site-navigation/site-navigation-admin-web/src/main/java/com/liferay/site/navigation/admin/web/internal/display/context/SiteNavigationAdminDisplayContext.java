@@ -16,7 +16,7 @@ package com.liferay.site.navigation.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -61,6 +61,7 @@ import com.liferay.staging.StagingGroupHelperUtil;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
@@ -121,13 +122,14 @@ public class SiteNavigationAdminDisplayContext {
 		Stream<SiteNavigationMenuItemType> stream =
 			siteNavigationMenuItemTypes.stream();
 
-		return DropdownItemList.of(
+		return DropdownItemListBuilder.addAll(
 			stream.map(
 				siteNavigationMenuItemType -> _getDropdownItem(
 					siteNavigationMenuItemType, themeDisplay)
-			).toArray(
-				DropdownItem[]::new
-			));
+			).collect(
+				Collectors.toList()
+			)
+		).build();
 	}
 
 	public String getDisplayStyle() {

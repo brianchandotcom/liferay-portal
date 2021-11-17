@@ -21,6 +21,7 @@ import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
@@ -66,7 +67,8 @@ public class EditCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 					_commerceOrderNoteService, _commerceOrderService,
 					_commerceOrderStatusRegistry, _commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,
-					_commerceShipmentService, renderRequest);
+					_commerceShipmentService, _cpMeasurementUnitService,
+					renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -118,5 +120,8 @@ public class EditCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

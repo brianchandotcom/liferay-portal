@@ -49,6 +49,20 @@ definition {
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
+		OpenGraph.mapEditableTextToField(
+			field = "Description",
+			mappedField = "description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textType = "TextArea");
+
+		Button.clickSave();
+
+		OpenGraph.viewMappedField(
+			mappedField = "description",
+			mappedFieldValue = "Description is Description: ${description:Description}",
+			textType = "TextArea");
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
 		Blogs.addWithCustomAbstract(
@@ -70,7 +84,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''Blogs Entry Title - Test Site Name - ${siteName},content="Custom Abstract"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''Blogs Entry Title - Test Site Name - ${siteName},content="Description is Description: Custom Abstract"''');
 	}
 
 	@description = "This test ensures that user can map the document with SEO meta tags for display pages."

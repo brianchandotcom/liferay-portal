@@ -35,24 +35,6 @@
 	<clay:col
 		md="2"
 	>
-		<liferay-util:buffer
-			var="userSticker"
-		>
-			<clay:sticker
-				icon="picture"
-				shape="circle"
-			/>
-		</liferay-util:buffer>
-
-		<clay:dropdown-menu
-			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
-			label="<%= userSticker %>"
-		/>
-	</clay:col>
-
-	<clay:col
-		md="2"
-	>
 		<clay:dropdown-menu
 			dropdownItems="<%= dropdownsDisplayContext.getGroupDropdownItems() %>"
 			label="Dividers"

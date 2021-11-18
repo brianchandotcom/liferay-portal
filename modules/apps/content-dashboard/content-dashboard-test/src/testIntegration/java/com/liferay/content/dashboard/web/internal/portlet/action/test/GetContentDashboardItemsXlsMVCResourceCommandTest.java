@@ -96,7 +96,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 				_serveResource(FileEntry.class.getName(), _group.getGroupId());
 
 			byte[] expectedFileByteArray = FileUtil.getBytes(
-				getClass(), "expected.xls");
+				getClass(), "dependencies/expected.xls");
 
 			byte[] generatedFileByteArray =
 				generatedByteArrayOutputStream.toByteArray();

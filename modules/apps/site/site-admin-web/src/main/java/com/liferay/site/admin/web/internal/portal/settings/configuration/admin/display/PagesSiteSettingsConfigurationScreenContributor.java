@@ -46,7 +46,7 @@ public class PagesSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/site_settings/public_private_pages.jsp";
+		return "/site_settings/pages.jsp";
 	}
 
 	@Override

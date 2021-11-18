@@ -23,6 +23,7 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112992. The user could add a child site in Sites admin."
 	@priority = "5"
 	test AddChildSite {
 		property portal.acceptance = "true";

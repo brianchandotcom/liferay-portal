@@ -80,7 +80,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-112989. View All link will be shown in Applications Menu when the total amount of Recently Visited and My Sites more than 7."
+	@description = "This is a use case for LPS-112989 and LPS-112993. View All link will be shown in Applications Menu when the total amount of Recently Visited and My Sites more than 7."
 	@priority = "5"
 	@uitest
 	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {
@@ -119,7 +119,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-112990. The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
+	@description = "This is a use case for LPS-112990, LPS-112992 and LPS-112989. The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
 	@priority = "5"
 	@uitest
 	test ViewLocationOfApplicationsMenuIconAndUserAvatarIcon {
@@ -195,7 +195,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115218 and LPS-98753. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
+	@description = "This is a use case for LPS-115218, LPS-98753 and LPS-112992. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
 	@priority = "5"
 	@uitest
 	test ViewProductMenuWhenDisableApplicationsMenuInDefaultInstance {

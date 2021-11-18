@@ -246,7 +246,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103104. Can add a widget page via page tree panel."
+	@description = "This is a test for LPS-103104 and LPS-112989. Can add a widget page via page tree panel."
 	@priority = "5"
 	test AddWidgetPage {
 		property portal.acceptance = "true";
@@ -268,7 +268,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-116618. Configure page via Page Tree panel."
+	@description = "This is a test for LPS-116618 and LPS-112992. Configure page via Page Tree panel."
 	@priority = "4"
 	test ConfigurePage {
 		task ("Assert Test Page Name is shown in Pages admin") {

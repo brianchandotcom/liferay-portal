@@ -116,29 +116,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 	private ByteArrayOutputStream _serveResource(String className, long groupId)
 		throws Exception {
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
-		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
-			_group);
-
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockLiferayResourceRequest.setParameter(
-			"groupId", String.valueOf(groupId));
-		mockLiferayResourceRequest.setParameter("className", className);
-
-		Portlet portlet = new PortletImpl();
-
-		PortletApp portletApp = new PortletAppImpl("contextName");
-
-		portletApp.setSpecMajorVersion(1);
-
-		portlet.setPortletApp(portletApp);
-
-		mockLiferayResourceRequest.setPortlet(portlet);
-
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
@@ -148,6 +125,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
+			_group);
+
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -155,6 +135,26 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			MockLiferayResourceRequest mockLiferayResourceRequest =
+				new MockLiferayResourceRequest();
+
+			mockLiferayResourceRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			mockLiferayResourceRequest.setParameter(
+				"groupId", String.valueOf(groupId));
+			mockLiferayResourceRequest.setParameter("className", className);
+
+			Portlet portlet = new PortletImpl();
+
+			PortletApp portletApp = new PortletAppImpl("contextName");
+
+			portletApp.setSpecMajorVersion(1);
+
+			portlet.setPortletApp(portletApp);
+
+			mockLiferayResourceRequest.setPortlet(portlet);
 
 			_mvcResourceCommand.serveResource(
 				mockLiferayResourceRequest, mockLiferayResourceResponse);

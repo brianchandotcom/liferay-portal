@@ -23,7 +23,6 @@ Group stagingGroup = (Group)request.getAttribute("site.stagingGroup");
 long stagingGroupId = (long)request.getAttribute("site.stagingGroupId");
 
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, false);
-LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, true);
 
 Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(liveGroupId);
 
@@ -31,14 +30,6 @@ TreeMap<String, String> publicVirtualHostnames = publicLayoutSet.getVirtualHostn
 
 if (publicVirtualHostnames.isEmpty()) {
 	publicVirtualHostnames = TreeMapBuilder.put(
-		StringPool.BLANK, StringPool.BLANK
-	).build();
-}
-
-TreeMap<String, String> privateVirtualHostnames = privateLayoutSet.getVirtualHostnames();
-
-if (privateVirtualHostnames.isEmpty()) {
-	privateVirtualHostnames = TreeMapBuilder.put(
 		StringPool.BLANK, StringPool.BLANK
 	).build();
 }
@@ -122,9 +113,9 @@ if (privateVirtualHostnames.isEmpty()) {
 
 <aui:fieldset>
 	<p class="small text-secondary">
-		<liferay-ui:message key="enter-the-friendly-url-that-is-used-by-both-public-and-private-pages" />
+		<liferay-ui:message key="enter-the-friendly-url-that-is-used-by-pages" />
 
-		<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-public-pages-and-x-for-private-pages" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-pages" translateArguments="<%= false %>" />
 	</p>
 
 	<aui:input label="friendly-url" name="groupFriendlyURL" type="text" value="<%= HttpUtil.decodeURL(liveGroup.getFriendlyURL()) %>" />
@@ -134,13 +125,13 @@ if (privateVirtualHostnames.isEmpty()) {
 	</c:if>
 
 	<p class="small text-secondary">
-		<liferay-ui:message key="enter-the-public-and-private-virtual-host-that-map-to-the-public-and-private-friendly-url" />
+		<liferay-ui:message key="enter-the-virtual-host-that-map-to-the-friendly-url" />
 
-		<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-public-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
 	</p>
 
 	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">
-		<h4 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h4>
+		<h4 class="sheet-subtitle"><liferay-ui:message key="pages" /></h4>
 
 		<%
 		for (Map.Entry<String, String> entry : publicVirtualHostnames.entrySet()) {
@@ -153,49 +144,9 @@ if (privateVirtualHostnames.isEmpty()) {
 				cssClass="lfr-form-row"
 			>
 				<clay:row>
-					<aui:input inlineField="<%= true %>" label="public-pages-virtual-host" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
+					<aui:input inlineField="<%= true %>" label="virtual-host" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="publicVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
-						<aui:option label="default-language" value="" />
-
-						<%
-						for (Locale localeEntry : availableLocales) {
-							String languageId = LocaleUtil.toLanguageId(localeEntry);
-						%>
-
-							<aui:option label="<%= localeEntry.getDisplayName(themeDisplay.getLocale()) %>" selected="<%= languageId.equals(virtualHostLanguageId) %>" value="<%= languageId %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</clay:row>
-			</clay:container-fluid>
-
-		<%
-		}
-		%>
-
-	</div>
-
-	<div id="<portlet:namespace />privateVirtualHostFields">
-		<h4 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h4>
-
-		<%
-		for (Map.Entry<String, String> entry : privateVirtualHostnames.entrySet()) {
-			String virtualHostname = entry.getKey();
-
-			String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
-		%>
-
-			<clay:container-fluid
-				cssClass="lfr-form-row"
-			>
-				<clay:row>
-					<aui:input inlineField="<%= true %>" label="private-pages-virtual-host" maxlength="200" name="privateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
-
-					<aui:select inlineField="<%= true %>" label="language" name="privateVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
 						<aui:option label="default-language" value="" />
 
 						<%
@@ -246,60 +197,9 @@ if (privateVirtualHostnames.isEmpty()) {
 					cssClass="lfr-form-row"
 				>
 					<clay:row>
-						<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name="stagingPublicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
+						<aui:input inlineField="<%= true %>" label="staging-pages" maxlength="200" name="stagingPublicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 						<aui:select inlineField="<%= true %>" label="language" name="stagingPublicVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
-							<aui:option label="default-language" value="" />
-
-							<%
-							for (Locale localeEntry : availableLocales) {
-								String languageId = LocaleUtil.toLanguageId(localeEntry);
-							%>
-
-								<aui:option label="<%= localeEntry.getDisplayName(themeDisplay.getLocale()) %>" selected="<%= languageId.equals(virtualHostLanguageId) %>" value="<%= languageId %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</clay:row>
-				</clay:container-fluid>
-
-			<%
-			}
-			%>
-
-		</div>
-
-		<%
-		LayoutSet stagingPrivateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(stagingGroupId, true);
-
-		TreeMap<String, String> stagingPrivateVirtualHostnames = stagingPrivateLayoutSet.getVirtualHostnames();
-
-		if (stagingPrivateVirtualHostnames.isEmpty()) {
-			stagingPrivateVirtualHostnames = TreeMapBuilder.put(
-				StringPool.BLANK, StringPool.BLANK
-			).build();
-		}
-		%>
-
-		<div id="<portlet:namespace />stagingPrivateVirtualHostFields">
-
-			<%
-			for (Map.Entry<String, String> entry : stagingPrivateVirtualHostnames.entrySet()) {
-				String virtualHostname = entry.getKey();
-
-				String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
-			%>
-
-				<clay:container-fluid
-					cssClass="lfr-form-row"
-				>
-					<clay:row>
-						<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name="stagingPrivateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
-
-						<aui:select inlineField="<%= true %>" label="language" name="stagingPrivateVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
 							<aui:option label="default-language" value="" />
 
 							<%
@@ -331,19 +231,9 @@ if (privateVirtualHostnames.isEmpty()) {
 		namespace: '<portlet:namespace />',
 	}).render();
 
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />privateVirtualHostFields',
-		namespace: '<portlet:namespace />',
-	}).render();
-
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
 		new Liferay.AutoFields({
 			contentBox: '#<portlet:namespace />stagingPublicVirtualHostFields',
-			namespace: '<portlet:namespace />',
-		}).render();
-
-		new Liferay.AutoFields({
-			contentBox: '#<portlet:namespace />stagingPrivateVirtualHostFields',
 			namespace: '<portlet:namespace />',
 		}).render();
 	</c:if>

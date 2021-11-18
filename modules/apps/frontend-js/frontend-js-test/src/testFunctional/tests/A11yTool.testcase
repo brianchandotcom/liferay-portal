@@ -160,6 +160,59 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142324. Verifies the correct target and code is displayed."
+	@priority = "4"
+	test CanDisplayTargetCode {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Verifies there are violations on the page") {
+			VerifyElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			VerifyElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task ("Click on a rule violation") {
+			Click(
+				key_text = "button-name",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		}
+
+		task ("Click on an occurrence") {
+			Click(
+				key_text = "Occurrence 2",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_LIST_ITEM");
+		}
+
+		task ("Assert the correct target is displayed on the side panel") {
+			AssertElementPresent(
+				key_text = "Target",
+				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
+
+			AssertElementPresent(
+				key_text = "button:nth-child(10)",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_TARGET_SELECTOR");
+		}
+
+		task ("Assert the correct code is displayed on the side panel") {
+			AssertElementPresent(
+				key_text = "Code",
+				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
+
+			AssertElementPresent(
+				key_text = "<button></button>",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_CODE_ELEMENT");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-142322. Verifies side panel displays information about a violation rule."
 	@priority = "4"
 	test CanDisplayViolationRuleDetails {

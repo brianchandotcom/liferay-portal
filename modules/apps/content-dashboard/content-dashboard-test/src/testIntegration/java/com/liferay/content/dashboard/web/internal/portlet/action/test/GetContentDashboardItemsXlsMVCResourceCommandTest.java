@@ -117,15 +117,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
-		mockLiferayResourceRequest.setParameter(
-			"groupId", String.valueOf(groupId));
-		mockLiferayResourceRequest.setParameter("className", className);
-
 		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
 			_group);
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayResourceRequest.setParameter(
+			"groupId", String.valueOf(groupId));
+		mockLiferayResourceRequest.setParameter("className", className);
 
 		PortletImpl portletImpl = new PortletImpl();
 

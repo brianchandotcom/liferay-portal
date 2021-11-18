@@ -34,25 +34,22 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Add public page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Blogs Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
 		}
 
 		task ("Add new blog") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/guest/blogs-page");
-
-			Portlet.addPG(portletName = "Blogs");
-
-			Portlet.viewSpecificPG(portletName = "Blogs");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
 		}
 
 		task ("Logout and go to blogs page") {
 			User.logoutPG();
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/guest/blogs-page");
+			Navigator.gotoPage(pageName = "Blogs Page");
 		}
 		task ("Assert no permission in configuration") {
 			BlogsConfiguration.viewNoPermissionPG();
@@ -71,11 +68,9 @@ definition {
 		var url2 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&amp;p_p_state=maximized";
 
 		task ("Add public page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "testxxx");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "testxxx");
 		}
 
 		task ("Logout, go to specific url and assert error message") {

@@ -36,6 +36,10 @@ components:
                     items:
                         $ref: "#/components/schemas/DSDocument"
                         type: array
+                dsEnvelopeId:
+                    description:
+                        The envelope's Id.
+                    type: string
                 dsRecipient:
                     items:
                         $ref: "#/components/schemas/DSRecipient"
@@ -47,10 +51,6 @@ components:
                 emailSubject:
                     description:
                         The envelope's email subject.
-                    type: string
-                dsEnvelopeId:
-                    description:
-                        The envelope's Id.
                     type: string
                 name:
                     description:

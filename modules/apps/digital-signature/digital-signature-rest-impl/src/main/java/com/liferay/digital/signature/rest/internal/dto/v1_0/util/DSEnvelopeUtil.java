@@ -31,10 +31,10 @@ public class DSEnvelopeUtil {
 
 		return new DSEnvelope() {
 			{
+				dsEnvelopeId = dsEnvelope.getDSEnvelopeId();
 				dsRecipient = _getDSRecipients(dsEnvelope.getDSRecipients());
 				emailBlurb = dsEnvelope.getEmailBlurb();
 				emailSubject = dsEnvelope.getEmailSubject();
-				dsEnvelopeId = dsEnvelope.getDSEnvelopeId();
 				name = dsEnvelope.getName();
 				senderEmailAddress = dsEnvelope.getSenderEmailAddress();
 				status = dsEnvelope.getStatus();

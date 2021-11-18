@@ -159,10 +159,20 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		cellIndex = _createVersionCell(
 			cellIndex, contentDashboardItem, locale, row);
 
-		cellIndex = _createCategoryCell(
-			cellIndex, contentDashboardItem, locale, row);
+		cellIndex = _createCell(
+			cellIndex, row,
+			StringUtils.joinWith(
+				", ",
+				ListUtil.toList(
+					contentDashboardItem.getAssetCategories(), category -> category.getTitle(locale))));
 
-		cellIndex = _createTagCell(cellIndex, contentDashboardItem, row);
+		cellIndex = _createCell(
+			cellIndex, row,
+			StringUtils.joinWith(
+				", ",
+				ListUtil.toList(
+					contentDashboardItem.getAssetTags(),
+					AssetTagModel::getName)));
 
 		return _createCell(
 			cellIndex, row,
@@ -190,21 +200,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		}
 
 		return headerRowCellIndex;
-	}
-
-	private int _createCategoryCell(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
-		Locale locale, Row row) {
-
-		List<AssetCategory> categories =
-			contentDashboardItem.getAssetCategories();
-
-		return _createCell(
-			cellIndex, row,
-			StringUtils.joinWith(
-				", ",
-				ListUtil.toList(
-					categories, category -> category.getTitle(locale))));
 	}
 
 	private int _createCell(int cellIndex, Row row, String value) {
@@ -289,18 +284,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 		return _createCell(
 			cellIndex, row, contentDashboardItemSubtype.getLabel(locale));
-	}
-
-	private int _createTagCell(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem, Row row) {
-
-		return _createCell(
-			cellIndex, row,
-			StringUtils.joinWith(
-				", ",
-				ListUtil.toList(
-					contentDashboardItem.getAssetTags(),
-					AssetTagModel::getName)));
 	}
 
 	private int _createVersionCell(

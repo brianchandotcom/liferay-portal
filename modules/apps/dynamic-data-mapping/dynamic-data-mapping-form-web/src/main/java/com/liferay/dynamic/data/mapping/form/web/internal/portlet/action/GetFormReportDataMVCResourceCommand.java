@@ -20,6 +20,9 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalServic
 import com.liferay.dynamic.data.mapping.util.DDMFormReportDataUtil;
 import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -54,51 +57,70 @@ public class GetFormReportDataMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long formInstanceId = ParamUtil.getLong(
-			resourceRequest, "formInstanceId");
+		try {
+			long formInstanceId = ParamUtil.getLong(
+				resourceRequest, "formInstanceId");
 
-		DDMFormInstanceReport ddmFormInstanceReport =
-			_ddmFormInstanceReportLocalService.
-				getFormInstanceReportByFormInstanceId(formInstanceId);
+			DDMFormInstanceReport ddmFormInstanceReport =
+				_ddmFormInstanceReportLocalService.
+					getFormInstanceReportByFormInstanceId(formInstanceId);
 
-		String portletNamespace = _portal.getPortletNamespace(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+			String portletNamespace = _portal.getPortletNamespace(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"data", ddmFormInstanceReport.getData()
-			).put(
-				"fields",
-				DDMFormReportDataUtil.getFieldsJSONArray(ddmFormInstanceReport)
-			).put(
-				"formReportRecordsFieldValuesURL",
-				_http.addParameter(
-					ResourceURLBuilder.createResourceURL(
-						resourceResponse
-					).setResourceID(
-						"/dynamic_data_mapping_form" +
-							"/get_form_records_field_values"
-					).buildString(),
-					portletNamespace + "formInstanceId", formInstanceId)
-			).put(
-				"lastModifiedDate",
-				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)resourceRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"data", ddmFormInstanceReport.getData()
+				).put(
+					"fields",
+					DDMFormReportDataUtil.getFieldsJSONArray(
+						ddmFormInstanceReport)
+				).put(
+					"formReportRecordsFieldValuesURL",
+					_http.addParameter(
+						ResourceURLBuilder.createResourceURL(
+							resourceResponse
+						).setResourceID(
+							"/dynamic_data_mapping_form" +
+								"/get_form_records_field_values"
+						).buildString(),
+						portletNamespace + "formInstanceId", formInstanceId)
+				).put(
+					"lastModifiedDate",
+					() -> {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)resourceRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
 
-					return DDMFormReportDataUtil.getLastModifiedDate(
-						ddmFormInstanceReport, themeDisplay.getLocale(),
-						themeDisplay.getTimeZone());
-				}
-			).put(
-				"portletNamespace", portletNamespace
-			).put(
-				"totalItems",
-				DDMFormReportDataUtil.getTotalItems(ddmFormInstanceReport)
-			));
+						return DDMFormReportDataUtil.getLastModifiedDate(
+							ddmFormInstanceReport, themeDisplay.getLocale(),
+							themeDisplay.getTimeZone());
+					}
+				).put(
+					"portletNamespace", portletNamespace
+				).put(
+					"totalItems",
+					DDMFormReportDataUtil.getTotalItems(ddmFormInstanceReport)
+				));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					LanguageUtil.get(
+						_portal.getHttpServletRequest(resourceRequest),
+						"your-request-failed-to-complete")));
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetFormReportDataMVCResourceCommand.class);
 
 	@Reference
 	private DDMFormInstanceReportLocalService

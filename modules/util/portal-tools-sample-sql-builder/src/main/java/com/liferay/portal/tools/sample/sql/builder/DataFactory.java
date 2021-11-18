@@ -763,7 +763,8 @@ public class DataFactory {
 		_firstNames = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("first_names.txt")));
+			new InputStreamReader(
+				getResourceInputStream("user_name_data/first_names.txt")));
 
 		String line = null;
 
@@ -776,7 +777,8 @@ public class DataFactory {
 		_lastNames = new ArrayList<>();
 
 		unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("last_names.txt")));
+			new InputStreamReader(
+				getResourceInputStream("user_name_data/last_names.txt")));
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			_lastNames.add(line);

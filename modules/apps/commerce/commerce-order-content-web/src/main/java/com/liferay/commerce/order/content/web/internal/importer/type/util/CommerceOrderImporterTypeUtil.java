@@ -170,6 +170,7 @@ public class CommerceOrderImporterTypeUtil {
 						getParentCommerceOrderItemCPDefinitionId());
 			commerceOrderImporterItemImpl.setQuantity(
 				commerceOrderItem.getQuantity());
+			commerceOrderImporterItemImpl.setSku(commerceOrderItem.getSku());
 
 			try {
 

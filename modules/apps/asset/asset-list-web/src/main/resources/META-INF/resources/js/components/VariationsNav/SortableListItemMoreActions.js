@@ -35,21 +35,21 @@ const SortableListItemMoreActions = ({
 			direction: -1,
 			disabled: !index,
 			icon: 'angle-up',
-			text: 'Prioritize',
+			text: Liferay.Language.get('prioritize'),
 		},
 		{
 			cssClasses: 'pl-3 py-1',
 			direction: 1,
 			disabled: index + 1 === totalItems,
 			icon: 'angle-down',
-			text: 'Deprioritize',
+			text: Liferay.Language.get('deprioritize'),
 		},
 		{
 			cssClasses: 'border-top pl-3 py-1',
 			deleteAction: true,
 			disabled: !itemIsDeleteable,
 			icon: 'trash',
-			text: 'Delete',
+			text: Liferay.Language.get('delete'),
 		},
 	];
 

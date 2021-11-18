@@ -69,10 +69,13 @@ const VariationsNav = ({
 			{!availableSegmentsEntries &&
 				assetEntryListSegmentsEntryRels.length < 2 && (
 					<p className="mb-3 small text-secondary">
-						No segments.{' '}
+						{Liferay.Language.get(
+							'you-need-segments-to-create-a-personalized-variation'
+						)}{' '}
 						<ClayLink href={createNewSegmentURL}>
-							Create one
+							{Liferay.Language.get('create-your-first-segment')}
 						</ClayLink>
+						.
 					</p>
 				)}
 

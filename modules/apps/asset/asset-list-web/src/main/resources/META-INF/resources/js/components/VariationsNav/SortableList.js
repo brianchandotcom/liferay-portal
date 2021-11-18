@@ -85,7 +85,7 @@ const SortableList = ({items, namespace, savePriorityURL}) => {
 
 		if (
 			confirm(
-				'Are you sure you want to delete this? It will be deleted immediately.'
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
 			submitForm(document.hrefFm, deleteURL);

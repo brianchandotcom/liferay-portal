@@ -140,15 +140,11 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
 		Locale locale, Row row) {
 
-		String[] keys = {
-			contentDashboardItem.getTitle(locale),
-			contentDashboardItem.getUserName(),
-			contentDashboardItem.getTypeLabel(locale)
-		};
+		cellIndex = _createCell(cellIndex, row, contentDashboardItem.getTitle(locale));
 
-		for (String key : keys) {
-			cellIndex = _createCell(cellIndex, row, key);
-		}
+		cellIndex = _createCell(cellIndex, row, contentDashboardItem.getUserName());
+
+		cellIndex = _createCell(cellIndex, row, contentDashboardItem.getTypeLabel(locale));
 
 		cellIndex = _createSubtypeCell(
 			cellIndex, contentDashboardItem, locale, row);

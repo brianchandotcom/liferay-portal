@@ -19,13 +19,14 @@ import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
 import {getLocalizedText} from '../utils/language';
 import ThemeContext from './ThemeContext';
 import JSONInput from './sxp_element/JSONInput';
 
 function JSONSXPElement({
 	collapseAll,
-	sxpElementTemplateJSON,
+	sxpElement,
 	error = {},
 	id,
 	index,
@@ -42,24 +43,21 @@ function JSONSXPElement({
 	const [active, setActive] = useState(false);
 	const [collapse, setCollapse] = useState(collapseAll);
 
-	const description = getLocalizedText(
-		sxpElementTemplateJSON.description_i18n,
-		locale
-	);
-	const title = getLocalizedText(sxpElementTemplateJSON.title_i18n, locale);
+	const description = getLocalizedText(sxpElement.description_i18n, locale);
+	const title = getLocalizedText(sxpElement.title_i18n, locale);
 
 	useEffect(() => {
 		setCollapse(collapseAll);
 	}, [collapseAll]);
 
 	const _inputName = () =>
-		`selectedQuerySXPElements[${index}].uiConfigurationValues.sxpElementTemplateJSON`;
+		`elementInstances[${index}].uiConfigurationValues.sxpElement`;
 
 	const _hasError = () =>
 		touched.uiConfigurationValues &&
-		touched.uiConfigurationValues.sxpElementTemplateJSON &&
+		touched.uiConfigurationValues.sxpElement &&
 		error.uiConfigurationValues &&
-		!!error.uiConfigurationValues.sxpElementTemplateJSON;
+		!!error.uiConfigurationValues.sxpElement;
 
 	return (
 		<div className="sheet sxp-element" id={prefixedId}>
@@ -67,7 +65,12 @@ function JSONSXPElement({
 				<ClayList.Item flex>
 					<ClayList.ItemField>
 						<ClaySticker size="md">
-							<ClayIcon symbol={sxpElementTemplateJSON.icon} />
+							<ClayIcon
+								symbol={
+									sxpElement.elementDefinition?.icon ||
+									DEFAULT_SXP_ELEMENT_ICON
+								}
+							/>
 						</ClaySticker>
 					</ClayList.ItemField>
 
@@ -145,8 +148,8 @@ function JSONSXPElement({
 						setFieldTouched={setFieldTouched}
 						setFieldValue={setFieldValue}
 						value={
-							uiConfigurationValues.sxpElementTemplateJSON ||
-							JSON.stringify(sxpElementTemplateJSON, null, '\t')
+							uiConfigurationValues.sxpElement ||
+							JSON.stringify(sxpElement, null, '\t')
 						}
 					/>
 
@@ -154,10 +157,9 @@ function JSONSXPElement({
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
 								{
 									error.uiConfigurationValues
-										.sxpElementTemplateJSON
+										.sxpElement
 								}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
@@ -178,7 +180,7 @@ JSONSXPElement.propTypes = {
 	prefixedId: PropTypes.string,
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
-	sxpElementTemplateJSON: PropTypes.object,
+	sxpElement: PropTypes.object,
 	touched: PropTypes.object,
 	uiConfigurationValues: PropTypes.object,
 };

@@ -30,7 +30,6 @@ import ThemeContext from '../shared/ThemeContext';
 import {CUSTOM_JSON_SXP_ELEMENT, DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
 import {fetchData} from '../utils/fetch';
 import {getLocalizedText} from '../utils/language';
-import {getSXPBlueprintForm} from '../utils/utils';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];
@@ -46,14 +45,8 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 		setShowList(expand);
 	}, [expand]);
 
-	const _handleAddSXPElement = (
-		sxpElementTemplateJSON,
-		uiConfigurationJSON
-	) => () => {
-		onAddSXPElement({
-			sxpElementTemplateJSON,
-			uiConfigurationJSON,
-		});
+	const _handleAddSXPElement = (sxpElement) => () => {
+		onAddSXPElement(sxpElement);
 	};
 
 	return (
@@ -76,73 +69,66 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 
 			{showList && (
 				<ClayList>
-					{sxpElements.map(
-						(
-							{sxpElementTemplateJSON, uiConfigurationJSON},
-							index
-						) => {
-							const description = getLocalizedText(
-								sxpElementTemplateJSON.description_i18n,
-								locale
-							);
-							const title = getLocalizedText(
-								sxpElementTemplateJSON.title_i18n,
-								locale
-							);
+					{sxpElements.map((sxpElement, index) => {
+						const description = getLocalizedText(
+							sxpElement.description_i18n,
+							locale
+						);
+						const title = getLocalizedText(
+							sxpElement.title_i18n,
+							locale
+						);
 
-							return (
-								<ClayList.Item
-									className="sxp-element-item"
-									flex
-									key={index}
-								>
-									<ClayList.ItemField>
-										<ClaySticker size="md">
-											<ClayIcon
-												symbol={
-													sxpElementTemplateJSON.icon ||
-													DEFAULT_SXP_ELEMENT_ICON
-												}
-											/>
-										</ClaySticker>
-									</ClayList.ItemField>
+						return (
+							<ClayList.Item
+								className="sxp-element-item"
+								flex
+								key={index}
+							>
+								<ClayList.ItemField>
+									<ClaySticker size="md">
+										<ClayIcon
+											symbol={
+												sxpElement.elementDefinition
+													?.icon ||
+												DEFAULT_SXP_ELEMENT_ICON
+											}
+										/>
+									</ClaySticker>
+								</ClayList.ItemField>
 
-									<ClayList.ItemField expand>
-										{title && (
-											<ClayList.ItemTitle>
-												{title}
-											</ClayList.ItemTitle>
+								<ClayList.ItemField expand>
+									{title && (
+										<ClayList.ItemTitle>
+											{title}
+										</ClayList.ItemTitle>
+									)}
+
+									{description && (
+										<ClayList.ItemText subtext={true}>
+											{description}
+										</ClayList.ItemText>
+									)}
+								</ClayList.ItemField>
+
+								<ClayList.ItemField>
+									<div className="add-sxp-element-button-background" />
+
+									<ClayButton
+										aria-label={Liferay.Language.get('add')}
+										className="add-sxp-element-button"
+										displayType="secondary"
+										onClick={_handleAddSXPElement(
+											sxpElement
 										)}
-
-										{description && (
-											<ClayList.ItemText subtext={true}>
-												{description}
-											</ClayList.ItemText>
-										)}
-									</ClayList.ItemField>
-
-									<ClayList.ItemField>
-										<div className="add-sxp-element-button-background" />
-
-										<ClayButton
-											aria-label={Liferay.Language.get(
-												'add'
-											)}
-											className="add-sxp-element-button"
-											displayType="secondary"
-											onClick={_handleAddSXPElement(
-												sxpElementTemplateJSON,
-												uiConfigurationJSON
-											)}
-											small
-										>
-											{Liferay.Language.get('add')}
-										</ClayButton>
-									</ClayList.ItemField>
-								</ClayList.Item>
-							);
-						}
-					)}
+										small
+									>
+										{Liferay.Language.get('add')}
+									</ClayButton>
+								</ClayList.ItemField>
+							</ClayList.Item>
+						);
+					})}
 				</ClayList>
 			)}
 		</>
@@ -177,7 +163,7 @@ function SXPElementSidebar({
 
 		sxpElements.map((sxpElement) => {
 			const category =
-				sxpElement.sxpElementTemplateJSON.category || DEFAULT_CATEGORY;
+				sxpElement.elementDefinition?.category || DEFAULT_CATEGORY;
 
 			newCategorizedSXPElements[category] = [
 				...(newCategorizedSXPElements[category] || []),
@@ -217,12 +203,10 @@ function SXPElementSidebar({
 		(value) => {
 			const newSXPElements = sxpElements.filter((sxpElement) => {
 				if (value) {
-					const sxpElementTitle =
-						sxpElement.sxpElementTemplateJSON.title ||
-						getLocalizedText(
-							sxpElement.sxpElementTemplateJSON.title_i18n,
-							locale
-						);
+					const sxpElementTitle = getLocalizedText(
+						sxpElement.title_i18n,
+						locale
+					);
 
 					return sxpElementTitle
 						.toLowerCase()
@@ -303,6 +287,7 @@ function SXPElementSidebar({
 }
 
 function AddSXPElementSidebar(props) {
+	const {defaultLocale} = useContext(ThemeContext);
 	const [querySXPElements, setQuerySXPElements] = useState(null);
 
 	useEffect(() => {
@@ -311,7 +296,21 @@ function AddSXPElementSidebar(props) {
 			{method: 'GET'},
 			(responseContent) =>
 				setQuerySXPElements(
-					responseContent.items.map(getSXPBlueprintForm)
+					responseContent.items.map(
+						({
+							description,
+							description_i18n,
+							title,
+							title_i18n,
+							...props
+						}) => ({
+							...props,
+							description_i18n: description_i18n || {
+								[defaultLocale]: description,
+							},
+							title_i18n: title_i18n || {[defaultLocale]: title},
+						})
+					)
 				),
 			() => setQuerySXPElements([])
 		);

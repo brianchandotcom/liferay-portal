@@ -21,19 +21,15 @@ import boostAllKeywordsMatch from '../sxp_elements/boostAllKeywordsMatch';
 // import TEXT_MATCH_OVER_MULTIPLE_FIELDS from '../sxp_elements/textMatchOverMultipleFields';
 
 export const CUSTOM_JSON_SXP_ELEMENT = {
-	sxpElementTemplateJSON: {
-		category: 'custom',
-		clauses: [],
-		conditions: {},
-		description: Liferay.Language.get('editable-json-text-area'),
-		description_i18n: {
-			en_US: Liferay.Language.get('editable-json-text-area'),
-		},
-		enabled: true,
-		icon: 'custom-field',
-		title: Liferay.Language.get('custom-json-element'),
-		title_i18n: {en_US: Liferay.Language.get('custom-json-element')},
+	description_i18n: {
+		en_US: Liferay.Language.get('editable-json-text-area'),
 	},
+	elementDefinition: {
+		category: 'custom',
+		configuration: {},
+		icon: 'custom-field',
+	},
+	title_i18n: {en_US: Liferay.Language.get('custom-json-element')},
 };
 
 export const DEFAULT_ADVANCED_CONFIGURATION = {};

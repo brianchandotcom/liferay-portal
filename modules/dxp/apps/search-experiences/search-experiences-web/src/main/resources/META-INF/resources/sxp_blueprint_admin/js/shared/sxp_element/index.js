@@ -23,7 +23,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import {INPUT_TYPES} from '../../utils/inputTypes';
 import {
-	cleanUIConfigurationJSON,
+	cleanUIConfiguration,
 	getSXPElementOutput,
 	isDefined,
 } from '../../utils/utils';
@@ -68,9 +68,8 @@ function SXPElement({
 	searchableTypes = [],
 	setFieldTouched = () => {},
 	setFieldValue = () => {},
-	sxpElementTemplateJSON,
+	sxpElement,
 	touched = {},
-	uiConfigurationJSON,
 	uiConfigurationValues,
 }) {
 	const {locale} = useContext(ThemeContext);
@@ -78,13 +77,12 @@ function SXPElement({
 	const [collapse, setCollapse] = useState(false);
 	const [active, setActive] = useState(false);
 
-	const description = getLocalizedText(
-		sxpElementTemplateJSON.description_i18n,
-		locale
-	);
-	const title = getLocalizedText(sxpElementTemplateJSON.title_i18n, locale);
+	const description = getLocalizedText(sxpElement.description_i18n, locale);
+	const title = getLocalizedText(sxpElement.title_i18n, locale);
 
-	const fieldSets = cleanUIConfigurationJSON(uiConfigurationJSON).fieldSets;
+	const fieldSets = cleanUIConfiguration(
+		sxpElement.elementDefinition?.uiConfiguration
+	).fieldSets;
 
 	useEffect(() => {
 		setCollapse(collapseAll);
@@ -95,7 +93,15 @@ function SXPElement({
 	};
 
 	const _getInputName = (configKey) => {
-		return `selectedQuerySXPElements[${index}].uiConfigurationValues.${configKey}`;
+		return `elementInstances[${index}].uiConfigurationValues.${configKey}`;
+	};
+
+	const _isEnabled = () => {
+		const enabled =
+			sxpElement.elementDefinition?.configuration?.queryConfiguration
+				?.queryEntries?.[0]?.enabled;
+
+		return isDefined(enabled) ? enabled : true;
 	};
 
 	const _handleDelete = () => {
@@ -104,10 +110,9 @@ function SXPElement({
 
 	const _handleToggle = () => {
 		setFieldValue(
-			`selectedQuerySXPElements[${index}].sxpElementTemplateJSON.enabled`,
-			isDefined(sxpElementTemplateJSON.enabled)
-				? !sxpElementTemplateJSON.enabled
-				: false
+			`elementInstances[${index}].sxpElement.elementDefinition.` +
+				`configuration.queryConfiguration.queryEntries[0].enabled`,
+			!_isEnabled()
 		);
 	};
 
@@ -116,10 +121,7 @@ function SXPElement({
 		!!error.uiConfigurationValues?.[config.name];
 
 	const _renderInput = (config) => {
-		const disabled =
-			(isDefined(sxpElementTemplateJSON.enabled) &&
-				!sxpElementTemplateJSON.enabled) ||
-			isSubmitting;
+		const disabled = !_isEnabled() || isSubmitting;
 		const inputId = _getInputId(id, config.name);
 		const inputName = _getInputName(config.name);
 		const typeOptions = config.typeOptions || {};
@@ -289,9 +291,7 @@ function SXPElement({
 	return (
 		<div
 			className={getCN('sxp-element', 'sheet', {
-				disabled:
-					isDefined(sxpElementTemplateJSON.enabled) &&
-					!sxpElementTemplateJSON.enabled,
+				disabled: !_isEnabled(),
 			})}
 			id={prefixedId}
 		>
@@ -301,7 +301,7 @@ function SXPElement({
 						<ClaySticker size="md">
 							<ClayIcon
 								symbol={
-									sxpElementTemplateJSON.icon ||
+									sxpElement.elementDefinition?.icon ||
 									DEFAULT_SXP_ELEMENT_ICON
 								}
 							/>
@@ -322,16 +322,12 @@ function SXPElement({
 
 					<ClayToggle
 						aria-label={
-							!isDefined(sxpElementTemplateJSON.enabled) ||
-							sxpElementTemplateJSON.enabled
+							_isEnabled()
 								? Liferay.Language.get('enabled')
 								: Liferay.Language.get('disabled')
 						}
 						onToggle={_handleToggle}
-						toggled={
-							!isDefined(sxpElementTemplateJSON.enabled) ||
-							sxpElementTemplateJSON.enabled
-						}
+						toggled={_isEnabled()}
 					/>
 
 					<ClayDropDown
@@ -360,8 +356,7 @@ function SXPElement({
 								size="lg"
 								text={JSON.stringify(
 									getSXPElementOutput({
-										sxpElementTemplateJSON,
-										uiConfigurationJSON,
+										sxpElement,
 										uiConfigurationValues,
 									}),
 									null,
@@ -505,9 +500,7 @@ SXPElement.propTypes = {
 	searchableTypes: PropTypes.arrayOf(PropTypes.object),
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
-	sxpElementTemplateJSON: PropTypes.object,
 	touched: PropTypes.object,
-	uiConfigurationJSON: PropTypes.object,
 	uiConfigurationValues: PropTypes.object,
 };
 

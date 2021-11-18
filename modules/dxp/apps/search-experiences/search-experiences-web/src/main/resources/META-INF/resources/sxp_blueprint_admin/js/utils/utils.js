@@ -123,13 +123,13 @@ export function toNumber(str) {
 }
 
 /**
- * Cleans up the UIConfigurationJSON to prevent page load failures
+ * Cleans up the uiConfiguration to prevent page load failures
  * - Checks that `fieldSets` and `fields` are arrays
  * - Removes fields without a `name` property
  * - Removes fields with a duplicate `name` property
  *
  * Example:
- *	cleanUIConfigurationJSON({
+ *	cleanUIConfiguration({
  *		fieldSets: [
  *			{
  *				fields: [
@@ -162,16 +162,16 @@ export function toNumber(str) {
  *		],
  *	}
  *
- * @param {object} uiConfigurationJSON Object with UI configuration
+ * @param {object} uiConfiguration Object with UI configuration
  * @return {object}
  */
-export function cleanUIConfigurationJSON(uiConfigurationJSON = {}) {
+export function cleanUIConfiguration(uiConfiguration = {}) {
 	const fieldSets = [];
 
-	if (Array.isArray(uiConfigurationJSON.fieldSets)) {
+	if (Array.isArray(uiConfiguration.fieldSets)) {
 		const fieldNames = [];
 
-		uiConfigurationJSON.fieldSets.forEach((fieldSet) => {
+		uiConfiguration.fieldSets.forEach((fieldSet) => {
 			if (Array.isArray(fieldSet.fields)) {
 				const fields = [];
 
@@ -286,20 +286,20 @@ export function getDefaultValue(item) {
 /**
  * Function for replacing the ${variable_name} with actual value.
  *
- * @param {object} _.uiConfigurationJSON Object with UI configuration
- * @param {object} _.sxpElementTemplateJSON Actual element template for blueprint configuration
- * @param {object} _.uiConfigurationValues Values that will replace the keys in uiConfigurationJSON
+ * @param {object} _.sxpElement SXP Element with elementDefinition
+ * @param {object} _.uiConfigurationValues Values that will replace the keys in uiConfiguration
  * @return {object}
  */
 export function getSXPElementOutput({
-	sxpElementTemplateJSON,
-	uiConfigurationJSON,
+	sxpElement,
 	uiConfigurationValues,
 }) {
-	const fieldSets = cleanUIConfigurationJSON(uiConfigurationJSON).fieldSets;
+	const fieldSets = cleanUIConfiguration(sxpElement.elementDefinition?.uiConfiguration).fieldSets;
 
 	if (fieldSets.length > 0) {
-		let flattenJSON = JSON.stringify(sxpElementTemplateJSON);
+		let flattenJSON = JSON.stringify(
+			sxpElement.elementDefinition?.configuration || {}
+		);
 
 		fieldSets.map(({fields}) => {
 			fields.map((config) => {
@@ -479,15 +479,29 @@ export function getSXPElementOutput({
 		return JSON.parse(flattenJSON);
 	}
 
+	return (
+		parseCustomSXPElement(sxpElement, uiConfigurationValues)
+			.elementDefinition?.configuration || {}
+	);
+};
+
+/**
+ * Function for parsing custom json element text into sxpElement
+ *
+ * @param {object} sxpElement Original sxpElement (default)
+ * @param {object} uiConfigurationValues Contains custom JSON for sxpElement
+ * @return {object}
+ */
+export const parseCustomSXPElement = (sxpElement, uiConfigurationValues) => {
 	try {
-		if (isDefined(uiConfigurationValues.sxpElementTemplateJSON)) {
-			return JSON.parse(uiConfigurationValues.sxpElementTemplateJSON);
+		if (isDefined(uiConfigurationValues.sxpElement)) {
+			return JSON.parse(uiConfigurationValues.sxpElement);
 		}
 
-		return sxpElementTemplateJSON;
+		return sxpElement;
 	}
 	catch {
-		return sxpElementTemplateJSON;
+		return sxpElement;
 	}
 }
 
@@ -521,11 +535,11 @@ export function getSXPElementOutput({
  * });
  * => {boost: 10, language: 'en_US'}
  *
- * @param {object} uiConfigurationJSON Object with UI configuration
+ * @param {object} uiConfiguration Object with UI configuration
  * @return {object}
  */
-export function getUIConfigurationValues(uiConfigurationJSON) {
-	return cleanUIConfigurationJSON(uiConfigurationJSON).fieldSets.reduce(
+export function getUIConfigurationValues(uiConfiguration = {}) {
+	return cleanUIConfiguration(uiConfiguration).fieldSets.reduce(
 		(allValues, fieldSet) => {
 			const uiConfigurationValues = fieldSet.fields.reduce(
 				(acc, curr) => ({

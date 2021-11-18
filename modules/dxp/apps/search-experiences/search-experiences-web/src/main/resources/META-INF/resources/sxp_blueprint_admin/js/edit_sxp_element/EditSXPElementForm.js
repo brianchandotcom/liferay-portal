@@ -92,7 +92,7 @@ function EditSXPElementForm({
 		)
 	);
 	const [uiConfigurationJSON, setUIConfigurationJSON] = useState(
-		JSON.stringify(uiConfiguration, null, '\t')
+		JSON.stringify(uiConfiguration || {}, null, '\t')
 	);
 
 	useEffect(() => {
@@ -334,13 +334,28 @@ function EditSXPElementForm({
 			);
 		}
 
+		const {
+			description_i18n,
+			title_i18n,
+			...restOfSXPElementTemplateJSON
+		} = previewSXPElementTemplateJSON;
+
+		const sxpElement = {
+			description_i18n,
+			elementDefinition: {
+				uiConfiguration: previewUIConfigurationJSON,
+				...restOfSXPElementTemplateJSON,
+			},
+			title_i18n,
+			type,
+		};
+
 		return (
 			<div className="portlet-sxp-blueprint-admin">
 				<ErrorBoundary>
 					<SXPElement
 						collapseAll={false}
-						sxpElementTemplateJSON={previewSXPElementTemplateJSON}
-						uiConfigurationJSON={previewUIConfigurationJSON}
+						sxpElement={sxpElement}
 						uiConfigurationValues={getUIConfigurationValues(
 							previewUIConfigurationJSON
 						)}

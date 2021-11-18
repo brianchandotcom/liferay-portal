@@ -7093,7 +7093,7 @@ public class DataFactory {
 		String data = null;
 
 		try {
-			data = _readFile(templateFileName);
+			data = _readFile("home_page_template_data/" + templateFileName);
 
 			for (FragmentEntryLinkModel fragmentEntryLinkModel :
 					fragmentEntryLinkModels) {

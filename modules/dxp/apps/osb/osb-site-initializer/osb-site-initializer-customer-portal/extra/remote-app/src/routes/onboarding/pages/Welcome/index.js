@@ -12,12 +12,12 @@ import { steps } from '../../utils/constants';
 import WelcomeSkeleton from './Skeleton';
 
 const Welcome = ({ userAccount }) => {
-	const [{ assetsPath, externalReferenceCode }, dispatch] = useContext(AppContext);
+	const [{ assetsPath, project }, dispatch] = useContext(AppContext);
 	const { isLoading } = usePageGuard(
 		userAccount,
 		onboardingPageGuard,
 		overviewPageGuard,
-		externalReferenceCode
+		project && project.externalReferenceCode
 	);
 
 	if (isLoading) {

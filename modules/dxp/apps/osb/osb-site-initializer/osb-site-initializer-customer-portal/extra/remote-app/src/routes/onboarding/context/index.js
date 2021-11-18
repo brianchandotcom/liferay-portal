@@ -40,7 +40,7 @@ const AppContext = createContext();
 
 const AppProvider = ({ assetsPath, children }) => {
 	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath));
-	const { data: userAccount, isLoading } = useGraphQL(getUserAccountById(LiferayTheme.getUserId()));
+	const { data } = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
 
 	useEffect(() => {
 		const projectExternalReferenceCode = SearchParams.get(PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE);
@@ -53,12 +53,14 @@ const AppProvider = ({ assetsPath, children }) => {
 		});
 	}, []);
 
-	if (isLoading) {
-		dispatch({
-			payload: userAccount,
-			type: actionTypes.UPDATE_USER_ACCOUNT
-		});
-	}
+	useEffect(() => {
+		if (data) {
+			dispatch({
+				payload: data.userAccount,
+				type: actionTypes.UPDATE_USER_ACCOUNT
+			});
+		}
+	}, [data]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

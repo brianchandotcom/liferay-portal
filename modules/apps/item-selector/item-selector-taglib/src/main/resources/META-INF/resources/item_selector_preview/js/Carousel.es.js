@@ -19,7 +19,6 @@ import React, {useState} from 'react';
 
 import PreviewImage from './PreviewImage.es';
 import PreviewVideo from './PreviewVideo.es';
-import {STR_VIDEO_HTML_RETURN_TYPE} from './constants';
 
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>

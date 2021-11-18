@@ -24,6 +24,8 @@ const VocabulariesSelectionBox = ({
 	rightList,
 }) => {
 	const [items, setItems] = useState([leftList, rightList]);
+	const [leftSelected, setLeftSelected] = useState([]);
+	const [rightSelected, setRightSelected] = useState([]);
 
 	const [leftElements, rightElements] = items;
 
@@ -41,30 +43,51 @@ const VocabulariesSelectionBox = ({
 		});
 	};
 
+	const disableOptionsFromOtherSites = (vocabulary) => {
+		leftElements.forEach((elem) => {
+			if (!elem.global && elem.site !== vocabulary.site) {
+				selectorRef.current.querySelector(
+					`option[value='${elem.value}']`
+				).disabled = true;
+			}
+		});
+	};
+
 	const disableNonSelectableOptions = () => {
 		const selectedVocabulaboriesFromNonGlobalSite = rightElements.filter(
 			(elem) => !elem.global
 		);
 
 		if (selectedVocabulaboriesFromNonGlobalSite.length) {
-			leftElements.forEach((elem) => {
-				if (
-					!elem.global &&
-					elem.site !==
-						selectedVocabulaboriesFromNonGlobalSite[0].site
-				) {
-					selectorRef.current.querySelector(
-						`option[value='${elem.value}']`
-					).disabled = true;
-				}
-			});
+			disableOptionsFromOtherSites(
+				selectedVocabulaboriesFromNonGlobalSite[0]
+			);
 		}
+	};
+
+	const handleLeftSelectionChange = () => {
+		leftSelected.forEach((selectedVocabularyValue) => {
+			const vocabulary = leftElements.find(
+				(elem) => elem.value === selectedVocabularyValue
+			);
+			if (!vocabulary.global) {
+				disableOptionsFromOtherSites(vocabulary);
+			}
+		});
 	};
 
 	useEffect(() => {
 		enableAllOptions();
 		disableNonSelectableOptions();
-	});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [items]);
+
+	useEffect(() => {
+		enableAllOptions();
+		disableNonSelectableOptions();
+		handleLeftSelectionChange();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [leftSelected]);
 
 	return (
 		<div ref={selectorRef}>
@@ -76,11 +99,15 @@ const VocabulariesSelectionBox = ({
 				left={{
 					id: leftBoxName,
 					label: Liferay.Language.get('available'),
+					onSelectChange: setLeftSelected,
+					selected: leftSelected,
 				}}
 				onItemsChange={setItems}
 				right={{
 					id: `${portletNamespace}${rightBoxName}`,
 					label: Liferay.Language.get('in-use'),
+					onSelectChange: setRightSelected,
+					selected: rightSelected,
 				}}
 			/>
 		</div>

@@ -25,6 +25,7 @@ import {fetchData} from '../../utils/fetch';
 import SelectTypes from './SelectTypes';
 
 function QueryBuilderTab({
+	elementInstances,
 	entityJSON,
 	errors = [],
 	frameworkConfig = {},
@@ -34,7 +35,6 @@ function QueryBuilderTab({
 	onDeleteSXPElement,
 	onFrameworkConfigChange,
 	onToggleSidebar,
-	selectedSXPElements,
 	setFieldTouched,
 	setFieldValue,
 	touched = [],
@@ -67,51 +67,48 @@ function QueryBuilderTab({
 
 	const _renderSelectedElements = () => (
 		<>
-			{selectedSXPElements.map((sxpElement, index) => {
-				return sxpElement.uiConfigurationJSON ? (
-					<SXPElement
-						collapseAll={collapseAll}
-						entityJSON={entityJSON}
-						error={errors[index]}
-						id={sxpElement.id}
-						index={index}
-						indexFields={indexFields}
-						isSubmitting={isSubmitting}
-						key={sxpElement.id}
-						onBlur={onBlur}
-						onChange={onChange}
-						onDeleteSXPElement={onDeleteSXPElement}
-						prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-						searchableTypes={searchableTypes}
-						setFieldTouched={setFieldTouched}
-						setFieldValue={setFieldValue}
-						sxpElementTemplateJSON={
-							sxpElement.sxpElementTemplateJSON
-						}
-						touched={touched[index]}
-						uiConfigurationJSON={sxpElement.uiConfigurationJSON}
-						uiConfigurationValues={sxpElement.uiConfigurationValues}
-					/>
-				) : (
-					<JSONSXPElement
-						collapseAll={collapseAll}
-						error={errors[index]}
-						id={sxpElement.id}
-						index={index}
-						isSubmitting={isSubmitting}
-						key={sxpElement.id}
-						onDeleteSXPElement={onDeleteSXPElement}
-						prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-						setFieldTouched={setFieldTouched}
-						setFieldValue={setFieldValue}
-						sxpElementTemplateJSON={
-							sxpElement.sxpElementTemplateJSON
-						}
-						touched={touched[index]}
-						uiConfigurationValues={sxpElement.uiConfigurationValues}
-					/>
-				);
-			})}
+			{elementInstances.map(
+				({id, sxpElement, uiConfigurationValues}, index) => {
+					return sxpElement.elementDefinition?.uiConfiguration ? (
+						<SXPElement
+							collapseAll={collapseAll}
+							entityJSON={entityJSON}
+							error={errors[index]}
+							id={id}
+							index={index}
+							indexFields={indexFields}
+							isSubmitting={isSubmitting}
+							key={id}
+							onBlur={onBlur}
+							onChange={onChange}
+							onDeleteSXPElement={onDeleteSXPElement}
+							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
+							searchableTypes={searchableTypes}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							sxpElement={sxpElement}
+							touched={touched[index]}
+							uiConfigurationValues={uiConfigurationValues}
+						/>
+					) : (
+						<JSONSXPElement
+							collapseAll={collapseAll}
+							error={errors[index]}
+							id={id}
+							index={index}
+							isSubmitting={isSubmitting}
+							key={id}
+							onDeleteSXPElement={onDeleteSXPElement}
+							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							sxpElement={sxpElement}
+							touched={touched[index]}
+							uiConfigurationValues={uiConfigurationValues}
+						/>
+					);
+				}
+			)}
 		</>
 	);
 
@@ -164,7 +161,7 @@ function QueryBuilderTab({
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				{selectedSXPElements.length === 0 ? (
+				{elementInstances.length === 0 ? (
 					<div className="sheet">
 						<div className="selected-sxp-elements-empty-text">
 							{Liferay.Language.get(
@@ -222,6 +219,7 @@ function QueryBuilderTab({
 }
 
 QueryBuilderTab.propTypes = {
+	elementInstances: PropTypes.arrayOf(PropTypes.object),
 	entityJSON: PropTypes.object,
 	errors: PropTypes.arrayOf(PropTypes.object),
 	frameworkConfig: PropTypes.object,
@@ -231,7 +229,6 @@ QueryBuilderTab.propTypes = {
 	onDeleteSXPElement: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
 	onToggleSidebar: PropTypes.func,
-	selectedSXPElements: PropTypes.arrayOf(PropTypes.object),
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
 	touched: PropTypes.arrayOf(PropTypes.object),

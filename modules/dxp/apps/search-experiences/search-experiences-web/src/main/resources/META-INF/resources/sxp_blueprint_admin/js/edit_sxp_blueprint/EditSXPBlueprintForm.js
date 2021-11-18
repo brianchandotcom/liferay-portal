@@ -25,11 +25,11 @@ import {addParams} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
 import {
-	cleanUIConfigurationJSON,
-	getSXPBlueprintForm,
+	cleanUIConfiguration,
 	getSXPElementOutput,
 	getUIConfigurationValues,
 	isDefined,
+	parseCustomSXPElement,
 } from '../utils/utils';
 import {
 	validateBoost,
@@ -116,54 +116,25 @@ function EditSXPBlueprintForm({
 		sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
 	});
 
-	const _getSelectedSXPElements = (values) =>
-		values.selectedQuerySXPElements.map(
+	const _getElementInstances = (values) =>
+		values.elementInstances.map(
 			({
 				id, // eslint-disable-line
-				sxpElementTemplateJSON,
-				uiConfigurationJSON,
+				sxpElement,
 				uiConfigurationValues,
 				...props
 			}) => {
-				const configurationEntry = getSXPElementOutput({
-					sxpElementTemplateJSON,
-					uiConfigurationJSON,
-					uiConfigurationValues,
-				});
-
-				// Check if sxpElementTemplateJSON is a custom JSON (if so, use
-				// updated sxpElementTemplateJSON stored in uiConfigurationValues)
-
-				const newSXPElementTemplateJSON = uiConfigurationJSON
-					? sxpElementTemplateJSON
-					: configurationEntry;
-
-				// Isolate title_i18n and description_i18n from sxpElementTemplateJSON
-
-				const {
-					description_i18n,
-					title_i18n,
-					...restOfSXPElementTemplateJSON
-				} = newSXPElementTemplateJSON;
-
-				// Add uiConfigurationJSON back into elementDefinition if available
-
-				const elementDefinition = uiConfigurationJSON
-					? {
-							...restOfSXPElementTemplateJSON,
-							uiConfiguration: uiConfigurationJSON,
-					  }
-					: restOfSXPElementTemplateJSON;
-
 				return {
-					configurationEntry,
-					sxpElement: {
-						description_i18n,
-						elementDefinition,
-						title_i18n,
-					},
-					uiConfigurationValues,
 					...props,
+					configurationEntry: getSXPElementOutput({
+						sxpElement,
+						uiConfigurationValues,
+					}),
+					sxpElement: parseCustomSXPElement(
+						sxpElement,
+						uiConfigurationValues
+					),
+					uiConfigurationValues,
 				};
 			}
 		);
@@ -174,7 +145,7 @@ function EditSXPBlueprintForm({
 
 		try {
 			configuration = _getConfiguration(values);
-			elementInstances = _getSelectedSXPElements(values);
+			elementInstances = _getElementInstances(values);
 		}
 		catch (error) {
 			openErrorToast({
@@ -280,26 +251,22 @@ function EditSXPBlueprintForm({
 
 		// Validate the elements added to the query builder
 
-		const selectedQuerySXPElementsArray = [];
+		const elementInstancesArray = [];
 
-		values.selectedQuerySXPElements.map(
-			(
-				{
-					sxpElementTemplateJSON,
-					uiConfigurationJSON,
-					uiConfigurationValues,
-				},
-				index
-			) => {
-				if (
-					isDefined(sxpElementTemplateJSON.enabled) &&
-					!sxpElementTemplateJSON.enabled
-				) {
+		values.elementInstances.map(
+			({sxpElement, uiConfigurationValues}, index) => {
+				const enabled =
+					sxpElement.elementDefinition?.configuration
+						?.queryConfiguration?.queryEntries?.[0]?.enabled;
+				const uiConfiguration =
+					sxpElement.elementDefinition?.uiConfiguration;
+
+				if (isDefined(enabled) && !enabled) {
 					return;
 				}
 
 				const configErrors = {};
-				const fieldSets = cleanUIConfigurationJSON(uiConfigurationJSON)
+				const fieldSets = cleanUIConfiguration(uiConfiguration)
 					.fieldSets;
 
 				if (fieldSets.length > 0) {
@@ -328,29 +295,28 @@ function EditSXPBlueprintForm({
 						});
 					});
 				}
-				else if (!uiConfigurationJSON) {
-					const configValue =
-						uiConfigurationValues?.sxpElementTemplateJSON;
+				else if (!uiConfiguration) {
+					const configValue = uiConfigurationValues?.sxpElement;
 
 					const configError =
 						validateRequired(configValue, INPUT_TYPES.JSON) ||
 						validateJSON(configValue, INPUT_TYPES.JSON);
 
 					if (configError) {
-						configErrors.sxpElementTemplateJSON = configError;
+						configErrors.sxpElement = configError;
 					}
 				}
 
 				if (Object.keys(configErrors).length > 0) {
-					selectedQuerySXPElementsArray[index] = {
+					elementInstancesArray[index] = {
 						uiConfigurationValues: configErrors,
 					};
 				}
 			}
 		);
 
-		if (selectedQuerySXPElementsArray.length > 0) {
-			errors.selectedQuerySXPElements = selectedQuerySXPElementsArray;
+		if (elementInstancesArray.length > 0) {
+			errors.elementInstances = elementInstancesArray;
 		}
 
 		// Validate all JSON inputs on the settings tab
@@ -391,6 +357,12 @@ function EditSXPBlueprintForm({
 			applyIndexerClauses:
 				initialConfiguration.queryConfiguration?.applyIndexerClauses ||
 				true,
+			elementInstances: initialSXPElementInstances.map(
+				(elementInstance, index) => ({
+					...elementInstance,
+					id: index,
+				})
+			),
 			facetConfig: JSON.stringify(initialConfiguration.facet, null, '\t'),
 			frameworkConfig: initialConfiguration.general || {},
 			highlightConfig: JSON.stringify(
@@ -403,14 +375,6 @@ function EditSXPBlueprintForm({
 				null,
 				'\t'
 			),
-			selectedQuerySXPElements: initialSXPElementInstances.map(
-				({sxpElement, uiConfigurationValues, ...props}, index) => ({
-					...getSXPBlueprintForm(sxpElement),
-					id: index,
-					uiConfigurationValues,
-					...props,
-				})
-			),
 			sortConfig: JSON.stringify(
 				initialConfiguration.sortConfiguration,
 				null,
@@ -422,25 +386,25 @@ function EditSXPBlueprintForm({
 	});
 
 	const _handleAddSXPElement = (sxpElement) => {
-		if (formik.touched?.selectedQuerySXPElements) {
+		if (formik.touched?.elementInstances) {
 			formik.setTouched({
 				...formik.touched,
-				selectedQuerySXPElements: [
+				elementInstances: [
 					undefined,
-					...formik.touched.selectedQuerySXPElements,
+					...formik.touched.elementInstances,
 				],
 			});
 		}
 
-		formik.setFieldValue('selectedQuerySXPElements', [
+		formik.setFieldValue('elementInstances', [
 			{
-				...sxpElement,
 				id: sxpElementIdCounterRef.current++,
+				sxpElement,
 				uiConfigurationValues: getUIConfigurationValues(
-					sxpElement.uiConfigurationJSON
+					sxpElement.elementDefinition?.uiConfiguration
 				),
 			},
-			...formik.values.selectedQuerySXPElements,
+			...formik.values.elementInstances,
 		]);
 
 		openSuccessToast({
@@ -449,24 +413,22 @@ function EditSXPBlueprintForm({
 	};
 
 	const _handleDeleteSXPElement = (id) => {
-		const index = formik.values.selectedQuerySXPElements.findIndex(
+		const index = formik.values.elementInstances.findIndex(
 			(item) => item.id === id
 		);
 
-		if (formik.touched?.selectedQuerySXPElements) {
+		if (formik.touched?.elementInstances) {
 			formik.setTouched({
 				...formik.touched,
-				selectedQuerySXPElements: formik.touched.selectedQuerySXPElements.filter(
+				elementInstances: formik.touched.elementInstances.filter(
 					(_, i) => i !== index
 				),
 			});
 		}
 
 		formik.setFieldValue(
-			'selectedQuerySXPElements',
-			formik.values.selectedQuerySXPElements.filter(
-				(item) => item.id !== id
-			)
+			'elementInstances',
+			formik.values.elementInstances.filter((item) => item.id !== id)
 		);
 
 		openSuccessToast({
@@ -485,7 +447,7 @@ function EditSXPBlueprintForm({
 
 		try {
 			configuration = _getConfiguration(formik.values);
-			elementInstances = _getSelectedSXPElements(formik.values);
+			elementInstances = _getElementInstances(formik.values);
 		}
 		catch (error) {
 			setPreviewInfo({
@@ -667,8 +629,11 @@ function EditSXPBlueprintForm({
 							})}
 						>
 							<QueryBuilderTab
+								elementInstances={
+									formik.values.elementInstances
+								}
 								entityJSON={entityJSON}
-								errors={formik.errors.selectedQuerySXPElements}
+								errors={formik.errors.elementInstances}
 								frameworkConfig={formik.values.frameworkConfig}
 								isSubmitting={
 									formik.isSubmitting || previewInfo.loading
@@ -683,14 +648,9 @@ function EditSXPBlueprintForm({
 									setShowPreview(false);
 									setShowSidebar(!showSidebar);
 								}}
-								selectedSXPElements={
-									formik.values.selectedQuerySXPElements
-								}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
-								touched={
-									formik.touched.selectedQuerySXPElements
-								}
+								touched={formik.touched.elementInstances}
 							/>
 						</div>
 					</>

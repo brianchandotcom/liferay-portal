@@ -120,10 +120,11 @@ AUI.add(
 
 					var elements = [];
 
-					var selectedElements = instance.getAllSelectedElements();
+					var allElements = instance._getAllElements(false);
 
-					selectedElements.each((item) => {
+					allElements.each((item) => {
 						elements.push({
+							checked: item.attr('checked'),
 							name: item.attr('name'),
 							value: item.val(),
 						});

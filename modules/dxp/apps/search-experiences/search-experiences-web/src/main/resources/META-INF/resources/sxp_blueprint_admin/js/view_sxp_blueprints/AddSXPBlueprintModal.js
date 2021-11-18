@@ -31,17 +31,22 @@ import {
 } from '../utils/data';
 import {fetchData} from '../utils/fetch';
 import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
-import {getSXPBlueprintForm, getSXPElementOutput} from '../utils/utils';
+import {getSXPElementOutput, getUIConfigurationValues} from '../utils/utils';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
 	(sxpElement) => {
-		const translatedSXPElement = getSXPBlueprintForm(sxpElement);
+		const uiConfigurationValues = getUIConfigurationValues(
+			sxpElement.elementDefinition?.uiConfiguration
+		);
 
 		return {
-			configurationEntry: getSXPElementOutput(translatedSXPElement),
+			configurationEntry: getSXPElementOutput({
+				sxpElement,
+				uiConfigurationValues,
+			}),
 			sxpElement,
 			type: sxpElement.type || SXP_ELEMENT_TYPE.QUERY,
-			uiConfigurationValues: translatedSXPElement.uiConfigurationValues,
+			uiConfigurationValues,
 		};
 	}
 );

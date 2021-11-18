@@ -37,14 +37,14 @@ import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX, DEFAULT_ERROR} from '../utils/constants';
-import {renameKeys, sub} from '../utils/language';
+import {sub} from '../utils/language';
 import {openErrorToast} from '../utils/toasts';
 import {getUIConfigurationValues} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
 function EditSXPElementForm({
-	initialConfiguration = {},
 	initialDescription = {},
+	initialElementDefinition = {},
 	initialTitle = {},
 	predefinedVariables = [],
 	readOnly,
@@ -75,24 +75,24 @@ function EditSXPElementForm({
 
 	const [variables, setVariables] = useState(filteredCategories);
 
-	if (!initialConfiguration.sxpElementTemplateJSON) {
-		initialConfiguration.sxpElementTemplateJSON = {};
-	}
-
-	initialConfiguration.sxpElementTemplateJSON.title_i18n = renameKeys(
-		initialTitle,
-		(str) => str.replace('-', '_')
-	);
-	initialConfiguration.sxpElementTemplateJSON.description_i18n = renameKeys(
-		initialDescription,
-		(str) => str.replace('-', '_')
-	);
+	const {
+		uiConfiguration,
+		...restOfElementDefinition
+	} = initialElementDefinition;
 
 	const [sxpElementTemplateJSON, setSXPElementTemplateJSON] = useState(
-		JSON.stringify(initialConfiguration.sxpElementTemplateJSON, null, '\t')
+		JSON.stringify(
+			{
+				...restOfElementDefinition,
+				description_i18n: initialDescription,
+				title_i18n: initialTitle,
+			},
+			null,
+			'\t'
+		)
 	);
 	const [uiConfigurationJSON, setUIConfigurationJSON] = useState(
-		JSON.stringify(initialConfiguration.uiConfigurationJSON, null, '\t')
+		JSON.stringify(uiConfiguration, null, '\t')
 	);
 
 	useEffect(() => {

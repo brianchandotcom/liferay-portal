@@ -272,11 +272,32 @@ definition {
 	}
 
 	@description = "Verify that the user can view the column values on the page after submit the process."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewValuesAfterSubmitAProcess {
 
-		// TODO LRQA-70693 CanViewValuesAfterSubmitAProcess pending implementation
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNewSubmissions.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "test@liferay.com",
+			ddlFirstName = "Test",
+			ddlInstantMesseger = "Liferay",
+			ddlJobTitle = "QA",
+			ddlLastName = "Test",
+			ddlPhoneMobile = "12345678",
+			ddlPhoneOffice = "12345678");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsAdmin.viewProcessNameByColumns(
+			kfCompanyName = "Liferay",
+			kfEmailName = "test@liferay.com",
+			kfFirstName = "Test",
+			kfInstantMessengerService = "Google Hangouts",
+			kfInstantMessenger = "Liferay",
+			kfStatus = "Pending",
+			kfAuthor = "Test Test");
+
 
 	}
 

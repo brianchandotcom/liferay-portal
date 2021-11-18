@@ -504,15 +504,6 @@ definition {
 			fieldType = "String");
 	}
 
-	@description = "LPS-135402 - Verify it is possible to create a One to Many Relationship with itself"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanCreateSelfOneToManyRelationship {
-
-		// TODO LPS-141655 CanCreateSelfOneToManyRelationship pending implementation
-
-	}
-
 	@description = "LPS-135549 - Verify it is possible to create a String field"
 	@priority = "5"
 	test CanCreateStringField {
@@ -1464,24 +1455,6 @@ definition {
 	test CanSearchObjectEntryTitleOnRelationshipField {
 
 		// TODO LPS-141618 CanSearchObjectEntryTitleOnRelationshipField pending implementation
-
-	}
-
-	@description = "LPS-135402 - Verify that it is possible to relate to another entry on the Relationship field for a self-referencing relation"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSelfRelateAnotherEntryOnRelationshipField {
-
-		// TODO LPS-141656 CanSelfRelateAnotherEntryOnRelationshipField pending implementation
-
-	}
-
-	@description = "LPS-135402 - Verify that it is possible to relate to another entry on the Relationship tab for a self-referencing relation"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSelfRelateAnotherEntryOnRelationshipTab {
-
-		// TODO LPS-141657 CanSelfRelateAnotherEntryOnRelationshipTab pending implementation
 
 	}
 
@@ -2518,24 +2491,6 @@ definition {
 
 	}
 
-	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many (self-reference) will allow the child entry with relation to be teleted but not its relation"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CascadeDeletionSelfOneToManyWillAllowDeleteChild {
-
-		// TODO LPS-141674 CascadeDeletionSelfOneToManyWillAllowDeleteChild pending implementation
-
-	}
-
-	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many (self-reference) will allow the parent entry with relation and its relations to be deleted"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CascadeDeletionSelfOneToManyWillAllowDeleteParent {
-
-		// TODO LPS-141673 CascadeDeletionSelfOneToManyWillAllowDeleteParent pending implementation
-
-	}
-
 	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -2614,24 +2569,6 @@ definition {
 		property portal.acceptance = "true";
 
 		// TODO LPS-141676 DisassociateDeletionOneToManyWillAllowDeleteParent pending implementation
-
-	}
-
-	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many (self-reference) will allow the child entry with relation to be deleted and its relation to be disassociated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DisassociateDeletionSelfOneToManyWillAllowDeleteChild {
-
-		// TODO LPS-141679 DisassociateDeletionSelfOneToManyWillAllowDeleteChild pending implementation
-
-	}
-
-	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many (self-reference) will allow the parent entry with relation to be deleted and its relations to be disassociated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DisassociateDeletionSelfOneToManyWillAllowDeleteParent {
-
-		// TODO LPS-141678 DisassociateDeletionSelfOneToManyWillAllowDeleteParent pending implementation
 
 	}
 
@@ -3664,24 +3601,6 @@ definition {
 		property portal.acceptance = "true";
 
 		// TODO LPS-141666 PreventDeletionOneToManyWontAllowDelete pending implementation
-
-	}
-
-	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many (self-reference) will allow the user to delete a child entry with relation"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test PreventDeletionSelfOneToManyWillAllowDelete {
-
-		// TODO LPS-141669 PreventDeletionSelfOneToManyWillAllowDelete pending implementation
-
-	}
-
-	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many (self-reference) won't allow the user to delete a parent entry with relation"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test PreventDeletionSelfOneToManyWontAllowDelete {
-
-		// TODO LPS-141668 PreventDeletionSelfOneToManyWontAllowDelete pending implementation
 
 	}
 

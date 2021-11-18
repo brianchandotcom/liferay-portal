@@ -15,17 +15,6 @@ import {
 } from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 
-const initialApp = (assetsPath) => ({
-	assetsPath,
-	dxp: {
-		organization: 'SuperBank',
-		version: '7.3',
-	},
-	project: undefined,
-	step: steps.welcome,
-	userAccount: undefined,
-});
-
 const initialForm = {
 	dxp: {
 		admins: [getInitialDxpAdmin()],
@@ -41,8 +30,18 @@ const initialForm = {
 
 const AppContext = createContext();
 
-const AppProvider = ({assetsPath, children}) => {
-	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath));
+const AppContextProvider = ({assetsPath, children}) => {
+	const [state, dispatch] = useReducer(reducer, {
+		assetsPath,
+		dxp: {
+			organization: 'SuperBank',
+			version: '7.3',
+		},
+		project: {},
+		step: steps.welcome,
+		userAccount: {},
+	});
+
 	const {data} = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
 
 	useEffect(() => {
@@ -74,4 +73,4 @@ const AppProvider = ({assetsPath, children}) => {
 	);
 };
 
-export {AppContext, AppProvider};
+export {AppContext, AppContextProvider};

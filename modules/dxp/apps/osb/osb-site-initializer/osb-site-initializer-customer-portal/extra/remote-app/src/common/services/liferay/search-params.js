@@ -1,11 +1,7 @@
 const liferaySearchParams = new URLSearchParams(window.location.search);
 
-export const get = (param) => {
-	return liferaySearchParams.get(param);
-};
-
 export const SearchParams = {
-	get,
+	get: (param) => liferaySearchParams.get(param),
 };
 
 export const PARAMS_KEYS = {

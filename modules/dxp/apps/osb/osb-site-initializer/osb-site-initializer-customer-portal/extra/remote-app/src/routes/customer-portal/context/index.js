@@ -6,16 +6,14 @@ import {
 import {CUSTOM_EVENTS} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 
-const initialApp = (assetsPath) => ({
-	assetsPath,
-	project: undefined,
-	userAccount: undefined,
-});
-
 const AppContext = createContext();
 
-const AppProvider = ({assetsPath, children}) => {
-	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath));
+const AppContextProvider = ({assetsPath, children}) => {
+	const [state, dispatch] = useReducer(reducer, {
+		assetsPath,
+		project: {},
+		userAccount: {},
+	});
 
 	useEffect(() => {
 		const koroneikiExternalReferenceCode = SearchParams.get(
@@ -36,6 +34,7 @@ const AppProvider = ({assetsPath, children}) => {
 				payload: userAccountData,
 				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
+
 		window.addEventListener(
 			CUSTOM_EVENTS.USER_ACCOUNT,
 			onUserAccountLoading
@@ -55,4 +54,4 @@ const AppProvider = ({assetsPath, children}) => {
 	);
 };
 
-export {AppContext, AppProvider};
+export {AppContext, AppContextProvider};

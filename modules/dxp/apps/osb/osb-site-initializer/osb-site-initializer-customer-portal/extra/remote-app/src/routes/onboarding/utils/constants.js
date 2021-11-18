@@ -40,21 +40,17 @@ const steps = {
 	welcome: 0,
 };
 
-const getInitialDxpAdmin = () => {
-	return {
-		email: '',
-		firstName: '',
-		github: '',
-		lastName: '',
-	};
-};
+const getInitialDxpAdmin = () => ({
+	email: '',
+	firstName: '',
+	github: '',
+	lastName: '',
+});
 
-const getInitialInvite = (id = roles.watcher.id) => {
-	return {
-		email: '',
-		roleId: id,
-	};
-};
+const getInitialInvite = (id = roles.watcher.id) => ({
+	email: '',
+	roleId: id,
+});
 
 const getRoles = () => Object.values(roles);
 

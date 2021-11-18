@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
-import org.osgi.service.component.annotations.Reference;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -215,4 +214,5 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 	private final NPMResolver _npmResolver;
 	private final RemoteAppEntry _remoteAppEntry;
+
 }

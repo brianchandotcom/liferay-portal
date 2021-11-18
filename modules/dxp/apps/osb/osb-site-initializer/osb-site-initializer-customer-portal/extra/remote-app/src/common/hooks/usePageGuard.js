@@ -100,12 +100,9 @@ const usePageGuard = (
 				externalReferenceCode
 			);
 
-			if (alternativeValidate) {
-				window.location.href = location;
-			}
-			else {
-				window.location.href = `${liferaySiteName}/${PROJECT_PAGE_KEY}`;
-			}
+			window.location.href = alternativeValidate
+				? location
+				: `${liferaySiteName}/${PROJECT_PAGE_KEY}`;
 		}
 	}
 

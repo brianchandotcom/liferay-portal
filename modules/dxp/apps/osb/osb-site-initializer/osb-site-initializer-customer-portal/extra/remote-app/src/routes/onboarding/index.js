@@ -1,14 +1,14 @@
 import OnboardingStyles from '~/routes/onboarding/styles/app.scss';
-import {AppProvider} from './context';
+import {AppContextProvider} from './context';
 import Pages from './pages';
 
 const Onboarding = (props) => {
 	return (
 		<>
 			<style>{OnboardingStyles}</style>
-			<AppProvider {...props}>
+			<AppContextProvider {...props}>
 				<Pages />
-			</AppProvider>
+			</AppContextProvider>
 		</>
 	);
 };

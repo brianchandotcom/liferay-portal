@@ -17,7 +17,7 @@ const Welcome = ({userAccount}) => {
 		userAccount,
 		onboardingPageGuard,
 		overviewPageGuard,
-		project && project.externalReferenceCode
+		project?.externalReferenceCode
 	);
 
 	if (isLoading) {

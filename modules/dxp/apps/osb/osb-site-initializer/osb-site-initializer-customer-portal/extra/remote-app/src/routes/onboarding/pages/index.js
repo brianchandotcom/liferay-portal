@@ -19,9 +19,8 @@ const Pages = () => {
 	if (userAccount) {
 		return <Welcome userAccount={userAccount} />;
 	}
-	else {
-		return <Welcome.Skeleton />;
-	}
+
+	return <Welcome.Skeleton />;
 };
 
 export default Pages;

@@ -6,7 +6,7 @@ const SearchProject = ({onChange, props}) => {
 		<div className="position-relative">
 			<ClayInput
 				className="font-weight-semi-bold h5 rounded-pill search-project shadow-lg"
-				onChange={(ex) => onChange(ex.target.value)}
+				onChange={({target: {value}}) => onChange(value)}
 				placeholder="Find a project"
 				type="text"
 				{...props}

@@ -13,6 +13,22 @@ import HomeSkeleton from './Skeleton';
 const PROJECT_THRESHOLD_COUNT = 4;
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
 
+const openPage = (project) => {
+	window.location.href = `${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.externalReferenceCode}`;
+};
+
+const getStatus = (slaCurrent, slaFuture) => {
+	if (slaCurrent) {
+		return status.active;
+	}
+
+	if (slaFuture) {
+		return status.future;
+	}
+
+	return status.expired;
+};
+
 const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
 
@@ -24,18 +40,6 @@ const Home = ({userAccount}) => {
 				),
 			}),
 		]) || [];
-
-	const getStatus = (slaCurrent, slaFuture) => {
-		if (slaCurrent) {
-			return status.active;
-		}
-		else if (slaFuture) {
-			return status.future;
-		}
-		else {
-			return status.expired;
-		}
-	};
 
 	const projects =
 		koroneikiAccountsData?.koroneikiAccounts.map(
@@ -70,15 +74,12 @@ const Home = ({userAccount}) => {
 			})
 		) || [];
 
+	const withManyProjects = projects.length > PROJECT_THRESHOLD_COUNT;
 	const projectsFiltered = projects.filter((project) =>
 		keyword
 			? project.title.toLowerCase().includes(keyword.toLowerCase())
 			: true
 	);
-	const nextPage = (project) => {
-		window.location.href = `${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.externalReferenceCode}`;
-	};
-	const withManyProjects = projects.length > PROJECT_THRESHOLD_COUNT;
 
 	return (
 		<>
@@ -108,7 +109,14 @@ const Home = ({userAccount}) => {
 							</h5>
 						</div>
 					)}
-					{!isLoadingKoroneiki ? (
+
+					{isLoadingKoroneiki ? (
+						<div className="d-flex flex-wrap home-projects">
+							<ProjectCard.Skeleton />
+
+							<ProjectCard.Skeleton />
+						</div>
+					) : (
 						<div
 							className={classNames('d-flex flex-wrap', {
 								'home-projects': !withManyProjects,
@@ -118,17 +126,11 @@ const Home = ({userAccount}) => {
 							{projectsFiltered.map((project, index) => (
 								<ProjectCard
 									key={index}
-									onClick={() => nextPage(project)}
+									onClick={() => openPage(project)}
 									small={withManyProjects}
 									{...project}
 								/>
 							))}
-						</div>
-					) : (
-						<div className="d-flex flex-wrap home-projects">
-							<ProjectCard.Skeleton />
-
-							<ProjectCard.Skeleton />
 						</div>
 					)}
 				</div>

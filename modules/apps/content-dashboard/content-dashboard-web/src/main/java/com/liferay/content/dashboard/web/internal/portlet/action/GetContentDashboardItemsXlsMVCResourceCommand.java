@@ -199,9 +199,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private int _createCell(int cellIndex, Row row, String value) {
-		Cell titleDataCell = row.createCell(cellIndex++);
+		Cell cell = row.createCell(cellIndex++);
 
-		titleDataCell.setCellValue(value);
+		cell.setCellValue(value);
 
 		return cellIndex;
 	}

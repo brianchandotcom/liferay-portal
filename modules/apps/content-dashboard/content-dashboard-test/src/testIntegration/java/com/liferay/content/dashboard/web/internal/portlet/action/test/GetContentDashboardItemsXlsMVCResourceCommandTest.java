@@ -92,18 +92,13 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
-			ByteArrayOutputStream actualByteArrayOutputStream =
+			ByteArrayOutputStream byteArrayOutputStream =
 				_serveResource(FileEntry.class.getName(), _group.getGroupId());
 
-			byte[] expectedFileByteArray = FileUtil.getBytes(
-				getClass(), "dependencies/expected.xls");
-
-			byte[] generatedFileByteArray =
-				actualByteArrayOutputStream.toByteArray();
-
-			Assert.assertEquals(
-				new String(expectedFileByteArray),
-				new String(generatedFileByteArray));
+			Assert.assertArrayEquals(
+				FileUtil.getBytes(
+					getClass(), "dependencies/expected.xls"),
+				byteArrayOutputStream.toByteArray());
 		}
 		finally {
 			System.setProperty("user.name", originalUserName);

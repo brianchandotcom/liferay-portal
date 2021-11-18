@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.util.LayoutVisibilityUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -962,6 +963,11 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isPrivateLayoutsEnabled() {
+		return LayoutVisibilityUtil.isPrivateLayoutsEnabled(getGroupId());
 	}
 
 	@Override

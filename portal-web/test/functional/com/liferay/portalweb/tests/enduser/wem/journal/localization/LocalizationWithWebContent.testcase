@@ -230,30 +230,24 @@ definition {
 				configurationName = "Administration",
 				configurationScope = "System Scope");
 
-			FormFields.enableCheckbox(fieldName = "Changeable Default Language");
-
-			SystemSettings.saveConfiguration();
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Changeable Default Language");
 		}
 
 		task ("Go To Test Site And Create a Web Content") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
 				groupName = "Test Site Name",
-				title = "WC WebContent Title");
+				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
 		}
 
 		task ("Set Web Content with two translations") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-			PortletEntry.changeLocale(locale = "es-ES");
 
-			WebContent.addCP(
-				webContentContent = "WC Contenido de la web Contenido",
-				webContentTitle = "WC Contenido de la web Titulo");
 
 			PortletEntry.publish();
 		}

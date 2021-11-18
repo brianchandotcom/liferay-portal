@@ -75,7 +75,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103104. Can add a child page via page tree panel."
+	@description = "This is a test for LPS-103104 and LPS-102544. Can add a child page via page tree panel."
 	@priority = "5"
 	@uitest
 	test AddChildPage {

@@ -1593,7 +1593,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
-		Alert.viewWarningSpecific(warningMessage = "You do not have the permission to view this form.");
+		Alert.viewWarningSpecific(warningMessage = "This form is not available or it was not published.");
 	}
 
 	@description = "Verify that multiple Forms can be deleted"

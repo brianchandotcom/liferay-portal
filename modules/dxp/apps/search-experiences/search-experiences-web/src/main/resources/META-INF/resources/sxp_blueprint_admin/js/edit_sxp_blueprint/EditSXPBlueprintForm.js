@@ -121,22 +121,22 @@ function EditSXPBlueprintForm({
 			({
 				id, // eslint-disable-line
 				sxpElement,
+				sxpElementId,
+				type,
 				uiConfigurationValues,
-				...props
-			}) => {
-				return {
-					...props,
-					configurationEntry: getConfigurationEntry({
-						sxpElement,
-						uiConfigurationValues,
-					}),
-					sxpElement: parseCustomSXPElement(
-						sxpElement,
-						uiConfigurationValues
-					),
+			}) => ({
+				configurationEntry: getConfigurationEntry({
+					sxpElement,
 					uiConfigurationValues,
-				};
-			}
+				}),
+				sxpElement: parseCustomSXPElement(
+					sxpElement,
+					uiConfigurationValues
+				),
+				sxpElementId,
+				type,
+				uiConfigurationValues,
+			})
 		);
 
 	const _handleFormikSubmit = async (values) => {

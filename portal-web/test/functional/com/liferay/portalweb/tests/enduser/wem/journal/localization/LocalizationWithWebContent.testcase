@@ -220,8 +220,6 @@ definition {
 	@priority = "5"
 	test ViewChangeWebContentLanguage {
 		task ("Check Changeable Default Language setting") {
-			ApplicationsMenuHelper.openApplicationsMenu();
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -238,12 +236,6 @@ definition {
 		}
 
 		task ("Go To Test Site And Create a Web Content") {
-			ApplicationsMenu.gotoSite(key_site = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content");
-
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",

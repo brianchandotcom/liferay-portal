@@ -164,7 +164,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			StringUtils.joinWith(
 				", ",
 				ListUtil.toList(
-					contentDashboardItem.getAssetCategories(), category -> category.getTitle(locale))));
+					contentDashboardItem.getAssetCategories(), assetCategory -> assetCategory.getTitle(locale))));
 
 		cellIndex = _createCell(
 			cellIndex, row,

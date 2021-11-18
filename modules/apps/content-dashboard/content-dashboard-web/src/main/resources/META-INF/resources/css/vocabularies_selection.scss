@@ -5,12 +5,16 @@ html#{$cadmin-selector} {
 	.cadmin {
 		.vocabularies-selection {
 			&-wrapper {
-				height: 235px;
+				height: 285px;
 			}
 
 			&-loader {
 				top: 50%;
 				transform: translateY(-50%);
+			}
+
+			.clay-reorder {
+				min-height: 220px;
 			}
 
 			option:disabled {

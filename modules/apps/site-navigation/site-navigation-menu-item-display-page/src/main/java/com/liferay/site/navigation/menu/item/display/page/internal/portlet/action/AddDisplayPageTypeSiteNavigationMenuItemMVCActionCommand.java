@@ -72,20 +72,20 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		if ((classNameId > 0) && (classPK > 0) && (siteNavigationMenuId > 0) &&
 			Validator.isNotNull(siteNavigationMenuItemType)) {
 
-			UnicodeProperties curTypeSettingsUnicodeProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				new UnicodeProperties(true);
 
-			curTypeSettingsUnicodeProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"classNameId", String.valueOf(classNameId));
-			curTypeSettingsUnicodeProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"classTypeId",
 				String.valueOf(
 					ParamUtil.getLong(actionRequest, "classTypeId")));
-			curTypeSettingsUnicodeProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"classPK", String.valueOf(classPK));
-			curTypeSettingsUnicodeProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"title", ParamUtil.getString(actionRequest, "title"));
-			curTypeSettingsUnicodeProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"type", ParamUtil.getString(actionRequest, "type"));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -98,8 +98,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
 					siteNavigationMenuItemType,
-					curTypeSettingsUnicodeProperties.toString(),
-					serviceContext);
+					typeSettingsUnicodeProperties.toString(), serviceContext);
 			}
 			catch (SiteNavigationMenuItemNameException
 						siteNavigationMenuItemNameException) {

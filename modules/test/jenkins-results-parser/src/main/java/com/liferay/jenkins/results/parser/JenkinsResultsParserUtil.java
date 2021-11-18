@@ -2711,7 +2711,7 @@ public class JenkinsResultsParserUtil {
 			return null;
 		}
 
-		String command = combine("ssh ", hostname, " date +%s");
+		String command = combine("ssh root@", hostname, " date +%s");
 
 		try {
 			Process process = executeBashCommands(

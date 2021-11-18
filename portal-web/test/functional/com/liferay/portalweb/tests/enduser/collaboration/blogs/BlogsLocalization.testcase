@@ -107,7 +107,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "ja/blogs-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "ja/web/guest/blogs-page");
 
 		SocialBookmarks.viewDefaultSharableBookmarks();
 	}

@@ -24,6 +24,9 @@ import com.liferay.commerce.shop.by.diagram.exception.NoSuchCSDiagramEntryExcept
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -31,14 +34,18 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -46,6 +53,8 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,6 +77,8 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		boolean publish = ParamUtil.getBoolean(actionRequest, "publish", true);
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
@@ -77,6 +88,12 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 
 				TransactionInvokerUtil.invoke(
 					_transactionConfig, csDiagramSettingCallable);
+
+				if (!publish) {
+					writeJSON(
+						_portal.getHttpServletResponse(actionResponse),
+						JSONUtil.put("success", true));
+				}
 			}
 		}
 		catch (Throwable throwable) {
@@ -90,17 +107,52 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, throwable.getClass());
 
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
+				if (publish) {
+					String redirect = ParamUtil.getString(
+						actionRequest, "redirect");
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+				else {
+					writeJSON(
+						_portal.getHttpServletResponse(actionResponse),
+						JSONUtil.put(
+							"error",
+							LanguageUtil.get(
+								_portal.getHttpServletRequest(actionRequest),
+								"please-select-an-existing-file")
+						).put(
+							"success", false
+						));
+				}
 			}
 			else {
 				_log.error(throwable, throwable);
 
-				throw new Exception(throwable);
+				if (publish) {
+					throw new Exception(throwable);
+				}
+
+				writeJSON(
+					_portal.getHttpServletResponse(actionResponse),
+					JSONUtil.put(
+						"error", throwable.getMessage()
+					).put(
+						"success", false
+					));
 			}
 		}
+	}
+
+	protected void writeJSON(
+			HttpServletResponse httpServletResponse, JSONObject jsonObject)
+		throws IOException {
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
+
+		httpServletResponse.flushBuffer();
 	}
 
 	private CPAttachmentFileEntry _addOrUpdateCPAttachmentFileEntry(

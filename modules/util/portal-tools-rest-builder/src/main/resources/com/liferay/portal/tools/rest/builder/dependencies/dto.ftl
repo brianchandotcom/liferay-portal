@@ -284,8 +284,19 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 				sb.append("\"${propertyName}\": ");
 
-				<#if allSchemas[propertyType]?? || stringUtil.equals(propertyType, "Object")>
+				<#if allSchemas[propertyType]??>
 					sb.append(String.valueOf(${propertyName}));
+				<#elseif stringUtil.equals(propertyType, "Object")>
+					if (${propertyName} instanceof String) {
+						sb.append("\"");
+
+						sb.append((String)${propertyName});
+
+						sb.append("\"");
+					}
+					else {
+						sb.append(${propertyName});
+					}
 				<#else>
 					<#if propertyType?contains("[]")>
 						sb.append("[");

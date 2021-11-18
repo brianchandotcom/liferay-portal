@@ -558,37 +558,6 @@ export function getUIConfigurationValues(uiConfiguration = {}) {
 }
 
 /**
- * Function for formatting SXP element into expected sxpElementTemplateJSON,
- * uiConfigurationJSON, and uiConfigurationValues.
- *
- * @param {object} querySXPElement Object of SXP Element from REST API
- * @return {object}
- */
-export const getSXPBlueprintForm = ({
-	title,
-	description,
-	title_i18n,
-	description_i18n,
-	elementDefinition = {},
-}) => {
-	const {uiConfiguration, ...restOfElementDefinition} = elementDefinition;
-
-	return {
-		sxpElementTemplateJSON: {
-			description_i18n: description_i18n || {
-				[Liferay.ThemeDisplay.getDefaultLanguageId()]: description,
-			},
-			title_i18n: title_i18n || {
-				[Liferay.ThemeDisplay.getDefaultLanguageId()]: title,
-			},
-			...restOfElementDefinition,
-		},
-		uiConfigurationJSON: uiConfiguration,
-		uiConfigurationValues: getUIConfigurationValues(uiConfiguration),
-	};
-};
-
-/**
  * Function for transforming the framework configuration's `clause_contributor`
  * object to an object of clause contributors with `enabled` state.
  *

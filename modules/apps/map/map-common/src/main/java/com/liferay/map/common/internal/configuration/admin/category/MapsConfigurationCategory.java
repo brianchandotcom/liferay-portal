@@ -26,7 +26,7 @@ public class MapsConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return "geolocation";
+		return "maps";
 	}
 
 	@Override

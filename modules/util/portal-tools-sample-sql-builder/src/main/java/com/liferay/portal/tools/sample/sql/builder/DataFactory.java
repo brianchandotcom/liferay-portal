@@ -420,13 +420,14 @@ public class DataFactory {
 
 		_companyId = _counter.get();
 
-		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
+		_dlDDMStructureContent = _readFile(
+			"ddm_structure_data/ddm_structure_basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
-			"ddm_structure_layout_basic_document.json");
+			"ddm_structure_data/ddm_structure_layout_basic_document.json");
 		_journalDDMStructureContent = _readFile(
-			"ddm_structure_basic_web_content.json");
+			"ddm_structure_data/ddm_structure_basic_web_content.json");
 		_journalDDMStructureLayoutContent = _readFile(
-			"ddm_structure_layout_basic_web_content.json");
+			"ddm_structure_data/ddm_structure_layout_basic_web_content.json");
 		_layoutPageTemplateStructureRelData = _readFile(
 			"layout_page_template_structure_rel_data.json");
 

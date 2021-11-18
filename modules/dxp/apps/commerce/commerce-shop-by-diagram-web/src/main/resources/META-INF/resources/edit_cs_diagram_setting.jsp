@@ -36,6 +36,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCSDiagramSetting" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+	<aui:input name="publish" type="hidden" value="<%= true %>" />
 	<aui:input name="radius" type="hidden" value="<%= (csDiagramSetting != null) ? csDiagramSetting.getRadius() : csDiagramSettingDisplayContext.getRadius() %>" />
 
 	<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
@@ -143,12 +144,8 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"currentURL", currentURL
-		).put(
 			"diagramId", (csDiagramSetting != null) ? csDiagramSetting.getCSDiagramSettingId() : 0
-		).put(
-			"selectType", liferayPortletResponse.getNamespace() + "selectType"
 		).build()
 	%>'
-	module="js/edit_cp_definition_diagram_setting"
+	module="js/edit_cs_diagram_setting"
 />

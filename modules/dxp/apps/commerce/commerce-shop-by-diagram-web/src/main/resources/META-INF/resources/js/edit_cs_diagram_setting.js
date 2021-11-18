@@ -10,7 +10,7 @@
  */
 
 import {State} from '@liferay/frontend-js-state-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, navigate, openToast} from 'frontend-js-web';
 import {imageSelectorImageAtom} from 'item-selector-taglib';
 
 export const HEADERS = new Headers({
@@ -21,7 +21,7 @@ export const HEADERS = new Headers({
 const DIAGRAMS_ENDPOINT = '/o/headless-commerce-admin-catalog/v1.0/diagrams/';
 
 export default function ({diagramId, namespace}) {
-	const inputType = document.getElementById(`${namespace}type`);
+	const typeInput = document.getElementById(`${namespace}type`);
 
 	const handleSelectChange = () => {
 		const url = new URL(
@@ -31,21 +31,48 @@ export default function ({diagramId, namespace}) {
 
 		fetch(url, {
 			body: JSON.stringify({
-				type: inputType.value,
+				type: typeInput.value,
 			}),
 			headers: HEADERS,
 			method: 'PATCH',
 		});
 	};
 
-	inputType.addEventListener('change', handleSelectChange);
+	typeInput.addEventListener('change', handleSelectChange);
 
-	function handleDiagramImageChanged({fileEntryId, src}) {
-		// eslint-disable-next-line no-console
-		console.log(fileEntryId, src);
+	function handleDiagramImageChanged({fileEntryId}) {
+		if (fileEntryId === '0') {
+			return;
+		}
 
-		// TODO:fetch then window.location.reload();
+		const publishInput = document.getElementById(`${namespace}publish`);
 
+		publishInput.value = false;
+
+		const fileEntryIdInput = document.getElementById(
+			`${namespace}fileEntryId`
+		);
+
+		fileEntryIdInput.value = fileEntryId;
+
+		const form = document.getElementById(`${namespace}fm`);
+
+		fetch(form.action, {
+			body: new FormData(form),
+			method: 'POST',
+		}).then((response) => {
+			if (response.status === 200) {
+				navigate(location.href);
+			}
+			else {
+				response.json().then((error) => {
+					openToast({
+						title: error.message,
+						type: 'danger',
+					});
+				});
+			}
+		});
 	}
 
 	const {dispose: unsubscribeImageSelector} = State.subscribe(
@@ -55,7 +82,7 @@ export default function ({diagramId, namespace}) {
 
 	return {
 		dispose() {
-			inputType.removeEventListener('change', handleSelectChange);
+			typeInput.removeEventListener('change', handleSelectChange);
 
 			unsubscribeImageSelector();
 		},

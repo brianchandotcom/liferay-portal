@@ -19,6 +19,7 @@ import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -94,6 +96,53 @@ public class ConfigurationModelListenerTest {
 
 				return configuration;
 			});
+	}
+
+	@Test
+	public void testMultipleListenersRegistered() throws Exception {
+		String pid = RandomTestUtil.randomString(20);
+
+		int numberOfListeners = 3;
+
+		AtomicInteger callCounter = new AtomicInteger();
+
+		for (int i = 0; i < numberOfListeners; i++) {
+			_registerConfigurationModelListener(
+				new ConfigurationModelListener() {
+
+					@Override
+					public void onAfterDelete(String pid) {
+						callCounter.incrementAndGet();
+					}
+
+					@Override
+					public void onAfterSave(
+						String pid, Dictionary<String, Object> properties) {
+
+						callCounter.incrementAndGet();
+					}
+
+					@Override
+					public void onBeforeDelete(String pid) {
+						callCounter.incrementAndGet();
+					}
+
+					@Override
+					public void onBeforeSave(
+						String pid, Dictionary<String, Object> properties) {
+
+						callCounter.incrementAndGet();
+					}
+
+				},
+				pid);
+		}
+
+		ConfigurationTestUtil.saveConfiguration(pid, new HashMapDictionary<>());
+
+		ConfigurationTestUtil.deleteConfiguration(pid);
+
+		Assert.assertEquals(numberOfListeners * 4, callCounter.get());
 	}
 
 	@Test

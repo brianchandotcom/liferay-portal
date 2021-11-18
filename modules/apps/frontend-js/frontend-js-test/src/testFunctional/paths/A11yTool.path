@@ -125,6 +125,21 @@
 	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'panel-body')]//ul//*[contains(@class,'list-group-item') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIOLATION_PANEL_TARGET_CODE_HEADER</td>
+	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'my-3') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_OCCURRENCE_TARGET_SELECTOR</td>
+	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'code-block') and contains(@aria-label,'Target Selector')]//*[contains(., '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIOLATION_PANEL_OCCURRENCE_CODE_ELEMENT</td>
+	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'code-block') and contains(@aria-label,'Code of the Element')]//*[contains(., '${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

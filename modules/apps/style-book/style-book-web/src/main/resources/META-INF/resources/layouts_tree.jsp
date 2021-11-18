@@ -35,6 +35,6 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	linkTemplate="<%= linkTemplate %>"
 	privateLayout="<%= privateLayout %>"
 	rootLinkTemplate='<span class="{cssClass}" id="{id}" title="{title}">{label}</span>'
-	rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+	rootNodeName='<%= group.isPrivateLayoutsEnabled() ? group.getLayoutRootNodeName(privateLayout, locale) : LanguageUtil.get(request, "pages") %>'
 	treeId="layoutsTree"
 />

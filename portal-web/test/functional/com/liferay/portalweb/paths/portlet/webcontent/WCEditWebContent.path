@@ -65,6 +65,12 @@
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
+<!--SIDEBAR-->
+<tr>
+	<td>DEFAULT_LANGUAGE</td>
+	<td>//div[contains(@class,'article-default-language')]//p[normalize-space()='Default Language: ${defaultLanguage}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'contextual-sidebar-visible')]</td>

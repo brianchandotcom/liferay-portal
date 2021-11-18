@@ -195,7 +195,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
+	@description = "This is a use case for LPS-115218 and LPS-98753. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
 	@priority = "5"
 	@uitest
 	test ViewProductMenuWhenDisableApplicationsMenuInDefaultInstance {

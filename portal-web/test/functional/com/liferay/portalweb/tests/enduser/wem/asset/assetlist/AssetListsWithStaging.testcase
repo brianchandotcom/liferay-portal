@@ -32,7 +32,7 @@ definition {
 		}
 	}
 
-	@description = "Assert the Collections administration is written accessible on the staging site while read-only accessible on live site."
+	@description = "This is a test for LPS-112994. Assert the Collections administration is written accessible on the staging site while read-only accessible on live site."
 	@priority = "5"
 	test AssertCollectionsAdminInStagingAndLiveSite {
 		property portal.acceptance = "true";

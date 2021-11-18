@@ -513,7 +513,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-86221. A user can preview a pending web content within its display page."
+	@description = "This is a test for LPS-86221 and LPS-112994. A user can preview a pending web content within its display page."
 	@priority = "5"
 	test PreviewPendingWebContent {
 		property portal.acceptance = "true";

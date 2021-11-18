@@ -21,3 +21,22 @@ export const buildItemsPriorityURL = ({items, namespace, url}) => {
 
 	return urlWithPriorityParam;
 };
+
+export const dragIsOutOfBounds = ({dragIndex, hoverIndex, monitor, ref}) => {
+	const hoverBoundingRect = ref.current.getBoundingClientRect();
+
+	const verticalMiddle =
+		(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+	const mousePosition = monitor.getClientOffset();
+
+	const pixelsToTop = mousePosition.y - hoverBoundingRect.top;
+
+	const draggingUpwards =
+		dragIndex > hoverIndex && pixelsToTop > verticalMiddle * 1.5;
+
+	const draggingDownwards =
+		dragIndex < hoverIndex && pixelsToTop < verticalMiddle / 2;
+
+	return draggingDownwards || draggingUpwards;
+};

@@ -20,6 +20,11 @@ import React, {useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import SortableListItemMoreActions from './SortableListItemMoreActions';
+import {dragIsOutOfBounds} from './utils/index';
+
+const ItemTypes = {
+	SORTABLE_LIST_ITEM: 'sortableListItem',
+};
 
 const SortableListItem = ({
 	handleItemDelete,
@@ -35,7 +40,7 @@ const SortableListItem = ({
 	const ref = useRef(null);
 
 	const [, drop] = useDrop({
-		accept: 'sortableListItem',
+		accept: ItemTypes.SORTABLE_LIST_ITEM,
 
 		drop: () => {
 			handleSavePriority();
@@ -43,35 +48,18 @@ const SortableListItem = ({
 
 		hover: (item, monitor) => {
 			const dragIndex = item.index;
-
 			const hoverIndex = index;
 
-			if (!ref.current || dragIndex === hoverIndex) {
+			if (
+				!ref.current ||
+				dragIndex === hoverIndex ||
+				dragIsOutOfBounds({dragIndex, hoverIndex, monitor, ref})
+			) {
 				return;
 			}
-
-			const hoverBoundingRect = ref.current.getBoundingClientRect();
-
-			const verticalMiddle =
-				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-			const mousePosition = monitor.getClientOffset();
-
-			const pixelsToTop = mousePosition.y - hoverBoundingRect.top;
-
-			const draggingUpwards =
-				dragIndex > hoverIndex && pixelsToTop > verticalMiddle * 1.5;
-
-			const draggingDownwards =
-				dragIndex < hoverIndex && pixelsToTop < verticalMiddle / 2;
-
-			if (draggingDownwards || draggingUpwards) {
-				return;
-			}
-
-			handleItemMove({hoverIndex, index: dragIndex});
 
 			item.index = hoverIndex;
+			handleItemMove({hoverIndex, index: dragIndex});
 		},
 	});
 
@@ -84,7 +72,7 @@ const SortableListItem = ({
 		item: {
 			id,
 			index,
-			type: 'sortableListItem',
+			type: ItemTypes.SORTABLE_LIST_ITEM,
 		},
 	});
 

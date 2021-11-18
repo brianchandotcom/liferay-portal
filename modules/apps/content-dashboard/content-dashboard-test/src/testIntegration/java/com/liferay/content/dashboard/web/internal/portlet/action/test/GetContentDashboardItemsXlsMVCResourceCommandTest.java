@@ -84,7 +84,13 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		System.setProperty("user.name", "test");
 
 		try {
-			FileEntry fileEntry = _addFileEntry();
+			Date date = new Date(150000);
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				"Site", TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
+				"application/pdf", new byte[0], date, date,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
@@ -103,16 +109,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		finally {
 			System.setProperty("user.name", originalUserName);
 		}
-	}
-
-	private FileEntry _addFileEntry() throws Exception {
-		Date date = new Date(150000);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			"Site", TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
-			"application/pdf", new byte[0], date, date,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	private ByteArrayOutputStream _serveResource(String className, long groupId)

@@ -2045,13 +2045,18 @@ public class JenkinsResultsParserUtil {
 
 		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
 
-		for (int i = 1;
-			 buildProperties.containsKey(
-				 "master.slaves(" + prefix + "-" + i + ")");
-			 i++) {
+		Pattern pattern = Pattern.compile(
+			"master\\.slaves\\((?<jenkinsMasterName>" + prefix + "-\\d+)\\)");
+
+		for (String buildPropertyName : buildProperties.stringPropertyNames()) {
+			Matcher matcher = pattern.matcher(buildPropertyName);
+
+			if (!matcher.matches()) {
+				continue;
+			}
 
 			JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
-				prefix + "-" + i);
+				matcher.group("jenkinsMasterName"));
 
 			if ((jenkinsMaster.getSlaveRAM() >= minimumRAM) &&
 				(jenkinsMaster.getSlavesPerHost() <= maximumSlavesPerHost)) {

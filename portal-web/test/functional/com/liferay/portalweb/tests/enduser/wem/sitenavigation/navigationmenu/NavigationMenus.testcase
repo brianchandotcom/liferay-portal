@@ -281,6 +281,94 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-76717. Can specify whether a Navigation Menu performs a specific function in fragments."
+	@ignore = "true"
+	@priority = "3"
+	test CanSelectTheSpecificNavigationMenuInFragments {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a new fragment") {
+			var htmlSnippet = '''<lfr-widget-nav />''';
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Test Fragment Name");
+		}
+
+		task ("Add three navigation menus") {
+			for (var n : list "1,2,3") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name ${n}");
+			}
+		}
+
+		task ("Navigate to Navigation Menus admin") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Mark the first navigation menu as Primary Navigation") {
+			NavigationMenusAdmin.configureMenuType(
+				menuType = "Primary Navigation",
+				navigationMenu = "Navigation Menu Name 1");
+		}
+
+		task ("Mark the second navigation menu as Secondary Navigation") {
+			NavigationMenusAdmin.configureMenuType(
+				menuType = "Secondary Navigation",
+				navigationMenu = "Navigation Menu Name 2");
+		}
+
+		task ("Mark the third navigation menu as Social Navigation") {
+			NavigationMenusAdmin.configureMenuType(
+				menuType = "Social Navigation",
+				navigationMenu = "Navigation Menu Name 3");
+		}
+
+		task ("Create a Page Template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add a new fragment to the page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Test Fragment Name");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Setting the Nav Portlet configure") {
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Select different navigation menu, assert preview displays properly") {
+			NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
+
+			AssertTextPresent(value1 = "There is no Primary Navigation available for the current site.");
+
+			NavigationMenusWidget.selectNavigation(menuType = "Secondary Navigation");
+
+			AssertTextPresent(value1 = "There is no Secondary Navigation available for the current site.");
+
+			NavigationMenusWidget.selectNavigation(menuType = "Social Navigation");
+
+			AssertTextPresent(value1 = "There is no Social Navigation available for the current site.");
+		}
+	}
+
 	@description = "LPS-78049 - Multiple Navigation Menus can be deleted Filter by All."
 	@priority = "3"
 	test DeleteMultipleNavigationMenus {

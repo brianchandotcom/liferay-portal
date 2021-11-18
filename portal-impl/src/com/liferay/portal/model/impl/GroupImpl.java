@@ -965,6 +965,11 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public boolean isPrivateLayoutsEnabled() {
+		return true;
+	}
+
+	@Override
 	public boolean isRegularSite() {
 		if (getClassNameId() == ClassNameIds._GROUP_CLASS_NAME_ID) {
 			return true;

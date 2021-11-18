@@ -38,6 +38,7 @@
 		<java
 			classname="com.liferay.portal.tools.DBBuilder"
 			classpathref="db.builder.classpath"
+			failonerror="true"
 			fork="${fork.mode}"
 			outputproperty="db.builder.output"
 		>

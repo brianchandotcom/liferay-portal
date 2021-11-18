@@ -2140,6 +2140,12 @@ definition {
 		AssertElementNotPresent(locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
+	macro viewDefaultLanguage {
+		AssertVisible(
+			defaultLanguage = "${defaultLanguage}",
+			locator1 = "WCEditWebContent#DEFAULT_LANGUAGE");
+	}
+
 	macro viewDisplayStyleCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 

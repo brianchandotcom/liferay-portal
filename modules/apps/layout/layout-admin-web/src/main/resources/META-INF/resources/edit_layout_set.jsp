@@ -38,7 +38,13 @@ if (Validator.isNotNull(backURL)) {
 	portletDisplay.setURLBack(backURL);
 }
 
-renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
+String title = selGroup.getLayoutRootNodeName(privateLayout, locale);
+
+if (!selGroup.isPrivateLayoutsEnabled()) {
+	title = LanguageUtil.get(request, "pages");
+}
+
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="/layout_admin/edit_layout_set" var="editLayoutSetURL">

@@ -3281,16 +3281,6 @@ definition {
 
 	}
 
-	@description = "LPS-135551 - Verify that the Object's plural label is displayed on the chosen panel"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test ObjectLabelDisplayedOnPanel {
-		property portal.acceptance = "true";
-
-		// TODO LPS-141647 ObjectLabelDisplayedOnPanel pending implementation
-
-	}
-
 	@description = "LPS-139603 - Verify that the Object Label is displayed on the Relationship tab when a Relationship is created"
 	@ignore = "Test Stub"
 	@priority = "4"

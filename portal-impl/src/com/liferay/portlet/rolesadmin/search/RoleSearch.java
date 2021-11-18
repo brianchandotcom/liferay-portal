@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -91,32 +89,14 @@ public class RoleSearch extends SearchContainer<Role> {
 			RoleDisplayTerms.TYPE, String.valueOf(displayTerms.getType()));
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
-
 			String portletId = PortletProviderUtil.getPortletId(
 				Role.class.getName(), PortletProvider.Action.BROWSE);
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				portletRequest, portletId, "roles-order-by-col", "title");
 
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
-
-				preferences.setValue(
-					portletId, "roles-order-by-col", orderByCol);
-				preferences.setValue(
-					portletId, "roles-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					portletId, "roles-order-by-col", "title");
-				orderByType = preferences.getValue(
-					portletId, "roles-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				portletRequest, portletId, "roles-order-by-type", "asc");
 
 			OrderByComparator<Role> orderByComparator =
 				UsersAdminUtil.getRoleOrderByComparator(

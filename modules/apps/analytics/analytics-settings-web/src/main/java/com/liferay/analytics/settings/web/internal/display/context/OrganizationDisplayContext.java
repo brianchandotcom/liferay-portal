@@ -21,6 +21,7 @@ import com.liferay.analytics.settings.web.internal.search.OrganizationSearch;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -59,8 +60,9 @@ public class OrganizationDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_renderRequest, AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			"organization-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -125,8 +127,9 @@ public class OrganizationDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "organization-name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_renderRequest, AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			"organization-order-by-col", "organization-name");
 
 		return _orderByCol;
 	}

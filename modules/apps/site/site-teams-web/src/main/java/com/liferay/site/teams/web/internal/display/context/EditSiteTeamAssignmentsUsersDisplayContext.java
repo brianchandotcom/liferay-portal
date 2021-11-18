@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -104,8 +105,9 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			httpServletRequest, "orderByCol", "first-name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-order-by-col", "first-name");
 
 		return _orderByCol;
 	}
@@ -115,8 +117,9 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-order-by-type", "asc");
 
 		return _orderByType;
 	}

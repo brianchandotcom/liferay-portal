@@ -17,6 +17,7 @@ package com.liferay.roles.admin.web.internal.dao.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 
@@ -55,13 +57,13 @@ public class SegmentsEntrySearchContainerFactory {
 
 		searchContainer.setId("segmentsEntries");
 
-		String orderByCol = ParamUtil.getString(
-			renderRequest, "orderByCol", "name");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "name");
 
 		searchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = ParamUtil.getString(
-			renderRequest, "orderByType", "asc");
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "asc");
 
 		searchContainer.setOrderByType(orderByType);
 

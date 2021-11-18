@@ -19,14 +19,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -73,31 +70,14 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 			UserGroupDisplayTerms.NAME, displayTerms.getName());
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
-
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				portletRequest, portletId, "user-groups-order-by-col", "name");
 
-				preferences.setValue(
-					portletId, "user-groups-order-by-col", orderByCol);
-				preferences.setValue(
-					portletId, "user-groups-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					portletId, "user-groups-order-by-col", "name");
-				orderByType = preferences.getValue(
-					portletId, "user-groups-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				portletRequest, portletId, "user-groups-order-by-type", "asc");
 
 			OrderByComparator<UserGroup> orderByComparator =
 				UsersAdminUtil.getUserGroupOrderByComparator(

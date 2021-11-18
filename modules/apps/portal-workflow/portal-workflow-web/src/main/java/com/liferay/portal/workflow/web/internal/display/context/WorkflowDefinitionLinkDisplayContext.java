@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -195,53 +196,25 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
-
-		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = _portalPreferences.getValue(
-				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-				"definition-link-order-by-col", "resource");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				_httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				_portalPreferences.setValue(
-					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-					"definition-link-order-by-col", _orderByCol);
-			}
-		}
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			"definition-link-order-by-col", "resource");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
-
-		if (Validator.isNull(_orderByType)) {
-			_orderByType = _portalPreferences.getValue(
-				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-				"definition-link-order-by-type", "asc");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				_httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				_portalPreferences.setValue(
-					WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-					"definition-link-order-by-type", _orderByType);
-			}
-		}
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			"definition-link-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -280,8 +253,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
 		).buildPortletURL();
 
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		String orderByType = getOrderByType();
 
 		portletURL.setParameter("orderByType", orderByType);
 
@@ -410,8 +382,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = ParamUtil.getString(
-					_httpServletRequest, "orderByType", "asc");
+				String orderByType = getOrderByType();
 
 				if (Objects.equals(orderByType, "asc")) {
 					return "desc";

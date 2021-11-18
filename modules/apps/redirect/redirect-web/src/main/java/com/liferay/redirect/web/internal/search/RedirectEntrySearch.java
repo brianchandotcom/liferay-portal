@@ -16,11 +16,8 @@ package com.liferay.redirect.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
@@ -41,31 +38,13 @@ public class RedirectEntrySearch extends SearchContainer<RedirectEntry> {
 
 		super(portletRequest, iteratorURL, null, _EMPTY_RESULTS_MESSAGE);
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			portletRequest, RedirectPortletKeys.REDIRECT,
+			"redirect-entries-order-by-col", "modified-date");
 
-		String portletId = RedirectPortletKeys.REDIRECT;
-
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByCol)) {
-			preferences.setValue(
-				portletId, "redirect-entries-order-by-col", orderByCol);
-		}
-		else {
-			orderByCol = preferences.getValue(
-				portletId, "redirect-entries-order-by-col", "modified-date");
-		}
-
-		if (Validator.isNotNull(orderByType)) {
-			preferences.setValue(
-				portletId, "redirect-entries-order-by-type", orderByType);
-		}
-		else {
-			orderByType = preferences.getValue(
-				portletId, "redirect-entries-order-by-type", "asc");
-		}
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			portletRequest, RedirectPortletKeys.REDIRECT,
+			"redirect-entries-order-by-type", "asc");
 
 		setId(searchContainerId);
 		setOrderableHeaders(_orderableHeaders);

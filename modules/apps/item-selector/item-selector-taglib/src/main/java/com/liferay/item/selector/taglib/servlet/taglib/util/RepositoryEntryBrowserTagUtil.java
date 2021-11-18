@@ -15,8 +15,7 @@
 package com.liferay.item.selector.taglib.servlet.taglib.util;
 
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,42 +28,18 @@ public class RepositoryEntryBrowserTagUtil {
 		HttpServletRequest httpServletRequest,
 		PortalPreferences portalPreferences) {
 
-		String orderByCol = ParamUtil.getString(
-			httpServletRequest, "orderByCol");
-
-		if (Validator.isNotNull(orderByCol)) {
-			portalPreferences.setValue(
-				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
-				"order-by-col", orderByCol);
-		}
-		else {
-			orderByCol = portalPreferences.getValue(
-				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
-				"order-by-col", "title");
-		}
-
-		return orderByCol;
+		return SearchOrderByUtil.getOrderByCol(
+			httpServletRequest,
+			_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE, "title");
 	}
 
 	public static String getOrderByType(
 		HttpServletRequest httpServletRequest,
 		PortalPreferences portalPreferences) {
 
-		String orderByType = ParamUtil.getString(
-			httpServletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			portalPreferences.setValue(
-				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
-				"order-by-type", orderByType);
-		}
-		else {
-			orderByType = portalPreferences.getValue(
-				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
-				"order-by-type", "asc");
-		}
-
-		return orderByType;
+		return SearchOrderByUtil.getOrderByType(
+			httpServletRequest,
+			_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE, "asc");
 	}
 
 	private static final String

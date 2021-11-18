@@ -10,42 +10,36 @@
  */
 
 export default {
-	description: 'Paste any Elasticsearch query body in the element as is',
 	description_i18n: {
-		en_US: 'Paste any Elasticsearch query body in the element as is',
+		en_US: 'Paste any Elasticsearch query body in the element as is.',
 	},
 	elementDefinition: {
 		category: 'custom',
-		icon: 'custom-field',
-		sxpBlueprint: {
-			configuration: {
-				queryConfiguration: {
-					queryEntries: [
-						{
-							clauses: [
-								{
-									context: 'query',
-									occur: '${configuration.occur}',
-									query: {
-										wrapper: {
-											query: '${configuration.query}',
-										},
+		configuration: {
+			queryConfiguration: {
+				queryEntries: [
+					{
+						clauses: [
+							{
+								context: 'query',
+								occur: '${configuration.occur}',
+								query: {
+									wrapper: {
+										query: '${configuration.query}',
 									},
 								},
-							],
-						},
-					],
-				},
+							},
+						],
+					},
+				],
 			},
 		},
+		icon: 'custom-field',
 		uiConfiguration: {
 			fieldSets: [
 				{
 					fields: [
 						{
-							defaultValue: {
-								value: 'must',
-							},
 							label: 'Occur',
 							name: 'occur',
 							options: [
@@ -66,20 +60,23 @@ export default {
 									value: 'filter',
 								},
 							],
-							type: 'select',
+							uiType: 'select',
+							valueDefinition: {
+								defaultValueString: 'must',
+								type: 'String',
+							},
 						},
 						{
 							label: 'Query',
 							name: 'query',
-							type: 'json',
+							uiType: 'json',
 						},
 					],
 				},
 			],
 		},
 	},
-	title: 'Paste any Elasticsearch query',
 	title_i18n: {
-		en_US: 'Paste any Elasticsearch query',
+		en_US: 'Paste Any Elasticsearch Query',
 	},
 };

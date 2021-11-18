@@ -347,7 +347,6 @@ import com.liferay.wiki.social.WikiActivityKeys;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -437,7 +436,9 @@ public class DataFactory {
 
 		initJournalArticleContent();
 
-		initUserNames();
+		_firstNames = _readLines("user_name_data/first_names.txt");
+
+		_lastNames = _readLines("user_name_data/last_names.txt");
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -757,34 +758,6 @@ public class DataFactory {
 		}
 
 		_journalArticleContent = new String(chars);
-	}
-
-	public void initUserNames() throws IOException {
-		_firstNames = new ArrayList<>();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(
-				getResourceInputStream("user_name_data/first_names.txt")));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			_firstNames.add(line);
-		}
-
-		unsyncBufferedReader.close();
-
-		_lastNames = new ArrayList<>();
-
-		unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(
-				getResourceInputStream("user_name_data/last_names.txt")));
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			_lastNames.add(line);
-		}
-
-		unsyncBufferedReader.close();
 	}
 
 	public AccountEntryModel newAccountEntryModel(String type, int index) {
@@ -4914,7 +4887,7 @@ public class DataFactory {
 		return portletPreferenceValueModel;
 	}
 
-	public List<ReleaseModel> newReleaseModels() throws IOException {
+	public List<ReleaseModel> newReleaseModels() throws Exception {
 		List<ReleaseModel> releases = new ArrayList<>();
 
 		releases.add(
@@ -4925,26 +4898,21 @@ public class DataFactory {
 				ReleaseInfo.getBuildNumber(), false,
 				ReleaseConstants.TEST_STRING));
 
-		try (InputStream inputStream = DataFactory.class.getResourceAsStream(
-				"dependencies/releases.txt");
-			Reader reader = new InputStreamReader(inputStream);
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(reader)) {
+		for (String release :
+				_readLines(
+					DataFactory.class.getResourceAsStream(
+						"dependencies/releases.txt"))) {
 
-			String line = null;
+			String[] parts = StringUtil.split(release, CharPool.COLON);
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				String[] parts = StringUtil.split(line, CharPool.COLON);
+			if (parts.length > 0) {
+				String servletContextName = parts[0];
+				String schemaVersion = parts[1];
 
-				if (parts.length > 0) {
-					String servletContextName = parts[0];
-					String schemaVersion = parts[1];
-
-					releases.add(
-						newReleaseModel(
-							_counter.get(), servletContextName, schemaVersion,
-							0, true, null));
-				}
+				releases.add(
+					newReleaseModel(
+						_counter.get(), servletContextName, schemaVersion, 0,
+						true, null));
 			}
 		}
 
@@ -7253,6 +7221,26 @@ public class DataFactory {
 		return _readFile(getResourceInputStream(resourceName));
 	}
 
+	private List<String> _readLines(InputStream inputStream) throws Exception {
+		List<String> lines = new ArrayList<>();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new InputStreamReader(inputStream))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
+		}
+
+		return lines;
+	}
+
+	private List<String> _readLines(String resourceName) throws Exception {
+		return _readLines(getResourceInputStream(resourceName));
+	}
+
 	private String _replaceReleaseInfo(String resource) throws Exception {
 		StringBundler sb = new StringBundler(3);
 
@@ -7324,7 +7312,7 @@ public class DataFactory {
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dLFileEntryIdCounter;
-	private List<String> _firstNames;
+	private final List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;
 	private long _guestGroupId;
@@ -7334,7 +7322,7 @@ public class DataFactory {
 		new HashMap<>();
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
-	private List<String> _lastNames;
+	private final List<String> _lastNames;
 	private final Map<String, SimpleCounter> _layoutIdCounters =
 		new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;

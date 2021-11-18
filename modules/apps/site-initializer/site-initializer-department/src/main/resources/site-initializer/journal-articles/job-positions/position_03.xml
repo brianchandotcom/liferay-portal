@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="QJxi2nzR" name="Title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Senior Front End Developer]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="qXcRHe8c" name="Region" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Asia Pacific]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="LtALJh0R" name="Location" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Japan]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="d7Uy0VNu" name="ShortDescription" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[This is a short text that summarizes the job position description.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="CDY03g8w" name="FullDescription" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin mauris arcu, sit amet accumsan felis maximus ac. Integer hendrerit sodales turpis id porta. Pellentesque eros lacus, cursus eget sem id, interdum gravida risus. Mauris nec mi id erat eleifend mollis nec sit amet tortor. Nullam a nulla viverra, iaculis tortor at, rutrum enim. Vivamus fringilla, velit in volutpat viverra, dolor enim dictum arcu, porttitor porta est urna quis quam. Mauris ac dapibus lorem.</p>
+
+<p>Fusce eget mi diam. Aliquam erat volutpat. In mollis libero ligula, at interdum augue hendrerit ut. Duis nulla nunc, luctus ut nisi sit amet, malesuada rutrum dolor. Aliquam erat volutpat. Sed in dui tellus. Phasellus a dolor vehicula, fringilla enim auctor, accumsan magna. Phasellus non eros et nulla imperdiet luctus eu at velit. Morbi eu mauris hendrerit, condimentum odio eget, vulputate nibh. Cras eu risus ac diam vestibulum cursus in a urna. Ut a mattis velit, in imperdiet lorem.</p>
+
+<p>Phasellus tortor turpis, mattis vel ligula vitae, posuere elementum tellus. Nullam efficitur consectetur mauris id pulvinar. Donec aliquam libero nec enim hendrerit rhoncus. Aenean congue et velit nec venenatis. Morbi eu velit pharetra, condimentum erat eu, ullamcorper turpis. Quisque viverra, tortor eu ultrices commodo, leo tellus vulputate felis, vitae malesuada lectus justo non elit. Nulla sed egestas elit. Nunc interdum consequat dolor et iaculis. Proin ac nisi nunc. Vivamus dignissim felis eu accumsan auctor. Praesent ut massa orci. Vestibulum elementum felis tristique efficitur egestas. Proin tempor ante pulvinar, suscipit urna ut, euismod diam. Donec nisl est, gravida eu sollicitudin vel, pellentesque nec nisl. Donec tempus ipsum vel justo suscipit pulvinar.</p>
+
+<p>Ut ultricies mattis orci varius commodo. Mauris vel velit aliquam, congue tellus et, varius ligula. Praesent rutrum ante nisl, sed dictum elit dignissim eu. Mauris varius ligula vitae nulla bibendum, eu tempor libero iaculis. Quisque id dui orci. Fusce tempus fringilla felis, sit amet ultricies lacus suscipit a. Proin eu facilisis ligula. Donec dictum eleifend tortor ac venenatis. Fusce at est erat. Ut non diam metus. Ut ultrices vestibulum arcu eget luctus. Sed efficitur ut arcu ultrices sollicitudin. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus a enim ac risus varius auctor et sit amet nibh.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

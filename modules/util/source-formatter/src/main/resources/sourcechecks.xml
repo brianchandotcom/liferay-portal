@@ -1212,11 +1212,6 @@
 			<description name="Applies rules to enforce consisteny in code style." />
 			<property name="enabled" value="false" />
 		</check>
-		<check name="PoshiWhitespaceCheck">
-			<category name="Styling" />
-			<description name="Finds missing and unnecessary whitespace in poshi files." />
-			<property name="enabled" value="false" />
-		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
 		<check name="PropertiesCommentsCheck">

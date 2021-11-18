@@ -81,13 +81,13 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		const type = abortedRequest ? 'warning' : 'danger';
 
 		const toastContent = abortedRequest
-			? Liferay.Language.get('xls-generation-has-been-cancelled')
+			? Liferay.Language.get('xls-generation-was-cancelled')
 			: `${Liferay.Language.get(
-					'xls-generation-has-failed-try-again'
+					'xls-generation-failed.-try-again'
 			  )}. ${error}`;
 
 		const feedbackContent = abortedRequest
-			? Liferay.Language.get('xls-generation-cancelled')
+			? Liferay.Language.get('xls-generation-was-cancelled')
 			: Liferay.Language.get('an-error-occurred');
 
 		setToastMessage((current) => ({

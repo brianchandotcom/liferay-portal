@@ -44,7 +44,7 @@ const DownloadSpreadsheetModal = ({
 					<ClayModal.Body>
 						<p>
 							{Liferay.Language.get(
-								'your-xls-file-is-in-progress-leaving-this-page-will-cancel-the-process-do-you-want-to-wait-for-the-file'
+								'your-xls-file-is-being-generated.-leaving-this-page-will-cancel-the-process.-do-you-want-to-wait-for-the-file'
 							)}
 						</p>
 					</ClayModal.Body>

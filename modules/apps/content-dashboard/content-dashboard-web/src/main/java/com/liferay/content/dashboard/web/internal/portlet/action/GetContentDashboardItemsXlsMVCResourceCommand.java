@@ -14,7 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -29,8 +28,6 @@ import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearc
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -44,12 +41,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.Searcher;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -83,281 +82,155 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		try {
-			Workbook workbook = new HSSFWorkbook();
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		Locale locale = themeDisplay.getLocale();
 
-			Sheet sheet = workbook.createSheet("Content Dashboard Data");
+		WorkbookBuilder workbookBuilder = new WorkbookBuilder(
+			locale, "Content Dashboard Data");
 
-			Locale locale = _portal.getLocale(resourceRequest);
+		workbookBuilder.localizedCell(
+			"title"
+		).localizedCell(
+			"author"
+		).localizedCell(
+			"type"
+		).localizedCell(
+			"subtype"
+		).localizedCell(
+			"site-or-asset-library"
+		).localizedCell(
+			"status"
+		).localizedCell(
+			"categories"
+		).localizedCell(
+			"tags"
+		).localizedCell(
+			"modified-date"
+		).localizedCell(
+			"description"
+		).localizedCell(
+			"extension"
+		).localizedCell(
+			"file-name"
+		).localizedCell(
+			"size"
+		).localizedCell(
+			"display-date"
+		).localizedCell(
+			"creation-date"
+		).localizedCell(
+			"languages-translated-into"
+		);
 
-			_createHeaderRow(locale, sheet);
+		ContentDashboardItemSearchContainerFactory
+			contentDashboardItemSearchContainerFactory =
+				ContentDashboardItemSearchContainerFactory.getInstance(
+					_assetCategoryLocalService, _assetVocabularyLocalService,
+					_contentDashboardItemFactoryTracker,
+					_contentDashboardSearchRequestBuilderFactory, _portal,
+					resourceRequest, resourceResponse, _searcher);
 
-			ContentDashboardItemSearchContainerFactory
-				contentDashboardItemSearchContainerFactory =
-					ContentDashboardItemSearchContainerFactory.getInstance(
-						_assetCategoryLocalService, _assetVocabularyLocalService,
-						_contentDashboardItemFactoryTracker,
-						_contentDashboardSearchRequestBuilderFactory, _portal,
-						resourceRequest, resourceResponse, _searcher);
+		SearchContainer<ContentDashboardItem<?>> searchContainer =
+			contentDashboardItemSearchContainerFactory.createWithAllResults();
 
-			SearchContainer<ContentDashboardItem<?>> searchContainer =
-				contentDashboardItemSearchContainerFactory.createWithAllResults();
+		for (ContentDashboardItem<?> contentDashboardItem :
+				searchContainer.getResults()) {
 
-			List<ContentDashboardItem<?>> contentDashboardItems = searchContainer.getResults();
+			workbookBuilder.row();
 
-			for (ContentDashboardItem<?> contentDashboardItem : contentDashboardItems) {
-				Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+			workbookBuilder.cell(
+				contentDashboardItem.getTitle(locale)
+			).cell(
+				contentDashboardItem.getUserName()
+			).cell(
+				contentDashboardItem.getTypeLabel(locale)
+			).cell(
+				() -> {
+					ContentDashboardItemSubtype contentDashboardItemSubtype =
+						contentDashboardItem.getContentDashboardItemSubtype();
 
-				_createDataRow(
-					contentDashboardItem, locale, resourceRequest,
-					resourceResponse, row, themeDisplay);
+					return contentDashboardItemSubtype.getLabel(locale);
+				}
+			).cell(
+				contentDashboardItem.getScopeName(locale)
+			).cell(
+				() -> {
+					List<ContentDashboardItem.Version> versions =
+						contentDashboardItem.getVersions(locale);
+
+					ContentDashboardItem.Version version = versions.get(0);
+
+					return version.getLabel();
+				}
+			).cell(
+				StringUtils.joinWith(
+					", ",
+					ListUtil.toList(
+						contentDashboardItem.getAssetCategories(),
+						assetCategory -> assetCategory.getTitle(locale)))
+			).cell(
+				StringUtils.joinWith(
+					", ",
+					ListUtil.toList(
+						contentDashboardItem.getAssetTags(),
+						AssetTagModel::getName))
+			).cell(
+				String.valueOf(contentDashboardItem.getModifiedDate())
+			);
+
+			if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
+				JSONObject jsonObject =
+					contentDashboardItem.getSpecificInformationJSONObject(
+						ParamUtil.getString(resourceRequest, "backURL"),
+						_portal.getLiferayPortletResponse(resourceResponse),
+						locale, themeDisplay);
+
+				if (jsonObject != null) {
+					workbookBuilder.cell(
+						jsonObject.getString("description")
+					).cell(
+						jsonObject.getString("extension")
+					).cell(
+						jsonObject.getString("fileName")
+					).cell(
+						jsonObject.getString("size")
+					);
+				}
 			}
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
+			if (contentDashboardItem instanceof
+					JournalArticleContentDashboardItem) {
 
-			workbook.write(byteArrayOutputStream);
+				JSONObject jsonObject =
+					contentDashboardItem.getSpecificInformationJSONObject(
+						ParamUtil.getString(resourceRequest, "backURL"),
+						_portal.getLiferayPortletResponse(resourceResponse),
+						locale, themeDisplay);
 
-			LocalDate now = LocalDate.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-				"MM_dd_yyyy");
-
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse,
-				"ContentDashboardItemsData" + now.format(formatter) + ".xls",
-				byteArrayOutputStream.toByteArray(),
-				ContentTypes.APPLICATION_VND_MS_EXCEL);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-	}
-
-	private int _createBasicDataCells(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
-		Locale locale, Row row) {
-
-		cellIndex = _createCell(cellIndex, row, contentDashboardItem.getTitle(locale));
-
-		cellIndex = _createCell(cellIndex, row, contentDashboardItem.getUserName());
-
-		cellIndex = _createCell(cellIndex, row, contentDashboardItem.getTypeLabel(locale));
-
-		cellIndex = _createSubtypeCell(
-			cellIndex, contentDashboardItem, locale, row);
-
-		cellIndex = _createCell(
-			cellIndex, row, contentDashboardItem.getScopeName(locale));
-
-		cellIndex = _createVersionCell(
-			cellIndex, contentDashboardItem, locale, row);
-
-		cellIndex = _createCell(
-			cellIndex, row,
-			StringUtils.joinWith(
-				", ",
-				ListUtil.toList(
-					contentDashboardItem.getAssetCategories(), assetCategory -> assetCategory.getTitle(locale))));
-
-		cellIndex = _createCell(
-			cellIndex, row,
-			StringUtils.joinWith(
-				", ",
-				ListUtil.toList(
-					contentDashboardItem.getAssetTags(),
-					AssetTagModel::getName)));
-
-		return _createCell(
-			cellIndex, row,
-			String.valueOf(contentDashboardItem.getModifiedDate()));
-	}
-
-	private int _createBasicDataHeaderCells(
-		Row headerRow, int headerRowCellIndex, Locale locale) {
-
-		String[] keys = {
-			LanguageUtil.get(locale, "title"),
-			LanguageUtil.get(locale, "author"),
-			LanguageUtil.get(locale, "type"),
-			LanguageUtil.get(locale, "subtype"),
-			LanguageUtil.get(locale, "site-or-asset-library"),
-			LanguageUtil.get(locale, "status"),
-			LanguageUtil.get(locale, "categories"),
-			LanguageUtil.get(locale, "tags"),
-			LanguageUtil.get(locale, "modified-date")
-		};
-
-		for (String key : keys) {
-			headerRowCellIndex = _createCell(
-				headerRowCellIndex, headerRow, LanguageUtil.get(locale, key));
-		}
-
-		return headerRowCellIndex;
-	}
-
-	private int _createCell(int cellIndex, Row row, String value) {
-		Cell cell = row.createCell(cellIndex++);
-
-		cell.setCellValue(value);
-
-		return cellIndex;
-	}
-
-	private void _createDataRow(
-		ContentDashboardItem<?> contentDashboardItem, Locale locale,
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		Row row, ThemeDisplay themeDisplay) {
-
-		int cellIndex = _createBasicDataCells(
-			0, contentDashboardItem, locale, row);
-
-		if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
-			cellIndex = _getFileSpecificInformationJSONObject(
-				cellIndex, contentDashboardItem, locale, resourceResponse,
-				resourceRequest, row, themeDisplay);
-		}
-
-		if (contentDashboardItem instanceof
-				JournalArticleContentDashboardItem) {
-
-			_getJournalSpecificInformationJSONObject(
-				cellIndex + _FIRST_JOURNAL_SPECIFIC_FIELD_INDEX,
-				contentDashboardItem, locale, resourceResponse, resourceRequest,
-				row, themeDisplay);
-		}
-	}
-
-	private int _createFileHeaderCells(
-		Row headerRow, int headerRowCellIndex, Locale locale) {
-
-		String[] keys = {
-			"description", "extension", "file-name",
-			LanguageUtil.get(locale, "size")
-		};
-
-		for (String key : keys) {
-			headerRowCellIndex = _createCell(
-				headerRowCellIndex, headerRow, LanguageUtil.get(locale, key));
-		}
-
-		return headerRowCellIndex;
-	}
-
-	private void _createHeaderRow(Locale locale, Sheet sheet) {
-		Row headerRow = sheet.createRow((short)0);
-
-		int headerRowCellIndex = _createBasicDataHeaderCells(
-			headerRow, 0, locale);
-
-		headerRowCellIndex = _createFileHeaderCells(
-			headerRow, headerRowCellIndex, locale);
-
-		_createJournalArticleHeaderRow(headerRow, headerRowCellIndex, locale);
-	}
-
-	private void _createJournalArticleHeaderRow(
-		Row headerRow, int headerRowCellIndex, Locale locale) {
-
-		String[] keys = {
-			"display-date", "creation-date", "languages-translated-into"
-		};
-
-		for (String key : keys) {
-			headerRowCellIndex = _createCell(
-				headerRowCellIndex, headerRow, LanguageUtil.get(locale, key));
-		}
-	}
-
-	private int _createSubtypeCell(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
-		Locale locale, Row row) {
-
-		ContentDashboardItemSubtype contentDashboardItemSubtype =
-			contentDashboardItem.getContentDashboardItemSubtype();
-
-		return _createCell(
-			cellIndex, row, contentDashboardItemSubtype.getLabel(locale));
-	}
-
-	private int _createVersionCell(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
-		Locale locale, Row row) {
-
-		List<ContentDashboardItem.Version> versions =
-			contentDashboardItem.getVersions(locale);
-
-		ContentDashboardItem.Version latestVersion = versions.get(0);
-
-		return _createCell(cellIndex, row, latestVersion.getLabel());
-	}
-
-	private int _getFileSpecificInformationJSONObject(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
-		Locale locale, ResourceResponse resourceResponse,
-		ResourceRequest resourceRequest, Row row, ThemeDisplay themeDisplay) {
-
-		JSONObject fileSpecificDataJSONObject =
-			contentDashboardItem.getSpecificInformationJSONObject(
-				ParamUtil.getString(resourceRequest, "backURL"),
-				_portal.getLiferayPortletResponse(resourceResponse), locale,
-				themeDisplay);
-
-		if (fileSpecificDataJSONObject == null)
-
-			return cellIndex;
-
-		String[] keys = {"description", "extension", "fileName", "size"};
-
-		for (String key : keys) {
-			String cellValue = fileSpecificDataJSONObject.get(
-				key
-			).toString();
-
-			cellIndex = _createCell(cellIndex, row, cellValue);
-		}
-
-		return cellIndex;
-	}
-
-	private void _getJournalSpecificInformationJSONObject(
-		int cellIndex, ContentDashboardItem<?> contentDashboardItem,
-		Locale locale, ResourceResponse resourceResponse,
-		ResourceRequest resourceRequest, Row row, ThemeDisplay themeDisplay) {
-
-		JSONObject specificInformationJSONObject =
-			contentDashboardItem.getSpecificInformationJSONObject(
-				ParamUtil.getString(resourceRequest, "backURL"),
-				_portal.getLiferayPortletResponse(resourceResponse), locale,
-				themeDisplay);
-
-		if (specificInformationJSONObject == null)
-
-			return;
-
-		String[] keys = {"displayDate", "creationDate", "languagesTranslated"};
-
-		for (String key : keys) {
-			Object object = specificInformationJSONObject.get(key);
-			String cellValue = null;
-
-			if (key.equals("languagesTranslated")) {
-				cellValue = StringUtil.merge((String[])object);
+				if (jsonObject != null) {
+					workbookBuilder.cell(
+						jsonObject.getString("displayDate")
+					).cell(
+						jsonObject.getString("creationDate")
+					).cell(
+						StringUtil.merge(
+							(String[])jsonObject.get("languagesTranslated"))
+					);
+				}
 			}
-			else {
-				cellValue = object.toString();
-			}
-
-			cellIndex = _createCell(cellIndex, row, cellValue);
 		}
+
+		LocalDate localDate = LocalDate.now();
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse,
+			"ContentDashboardItemsData" +
+				localDate.format(DateTimeFormatter.ofPattern("MM_dd_yyyy")) +
+					".xls",
+			workbookBuilder.build(), ContentTypes.APPLICATION_VND_MS_EXCEL);
 	}
-
-	private static final int _FIRST_JOURNAL_SPECIFIC_FIELD_INDEX = 4;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GetContentDashboardItemsXlsMVCResourceCommand.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -378,5 +251,55 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 	@Reference
 	private Searcher _searcher;
+
+	private class WorkbookBuilder {
+
+		public WorkbookBuilder(Locale locale, String sheetName) {
+			_locale = locale;
+
+			_sheet = _workbook.createSheet(sheetName);
+
+			row();
+		}
+
+		public byte[] build() throws IOException {
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			_workbook.write(byteArrayOutputStream);
+
+			return byteArrayOutputStream.toByteArray();
+		}
+
+		public WorkbookBuilder cell(String value) {
+			Cell cell = _row.createCell(_cellIndex++);
+
+			cell.setCellValue(value);
+
+			return this;
+		}
+
+		public WorkbookBuilder cell(Supplier<String> supplier) {
+			return cell(supplier.get());
+		}
+
+		public WorkbookBuilder localizedCell(String value) {
+			return cell(LanguageUtil.get(_locale, value));
+		}
+
+		public WorkbookBuilder row() {
+			_row = _sheet.createRow(_rowIndex++);
+
+			return this;
+		}
+
+		private int _cellIndex;
+		private final Locale _locale;
+		private Row _row;
+		private short _rowIndex;
+		private final Sheet _sheet;
+		private Workbook _workbook = new HSSFWorkbook();
+
+	}
 
 }

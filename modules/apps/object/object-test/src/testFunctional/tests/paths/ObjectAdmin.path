@@ -31,20 +31,13 @@
 		<td></td>
 	</tr>
 	<tr>
-<<<<<<< HEAD
 		<td>ADD_LAYOUT_NAME_FIELD</td>
 		<td>//input[contains(@id,'listObjectLayoutName')]</td>
 		<td></td>
 	</tr>
-=======
+	<tr>
 		<td>ADD_FIELD_ON_BLOCK</td>
 		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
-		<td></td>
-	</tr>
-	<tr>
->>>>>>> f963351 (LPS-141502 Add CanAddFieldTab Test)
-		<td>OBJECT_LAYOUTS_TAB</td>
-		<td>//a[contains(text(), 'Layouts')]</td>
 		<td></td>
 	</tr>
 	<tr>

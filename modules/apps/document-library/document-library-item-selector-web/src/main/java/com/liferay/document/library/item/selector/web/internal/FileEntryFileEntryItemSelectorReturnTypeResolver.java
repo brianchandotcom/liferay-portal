@@ -14,14 +14,21 @@
 
 package com.liferay.document.library.item.selector.web.internal;
 
+import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.document.library.video.renderer.DLVideoRenderer;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,7 +72,7 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"extension", fileEntry.getExtension()
 		).put(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
@@ -79,11 +86,29 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 			"url", previewURL
 		).put(
 			"uuid", fileEntry.getUuid()
-		).toString();
+		);
+
+		if (ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
+				fileEntry.getMimeType()) ||
+			Objects.equals(
+				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT,
+				fileEntry.getMimeType())) {
+
+			jsonObject.put(
+				"html",
+				_dlVideoRenderer.renderHTML(
+					fileEntry.getFileVersion(), themeDisplay.getRequest()));
+		}
+
+		return jsonObject.toString();
 	}
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private DLVideoRenderer _dlVideoRenderer;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

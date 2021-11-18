@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.info.item.provider;
+package com.liferay.blogs.web.internal.info.item.provider;
 
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
-import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -32,26 +32,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "item.class.name=com.liferay.portal.kernel.model.Layout",
+	property = "item.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = InfoItemFriendlyURLProvider.class
 )
-public class LayoutInfoItemFriendlyURLProvider
-	implements InfoItemFriendlyURLProvider<Layout> {
+public class BlogsEntryInfoItemFriendlyURLProvider
+	implements InfoItemFriendlyURLProvider<BlogsEntry> {
 
 	@Override
-	public String getFriendlyURL(Layout layout, String languageId) {
-		return layout.getFriendlyURL(LocaleUtil.fromLanguageId(languageId));
+	public String getFriendlyURL(BlogsEntry blogsEntry, String languageId) {
+		return blogsEntry.getUrlTitle();
 	}
 
 	@Override
 	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
-		Layout layout, String languageId) {
+		BlogsEntry blogsEntry, String languageId) {
 
 		return _friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
-			layout.getGroupId(),
-			_layoutFriendlyURLEntryHelper.getClassNameId(
-				layout.isPrivateLayout()),
-			layout.getPlid(), languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			blogsEntry.getGroupId(), _portal.getClassNameId(BlogsEntry.class),
+			blogsEntry.getEntryId(),
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			_friendlyURLEntryLocalizationComparator);
 	}
 
@@ -63,6 +63,6 @@ public class LayoutInfoItemFriendlyURLProvider
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
-	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+	private Portal _portal;
 
 }

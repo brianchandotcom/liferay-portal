@@ -80,6 +80,27 @@ public class OrderItem implements Cloneable, Serializable {
 
 	protected Map<String, ?> customFields;
 
+	public BigDecimal getDecimalQuantity() {
+		return decimalQuantity;
+	}
+
+	public void setDecimalQuantity(BigDecimal decimalQuantity) {
+		this.decimalQuantity = decimalQuantity;
+	}
+
+	public void setDecimalQuantity(
+		UnsafeSupplier<BigDecimal, Exception> decimalQuantityUnsafeSupplier) {
+
+		try {
+			decimalQuantity = decimalQuantityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal decimalQuantity;
+
 	public String getDeliveryGroup() {
 		return deliveryGroup;
 	}
@@ -412,6 +433,27 @@ public class OrderItem implements Cloneable, Serializable {
 	}
 
 	protected BigDecimal finalPriceWithTaxAmount;
+
+	public String getFormattedQuantity() {
+		return formattedQuantity;
+	}
+
+	public void setFormattedQuantity(String formattedQuantity) {
+		this.formattedQuantity = formattedQuantity;
+	}
+
+	public void setFormattedQuantity(
+		UnsafeSupplier<String, Exception> formattedQuantityUnsafeSupplier) {
+
+		try {
+			formattedQuantity = formattedQuantityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String formattedQuantity;
 
 	public Long getId() {
 		return id;
@@ -751,6 +793,27 @@ public class OrderItem implements Cloneable, Serializable {
 	}
 
 	protected Boolean subscription;
+
+	public String getUnitOfMeasure() {
+		return unitOfMeasure;
+	}
+
+	public void setUnitOfMeasure(String unitOfMeasure) {
+		this.unitOfMeasure = unitOfMeasure;
+	}
+
+	public void setUnitOfMeasure(
+		UnsafeSupplier<String, Exception> unitOfMeasureUnsafeSupplier) {
+
+		try {
+			unitOfMeasure = unitOfMeasureUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unitOfMeasure;
 
 	public BigDecimal getUnitPrice() {
 		return unitPrice;

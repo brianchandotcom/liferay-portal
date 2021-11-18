@@ -81,6 +81,16 @@ public class OrderItemSerDes {
 			sb.append(_toJSON(orderItem.getCustomFields()));
 		}
 
+		if (orderItem.getDecimalQuantity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"decimalQuantity\": ");
+
+			sb.append(orderItem.getDecimalQuantity());
+		}
+
 		if (orderItem.getDeliveryGroup() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +237,20 @@ public class OrderItemSerDes {
 			sb.append("\"finalPriceWithTaxAmount\": ");
 
 			sb.append(orderItem.getFinalPriceWithTaxAmount());
+		}
+
+		if (orderItem.getFormattedQuantity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formattedQuantity\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getFormattedQuantity()));
+
+			sb.append("\"");
 		}
 
 		if (orderItem.getId() != null) {
@@ -411,6 +435,20 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getSubscription());
 		}
 
+		if (orderItem.getUnitOfMeasure() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasure\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getUnitOfMeasure()));
+
+			sb.append("\"");
+		}
+
 		if (orderItem.getUnitPrice() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -467,6 +505,15 @@ public class OrderItemSerDes {
 		else {
 			map.put(
 				"customFields", String.valueOf(orderItem.getCustomFields()));
+		}
+
+		if (orderItem.getDecimalQuantity() == null) {
+			map.put("decimalQuantity", null);
+		}
+		else {
+			map.put(
+				"decimalQuantity",
+				String.valueOf(orderItem.getDecimalQuantity()));
 		}
 
 		if (orderItem.getDeliveryGroup() == null) {
@@ -594,6 +641,15 @@ public class OrderItemSerDes {
 			map.put(
 				"finalPriceWithTaxAmount",
 				String.valueOf(orderItem.getFinalPriceWithTaxAmount()));
+		}
+
+		if (orderItem.getFormattedQuantity() == null) {
+			map.put("formattedQuantity", null);
+		}
+		else {
+			map.put(
+				"formattedQuantity",
+				String.valueOf(orderItem.getFormattedQuantity()));
 		}
 
 		if (orderItem.getId() == null) {
@@ -724,6 +780,14 @@ public class OrderItemSerDes {
 				"subscription", String.valueOf(orderItem.getSubscription()));
 		}
 
+		if (orderItem.getUnitOfMeasure() == null) {
+			map.put("unitOfMeasure", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasure", String.valueOf(orderItem.getUnitOfMeasure()));
+		}
+
 		if (orderItem.getUnitPrice() == null) {
 			map.put("unitPrice", null);
 		}
@@ -771,6 +835,12 @@ public class OrderItemSerDes {
 					orderItem.setCustomFields(
 						(Map)OrderItemSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "decimalQuantity")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setDecimalQuantity(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "deliveryGroup")) {
@@ -882,6 +952,12 @@ public class OrderItemSerDes {
 						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "formattedQuantity")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setFormattedQuantity(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -982,6 +1058,11 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "subscription")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setSubscription((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setUnitOfMeasure((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "unitPrice")) {

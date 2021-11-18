@@ -122,6 +122,36 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@DecimalMin("0")
+	@Schema
+	@Valid
+	public BigDecimal getDecimalQuantity() {
+		return decimalQuantity;
+	}
+
+	public void setDecimalQuantity(BigDecimal decimalQuantity) {
+		this.decimalQuantity = decimalQuantity;
+	}
+
+	@JsonIgnore
+	public void setDecimalQuantity(
+		UnsafeSupplier<BigDecimal, Exception> decimalQuantityUnsafeSupplier) {
+
+		try {
+			decimalQuantity = decimalQuantityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected BigDecimal decimalQuantity;
+
 	@Schema
 	public String getDeliveryGroup() {
 		return deliveryGroup;
@@ -576,6 +606,34 @@ public class OrderItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal finalPriceWithTaxAmount;
+
+	@Schema
+	public String getFormattedQuantity() {
+		return formattedQuantity;
+	}
+
+	public void setFormattedQuantity(String formattedQuantity) {
+		this.formattedQuantity = formattedQuantity;
+	}
+
+	@JsonIgnore
+	public void setFormattedQuantity(
+		UnsafeSupplier<String, Exception> formattedQuantityUnsafeSupplier) {
+
+		try {
+			formattedQuantity = formattedQuantityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String formattedQuantity;
 
 	@DecimalMin("0")
 	@Schema
@@ -1040,6 +1098,34 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscription;
 
+	@Schema
+	public String getUnitOfMeasure() {
+		return unitOfMeasure;
+	}
+
+	public void setUnitOfMeasure(String unitOfMeasure) {
+		this.unitOfMeasure = unitOfMeasure;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasure(
+		UnsafeSupplier<String, Exception> unitOfMeasureUnsafeSupplier) {
+
+		try {
+			unitOfMeasure = unitOfMeasureUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String unitOfMeasure;
+
 	@DecimalMin("0")
 	@Schema
 	@Valid
@@ -1149,6 +1235,16 @@ public class OrderItem implements Serializable {
 			sb.append("\"customFields\": ");
 
 			sb.append(_toJSON(customFields));
+		}
+
+		if (decimalQuantity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"decimalQuantity\": ");
+
+			sb.append(decimalQuantity);
 		}
 
 		if (deliveryGroup != null) {
@@ -1297,6 +1393,20 @@ public class OrderItem implements Serializable {
 			sb.append("\"finalPriceWithTaxAmount\": ");
 
 			sb.append(finalPriceWithTaxAmount);
+		}
+
+		if (formattedQuantity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formattedQuantity\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(formattedQuantity));
+
+			sb.append("\"");
 		}
 
 		if (id != null) {
@@ -1477,6 +1587,20 @@ public class OrderItem implements Serializable {
 			sb.append("\"subscription\": ");
 
 			sb.append(subscription);
+		}
+
+		if (unitOfMeasure != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasure\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasure));
+
+			sb.append("\"");
 		}
 
 		if (unitPrice != null) {

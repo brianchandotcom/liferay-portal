@@ -229,6 +229,37 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testCreateDDMFormRenderingContext() throws Exception {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		_mockDDMFormInstance(ddmFormInstanceSettings);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			_createDDMFormDisplayContext();
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			ddmFormDisplayContext.createDDMFormRenderingContext(new DDMForm());
+
+		Assert.assertFalse(
+			(boolean)ddmFormRenderingContext.getProperty(
+				"showPartialResultsToRespondents"));
+
+		when(
+			ddmFormInstanceSettings.showPartialResultsToRespondents()
+		).thenReturn(
+			true
+		);
+
+		ddmFormRenderingContext =
+			ddmFormDisplayContext.createDDMFormRenderingContext(new DDMForm());
+
+		Assert.assertTrue(
+			(boolean)ddmFormRenderingContext.getProperty(
+				"showPartialResultsToRespondents"));
+	}
+
+	@Test
 	public void testDDMFormRenderingContextLocaleIsThemeDisplayLocale()
 		throws Exception {
 
@@ -504,6 +535,29 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			true, false, true);
 
 		Assert.assertFalse(ddmFormDisplayContext.isShowConfigurationIcon());
+	}
+
+	@Test
+	public void testIsShowPartialResultsToRespondents() throws Exception {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		_mockDDMFormInstance(ddmFormInstanceSettings);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			_createDDMFormDisplayContext();
+
+		Assert.assertFalse(
+			ddmFormDisplayContext.isShowPartialResultsToRespondents());
+
+		when(
+			ddmFormInstanceSettings.showPartialResultsToRespondents()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			ddmFormDisplayContext.isShowPartialResultsToRespondents());
 	}
 
 	@Test

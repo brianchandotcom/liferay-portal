@@ -160,6 +160,33 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			getSharedFormURL(), _ddmFormAdminDisplayContext.getSharedFormURL());
 	}
 
+	@Test
+	public void testIsShowPartialResultsToRespondents() throws Exception {
+		Assert.assertFalse(
+			_ddmFormAdminDisplayContext.isShowPartialResultsToRespondents(
+				null));
+
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		DDMFormInstance ddmFormInstance = _mockDDMFormInstance(
+			ddmFormInstanceSettings);
+
+		Assert.assertFalse(
+			_ddmFormAdminDisplayContext.isShowPartialResultsToRespondents(
+				ddmFormInstance));
+
+		when(
+			ddmFormInstanceSettings.showPartialResultsToRespondents()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_ddmFormAdminDisplayContext.isShowPartialResultsToRespondents(
+				ddmFormInstance));
+	}
+
 	protected String getSharedFormURL() {
 		return StringBundler.concat(
 			_PORTAL_URL, _PUBLIC_FRIENDLY_URL_PATH, _GROUP_FRIENDLY_URL_PATH,
@@ -372,6 +399,21 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		);
 
 		return ddmFormContextToDDMFormValues;
+	}
+
+	private DDMFormInstance _mockDDMFormInstance(
+			DDMFormInstanceSettings ddmFormInstanceSettings)
+		throws Exception {
+
+		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+
+		when(
+			ddmFormInstance.getSettingsModel()
+		).thenReturn(
+			ddmFormInstanceSettings
+		);
+
+		return ddmFormInstance;
 	}
 
 	private String _read(String fileName) throws Exception {

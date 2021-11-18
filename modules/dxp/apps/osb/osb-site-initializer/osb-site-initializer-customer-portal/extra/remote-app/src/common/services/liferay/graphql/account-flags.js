@@ -4,13 +4,19 @@ const getAccountFlagByFilter = (filter) => {
 	if (filter) {
 		const filterKeys = Object.keys(filter);
 
-		for (const key in filterKeys) {
-			const value = filter[key];
+		filterKeys.forEach((key) => {
+			let value = '';
+
+			if (key === 'value') {
+				value = filter[key];
+			} else {
+				value = `'${filter[key]}'`;
+			}
 
 			filters += filters
-				? `${filters ? ' and ' : ''}${key} eq '${value}'`
-				: `${key} eq '${value}'`;
-		}
+				? `${filters ? ' and ' : ''}${key} eq ${value}`
+				: `${key} eq ${value}`;
+		});
 
 		if (filters) {
 			return `c {

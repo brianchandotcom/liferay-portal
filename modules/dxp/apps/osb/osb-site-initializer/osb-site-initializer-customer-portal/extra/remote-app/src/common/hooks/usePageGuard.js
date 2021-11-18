@@ -37,7 +37,7 @@ const overviewPageGuard = (userAccount, _accountFlags, externalReferenceCode) =>
 	};
 
 	return {
-		location: `${liferaySiteName}/${PROJECT_PAGE_KEY}?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${getExternalReferenceCode()}`,
+		location: `${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${getExternalReferenceCode()}`,
 		validate: validation,
 	};
 };
@@ -49,22 +49,22 @@ const usePageGuard = (
 	externalReferenceCode
 ) => {
 	const [isLoading, setLoading] = useState(true);
-	const { data: accountFlags, isLoading: isLoadingGraphQL } = useGraphQL(
+	const { data, isLoading: isLoadingGraphQL } = useGraphQL([
 		getAccountFlagByFilter({
 			accountKey: externalReferenceCode,
 			name: 'onboarding',
 			userUuid: userAccount.externalReferenceCode,
 			value: 1,
 		}),
-	);
+	]);
 
 	if (!isLoadingGraphQL) {
 		setLoading(isLoadingGraphQL);
 
-		if (!validateExternalReferenceCode(userAccount.accountBriefs, externalReferenceCode) || !guard(userAccount, accountFlags, externalReferenceCode).validate) {
+		if (!validateExternalReferenceCode(userAccount.accountBriefs, externalReferenceCode) || !guard(userAccount, data.accountFlags, externalReferenceCode).validate) {
 			const { location, validate: alternativeValidate } = alternativeGuard(
 				userAccount,
-				accountFlags,
+				data.accountFlags,
 				externalReferenceCode
 			);
 

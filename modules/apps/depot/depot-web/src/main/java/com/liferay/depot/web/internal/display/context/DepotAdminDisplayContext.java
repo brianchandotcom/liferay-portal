@@ -101,8 +101,8 @@ public class DepotAdminDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-			DepotPortletKeys.DEPOT_ADMIN, getDefaultDisplayStyle());
+			_liferayPortletRequest, DepotPortletKeys.DEPOT_ADMIN,
+			getDefaultDisplayStyle());
 
 		return _displayStyle;
 	}

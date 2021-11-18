@@ -129,8 +129,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			SegmentsPortletKeys.SEGMENTS, "list");
+			_renderRequest, SegmentsPortletKeys.SEGMENTS, "list");
 
 		return _displayStyle;
 	}

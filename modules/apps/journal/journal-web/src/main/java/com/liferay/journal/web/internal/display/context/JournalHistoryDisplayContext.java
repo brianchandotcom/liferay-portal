@@ -110,8 +110,8 @@ public class JournalHistoryDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			JournalPortletKeys.JOURNAL, "history-display-style", "list");
+			_renderRequest, JournalPortletKeys.JOURNAL, "history-display-style",
+			"list");
 
 		return _displayStyle;
 	}

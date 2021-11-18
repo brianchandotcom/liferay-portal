@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -84,8 +83,8 @@ public class SelectSegmentsEntryDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			SegmentsPortletKeys.SEGMENTS, "entry-display-style", "list");
+			_renderRequest, SegmentsPortletKeys.SEGMENTS, "entry-display-style",
+			"list");
 
 		return _displayStyle;
 	}

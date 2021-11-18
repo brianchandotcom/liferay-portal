@@ -393,8 +393,8 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-			LayoutAdminPortletKeys.GROUP_PAGES, "miller-columns");
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			"miller-columns");
 
 		return _displayStyle;
 	}

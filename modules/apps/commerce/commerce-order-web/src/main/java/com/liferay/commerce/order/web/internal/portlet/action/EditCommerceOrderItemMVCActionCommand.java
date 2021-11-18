@@ -175,26 +175,23 @@ public class EditCommerceOrderItemMVCActionCommand
 			actionRequest, "commerceOrderItemId");
 		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "decimalQuantity");
+		long cpMeasurementUnitId = ParamUtil.getLong(
+			actionRequest, "cpMeasurementUnitId");
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-		if (commerceOrder.isOpen()) {
-			CommerceContext commerceContext =
-				(CommerceContext)actionRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
+		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
+			commerceOrderItemId, cpMeasurementUnitId,
+			decimalQuantity.intValue(),
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT),
+			ServiceContextFactory.getInstance(
+				CommerceOrderItem.class.getName(), actionRequest));
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceOrderItem.class.getName(), actionRequest);
-
-			commerceOrderItem =
-				_commerceOrderItemService.updateCommerceOrderItem(
-					commerceOrderItemId, decimalQuantity.intValue(),
-					commerceContext, serviceContext);
-		}
-		else {
+		if (!commerceOrder.isOpen()) {
 			BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 				actionRequest, "price");
 

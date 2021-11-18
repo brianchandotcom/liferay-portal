@@ -1413,15 +1413,6 @@ definition {
 
 	}
 
-	@description = "LPS-135400 - It is possible to search for an entry on the Relationship field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSearchEntryOnRelationshipField {
-
-		// TODO LPS-141651 CanSearchEntryOnRelationshipField pending implementation
-
-	}
-
 	@description = "LPS-135547 - Verify it is possible to search for a Custom Object"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -2670,16 +2661,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
-	}
-
-	@description = "LPS-135400 - Entries are listed when clicking on the Relationship field"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test EntriesListedOnRelationshipField {
-		property portal.acceptance = "true";
-
-		// TODO LPS-141650 EntriesListedOnRelationshipField pending implementation
-
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"

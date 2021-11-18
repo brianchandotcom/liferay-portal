@@ -249,17 +249,19 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					themeDisplay.getCompanyId());
 
 				DLFileEntryType googleDocsDLFileEntryType =
-					_dlFileEntryTypeLocalService.getFileEntryType(
+					_dlFileEntryTypeLocalService.fetchFileEntryType(
 						company.getGroupId(), "GOOGLE_DOCS");
 
-				String fileEntryTypeIdString = String.valueOf(
-					googleDocsDLFileEntryType.getFileEntryTypeId());
+				if (googleDocsDLFileEntryType != null) {
+					String fileEntryTypeIdString = String.valueOf(
+						googleDocsDLFileEntryType.getFileEntryTypeId());
 
-				if (StringUtil.equalsIgnoreCase(
+					if (StringUtil.equalsIgnoreCase(
 						fileEntryTypeIdString,
 						infoItemFormVariation.getKey())) {
 
-					continue;
+						continue;
+					}
 				}
 
 				InfoItemReference infoItemReference =

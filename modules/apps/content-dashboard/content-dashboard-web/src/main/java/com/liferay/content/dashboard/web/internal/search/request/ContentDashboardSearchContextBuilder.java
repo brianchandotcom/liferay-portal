@@ -291,9 +291,12 @@ public class ContentDashboardSearchContextBuilder {
 			Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 			DLFileEntryType googleDocsDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
 					company.getGroupId(), "GOOGLE_DOCS");
 
+			if (googleDocsDLFileEntryType == null) {
+				return Optional.empty();
+			}
 			BooleanFilter booleanFilter = new BooleanFilter();
 
 			booleanFilter.addTerm(

@@ -18,8 +18,9 @@ export const ACTIONS = {
 	assignRoles(itemData, portletNamespace) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
+			getSelectedItemsOnly: false,
 			multiple: true,
-			onSelect: (selectedItems) => {
+			onSelect: (items) => {
 				const editUserGroupRoleFm = document.getElementById(
 					`${portletNamespace}editUserGroupRoleFm`
 				);
@@ -28,12 +29,21 @@ export const ACTIONS = {
 					return;
 				}
 
-				const input = document.createElement('input');
+				const allItems = document.createElement('input');
 
-				input.name = `${portletNamespace}rowIds`;
-				input.value = selectedItems.map((item) => item.value);
+				allItems.name = `${portletNamespace}availableRowIds`;
+				allItems.value = items.map((item) => item.value);
 
-				editUserGroupRoleFm.appendChild(input);
+				editUserGroupRoleFm.appendChild(allItems);
+
+				const selectedItems = document.createElement('input');
+
+				selectedItems.name = `${portletNamespace}rowIds`;
+				selectedItems.value = items
+					.filter((item) => item.checked)
+					.map((item) => item.value);
+
+				editUserGroupRoleFm.appendChild(selectedItems);
 
 				submitForm(editUserGroupRoleFm, itemData.editUserGroupRoleURL);
 			},

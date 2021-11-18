@@ -1061,7 +1061,6 @@ definition {
 	@description = "LPS-132406: Given the Page Audit Panel
 	When the users leave the page because the session expires or s/he does log out
 	Then they find the panel closed"
-	@ignore = "true"
 	@priority = "3"
 	test CheckPageAuditClosedAfterLogout {
 		task ("Open Content Performance panel") {
@@ -2923,28 +2922,6 @@ definition {
 	@description = "LPS-132406: Given the Page Audit Panel
 	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
 	Then they find the panel open"
-	@ignore = "true"
-	@priority = "3"
-	test CheckPageAuditOpenAfterNavigation {
-		task ("Open Content Performance panel") {
-			PageAudit.openPanelBeforeConfiguration();
-
-			PageAudit.connectToGooglePageAudit();
-		}
-
-		task ("Logout and login") {
-			Click(locator1 = "Icon#BACK");
-		}
-
-		task ("Check if panel is closed") {
-			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
-		}
-	}
-
-	@description = "LPS-132406: Given the Page Audit Panel
-	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
-	Then they find the panel open"
-	@ignore = "true"
 	@priority = "3"
 	test CheckPageAuditOpenAfterNavigation {
 		task ("Open Content Performance panel") {
@@ -3415,7 +3392,6 @@ definition {
 	@description = "LPS-135681: Given the Page Audit panel when the invalid API Key error is retrieved
 	When the user clicks on the Set API Key button
 	Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
-	@ignore = "true"
 	@priority = "3"
 	test InvalidAPIKeyErrorIsRecovered {
 		property portal.acceptance = "true";

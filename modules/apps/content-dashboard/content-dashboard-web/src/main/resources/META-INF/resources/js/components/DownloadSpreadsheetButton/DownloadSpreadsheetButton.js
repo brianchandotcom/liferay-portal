@@ -253,7 +253,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 					displayType="secondary"
 					onClick={handleClick}
 					title={Liferay.Language.get(
-						'download-your-data-in-a-xls-file'
+						'download-your-data-as-an-xls-file'
 					)}
 				>
 					<span className="inline-item inline-item-before">

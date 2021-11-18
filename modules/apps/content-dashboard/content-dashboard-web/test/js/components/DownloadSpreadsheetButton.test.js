@@ -62,11 +62,11 @@ describe('DownloadSpreadsheetButton', () => {
 		expect(getByText('export-xls')).toBeInTheDocument();
 
 		const {className: btnClassName} = getByTitle(
-			'download-your-data-in-a-xls-file'
+			'download-your-data-as-an-xls-file'
 		);
 
 		expect(
-			getByTitle('download-your-data-in-a-xls-file')
+			getByTitle('download-your-data-as-an-xls-file')
 		).toBeInTheDocument();
 		expect(btnClassName).toContain(
 			'btn-outline-borderless btn-outline-secondary'

@@ -175,9 +175,7 @@ definition {
 	@description = "Verify that the user can modify the quantity of items view per page."
 	@priority = "3"
 	test CanModifyQuantityOfItemsPerPage {
-
-		for (var kfProcessName : list "1,2,3,4"){
-
+		for (var kfProcessName : list "1,2,3,4") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 			KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Liferay");
@@ -187,8 +185,7 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		AssertElementNotPresent(
-			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT");
+		AssertElementNotPresent(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT");
 
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -196,13 +193,11 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		AssertElementPresent(
-			locator1 = "Pagination#RESULTS");
+		AssertElementPresent(locator1 = "Pagination#RESULTS");
 
 		Pagination.changePagination(itemsPerPage = "4");
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
-
 	}
 
 	@description = "Verify that user can nagivate through pages."

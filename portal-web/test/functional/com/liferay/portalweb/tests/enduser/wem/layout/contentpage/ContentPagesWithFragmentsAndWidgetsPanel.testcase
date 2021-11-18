@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130964. Change display style in Fragments and Widgets panel."
+	@description = "This is a test for LPS-130964 and LPS-76741. Change display style in Fragments and Widgets panel."
 	@priority = "4"
 	test ChangeDisplayStyle {
 		task ("Navigate to the Pages admin in new site") {
@@ -102,6 +102,18 @@ definition {
 			AssertVisible(
 				key_switchTo = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("Navigate Back to Site Pages") {
+			Navigator.gotoBack();
+		}
+
+		task ("Access to content page can be edited at view mode") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Test Content Page Name");
+
+			ContentPages.gotoPageEditor();
 		}
 	}
 

@@ -1,15 +1,15 @@
 {
 	"action": "create",
-	"description": "",
+	"description": "This is a description for Test Commerce Notification Template.",
 	"enabled": true,
 	"from": "test-integration@liferay.com",
 	"fromName": {
 		"en-US": "Test Integration"
 	},
-	"name": "Test Notification Template",
+	"name": "Test Commerce Notification Template",
 	"objectDefinitionName": "C_TestBundleSiteInitializer",
 	"subject": {
-		"en-US": "Test subject Notification Template"
+		"en-US": "This is a subject for Test Commerce Notification Template"
 	},
 	"to": "test@liferay.com"
 }

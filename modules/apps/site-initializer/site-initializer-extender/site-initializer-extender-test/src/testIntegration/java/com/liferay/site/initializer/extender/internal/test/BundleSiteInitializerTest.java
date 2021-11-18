@@ -287,7 +287,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Catalog 2", commerceCatalog2.getName());
 
-		_assertCPDefinitions(group);
+		_assertCPDefinition(group);
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -314,6 +314,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
 	}
+
 	private void _assertCommerceNotificationTemplate(
 			CommerceChannel commerceChannel, Group group)
 		throws Exception {
@@ -333,12 +334,12 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(commerceNotificationTemplate);
 		Assert.assertEquals(
-			"Test Notification Template",
+			"Test Commerce Notification Template",
 			commerceNotificationTemplate.getName());
 	}
 
-	private void _assertCPDefinitions(Group group) throws Exception {
-		CPDefinition cpDefinition1 =
+	private void _assertCPDefinition(Group group) throws Exception {
+		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					"TEST001", group.getCompanyId());

@@ -154,7 +154,7 @@ public class InputTag extends IncludeTag {
 	private String _getValue() {
 		try {
 			if (getClassPK() == 0) {
-				return null;
+				return StringPool.BLANK;
 			}
 
 			FriendlyURLEntry mainFriendlyURLEntry =

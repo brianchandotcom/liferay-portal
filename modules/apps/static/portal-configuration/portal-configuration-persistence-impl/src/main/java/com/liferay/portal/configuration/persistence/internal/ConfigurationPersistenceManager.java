@@ -16,17 +16,20 @@ package com.liferay.portal.configuration.persistence.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -82,13 +85,13 @@ public class ConfigurationPersistenceManager
 
 	@Override
 	public void delete(String pid) throws IOException {
-		List<ConfigurationModelListener> configurationModelListeners = null;
+		String pidKey = null;
 
 		if (!pid.endsWith("factory")) {
 			Dictionary<?, ?> dictionary = getDictionary(pid);
 
 			if (dictionary != null) {
-				String pidKey = (String)dictionary.get(
+				pidKey = (String)dictionary.get(
 					ConfigurationAdmin.SERVICE_FACTORYPID);
 
 				if (pidKey == null) {
@@ -98,19 +101,13 @@ public class ConfigurationPersistenceManager
 				if (pidKey == null) {
 					pidKey = pid;
 				}
-
-				configurationModelListeners = _getConfigurationModelListener(
-					pidKey);
 			}
 		}
 
-		if (configurationModelListeners != null) {
-			for (ConfigurationModelListener configurationModelListener :
-					configurationModelListeners) {
-
-				configurationModelListener.onBeforeDelete(pid);
-			}
-		}
+		_visitConfigurationModelListeners(
+			pidKey,
+			configurationModelListener ->
+				configurationModelListener.onBeforeDelete(pid));
 
 		Lock lock = _readWriteLock.writeLock();
 
@@ -127,13 +124,10 @@ public class ConfigurationPersistenceManager
 			lock.unlock();
 		}
 
-		if (configurationModelListeners != null) {
-			for (ConfigurationModelListener configurationModelListener :
-					configurationModelListeners) {
-
-				configurationModelListener.onAfterDelete(pid);
-			}
-		}
+		_visitConfigurationModelListeners(
+			pidKey,
+			configurationModelListener ->
+				configurationModelListener.onAfterDelete(pid));
 	}
 
 	@Override
@@ -239,12 +233,12 @@ public class ConfigurationPersistenceManager
 			String pid, @SuppressWarnings("rawtypes") Dictionary dictionary)
 		throws IOException {
 
-		List<ConfigurationModelListener> configurationModelListeners = null;
+		String pidKey = null;
 
 		if (!pid.endsWith("factory") &&
 			(dictionary.get("_felix_.cm.newConfiguration") == null)) {
 
-			String pidKey = (String)dictionary.get(
+			pidKey = (String)dictionary.get(
 				ConfigurationAdmin.SERVICE_FACTORYPID);
 
 			if (pidKey == null) {
@@ -255,18 +249,12 @@ public class ConfigurationPersistenceManager
 				pidKey = StringUtil.replaceLast(
 					pidKey, ".scoped", StringPool.BLANK);
 			}
-
-			configurationModelListeners = _getConfigurationModelListener(
-				pidKey);
 		}
 
-		if (configurationModelListeners != null) {
-			for (ConfigurationModelListener configurationModelListener :
-					configurationModelListeners) {
-
-				configurationModelListener.onBeforeSave(pid, dictionary);
-			}
-		}
+		_visitConfigurationModelListeners(
+			pidKey,
+			configurationModelListener ->
+				configurationModelListener.onBeforeSave(pid, dictionary));
 
 		Dictionary<Object, Object> newDictionary = _copyDictionary(dictionary);
 
@@ -296,13 +284,10 @@ public class ConfigurationPersistenceManager
 			lock.unlock();
 		}
 
-		if (configurationModelListeners != null) {
-			for (ConfigurationModelListener configurationModelListener :
-					configurationModelListeners) {
-
-				configurationModelListener.onAfterSave(pid, dictionary);
-			}
-		}
+		_visitConfigurationModelListeners(
+			pidKey,
+			configurationModelListener ->
+				configurationModelListener.onAfterSave(pid, dictionary));
 	}
 
 	protected void createConfigurationTable() {
@@ -499,18 +484,6 @@ public class ConfigurationPersistenceManager
 		return configFile.getCanonicalFile();
 	}
 
-	private List<ConfigurationModelListener> _getConfigurationModelListener(
-		String configurationModelClassName) {
-
-		if (_serviceTrackerMap == null) {
-			_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-				_bundleContext, ConfigurationModelListener.class,
-				"model.class.name");
-		}
-
-		return _serviceTrackerMap.getService(configurationModelClassName);
-	}
-
 	private Dictionary<Object, Object> _overrideDictionary(
 		String pid, Dictionary<Object, Object> dictionary) {
 
@@ -599,6 +572,32 @@ public class ConfigurationPersistenceManager
 		}
 
 		return dictionary;
+	}
+
+	private void _visitConfigurationModelListeners(
+			String key,
+			UnsafeConsumer
+				<ConfigurationModelListener,
+				 ConfigurationModelListenerException>
+					configurationModelListenerUnsafeConsumer)
+		throws ConfigurationModelListenerException {
+
+		if (Validator.isNull(key)) {
+			return;
+		}
+
+		if (_serviceTrackerMap == null) {
+			_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+				_bundleContext, ConfigurationModelListener.class,
+				"model.class.name");
+		}
+
+		if (_serviceTrackerMap.containsKey(key)) {
+			UnsafeConsumer.accept(
+				_serviceTrackerMap.getService(key),
+				configurationModelListenerUnsafeConsumer,
+				ConfigurationModelListenerException.class);
+		}
 	}
 
 	private static final String _FELIX_FILE_INSTALL_FILENAME =

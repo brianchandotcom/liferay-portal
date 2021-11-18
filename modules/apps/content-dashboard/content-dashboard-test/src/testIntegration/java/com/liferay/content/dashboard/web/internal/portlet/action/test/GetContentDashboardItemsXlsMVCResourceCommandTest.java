@@ -158,7 +158,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			_getContentDashboardItemsXlsMVCResourceCommand.serveResource(
+			_mvcResourceCommand.serveResource(
 				mockLiferayResourceRequest, mockLiferayResourceResponse);
 		}
 		finally {
@@ -172,7 +172,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 	@Inject(
 		filter = "mvc.command.name=/content_dashboard/get_content_dashboard_items_xls"
 	)
-	private MVCResourceCommand _getContentDashboardItemsXlsMVCResourceCommand;
+	private MVCResourceCommand _mvcResourceCommand;
 
 	@DeleteAfterTestRun
 	private Group _group;

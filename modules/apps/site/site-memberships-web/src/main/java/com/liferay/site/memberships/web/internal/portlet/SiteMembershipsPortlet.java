@@ -256,6 +256,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		Group group = _getGroup(actionRequest, actionResponse);
 
+		long[] availableRoleIds = ParamUtil.getLongValues(
+			actionRequest, "availableRowIds");
+
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		List<UserGroupRole> userGroupRoles =
@@ -271,7 +274,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		List<Long> removeRoleIds = new ArrayList<>();
 
 		for (long roleId : curRoleIds) {
-			if (!ArrayUtil.contains(roleIds, roleId)) {
+			if (!ArrayUtil.contains(roleIds, roleId) &&
+				ArrayUtil.contains(availableRoleIds, roleId)) {
+
 				removeRoleIds.add(roleId);
 			}
 		}

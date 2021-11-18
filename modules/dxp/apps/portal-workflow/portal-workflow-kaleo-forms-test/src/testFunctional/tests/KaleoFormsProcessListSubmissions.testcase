@@ -75,11 +75,9 @@ definition {
 	@description = "Verify that the user can clear the result bar after the user use  the search bar ."
 	@priority = "5"
 	test CanClearSearchBar {
-
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsNewSubmissions.addNewContacts(
-			ddlCompany = "Liferay");
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Liferay");
 
 		KaleoFormsAdmin.saveProcessRecord();
 
@@ -90,8 +88,6 @@ definition {
 		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Liferay");
-		
-
 	}
 
 	@description = "Verify that the user can create a new submission without filling in the fields."

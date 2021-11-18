@@ -24,30 +24,30 @@ import java.util.stream.Stream;
  */
 public class CSSClassNames {
 
-	public static Builder builder(String... cssClassNames) {
+	public static Builder builder(String... cssClasses) {
 		Builder builder = new Builder();
 
-		builder.add(cssClassNames);
+		builder.add(cssClasses);
 
 		return builder;
 	}
 
 	public static class Builder {
 
-		public Builder add(String cssClassName) {
-			return _add(cssClassName, true);
+		public Builder add(String cssClass) {
+			return _add(cssClass, true);
 		}
 
-		public Builder add(String... cssClassNames) {
-			for (String cssClassName : cssClassNames) {
-				_add(cssClassName, true);
+		public Builder add(String... cssClasses) {
+			for (String cssClass : cssClasses) {
+				_add(cssClass, true);
 			}
 
 			return this;
 		}
 
-		public Builder add(String cssClassName, boolean condition) {
-			return _add(cssClassName, condition);
+		public Builder add(String cssClass, boolean condition) {
+			return _add(cssClass, condition);
 		}
 
 		public String build() {
@@ -57,9 +57,9 @@ public class CSSClassNames {
 		private Builder() {
 		}
 
-		private Builder _add(String cssClassName, boolean condition) {
+		private Builder _add(String cssClass, boolean condition) {
 			if (condition) {
-				_streamBuilder.accept(cssClassName);
+				_streamBuilder.accept(cssClass);
 			}
 
 			return this;

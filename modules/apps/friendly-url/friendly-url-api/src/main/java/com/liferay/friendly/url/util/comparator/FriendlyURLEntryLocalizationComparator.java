@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.util.comparator;
+package com.liferay.friendly.url.util.comparator;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.portal.kernel.util.OrderByComparator;

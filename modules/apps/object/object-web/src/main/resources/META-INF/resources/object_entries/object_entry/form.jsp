@@ -91,72 +91,90 @@ portletDisplay.setURLBack(backURL);
 		}, {});
 	}
 
-	function <portlet:namespace />submitObjectEntry() {
-		const form = document.getElementById('<portlet:namespace />fm');
+	Liferay.provide(
+		window,
+		'<portlet:namespace />submitObjectEntry',
+		() => {
+			const form = document.getElementById('<portlet:namespace />fm');
 
-		const DDMFormInstance = Liferay.component('editObjectEntry');
+			const DDMFormInstance = Liferay.component('editObjectEntry');
 
-		const current = DDMFormInstance.reactComponentRef.current;
+			const current = DDMFormInstance.reactComponentRef.current;
 
-		current.validate().then((result) => {
-			if (result) {
-				const fields = current.getFields();
-				let shouldSubmitForm = true;
+			current.validate().then((result) => {
+				if (result) {
+					const fields = current.getFields();
+					let shouldSubmitForm = true;
 
-				fields.forEach((field) => {
-					if (field.type === 'text' && field.value.length > 280) {
-						shouldSubmitForm = false;
+					fields.forEach((field) => {
+						if (field.type === 'text' && field.value.length > 280) {
+							shouldSubmitForm = false;
 
-						Liferay.Util.openToast({
-							message:
-								'<liferay-ui:message key="the-maximum-length-is-280-characters-for-text-fields" />',
-							type: 'warning',
-						});
+							Liferay.Util.openToast({
+								message:
+									'<liferay-ui:message key="the-maximum-length-is-280-characters-for-text-fields" />',
+								type: 'warning',
+							});
 
-						return false;
-					}
-				});
+							return false;
+						}
+					});
 
-				if (shouldSubmitForm) {
-					const values = <portlet:namespace />getValues(fields);
-					const objectEntryId = <portlet:namespace />getObjectEntryId();
-					const path = <portlet:namespace />getPath(objectEntryId);
+					if (shouldSubmitForm) {
+						const values = <portlet:namespace />getValues(fields);
+						const objectEntryId = <portlet:namespace />getObjectEntryId();
+						const path = <portlet:namespace />getPath(objectEntryId);
 
-					Liferay.Util.fetch(path, {
-						body: JSON.stringify(values),
-						headers: new Headers({
-							'Accept': 'application/json',
-							'Content-Type': 'application/json',
-						}),
-						method: objectEntryId ? 'PUT' : 'POST',
-					})
-						.then((response) => {
-							if (response.status === 401) {
-								window.location.reload();
-							}
-							else if (response.ok) {
-								Liferay.Util.openToast({
-									message:
-										'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
-									type: 'success',
-								});
-
-								Liferay.Util.navigate('<%= backURL%>');
-							}
-							else {
-								return response.json();
-							}
+						Liferay.Util.fetch(path, {
+							body: JSON.stringify(values),
+							headers: new Headers({
+								'Accept': 'application/json',
+								'Content-Type': 'application/json',
+							}),
+							method: objectEntryId ? 'PUT' : 'POST',
 						})
-						.then((response) => {
-							if (response && response.title) {
-								Liferay.Util.openToast({
-									message: response.title,
-									type: 'danger',
-								});
-							}
-						});
+							.then((response) => {
+								if (response.status === 401) {
+									window.location.reload();
+								}
+								else if (response.ok) {
+									Liferay.Util.openToast({
+										message:
+											'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
+										type: 'success',
+									});
+
+									response.json().then((payload) => {
+										var portletURL = new Liferay.PortletURL.createURL(
+											'<%= currentURLObj %>'
+										);
+
+										portletURL.setParameter(
+											'objectEntryId',
+											payload.id
+										);
+
+										Liferay.Util.navigate(
+											portletURL.toString()
+										);
+									});
+								}
+								else {
+									return response.json();
+								}
+							})
+							.then((response) => {
+								if (response && response.title) {
+									Liferay.Util.openToast({
+										message: response.title,
+										type: 'danger',
+									});
+								}
+							});
+					}
 				}
-			}
-		});
-	}
+			});
+		},
+		['liferay-portlet-url']
+	);
 </aui:script>

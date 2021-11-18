@@ -575,7 +575,7 @@ definition {
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
 	@priority = "5"
-	test ViewExperienceSelectedInPreviewPageDraft {
+	test ViewExperienceSelectedInPreviewDraftPage {
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

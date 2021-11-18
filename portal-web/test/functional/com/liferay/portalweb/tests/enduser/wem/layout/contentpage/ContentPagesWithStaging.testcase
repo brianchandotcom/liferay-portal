@@ -1599,7 +1599,7 @@ definition {
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
 	@priority = "4"
-	test ViewExperienceSelectedInPreviewPageDraft {
+	test ViewExperienceSelectedInPreviewDraftPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name (Staging)",

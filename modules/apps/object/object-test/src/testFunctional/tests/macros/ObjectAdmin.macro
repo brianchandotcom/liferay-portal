@@ -30,9 +30,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro addObjectDoubleFieldEntryViaUI {
@@ -44,9 +42,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro addObjectFieldViaAPI {
@@ -124,9 +120,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro addObjectRelationshipViaAPI {
@@ -189,9 +183,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro addObjectViaAPI {

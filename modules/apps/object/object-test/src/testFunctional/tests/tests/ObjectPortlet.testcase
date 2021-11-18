@@ -260,6 +260,8 @@ definition {
 
 		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test Entry");
 
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 		ObjectPortlet.viewEntry(entry = "Test Entry");
 	}
 
@@ -453,6 +455,8 @@ definition {
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
 
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 		ObjectPortlet.viewEntry(entry = "Test Entry");
 	}
 
@@ -625,6 +629,8 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntryDetails(entry = "Test Entry");
 
@@ -2103,6 +2109,8 @@ definition {
 		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test Entry");
 
 		Refresh();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertDuplicatedEntryNotPresent(entry = "Test Entry");
 	}

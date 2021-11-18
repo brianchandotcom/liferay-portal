@@ -9,9 +9,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro assertDeleteEntryButtonNotPresent {
@@ -220,9 +218,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro updateEntry {
@@ -234,9 +230,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY");
+		WaitForSPARefresh();
 	}
 
 	macro viewEntry {

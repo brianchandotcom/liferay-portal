@@ -32,7 +32,7 @@ definition {
 			locator1 = "TextArea#ANY_LABELED",
 			value1 = "${displayStyleKey}");
 
-		Button.clickSave();
+		SystemSettings.saveConfiguration();
 	}
 
 	macro enableReadingTime {

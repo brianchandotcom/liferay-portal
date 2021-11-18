@@ -282,11 +282,36 @@ definition {
 	}
 
 	@description = "Verify that user can search by Column Value and view the search result."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchByColunmValue {
 
-		// TODO LRQA-70696 CanSearchByColunmValue pending implementation
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNewSubmissions.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "hr@liferay.com");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		Navigator.gotoBack();
+
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNewSubmissions.addNewContacts(
+			ddlCompany = "Gazzing",
+			ddlEmail = "people@gazzing.com");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		Search.searchCP(searchTerm = "Gazzing");
+
+		KaleoFormsAdmin.viewProcess(kfProcessName = "Gazzing");
+
+		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
+
+		Search.searchCP(searchTerm = "hr@liferay.com");
+
+		KaleoFormsAdmin.viewProcess(kfProcessName = "Liferay");
 
 	}
 

@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.felix.cm.PersistenceManager;
@@ -52,7 +54,7 @@ public class ConfigurationModelListenerTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_serviceRegistration.unregister();
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
 
 		if (_configuration != null) {
 			Object delegatee = ReflectionTestUtil.getFieldValue(
@@ -66,7 +68,7 @@ public class ConfigurationModelListenerTest {
 	public void testListenForScopedConfiguration() throws Exception {
 		String pid = RandomTestUtil.randomString(20);
 
-		_serviceRegistration = _registerConfigurationModelListener(
+		_registerConfigurationModelListener(
 			new ConfigurationModelListener() {
 
 				@Override
@@ -110,8 +112,7 @@ public class ConfigurationModelListenerTest {
 
 			};
 
-		_serviceRegistration = _registerConfigurationModelListener(
-			configurationModelListener, pid);
+		_registerConfigurationModelListener(configurationModelListener, pid);
 
 		_configuration = _getConfiguration(pid);
 
@@ -146,8 +147,7 @@ public class ConfigurationModelListenerTest {
 
 			};
 
-		_serviceRegistration = _registerConfigurationModelListener(
-			configurationModelListener, pid);
+		_registerConfigurationModelListener(configurationModelListener, pid);
 
 		_configuration = _getConfiguration(pid);
 
@@ -178,8 +178,7 @@ public class ConfigurationModelListenerTest {
 
 			};
 
-		_serviceRegistration = _registerConfigurationModelListener(
-			configurationModelListener, pid);
+		_registerConfigurationModelListener(configurationModelListener, pid);
 
 		_configuration = _getConfiguration(pid);
 
@@ -234,8 +233,7 @@ public class ConfigurationModelListenerTest {
 
 			};
 
-		_serviceRegistration = _registerConfigurationModelListener(
-			configurationModelListener, pid);
+		_registerConfigurationModelListener(configurationModelListener, pid);
 
 		testProperties.put(_TEST_KEY, newValue);
 
@@ -273,15 +271,16 @@ public class ConfigurationModelListenerTest {
 			persistenceManager -> persistenceManager.exists(pid));
 	}
 
-	private ServiceRegistration<?> _registerConfigurationModelListener(
+	private void _registerConfigurationModelListener(
 		ConfigurationModelListener configurationModelListener, String pid) {
 
-		return _bundleContext.registerService(
-			ConfigurationModelListener.class.getName(),
-			configurationModelListener,
-			HashMapDictionaryBuilder.put(
-				"model.class.name", pid
-			).build());
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				ConfigurationModelListener.class.getName(),
+				configurationModelListener,
+				HashMapDictionaryBuilder.put(
+					"model.class.name", pid
+				).build()));
 	}
 
 	private static final String _TEST_KEY = StringUtil.randomString(20);
@@ -303,6 +302,7 @@ public class ConfigurationModelListenerTest {
 	}
 
 	private Configuration _configuration;
-	private ServiceRegistration<?> _serviceRegistration;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

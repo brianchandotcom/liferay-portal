@@ -3848,7 +3848,7 @@ public class DataFactory {
 		for (LayoutModel layoutModel : layoutModels) {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _HEADING_RENDER_KEY,
+					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_HEADING,
 					_readFile(
 						_getFragmentComponentInputStream("heading", "css")),
 					_readFile(
@@ -3859,7 +3859,7 @@ public class DataFactory {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _PARAGRAPH_RENDER_KEY,
+					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "css")),
 					_readFile(
@@ -3870,7 +3870,7 @@ public class DataFactory {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _IMAGE_RENDER_KEY, "",
+					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE, "",
 					_readFile(
 						_getFragmentComponentInputStream("image", "html")),
 					_readFile("image_configuration.json"),
@@ -7079,19 +7079,25 @@ public class DataFactory {
 
 				String rendererKey = fragmentEntryLinkModel.getRendererKey();
 
-				if (rendererKey.equals(_HEADING_RENDER_KEY)) {
+				if (rendererKey.equals(
+						_FRAGMENT_COMPONENT_RENDER_KEY_HEADING)) {
+
 					data = StringUtil.replace(
 						data, "${headingFragmentEntryLinkId}",
 						String.valueOf(
 							fragmentEntryLinkModel.getFragmentEntryLinkId()));
 				}
-				else if (rendererKey.equals(_PARAGRAPH_RENDER_KEY)) {
+				else if (rendererKey.equals(
+							_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
+
 					data = StringUtil.replace(
 						data, "${paragraphFragmentEntryLinkId}",
 						String.valueOf(
 							fragmentEntryLinkModel.getFragmentEntryLinkId()));
 				}
-				else if (rendererKey.equals(_IMAGE_RENDER_KEY)) {
+				else if (rendererKey.equals(
+							_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE)) {
+
 					data = StringUtil.replace(
 						data, "${imageFragmentEntryLinkId}",
 						String.valueOf(
@@ -7244,17 +7250,19 @@ public class DataFactory {
 	private static final String _DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
 
+	private static final String _FRAGMENT_COMPONENT_RENDER_KEY_HEADING =
+		"BASIC_COMPONENT-heading";
+
+	private static final String _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE =
+		"BASIC_COMPONENT-image";
+
+	private static final String _FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH =
+		"BASIC_COMPONENT-paragraph";
+
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
 
-	private static final String _HEADING_RENDER_KEY = "BASIC_COMPONENT-heading";
-	
-	private static final String _IMAGE_RENDER_KEY = "BASIC_COMPONENT-image";
-
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
-
-	private static final String _PARAGRAPH_RENDER_KEY =
-		"BASIC_COMPONENT-paragraph";
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
 

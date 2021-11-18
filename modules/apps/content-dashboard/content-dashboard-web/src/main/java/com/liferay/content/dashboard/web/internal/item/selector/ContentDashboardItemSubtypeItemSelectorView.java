@@ -257,8 +257,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 						googleDocsDLFileEntryType.getFileEntryTypeId());
 
 					if (StringUtil.equalsIgnoreCase(
-						fileEntryTypeIdString,
-						infoItemFormVariation.getKey())) {
+							fileEntryTypeIdString,
+							infoItemFormVariation.getKey())) {
 
 						continue;
 					}

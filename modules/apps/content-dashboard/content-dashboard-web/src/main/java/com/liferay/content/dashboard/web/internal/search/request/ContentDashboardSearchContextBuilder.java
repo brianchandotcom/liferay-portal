@@ -297,6 +297,7 @@ public class ContentDashboardSearchContextBuilder {
 			if (googleDocsDLFileEntryType == null) {
 				return Optional.empty();
 			}
+
 			BooleanFilter booleanFilter = new BooleanFilter();
 
 			booleanFilter.addTerm(

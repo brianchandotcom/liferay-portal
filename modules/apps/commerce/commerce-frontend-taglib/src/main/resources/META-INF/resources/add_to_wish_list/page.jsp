@@ -29,5 +29,9 @@
 		skuId: <%= skuId %>,
 	};
 
-	AddToWishList.default('<%= addToWishListId %>', '<%= addToWishListId %>');
+	AddToWishList.default(
+		'<%= addToWishListId %>',
+		'<%= addToWishListId %>',
+		initialProps
+	);
 </aui:script>

@@ -23,6 +23,7 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 <clay:headless-data-set-display
 	apiURL="<%= viewSXPBlueprintsDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= viewSXPBlueprintsDisplayContext.getClayDataSetActionDropdownItems() %>"
+	creationMenu="<%= viewSXPBlueprintsDisplayContext.getCreationMenu() %>"
 	formName="fm"
 	id="<%= SXPBlueprintAdminClayDataSetDisplayNames.SXP_BLUEPRINTS %>"
 	itemsPerPage="<%= 20 %>"
@@ -31,3 +32,25 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 	style="fluid"
 />
+
+<div id="<portlet:namespace />addSXPBlueprint">
+	<react:component
+		module="sxp_blueprint_admin/js/view_sxp_blueprints/AddSXPBlueprintModal"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"contextPath", application.getContextPath()
+			).put(
+				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+			).put(
+				"editSXPBlueprintURL",
+				PortletURLBuilder.createRenderURL(
+					renderResponse
+				).setMVCRenderCommandName(
+					"/sxp_blueprint_admin/edit_sxp_blueprint"
+				).buildString()
+			).put(
+				"portletNamespace", liferayPortletResponse.getNamespace()
+			).build()
+		%>'
+	/>
+</div>

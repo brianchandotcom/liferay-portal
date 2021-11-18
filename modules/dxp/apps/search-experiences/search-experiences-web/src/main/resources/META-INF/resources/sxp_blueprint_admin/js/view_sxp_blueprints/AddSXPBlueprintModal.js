@@ -14,7 +14,7 @@ import ClayCard from '@clayui/card';
 import {ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
@@ -32,6 +32,8 @@ import {
 import {fetchData} from '../utils/fetch';
 import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
 import {getConfigurationEntry, getUIConfigurationValues} from '../utils/utils';
+
+const ADD_EVENT = 'addSXPBlueprint';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
 	(sxpElement) => {
@@ -99,30 +101,22 @@ const FrameworkCard = ({
 	);
 };
 
-/**
- * A slightly modified version of frontend-js-web module's SimpleInputModal
- * React component to include a description field.
- */
 const AddModal = ({
 	contextPath,
-	closeModal,
 	defaultLocale,
-	dialogTitle,
 	editSXPBlueprintURL,
-	initialVisible,
 	keywordQueryContributors = [],
 	modelPrefilterContributors = [],
+	observer,
+	onClose,
 	portletNamespace,
 	queryPrefilterContributors = [],
-	redirectURL = '',
 	searchableTypes = [],
-	submitButtonLabel = Liferay.Language.get('create'),
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
 	const [framework, setFramework] = useState(FRAMEWORK_TYPES.ALL);
 	const [loadingResponse, setLoadingResponse] = useState(false);
-	const [visible, setVisible] = useState(initialVisible);
 	const [inputValue, setInputValue] = useState('');
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 
@@ -172,11 +166,9 @@ const AddModal = ({
 						: [],
 				title_i18n: {[defaultLocale]: inputValue},
 			}),
-
 			headers: new Headers({
 				'Content-Type': 'application/json',
 			}),
-
 			method: 'POST',
 		})
 			.then((response) => {
@@ -192,9 +184,7 @@ const AddModal = ({
 						handleFormError(responseContent);
 					}
 					else {
-						setVisible(false);
-
-						closeModal();
+						onClose();
 
 						if (responseContent.id) {
 							const url = new URL(editSXPBlueprintURL);
@@ -207,7 +197,7 @@ const AddModal = ({
 							navigate(url);
 						}
 						else {
-							navigate(redirectURL);
+							navigate(window.location.href);
 						}
 					}
 				}
@@ -219,204 +209,189 @@ const AddModal = ({
 		setLoadingResponse(true);
 	};
 
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			setVisible(false);
-
-			closeModal();
-		},
-	});
-
 	return (
-		visible && (
-			<ClayModal
-				className="sxp-blueprint-edit-title-modal"
-				observer={observer}
-				size="md"
-			>
-				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
+		<ClayModal
+			className="sxp-blueprint-edit-title-modal"
+			observer={observer}
+			size="md"
+		>
+			<ClayModal.Header>
+				{Liferay.Language.get('new-search-blueprint')}
+			</ClayModal.Header>
 
-				<form id={`${portletNamespace}form`} onSubmit={_handleSubmit}>
-					<ClayModal.Body>
-						<div
-							className={getCN('form-group', {
-								'has-error': errorMessage,
-							})}
+			<form id={`${portletNamespace}form`} onSubmit={_handleSubmit}>
+				<ClayModal.Body>
+					<div
+						className={getCN('form-group', {
+							'has-error': errorMessage,
+						})}
+					>
+						<label
+							className="control-label"
+							htmlFor={`${portletNamespace}title`}
 						>
-							<label
-								className="control-label"
-								htmlFor={`${portletNamespace}title`}
-							>
-								{Liferay.Language.get('name')}
+							{Liferay.Language.get('name')}
 
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</label>
 
-							<input
-								autoFocus
-								className="form-control"
-								disabled={loadingResponse}
-								id={`${portletNamespace}title`}
-								name={`${portletNamespace}title`}
-								onChange={(event) =>
-									setInputValue(event.target.value)
-								}
-								required
-								type="text"
-								value={inputValue}
-							/>
+						<input
+							autoFocus
+							className="form-control"
+							disabled={loadingResponse}
+							id={`${portletNamespace}title`}
+							name={`${portletNamespace}title`}
+							onChange={(event) =>
+								setInputValue(event.target.value)
+							}
+							required
+							type="text"
+							value={inputValue}
+						/>
 
-							<input
-								id={`${portletNamespace}title_${defaultLocale}`}
-								name={`${portletNamespace}title_${defaultLocale}`}
-								type="hidden"
-								value={inputValue}
-							/>
+						<input
+							id={`${portletNamespace}title_${defaultLocale}`}
+							name={`${portletNamespace}title_${defaultLocale}`}
+							type="hidden"
+							value={inputValue}
+						/>
 
-							{errorMessage && (
-								<div className="form-feedback-item">
-									<ClayIcon
-										className="inline-item inline-item-before"
-										symbol="exclamation-full"
-									/>
+						{errorMessage && (
+							<div className="form-feedback-item">
+								<ClayIcon
+									className="inline-item inline-item-before"
+									symbol="exclamation-full"
+								/>
 
-									{errorMessage}
-								</div>
-							)}
-						</div>
+								{errorMessage}
+							</div>
+						)}
+					</div>
 
-						<div className="form-group">
-							<label
-								className="control-label"
-								htmlFor={`${portletNamespace}description`}
-							>
-								{Liferay.Language.get('description')}
-							</label>
+					<div className="form-group">
+						<label
+							className="control-label"
+							htmlFor={`${portletNamespace}description`}
+						>
+							{Liferay.Language.get('description')}
+						</label>
 
-							<textarea
-								className="form-control"
-								disabled={loadingResponse}
-								id={`${portletNamespace}description`}
-								name={`${portletNamespace}description`}
-								onChange={(event) =>
-									setDescriptionInputValue(event.target.value)
-								}
-								value={descriptionInputValue}
-							/>
+						<textarea
+							className="form-control"
+							disabled={loadingResponse}
+							id={`${portletNamespace}description`}
+							name={`${portletNamespace}description`}
+							onChange={(event) =>
+								setDescriptionInputValue(event.target.value)
+							}
+							value={descriptionInputValue}
+						/>
 
-							<input
-								id={`${portletNamespace}description_${defaultLocale}`}
-								name={`${portletNamespace}description_${defaultLocale}`}
-								type="hidden"
-								value={descriptionInputValue}
-							/>
-						</div>
+						<input
+							id={`${portletNamespace}description_${defaultLocale}`}
+							name={`${portletNamespace}description_${defaultLocale}`}
+							type="hidden"
+							value={descriptionInputValue}
+						/>
+					</div>
 
-						<div className="form-group">
-							<label
-								className="control-label"
-								htmlFor={`${portletNamespace}framework`}
-							>
-								{Liferay.Language.get('start-with')}
+					<div className="form-group">
+						<label
+							className="control-label"
+							htmlFor={`${portletNamespace}framework`}
+						>
+							{Liferay.Language.get('start-with')}
 
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</label>
 
-							<ClayLayout.Row>
-								<ClayLayout.Col size={6}>
-									<FrameworkCard
-										checked={
-											framework === FRAMEWORK_TYPES.ALL
-										}
-										description={Liferay.Language.get(
-											'select-all-clauses-description'
-										)}
-										imagePath={`${contextPath}/sxp_blueprint_admin/images/all-clauses.svg`}
-										onChange={() =>
-											setFramework(FRAMEWORK_TYPES.ALL)
-										}
-										title={Liferay.Language.get(
-											'all-clauses'
-										)}
-										value={FRAMEWORK_TYPES.ALL}
-									/>
-								</ClayLayout.Col>
-
-								<ClayLayout.Col size={6}>
-									<FrameworkCard
-										checked={
-											framework ===
-											FRAMEWORK_TYPES.BASELINE
-										}
-										description={Liferay.Language.get(
-											'select-baseline-clauses-description'
-										)}
-										imagePath={`${contextPath}/sxp_blueprint_admin/images/baseline-clauses.svg`}
-										onChange={() =>
-											setFramework(
-												FRAMEWORK_TYPES.BASELINE
-											)
-										}
-										title={Liferay.Language.get(
-											'baseline-clauses'
-										)}
-										value={FRAMEWORK_TYPES.BASELINE}
-									/>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
-						</div>
-					</ClayModal.Body>
-
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									disabled={loadingResponse}
-									displayType="secondary"
-									onClick={onClose}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-
-								<ClayButton
-									disabled={loadingResponse}
-									displayType="primary"
-									type="submit"
-								>
-									{loadingResponse && (
-										<span className="inline-item inline-item-before">
-											<span
-												aria-hidden="true"
-												className="loading-animation"
-											></span>
-										</span>
+						<ClayLayout.Row>
+							<ClayLayout.Col size={6}>
+								<FrameworkCard
+									checked={framework === FRAMEWORK_TYPES.ALL}
+									description={Liferay.Language.get(
+										'select-all-clauses-description'
 									)}
+									imagePath={`${contextPath}/sxp_blueprint_admin/images/all-clauses.svg`}
+									onChange={() =>
+										setFramework(FRAMEWORK_TYPES.ALL)
+									}
+									title={Liferay.Language.get('all-clauses')}
+									value={FRAMEWORK_TYPES.ALL}
+								/>
+							</ClayLayout.Col>
 
-									{submitButtonLabel}
-								</ClayButton>
-							</ClayButton.Group>
-						}
-					/>
-				</form>
-			</ClayModal>
-		)
+							<ClayLayout.Col size={6}>
+								<FrameworkCard
+									checked={
+										framework === FRAMEWORK_TYPES.BASELINE
+									}
+									description={Liferay.Language.get(
+										'select-baseline-clauses-description'
+									)}
+									imagePath={`${contextPath}/sxp_blueprint_admin/images/baseline-clauses.svg`}
+									onChange={() =>
+										setFramework(FRAMEWORK_TYPES.BASELINE)
+									}
+									title={Liferay.Language.get(
+										'baseline-clauses'
+									)}
+									value={FRAMEWORK_TYPES.BASELINE}
+								/>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+					</div>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								disabled={loadingResponse}
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								disabled={loadingResponse}
+								displayType="primary"
+								type="submit"
+							>
+								{loadingResponse && (
+									<span className="inline-item inline-item-before">
+										<span
+											aria-hidden="true"
+											className="loading-animation"
+										></span>
+									</span>
+								)}
+
+								{Liferay.Language.get('create')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</form>
+		</ClayModal>
 	);
 };
 
 export function AddSXPBlueprintModal({
-	closeModal,
 	contextPath,
 	defaultLocale,
-	dialogTitle,
 	editSXPBlueprintURL,
 	portletNamespace,
-	redirectURL,
 }) {
-	const [searchableTypes, setSearchableTypes] = useState(null);
+	const {observer, onClose} = useModal({
+		onClose: () => setVisibleModal(false),
+	});
+
 	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
 		null
 	);
@@ -428,6 +403,16 @@ export function AddSXPBlueprintModal({
 		queryPrefilterContributors,
 		setQueryPrefilterContributors,
 	] = useState(null);
+	const [searchableTypes, setSearchableTypes] = useState(null);
+	const [visibleModal, setVisibleModal] = useState(false);
+
+	useEffect(() => {
+		Liferay.on(ADD_EVENT, () => setVisibleModal(true));
+
+		return () => {
+			Liferay.detach(ADD_EVENT);
+		};
+	}, []);
 
 	useEffect(() => {
 		[
@@ -476,20 +461,22 @@ export function AddSXPBlueprintModal({
 	}
 
 	return (
-		<AddModal
-			closeModal={closeModal}
-			contextPath={contextPath}
-			defaultLocale={defaultLocale}
-			dialogTitle={dialogTitle}
-			editSXPBlueprintURL={editSXPBlueprintURL}
-			initialVisible
-			keywordQueryContributors={keywordQueryContributors}
-			modelPrefilterContributors={modelPrefilterContributors}
-			portletNamespace={portletNamespace}
-			queryPrefilterContributors={queryPrefilterContributors}
-			redirectURL={redirectURL}
-			searchableTypes={searchableTypes}
-		/>
+		<ClayModalProvider>
+			{visibleModal && (
+				<AddModal
+					contextPath={contextPath}
+					defaultLocale={defaultLocale}
+					editSXPBlueprintURL={editSXPBlueprintURL}
+					keywordQueryContributors={keywordQueryContributors}
+					modelPrefilterContributors={modelPrefilterContributors}
+					observer={observer}
+					onClose={onClose}
+					portletNamespace={portletNamespace}
+					queryPrefilterContributors={queryPrefilterContributors}
+					searchableTypes={searchableTypes}
+				/>
+			)}
+		</ClayModalProvider>
 	);
 }
 

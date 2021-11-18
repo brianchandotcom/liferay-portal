@@ -105,10 +105,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
 			contentDashboardItemSearchContainerFactory.createWithAllResults();
 
-		List<ContentDashboardItem<?>> items = searchContainer.getResults();
+		List<ContentDashboardItem<?>> contentDashboardItems = searchContainer.getResults();
 
 		try {
-			for (ContentDashboardItem<?> contentDashboardItem : items) {
+			for (ContentDashboardItem<?> contentDashboardItem : contentDashboardItems) {
 				Row row = sheet.createRow(sheet.getLastRowNum() + 1);
 
 				_createDataRow(

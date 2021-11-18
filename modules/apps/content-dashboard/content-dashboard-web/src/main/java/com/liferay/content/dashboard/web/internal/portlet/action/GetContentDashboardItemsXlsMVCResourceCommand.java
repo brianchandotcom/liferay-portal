@@ -83,31 +83,31 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Workbook workbook = new HSSFWorkbook();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Sheet sheet = workbook.createSheet("Content Dashboard Data");
-
-		Locale locale = _portal.getLocale(resourceRequest);
-
-		_createHeaderRow(locale, sheet);
-
-		ContentDashboardItemSearchContainerFactory
-			contentDashboardItemSearchContainerFactory =
-				ContentDashboardItemSearchContainerFactory.getInstance(
-					_assetCategoryLocalService, _assetVocabularyLocalService,
-					_contentDashboardItemFactoryTracker,
-					_contentDashboardSearchRequestBuilderFactory, _portal,
-					resourceRequest, resourceResponse, _searcher);
-
-		SearchContainer<ContentDashboardItem<?>> searchContainer =
-			contentDashboardItemSearchContainerFactory.createWithAllResults();
-
-		List<ContentDashboardItem<?>> contentDashboardItems = searchContainer.getResults();
-
 		try {
+			Workbook workbook = new HSSFWorkbook();
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			Sheet sheet = workbook.createSheet("Content Dashboard Data");
+
+			Locale locale = _portal.getLocale(resourceRequest);
+
+			_createHeaderRow(locale, sheet);
+
+			ContentDashboardItemSearchContainerFactory
+				contentDashboardItemSearchContainerFactory =
+					ContentDashboardItemSearchContainerFactory.getInstance(
+						_assetCategoryLocalService, _assetVocabularyLocalService,
+						_contentDashboardItemFactoryTracker,
+						_contentDashboardSearchRequestBuilderFactory, _portal,
+						resourceRequest, resourceResponse, _searcher);
+
+			SearchContainer<ContentDashboardItem<?>> searchContainer =
+				contentDashboardItemSearchContainerFactory.createWithAllResults();
+
+			List<ContentDashboardItem<?>> contentDashboardItems = searchContainer.getResults();
+
 			for (ContentDashboardItem<?> contentDashboardItem : contentDashboardItems) {
 				Row row = sheet.createRow(sheet.getLastRowNum() + 1);
 

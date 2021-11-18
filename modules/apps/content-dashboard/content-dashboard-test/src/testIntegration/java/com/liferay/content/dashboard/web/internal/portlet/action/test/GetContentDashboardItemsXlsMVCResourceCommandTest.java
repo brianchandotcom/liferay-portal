@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -127,15 +129,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			"groupId", String.valueOf(groupId));
 		mockLiferayResourceRequest.setParameter("className", className);
 
-		PortletImpl portletImpl = new PortletImpl();
+		Portlet portlet = new PortletImpl();
 
-		PortletAppImpl portletAppImpl = new PortletAppImpl("contextName");
+		PortletApp portletApp = new PortletAppImpl("contextName");
 
-		portletAppImpl.setSpecMajorVersion(1);
+		portletApp.setSpecMajorVersion(1);
 
-		portletImpl.setPortletApp(portletAppImpl);
+		portlet.setPortletApp(portletApp);
 
-		mockLiferayResourceRequest.setPortlet(portletImpl);
+		mockLiferayResourceRequest.setPortlet(portlet);
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();

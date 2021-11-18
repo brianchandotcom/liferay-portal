@@ -17,7 +17,6 @@ import {
 	DEFAULT_PARAMETER_CONFIGURATION,
 	DEFAULT_SORT_CONFIGURATION,
 } from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/data';
-import {getSXPBlueprintForm} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 
 export const ENTITY_JSON = {
 	'com.liferay.asset.kernel.model.AssetTag': {
@@ -114,10 +113,6 @@ export const QUERY_SXP_ELEMENTS = [
 	boostAllKeywordsMatch,
 	pasteAnyElasticsearchQuery,
 ];
-
-export const SELECTED_SXP_ELEMENTS = QUERY_SXP_ELEMENTS.map(
-	getSXPBlueprintForm
-);
 
 export const INITIAL_CONFIGURATION = {
 	advanced: DEFAULT_ADVANCED_CONFIGURATION,

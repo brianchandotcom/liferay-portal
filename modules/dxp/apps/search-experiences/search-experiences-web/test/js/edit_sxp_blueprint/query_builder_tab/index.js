@@ -13,9 +13,11 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import QueryBuilder from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/query_builder_tab';
-import {SELECTED_SXP_ELEMENTS} from '../../mocks/data';
+import {QUERY_SXP_ELEMENTS} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
+
+import {getUIConfigurationValues} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',
@@ -46,11 +48,15 @@ afterAll(() => {
 function renderBuilder(props) {
 	return render(
 		<QueryBuilder
+			elementInstances={QUERY_SXP_ELEMENTS.map((sxpElement, index) => ({
+				id: index,
+				sxpElement,
+				uiConfigurationValues: getUIConfigurationValues(
+					sxpElement.elementDefinition.uiConfiguration
+				),
+			}))}
 			onDeleteSXPElement={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}
-			selectedSXPElements={SELECTED_SXP_ELEMENTS.map(
-				(element, index) => ({...element, id: index})
-			)}
 			{...props}
 		/>
 	);
@@ -70,8 +76,8 @@ describe('QueryBuilder', () => {
 
 		await findByText('query-builder');
 
-		SELECTED_SXP_ELEMENTS.map((sxpElement) =>
-			getByText(sxpElement.sxpElementTemplateJSON.title_i18n['en_US'])
+		QUERY_SXP_ELEMENTS.map((sxpElement) =>
+			getByText(sxpElement.title_i18n['en_US'])
 		);
 	});
 
@@ -80,10 +86,8 @@ describe('QueryBuilder', () => {
 
 		await findByText('query-builder');
 
-		SELECTED_SXP_ELEMENTS.map((sxpElement) =>
-			getByText(
-				sxpElement.sxpElementTemplateJSON.description_i18n['en_US']
-			)
+		QUERY_SXP_ELEMENTS.map((sxpElement) =>
+			getByText(sxpElement.description_i18n['en_US'])
 		);
 	});
 

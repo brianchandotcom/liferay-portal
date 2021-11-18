@@ -11,7 +11,7 @@
 
 import {INPUT_TYPES} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/inputTypes';
 import {
-	cleanUIConfigurationJSON,
+	cleanUIConfiguration,
 	getClauseContributorsConfig,
 	getClauseContributorsState,
 	getDefaultValue,
@@ -103,10 +103,10 @@ describe('utils', () => {
 		});
 	});
 
-	describe('cleanUIConfigurationJSON', () => {
+	describe('cleanUIConfiguration', () => {
 		it('returns a valid UIConfigurationJSON', () => {
 			expect(
-				cleanUIConfigurationJSON({
+				cleanUIConfiguration({
 					fieldSets: [
 						{
 							fields: [
@@ -148,7 +148,7 @@ describe('utils', () => {
 
 		it('cleans up UIConfigurationJSON when "fields" is an empty array', () => {
 			expect(
-				cleanUIConfigurationJSON({
+				cleanUIConfiguration({
 					fieldSets: [
 						{
 							fields: [],
@@ -160,7 +160,7 @@ describe('utils', () => {
 
 		it('returns a valid UIConfigurationJSON when "fieldSets" is an invalid type', () => {
 			expect(
-				cleanUIConfigurationJSON({
+				cleanUIConfiguration({
 					fieldSets: '',
 				})
 			).toEqual({fieldSets: []});
@@ -168,7 +168,7 @@ describe('utils', () => {
 
 		it('returns a valid UIConfigurationJSON when "fields" is an invalid type', () => {
 			expect(
-				cleanUIConfigurationJSON({
+				cleanUIConfiguration({
 					fieldSets: [
 						{
 							fields: '',
@@ -180,7 +180,7 @@ describe('utils', () => {
 
 		it('removes field with missing "name" property from UIConfigurationJSON', () => {
 			expect(
-				cleanUIConfigurationJSON({
+				cleanUIConfiguration({
 					fieldSets: [
 						{
 							fields: [
@@ -216,7 +216,7 @@ describe('utils', () => {
 
 		it('removes field with non-unique "name" property from UIConfigurationJSON', () => {
 			expect(
-				cleanUIConfigurationJSON({
+				cleanUIConfiguration({
 					fieldSets: [
 						{
 							fields: [
@@ -714,24 +714,28 @@ describe('utils', () => {
 		it('gets sxpElementOutput of date', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						start_date: '${configuration.start_date}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								start_date: '${configuration.start_date}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										label: 'Create Date: From',
-										name: 'start_date',
-										type: 'date',
-										typeOptions: {
-											format: 'YYYYMMDD',
-										},
+										fields: [
+											{
+												label: 'Create Date: From',
+												name: 'start_date',
+												type: 'date',
+												typeOptions: {
+													format: 'YYYYMMDD',
+												},
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						start_date: 1609488000,
@@ -745,38 +749,48 @@ describe('utils', () => {
 		it('gets sxpElementOutput of select', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						type: '${configuration.type}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								type: '${configuration.type}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: 'best_fields',
-										label: 'Match Type',
-										name: 'type',
-										type: 'select',
-										typeOptions: {
-											options: [
-												{
-													label: 'Best Fields',
-													value: 'best_fields',
+										fields: [
+											{
+												defaultValue: 'best_fields',
+												label: 'Match Type',
+												name: 'type',
+												type: 'select',
+												typeOptions: {
+													options: [
+														{
+															label:
+																'Best Fields',
+															value:
+																'best_fields',
+														},
+														{
+															label:
+																'Most Fields',
+															value:
+																'most_fields',
+														},
+														{
+															label:
+																'Cross Fields',
+															value:
+																'cross_fields',
+														},
+													],
 												},
-												{
-													label: 'Most Fields',
-													value: 'most_fields',
-												},
-												{
-													label: 'Cross Fields',
-													value: 'cross_fields',
-												},
-											],
-										},
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						type: 'best_fields',
@@ -790,25 +804,29 @@ describe('utils', () => {
 		it('gets sxpElementOutput of itemSelector', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						role: '${configuration.role_id}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								role: '${configuration.role_id}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										label: 'Role',
-										name: 'role_id',
-										type: 'itemSelector',
-										typeOptions: {
-											itemType:
-												'com.liferay.portal.kernel.model.Role',
-										},
+										fields: [
+											{
+												label: 'Role',
+												name: 'role_id',
+												type: 'itemSelector',
+												typeOptions: {
+													itemType:
+														'com.liferay.portal.kernel.model.Role',
+												},
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						role_id: [{label: 'Administrator', value: '20107'}],
@@ -822,22 +840,26 @@ describe('utils', () => {
 		it('gets sxpElementOutput of multiselect', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						keywords: '${configuration.keywords}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								keywords: '${configuration.keywords}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: [],
-										label: 'Keywords',
-										name: 'keywords',
-										type: 'multiselect',
+										fields: [
+											{
+												defaultValue: [],
+												label: 'Keywords',
+												name: 'keywords',
+												type: 'multiselect',
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						keywords: [{label: 'test', value: 'test'}],
@@ -851,21 +873,26 @@ describe('utils', () => {
 		it('gets sxpElementOutput of number', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						asset_category_id: '${configuration.asset_category_id}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								asset_category_id:
+									'${configuration.asset_category_id}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										label: 'Asset Category ID',
-										name: 'asset_category_id',
-										type: 'number',
+										fields: [
+											{
+												label: 'Asset Category ID',
+												name: 'asset_category_id',
+												type: 'number',
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						asset_category_id: 1032490,
@@ -879,26 +906,30 @@ describe('utils', () => {
 		it('gets sxpElementOutput of number with suffix', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						time_range: '${configuration.time_range}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								time_range: '${configuration.time_range}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: 30,
-										label: 'Time range',
-										name: 'time_range',
-										type: 'number',
-										typeOptions: {
-											unit: 'days',
-											unitSuffix: 'd',
-										},
+										fields: [
+											{
+												defaultValue: 30,
+												label: 'Time range',
+												name: 'time_range',
+												type: 'number',
+												typeOptions: {
+													unit: 'days',
+													unitSuffix: 'd',
+												},
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						time_range: 30,
@@ -912,22 +943,26 @@ describe('utils', () => {
 		it('gets sxpElementOutput of slider', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						boost: '${configuration.boost}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								boost: '${configuration.boost}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: 10,
-										label: 'Boost',
-										name: 'boost',
-										type: 'slider',
+										fields: [
+											{
+												defaultValue: 10,
+												label: 'Boost',
+												name: 'boost',
+												type: 'slider',
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						boost: 20,
@@ -941,25 +976,29 @@ describe('utils', () => {
 		it('gets sxpElementOutput of field mapping', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						field: '${configuration.field}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								field: '${configuration.field}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: {
-											field: '',
-											locale: '',
-										},
-										label: 'Field',
-										name: 'field',
-										type: 'fieldMapping',
+										fields: [
+											{
+												defaultValue: {
+													field: '',
+													locale: '',
+												},
+												label: 'Field',
+												name: 'field',
+												type: 'fieldMapping',
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						field: {
@@ -977,38 +1016,43 @@ describe('utils', () => {
 		it('gets sxpElementOutput of field mapping list', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						fields: '${configuration.fields}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								fields: '${configuration.fields}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: [
+										fields: [
 											{
-												boost: 2,
-												field: 'localized_title',
-												locale:
-													'${context.language_id}',
-											},
-											{
-												boost: 1,
-												field: 'content',
-												locale:
-													'${context.language_id}',
+												defaultValue: [
+													{
+														boost: 2,
+														field:
+															'localized_title',
+														locale:
+															'${context.language_id}',
+													},
+													{
+														boost: 1,
+														field: 'content',
+														locale:
+															'${context.language_id}',
+													},
+												],
+												label: 'Field',
+												name: 'fields',
+												type: 'fieldMappingList',
+												typeOptions: {
+													boost: true,
+												},
 											},
 										],
-										label: 'Field',
-										name: 'fields',
-										type: 'fieldMappingList',
-										typeOptions: {
-											boost: true,
-										},
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						fields: [
@@ -1036,21 +1080,25 @@ describe('utils', () => {
 		it('gets sxpElementOutput of json', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						json: '${configuration.json}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								json: '${configuration.json}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: {},
-										name: 'json',
-										type: 'json',
+										fields: [
+											{
+												defaultValue: {},
+												name: 'json',
+												type: 'json',
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						json: '{"category": "custom"}',
@@ -1064,24 +1112,28 @@ describe('utils', () => {
 		it('gets sxpElementOutput of text', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						geopoint: '${configuration.geopoint}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								geopoint: '${configuration.geopoint}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue:
-											'expando__keyword__custom_fields__location_geolocation',
-										helpText: 'A geopoint field',
-										label: 'Geopoint',
-										name: 'geopoint',
-										type: 'text',
+										fields: [
+											{
+												defaultValue:
+													'expando__keyword__custom_fields__location_geolocation',
+												helpText: 'A geopoint field',
+												label: 'Geopoint',
+												name: 'geopoint',
+												type: 'text',
+											},
+										],
 									},
 								],
 							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						geopoint:
@@ -1097,42 +1149,46 @@ describe('utils', () => {
 		it('gets sxpElementOutput of configuration with multiple fields', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						boost: '${configuration.boost}',
-						field: '${configuration.field}',
-						json: '${configuration.json}',
-					},
-					uiConfigurationJSON: {
-						fieldSets: [
-							{
-								fields: [
+					sxpElement: {
+						elementDefinition: {
+							configuration: {
+								boost: '${configuration.boost}',
+								field: '${configuration.field}',
+								json: '${configuration.json}',
+							},
+							uiConfiguration: {
+								fieldSets: [
 									{
-										defaultValue: 10,
-										label: 'Boost',
-										name: 'boost',
-										type: 'slider',
+										fields: [
+											{
+												defaultValue: 10,
+												label: 'Boost',
+												name: 'boost',
+												type: 'slider',
+											},
+											{
+												defaultValue: {},
+												name: 'json',
+												type: 'json',
+											},
+										],
 									},
 									{
-										defaultValue: {},
-										name: 'json',
-										type: 'json',
+										fields: [
+											{
+												defaultValue: {
+													field: '',
+													locale: '',
+												},
+												label: 'Field',
+												name: 'field',
+												type: 'fieldMapping',
+											},
+										],
 									},
 								],
 							},
-							{
-								fields: [
-									{
-										defaultValue: {
-											field: '',
-											locale: '',
-										},
-										label: 'Field',
-										name: 'field',
-										type: 'fieldMapping',
-									},
-								],
-							},
-						],
+						},
 					},
 					uiConfigurationValues: {
 						boost: 20,
@@ -1154,25 +1210,23 @@ describe('utils', () => {
 		it('gets sxpElementOutput of custom json with no configuration', () => {
 			expect(
 				getSXPElementOutput({
-					sxpElementTemplateJSON: {
-						category: 'custom',
-						clauses: [],
-						conditions: {},
-						description: 'Editable JSON text area',
-						enabled: true,
-						icon: 'custom-field',
-						title: 'Custom JSON Element',
+					sxpElement: {
+						description_i18n: {en_US: 'Editable JSON text area'},
+						elementDefinition: {
+							category: 'custom',
+							configuration: {
+								clauses: [],
+								conditions: {},
+							},
+							enabled: true,
+							icon: 'custom-field',
+						},
+						title_i18n: {en_US: 'Custom JSON Element'},
 					},
-					uiConfigurationValues: {},
 				})
 			).toEqual({
-				category: 'custom',
 				clauses: [],
 				conditions: {},
-				description: 'Editable JSON text area',
-				enabled: true,
-				icon: 'custom-field',
-				title: 'Custom JSON Element',
 			});
 		});
 	});

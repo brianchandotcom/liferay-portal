@@ -13,7 +13,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import JSONSXPElement from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/JSONSXPElement';
-import {SELECTED_SXP_ELEMENTS} from '../mocks/data';
+import {QUERY_SXP_ELEMENTS} from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -36,9 +36,7 @@ function renderJSONSXPElement(props) {
 			onDeleteSXPElement={onDeleteSXPElement}
 			setFieldTouched={setFieldTouched}
 			setFieldValue={setFieldValue}
-			sxpElementTemplateJSON={
-				SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON
-			}
+			sxpElement={QUERY_SXP_ELEMENTS[0]}
 			{...props}
 		/>
 	);
@@ -54,19 +52,13 @@ describe('JSONSXPElement', () => {
 	it('displays the title', () => {
 		const {getByText} = renderJSONSXPElement();
 
-		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.title_i18n['en_US']
-		);
+		getByText(QUERY_SXP_ELEMENTS[0].title_i18n['en_US']);
 	});
 
 	it('displays the description', () => {
 		const {getByText} = renderJSONSXPElement();
 
-		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.description_i18n[
-				'en_US'
-			]
-		);
+		getByText(QUERY_SXP_ELEMENTS[0].description_i18n['en_US']);
 	});
 
 	it('can collapse the query elements', () => {

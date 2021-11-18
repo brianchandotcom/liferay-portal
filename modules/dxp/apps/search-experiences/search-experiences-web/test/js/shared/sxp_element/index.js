@@ -13,7 +13,8 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import SXPElement from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/sxp_element/index';
-import {INDEX_FIELDS, SELECTED_SXP_ELEMENTS} from '../../mocks/data';
+import {getUIConfigurationValues} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
+import {INDEX_FIELDS, QUERY_SXP_ELEMENTS} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -32,13 +33,10 @@ function renderSXPElement(props) {
 			collapseAll={false}
 			indexFields={INDEX_FIELDS}
 			onDeleteSXPElement={onDeleteSXPElement}
-			sxpElementTemplateJSON={
-				SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON
-			}
-			uiConfigurationJSON={SELECTED_SXP_ELEMENTS[0].uiConfigurationJSON}
-			uiConfigurationValues={
-				SELECTED_SXP_ELEMENTS[0].uiConfigurationValues
-			}
+			sxpElement={QUERY_SXP_ELEMENTS[0]}
+			uiConfigurationValues={getUIConfigurationValues(
+				QUERY_SXP_ELEMENTS[0].elementDefinition?.uiConfiguration
+			)}
 			{...props}
 		/>
 	);
@@ -56,19 +54,13 @@ describe('SXPElement', () => {
 	it('displays the title', () => {
 		const {getByText} = renderSXPElement();
 
-		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.title_i18n['en_US']
-		);
+		getByText(QUERY_SXP_ELEMENTS[0].title_i18n['en_US']);
 	});
 
 	it('displays the description', () => {
 		const {getByText} = renderSXPElement();
 
-		getByText(
-			SELECTED_SXP_ELEMENTS[0].sxpElementTemplateJSON.description_i18n[
-				'en_US'
-			]
-		);
+		getByText(QUERY_SXP_ELEMENTS[0].description_i18n['en_US']);
 	});
 
 	it('can collapse the query elements', () => {

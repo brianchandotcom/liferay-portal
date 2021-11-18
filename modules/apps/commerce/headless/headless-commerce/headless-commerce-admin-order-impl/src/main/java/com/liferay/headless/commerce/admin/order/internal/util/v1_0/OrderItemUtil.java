@@ -67,13 +67,34 @@ public class OrderItemUtil {
 			throw new CPInstanceSkuException();
 		}
 
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemService.addCommerceOrderItem(
+		CommerceOrderItem commerceOrderItem;
+
+		if (commerceOrder.isOpen()) {
+			commerceOrderItem = commerceOrderItemService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null,
 				GetterUtil.get(orderItem.getQuantity(), 0),
 				GetterUtil.get(orderItem.getShippedQuantity(), 0),
 				commerceContext, serviceContext);
+		}
+		else {
+			BigDecimal decimalQuantity = (BigDecimal)GetterUtil.get(
+				orderItem.getDecimalQuantity(), BigDecimal.ZERO);
+
+			if (decimalQuantity == BigDecimal.ZERO) {
+				decimalQuantity = BigDecimal.valueOf(
+					GetterUtil.get(orderItem.getQuantity(), 0));
+			}
+
+			commerceOrderItem =
+				commerceOrderItemService.importCommerceOrderItem(
+					commerceOrder.getCommerceOrderId(),
+					cpInstance.getCPInstanceId(),
+					GetterUtil.getString(orderItem.getUnitOfMeasure(), "pc"),
+					decimalQuantity,
+					GetterUtil.get(orderItem.getShippedQuantity(), 0),
+					serviceContext);
+		}
 
 		commerceOrderItem =
 			commerceOrderItemService.updateCommerceOrderItemInfo(

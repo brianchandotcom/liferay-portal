@@ -2941,6 +2941,27 @@ definition {
 		}
 	}
 
+	@description = "LPS-132406: Given the Page Audit Panel
+	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
+	Then they find the panel open"
+	@ignore = "true"
+	@priority = "3"
+	test CheckPageAuditOpenAfterNavigation {
+		task ("Open Content Performance panel") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			PageAudit.connectToGooglePageAudit();
+		}
+
+		task ("Logout and login") {
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("Check if panel is closed") {
+			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		}
+	}
+
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
 	When the page is blocked from indexing
 	Then the users will see a text with a link to the configuration section: Change the robots.txt setting from the Configuration section of this page"
@@ -3934,27 +3955,6 @@ definition {
 
 		task ("Check that Page Audit icon is not visible") {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-	}
-
-	@description = "LPS-132406: Given the Page Audit Panel
-	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
-	Then they find the panel open"
-	@ignore = "true"
-	@priority = "3"
-	test CheckPageAuditOpenAfterNavigation {
-		task ("Open Content Performance panel") {
-			PageAudit.openPanelBeforeConfiguration();
-
-			PageAudit.connectToGooglePageAudit();
-		}
-
-		task ("Logout and login") {
-			Click(locator1 = "Icon#BACK");
-		}
-
-		task ("Check if panel is closed") {
-			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 		}
 	}
 

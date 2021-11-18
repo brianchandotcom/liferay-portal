@@ -908,7 +908,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			if (searchActionURL != null) {
 				jspWriter.write(" action=\"");
-				jspWriter.write(searchActionURL);
+				jspWriter.write(HtmlUtil.escapeAttribute(searchActionURL));
 				jspWriter.write("\"");
 			}
 
@@ -1102,7 +1102,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			LinkTag linkTag = new LinkTag();
 
 			linkTag.setCssClass("component-link tbar-link");
-			linkTag.setHref(getClearResultsURL());
+			linkTag.setHref(HtmlUtil.escapeAttribute(getClearResultsURL()));
 			linkTag.setLabel(LanguageUtil.get(resourceBundle, "clear"));
 
 			linkTag.doTag(pageContext);

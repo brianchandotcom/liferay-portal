@@ -1,6 +1,6 @@
 [
 	{
-		"ddmStructureKey": "BLOG",
+		"ddmStructureKey": "ENTRY",
 		"title": "Blog Entries",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
@@ -41,135 +41,8 @@
 		}
 	},
 	{
-		"ddmStructureKey": "BLOG",
-		"title": "Featured Blog Entries",
-		"unicodeProperties": {
-			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
-			"classNameIds": "com.liferay.journal.model.JournalArticle",
-			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory",
-			"orderBy": [
-				{
-					"key": "orderByColumn1",
-					"value": "modifiedDate"
-				},
-				{
-					"key": "orderByColumn2",
-					"value": "title"
-				},
-				{
-					"key": "orderByType1",
-					"value": "ASC"
-				},
-				{
-					"key": "orderByType2",
-					"value": "ASC"
-				}
-			],
-			"query": [
-				{
-					"key": "queryAndOperator",
-					"value": "true"
-				},
-				{
-					"key": "queryContains",
-					"value": "true"
-				},
-				{
-					"key": "queryName",
-					"value": "assetTags"
-				},
-				{
-					"key": "queryTags",
-					"value": "[featured]"
-				}
-			]
-		}
-	},
-	{
-		"ddmStructureKey": "COURSE",
-		"title": "Courses",
-		"unicodeProperties": {
-			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
-			"classNameIds": "com.liferay.journal.model.JournalArticle",
-			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory",
-			"orderBy": [
-				{
-					"key": "orderByColumn1",
-					"value": "modifiedDate"
-				},
-				{
-					"key": "orderByColumn2",
-					"value": "title"
-				},
-				{
-					"key": "orderByType1",
-					"value": "ASC"
-				},
-				{
-					"key": "orderByType2",
-					"value": "ASC"
-				}
-			],
-			"query": [
-				{
-					"key": "queryAndOperator",
-					"value": "true"
-				},
-				{
-					"key": "queryContains",
-					"value": "true"
-				},
-				{
-					"key": "queryName",
-					"value": "assetTags"
-				}
-			]
-		}
-	},
-	{
-		"ddmStructureKey": "TEACHER",
-		"title": "Teachers",
-		"unicodeProperties": {
-			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
-			"classNameIds": "com.liferay.journal.model.JournalArticle",
-			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory",
-			"orderBy": [
-				{
-					"key": "orderByColumn1",
-					"value": "modifiedDate"
-				},
-				{
-					"key": "orderByColumn2",
-					"value": "title"
-				},
-				{
-					"key": "orderByType1",
-					"value": "ASC"
-				},
-				{
-					"key": "orderByType2",
-					"value": "ASC"
-				}
-			],
-			"query": [
-				{
-					"key": "queryAndOperator",
-					"value": "true"
-				},
-				{
-					"key": "queryContains",
-					"value": "true"
-				},
-				{
-					"key": "queryName",
-					"value": "assetTags"
-				}
-			]
-		}
-	},
-	{
-		"ddmStructureKey": "CLASSROOM",
-		"title": "Classrooms",
+		"ddmStructureKey": "MEMBER",
+		"title": "Team Members",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
 			"classNameIds": "com.liferay.journal.model.JournalArticle",

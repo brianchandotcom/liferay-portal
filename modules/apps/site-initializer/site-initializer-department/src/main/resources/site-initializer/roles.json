@@ -20,7 +20,7 @@
 				"resource": "com.liferay.portal.kernel.model.Layout"
 			}
 		],
-		"name": "Student",
+		"name": "Team Member",
 		"scope": 3,
 		"type": 2
 	},
@@ -45,7 +45,7 @@
 				"resource": "com.liferay.portal.kernel.model.Layout"
 			}
 		],
-		"name": "Teacher",
+		"name": "RH Manager",
 		"scope": 3,
 		"type": 2
 	}

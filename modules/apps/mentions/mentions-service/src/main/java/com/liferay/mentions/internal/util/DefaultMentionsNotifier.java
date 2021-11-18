@@ -113,6 +113,10 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.setLocalizedSubjectMap(
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Layout layout = themeDisplay.getLayout();
+
 		for (String mentionedUserScreenName : mentionedUsersScreenNames) {
 			User mentionedUser = _userLocalService.fetchUserByScreenName(
 				user.getCompanyId(), mentionedUserScreenName);
@@ -121,20 +125,18 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 				continue;
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(mentionedUser);
+			if ((themeDisplay != null) && (layout != null)) {
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(mentionedUser);
 
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+				if (!LayoutPermissionUtil.contains(
+						permissionChecker, layout, true, ActionKeys.VIEW) ||
+					!PortletPermissionUtil.contains(
+						permissionChecker, layout, themeDisplay.getPpid(),
+						ActionKeys.VIEW)) {
 
-			Layout layout = themeDisplay.getLayout();
-
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, true, ActionKeys.VIEW) ||
-				!PortletPermissionUtil.contains(
-					permissionChecker, layout, themeDisplay.getPpid(),
-					ActionKeys.VIEW)) {
-
-				continue;
+					continue;
+				}
 			}
 
 			subscriptionSender.addRuntimeSubscribers(

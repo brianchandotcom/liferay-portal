@@ -34,8 +34,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -219,9 +219,10 @@ public class MentionsPortlet extends MVCPortlet {
 					PermissionChecker permissionChecker =
 						PermissionCheckerFactoryUtil.create(user);
 
-					if (LayoutPermissionUtil.contains(
+					if ((layout != null) &&
+						_layoutPermission.contains(
 							permissionChecker, layout, true, ActionKeys.VIEW) &&
-						PortletPermissionUtil.contains(
+						_portletPermission.contains(
 							permissionChecker, layout, discussionPortletId,
 							ActionKeys.VIEW)) {
 
@@ -243,7 +244,13 @@ public class MentionsPortlet extends MVCPortlet {
 		MentionsPortlet.class);
 
 	@Reference
+	private LayoutPermission _layoutPermission;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 	private ServiceTrackerMap<String, MentionsStrategy> _serviceTrackerMap;
 

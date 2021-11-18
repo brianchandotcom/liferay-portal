@@ -173,6 +173,24 @@ public class DDMFormTemplateContextFactoryTest {
 	}
 
 	@Test
+	public void testShowPartialResultsToRespondents() throws Exception {
+		Map<String, Object> ddmFormTemplateContext =
+			DDMFormTemplateContext.Builder.newBuilder(
+				_ddmFormTemplateContextFactory
+			).withHttpServletRequest(
+				_httpServletRequest
+			).withLocale(
+				LocaleUtil.US
+			).withProperty(
+				"showPartialResultsToRespondents", true
+			).build();
+
+		Assert.assertTrue(
+			(boolean)ddmFormTemplateContext.get(
+				"showPartialResultsToRespondents"));
+	}
+
+	@Test
 	public void testShowRequiredFieldsWarning() throws Exception {
 		DDMFormTemplateContext.Builder builder =
 			DDMFormTemplateContext.Builder.newBuilder(

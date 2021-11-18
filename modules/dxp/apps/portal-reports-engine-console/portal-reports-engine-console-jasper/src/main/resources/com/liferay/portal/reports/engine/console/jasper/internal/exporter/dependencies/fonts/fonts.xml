@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<fontFamilies>
+	<fontFamily name="ipaexm">
+		<normal>com/liferay/portal/reports/engine/console/jasper/internal/exporter/dependencies/fonts/ipaexm/ipaexm.ttf</normal>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+	</fontFamily>
+</fontFamilies>

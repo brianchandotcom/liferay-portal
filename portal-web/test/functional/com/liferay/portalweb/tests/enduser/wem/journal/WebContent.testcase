@@ -988,7 +988,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98669. The user could select the 12th page in Link to Page field."
-	@ignore = "true"
 	@priority = "4"
 	test SelectThe12thPageInLinkToPage {
 		task ("Add 12 pages") {

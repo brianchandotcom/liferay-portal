@@ -166,6 +166,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			itemSubtypeJSONObject.getString("className"));
 		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
 		Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
+
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 	}
 

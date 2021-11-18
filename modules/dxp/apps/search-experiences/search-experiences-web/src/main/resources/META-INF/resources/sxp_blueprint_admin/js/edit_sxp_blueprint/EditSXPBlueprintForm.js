@@ -26,7 +26,7 @@ import {INPUT_TYPES} from '../utils/inputTypes';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
 import {
 	cleanUIConfiguration,
-	getSXPElementOutput,
+	getConfigurationEntry,
 	getUIConfigurationValues,
 	isDefined,
 	parseCustomSXPElement,
@@ -126,7 +126,7 @@ function EditSXPBlueprintForm({
 			}) => {
 				return {
 					...props,
-					configurationEntry: getSXPElementOutput({
+					configurationEntry: getConfigurationEntry({
 						sxpElement,
 						uiConfigurationValues,
 					}),

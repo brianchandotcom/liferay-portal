@@ -14,8 +14,8 @@ import {
 	cleanUIConfiguration,
 	getClauseContributorsConfig,
 	getClauseContributorsState,
+	getConfigurationEntry,
 	getDefaultValue,
-	getSXPElementOutput,
 	getUIConfigurationValues,
 	isDefined,
 	isEmpty,
@@ -710,10 +710,10 @@ describe('utils', () => {
 		});
 	});
 
-	describe('getSXPElementOutput', () => {
-		it('gets sxpElementOutput of date', () => {
+	describe('getConfigurationEntry', () => {
+		it('gets configurationEntry of date', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -746,9 +746,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of select', () => {
+		it('gets configurationEntry of select', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -801,9 +801,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of itemSelector', () => {
+		it('gets configurationEntry of itemSelector', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -837,9 +837,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of multiselect', () => {
+		it('gets configurationEntry of multiselect', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -870,9 +870,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of number', () => {
+		it('gets configurationEntry of number', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -903,9 +903,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of number with suffix', () => {
+		it('gets configurationEntry of number with suffix', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -940,9 +940,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of slider', () => {
+		it('gets configurationEntry of slider', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -973,9 +973,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of field mapping', () => {
+		it('gets configurationEntry of field mapping', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1013,9 +1013,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of field mapping list', () => {
+		it('gets configurationEntry of field mapping list', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1077,9 +1077,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of json', () => {
+		it('gets configurationEntry of json', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1109,9 +1109,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of text', () => {
+		it('gets configurationEntry of text', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1146,9 +1146,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of configuration with multiple fields', () => {
+		it('gets configurationEntry of configuration with multiple fields', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1207,9 +1207,9 @@ describe('utils', () => {
 			});
 		});
 
-		it('gets sxpElementOutput of custom json with no configuration', () => {
+		it('gets configurationEntry of custom json with no configuration', () => {
 			expect(
-				getSXPElementOutput({
+				getConfigurationEntry({
 					sxpElement: {
 						description_i18n: {en_US: 'Editable JSON text area'},
 						elementDefinition: {

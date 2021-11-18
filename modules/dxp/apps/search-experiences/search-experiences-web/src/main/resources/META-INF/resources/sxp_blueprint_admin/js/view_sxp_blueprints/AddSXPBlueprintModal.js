@@ -31,7 +31,7 @@ import {
 } from '../utils/data';
 import {fetchData} from '../utils/fetch';
 import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
-import {getSXPElementOutput, getUIConfigurationValues} from '../utils/utils';
+import {getConfigurationEntry, getUIConfigurationValues} from '../utils/utils';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
 	(sxpElement) => {
@@ -40,7 +40,7 @@ const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map
 		);
 
 		return {
-			configurationEntry: getSXPElementOutput({
+			configurationEntry: getConfigurationEntry({
 				sxpElement,
 				uiConfigurationValues,
 			}),

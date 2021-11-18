@@ -290,11 +290,13 @@ export function getDefaultValue(item) {
  * @param {object} _.uiConfigurationValues Values that will replace the keys in uiConfiguration
  * @return {object}
  */
-export function getSXPElementOutput({
+export function getConfigurationEntry({
 	sxpElement,
 	uiConfigurationValues,
 }) {
-	const fieldSets = cleanUIConfiguration(sxpElement.elementDefinition?.uiConfiguration).fieldSets;
+	const fieldSets = cleanUIConfiguration(
+		sxpElement.elementDefinition?.uiConfiguration
+	).fieldSets;
 
 	if (fieldSets.length > 0) {
 		let flattenJSON = JSON.stringify(

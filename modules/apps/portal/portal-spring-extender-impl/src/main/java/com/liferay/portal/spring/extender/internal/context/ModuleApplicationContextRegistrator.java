@@ -29,8 +29,6 @@ import java.beans.Introspector;
 import java.util.Dictionary;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
@@ -44,18 +42,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class ModuleApplicationContextRegistrator {
 
 	public ModuleApplicationContextRegistrator(
-			ConfigurableApplicationContextConfigurator
-				configurableApplicationContextConfigurator,
-			Bundle extendeeBundle, Bundle extenderBundle,
-			ModuleApplicationContextPreload moduleApplicationContextPreload)
-		throws Exception {
+		ConfigurableApplicationContextConfigurator
+			configurableApplicationContextConfigurator,
+		Bundle extendeeBundle, Bundle extenderBundle) {
 
 		_configurableApplicationContextConfigurator =
 			configurableApplicationContextConfigurator;
 		_extendeeBundle = extendeeBundle;
 		_extenderBundle = extenderBundle;
-
-		_moduleApplicationContextPreload = moduleApplicationContextPreload;
 	}
 
 	protected void start() throws Exception {
@@ -81,16 +75,8 @@ public class ModuleApplicationContextRegistrator {
 					if (!beanFactory.containsBean("liferayDataSource")) {
 						beanFactory.registerSingleton(
 							"liferayDataSource",
-							DataSourceUtil.getProviderDataSource(
-								extendeeClassLoader));
+							DataSourceUtil.getDataSource(extendeeClassLoader));
 					}
-
-					DataSourceUtil.setSpringDataSource(
-						extendeeClassLoader,
-						beanFactory.getBean(
-							"liferayDataSource", DataSource.class));
-
-					_moduleApplicationContextPreload.stop(_extendeeBundle);
 				});
 
 			_configurableApplicationContext.addBeanFactoryPostProcessor(
@@ -140,13 +126,6 @@ public class ModuleApplicationContextRegistrator {
 		ApplicationContextServicePublisherUtil.unregisterContext(
 			_serviceRegistrations);
 
-		BundleWiring extendeeBundleWiring = _extendeeBundle.adapt(
-			BundleWiring.class);
-
-		ClassLoader extendeeClassLoader = extendeeBundleWiring.getClassLoader();
-
-		DataSourceUtil.unsetSpringDataSource(extendeeClassLoader);
-
 		PortletBeanLocatorUtil.setBeanLocator(
 			_extendeeBundle.getSymbolicName(), null);
 
@@ -160,8 +139,6 @@ public class ModuleApplicationContextRegistrator {
 		_configurableApplicationContextConfigurator;
 	private final Bundle _extendeeBundle;
 	private final Bundle _extenderBundle;
-	private final ModuleApplicationContextPreload
-		_moduleApplicationContextPreload;
 	private List<ServiceRegistration<?>> _serviceRegistrations;
 
 }

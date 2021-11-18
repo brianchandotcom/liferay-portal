@@ -122,8 +122,7 @@ public class ModuleApplicationContextExtender
 			_component.setImplementation(
 				new ModuleApplicationContextRegistrator(
 					_configurableApplicationContextConfigurator, _bundle,
-					bundleContext.getBundle(),
-					_moduleApplicationContextPreload));
+					bundleContext.getBundle()));
 
 			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -261,9 +260,6 @@ public class ModuleApplicationContextExtender
 	@Reference
 	private ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;
-
-	@Reference
-	private ModuleApplicationContextPreload _moduleApplicationContextPreload;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

@@ -332,7 +332,6 @@ definition {
 			kfProcessName = "Kaleo Forms Process",
 			workflowDefinitionTitle = "Single Approver",
 			workflowTask = "created");
-			
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -367,7 +366,6 @@ definition {
 			workflowTask = "created");
 
 		KaleoFormsAdmin.assertPaginationBarPresent();
-
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."
@@ -386,7 +384,6 @@ definition {
 		Search.searchCP(searchTerm = "daCwZ12");
 
 		KaleoFormsAdmin.noProcessesWereFound();
-
 	}
 
 }

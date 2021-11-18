@@ -1,7 +1,7 @@
 {
-	"articleId": "BLOG-05",
-	"ddmStructureKey": "BLOG",
-	"ddmTemplateKey": "BLOG",
+	"articleId": "ENTRY-05",
+	"ddmStructureKey": "ENTRY",
+	"ddmTemplateKey": "ENTRY",
 	"folder": "Blog Entries",
 	"name": "When professionals run into problems with design"
 }

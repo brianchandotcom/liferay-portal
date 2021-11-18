@@ -1,1 +1,0 @@
-<h1>${CourseName.getData()}</h1>

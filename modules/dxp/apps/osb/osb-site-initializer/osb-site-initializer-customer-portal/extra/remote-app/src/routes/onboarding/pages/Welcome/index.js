@@ -43,7 +43,7 @@ const Welcome = ({ userAccount }) => {
 				),
 			}}
 			headerProps={{
-				greetings: 'Hello Sarah,',
+				greetings: `Hello ${userAccount.name},`,
 				title: 'Welcome to Liferay’s Customer Portal',
 			}}
 		>

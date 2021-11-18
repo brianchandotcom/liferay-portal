@@ -3,32 +3,32 @@
 		"name": "Main Navigation",
 		"pages": [
 			{
-				"friendlyURL": "/courses",
+				"friendlyURL": "/team",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/careers",
 				"privateLayout": false
 			},
 			{
 				"friendlyURL": "/blog",
 				"privateLayout": false
-			},
-			{
-				"friendlyURL": "/apply",
-				"privateLayout": false
 			}
 		]
 	},
 	{
-		"name": "Private Area Navigation",
+		"name": "Footer Navigation",
 		"pages": [
 			{
-				"friendlyURL": "/my-learning",
+				"friendlyURL": "/privacy-policy",
 				"privateLayout": false
 			},
 			{
-				"friendlyURL": "/notifications",
+				"friendlyURL": "/cookie-settings",
 				"privateLayout": false
 			},
 			{
-				"friendlyURL": "/account-settings",
+				"friendlyURL": "/github",
 				"privateLayout": false
 			}
 		]

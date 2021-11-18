@@ -1,7 +1,7 @@
 {
-	"hidden": true,
+	"hidden": false,
 	"name_i18n": {
-		"en_US": "Courses"
+		"en_US": "Cookie Settings"
 	},
 	"private": false,
 	"system": false,

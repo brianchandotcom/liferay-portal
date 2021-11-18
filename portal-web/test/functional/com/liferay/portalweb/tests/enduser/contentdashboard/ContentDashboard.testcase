@@ -1949,8 +1949,27 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test FilteringExtensionsOnTheDashboard {
+		task ("Add a text file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/doc",
+				sourceFileName = "Document_1.doc");
+		}
 
-		// TODO LPS-133354 FilteringExtensionsOnTheDashboard pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "doc",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: doc");
+		}
 
 	}
 
@@ -2206,8 +2225,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeAudio {
+		task ("Add an audio file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "audio/mp3",
+				sourceFileName = "Document_1.mp3");
+		}
 
-		// TODO LPS-133354 MimeTypeAudio pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "mp3",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: mp3");
+		}
 
 	}
 
@@ -2217,9 +2255,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeCode {
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "code/html",
+				sourceFileName = "fragment_freemarker_basic.html");
+		}
 
-		// TODO LPS-133354 MimeTypeCode pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
 
+			ContentDashboard.filterByExtension(
+				extensionName = "html",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: html");
+		}
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2228,8 +2284,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeCompressed {
+		task ("Add a compressed file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "compressed/zip",
+				sourceFileName = "fragment-collection.zip");
+		}
 
-		// TODO LPS-133354 MimeTypeCompressed pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "zip",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: zip");
+		}
 
 	}
 
@@ -2239,8 +2314,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeOthers {
+		task ("Add a vectorial file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/json",
+				sourceFileName = "checkbox_configuration.json");
+		}
 
-		// TODO LPS-133354 MimeTypeOthers pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "json",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: json");
+		}
 
 	}
 
@@ -2250,8 +2344,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypePresentation {
+		task ("Add a compressed file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/powerpoint",
+				sourceFileName = "Document_1.pptx");
+		}
 
-		// TODO LPS-133354 MimeTypePresentation pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "pptx",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: pptx");
+		}
 
 	}
 
@@ -2261,8 +2374,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeSpreadsheet {
+		task ("Add a spreadSheet file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/excel",
+				sourceFileName = "Document_1.xls");
+		}
 
-		// TODO LPS-133354 MimeTypeSpreadsheet pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "xls",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: xls");
+		}
 
 	}
 
@@ -2272,8 +2404,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeText {
+		task ("Add a text file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/docx",
+				sourceFileName = "Document_1.docx");
+		}
 
-		// TODO LPS-133354 MimeTypeText pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "docx",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: docx");
+		}
 
 	}
 
@@ -2283,8 +2434,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeVectorial {
+		task ("Add a vectorial file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/pdf",
+				sourceFileName = "Document_1.pdf");
+		}
 
-		// TODO LPS-133354 MimeTypeVectorial pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "pdf",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: pdf");
+		}
 
 	}
 
@@ -2294,8 +2464,27 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test MimeTypeVideo {
+		task ("Add a video file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "video/mp4",
+				sourceFileName = "Document_1.mp4");
+		}
 
-		// TODO LPS-133354 MimeTypeVideo pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "mp4",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: mp4");
+		}
 
 	}
 
@@ -2327,8 +2516,20 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NoMimeType {
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
 
-		// TODO LPS-133354 NoMimeType pending implementation
+			ContentDashboard.filterByExtension(
+				extensionName = "",
+				filterOption = "Extension",
+				noResultMessage = "No results were found.");
+		}
+
+		task ("Check if message of No results were found is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_BY_EXTENSION_EMPTY",
+				value1 = "No results were found.");
+		}
 
 	}
 
@@ -2697,8 +2898,51 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SelectedExtensionNumbers {
+		task ("Add a text file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "text/doc",
+				sourceFileName = "Document_1.doc");
+		}
 
-		// TODO LPS-133354 SelectedExtensionNumbers pending implementation
+		task ("Add a image file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_2",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpeg");
+		}
+
+		task ("Add an audio file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_3",
+				groupName = "Test Site Name",
+				mimeType = "audio/mp3",
+				sourceFileName = "Document_3.mp3");
+		}
+
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByExtension(
+				extensionName = "mp3",
+				filterOption = "Extension");
+
+			ContentDashboard.filterByExtension(
+				extensionName = "Image",
+				filterOption = "Extension");
+
+			ContentDashboard.filterByExtension(
+				extensionName = "Text",
+				filterOption = "Extension");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "3 Results for");
+		}
 
 	}
 
@@ -2708,9 +2952,27 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SelectedParentAndChildExtensions {
+		task ("Add a text file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/doc",
+				sourceFileName = "Document_1.doc");
+		}
 
-		// TODO LPS-133354 SelectedParentAndChildExtensions pending implementation
+		task ("Navigate to the content Dashboard and filter by file extension") {
+			ContentDashboard.goToContentDashboard();
 
+			ContentDashboard.filterByMimeParent(
+				filterOption = "Extension",
+				parentExtension = "Text (1 Item)");
+		}
+
+		task ("Check if extension is present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Extension: doc");
+		}
 	}
 
 	@description = "LPS-131886 Validade if when Web Content is updated its being corectly displayed"

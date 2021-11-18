@@ -170,6 +170,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BY_EXTENSION_EMPTY</td>
+	<td>//*[contains(@class, 'sheet-text') and contains(@class, 'text-center') and contains(text(), '${noResultMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_BY_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'${filterOption}')]</td>
 	<td></td>
@@ -177,6 +182,16 @@
 <tr>
 	<td>FILTER_CATEGORY_NAME</td>
 	<td>//*[contains(@class,'label') and contains(text(),'Category:${categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EXTENSION_ELEMENT</td>
+	<td>//*[contains(@class, 'card-body')]//*[contains(@class, 'text-truncate') and contains (text(), '${extensionName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_PARENT_EXTENSION</td>
+	<td>//*[contains(@class, 'card-body')]//*[contains(@class, 'text-truncate') and contains (text(), '${parentExtension}')]</td>
 	<td></td>
 </tr>
 <tr>

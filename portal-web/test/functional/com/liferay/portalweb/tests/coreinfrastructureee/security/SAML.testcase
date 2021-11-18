@@ -13,7 +13,9 @@ definition {
 	// All test cases are currently configured to run Liferay SAML as both the IdP and SP.
 
 	setUp {
-		User.firstLoginUI();
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 	}
 
 	@description = "This is a use case for LPS-32577. Add user inherited roles as SAML attribute statements."

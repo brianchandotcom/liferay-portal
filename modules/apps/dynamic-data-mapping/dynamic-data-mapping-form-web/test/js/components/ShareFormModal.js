@@ -149,7 +149,7 @@ describe('ShareFormModal', () => {
 		expect(spy.mock.calls[0][0]).toBe(props.autocompleteUserURL);
 	});
 
-	it('when filling the email addresses and creating a subject, sends the email with the proper payload and endpoint', async () => {
+	it.skip('when filling the email addresses and creating a subject, sends the email with the proper payload and endpoint', async () => {
 		fetch.mockResponse(JSON.stringify([]));
 
 		const CUSTOM_MESSAGE = 'my custom message';

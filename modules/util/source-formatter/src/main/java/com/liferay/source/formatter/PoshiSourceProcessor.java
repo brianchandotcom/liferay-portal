@@ -14,12 +14,17 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.poshi.core.elements.PoshiElement;
+import com.liferay.poshi.core.elements.PoshiNodeFactory;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -46,6 +51,32 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return super.format(file, fileName, absolutePath, content);
+	}
+
+	@Override
+	protected String parse(
+			File file, String fileName, String content,
+			Set<String> modifiedMessages)
+		throws Exception {
+
+		PoshiElement poshiElement =
+			(PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
+				FileUtil.getURL(file));
+
+		String newContent = poshiElement.toPoshiScript();
+
+		if (!content.equals(newContent)) {
+			modifiedMessages.add(file.toString() + " (PoshiParser)");
+
+			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+			if (sourceFormatterArgs.isShowDebugInformation()) {
+				DebugUtil.printContentModifications(
+					"PoshiParser", fileName, content, newContent);
+			}
+		}
+
+		return newContent;
 	}
 
 	private static final String[] _INCLUDES = {

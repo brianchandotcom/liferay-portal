@@ -1,5 +1,6 @@
 {
+	"defaultStyleBookEntry": true,
 	"frontendTokensValuesPath": "frontend-tokens-values.json",
-	"name": "Department Modern",
+	"name": "Department",
 	"thumbnailPath": "thumbnail.png"
 }

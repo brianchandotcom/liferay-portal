@@ -15,7 +15,10 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,6 +54,24 @@ public class SearchDisplayStyleUtil {
 		portalPreferences.setValue(portletName, key, displayStyle);
 
 		return displayStyle;
+	}
+
+	public static String getDisplayStyle(
+		PortletRequest portletRequest, String portletName,
+		String defaultValue) {
+
+		return getDisplayStyle(
+			PortalUtil.getHttpServletRequest(portletRequest), portletName,
+			defaultValue);
+	}
+
+	public static String getDisplayStyle(
+		PortletRequest portletRequest, String portletName, String key,
+		String defaultValue) {
+
+		return getDisplayStyle(
+			PortalUtil.getHttpServletRequest(portletRequest), portletName, key,
+			defaultValue);
 	}
 
 }

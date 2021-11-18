@@ -828,7 +828,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
+	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
 	@priority = "5"
 	@uitest
 	test ViewSelectedWebContentInContentPage {
@@ -872,7 +872,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
+	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
 	@priority = "4"
 	test ViewSelectedWebContentInContentPageTemplate {
 		property testray.main.component.name = "Content Page Templates";
@@ -936,7 +936,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
+	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
 	@priority = "4"
 	test ViewSelectedWebContentInDisplayPageTemplate {
 		property testray.main.component.name = "Display Pages";

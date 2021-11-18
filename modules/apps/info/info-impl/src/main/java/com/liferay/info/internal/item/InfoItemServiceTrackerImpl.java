@@ -14,6 +14,8 @@
 
 package com.liferay.info.internal.item;
 
+import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
+import com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.exception.CapabilityVerificationException;
@@ -257,6 +259,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemDetailsProvider.class, InfoItemFieldValuesProvider.class,
 			InfoItemFieldValuesUpdater.class, InfoItemFormProvider.class,
 			InfoItemFormVariationsProvider.class,
+			InfoItemFriendlyURLProvider.class, InfoItemFriendlyURLUpdater.class,
 			InfoItemLanguagesProvider.class, InfoItemObjectProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
 			InfoItemSelector.class, InfoItemWorkflowProvider.class,

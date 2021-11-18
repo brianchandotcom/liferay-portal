@@ -159,6 +159,13 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"saveDraftURL", _getActionURL("/style_book/edit_style_book_entry")
 		).put(
+			"showPrivateLayouts",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.isPrivateLayoutsEnabled();
+			}
+		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
 			"templatesPreviewEnabled",

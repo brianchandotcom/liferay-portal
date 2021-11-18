@@ -475,6 +475,20 @@ definition {
 
 		OpenGraph.viewDefaultMappedField(portlet = "Open Graph");
 
+		OpenGraph.mapEditableTextToField(
+			field = "Description",
+			mappedField = "Description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textType = "TextArea");
+
+		Button.clickSave();
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Description is Description: ${description:Description}",
+			textType = "TextArea");
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			description = "Web Content Description",
@@ -494,7 +508,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Web Content Title","og:description" content="Web Content Description"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Web Content Title","og:description" content="Description is Description: Web Content Description"''');
 	}
 
 	@description = "This ensures that the user can reset to the default OG title tag."

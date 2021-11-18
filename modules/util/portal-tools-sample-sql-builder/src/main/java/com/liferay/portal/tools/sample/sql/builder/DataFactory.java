@@ -3853,9 +3853,13 @@ public class DataFactory {
 						_getFragmentComponentInputStream("heading", "css")),
 					_readFile(
 						_getFragmentComponentInputStream("heading", "html")),
-					_readFile("fragment_component_heading_configuration.json"),
-					_readFile("fragment_component_heading_editValue.json"), 0,
-					headingRenderNamespace));
+					_readFile(
+						"fragment_component_data" +
+							"/fragment_component_heading_configuration.json"),
+					_readFile(
+						"fragment_component_data" +
+							"/fragment_component_heading_editValue.json"),
+					0, headingRenderNamespace));
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
@@ -3865,10 +3869,13 @@ public class DataFactory {
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "html")),
 					_readFile(
-						"fragment_component_paragraph_configuration.json"),
+						"fragment_component_data" +
+							"/fragment_component_paragraph_configuration.json"),
 					_replaceReleaseInfo(
 						_readFile(
-							"fragment_component_paragraph_editValue.json")),
+							"fragment_component_data" +
+								"/fragment_component_paragraph_editValue." +
+									"json")),
 					0, paragraphRenderNamespace));
 
 			fragmentEntryLinkModels.add(
@@ -3876,9 +3883,13 @@ public class DataFactory {
 					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE, "",
 					_readFile(
 						_getFragmentComponentInputStream("image", "html")),
-					_readFile("fragment_component_image_configuration.json"),
-					_readFile("fragment_component_image_editValue.json"), 0,
-					imageRenderNamespace));
+					_readFile(
+						"fragment_component_data" +
+							"/fragment_component_image_configuration.json"),
+					_readFile(
+						"fragment_component_data" +
+							"/fragment_component_image_editValue.json"),
+					0, imageRenderNamespace));
 		}
 
 		return fragmentEntryLinkModels;

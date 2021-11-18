@@ -5,7 +5,7 @@ export const get = (param) => {
 };
 
 export const SearchParams = {
-	get
+	get,
 };
 
 export const PARAMS_KEYS = {

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import BaseButton from '~/common/components/BaseButton';
 import {
 	onboardingPageGuard,
@@ -6,14 +6,14 @@ import {
 	usePageGuard,
 } from '~/common/hooks/usePageGuard';
 import Layout from '../../components/Layout';
-import { AppContext } from '../../context';
-import { actionTypes } from '../../context/reducer';
-import { steps } from '../../utils/constants';
+import {AppContext} from '../../context';
+import {actionTypes} from '../../context/reducer';
+import {steps} from '../../utils/constants';
 import WelcomeSkeleton from './Skeleton';
 
-const Welcome = ({ userAccount }) => {
-	const [{ assetsPath, project }, dispatch] = useContext(AppContext);
-	const { isLoading } = usePageGuard(
+const Welcome = ({userAccount}) => {
+	const [{assetsPath, project}, dispatch] = useContext(AppContext);
+	const {isLoading} = usePageGuard(
 		userAccount,
 		onboardingPageGuard,
 		overviewPageGuard,
@@ -57,8 +57,8 @@ const Welcome = ({ userAccount }) => {
 			/>
 
 			<p className="mb-0 px-1 text-center text-neutral-2">
-				Let&apos;s download your DXP activation keys, add any team members to
-				your projects and give you a quick tour of the space.
+				Let&apos;s download your DXP activation keys, add any team
+				members to your projects and give you a quick tour of the space.
 			</p>
 		</Layout>
 	);

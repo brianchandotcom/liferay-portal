@@ -1,12 +1,12 @@
 .customer-portal-select-user #customer-portal-user-name-application {
-	width: 94px;
 	height: 24px;
+	width: 94px;
 }
 
 .customer-portal-select-user .lexicon-icon-caret-bottom {
 	fill: var(--color-neutral-5);
-	width: 24px;
 	height: 24px;
+	width: 24px;
 }
 
 .customer-portal-select-user .mr {

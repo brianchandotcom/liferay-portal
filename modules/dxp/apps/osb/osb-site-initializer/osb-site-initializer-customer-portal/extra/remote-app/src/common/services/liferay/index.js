@@ -22,7 +22,7 @@ const getLiferaySiteName = () => {
 		}
 
 		// eslint-disable-next-line no-undef
-		const { pathname } = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 		const pathSplit = pathname.split('/').filter(Boolean);
 		siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
 	}

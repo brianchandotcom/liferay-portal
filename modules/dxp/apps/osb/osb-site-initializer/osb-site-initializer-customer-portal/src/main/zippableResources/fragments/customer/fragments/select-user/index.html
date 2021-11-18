@@ -1,12 +1,14 @@
 [#assign clayIconSVG = themeDisplay.getCDNBaseURL() +
 "/o/admin-theme/images/clay/icons.svg" /]
 
-<div class="d-flex align-items-center customer-portal-select-user">
-	<div id="customer-portal-user-icon-application-wrapper" class="mr rounded-circle skeleton">
-		<img id="customer-portal-user-icon-application" class="rounded-circle sticker-lg" />
+<div class="align-items-center customer-portal-select-user d-flex">
+	<div class="mr rounded-circle skeleton" id="customer-portal-user-icon-application-wrapper">
+		<img class="rounded-circle sticker-lg" id="customer-portal-user-icon-application" />
 	</div>
-	<div id="customer-portal-user-name-application" class="font-weight-bold mr rounded-sm skeleton text-paragraph text-truncate ">
+
+	<div class="font-weight-bold mr rounded-sm skeleton text-paragraph text-truncate" id="customer-portal-user-name-application">
 	</div>
+
 	<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
 		<use xlink:href="${clayIconSVG}#caret-bottom" />
 	</svg>

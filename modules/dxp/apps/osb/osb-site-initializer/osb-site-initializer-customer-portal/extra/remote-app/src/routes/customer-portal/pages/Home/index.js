@@ -28,9 +28,11 @@ const Home = ({userAccount}) => {
 	const getStatus = (slaCurrent, slaFuture) => {
 		if (slaCurrent) {
 			return status.active;
-		} else if (slaFuture) {
+		}
+		else if (slaFuture) {
 			return status.future;
-		} else {
+		}
+		else {
 			return status.expired;
 		}
 	};

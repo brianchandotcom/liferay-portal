@@ -9,7 +9,8 @@ const getAccountFlagByFilter = (filter) => {
 
 			if (key === 'value') {
 				value = filter[key];
-			} else {
+			}
+			else {
 				value = `'${filter[key]}'`;
 			}
 

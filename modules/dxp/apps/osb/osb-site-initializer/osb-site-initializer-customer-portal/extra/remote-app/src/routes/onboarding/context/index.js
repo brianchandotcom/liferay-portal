@@ -1,16 +1,19 @@
-import { createContext, useEffect, useReducer } from 'react';
+import {createContext, useEffect, useReducer} from 'react';
 import useGraphQL from '~/common/hooks/useGraphQL';
 import FormProvider from '~/common/providers/FormProvider';
-import { LiferayTheme } from '~/common/services/liferay';
-import { getUserAccountById } from '~/common/services/liferay/graphql/user-accounts';
-import { PARAMS_KEYS, SearchParams } from '~/common/services/liferay/search-params';
+import {LiferayTheme} from '~/common/services/liferay';
+import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
+import {
+	PARAMS_KEYS,
+	SearchParams,
+} from '~/common/services/liferay/search-params';
 import {
 	getInitialDxpAdmin,
 	getInitialInvite,
 	roles,
 	steps,
 } from '../utils/constants';
-import reducer, { actionTypes } from './reducer';
+import reducer, {actionTypes} from './reducer';
 
 const initialApp = (assetsPath) => ({
 	assetsPath,
@@ -20,7 +23,7 @@ const initialApp = (assetsPath) => ({
 	},
 	project: undefined,
 	step: steps.welcome,
-	userAccount: undefined
+	userAccount: undefined,
 });
 
 const initialForm = {
@@ -38,18 +41,20 @@ const initialForm = {
 
 const AppContext = createContext();
 
-const AppProvider = ({ assetsPath, children }) => {
+const AppProvider = ({assetsPath, children}) => {
 	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath));
-	const { data } = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
+	const {data} = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
 
 	useEffect(() => {
-		const projectExternalReferenceCode = SearchParams.get(PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE);
+		const projectExternalReferenceCode = SearchParams.get(
+			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+		);
 
 		dispatch({
 			payload: {
-				externalReferenceCode: projectExternalReferenceCode
+				externalReferenceCode: projectExternalReferenceCode,
 			},
-			type: actionTypes.UPDATE_ASSET_PATH
+			type: actionTypes.UPDATE_ASSET_PATH,
 		});
 	}, []);
 
@@ -57,7 +62,7 @@ const AppProvider = ({ assetsPath, children }) => {
 		if (data) {
 			dispatch({
 				payload: data.userAccount,
-				type: actionTypes.UPDATE_USER_ACCOUNT
+				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
 		}
 	}, [data]);
@@ -69,4 +74,4 @@ const AppProvider = ({ assetsPath, children }) => {
 	);
 };
 
-export { AppContext, AppProvider };
+export {AppContext, AppProvider};

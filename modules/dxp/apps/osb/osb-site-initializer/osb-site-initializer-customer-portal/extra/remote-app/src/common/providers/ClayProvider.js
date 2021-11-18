@@ -1,4 +1,4 @@
-import { ClayIconSpriteContext } from '@clayui/icon';
+import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 
 const getIconSpriteMap = () => {
@@ -19,7 +19,7 @@ const getIconSpriteMap = () => {
 	}
 };
 
-const ClayProvider = ({ children }) => {
+const ClayProvider = ({children}) => {
 	return (
 		<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
 			{children}

@@ -284,7 +284,6 @@ definition {
 	@description = "Verify that user can search by Column Value and view the search result."
 	@priority = "3"
 	test CanSearchByColunmValue {
-
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsNewSubmissions.addNewContacts(
@@ -312,7 +311,6 @@ definition {
 		Search.searchCP(searchTerm = "hr@liferay.com");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Liferay");
-
 	}
 
 	@description = "Verify that the user is able to track the workflow through the Kebab Menu."

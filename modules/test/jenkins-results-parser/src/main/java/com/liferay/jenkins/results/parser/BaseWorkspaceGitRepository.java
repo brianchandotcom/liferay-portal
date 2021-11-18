@@ -282,11 +282,6 @@ public abstract class BaseWorkspaceGitRepository
 
 		gitWorkingDirectory.displayLog();
 
-		if (_isPullRequest()) {
-			gitWorkingDirectory.createLocalGitBranch(
-				getUpstreamBranchName(), true, getBaseBranchSHA());
-		}
-
 		writePropertiesFiles();
 
 		_setUp = true;
@@ -564,6 +559,9 @@ public abstract class BaseWorkspaceGitRepository
 		if (!gitWorkingDirectory.localSHAExists(baseBranchSHA)) {
 			gitWorkingDirectory.fetch(_getUpstreamRemoteGitRef());
 		}
+
+		gitWorkingDirectory.createLocalGitBranch(
+			getUpstreamBranchName(), true, baseBranchSHA);
 
 		return gitWorkingDirectory.getRebasedLocalGitBranch(
 			getBranchName(), getSenderBranchName(),

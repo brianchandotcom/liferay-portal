@@ -31,9 +31,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -105,47 +104,27 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_liferayPortletRequest);
-
-		String orderByCol = ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol");
-
-		if (Validator.isNull(orderByCol)) {
-			orderByCol = portalPreferences.getValue(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col",
-				"modified-date");
-		}
-		else {
-			portalPreferences.setValue(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col",
-				orderByCol);
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
 		}
 
-		return orderByCol;
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_liferayPortletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
+			"entries-order-by-col", "modified-date");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_liferayPortletRequest);
-
-		String orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType");
-
-		if (Validator.isNull(orderByType)) {
-			orderByType = portalPreferences.getValue(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type",
-				"asc");
-		}
-		else {
-			portalPreferences.setValue(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type",
-				orderByType);
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
 		}
 
-		return orderByType;
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_liferayPortletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
+			"entries-order-by-type", "asc");
+
+		return _orderByType;
 	}
 
 	public SearchContainer<DDMStructure> getStructureSearch() throws Exception {
@@ -417,6 +396,8 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
 	private final Portal _portal;
 
 }

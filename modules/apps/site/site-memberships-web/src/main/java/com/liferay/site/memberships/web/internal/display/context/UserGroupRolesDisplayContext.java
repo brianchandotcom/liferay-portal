@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
@@ -117,23 +118,27 @@ public class UserGroupRolesDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "title");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest,
+			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+			"order-by-col-roles", "title");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest,
+			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+			"order-by-type-roles", "asc");
 
 		return _orderByType;
 	}
@@ -210,11 +215,11 @@ public class UserGroupRolesDisplayContext {
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
 		roleSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
-		roleSearch.setOrderByCol(_getOrderByCol());
+		roleSearch.setOrderByCol(getOrderByCol());
 
 		boolean orderByAsc = false;
 
-		if (Objects.equals(_getOrderByType(), "asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -287,28 +292,6 @@ public class UserGroupRolesDisplayContext {
 		_userGroupId = ParamUtil.getLong(_httpServletRequest, "userGroupId");
 
 		return _userGroupId;
-	}
-
-	private String _getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "title");
-
-		return _orderByCol;
-	}
-
-	private String _getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
-
-		return _orderByType;
 	}
 
 	private List<Role> _getSelectedRoles() {

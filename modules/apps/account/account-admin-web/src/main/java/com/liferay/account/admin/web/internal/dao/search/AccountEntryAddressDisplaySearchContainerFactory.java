@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AddressDisplay;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -54,13 +56,15 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 
 		searchContainer.setId("accountEntryAddresses");
 
-		String orderByCol = ParamUtil.getString(
-			liferayPortletRequest, "orderByCol", "name");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			"address-order-by-col", "name");
 
 		searchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			"address-order-by-type", "asc");
 
 		searchContainer.setOrderByType(orderByType);
 

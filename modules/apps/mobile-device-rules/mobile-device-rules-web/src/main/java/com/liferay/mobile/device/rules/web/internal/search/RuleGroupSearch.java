@@ -14,11 +14,12 @@
 
 package com.liferay.mobile.device.rules.web.internal.search;
 
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +59,13 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 		iteratorURL.setParameter(
 			RuleGroupDisplayTerms.NAME, displayTerms.getName());
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol", "create-date");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType", "asc");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+			"rule-group-search-order-by-col", "create-date");
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+			"rule-group-search-order-by-type", "asc");
 
 		OrderByComparator<MDRRuleGroup> orderByComparator =
 			getOrganizationOrderByComparator(orderByCol, orderByType);

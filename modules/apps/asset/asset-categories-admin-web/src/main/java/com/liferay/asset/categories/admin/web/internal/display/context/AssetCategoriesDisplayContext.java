@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -565,8 +566,9 @@ public class AssetCategoriesDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest,
+			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN, "asc");
 
 		return _orderByType;
 	}
@@ -932,8 +934,9 @@ public class AssetCategoriesDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol",
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest,
+			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 			isFlattenedNavigationAllowed() ? "path" : "create-date");
 
 		return _orderByCol;

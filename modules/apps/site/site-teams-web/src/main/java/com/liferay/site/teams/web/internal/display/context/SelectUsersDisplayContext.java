@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -98,8 +99,9 @@ public class SelectUsersDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "first-name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-order-by-col", "first-name");
 
 		return _orderByCol;
 	}
@@ -109,8 +111,9 @@ public class SelectUsersDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-order-by-type", "asc");
 
 		return _orderByType;
 	}

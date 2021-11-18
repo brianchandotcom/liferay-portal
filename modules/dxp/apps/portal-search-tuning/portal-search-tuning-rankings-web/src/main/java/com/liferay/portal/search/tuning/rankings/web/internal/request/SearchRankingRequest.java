@@ -15,9 +15,9 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.request;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -27,6 +27,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
@@ -91,12 +92,21 @@ public class SearchRankingRequest {
 		return searchRankingResponse;
 	}
 
+	private String _getOrderByCol() {
+		return SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
+			"search-ranking-order-by-col", RankingFields.QUERY_STRING_KEYWORD);
+	}
+
+	private String _getOrderByType() {
+		return SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
+			"search-ranking-order-by-type", "asc");
+	}
+
 	private Collection<Sort> _getSorts() {
-		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol",
-			RankingFields.QUERY_STRING_KEYWORD);
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		String orderByCol = _getOrderByCol();
+		String orderByType = _getOrderByType();
 
 		SortOrder sortOrder = SortOrder.ASC;
 

@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.PasswordPolicyDescriptionComparator;
 import com.liferay.portal.kernel.util.comparator.PasswordPolicyNameComparator;
 
@@ -70,33 +67,15 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 			PasswordPolicyDisplayTerms.NAME, displayTerms.getName());
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				portletRequest,
+				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
+				"password-policies-order-by-col", "name");
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
-
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
-
-				preferences.setValue(
-					PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-					"password-policies-order-by-col", orderByCol);
-				preferences.setValue(
-					PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-					"password-policies-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-					"password-policies-order-by-col", "name");
-				orderByType = preferences.getValue(
-					PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-					"password-policies-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				portletRequest,
+				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
+				"password-policies-order-by-type", "asc");
 
 			OrderByComparator<PasswordPolicy> orderByComparator =
 				getOrderByComparator(orderByCol, orderByType);

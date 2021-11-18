@@ -15,9 +15,9 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.request;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -29,6 +29,7 @@ import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
+import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
 import com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymSetDisplayContext;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetFields;
 
@@ -84,6 +85,29 @@ public class SearchSynonymSetRequest {
 		return searchRankingResponse;
 	}
 
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, SynonymsPortletKeys.SYNONYMS,
+			SynonymSetFields.SYNONYMS_KEYWORD);
+
+		return _orderByCol;
+	}
+
+	private String _getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, SynonymsPortletKeys.SYNONYMS, "asc");
+
+		return _orderByType;
+	}
+
 	private Query _getQuery() {
 		String keywords = _searchContext.getKeywords();
 
@@ -95,11 +119,8 @@ public class SearchSynonymSetRequest {
 	}
 
 	private Collection<Sort> _getSorts() {
-		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol",
-			SynonymSetFields.SYNONYMS_KEYWORD);
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		String orderByCol = _getOrderByCol();
+		String orderByType = _getOrderByType();
 
 		SortOrder sortOrder = SortOrder.ASC;
 
@@ -111,6 +132,8 @@ public class SearchSynonymSetRequest {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private String _orderByCol;
+	private String _orderByType;
 	private final Queries _queries;
 	private final SearchContainer<SynonymSetDisplayContext> _searchContainer;
 	private final SearchContext _searchContext;

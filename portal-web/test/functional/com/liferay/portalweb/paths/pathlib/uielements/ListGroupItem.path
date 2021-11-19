@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ITEM_ACTIONS_DEFAULT</td>
-	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5/../..//a[span/*[name()='svg'][contains(.,'ellipsis-v')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEM_NAME_LINK</td>
 	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5/a[normalize-space(text())='${key_itemName}']</td>
 	<td></td>

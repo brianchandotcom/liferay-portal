@@ -462,8 +462,8 @@ definition {
 
 		Search.searchCP(searchTerm = "Name");
 
-		while (IsElementPresent.pauseIsElementPresent(locator1 = "ListGroupItem#ITEM_ACTIONS_DEFAULT")) {
-			Click(locator1 = "ListGroupItem#ITEM_ACTIONS_DEFAULT");
+		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS")) {
+			Click(locator1 = "Icon#VERTICAL_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Delete");
 

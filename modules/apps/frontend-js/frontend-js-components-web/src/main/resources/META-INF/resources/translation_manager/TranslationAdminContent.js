@@ -105,9 +105,11 @@ const TranslationAdminContent = ({
 							onActiveChange={setCreationMenuActive}
 							trigger={
 								<ClayButtonWithIcon
+									className="lfr-portal-tooltip"
 									disabled={availableLocales.length === 0}
 									small
 									symbol="plus"
+									title={Liferay.Language.get('add')}
 								/>
 							}
 						>
@@ -196,6 +198,7 @@ const TranslationAdminContent = ({
 									<ClayTable.Cell>
 										{!isDefaultLocale && (
 											<ClayButtonWithIcon
+												className="lfr-portal-tooltip"
 												displayType="unstyled"
 												monospaced={false}
 												onClick={() =>
@@ -204,6 +207,9 @@ const TranslationAdminContent = ({
 													)
 												}
 												symbol="trash"
+												title={Liferay.Language.get(
+													'delete'
+												)}
 											/>
 										)}
 									</ClayTable.Cell>

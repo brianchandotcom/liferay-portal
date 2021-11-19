@@ -47,6 +47,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -281,8 +282,10 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(cpAttachmentFileEntry);
 
-		// TODO Check that the name is test_commerce_product.png
+		FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
+		Assert.assertEquals(
+			"test_commerce_product.png", fileEntry.getFileName());
 	}
 
 	private void _assertDDMStructure(Group group) {

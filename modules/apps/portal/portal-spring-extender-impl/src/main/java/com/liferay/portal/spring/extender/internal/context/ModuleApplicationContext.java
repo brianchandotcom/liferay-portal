@@ -14,16 +14,23 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.portal.spring.extender.internal.jdbc.DataSourceUtil;
+
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.sql.DataSource;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -37,17 +44,38 @@ import org.springframework.core.io.UrlResource;
 public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 
 	public ModuleApplicationContext(
-		Bundle bundle, ClassLoader classLoader, String[] configLocations) {
+		Bundle bundle, ClassLoader extendeeClassLoader,
+		ClassLoader resourceLoaderClassLoader, String[] configLocations) {
 
 		super(configLocations, false, null);
 
 		this.bundle = bundle;
 
-		setClassLoader(classLoader);
+		setClassLoader(resourceLoaderClassLoader);
+
+		super.refreshBeanFactory();
+
+		ConfigurableListableBeanFactory configurableListableBeanFactory =
+			getBeanFactory();
+
+		if (!configurableListableBeanFactory.containsBean(
+				"liferayDataSource")) {
+
+			configurableListableBeanFactory.registerSingleton(
+				"liferayDataSource",
+				DataSourceUtil.getDataSource(extendeeClassLoader));
+		}
+
+		_dataSource = configurableListableBeanFactory.getBean(
+			"liferayDataSource", DataSource.class);
 	}
 
 	public BundleContext getBundleContext() {
 		return bundle.getBundleContext();
+	}
+
+	public DataSource getDataSource() {
+		return _dataSource;
 	}
 
 	@Override
@@ -62,6 +90,13 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 		}
 
 		return resources.toArray(new Resource[0]);
+	}
+
+	@Override
+	public void refresh() throws BeansException, IllegalStateException {
+		super.refresh();
+
+		_dataSource = getBean("liferayDataSource", DataSource.class);
 	}
 
 	@Override
@@ -113,6 +148,18 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 		};
 	}
 
+	@Override
+	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
+		if (_freshBeanFactory.compareAndSet(true, false)) {
+			return getBeanFactory();
+		}
+
+		return super.obtainFreshBeanFactory();
+	}
+
 	protected final Bundle bundle;
+
+	private volatile DataSource _dataSource;
+	private final AtomicBoolean _freshBeanFactory = new AtomicBoolean(true);
 
 }

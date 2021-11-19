@@ -1,4 +1,7 @@
 dependencies {
+	testIntegrationCompile group: "com.github.ignaciotcrespo", name: "frutilla", version: "0.7.1"
+	testIntegrationCompile project(":apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-product-type-virtual-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

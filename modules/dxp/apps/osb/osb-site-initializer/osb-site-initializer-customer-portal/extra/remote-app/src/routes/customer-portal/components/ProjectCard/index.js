@@ -25,7 +25,7 @@ const ProjectCard = ({ code, isSmall, onClick, region, sla, status, title }) => 
 				'flex-column': !isSmall,
 				'flex-row': isSmall
 			})}>
-				<ClayCard.Description className="text-neutral-3" displayType="title" tag={isSmall ? "h4" : "h3"}>
+				<ClayCard.Description className="text-neutral-3" displayType="title" tag={isSmall ? "h4" : "h3"} title={title}>
 					{title}
 					{isSmall && <div className="font-weight-lighter subtitle text-neutral-5 text-paragraph text-uppercase">
 						{code}
@@ -46,7 +46,7 @@ const ProjectCard = ({ code, isSmall, onClick, region, sla, status, title }) => 
 							</span>
 						</div>
 
-						{isSmall && <div className="text-neutral-5 text-paragraph-sm" >
+						{isSmall && <div className="text-align-end text-neutral-5 text-paragraph-sm" >
 							Support Region <span className="font-weight-bold">{region}</span>
 						</div>}
 					</ClayCard.Description>

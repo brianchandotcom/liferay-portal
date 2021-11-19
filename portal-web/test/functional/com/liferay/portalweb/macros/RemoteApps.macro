@@ -17,7 +17,7 @@ definition {
 			entryName = "${entryName}",
 			entryURL = "${entryURL}");
 
-		PortletEntry.save();
+		PortletEntry.publish();
 	}
 
 	macro addCustomElement {
@@ -32,7 +32,7 @@ definition {
 			entryName = "${entryName}",
 			entryURL = "${entryURL}");
 
-		PortletEntry.save();
+		PortletEntry.publish();
 	}
 
 	macro deleteRemoteApp {
@@ -54,6 +54,8 @@ definition {
 	}
 
 	macro getRemoteAppEntryName {
+		WaitForSPARefresh();
+		
 		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name')]@value");
 
 		return "${remoteAppEntryValue}";

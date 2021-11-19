@@ -81,7 +81,6 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 
 		<liferay-ui:search-iterator
 			markupView="lexicon"
-			paginate="<%= false %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

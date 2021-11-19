@@ -84,6 +84,9 @@ public class CPMeasurementUnitsDisplayContext {
 		String viewDimensionProductMeasurementUnitsURL = getNavigationItemURL(
 			"view-all-dimension-product-measurement-units",
 			CPMeasurementUnitConstants.TYPE_DIMENSION);
+		String viewUnitProductMeasurementUnitsURL = getNavigationItemURL(
+			"view-all-piece-product-measurement-units",
+			CPMeasurementUnitConstants.TYPE_UNIT);
 		String viewWeightProductMeasurementUnitsURL = getNavigationItemURL(
 			"view-all-weight-product-measurement-units",
 			CPMeasurementUnitConstants.TYPE_WEIGHT);
@@ -102,6 +105,11 @@ public class CPMeasurementUnitsDisplayContext {
 				viewDimensionProductMeasurementUnitsURL,
 				LanguageUtil.get(resourceBundle, "dimensions"));
 
+		NavigationItem unitCPMeasurementUnitsNavigationItem = getNavigationItem(
+			toolbarItem.equals("view-all-piece-product-measurement-units"),
+			viewUnitProductMeasurementUnitsURL,
+			LanguageUtil.get(resourceBundle, "unit"));
+
 		NavigationItem weightCPMeasurementUnitsNavigationItem =
 			getNavigationItem(
 				toolbarItem.equals("view-all-weight-product-measurement-units"),
@@ -109,6 +117,7 @@ public class CPMeasurementUnitsDisplayContext {
 				LanguageUtil.get(resourceBundle, "weight"));
 
 		navigationItems.add(dimensionCPMeasurementUnitsNavigationItem);
+		navigationItems.add(unitCPMeasurementUnitsNavigationItem);
 		navigationItems.add(weightCPMeasurementUnitsNavigationItem);
 
 		return navigationItems;

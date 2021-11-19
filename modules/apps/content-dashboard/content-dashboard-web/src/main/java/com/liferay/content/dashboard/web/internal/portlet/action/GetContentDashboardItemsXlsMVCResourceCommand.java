@@ -211,7 +211,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 				if (jsonObject != null) {
 					workbookBuilder.cell(
-						jsonObject.getString("displayDate")
+						jsonObject.getString("displayDate"), 4
 					).cell(
 						jsonObject.getString("creationDate")
 					).cell(
@@ -279,6 +279,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			return this;
 		}
 
+		public WorkbookBuilder cell(String value, int cellIndexIncrement) {
+			_cellIndex += cellIndexIncrement;
+			Cell cell = _row.createCell(_cellIndex++);
+
+			cell.setCellValue(value);
+
+			return this;
+		}
+
 		public WorkbookBuilder cell(Supplier<String> supplier) {
 			return cell(supplier.get());
 		}
@@ -289,7 +298,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 		public WorkbookBuilder row() {
 			_row = _sheet.createRow(_rowIndex++);
-
+			_cellIndex = 0;
 			return this;
 		}
 

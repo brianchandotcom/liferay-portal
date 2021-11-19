@@ -67,21 +67,19 @@ public class AccountOrganizationSearchContainerFactory {
 
 		searchContainer.setId("accountOrganizations");
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"organization-order-by-col", "name");
+		searchContainer.setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"organization-order-by-col", "name"));
 
-		if (orderByCol.equals("id")) {
-			orderByCol = "organizationId";
+		if (Objects.equals(searchContainer.getOrderByCol(), "id")) {
+			searchContainer.setOrderByCol("organizationId");
 		}
 
-		searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"organization-order-by-type", "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"organization-order-by-type", "asc"));
 
 		if (AccountEntryPermission.contains(
 				PermissionCheckerFactoryUtil.create(
@@ -99,7 +97,7 @@ public class AccountOrganizationSearchContainerFactory {
 			_accountOrganizationRetriever.searchAccountOrganizations(
 				accountEntryId, keywords, searchContainer.getStart(),
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
-				Objects.equals(orderByType, "desc"));
+				Objects.equals(searchContainer.getOrderByCol(), "desc"));
 
 		searchContainer.setResults(baseModelSearchResult.getBaseModels());
 		searchContainer.setTotal(baseModelSearchResult.getLength());

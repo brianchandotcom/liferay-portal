@@ -123,11 +123,9 @@ public class BlogImagesDisplayContext {
 				new long[] {attachmentsFolder.getFolderId()});
 			searchContext.setStart(searchContainer.getStart());
 
-			String orderByCol = getOrderByCol();
-			String orderByType = getOrderByType();
-
 			Sort sort = new Sort(
-				orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
+				getOrderByCol(),
+				!StringUtil.equalsIgnoreCase(getOrderByType(), "asc"));
 
 			searchContext.setSorts(sort);
 

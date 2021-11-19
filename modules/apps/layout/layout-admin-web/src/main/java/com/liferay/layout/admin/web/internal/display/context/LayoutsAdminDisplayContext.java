@@ -607,11 +607,9 @@ public class LayoutsAdminDisplayContext {
 
 		layoutsSearchContainer.setOrderByCol(_getOrderByCol());
 
-		String orderByType = _getOrderByType();
-
 		boolean orderByAsc = false;
 
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(_getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 

@@ -67,18 +67,16 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 			DefinitionDisplayTerms.SOURCE_ID,
 			String.valueOf(definitionDisplayTerms.getSourceId()));
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-			"create-date");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-			"asc");
-
-		setOrderByCol(orderByCol);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+				"create-date"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+				"asc"));
 		setOrderByComparator(
-			getDefinitionOrderByComparator(orderByCol, orderByType));
-		setOrderByType(orderByType);
+			getDefinitionOrderByComparator(getOrderByCol(), getOrderByType()));
 	}
 
 	protected OrderByComparator<Definition> getDefinitionOrderByComparator(

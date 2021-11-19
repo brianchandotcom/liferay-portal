@@ -53,34 +53,33 @@ public class OAuthApplicationSearch extends SearchContainer<OAuthApplication> {
 			String.valueOf(displayTerms.getOAuthApplicationId()));
 
 		try {
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, OAuthPortletKeys.OAUTH_ADMIN,
-				"oauth-applications-order-by-col", "id");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, OAuthPortletKeys.OAUTH_ADMIN,
-				"oauth-applications-order-by-type", "desc");
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest, OAuthPortletKeys.OAUTH_ADMIN,
+					"oauth-applications-order-by-col", "id"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest, OAuthPortletKeys.OAUTH_ADMIN,
+					"oauth-applications-order-by-type", "desc"));
 
 			OrderByComparator<OAuthApplication> orderByComparator = null;
 
 			boolean ascending = false;
 
-			if (orderByType.equals("asc")) {
+			if (getOrderByType().equals("asc")) {
 				ascending = true;
 			}
 
-			if (orderByCol.equals("id")) {
+			if (getOrderByCol().equals("id")) {
 				orderByComparator = OrderByComparatorFactoryUtil.create(
 					OAuthApplicationModelImpl.TABLE_NAME, "oAuthApplicationId",
 					ascending);
 			}
-			else if (orderByCol.equals("name")) {
+			else if (getOrderByCol().equals("name")) {
 				orderByComparator = OrderByComparatorFactoryUtil.create(
 					OAuthApplicationModelImpl.TABLE_NAME, "name", ascending);
 			}
 
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {

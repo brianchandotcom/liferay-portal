@@ -209,18 +209,11 @@ public class ViewMembershipRequestsDisplayContext {
 
 		siteMembershipSearch.setOrderByCol(getOrderByCol());
 
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
 		siteMembershipSearch.setOrderByComparator(
-			new MembershipRequestCreateDateComparator(orderByAsc));
+			new MembershipRequestCreateDateComparator(
+				Objects.equals(getOrderByType(), "asc")));
 
-		siteMembershipSearch.setOrderByType(orderByType);
+		siteMembershipSearch.setOrderByType(getOrderByType());
 
 		int membershipRequestCount =
 			MembershipRequestLocalServiceUtil.searchCount(

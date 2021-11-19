@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -93,12 +92,10 @@ public class MasterLayoutDisplayContext {
 
 		masterLayoutsSearchContainer.setOrderByCol(getOrderByCol());
 
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+		masterLayoutsSearchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		masterLayoutsSearchContainer.setOrderByComparator(orderByComparator);
+					getOrderByCol(), getOrderByType()));
 
 		masterLayoutsSearchContainer.setOrderByType(getOrderByType());
 
@@ -111,7 +108,8 @@ public class MasterLayoutDisplayContext {
 					_themeDisplay.getScopeGroupId(), getKeywords(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 					masterLayoutsSearchContainer.getStart(),
-					masterLayoutsSearchContainer.getEnd(), orderByComparator);
+					masterLayoutsSearchContainer.getEnd(),
+					masterLayoutsSearchContainer.getOrderByComparator());
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
@@ -132,7 +130,8 @@ public class MasterLayoutDisplayContext {
 					_themeDisplay.getScopeGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 					masterLayoutsSearchContainer.getStart(),
-					masterLayoutsSearchContainer.getEnd(), orderByComparator));
+					masterLayoutsSearchContainer.getEnd(),
+					masterLayoutsSearchContainer.getOrderByComparator()));
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.

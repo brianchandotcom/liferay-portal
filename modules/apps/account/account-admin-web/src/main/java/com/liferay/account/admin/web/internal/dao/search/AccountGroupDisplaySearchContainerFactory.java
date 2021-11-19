@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Albert Lee
@@ -51,11 +52,10 @@ public class AccountGroupDisplaySearchContainerFactory {
 
 		accountGroupDisplaySearchContainer.setId("accountGroups");
 
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
-			"account-group-order-by-type", "asc");
-
-		accountGroupDisplaySearchContainer.setOrderByType(orderByType);
+		accountGroupDisplaySearchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
+				"account-group-order-by-type", "asc"));
 
 		accountGroupDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
@@ -73,7 +73,10 @@ public class AccountGroupDisplaySearchContainerFactory {
 				accountGroupDisplaySearchContainer.getStart(),
 				accountGroupDisplaySearchContainer.getEnd(),
 				OrderByComparatorFactoryUtil.create(
-					"AccountGroup", "name", orderByType.equals("asc")));
+					"AccountGroup", "name",
+					Objects.equals(
+						accountGroupDisplaySearchContainer.getOrderByType(),
+						"asc")));
 
 		List<AccountGroupDisplay> accountGroupDisplays =
 			TransformUtil.transform(

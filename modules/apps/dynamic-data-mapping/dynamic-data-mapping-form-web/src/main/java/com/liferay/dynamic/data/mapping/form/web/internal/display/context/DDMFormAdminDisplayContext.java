@@ -1055,15 +1055,11 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstanceSearch ddmFormInstanceSearch = new DDMFormInstanceSearch(
 			renderRequest, portletURL);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMFormInstance> orderByComparator =
-			getDDMFormInstanceOrderByComparator(orderByCol, orderByType);
-
-		ddmFormInstanceSearch.setOrderByCol(orderByCol);
-		ddmFormInstanceSearch.setOrderByComparator(orderByComparator);
-		ddmFormInstanceSearch.setOrderByType(orderByType);
+		ddmFormInstanceSearch.setOrderByCol(getOrderByCol());
+		ddmFormInstanceSearch.setOrderByComparator(
+			getDDMFormInstanceOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		ddmFormInstanceSearch.setOrderByType(getOrderByType());
 
 		if (ddmFormInstanceSearch.isSearch()) {
 			ddmFormInstanceSearch.setEmptyResultsMessage("no-forms-were-found");

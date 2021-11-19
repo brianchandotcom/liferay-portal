@@ -36,17 +36,15 @@ public class RedirectNotFoundEntrySearch
 
 		super(portletRequest, iteratorURL, null, _EMPTY_RESULTS_MESSAGE);
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, RedirectPortletKeys.REDIRECT,
-			"redirect-not-found-entries-order-by-col", "requests");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, RedirectPortletKeys.REDIRECT,
-			"redirect-not-found-entries-order-by-type", "asc");
-
 		setId(searchContainerId);
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, RedirectPortletKeys.REDIRECT,
+				"redirect-not-found-entries-order-by-col", "requests"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, RedirectPortletKeys.REDIRECT,
+				"redirect-not-found-entries-order-by-type", "asc"));
 		setRowChecker(new EmptyOnClickRowChecker(portletResponse));
 	}
 

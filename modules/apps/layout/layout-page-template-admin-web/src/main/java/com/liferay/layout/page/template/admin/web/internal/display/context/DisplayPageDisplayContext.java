@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,12 +70,10 @@ public class DisplayPageDisplayContext {
 
 		displayPagesSearchContainer.setOrderByCol(getOrderByCol());
 
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+		displayPagesSearchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		displayPagesSearchContainer.setOrderByComparator(orderByComparator);
+					getOrderByCol(), getOrderByType()));
 
 		displayPagesSearchContainer.setOrderByType(getOrderByType());
 
@@ -89,7 +86,8 @@ public class DisplayPageDisplayContext {
 					_themeDisplay.getScopeGroupId(), getKeywords(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 					displayPagesSearchContainer.getStart(),
-					displayPagesSearchContainer.getEnd(), orderByComparator);
+					displayPagesSearchContainer.getEnd(),
+					displayPagesSearchContainer.getOrderByComparator());
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
@@ -103,7 +101,8 @@ public class DisplayPageDisplayContext {
 					_themeDisplay.getScopeGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 					displayPagesSearchContainer.getStart(),
-					displayPagesSearchContainer.getEnd(), orderByComparator);
+					displayPagesSearchContainer.getEnd(),
+					displayPagesSearchContainer.getOrderByComparator());
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.

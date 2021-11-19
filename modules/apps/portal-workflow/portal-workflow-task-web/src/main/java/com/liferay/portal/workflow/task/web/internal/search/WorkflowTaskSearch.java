@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.workflow.task.web.internal.util.WorkflowTaskPortletUtil;
@@ -65,20 +64,17 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 			new DisplayTerms(portletRequest), curParam, DEFAULT_DELTA,
 			iteratorURL, headerNames, null);
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, PortletKeys.MY_WORKFLOW_TASK, "last-activity-date");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, PortletKeys.MY_WORKFLOW_TASK, "asc");
-
-		OrderByComparator<WorkflowTask> orderByComparator =
-			WorkflowTaskPortletUtil.getWorkflowTaskOrderByComparator(
-				orderByCol, orderByType);
-
 		setOrderableHeaders(orderableHeaders);
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, PortletKeys.MY_WORKFLOW_TASK,
+				"last-activity-date"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, PortletKeys.MY_WORKFLOW_TASK, "asc"));
+		setOrderByComparator(
+			WorkflowTaskPortletUtil.getWorkflowTaskOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 	}
 
 }

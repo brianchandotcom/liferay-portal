@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Pei-Jung Lan
@@ -58,11 +59,10 @@ public class AccountRoleDisplaySearchContainerFactory {
 		searchContainer.setId("accountRoles");
 		searchContainer.setOrderByCol("name");
 
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"account-role-order-by-type", "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"account-role-order-by-type", "asc"));
 
 		searchContainer.setRowChecker(
 			new AccountRoleRowChecker(liferayPortletResponse));
@@ -84,7 +84,8 @@ public class AccountRoleDisplaySearchContainerFactory {
 					}
 				).build(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				new RoleNameComparator(orderByType.equals("asc")));
+				new RoleNameComparator(
+					Objects.equals(searchContainer.getOrderByType(), "asc")));
 
 		List<AccountRoleDisplay> accountRoleDisplays = TransformUtil.transform(
 			baseModelSearchResult.getBaseModels(),

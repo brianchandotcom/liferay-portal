@@ -82,17 +82,15 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 		}
 
 		try {
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, CommercePortletKeys.COMMERCE_ORDER,
-				"commerce-orders-order-by-col", "create-date");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, CommercePortletKeys.COMMERCE_ORDER,
-				"commerce-orders-order-by-type", "desc");
-
 			setOrderableHeaders(_orderableHeaders);
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest, CommercePortletKeys.COMMERCE_ORDER,
+					"commerce-orders-order-by-col", "create-date"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest, CommercePortletKeys.COMMERCE_ORDER,
+					"commerce-orders-order-by-type", "desc"));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize commerce order search", exception);

@@ -67,23 +67,19 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 			PasswordPolicyDisplayTerms.NAME, displayTerms.getName());
 
 		try {
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest,
-				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				"password-policies-order-by-col", "name");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest,
-				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				"password-policies-order-by-type", "asc");
-
-			OrderByComparator<PasswordPolicy> orderByComparator =
-				getOrderByComparator(orderByCol, orderByType);
-
 			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest,
+					PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
+					"password-policies-order-by-col", "name"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest,
+					PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
+					"password-policies-order-by-type", "asc"));
+			setOrderByComparator(
+				getOrderByComparator(getOrderByCol(), getOrderByType()));
 		}
 		catch (Exception exception) {
 			_log.error(

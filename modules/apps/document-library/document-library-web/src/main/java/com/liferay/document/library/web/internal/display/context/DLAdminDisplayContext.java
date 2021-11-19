@@ -489,9 +489,6 @@ public class DLAdminDisplayContext {
 			ListUtil.fromArray(
 				_dlPortletInstanceSettingsHelper.getEntryColumns()));
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
 		boolean orderByModel = false;
 
 		if (navigation.equals("home")) {
@@ -500,15 +497,15 @@ public class DLAdminDisplayContext {
 
 		OrderByComparator<RepositoryEntry> orderByComparator =
 			DLUtil.getRepositoryModelOrderByComparator(
-				orderByCol, orderByType, orderByModel);
+				getOrderByCol(), getOrderByType(), orderByModel);
 
 		if (navigation.equals("recent")) {
 			orderByComparator = new RepositoryModelModifiedDateComparator();
 		}
 
-		dlSearchContainer.setOrderByCol(orderByCol);
+		dlSearchContainer.setOrderByCol(getOrderByCol());
 		dlSearchContainer.setOrderByComparator(orderByComparator);
-		dlSearchContainer.setOrderByType(orderByType);
+		dlSearchContainer.setOrderByType(getOrderByType());
 
 		List<RepositoryEntry> results = new ArrayList<>();
 		int total = 0;
@@ -537,23 +534,23 @@ public class DLAdminDisplayContext {
 			}
 
 			int type = Sort.STRING_TYPE;
-			String fieldName = orderByCol;
+			String fieldName = getOrderByCol();
 
-			if (orderByCol.equals("creationDate")) {
+			if (fieldName.equals("creationDate")) {
 				fieldName = Field.CREATE_DATE;
 				type = Sort.LONG_TYPE;
 			}
-			else if (orderByCol.equals("modifiedDate")) {
+			else if (fieldName.equals("modifiedDate")) {
 				fieldName = Field.MODIFIED_DATE;
 				type = Sort.LONG_TYPE;
 			}
-			else if (orderByCol.equals("size")) {
+			else if (fieldName.equals("size")) {
 				type = Sort.LONG_TYPE;
 			}
 
 			Sort sort = new Sort(
 				fieldName, type,
-				!StringUtil.equalsIgnoreCase(orderByType, "asc"));
+				!StringUtil.equalsIgnoreCase(getOrderByType(), "asc"));
 
 			searchContext.setSorts(sort);
 
@@ -667,7 +664,7 @@ public class DLAdminDisplayContext {
 
 				OrderByComparator<FileEntry> fileEntryOrderByComparator =
 					DLUtil.getRepositoryModelOrderByComparator(
-						orderByCol, orderByType, orderByModel);
+						getOrderByCol(), getOrderByType(), orderByModel);
 
 				results.addAll(
 					DLAppServiceUtil.getGroupFileEntries(

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -317,13 +316,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 		WorkflowDefinitionLinkSearchTerms searchTerms =
 			(WorkflowDefinitionLinkSearchTerms)searchContainer.getSearchTerms();
 
-		OrderByComparator<WorkflowDefinitionLinkSearchEntry> orderByComparator =
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(
 			WorkflowDefinitionLinkPortletUtil.
 				getWorkflowDefinitionLinkOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+					getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
 		List<WorkflowDefinitionLinkSearchEntry>

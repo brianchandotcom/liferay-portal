@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -141,16 +140,11 @@ public class JournalSelectDDMTemplateDisplayContext {
 			templateSearch.setEmptyResultsMessage("no-templates-were-found");
 		}
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMTemplate> orderByComparator =
+		templateSearch.setOrderByCol(getOrderByCol());
+		templateSearch.setOrderByComparator(
 			DDMUtil.getTemplateOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		templateSearch.setOrderByCol(orderByCol);
-		templateSearch.setOrderByComparator(orderByComparator);
-		templateSearch.setOrderByType(orderByType);
+				getOrderByCol(), getOrderByType()));
+		templateSearch.setOrderByType(getOrderByType());
 
 		long[] groupIds =
 			SiteConnectedGroupGroupProviderUtil.

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -121,12 +120,10 @@ public class AssetListDisplayContext {
 		assetListEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		OrderByComparator<AssetListEntry> orderByComparator =
-			AssetListPortletUtil.getAssetListEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		assetListEntriesSearchContainer.setOrderByCol(getOrderByCol());
-		assetListEntriesSearchContainer.setOrderByComparator(orderByComparator);
+		assetListEntriesSearchContainer.setOrderByComparator(
+			AssetListPortletUtil.getAssetListEntryOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		assetListEntriesSearchContainer.setOrderByType(getOrderByType());
 
 		List<AssetListEntry> assetListEntries = null;
@@ -137,7 +134,8 @@ public class AssetListDisplayContext {
 			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
 				_themeDisplay.getScopeGroupId(), _getKeywords(),
 				assetListEntriesSearchContainer.getStart(),
-				assetListEntriesSearchContainer.getEnd(), orderByComparator);
+				assetListEntriesSearchContainer.getEnd(),
+				assetListEntriesSearchContainer.getOrderByComparator());
 
 			assetListEntriesCount =
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
@@ -147,7 +145,8 @@ public class AssetListDisplayContext {
 			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
 				_themeDisplay.getScopeGroupId(),
 				assetListEntriesSearchContainer.getStart(),
-				assetListEntriesSearchContainer.getEnd(), orderByComparator);
+				assetListEntriesSearchContainer.getEnd(),
+				assetListEntriesSearchContainer.getOrderByComparator());
 
 			assetListEntriesCount = getAssetListEntriesCount();
 		}

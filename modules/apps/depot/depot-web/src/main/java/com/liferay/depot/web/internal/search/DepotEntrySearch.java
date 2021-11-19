@@ -46,16 +46,16 @@ public class DepotEntrySearch extends SearchContainer<DepotEntry> {
 		String portletId = PortletProviderUtil.getPortletId(
 			User.class.getName(), PortletProvider.Action.VIEW);
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, portletId, "depot-entries-order-by-col", "name");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, portletId, "depot-entries-order-by-type", "asc");
-
 		setId(searchContainerId);
 		setOrderableHeaders(_orderableHeaders);
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, portletId, "depot-entries-order-by-col",
+				"name"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, portletId, "depot-entries-order-by-type",
+				"asc"));
 		setRowChecker(new EmptyOnClickRowChecker(portletResponse));
 	}
 

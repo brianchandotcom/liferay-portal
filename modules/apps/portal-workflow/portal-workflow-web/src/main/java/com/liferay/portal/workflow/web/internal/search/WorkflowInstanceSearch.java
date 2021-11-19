@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.web.internal.search;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.util.WorkflowInstancePortletUtil;
@@ -51,21 +50,17 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 			portletRequest, new DisplayTerms(portletRequest), null,
 			DEFAULT_CUR_PARAM, DEFAULT_DELTA, iteratorURL, headerNames, null);
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, WorkflowPortletKeys.USER_WORKFLOW,
-			"instance-order-by-col", "last-activity-date");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, WorkflowPortletKeys.USER_WORKFLOW,
-			"instance-order-by-type", "asc");
-
-		OrderByComparator<WorkflowInstance> orderByComparator =
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, WorkflowPortletKeys.USER_WORKFLOW,
+				"instance-order-by-col", "last-activity-date"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, WorkflowPortletKeys.USER_WORKFLOW,
+				"instance-order-by-type", "asc"));
+		setOrderByComparator(
 			WorkflowInstancePortletUtil.getWorkflowInstanceOrderByComparator(
-				orderByCol, orderByType);
-
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
+				getOrderByCol(), getOrderByType()));
 	}
 
 }

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -207,12 +206,10 @@ public class SelectUserGroupsDisplayContext {
 		SearchContainer<UserGroup> userGroupSearchContainer =
 			new UserGroupSearch(_renderRequest, getPortletURL());
 
-		OrderByComparator<UserGroup> orderByComparator =
-			UsersAdminUtil.getUserGroupOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		userGroupSearchContainer.setOrderByCol(getOrderByCol());
-		userGroupSearchContainer.setOrderByComparator(orderByComparator);
+		userGroupSearchContainer.setOrderByComparator(
+			UsersAdminUtil.getUserGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		userGroupSearchContainer.setOrderByType(getOrderByType());
 
 		Team team = getTeam();

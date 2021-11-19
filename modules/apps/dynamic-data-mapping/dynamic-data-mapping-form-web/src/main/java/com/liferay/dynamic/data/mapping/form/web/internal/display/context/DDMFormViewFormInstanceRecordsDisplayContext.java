@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -392,17 +391,12 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 			new DDMFormInstanceRecordSearch(
 				_renderRequest, portletURL, getHeaderNames());
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator =
+		ddmFormInstanceRecordSearch.setOrderByCol(getOrderByCol());
+		ddmFormInstanceRecordSearch.setOrderByComparator(
 			DDMFormInstanceRecordSearch.
 				getDDMFormInstanceRecordOrderByComparator(
-					orderByCol, orderByType);
-
-		ddmFormInstanceRecordSearch.setOrderByCol(orderByCol);
-		ddmFormInstanceRecordSearch.setOrderByComparator(orderByComparator);
-		ddmFormInstanceRecordSearch.setOrderByType(orderByType);
+					getOrderByCol(), getOrderByType()));
+		ddmFormInstanceRecordSearch.setOrderByType(getOrderByType());
 
 		if (ddmFormInstanceRecordSearch.isSearch()) {
 			ddmFormInstanceRecordSearch.setEmptyResultsMessage(

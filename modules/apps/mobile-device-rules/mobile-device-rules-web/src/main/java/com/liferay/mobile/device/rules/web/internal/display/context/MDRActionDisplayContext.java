@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -61,16 +61,11 @@ public class MDRActionDisplayContext {
 
 		ruleActionSearchContainer.setOrderByCol(getOrderByCol());
 
-		String orderByType = getOrderByType();
+		ruleActionSearchContainer.setOrderByComparator(
+			new ActionCreateDateComparator(
+				Objects.equals(getOrderByType(), "asc")));
 
-		boolean orderByAsc = orderByType.equals("asc");
-
-		OrderByComparator<MDRAction> orderByComparator =
-			new ActionCreateDateComparator(orderByAsc);
-
-		ruleActionSearchContainer.setOrderByComparator(orderByComparator);
-
-		ruleActionSearchContainer.setOrderByType(orderByType);
+		ruleActionSearchContainer.setOrderByType(getOrderByType());
 
 		ruleActionSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -81,7 +76,8 @@ public class MDRActionDisplayContext {
 		ruleActionSearchContainer.setResults(
 			MDRActionLocalServiceUtil.getActions(
 				ruleGroupInstanceId, ruleActionSearchContainer.getStart(),
-				ruleActionSearchContainer.getEnd(), orderByComparator));
+				ruleActionSearchContainer.getEnd(),
+				ruleActionSearchContainer.getOrderByComparator()));
 
 		_ruleActionSearchContainer = ruleActionSearchContainer;
 

@@ -56,17 +56,15 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 
 		searchContainer.setId("accountEntryAddresses");
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"address-order-by-col", "name");
+		searchContainer.setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"address-order-by-col", "name"));
 
-		searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"address-order-by-type", "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"address-order-by-type", "asc"));
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
@@ -92,7 +90,10 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 				themeDisplay.getCompanyId(), AccountEntry.class.getName(),
 				ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
 				keywords, params, searchContainer.getStart(),
-				searchContainer.getEnd(), _getSort(orderByCol, orderByType));
+				searchContainer.getEnd(),
+				_getSort(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
 
 		searchContainer.setResults(
 			TransformUtil.transform(

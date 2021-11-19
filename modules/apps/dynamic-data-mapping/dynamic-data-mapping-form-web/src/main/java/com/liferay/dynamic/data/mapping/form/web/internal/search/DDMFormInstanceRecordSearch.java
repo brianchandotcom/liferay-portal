@@ -86,22 +86,20 @@ public class DDMFormInstanceRecordSearch
 				setSearch(true);
 			}
 
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-				"view-entries-order-by-col", "id");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-				"view-entries-order-by-type", "asc");
-
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator =
-				getDDMFormInstanceRecordOrderByComparator(
-					orderByCol, orderByType);
-
 			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest,
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+					"view-entries-order-by-col", "id"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest,
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+					"view-entries-order-by-type", "asc"));
+			setOrderByComparator(
+				getDDMFormInstanceRecordOrderByComparator(
+					getOrderByCol(), getOrderByType()));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

@@ -158,16 +158,9 @@ public class AssetDisplayPageUsagesDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-display-page-template-usages");
 
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
 		OrderByComparator<AssetDisplayPageEntry> orderByComparator =
-			new AssetDisplayPageEntryModifiedDateComparator(orderByAsc);
+			new AssetDisplayPageEntryModifiedDateComparator(
+				Objects.equals(getOrderByType(), "asc"));
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);

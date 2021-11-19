@@ -57,15 +57,13 @@ public class SegmentsEntrySearchContainerFactory {
 
 		searchContainer.setId("segmentsEntries");
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "name");
+		searchContainer.setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "name"));
 
-		searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "asc"));
 
 		String tabs3 = ParamUtil.getString(renderRequest, "tabs3", "current");
 
@@ -94,7 +92,9 @@ public class SegmentsEntrySearchContainerFactory {
 					themeDisplay.getCompanyGroupId(),
 					ParamUtil.getString(renderRequest, "keywords"), params,
 					searchContainer.getStart(), searchContainer.getEnd(),
-					_getSort(orderByCol, orderByType, themeDisplay)));
+					_getSort(
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType(), themeDisplay)));
 
 		searchContainer.setResults(baseModelSearchResult.getBaseModels());
 		searchContainer.setTotal(baseModelSearchResult.getLength());

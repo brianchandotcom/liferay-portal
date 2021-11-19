@@ -175,12 +175,10 @@ public class BlogEntriesDisplayContext {
 
 		entriesSearchContainer.setOrderByCol(getOrderByCol());
 
-		entriesSearchContainer.setOrderByType(getOrderByType());
-
 		entriesSearchContainer.setOrderByComparator(
-			BlogsUtil.getOrderByComparator(
-				entriesSearchContainer.getOrderByCol(),
-				entriesSearchContainer.getOrderByType()));
+			BlogsUtil.getOrderByComparator(getOrderByCol(), getOrderByType()));
+
+		entriesSearchContainer.setOrderByType(getOrderByType());
 
 		entriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));

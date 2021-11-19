@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -131,12 +130,10 @@ public class LayoutPrototypeDisplayContext {
 
 		searchContainer.setOrderByCol(getOrderByCol());
 
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+		searchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByComparator(orderByComparator);
+					getOrderByCol(), getOrderByType()));
 
 		searchContainer.setOrderByType(getOrderByType());
 
@@ -154,7 +151,7 @@ public class LayoutPrototypeDisplayContext {
 					themeDisplay.getScopeGroupId(), 0,
 					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
 					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+					searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 

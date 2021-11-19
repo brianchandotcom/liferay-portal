@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -100,17 +99,11 @@ public class SelectLayoutCollectionDisplayContext {
 			_liferayPortletRequest, getPortletURL(), null,
 			LanguageUtil.get(_httpServletRequest, "there-are-no-collections"));
 
-		String orderByCol = _getOrderByCol();
-
-		String orderByType = _getOrderByType();
-
-		OrderByComparator<AssetListEntry> orderByComparator =
+		searchContainer.setOrderByCol(_getOrderByCol());
+		searchContainer.setOrderByComparator(
 			AssetListPortletUtil.getAssetListEntryOrderByComparator(
-				_getOrderByCol(), _getOrderByType());
-
-		searchContainer.setOrderByCol(orderByCol);
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
+				_getOrderByCol(), _getOrderByType()));
+		searchContainer.setOrderByType(_getOrderByType());
 
 		List<AssetListEntry> assetListEntries = null;
 
@@ -120,7 +113,7 @@ public class SelectLayoutCollectionDisplayContext {
 			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
 				_themeDisplay.getScopeGroupId(), _getKeywords(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+				searchContainer.getOrderByComparator());
 
 			assetListEntriesCount =
 				AssetListEntryServiceUtil.getAssetListEntriesCount(

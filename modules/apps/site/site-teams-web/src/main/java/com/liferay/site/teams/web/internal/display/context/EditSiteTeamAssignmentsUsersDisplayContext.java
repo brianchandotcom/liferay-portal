@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -136,12 +135,10 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 		SearchContainer<User> userSearchContainer = new UserSearch(
 			renderRequest, getEditTeamAssignmentsURL());
 
-		OrderByComparator<User> orderByComparator =
-			UsersAdminUtil.getUserOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		userSearchContainer.setOrderByCol(getOrderByCol());
-		userSearchContainer.setOrderByComparator(orderByComparator);
+		userSearchContainer.setOrderByComparator(
+			UsersAdminUtil.getUserOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		userSearchContainer.setOrderByType(getOrderByType());
 
 		userSearchContainer.setRowChecker(

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -43,20 +42,17 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 			iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				"kb-templates-order-by-col", "modified-date");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				"kb-templates-order-by-type", "desc");
-
-			OrderByComparator<KBTemplate> orderByComparator =
-				KBUtil.getKBTemplateOrderByComparator(orderByCol, orderByType);
-
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+					"kb-templates-order-by-col", "modified-date"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+					"kb-templates-order-by-type", "desc"));
+			setOrderByComparator(
+				KBUtil.getKBTemplateOrderByComparator(
+					getOrderByCol(), getOrderByType()));
 		}
 		catch (Exception exception) {
 			_log.error(

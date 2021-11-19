@@ -93,31 +93,42 @@ public class SearchRankingRequest {
 	}
 
 	private String _getOrderByCol() {
-		return SearchOrderByUtil.getOrderByCol(
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
 			"search-ranking-order-by-col", RankingFields.QUERY_STRING_KEYWORD);
+
+		return _orderByCol;
 	}
 
 	private String _getOrderByType() {
-		return SearchOrderByUtil.getOrderByType(
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
 			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
 			"search-ranking-order-by-type", "asc");
+
+		return _orderByType;
 	}
 
 	private Collection<Sort> _getSorts() {
-		String orderByCol = _getOrderByCol();
-		String orderByType = _getOrderByType();
-
 		SortOrder sortOrder = SortOrder.ASC;
 
-		if (Objects.equals(orderByType, "desc")) {
+		if (Objects.equals(_getOrderByType(), "desc")) {
 			sortOrder = SortOrder.DESC;
 		}
 
-		return Arrays.asList(_sorts.field(orderByCol, sortOrder));
+		return Arrays.asList(_sorts.field(_getOrderByCol(), sortOrder));
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private String _orderByCol;
+	private String _orderByType;
 	private final Queries _queries;
 	private final RankingIndexName _rankingIndexName;
 	private final SearchContainer<RankingEntryDisplayContext> _searchContainer;

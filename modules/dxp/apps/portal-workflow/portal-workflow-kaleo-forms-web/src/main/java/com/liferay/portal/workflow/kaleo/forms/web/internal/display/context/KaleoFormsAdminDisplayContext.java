@@ -217,21 +217,15 @@ public class KaleoFormsAdminDisplayContext {
 	public OrderByComparator<KaleoProcess> getKaleoProcessOrderByComparator(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
 		OrderByComparator<KaleoProcess> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new KaleoProcessCreateDateComparator(
-				orderByAsc);
+				orderByType.equals("asc"));
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new KaleoProcessModifiedDateComparator(
-				orderByAsc);
+				orderByType.equals("asc"));
 		}
 
 		return orderByComparator;
@@ -241,15 +235,11 @@ public class KaleoFormsAdminDisplayContext {
 		KaleoProcessSearch kaleoProcessSearch = new KaleoProcessSearch(
 			_renderRequest, getPortletURL());
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<KaleoProcess> orderByComparator =
-			getKaleoProcessOrderByComparator(orderByCol, orderByType);
-
-		kaleoProcessSearch.setOrderByCol(orderByCol);
-		kaleoProcessSearch.setOrderByComparator(orderByComparator);
-		kaleoProcessSearch.setOrderByType(orderByType);
+		kaleoProcessSearch.setOrderByCol(getOrderByCol());
+		kaleoProcessSearch.setOrderByComparator(
+			getKaleoProcessOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		kaleoProcessSearch.setOrderByType(getOrderByType());
 
 		setKaleoProcessSearchResults(kaleoProcessSearch);
 		setKaleoProcessSearchTotal(kaleoProcessSearch);

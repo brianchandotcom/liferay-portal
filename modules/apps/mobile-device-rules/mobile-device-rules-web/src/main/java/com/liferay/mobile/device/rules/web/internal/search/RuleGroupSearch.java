@@ -59,20 +59,17 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 		iteratorURL.setParameter(
 			RuleGroupDisplayTerms.NAME, displayTerms.getName());
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
-			"rule-group-search-order-by-col", "create-date");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
-			"rule-group-search-order-by-type", "asc");
-
-		OrderByComparator<MDRRuleGroup> orderByComparator =
-			getOrganizationOrderByComparator(orderByCol, orderByType);
-
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+				"rule-group-search-order-by-col", "create-date"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+				"rule-group-search-order-by-type", "asc"));
+		setOrderByComparator(
+			getOrganizationOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 	}
 
 	protected OrderByComparator<MDRRuleGroup> getOrganizationOrderByComparator(

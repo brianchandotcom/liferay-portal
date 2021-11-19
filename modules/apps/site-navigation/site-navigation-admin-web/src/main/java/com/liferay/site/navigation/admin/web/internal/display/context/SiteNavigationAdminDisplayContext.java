@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -223,12 +222,10 @@ public class SiteNavigationAdminDisplayContext {
 				_liferayPortletRequest, getPortletURL(), null,
 				"there-are-no-navigation-menus");
 
-		OrderByComparator<SiteNavigationMenu> orderByComparator =
-			SiteNavigationMenuPortletUtil.getOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			SiteNavigationMenuPortletUtil.getOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
 		EmptyOnClickRowChecker emptyOnClickRowChecker =
@@ -243,7 +240,7 @@ public class SiteNavigationAdminDisplayContext {
 			menus = _siteNavigationMenuService.getSiteNavigationMenus(
 				themeDisplay.getScopeGroupId(), getKeywords(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+				searchContainer.getOrderByComparator());
 
 			menusCount = _siteNavigationMenuService.getSiteNavigationMenusCount(
 				themeDisplay.getScopeGroupId(), getKeywords());
@@ -251,7 +248,8 @@ public class SiteNavigationAdminDisplayContext {
 		else {
 			menus = _siteNavigationMenuService.getSiteNavigationMenus(
 				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
 
 			menusCount = _siteNavigationMenuService.getSiteNavigationMenusCount(
 				themeDisplay.getScopeGroupId());

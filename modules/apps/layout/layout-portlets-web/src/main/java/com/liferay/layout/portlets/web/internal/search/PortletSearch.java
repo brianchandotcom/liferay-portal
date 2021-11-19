@@ -57,18 +57,16 @@ public class PortletSearch extends SearchContainer<Portlet> {
 		iteratorURL.setParameter(
 			PortletDisplayTerms.NAME, displayTerms.getName());
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, LayoutsPortletsPortletKeys.LAYOUT_PORTLETS, "name");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, LayoutsPortletsPortletKeys.LAYOUT_PORTLETS, "asc");
-
-		OrderByComparator<Portlet> orderByComparator = getOrderByComparator(
-			orderByCol, orderByType);
-
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, LayoutsPortletsPortletKeys.LAYOUT_PORTLETS,
+				"name"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, LayoutsPortletsPortletKeys.LAYOUT_PORTLETS,
+				"asc"));
+		setOrderByComparator(
+			getOrderByComparator(getOrderByCol(), getOrderByType()));
 	}
 
 	protected static OrderByComparator<Portlet> getOrderByComparator(

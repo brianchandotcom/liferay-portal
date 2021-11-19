@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,12 +124,10 @@ public class SiteMySitesDisplayContext {
 		GroupSearch groupSearch = new GroupSearch(
 			_renderRequest, getPortletURL());
 
-		OrderByComparator<Group> orderByComparator =
-			UsersAdminUtil.getGroupOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		groupSearch.setOrderByCol(getOrderByCol());
-		groupSearch.setOrderByComparator(orderByComparator);
+		groupSearch.setOrderByComparator(
+			UsersAdminUtil.getGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		groupSearch.setOrderByType(getOrderByType());
 
 		GroupSearchTerms searchTerms =

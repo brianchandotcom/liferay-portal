@@ -39,16 +39,14 @@ public class KBObjectsSearch extends SearchContainer<Object> {
 			iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				"kb-articles-order-by-col", "priority");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				"kb-articles-order-by-type", "asc");
-
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+					"kb-articles-order-by-col", "priority"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+					"kb-articles-order-by-type", "asc"));
 		}
 		catch (Exception exception) {
 			_log.error(

@@ -70,17 +70,15 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		searchContainer.setId("accountUsers");
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"assignable-account-user-order-by-col", "last-name");
+		searchContainer.setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"assignable-account-user-order-by-col", "last-name"));
 
-		searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			"assignable-account-user-order-by-type", "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"assignable-account-user-order-by-type", "asc"));
 
 		searchContainer.setRowChecker(rowChecker);
 
@@ -99,8 +97,8 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 				AccountConstants.ACCOUNT_ENTRY_ID_ANY,
 				_getEmailAddressDomains(accountEntryId, navigation), keywords,
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
-				searchContainer.getDelta(), orderByCol,
-				_isReverseOrder(orderByType));
+				searchContainer.getDelta(), searchContainer.getOrderByCol(),
+				_isReverseOrder(searchContainer.getOrderByType()));
 
 		searchContainer.setResults(
 			TransformUtil.transform(

@@ -54,17 +54,15 @@ public class CommerceOrderItemSearch
 			commerceOrderItemDisplayTerms.getName());
 
 		try {
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, CommercePortletKeys.COMMERCE_ORDER,
-				"commerce-order-items-order-by-col", "sku");
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, CommercePortletKeys.COMMERCE_ORDER,
-				"commerce-order-items-order-by-type", "asc");
-
 			setOrderableHeaders(_orderableHeaders);
-			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
+			setOrderByCol(
+				SearchOrderByUtil.getOrderByCol(
+					portletRequest, CommercePortletKeys.COMMERCE_ORDER,
+					"commerce-order-items-order-by-col", "sku"));
+			setOrderByType(
+				SearchOrderByUtil.getOrderByType(
+					portletRequest, CommercePortletKeys.COMMERCE_ORDER,
+					"commerce-order-items-order-by-type", "asc"));
 		}
 		catch (Exception exception) {
 			_log.error(

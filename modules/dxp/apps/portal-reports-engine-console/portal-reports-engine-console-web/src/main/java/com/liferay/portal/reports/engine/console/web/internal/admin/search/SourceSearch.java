@@ -56,20 +56,16 @@ public class SourceSearch extends SearchContainer<Source> {
 			SourceDisplayTerms.DRIVER_URL,
 			definitionDisplayTerms.getDriverUrl());
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-			"create-date");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-			"asc");
-
-		setOrderByCol(orderByCol);
-
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+				"create-date"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+				"asc"));
 		setOrderByComparator(
-			getSourceOrderByComparator(orderByCol, orderByType));
-
-		setOrderByType(orderByType);
+			getSourceOrderByComparator(getOrderByCol(), getOrderByType()));
 	}
 
 	protected OrderByComparator<Source> getSourceOrderByComparator(

@@ -78,15 +78,12 @@ definition {
 				portlet = "Pages");
 		}
 
-		var key_breadcrumbName="Pages";
-
-		Pause(locator1 = "3000");
-
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Public Page");
 		}
 		else {
 			AssertClick(
+				key_breadcrumbName = "Pages",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = "Pages");
 
@@ -133,15 +130,12 @@ definition {
 				portlet = "Pages");
 		}
 
-		var key_breadcrumbName="Pages";
-
-		Pause(locator1 = "3000");
-
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Private Page");
 		}
 		else {
 			AssertClick(
+				key_breadcrumbName = "Pages",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = "Pages");
 
@@ -171,8 +165,6 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 		}
-
-		Pause(locator1 = "3000");
 
 		LexiconEntry.gotoAdd();
 

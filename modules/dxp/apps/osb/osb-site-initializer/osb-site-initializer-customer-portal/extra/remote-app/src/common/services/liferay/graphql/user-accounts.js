@@ -3,6 +3,7 @@ const getUserAccountById = (id) => {
                 id
                 name
                 image
+                externalReferenceCode
                 accountBriefs {
                   id
                   name

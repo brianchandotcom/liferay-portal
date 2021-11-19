@@ -8,9 +8,9 @@ import SharedStyle from '~/common/styles/global.scss';
 import CustomerPortal from '~/routes/customer-portal';
 import Onboarding from '~/routes/onboarding';
 
-const CustomerPortalApplication = ({liferaywebdavurl, route}) => {
+const CustomerPortalApplication = ({liferaywebdavurl, page, route}) => {
 	if (route === 'portal') {
-		return <CustomerPortal assetsPath={liferaywebdavurl} />;
+		return <CustomerPortal assetsPath={liferaywebdavurl} page={page} />;
 	}
 
 	if (route === 'onboarding') {
@@ -26,6 +26,7 @@ class CustomerPortalWebComponent extends WebComponent {
 			<ClayProvider>
 				<CustomerPortalApplication
 					liferaywebdavurl={super.getAttribute('liferaywebdavurl')}
+					page={super.getAttribute('page')}
 					route={super.getAttribute('route')}
 				/>
 			</ClayProvider>,

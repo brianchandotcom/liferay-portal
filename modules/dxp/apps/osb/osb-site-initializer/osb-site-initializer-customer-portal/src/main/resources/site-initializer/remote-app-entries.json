@@ -8,13 +8,51 @@
 		],
 		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {
-			"en_US": "Customer Portal"
+			"en_US": "Customer Portal (Onboarding)"
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"route": "portal"
+			"route": "onboarding"
 		},
 		"remoteAppEntryKey": "CUSTOMER-PORTAL-ONBOARDING",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-ONBOARDING$]"
+	},
+	{
+		"cssURLs": "",
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
+		],
+		"htmlElementName": "liferay-remote-app-customer-portal",
+		"name_i18n": {
+			"en_US": "Customer Portal (Home)"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"properties": {
+			"route": "portal",
+			"page": "home"
+		},
+		"remoteAppEntryKey": "CUSTOMER-PORTAL-HOME",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-HOME$]"
+	},
+	{
+		"cssURLs": "",
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
+		],
+		"htmlElementName": "liferay-remote-app-customer-portal",
+		"name_i18n": {
+			"en_US": "Customer Portal (Project Overview)"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"properties": {
+			"route": "portal",
+			"page": "overview"
+		},
+		"remoteAppEntryKey": "CUSTOMER-PORTAL-OVERVIEW",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-OVERVIEW$]"
 	}
 ]

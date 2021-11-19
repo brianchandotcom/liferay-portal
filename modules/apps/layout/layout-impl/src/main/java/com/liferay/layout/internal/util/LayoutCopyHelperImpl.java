@@ -505,38 +505,25 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			List<PortletPreferences> portletPreferencesList =
-				_portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					sourceLayout.getPlid());
+			List<String> portletIds = _getLayoutPortletIds(sourceLayout);
 
-			List<PortletPreferences> targetPortletPreferencesList =
-				_portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					targetLayout.getPlid());
+			List<String> targetPortletIds = _getLayoutPortletIds(targetLayout);
 
-			Stream<PortletPreferences> targetPortletPreferencesStream =
-				targetPortletPreferencesList.stream();
-
-			List<String> targetPortletIds = targetPortletPreferencesStream.map(
-				PortletPreferences::getPortletId
-			).collect(
-				Collectors.toList()
-			);
-
-			for (PortletPreferences portletPreferences :
-					portletPreferencesList) {
-
+			for (String portletId : portletIds) {
 				Portlet portlet = _portletLocalService.getPortletById(
-					portletPreferences.getPortletId());
+					portletId);
 
 				if ((portlet == null) || portlet.isUndeployedPortlet()) {
 					continue;
 				}
 
-				targetPortletIds.remove(portletPreferences.getPortletId());
+				targetPortletIds.remove(portletId);
+
+				PortletPreferences portletPreferences =
+					_portletPreferencesLocalService.fetchPortletPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						sourceLayout.getPlid(), portletId);
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
 					_portletPreferenceValueLocalService.getPreferences(
@@ -546,8 +533,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					_portletPreferencesLocalService.fetchPortletPreferences(
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						targetLayout.getPlid(),
-						portletPreferences.getPortletId());
+						targetLayout.getPlid(), portletId);
 
 				if (targetPortletPreferences != null) {
 					_portletPreferencesLocalService.updatePreferences(
@@ -562,10 +548,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						targetLayout.getCompanyId(),
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						targetLayout.getPlid(),
-						portletPreferences.getPortletId(),
-						_portletLocalService.getPortletById(
-							portletPreferences.getPortletId()),
+						targetLayout.getPlid(), portletId, portlet,
 						PortletPreferencesFactoryUtil.toXML(
 							jxPortletPreferences));
 				}

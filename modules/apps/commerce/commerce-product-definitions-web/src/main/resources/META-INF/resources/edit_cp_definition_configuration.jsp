@@ -160,7 +160,15 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 			>
 				<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
-				<aui:input checked="<%= shippable %>" name="shippable" type="toggle-switch" value="<%= shippable %>" />
+				<%
+				boolean shippableDisabled = false;
+
+				if (StringUtil.equalsIgnoreCase(cpDefinition.getProductTypeName(), VirtualCPTypeConstants.NAME)) {
+					shippableDisabled = true;
+				}
+				%>
+
+				<aui:input checked="<%= shippable %>" disabled="<%= shippableDisabled %>" name="shippable" type="toggle-switch" value="<%= shippable %>" />
 
 				<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
 					<aui:input checked='<%= BeanParamUtil.getBoolean(cpDefinition, request, "freeShipping", false) %>' inlineField="<%= true %>" name="freeShipping" type="toggle-switch" />
@@ -168,15 +176,15 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 					<aui:input checked='<%= BeanParamUtil.getBoolean(cpDefinition, request, "shipSeparately", false) %>' inlineField="<%= true %>" label="always-ship-separately" name="shipSeparately" type="toggle-switch" />
 
 					<aui:input name="shippingExtraPrice" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCommerceCurrencyCode()) %>" />
+
+					<aui:input name="width" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>" />
+
+					<aui:input name="height" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>" />
+
+					<aui:input name="depth" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>" />
+
+					<aui:input name="weight" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT)) %>" />
 				</div>
-
-				<aui:input name="width" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>" />
-
-				<aui:input name="height" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>" />
-
-				<aui:input name="depth" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>" />
-
-				<aui:input name="weight" suffix="<%= HtmlUtil.escape(cpDefinitionConfigurationDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT)) %>" />
 			</commerce-ui:panel>
 		</div>
 	</div>

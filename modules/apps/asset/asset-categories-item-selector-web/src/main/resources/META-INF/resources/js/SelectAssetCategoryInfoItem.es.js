@@ -55,8 +55,11 @@ function SelectAssetCategory({
 	}, [nodes]);
 
 	const [filterQuery, setFilterQuery] = useState('');
+	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
 	const handleSelectionChange = (selectedNodeIds) => {
+		setSelectedItemsCount(selectedNodeIds.size);
+
 		if (!selectedNodeIds.size) {
 			return;
 		}
@@ -109,6 +112,26 @@ function SelectAssetCategory({
 					</div>
 				</ClayLayout.ContainerFluid>
 			</form>
+
+			{selectedItemsCount ? (
+				<ClayLayout.Container
+					className="category-tree-count-feedback mb-3"
+					containerElement="section"
+					fluid
+				>
+					<div className="container p-0">
+						<p className="m-0">
+							{selectedItemsCount > 1
+								? `${selectedItemsCount} ${Liferay.Language.get(
+										'items-selected'
+								  )}`
+								: `${selectedItemsCount} ${Liferay.Language.get(
+										'item-selected'
+								  )}`}
+						</p>
+					</div>
+				</ClayLayout.Container>
+			) : null}
 
 			<form name={`${namespace}selectCategoryFm`}>
 				<ClayLayout.ContainerFluid containerElement="fieldset">

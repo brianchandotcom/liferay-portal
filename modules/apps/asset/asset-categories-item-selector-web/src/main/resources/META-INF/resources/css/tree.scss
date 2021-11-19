@@ -1,4 +1,18 @@
+@import 'cadmin-variables';
+
 $spacer: 1rem;
+
+.category-tree-count-feedback {
+	align-items: center;
+	background: $cadmin-primary-l2;
+	display: flex;
+	min-height: 40px;
+	padding: 0 24px;
+
+	p {
+		font-size: 12px;
+	}
+}
 
 .select-category-filter {
 	background: #fff;

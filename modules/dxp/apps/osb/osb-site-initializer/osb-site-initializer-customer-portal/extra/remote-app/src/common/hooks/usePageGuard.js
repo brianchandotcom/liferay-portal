@@ -5,7 +5,7 @@ import {PARAMS_KEYS} from '../services/liferay/search-params';
 import useGraphQL from './useGraphQL';
 
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
-const PROJECT_PAGE_KEY = 'projects';
+const PROJECT_PAGE_KEY = 'home';
 
 const validateExternalReferenceCode = (
 	accountBriefs,
@@ -25,7 +25,7 @@ const onboardingPageGuard = (
 	externalReferenceCode
 ) => {
 	return {
-		location: `${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
+		location: `${window.location.origin}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
 		validate:
 			!accountFlags.length &&
 			userAccount.roleBriefs.find(
@@ -53,14 +53,13 @@ const overviewPageGuard = (
 	const getExternalReferenceCode = () => {
 		if (isValidExternalReferenceCode) {
 			return externalReferenceCode;
-		}
-		else if (userAccount.accountBriefs.length === 1) {
+		} else if (userAccount.accountBriefs.length === 1) {
 			return userAccount.accountBriefs[0].externalReferenceCode;
 		}
 	};
 
 	return {
-		location: `${liferaySiteName}/overview?${
+		location: `${window.location.origin}${liferaySiteName}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${getExternalReferenceCode()}`,
 		validate: validation,
@@ -84,8 +83,6 @@ const usePageGuard = (
 	]);
 
 	if (!isLoadingGraphQL) {
-		setLoading(isLoadingGraphQL);
-
 		if (
 			!validateExternalReferenceCode(
 				userAccount.accountBriefs,
@@ -100,11 +97,15 @@ const usePageGuard = (
 				externalReferenceCode
 			);
 
-			window.location.href = alternativeValidate
-				? location
-				: `${liferaySiteName}/${PROJECT_PAGE_KEY}`;
+			if (alternativeValidate) {
+				window.location.href = location;
+			} else {
+				window.location.href = `${window.location.origin}${liferaySiteName}/${PROJECT_PAGE_KEY}`;
+			}
 		}
 	}
+
+	setLoading(isLoadingGraphQL);
 
 	return {
 		isLoading,

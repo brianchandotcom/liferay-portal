@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.320
+
+### Script
+
+* [POSHI-211](https://issues.liferay.com/browse/POSHI-211) - Fix poshi script parsing to generate Poshi files
+
 ## 1.0.319
 
 ### Resources

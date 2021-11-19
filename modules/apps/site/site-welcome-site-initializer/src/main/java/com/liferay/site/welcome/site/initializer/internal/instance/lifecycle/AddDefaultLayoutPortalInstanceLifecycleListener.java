@@ -52,7 +52,13 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 			group.getGroupId(), false, friendlyURL);
 
 		if (defaultLayout == null) {
-			_siteInitializer.initialize(group.getGroupId());
+			defaultLayout = _layoutLocalService.fetchFirstLayout(
+				group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
+
+			if (defaultLayout == null) {
+				_siteInitializer.initialize(group.getGroupId());
+			}
 		}
 	}
 

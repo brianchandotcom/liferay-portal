@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
@@ -46,6 +48,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 import javax.servlet.Servlet;
@@ -213,8 +216,12 @@ public class FriendlyURLServlet extends HttpServlet {
 		Object object = infoItemObjectProvider.getInfoItem(classPK);
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemLanguagesProvider.class, className);
+			Optional.ofNullable(
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemLanguagesProvider.class, className)
+			).orElse(
+				_defaultInfoItemLanguagesProvider
+			);
 
 		InfoItemFriendlyURLProvider<Object> infoItemFriendlyURLProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -309,6 +316,25 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);
+
+	private static final InfoItemLanguagesProvider<Object>
+		_defaultInfoItemLanguagesProvider =
+			new InfoItemLanguagesProvider<Object>() {
+
+				@Override
+				public String[] getAvailableLanguageIds(Object object)
+					throws PortalException {
+
+					return new String[] {getDefaultLanguageId(object)};
+				}
+
+				@Override
+				public String getDefaultLanguageId(Object object) {
+					return LanguageUtil.getLanguageId(
+						LocaleUtil.getSiteDefault());
+				}
+
+			};
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

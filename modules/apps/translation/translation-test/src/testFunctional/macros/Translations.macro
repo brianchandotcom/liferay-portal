@@ -85,6 +85,12 @@ definition {
 			rowEntry = "${translationEntry}");
 	}
 
+	macro editTranslationEntry {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${translationEntry}");
+	}
+
 	macro exportTranslation {
 		AssertElementPresent(
 			key_defaultLanguage = "English (United States)",

@@ -19,7 +19,6 @@ import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -107,7 +106,8 @@ public class VulcanFeature implements Feature {
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(CTContainerRequestFilter.class);
 		featureContext.register(DateParamConverterProvider.class);
-		featureContext.register(DuplicateExternalReferenceCodeExceptionMapper.class);
+		featureContext.register(
+			DuplicateExternalReferenceCodeExceptionMapper.class);
 		featureContext.register(EntityExtensionWriterInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);

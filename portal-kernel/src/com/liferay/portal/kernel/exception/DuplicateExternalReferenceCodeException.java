@@ -26,7 +26,9 @@ public class DuplicateExternalReferenceCodeException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

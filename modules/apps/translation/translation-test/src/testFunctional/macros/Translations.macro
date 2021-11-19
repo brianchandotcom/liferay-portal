@@ -79,6 +79,12 @@ definition {
 			locator1 = "Translation#CONTENT_TITLE");
 	}
 
+	macro deleteTranslationEntry {
+		LexiconEntry.delete(
+			confirmationText = "${confirmationText}",
+			rowEntry = "${translationEntry}");
+	}
+
 	macro exportTranslation {
 		AssertElementPresent(
 			key_defaultLanguage = "English (United States)",

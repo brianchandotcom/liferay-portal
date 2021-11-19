@@ -63,8 +63,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
@@ -1131,6 +1133,24 @@ public class RenderLayoutStructureDisplayContext {
 		return _previewVersion;
 	}
 
+	private long[] _getSegmentsEntryIds() {
+		if (_segmentsEntryIds != null) {
+			return _segmentsEntryIds;
+		}
+
+		SegmentsEntryRetriever segmentsEntryRetriever =
+			ServletContextUtil.getSegmentsEntryRetriever();
+
+		RequestContextMapper requestContextMapper =
+			ServletContextUtil.getRequestContextMapper();
+
+		_segmentsEntryIds = segmentsEntryRetriever.getSegmentsEntryIds(
+			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
+			requestContextMapper.map(_httpServletRequest));
+
+		return _segmentsEntryIds;
+	}
+
 	private long[] _getSegmentsExperienceIds() {
 		long[] selectedSegmentsExperienceIds = ParamUtil.getLongValues(
 			_httpServletRequest, "segmentsExperienceId");
@@ -1166,6 +1186,7 @@ public class RenderLayoutStructureDisplayContext {
 	private Long _previewClassPK;
 	private Integer _previewType;
 	private String _previewVersion;
+	private long[] _segmentsEntryIds;
 	private long[] _segmentsExperienceIds;
 	private final boolean _showPreview;
 	private final ThemeDisplay _themeDisplay;

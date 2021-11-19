@@ -115,6 +115,9 @@ public class PullRequestSubrepositoryTopLevelBuild
 				(SubrepositoryWorkspace)workspace;
 
 			subrepositoryWorkspace.setBuildProfile(getBuildProfile());
+
+			subrepositoryWorkspace.setPortalUpstreamBranchName(
+				_getPortalUpstreamBranchName());
 		}
 
 		WorkspaceGitRepository workspaceGitRepository =
@@ -135,6 +138,17 @@ public class PullRequestSubrepositoryTopLevelBuild
 		}
 
 		return workspace;
+	}
+
+	private String _getPortalUpstreamBranchName() {
+		String portalUpstreamBranchName = getParameterValue(
+			"PORTAL_GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			return portalUpstreamBranchName;
+		}
+
+		return getBranchName();
 	}
 
 	private String _getSenderBranchSHA() {

@@ -23,20 +23,22 @@ public class SubrepositoryWorkspace extends PortalWorkspace {
 
 	@Override
 	public PortalWorkspaceGitRepository getPortalWorkspaceGitRepository() {
-		WorkspaceGitRepository workspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
+		if (_portalUpstreamBranchName == null) {
+			WorkspaceGitRepository workspaceGitRepository =
+				getPrimaryWorkspaceGitRepository();
 
-		String upstreamBranchName =
-			workspaceGitRepository.getUpstreamBranchName();
+			_portalUpstreamBranchName =
+				workspaceGitRepository.getUpstreamBranchName();
+		}
 
 		String repositoryName = "liferay-portal";
 
-		if (!upstreamBranchName.equals("master")) {
+		if (!_portalUpstreamBranchName.equals("master")) {
 			repositoryName += "-ee";
 		}
 
 		String directoryName = JenkinsResultsParserUtil.getGitDirectoryName(
-			repositoryName, upstreamBranchName);
+			repositoryName, _portalUpstreamBranchName);
 
 		WorkspaceGitRepository portalWorkspaceGitRepository =
 			getWorkspaceGitRepository(directoryName);
@@ -49,6 +51,10 @@ public class SubrepositoryWorkspace extends PortalWorkspace {
 		}
 
 		return (PortalWorkspaceGitRepository)portalWorkspaceGitRepository;
+	}
+
+	public void setPortalUpstreamBranchName(String portalUpstreamBranchName) {
+		_portalUpstreamBranchName = portalUpstreamBranchName;
 	}
 
 	protected SubrepositoryWorkspace(JSONObject jsonObject) {
@@ -79,5 +85,7 @@ public class SubrepositoryWorkspace extends PortalWorkspace {
 			copyOSBAsahRepositoryToModule();
 		}
 	}
+
+	private String _portalUpstreamBranchName;
 
 }

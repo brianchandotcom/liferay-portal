@@ -90,6 +90,12 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM_SELECTED");
 	}
 
+	macro viewNumberOfSelectedItems {
+		AssertTextEquals(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "${text}");
+	}
+
 	macro viewNoSubheaderInFilterAndOrder {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 

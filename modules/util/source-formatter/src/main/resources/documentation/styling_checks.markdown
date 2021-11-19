@@ -114,13 +114,7 @@ OperatorOperandCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Verifies t
 OperatorOrderCheck | .java | Verifies that when an operator has a literal string or a number as one of the operands, it is always on the right hand side. |
 [OperatorWrapCheck](https://checkstyle.sourceforge.io/config_whitespace.html#OperatorWrap) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the policy on how to wrap lines on operators. |
 PlusStatementCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks to statements where `+` is used for concatenation. |
-PoshiAnnotationsOrderCheck | .function, .macro or .testcase | Checks the order of annotations. |
-PoshiCommandsOrderCheck | .function, .macro or .testcase | Checks the order of poshi commands. |
-PoshiEmptyLinesCheck | .function, .macro or .testcase | Finds missing and unnecessary empty lines. |
-PoshiIndentationCheck | .function, .macro or .testcase | Finds incorrect indentation in poshi files. |
-PoshiParametersOrderCheck | .function, .macro or .testcase | Checks the order of parameters in `.function` and `.macro` files. |
 PoshiStylingCheck | .function, .macro or .testcase | Applies rules to enforce consisteny in code style. |
-PoshiWhitespaceCheck | .function, .macro or .testcase | Finds missing and unnecessary whitespace in poshi files. |
 PropertiesCommentsCheck | .eslintignore, .prettierignore or .properties | Validates comments in `.properties` files. |
 PropertiesDefinitionKeysCheck | .eslintignore, .prettierignore or .properties | Sorts definition keys in `liferay-plugin-package.properties` file. |
 PropertiesDependenciesFileCheck | .eslintignore, .prettierignore or .properties | Sorts the properties in `dependencies.properties` file. |

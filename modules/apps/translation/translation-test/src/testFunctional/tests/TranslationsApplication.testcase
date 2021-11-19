@@ -168,9 +168,7 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+		Translations.editTranslationEntry(translationEntry = "Translation of WC WebContent Title to es-ES");
 
 		Translations.viewTranslationDetails(
 			currentTargetLocale = "es-ES",
@@ -185,9 +183,7 @@ definition {
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+		Translations.editTranslationEntry(translationEntry = "Translation of WC WebContent Title to es-ES");
 
 		Translations.viewTranslationDetails(
 			currentTargetLocale = "es-ES",
@@ -195,9 +191,11 @@ definition {
 			webContentDescription = "WC WebContent Descripción editar",
 			webContentTitle = "WC WebContent Título editar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			version = "1.1",
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
@@ -243,9 +241,7 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+		Translations.editTranslationEntry(translationEntry = "Translation of WC WebContent Title to es-ES");
 
 		Translations.viewTranslationDetails(
 			currentTargetLocale = "es-ES",
@@ -264,9 +260,7 @@ definition {
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Translation of WC WebContent Title to ja-JP");
+		Translations.editTranslationEntry(translationEntry = "Translation of WC WebContent Title to ja-JP");
 
 		Translations.viewTranslationDetails(
 			currentTargetLocale = "ja-JP",
@@ -274,9 +268,11 @@ definition {
 			webContentDescription = "wc webcontent記述",
 			webContentTitle = "wc webcontentタイトル");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			version = "1.1",
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
@@ -436,9 +432,7 @@ definition {
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+		Translations.editTranslationEntry(translationEntry = "Translation of WC WebContent Title to es-ES");
 
 		Translations.viewTranslationDetails(
 			currentTargetLocale = "es-ES",

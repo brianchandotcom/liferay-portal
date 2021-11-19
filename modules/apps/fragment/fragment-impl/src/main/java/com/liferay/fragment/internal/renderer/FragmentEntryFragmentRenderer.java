@@ -290,6 +290,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext.getPreviewType());
 		defaultFragmentEntryProcessorContext.setPreviewVersion(
 			fragmentRendererContext.getPreviewVersion());
+		defaultFragmentEntryProcessorContext.setSegmentsEntryIds(
+			fragmentRendererContext.getSegmentsEntryIds());
 		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
 			fragmentRendererContext.getSegmentsExperienceIds());
 

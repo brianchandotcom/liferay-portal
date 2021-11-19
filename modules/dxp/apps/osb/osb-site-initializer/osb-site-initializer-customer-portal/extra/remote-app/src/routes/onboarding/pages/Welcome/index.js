@@ -17,7 +17,7 @@ const Welcome = ({userAccount}) => {
 		userAccount,
 		onboardingPageGuard,
 		overviewPageGuard,
-		project?.externalReferenceCode
+		project.accountKey
 	);
 
 	if (isLoading) {

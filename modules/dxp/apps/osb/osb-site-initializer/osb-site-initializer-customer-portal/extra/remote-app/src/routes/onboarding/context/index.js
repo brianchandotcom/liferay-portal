@@ -51,9 +51,9 @@ const AppContextProvider = ({assetsPath, children}) => {
 
 		dispatch({
 			payload: {
-				externalReferenceCode: projectExternalReferenceCode,
+				accountKey: projectExternalReferenceCode,
 			},
-			type: actionTypes.UPDATE_ASSET_PATH,
+			type: actionTypes.UPDATE_PROJECT,
 		});
 	}, []);
 

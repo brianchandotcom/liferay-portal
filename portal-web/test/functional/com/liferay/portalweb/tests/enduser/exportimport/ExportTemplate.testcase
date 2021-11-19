@@ -80,7 +80,7 @@ definition {
 			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
-		var valueName = selenium.getText("//ul/li/div/h2");
+		var valueName = selenium.getText("//dl/dd/div/h2");
 
 		echo("value name ${valueName}");
 

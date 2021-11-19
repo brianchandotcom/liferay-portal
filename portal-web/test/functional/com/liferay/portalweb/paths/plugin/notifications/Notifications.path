@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(.,'${key_contentBody}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//dd[contains(.,'${key_contentBody}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,7 +73,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_WORKFLOW_TITLE_2</td>
-	<td>//div[@class='user-notifications']//li[2]//div[contains(@data-qa-id,'rowItemContent')]//a</td>
+	<td>//div[@class='user-notifications']//dd[2]//div[contains(@data-qa-id,'rowItemContent')]//a</td>
 	<td></td>
 </tr>
 <tr>

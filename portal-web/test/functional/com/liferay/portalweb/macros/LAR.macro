@@ -553,7 +553,7 @@ definition {
 	}
 
 	macro getLarFileName {
-		var valueName = selenium.getAttribute("//ul/li/div/h2//a@href");
+		var valueName = selenium.getAttribute("//dl/dd/div/h2//a@href");
 
 		echo("value name ${valueName}");
 

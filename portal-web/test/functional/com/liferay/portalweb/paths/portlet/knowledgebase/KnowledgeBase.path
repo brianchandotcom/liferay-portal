@@ -39,7 +39,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//input[@type='checkbox']</td>
+	<td>//dd[contains(.,'${key_kbArticleTitle}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 <!--DESCRIPTIVE_VIEW-->
 <tr>
 	<td>DESCRIPTIVE_VIEW_ARTICLE_PRIORITY</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//span[@class='kb-descriptive-details' and contains(.,'Priority')]</td>
+	<td>//dd[contains(.,'${key_kbArticleTitle}')]//span[@class='kb-descriptive-details' and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VIEW_CHILD_ARTICLE_LINK</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//a[contains(.,'Child Article')]</td>
+	<td>//dd[contains(.,'${key_kbArticleTitle}')]//a[contains(.,'Child Article')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1608,7 +1608,7 @@ definition {
 
 		LAR.exportSiteCP(siteScopeName = "Guest");
 
-		var downloadURL = selenium.getAttribute("//ul/li/div/h2/span/a@href");
+		var downloadURL = selenium.getAttribute("//dl/dd/div/h2/span/a@href");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

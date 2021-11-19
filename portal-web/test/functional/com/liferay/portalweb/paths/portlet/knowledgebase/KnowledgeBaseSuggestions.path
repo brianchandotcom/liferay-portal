@@ -27,12 +27,12 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/span[contains(.,'${kbSuggestionUserName}')]</td>
+	<td>//div/dl/dd[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/span[contains(.,'${kbSuggestionUserName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS</td>
-	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//h2[contains(.,'${kbSuggestionBody}')]/following-sibling::span[contains(.,'${status}')]</td>
+	<td>//div/dl/dd[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//h2[contains(.,'${kbSuggestionBody}')]/following-sibling::span[contains(.,'${status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_NEW</td>
-	<td>//li[contains(@class,'list-group-header')]/div[contains(@class,'list-group-header-title')]</td>
+	<td>//dt[contains(@class,'list-group-header')]/div[contains(@class,'list-group-header-title')]</td>
 	<td></td>
 </tr>
 </tbody>

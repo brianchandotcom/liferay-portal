@@ -497,6 +497,112 @@ definition {
 		}
 	}
 
+	@description = "LPS-79349 - User can propagate the changes of fragment to page templates."
+	@priority = "3"
+	test PropagateChangesOfFragmentToPageTemplates {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a new fragment") {
+			var htmlSnippet = '''<div>TEST</div>''';
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Test Fragment Name");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a new content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("Add the new fragment to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Test Fragment Name");
+		}
+
+		task ("View the inline text of new fragment at edit mode") {
+			AssertTextEquals(
+				index = "1",
+				key_fragmentName = "Test Fragment Name",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
+				value1 = "TEST");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Edit the new fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Test Fragment Name",
+				item = "Edit");
+
+			var htmlSnippet = '''<div>EDITED</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Propagate the changes") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Test Fragment Name",
+				item = "View Usages");
+
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+			Click(locator1 = "Button#PROPAGATE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the edited inline text of new fragment at edit mode") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertTextEquals(
+				index = "1",
+				key_fragmentName = "Test Fragment Name",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
+				value1 = "EDITED");
+		}
+	}
+
 	@description = "Fragments can be renamed."
 	@priority = "4"
 	@uitest

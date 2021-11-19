@@ -51,6 +51,11 @@ public interface FragmentEntryConfigurationParser {
 			String configuration, String editableValues, Locale locale)
 		throws JSONException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getContextObjects(JSONObject, String, long[])}
+	 */
+	@Deprecated
 	public Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration);
 

@@ -44,6 +44,19 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 		workspaceGitRepository.addPropertyOption(
 			portalBatchBuildData.getPortalUpstreamBranchName());
 
+		String dockerEnabled = System.getenv("DOCKER_ENABLED");
+
+		if ((dockerEnabled != null) && dockerEnabled.equals("true")) {
+			workspaceGitRepository.addPropertyOption("docker");
+		}
+
+		if (JenkinsResultsParserUtil.isWindows()) {
+			workspaceGitRepository.addPropertyOption("windows");
+		}
+		else {
+			workspaceGitRepository.addPropertyOption("unix");
+		}
+
 		workspaceGitRepository.setSenderBranchSHA(
 			portalBatchBuildData.getPortalBranchSHA());
 

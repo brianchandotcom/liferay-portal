@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.welcome.site.initializer.internal.WelcomeSiteInitializer;
 
@@ -43,9 +45,11 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
-		Layout defaultLayout = _layoutLocalService.fetchFirstLayout(
-			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			false);
+		String friendlyURL = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
+
+		Layout defaultLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, friendlyURL);
 
 		if (defaultLayout == null) {
 			_siteInitializer.initialize(group.getGroupId());

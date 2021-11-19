@@ -14,13 +14,13 @@
 
 package com.liferay.asset.kernel.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DuplicateCategoryExternalReferenceCodeException
-	extends PortalException {
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateCategoryExternalReferenceCodeException() {
 	}

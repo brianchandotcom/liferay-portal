@@ -14,13 +14,13 @@
 
 package com.liferay.journal.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DuplicateArticleExternalReferenceCodeException
-	extends PortalException {
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateArticleExternalReferenceCodeException() {
 	}

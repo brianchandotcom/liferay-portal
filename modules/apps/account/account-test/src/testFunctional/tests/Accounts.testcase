@@ -831,9 +831,9 @@ definition {
 		}
 	}
 
-	@description = "This test adds an organization as an assignee of a business account with domain."
+	@description = "This test adds an organization as an assignee of a business account"
 	@priority = "4"
-	test CanAssignOrganizationToAccountWithDomain {
+	test CanAssignOrganizationToBusinessAccount {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",
 			organizationSite = "true");

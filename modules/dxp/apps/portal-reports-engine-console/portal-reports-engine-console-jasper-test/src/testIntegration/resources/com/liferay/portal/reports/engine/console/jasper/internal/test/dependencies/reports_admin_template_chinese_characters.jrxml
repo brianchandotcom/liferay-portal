@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<jasperReport bottomMargin="20" columnWidth="555" leftMargin="20" name="sampleReport" pageHeight="842" pageWidth="595" rightMargin="20" topMargin="20" uuid="456b3ca3-588c-434e-9b82-59e01250796e" xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record" />
+	<style fontName="ipaexm" fontSize="14" isDefault="true" name="Sans_Normal" />
+	<queryString><![CDATA[select * from User_]]></queryString>
+	<background><band splitType="Stretch" /></background>
+	<title>
+		<band height="141" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" />
+			<staticText>
+				<reportElement height="50" key="" stretchType="RelativeToTallestObject" uuid="937f15cb-e4ea-4b51-947e-0d107f24ea63" width="329" x="171" y="40" />
+				<box bottomPadding="7" leftPadding="7" rightPadding="7" topPadding="7" />
+				<textElement>
+					<font fontName="ipaexm" />
+				</textElement>
+				<text><![CDATA[中国文字 Chinese Characters]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

@@ -632,10 +632,7 @@ definition {
 
 		Page.viewPagesOrder(
 			depth = "2",
-			pageName1 = "Home",
-			pageName2 = "1",
-			pageName3 = "2",
-			pageName4 = "Hello");
+			pageNameList = "Home,1,2,Hello");
 	}
 
 	@description = "This is a use case for LPS-107677."

@@ -86,4 +86,17 @@ definition {
 			value1 = "${menuType}");
 	}
 
+	macro viewMenuItemsOrder {
+		var index = "1";
+
+		for (var pageName : list "${pageNameList}") {
+			AssertTextEquals.assertPartialText(
+				key_index = "${index}",
+				locator1 = "NavigationMenusWidget#MENU_ITEM",
+				value1 = "${pageName}");
+
+			var index = ${index} + 1;
+		}
+	}
+
 }

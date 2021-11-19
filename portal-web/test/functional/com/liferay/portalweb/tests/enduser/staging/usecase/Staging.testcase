@@ -2245,10 +2245,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Page.viewPagesOrderOnPage(
-			pageName1 = "Staging Test Page",
-			pageName2 = "Test Page 1",
-			pageName3 = "Test Page 2");
+		NavigationMenusWidget.viewMenuItemsOrder(pageNameList = "Staging Test Page,Test Page 1,Test Page 2");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -2256,9 +2253,7 @@ definition {
 
 		Page.viewPagesOrder(
 			depth = "2",
-			pageName1 = "Staging Test Page",
-			pageName2 = "Test Page 1",
-			pageName3 = "Test Page 2");
+			pageNameList = "Staging Test Page,Test Page 1,Test Page 2");
 	}
 
 	@description = "This is a use case for LPS-97827."

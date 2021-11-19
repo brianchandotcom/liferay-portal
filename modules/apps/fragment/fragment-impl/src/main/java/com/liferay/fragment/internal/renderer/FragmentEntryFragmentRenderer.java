@@ -159,7 +159,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	private String _renderFragmentEntry(
 		long fragmentEntryId, String css, String html, String js,
 		String configuration, String namespace, String fragmentElementId,
-		HttpServletRequest httpServletRequest) {
+		String viewMode, HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(18);
 
@@ -195,7 +195,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				outputData = new OutputData();
 			}
 
-			if (!cssLoaded) {
+			if (!cssLoaded ||
+				Objects.equals(viewMode, FragmentEntryLinkConstants.EDIT)) {
+
 				sb.append("<style>");
 				sb.append(css);
 				sb.append("</style>");
@@ -332,7 +334,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getFragmentEntryId(), css, html,
 			fragmentEntryLink.getJs(), configurationJSONObject.toString(),
 			fragmentEntryLink.getNamespace(),
-			fragmentRendererContext.getFragmentElementId(), httpServletRequest);
+			fragmentRendererContext.getFragmentElementId(),
+			fragmentRendererContext.getMode(), httpServletRequest);
 
 		if (Objects.equals(
 				fragmentRendererContext.getMode(),

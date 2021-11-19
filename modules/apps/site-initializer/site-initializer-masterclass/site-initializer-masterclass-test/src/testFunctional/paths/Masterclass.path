@@ -16,6 +16,27 @@
 	<td>//div[contains(@class,'hero-pre') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
+<!--PAGE_EDITOR-->
+<tr>
+	<td>COLLECTION_DISPLAY</td>
+	<td>//li[contains(@class,'topper__title') and contains(.,'${key_collectionDisplay}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAYOUT_SELECT</td>
+	<td>//div[contains(@class,'tab-content')]//div[contains(@class,'form-group-sm')][2]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAX_NUMBER_OF_ITEMS</td>
+	<td>//div[contains(@class,'tab-content')]//div[contains(@class,'form-group-sm')][4]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLUMNS_NUMBER</td>
+	<td>//div[contains(@class,'layout-content')]//div[contains(@class,'row')][1]/div[contains(@class,'col')][${key_colummnsNumber}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

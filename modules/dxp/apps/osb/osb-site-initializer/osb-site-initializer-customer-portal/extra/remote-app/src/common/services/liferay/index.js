@@ -23,7 +23,10 @@ const getLiferaySiteName = () => {
 		// eslint-disable-next-line no-undef
 		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 		const pathSplit = pathname.split('/').filter(Boolean);
-		siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
+		siteName = `/${(pathSplit.length > 2
+			? pathSplit.slice(0, pathSplit.length - 1)
+			: pathSplit
+		).join('/')}`;
 	} catch (error) {
 		console.warn('Not able to find Liferay PathName\n', error);
 	}

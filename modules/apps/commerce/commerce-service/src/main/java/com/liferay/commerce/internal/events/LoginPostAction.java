@@ -17,6 +17,9 @@ package com.liferay.commerce.internal.events;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -25,6 +28,10 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -108,14 +115,40 @@ public class LoginPostAction extends Action {
 			return;
 		}
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.getPersonalCommerceAccount(
-				_portal.getUserId(httpServletRequest));
+		long userId = _portal.getUserId(httpServletRequest);
 
-		_commerceOrderLocalService.updateAccount(
-			commerceOrder.getCommerceOrderId(),
-			_portal.getUserId(httpServletRequest),
-			commerceAccount.getCommerceAccountId());
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getPersonalCommerceAccount(userId);
+
+		CommerceOrder userCommerceOrder =
+			_commerceOrderLocalService.fetchCommerceOrder(
+				commerceAccount.getCommerceAccountId(), commerceChannelGroupId,
+				userId, CommerceOrderConstants.ORDER_STATUS_OPEN);
+
+		if (userCommerceOrder != null) {
+			CommerceContext commerceContext = _commerceContextFactory.create(
+				_portal.getCompanyId(httpServletRequest),
+				commerceChannelGroupId, userId,
+				userCommerceOrder.getCommerceOrderId(),
+				commerceAccount.getCommerceAccountId());
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				httpServletRequest);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(
+					_portal.getUser(httpServletRequest)));
+
+			_commerceOrderLocalService.mergeGuestCommerceOrder(
+				commerceOrder.getCommerceOrderId(),
+				userCommerceOrder.getCommerceOrderId(), commerceContext,
+				serviceContext);
+		}
+		else {
+			_commerceOrderLocalService.updateAccount(
+				commerceOrder.getCommerceOrderId(), userId,
+				commerceAccount.getCommerceAccountId());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -126,6 +159,9 @@ public class LoginPostAction extends Action {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,6 +92,14 @@ public class ZipWriterImpl implements ZipWriter {
 
 			_exportEntries.add(
 				new AbstractMap.SimpleImmutableEntry<>(name, bytes));
+
+			_exportEntriesBytes += bytes.length;
+
+			if (_exportEntriesBytes >=
+					PropsValues.ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE) {
+
+				_writeExportEntries();
+			}
 
 			return;
 		}
@@ -220,6 +229,7 @@ public class ZipWriterImpl implements ZipWriter {
 					StandardOpenOption.WRITE);
 			}
 
+			_exportEntriesBytes = 0;
 			_exportEntries = null;
 		}
 		catch (IOException ioException) {
@@ -228,6 +238,7 @@ public class ZipWriterImpl implements ZipWriter {
 	}
 
 	private List<Map.Entry<String, byte[]>> _exportEntries;
+	private long _exportEntriesBytes;
 	private final File _file;
 	private final URI _uri;
 

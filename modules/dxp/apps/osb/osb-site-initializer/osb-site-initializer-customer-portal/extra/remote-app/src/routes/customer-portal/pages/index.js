@@ -1,15 +1,24 @@
 import {useContext} from 'react';
 import {AppContext} from '../context';
 import Home from './Home';
+import Overview from './Overview';
 
 const Pages = () => {
-	const [{userAccount}] = useContext(AppContext);
+	const [{page, userAccount}] = useContext(AppContext);
+
+	if (page === 'overview') {
+		if (userAccount) {
+			return <Overview userAccount={userAccount} />;
+		} else {
+			return <div>Overview Skeleton</div>;
+		}
+	}
 
 	if (userAccount) {
 		return <Home userAccount={userAccount} />;
-	} else {
-		return <Home.Skeleton />;
 	}
+
+	return <Home.Skeleton />;
 };
 
 export default Pages;

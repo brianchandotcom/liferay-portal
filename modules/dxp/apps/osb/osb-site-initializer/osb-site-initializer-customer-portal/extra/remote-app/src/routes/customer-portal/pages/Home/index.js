@@ -64,7 +64,7 @@ const Home = ({userAccount}) => {
 	const accountBriefs = data?.userAccount.accountBriefs || [];
 
 	const nextPage = (project) => {
-		window.location.href = `${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.externalReferenceCode}`;
+		window.location.href = `${window.location.origin}${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.accountKey}`;
 	};
 
 	const projects =
@@ -150,9 +150,9 @@ const Home = ({userAccount}) => {
 						>
 							{projectsFiltered.map((project, index) => (
 								<ProjectCard
+									isSmall={withManyProjects}
 									key={index}
 									onClick={() => nextPage(project)}
-									small={withManyProjects}
 									{...project}
 								/>
 							))}

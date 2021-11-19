@@ -1,4 +1,7 @@
 import {createContext, useEffect, useReducer} from 'react';
+import useGraphQL from '~/common/hooks/useGraphQL';
+import {LiferayTheme} from '~/common/services/liferay';
+import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
 import {
 	PARAMS_KEYS,
 	SearchParams,
@@ -6,64 +9,50 @@ import {
 import {CUSTOM_EVENTS} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 
+const initialApp = (assetsPath, page) => ({
+	assetsPath,
+	page,
+	project: undefined,
+	userAccount: undefined,
+});
+
 const AppContext = createContext();
 
-const AppContextProvider = ({assetsPath, children}) => {
-	const [state, dispatch] = useReducer(reducer, {
-		assetsPath,
-		project: {},
-		userAccount: {},
-	});
+const AppProvider = ({assetsPath, children, page}) => {
+	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath, page));
+	const {data} = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
 
 	useEffect(() => {
-		const koroneikiExternalReferenceCode = SearchParams.get(
+		const projectExternalReferenceCode = SearchParams.get(
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		);
 
-		if (koroneikiExternalReferenceCode) {
-			dispatch({
-				payload: {
-					externalReferenceCode: koroneikiExternalReferenceCode,
-				},
-				type: actionTypes.UPDATE_PROJECT,
-			});
-		}
-
-		const onUserAccountLoading = ({detail: userAccountData}) =>
-			dispatch({
-				payload: userAccountData,
-				type: actionTypes.UPDATE_USER_ACCOUNT,
-			});
-
-		window.addEventListener(
-			CUSTOM_EVENTS.USER_ACCOUNT,
-			onUserAccountLoading
-		);
-
-		return () =>
-			window.removeEventListener(
-				CUSTOM_EVENTS.USER_ACCOUNT,
-				onUserAccountLoading
-			);
+		dispatch({
+			payload: {
+				accountKey: projectExternalReferenceCode,
+			},
+			type: actionTypes.UPDATE_PROJECT,
+		});
 	}, []);
 
 	useEffect(() => {
-		const onUserAccountLoading = ({detail: userAccountData}) =>
+		if (data) {
 			dispatch({
-				payload: userAccountData,
+				payload: data.userAccount,
 				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
-		window.addEventListener(
-			CUSTOM_EVENTS.USER_ACCOUNT,
-			onUserAccountLoading
-		);
 
-		return () =>
-			window.removeEventListener(
-				CUSTOM_EVENTS.USER_ACCOUNT,
-				onUserAccountLoading
+			window.dispatchEvent(
+				new CustomEvent(CUSTOM_EVENTS.USER_ACCOUNT, {
+					bubbles: true,
+					composed: true,
+					detail: {
+						...data.userAccount,
+					},
+				})
 			);
-	}, []);
+		}
+	}, [data]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>
@@ -72,4 +61,4 @@ const AppContextProvider = ({assetsPath, children}) => {
 	);
 };
 
-export {AppContext, AppContextProvider};
+export {AppContext, AppProvider};

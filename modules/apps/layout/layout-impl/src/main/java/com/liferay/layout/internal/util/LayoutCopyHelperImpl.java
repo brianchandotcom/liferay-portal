@@ -73,6 +73,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -429,80 +430,69 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		_deletePortletPermissions(targetLayout);
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				sourceLayout.getGroupId(), sourceLayout.getPlid());
+		List<String> portletIds = _getLayoutPortletIds(sourceLayout);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			List<String> portletIds =
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink);
+		for (String portletId : portletIds) {
+			String resourceName = PortletIdCodec.decodePortletName(portletId);
+			String sourceResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				sourceLayout.getPlid(), portletId);
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(resourceName);
 
-			for (String portletId : portletIds) {
-				String resourceName = PortletIdCodec.decodePortletName(
-					portletId);
-				String sourceResourcePrimKey =
-					PortletPermissionUtil.getPrimaryKey(
-						sourceLayout.getPlid(), portletId);
-				List<String> actionIds =
-					ResourceActionsUtil.getPortletResourceActions(resourceName);
+			Map<Long, Set<String>> sourceRoleIdsToActionIds =
+				_resourcePermissionLocalService.
+					getAvailableResourcePermissionActionIds(
+						targetLayout.getCompanyId(), resourceName,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						sourceResourcePrimKey, actionIds);
 
-				Map<Long, Set<String>> sourceRoleIdsToActionIds =
-					_resourcePermissionLocalService.
-						getAvailableResourcePermissionActionIds(
-							targetLayout.getCompanyId(), resourceName,
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							sourceResourcePrimKey, actionIds);
+			if (sourceRoleIdsToActionIds.isEmpty()) {
+				continue;
+			}
 
-				if (sourceRoleIdsToActionIds.isEmpty()) {
+			Group targetGroup = targetLayout.getGroup();
+
+			Set<Long> roleIds = new HashSet<>();
+
+			for (Role role :
+					_roleLocalService.getGroupRelatedRoles(
+						targetLayout.getGroupId())) {
+
+				String roleName = role.getName();
+
+				if (roleName.equals(RoleConstants.ADMINISTRATOR) ||
+					(!targetGroup.isLayoutSetPrototype() &&
+					 targetLayout.isPrivateLayout() &&
+					 roleName.equals(RoleConstants.GUEST))) {
+
 					continue;
 				}
 
-				Group targetGroup = targetLayout.getGroup();
-
-				Set<Long> roleIds = new HashSet<>();
-
-				for (Role role :
-						_roleLocalService.getGroupRelatedRoles(
-							targetLayout.getGroupId())) {
-
-					String roleName = role.getName();
-
-					if (roleName.equals(RoleConstants.ADMINISTRATOR) ||
-						(!targetGroup.isLayoutSetPrototype() &&
-						 targetLayout.isPrivateLayout() &&
-						 roleName.equals(RoleConstants.GUEST))) {
-
-						continue;
-					}
-
-					roleIds.add(role.getRoleId());
-				}
-
-				Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
-
-				for (Map.Entry<Long, Set<String>> entry :
-						sourceRoleIdsToActionIds.entrySet()) {
-
-					Long roleId = entry.getKey();
-
-					if (roleIds.contains(roleId)) {
-						Set<String> sourceActionIds = entry.getValue();
-
-						targetRoleIdsToActionIds.put(
-							roleId, sourceActionIds.toArray(new String[0]));
-					}
-				}
-
-				String targetResourcePrimKey =
-					PortletPermissionUtil.getPrimaryKey(
-						targetLayout.getPlid(), portletId);
-
-				_resourcePermissionLocalService.setResourcePermissions(
-					targetLayout.getCompanyId(), resourceName,
-					ResourceConstants.SCOPE_INDIVIDUAL, targetResourcePrimKey,
-					targetRoleIdsToActionIds);
+				roleIds.add(role.getRoleId());
 			}
+
+			Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
+
+			for (Map.Entry<Long, Set<String>> entry :
+					sourceRoleIdsToActionIds.entrySet()) {
+
+				Long roleId = entry.getKey();
+
+				if (roleIds.contains(roleId)) {
+					Set<String> sourceActionIds = entry.getValue();
+
+					targetRoleIdsToActionIds.put(
+						roleId, sourceActionIds.toArray(new String[0]));
+				}
+			}
+
+			String targetResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				targetLayout.getPlid(), portletId);
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				targetLayout.getCompanyId(), resourceName,
+				ResourceConstants.SCOPE_INDIVIDUAL, targetResourcePrimKey,
+				targetRoleIdsToActionIds);
 		}
 	}
 
@@ -648,6 +638,22 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 			}
 		}
+	}
+
+	private List<String> _getLayoutPortletIds(Layout layout) {
+		List<String> layoutPortletIds = new ArrayList<>();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				layout.getGroupId(), layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			layoutPortletIds.addAll(
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink));
+		}
+
+		return layoutPortletIds;
 	}
 
 	private Map<Long, Long> _getSegmentsExperienceIds(

@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiNodeFactory;
+import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -62,6 +63,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 		PoshiElement poshiElement =
 			(PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
 				FileUtil.getURL(file));
+
+		PoshiScriptParserException.throwExceptions();
 
 		String newContent = poshiElement.toPoshiScript();
 

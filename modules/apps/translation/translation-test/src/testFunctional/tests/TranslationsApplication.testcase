@@ -564,13 +564,9 @@ definition {
 			assetName = "WC WebContent Title",
 			assetType = "Web Content Article");
 
-		AssertElementNotPresent(
-			key_rowEntry = "Translation",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
-		AssertElementNotPresent(
-			key_rowEntry = "Translation of WC WebContent Title to es-ES",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		Translations.viewEmptyState();
 	}
 
 }

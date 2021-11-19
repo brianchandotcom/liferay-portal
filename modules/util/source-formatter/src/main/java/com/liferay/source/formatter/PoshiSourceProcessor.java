@@ -64,7 +64,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			(PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
 				FileUtil.getURL(file));
 
-		PoshiScriptParserException.throwExceptions();
+		PoshiScriptParserException.throwExceptions(
+			SourceUtil.getAbsolutePath(file));
 
 		String newContent = poshiElement.toPoshiScript();
 

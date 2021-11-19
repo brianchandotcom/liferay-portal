@@ -267,6 +267,9 @@ public class AccountResourceImpl
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
+		_accountEntryService.updateExternalReferenceCode(
+			accountId, account.getExternalReferenceCode());
+
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
 				accountId, _getOrganizationIds(account));

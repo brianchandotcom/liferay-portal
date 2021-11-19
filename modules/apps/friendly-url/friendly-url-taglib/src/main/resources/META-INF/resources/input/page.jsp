@@ -17,7 +17,6 @@
 <%@ include file="/input/init.jsp" %>
 
 <%
-long classPK = (long)request.getAttribute("liferay-friendly-url:input:classPK");
 boolean disabled = (boolean)request.getAttribute("liferay-friendly-url:input:disabled");
 int friendlyURLMaxLength = (int)request.getAttribute("liferay-friendly-url:input:friendlyURLMaxLength");
 boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:input:localizable");
@@ -25,10 +24,10 @@ String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 %>
 
-<c:if test="<%= classPK != 0 %>">
+<c:if test='<%= (boolean)request.getAttribute("liferay-friendly-url:input:showHistory") %>'>
 	<liferay-friendly-url:history
 		className='<%= (String)request.getAttribute("liferay-friendly-url:input:className") %>'
-		classPK="<%= classPK %>"
+		classPK='<%= (long)request.getAttribute("liferay-friendly-url:input:classPK") %>'
 		elementId="<%= portletDisplay.getNamespace() + name %>"
 		localizable="<%= localizable %>"
 	/>

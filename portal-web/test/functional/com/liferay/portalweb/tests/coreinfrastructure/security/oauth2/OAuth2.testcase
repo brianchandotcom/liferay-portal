@@ -571,7 +571,7 @@ definition {
 	test EditApplicationScopesAndViewLanguageKeys {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "OAuth2#EditApplicationScopesAndViewLanguageKeys";
 
 		FileInstall.deployFileOnServer(
@@ -601,7 +601,7 @@ definition {
 
 			Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 
-			OAuth2.viewResourcePanelCollapsed(scopeList = "Analytics,Liferay.Batch.Planner.REST,Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Frontend.View.State.REST,Liferay.Headless.Admin.Content");
+			OAuth2.viewResourcePanelCollapsed(scopeList = "Analytics,Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Frontend.View.State.REST,Liferay.Headless.Admin.Content");
 		}
 		task ("Edit OAuth application scopes and check the permission to read the userprofile") {
 			Navigator.gotoBack();

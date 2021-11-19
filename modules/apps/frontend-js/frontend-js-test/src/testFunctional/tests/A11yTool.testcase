@@ -158,7 +158,7 @@ definition {
 		task ("Assert the correct target is displayed on the side panel") {
 			AssertElementPresent(
 				key_header = "Target",
-				key_text = "Target Selector",
+				key_label = "Target Selector",
 				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
 
 			AssertElementPresent(
@@ -169,7 +169,7 @@ definition {
 		task ("Assert the correct code is displayed on the side panel") {
 			AssertElementPresent(
 				key_header = "Code",
-				key_text = "Code of the Element",
+				key_label = "Code of the Element",
 				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
 
 			AssertElementPresent(

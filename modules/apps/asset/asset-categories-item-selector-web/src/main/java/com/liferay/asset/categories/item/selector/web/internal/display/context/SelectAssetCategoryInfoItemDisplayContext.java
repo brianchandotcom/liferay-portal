@@ -67,26 +67,6 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public JSONArray getCategoriesJSONArray() throws Exception {
-		return JSONUtil.put(
-			JSONUtil.put(
-				"children", _getVocabulariesJSONArray()
-			).put(
-				"disabled", true
-			).put(
-				"expanded", true
-			).put(
-				"icon", "folder"
-			).put(
-				"id", "0"
-			).put(
-				"name",
-				LanguageUtil.get(_themeDisplay.getLocale(), "vocabularies")
-			).put(
-				"vocabulary", true
-			));
-	}
-
 	public Map<String, Object> getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"categoriesMultipleSelectionEnabled",
@@ -99,7 +79,7 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"nodes", getCategoriesJSONArray()
+			"nodes", _getVocabulariesJSONArray()
 		).build();
 	}
 

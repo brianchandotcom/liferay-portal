@@ -36,10 +36,10 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-114527. Can move multiple pages via dragging in Pages admin of Staging site but cannot in Live site."
+	@description = "This is a test for LPS-114527. Can move multiple pages via dragging in Pages admin of Staging site but cannot in Live site."
 	@priority = "3"
 	test CanMoveMultiplePagesInStagingSiteButCannotInLiveSite {
-		task ("Add 2 widget page and 1 content page in the same level") {
+		task ("Add 2 widget pages and 1 content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name (Staging)",
@@ -66,16 +66,14 @@ definition {
 			Staging.publishCustomPublication();
 		}
 
-		task ("Assert pages order in Staging site") {
+		task ("View pages order in Staging site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",
-				pageName1 = "Test Page Name 1",
-				pageName2 = "Test Page Name 2",
-				pageName3 = "Test Page Name 3");
+				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 
 		task ("Move Test Page Name 2 and 3 to top of Test Page Name 1 in Staging site") {
@@ -88,27 +86,23 @@ definition {
 				pageNameTo = "Test Page Name 1");
 		}
 
-		task ("Assert Test Page Name 2 and 3 are moved to top of Test Page Name 1 in Staging site") {
+		task ("View Test Page Name 2 and 3 are moved to top of Test Page Name 1 in Staging site") {
 			Page.viewPagesOrder(
 				depth = "2",
-				pageName1 = "Test Page Name 2",
-				pageName2 = "Test Page Name 3",
-				pageName3 = "Test Page Name 1");
+				pageNameList = "Test Page Name 2,Test Page Name 3,Test Page Name 1");
 		}
 
-		task ("Assert pages order in Live site") {
+		task ("View pages order in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",
-				pageName1 = "Test Page Name 1",
-				pageName2 = "Test Page Name 2",
-				pageName3 = "Test Page Name 3");
+				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 
-		task ("Assert cannot move Test Page Name 2 and 3 to top of Test Page Name 1 in Live site") {
+		task ("View cannot move Test Page Name 2 and 3 to top of Test Page Name 1 in Live site") {
 			for (var n : list "2,3") {
 				SitePages.checkPage(pageName = "Test Page Name ${n}");
 			}
@@ -123,112 +117,120 @@ definition {
 
 			Page.viewPagesOrder(
 				depth = "2",
-				pageName1 = "Test Page Name 1",
-				pageName2 = "Test Page Name 2",
-				pageName3 = "Test Page Name 3");
+				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 	}
 
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page when enable Live."
 	@priority = "3"
-	test ViewCollectionItemInformationInStaging {
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Test Site Name (Staging)",
-			site = "false",
-			title = "Webcontent Title");
-
-		HeadlessBlog.addBlogEntry(
-			content = "Blogs Entry Content",
-			groupName = "Test Site Name (Staging)",
-			site = "false",
-			title = "Blogs Entry Title");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title",
-			groupName = "Test Site Name-staging",
-			mimeType = "image/jpeg",
-			site = "false",
-			sourceFileName = "Document_1.jpg");
-
-		JSONAssetlist.addDynamicAssetListEntryWithItemType(
-			groupName = "Test Site Name (Staging)",
-			itemType = "All Types",
-			site = "false",
-			title = "Dynamic Collection");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Dynamic Collection",
-			pageName = "Content Collection Page Name",
-			tabName = "Collections");
-
-		PageEditor.clickPublish();
-
-		ProductMenu.gotoHomePage();
-
-		PagesFinder.goToPagesFinder();
-
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
-			AssertElementPresent(
-				key_tableHeader = "${tableHeader}",
-				locator1 = "LexiconTable#TABLE_HEADER");
+	test ViewCollectionItemInformation {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
 		}
 
-		Page.viewCollectionItem(itemName = "Document Title");
-
-		Page.viewCollectionItem(
-			itemName = "Blogs Entry Title",
-			key_rowNumber = "2");
-
-		Page.viewCollectionItem(
-			itemName = "Webcontent Title",
-			key_rowNumber = "3");
-
-		IFrame.closeFrame();
-
-		ProductMenuHelper.openProductMenu();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
-			AssertElementPresent(
-				key_tableHeader = "${tableHeader}",
-				locator1 = "LexiconTable#TABLE_HEADER");
+		task ("Add a blogs entry") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Blogs Entry Title");
 		}
 
-		Page.viewCollectionItem(itemName = "Document Title");
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name-staging",
+				mimeType = "image/jpeg",
+				site = "false",
+				sourceFileName = "Document_1.jpg");
+		}
 
-		Page.viewCollectionItem(
-			itemName = "Blogs Entry Title",
-			key_rowNumber = "2");
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemType = "All Types",
+				site = "false",
+				title = "Dynamic Collection");
+		}
 
-		Page.viewCollectionItem(
-			itemName = "Webcontent Title",
-			key_rowNumber = "3");
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Dynamic Collection Page Name",
+				tabName = "Collections");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View header table are shown in collection items via page tree in staging site") {
+			ProductMenu.gotoHomePage();
+
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Dynamic Collection Page Name");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "View Collection Items",
+				pageName = "Dynamic Collection Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+				AssertElementPresent(
+					key_tableHeader = "${tableHeader}",
+					locator1 = "LexiconTable#TABLE_HEADER");
+			}
+		}
+
+		task ("View assets are shown in collection items via page tree in staging site") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				Page.viewCollectionItem(
+					itemName = "${title}",
+					key_rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View header table are shown in collection items via Pages admin in staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Dynamic Collection Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+				AssertElementPresent(
+					key_tableHeader = "${tableHeader}",
+					locator1 = "LexiconTable#TABLE_HEADER");
+			}
+		}
+
+		task ("View assets are shown in collection items via Pages admin in staging site") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				Page.viewCollectionItem(
+					itemName = "${title}",
+					key_rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
 	}
 
 }

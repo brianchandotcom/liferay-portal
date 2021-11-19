@@ -157,10 +157,8 @@ function JSONSXPElement({
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-								{
-									error.uiConfigurationValues
-										.sxpElement
-								}
+
+								{error.uiConfigurationValues.sxpElement}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}

@@ -82,7 +82,7 @@ const CodeMirrorEditor = React.forwardRef(
 	) => {
 		const innerRef = useRef(ref);
 		const editorWrapperRef = useRef();
-		const editor = useCombinedRefs(ref, innerRef);
+		const editorRef = useCombinedRefs(ref, innerRef);
 
 		useEffect(() => {
 			if (editorWrapperRef.current) {
@@ -124,9 +124,9 @@ const CodeMirrorEditor = React.forwardRef(
 					});
 				}
 
-				editor.current = codeMirror;
+				editorRef.current = codeMirror;
 			}
-		}, [editorWrapper]); // eslint-disable-line
+		}, [editorWrapperRef]); // eslint-disable-line
 
 		return (
 			<div

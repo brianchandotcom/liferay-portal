@@ -290,10 +290,7 @@ export function getDefaultValue(item) {
  * @param {object} _.uiConfigurationValues Values that will replace the keys in uiConfiguration
  * @return {object}
  */
-export function getConfigurationEntry({
-	sxpElement,
-	uiConfigurationValues,
-}) {
+export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 	const fieldSets = cleanUIConfiguration(
 		sxpElement.elementDefinition?.uiConfiguration
 	).fieldSets;
@@ -485,7 +482,7 @@ export function getConfigurationEntry({
 		parseCustomSXPElement(sxpElement, uiConfigurationValues)
 			.elementDefinition?.configuration || {}
 	);
-};
+}
 
 /**
  * Function for parsing custom json element text into sxpElement
@@ -494,7 +491,7 @@ export function getConfigurationEntry({
  * @param {object} uiConfigurationValues Contains custom JSON for sxpElement
  * @return {object}
  */
-export const parseCustomSXPElement = (sxpElement, uiConfigurationValues) => {
+export function parseCustomSXPElement(sxpElement, uiConfigurationValues) {
 	try {
 		if (isDefined(uiConfigurationValues.sxpElement)) {
 			return JSON.parse(uiConfigurationValues.sxpElement);

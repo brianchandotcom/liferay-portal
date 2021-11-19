@@ -187,6 +187,15 @@ public class FragmentEntryConfigurationParserImpl
 	public Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration) {
 
+		return getContextObjects(
+			configurationValuesJSONObject, configuration, new long[] {0});
+	}
+
+	@Override
+	public Map<String, Object> getContextObjects(
+		JSONObject configurationValuesJSONObject, String configuration,
+		long[] segmentsEntryIds) {
+
 		HashMap<String, Object> contextObjects = new HashMap<>();
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
@@ -216,7 +225,8 @@ public class FragmentEntryConfigurationParserImpl
 					"collectionSelector")) {
 
 				Object contextListObject = _getInfoListObjectEntry(
-					configurationValuesJSONObject.getString(name));
+					configurationValuesJSONObject.getString(name),
+					segmentsEntryIds);
 
 				if (contextListObject != null) {
 					contextObjects.put(

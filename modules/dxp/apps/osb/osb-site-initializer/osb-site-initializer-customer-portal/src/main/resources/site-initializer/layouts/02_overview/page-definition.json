@@ -23,7 +23,7 @@
                                 "widgetConfig": {
                                     "portletSetupPortletDecoratorId": "barebone"
                                 },
-                                "widgetName": "[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-HOME$]"
+                                "widgetName": "[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-OVERVIEW$]"
                             }
                         },
                         "type": "Widget"
@@ -36,7 +36,7 @@
     },
     "settings": {
         "masterPage": {
-            "key": "home"
+            "key": "overview"
         }
     }
 }

@@ -149,7 +149,7 @@ public class OracleDB extends BaseDB {
 
 	@Override
 	protected String limitColumnLength(String column, int length) {
-		return StringBundler.concat("substr(", column, ",1,", length, ")");
+		return StringBundler.concat("substr(", column, ", 1, ", length, ")");
 	}
 
 	@Override

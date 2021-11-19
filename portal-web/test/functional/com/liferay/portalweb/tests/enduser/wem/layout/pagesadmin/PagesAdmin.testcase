@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "This is use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
+	@description = "This is a use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
 	@priority = "5"
 	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
 		property portal.acceptance = "true";
@@ -50,17 +50,10 @@ definition {
 				tabName = "Collections");
 		}
 
-		task ("Assert there is no collection items shown in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("View there is no collection items shown in Collection Display") {
+			PageEditor.viewCollectionItem(assetTitle = "Sample Collection Item");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
-				value1 = "(0 Items)");
+			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(0 Items)");
 		}
 
 		task ("Add a web content article based on Basic Web Content in collection page") {
@@ -75,17 +68,10 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert the web content article is shown in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("View the web content article is shown in Collection Display") {
+			PageEditor.viewCollectionItem(assetTitle = "Web Content Title");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
-				value1 = "(1 Items)");
+			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(1 Items)");
 		}
 
 		task ("Add a Blogs entry in collection page") {
@@ -100,23 +86,18 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert the Blogs entry is shown in Collection Display") {
+		task ("View the Blogs entry is shown in Collection Display") {
 			var n = "1";
 
-			for (var title : list "Blogs Entry Title,Web Content Title") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${title}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var titleName : list "Blogs Entry Title,Web Content Title") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "${titleName}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
-				value1 = "(2 Items)");
+			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(2 Items)");
 		}
 
 		task ("Add a document based on Basic Document in collection page") {
@@ -131,133 +112,24 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert the document is shown in Collection Display") {
+		task ("View the document is shown in Collection Display") {
 			var n = "1";
 
-			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${title}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var titleName : list "Document Title,Blogs Entry Title,Web Content Title") {
+				PageEditor.viewCollectionItem(
+					assetTitle = "${titleName}",
+					row = "${n}");
 
 				var n = ${n} + 1;
 			}
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
-				value1 = "(3 Items)");
+			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(3 Items)");
 		}
 	}
 
-	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from pages admin."
-	@priority = "5"
-	test AddcollectionViaAddingCollectionPage {
-		property portal.acceptance = "true";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Manual Collection Name",
-			menuItem = "Manual Collection",
-			pageName = "Manual Collection Page Name",
-			selectedAsset = "All Types",
-			tabName = "Collections");
-
-		PageEditor.clickPublish();
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Dynamic Collection Name",
-			menuItem = "Dynamic Collection",
-			pageName = "Dynamic Collection Page Name",
-			selectedAsset = "All Types",
-			tabName = "Collections");
-
-		PageEditor.clickPublish();
-
-		Page.view(
-			pageName = "Manual Collection Page Name",
-			privacy = "Public Pages");
-
-		Page.view(
-			pageName = "Dynamic Collection Page Name",
-			privacy = "Public Pages");
-	}
-
-	@description = "This is for LPS-110108. Add a Draft page and check label."
+	@description = "This is a use case for LPS-107776. Only can add specific type collection items in a collection page based on manual collection with single item type."
 	@priority = "4"
-	test AddDraftPageAndViewLabel {
-		property testray.component.names = "Site Pages Administration";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-		AssertTextEquals(
-			key_itemName = "Test Content Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS",
-			value1 = "Draft");
-	}
-
-	@description = "This is for LPS-110108. Adding a fourth level child page and viewing it on Page admin."
-	@priority = "5"
-	test AddPageWithFourthLevelChildPagesToSite {
-		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "First Level Child Page",
-			parentLayoutName = "Site Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Second Level Child Page",
-			parentLayoutName = "First Level Child Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Third Level Child Page",
-			parentLayoutName = "Second Level Child Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Fourth Level Child Page",
-			parentLayoutName = "Third Level Child Page");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		Page.view(
-			depth = "2",
-			pageName = "First Level Child Page",
-			privacy = "Public Pages");
-
-		Page.view(
-			depth = "3",
-			pageName = "Second Level Child Page",
-			privacy = "Public Pages");
-
-		Page.view(
-			depth = "4",
-			pageName = "Third Level Child Page",
-			privacy = "Public Pages");
-
-		Page.view(
-			depth = "5",
-			pageName = "Fourth Level Child Page",
-			privacy = "Public Pages");
-	}
-
-	@description = "This is use case for LPS-107776. Only can add specific type collection items in a collection page based on manual collection with single item type."
-	@priority = "4"
-	test AddSingleTypeCollectionItemsInCollectionPageBasedOnManualCollectionWithSingleItemType {
+	test AddCollectionItemsInCollectionPageBasedOnManualCollection {
 		task ("Add a manual collection with Web Content Article item type") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
@@ -275,17 +147,10 @@ definition {
 				tabName = "Collections");
 		}
 
-		task ("Assert there is no collection items shown in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("View there is no collection items shown in Collection Display") {
+			PageEditor.viewCollectionItem(assetTitle = "Sample Collection Item");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
-				value1 = "(0 Items)");
+			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(0 Items)");
 		}
 
 		task ("Add a web content article based on Basic Web Content in collection page") {
@@ -298,562 +163,313 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert the web content article is shown in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("View the web content article is shown in Collection Display") {
+			PageEditor.viewCollectionItem(assetTitle = "Web Content Title");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
-				value1 = "(1 Items)");
+			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(1 Items)");
 		}
 	}
 
-	@description = "This is a test for LPS-129406. The user that has all permissions for Web Content in Content & Data role can not add a page via Page Tree Panel."
+	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from pages admin."
+	@priority = "5"
+	@uitest
+	test AddCollectionViaAddingCollectionPage {
+		property portal.acceptance = "true";
+
+		task ("Add a manual collection when adding a collection page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection Name",
+				menuItem = "Manual Collection",
+				pageName = "Manual Collection Page Name",
+				selectedAsset = "All Types",
+				tabName = "Collections");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a dynamic collection when adding a collection page") {
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection Name",
+				menuItem = "Dynamic Collection",
+				pageName = "Dynamic Collection Page Name",
+				selectedAsset = "All Types",
+				tabName = "Collections");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View collection pages are shown in pages admin") {
+			for (var collectionType : list "Manual,Dynamic") {
+				Page.view(
+					pageName = "${collectionType} Collection Page Name",
+					privacy = "Public Pages");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-110108. Can view the draft label of a page in pages admin."
 	@priority = "4"
-	test CannotAddPageViaPageTreeWithAllWebContentPermissions {
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = "Guest",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add a new regular role") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
-		}
-
-		task ("Define the permissions of new role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Regular Role Name",
-				roleType = "regular");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
-				roleTitle = "Regular Role Name");
-
-			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.journal",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "ACCESS,ADD_SUBFOLDER,ADD_ARTICLE,DELETE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.journal.model.JournalFolder",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.journal.model.JournalArticle",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.journal.model.JournalFeed",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-		}
-
-		task ("Assign the regular role to new user") {
-			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the new user cannot add a page via Page Tree panel") {
-			ProductMenuHelper.openProductMenu();
-
-			PagesFinder.goToPagesFinder();
-
-			AssertNotVisible(locator1 = "Icon#PLUS");
-		}
-
-		task ("View the new user is able to navigate and add a Web Content") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content");
-
-			AssertElementPresent(locator1 = "Icon#PLUS");
-		}
-
-		task ("View the new user is able to navigate and add a Structure") {
-			NavItem.gotoStructures();
-
-			AssertElementPresent(locator1 = "Icon#PLUS");
-		}
-
-		task ("View the new user is able to navigate and add a Template") {
-			NavItem.gotoTemplates();
-
-			AssertElementPresent(locator1 = "Icon#PLUS");
-		}
-	}
-
-	@description = "This is for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
-	@priority = "5"
-	test CheckAndViewCountViaManagementToolbar {
-		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Widget Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page",
-			type = "content");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.checkPage(pageName = "Test Widget Page");
-
-		AssertTextEquals(
-			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "1 of 2 Selected");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ManagementBar.clickSelectAllCheckbox();
-
-		SitePages.viewCheckboxChecked(pageName = "Test Widget Page");
-
-		SitePages.viewCheckboxChecked(pageName = "Test Content Page");
-	}
-
-	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
-	@priority = "5"
-	test GoToCollectionItemDisplayPage {
-		property portal.acceptance = "true";
-
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-			contentType = "Web Content Article",
-			displayPageTemplateEntryName = "Display Page Name",
-			groupName = "Test Site Name",
-			subType = "Basic Web Content");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		PageEditor.clickPublish();
-
-		for (var i : list "1,2,3") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content ${i}",
+	test AddDraftContentPage {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				title = "WC WebContent Title ${i}");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title ${i}");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
+				layoutName = "Test Page Name",
+				type = "content");
 		}
 
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Site Name",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article",
-			title = "Manual Collection");
+		task ("View Draft label is shown") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			SitePages.viewPageStatus(
+				pageName = "Test Page Name",
+				status = "Draft");
+		}
+	}
 
-		AssetListsAdmin.selectAsset(
-			assetListName = "Manual Collection",
-			assetType = "Basic Web Content",
-			entryList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3");
+	@description = "This is a test for LPS-110108. Can add a fourth level of child page and view it on Pages admin."
+	@priority = "5"
+	test AddFourthLevelChildPage {
+		property portal.acceptance = "true";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Manual Collection",
-			pageName = "Content Collection Page Name",
-			tabName = "Collections");
-
-		PageEditor.clickPublish();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		for (var i : list "1,2,3") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			SitePages.gotoPageMenuItem(
-				menuItem = "View Collection Items",
-				pageName = "Content Collection Page Name");
-
-			Pause(locator1 = "5000");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Page.gotoCollectionEntryEllipsisItem(
-				item = "View Display Page",
-				tableEntry = "WC WebContent Title ${i}");
-
-			SelectFrameTop();
-
-			ContentPages.viewFragmentText(
-				assetType = "web-content",
-				fragmentName = "Display Page Content",
-				text = "WC WebContent Content ${i}");
-
-			Navigator.gotoBack();
+		task ("Add a parent page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
 		}
 
-		AssertVisible(
-			key_itemName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+		task ("Add the first level of child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name 1",
+				parentLayoutName = "Test Page Name");
+		}
 
-		ProductMenu.gotoHomePage();
+		task ("Add the second level of child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name 2",
+				parentLayoutName = "Child Page Name 1");
+		}
 
-		PagesFinder.goToPagesFinder();
+		task ("Add the third level of child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name 3",
+				parentLayoutName = "Child Page Name 2");
+		}
 
-		for (var i : list "1,2,3") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
+		task ("Add the fourth level of child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name 4",
+				parentLayoutName = "Child Page Name 3");
+		}
 
-			PagesFinder.gotoPageEllipsisItem(
-				item = "View Collection Items",
-				pageName = "Content Collection Page Name");
+		task ("View the children pages are shown in pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Pause(locator1 = "5000");
+			var n = "2";
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			for (var i : list "1,2,3,4") {
+				Page.view(
+					depth = "${n}",
+					pageName = "Child Page Name ${i}",
+					privacy = "Public Pages");
 
-			Page.gotoCollectionEntryEllipsisItem(
-				item = "View Display Page",
-				tableEntry = "WC WebContent Title ${i}");
-
-			SelectFrameTop();
-
-			ContentPages.viewFragmentText(
-				assetType = "web-content",
-				fragmentName = "Display Page Content",
-				text = "WC WebContent Content ${i}");
-
-			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
+				var n = ${n} + 1;
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-110183. Can access to edition of collection items in Collection Items modal."
 	@priority = "4"
-	test GoToCollectionItemEditMode {
-		JSONWebcontent.addWebContent(
-			content = "Webcontent Content",
-			groupName = "Test Site Name",
-			title = "Webcontent Title");
+	test GoToCollectionItemEditModeViaViewCollectionItemsModal {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		HeadlessBlog.addBlogEntry(
-			content = "Blogs Entry Content",
-			groupName = "Test Site Name",
-			title = "Blogs Entry Title");
+		task ("Add a blogs entry") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a collection page based on recent content collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Recent Content",
-			pageName = "Content Collection Page Name",
-			tabName = "Collection Providers");
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Recent Content",
+				pageName = "Test Collection Page Name",
+				tabName = "Collection Providers");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("View assets can be aditable via collection items in pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				SitePages.gotoPageMenuItem(
+					menuItem = "View Collection Items",
+					pageName = "Test Collection Page Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
-			pageName = "Content Collection Page Name");
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = "5000");
+				Page.gotoCollectionEntryEllipsisItem(
+					item = "Edit Content",
+					tableEntry = "${title}");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+				ControlMenu.viewHeaderTitle(headerTitle = "${title}");
 
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Webcontent Title");
+				Navigator.gotoBack();
+			}
+		}
 
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+		task ("View assets can be aditable via collection items in page tree") {
+			PagesFinder.goToPagesFinder();
 
-		Navigator.gotoBack();
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				PagesFinder.gotoPageEllipsisItem(
+					item = "View Collection Items",
+					pageName = "Test Collection Page Name");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
-			pageName = "Content Collection Page Name");
+				Page.gotoCollectionEntryEllipsisItem(
+					item = "Edit Content",
+					tableEntry = "${title}");
 
-		Pause(locator1 = "5000");
+				ControlMenu.viewHeaderTitle(headerTitle = "${title}");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+				PageEditor.clickBack();
 
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Blogs Entry Title");
+				ControlMenu.viewHeaderTitle(headerTitle = "Test Collection Page Name *");
 
-		AssertTextEquals(
-			key_text = "Title",
-			locator1 = "TextArea#ANY",
-			value1 = "Blogs Entry Title");
-
-		Navigator.gotoBack();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Document Title");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Document Title");
-
-		Navigator.gotoBack();
-
-		AssertVisible(
-			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
-
-		ProductMenu.gotoHomePage();
-
-		PagesFinder.goToPagesFinder();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Webcontent Title");
-
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Blogs Entry Title");
-
-		AssertTextEquals(
-			key_text = "Title",
-			locator1 = "TextArea#ANY",
-			value1 = "Blogs Entry Title");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Document Title");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Document Title");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name *");
-
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name*");
+				PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name*");
+			}
+		}
 	}
 
-	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
+	@description = "This is a test for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
 	@priority = "5"
 	test MouseOverNonRootPageAndViewPage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration";
 
-		for (var n : list "1,2") {
+		task ("Add two content pages then publish") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
+		}
+
+		task ("Add a child page then publish") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name ${n}",
+				layoutName = "Child Page Name 1",
+				parentLayoutName = "Test Page Name 1",
 				type = "content");
 
 			JSONLayout.publishLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name ${n}");
+				layoutName = "Child Page Name 1");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Content Page Name 1",
-			parentLayoutName = "Test Content Page Name 1",
-			type = "content");
+		task ("Select the first page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		JSONLayout.publishLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Content Page Name 1");
+			SitePages.expandPageTree(depth = "2");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			SitePages.checkPage(pageName = "Test Page Name 1");
+		}
 
-		SitePages.expandPageTree(depth = "2");
+		task ("View plus icon is shown when mouse over the page name") {
+			MouseOver(
+				key_itemName = "Child Page Name 1",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
 
-		SitePages.checkPage(pageName = "Test Content Page Name 1");
+			AssertVisible(
+				key_pageName = "Child Page Name 1",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+		}
 
-		MouseOver(
-			key_itemName = "Child Content Page Name 1",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+		task ("View child page via kebab menu action") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Child Page Name 1");
 
-		AssertVisible(
-			key_pageName = "Child Content Page Name 1",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+			ControlMenu.viewHeaderTitle(headerTitle = "Child Page Name 1");
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View",
-			pageName = "Child Content Page Name 1");
+		task ("View parent page by clicking on page name") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+			Click(
+				key_pageName = "Test Page Name 1",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE_LINK");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		Click(
-			key_pageName = "Test Content Page Name 1",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE_LINK");
-
-		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
-
-		ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name 1");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
+		}
 	}
 
-	@description = "This is for LPS-110108. Move child page to parent page level via drag and drop."
+	@description = "This is a test for LPS-110108. Move child page to parent page level via drag and drop."
 	@priority = "4"
 	test MoveChildPageToParentLevel {
-		property testray.component.names = "Site Pages Administration";
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Parent Page Name");
+		task ("Add a child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name",
+				parentLayoutName = "Test Page Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Page Name",
-			parentLayoutName = "Parent Page Name");
+		task ("View child page is shown under parent page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			Page.view(
+				depth = "2",
+				pageName = "Child Page Name",
+				privacy = "Public Pages");
+		}
 
-		Page.view(
-			depth = "2",
-			pageName = "Child Page Name",
-			privacy = "Public Pages");
+		task ("Move child page to parent level") {
+			SitePages.movePageToPageUp(
+				pageName = "Child Page Name",
+				pageNameTo = "Test Page Name");
+		}
 
-		SitePages.movePageToPageUp(
-			pageName = "Child Page Name",
-			pageNameTo = "Parent Page Name");
-
-		Page.view(
-			pageName = "Child Page Name",
-			privacy = "Public Pages");
+		task ("View child and parent page are in the same level") {
+			for (var name : list "Test,Child") {
+				Page.view(
+					pageName = "${name} Page Name",
+					privacy = "Public Pages");
+			}
+		}
 	}
 
-	@description = "This is for LPS-114527. Can move multiple different level pages to the same level via dragging in Pages admin."
+	@description = "This is a test for LPS-114527. Can move multiple different level pages to the same level via dragging in Pages admin."
 	@priority = "4"
 	test MoveMultipleDifferentLevelsPagesToTheSameLevel {
 		task ("Add a widget page") {
@@ -890,40 +506,34 @@ definition {
 		task ("Move Test Page Name 2 and Child Child Page Name 1 to the same level with Child Page Name 1") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			WaitForPageLoad();
+			for (var name : list "Test,Child") {
+				Click(
+					key_itemName = "${name} Page Name 1",
+					locator1 = "SitePages#LIST_GROUP_ITEM");
+			}
 
-			Click(
-				key_itemName = "Test Page Name 1",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
-
-			Click(
-				key_itemName = "Child Page Name 1",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
-
-			SitePages.checkPage(pageName = "Test Page Name 2");
-
-			SitePages.checkPage(pageName = "Child Child Page Name 1");
+			for (var pageName : list "Test Page Name 2,Child Child Page Name 1") {
+				SitePages.checkPage(pageName = "${pageName}");
+			}
 
 			SitePages.movePageToPageUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Child Page Name 1");
 		}
 
-		task ("Assert Test Page Name 2 and Child Child Page Name 1 are moved to the same level with Child Page Name 1") {
+		task ("View Test Page Name 2 and Child Child Page Name 1 are moved to the same level with Child Page Name 1") {
 			Page.viewPagesOrder(
 				depth = "3",
-				pageName1 = "Test Page Name 2",
-				pageName2 = "Child Child Page Name 1",
-				pageName3 = "Child Page Name 1");
+				pageNameList = "Test Page Name 2,Child Child Page Name 1,Child Page Name 1");
 		}
 	}
 
-	@description = "This is for LPS-114527. Can move multiple same level pages at the same level via dragging in Pages admin."
+	@description = "This is a test for LPS-114527. Can move multiple same level pages at the same level via dragging in Pages admin."
 	@priority = "5"
 	test MoveMultiplePagesInSameLevel {
 		property portal.acceptance = "true";
 
-		task ("Add 2 widget page and 1 content page in the same level") {
+		task ("Add two widget pages and one content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -940,16 +550,12 @@ definition {
 				layoutName = "Test Page Name 3");
 		}
 
-		task ("Assert pages order") {
+		task ("View pages order in Pages admin") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",
-				pageName1 = "Test Page Name 1",
-				pageName2 = "Test Page Name 2",
-				pageName3 = "Test Page Name 3");
+				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 
 		task ("Move Test Page Name 2 and 3 to top of Test Page Name 1") {
@@ -962,19 +568,17 @@ definition {
 				pageNameTo = "Test Page Name 1");
 		}
 
-		task ("Assert Test Page Name 2 and 3 are moved to top of Test Page Name 1") {
+		task ("View Test Page Name 2 and 3 are moved to top of Test Page Name 1") {
 			Page.viewPagesOrder(
 				depth = "2",
-				pageName1 = "Test Page Name 2",
-				pageName2 = "Test Page Name 3",
-				pageName3 = "Test Page Name 1");
+				pageNameList = "Test Page Name 2,Test Page Name 3,Test Page Name 1");
 		}
 	}
 
-	@description = "This is for LPS-114527. Can move multiple same level pages to different level via dragging in Pages admin."
+	@description = "This is a test for LPS-114527. Can move multiple same level pages to different level via dragging in Pages admin."
 	@priority = "4"
 	test MoveMultipleSameLevelPagesToChildLevel {
-		task ("Add 2 widget page and 1 content page in the same level") {
+		task ("Add two widget pages and 1 content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -994,8 +598,6 @@ definition {
 		task ("Move Test Page Name 1 and 2 to child level of Test Page Name 3") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			WaitForPageLoad();
-
 			Click(
 				key_itemName = "Test Page Name 3",
 				locator1 = "SitePages#LIST_GROUP_ITEM");
@@ -1011,89 +613,107 @@ definition {
 				value1 = "");
 		}
 
-		task ("Assert Test Page Name 1 and 2 are moved to child level of Test Page Name 3") {
+		task ("View Test Page Name 1 and 2 are moved to child level of Test Page Name 3") {
 			Page.viewPagesOrder(
 				depth = "3",
-				pageName1 = "Test Page Name 1",
-				pageName2 = "Test Page Name 2");
+				pageNameList = "Test Page Name 1,Test Page Name 2");
 		}
 	}
 
-	@description = "This is for LPS-110108. Reorder pages in same level via drag and drop."
+	@description = "This is a test for LPS-110108. Reorder pages in same level via drag and drop."
 	@priority = "5"
 	test MovePageInSameLevel {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Pages Administration";
 
-		for (var n : list "1,2") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name ${n}",
-				type = "content");
+		task ("Add two content pages then publish") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}",
+					type = "content");
 
-			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name ${n}");
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("View pages order in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		Page.viewPagesOrder(
-			depth = "2",
-			pageName1 = "Test Content Page Name 1",
-			pageName2 = "Test Content Page Name 2");
+			Page.viewPagesOrder(
+				depth = "2",
+				pageNameList = "Test Page Name 1,Test Page Name 2");
+		}
 
-		SitePages.movePageToPageUp(
-			pageName = "Test Content Page Name 2",
-			pageNameTo = "Test Content Page Name 1");
+		task ("Change order of pages") {
+			SitePages.movePageToPageUp(
+				pageName = "Test Page Name 2",
+				pageNameTo = "Test Page Name 1");
+		}
 
-		Page.viewPagesOrder(
-			depth = "2",
-			pageName1 = "Test Content Page Name 2",
-			pageName2 = "Test Content Page Name 1");
+		task ("View new pages order in Pages admin") {
+			Page.viewPagesOrder(
+				depth = "2",
+				pageNameList = "Test Page Name 2,Test Page Name 1");
+		}
 	}
 
-	@description = "This is for LPS-110108. Move parent page to child page level via drag and drop."
+	@description = "This is a test for LPS-110108. Move parent page to child page level via drag and drop."
 	@priority = "4"
 	test MoveParentPageToChildLevel {
-		property testray.component.names = "Site Pages Administration";
+		task ("Add two content pages then publish") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}",
+					type = "content");
 
-		for (var n : list "1,2") {
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
+		}
+
+		task ("Add a child page then publish") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name ${n}",
+				layoutName = "Child Page Name 1",
+				parentLayoutName = "Test Page Name 1",
 				type = "content");
 
 			JSONLayout.publishLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name ${n}");
+				layoutName = "Child Page Name 1");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Content Page Name 1",
-			parentLayoutName = "Test Content Page Name 1",
-			type = "content");
+		task ("View child page in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		JSONLayout.publishLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Content Page Name 1");
+			Page.view(
+				depth = "2",
+				pageName = "Child Page Name 1",
+				privacy = "Public Pages");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Move Test Page Name 2 to child level of Test Page Name 1") {
+			SitePages.movePageToPageUp(
+				pageName = "Test Page Name 2",
+				pageNameTo = "Child Page Name 1");
+		}
 
-		Page.view(
-			depth = "2",
-			pageName = "Child Content Page Name 1",
-			privacy = "Public Pages");
+		task ("View moved page is at the same level than child page") {
+			var n = "1";
 
-		SitePages.movePageToPageUp(
-			pageName = "Test Content Page Name 2",
-			pageNameTo = "Child Content Page Name 1");
+			for (var name : list "Child,Test") {
+				Page.view(
+					depth = "2",
+					pageName = "${name} Page Name ${n}",
+					privacy = "Public Pages");
 
-		Page.view(
-			depth = "2",
-			pageName = "Test Content Page Name 2",
-			privacy = "Public Pages");
+				var n = ${n} + 1;
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-139064. Users can preview draft for a collection page from Pages admin when they exist."
@@ -1234,251 +854,446 @@ definition {
 		task ("Search for all three pages and assert they all appear") {
 			Search.searchCP(searchTerm = "page");
 
-			AssertTextEquals(
-				locator1 = "//tr[1]/td[2]",
-				value1 = "Page One");
+			for (var n : list "2,3") {
+				AssertTextEquals(
+					locator1 = "//tr[1]/td[${n}]",
+					value1 = "Page One");
+			}
 
-			AssertTextEquals(
-				locator1 = "//tr[1]/td[3]",
-				value1 = "Page One");
+			for (var n : list "2,3") {
+				AssertTextEquals(
+					locator1 = "//tr[2]/td[${n}]",
+					value1 = "Page Two");
+			}
 
-			AssertTextEquals(
-				locator1 = "//tr[2]/td[2]",
-				value1 = "Page Two");
+			var n = "2";
 
-			AssertTextEquals(
-				locator1 = "//tr[2]/td[3]",
-				value1 = "Page Two");
+			for (var pageName : list "Page Three,Page One Page Three") {
+				AssertTextEquals(
+					locator1 = "//tr[3]/td[${n}]",
+					value1 = "${pageName}");
 
-			AssertTextEquals(
-				locator1 = "//tr[3]/td[2]",
-				value1 = "Page Three");
-
-			AssertTextEquals(
-				locator1 = "//tr[3]/td[3]",
-				value1 = "Page One Page Three");
+				var n = ${n} + 1;
+			}
 		}
 
 		task ("Search for one page and assert only that page appears") {
 			Search.searchCP(searchTerm = "one");
 
-			AssertTextEquals(
-				locator1 = "//tr[1]/td[2]",
-				value1 = "Page One");
+			for (var n : list "2,3") {
+				AssertTextEquals(
+					locator1 = "//tr[1]/td[${n}]",
+					value1 = "Page One");
+			}
 
-			AssertTextEquals(
-				locator1 = "//tr[1]/td[3]",
-				value1 = "Page One");
-
-			AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'Page Two')]");
-
-			AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'Page Three')]");
+			for (var pageName : list "Page Two,Page Three") {
+				AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'${pageName}')]");
+			}
 		}
 
 		task ("Search for child page and assert that page appears") {
 			Search.searchCP(searchTerm = "three");
 
-			AssertTextEquals(
-				locator1 = "//tr[1]/td[2]",
-				value1 = "Page Three");
+			var n = "2";
 
-			AssertTextEquals(
-				locator1 = "//tr[1]/td[3]",
-				value1 = "Page One Page Three");
+			for (var pageName : list "Page Three,Page One Page Three") {
+				AssertTextEquals(
+					locator1 = "//tr[1]/td[${n}]",
+					value1 = "${pageName}");
 
-			AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'Page One')]");
+				var n = ${n} + 1;
+			}
 
-			AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'Page Two')]");
+			for (var pageName : list "Page One,Page Two") {
+				AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'${pageName}')]");
+			}
 		}
 	}
 
-	@description = "This is for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
+	@description = "This is a test for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
 	@priority = "4"
-	test SelectNonRootPageAndViewPage {
-		property testray.component.names = "Site Pages Administration";
+	test ViewChildPage {
+		task ("Add a content page then publish") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name",
-			type = "content");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.publishLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name");
+		task ("Add a child page then publish") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name",
+				parentLayoutName = "Test Page Name",
+				type = "content");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Content Page Name",
-			parentLayoutName = "Test Content Page Name",
-			type = "content");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name");
+		}
 
-		JSONLayout.publishLayout(
-			groupName = "Test Site Name",
-			layoutName = "Child Content Page Name");
+		task ("View the plus icon is shown after check the page in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			SitePages.expandPageTree(depth = "2");
 
-		SitePages.expandPageTree(depth = "2");
+			SitePages.checkPage(pageName = "Child Page Name");
 
-		SitePages.checkPage(pageName = "Child Content Page Name");
+			AssertVisible(
+				key_pageName = "Child Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+		}
 
-		AssertVisible(
-			key_pageName = "Child Content Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+		task ("View child page via action menu") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Child Page Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View",
-			pageName = "Child Content Page Name");
-
-		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+			ControlMenu.viewHeaderTitle(headerTitle = "Child Page Name");
+		}
 	}
 
-	@description = "This is a test for LPS-110183. Can view information about collection items of collection page."
+	@description = "This is a test for LPS-110183. Can view information about collection items of collection page via Pages admin."
 	@priority = "5"
 	test ViewCollectionItemViaPageFinderAndPageAdmin {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "Webcontent Content",
-			groupName = "Test Site Name",
-			title = "Webcontent Title");
-
-		HeadlessBlog.addBlogEntry(
-			content = "Blogs Entry Content",
-			groupName = "Test Site Name",
-			title = "Blogs Entry Title");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONAssetlist.addDynamicAssetListEntryWithItemType(
-			groupName = "Test Site Name",
-			itemType = "All Types",
-			title = "Dynamic Collection");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Dynamic Collection",
-			pageName = "Content Collection Page Name",
-			tabName = "Collections");
-
-		PagesFinder.goToPagesFinder();
-
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name*");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
-			AssertElementPresent(
-				key_tableHeader = "${tableHeader}",
-				locator1 = "LexiconTable#TABLE_HEADER");
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
 		}
 
-		Page.viewCollectionItem(itemName = "Document Title");
-
-		Page.viewCollectionItem(
-			itemName = "Blogs Entry Title",
-			key_rowNumber = "2");
-
-		Page.viewCollectionItem(
-			itemName = "Webcontent Title",
-			key_rowNumber = "3");
-
-		IFrame.closeFrame();
-
-		ProductMenuHelper.openProductMenu();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
-			AssertElementPresent(
-				key_tableHeader = "${tableHeader}",
-				locator1 = "LexiconTable#TABLE_HEADER");
+		task ("Add a blogs entry") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
 		}
 
-		Page.viewCollectionItem(itemName = "Document Title");
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
 
-		Page.viewCollectionItem(
-			itemName = "Blogs Entry Title",
-			key_rowNumber = "2");
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
 
-		Page.viewCollectionItem(
-			itemName = "Webcontent Title",
-			key_rowNumber = "3");
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Dynamic Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("View header table are shown in collection items via page tree") {
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Dynamic Collection Page Name*");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "View Collection Items",
+				pageName = "Dynamic Collection Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+				AssertElementPresent(
+					key_tableHeader = "${tableHeader}",
+					locator1 = "LexiconTable#TABLE_HEADER");
+			}
+		}
+
+		task ("View assets are shown in collection items via page tree") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				Page.viewCollectionItem(
+					itemName = "${title}",
+					key_rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View header table are shown in collection items via Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Dynamic Collection Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
+				AssertElementPresent(
+					key_tableHeader = "${tableHeader}",
+					locator1 = "LexiconTable#TABLE_HEADER");
+			}
+		}
+
+		task ("View assets are shown in collection items via Pages admin") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				Page.viewCollectionItem(
+					itemName = "${title}",
+					key_rowNumber = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-110183. Can view more collection items use pagination in Collection Items modal."
 	@priority = "4"
 	test ViewCollectionItemWithPagination {
-		for (var entryTitle : list "5,4,3,2,1") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
+		task ("Add five web contents") {
+			for (var n : list "5,4,3,2,1") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+		}
+
+		task ("Add a collection page based on highest rated assets collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Highest Rated Assets",
+				pageName = "Test Collection Page Name",
+				tabName = "Collection Providers");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View all web contents are shown in collection items") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Test Collection Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var rowNumber : list "1,2,3,4,5") {
+				Page.viewCollectionItem(
+					itemName = "Web Content Title ${rowNumber}",
+					key_rowNumber = "${rowNumber}");
+			}
+		}
+
+		task ("Change the pagination to four items per page") {
+			Pagination.changePagination(itemsPerPage = "4");
+		}
+
+		task ("View four web contents are shown in collecion items") {
+			for (var rowNumber : list "1,2,3,4") {
+				Page.viewCollectionItem(
+					itemName = "Web Content Title ${rowNumber}",
+					key_rowNumber = "${rowNumber}");
+			}
+
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 5");
+		}
+
+		task ("View fifth web content is shown in the next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Page.viewCollectionItem(itemName = "Web Content Title 5");
+		}
+	}
+
+	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
+	@priority = "5"
+	test ViewDisplayPageTemplateViaCollectionItems {
+		property portal.acceptance = "true";
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT",
 				groupName = "Test Site Name",
-				title = "Web Content Title ${entryTitle}");
+				subType = "Basic Web Content");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a Display Page Content fragment to DPT then publish") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPublicCollectionPage(
-			collectionName = "Highest Rated Assets",
-			pageName = "Content Collection Page Name",
-			tabName = "Collection Providers");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
-		PageEditor.clickPublish();
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var rowNumber : list "1,2,3,4,5") {
-			Page.viewCollectionItem(
-				itemName = "Web Content Title ${rowNumber}",
-				key_rowNumber = "${rowNumber}");
+			PageEditor.clickPublish();
 		}
 
-		Pagination.changePagination(itemsPerPage = "4");
-
-		for (var rowNumber : list "1,2,3,4") {
-			Page.viewCollectionItem(
-				itemName = "Web Content Title ${rowNumber}",
-				key_rowNumber = "${rowNumber}");
+		task ("Add three web contents") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${i}");
+			}
 		}
 
-		LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 5");
+		task ("Select Web Content DPT as Specific Display Page Template") {
+			for (var i : list "1,2,3") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title ${i}");
 
-		Page.viewCollectionItem(itemName = "Web Content Title 5");
+				WebContent.editDisplayPage(
+					pageName = "Web Content DPT",
+					pageType = "Display Page Templates");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("Add a manual collection with Web Content Article item type and Basic Web Content item subtype") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Manual Collection");
+		}
+
+		task ("Select all web contents as collection item") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetType = "Basic Web Content",
+				entryList = "Web Content Title 1,Web Content Title 2,Web Content Title 3");
+		}
+
+		task ("Add a collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Manual Collection Page Name",
+				tabName = "Collections");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View display page of all web contents via collection items in pages admin") {
+			for (var i : list "1,2,3") {
+				WaitForLiferayEvent.initializeLiferayEventLog();
+
+				SitePages.gotoPageMenuItem(
+					menuItem = "View Collection Items",
+					pageName = "Manual Collection Page Name");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Page.gotoCollectionEntryEllipsisItem(
+					item = "View Display Page",
+					tableEntry = "Web Content Title ${i}");
+
+				SelectFrameTop();
+
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Display Page Content",
+					text = "Web Content Content ${i}");
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("View display page of all web contents via collection items in page tree") {
+			ProductMenu.gotoHomePage();
+
+			PagesFinder.goToPagesFinder();
+
+			for (var i : list "1,2,3") {
+				WaitForLiferayEvent.initializeLiferayEventLog();
+
+				PagesFinder.gotoPageEllipsisItem(
+					item = "View Collection Items",
+					pageName = "Manual Collection Page Name");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Page.gotoCollectionEntryEllipsisItem(
+					item = "View Display Page",
+					tableEntry = "Web Content Title ${i}");
+
+				SelectFrameTop();
+
+				ContentPages.viewFragmentText(
+					assetType = "web-content",
+					fragmentName = "Display Page Content",
+					text = "Web Content Content ${i}");
+
+				PageEditor.clickBack();
+
+				ControlMenu.viewHeaderTitle(headerTitle = "Manual Collection Page Name");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
+	@priority = "5"
+	test ViewNumberOfSelectedPagesOnManagementToolbar {
+		property portal.acceptance = "true";
+
+		task ("Add two widget pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
+
+		task ("Select first page in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.checkPage(pageName = "Test Page Name 1");
+		}
+
+		task ("View managment bar text is shown") {
+			ManagementBar.viewNumberOfSelectedItems(text = "1 of 2 Selected");
+		}
+
+		task ("Select all pages via management bar") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ManagementBar.clickSelectAllCheckbox();
+		}
+
+		task ("View managment bar text is shown") {
+			ManagementBar.viewNumberOfSelectedItems(text = "All Selected");
+		}
+
+		task ("View both pages are selected") {
+			for (var i : list "1,2") {
+				SitePages.viewCheckboxChecked(pageName = "Test Page Name ${i}");
+			}
+		}
 	}
 
 }

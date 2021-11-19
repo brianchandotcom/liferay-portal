@@ -65,16 +65,6 @@ public class DataSourceTest {
 
 		TestEntityLocalServiceUtil.addTestEntity(testEntity);
 
-		DataSource portalDataSource = InfrastructureUtil.getDataSource();
-
-		try (Connection connection = portalDataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from TestEntity");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertFalse(resultSet.next());
-		}
-
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from TestEntity");

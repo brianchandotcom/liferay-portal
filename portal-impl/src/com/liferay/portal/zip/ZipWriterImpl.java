@@ -171,36 +171,7 @@ public class ZipWriterImpl implements ZipWriter {
 	@Override
 	public File getFile() {
 		if (_exportEntries != null) {
-			try (FileSystem fileSystem = FileSystems.newFileSystem(
-					_uri, Collections.emptyMap())) {
-
-				Iterator<Map.Entry<String, byte[]>> iterator =
-					_exportEntries.iterator();
-
-				while (iterator.hasNext()) {
-					Map.Entry<String, byte[]> entry = iterator.next();
-
-					iterator.remove();
-
-					Path path = fileSystem.getPath(entry.getKey());
-
-					Path parentPath = path.getParent();
-
-					if (parentPath != null) {
-						Files.createDirectories(parentPath);
-					}
-
-					Files.write(
-						path, entry.getValue(), StandardOpenOption.CREATE,
-						StandardOpenOption.TRUNCATE_EXISTING,
-						StandardOpenOption.WRITE);
-				}
-
-				_exportEntries = null;
-			}
-			catch (IOException ioException) {
-				throw new UncheckedIOException(ioException);
-			}
+			_writeExportEntries();
 		}
 
 		return _file;
@@ -221,6 +192,39 @@ public class ZipWriterImpl implements ZipWriter {
 	@Deprecated
 	@Override
 	public void umount() {
+	}
+
+	private void _writeExportEntries() {
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				_uri, Collections.emptyMap())) {
+
+			Iterator<Map.Entry<String, byte[]>> iterator =
+				_exportEntries.iterator();
+
+			while (iterator.hasNext()) {
+				Map.Entry<String, byte[]> entry = iterator.next();
+
+				iterator.remove();
+
+				Path path = fileSystem.getPath(entry.getKey());
+
+				Path parentPath = path.getParent();
+
+				if (parentPath != null) {
+					Files.createDirectories(parentPath);
+				}
+
+				Files.write(
+					path, entry.getValue(), StandardOpenOption.CREATE,
+					StandardOpenOption.TRUNCATE_EXISTING,
+					StandardOpenOption.WRITE);
+			}
+
+			_exportEntries = null;
+		}
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
+		}
 	}
 
 	private List<Map.Entry<String, byte[]>> _exportEntries;

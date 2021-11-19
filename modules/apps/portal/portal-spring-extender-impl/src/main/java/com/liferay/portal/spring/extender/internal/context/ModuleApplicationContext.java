@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.spring.extender.internal.jdbc.DataSourceUtil;
 
 import java.net.URL;
@@ -33,6 +35,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
@@ -42,6 +45,30 @@ import org.springframework.core.io.UrlResource;
  * @author Miguel Pastor
  */
 public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
+
+	public static void registerDataSourceBean(
+		ConfigurableListableBeanFactory configurableListableBeanFactory,
+		ClassLoader extendeeClassLoader) {
+
+		if (configurableListableBeanFactory.containsBean("liferayDataSource")) {
+			return;
+		}
+
+		DataSource dataSource = DataSourceUtil.getDataSource(
+			extendeeClassLoader);
+
+		configurableListableBeanFactory.registerSingleton(
+			"liferayDataSource", dataSource);
+
+		if (InfrastructureUtil.getDataSource() != dataSource) {
+			DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =
+				(DefaultSingletonBeanRegistry)configurableListableBeanFactory;
+
+			defaultSingletonBeanRegistry.registerDisposableBean(
+				"dataSourceDestroyer",
+				() -> DataSourceFactoryUtil.destroyDataSource(dataSource));
+		}
+	}
 
 	public ModuleApplicationContext(
 		Bundle bundle, ClassLoader extendeeClassLoader,
@@ -58,13 +85,8 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 		ConfigurableListableBeanFactory configurableListableBeanFactory =
 			getBeanFactory();
 
-		if (!configurableListableBeanFactory.containsBean(
-				"liferayDataSource")) {
-
-			configurableListableBeanFactory.registerSingleton(
-				"liferayDataSource",
-				DataSourceUtil.getDataSource(extendeeClassLoader));
-		}
+		registerDataSourceBean(
+			configurableListableBeanFactory, extendeeClassLoader);
 
 		_dataSource = configurableListableBeanFactory.getBean(
 			"liferayDataSource", DataSource.class);

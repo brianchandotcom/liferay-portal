@@ -17,6 +17,7 @@ package com.liferay.portal.spring.extender.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
+import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -115,6 +116,17 @@ public class LiferayServiceExtender
 			}
 
 			_sessionFactoryImplementor.close();
+
+			if (InfrastructureUtil.getDataSource() != _dataSource) {
+				try {
+					DataSourceFactoryUtil.destroyDataSource(_dataSource);
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to destroy external DataSource " + _dataSource,
+						exception);
+				}
+			}
 		}
 
 		public void start() throws Exception {
@@ -124,15 +136,14 @@ public class LiferayServiceExtender
 			ClassLoader extendeeClassLoader =
 				extendeeBundleWiring.getClassLoader();
 
-			DataSource dataSource = DataSourceUtil.getDataSource(
-				extendeeClassLoader);
+			_dataSource = DataSourceUtil.getDataSource(extendeeClassLoader);
 
 			BundleContext extendeeBundleContext =
 				_extendeeBundle.getBundleContext();
 
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
-					DataSource.class, dataSource,
+					DataSource.class, _dataSource,
 					MapUtil.singletonDictionary(
 						"origin.bundle.symbolic.name",
 						_extendeeBundle.getSymbolicName())));
@@ -141,7 +152,7 @@ public class LiferayServiceExtender
 				extendeeClassLoader, _extendeeBundle.getSymbolicName());
 
 			PortletHibernateConfiguration portletHibernateConfiguration =
-				new PortletHibernateConfiguration(classLoader, dataSource);
+				new PortletHibernateConfiguration(classLoader, _dataSource);
 
 			_sessionFactoryImplementor =
 				(SessionFactoryImplementor)
@@ -165,7 +176,8 @@ public class LiferayServiceExtender
 						_extendeeBundle.getSymbolicName())));
 
 			DefaultTransactionExecutor defaultTransactionExecutor =
-				_getTransactionExecutor(dataSource, _sessionFactoryImplementor);
+				_getTransactionExecutor(
+					_dataSource, _sessionFactoryImplementor);
 
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
@@ -204,6 +216,7 @@ public class LiferayServiceExtender
 			return new DefaultTransactionExecutor(platformTransactionManager);
 		}
 
+		private DataSource _dataSource;
 		private final Bundle _extendeeBundle;
 		private final List<ServiceRegistration<?>> _serviceRegistrations =
 			new ArrayList<>();

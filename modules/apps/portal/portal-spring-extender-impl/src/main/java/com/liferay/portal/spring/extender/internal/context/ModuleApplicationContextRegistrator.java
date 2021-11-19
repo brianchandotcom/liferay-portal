@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
-import com.liferay.portal.spring.extender.internal.jdbc.DataSourceUtil;
 import com.liferay.portal.spring.extender.internal.loader.ModuleAggregareClassLoader;
 
 import java.beans.Introspector;
@@ -71,13 +70,8 @@ public class ModuleApplicationContextRegistrator {
 				headers.get("Liferay-Spring-Context"), CharPool.COMMA));
 
 		_moduleApplicationContext.addBeanFactoryPostProcessor(
-			beanFactory -> {
-				if (!beanFactory.containsBean("liferayDataSource")) {
-					beanFactory.registerSingleton(
-						"liferayDataSource",
-						DataSourceUtil.getDataSource(_extendeeClassLoader));
-				}
-			});
+			beanFactory -> ModuleApplicationContext.registerDataSourceBean(
+				beanFactory, _extendeeClassLoader));
 
 		_moduleApplicationContext.addBeanFactoryPostProcessor(
 			new ModuleBeanFactoryPostProcessor(

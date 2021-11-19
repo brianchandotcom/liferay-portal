@@ -24,6 +24,8 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,8 +42,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -100,12 +100,11 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				_serveResource(FileEntry.class.getName(), _group.getGroupId());
+			ByteArrayOutputStream byteArrayOutputStream = _serveResource(
+				FileEntry.class.getName(), _group.getGroupId());
 
 			Assert.assertArrayEquals(
-				FileUtil.getBytes(
-					getClass(), "dependencies/expected.xls"),
+				FileUtil.getBytes(getClass(), "dependencies/expected.xls"),
 				byteArrayOutputStream.toByteArray());
 		}
 		finally {
@@ -167,12 +166,12 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			mockLiferayResourceResponse.getPortletOutputStream();
 	}
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	@Inject(
 		filter = "mvc.command.name=/content_dashboard/get_content_dashboard_items_xls"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 }

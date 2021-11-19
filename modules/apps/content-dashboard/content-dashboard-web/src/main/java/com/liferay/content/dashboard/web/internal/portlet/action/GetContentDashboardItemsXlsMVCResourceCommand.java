@@ -281,6 +281,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 		public WorkbookBuilder cell(String value, int cellIndexIncrement) {
 			_cellIndex += cellIndexIncrement;
+
 			Cell cell = _row.createCell(_cellIndex++);
 
 			cell.setCellValue(value);
@@ -299,6 +300,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		public WorkbookBuilder row() {
 			_row = _sheet.createRow(_rowIndex++);
 			_cellIndex = 0;
+
 			return this;
 		}
 

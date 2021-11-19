@@ -15,6 +15,7 @@
 package com.liferay.commerce.order.web.internal.display.context;
 
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfiguration;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
@@ -87,6 +88,8 @@ public class CommerceOrderEditDisplayContext {
 			CommerceNotificationQueueEntryLocalService
 				commerceNotificationQueueEntryLocalService,
 			CommerceOrderEngine commerceOrderEngine,
+			CommerceOrderItemDecimalQuantityConfiguration
+				commerceOrderItemDecimalQuantityConfiguration,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderService commerceOrderService,
@@ -103,6 +106,8 @@ public class CommerceOrderEditDisplayContext {
 		_commerceNotificationQueueEntryLocalService =
 			commerceNotificationQueueEntryLocalService;
 		_commerceOrderEngine = commerceOrderEngine;
+		_commerceOrderItemDecimalQuantityConfiguration =
+			commerceOrderItemDecimalQuantityConfiguration;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderService = commerceOrderService;
@@ -448,10 +453,14 @@ public class CommerceOrderEditDisplayContext {
 		if ((decimalQuantity == null) ||
 			decimalQuantity.equals(BigDecimal.ZERO)) {
 
-			return BigDecimal.valueOf(commerceOrderItem.getQuantity());
+			decimalQuantity = BigDecimal.valueOf(
+				commerceOrderItem.getQuantity());
 		}
 
-		return decimalQuantity;
+		return decimalQuantity.setScale(
+			_commerceOrderItemDecimalQuantityConfiguration.
+				maximumFractionDigits(),
+			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
 	}
 
 	public String getDescriptiveCommerceAddress(CommerceAddress commerceAddress)
@@ -721,6 +730,8 @@ public class CommerceOrderEditDisplayContext {
 	private final Format _commerceOrderDateFormatDateTime;
 	private final CommerceOrderEngine _commerceOrderEngine;
 	private CommerceOrderItem _commerceOrderItem;
+	private final CommerceOrderItemDecimalQuantityConfiguration
+		_commerceOrderItemDecimalQuantityConfiguration;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;

@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>VIOLATION_PANEL_TARGET_CODE_HEADER</td>
-	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'code-block') and contains(@aria-label,'${key_text}')]//preceding-sibling::div[contains(.,'${key_header}')]</td>
+	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'code-block') and contains(@aria-label,'${key_label}')]//preceding-sibling::div[contains(.,'${key_header}')]</td>
 	<td></td>
 </tr>
 <tr>

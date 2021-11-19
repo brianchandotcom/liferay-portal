@@ -14,21 +14,15 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,45 +36,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		_checkLineBreak(fileName, content);
-
-		content = _formatComments(content);
-
-		return _formatProperties(content);
-	}
-
-	private void _checkLineBreak(String fileName, String content) {
-		int x = -1;
-
-		int[] multiLineCommentsPositions = SourceUtil.getMultiLinePositions(
-			content, _multiLineCommentsPattern);
-		int[] multiLineStringPositions = SourceUtil.getMultiLinePositions(
-			content, _multiLineStringPattern);
-
-		while (true) {
-			x = content.indexOf(CharPool.SEMICOLON, x + 1);
-
-			if (x == -1) {
-				return;
-			}
-
-			int lineNumber = getLineNumber(content, x);
-
-			String line = getLine(content, lineNumber);
-
-			if ((content.charAt(x + 1) != CharPool.NEW_LINE) &&
-				!ToolsUtil.isInsideQuotes(content, x) &&
-				!SourceUtil.isInsideMultiLines(
-					lineNumber, multiLineCommentsPositions) &&
-				!SourceUtil.isInsideMultiLines(
-					lineNumber, multiLineStringPositions) &&
-				!StringUtil.startsWith(line.trim(), StringPool.DOUBLE_SLASH)) {
-
-				addMessage(
-					fileName, "There should be a line break after ';'",
-					getLineNumber(content, x));
-			}
-		}
+		return _formatComments(content);
 	}
 
 	private String _formatComments(String content) throws IOException {
@@ -173,44 +129,6 @@ public class PoshiStylingCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private String _formatProperties(String content) {
-		Matcher matcher = _propertyPattern.matcher(content);
-
-		while (matcher.find()) {
-			String properties = matcher.group();
-
-			List<String> propertiesList = ListUtil.fromArray(
-				properties.split("\n"));
-
-			Collections.sort(propertiesList);
-
-			StringBundler sb = new StringBundler(
-				(propertiesList.size() * 2) + 1);
-
-			for (String property : propertiesList) {
-				sb.append(property);
-				sb.append("\n");
-			}
-
-			sb.append("\n");
-
-			String newProperties = sb.toString();
-
-			if (!properties.equals(newProperties)) {
-				return StringUtil.replaceFirst(
-					content, properties, newProperties, matcher.start());
-			}
-		}
-
-		return content;
-	}
-
-	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
-		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
-	private static final Pattern _multiLineStringPattern = Pattern.compile(
-		"'''.*?'''", Pattern.DOTALL);
-	private static final Pattern _propertyPattern = Pattern.compile(
-		"(?<=\n)(\t+property .+;\n+)+");
 	private static final Pattern _singleLineCommentPattern = Pattern.compile(
 		"^([ \t]*)// *(\t*.*)");
 

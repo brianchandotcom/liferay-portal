@@ -352,10 +352,16 @@ definition {
 			GDPR.anonymizeSingleEntryCP(rowEntry = "Blogs Entry Title");
 		}
 
-		task ("Assert that the document is a related asset and shows the name of the deleted user as the author") {
+		task ("Assert that both the message board and document have not been anonymized") {
 			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
+
+			AssertTextEquals.assertPartialText(
+				key_threadSubject = "MB Thread Message Subject",
+				key_userName = "userfn userln",
+				locator1 = "MessageBoardsThread#THREAD_USERNAME",
+				value1 = "userfn userln");
 
 			Click(
 				key_relatedAssetTitle = "DM Document Title",

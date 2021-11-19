@@ -60,6 +60,8 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			<clay:sheet
 				cssClass="translation-import-body-form"
 			>
+				<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="please-enter-a-file-with-a-valid-xliff-file-extension" />
+
 				<div>
 					<react:component
 						module="js/ImportTranslation.es"

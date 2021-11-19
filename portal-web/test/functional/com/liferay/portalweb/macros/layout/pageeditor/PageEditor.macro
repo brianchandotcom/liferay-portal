@@ -4049,6 +4049,12 @@ definition {
 		AssertElementNotPresent(locator1 = "//body[.='${elementValue}']");
 	}
 
+	macro viewNumberOfCollectionItemsInCollectionPage {
+		AssertTextEquals(
+			locator1 = "ControlMenu#VIEW_COLLECTION_ITEMS_BUTTON",
+			value1 = "${numberOfItems}");
+	}
+
 	macro waitForAutoSave {
 		WaitForVisible(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}

@@ -67,7 +67,6 @@ public class PoshiScriptParserException extends Exception {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("\n\nPoshi parsing errors in " + filePath + "\n\n");
-
 			sb.append(poshiScriptParserException.getMessage());
 			sb.append("\n\n");
 

@@ -58,26 +58,18 @@ definition {
 			status = "Draft",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.delete(
+		Translations.deleteTranslationEntry(
 			confirmationText = "Are you sure you want to delete this? It will be deleted immediately.",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+			translationEntry = "Translation of WC WebContent Title to es-ES");
 
-		AssertElementNotPresent(
-			key_rowEntry = "Translation of WC WebContent Title to es-ES",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		Translations.viewEmptyState();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		Click.clickNoMouseOver(
-			key_currentLocale = StringUtil.lowerCase("en-US"),
-			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
-
-		AssertTextEquals(
-			key_localizedLanguage = "es-ES",
-			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
-			value1 = "Not Translated");
+		Translations.viewUntranslatedStatus(locale = "es-ES");
 	}
 
 	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."
@@ -116,17 +108,17 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.delete(
+		Translations.deleteTranslationEntry(
 			confirmationText = "Are you sure you want to delete this? It will be deleted immediately.",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+			translationEntry = "Translation of WC WebContent Title to es-ES");
 
-		AssertElementNotPresent(
-			key_rowEntry = "Translation of WC WebContent Title to es-ES",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		Translations.viewEmptyState();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			version = "1.1",
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 

@@ -17,9 +17,9 @@ AUI.add(
 	(A) => {
 		var Lang = A.Lang;
 
-		var CSS_ACTION_CLEAR = 'lfr-action-clear';
+		var CSS_ACTION_CLEAR = 'float-right lfr-action-clear';
 
-		var CSS_ACTION_UNDO = 'lfr-action-undo';
+		var CSS_ACTION_UNDO = 'float-left lfr-action-undo';
 
 		var CSS_HELPER_CLEARFIX = 'helper-clearfix';
 
@@ -27,9 +27,9 @@ AUI.add(
 
 		var CSS_MESSAGE_INFO = 'alert alert-info';
 
-		var CSS_QUEUE = 'lfr-undo-queue';
+		var CSS_QUEUE = 'lfr-undo-queue mx-auto my-2';
 
-		var CSS_QUEUE_EMPTY = 'lfr-queue-empty';
+		var CSS_QUEUE_EMPTY = 'lfr-queue-empty d-none';
 
 		var CSS_QUEUE_SINGLE = 'lfr-queue-single';
 

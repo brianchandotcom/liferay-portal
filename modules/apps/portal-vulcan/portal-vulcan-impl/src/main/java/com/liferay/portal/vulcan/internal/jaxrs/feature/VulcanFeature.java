@@ -47,6 +47,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.UserContextProv
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.XmlMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.dynamic.feature.StatusDynamicFeature;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.DuplicateExternalReferenceCodeExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFilterExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
@@ -105,6 +106,8 @@ public class VulcanFeature implements Feature {
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(CTContainerRequestFilter.class);
 		featureContext.register(DateParamConverterProvider.class);
+		featureContext.register(
+			DuplicateExternalReferenceCodeExceptionMapper.class);
 		featureContext.register(EntityExtensionWriterInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);

@@ -3209,6 +3209,10 @@ public class PropsValues {
 	public static final String ZIP_FILE_NAME_ENCODING = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.ZIP_FILE_NAME_ENCODING));
 
+	public static final long ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.ZIP_FILE_WRITER_EXPORT_BUFFER_SIZE));
+
 	static {
 		if (!LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
 			LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;

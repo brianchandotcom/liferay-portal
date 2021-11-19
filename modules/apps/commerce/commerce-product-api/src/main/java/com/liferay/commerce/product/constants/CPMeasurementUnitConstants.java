@@ -16,12 +16,13 @@ package com.liferay.commerce.product.constants;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CPMeasurementUnitConstants {
 
 	public static final int TYPE_DIMENSION = 0;
 
-	public static final int TYPE_PIECE = 2;
+	public static final int TYPE_UNIT = 2;
 
 	public static final int TYPE_WEIGHT = 1;
 

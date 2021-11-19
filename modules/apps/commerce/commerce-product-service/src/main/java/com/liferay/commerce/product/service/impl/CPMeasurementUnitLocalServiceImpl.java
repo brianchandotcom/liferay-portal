@@ -202,7 +202,7 @@ public class CPMeasurementUnitLocalServiceImpl
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 
 		_addCPMeasurementUnit(
-			"piece(s)", "pc", 1, true, 1, CPMeasurementUnitConstants.TYPE_PIECE,
+			"piece(s)", "pc", 1, true, 1, CPMeasurementUnitConstants.TYPE_UNIT,
 			serviceContext);
 	}
 

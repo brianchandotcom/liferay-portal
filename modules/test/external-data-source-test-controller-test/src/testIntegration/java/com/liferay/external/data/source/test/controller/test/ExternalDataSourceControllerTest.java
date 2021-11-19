@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,7 +51,6 @@ import java.util.zip.ZipEntry;
 import org.hsqldb.jdbc.JDBCDriver;
 
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -75,14 +73,7 @@ public class ExternalDataSourceControllerTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
-
-	public static void assume() {
-		DB db = DBManagerUtil.getDB();
-
-		Assume.assumeTrue(DBType.HYPERSONIC.equals(db.getDBType()));
-	}
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {

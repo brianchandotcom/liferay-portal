@@ -2560,43 +2560,59 @@ definition {
 	}
 
 	macro signInPG {
-		Navigator.gotoLoginPage();
+		User._clickSignInLink(
+			idpName = "${idpName}",
+			localization = "${localization}",
+			samlMultiIdPs = "${samlMultiIdPs}");
 
-		Type(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
-
-		Type(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "${emailPassword}");
-
-		Check(locator1 = "Checkbox#REMEMBER_ME");
-
-		AssertClick(
-			locator1 = "Button#SIGN_IN",
-			value1 = "Sign In");
-
-		if (IsElementPresent.pauseIsElementPresent(
-				locator1 = "Button#I_AGREE",
-				value1 = "I Agree")) {
-			AssertClick(
-				locator1 = "Button#I_AGREE",
-				value1 = "I Agree");
+		if ("${authenticationMethod}" == "By Screen Name") {
+			Type(
+				locator1 = "TextInput#SCREEN_NAME",
+				value1 = "${userScreenName}");
+		}
+		else if ("${authenticationMethod}" == "By User ID") {
+			Type.typePause(
+				key_text = "ID",
+				locator1 = "TextInput#ANY",
+				value1 = "${userID}");
+		}
+		else {
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "${userEmailAddress}");
 		}
 
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "Please enter your verification code.");
+		Type.typePause(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "${password}");
 
-		Type(
-			locator1 = "SignInCreateAccount#EMAIL_VERIFICATION_CODE_FIELD",
-			value1 = "${emailVerification}");
+		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
+			Check(locator1 = "Checkbox#REMEMBER_ME");
+		}
 
-		AssertClick(
-			locator1 = "Button#VERIFY",
-			value1 = "Verify");
+		User._clickSignInButton(localization = "${localization}");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		if (isSet(localizedAgree)) {
+			User.acceptEndUserLicenseAgreementLocalized(localizedAgree = "${localizedAgree}");
+		}
+
+		else if (IsElementPresent(locator1 = "Button#I_AGREE")) {
+			SignIn.agreeToTermsOfUse();
+		}
+
+		if (isSet(emailVerification)) {
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "Please enter your verification code.");
+
+			Type(
+				locator1 = "SignInCreateAccount#EMAIL_VERIFICATION_CODE_FIELD",
+				value1 = "${emailVerification}");
+
+			AssertClick(
+				locator1 = "Button#VERIFY",
+				value1 = "Verify");
+		}
 
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
 			if ((isSet(syntaxCheckingEnabled)) && ("${syntaxCheckingEnabled}" == "true")) {
@@ -2621,13 +2637,19 @@ definition {
 			Button.clickSave();
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {
-			Type(
-				locator1 = "TextInput#ANSWER",
-				value1 = "test");
-
-			Button.clickSave();
+		if (isSet(localizedAnswer)) {
+			User.answerPasswordReminderLocalized(
+				localizedAnswer = "${localizedAnswer}",
+				localizedSaveButton = "${localizedSaveButton}");
 		}
+
+		else if (IsElementPresent(locator1 = "Select#QUESTION")) {
+			SignIn.setPasswordReminder();
+		}
+
+		AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro singleDeactivateCP {

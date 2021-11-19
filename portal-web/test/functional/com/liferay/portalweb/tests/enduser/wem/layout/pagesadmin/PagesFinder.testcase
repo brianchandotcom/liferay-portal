@@ -23,8 +23,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		else {
+			Role.tearDownCP();
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 
@@ -265,6 +270,141 @@ definition {
 
 		task ("Navigate to widget page via page tree") {
 			PagesFinder.navigateToPage(pageName = "Test Page Name");
+		}
+	}
+
+	@description = "This is a test for LPS-129406. The user that has all permissions for Web Content in Content & Data role can not add a page via Page Tree Panel."
+	@priority = "4"
+	test CannotAddPageWithAllWebContentPermissions {
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+		}
+
+		task ("Define the permissions of new role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Regular Role Name",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Regular Role Name");
+
+			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+
+			for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+
+			for (var resourceActionIndex : list "ACCESS,ADD_SUBFOLDER,ADD_ARTICLE,DELETE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal.model.JournalFolder",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+
+			for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal.model.JournalArticle",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+
+			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal.model.JournalFeed",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+
+			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+
+			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle",
+					roleTitle = "Regular Role Name",
+					roleType = "regular");
+			}
+		}
+
+		task ("Assign the regular role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the new user cannot add a page via Page Tree panel") {
+			ProductMenuHelper.openProductMenu();
+
+			PagesFinder.goToPagesFinder();
+
+			AssertNotVisible(locator1 = "Icon#PLUS");
+		}
+
+		task ("View the new user is able to navigate and add a Web Content") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			AssertElementPresent(locator1 = "Icon#PLUS");
+		}
+
+		task ("View the new user is able to navigate and add a Structure") {
+			NavItem.gotoStructures();
+
+			AssertElementPresent(locator1 = "Icon#PLUS");
+		}
+
+		task ("View the new user is able to navigate and add a Template") {
+			NavItem.gotoTemplates();
+
+			AssertElementPresent(locator1 = "Icon#PLUS");
+		}
+
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 		}
 	}
 

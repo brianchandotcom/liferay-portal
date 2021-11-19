@@ -120,16 +120,12 @@ const ValidationDate = ({
 		const parameter = {}
 
 		if (typeName === 'startsFrom') {
-			if(selectedValidation.name === 'dateRange') {
-				parameter.endsOn = endDate;
-			}
-			parameter.startsFrom = parameters
+			parameter.startsFrom = parameters;
+			parameter.endsOn = endDate;
 			
 		} else if (typeName === 'endsOn') {
-			if(selectedValidation.name === 'dateRange') {
-				parameter.startsFrom = startDate;
-			}
-			parameter.endsOn = parameters
+			parameter.endsOn = parameters;
+			parameter.startsFrom = startDate;
 		}
 
 		dispatch({payload: {parameter}, type: EVENT_TYPES.SET_PARAMETER});

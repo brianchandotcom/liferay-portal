@@ -536,18 +536,9 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
-
-		Translations.viewTranslationEntry(
-			language = "es-ES",
-			status = "Approved",
-			title = "Translation of WC WebContent Title to es-ES");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContent.moveToRecycleBinCP(
-			assetType = "Web Content Article",
-			webContentTitle = "WC WebContent Title");
+		JSONWebcontent.moveWebContentToTrash(
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 

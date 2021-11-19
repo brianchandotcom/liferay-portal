@@ -38,9 +38,11 @@ definition {
 			language = "Groovy",
 			script = "${script}");
 
+		var outputContent = '''<div class="embedded-html-test"> Test Embedded HTML </div>''';
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = '''<div class="embedded-html-test"> Test Embedded HTML </div>''');
+			value1 = "${outputContent}");
 
 		ServerAdministration.executeScript(
 			htmlOutput = "true",

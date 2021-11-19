@@ -155,9 +155,11 @@ definition {
 				entry = "Fragment Name",
 				item = "Edit");
 
+			var htmlContent = '''<div class="fragment_1">Fragment Name</div>''';
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = '''<div class="fragment_1">Fragment Name</div>''');
+				value1 = "${htmlContent}");
 		}
 	}
 

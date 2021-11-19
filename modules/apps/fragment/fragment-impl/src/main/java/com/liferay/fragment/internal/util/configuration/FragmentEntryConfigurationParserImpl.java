@@ -657,7 +657,9 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
-	private Object _getInfoListObjectEntry(String value) {
+	private Object _getInfoListObjectEntry(
+		String value, long[] segmentsEntryIds) {
+
 		if (Validator.isNull(value)) {
 			return Collections.emptyList();
 		}
@@ -686,9 +688,16 @@ public class FragmentEntryConfigurationParserImpl
 				return Collections.emptyList();
 			}
 
+			DefaultLayoutListRetrieverContext
+				defaultLayoutListRetrieverContext =
+					new DefaultLayoutListRetrieverContext();
+
+			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+				segmentsEntryIds);
+
 			return layoutListRetriever.getList(
 				listObjectReferenceFactory.getListObjectReference(jsonObject),
-				new DefaultLayoutListRetrieverContext());
+				defaultLayoutListRetrieverContext);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

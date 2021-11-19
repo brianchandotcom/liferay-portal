@@ -35,7 +35,6 @@ components:
                     # @review
                     description:
                         The optional external key of this account.
-                    readOnly: true
                     type: string
                 id:
                     format: int64

@@ -43,20 +43,7 @@
 		}
 	}
 
-	.browse-button-container {
-		padding-top: 5px;
-	}
-
 	a {
-		&.browse-button {
-			background-image: url(../images/common/add.png);
-			background-repeat: no-repeat;
-			color: white;
-			font-size: 1.2em;
-			font-weight: bold;
-			text-decoration: none;
-		}
-
 		&.clear-uploads {
 			background-image: url(../images/common/remove.png);
 			background-repeat: no-repeat;

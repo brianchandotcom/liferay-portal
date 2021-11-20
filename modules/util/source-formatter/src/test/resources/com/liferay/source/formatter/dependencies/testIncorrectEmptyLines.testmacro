@@ -1,8 +1,0 @@
-definition {
-
-	macro _gotoPendingFilter {
-		Pause(locator1 = "5000");
-
-	}
-
-}

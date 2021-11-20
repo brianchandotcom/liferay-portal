@@ -1,6 +1,3 @@
-// this is a macro,
-// it contains _addPage.
-
 definition {
 
 	macro _addPage {

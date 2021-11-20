@@ -52,6 +52,21 @@ public class DataSourceTest {
 	public void testUpdate() throws Exception {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from TestEntity");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(
+				"Missing upgrade process created record", resultSet.next());
+
+			Assert.assertEquals(-1, resultSet.getLong("id_"));
+			Assert.assertEquals(
+				"Test Upgrade Value", resultSet.getString("data_"));
+
+			Assert.assertFalse("Found more than 1 record", resultSet.next());
+		}
+
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				"delete from TestEntity")) {
 
 			preparedStatement.executeUpdate();

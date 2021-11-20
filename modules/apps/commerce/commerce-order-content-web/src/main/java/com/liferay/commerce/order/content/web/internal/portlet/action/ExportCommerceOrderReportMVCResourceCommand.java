@@ -95,6 +95,10 @@ public class ExportCommerceOrderReportMVCResourceCommand
 					() -> {
 						Region region = billingAddress.getRegion();
 
+						if (region == null) {
+							return StringPool.BLANK;
+						}
+
 						return region.getName();
 					}
 				).put(
@@ -130,10 +134,13 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				).put(
 					"shippingAddressRegion",
 					() -> {
-						Region shippingAddressRegion =
-							shippingAddress.getRegion();
+						Region region = shippingAddress.getRegion();
 
-						return shippingAddressRegion.getName();
+						if (region == null) {
+							return StringPool.BLANK;
+						}
+
+						return region.getName();
 					}
 				).put(
 					"shippingAddressStreet1", shippingAddress.getStreet1()

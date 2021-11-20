@@ -59,6 +59,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -71,7 +72,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -551,20 +551,13 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public String getExportCommerceOrderReportURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
-		LiferayPortletURL liferayPortletURL =
-			liferayPortletResponse.createResourceURL(
-				CommercePortletKeys.COMMERCE_ORDER_CONTENT);
-
-		liferayPortletURL.setResourceID(
-			"/commerce_order_content/export_commerce_order_report");
-
-		return PortletURLBuilder.create(
-			liferayPortletURL
+		return ResourceURLBuilder.createResourceURL(
+			_cpRequestHelper.getLiferayPortletResponse(),
+			CommercePortletKeys.COMMERCE_ORDER_CONTENT
 		).setParameter(
 			"commerceOrderId", getCommerceOrderId()
+		).setResourceID(
+			"/commerce_order_content/export_commerce_order_report"
 		).buildString();
 	}
 

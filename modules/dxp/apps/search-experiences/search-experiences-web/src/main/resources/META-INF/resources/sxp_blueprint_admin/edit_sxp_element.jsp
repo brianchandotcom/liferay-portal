@@ -24,6 +24,8 @@ if (Validator.isNull(redirect)) {
 		renderResponse
 	).setMVCRenderCommandName(
 		"/sxp_blueprint_admin/view_sxp_elements"
+	).setTabs1(
+		"sxpElements"
 	).buildString();
 }
 
@@ -44,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-element"));
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"redirect", redirect
+				"redirectURL", redirect
 			).put(
 				"sxpElementId", ParamUtil.getLong(renderRequest, "sxpElementId")
 			).build()

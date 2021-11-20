@@ -1,10 +1,16 @@
-import { ClayInput } from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 
-const SearchProject = ({ onChange, props }) => {
+const SearchProject = ({onChange, props}) => {
 	return (
 		<div className="position-relative">
-			<ClayInput className="font-weight-semi-bold h5 rounded-pill search-project shadow-lg" onChange={(ex) => onChange(ex.target.value)} placeholder="Find a project" type="text" {...props} />
+			<ClayInput
+				className="font-weight-semi-bold h5 rounded-pill search-project shadow-lg"
+				onChange={(ex) => onChange(ex.target.value)}
+				placeholder="Find a project"
+				type="text"
+				{...props}
+			/>
 
 			<ClayIcon
 				className="position-absolute text-brand-primary"

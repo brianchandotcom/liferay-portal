@@ -12,7 +12,7 @@
  */
 
 const getAccountSubscriptionGroupsByFilter = (filter) => ({
-    query: `{
+	query: `{
         c {
           accountSubscriptionGroups(filter: "accountKey eq '${filter}' and hasActivation eq true") {
               items {
@@ -20,112 +20,141 @@ const getAccountSubscriptionGroupsByFilter = (filter) => ({
               }
             }
           }
-    }`});
+    }`,
+});
 
 const doFetch = async (query) => {
-    const queryString = JSON.stringify(query);
+	const queryString = JSON.stringify(query);
 
-    const response = await fetch(`${window.location.origin}/o/graphql`, {
-        body: queryString,
-        headers: {
-            'Content-Type': 'application/json',
-            'x-csrf-token': Liferay.authToken,
-        },
-        method: 'POST',
-    });
+	const response = await fetch(`${window.location.origin}/o/graphql`, {
+		body: queryString,
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'POST',
+	});
 
-    const { data } = await response.json();
+	const {data} = await response.json();
 
-    return data.c.accountSubscriptionGroups.items;
-}
+	return data.c.accountSubscriptionGroups.items;
+};
 
 const getSubscriptionKey = (name) => {
-    return name.split(" ")[0].toLowerCase();
-}
+	return name.split(' ')[0].toLowerCase();
+};
 
 const htmlElement = (name, key) => {
-    return `<li><a href="#" class="btn btn-sm btn-menu">
+	return `<li><a href="#" class="btn btn-sm btn-menu">
     <img class="mr-2" width="16" src="${window.location.origin}/webdav/${pathSplit[1]}/document_library/assets/navigation-menu/${key}_icon_gray.svg" alt="" />
     ${name}
   </a></li>`;
-}
+};
 
 const setSrcIcon = (keybutton) => {
-    let srcIcon = keybutton.children[0].src;
-    if (srcIcon.substr(srcIcon.length - 3) !== "svg") {
-        srcIcon = srcIcon.split("/");
-        srcIcon.pop();
-        srcIcon = srcIcon.join("/");
-    }
+	let srcIcon = keybutton.children[0].src;
+	if (srcIcon.substr(srcIcon.length - 3) !== 'svg') {
+		srcIcon = srcIcon.split('/');
+		srcIcon.pop();
+		srcIcon = srcIcon.join('/');
+	}
 
-    return srcIcon;
-}
+	return srcIcon;
+};
 
 const arrowToggleElementKey = 'customer-portal-arrow';
 const productsElementKey = '#customer-portal-products';
 
-const projectExternalReferenceCode = new URLSearchParams(window.location.search).get('kor_id');
+const projectExternalReferenceCode = new URLSearchParams(
+	window.location.search
+).get('kor_id');
 const currentProducts = fragmentElement.querySelector(productsElementKey);
 let expandedHeightProducts;
 
-const { pathname } = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 const pathSplit = pathname.split('/').filter(Boolean);
 
 (async () => {
-    try {
-        if (projectExternalReferenceCode) {
-            const accountSubscriptionGroups = await doFetch(getAccountSubscriptionGroupsByFilter(projectExternalReferenceCode)) || [];
-            expandedHeightProducts = accountSubscriptionGroups.length * 40;
+	try {
+		if (projectExternalReferenceCode) {
+			const accountSubscriptionGroups =
+				(await doFetch(
+					getAccountSubscriptionGroupsByFilter(
+						projectExternalReferenceCode
+					)
+				)) || [];
+			expandedHeightProducts = accountSubscriptionGroups.length * 40;
 
-            currentProducts.innerHTML = accountSubscriptionGroups.map(
-                ({ name }) => htmlElement(name, getSubscriptionKey(name))
-            ).join("\n");
-        }
-    }
-    catch (error) {
-        console.error(error.message);
-    }
+			currentProducts.innerHTML = accountSubscriptionGroups
+				.map(({name}) => htmlElement(name, getSubscriptionKey(name)))
+				.join('\n');
+		}
+	}
+	catch (error) {
+		console.error(error.message);
+	}
 })();
 
-fragmentElement.addEventListener("click", (event) => {
-    const lastButton = fragmentElement.querySelector('.active');
-    let currentButton = event.target;
+fragmentElement.addEventListener('click', (event) => {
+	const lastButton = fragmentElement.querySelector('.active');
+	let currentButton = event.target;
 
-    if (currentButton.tagName === "IMG") {
-        currentButton = currentButton.parentElement;
-    }
+	if (currentButton.tagName === 'IMG') {
+		currentButton = currentButton.parentElement;
+	}
 
-    if (event.target.id === "customer-portal-toggle-products" || event.target.id === arrowToggleElementKey) {
-        const products = fragmentElement.querySelector(productsElementKey);
-        const heightProducts = products.offsetHeight;
+	if (
+		event.target.id === 'customer-portal-toggle-products' ||
+		event.target.id === arrowToggleElementKey
+	) {
+		const products = fragmentElement.querySelector(productsElementKey);
+		const heightProducts = products.offsetHeight;
 
-        if (heightProducts < expandedHeightProducts) {
-            currentProducts.style.height = `${expandedHeightProducts}px`;
-        } else {
-            currentProducts.style.height = "0px";
-        }
+		if (heightProducts < expandedHeightProducts) {
+			currentProducts.style.height = `${expandedHeightProducts}px`;
+		}
+		else {
+			currentProducts.style.height = '0px';
+		}
 
-        const arrow = fragmentElement.querySelector(`#${arrowToggleElementKey}`);
-        arrow.classList.toggle("left");
-        arrow.classList.toggle("down");
-    } else if (lastButton !== currentButton && currentButton.tagName === "A") {
-        currentButton.classList.toggle('active');
-        lastButton.classList.toggle('active');
+		const arrow = fragmentElement.querySelector(
+			`#${arrowToggleElementKey}`
+		);
+		arrow.classList.toggle('left');
+		arrow.classList.toggle('down');
+	}
+	else if (lastButton !== currentButton && currentButton.tagName === 'A') {
+		currentButton.classList.toggle('active');
+		lastButton.classList.toggle('active');
 
-        if (currentButton.children[0] && currentButton.children[0].src) {
-            currentButton.children[0].src = setSrcIcon(currentButton).replace("_gray", "");
-        }
+		if (currentButton.children[0] && currentButton.children[0].src) {
+			currentButton.children[0].src = setSrcIcon(currentButton).replace(
+				'_gray',
+				''
+			);
+		}
 
-        if (lastButton.children[0] && lastButton.children[0].src) {
-            lastButton.children[0].src = setSrcIcon(lastButton).replace(".svg", "_gray.svg");
-        }
+		if (lastButton.children[0] && lastButton.children[0].src) {
+			lastButton.children[0].src = setSrcIcon(lastButton).replace(
+				'.svg',
+				'_gray.svg'
+			);
+		}
 
-        const toggleProducts = fragmentElement.querySelector("#customer-portal-toggle-products");
-        const grandParentElementId = currentButton.parentElement.parentElement.id;
+		const toggleProducts = fragmentElement.querySelector(
+			'#customer-portal-toggle-products'
+		);
+		const grandParentElementId =
+			currentButton.parentElement.parentElement.id;
 
-        if ((grandParentElementId === "customer-portal-products" && toggleProducts.classList.contains("text-neutral-10")) || (toggleProducts.classList.contains("text-brand-primary") && grandParentElementId !== "customer-portal-products")) {
-            toggleProducts.classList.toggle("text-neutral-10");
-            toggleProducts.classList.toggle("text-brand-primary");
-        }
-    }
+		if (
+			(grandParentElementId === 'customer-portal-products' &&
+				toggleProducts.classList.contains('text-neutral-10')) ||
+			(toggleProducts.classList.contains('text-brand-primary') &&
+				grandParentElementId !== 'customer-portal-products')
+		) {
+			toggleProducts.classList.toggle('text-neutral-10');
+			toggleProducts.classList.toggle('text-brand-primary');
+		}
+	}
 });

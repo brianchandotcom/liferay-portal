@@ -7,7 +7,8 @@ const getUserId = () => {
 
 		// eslint-disable-next-line no-undef
 		return Liferay.ThemeDisplay.getUserId();
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn(error.message);
 	}
 };
@@ -27,7 +28,8 @@ const getLiferaySiteName = () => {
 			? pathSplit.slice(0, pathSplit.length - 1)
 			: pathSplit
 		).join('/')}`;
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay PathName\n', error);
 	}
 

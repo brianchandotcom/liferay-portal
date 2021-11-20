@@ -7,10 +7,10 @@ import {getUserAccountById} from '~/common/services/liferay/graphql/user-account
 import {PARAMS_KEYS} from '~/common/services/liferay/search-params';
 import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
 import {REACT_APP_LIFERAY_API} from '~/common/utils';
-import Banner from '../components/Banner';
-import ProjectCard from '../components/ProjectCard';
-import SearchProject from '../components/SearchProject';
-import {status} from '../utils/constants';
+import Banner from '../../components/Banner';
+import ProjectCard from '../../components/ProjectCard';
+import SearchProject from '../../components/SearchProject';
+import {status} from '../../utils/constants';
 import HomeSkeleton from './Skeleton';
 
 const PROJECT_THRESHOLD_COUNT = 4;
@@ -116,6 +116,7 @@ const Home = ({userAccount}) => {
 				})}
 			>
 				<Banner userName={userAccount.name} />
+
 				{!isLoadingUser & !isLoadingKoroneiki ? (
 					<Banner userName={data?.userAccount.name || ''} />
 				) : (
@@ -141,6 +142,7 @@ const Home = ({userAccount}) => {
 							</h5>
 						</div>
 					)}
+
 					{!isLoadingKoroneiki ? (
 						<div
 							className={classNames('d-flex flex-wrap', {

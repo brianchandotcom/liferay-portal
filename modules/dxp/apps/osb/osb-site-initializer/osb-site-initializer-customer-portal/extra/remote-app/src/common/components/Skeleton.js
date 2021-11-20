@@ -3,7 +3,7 @@ import classNames from 'classnames';
 const Skeleton = ({align, count = 1, height, width, ...props}) => {
 	return (
 		<div {...props}>
-			{[...new Array(count)].map((_a, index) => (
+			{[...new Array(count)].map((_, index) => (
 				<div
 					className={classNames(
 						'rounded skeleton',

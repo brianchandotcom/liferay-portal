@@ -9,9 +9,9 @@ const Pages = () => {
 	if (page === 'overview') {
 		if (userAccount) {
 			return <Overview userAccount={userAccount} />;
-		} else {
-			return <div>Overview Skeleton</div>;
 		}
+
+		return <div>Overview Skeleton</div>;
 	}
 
 	if (userAccount) {

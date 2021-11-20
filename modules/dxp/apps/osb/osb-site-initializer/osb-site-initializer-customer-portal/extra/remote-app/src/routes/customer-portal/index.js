@@ -6,6 +6,7 @@ const CustomerPortal = (props) => {
 	return (
 		<>
 			<style>{CustomerPortalStyles}</style>
+
 			<AppContextProvider {...props}>
 				<Pages />
 			</AppContextProvider>

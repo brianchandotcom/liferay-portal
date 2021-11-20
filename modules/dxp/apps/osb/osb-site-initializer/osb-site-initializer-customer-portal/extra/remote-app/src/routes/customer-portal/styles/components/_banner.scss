@@ -9,14 +9,14 @@ $banner-height: 286px;
 	}
 
 	&.rounded-left {
-		border-top-left-radius: 1rem !important;
 		border-bottom-left-radius: 1rem !important;
+		border-top-left-radius: 1rem !important;
 	}
 
 	img {
+		border-bottom-left-radius: 1rem !important;
+		border-top-left-radius: 1rem !important;
 		height: $banner-height;
 		right: 0;
-		border-top-left-radius: 1rem !important;
-		border-bottom-left-radius: 1rem !important;
 	}
 }

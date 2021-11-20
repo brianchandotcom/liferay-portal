@@ -30,8 +30,8 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"route": "portal",
-			"page": "home"
+			"page": "home",
+			"route": "portal"
 		},
 		"remoteAppEntryKey": "CUSTOMER-PORTAL-HOME",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-HOME$]"
@@ -49,8 +49,8 @@
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
-			"route": "portal",
-			"page": "overview"
+			"page": "overview",
+			"route": "portal"
 		},
 		"remoteAppEntryKey": "CUSTOMER-PORTAL-OVERVIEW",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-OVERVIEW$]"

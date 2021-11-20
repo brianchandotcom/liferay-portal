@@ -29,7 +29,8 @@ const userName = fragmentElement.querySelector(
 
 			if (userAccount.image) {
 				userIcon.src = window.location.origin + userAccount.image;
-			} else {
+			}
+			else {
 				userIconWrapper.className =
 					'mr sticker sticker-circle sticker-lg user-icon-color-1';
 				userIconWrapper.innerHTML = `<svg class="lexicon-icon lexicon-icon-user" focusable="false" role="presentation">
@@ -42,7 +43,8 @@ const userName = fragmentElement.querySelector(
 
 			userName.innerHTML = userAccount.name;
 		});
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error.message);
 	}
 })();

@@ -1,18 +1,18 @@
 .customer-portal-liferay-contact #customer-portal-liferay-contact-name.skeleton {
-	width: 107px;
 	height: 24px;
+	width: 107px;
 }
 
 .customer-portal-liferay-contact #customer-portal-liferay-contact-role.skeleton {
-	width: 130px;
 	height: 24px;
 	margin-top: 4px;
+	width: 130px;
 }
 
 .customer-portal-liferay-contact #customer-portal-liferay-contact-email.skeleton {
-	width: 190px;
 	height: 16px;
 	margin-top: 4px;
+	width: 190px;
 }
 
 .customer-portal-liferay-contact .skeleton {

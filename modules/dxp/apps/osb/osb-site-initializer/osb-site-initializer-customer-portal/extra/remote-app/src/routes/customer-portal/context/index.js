@@ -9,17 +9,15 @@ import {
 import {CUSTOM_EVENTS} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 
-const initialApp = (assetsPath, page) => ({
-	assetsPath,
-	page,
-	project: undefined,
-	userAccount: undefined,
-});
-
 const AppContext = createContext();
 
-const AppProvider = ({assetsPath, children, page}) => {
-	const [state, dispatch] = useReducer(reducer, initialApp(assetsPath, page));
+const AppContextProvider = ({assetsPath, children, page}) => {
+	const [state, dispatch] = useReducer(reducer, {
+		assetsPath,
+		page,
+		project: undefined,
+		userAccount: undefined,
+	});
 	const {data} = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
 
 	useEffect(() => {
@@ -61,4 +59,4 @@ const AppProvider = ({assetsPath, children, page}) => {
 	);
 };
 
-export {AppContext, AppProvider};
+export {AppContext, AppContextProvider};

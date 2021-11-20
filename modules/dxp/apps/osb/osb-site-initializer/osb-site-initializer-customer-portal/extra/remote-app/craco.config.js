@@ -1,5 +1,6 @@
 const sassRegex = /\.(scss|sass)$/;
 
+// eslint-disable-next-line no-undef
 module.exports = {
 	babel: {
 		plugins: [

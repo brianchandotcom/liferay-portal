@@ -13,25 +13,30 @@
 
 const eventName = 'customer-portal-project-loading';
 
-const contactName = fragmentElement.querySelector('#customer-portal-liferay-contact-name');
-const contactRole = fragmentElement.querySelector('#customer-portal-liferay-contact-role');
-const contactEmail = fragmentElement.querySelector('#customer-portal-liferay-contact-email');
-
+const contactName = fragmentElement.querySelector(
+	'#customer-portal-liferay-contact-name'
+);
+const contactRole = fragmentElement.querySelector(
+	'#customer-portal-liferay-contact-role'
+);
+const contactEmail = fragmentElement.querySelector(
+	'#customer-portal-liferay-contact-email'
+);
 
 (async () => {
-    try {
-        window.addEventListener(eventName, ({ detail: project }) => {
-            contactName.classList.toggle('skeleton');
+	try {
+		window.addEventListener(eventName, ({detail: project}) => {
+			contactName.classList.toggle('skeleton');
 
-            contactRole.classList.toggle('skeleton');
-            contactEmail.classList.toggle('skeleton');
+			contactRole.classList.toggle('skeleton');
+			contactEmail.classList.toggle('skeleton');
 
-            contactName.innerHTML = project.liferayContactName;
-            contactRole.innerHTML = project.liferayContactRole;
-            contactEmail.innerHTML = project.liferayContactEmailAddress;
-        });
-    }
-    catch (error) {
-        console.error(error.message);
-    }
+			contactName.innerHTML = project.liferayContactName;
+			contactRole.innerHTML = project.liferayContactRole;
+			contactEmail.innerHTML = project.liferayContactEmailAddress;
+		});
+	}
+	catch (error) {
+		console.error(error.message);
+	}
 })();

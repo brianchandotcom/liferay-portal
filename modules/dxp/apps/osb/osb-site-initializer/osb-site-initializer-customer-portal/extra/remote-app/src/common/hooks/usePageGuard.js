@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {LiferayTheme} from '../services/liferay';
 import {getAccountFlagByFilter} from '../services/liferay/graphql/account-flags';
 import {PARAMS_KEYS} from '../services/liferay/search-params';
@@ -53,7 +53,8 @@ const overviewPageGuard = (
 	const getExternalReferenceCode = () => {
 		if (isValidExternalReferenceCode) {
 			return externalReferenceCode;
-		} else if (userAccount.accountBriefs.length === 1) {
+		}
+		else if (userAccount.accountBriefs.length === 1) {
 			return userAccount.accountBriefs[0].externalReferenceCode;
 		}
 	};
@@ -73,6 +74,7 @@ const usePageGuard = (
 	externalReferenceCode
 ) => {
 	const [isLoading, setLoading] = useState(true);
+
 	const {data, isLoading: isLoadingGraphQL} = useGraphQL([
 		getAccountFlagByFilter({
 			accountKey: externalReferenceCode,
@@ -82,30 +84,37 @@ const usePageGuard = (
 		}),
 	]);
 
-	if (!isLoadingGraphQL) {
-		if (
-			!validateExternalReferenceCode(
-				userAccount.accountBriefs,
-				externalReferenceCode
-			) ||
-			!guard(userAccount, data.accountFlags, externalReferenceCode)
-				.validate
-		) {
-			const {location, validate: alternativeValidate} = alternativeGuard(
-				userAccount,
-				data.accountFlags,
-				externalReferenceCode
-			);
+	useEffect(() => {
+		if (!isLoadingGraphQL) {
+			if (
+				!validateExternalReferenceCode(
+					userAccount.accountBriefs,
+					externalReferenceCode
+				) ||
+				!guard(userAccount, data.accountFlags, externalReferenceCode)
+					.validate
+			) {
+				const {
+					location,
+					validate: alternativeValidate,
+				} = alternativeGuard(
+					userAccount,
+					data.accountFlags,
+					externalReferenceCode
+				);
 
-			if (alternativeValidate) {
-				window.location.href = location;
-			} else {
-				window.location.href = `${window.location.origin}${liferaySiteName}/${PROJECT_PAGE_KEY}`;
+				if (alternativeValidate) {
+					window.location.href = location;
+				}
+				else {
+					window.location.href = `${window.location.origin}${liferaySiteName}/${PROJECT_PAGE_KEY}`;
+				}
 			}
 		}
-	}
 
-	setLoading(isLoadingGraphQL);
+		setLoading(isLoadingGraphQL);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, isLoadingGraphQL]);
 
 	return {
 		isLoading,

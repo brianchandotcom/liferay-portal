@@ -11,44 +11,42 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/constants';
 import {DEFAULT_EDIT_SXP_ELEMENT} from '../utils/data';
 import {isDefined} from '../utils/utils';
 
-/**
- * A slightly modified version of frontend-js-web module's SimpleInputModal
- * React component to include a description field.
- */
+const ADD_EVENT = 'addSXPElement';
+
 const AddSXPElementModal = ({
-	closeModal,
 	defaultLocale,
-	dialogTitle,
 	editSXPElementURL,
-	initialVisible,
 	portletNamespace,
-	submitButtonLabel = Liferay.Language.get('create'),
-	redirectURL = '',
 }) => {
 	const isMounted = useIsMounted();
+
+	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
-	const [visible, setVisible] = useState(initialVisible);
 	const [titleInputValue, setTitleInputValue] = useState('');
-	const [descriptionInputValue, setDescriptionInputValue] = useState('');
+	const [visibleModal, setVisibleModal] = useState(false);
 
 	const {observer, onClose} = useModal({
-		onClose: () => {
-			setVisible(false);
-
-			closeModal();
-		},
+		onClose: () => setVisibleModal(false),
 	});
+
+	useEffect(() => {
+		Liferay.on(ADD_EVENT, () => setVisibleModal(true));
+
+		return () => {
+			Liferay.detach(ADD_EVENT);
+		};
+	}, []);
 
 	const _handleFormError = (responseContent) => {
 		setErrorMessage(responseContent.error || DEFAULT_ERROR);
@@ -83,9 +81,7 @@ const AddSXPElementModal = ({
 						_handleFormError(responseContent);
 					}
 					else {
-						setVisible(false);
-
-						closeModal();
+						setVisibleModal(false);
 
 						if (isDefined(responseContent.id)) {
 							const url = new URL(editSXPElementURL);
@@ -98,7 +94,7 @@ const AddSXPElementModal = ({
 							navigate(url);
 						}
 						else {
-							navigate(redirectURL);
+							navigate(window.location.href);
 						}
 					}
 				}
@@ -111,108 +107,117 @@ const AddSXPElementModal = ({
 	};
 
 	return (
-		visible && (
-			<ClayModal observer={observer} size="md">
-				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
+		<ClayModalProvider>
+			{visibleModal && (
+				<ClayModal observer={observer} size="md">
+					<ClayModal.Header>
+						{Liferay.Language.get('new-search-element')}
+					</ClayModal.Header>
 
-				<form id={`${portletNamespace}form`} onSubmit={_handleSubmit}>
-					<ClayModal.Body>
-						<div
-							className={getCN('form-group', {
-								'has-error': errorMessage,
-							})}
-						>
-							<label
-								className="control-label"
-								htmlFor={`${portletNamespace}title`}
+					<form
+						id={`${portletNamespace}form`}
+						onSubmit={_handleSubmit}
+					>
+						<ClayModal.Body>
+							<div
+								className={getCN('form-group', {
+									'has-error': errorMessage,
+								})}
 							>
-								{Liferay.Language.get('name')}
-
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
-
-							<input
-								autoFocus
-								className="form-control"
-								disabled={loadingResponse}
-								id={`${portletNamespace}title`}
-								name={`${portletNamespace}title`}
-								onChange={(event) =>
-									setTitleInputValue(event.target.value)
-								}
-								required
-								type="text"
-								value={titleInputValue}
-							/>
-
-							{errorMessage && (
-								<div className="form-feedback-item">
-									<ClayIcon
-										className="inline-item inline-item-before"
-										symbol="exclamation-full"
-									/>
-
-									{errorMessage}
-								</div>
-							)}
-						</div>
-
-						<div className="form-group">
-							<label
-								className="control-label"
-								htmlFor={`${portletNamespace}description`}
-							>
-								{Liferay.Language.get('description')}
-							</label>
-
-							<textarea
-								className="form-control"
-								disabled={loadingResponse}
-								id={`${portletNamespace}description`}
-								name={`${portletNamespace}description`}
-								onChange={(event) =>
-									setDescriptionInputValue(event.target.value)
-								}
-								value={descriptionInputValue}
-							/>
-						</div>
-					</ClayModal.Body>
-
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									disabled={loadingResponse}
-									displayType="secondary"
-									onClick={onClose}
+								<label
+									className="control-label"
+									htmlFor={`${portletNamespace}title`}
 								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
+									{Liferay.Language.get('name')}
 
-								<ClayButton
+									<span className="reference-mark">
+										<ClayIcon symbol="asterisk" />
+									</span>
+								</label>
+
+								<input
+									autoFocus
+									className="form-control"
 									disabled={loadingResponse}
-									displayType="primary"
-									type="submit"
-								>
-									{loadingResponse && (
-										<span className="inline-item inline-item-before">
-											<span
-												aria-hidden="true"
-												className="loading-animation"
-											></span>
-										</span>
-									)}
+									id={`${portletNamespace}title`}
+									name={`${portletNamespace}title`}
+									onChange={(event) =>
+										setTitleInputValue(event.target.value)
+									}
+									required
+									type="text"
+									value={titleInputValue}
+								/>
 
-									{submitButtonLabel}
-								</ClayButton>
-							</ClayButton.Group>
-						}
-					/>
-				</form>
-			</ClayModal>
-		)
+								{errorMessage && (
+									<div className="form-feedback-item">
+										<ClayIcon
+											className="inline-item inline-item-before"
+											symbol="exclamation-full"
+										/>
+
+										{errorMessage}
+									</div>
+								)}
+							</div>
+
+							<div className="form-group">
+								<label
+									className="control-label"
+									htmlFor={`${portletNamespace}description`}
+								>
+									{Liferay.Language.get('description')}
+								</label>
+
+								<textarea
+									className="form-control"
+									disabled={loadingResponse}
+									id={`${portletNamespace}description`}
+									name={`${portletNamespace}description`}
+									onChange={(event) =>
+										setDescriptionInputValue(
+											event.target.value
+										)
+									}
+									value={descriptionInputValue}
+								/>
+							</div>
+						</ClayModal.Body>
+
+						<ClayModal.Footer
+							last={
+								<ClayButton.Group spaced>
+									<ClayButton
+										disabled={loadingResponse}
+										displayType="secondary"
+										onClick={onClose}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
+
+									<ClayButton
+										disabled={loadingResponse}
+										displayType="primary"
+										type="submit"
+									>
+										{loadingResponse && (
+											<span className="inline-item inline-item-before">
+												<span
+													aria-hidden="true"
+													className="loading-animation"
+												></span>
+											</span>
+										)}
+
+										{Liferay.Language.get('create')}
+									</ClayButton>
+								</ClayButton.Group>
+							}
+						/>
+					</form>
+				</ClayModal>
+			)}
+		</ClayModalProvider>
 	);
 };
 

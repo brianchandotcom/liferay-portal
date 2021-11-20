@@ -32,3 +32,23 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 	style="fluid"
 />
+
+<div id="<portlet:namespace />addSXPElement">
+	<react:component
+		module="sxp_blueprint_admin/js/view_sxp_elements/AddSXPElementModal"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+			).put(
+				"editSXPElementURL",
+				PortletURLBuilder.createRenderURL(
+					renderResponse
+				).setMVCRenderCommandName(
+					"/sxp_blueprint_admin/edit_sxp_element"
+				).buildString()
+			).put(
+				"portletNamespace", liferayPortletResponse.getNamespace()
+			).build()
+		%>'
+	/>
+</div>

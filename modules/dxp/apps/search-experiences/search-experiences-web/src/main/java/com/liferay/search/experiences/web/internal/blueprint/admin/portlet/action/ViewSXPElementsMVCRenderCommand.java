@@ -14,20 +14,12 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.admin.portlet.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
-import com.liferay.search.experiences.service.SXPElementService;
+import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsDisplayContext;
-import com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsManagementToolbarDisplayContext;
 import com.liferay.search.experiences.web.internal.constants.SXPWebKeys;
 
 import javax.portlet.PortletException;
@@ -38,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Petteri Karttunen
+ * @author Kevin Tan
  */
 @Component(
 	immediate = true,
@@ -55,64 +47,22 @@ public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ViewSXPElementsDisplayContext viewSXPElementsDisplayContext =
-			_getViewElementsDisplayContext(renderRequest, renderResponse);
-
 		renderRequest.setAttribute(
 			SXPWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT,
-			viewSXPElementsDisplayContext);
-
-		try {
-			ViewSXPElementsManagementToolbarDisplayContext
-				viewSXPElementEntriesManagementToolbarDisplayContext =
-					new ViewSXPElementsManagementToolbarDisplayContext(
-						viewSXPElementsDisplayContext.getDisplayStyle(),
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse),
-						viewSXPElementsDisplayContext.getSearchContainer());
-
-			renderRequest.setAttribute(
-				SXPWebKeys.VIEW_SXP_ELEMENTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,
-				viewSXPElementEntriesManagementToolbarDisplayContext);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			SessionErrors.add(renderRequest, portalException.getClass());
-		}
+			new ViewSXPElementsDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_sxpElementModelResourcePermission));
 
 		return "/sxp_blueprint_admin/view.jsp";
 	}
 
-	private ViewSXPElementsDisplayContext _getViewElementsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new ViewSXPElementsDisplayContext(
-			_portal.getLiferayPortletRequest(renderRequest),
-			_portal.getLiferayPortletResponse(renderResponse), _queries,
-			_searcher, _searchRequestBuilderFactory, _sorts,
-			_sxpElementService);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewSXPElementsMVCRenderCommand.class);
-
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private Queries _queries;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Reference
-	private Sorts _sorts;
-
-	@Reference
-	private SXPElementService _sxpElementService;
+	@Reference(
+		target = "(model.class.name=com.liferay.search.experiences.model.SXPElement)"
+	)
+	private ModelResourcePermission<SXPElement>
+		_sxpElementModelResourcePermission;
 
 }

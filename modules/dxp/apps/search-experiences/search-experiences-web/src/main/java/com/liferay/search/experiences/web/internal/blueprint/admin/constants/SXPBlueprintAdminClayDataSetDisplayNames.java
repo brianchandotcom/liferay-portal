@@ -21,4 +21,6 @@ public class SXPBlueprintAdminClayDataSetDisplayNames {
 
 	public static final String SXP_BLUEPRINTS = "sxpBlueprints";
 
+	public static final String SXP_ELEMENTS = "sxpElements";
+
 }

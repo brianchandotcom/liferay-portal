@@ -32,10 +32,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = true,
-	property = "clay.data.set.display.name=" + SXPBlueprintAdminClayDataSetDisplayNames.SXP_BLUEPRINTS,
+	property = "clay.data.set.display.name=" + SXPBlueprintAdminClayDataSetDisplayNames.SXP_ELEMENTS,
 	service = ClayDataSetDisplayView.class
 )
-public class SXPBlueprintsTableClayDataSetDisplayView
+public class SXPElementsTableClayDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -50,8 +50,6 @@ public class SXPBlueprintsTableClayDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"description", "description");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("id", "id");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("userName", "author");
 

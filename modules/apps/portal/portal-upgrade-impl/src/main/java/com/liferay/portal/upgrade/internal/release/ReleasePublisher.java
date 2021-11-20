@@ -65,15 +65,7 @@ public final class ReleasePublisher extends BaseModelListener<Release> {
 			});
 	}
 
-	public void publish(Release release) {
-		ServiceRegistration<Release> oldServiceRegistration =
-			_serviceConfiguratorRegistrations.get(
-				release.getServletContextName());
-
-		if (oldServiceRegistration != null) {
-			oldServiceRegistration.unregister();
-		}
-
+	public ServiceRegistration<Release> publish(Release release) {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
@@ -98,14 +90,14 @@ public final class ReleasePublisher extends BaseModelListener<Release> {
 		ServiceRegistration<Release> newServiceRegistration =
 			_bundleContext.registerService(Release.class, release, properties);
 
-		_serviceConfiguratorRegistrations.put(
+		return _serviceConfiguratorRegistrations.put(
 			release.getServletContextName(), newServiceRegistration);
 	}
 
-	public void publishInProgress(Release release) {
+	public ServiceRegistration<Release> publishInProgress(Release release) {
 		release.setState(_STATE_IN_PROGRESS);
 
-		publish(release);
+		return publish(release);
 	}
 
 	@Activate

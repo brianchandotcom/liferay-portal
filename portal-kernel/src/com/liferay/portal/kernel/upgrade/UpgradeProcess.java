@@ -58,6 +58,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +66,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.sql.DataSource;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,7 +99,7 @@ public abstract class UpgradeProcess
 
 		String message = "Completed upgrade process ";
 
-		try (Connection connection = DataAccess.getConnection()) {
+		try (Connection connection = getConnection()) {
 			this.connection = connection;
 
 			if (isSkipUpgradeProcess()) {
@@ -427,6 +435,42 @@ public abstract class UpgradeProcess
 	}
 
 	protected abstract void doUpgrade() throws Exception;
+
+	protected Connection getConnection() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle != null) {
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			Collection<ServiceReference<DataSource>> serviceReferences =
+				bundleContext.getServiceReferences(
+					DataSource.class,
+					StringBundler.concat(
+						"(origin.bundle.symbolic.name=",
+						bundle.getSymbolicName(), ")"));
+
+			Iterator<ServiceReference<DataSource>> iterator =
+				serviceReferences.iterator();
+
+			if (iterator.hasNext()) {
+				ServiceReference<DataSource> serviceReference = iterator.next();
+
+				DataSource dataSource = bundleContext.getService(
+					serviceReference);
+
+				try {
+					if (dataSource != null) {
+						return dataSource.getConnection();
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			}
+		}
+
+		return DataAccess.getConnection();
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link

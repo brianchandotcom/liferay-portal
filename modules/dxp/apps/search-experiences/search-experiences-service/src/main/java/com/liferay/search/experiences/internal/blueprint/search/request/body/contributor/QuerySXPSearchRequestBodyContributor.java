@@ -35,7 +35,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.Rescore;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.beans.ExceptionListener;
 
@@ -60,10 +59,8 @@ public class QuerySXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		Configuration configuration, SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
-
-		Configuration configuration = sxpBlueprint.getConfiguration();
 
 		QueryConfiguration queryConfiguration =
 			configuration.getQueryConfiguration();

@@ -29,11 +29,11 @@ import com.liferay.portal.search.significance.SignificanceHeuristics;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.AggsSXPSearchRequestBodyContributor;
@@ -43,11 +43,17 @@ import com.liferay.search.experiences.internal.blueprint.search.request.body.con
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SuggestSXPSearchRequestBodyContributor;
+import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -111,7 +117,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private void _contributeSXPSearchRequestBodyContributors(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		Configuration configuration, SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
 		if (ListUtil.isEmpty(_sxpSearchRequestBodyContributors)) {
@@ -125,7 +131,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 			try {
 				sxpSearchRequestBodyContributor.contribute(
-					searchRequestBuilder, sxpBlueprint, sxpParameterData);
+					configuration, searchRequestBuilder, sxpParameterData);
 			}
 			catch (Exception exception) {
 				runtimeException.addSuppressed(exception);
@@ -138,9 +144,31 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private void _enhance(
+		ElementInstance elementInstance,
+		PropertyExpander.PropertyResolver propertyResolver1,
+		SearchRequestBuilder searchRequestBuilder,
+		SXPParameterData sxpParameterData) {
+
+		SXPElement sxpElement = elementInstance.getSxpElement();
+
+		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
+
+		PropertyExpander.PropertyResolver propertyResolver2 =
+			(name, options) -> _resolveProperty(elementInstance, name);
+
+		_contributeSXPSearchRequestBodyContributors(
+			_expand(
+				elementDefinition.getConfiguration(), propertyResolver1,
+				propertyResolver2),
+			searchRequestBuilder, sxpParameterData);
+	}
+
+	private void _enhance(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
-		if (sxpBlueprint.getConfiguration() == null) {
+		if ((sxpBlueprint.getConfiguration() == null) &&
+			ArrayUtil.isEmpty(sxpBlueprint.getElementInstances())) {
+
 			return;
 		}
 
@@ -149,19 +177,32 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				searchContext -> searchContext),
 			sxpBlueprint);
 
-		_contributeSXPSearchRequestBodyContributors(
-			searchRequestBuilder, _expand(sxpBlueprint, sxpParameterData),
-			sxpParameterData);
+		PropertyExpander.PropertyResolver propertyResolver =
+			(name, options) -> _resolveProperty(
+				name, options, sxpParameterData);
+
+		if (sxpBlueprint.getConfiguration() != null) {
+			_contributeSXPSearchRequestBodyContributors(
+				_expand(sxpBlueprint.getConfiguration(), propertyResolver),
+				searchRequestBuilder, sxpParameterData);
+		}
+
+		ArrayUtil.isNotEmptyForEach(
+			sxpBlueprint.getElementInstances(),
+			elementInstance -> _enhance(
+				elementInstance, propertyResolver, searchRequestBuilder,
+				sxpParameterData));
 	}
 
-	private SXPBlueprint _expand(
-		SXPBlueprint sxpBlueprint, SXPParameterData sxpParameterData) {
+	private Configuration _expand(
+		Configuration configuration,
+		PropertyExpander.PropertyResolver... propertyResolvers) {
 
-		return SXPBlueprintUtil.toSXPBlueprint(
-			sxpBlueprint,
-			SXPParameterParser.parse(
-				String.valueOf(sxpBlueprint.getConfiguration()),
-				sxpParameterData));
+		PropertyExpander propertyExpander = new PropertyExpander(
+			propertyResolvers);
+
+		return ConfigurationUtil.toConfiguration(
+			propertyExpander.expand(String.valueOf(configuration)));
 	}
 
 	private DTOConverter
@@ -174,6 +215,34 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return (DTOConverter
 			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>)
 				_dtoConverterRegistry.getDTOConverter(dtoClassName);
+	}
+
+	private Object _resolveProperty(
+		ElementInstance elementInstance, String name) {
+
+		String prefix = "configuration.";
+
+		if (!name.startsWith(prefix)) {
+			return null;
+		}
+
+		Map<String, Object> values = elementInstance.getUiConfigurationValues();
+
+		return values.get(name.substring(prefix.length()));
+	}
+
+	private Object _resolveProperty(
+		String name, Map<String, String> options,
+		SXPParameterData sxpParameterData) {
+
+		SXPParameter sxpParameter = sxpParameterData.getSXPParameterByName(
+			name);
+
+		if ((sxpParameter == null) || !sxpParameter.isTemplateVariable()) {
+			return null;
+		}
+
+		return sxpParameter.evaluateToString(options);
 	}
 
 	@Reference

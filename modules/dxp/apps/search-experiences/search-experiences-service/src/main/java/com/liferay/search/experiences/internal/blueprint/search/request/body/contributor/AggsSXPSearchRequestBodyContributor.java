@@ -29,7 +29,6 @@ import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.util.Iterator;
 
@@ -52,10 +51,8 @@ public class AggsSXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		Configuration configuration, SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
-
-		Configuration configuration = sxpBlueprint.getConfiguration();
 
 		AggregationConfiguration aggregationConfiguration =
 			configuration.getAggregationConfiguration();

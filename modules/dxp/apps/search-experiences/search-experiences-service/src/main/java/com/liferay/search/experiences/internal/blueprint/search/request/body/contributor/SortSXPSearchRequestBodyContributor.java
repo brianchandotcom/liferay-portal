@@ -16,13 +16,11 @@ package com.liferay.search.experiences.internal.blueprint.search.request.body.co
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.geolocation.DistanceUnit;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoDistanceType;
-import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.GeoDistanceSort;
@@ -36,7 +34,6 @@ import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterD
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 
 import java.util.Iterator;
@@ -60,14 +57,8 @@ public class SortSXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		Configuration configuration, SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
-
-		if (_hasSorts(searchRequestBuilder)) {
-			return;
-		}
-
-		Configuration configuration = sxpBlueprint.getConfiguration();
 
 		SortConfiguration sortConfiguration =
 			configuration.getSortConfiguration();
@@ -94,12 +85,6 @@ public class SortSXPSearchRequestBodyContributor
 		geoDistanceSort.addGeoLocationPoints(
 			_geoBuilders.geoLocationPoint(
 				jsonArray.getDouble(0), jsonArray.getDouble(1)));
-	}
-
-	private boolean _hasSorts(SearchRequestBuilder searchRequestBuilder) {
-		SearchRequest searchRequest = searchRequestBuilder.build();
-
-		return ListUtil.isNotEmpty(searchRequest.getSorts());
 	}
 
 	private void _processGeoDistanceType(

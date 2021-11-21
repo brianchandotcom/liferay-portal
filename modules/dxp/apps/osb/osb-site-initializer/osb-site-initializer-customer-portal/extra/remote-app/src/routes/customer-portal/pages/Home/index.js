@@ -1,12 +1,9 @@
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import useGraphQL from '~/common/hooks/useGraphQL';
 import {LiferayTheme} from '~/common/services/liferay';
 import {getKoroneikiAccountsByFilter} from '~/common/services/liferay/graphql/koroneiki-accounts';
-import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
 import {PARAMS_KEYS} from '~/common/services/liferay/search-params';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {REACT_APP_LIFERAY_API} from '~/common/utils';
 import Banner from '../../components/Banner';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
@@ -31,7 +28,7 @@ const getStatus = (slaCurrent, slaFuture) => {
 const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
 
-	const {data: koroneikiAccountsData, isLoading: isLoadingKoroneiki} =
+	const {data: koroneikiAccountsData, isLoading} =
 		useGraphQL([
 			getKoroneikiAccountsByFilter({
 				accountKeys: userAccount.accountBriefs.map(
@@ -39,29 +36,6 @@ const Home = ({userAccount}) => {
 				),
 			}),
 		]) || [];
-
-	const {data, isLoading: isLoadingUser} = useGraphQL([
-		getUserAccountById(LiferayTheme.getUserId()),
-	]);
-
-	useEffect(() => {
-		if (data) {
-			Storage.setItem(
-				STORAGE_KEYS.USER_APPLICATION,
-				JSON.stringify({
-					accountKey: data.userAccount.accountKey,
-					image:
-						data.userAccount.image &&
-						`${REACT_APP_LIFERAY_API}${data.userAccount.image}`,
-					name: data.userAccount.name,
-				})
-			);
-		} else {
-			Storage.removeItem(STORAGE_KEYS.USER_APPLICATION);
-		}
-	}, [data]);
-
-	const accountBriefs = data?.userAccount.accountBriefs || [];
 
 	const nextPage = (project) => {
 		window.location.href = `${window.location.origin}${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.accountKey}`;
@@ -93,7 +67,7 @@ const Home = ({userAccount}) => {
 					future: slaFuture,
 				},
 				status: getStatus(slaCurrent, slaFuture),
-				title: accountBriefs.find(
+				title: userAccount.accountBriefs.find(
 					({externalReferenceCode}) =>
 						externalReferenceCode === accountKey
 				).name,
@@ -116,12 +90,6 @@ const Home = ({userAccount}) => {
 				})}
 			>
 				<Banner userName={userAccount.name} />
-
-				{!isLoadingUser & !isLoadingKoroneiki ? (
-					<Banner userName={data?.userAccount.name || ''} />
-				) : (
-					<Banner.Skeleton />
-				)}
 			</div>
 			<div
 				className={classNames('mx-auto', {
@@ -143,7 +111,7 @@ const Home = ({userAccount}) => {
 						</div>
 					)}
 
-					{!isLoadingKoroneiki ? (
+					{!isLoading ? (
 						<div
 							className={classNames('d-flex flex-wrap', {
 								'home-projects': !withManyProjects,

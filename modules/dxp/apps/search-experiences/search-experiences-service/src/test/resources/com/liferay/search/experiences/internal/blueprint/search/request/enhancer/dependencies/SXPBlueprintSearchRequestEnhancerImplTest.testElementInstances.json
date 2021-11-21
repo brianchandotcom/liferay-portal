@@ -1,0 +1,210 @@
+{
+	"configuration": {
+		"queryConfiguration": {
+			"applyIndexerClauses": true,
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"occur": "must",
+							"query": {
+								"term": {
+									"version": {
+										"value": "7.4"
+									}
+								}
+							}
+						}
+					],
+					"enabled": true
+				}
+			]
+		},
+		"sortConfiguration": {
+			"sorts": [
+				"department"
+			]
+		}
+	},
+	"elementInstances": [
+		{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Paste any Elasticsearch query body in the element as is."
+				},
+				"elementDefinition": {
+					"category": "custom",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "${configuration.occur}",
+											"query": "${configuration.query}"
+										}
+									]
+								}
+							]
+						}
+					},
+					"icon": "custom-field",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"label": "Occur",
+										"name": "occur",
+										"options": [
+											{
+												"label": "MUST",
+												"value": "must"
+											},
+											{
+												"label": "SHOULD",
+												"value": "should"
+											},
+											{
+												"label": "MUST NOT",
+												"value": "must_not"
+											},
+											{
+												"label": "FILTER",
+												"value": "filter"
+											}
+										],
+										"uiType": "select",
+										"valueDefinition": {
+											"defaultValueString": "must",
+											"type": "String"
+										}
+									},
+									{
+										"label": "Query",
+										"name": "query",
+										"uiType": "json"
+									}
+								]
+							}
+						]
+					}
+				},
+				"title_i18n": {
+					"en_US": "Paste Any Elasticsearch Query"
+				}
+			},
+			"uiConfigurationValues": {
+				"occur": "should",
+				"query": {
+					"match": {
+						"ranking": 5
+					}
+				}
+			}
+		},
+		{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Boost the given asset type over others."
+				},
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"term": {
+													"entryClassName": {
+														"boost": "${configuration.boost}",
+														"value": "${configuration.entry_class_name}"
+													}
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"label": "Asset Type",
+										"name": "entry_class_name",
+										"uiType": "searchableType"
+									},
+									{
+										"label": "Boost",
+										"name": "boost",
+										"uiType": "number",
+										"valueDefinition": {
+											"defaultValueInteger": 10,
+											"minValueInteger": 0,
+											"type": "Integer"
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"title_i18n": {
+					"en_US": "Boost Asset Type"
+				}
+			},
+			"uiConfigurationValues": {
+				"boost": 142857,
+				"entry_class_name": "com.liferay.journal.model.JournalArticle"
+			}
+		},
+		{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Sort by any field in descending order."
+				},
+				"elementDefinition": {
+					"category": "sort",
+					"configuration": {
+						"sortConfiguration": {
+							"sorts": [
+								{
+									"${configuration.field}": "desc"
+								}
+							]
+						}
+					},
+					"icon": "sort",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"label": "Field",
+										"name": "field",
+										"uiType": "text"
+									}
+								]
+							}
+						]
+					}
+				},
+				"title_i18n": {
+					"en_US": "Sort Descending"
+				}
+			},
+			"uiConfigurationValues": {
+				"field": "lastName"
+			}
+		}
+	]
+}

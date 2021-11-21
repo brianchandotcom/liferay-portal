@@ -47,7 +47,9 @@ public class ConfigurationUtil {
 		AggregationConfiguration aggregationConfiguration =
 			configuration.getAggregationConfiguration();
 
-		if (aggregationConfiguration != null) {
+		if ((aggregationConfiguration != null) &&
+			(aggregationConfiguration.getAggs() instanceof Map)) {
+
 			aggregationConfiguration.setAggs(
 				JSONFactoryUtil.createJSONObject(
 					(Map<?, ?>)aggregationConfiguration.getAggs()));
@@ -85,14 +87,14 @@ public class ConfigurationUtil {
 	}
 
 	private static void _unpack(Clause clause) {
-		if (clause.getQuery() != null) {
+		if (clause.getQuery() instanceof Map) {
 			clause.setQuery(
 				JSONFactoryUtil.createJSONObject((Map<?, ?>)clause.getQuery()));
 		}
 	}
 
 	private static void _unpack(Rescore rescore) {
-		if (rescore.getQuery() != null) {
+		if (rescore.getQuery() instanceof Map) {
 			rescore.setQuery(
 				JSONFactoryUtil.createJSONObject(
 					(Map<?, ?>)rescore.getQuery()));

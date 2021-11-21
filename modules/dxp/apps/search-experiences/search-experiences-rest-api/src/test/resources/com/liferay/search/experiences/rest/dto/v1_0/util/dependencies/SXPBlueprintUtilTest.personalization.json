@@ -289,22 +289,10 @@
 			},
 			"type": 10,
 			"uiConfigurationValues": {
-				"boost": {
-					"defaultValueInteger": 2,
-					"type": "Integer"
-				},
-				"decay": {
-					"defaultValueFloat": 0.3,
-					"type": "Float"
-				},
-				"field": {
-					"defaultValueString": "expando__keyword__custom_fields__location_geolocation",
-					"type": "String"
-				},
-				"scale": {
-					"defaultValueInteger": 5000,
-					"type": "Integer"
-				}
+				"boost": 2,
+				"decay": 0.3,
+				"field": "expando__keyword__custom_fields__location_geolocation",
+				"scale": 5000
 			}
 		},
 		{
@@ -381,10 +369,7 @@
 			},
 			"type": 10,
 			"uiConfigurationValues": {
-				"boost": {
-					"defaultValueInteger": 20,
-					"type": "Integer"
-				}
+				"boost": 20
 			}
 		},
 		{
@@ -445,10 +430,7 @@
 			},
 			"type": 10,
 			"uiConfigurationValues": {
-				"boost": {
-					"defaultValueInteger": 10,
-					"type": "Integer"
-				}
+				"boost": 10
 			}
 		}
 	],

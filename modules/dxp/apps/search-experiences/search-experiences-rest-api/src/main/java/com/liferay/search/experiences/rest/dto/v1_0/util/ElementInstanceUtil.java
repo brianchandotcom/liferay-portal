@@ -56,6 +56,8 @@ public class ElementInstanceUtil {
 			elementInstance.setSxpElement(SXPElementUtil.unpack(sxpElement));
 		}
 
+		MapUtil.unpack(elementInstance.getUiConfigurationValues());
+
 		return elementInstance;
 	}
 

@@ -286,7 +286,7 @@ components:
                     type: integer
                 uiConfigurationValues:
                     additionalProperties:
-                        $ref: "#/components/schemas/ValueDefinition"
+                        type: object
                     type: object
             type: object
         FieldMappingInfo:

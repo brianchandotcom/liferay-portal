@@ -9,10 +9,6 @@ const getUserAccountById = (id) => {
                   name
                   externalReferenceCode
                 }
-                roleBriefs {
-                  id
-                  name
-                }
               }`;
 };
 

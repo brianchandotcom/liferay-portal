@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {LiferayTheme} from '../services/liferay';
 import {getAccountFlagByFilter} from '../services/liferay/graphql/account-flags';
+import {getAccountRolesByUserAccountId} from '../services/liferay/graphql/account-roles';
 import {PARAMS_KEYS} from '../services/liferay/search-params';
 import useGraphQL from './useGraphQL';
 
@@ -19,42 +20,42 @@ const validateExternalReferenceCode = (
 };
 
 const onboardingPageGuard = (
-	userAccount,
+	accountBriefs,
+	externalReferenceCode,
 	accountFlags,
-	externalReferenceCode
+	accountAccountRoles,
 ) => {
 	return {
 		location: `${window.location.origin}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
 		validate:
 			!accountFlags.length &&
-			userAccount.roleBriefs.find(
+			accountAccountRoles.find(
 				({name}) => name === 'Account Administrator'
 			) &&
 			validateExternalReferenceCode(
-				userAccount.accountBriefs,
+				accountBriefs,
 				externalReferenceCode
 			),
 	};
 };
 
 const overviewPageGuard = (
-	userAccount,
-	_accountFlags,
-	externalReferenceCode
+	accountBriefs,
+	externalReferenceCode,
 ) => {
 	const isValidExternalReferenceCode = validateExternalReferenceCode(
-		userAccount.accountBriefs,
+		accountBriefs,
 		externalReferenceCode
 	);
 	const validation =
-		isValidExternalReferenceCode || userAccount.accountBriefs.length === 1;
+		isValidExternalReferenceCode || accountBriefs.length === 1;
 
 	const getExternalReferenceCode = () => {
 		if (isValidExternalReferenceCode) {
 			return externalReferenceCode;
 		}
-		else if (userAccount.accountBriefs.length === 1) {
-			return userAccount.accountBriefs[0].externalReferenceCode;
+		else if (accountBriefs.length === 1) {
+			return accountBriefs[0].externalReferenceCode;
 		}
 	};
 
@@ -81,6 +82,7 @@ const usePageGuard = (
 			userUuid: userAccount.externalReferenceCode,
 			value: 1,
 		}),
+		getAccountRolesByUserAccountId(userAccount.id)
 	]);
 
 	useEffect(() => {
@@ -90,16 +92,21 @@ const usePageGuard = (
 					userAccount.accountBriefs,
 					externalReferenceCode
 				) ||
-				!guard(userAccount, data.accountFlags, externalReferenceCode)
-					.validate
+				!guard(
+					userAccount.accountBriefs, 
+					externalReferenceCode, 
+					data.accountFlags, 
+					data.accountAccountRoles
+				).validate
 			) {
 				const {
 					location,
 					validate: alternativeValidate,
 				} = alternativeGuard(
-					userAccount,
-					data.accountFlags,
-					externalReferenceCode
+						userAccount.accountBriefs, 
+						externalReferenceCode, 
+						data.accountFlags, 
+						data.accountAccountRoles
 				);
 
 				if (alternativeValidate) {

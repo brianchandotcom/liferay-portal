@@ -142,19 +142,19 @@ public class ElementInstance implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, ValueDefinition> getUiConfigurationValues() {
+	public Map<String, Object> getUiConfigurationValues() {
 		return uiConfigurationValues;
 	}
 
 	public void setUiConfigurationValues(
-		Map<String, ValueDefinition> uiConfigurationValues) {
+		Map<String, Object> uiConfigurationValues) {
 
 		this.uiConfigurationValues = uiConfigurationValues;
 	}
 
 	@JsonIgnore
 	public void setUiConfigurationValues(
-		UnsafeSupplier<Map<String, ValueDefinition>, Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			uiConfigurationValuesUnsafeSupplier) {
 
 		try {
@@ -170,7 +170,7 @@ public class ElementInstance implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, ValueDefinition> uiConfigurationValues;
+	protected Map<String, Object> uiConfigurationValues;
 
 	@Override
 	public boolean equals(Object object) {

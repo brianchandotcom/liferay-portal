@@ -96,18 +96,18 @@ public class ElementInstance implements Cloneable, Serializable {
 
 	protected Integer type;
 
-	public Map<String, ValueDefinition> getUiConfigurationValues() {
+	public Map<String, Object> getUiConfigurationValues() {
 		return uiConfigurationValues;
 	}
 
 	public void setUiConfigurationValues(
-		Map<String, ValueDefinition> uiConfigurationValues) {
+		Map<String, Object> uiConfigurationValues) {
 
 		this.uiConfigurationValues = uiConfigurationValues;
 	}
 
 	public void setUiConfigurationValues(
-		UnsafeSupplier<Map<String, ValueDefinition>, Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			uiConfigurationValuesUnsafeSupplier) {
 
 		try {
@@ -118,7 +118,7 @@ public class ElementInstance implements Cloneable, Serializable {
 		}
 	}
 
-	protected Map<String, ValueDefinition> uiConfigurationValues;
+	protected Map<String, Object> uiConfigurationValues;
 
 	@Override
 	public ElementInstance clone() throws CloneNotSupportedException {

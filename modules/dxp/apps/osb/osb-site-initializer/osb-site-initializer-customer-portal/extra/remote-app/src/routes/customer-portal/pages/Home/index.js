@@ -54,6 +54,7 @@ const Home = ({userAccount}) => {
 				slaCurrentEndDate,
 				slaFuture,
 			}) => ({
+				accountKey,
 				code,
 				contact: {
 					emailAddress: liferayContactEmailAddress,
@@ -135,21 +136,6 @@ const Home = ({userAccount}) => {
 						</div>
 					)}
 				</div>
-			</div>
-			<div
-				className={classNames('d-flex', 'flex-wrap', {
-					'home-projects': !withManyProjects,
-					'home-projects-sm pt-2': withManyProjects,
-				})}
-			>
-				{projects.map((project, index) => (
-					<ProjectCard
-						key={index}
-						onClick={() => nextPage(project)}
-						small={withManyProjects}
-						{...project}
-					/>
-				))}
 			</div>
 		</>
 	);

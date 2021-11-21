@@ -5,7 +5,6 @@ import {PARAMS_KEYS} from '../services/liferay/search-params';
 import useGraphQL from './useGraphQL';
 
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
-const PROJECT_PAGE_KEY = 'home';
 
 const validateExternalReferenceCode = (
 	accountBriefs,
@@ -75,7 +74,7 @@ const usePageGuard = (
 ) => {
 	const [isLoading, setLoading] = useState(true);
 
-	const {data, isLoading: isLoadingGraphQL} = useGraphQL([
+	const {data} = useGraphQL([
 		getAccountFlagByFilter({
 			accountKey: externalReferenceCode,
 			name: 'onboarding',
@@ -85,7 +84,7 @@ const usePageGuard = (
 	]);
 
 	useEffect(() => {
-		if (!isLoadingGraphQL) {
+		if (data) {
 			if (
 				!validateExternalReferenceCode(
 					userAccount.accountBriefs,
@@ -107,14 +106,15 @@ const usePageGuard = (
 					window.location.href = location;
 				}
 				else {
-					window.location.href = `${window.location.origin}${liferaySiteName}/${PROJECT_PAGE_KEY}`;
+					window.location.href = `${window.location.origin}${liferaySiteName}`;
 				}
+			} else {
+				setLoading(false);
 			}
 		}
 
-		setLoading(isLoadingGraphQL);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, isLoadingGraphQL]);
+	}, [data]);
 
 	return {
 		isLoading,

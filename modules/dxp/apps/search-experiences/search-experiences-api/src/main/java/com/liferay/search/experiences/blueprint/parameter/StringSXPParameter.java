@@ -14,8 +14,10 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
 
@@ -30,6 +32,25 @@ public class StringSXPParameter extends BaseSXPParameter {
 		super(name, templateVariable);
 
 		_value = value;
+	}
+
+	@Override
+	public boolean evaluateContains(Object value, Object[] values) {
+		if (values != null) {
+			for (Object object : values) {
+				if (StringUtil.containsIgnoreCase(
+						_value, GetterUtil.getString(object),
+						StringPool.BLANK)) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		return StringUtil.containsIgnoreCase(
+			_value, GetterUtil.getString(value), StringPool.BLANK);
 	}
 
 	@Override

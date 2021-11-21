@@ -150,6 +150,14 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
+					"contains", "string", _consumeValue("ne"))));
+		Assert.assertTrue(
+			_evaluate(
+				_getConditionJSONObject(
+					"contains", "string", _consumeValues("two", "one"))));
+		Assert.assertTrue(
+			_evaluate(
+				_getConditionJSONObject(
 					"contains", "string_array", _consumeValue("one"))));
 	}
 
@@ -451,6 +459,14 @@ public class SXPConditionEvaluatorTest {
 				_getNotJSONObject(
 					_getConditionJSONObject(
 						"contains", "long_array", _consumeValue(4L)))));
+		Assert.assertTrue(
+			_evaluate(
+				_getConditionJSONObject(
+					"contains", "string", _consumeValue("four"))));
+		Assert.assertTrue(
+			_evaluate(
+				_getConditionJSONObject(
+					"contains", "string", _consumeValues("two", "three"))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
@@ -74,6 +75,7 @@ public class DynamicDataMappingXStreamConfigurator
 			new XStreamType(DDMFormField.class),
 			new XStreamType(DDMFormFieldOptions.class),
 			new XStreamType(DDMFormFieldValidation.class),
+			new XStreamType(DDMFormRule.class),
 			new XStreamType(DDMFormValues.class),
 			new XStreamType(LocalizedValue.class)
 		};

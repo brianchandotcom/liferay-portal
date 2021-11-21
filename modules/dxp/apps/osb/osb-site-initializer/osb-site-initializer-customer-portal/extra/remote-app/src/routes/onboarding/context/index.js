@@ -39,7 +39,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		},
 		project: {},
 		step: steps.welcome,
-		userAccount: {},
+		userAccount: undefined,
 	});
 
 	const {data} = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);

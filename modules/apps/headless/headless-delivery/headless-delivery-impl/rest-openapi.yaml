@@ -3104,6 +3104,11 @@ components:
                         The type of pagination.
                     enum: [None, Regular, Simple]
                     type: string
+                showAllItems:
+                    # @review
+                    description:
+                        Whether to show all items when pagination is enabled.
+                    type: boolean
                 templateKey:
                     # @review
                     description:

@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_CHECKBOX</td>
-	<td>//label[contains(.,'${key_fieldName}')]/input[contains(@id,'PortletConfiguration')]</td>
+	<td>//label[text()[normalize-space()='${key_fieldName}']]/input[contains(@id,'PortletConfiguration')]</td>
 	<td></td>
 </tr>
 <tr>

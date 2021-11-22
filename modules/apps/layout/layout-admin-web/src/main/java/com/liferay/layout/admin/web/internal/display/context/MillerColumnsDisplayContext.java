@@ -332,7 +332,7 @@ public class MillerColumnsDisplayContext {
 
 		if (LayoutLocalServiceUtil.hasLayouts(
 				_layoutsAdminDisplayContext.getSelGroup(), false) &&
-			_layoutsAdminDisplayContext.isShowPublicPages()) {
+			_layoutsAdminDisplayContext.isShowPublicLayouts()) {
 
 			boolean active = !_layoutsAdminDisplayContext.isPrivateLayout();
 

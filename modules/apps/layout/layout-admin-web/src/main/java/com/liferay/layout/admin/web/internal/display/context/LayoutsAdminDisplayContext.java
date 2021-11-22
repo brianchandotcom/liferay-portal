@@ -140,7 +140,7 @@ public class LayoutsAdminDisplayContext {
 
 	public List<DropdownItem> getAddLayoutDropdownItems() {
 		return DropdownItemListBuilder.add(
-			() -> isShowPublicPages(),
+			() -> isShowPublicLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					getSelectLayoutPageTemplateEntryURL(false));
@@ -148,7 +148,7 @@ public class LayoutsAdminDisplayContext {
 					LanguageUtil.get(httpServletRequest, "public-page"));
 			}
 		).add(
-			() -> isShowPublicPages(),
+			() -> isShowPublicLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					getSelectLayoutCollectionURL(
@@ -442,7 +442,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<String> results = new ArrayList<>();
 
-		if (isShowPublicPages()) {
+		if (isShowPublicLayouts()) {
 			results.add("public-pages");
 		}
 
@@ -1140,7 +1140,7 @@ public class LayoutsAdminDisplayContext {
 	public String getTitle(boolean privatePages) {
 		String title = "pages";
 
-		if (isShowPublicPages()) {
+		if (isShowPublicLayouts()) {
 			if (privatePages) {
 				title = "private-pages";
 			}
@@ -1608,7 +1608,7 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isShowPublicPages() {
+	public boolean isShowPublicLayouts() {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
@@ -1618,7 +1618,7 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean isShowUserPrivatePages() throws PortalException {
+	public boolean isShowUserPrivateLayouts() throws PortalException {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isUser()) {

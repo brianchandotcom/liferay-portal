@@ -182,12 +182,30 @@ definition {
 
 	}
 
-	@description = "LRQA-71360 - Verify that on the -Add Calendar- page the user can select checkbox ,Default Calendar ,Enable Comments ,Enable Ratings"
+	@description = "Verify that the user can make the new Calendar as the Default Calendar"
 	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSelectCheckboxes {
+	@priority = "3"
+	test CanMakeNewCalendarAsDefault {
 
-		// TODO LRQA-71595 CanSelectCheckboxes pending implementation
+		// TODO LRQA-71595 CanMakeNewCalendarAsDefault pending implementation
+
+	}
+
+	@description = "Verify that the user can Enable Comments on Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEnableComments {
+
+		// TODO LRQA-71797 CanEnableComments pending implementation
+
+	}
+
+	@description = "Verify that the user can Enable Ratings on Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEnableRatings {
+
+		// TODO LRQA-71798 CanEnableRatings pending implementation
 
 	}
 

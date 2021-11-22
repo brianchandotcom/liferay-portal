@@ -101,6 +101,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENTRY_RELATIONSHIP_TAB</td>
+		<td>//a[contains(text(),'Relationship Tab')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FIELD_TAB_NAME</td>
 		<td>//div[contains(@class,"object-admin-panel__header object-admin-panel__header--expanded")]//h3[contains(text(),'${key_fieldTabName}')]</td>
 		<td></td>
@@ -138,6 +143,11 @@
 	<tr>
 		<td>LAYOUT_LAYOUT_TAB</td>
 		<td>//button[contains(text(), 'Layout')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LAYOUT_INFO_TAB</td>
+		<td>//button[contains(text(), 'Info')]</td>
 		<td></td>
 	</tr>
 	<tr>

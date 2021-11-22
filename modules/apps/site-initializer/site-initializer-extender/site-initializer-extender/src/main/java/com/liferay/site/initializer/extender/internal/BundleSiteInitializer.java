@@ -318,17 +318,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 			};
 
 			_invoke(() -> _addPermissions(serviceContext));
-
 			_invoke(() -> _addDDMStructures(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
-			_invoke(() -> _addObjectDefinitions(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
-			Map <String, String> listTypeDefinitionsStringUtilReplaceValues =
+			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
 				_invoke(() -> _addListTypeDefinitions(serviceContext));
+
+			_invoke(
+				() -> _addObjectDefinitions(
+					listTypeDefinitionsStringUtilReplaceValues,
+					serviceContext));
+
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addAssetListEntries(
@@ -1377,13 +1381,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addSiteNavigationMenus(serviceContext);
 	}
 
-	private Map <String, String> _addListTypeDefinitions(ServiceContext serviceContext)
+	private Map<String, String> _addListTypeDefinitions(
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/list-type-definitions");
 
-		Map<String, String> listTypeDefinitionsStringUtilReplaceValues = new HashMap<>();
+		Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
+			new HashMap<>();
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return listTypeDefinitionsStringUtilReplaceValues;
@@ -1416,22 +1422,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 					null, null,
 					listTypeDefinitionResource.toFilter(
 						StringBundler.concat(
-							"name eq '",
-							listTypeDefinition.getName(), "'")),
+							"name eq '", listTypeDefinition.getName(), "'")),
 					null, null);
 
 			ListTypeDefinition existingListTypeDefinition =
 				listTypeDefinitionsPage.fetchFirstItem();
 
 			if (existingListTypeDefinition == null) {
-				listTypeDefinition = listTypeDefinitionResource.postListTypeDefinition(
-					listTypeDefinition);
+				listTypeDefinition =
+					listTypeDefinitionResource.postListTypeDefinition(
+						listTypeDefinition);
 			}
 			else {
-				listTypeDefinition = listTypeDefinitionResource.putListTypeDefinition(
-					existingListTypeDefinition.getId(), listTypeDefinition);
+				listTypeDefinition =
+					listTypeDefinitionResource.putListTypeDefinition(
+						existingListTypeDefinition.getId(), listTypeDefinition);
 			}
-			listTypeDefinitionsStringUtilReplaceValues.put("LIST_TYPE_DEFINITION_NAME:" + listTypeDefinition.getName(), String.valueOf(listTypeDefinition.getId()));
+
+			listTypeDefinitionsStringUtilReplaceValues.put(
+				"LIST_TYPE_DEFINITION_NAME:" + listTypeDefinition.getName(),
+				String.valueOf(listTypeDefinition.getId()));
 		}
 
 		return listTypeDefinitionsStringUtilReplaceValues;
@@ -1466,7 +1476,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addObjectDefinitions(ServiceContext serviceContext)
+	private void _addObjectDefinitions(
+			Map<String, String> listTypeDefinitionsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1490,6 +1502,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			String json = _read(resourcePath);
+
+			json = StringUtil.replace(
+				json, "[$", "$]", listTypeDefinitionsStringUtilReplaceValues);
 
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
 

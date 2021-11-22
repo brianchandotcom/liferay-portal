@@ -1,0 +1,26 @@
+{
+	"label": {
+		"en_US": "test object"
+	},
+	"name": "TestObject",
+	"objectFields": [
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Test PickList"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_NAME:test1$]",
+			"name": "test1",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Quote Comparisons"
+	},
+	"scope": "site"
+}

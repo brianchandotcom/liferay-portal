@@ -49,27 +49,30 @@ public class DateUtil {
 	}
 
 	public static String getDate(String offsetDays) {
-		return getFormattedDate(offsetDays, "d");
+		return getFormattedDate("Day", offsetDays, "d");
 	}
 
 	public static String getDayOfWeek(String offsetDays) {
-		return getFormattedDate(offsetDays, "EEEE");
+		return getFormattedDate("Day", offsetDays, "EEEE");
 	}
 
 	public static String getFormattedCurrentDate(String pattern) {
 		return _format(new Date(), pattern);
 	}
 
-	public static String getFormattedDate(String offsetDays, String pattern) {
-		return _format(_getOffsetDate(Integer.valueOf(offsetDays)), pattern);
+	public static String getFormattedDate(
+		String type, String offsetDays, String pattern) {
+
+		return _format(
+			_getOffsetDate(type, Integer.valueOf(offsetDays)), pattern);
 	}
 
 	public static String getMonth(String offsetDays) {
-		return getFormattedDate(offsetDays, "M");
+		return getFormattedDate("Day", offsetDays, "M");
 	}
 
 	public static String getMonthName(String offsetDays) {
-		return getFormattedDate(offsetDays, "MMMM");
+		return getFormattedDate("Day", offsetDays, "MMMM");
 	}
 
 	public static String getNanoseconds() {
@@ -81,7 +84,7 @@ public class DateUtil {
 	}
 
 	public static String getYear(String offsetDays) {
-		return getFormattedDate(offsetDays, "yyyy");
+		return getFormattedDate("Day", offsetDays, "yyyy");
 	}
 
 	private static String _format(Date date, String pattern) {

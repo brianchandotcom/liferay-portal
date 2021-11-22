@@ -4137,6 +4137,7 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+		
 
 	}
 

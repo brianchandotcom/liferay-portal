@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.view;
 
-import com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetSampleFrontendDataSetNames;
+import com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetNames;
 import com.liferay.frontend.data.set.view.FrontendDataSetView;
 import com.liferay.frontend.data.set.view.list.BaseListFrontendDataSetView;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false,
-	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.HEADLESS_SAMPLE,
+	property = "frontend.data.set.name=" + FrontendDataSetNames.HEADLESS_SAMPLE,
 	service = FrontendDataSetView.class
 )
 public class SampleListFrontendDataSetView extends BaseListFrontendDataSetView {

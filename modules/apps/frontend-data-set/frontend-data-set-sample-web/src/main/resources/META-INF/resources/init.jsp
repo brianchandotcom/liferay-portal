@@ -19,7 +19,7 @@
 <%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontent-data-set" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetSampleFrontendDataSetNames" %><%@
+<%@ page import="com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetNames" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetSampleWebKeys" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.FrontendDataSetSampleDisplayContext" %>
 

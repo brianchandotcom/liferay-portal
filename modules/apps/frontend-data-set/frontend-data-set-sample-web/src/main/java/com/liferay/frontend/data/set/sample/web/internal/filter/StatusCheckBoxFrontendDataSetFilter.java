@@ -17,7 +17,7 @@ package com.liferay.frontend.data.set.sample.web.internal.filter;
 import com.liferay.frontend.data.set.filter.BaseCheckBoxFrontendDataSetFilter;
 import com.liferay.frontend.data.set.filter.CheckBoxFrontendDataSetFilterItem;
 import com.liferay.frontend.data.set.filter.FrontendDataSetFilter;
-import com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetSampleFrontendDataSetNames;
+import com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetNames;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.HEADLESS_SAMPLE,
+	property = "frontend.data.set.name=" + FrontendDataSetNames.HEADLESS_SAMPLE,
 	service = FrontendDataSetFilter.class
 )
 public class StatusCheckBoxFrontendDataSetFilter

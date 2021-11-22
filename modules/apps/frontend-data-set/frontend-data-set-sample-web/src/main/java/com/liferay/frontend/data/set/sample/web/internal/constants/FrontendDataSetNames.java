@@ -17,7 +17,7 @@ package com.liferay.frontend.data.set.sample.web.internal.constants;
 /**
  * @author Marko Cikos
  */
-public class FrontendDataSetSampleFrontendDataSetNames {
+public class FrontendDataSetNames {
 
 	public static final String HEADLESS_SAMPLE = "HEADLESS_SAMPLE";
 

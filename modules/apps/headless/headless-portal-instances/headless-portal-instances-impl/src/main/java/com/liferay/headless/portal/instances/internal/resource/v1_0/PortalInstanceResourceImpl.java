@@ -18,10 +18,20 @@ import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
+import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
@@ -103,6 +113,16 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	public PortalInstance postPortalInstance(PortalInstance portalInstance)
 		throws Exception {
 
+		return postPortalInstanceWithAdminInfo(
+			null, null, null, portalInstance);
+	}
+
+	@Override
+	public PortalInstance postPortalInstanceWithAdminInfo(
+			String administratorEmailAddress, String administratorFirstName,
+			String administratorLastName, PortalInstance portalInstance)
+		throws Exception {
+
 		long companyId = Optional.ofNullable(
 			portalInstance.getCompanyId()
 		).orElse(
@@ -113,6 +133,34 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			companyId, portalInstance.getPortalInstanceId(),
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), false,
 			0, true);
+
+		if (Validator.isNotNull(administratorEmailAddress) ||
+			Validator.isNotNull(administratorFirstName) ||
+			Validator.isNotNull(administratorLastName)) {
+
+			_validateAdminInfo(
+				company.getCompanyId(), administratorEmailAddress,
+				administratorFirstName, administratorLastName);
+
+			User defaultAdminUser = _userLocalService.getUserByEmailAddress(
+				company.getCompanyId(),
+				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+					company.getMx());
+
+			defaultAdminUser.setEmailAddress(administratorEmailAddress);
+			defaultAdminUser.setFirstName(administratorFirstName);
+			defaultAdminUser.setLastName(administratorLastName);
+
+			ScreenNameGenerator screenNameGenerator =
+				ScreenNameGeneratorFactory.getInstance();
+
+			defaultAdminUser.setScreenName(
+				screenNameGenerator.generate(
+					company.getCompanyId(), defaultAdminUser.getUserId(),
+					administratorEmailAddress));
+
+			_userLocalService.updateUser(defaultAdminUser);
+		}
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(
@@ -162,6 +210,26 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		};
 	}
 
+	private void _validateAdminInfo(
+			long companyId, String emailAddress, String firstName,
+			String lastName)
+		throws Exception {
+
+		if (Validator.isNull(emailAddress) || Validator.isNull(firstName) ||
+			Validator.isNull(lastName)) {
+
+			throw new UserScreenNameException.MustNotBeNull();
+		}
+
+		EmailAddressValidator emailAddressValidator =
+			EmailAddressValidatorFactory.getInstance();
+
+		if (!emailAddressValidator.validate(companyId, emailAddress)) {
+			throw new UserEmailAddressException.MustValidate(
+				emailAddress, emailAddressValidator);
+		}
+	}
+
 	@Reference
 	private CompanyService _companyService;
 
@@ -172,5 +240,8 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

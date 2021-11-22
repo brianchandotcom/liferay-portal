@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "destination.name=" + AntivirusAsyncConstants.ANTIVIRUS_DESTINATION,
-	service = {AntivirusAsyncMessageListener.class, MessageListener.class}
+	service = MessageListener.class
 )
 public class AntivirusAsyncMessageListener implements MessageListener {
 

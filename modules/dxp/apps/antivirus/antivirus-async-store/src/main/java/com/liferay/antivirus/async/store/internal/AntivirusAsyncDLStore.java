@@ -53,8 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	property = "service.ranking:Integer=1000",
-	service = {AntivirusAsyncDLStore.class, DLStore.class}
+	property = "service.ranking:Integer=1000", service = DLStore.class
 )
 public class AntivirusAsyncDLStore implements DLStore {
 

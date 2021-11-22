@@ -19,36 +19,16 @@ package com.liferay.antivirus.async.store.constants;
  */
 public class AntivirusAsyncConstants {
 
-	public static final String ANTIVIRUS = "antivirus";
-
 	public static final String ANTIVIRUS_BATCH_DESTINATION =
-		"liferay/" + ANTIVIRUS + "_batch_destination";
+		"liferay/antivirus_batch_destination";
 
 	public static final String ANTIVIRUS_BATCH_GROUP_NAME =
 		"Antivirus Batch Scan";
 
 	public static final String ANTIVIRUS_DESTINATION =
-		"liferay/" + ANTIVIRUS + "_destination";
+		"liferay/antivirus_destination";
 
 	public static final String ANTIVIRUS_GROUP_NAME = "Antivirus Scan";
-
-	public static final String KEY_CAUTION = "caution[antivirus]";
-
-	public static final String KEY_ERROR = "error[antivirus]";
-
-	public static final String KEY_PROCESSING_ERROR =
-		"x-was-subject-to-a-processing-error.-another-attempt-will-be-made-" +
-			"in-x-minutes";
-
-	public static final String KEY_SIZE_EXCEEDED =
-		"x-could-not-be-scanned-because-it-exceeds-the-size-limit-allowed-by-" +
-			"the-antivirus-service";
-
-	public static final String KEY_VIRUS_FOUND =
-		"x-was-found-to-contain-a-virus-x.-its-contents-have-been-" +
-			"quarantined.-please-contact-the-system-administrator";
-
-	public static final String KEY_WARNING = "warning[antivirus]";
 
 	public static final long QUARANTINE_REPOSITORY_ID = 999999999999999999L;
 

@@ -33,7 +33,6 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
-import com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfigurationUtil;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
@@ -604,9 +603,6 @@ public class EditAssetListDisplayContext {
 			_getAssetListEntrySegmentsEntryRelJSONArray()
 		).put(
 			"availableSegmentsEntries", !getAvailableSegmentsEntries().isEmpty()
-		).put(
-			"collectionsVariationsPrioritization",
-			FFCollectionsVariationsPrioritizationConfigurationUtil.prioritizationEnabled()
 		).put(
 			"createNewSegmentURL",
 			() -> {
@@ -1236,11 +1232,11 @@ public class EditAssetListDisplayContext {
 	}
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRelLists =
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRelList =
 			getAssetListEntrySegmentsEntryRels();
 
 		Stream<AssetListEntrySegmentsEntryRel> stream =
-			assetListEntrySegmentsEntryRelLists.stream();
+			assetListEntrySegmentsEntryRelList.stream();
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);

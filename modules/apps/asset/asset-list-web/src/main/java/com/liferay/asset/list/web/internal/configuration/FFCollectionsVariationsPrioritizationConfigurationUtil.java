@@ -15,16 +15,16 @@
 package com.liferay.asset.list.web.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
-import java.util.Map;
-
 /**
  * @author Yurena Cabrera
  */
-
 @Component(
 	configurationPid = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration",
 	immediate = true, service = {}
@@ -38,9 +38,13 @@ public class FFCollectionsVariationsPrioritizationConfigurationUtil {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ffCollectionsVariationsPrioritizationConfiguration = ConfigurableUtil.createConfigurable(
-			FFCollectionsVariationsPrioritizationConfiguration.class, properties);
+		_ffCollectionsVariationsPrioritizationConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFCollectionsVariationsPrioritizationConfiguration.class,
+				properties);
 	}
 
-	private static volatile FFCollectionsVariationsPrioritizationConfiguration _ffCollectionsVariationsPrioritizationConfiguration;
+	private static volatile FFCollectionsVariationsPrioritizationConfiguration
+		_ffCollectionsVariationsPrioritizationConfiguration;
+
 }

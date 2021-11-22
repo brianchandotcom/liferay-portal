@@ -382,10 +382,12 @@ const Collection = React.memo(
 						collectionConfig={collectionConfig}
 						collectionId={item.itemId}
 						onPageChange={setActivePage}
+						showAllItems={
+							collectionConfig.paginationType &&
+							collectionConfig.showAllItems
+						}
 						totalNumberOfItems={
-							collection.fakeCollection
-								? 0
-								: collection.totalNumberOfItems
+							collection.fakeCollection ? 0 : numberOfItems
 						}
 						totalPages={totalPages}
 					/>

@@ -1,0 +1,7 @@
+{
+	"name": "test1",
+	"name_i18n": {
+		"en-US": "test1",
+		"pt-BR": "test2"
+	}
+}

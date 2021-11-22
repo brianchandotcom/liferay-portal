@@ -32,6 +32,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
+import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
@@ -183,6 +185,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
 		LayoutSetLocalService layoutSetLocalService,
+		ListTypeDefinitionResource listTypeDefinitionResource,
+		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService, Portal portal,
@@ -229,6 +233,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutPageTemplateStructureLocalService =
 			layoutPageTemplateStructureLocalService;
 		_layoutSetLocalService = layoutSetLocalService;
+		_listTypeDefinitionResource = listTypeDefinitionResource;
+		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -321,6 +327,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
+			Map <String, String> listTypeDefinitionsStringUtilReplaceValues =
+				_invoke(() -> _addListTypeDefinitions(serviceContext));
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addAssetListEntries(
@@ -1369,6 +1377,66 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addSiteNavigationMenus(serviceContext);
 	}
 
+	private Map <String, String> _addListTypeDefinitions(ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/list-type-definitions");
+
+		Map<String, String> listTypeDefinitionsStringUtilReplaceValues = new HashMap<>();
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return listTypeDefinitionsStringUtilReplaceValues;
+		}
+
+		ListTypeDefinitionResource.Builder listTypeDefinitionResourceBuilder =
+			_listTypeDefinitionResourceFactory.create();
+
+		ListTypeDefinitionResource listTypeDefinitionResource =
+			listTypeDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (String path : resourcePaths) {
+			String json = _read(path);
+
+			ListTypeDefinition listTypeDefinition = ListTypeDefinition.toDTO(
+				json);
+
+			if (listTypeDefinition == null) {
+				_log.error(
+					"Unable to transform list type definition from JSON: " +
+						json);
+
+				continue;
+			}
+
+			Page<ListTypeDefinition> listTypeDefinitionsPage =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null,
+					listTypeDefinitionResource.toFilter(
+						StringBundler.concat(
+							"name eq '",
+							listTypeDefinition.getName(), "'")),
+					null, null);
+
+			ListTypeDefinition existingListTypeDefinition =
+				listTypeDefinitionsPage.fetchFirstItem();
+
+			if (existingListTypeDefinition == null) {
+				listTypeDefinition = listTypeDefinitionResource.postListTypeDefinition(
+					listTypeDefinition);
+			}
+			else {
+				listTypeDefinition = listTypeDefinitionResource.putListTypeDefinition(
+					existingListTypeDefinition.getId(), listTypeDefinition);
+			}
+			listTypeDefinitionsStringUtilReplaceValues.put("LIST_TYPE_DEFINITION_NAME:" + listTypeDefinition.getName(), String.valueOf(listTypeDefinition.getId()));
+		}
+
+		return listTypeDefinitionsStringUtilReplaceValues;
+	}
+
 	private void _addModelResourcePermissions(
 			String className, String primKey, String resourcePath,
 			ServiceContext serviceContext)
@@ -2313,6 +2381,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private final LayoutSetLocalService _layoutSetLocalService;
+	private final ListTypeDefinitionResource _listTypeDefinitionResource;
+	private final ListTypeDefinitionResource.Factory
+		_listTypeDefinitionResourceFactory;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

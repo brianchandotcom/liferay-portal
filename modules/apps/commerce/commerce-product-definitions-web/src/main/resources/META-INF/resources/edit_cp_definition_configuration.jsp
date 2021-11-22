@@ -163,7 +163,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 				<%
 				boolean shippableDisabled = false;
 
-				if (StringUtil.equalsIgnoreCase(cpDefinition.getProductTypeName(), VirtualCPTypeConstants.NAME)) {
+				if ((cpDefinition != null) && StringUtil.equalsIgnoreCase(cpDefinition.getProductTypeName(), VirtualCPTypeConstants.NAME)) {
 					shippableDisabled = true;
 				}
 				%>

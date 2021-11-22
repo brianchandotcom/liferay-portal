@@ -61,7 +61,10 @@ public class CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem._numberOfItemsPerPage) ||
 			!Objects.equals(
 				_paginationType,
-				collectionStyledLayoutStructureItem._paginationType)) {
+				collectionStyledLayoutStructureItem._paginationType) ||
+			!Objects.equals(
+				_showAllItems,
+				collectionStyledLayoutStructureItem._showAllItems)) {
 
 			return false;
 		}

@@ -67,8 +67,10 @@ paths:
             # @review
             tags: ["PortalInstance"]
         post:
+            # @review
             description:
-                Adds a new portal instance.
+                Adds a new portal instance. Administrator information can optionally be passed as query parameters. If
+                administrator information is given, all parameters are required.
             operationId: postPortalInstance
             parameters:
                 - in: query

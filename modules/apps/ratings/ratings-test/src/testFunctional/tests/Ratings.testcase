@@ -639,13 +639,55 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136958. It checks that Stacked stars can be added and removed from a web content."
-	@ignore = "true"
 	@priority = "5"
 	test CanRevokeStackedStarsFromWC {
-		property portal.acceptance = "false";
+		Ratings.configureRatingType(
+			applications = "JournalArticle",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
 
-		// TODO LPS-136958 CanRevokeStackedStarsFromWC pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Web Content Page",
+			widgetName = "Web Content Display");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		Navigator.gotoPage(pageName = "Web Content Page");
+
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Ratings");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		IFrame.closeFrame();
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		Ratings.viewRateStackedStar(
+			averageStarCount = "3.0",
+			ratingStarCount = "3");
+
+		Ratings.revokeStackedStarsRating();
+
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
 	}
 
 	@description = "This is a test for LPS-136951. It checks that Stacked stars can be added and removed from a wiki entry."

@@ -196,8 +196,18 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE</td>
+		<td>//div[contains(@class,'form-group has-error')]//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_FIELDS_TAB</td>
 		<td>//a[contains(text(),'Fields')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR</td>
+		<td>//div[contains(@class,'form-group has-error')]//label[contains(text(),'Relationship')]</td>
 		<td></td>
 	</tr>
 	<tr>

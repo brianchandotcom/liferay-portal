@@ -684,11 +684,52 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's not possible to add a Tab with Relationship Type in an Object without Relashionsip"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotAddRelationshibTabWithoutRelationship {
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141503 CannotAddRelationshibTabWithoutRelationship pending implementation
+
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject");
+
+
+
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			tabName = "Field Tab"
+		);
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			tabName = "Relationship Tab"
+		);
+
+
+		ObjectAdmin.assertObjectLayoutRelationshipFieldRequiredError();
+
+		
+
+
+
+
+		
+
+
 
 	}
 

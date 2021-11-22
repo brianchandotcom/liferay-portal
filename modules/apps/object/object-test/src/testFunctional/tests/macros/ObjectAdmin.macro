@@ -373,6 +373,18 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
 	}
 
+	macro assertObjectLayoutRelationshipFieldRequiredError {
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR"
+		);
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE"
+		);
+
+
+	}
+
 	macro assertObjectNameFieldRequired {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_FIELD_REQUIRED");
 	}
@@ -526,6 +538,15 @@ definition {
 
 	macro goToLayoutsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_TAB");
+	}
+
+	macro goToLayoutTabOnLayouts {
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+
+
 	}
 
 	macro gotoRelationshipsTab {

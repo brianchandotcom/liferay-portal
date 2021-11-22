@@ -1901,7 +1901,6 @@ rerun your task.
 						test.type="@{test.type}"
 					>
 						<misc>
-							<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
 							<jvmarg value="-Dtest.class.group.index=${test.class.group.index}" />
 							<jvmarg value="-Dtest.class.groups=${TEST_CLASS_GROUPS}" />
 						</misc>

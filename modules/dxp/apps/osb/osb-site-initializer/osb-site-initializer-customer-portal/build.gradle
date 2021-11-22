@@ -95,12 +95,14 @@ uploadExtraRemoteApp {
 }
 
 zipExtraRemoteApp {
-	dependsOn buildExtraRemoteApp
+	if (!System.getenv("JENKINS_HOME")) {
+		dependsOn buildExtraRemoteApp
 
-	archiveName "extra-remote-app.zip"
-	destinationDir new File(buildDir, "dist")
-	from new File(projectDir, "extra/remote-app/build/static/js")
-	include "*.js"
+		archiveName "extra-remote-app.zip"
+		destinationDir new File(buildDir, "dist")
+		from new File(projectDir, "extra/remote-app/build/static/js")
+		include "*.js"
+	}
 }
 
 _createExtraRemoteAppTasks()

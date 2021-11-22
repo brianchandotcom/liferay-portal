@@ -39,6 +39,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.Response;
 
@@ -87,13 +90,30 @@ public class CartItemResourceImpl
 	@NestedField(parentClass = Cart.class, value = "cartItems")
 	@Override
 	public Page<CartItem> getCartItemsPage(
-			@NestedFieldId("id") Long cartId, Pagination pagination)
+			@NestedFieldId("id") Long cartId, Long skuId, Pagination pagination)
 		throws Exception {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrderItemService.getCommerceOrderItems(
+				cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Stream<CommerceOrderItem> commerceOrderItemsStream =
+			commerceOrderItems.stream();
 
 		return Page.of(
 			_toCartItems(
-				_commerceOrderItemService.getCommerceOrderItems(
-					cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+				commerceOrderItemsStream.filter(
+					commerceOrderItem -> {
+						if (skuId == null) {
+							return true;
+						}
+
+						return Objects.equals(
+							commerceOrderItem.getCPInstanceId(), skuId);
+					}
+				).collect(
+					Collectors.toList()
+				)));
 	}
 
 	@Override

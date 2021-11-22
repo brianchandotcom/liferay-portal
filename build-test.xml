@@ -13860,13 +13860,21 @@ url=${short.hostname}:8080</echo>
 		<if>
 			<equals arg1="${contentpage.translation.file}" arg2="true" />
 			<then>
+				<pathconvert property="translation.file.path">
+					<path>
+						<fileset
+							dir="${selenium.output.dir.name}/${translation.zip.file.name}"
+							includes="*${translation.file.name}.${translation.file.type}"
+						/>
+					</path>
+				</pathconvert>
 				<replace
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					file="${translation.file.path}"
 					token="${contentpage.translation.title.target.original}"
 					value="${contentpage.translation.title.target}"
 				/>
 				<replace
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					file="${translation.file.path}"
 					token="${contentpage.translation.fragment.target.original}"
 					value="${contentpage.translation.fragment.target}"
 				/>
@@ -13893,10 +13901,26 @@ url=${short.hostname}:8080</echo>
 		<if>
 			<equals arg1="${translation.file.encoding}" arg2="utf8" />
 			<then>
+				<pathconvert property="translation.file.path">
+					<path>
+						<fileset
+							dir="${selenium.output.dir.name}/${translation.zip.file.name}"
+							includes="*${translation.file.name}.${translation.file.type}"
+						/>
+					</path>
+				</pathconvert>
+
+				<propertyregex
+					input="${translation.file.path}"
+					property="translation.utf8.file.path"
+					regexp=".xlf"
+					replace="_utf8.xlf"
+				/>
+
 				<copy
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					file="${translation.file.path}"
 					outputencoding="UTF-8"
-					tofile="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}_utf8.${translation.file.type}"
+					tofile="${translation.utf8.file.path}"
 				/>
 			</then>
 		</if>

@@ -10,21 +10,69 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useContext} from 'react';
 
-export default function BaseNode({className, description, icon, label}) {
+import {DiagramBuilderContext} from '../../DiagramBuilderContext';
+import {nodeDescription} from './utils';
+
+export default function BaseNode({
+	className,
+	description,
+	descriptionSidebar,
+	icon,
+	label,
+	type,
+	...otherProps
+}) {
+	const {availableArea} = useContext(DiagramBuilderContext);
+
+	const borderAreaColor = availableArea ? 'blue' : 'red';
+	const displayBorderArea = !descriptionSidebar && availableArea !== null;
+
+	const descriptionColor = descriptionSidebar
+		? 'text-secondary'
+		: 'text-muted';
+
+	if (!description) {
+		description = nodeDescription[type];
+	}
+
 	return (
-		<div className={`node ${className}`}>
-			<div className="mr-2 node-icon">
-				<ClayIcon symbol={icon} />
-			</div>
+		<div style={{position: 'relative'}}>
+			{displayBorderArea && (
+				<div className={`node-border-area ${borderAreaColor}`} />
+			)}
 
-			<div className="node-info">
-				<span className="node-label">{label}</span>
+			<div
+				className={`node ${className}`}
+				style={{
+					position: displayBorderArea ? 'absolute' : 'unset',
+				}}
+				{...otherProps}
+			>
+				{descriptionSidebar && (
+					<ClayIcon className="mr-4 text-secondary" symbol="drag" />
+				)}
 
-				<span className="node-description text-muted">
-					{description}
-				</span>
+				<div className="mr-3 node-icon">
+					<ClayIcon symbol={icon} />
+				</div>
+
+				<div className="node-info">
+					<span
+						className="node-label truncate-container"
+						title={label}
+					>
+						{label}
+					</span>
+
+					<span
+						className={`node-description truncate-container ${descriptionColor}`}
+						title={descriptionSidebar ?? description}
+					>
+						{descriptionSidebar ?? description}
+					</span>
+				</div>
 			</div>
 		</div>
 	);

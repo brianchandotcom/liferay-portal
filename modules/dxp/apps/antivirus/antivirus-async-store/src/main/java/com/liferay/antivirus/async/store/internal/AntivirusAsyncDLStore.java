@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -715,9 +714,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private AntivirusAsyncMessageListener _antivirusAsyncMessageListener;
-
 	/**
 	 * A marker reference to ensure we only start if there is a service
 	 * available.
@@ -729,14 +725,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 	private DLValidator _dlValidator;
 
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private com.liferay.portal.kernel.util.File _file;
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private MessageBus _messageBus;
 
 	private final StoreFactory _storeFactory;
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private UserLocalService _userLocalService;
 
 }

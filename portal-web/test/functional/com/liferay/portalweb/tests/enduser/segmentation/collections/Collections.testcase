@@ -1,4 +1,4 @@
-@component-name = "portal-segmentation"
+@component-name = "portal-wcm"
 definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";

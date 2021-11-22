@@ -91,6 +91,47 @@ paths:
                         default response
             # @review
             tags: ["PortalInstance"]
+    /portal-instances/with-admin-info:
+        post:
+            operationId: postPortalInstanceWithAdminInfo
+            parameters:
+                - in: query
+                  name: adminEmailAddress
+                  required: true
+                  schema:
+                      format: email
+                      type: string
+                - in: query
+                  name: adminFirstName
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: adminLastName
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PortalInstance"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PortalInstance"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PortalInstance"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PortalInstance"
+                    description:
+                        default response
+            # @review
+            tags: ["PortalInstance"]
     /portal-instances/{portalInstanceId}:
         delete:
             description:

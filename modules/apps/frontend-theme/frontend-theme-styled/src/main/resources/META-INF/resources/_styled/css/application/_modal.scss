@@ -9,6 +9,10 @@
 		right: 0;
 		top: 0;
 		-webkit-overflow-scrolling: touch;
+
+		@media print {
+			position: initial;
+		}
 	}
 }
 

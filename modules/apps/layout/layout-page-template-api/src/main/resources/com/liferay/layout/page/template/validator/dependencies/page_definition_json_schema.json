@@ -773,6 +773,10 @@
 					"title": "The paginationType Schema",
 					"type": "string"
 				},
+				"showAllItems": {
+					"title": "The showAllItems Schema",
+					"type": "boolean"
+				},
 				"templateKey": {
 					"title": "The templateKey Schema",
 					"type": "string"

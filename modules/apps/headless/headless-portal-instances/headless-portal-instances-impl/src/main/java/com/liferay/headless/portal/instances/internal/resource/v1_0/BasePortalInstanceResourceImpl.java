@@ -92,7 +92,23 @@ public abstract class BasePortalInstanceResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "siteInitializerKey": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds a new portal instance"
+		description = "Adds a new portal instance."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "administratorEmailAddress"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "administratorFirstName"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "administratorLastName"
+			)
+		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -104,7 +120,17 @@ public abstract class BasePortalInstanceResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("administratorEmailAddress")
+			String administratorEmailAddress,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("administratorFirstName")
+			String administratorFirstName,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("administratorLastName")
+			String administratorLastName,
+			PortalInstance portalInstance)
 		throws Exception {
 
 		return new PortalInstance();

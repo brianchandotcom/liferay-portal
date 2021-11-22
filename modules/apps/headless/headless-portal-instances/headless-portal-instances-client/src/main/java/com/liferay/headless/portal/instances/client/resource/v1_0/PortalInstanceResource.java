@@ -46,11 +46,14 @@ public interface PortalInstanceResource {
 			Boolean skipDefault)
 		throws Exception;
 
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(
+			String administratorEmailAddress, String administratorFirstName,
+			String administratorLastName, PortalInstance portalInstance)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postPortalInstanceHttpResponse(
-			PortalInstance portalInstance)
+			String administratorEmailAddress, String administratorFirstName,
+			String administratorLastName, PortalInstance portalInstance)
 		throws Exception;
 
 	public void deletePortalInstance(String portalInstanceId) throws Exception;
@@ -244,11 +247,15 @@ public interface PortalInstanceResource {
 			return httpInvoker.invoke();
 		}
 
-		public PortalInstance postPortalInstance(PortalInstance portalInstance)
+		public PortalInstance postPortalInstance(
+				String administratorEmailAddress, String administratorFirstName,
+				String administratorLastName, PortalInstance portalInstance)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postPortalInstanceHttpResponse(portalInstance);
+				postPortalInstanceHttpResponse(
+					administratorEmailAddress, administratorFirstName,
+					administratorLastName, portalInstance);
 
 			String content = httpResponse.getContent();
 
@@ -288,7 +295,8 @@ public interface PortalInstanceResource {
 		}
 
 		public HttpInvoker.HttpResponse postPortalInstanceHttpResponse(
-				PortalInstance portalInstance)
+				String administratorEmailAddress, String administratorFirstName,
+				String administratorLastName, PortalInstance portalInstance)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -313,6 +321,24 @@ public interface PortalInstanceResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (administratorEmailAddress != null) {
+				httpInvoker.parameter(
+					"administratorEmailAddress",
+					String.valueOf(administratorEmailAddress));
+			}
+
+			if (administratorFirstName != null) {
+				httpInvoker.parameter(
+					"administratorFirstName",
+					String.valueOf(administratorFirstName));
+			}
+
+			if (administratorLastName != null) {
+				httpInvoker.parameter(
+					"administratorLastName",
+					String.valueOf(administratorLastName));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

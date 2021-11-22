@@ -58,7 +58,9 @@ public interface PortalInstanceResource {
 	public Page<PortalInstance> getPortalInstancesPage(Boolean skipDefault)
 		throws Exception;
 
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(
+			String administratorEmailAddress, String administratorFirstName,
+			String administratorLastName, PortalInstance portalInstance)
 		throws Exception;
 
 	public void deletePortalInstance(String portalInstanceId) throws Exception;

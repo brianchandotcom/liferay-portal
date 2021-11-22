@@ -55,6 +55,16 @@ public class ElementInstanceSerDes {
 
 		sb.append("{");
 
+		if (elementInstance.getConfigurationEntry() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configurationEntry\": ");
+
+			sb.append(String.valueOf(elementInstance.getConfigurationEntry()));
+		}
+
 		if (elementInstance.getSxpElement() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -114,6 +124,15 @@ public class ElementInstanceSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (elementInstance.getConfigurationEntry() == null) {
+			map.put("configurationEntry", null);
+		}
+		else {
+			map.put(
+				"configurationEntry",
+				String.valueOf(elementInstance.getConfigurationEntry()));
+		}
+
 		if (elementInstance.getSxpElement() == null) {
 			map.put("sxpElement", null);
 		}
@@ -168,7 +187,14 @@ public class ElementInstanceSerDes {
 			ElementInstance elementInstance, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "sxpElement")) {
+			if (Objects.equals(jsonParserFieldName, "configurationEntry")) {
+				if (jsonParserFieldValue != null) {
+					elementInstance.setConfigurationEntry(
+						ConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sxpElement")) {
 				if (jsonParserFieldValue != null) {
 					elementInstance.setSxpElement(
 						SXPElementSerDes.toDTO((String)jsonParserFieldValue));

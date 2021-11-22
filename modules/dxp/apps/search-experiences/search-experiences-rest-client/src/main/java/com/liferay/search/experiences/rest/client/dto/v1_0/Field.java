@@ -34,26 +34,26 @@ public class Field implements Cloneable, Serializable {
 		return FieldSerDes.toDTO(json);
 	}
 
-	public Boolean getBoost() {
-		return boost;
+	public Object getDefaultValue() {
+		return defaultValue;
 	}
 
-	public void setBoost(Boolean boost) {
-		this.boost = boost;
+	public void setDefaultValue(Object defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
-	public void setBoost(
-		UnsafeSupplier<Boolean, Exception> boostUnsafeSupplier) {
+	public void setDefaultValue(
+		UnsafeSupplier<Object, Exception> defaultValueUnsafeSupplier) {
 
 		try {
-			boost = boostUnsafeSupplier.get();
+			defaultValue = defaultValueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean boost;
+	protected Object defaultValue;
 
 	public FieldMapping[] getFieldMappings() {
 		return fieldMappings;
@@ -137,151 +137,45 @@ public class Field implements Cloneable, Serializable {
 
 	protected String name;
 
-	public Boolean getNullable() {
-		return nullable;
+	public String getType() {
+		return type;
 	}
 
-	public void setNullable(Boolean nullable) {
-		this.nullable = nullable;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public void setNullable(
-		UnsafeSupplier<Boolean, Exception> nullableUnsafeSupplier) {
-
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
-			nullable = nullableUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean nullable;
+	protected String type;
 
-	public Option[] getOptions() {
-		return options;
+	public TypeOptions getTypeOptions() {
+		return typeOptions;
 	}
 
-	public void setOptions(Option[] options) {
-		this.options = options;
+	public void setTypeOptions(TypeOptions typeOptions) {
+		this.typeOptions = typeOptions;
 	}
 
-	public void setOptions(
-		UnsafeSupplier<Option[], Exception> optionsUnsafeSupplier) {
+	public void setTypeOptions(
+		UnsafeSupplier<TypeOptions, Exception> typeOptionsUnsafeSupplier) {
 
 		try {
-			options = optionsUnsafeSupplier.get();
+			typeOptions = typeOptionsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Option[] options;
-
-	public Boolean getRequired() {
-		return required;
-	}
-
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
-
-	public void setRequired(
-		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
-
-		try {
-			required = requiredUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean required;
-
-	public String getUiType() {
-		return uiType;
-	}
-
-	public void setUiType(String uiType) {
-		this.uiType = uiType;
-	}
-
-	public void setUiType(
-		UnsafeSupplier<String, Exception> uiTypeUnsafeSupplier) {
-
-		try {
-			uiType = uiTypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String uiType;
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-
-	public void setUnit(UnsafeSupplier<String, Exception> unitUnsafeSupplier) {
-		try {
-			unit = unitUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String unit;
-
-	public String getUnitSuffix() {
-		return unitSuffix;
-	}
-
-	public void setUnitSuffix(String unitSuffix) {
-		this.unitSuffix = unitSuffix;
-	}
-
-	public void setUnitSuffix(
-		UnsafeSupplier<String, Exception> unitSuffixUnsafeSupplier) {
-
-		try {
-			unitSuffix = unitSuffixUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String unitSuffix;
-
-	public ValueDefinition getValueDefinition() {
-		return valueDefinition;
-	}
-
-	public void setValueDefinition(ValueDefinition valueDefinition) {
-		this.valueDefinition = valueDefinition;
-	}
-
-	public void setValueDefinition(
-		UnsafeSupplier<ValueDefinition, Exception>
-			valueDefinitionUnsafeSupplier) {
-
-		try {
-			valueDefinition = valueDefinitionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ValueDefinition valueDefinition;
+	protected TypeOptions typeOptions;
 
 	@Override
 	public Field clone() throws CloneNotSupportedException {

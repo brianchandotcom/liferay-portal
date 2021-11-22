@@ -35,6 +35,28 @@ public class ElementInstance implements Cloneable, Serializable {
 		return ElementInstanceSerDes.toDTO(json);
 	}
 
+	public Configuration getConfigurationEntry() {
+		return configurationEntry;
+	}
+
+	public void setConfigurationEntry(Configuration configurationEntry) {
+		this.configurationEntry = configurationEntry;
+	}
+
+	public void setConfigurationEntry(
+		UnsafeSupplier<Configuration, Exception>
+			configurationEntryUnsafeSupplier) {
+
+		try {
+			configurationEntry = configurationEntryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Configuration configurationEntry;
+
 	public SXPElement getSxpElement() {
 		return sxpElement;
 	}

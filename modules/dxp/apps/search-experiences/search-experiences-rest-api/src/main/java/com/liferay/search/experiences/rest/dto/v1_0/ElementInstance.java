@@ -59,6 +59,36 @@ public class ElementInstance implements Serializable {
 
 	@Schema
 	@Valid
+	public Configuration getConfigurationEntry() {
+		return configurationEntry;
+	}
+
+	public void setConfigurationEntry(Configuration configurationEntry) {
+		this.configurationEntry = configurationEntry;
+	}
+
+	@JsonIgnore
+	public void setConfigurationEntry(
+		UnsafeSupplier<Configuration, Exception>
+			configurationEntryUnsafeSupplier) {
+
+		try {
+			configurationEntry = configurationEntryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Configuration configurationEntry;
+
+	@Schema
+	@Valid
 	public SXPElement getSxpElement() {
 		return sxpElement;
 	}
@@ -198,6 +228,16 @@ public class ElementInstance implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (configurationEntry != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configurationEntry\": ");
+
+			sb.append(String.valueOf(configurationEntry));
+		}
 
 		if (sxpElement != null) {
 			if (sb.length() > 1) {

@@ -3,6 +3,27 @@
 	border-left: 1px solid #e7e7ed;
 	width: 30vw;
 
+	.node {
+		border: none;
+		cursor: grab;
+		width: 100%;
+
+		&:hover {
+			border: 2px solid #80acff;
+			box-shadow: 0 8px 16px 0 #27283329;
+		}
+
+		.node-icon {
+			height: 32px;
+			width: 32px;
+
+			svg {
+				height: 16px;
+				width: 16px;
+			}
+		}
+	}
+
 	.sidebar-header {
 		align-items: center;
 		border-bottom: 1px solid #e7e7ed;

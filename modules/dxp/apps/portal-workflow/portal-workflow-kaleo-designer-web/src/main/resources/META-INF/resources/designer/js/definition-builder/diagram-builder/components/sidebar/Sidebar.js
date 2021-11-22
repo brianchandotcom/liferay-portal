@@ -11,14 +11,30 @@
 
 import React from 'react';
 
+import {nodeDescription, nodeTypes} from '../nodes/utils';
+
 export default function Sidebar() {
+	const onDragStart = (event, nodeType) => {
+		event.dataTransfer.setData('application/reactflow', nodeType);
+		event.dataTransfer.effectAllowed = 'move';
+	};
+
 	return (
 		<div className="sidebar">
 			<div className="sidebar-header">
-				<span className="title">Nodes</span>
+				<span className="title">{Liferay.Language.get('nodes')}</span>
 			</div>
 
-			<div className="sidebar-body"></div>
+			<div className="sidebar-body">
+				{Object.entries(nodeTypes).map(([key, Component], index) => (
+					<Component
+						descriptionSidebar={nodeDescription[key]}
+						draggable
+						key={index}
+						onDragStart={(event) => onDragStart(event, key)}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }

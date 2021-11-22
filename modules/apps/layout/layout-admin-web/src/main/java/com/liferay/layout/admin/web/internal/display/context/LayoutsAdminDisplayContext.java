@@ -1608,7 +1608,17 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isShowPrivatePages() throws PortalException {
+	public boolean isShowPublicPages() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowUserPrivatePages() throws PortalException {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isUser()) {
@@ -1626,16 +1636,6 @@ public class LayoutsAdminDisplayContext {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	public boolean isShowPublicPages() {
-		Group selGroup = getSelGroup();
-
-		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
-			return false;
 		}
 
 		return true;

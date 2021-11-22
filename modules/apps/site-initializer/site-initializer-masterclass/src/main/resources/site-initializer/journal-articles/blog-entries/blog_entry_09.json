@@ -1,5 +1,8 @@
 {
 	"articleId": "BLOG-09",
+	"categories": [
+		"MASCAT0002"
+	],
 	"ddmStructureKey": "BLOG",
 	"ddmTemplateKey": "BLOG",
 	"folder": "Blog Entries",

@@ -1,5 +1,8 @@
 {
 	"articleId": "COURSE-02",
+	"categories": [
+		"MASCAT0002"
+	],
 	"ddmStructureKey": "COURSE",
 	"ddmTemplateKey": "COURSE",
 	"folder": "Courses",

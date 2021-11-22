@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,9 +104,8 @@ public class AntivirusAsyncFileStoreInitializer
 
 		_serviceRegistration = bundleContext.registerService(
 			Destination.class, _destination,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", _destination.getName()
-			).build());
+			MapUtil.singletonDictionary(
+				"destination.name", _destination.getName()));
 	}
 
 	@Override

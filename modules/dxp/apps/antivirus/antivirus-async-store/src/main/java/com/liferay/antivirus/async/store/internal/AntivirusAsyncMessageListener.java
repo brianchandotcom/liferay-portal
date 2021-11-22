@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.MessageRunnable;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.InputStream;
@@ -194,9 +194,8 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 
 		_destinationServiceRegistration = bundleContext.registerService(
 			Destination.class, _destination,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", _destination.getName()
-			).build());
+			MapUtil.singletonDictionary(
+				"destination.name", _destination.getName()));
 	}
 
 	@Deactivate

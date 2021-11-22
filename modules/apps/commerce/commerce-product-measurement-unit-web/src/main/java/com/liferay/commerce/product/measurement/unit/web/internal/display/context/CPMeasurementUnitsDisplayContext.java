@@ -106,7 +106,7 @@ public class CPMeasurementUnitsDisplayContext {
 				LanguageUtil.get(resourceBundle, "dimensions"));
 
 		NavigationItem unitCPMeasurementUnitsNavigationItem = getNavigationItem(
-			toolbarItem.equals("view-all-piece-product-measurement-units"),
+			toolbarItem.equals("view-all-unit-product-measurement-units"),
 			viewUnitProductMeasurementUnitsURL,
 			LanguageUtil.get(resourceBundle, "unit"));
 

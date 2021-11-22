@@ -323,6 +323,12 @@ definition {
 	}
 
 	macro translateContentPageFile {
+		if ((contains("${translationFileName}", " ")) && (contains("${translationFileName}", "(")) && (contains("${translationFileName}", ")"))) {
+			var translationFileName = StringUtil.extractLast("${translationFileName}", " ");
+			var translationFileName = StringUtil.replace("${translationFileName}", "(", "?");
+			var translationFileName = StringUtil.replace("${translationFileName}", ")", "?");
+		}
+
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "update-translation-file -Doperation=${operation} -Dcontentpage.translation.fragment.target.original=<![CDATA[${fragmentContent}]]></target> -Dcontentpage.translation.fragment.target=<![CDATA[${fragmentContentTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dcontentpage.translation.file=${contentPageTranslation} -Dtranslation.zip.file.name=${translationZipFileName}");

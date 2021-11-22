@@ -33,6 +33,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
+import com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfigurationUtil;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
@@ -647,6 +648,9 @@ public class EditAssetListDisplayContext {
 		).put(
 			"validAssetListEntry",
 			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
+		).put(
+			"collectionsVariationsPrioritization",
+			FFCollectionsVariationsPrioritizationConfigurationUtil.prioritizationEnabled()
 		).build();
 	}
 

@@ -297,7 +297,12 @@ public class LayoutsAdminManagementToolbarDisplayContext
 				httpServletRequest, "private-collection-page");
 		}
 
-		return LanguageUtil.get(httpServletRequest, "public-collection-page");
+		if (_layoutsAdminDisplayContext.isShowPrivateLayouts()) {
+			return LanguageUtil.get(
+				httpServletRequest, "public-collection-page");
+		}
+
+		return LanguageUtil.get(httpServletRequest, "collection-page");
 	}
 
 	private String _getLabel(boolean privateLayout) {
@@ -318,7 +323,11 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			return LanguageUtil.get(httpServletRequest, "private-page");
 		}
 
-		return LanguageUtil.get(httpServletRequest, "public-page");
+		if (_layoutsAdminDisplayContext.isShowPrivateLayouts()) {
+			return LanguageUtil.get(httpServletRequest, "public-page");
+		}
+
+		return LanguageUtil.get(httpServletRequest, "page");
 	}
 
 	private boolean _isSiteTemplate() {

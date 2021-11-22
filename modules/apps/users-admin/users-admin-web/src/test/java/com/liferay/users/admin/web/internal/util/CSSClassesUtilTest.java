@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Drew Brokke
  */
-public class CSSClassNamesTest {
+public class CSSClassesUtilTest {
 
 	@ClassRule
 	@Rule
@@ -35,12 +35,12 @@ public class CSSClassNamesTest {
 	public void testBasicOutput() {
 		Assert.assertEquals(
 			"hello",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"hello"
 			).build());
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"hello", "world"
 			).build());
 	}
@@ -49,7 +49,7 @@ public class CSSClassNamesTest {
 	public void testConditionalOutput() {
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"hello"
 			).add(
 				"goodbye", false
@@ -60,7 +60,7 @@ public class CSSClassNamesTest {
 			).build());
 		Assert.assertEquals(
 			"foo hello world",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"hello", "world"
 			).add(
 				"cruel", false
@@ -73,12 +73,12 @@ public class CSSClassNamesTest {
 	public void testDistinctOutput() {
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"hello", "hello", "world", "world"
 			).build());
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"hello"
 			).add(
 				"hello"
@@ -93,12 +93,12 @@ public class CSSClassNamesTest {
 	public void testSortedOutput() {
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"world", "hello"
 			).build());
 		Assert.assertEquals(
 			"alpha beta gamma",
-			CSSClassNames.builder(
+			CSSClassesUtil.builder(
 				"beta"
 			).add(
 				"gamma"

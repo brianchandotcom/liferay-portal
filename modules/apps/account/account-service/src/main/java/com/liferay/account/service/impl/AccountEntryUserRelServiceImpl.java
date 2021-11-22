@@ -114,8 +114,8 @@ public class AccountEntryUserRelServiceImpl
 			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
 
 		return accountEntryUserRelLocalService.addPersonTypeAccountEntryUserRel(
-				accountEntryId, creatorUserId, screenName, emailAddress, locale,
-				firstName, middleName, lastName, prefixId, suffixId, jobTitle);
+			accountEntryId, creatorUserId, screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
 	}
 
 	@Override

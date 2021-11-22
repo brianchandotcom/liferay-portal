@@ -131,7 +131,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			() ->
-				_layoutsAdminDisplayContext.isShowPublicPages() &&
+				_layoutsAdminDisplayContext.isShowPublicLayouts() &&
 				_layoutsAdminDisplayContext.isShowAddChildPageAction(
 					selLayout) &&
 				(!_layoutsAdminDisplayContext.isPrivateLayout() ||
@@ -147,7 +147,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				_layoutsAdminDisplayContext.isShowPublicPages() &&
+				_layoutsAdminDisplayContext.isShowPublicLayouts() &&
 				_layoutsAdminDisplayContext.isShowAddChildPageAction(
 					selLayout) &&
 				(!_layoutsAdminDisplayContext.isPrivateLayout() ||
@@ -161,7 +161,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				_layoutsAdminDisplayContext.isShowUserPrivatePages() &&
+				_layoutsAdminDisplayContext.isShowUserPrivateLayouts() &&
 				((_layoutsAdminDisplayContext.isShowAddChildPageAction(
 					selLayout) &&
 				  _layoutsAdminDisplayContext.isPrivateLayout()) ||
@@ -177,7 +177,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				_layoutsAdminDisplayContext.isShowUserPrivatePages() &&
+				_layoutsAdminDisplayContext.isShowUserPrivateLayouts() &&
 				(_layoutsAdminDisplayContext.isPrivateLayout() ||
 				 _layoutsAdminDisplayContext.isFirstColumn() ||
 				 !_layoutsAdminDisplayContext.hasLayouts()),

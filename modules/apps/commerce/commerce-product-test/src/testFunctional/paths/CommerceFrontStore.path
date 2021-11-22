@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>MAX_QUANTITY_SELECTOR_PRODUCT_DETAILS</td>
-	<td>//div[@class="add-to-cart-wrapper align-items-center d-flex"]//input[contains(@max, '${key_value}')]</td>
+	<td>//div[contains(@class,"product-detail")]//div[contains(@class,"add-to-cart")]//input[contains(@max, '${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

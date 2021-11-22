@@ -38,12 +38,6 @@ import org.apache.commons.logging.LogFactory;
 public class MulticastTransport extends Thread implements Transport {
 
 	public MulticastTransport(
-		DatagramHandler handler, String multicastAddress, int port) {
-
-		this(handler, multicastAddress, port, null);
-	}
-
-	public MulticastTransport(
 		DatagramHandler handler, String multicastAddress, int port,
 		String bindAddress) {
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -120,6 +121,8 @@ public class DepotAdminGroupSearchProvider {
 
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
+				"actionId", ActionKeys.VIEW
+			).put(
 				"site", Boolean.FALSE
 			).build();
 

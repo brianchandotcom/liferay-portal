@@ -90,10 +90,15 @@ public class DateUtil {
 		return simpleDateFormat.format(date);
 	}
 
-	private static Date _getOffsetDate(int offsetDays) {
+	private static Date _getOffsetDate(String type, int offset) {
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.add(Calendar.DATE, offsetDays);
+		if (type.equals("Day")) {
+			calendar.add(Calendar.DATE, offset);
+		}
+		else if (type.equals("Minute")) {
+			calendar.add(Calendar.MINUTE, offset);
+		}
 
 		return calendar.getTime();
 	}

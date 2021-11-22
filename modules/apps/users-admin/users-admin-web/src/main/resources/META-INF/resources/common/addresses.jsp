@@ -71,7 +71,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 <div
 	class="<%=
-		CSSClassNames.builder(
+		CSSClassesUtil.builder(
 			"addresses-table-wrapper", "table-responsive"
 		).add(
 			"hide", addresses.isEmpty()

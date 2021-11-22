@@ -16,6 +16,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
@@ -138,6 +140,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -161,6 +164,7 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
+		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		CommerceReferencesHolder commerceReferencesHolder,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -203,6 +207,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"Commerce references holder " + commerceReferencesHolder);
 		}
 
+		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_commerceReferencesHolder = commerceReferencesHolder;
@@ -1084,6 +1089,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());
+
+			serviceContext.setAssetCategoryIds(
+				_getAssetCategoryIds(
+					serviceContext.getScopeGroupId(),
+					JSONUtil.toStringArray(
+						jsonObject.getJSONArray("categories"))));
 
 			serviceContext.setAssetTagNames(
 				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
@@ -2027,6 +2038,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
+	private long[] _getAssetCategoryIds(
+		long groupId, String[] externalReferenceCodes) {
+
+		List<Long> assetCategoryIds = new ArrayList<>();
+
+		for (String externalReferenceCode : externalReferenceCodes) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						groupId, externalReferenceCode);
+
+			if (assetCategory != null) {
+				assetCategoryIds.add(assetCategory.getCategoryId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(assetCategoryIds);
+	}
+
 	private String _getThemeId(
 		long companyId, String defaultThemeId, String themeName) {
 
@@ -2259,6 +2289,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
+	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;

@@ -595,13 +595,47 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136949. It checks that Stacked stars can be added and removed from comments."
-	@ignore = "true"
 	@priority = "5"
 	test CanRevokeStackedStarsFromComments {
-		property portal.acceptance = "false";
+		Ratings.configureRatingType(
+			applications = "MBDiscussion",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
 
-		// TODO LPS-136949 CanRevokeStackedStarsFromComments pending implementation
+		JSONLayout.addPublicLayout(
+            groupName = "Guest",
+            layoutName = "Wiki Test Page");
 
+        JSONLayout.addWidgetToPublicLayout(
+            column = "1",
+            groupName = "Guest",
+            layoutName = "Wiki Test Page",
+            widgetName = "Wiki");
+
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageName = "Wiki Page 1");
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page 1");
+
+		Comments.addPG(entryComment = "Wiki FrontPage Comment");
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		Ratings.viewRateStackedStar(
+			averageStarCount = "3.0",
+			ratingStarCount = "3");
+
+		Ratings.revokeStackedStarsRating();
+
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
 	}
 
 	@description = "This is a test for LPS-136958. It checks that Stacked stars can be added and removed from a web content."

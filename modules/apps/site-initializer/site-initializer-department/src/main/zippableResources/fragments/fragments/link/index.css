@@ -1,0 +1,27 @@
+.department-link a {
+  font-weight: var(--font-weight-bold);
+}
+
+.department-link a {
+  text-decoration: none;
+}
+
+.link-arrow {
+  fill: var(--primary);
+  margin-left: var(--spacer-2);
+  width: 0.4em;
+}
+
+.department-link a:hover + .link-arrow {
+  fill: var(--secondary);
+  transform: translateX(5px);
+  transition: all 0.1s ease-in-out;
+}
+
+.link-sm {
+  font-size: 16px;
+}
+
+.link-lg {
+  font-size: 18px;
+}

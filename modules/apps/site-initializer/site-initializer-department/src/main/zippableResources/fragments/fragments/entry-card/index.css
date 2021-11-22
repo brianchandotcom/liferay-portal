@@ -1,0 +1,49 @@
+a.entry-card {
+  color: var(--gray-900);
+}
+
+a.entry-card:hover {
+  color: var(--gray-900);
+  text-decoration: none;
+}
+
+.entry-card {
+  display: block;
+  font-family: var(--font-family-base);
+}
+
+.entry-card .image-group {
+  margin-bottom: var(--spacer-3);
+  position: relative;
+}
+
+.entry-card .image-overlay {
+  background-color: var(--brand-color-1);
+  height: 100%;
+  mix-blend-mode: screen;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+.entry-card-image {
+  filter: grayscale(100%);
+  width: 100%;
+}
+
+.entry-card:hover .image-overlay {
+  display: none;
+}
+
+.entry-card:hover .entry-card-image {
+  filter: grayscale(0%);
+}
+
+.entry-card-category {
+  color: var(--gray-600);
+  margin-bottom: var(--spacer-1);
+}
+
+.entry-card-title {
+  margin-bottom: var(--spacer-2);
+}

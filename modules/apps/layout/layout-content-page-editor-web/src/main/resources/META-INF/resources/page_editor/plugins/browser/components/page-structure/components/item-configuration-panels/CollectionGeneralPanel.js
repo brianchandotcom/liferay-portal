@@ -452,31 +452,37 @@ export function CollectionGeneralPanel({item}) {
 						</div>
 					)}
 
-					<ClayForm.Group
-						className={classNames({
-							'has-warning': numberOfItemsError,
-						})}
-						small
-					>
-						<label htmlFor={collectionNumberOfItemsId}>
-							{Liferay.Language.get('maximum-number-of-items')}
-						</label>
+					{(!item.config.paginationType ||
+						(item.config.paginationType &&
+							!item.config.showAllItems)) && (
+						<ClayForm.Group
+							className={classNames({
+								'has-warning': numberOfItemsError,
+							})}
+							small
+						>
+							<label htmlFor={collectionNumberOfItemsId}>
+								{Liferay.Language.get(
+									'maximum-number-of-items'
+								)}
+							</label>
 
-						<ClayInput
-							id={collectionNumberOfItemsId}
-							min="1"
-							onBlur={handleCollectionNumberOfItemsBlurred}
-							onChange={(event) =>
-								setNumberOfItems(Number(event.target.value))
-							}
-							type="number"
-							value={numberOfItems || ''}
-						/>
+							<ClayInput
+								id={collectionNumberOfItemsId}
+								min="1"
+								onBlur={handleCollectionNumberOfItemsBlurred}
+								onChange={(event) =>
+									setNumberOfItems(Number(event.target.value))
+								}
+								type="number"
+								value={numberOfItems || ''}
+							/>
 
-						{numberOfItemsError && (
-							<FeedbackMessage message={numberOfItemsError} />
-						)}
-					</ClayForm.Group>
+							{numberOfItemsError && (
+								<FeedbackMessage message={numberOfItemsError} />
+							)}
+						</ClayForm.Group>
+					)}
 
 					{item.config.paginationType && (
 						<ClayForm.Group

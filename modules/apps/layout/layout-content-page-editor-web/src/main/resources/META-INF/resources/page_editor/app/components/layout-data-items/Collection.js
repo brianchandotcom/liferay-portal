@@ -250,6 +250,7 @@ const Collection = React.memo(
 					numberOfItemsPerPage: collectionConfig.numberOfItemsPerPage,
 					onNetworkStatus: dispatch,
 					paginationType: collectionConfig.paginationType,
+					showAllItems: collectionConfig.showAllItems,
 					templateKey: collectionConfig.templateKey || null,
 				})
 					.then((response) => {

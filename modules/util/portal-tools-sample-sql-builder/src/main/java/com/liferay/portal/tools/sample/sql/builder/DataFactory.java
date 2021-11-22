@@ -4482,11 +4482,13 @@ public class DataFactory {
 	}
 
 	public LayoutPageTemplateStructureRelModel
-		newLayoutPageTemplateStructureRelModel(
-			LayoutModel layoutModel,
-			LayoutPageTemplateStructureModel layoutPageTemplateStructureModel,
-			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-			String templateFileName) {
+			newLayoutPageTemplateStructureRelModel(
+				LayoutModel layoutModel,
+				LayoutPageTemplateStructureModel
+					layoutPageTemplateStructureModel,
+				List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+				String templateFileName)
+		throws Exception {
 
 		List<FragmentEntryLinkModel> targetFragmentEntryLinkModels =
 			new ArrayList<>();
@@ -7049,53 +7051,43 @@ public class DataFactory {
 	}
 
 	private String _generateJsonData(
-		List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-		String templateFileName) {
+			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+			String templateFileName)
+		throws Exception {
 
-		String data = null;
+		String data = _readFile("home_page_template_data/" + templateFileName);
 
-		try {
-			data = _readFile("home_page_template_data/" + templateFileName);
+		for (FragmentEntryLinkModel fragmentEntryLinkModel :
+				fragmentEntryLinkModels) {
 
-			for (FragmentEntryLinkModel fragmentEntryLinkModel :
-					fragmentEntryLinkModels) {
+			String rendererKey = fragmentEntryLinkModel.getRendererKey();
 
-				String rendererKey = fragmentEntryLinkModel.getRendererKey();
-
-				if (rendererKey.equals(
-						_FRAGMENT_COMPONENT_RENDER_KEY_HEADING)) {
-
-					data = StringUtil.replace(
-						data, "${headingFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
-				else if (rendererKey.equals(
-							_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
-
-					data = StringUtil.replace(
-						data, "${paragraphFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
-				else if (rendererKey.equals(
-							_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE)) {
-
-					data = StringUtil.replace(
-						data, "${imageFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
-				else {
-					data = StringUtil.replace(
-						data, "${loginPortletFragmentEntryLinkId}",
-						String.valueOf(
-							fragmentEntryLinkModel.getFragmentEntryLinkId()));
-				}
+			if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_HEADING)) {
+				data = StringUtil.replace(
+					data, "${headingFragmentEntryLinkId}",
+					String.valueOf(
+						fragmentEntryLinkModel.getFragmentEntryLinkId()));
 			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
+			else if (rendererKey.equals(
+						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
+
+				data = StringUtil.replace(
+					data, "${paragraphFragmentEntryLinkId}",
+					String.valueOf(
+						fragmentEntryLinkModel.getFragmentEntryLinkId()));
+			}
+			else if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE)) {
+				data = StringUtil.replace(
+					data, "${imageFragmentEntryLinkId}",
+					String.valueOf(
+						fragmentEntryLinkModel.getFragmentEntryLinkId()));
+			}
+			else {
+				data = StringUtil.replace(
+					data, "${loginPortletFragmentEntryLinkId}",
+					String.valueOf(
+						fragmentEntryLinkModel.getFragmentEntryLinkId()));
+			}
 		}
 
 		return data;

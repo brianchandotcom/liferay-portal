@@ -15,6 +15,7 @@
 package com.liferay.asset.list.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -25,6 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration"
 )
 public interface FFCollectionsVariationsPrioritizationConfiguration {
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
 }

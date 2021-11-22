@@ -30,6 +30,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AntivirusAsyncConfiguration {
 
 	@Meta.AD(
+		description = "maximum-queue-size-help", name = "maximum-queue-size",
+		required = false
+	)
+	public int maximumQueueSize();
+
+	@Meta.AD(
 		deflt = "5", description = "retry-interval-help", max = "59", min = "1",
 		name = "retry-interval", required = false
 	)

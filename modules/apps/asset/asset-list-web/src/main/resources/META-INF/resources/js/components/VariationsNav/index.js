@@ -45,6 +45,7 @@ const VariationsNav = ({
 				<p className="font-weight-semi-bold h5 mb-0 text-uppercase">
 					{Liferay.Language.get('personalized-variations')}
 				</p>
+
 				<ClayTooltipProvider>
 					<ClayButtonWithIcon
 						data-tooltip-align="top"

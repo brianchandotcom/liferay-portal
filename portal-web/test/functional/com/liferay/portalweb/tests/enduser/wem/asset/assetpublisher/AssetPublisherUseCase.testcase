@@ -204,6 +204,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-132428. Error when configuring Asset Publisher."
+	@priority = "4"
+	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList";
+		property test.run.environment = "EE";
+
+		task ("Add component to blacklist") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Module Container",
+				configurationName = "Component Blacklist",
+				configurationScope = "System Scope");
+
+			BundleBlacklist.blacklistModuleAndComponentConfiguration(
+				label = "Blacklist Component Names",
+				symbolicName = "com.liferay.portal.workflow.kaleo.forms.web.internal.portlet.KaleoFormsAdminPortlet");
+		}
+
+		task ("Configure the Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Print");
+		}
+
+		task ("Assert there is not NullPointerException thrown") {
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+		}
+	}
+
 	@description = "Configure the Asset Publisher as Site Administrator."
 	@priority = "4"
 	test ConfigureAssetPublisherAsSiteAdministrater {

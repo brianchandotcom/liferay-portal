@@ -20,7 +20,7 @@ export default function (props) {
 		<div className="definition-builder-app">
 			<UpperToolbar {...props} />
 
-			<DiagramBuilder />
+			<DiagramBuilder version={props.version} />
 		</div>
 	);
 }

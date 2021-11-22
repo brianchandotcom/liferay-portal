@@ -16,13 +16,13 @@ import React from 'react';
 declare const SelectDateType: React.FC<IProps>;
 export default SelectDateType;
 interface IProps {
-	dateFieldOptions: IDateFieldOption[];
-	type: Type;
 	dateFieldName?: string;
-	options: IOptions[];
-	onChange: (value: string | number, dateFieldName?: string) => void;
+	dateFieldOptions: IDateFieldOption[];
 	label: string;
+	onChange: (value: Type, dateFieldName?: string) => void;
+	options: IOptions[];
 	tooltip?: string;
+	type: Type;
 }
 interface IDateFieldOption {
 	label: string;
@@ -33,4 +33,3 @@ interface IOptions {
 	name: DateType;
 	value: DateType;
 }
-declare type DateType = 'customDate' | 'responseDate';

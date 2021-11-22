@@ -13,8 +13,10 @@
  */
 
 import React from 'react';
+
 import CustomDate from './CustomDate';
 import SelectDateType from './SelectDateType';
+
 import './StartEndDate.scss';
 
 const StartEndDate: React.FC<IProps> = ({
@@ -27,38 +29,37 @@ const StartEndDate: React.FC<IProps> = ({
 	parameters,
 	readOnly,
 	tooltip,
-	visible
+	visible,
 }) => {
-
-	const handleChange = (key: string, value: string | number, dateFieldName?: string) => {
-
-		onChange(eventType,{
+	const handleChange = (properties: IParametersProperties) => {
+		onChange(eventType, {
 			...parameters,
-			dateFieldName,
-			[key]: value,
+			...properties,
 		});
-	}
+	};
 
 	return (
 		<>
-			<SelectDateType 
-				type={parameters.type}
+			<SelectDateType
 				dateFieldName={parameters.dateFieldName}
 				dateFieldOptions={dateFieldOptions}
-				options={options}
-				onChange={(value, options) => handleChange('type', value, options)}
 				label={label}
+				onChange={(value, dateFieldName) =>
+					handleChange({dateFieldName, type: value})
+				}
+				options={options}
 				tooltip={tooltip}
+				type={parameters.type}
 			/>
 
 			{parameters?.type === 'customDate' && (
 				<CustomDate
-					onChange={handleChange}
-					name={name}
-					options={options}
 					dateFieldOptions={dateFieldOptions}
-					parameters={parameters}
 					eventType={eventType}
+					name={name}
+					onChange={handleChange}
+					options={options}
+					parameters={parameters}
 					readOnly={readOnly}
 					visible={visible}
 				/>
@@ -70,15 +71,15 @@ const StartEndDate: React.FC<IProps> = ({
 export default StartEndDate;
 
 interface IProps {
+	dateFieldOptions: IDateFieldOption[];
 	eventType: EventType;
 	label: string;
 	name: string;
-	options: IOptions[];
 	onChange: (eventType: EventType, parameters: IParameters) => void;
-	tooltip: string;
+	options: IOptions[];
 	parameters: IParameters;
 	readOnly?: boolean;
-	dateFieldOptions: IDateFieldOption[];
+	tooltip: string;
 	visible: boolean;
 }
 
@@ -94,4 +95,3 @@ interface IOptions {
 }
 
 type EventType = 'startsFrom' | 'endsOn';
-

@@ -38,6 +38,10 @@ public class MapUtil {
 						name,
 						JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
 				}
+				else if (value instanceof Object[]) {
+					values1.put(
+						name, JSONFactoryUtil.createJSONArray((Object[])value));
+				}
 			});
 	}
 

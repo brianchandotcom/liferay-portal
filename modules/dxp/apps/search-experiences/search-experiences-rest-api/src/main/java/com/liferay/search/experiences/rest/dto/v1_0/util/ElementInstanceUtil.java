@@ -50,6 +50,8 @@ public class ElementInstanceUtil {
 			return null;
 		}
 
+		ConfigurationUtil.unpack(elementInstance.getConfigurationEntry());
+
 		SXPElement sxpElement = elementInstance.getSxpElement();
 
 		if (sxpElement != null) {

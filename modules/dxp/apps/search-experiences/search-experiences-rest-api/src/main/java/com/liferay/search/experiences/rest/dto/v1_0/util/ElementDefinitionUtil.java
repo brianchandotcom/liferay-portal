@@ -14,9 +14,13 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.Field;
+import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 
 /**
  * @author André de Oliveira
@@ -45,7 +49,32 @@ public class ElementDefinitionUtil {
 				ConfigurationUtil.unpack(configuration));
 		}
 
+		_unpack(elementDefinition.getUiConfiguration());
+
 		return elementDefinition;
+	}
+
+	private static void _unpack(Field field) {
+		if (field == null) {
+			return;
+		}
+
+		if (field.getDefaultValue() instanceof Object[]) {
+			field.setDefaultValue(
+				JSONFactoryUtil.createJSONArray(
+					(Object[])field.getDefaultValue()));
+		}
+	}
+
+	private static void _unpack(UiConfiguration uiConfiguration) {
+		if (uiConfiguration == null) {
+			return;
+		}
+
+		ArrayUtil.isNotEmptyForEach(
+			uiConfiguration.getFieldSets(),
+			fieldSet -> ArrayUtil.isNotEmptyForEach(
+				fieldSet.getFields(), field -> _unpack(field)));
 	}
 
 }

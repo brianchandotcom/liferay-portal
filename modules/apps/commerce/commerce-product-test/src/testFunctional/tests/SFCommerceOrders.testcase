@@ -82,9 +82,7 @@ definition {
 			key_orderAuthor = "Test Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-		ClickNoError(
-			key_text = "jbfs",
-			locator1 = "Icon#SVG_ELLIPSIS_BY_ID");
+		ClickNoError(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 

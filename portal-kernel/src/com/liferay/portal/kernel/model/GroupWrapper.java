@@ -959,6 +959,11 @@ public class GroupWrapper
 	}
 
 	@Override
+	public boolean isPrivateLayoutsEnabled() {
+		return model.isPrivateLayoutsEnabled();
+	}
+
+	@Override
 	public boolean isRegularSite() {
 		return model.isRegularSite();
 	}

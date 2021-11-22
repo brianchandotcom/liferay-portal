@@ -184,6 +184,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean isOrganization();
 
+	public boolean isPrivateLayoutsEnabled();
+
 	public boolean isRegularSite();
 
 	public boolean isRoot();

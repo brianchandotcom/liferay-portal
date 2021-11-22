@@ -99,13 +99,13 @@ public class AntivirusAsyncFileStoreInitializer
 
 		destinationConfiguration.setMaximumQueueSize(1);
 
-		_destination = destinationFactory.createDestination(
+		Destination destination = destinationFactory.createDestination(
 			destinationConfiguration);
 
 		_serviceRegistration = bundleContext.registerService(
-			Destination.class, _destination,
+			Destination.class, destination,
 			MapUtil.singletonDictionary(
-				"destination.name", _destination.getName()));
+				"destination.name", destination.getName()));
 	}
 
 	@Override
@@ -201,10 +201,6 @@ public class AntivirusAsyncFileStoreInitializer
 			_serviceRegistration.unregister();
 
 			_serviceRegistration = null;
-		}
-
-		if (_destination != null) {
-			_destination.destroy();
 		}
 	}
 
@@ -343,7 +339,6 @@ public class AntivirusAsyncFileStoreInitializer
 		_antivirusAsyncEventListenerManager;
 
 	private final int _batchInterval;
-	private final Destination _destination;
 
 	@Reference
 	private MessageBus _messageBus;

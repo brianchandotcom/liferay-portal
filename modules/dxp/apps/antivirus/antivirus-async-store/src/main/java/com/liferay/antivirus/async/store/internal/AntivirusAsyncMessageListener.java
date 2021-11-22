@@ -189,23 +189,19 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 				_antivirusAsyncRetryScheduler.schedule(message);
 			});
 
-		_destination = _destinationFactory.createDestination(
+		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
 		_destinationServiceRegistration = bundleContext.registerService(
-			Destination.class, _destination,
+			Destination.class, destination,
 			MapUtil.singletonDictionary(
-				"destination.name", _destination.getName()));
+				"destination.name", destination.getName()));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_destinationServiceRegistration != null) {
 			_destinationServiceRegistration.unregister();
-		}
-
-		if (_destination != null) {
-			_destination.destroy();
 		}
 	}
 
@@ -221,8 +217,6 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 
 	@Reference
 	private AntivirusScanner _antivirusScanner;
-
-	private Destination _destination;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

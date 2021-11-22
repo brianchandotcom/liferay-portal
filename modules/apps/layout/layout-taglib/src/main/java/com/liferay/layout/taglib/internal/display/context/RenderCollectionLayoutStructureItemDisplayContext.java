@@ -132,8 +132,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		if (Objects.equals(paginationType, PAGINATION_TYPE_NUMERIC) ||
 			Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE)) {
 
-			int numberOfItems =
+			int maxNumberOfItems =
 				_collectionStyledLayoutStructureItem.getNumberOfItems();
+
+			if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
+				maxNumberOfItems = getCollectionCount();
+			}
 
 			int numberOfItemsPerPage =
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
@@ -146,7 +150,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			}
 
 			end = Math.min(
-				Math.min(getActivePage() * numberOfItemsPerPage, numberOfItems),
+				Math.min(
+					getActivePage() * numberOfItemsPerPage, maxNumberOfItems),
 				getCollectionCount());
 
 			start = (getActivePage() - 1) * numberOfItemsPerPage;
@@ -288,6 +293,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			getCollectionCount(),
 			_collectionStyledLayoutStructureItem.getNumberOfItems());
 
+		if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
+			maxNumberOfItems = getCollectionCount();
+		}
+
 		_numberOfPages = (int)Math.ceil(
 			(double)maxNumberOfItems /
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
@@ -304,9 +313,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			(double)getMaxNumberOfItemsPerPage() /
 				_collectionStyledLayoutStructureItem.getNumberOfColumns());
 
-		int numberOfItemsToDisplay = Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItems());
+		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
 		if (Validator.isNotNull(
 				_collectionStyledLayoutStructureItem.getPaginationType()) &&
@@ -341,6 +348,17 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
+		if ((Objects.equals(
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				PAGINATION_TYPE_NUMERIC) ||
+			 Objects.equals(
+				 _collectionStyledLayoutStructureItem.getPaginationType(),
+				 PAGINATION_TYPE_SIMPLE)) &&
+			_collectionStyledLayoutStructureItem.isShowAllItems()) {
+
+			return getCollectionCount();
+		}
+
 		return Math.min(
 			getCollectionCount(),
 			_collectionStyledLayoutStructureItem.getNumberOfItems());

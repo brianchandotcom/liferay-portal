@@ -13,13 +13,20 @@ import React from 'react';
 
 import BaseNode from '../BaseNode';
 
-export default function StartNode({data: {description}}) {
+export default function StartNode({
+	data: {description} = {},
+	descriptionSidebar,
+	...otherProps
+}) {
 	return (
 		<BaseNode
 			className="start-node"
 			description={description}
+			descriptionSidebar={descriptionSidebar}
 			icon="play"
 			label={Liferay.Language.get('start')}
+			type="start"
+			{...otherProps}
 		/>
 	);
 }

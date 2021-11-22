@@ -12,4 +12,10 @@
 			width: 100%;
 		}
 	}
+
+	.truncate-container {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

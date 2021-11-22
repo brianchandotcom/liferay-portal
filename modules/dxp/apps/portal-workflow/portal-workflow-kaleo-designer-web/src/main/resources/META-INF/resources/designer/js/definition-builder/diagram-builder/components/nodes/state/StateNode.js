@@ -13,13 +13,20 @@ import React from 'react';
 
 import BaseNode from '../BaseNode';
 
-export default function StateNode({data: {description, label}}) {
+export default function StateNode({
+	data: {description, label} = {},
+	descriptionSidebar,
+	...otherProps
+}) {
 	return (
 		<BaseNode
 			className="state-node"
 			description={description}
+			descriptionSidebar={descriptionSidebar}
 			icon="circle"
 			label={label ?? Liferay.Language.get('state')}
+			type="state"
+			{...otherProps}
 		/>
 	);
 }

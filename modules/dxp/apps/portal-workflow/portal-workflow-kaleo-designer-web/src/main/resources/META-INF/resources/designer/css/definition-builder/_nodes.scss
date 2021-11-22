@@ -5,7 +5,9 @@
 	border-radius: 8px;
 	display: flex;
 	height: 74px;
+	left: 18px;
 	padding: 18px 16px;
+	top: 18px;
 	width: 254px;
 
 	.node-description {
@@ -38,14 +40,31 @@
 
 	&.end-node,
 	&.start-node {
-		svg {
+		.node-icon svg {
 			fill: #4b9bff;
 		}
 	}
 
 	&.state-node {
-		svg {
+		.node-icon svg {
 			fill: #ffb46e;
 		}
+	}
+}
+
+.node-border-area {
+	border-radius: 4px;
+	height: 110px;
+	opacity: 0.5;
+	width: 290px;
+
+	&.blue {
+		background: #f0f5ff;
+		border: 2px solid #0b5fff;
+	}
+
+	&.red {
+		background: #f48989;
+		border: 2px solid #da1414;
 	}
 }

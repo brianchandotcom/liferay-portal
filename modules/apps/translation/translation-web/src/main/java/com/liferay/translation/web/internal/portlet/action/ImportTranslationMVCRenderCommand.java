@@ -18,14 +18,15 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationPortletKeys;
+import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.web.internal.display.context.ImportTranslationDisplayContext;
 
 import java.util.Locale;
@@ -69,12 +70,12 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
 				new ImportTranslationDisplayContext(
-					classNameId, classPK, groupId,
+					classNameId, classPK, themeDisplay.getCompanyId(), groupId,
 					_portal.getHttpServletRequest(renderRequest),
-					_infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemWorkflowProvider.class, className),
-					_portal.getLiferayPortletResponse(renderResponse), model,
-					_getTitle(className, model, themeDisplay.getLocale())));
+					_portal.getLiferayPortletResponse(renderResponse),
+					_getTitle(className, model, themeDisplay.getLocale()),
+					_translationEntryLocalService,
+					_workflowDefinitionLinkLocalService));
 
 			return "/import_translation.jsp";
 		}
@@ -123,5 +124,12 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

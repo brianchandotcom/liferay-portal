@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.model.TranslationEntryTable;
 import com.liferay.translation.service.base.TranslationEntryLocalServiceBaseImpl;
 
 import java.io.ByteArrayInputStream;
@@ -201,6 +204,33 @@ public class TranslationEntryLocalServiceImpl
 		catch (IOException ioException) {
 			throw new PortalException(ioException);
 		}
+	}
+
+	@Override
+	public int getTranslationEntriesCount(
+		String className, long classPK, int[] statuses, boolean exclude) {
+
+		return translationEntryPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				TranslationEntryTable.INSTANCE
+			).where(
+				TranslationEntryTable.INSTANCE.classNameId.eq(
+					_portal.getClassNameId(className)
+				).and(
+					TranslationEntryTable.INSTANCE.classPK.eq(classPK)
+				).and(
+					() -> {
+						if (exclude) {
+							return TranslationEntryTable.INSTANCE.status.notIn(
+								ArrayUtil.toArray(statuses));
+						}
+
+						return TranslationEntryTable.INSTANCE.status.in(
+							ArrayUtil.toArray(statuses));
+					}
+				)
+			));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

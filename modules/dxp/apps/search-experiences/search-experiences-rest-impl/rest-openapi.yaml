@@ -228,8 +228,8 @@ components:
                                     fields:
                                         items:
                                             properties:
-                                                boost:
-                                                    type: boolean
+                                                defaultValue:
+                                                    type: object
                                                 fieldMappings:
                                                     items:
                                                         properties:
@@ -248,27 +248,36 @@ components:
                                                     type: string
                                                 name:
                                                     type: string
-                                                nullable:
-                                                    type: boolean
-                                                options:
-                                                    items:
-                                                        properties:
-                                                            label:
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    type: array
-                                                required:
-                                                    type: boolean
-                                                uiType:
+                                                type:
                                                     type: string
-                                                unit:
-                                                    type: string
-                                                unitSuffix:
-                                                    type: string
-                                                valueDefinition:
-                                                    $ref: "#/components/schemas/ValueDefinition"
+                                                typeOptions:
+                                                    properties:
+                                                        boost:
+                                                            type: boolean
+                                                        max:
+                                                            type: object
+                                                        min:
+                                                            type: object
+                                                        nullable:
+                                                            type: boolean
+                                                        options:
+                                                            items:
+                                                                properties:
+                                                                    label:
+                                                                        type: string
+                                                                    value:
+                                                                        type: string
+                                                                type: object
+                                                            type: array
+                                                        required:
+                                                            type: boolean
+                                                        step:
+                                                            type: object
+                                                        unit:
+                                                            type: string
+                                                        unitSuffix:
+                                                            type: string
+                                                    type: object
                                             type: object
                                         type: array
                                 type: object
@@ -277,6 +286,8 @@ components:
             type: object
         ElementInstance:
             properties:
+                configurationEntry:
+                    $ref: "#/components/schemas/Configuration"
                 sxpElement:
                     $ref: "#/components/schemas/SXPElement"
                 sxpElementId:

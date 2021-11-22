@@ -19,6 +19,18 @@
 		"cssVariableMapping": "body-color",
 		"value": "var(--gray-900)"
 	},
+	"borderRadius": {
+		"cssVariableMapping": "border-radius",
+		"value": "0.5rem"
+	},
+	"borderRadiusLg": {
+		"cssVariableMapping": "border-radius-lg",
+		"value": "0.75rem"
+	},
+	"borderRadiusSm": {
+		"cssVariableMapping": "border-radius-sm",
+		"value": "0.25rem"
+	},
 	"boxShadow": {
 		"cssVariableMapping": "box-shadow",
 		"value": "0 .5rem 1rem rgba(0,0,0,0.1)"
@@ -185,7 +197,7 @@
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
-		"value": "'Montserrat', sans-serif"
+		"value": "var(--font-family-sans-serif)"
 	},
 	"fontFamilyMonospace": {
 		"cssVariableMapping": "font-family-monospace",
@@ -215,6 +227,50 @@
 		"cssVariableMapping": "font-weight-bolder",
 		"value": "700"
 	},
+	"fontWeightNormal": {
+		"cssVariableMapping": "font-weight-normal",
+		"value": "500"
+	},
+	"fontWeightSemiBold": {
+		"cssVariableMapping": "font-weight-semi-bold",
+		"value": "600"
+	},
+	"gray100Color": {
+		"cssVariableMapping": "gray-100",
+		"value": "#f8f8fc"
+	},
+	"gray200Color": {
+		"cssVariableMapping": "gray-200",
+		"value": "#f1f2f9"
+	},
+	"gray300Color": {
+		"cssVariableMapping": "gray-300",
+		"value": "#e3e5f2"
+	},
+	"gray400Color": {
+		"cssVariableMapping": "gray-400",
+		"value": "#c8cce4"
+	},
+	"gray500Color": {
+		"cssVariableMapping": "gray-500",
+		"value": "#a8adcc"
+	},
+	"gray600Color": {
+		"cssVariableMapping": "gray-600",
+		"value": "#7b80a3"
+	},
+	"gray700Color": {
+		"cssVariableMapping": "gray-700",
+		"value": "#4f5064"
+	},
+	"gray800Color": {
+		"cssVariableMapping": "gray-800",
+		"value": "#3a3a4b"
+	},
+	"gray900Color": {
+		"cssVariableMapping": "gray-900",
+		"value": "#1d2234"
+	},
 	"grayDarkColor": {
 		"cssVariableMapping": "gray-dark",
 		"value": "var(--gray-800)"
@@ -242,6 +298,14 @@
 	"h6FontSize": {
 		"cssVariableMapping": "h6-font-size",
 		"value": "0.75rem"
+	},
+	"leadFontSize": {
+		"cssVariableMapping": "lead-font-size",
+		"value": "var(--font-size-lg)"
+	},
+	"leadFontWeight": {
+		"cssVariableMapping": "lead-font-weight",
+		"value": "var(--font-weight-normal)"
 	},
 	"lightColor": {
 		"cssVariableMapping": "light",

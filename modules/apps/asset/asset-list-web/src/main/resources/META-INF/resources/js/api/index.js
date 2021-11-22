@@ -14,7 +14,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-export const saveVariationsListPriorityService = ({method = 'POST', url}) => {
+const saveVariationsListPriorityService = ({method = 'POST', url}) => {
 	return fetch(url, {method})
 		.then(({ok, status}) => {
 			return {ok, status};
@@ -23,3 +23,5 @@ export const saveVariationsListPriorityService = ({method = 'POST', url}) => {
 			return error;
 		});
 };
+
+export {saveVariationsListPriorityService};

@@ -14,7 +14,7 @@
 
 const VARIATIONS_PRIORITY_PARAM_NAME = 'variations_priority';
 
-export const buildItemsPriorityURL = ({items, namespace, url}) => {
+const buildItemsPriorityURL = ({items, namespace, url}) => {
 	const urlWithPriorityParam = `${url}&${namespace}${VARIATIONS_PRIORITY_PARAM_NAME}=${items
 		.map((item) => item.assetListEntrySegmentsEntryRelId)
 		.join(',')}`;
@@ -22,7 +22,7 @@ export const buildItemsPriorityURL = ({items, namespace, url}) => {
 	return urlWithPriorityParam;
 };
 
-export const dragIsOutOfBounds = ({dragIndex, hoverIndex, monitor, ref}) => {
+const dragIsOutOfBounds = ({dragIndex, hoverIndex, monitor, ref}) => {
 	const hoverBoundingRect = ref.current.getBoundingClientRect();
 
 	const verticalMiddle =
@@ -40,3 +40,5 @@ export const dragIsOutOfBounds = ({dragIndex, hoverIndex, monitor, ref}) => {
 
 	return draggingDownwards || draggingUpwards;
 };
+
+export {buildItemsPriorityURL, dragIsOutOfBounds};

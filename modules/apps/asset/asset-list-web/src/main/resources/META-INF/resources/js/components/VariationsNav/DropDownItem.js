@@ -45,6 +45,7 @@ const DropDownItem = ({
 				small
 			>
 				<ClayIcon className="mr-3 mt-0" symbol={icon} />
+
 				{text}
 			</ClayButton>
 		</ClayDropDown.Item>

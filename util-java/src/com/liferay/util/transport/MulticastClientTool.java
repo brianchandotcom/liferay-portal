@@ -41,7 +41,8 @@ public class MulticastClientTool {
 				StringBundler.concat(
 					"Usage: java -classpath util-java.jar ",
 					MulticastClientTool.class.getName(),
-					"[-g] [-s] -h [multicastAddress] -p [port]"));
+					"[-g] [-s] -h [multicastAddress] -p [port] [-b] ",
+					"[bindAddress]"));
 
 			System.exit(1);
 		}
@@ -51,7 +52,8 @@ public class MulticastClientTool {
 		Map<String, Object> argsMap = _getArgsMap(args);
 
 		Integer port = (Integer)argsMap.get("port");
-		String host = (String)argsMap.get("host");
+		String multicastAddress = (String)argsMap.get("multicastAddress");
+		String bindAddress = (String)argsMap.get("bindAddress");
 
 		Boolean gzipData = (Boolean)argsMap.get("gzip");
 		Boolean shortData = (Boolean)argsMap.get("short");
@@ -60,7 +62,7 @@ public class MulticastClientTool {
 			gzipData.booleanValue(), shortData.booleanValue());
 
 		MulticastTransport multicastTransport = new MulticastTransport(
-			datagramHandler, host, port);
+			datagramHandler, multicastAddress, port, bindAddress);
 
 		if (shortData.booleanValue()) {
 			System.out.println("Truncating to 96 bytes.");
@@ -86,12 +88,17 @@ public class MulticastClientTool {
 				argsMap.put("short", Boolean.TRUE);
 			}
 			else if (args[i].equals("-h")) {
-				argsMap.put("host", args[i + 1]);
+				argsMap.put("multicastAddress", args[i + 1]);
 
 				i++;
 			}
 			else if (args[i].equals("-p")) {
 				argsMap.put("port", Integer.valueOf(args[i + 1]));
+
+				i++;
+			}
+			else if (args[i].equals("-b")) {
+				argsMap.put("bindAddress", args[i + 1]);
 
 				i++;
 			}

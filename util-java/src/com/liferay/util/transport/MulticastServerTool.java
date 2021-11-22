@@ -52,8 +52,15 @@ public class MulticastServerTool {
 
 			};
 
-			MulticastTransport transport = new MulticastTransport(
-				handler, args[0], port);
+			MulticastTransport transport = null;
+
+			if (args.length > 3) {
+				transport = new MulticastTransport(
+					handler, args[0], port, args[3]);
+			}
+			else {
+				transport = new MulticastTransport(handler, args[0], port);
+			}
 
 			transport.connect();
 
@@ -77,7 +84,7 @@ public class MulticastServerTool {
 
 			System.err.println(
 				"Usage: java MulticastServerTool multicastAddress port " +
-					"interval");
+					"interval bindAddress");
 
 			System.exit(1);
 		}

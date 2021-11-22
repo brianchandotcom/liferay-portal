@@ -142,6 +142,109 @@ definition {
 			text = "Titulo");
 	}
 
+	@description = "This ensures that the imported translation for a content page experience can be approved through the workflow."
+	@priority = "5"
+	test CanApproveImportedTranslationForExperience {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickManagementBar();
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			experienceList = "NewAnyoneExperience",
+			exportFileFormat = "XLIFF 1.2",
+			languageList = "Japanese (Japan)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "utf8",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "タイトル",
+			operation = "unzip",
+			translationFileName = "TranslatedContentPage (NewAnyoneExperience)-en_US-ja_JP",
+			translationZipFileName = "TranslationContentPage-en_US");
+
+		Translations.importTranslation(
+			contentPageTranslation = "true",
+			fileName = "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP_utf8.xlf",
+			filePath = "/TranslationContentPage-en_US",
+			pageName = "TranslationContentPage");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "TranslationContentPage",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "TranslationContentPage",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading Example");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "タイトル");
+	}
+
 	@description = "This ensures that a button on a content page can be translated and published properly."
 	@priority = "5"
 	test CanPublishTranslatedHeadingAfterReview {
@@ -762,6 +865,109 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "esta es la nueva experiencia");
+	}
+
+
+	@description = "This ensures that the imported translation for a content page experience can not be merged after rejecting through the workflow."
+	@priority = "5"
+	test RejectedTranslationWillNotBeAppliedToExperience {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickManagementBar();
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			experienceList = "NewAnyoneExperience",
+			languageList = "Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "Titulo",
+			operation = "unzip",
+			translationFileName = "TranslatedContentPage (NewAnyoneExperience)-en_US-es_ES",
+			translationZipFileName = "TranslationContentPage-en_US");
+
+		Translations.importTranslation(
+			contentPageTranslation = "true",
+			fileName = "TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf",
+			filePath = "/TranslationContentPage-en_US",
+			pageName = "TranslationContentPage");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "TranslationContentPage",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "TranslationContentPage",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		Navigator.ensureLocaleURL(locale = "es");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading Example");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+
+		Navigator.ensureLocaleURL(locale = "es");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading");
 	}
 
 }

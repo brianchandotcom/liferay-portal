@@ -384,6 +384,90 @@ definition {
 			text = "Titulo");
 	}
 
+	@description = "This ensures that imported translation for a content page experience can be merged to the correct experience of a content page."
+	@priority = "5"
+	test CanImportExportedTranslationForCorrespondingExperience {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickManagementBar();
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			experienceList = "NewAnyoneExperience",
+			languageList = "Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "Titulo",
+			operation = "unzip",
+			translationFileName = "TranslationContentPage (NewAnyoneExperience)-en_US-es_ES",
+			translationZipFileName = "TranslationContentPage-en_US");
+
+		Translations.importTranslation(
+			contentPageTranslation = "true",
+			fileName = "TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf",
+			filePath = "/TranslationContentPage-en_US",
+			pageName = "TranslationContentPage");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		Navigator.ensureLocaleURL(locale = "es");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Heading Example");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+
+		Navigator.ensureLocaleURL(locale = "es");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Titulo");
+	}
+
 	@description = "This ensures that the user can not import an invalid translation file."
 	@priority = "4"
 	test CannotImportAnInvalidFile {
@@ -415,6 +499,63 @@ definition {
 			fileName = "TranslationContentPage1-en_US-es_ES.xlf",
 			filePath = "",
 			pageName = "TranslationContentPage2",
+			validateInvalidFile = "true");
+
+		Translations.viewErrorMessages(
+			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
+			errorMessageItem = "The translation file does not correspond to this page.");
+	}
+
+	@description = "This ensures that the translation for a content page experience can not be imported after deleting the experience."
+	@priority = "5"
+	test CannotImportTranslationForDeletedExperience {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "TranslationContentPage",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			experienceList = "NewAnyoneExperience",
+			languageList = "Spanish (Spain)");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "TranslationContentPage",
+			siteName = "Guest");
+
+		PageEditor.deleteExperience(experienceName = "NewAnyoneExperience");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			contentPageTranslation = "true",
+			fileName = "TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf",
+			filePath = "",
+			pageName = "TranslationContentPage",
 			validateInvalidFile = "true");
 
 		Translations.viewErrorMessages(

@@ -225,6 +225,7 @@ AUI.add(
 						},
 						constrain: true,
 						hideClass: false,
+						modal: Util.isPhone() || Util.isTablet(),
 						preventOverlap: true,
 						zIndex: Liferay.zIndex.MENU,
 					}).render();
@@ -387,23 +388,15 @@ AUI.add(
 					var listNodeHeight = listNode.get('offsetHeight');
 					var listNodeWidth = listNode.get('offsetWidth');
 
-					var modalMask = false;
-
 					align.points = instance._getAlignPoints(cssClass);
 
 					menu.addClass('lfr-icon-menu-open');
-
-					if (Util.isPhone() || Util.isTablet()) {
-						overlay.hide();
-
-						modalMask = true;
-					}
 
 					overlay.setAttrs({
 						align,
 						centered: false,
 						height: listNodeHeight,
-						modal: modalMask,
+						modal: Util.isPhone() || Util.isTablet(),
 						width: listNodeWidth,
 					});
 

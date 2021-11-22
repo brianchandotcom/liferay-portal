@@ -3,68 +3,40 @@
 exports[`ValidationDate shows date range validation 1`] = `
 <div>
   <div
-    class="form-group"
-    data-field-name="selectedValidation"
+    class="ddm__validation-date-accepted-date"
   >
-    <label
-      class="ddm-label"
-      for="selectedValidation"
-      tabindex="0"
-    >
+    <label>
       accepted-date
     </label>
     <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedValidation_field"
-      multiple=""
-      name="selectedValidation_field"
+      class="form-control"
+      name="selectedValidation"
     >
       <option
+        name="futureDates"
+        parametermessage=""
+        template="futureDates({name}, \\"{parameter}\\")"
+        value="futureDates"
+      >
+        Future Dates
+      </option>
+      <option
+        name="pastDates"
+        parametermessage=""
+        template="pastDates({name}, \\"{parameter}\\")"
+        value="pastDates"
+      >
+        Past Dates
+      </option>
+      <option
+        name="dateRange"
+        parametermessage=""
+        template="dateRange({name}, \\"{parameter}\\")"
         value="dateRange"
       >
         Range
       </option>
     </select>
-    <div
-      class="form-builder-select-field input-group-container"
-      style=""
-    >
-      <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
-      >
-        <div
-          class="option-selected"
-        >
-          Range
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
-      </div>
-    </div>
-    <input
-      name="selectedValidation"
-      type="hidden"
-      value="dateRange"
-    />
-    <input
-      name="selectedValidation_edited"
-      type="hidden"
-      value="false"
-    />
-    
   </div>
   <label>
     START-DATE
@@ -73,67 +45,155 @@ exports[`ValidationDate shows date range validation 1`] = `
     class="separator"
   />
   <div
-    class="form-group"
-    data-field-name="selectedParameter"
+    class="ddm__validation-date-start-end"
   >
-    <label
-      class="ddm-label"
-      for="selectedParameter"
-      tabindex="0"
-    >
-      starts-from
-    </label>
-    <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedParameter_field"
-      multiple=""
-      name="selectedParameter_field"
-    >
-      <option
-        disabled=""
-        value=""
-      />
-    </select>
     <div
-      class="form-builder-select-field input-group-container"
-      style=""
+      class="ddm__validation-date-start-end-label"
     >
+      <label>
+        starts-from
+      </label>
       <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
+        data-tooltip-align="top"
+        title="starts-from-tooltip"
       >
-        <div
-          class="option-selected option-selected-placeholder"
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
         >
-          choose-an-option
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
       </div>
     </div>
-    <input
-      name="selectedParameter"
-      type="hidden"
-      value=""
-    />
-    <input
-      name="selectedParameter_edited"
-      type="hidden"
-      value="false"
-    />
-    
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            custom-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm__validation-date-start-end"
+  >
+    <div
+      class="ddm__validation-date-start-end-label"
+    >
+      <label>
+        date
+      </label>
+    </div>
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            response-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm-custom-date"
+  >
+    <label>
+      operation
+      <select
+        class="form-control"
+        name="selectedOperation_startsFrom"
+      >
+        <option
+          value="plus"
+        >
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
+    </label>
+    <label>
+      quantity
+      <input
+        class="form-control ddm-field-text"
+        max="999"
+        min="1"
+        name="inputedQuantity_startsFrom"
+        type="number"
+        value="1"
+      />
+    </label>
+    <label>
+      unit
+      <select
+        class="form-control"
+        name="selectedUnit_startsFrom"
+      >
+        <option
+          value="days"
+        >
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
+    </label>
   </div>
   <label>
     END-DATE
@@ -142,67 +202,155 @@ exports[`ValidationDate shows date range validation 1`] = `
     class="separator"
   />
   <div
-    class="form-group"
-    data-field-name="selectedParameter"
+    class="ddm__validation-date-start-end"
   >
-    <label
-      class="ddm-label"
-      for="selectedParameter"
-      tabindex="0"
-    >
-      ends-on
-    </label>
-    <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedParameter_field"
-      multiple=""
-      name="selectedParameter_field"
-    >
-      <option
-        disabled=""
-        value=""
-      />
-    </select>
     <div
-      class="form-builder-select-field input-group-container"
-      style=""
+      class="ddm__validation-date-start-end-label"
     >
+      <label>
+        ends-on
+      </label>
       <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
+        data-tooltip-align="top"
+        title="ends-on-tooltip"
       >
-        <div
-          class="option-selected option-selected-placeholder"
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
         >
-          choose-an-option
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
       </div>
     </div>
-    <input
-      name="selectedParameter"
-      type="hidden"
-      value=""
-    />
-    <input
-      name="selectedParameter_edited"
-      type="hidden"
-      value="false"
-    />
-    
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            custom-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm__validation-date-start-end"
+  >
+    <div
+      class="ddm__validation-date-start-end-label"
+    >
+      <label>
+        date
+      </label>
+    </div>
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            response-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm-custom-date"
+  >
+    <label>
+      operation
+      <select
+        class="form-control"
+        name="selectedOperation_endsOn"
+      >
+        <option
+          value="plus"
+        >
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
+    </label>
+    <label>
+      quantity
+      <input
+        class="form-control ddm-field-text"
+        max="999"
+        min="1"
+        name="inputedQuantity_endsOn"
+        type="number"
+        value="1"
+      />
+    </label>
+    <label>
+      unit
+      <select
+        class="form-control"
+        name="selectedUnit_endsOn"
+      >
+        <option
+          value="days"
+        >
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
+    </label>
   </div>
   <label
     for="validationDate_errorMessage"
@@ -215,7 +363,7 @@ exports[`ValidationDate shows date range validation 1`] = `
     name="validationDate_errorMessage"
     placeholder="this-field-is-invalid"
     type="text"
-    value=""
+    value="[object Object]"
   />
 </div>
 `;
@@ -223,131 +371,191 @@ exports[`ValidationDate shows date range validation 1`] = `
 exports[`ValidationDate shows future dates validation 1`] = `
 <div>
   <div
-    class="form-group"
-    data-field-name="selectedValidation"
+    class="ddm__validation-date-accepted-date"
   >
-    <label
-      class="ddm-label"
-      for="selectedValidation"
-      tabindex="0"
-    >
+    <label>
       accepted-date
     </label>
     <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedValidation_field"
-      multiple=""
-      name="selectedValidation_field"
+      class="form-control"
+      name="selectedValidation"
     >
       <option
+        name="futureDates"
+        parametermessage=""
+        template="futureDates({name}, \\"{parameter}\\")"
         value="futureDates"
       >
         Future Dates
       </option>
-    </select>
-    <div
-      class="form-builder-select-field input-group-container"
-      style=""
-    >
-      <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
+      <option
+        name="pastDates"
+        parametermessage=""
+        template="pastDates({name}, \\"{parameter}\\")"
+        value="pastDates"
       >
-        <div
-          class="option-selected"
-        >
-          Future Dates
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
-      </div>
-    </div>
-    <input
-      name="selectedValidation"
-      type="hidden"
-      value="futureDates"
-    />
-    <input
-      name="selectedValidation_edited"
-      type="hidden"
-      value="false"
-    />
-    
+        Past Dates
+      </option>
+      <option
+        name="dateRange"
+        parametermessage=""
+        template="dateRange({name}, \\"{parameter}\\")"
+        value="dateRange"
+      >
+        Range
+      </option>
+    </select>
   </div>
   <div
-    class="form-group"
-    data-field-name="selectedParameter"
+    class="ddm__validation-date-start-end"
   >
-    <label
-      class="ddm-label"
-      for="selectedParameter"
-      tabindex="0"
-    >
-      starts-from
-    </label>
-    <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedParameter_field"
-      multiple=""
-      name="selectedParameter_field"
-    >
-      <option
-        disabled=""
-        value=""
-      />
-    </select>
     <div
-      class="form-builder-select-field input-group-container"
-      style=""
+      class="ddm__validation-date-start-end-label"
     >
+      <label>
+        starts-from
+      </label>
       <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
+        data-tooltip-align="top"
+        title="starts-from-tooltip"
       >
-        <div
-          class="option-selected option-selected-placeholder"
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
         >
-          choose-an-option
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
       </div>
     </div>
-    <input
-      name="selectedParameter"
-      type="hidden"
-      value=""
-    />
-    <input
-      name="selectedParameter_edited"
-      type="hidden"
-      value="false"
-    />
-    
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            custom-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm__validation-date-start-end"
+  >
+    <div
+      class="ddm__validation-date-start-end-label"
+    >
+      <label>
+        date
+      </label>
+    </div>
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            response-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm-custom-date"
+  >
+    <label>
+      operation
+      <select
+        class="form-control"
+        name="selectedOperation_startsFrom"
+      >
+        <option
+          value="plus"
+        >
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
+    </label>
+    <label>
+      quantity
+      <input
+        class="form-control ddm-field-text"
+        max="999"
+        min="1"
+        name="inputedQuantity_startsFrom"
+        type="number"
+        value="1"
+      />
+    </label>
+    <label>
+      unit
+      <select
+        class="form-control"
+        name="selectedUnit_startsFrom"
+      >
+        <option
+          value="days"
+        >
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
+    </label>
   </div>
   <label
     for="validationDate_errorMessage"
@@ -360,7 +568,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
     name="validationDate_errorMessage"
     placeholder="this-field-is-invalid"
     type="text"
-    value=""
+    value="[object Object]"
   />
 </div>
 `;
@@ -368,131 +576,191 @@ exports[`ValidationDate shows future dates validation 1`] = `
 exports[`ValidationDate shows past dates validation 1`] = `
 <div>
   <div
-    class="form-group"
-    data-field-name="selectedValidation"
+    class="ddm__validation-date-accepted-date"
   >
-    <label
-      class="ddm-label"
-      for="selectedValidation"
-      tabindex="0"
-    >
+    <label>
       accepted-date
     </label>
     <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedValidation_field"
-      multiple=""
-      name="selectedValidation_field"
+      class="form-control"
+      name="selectedValidation"
     >
       <option
+        name="futureDates"
+        parametermessage=""
+        template="futureDates({name}, \\"{parameter}\\")"
+        value="futureDates"
+      >
+        Future Dates
+      </option>
+      <option
+        name="pastDates"
+        parametermessage=""
+        template="pastDates({name}, \\"{parameter}\\")"
         value="pastDates"
       >
         Past Dates
       </option>
-    </select>
-    <div
-      class="form-builder-select-field input-group-container"
-      style=""
-    >
-      <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
+      <option
+        name="dateRange"
+        parametermessage=""
+        template="dateRange({name}, \\"{parameter}\\")"
+        value="dateRange"
       >
-        <div
-          class="option-selected"
-        >
-          Past Dates
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
-      </div>
-    </div>
-    <input
-      name="selectedValidation"
-      type="hidden"
-      value="pastDates"
-    />
-    <input
-      name="selectedValidation_edited"
-      type="hidden"
-      value="false"
-    />
-    
+        Range
+      </option>
+    </select>
   </div>
   <div
-    class="form-group"
-    data-field-name="selectedParameter"
+    class="ddm__validation-date-start-end"
   >
-    <label
-      class="ddm-label"
-      for="selectedParameter"
-      tabindex="0"
-    >
-      ends-on
-    </label>
-    <select
-      aria-hidden="true"
-      class="form-control form-control"
-      hidden=""
-      id="selectedParameter_field"
-      multiple=""
-      name="selectedParameter_field"
-    >
-      <option
-        disabled=""
-        value=""
-      />
-    </select>
     <div
-      class="form-builder-select-field input-group-container"
-      style=""
+      class="ddm__validation-date-start-end-label"
     >
+      <label>
+        ends-on
+      </label>
       <div
-        class="form-control results-chosen select-field-trigger"
-        tabindex="0"
+        data-tooltip-align="top"
+        title="ends-on-tooltip"
       >
-        <div
-          class="option-selected option-selected-placeholder"
+        <svg
+          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
+          role="presentation"
         >
-          choose-an-option
-        </div>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
-          >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+          <use
+            xlink:href="#question-circle-full"
+          />
+        </svg>
       </div>
     </div>
-    <input
-      name="selectedParameter"
-      type="hidden"
-      value=""
-    />
-    <input
-      name="selectedParameter_edited"
-      type="hidden"
-      value="false"
-    />
-    
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            custom-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm__validation-date-start-end"
+  >
+    <div
+      class="ddm__validation-date-start-end-label"
+    >
+      <label>
+        date
+      </label>
+    </div>
+    <div
+      class="dropdown"
+    >
+      <div
+        class="dropdown-toggle form-builder-select-field input-group-container"
+        style=""
+      >
+        <div
+          class="form-control results-chosen select-field-trigger"
+        >
+          <div
+            class="option-selected"
+          >
+            response-date
+          </div>
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ddm-custom-date"
+  >
+    <label>
+      operation
+      <select
+        class="form-control"
+        name="selectedOperation_endsOn"
+      >
+        <option
+          value="plus"
+        >
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
+    </label>
+    <label>
+      quantity
+      <input
+        class="form-control ddm-field-text"
+        max="999"
+        min="1"
+        name="inputedQuantity_endsOn"
+        type="number"
+        value="1"
+      />
+    </label>
+    <label>
+      unit
+      <select
+        class="form-control"
+        name="selectedUnit_endsOn"
+      >
+        <option
+          value="days"
+        >
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
+    </label>
   </div>
   <label
     for="validationDate_errorMessage"
@@ -505,7 +773,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
     name="validationDate_errorMessage"
     placeholder="this-field-is-invalid"
     type="text"
-    value=""
+    value="[object Object]"
   />
 </div>
 `;

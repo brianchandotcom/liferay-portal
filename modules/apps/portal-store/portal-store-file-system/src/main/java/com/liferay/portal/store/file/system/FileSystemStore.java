@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -43,11 +44,19 @@ import java.util.List;
  * @author Alexander Chow
  * @author Edward Han
  * @author Manuel de la Peña
+ * @author Raymond Augé
  */
 public class FileSystemStore implements Store {
 
 	public FileSystemStore(
 		FileSystemStoreConfiguration fileSystemStoreConfiguration) {
+
+		this(fileSystemStoreConfiguration, null);
+	}
+
+	public FileSystemStore(
+		FileSystemStoreConfiguration fileSystemStoreConfiguration,
+		Consumer<File> initializer) {
 
 		String path = fileSystemStoreConfiguration.rootDir();
 
@@ -64,6 +73,10 @@ public class FileSystemStore implements Store {
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
+		}
+
+		if (initializer != null) {
+			initializer.accept(_rootDir);
 		}
 	}
 

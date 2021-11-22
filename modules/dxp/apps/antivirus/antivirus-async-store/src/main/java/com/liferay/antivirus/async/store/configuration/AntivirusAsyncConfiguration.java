@@ -30,6 +30,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AntivirusAsyncConfiguration {
 
 	@Meta.AD(
+		deflt = "23", description = "batch-scan-interval-help", max = "23",
+		min = "1", name = "batch-scan-interval", required = false
+	)
+	public int batchScanInterval();
+
+	@Meta.AD(
 		description = "maximum-queue-size-help", name = "maximum-queue-size",
 		required = false
 	)

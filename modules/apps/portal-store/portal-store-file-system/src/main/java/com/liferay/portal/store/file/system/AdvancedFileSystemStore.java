@@ -26,6 +26,7 @@ import java.io.File;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Consumer;
 
 /**
  * <p>
@@ -36,6 +37,7 @@ import java.util.ListIterator;
  * @author Ryan Park
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
+ * @author Raymond Augé
  */
 public class AdvancedFileSystemStore extends FileSystemStore {
 
@@ -44,6 +46,14 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			advancedFileSystemStoreConfiguration) {
 
 		super(advancedFileSystemStoreConfiguration);
+	}
+
+	public AdvancedFileSystemStore(
+		AdvancedFileSystemStoreConfiguration
+			advancedFileSystemStoreConfiguration,
+		Consumer<File> initializer) {
+
+		super(advancedFileSystemStoreConfiguration, initializer);
 	}
 
 	@Override

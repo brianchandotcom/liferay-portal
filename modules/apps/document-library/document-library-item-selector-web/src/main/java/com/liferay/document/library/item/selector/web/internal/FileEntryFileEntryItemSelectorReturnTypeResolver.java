@@ -20,7 +20,6 @@ import com.liferay.document.library.video.renderer.DLVideoRenderer;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -72,12 +71,28 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"extension", fileEntry.getExtension()
 		).put(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
 		).put(
 			"groupId", String.valueOf(fileEntry.getGroupId())
+		).put(
+			"html",
+			() -> {
+				if (ArrayUtil.contains(
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
+						fileEntry.getMimeType()) ||
+					Objects.equals(
+						DLContentTypes.VIDEO_EXTERNAL_SHORTCUT,
+						fileEntry.getMimeType())) {
+
+					return _dlVideoRenderer.renderHTML(
+						fileEntry.getFileVersion(), themeDisplay.getRequest());
+				}
+
+				return null;
+			}
 		).put(
 			"title", fileEntry.getTitle()
 		).put(
@@ -86,22 +101,7 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 			"url", previewURL
 		).put(
 			"uuid", fileEntry.getUuid()
-		);
-
-		if (ArrayUtil.contains(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
-				fileEntry.getMimeType()) ||
-			Objects.equals(
-				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT,
-				fileEntry.getMimeType())) {
-
-			jsonObject.put(
-				"html",
-				_dlVideoRenderer.renderHTML(
-					fileEntry.getFileVersion(), themeDisplay.getRequest()));
-		}
-
-		return jsonObject.toString();
+		).toString();
 	}
 
 	@Reference

@@ -327,6 +327,10 @@ public interface TranslationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTranslationEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTranslationEntriesCount(
+		String className, long classPK, int[] statuses, boolean exclude);
+
 	/**
 	 * Returns the translation entry with the primary key.
 	 *

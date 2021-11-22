@@ -420,6 +420,14 @@ public class TranslationEntryLocalServiceWrapper
 		return _translationEntryLocalService.getTranslationEntriesCount();
 	}
 
+	@Override
+	public int getTranslationEntriesCount(
+		String className, long classPK, int[] statuses, boolean exclude) {
+
+		return _translationEntryLocalService.getTranslationEntriesCount(
+			className, classPK, statuses, exclude);
+	}
+
 	/**
 	 * Returns the translation entry with the primary key.
 	 *

@@ -381,6 +381,13 @@ public class TranslationEntryLocalServiceUtil {
 		return getService().getTranslationEntriesCount();
 	}
 
+	public static int getTranslationEntriesCount(
+		String className, long classPK, int[] statuses, boolean exclude) {
+
+		return getService().getTranslationEntriesCount(
+			className, classPK, statuses, exclude);
+	}
+
 	/**
 	 * Returns the translation entry with the primary key.
 	 *

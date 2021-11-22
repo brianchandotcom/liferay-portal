@@ -727,7 +727,7 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Duplicate name customObjectField");
+		ObjectAdmin.viewFieldErrorMessage(message = "This name is already in use. Try another one.");
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"
@@ -749,7 +749,7 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Duplicate name C_CustomObject");
+		ObjectAdmin.viewFieldErrorMessage(message = "This name is already in use. Try another one.");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to create duplicated Relationship name"
@@ -854,7 +854,7 @@ definition {
 			fieldName = " ",
 			fieldType = "String");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Name is null");
+		ObjectAdmin.viewFieldErrorMessage(message = "Name is required.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
@@ -1034,7 +1034,7 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an upper case letter");
+		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an upper case letter.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
@@ -1058,7 +1058,7 @@ definition {
 			fieldName = "customField#$%",
 			fieldType = "Long");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Name must only contain letters and digits");
+		ObjectAdmin.viewFieldErrorMessage(message = "Name must only contain letters and digits.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"
@@ -1080,7 +1080,7 @@ definition {
 			fieldName = "CustomField",
 			fieldType = "String");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be a lower case letter");
+		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an lower case letter.");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
@@ -2907,6 +2907,8 @@ definition {
 
 		CreateObject.saveObject();
 
+		WaitForSPARefresh();
+
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		AssertElementNotPresent(
@@ -2997,6 +2999,10 @@ definition {
 			objectName = "CustomObject");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		WaitForSPARefresh();
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
@@ -3155,6 +3161,10 @@ definition {
 			objectName = "CustomObject");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		WaitForSPARefresh();
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
@@ -3554,6 +3564,8 @@ definition {
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
+
+		WaitForSPARefresh();
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 

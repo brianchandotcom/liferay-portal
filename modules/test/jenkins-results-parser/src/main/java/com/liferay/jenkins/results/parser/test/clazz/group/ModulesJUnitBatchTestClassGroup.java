@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
@@ -280,10 +281,9 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	private String _getAppTitlePrefix() {
-		String portalBranchName =
-			portalGitWorkingDirectory.getUpstreamBranchName();
+		Job job = getJob();
 
-		if (portalBranchName.contains("-private")) {
+		if (job.getBuildProfile() == Job.BuildProfile.DXP) {
 			return "Liferay";
 		}
 

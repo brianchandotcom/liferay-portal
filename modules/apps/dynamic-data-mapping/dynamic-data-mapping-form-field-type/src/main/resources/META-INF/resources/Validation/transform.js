@@ -13,19 +13,19 @@
  */
 
 const getValidationFromExpression = (validations, validation, expression) => {
-		let mutValidation;
+	let mutValidation;
 
-		if (!expression && validation) {
-			expression = validation.expression;
-		}
+	if (!expression && validation) {
+		expression = validation.expression;
+	}
 
-		if (expression) {
-			mutValidation = validations.find(
-				(validation) => validation.name === expression.name
-			);
-		}
+	if (expression) {
+		mutValidation = validations.find(
+			(validation) => validation.name === expression.name
+		);
+	}
 
-		return mutValidation;
+	return mutValidation;
 };
 
 const transformValidations = (validations, dataType) => {
@@ -39,27 +39,31 @@ const transformValidations = (validations, dataType) => {
 };
 
 const getValidation = (validations, validation, value) => {
-		const {errorMessage = {}, expression = {}, parameter = {}} = value;
-		let parameterMessage = '';
-		let selectedValidation = getValidationFromExpression(validations, validation, expression);
-		const enableValidation = !!expression.value;
+	const {errorMessage = {}, expression = {}, parameter = {}} = value;
+	let parameterMessage = '';
+	let selectedValidation = getValidationFromExpression(
+		validations,
+		validation,
+		expression
+	);
+	const enableValidation = !!expression.value;
 
-		if (selectedValidation) {
-			parameterMessage = selectedValidation.parameterMessage;
-		}
-		else {
-			selectedValidation = validations[0];
-		}
+	if (selectedValidation) {
+		parameterMessage = selectedValidation.parameterMessage;
+	}
+	else {
+		selectedValidation = validations[0];
+	}
 
-		return {
-			enableValidation,
-			errorMessage,
-			expression,
-			parameter,
-			parameterMessage,
-			selectedValidation,
-		};
+	return {
+		enableValidation,
+		errorMessage,
+		expression,
+		parameter,
+		parameterMessage,
+		selectedValidation,
 	};
+};
 
 export function normalizeDataType(initialDataType) {
 	return initialDataType === 'double' || initialDataType === 'integer'
@@ -97,11 +101,7 @@ export function transformData({
 }) {
 	const dataType = validation?.dataType ?? initialDataType;
 	const validations = transformValidations(initialValidations, dataType);
-	const parsedValidation = getValidation(
-		validations,
-		validation,
-		value
-	);
+	const parsedValidation = getValidation(validations, validation, value);
 	const localizationMode = editingLanguageId !== defaultLanguageId;
 
 	return {

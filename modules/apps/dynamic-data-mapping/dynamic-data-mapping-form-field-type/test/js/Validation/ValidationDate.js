@@ -18,6 +18,7 @@ import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import ValidationDate from '../../../src/main/resources/META-INF/resources/Validation/ValidationDate';
+import mockPages from '../__mocks__/mock_Pages';
 
 const globalLanguageDirection = Liferay.Language.direction;
 
@@ -48,6 +49,11 @@ const validations = [
 	},
 ];
 
+const state = {
+	builderPages: mockPages,
+	editingLanguageId: 'en_US',
+};
+
 const generateParameter = () => ({
 	en_US: {
 		endsOn: {
@@ -63,17 +69,16 @@ const generateParameter = () => ({
 			quantity: 1,
 			type: 'customDate',
 			unit: 'days',
+		},
 	},
-}
-
-})
+});
 
 const parameters = generateParameter();
 
 const localizedValue = jest.fn(() => parameters['en_US']);
 
-const ValidationDateProvider = ({builderPages = [], ...props}) => (
-	<FormProvider initialState={{builderPages}}>
+const ValidationDateProvider = ({builderPages = [], state, ...props}) => (
+	<FormProvider initialState={{builderPages}} value={state}>
 		<ValidationDate {...props} />
 	</FormProvider>
 );
@@ -92,15 +97,14 @@ describe('ValidationDate', () => {
 	afterEach(cleanup);
 
 	it('shows future dates validation', () => {
-
 		const {container} = render(
 			<ValidationDateProvider
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				localizedValue={localizedValue}
-				parameter={parameters}
 				name="validationDate"
 				onChange={() => {}}
+				parameter={parameters}
 				selectedValidation={{
 					label: '',
 					name: 'futureDates',
@@ -121,9 +125,9 @@ describe('ValidationDate', () => {
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				localizedValue={localizedValue}
-				parameter={parameters}
 				name="validationDate"
 				onChange={() => {}}
+				parameter={parameters}
 				selectedValidation={{
 					label: '',
 					name: 'pastDates',
@@ -145,9 +149,9 @@ describe('ValidationDate', () => {
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				localizedValue={localizedValue}
-				parameter={parameters}
 				name="validationDate"
 				onChange={() => {}}
+				parameter={parameters}
 				selectedValidation={{
 					label: '',
 					name: 'dateRange',
@@ -194,15 +198,16 @@ describe('ValidationDate', () => {
 			/>
 		);
 
-		const [selectedValidaiton, selectedOperation, selectedUnit] = [...getAllByRole('combobox')];
+		const [selectedValidaiton, selectedOperation, selectedUnit] = [
+			...getAllByRole('combobox'),
+		];
 
-		const startQuantity = getAllByRole('textbox')
+		const startQuantity = getAllByRole('textbox');
 
 		expect(selectedValidaiton).toHaveValue('futureDates');
 		expect(selectedOperation).toHaveValue('plus');
 		expect(selectedUnit).toHaveValue('days');
 		expect(startQuantity[0]).toHaveValue(1);
-
 	});
 
 	it('shows custom date fields for Past dates and operation minus when quantity is negative', () => {
@@ -245,5 +250,45 @@ describe('ValidationDate', () => {
 		expect(operation).toHaveValue('minus');
 		expect(quantity).toHaveValue(1);
 		expect(unit).toHaveValue('days');
+	});
+
+	it('', () => {
+		const parameter = {
+			en_US: {
+				endsOn: {
+					date: 'responseDate',
+					dateFieldName: 'Date12345853',
+					quantity: -1,
+					type: 'dateField',
+					unit: 'days',
+				},
+			},
+		};
+
+		const localizedValue = jest.fn(() => parameter['en_US']);
+
+		const {getAllByRole} = render(
+			<ValidationDateProvider
+				defaultLanguageId="en_US"
+				editingLanguageId="en_US"
+				localizedValue={localizedValue}
+				name="validationDate"
+				onChange={() => {}}
+				parameter={parameter}
+				selectedValidation={{
+					label: '',
+					name: 'pastDates',
+					parameterMessage: '',
+					template: 'pastDates({name}, "{parameter}")',
+				}}
+				state={state}
+				validations={validations}
+				visible={true}
+			/>
+		);
+
+		const test = getAllByRole('input');
+
+		expect(acceptedDate).toHaveValue('pastDates');
 	});
 });

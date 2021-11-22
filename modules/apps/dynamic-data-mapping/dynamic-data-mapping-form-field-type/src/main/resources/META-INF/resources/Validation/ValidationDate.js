@@ -112,7 +112,6 @@ const ValidationDate = ({
 
 	const fields = useMemo(() => {
 		const fields = [];
-
 		if (dateFieldTypeValidationEnabled) {
 			const visitor = new PagesVisitor(formBuilder.pages);
 

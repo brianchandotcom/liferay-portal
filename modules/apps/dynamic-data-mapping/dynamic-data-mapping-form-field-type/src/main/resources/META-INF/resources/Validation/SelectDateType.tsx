@@ -14,54 +14,37 @@
 
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import { ClayTooltipProvider } from '@clayui/tooltip';
-import React, { useMemo } from 'react';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import React, {useMemo} from 'react';
 
 const SelectDateType: React.FC<IProps> = ({
-    type,
-    dateFieldName,
-    dateFieldOptions,
-    options,
-    onChange,
-    label,
-    tooltip,
+	dateFieldName,
+	dateFieldOptions,
+	label,
+	onChange,
+	options,
+	tooltip,
+	type,
 }) => {
-
-    const selectedOption = useMemo(()=>{
-		if(type === "dateField"){
-			const date = dateFieldOptions.find(({name}) => 
-				dateFieldName === name
+	const selectedOption = useMemo(() => {
+		if (type === 'dateField') {
+			const date = dateFieldOptions.find(
+				({name}) => dateFieldName === name
 			) as IDateFieldOption;
 
-			return date.label;
+			return date?.label ?? 'Response Date';
 		}
 
-		const option = options?.find(({value}) => 
-			value === type
-		);
+		const option = options?.find(({value}) => value === type);
 
 		return option?.label;
-	},[type, dateFieldName, dateFieldOptions]);
+	}, [dateFieldName, type, dateFieldOptions, options]);
 
-    const items: IItem[] = [
-
-        ...options.map((option) => ({
-            ...option,
-            onClick: () => onChange(option.value)
-        })),
-		{
-			type: 'divider',
-		},
-		{
-			items: dateFieldOptions.map((option) => ({
-				...option,
-				onClick: () => {
-					onChange('dateField', option.name);
-				},
-			})),
-			label: Liferay.Language.get('date-fields'),
-			type: 'group',
-		},
+	const items: IItem[] = [
+		...options.map((option) => ({
+			...option,
+			onClick: () => onChange(option.value),
+		})),
 	];
 
 	if (dateFieldOptions.length > 0) {
@@ -123,28 +106,27 @@ const SelectDateType: React.FC<IProps> = ({
 export default SelectDateType;
 
 interface IProps {
-    dateFieldOptions: IDateFieldOption[];
-    type: Type;
-    dateFieldName?: string;
-    options: IOptions[];
-    onChange: (value: string | number,dateFieldName?: string) => void;
-    label: string;
-    tooltip?: string;
+	dateFieldName?: string;
+	dateFieldOptions: IDateFieldOption[];
+	label: string;
+	onChange: (value: Type, dateFieldName?: string) => void;
+	options: IOptions[];
+	tooltip?: string;
+	type: Type;
 }
 
 interface IItem {
-    items?: {
-        onClick: () => void;
-        label: string;
-        name: string;
-    }[];
-    onClick?: () => void;
-    name?: DateType;
-    value?: DateType;
-    label?: string;
-    type?: 'group' | 'divider';
+	items?: {
+		label: string;
+		name: string;
+		onClick: () => void;
+	}[];
+	label?: string;
+	name?: DateType;
+	onClick?: () => void;
+	type?: 'group' | 'divider';
+	value?: DateType;
 }
-
 
 interface IDateFieldOption {
 	label: string;
@@ -156,5 +138,3 @@ interface IOptions {
 	name: DateType;
 	value: DateType;
 }
-
-type DateType = 'customDate' | 'responseDate';

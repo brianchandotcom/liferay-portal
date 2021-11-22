@@ -4007,6 +4007,7 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
 		AssertElementNotPresent(locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+		
 
 	}
 

@@ -272,7 +272,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 					exception);
 			}
 
-			throw new MustSetValidValue(ddmFormField.getName());
+			throw new MustSetValidValue(
+				ddmFormField.getLabel(), ddmFormField.getName());
 		}
 	}
 
@@ -421,7 +422,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||
 				(!ddmFormField.isLocalizable() && value.isLocalized())) {
 
-				throw new MustSetValidValue(ddmFormField.getName());
+				throw new MustSetValidValue(
+					ddmFormField.getLabel(), ddmFormField.getName());
 			}
 
 			validateDDMFormFieldValueLocales(

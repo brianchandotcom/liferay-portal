@@ -15,6 +15,10 @@
 package com.liferay.dynamic.data.mapping.validator;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.petra.string.StringPool;
+
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
@@ -117,12 +121,17 @@ public class DDMFormValuesValidationException extends StorageException {
 	public static class MustSetValidValue
 		extends DDMFormValuesValidationException {
 
-		public MustSetValidValue(String fieldName) {
+		public MustSetValidValue(LocalizedValue fieldLabel, String fieldName) {
 			super(
 				String.format(
 					"Invalid value set for field name %s", fieldName));
 
+			_fieldLabel = fieldLabel;
 			_fieldName = fieldName;
+		}
+
+		public MustSetValidValue(String fieldName) {
+			this(null, fieldName);
 		}
 
 		public MustSetValidValue(String fieldName, Throwable throwable) {
@@ -133,10 +142,23 @@ public class DDMFormValuesValidationException extends StorageException {
 			_fieldName = fieldName;
 		}
 
+		public LocalizedValue getFieldLabel() {
+			return _fieldLabel;
+		}
+
+		public String getFieldLabelValue(Locale locale) {
+			if (_fieldLabel == null) {
+				return StringPool.BLANK;
+			}
+
+			return _fieldLabel.getString(locale);
+		}
+
 		public String getFieldName() {
 			return _fieldName;
 		}
 
+		private LocalizedValue _fieldLabel;
 		private String _fieldName;
 
 	}

@@ -128,9 +128,15 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 							<%
 							DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
+
+							String fieldLabelValue = msvv.getFieldLabelValue(themeDisplay.getLocale());
+
+							if (Validator.isNull(fieldLabelValue)) {
+								fieldLabelValue = msvv.getFieldName();
+							}
 							%>
 
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">

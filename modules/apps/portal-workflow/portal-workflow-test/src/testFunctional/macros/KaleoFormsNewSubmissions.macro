@@ -190,4 +190,19 @@ definition {
 			value1 = "${errorMessage}");
 	}
 
+	macro viewOrderTable {
+        var rowNumber = "1";
+
+        for (var key_fieldName : list "${fieldNameList}") {
+            AssertElementPresent(
+                key_order = "${rowNumber}",
+                key_fieldName = "${nameFieldset}",
+               	locator1 = "KaleoFormsAdmin#TABLE_ORDER_SUBMISSIONS");
+
+            var rowNumber = MathUtil.sum("${rowNumber}", "1");
+        }
+    }
+
+
+
 }

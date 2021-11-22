@@ -48,6 +48,13 @@
 	<td>//button[contains(@aria-label,'close')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ORDER_SUBMISSIONS</td>
+	<td>//tr[${key_order}]//span[contains(text(),"${key_fieldName}")]</td>
+	<td></td>
+</tr>
+
+
 </tbody>
 </table>
 </body>

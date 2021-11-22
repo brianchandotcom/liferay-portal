@@ -146,11 +146,28 @@ definition {
 	}
 
 	@description = "Verify that the user can reverse the order of submissions."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderSubmissions {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70690 CanOrderSubmissions pending implementation
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");
+		
+		KaleoFormsAdmin.saveProcessRecord();
+		
+
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process B");
+		
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
+
+		Workflow.clickRevertSortDirection();	
+		
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
+	
 
 	}
 

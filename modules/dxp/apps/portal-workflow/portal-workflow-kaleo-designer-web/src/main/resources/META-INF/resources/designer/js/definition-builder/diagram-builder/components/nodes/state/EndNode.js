@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import BaseNode from '../BaseNode';
@@ -30,3 +31,8 @@ export default function EndNode({
 		/>
 	);
 }
+
+EndNode.propTypes = {
+	data: PropTypes.object,
+	descriptionSidebar: PropTypes.string,
+};

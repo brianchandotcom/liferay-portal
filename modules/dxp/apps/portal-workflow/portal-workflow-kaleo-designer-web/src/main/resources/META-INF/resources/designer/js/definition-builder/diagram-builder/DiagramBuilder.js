@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import PropTypes from 'prop-types';
 import React, {useCallback, useRef, useState} from 'react';
 import ReactFlow, {
 	Background,
@@ -149,3 +150,7 @@ export default function DiagramBuilder({version}) {
 		</DiagramBuilderContextProvider>
 	);
 }
+
+DiagramBuilder.propTypes = {
+	version: PropTypes.string.isRequired,
+};

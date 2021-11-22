@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
@@ -77,3 +78,12 @@ export default function BaseNode({
 		</div>
 	);
 }
+
+BaseNode.propTypes = {
+	className: PropTypes.string,
+	description: PropTypes.string,
+	descriptionSidebar: PropTypes.string,
+	icon: PropTypes.string.isRequired,
+	label: PropTypes.string,
+	type: PropTypes.string.isRequired,
+};

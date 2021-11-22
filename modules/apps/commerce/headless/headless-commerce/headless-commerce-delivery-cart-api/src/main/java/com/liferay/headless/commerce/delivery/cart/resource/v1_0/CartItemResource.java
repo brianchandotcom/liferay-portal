@@ -73,7 +73,8 @@ public interface CartItemResource {
 	public Response putCartItemBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<CartItem> getCartItemsPage(Long cartId, Pagination pagination)
+	public Page<CartItem> getCartItemsPage(
+			Long cartId, Long skuId, Pagination pagination)
 		throws Exception;
 
 	public CartItem postCartItem(Long cartId, CartItem cartItem)

@@ -78,11 +78,12 @@ public interface CartItemResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Page<CartItem> getCartItemsPage(Long cartId, Pagination pagination)
+	public Page<CartItem> getCartItemsPage(
+			Long cartId, Long skuId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCartItemsPageHttpResponse(
-			Long cartId, Pagination pagination)
+			Long cartId, Long skuId, Pagination pagination)
 		throws Exception;
 
 	public CartItem postCartItem(Long cartId, CartItem cartItem)
@@ -626,11 +627,11 @@ public interface CartItemResource {
 		}
 
 		public Page<CartItem> getCartItemsPage(
-				Long cartId, Pagination pagination)
+				Long cartId, Long skuId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCartItemsPageHttpResponse(cartId, pagination);
+				getCartItemsPageHttpResponse(cartId, skuId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -670,7 +671,7 @@ public interface CartItemResource {
 		}
 
 		public HttpInvoker.HttpResponse getCartItemsPageHttpResponse(
-				Long cartId, Pagination pagination)
+				Long cartId, Long skuId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -693,6 +694,10 @@ public interface CartItemResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (skuId != null) {
+				httpInvoker.parameter("skuId", String.valueOf(skuId));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

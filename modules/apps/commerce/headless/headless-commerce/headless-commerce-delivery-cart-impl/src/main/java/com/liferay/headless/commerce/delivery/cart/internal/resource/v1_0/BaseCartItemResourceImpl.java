@@ -371,6 +371,10 @@ public abstract class BaseCartItemResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "skuId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -391,6 +395,9 @@ public abstract class BaseCartItemResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("cartId")
 			Long cartId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("skuId")
+			Long skuId,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 

@@ -1,6 +1,10 @@
 import {useContext, useEffect} from 'react';
 import useGraphQL from '~/common/hooks/useGraphQL';
-import { onboardingPageGuard, overviewPageGuard, usePageGuard } from '~/common/hooks/usePageGuard';
+import {
+	onboardingPageGuard,
+	overviewPageGuard,
+	usePageGuard,
+} from '~/common/hooks/usePageGuard';
 import {getKoroneikiAccountsByFilter} from '~/common/services/liferay/graphql/koroneiki-accounts';
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';

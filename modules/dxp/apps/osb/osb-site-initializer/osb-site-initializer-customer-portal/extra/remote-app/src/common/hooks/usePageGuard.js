@@ -23,7 +23,7 @@ const onboardingPageGuard = (
 	accountBriefs,
 	externalReferenceCode,
 	accountFlags,
-	accountAccountRoles,
+	accountAccountRoles
 ) => {
 	return {
 		location: `${window.location.origin}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
@@ -32,17 +32,11 @@ const onboardingPageGuard = (
 			accountAccountRoles.find(
 				({name}) => name === 'Account Administrator'
 			) &&
-			validateExternalReferenceCode(
-				accountBriefs,
-				externalReferenceCode
-			),
+			validateExternalReferenceCode(accountBriefs, externalReferenceCode),
 	};
 };
 
-const overviewPageGuard = (
-	accountBriefs,
-	externalReferenceCode,
-) => {
+const overviewPageGuard = (accountBriefs, externalReferenceCode) => {
 	const isValidExternalReferenceCode = validateExternalReferenceCode(
 		accountBriefs,
 		externalReferenceCode
@@ -82,7 +76,7 @@ const usePageGuard = (
 			userUuid: userAccount.externalReferenceCode,
 			value: 1,
 		}),
-		getAccountRolesByUserAccountId(userAccount.id)
+		getAccountRolesByUserAccountId(userAccount.id),
 	]);
 
 	useEffect(() => {
@@ -93,9 +87,9 @@ const usePageGuard = (
 					externalReferenceCode
 				) ||
 				!guard(
-					userAccount.accountBriefs, 
-					externalReferenceCode, 
-					data.accountFlags, 
+					userAccount.accountBriefs,
+					externalReferenceCode,
+					data.accountFlags,
 					data.accountAccountRoles
 				).validate
 			) {
@@ -103,10 +97,10 @@ const usePageGuard = (
 					location,
 					validate: alternativeValidate,
 				} = alternativeGuard(
-						userAccount.accountBriefs, 
-						externalReferenceCode, 
-						data.accountFlags, 
-						data.accountAccountRoles
+					userAccount.accountBriefs,
+					externalReferenceCode,
+					data.accountFlags,
+					data.accountAccountRoles
 				);
 
 				if (alternativeValidate) {
@@ -115,7 +109,8 @@ const usePageGuard = (
 				else {
 					window.location.href = `${window.location.origin}${liferaySiteName}`;
 				}
-			} else {
+			}
+			else {
 				setLoading(false);
 			}
 		}

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
@@ -44,7 +45,7 @@ public class ShippingAddressCheckoutStepDisplayContext
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return commerceAddressService.getShippingCommerceAddresses(
-			commerceOrder.getCompanyId(), CommerceAccount.class.getName(),
+			commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 			commerceOrder.getCommerceAccountId());
 	}
 

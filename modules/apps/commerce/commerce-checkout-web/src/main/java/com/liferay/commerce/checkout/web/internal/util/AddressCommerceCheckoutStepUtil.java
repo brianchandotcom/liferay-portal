@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
@@ -103,10 +104,9 @@ public class AddressCommerceCheckoutStepUtil {
 		}
 
 		return _commerceAddressService.addCommerceAddress(
-			CommerceAccount.class.getName(),
-			commerceOrder.getCommerceAccountId(), name, description, street1,
-			street2, street3, city, zip, regionId, countryId, phoneNumber,
-			_commerceAddressType, serviceContext);
+			AccountEntry.class.getName(), commerceOrder.getCommerceAccountId(),
+			name, description, street1, street2, street3, city, zip, regionId,
+			countryId, phoneNumber, _commerceAddressType, serviceContext);
 	}
 
 	protected CommerceOrder updateCommerceOrderAddress(

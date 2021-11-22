@@ -206,11 +206,15 @@ const Collection = React.memo(
 		const [collection, setCollection] = useState(emptyCollection);
 		const [loading, setLoading] = useState(false);
 
+		const numberOfItems =
+			collectionConfig.paginationType && collectionConfig.showAllItems
+				? collection.totalNumberOfItems
+				: Math.min(
+						collectionConfig.numberOfItems,
+						collection.totalNumberOfItems
+				  );
 		const totalPages = Math.ceil(
-			Math.min(
-				collectionConfig.numberOfItems,
-				collection.totalNumberOfItems
-			) / collectionConfig.numberOfItemsPerPage
+			numberOfItems / collectionConfig.numberOfItemsPerPage
 		);
 
 		useEffect(() => {
@@ -220,6 +224,7 @@ const Collection = React.memo(
 		}, [
 			collectionConfig.numberOfItems,
 			collectionConfig.numberOfItemsPerPage,
+			collectionConfig.showAllItems,
 			activePage,
 			totalPages,
 		]);

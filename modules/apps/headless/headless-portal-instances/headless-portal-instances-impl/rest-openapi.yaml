@@ -68,8 +68,25 @@ paths:
             tags: ["PortalInstance"]
         post:
             description:
-                Adds a new portal instance
+                Adds a new portal instance.
             operationId: postPortalInstance
+            parameters:
+                - in: query
+                  name: administratorEmailAddress
+                  required: false
+                  schema:
+                      format: email
+                      type: string
+                - in: query
+                  name: administratorFirstName
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: administratorLastName
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

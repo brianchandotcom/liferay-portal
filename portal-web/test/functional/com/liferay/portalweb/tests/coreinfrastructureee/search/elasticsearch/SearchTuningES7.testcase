@@ -410,8 +410,6 @@ definition {
 			SearchTuning.addSynonymSet(synonyms = "phone${counter},mobile${counter}");
 		}
 
-		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
-
 		PortletEntry.selectAll();
 
 		for (var counter : list "1,2,3,4,5,6") {

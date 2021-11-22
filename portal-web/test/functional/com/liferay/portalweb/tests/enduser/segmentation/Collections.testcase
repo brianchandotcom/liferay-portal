@@ -4,12 +4,14 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Segmentation";
+	property testray.main.component.name = "Asset Lists";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -20,6 +22,65 @@ definition {
 		}
 		else {
 			Site.tearDownCP();
+		}
+	}
+
+	@description = "Assert that the UI works correctly for adding Asset Lists."
+	@priority = "5"
+	@uitest
+	test AddAssetList {
+		property portal.acceptance = "true";
+
+		task ("Create a manual asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+		}
+
+		task ("Assert Asset List Entry names and types") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewAssetList(
+				assetListTitle = "Manual Asset List Test",
+				type = "Manual");
+
+			AssetListsAdmin.viewAssetList(
+				assetListTitle = "Dynamic Asset List Test",
+				type = "Dynamic");
+		}
+	}
+
+	@description = "Assert that the UI correctly displays a useful error message when an Asset List is added with a duplicate name."
+	@priority = "3"
+	test AddDuplicateAssetList {
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Create an asset list that has the same name as the first asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
+
+			PortletEntry.inputText(
+				fieldLabel = "Title",
+				text = "Manual Asset List Test");
+
+			Button.clickSave();
+		}
+
+		task ("Assert an error displays notifying that the user is not allowed to create a duplicate asset list") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_MODAL_CONTENT",
+				value1 = "A collection with that title already exists.");
 		}
 	}
 
@@ -59,6 +120,89 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-115236. Configure Filter by Field."
+	@priority = "5"
+	@uitest
+	test ConfigureFilterByField {
+		property portal.acceptance = "true";
+
+		task ("Add a web content structure with a Select field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Select from List",
+				fieldName = "Select from List");
+
+			var index = "1";
+
+			for (var optionValue : list "Option 1,Option 2,Option 3") {
+				DataEngine.addFieldOption(
+					fieldFieldLabel = "Select from List",
+					index = "${index}",
+					optionValue = "${optionValue}");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldFieldLabel = "Select from List",
+					fieldReferenceOfFieldOption = "Value${index}",
+					index = "${index}");
+
+				var index = ${index} + 1;
+			}
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a Dynamic Collection based on Web Content Article and new structure") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Enable Filter by Field and Choose Select from List field") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
+
+			Select(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
+				value1 = "Option 2");
+
+			AssertSelectedLabel(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
+				value1 = "Option 2");
+
+			Button.click(button = "Apply");
+
+			SelectFrameTop();
+		}
+
+		task ("Assert the selected info is shown above the Select button") {
+			AssertTextEquals.assertPartialText(
+				key_text = "Select from List: Value2",
+				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
+				value1 = "Select from List: Value2");
+		}
+
+		task ("Assert the selected info is still shown above the Select button") {
+			PortletEntry.save();
+
+			AssertTextEquals.assertPartialText(
+				key_text = "Select from List: Value2",
+				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
+				value1 = "Select from List: Value2");
+		}
+	}
+
 	@description = "LPS-86283: Validate if, only the content matching the criteria of the assigned segment must be shown in asset publisher	"
 	@ignore = "true"
 	@priority = "4"
@@ -66,6 +210,130 @@ definition {
 
 		// TODO LPS-86283 ContentMatchesSegmentCriteria pending implementation
 
+	}
+
+	@description = "Assert that the UI works correctly for deleting Asset Lists."
+	@priority = "5"
+	test DeleteAssetList {
+		property portal.acceptance = "true";
+
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Create a dynamic asset list") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Asset List Test");
+		}
+
+		task ("Delete both asset lists") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.deleteEntry(assetListTitle = "Manual Asset List Test");
+
+			AssetListsAdmin.deleteEntry(assetListTitle = "Dynamic Asset List Test");
+		}
+
+		task ("Assert the taglib that displays when there are no entries displays") {
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		}
+	}
+
+	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
+	@priority = "4"
+	test FilterCollectionItemsByGlobalCategory {
+		task ("Add two web contents with different global category") {
+			var n = "1";
+
+			for (var vocabularyName : list "Topic,Audience") {
+				var categoryId = JSONCategory.addCategory(
+					groupName = "Global",
+					title = "Category Name ${n}",
+					vocabularyName = "${vocabularyName}");
+
+				JSONWebcontent.addWebContent(
+					assetCategoryIds = "${categoryId}",
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a category filter rule") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category Name 1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("View only the first web content shown in collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 1",
+				assetType = "Web Content Article");
+
+			Navigator.gotoBack();
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article");
+		}
+
+		task ("Remove the selected category") {
+			AssetCategorization.removeCategories(categoryNameList = "Category Name 1");
+		}
+
+		task ("Add a new category filter rule") {
+			AssetListsAdmin.addCategoriesFilter(categoryNameList = "Category Name 2");
+		}
+
+		task ("View only the second web content shown in collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article");
+
+			Navigator.gotoBack();
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 1",
+				assetType = "Web Content Article");
+		}
+
+		task ("Delete the global categories") {
+			var n = "1";
+
+			for (var vocabularyName : list "Topic,Audience") {
+				JSONCategory.deleteCategory(
+					categoryName = "Category Name ${n}",
+					groupName = "Global",
+					vocabularyName = "${vocabularyName}");
+
+				var n = ${n} + 1;
+			}
+		}
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set does not show assets for the personalized views that the user doesn't belongs to when the configuration is enabled"
@@ -102,6 +370,32 @@ definition {
 
 		// TODO LPS-87232 RecommendedContentForUsers pending implementation
 
+	}
+
+	@description = "Assert that the UI works correctly for renaming Asset Lists."
+	@priority = "5"
+	test RenameAssetList {
+		property portal.acceptance = "true";
+
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Rename the asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.renameAssetList(
+				newAssetListTitle = "Manual Asset List Edit",
+				oldAssetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Assert that the name of the asset list changed correctly") {
+			AssetListsAdmin.viewAssetList(
+				assetListTitle = "Manual Asset List Edit",
+				type = "Manual");
+		}
 	}
 
 	@description = "LPS-86283: Validate if, when selecting a segment it is possible to filter and order, sorting and search	"
@@ -158,6 +452,158 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-132626. Able to select all vocabularies when creating a collection."
+	@priority = "4"
+	test ViewAllTwoCategoriesInDynamicCollection {
+		task ("Add a vocabulary with Web Content Article") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			PortletEntry.inputName(name = "Language");
+
+			Vocabulary.addAssociatedAssetType(
+				assetType = "Web Content Article",
+				vocabularyName = "Language");
+
+			Button.clickNoError(button = "Save");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a vocabulary with two associated asset types") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			PortletEntry.inputName(name = "Region");
+
+			Vocabulary.addAssociatedAssetType(assetType = "Web Content Article");
+
+			Button.clickAddRow();
+
+			Vocabulary.addAssociatedAssetType(
+				assetType = "Page",
+				rowNumber = "2");
+
+			Button.clickNoError(button = "Save");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Assert the 2 vocabularies in Collection Category Filter") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			Panel.expandPanel(panel = "Filter");
+
+			Select(
+				locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
+				value1 = "Categories");
+
+			Click(locator1 = "Button#SELECT_CATEGORIES");
+
+			AssetCategorization.gotoSelectCategory();
+
+			for (var vocabularyName : list "Language,Region") {
+				AssertElementPresent(
+					key_nodeName = "${vocabularyName}",
+					locator1 = "Treeview#NODE_UNSELECTED");
+			}
+		}
+	}
+
+	@description = "Assert that Asset Lists correctly display their selected content."
+	@priority = "4"
+	@uitest
+	test ViewAssetListContent {
+		task ("Create a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Create a manual asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Select the Web Content Article as item type and Basic Web Content as item subtype") {
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Select the created web content article to be linked to the asset list") {
+			AssetListsAdmin.selectAsset(
+				assetName = "WC WebContent Title",
+				assetType = "Basic Web Content");
+		}
+
+		task ("Assert the selected web content article is viewable from the View Content action for the asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Manual Asset List Test",
+				assetTitle = "WC WebContent Title",
+				assetType = "Web Content Article");
+		}
+	}
+
+	@description = "This is a test for LPS-84331. Assert that Asset Lists correctly display where they are used."
+	@priority = "4"
+	test ViewAssetListUsages {
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the created manual asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Asset List Test");
+		}
+
+		task ("Assert the created asset list is used exactly once") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewUsages(
+				assetListTitle = "Manual Asset List Test",
+				usageAmount = "1",
+				usageType = "All");
+		}
+	}
+
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
 	@ignore = "true"
 	@priority = "4"
@@ -167,4 +613,224 @@ definition {
 
 	}
 
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
+	@priority = "4"
+	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
+			if ("${rule}" == "Contains All") {
+				var queryAndOperator = "All";
+				var queryContains = "Contains";
+				var matchingList = "1 2 3 4,2 3 4";
+				var notMatchingList = "1,1 2,1 2 3,1 3 4,3 4,4";
+			}
+
+			else if ("${rule}" == "Contains Any") {
+				var queryAndOperator = "Any";
+				var queryContains = "Contains";
+				var matchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
+				var notMatchingList = "1 2,1,4";
+			}
+
+			else if ("${rule}" == "Does Not Contain All") {
+				var queryAndOperator = "All";
+				var queryContains = "Does Not Contain";
+				var matchingList = "1,1 2,1 2 3,3 4,4";
+				var notMatchingList = "1 2 3 4,1 3 4";
+			}
+
+			else if ("${rule}" == "Does Not Contain Any") {
+				var queryAndOperator = "Any";
+				var queryContains = "Does Not Contain";
+				var matchingList = "1,1 2,4";
+				var notMatchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
+			}
+
+			task ("Create a dynamic asset list") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemType = "All Types",
+					title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+			}
+
+			task ("Create filter rule for asset list") {
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+				AssetListsAdmin.addKeywordsFilter(
+					keyWords = "&quot;2 3&quot; &quot;3 4&quot;",
+					queryAndOperator = "${queryAndOperator}",
+					queryContains = "${queryContains}");
+			}
+
+			task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+				Navigator.gotoSitePage(
+					pageName = "Asset Publisher Page",
+					siteName = "Test Site Name");
+
+				AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+			}
+
+			task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+				Navigator.gotoSitePage(
+					pageName = "Asset Publisher Page",
+					siteName = "Test Site Name");
+
+				for (var text : list "${matchingList}") {
+					var key_assetTitle = "WC WebContent Title ${text}";
+
+					AssertTextEquals(
+						locator1 = "AP#ASSET_ABSTRACT_TITLE",
+						value1 = "WC WebContent Title ${text}");
+
+					AssertTextEquals(
+						locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+						value1 = "WC WebContent Content ${text}");
+				}
+			}
+
+			task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+				for (var text : list "${notMatchingList}") {
+					var key_assetTitle = "WC WebContent Title ${text}";
+
+					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+				}
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
+	@priority = "5"
+	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
+		property portal.acceptance = "true";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
+			if ("${rule}" == "Contains All") {
+				var queryAndOperator = "All";
+				var queryContains = "Contains";
+				var matchingList = "1 2 3,1 2 3 4,2 3 4";
+				var notMatchingList = "1,1 2,1 3 4,3 4,4";
+			}
+
+			else if ("${rule}" == "Contains Any") {
+				var queryAndOperator = "Any";
+				var queryContains = "Contains";
+				var matchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
+				var notMatchingList = "1,4";
+			}
+
+			else if ("${rule}" == "Does Not Contain All") {
+				var queryAndOperator = "All";
+				var queryContains = "Does Not Contain";
+				var matchingList = "1,1 2,3 4,4";
+				var notMatchingList = "1 2 3,1 2 3 4,1 3 4";
+			}
+
+			else if ("${rule}" == "Does Not Contain Any") {
+				var queryAndOperator = "Any";
+				var queryContains = "Does Not Contain";
+				var matchingList = "1,4";
+				var notMatchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
+			}
+			task ("Create a dynamic asset list") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemType = "All Types",
+					title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+			}
+
+			task ("Create filter rule for asset list") {
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+				AssetListsAdmin.addKeywordsFilter(
+					keyWords = "2 3",
+					queryAndOperator = "${queryAndOperator}",
+					queryContains = "${queryContains}");
+			}
+
+			task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+				Navigator.gotoSitePage(
+					pageName = "Asset Publisher Page",
+					siteName = "Test Site Name");
+
+				AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+			}
+
+			task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+				Navigator.gotoSitePage(
+					pageName = "Asset Publisher Page",
+					siteName = "Test Site Name");
+
+				for (var text : list "${matchingList}") {
+					var key_assetTitle = "WC WebContent Title ${text}";
+
+					AssertTextEquals(
+						locator1 = "AP#ASSET_ABSTRACT_TITLE",
+						value1 = "WC WebContent Title ${text}");
+
+					AssertTextEquals(
+						locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+						value1 = "WC WebContent Content ${text}");
+				}
+			}
+
+			task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+				for (var text : list "${notMatchingList}") {
+					var key_assetTitle = "WC WebContent Title ${text}";
+
+					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+				}
+			}
+		}
+	}
 }

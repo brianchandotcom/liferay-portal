@@ -14,14 +14,23 @@
 
 package com.liferay.headless.portal.instances.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
@@ -101,13 +110,37 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	}
 
 	@Override
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(
+			String administratorEmailAddress, String administratorFirstName,
+			String administratorLastName, PortalInstance portalInstance)
 		throws Exception {
 
 		Company company = _companyLocalService.addCompany(
 			portalInstance.getCompanyId(), portalInstance.getPortalInstanceId(),
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), false,
 			0, true);
+
+		if (Validator.isNotNull(administratorEmailAddress) ||
+			Validator.isNotNull(administratorFirstName) ||
+			Validator.isNotNull(administratorLastName)) {
+
+			_validateAdminInfo(
+				company.getCompanyId(), administratorEmailAddress,
+				administratorFirstName, administratorLastName);
+
+			User defaultAdminUser = _userLocalService.getUserByEmailAddress(
+				company.getCompanyId(),
+				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+					company.getMx());
+
+			defaultAdminUser.setScreenName(
+				administratorFirstName + administratorLastName);
+			defaultAdminUser.setEmailAddress(administratorEmailAddress);
+			defaultAdminUser.setFirstName(administratorFirstName);
+			defaultAdminUser.setLastName(administratorLastName);
+
+			_userLocalService.updateUser(defaultAdminUser);
+		}
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(
@@ -159,6 +192,26 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		};
 	}
 
+	private void _validateAdminInfo(
+			long companyId, String emailAddress, String firstName,
+			String lastName)
+		throws Exception {
+
+		if (Validator.isNull(emailAddress) || Validator.isNull(firstName) ||
+			Validator.isNull(lastName)) {
+
+			throw new UserScreenNameException.MustNotBeNull();
+		}
+
+		EmailAddressValidator emailAddressValidator =
+			EmailAddressValidatorFactory.getInstance();
+
+		if (!emailAddressValidator.validate(companyId, emailAddress)) {
+			throw new UserEmailAddressException.MustValidate(
+				emailAddress, emailAddressValidator);
+		}
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -169,5 +222,11 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserAccountResource _userAccountResource;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

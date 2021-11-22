@@ -309,7 +309,7 @@ definition {
 			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 			AssertTextEquals(
-				key_localizedLanguage = "zh_CN",
+				key_localizedLanguage = "zh-CN",
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 				value1 = "Translated");
 		}
@@ -342,7 +342,7 @@ definition {
 			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 			AssertTextEquals(
-				key_localizedLanguage = "zh_CN",
+				key_localizedLanguage = "zh-CN",
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 				value1 = "Not Translated");
 		}
@@ -738,7 +738,7 @@ definition {
 			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 			AssertTextEquals(
-				key_localizedLanguage = "zh_CN",
+				key_localizedLanguage = "zh-CN",
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 				value1 = "Translated");
 		}
@@ -771,7 +771,7 @@ definition {
 			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 			AssertTextEquals(
-				key_localizedLanguage = "zh_CN",
+				key_localizedLanguage = "zh-CN",
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 				value1 = "Not Translated");
 		}

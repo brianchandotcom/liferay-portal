@@ -25,11 +25,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -61,6 +64,16 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 				commerceAddressObjectBiConsumer.accept(
 					commerceAddress, entry.getValue());
 			}
+		}
+
+		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
+			address.getCompanyId(), Address.class.getName(),
+			address.getAddressId());
+
+		if (!phones.isEmpty()) {
+			Phone phone = phones.get(0);
+
+			commerceAddress.setPhoneNumber(phone.getNumber());
 		}
 
 		commerceAddress.setCommerceAddressId(address.getAddressId());

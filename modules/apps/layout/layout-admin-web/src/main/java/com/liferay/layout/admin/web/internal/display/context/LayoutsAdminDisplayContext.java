@@ -142,20 +142,31 @@ public class LayoutsAdminDisplayContext {
 		return DropdownItemListBuilder.add(
 			() -> isShowPublicLayouts(),
 			dropdownItem -> {
+				String label = "public-page";
+
+				if (!isShowPrivateLayouts()) {
+					label = "page";
+				}
+
 				dropdownItem.setHref(
 					getSelectLayoutPageTemplateEntryURL(false));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "public-page"));
+					LanguageUtil.get(httpServletRequest, label));
 			}
 		).add(
 			() -> isShowPublicLayouts(),
 			dropdownItem -> {
+				String label = "public-collection-page";
+
+				if (!isShowPrivateLayouts()) {
+					label = "collection-page";
+				}
+
 				dropdownItem.setHref(
 					getSelectLayoutCollectionURL(
 						LayoutConstants.DEFAULT_PLID, null, false));
 				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "public-collection-page"));
+					LanguageUtil.get(httpServletRequest, label));
 			}
 		).add(
 			() -> isShowPrivateLayouts(),

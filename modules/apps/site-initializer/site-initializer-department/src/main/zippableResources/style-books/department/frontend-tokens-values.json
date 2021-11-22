@@ -1,7 +1,7 @@
 {
 	"blackColor": {
 		"cssVariableMapping": "black",
-		"value": "#000"
+		"value": "var(--gray-900)"
 	},
 	"blockquoteFontSize": {
 		"cssVariableMapping": "blockquote-font-size",
@@ -33,19 +33,19 @@
 	},
 	"brandColor1": {
 		"cssVariableMapping": "brand-color-1",
-		"value": "#FFD980"
+		"value": "#243c93"
 	},
 	"brandColor2": {
 		"cssVariableMapping": "brand-color-2",
-		"value": "#FFEAB8"
+		"value": "#b5c2f2"
 	},
 	"brandColor3": {
 		"cssVariableMapping": "brand-color-3",
-		"value": "#ADC3FF"
+		"value": "#4fbfa3"
 	},
 	"brandColor4": {
 		"cssVariableMapping": "brand-color-4",
-		"value": "#E1E9FF"
+		"value": "#adebd6"
 	},
 	"btnLinkColor": {
 		"cssVariableMapping": "btn-link-color",
@@ -149,35 +149,35 @@
 	},
 	"display1Size": {
 		"cssVariableMapping": "display1-size",
-		"value": "6rem"
+		"value": "4.5rem"
 	},
 	"display1Weight": {
 		"cssVariableMapping": "display1-weight",
-		"value": "400"
+		"value": "600"
 	},
 	"display2Size": {
 		"cssVariableMapping": "display2-size",
-		"value": "4.5rem"
+		"value": "4rem"
 	},
 	"display2Weight": {
 		"cssVariableMapping": "display2-weight",
-		"value": "400"
+		"value": "600"
 	},
 	"display3Size": {
 		"cssVariableMapping": "display3-size",
-		"value": "4rem"
+		"value": "3.5rem"
 	},
 	"display3Weight": {
 		"cssVariableMapping": "display3-weight",
-		"value": "400"
+		"value": "600"
 	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",
-		"value": "3.25rem"
+		"value": "3rem"
 	},
 	"display4Weight": {
 		"cssVariableMapping": "display4-weight",
-		"value": "400"
+		"value": "600"
 	},
 	"displayLineHeight": {
 		"cssVariableMapping": "display-line-height",
@@ -185,11 +185,11 @@
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
-		"value": "'Source Serif Pro', serif"
+		"value": "'Montserrat', sans-serif"
 	},
 	"fontFamilyMonospace": {
 		"cssVariableMapping": "font-family-monospace",
-		"value": "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+		"value": "'Roboto Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
 	},
 	"fontFamilySansSerif": {
 		"cssVariableMapping": "font-family-sans-serif",
@@ -221,27 +221,27 @@
 	},
 	"h1FontSize": {
 		"cssVariableMapping": "h1-font-size",
-		"value": "2.75rem"
+		"value": "2.5rem"
 	},
 	"h2FontSize": {
 		"cssVariableMapping": "h2-font-size",
-		"value": "2.5rem"
+		"value": "2rem"
 	},
 	"h3FontSize": {
 		"cssVariableMapping": "h3-font-size",
-		"value": "1.875rem"
+		"value": "1.5rem"
 	},
 	"h4FontSize": {
 		"cssVariableMapping": "h4-font-size",
-		"value": "1.65rem"
+		"value": "1.125rem"
 	},
 	"h5FontSize": {
 		"cssVariableMapping": "h5-font-size",
-		"value": "1.35rem"
+		"value": "1rem"
 	},
 	"h6FontSize": {
 		"cssVariableMapping": "h6-font-size",
-		"value": "1rem"
+		"value": "0.75rem"
 	},
 	"lightColor": {
 		"cssVariableMapping": "light",
@@ -253,11 +253,11 @@
 	},
 	"primaryColor": {
 		"cssVariableMapping": "primary",
-		"value": "var(--gray-900)"
+		"value": "var(--brand-color-1)"
 	},
 	"secondaryColor": {
 		"cssVariableMapping": "secondary",
-		"value": "var(--gray-600)"
+		"value": "var(--brand-color-3)"
 	},
 	"spacer0": {
 		"cssVariableMapping": "spacer-0",
@@ -266,6 +266,10 @@
 	"spacer1": {
 		"cssVariableMapping": "spacer-1",
 		"value": "0.5rem"
+	},
+	"spacer10": {
+		"cssVariableMapping": "spacer-9",
+		"value": "10rem"
 	},
 	"spacer2": {
 		"cssVariableMapping": "spacer-2",
@@ -289,7 +293,7 @@
 	},
 	"spacer7": {
 		"cssVariableMapping": "spacer-7",
-		"value": "5rem"
+		"value": "5.5rem"
 	},
 	"spacer8": {
 		"cssVariableMapping": "spacer-8",

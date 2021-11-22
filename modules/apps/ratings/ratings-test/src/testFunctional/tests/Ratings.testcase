@@ -729,13 +729,44 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136956. It checks that stars can be added and removed from a KB article."
-	@ignore = "true"
 	@priority = "5"
 	test CanRevokeStarsFromKB {
-		property portal.acceptance = "false";
+		Ratings.configureRatingType(
+			applications = "knowledge",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
 
-		// TODO LPS-136956 CanRevokeStarsFromKB pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Knowledge Base");
+
+		AssetListsAdmin.gotoEntry(assetListName = "Knowledge Base Article Title");
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		Ratings.viewRateStackedStar(
+			averageStarCount = "3.0",
+			ratingStarCount = "3");
+
+		Ratings.revokeStackedStarsRating();
+
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
 	}
 
 	@description = "This is a test for LPS-136960. It checks that stars can be added and removed from a MB thread."

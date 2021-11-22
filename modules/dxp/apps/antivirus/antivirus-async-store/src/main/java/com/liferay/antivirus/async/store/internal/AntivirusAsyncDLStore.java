@@ -17,7 +17,6 @@ package com.liferay.antivirus.async.store.internal;
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.internal.events.AntivirusAsyncEventListenerManager;
 import com.liferay.antivirus.async.store.util.AntivirusAsyncUtil;
-import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.DirectoryNameException;
 import com.liferay.document.library.kernel.store.DLStore;
@@ -30,8 +29,8 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -701,8 +700,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				_messageBus.sendMessage(
-					AntivirusAsyncConstants.ANTIVIRUS_DESTINATION, message);
+				_destination.send(message);
 
 				return null;
 			});
@@ -712,18 +710,13 @@ public class AntivirusAsyncDLStore implements DLStore {
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
-	/**
-	 * A marker reference to ensure we only start if there is a service
-	 * available.
-	 */
-	@Reference
-	private AntivirusScanner _antivirusScanner;
+	@Reference(
+		target = "(destination.name=" + AntivirusAsyncConstants.ANTIVIRUS_DESTINATION + ")"
+	)
+	private Destination _destination;
 
 	@Reference
 	private DLValidator _dlValidator;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	private final StoreFactory _storeFactory;
 

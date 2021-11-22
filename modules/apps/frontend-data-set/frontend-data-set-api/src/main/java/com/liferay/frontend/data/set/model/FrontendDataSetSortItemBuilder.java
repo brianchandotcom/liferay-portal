@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.util;
+package com.liferay.frontend.data.set.model;
 
-import com.liferay.frontend.data.set.model.FrontendDataSetSortItem;
 import com.liferay.petra.function.UnsafeSupplier;
 
 /**

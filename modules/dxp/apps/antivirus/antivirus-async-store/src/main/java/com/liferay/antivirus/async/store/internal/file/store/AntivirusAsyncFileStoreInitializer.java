@@ -199,8 +199,6 @@ public class AntivirusAsyncFileStoreInitializer
 	protected void deactivate() {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
-
-			_serviceRegistration = null;
 		}
 	}
 
@@ -346,7 +344,7 @@ public class AntivirusAsyncFileStoreInitializer
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	private volatile ServiceRegistration<Destination> _serviceRegistration;
+	private final ServiceRegistration<Destination> _serviceRegistration;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

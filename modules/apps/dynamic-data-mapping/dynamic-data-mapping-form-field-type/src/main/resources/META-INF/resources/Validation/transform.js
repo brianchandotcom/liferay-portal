@@ -12,8 +12,7 @@
  * details.
  */
 
-const getValidationFromExpression = (validations, validation) => {
-	return function transformValidationFromExpression(expression) {
+const getValidationFromExpression = (validations, validation, expression) => {
 		let mutValidation;
 
 		if (!expression && validation) {
@@ -27,7 +26,6 @@ const getValidationFromExpression = (validations, validation) => {
 		}
 
 		return mutValidation;
-	};
 };
 
 const transformValidations = (validations, dataType) => {
@@ -40,11 +38,10 @@ const transformValidations = (validations, dataType) => {
 	});
 };
 
-const getValidation = (validations, transformValidationFromExpression) => {
-	return function transformValue(value) {
+const getValidation = (validations, validation, value) => {
 		const {errorMessage = {}, expression = {}, parameter = {}} = value;
 		let parameterMessage = '';
-		let selectedValidation = transformValidationFromExpression(expression);
+		let selectedValidation = getValidationFromExpression(validations, validation, expression);
 		const enableValidation = !!expression.value;
 
 		if (selectedValidation) {
@@ -63,7 +60,6 @@ const getValidation = (validations, transformValidationFromExpression) => {
 			selectedValidation,
 		};
 	};
-};
 
 export function normalizeDataType(initialDataType) {
 	return initialDataType === 'double' || initialDataType === 'integer'
@@ -103,8 +99,9 @@ export function transformData({
 	const validations = transformValidations(initialValidations, dataType);
 	const parsedValidation = getValidation(
 		validations,
-		getValidationFromExpression(validations, validation)
-	)(value);
+		validation,
+		value
+	);
 	const localizationMode = editingLanguageId !== defaultLanguageId;
 
 	return {

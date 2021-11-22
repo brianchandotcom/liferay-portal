@@ -353,8 +353,6 @@ import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
 
-import java.net.URL;
-
 import java.sql.Types;
 
 import java.text.Format;
@@ -5668,11 +5666,7 @@ public class DataFactory {
 	}
 
 	protected InputStream getResourceInputStream(String resourceName) {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		return classLoader.getResourceAsStream(
+		return DataFactory.class.getResourceAsStream(
 			_DEPENDENCIES_DIR + resourceName);
 	}
 
@@ -7111,16 +7105,10 @@ public class DataFactory {
 			String fragmentName, String suffix)
 		throws Exception {
 
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		URL url = classLoader.getResource(
+		return DataFactory.class.getResourceAsStream(
 			StringBundler.concat(
-				"com/liferay/fragment/collection/contributor/basic/component",
+				"/com/liferay/fragment/collection/contributor/basic/component",
 				"/dependencies/", fragmentName, "/index.", suffix));
-
-		return url.openStream();
 	}
 
 	private String _getResourcePermissionModelName(String... classNames) {
@@ -7257,7 +7245,7 @@ public class DataFactory {
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 
 	private static final String _DEPENDENCIES_DIR =
-		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
+		"/com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
 
 	private static final String _FRAGMENT_COMPONENT_RENDER_KEY_HEADING =
 		"BASIC_COMPONENT-heading";

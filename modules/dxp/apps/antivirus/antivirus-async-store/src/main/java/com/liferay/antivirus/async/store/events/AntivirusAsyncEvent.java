@@ -14,27 +14,11 @@
 
 package com.liferay.antivirus.async.store.events;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.Objects;
-
 /**
  * @author Raymond Augé
  */
 public enum AntivirusAsyncEvent {
 
-	MISSING, PREPARE, PROCESSING_ERROR, SIZE_EXCEEDED, SUCCESS, VIRUS_FOUND;
-
-	public static AntivirusAsyncEvent withName(String name) {
-		for (AntivirusAsyncEvent antivirusAsyncEvent : values()) {
-			if (Objects.equals(
-					antivirusAsyncEvent.name(), StringUtil.toUpperCase(name))) {
-
-				return antivirusAsyncEvent;
-			}
-		}
-
-		return null;
-	}
+	MISSING, PREPARE, PROCESSING_ERROR, SIZE_EXCEEDED, SUCCESS, VIRUS_FOUND
 
 }

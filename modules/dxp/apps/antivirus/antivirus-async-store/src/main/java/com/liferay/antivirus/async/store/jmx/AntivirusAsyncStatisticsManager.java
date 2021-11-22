@@ -78,7 +78,7 @@ public class AntivirusAsyncStatisticsManager
 	public void accept(
 		String eventName, Map.Entry<Message, Object[]> eventData) {
 
-		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.withName(
+		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.valueOf(
 			eventName);
 
 		if (antivirusAsyncEvent == AntivirusAsyncEvent.PROCESSING_ERROR) {

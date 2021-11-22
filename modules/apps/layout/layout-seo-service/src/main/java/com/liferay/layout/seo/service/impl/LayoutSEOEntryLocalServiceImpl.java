@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -110,6 +111,13 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		return layoutSEOEntryPersistence.fetchByG_P_L(
 			groupId, privateLayout, layoutId);
+	}
+
+	@Override
+	public List<LayoutSEOEntry> getLayoutSEOEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return layoutSEOEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
 	@Override

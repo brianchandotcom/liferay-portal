@@ -44,8 +44,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
@@ -682,13 +680,14 @@ public class AntivirusAsyncDLStore implements DLStore {
 		message.put("sourceFileName", dlStoreRequest.getSourceFileName());
 		message.put("versionLabel", dlStoreRequest.getVersionLabel());
 
-		long userId = Optional.ofNullable(
-			PermissionThreadLocal.getPermissionChecker()
-		).map(
-			PermissionChecker::getUserId
-		).orElse(
-			0L
-		);
+		long userId = 0;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			userId = permissionChecker.getUserId();
+		}
 
 		message.put("userId", userId);
 

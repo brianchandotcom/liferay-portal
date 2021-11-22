@@ -45,6 +45,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-76817. Can namespace the CSS of a Web Fragment to avoid affecting the rest of the page."
+	@priority = "3"
+	test CanCheckTheNamespaceOfCSSInFragments {
+		task ("Edit this  fragment with the following codes") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			var htmlSnippet = '''
+<div class="test">
+CSS
+</div>
+<div>
+NO CSS
+</div>
+		''';
+
+			var cssSnippet = '''
+.test
+{ font-size: 40px; }
+		''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+		}
+
+		task ("Assert CSS only applies to CSS and not NO CSS in Fragment preview") {
+			FragmentsEditor.assertFragmentPreview(
+				fragmentLocator = "//div[@class='test']",
+				text = "CSS");
+
+			FragmentsEditor.assertFragmentPreview(fragmentLocator = "//div[@class='test']/parent::div/following-sibling::style");
+		}
+
+		task ("Assert Success Message") {
+			PortletEntry.publish();
+		}
+	}
+
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
 	@priority = "5"
 	@uitest

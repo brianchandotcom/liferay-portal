@@ -558,10 +558,10 @@ public class BundleSiteInitializerTest {
 	private void _assertPermissions(Group group) throws Exception {
 		_assertRoles(group);
 
-		_assertResourcePermissions(group);
+		_assertResourcePermission(group);
 	}
 
-	private void _assertResourcePermissions(Group group) throws Exception {
+	private void _assertResourcePermission(Group group) throws Exception {
 		Role role = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 1");
 

@@ -30,7 +30,6 @@ import java.util.function.BiConsumer;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -88,10 +87,10 @@ public class AntivirusAsyncRetryEventListener
 		}
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusAsyncRetryScheduler _antivirusAsyncRetryScheduler;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

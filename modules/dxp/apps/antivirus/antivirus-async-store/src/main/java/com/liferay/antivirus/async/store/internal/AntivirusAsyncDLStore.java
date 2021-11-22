@@ -47,7 +47,6 @@ import java.io.InputStream;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -709,7 +708,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			});
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
@@ -717,13 +716,13 @@ public class AntivirusAsyncDLStore implements DLStore {
 	 * A marker reference to ensure we only start if there is a service
 	 * available.
 	 */
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusScanner _antivirusScanner;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private DLValidator _dlValidator;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private MessageBus _messageBus;
 
 	private final StoreFactory _storeFactory;

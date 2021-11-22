@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -214,19 +213,19 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntivirusAsyncMessageListener.class);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusAsyncRetryScheduler _antivirusAsyncRetryScheduler;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusScanner _antivirusScanner;
 
 	private Destination _destination;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private DestinationFactory _destinationFactory;
 
 	private ServiceRegistration<Destination> _destinationServiceRegistration;

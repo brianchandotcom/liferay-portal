@@ -65,7 +65,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -86,8 +85,7 @@ public class AntivirusAsyncFileStoreInitializer
 	@Activate
 	public AntivirusAsyncFileStoreInitializer(
 		BundleContext bundleContext, Map<String, Object> properties,
-		@Reference(policyOption = ReferencePolicyOption.GREEDY)
-			DestinationFactory destinationFactory) {
+		@Reference DestinationFactory destinationFactory) {
 
 		AntivirusAsyncConfiguration antivirusAsyncConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -341,22 +339,22 @@ public class AntivirusAsyncFileStoreInitializer
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntivirusAsyncFileStoreInitializer.class);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
 	private final int _batchInterval;
 	private final Destination _destination;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private MessageBus _messageBus;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	private volatile ServiceRegistration<Destination> _serviceRegistration;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private TriggerFactory _triggerFactory;
 
 }

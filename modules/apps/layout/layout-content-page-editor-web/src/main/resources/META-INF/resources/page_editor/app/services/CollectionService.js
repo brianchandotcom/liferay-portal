@@ -43,6 +43,7 @@ export default {
 		numberOfItemsPerPage,
 		onNetworkStatus,
 		paginationType,
+		showAllItems,
 		templateKey,
 	}) {
 		return serviceFetch(
@@ -59,6 +60,7 @@ export default {
 					numberOfItems,
 					numberOfItemsPerPage,
 					paginationType,
+					showAllItems,
 					templateKey,
 				},
 			},

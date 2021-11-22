@@ -32,14 +32,21 @@ const _getComponent = (props) => {
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/api/index.js',
-	() => ({
-		saveVariationsListPriorityService: jest.fn(),
-	})
+	() => {
+		const moduleMock = jest.fn();
+		moduleMock.mockReturnValue({
+			ok: true,
+			status: 200,
+		});
+
+		return {
+			saveVariationsListPriorityService: moduleMock,
+		};
+	}
 );
 
-describe('VariationsNav Empty State', () => {
+describe('VariationsNav Initial State', () => {
 	beforeEach(() => {
-		window.Liferay.Util.navigate = jest.fn();
 		window['openSelectSegmentsEntryDialogMethod'] = jest.fn();
 	});
 
@@ -48,35 +55,65 @@ describe('VariationsNav Empty State', () => {
 		cleanup();
 	});
 
-	it('shows a navigation button if no segments are available', () => {
-		const {container, getByText} = render(
-			_getComponent(emptyStateNoSegments)
-		);
+	it('shows an initial state with the proper texts', () => {
+		const {getByText} = render(_getComponent(emptyStateNoSegments));
 
-		const navigateToAddNewSegmentButton = getByText(
-			'Add your first segment'
-		);
+		expect(getByText('personalized-variations')).toBeInTheDocument();
+		expect(
+			getByText(
+				'create-personalized-variations-of-the-collections-for-different-segments'
+			)
+		).toBeInTheDocument();
+		expect(
+			getByText('you-need-segments-to-create-a-personalized-variation', {
+				exact: false,
+			})
+		).toBeInTheDocument();
+		expect(getByText('create-your-first-segment')).toBeInTheDocument();
+	});
 
-		expect(navigateToAddNewSegmentButton).toBeInTheDocument();
-		expect(container.getElementsByClassName('c-empty-state').length).toBe(
-			1
-		);
+	it('shows an initial state with the Add variation button disabled', () => {
+		const {getByTitle} = render(_getComponent(emptyStateNoSegments));
 
-		fireEvent.click(navigateToAddNewSegmentButton);
-		expect(window.Liferay.Util.navigate).toHaveBeenCalledWith(
+		const addNewVariationButton = getByTitle('create-variation');
+		expect(addNewVariationButton).toBeInTheDocument();
+		expect(addNewVariationButton).toBeDisabled();
+	});
+
+	it('shows an initial state with a link to navigate to segments', () => {
+		const {getByText} = render(_getComponent(emptyStateNoSegments));
+
+		const navigateToSegmentsLink = getByText('create-your-first-segment');
+
+		expect(navigateToSegmentsLink).toBeInTheDocument();
+		expect(navigateToSegmentsLink).toHaveAttribute(
+			'href',
 			'http://localhost:8080/create-new-segment-demo-url'
 		);
 	});
 
+	it('shows the default variation', () => {
+		const {getByText} = render(_getComponent(emptyStateNoSegments));
+		expect(getByText('Anyone')).toBeInTheDocument();
+		expect(getByText('prioritize')).toBeInTheDocument();
+		expect(getByText('deprioritize')).toBeInTheDocument();
+		expect(getByText('delete')).toBeInTheDocument();
+	});
+
 	it('shows a create variation button, initially disabled', () => {
-		const {getByText, rerender} = render(
+		const {getByTitle, rerender} = render(
 			_getComponent(emptyStateOneAvailableSegments)
 		);
 
-		const createVariationButton = getByText('New Personalized Variation');
+		const addNewVariationButton = getByTitle('create-variation');
 
-		expect(createVariationButton).toBeInTheDocument();
-		expect(createVariationButton).toBeDisabled();
+		expect(
+			addNewVariationButton.getElementsByClassName('lexicon-icon-plus')
+				.length
+		).toBe(1);
+
+		expect(addNewVariationButton).toBeInTheDocument();
+		expect(addNewVariationButton).toBeDisabled();
 
 		rerender(
 			_getComponent({
@@ -85,8 +122,8 @@ describe('VariationsNav Empty State', () => {
 			})
 		);
 
-		expect(createVariationButton).not.toBeDisabled();
-		fireEvent.click(createVariationButton);
+		expect(addNewVariationButton).not.toBeDisabled();
+		fireEvent.click(addNewVariationButton);
 		expect(
 			window['openSelectSegmentsEntryDialogMethod']
 		).toHaveBeenCalled();
@@ -112,30 +149,13 @@ describe('VariationsNav With segments', () => {
 		expect(getByText('personalized-variations')).toBeInTheDocument();
 	});
 
-	it('shows a variations nav list with the add new variation button, if available', () => {
-		const {getByTitle} = render(_getComponent(listWithTwoVariations));
-
-		const addNewVariationButton = getByTitle('Add new variation');
-
-		expect(addNewVariationButton).toBeInTheDocument();
-		expect(
-			addNewVariationButton.getElementsByClassName('lexicon-icon-plus')
-				.length
-		).toBe(1);
-
-		fireEvent.click(addNewVariationButton);
-		expect(
-			window['openSelectSegmentsEntryDialogMethod']
-		).toHaveBeenCalled();
-	});
-
-	it('shows a variations nav list and hides the add new variation button, if no more entries available', () => {
-		const {queryByTitle} = render(
+	it('shows a variations nav list and disables the add new variation button, if no more entries available', () => {
+		const {getByTitle} = render(
 			_getComponent(listWithFourVariationsAndNoMoreSegmentsEntries)
 		);
 
-		const addNewVariationButton = queryByTitle('Add new variation');
-		expect(addNewVariationButton).not.toBeInTheDocument();
+		const addNewVariationButton = getByTitle('create-variation');
+		expect(addNewVariationButton).toBeDisabled();
 	});
 
 	it('shows a variations nav list with the proper items list', () => {
@@ -143,39 +163,73 @@ describe('VariationsNav With segments', () => {
 			_getComponent(listWithTwoVariations)
 		);
 
-		expect(getByText('Anyone')).toBeInTheDocument();
-		expect(getByText('Liferayers')).toBeInTheDocument();
+		const itemOne = getByText('Anyone');
+		const itemTwo = getByText('Liferayers');
+
+		expect(itemOne).toBeInTheDocument();
+		expect(itemTwo).toBeInTheDocument();
 
 		expect(container.getElementsByClassName('active').length).toBe(1);
 
 		expect(
-			container.getElementsByClassName('lexicon-icon-drag').length
-		).toBe(2);
-		expect(
 			container.getElementsByClassName('lexicon-icon-ellipsis-v').length
 		).toBe(2);
+
+		fireEvent.mouseOver(itemOne);
+		expect(
+			container.getElementsByClassName('lexicon-icon-drag').length
+		).toBe(1);
+		fireEvent.mouseOut(itemOne);
+		expect(
+			container.getElementsByClassName('lexicon-icon-drag').length
+		).toBe(0);
 	});
 
 	it('shows a variations nav list with an action menu for each item', () => {
 		const {getAllByText} = render(_getComponent(listWithTwoVariations));
 
-		expect(getAllByText('Prioritize').length).toBe(2);
-		expect(getAllByText('Deprioritize').length).toBe(2);
+		expect(getAllByText('prioritize').length).toBe(2);
+		expect(getAllByText('deprioritize').length).toBe(2);
 
-		const deleteButtons = getAllByText('Delete');
+		const deleteButtons = getAllByText('delete');
 		expect(deleteButtons.length).toBe(2);
 		expect(deleteButtons[0]).toBeDisabled();
 		expect(deleteButtons[1]).not.toBeDisabled();
 
 		fireEvent.click(deleteButtons[1]);
-		expect(window.confirm).toHaveBeenCalled();
+		expect(window.confirm).toHaveBeenCalledWith(
+			'are-you-sure-you-want-to-delete-this'
+		);
 		expect(window.submitForm).toHaveBeenCalledWith(
 			undefined,
 			'delete-asset-list-entry-url-1'
 		);
 	});
 
-	it('responds to dnd events', () => {
+	it('shows a variations nav list with a non deletable default item', () => {
+		const {getAllByText} = render(_getComponent(listWithTwoVariations));
+
+		const deleteButtons = getAllByText('delete');
+		expect(deleteButtons.length).toBe(2);
+		expect(deleteButtons[0]).toBeDisabled();
+
+		fireEvent.click(deleteButtons[0]);
+		expect(window.confirm).not.toHaveBeenCalled();
+		expect(window.submitForm).not.toHaveBeenCalledWith();
+	});
+});
+
+describe('VariationsNav', () => {
+	beforeEach(() => {
+		global.Liferay.Util.openToast = jest.fn();
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		cleanup();
+	});
+
+	it('responds to dnd events', async () => {
 		const {getAllByRole} = render(_getComponent(listWithTwoVariations));
 		let nodes = getAllByRole('listitem');
 
@@ -185,6 +239,7 @@ describe('VariationsNav With segments', () => {
 		fireEvent.dragStart(nodes[0]);
 		fireEvent.dragEnter(nodes[1]);
 		fireEvent.dragOver(nodes[1]);
+
 		fireEvent.drop(nodes[1]);
 
 		nodes = getAllByRole('listitem');
@@ -192,10 +247,17 @@ describe('VariationsNav With segments', () => {
 		expect(nodes[0].innerHTML).toContain('Liferayers');
 		expect(nodes[1].innerHTML).toContain('Anyone');
 
-		expect(saveVariationsListPriorityService).toHaveBeenCalled();
+		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
+
+		expect(global.Liferay.Util.openToast).toHaveBeenCalledWith({
+			message: Liferay.Language.get(
+				'your-request-completed-successfully'
+			),
+			type: 'success',
+		});
 	});
 
-	it('responds to reorder on click event', () => {
+	it('responds to reorder on click event', async () => {
 		const {getAllByRole, getAllByText} = render(
 			_getComponent(listWithTwoVariations)
 		);
@@ -204,7 +266,7 @@ describe('VariationsNav With segments', () => {
 		expect(nodes[0].innerHTML).toContain('Anyone');
 		expect(nodes[1].innerHTML).toContain('Liferayers');
 
-		const prioritizeVariationButtons = getAllByText('Prioritize');
+		const prioritizeVariationButtons = getAllByText('prioritize');
 		fireEvent.click(prioritizeVariationButtons[1]);
 
 		nodes = getAllByRole('listitem');
@@ -212,6 +274,43 @@ describe('VariationsNav With segments', () => {
 		expect(nodes[0].innerHTML).toContain('Liferayers');
 		expect(nodes[1].innerHTML).toContain('Anyone');
 
-		expect(saveVariationsListPriorityService).toHaveBeenCalled();
+		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
+
+		expect(global.Liferay.Util.openToast).toHaveBeenCalledWith({
+			message: Liferay.Language.get(
+				'your-request-completed-successfully'
+			),
+			type: 'success',
+		});
+	});
+
+	it('throws an error if the API call fails', async () => {
+		saveVariationsListPriorityService.mockReturnValue({
+			ok: false,
+			status: 500,
+		});
+
+		const {getAllByRole, getAllByText} = render(
+			_getComponent(listWithTwoVariations)
+		);
+		let nodes = getAllByRole('listitem');
+
+		expect(nodes[0].innerHTML).toContain('Anyone');
+		expect(nodes[1].innerHTML).toContain('Liferayers');
+
+		const prioritizeVariationButtons = getAllByText('prioritize');
+		fireEvent.click(prioritizeVariationButtons[1]);
+
+		nodes = getAllByRole('listitem');
+
+		expect(nodes[0].innerHTML).toContain('Liferayers');
+		expect(nodes[1].innerHTML).toContain('Anyone');
+
+		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
+
+		expect(global.Liferay.Util.openToast).toHaveBeenCalledWith({
+			message: Liferay.Language.get('an-unexpected-error-occurred'),
+			type: 'danger',
+		});
 	});
 });

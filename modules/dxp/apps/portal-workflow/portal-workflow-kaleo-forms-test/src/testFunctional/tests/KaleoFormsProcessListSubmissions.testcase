@@ -123,17 +123,21 @@ definition {
 	test CanFilterByModifiedDate {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
+
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");
 
 		KaleoFormsAdmin.saveProcessRecord();
+
 
 		LexiconEntry.gotoAdd();
 
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process B");
 
+
 		KaleoFormsAdmin.saveProcessRecord();
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
+
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

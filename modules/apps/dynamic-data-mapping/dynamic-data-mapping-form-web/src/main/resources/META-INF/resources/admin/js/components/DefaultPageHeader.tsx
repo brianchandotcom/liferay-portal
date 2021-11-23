@@ -12,7 +12,29 @@
  * details.
  */
 
-export {default as elementSetReducer} from './elementSetReducer.es';
-export {default as formInfoReducer} from './formInfoReducer.es';
-export {default as rulesReducer} from './rulesReducer.es';
-export {default as sidebarReducer} from './sidebarReducer.es';
+import React from 'react';
+
+import './DefaultPageHeader.scss';
+
+const DefaultPageHeader: React.FC<IProps> = ({description, title}) => {
+	return (
+		<div className="lfr-ddm__default-page-header">
+			<h1 className="lfr-ddm__default-page-header-title">{title}</h1>
+
+			{description && (
+				<span className="lfr-ddm__default-page-header-description">
+					{description}
+				</span>
+			)}
+
+			<div className="lfr-ddm__default-page-header-line" />
+		</div>
+	);
+};
+
+export default DefaultPageHeader;
+
+interface IProps {
+	description?: string;
+	title: string;
+}

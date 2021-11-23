@@ -1,0 +1,27 @@
+@import 'atlas-variables';
+
+.lfr-ddm__default-page-header {
+	margin-bottom: 4rem;
+
+	&-description {
+		color: $secondary;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 2rem;
+		word-wrap: break-word;
+	}
+
+	&-line {
+		background-color: $secondary-l2;
+		height: 1px;
+	}
+
+	&-title {
+		color: $dark;
+		font-size: 2.25rem;
+		font-weight: 600;
+		line-height: 6.25rem;
+		margin: 0;
+		word-wrap: break-word;
+	}
+}

@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_TITLE</td>
-	<td>//div[contains(@class,'basic-info')]//h1[contains(.,'${key_successPageTitle}')]</td>
+	<td>//h2[contains(@class,'lfr-ddm__default-page-title') and contains(.,'${key_successPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION</td>
-	<td>//div[contains(@class,'basic-info')]//p[contains(.,'${key_successPageDescription}')]</td>
+	<td>//p[contains(@class,'lfr-ddm__default-page-description') and contains(.,'${key_successPageDescription}')]</td>
 	<td></td>
 </tr>
 </tbody>

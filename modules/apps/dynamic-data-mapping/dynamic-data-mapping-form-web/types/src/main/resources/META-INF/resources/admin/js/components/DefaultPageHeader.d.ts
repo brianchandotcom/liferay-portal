@@ -12,7 +12,11 @@
  * details.
  */
 
-export {default as elementSetReducer} from './elementSetReducer.es';
-export {default as formInfoReducer} from './formInfoReducer.es';
-export {default as rulesReducer} from './rulesReducer.es';
-export {default as sidebarReducer} from './sidebarReducer.es';
+import React from 'react';
+import './DefaultPageHeader.scss';
+declare const DefaultPageHeader: React.FC<IProps>;
+export default DefaultPageHeader;
+interface IProps {
+	description?: string;
+	title: string;
+}

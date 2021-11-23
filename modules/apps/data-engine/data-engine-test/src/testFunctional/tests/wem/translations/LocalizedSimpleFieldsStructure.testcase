@@ -583,8 +583,6 @@ definition {
 				fieldName = "Numeric");
 		}
 
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldLabel(

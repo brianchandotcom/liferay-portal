@@ -247,11 +247,11 @@ definition {
         Click(
             key_type = "Relationships",
             locator1 = "ObjectAdmin#TAB_TYPE");
-        
+
 		Type(
             locator1 = "ObjectAdmin#TAB_LABEL_NAME",
             value1 = "${tabName}");
-        
+
 		Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
 
 		if (isSet(relationshipsLabelName)) {
@@ -262,7 +262,6 @@ definition {
         Click(
             key_tab = "Save",
             locator1 = "Button#TAB_SUBMIT_BTN");
-        
     }
 
 	macro assertAddEntryModalIsNotPresent {
@@ -367,7 +366,7 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
 
 	}
-	
+
 	macro assertObjectLayoutNotPresent {
 		var key_layoutLabel = "${layoutLabel}";
 
@@ -532,7 +531,6 @@ definition {
 	macro gotoRelationshipsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_RELATIONSHIPS_TAB");
 	}
-
 
 	macro markLayoutAsDefault {
 		SelectFrame(locator1 = "IFrame#IFRAME");

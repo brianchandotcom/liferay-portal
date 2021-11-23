@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.web.internal.configuration.activator.FFClobObjectFieldTypeConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -42,9 +43,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ObjectDefinitionsFieldsDisplayContext {
 
 	public ObjectDefinitionsFieldsDisplayContext(
+		FFClobObjectFieldTypeConfigurationActivator
+			ffClobObjectFieldTypeConfigurationActivator,
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission) {
+
+		_ffClobObjectFieldTypeConfigurationActivator =			ffClobObjectFieldTypeConfigurationActivator;
 
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
@@ -131,6 +136,12 @@ public class ObjectDefinitionsFieldsDisplayContext {
 			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
+	public boolean isFFClobObjectFieldTypeConfigurationEnabled() {
+		return _ffClobObjectFieldTypeConfigurationActivator.enabled();
+	}
+
+	private final FFClobObjectFieldTypeConfigurationActivator
+		_ffClobObjectFieldTypeConfigurationActivator;
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;

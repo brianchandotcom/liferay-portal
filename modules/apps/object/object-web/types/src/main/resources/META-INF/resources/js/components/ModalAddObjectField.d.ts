@@ -15,6 +15,7 @@
 import React from 'react';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
+	ffClobObjectFieldTypeConfigurationEnabled: boolean;
 	observer: any;
 	onClose: () => void;
 }

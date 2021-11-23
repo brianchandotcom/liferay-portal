@@ -1543,7 +1543,7 @@ definition {
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-ja_JP.xlf",
-			folderName = "WebContentTitle-en_US",
+			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");

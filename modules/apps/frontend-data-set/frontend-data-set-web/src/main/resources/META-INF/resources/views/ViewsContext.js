@@ -61,6 +61,7 @@ export function viewsReducer(state, {type, value}) {
 
 export default React.createContext({
 	activeView: null,
+	customViewsEnabled: false,
 	views: [],
 	visibleFieldNames: {},
 });

@@ -24,6 +24,7 @@ const App = ({
 	activeViewSettings,
 	apiURL,
 	appURL,
+	customViewsEnabled,
 	portletId,
 	views,
 	...props
@@ -36,6 +37,7 @@ const App = ({
 	const [state, dispatch] = useThunk(
 		useReducer(viewsReducer, {
 			activeView,
+			customViewsEnabled,
 			views,
 			visibleFieldNames: activeViewSettings?.visibleFieldNames || {},
 		})

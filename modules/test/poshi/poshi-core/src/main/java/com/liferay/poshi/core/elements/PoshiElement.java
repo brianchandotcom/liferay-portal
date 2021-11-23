@@ -996,8 +996,7 @@ public abstract class PoshiElement
 
 		if (isValidPoshiScriptStatement(
 				_varInvocationAssignmentStatementPattern, poshiScript) &&
-			!isValidFunctionFileName(value) &&
-			!isValidUtilityClassName(value)) {
+			isValidMacroFileName(value)) {
 
 			return true;
 		}

@@ -1,7 +1,7 @@
+import {useQuery} from '@apollo/client';
 import {createContext, useEffect, useReducer} from 'react';
-import useGraphQL from '~/common/hooks/useGraphQL';
 import {LiferayTheme} from '~/common/services/liferay';
-import {getUserAccountById} from '~/common/services/liferay/graphql/user-accounts';
+import {getUserAccountById} from '~/common/services/liferay/graphql/queries';
 import {
 	PARAMS_KEYS,
 	SearchParams,
@@ -18,7 +18,12 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		project: undefined,
 		userAccount: undefined,
 	});
-	const {data} = useGraphQL([getUserAccountById(LiferayTheme.getUserId())]);
+
+	const {data} = useQuery(getUserAccountById, {
+		variables: {userAccountId: LiferayTheme.getUserId()},
+	});
+
+	const userAccount = data?.userAccount;
 
 	useEffect(() => {
 		const projectExternalReferenceCode = SearchParams.get(
@@ -34,9 +39,9 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 	}, []);
 
 	useEffect(() => {
-		if (data) {
+		if (userAccount) {
 			dispatch({
-				payload: data.userAccount,
+				payload: userAccount,
 				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
 
@@ -44,13 +49,11 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				new CustomEvent(CUSTOM_EVENTS.USER_ACCOUNT, {
 					bubbles: true,
 					composed: true,
-					detail: {
-						...data.userAccount,
-					},
+					detail: userAccount,
 				})
 			);
 		}
-	}, [data]);
+	}, [userAccount]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

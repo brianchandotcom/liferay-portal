@@ -112,8 +112,6 @@ definition {
 		Click(locator1 = "Modal#PLUS");
 
 		for (var locale : list "${localeList}") {
-			var locale = StringUtil.replace("${locale}", "_", "-");
-
 			MenuItem.click(menuItem = "${locale}");
 
 			AssertElementPresent(

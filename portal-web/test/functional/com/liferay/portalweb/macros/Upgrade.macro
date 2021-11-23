@@ -118,6 +118,60 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
 	}
 
+	macro addAutoTagViaGogoShell {
+		var companyId = JSONCompany.getCompanyId();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "assetAutoTagger:tagAllUntagged ${companyId}");
+
+		GogoShell.viewOutput(outputContent = "Added ${blogTagNum} tags to asset entry ${blogEntryTitle}");
+
+		GogoShell.viewOutput(outputContent = "Added ${dmTagNum} tags to asset entry ${dmDocumentTitle}");
+
+		GogoShell.viewOutput(outputContent = "Added ${wcTagNum} tags to asset entry ${webContentTitleXml}");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "${blogEntryTitle}");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "${blogTagName}") {
+			AssetCategorization.viewTag(tagName = "${tagName}");
+		}
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		for (var tagName : list "${dmTagName}") {
+			AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+		}
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		}
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "${wcTagName}") {
+			AssetCategorization.viewTag(tagName = "${tagName}");
+		}
+	}
+
 	macro addAutoTaggedWebContent {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");

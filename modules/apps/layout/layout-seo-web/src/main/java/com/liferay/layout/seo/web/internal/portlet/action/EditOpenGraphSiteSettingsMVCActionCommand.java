@@ -19,11 +19,12 @@ import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -53,10 +54,8 @@ public class EditOpenGraphSiteSettingsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Group.class.getName(), actionRequest);
-
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		boolean openGraphEnabled = ParamUtil.getBoolean(
 			actionRequest, "openGraphEnabled", true);
@@ -67,8 +66,10 @@ public class EditOpenGraphSiteSettingsMVCActionCommand
 			actionRequest, "openGraphImageFileEntryId");
 
 		_layoutSEOSiteLocalService.updateLayoutSEOSite(
-			_portal.getUserId(actionRequest), liveGroupId, openGraphEnabled,
-			openGraphImageAltMap, openGraphImageFileEntryId, serviceContext);
+			_portal.getUserId(actionRequest), themeDisplay.getScopeGroupId(),
+			openGraphEnabled, openGraphImageAltMap, openGraphImageFileEntryId,
+			ServiceContextFactory.getInstance(
+				Group.class.getName(), actionRequest));
 	}
 
 	@Reference

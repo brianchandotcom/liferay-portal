@@ -34,7 +34,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
@@ -122,10 +121,9 @@ public class AsyncAntivirusQueueOverflowTest {
 					null);
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Map.Entry<Message, Object[]>>>
+		ServiceRegistration<BiConsumer<String, Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-					(Class<?>)BiConsumer.class,
+				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 				new MockEventListener.Builder().prepareConsumer(
 					(n, p) -> prepareEventFired.incrementAndGet()
 				).successConsumer(
@@ -135,13 +133,13 @@ public class AsyncAntivirusQueueOverflowTest {
 					}
 				).build(),
 				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, -100
+				).put(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
 					new String[] {
 						AntivirusAsyncEvent.PREPARE.name(),
 						AntivirusAsyncEvent.SUCCESS.name()
 					}
-				).put(
-					Constants.SERVICE_RANKING, -100
 				).build());
 
 		try {

@@ -17,19 +17,15 @@ package com.liferay.antivirus.async.store.test;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
 import com.liferay.portal.kernel.messaging.Message;
 
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
  * @author Raymond Augé
  */
-public class MockEventListener
-	implements BiConsumer<String, Map.Entry<Message, Object[]>> {
+public class MockEventListener implements BiConsumer<String, Message> {
 
 	@Override
-	public void accept(
-		String eventName, Map.Entry<Message, Object[]> eventPayload) {
-
+	public void accept(String eventName, Message eventPayload) {
 		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.valueOf(
 			eventName);
 
@@ -62,7 +58,7 @@ public class MockEventListener
 		}
 
 		public Builder missingConsumer(
-			BiConsumer<String, Map.Entry<Message, Object[]>> missingConsumer) {
+			BiConsumer<String, Message> missingConsumer) {
 
 			_missingConsumer = missingConsumer;
 
@@ -70,7 +66,7 @@ public class MockEventListener
 		}
 
 		public Builder prepareConsumer(
-			BiConsumer<String, Map.Entry<Message, Object[]>> prepareConsumer) {
+			BiConsumer<String, Message> prepareConsumer) {
 
 			_prepareConsumer = prepareConsumer;
 
@@ -78,8 +74,7 @@ public class MockEventListener
 		}
 
 		public Builder processingErrorConsumer(
-			BiConsumer<String, Map.Entry<Message, Object[]>>
-				processingErrorConsumer) {
+			BiConsumer<String, Message> processingErrorConsumer) {
 
 			_processingErrorConsumer = processingErrorConsumer;
 
@@ -87,8 +82,7 @@ public class MockEventListener
 		}
 
 		public Builder sizeExceededConsumer(
-			BiConsumer<String, Map.Entry<Message, Object[]>>
-				sizeExceededConsumer) {
+			BiConsumer<String, Message> sizeExceededConsumer) {
 
 			_sizeExceededConsumer = sizeExceededConsumer;
 
@@ -96,7 +90,7 @@ public class MockEventListener
 		}
 
 		public Builder successConsumer(
-			BiConsumer<String, Map.Entry<Message, Object[]>> successConsumer) {
+			BiConsumer<String, Message> successConsumer) {
 
 			_successConsumer = successConsumer;
 
@@ -104,43 +98,36 @@ public class MockEventListener
 		}
 
 		public Builder virusFoundConsumer(
-			BiConsumer<String, Map.Entry<Message, Object[]>>
-				virusFoundConsumer) {
+			BiConsumer<String, Message> virusFoundConsumer) {
 
 			_virusFoundConsumer = virusFoundConsumer;
 
 			return this;
 		}
 
-		private BiConsumer<String, Map.Entry<Message, Object[]>>
-			_missingConsumer = (n, p) -> {
+		private BiConsumer<String, Message> _missingConsumer = (n, p) -> {
+		};
+		private BiConsumer<String, Message> _prepareConsumer = (n, p) -> {
+		};
+		private BiConsumer<String, Message> _processingErrorConsumer =
+			(n, p) -> {
 			};
-		private BiConsumer<String, Map.Entry<Message, Object[]>>
-			_prepareConsumer = (n, p) -> {
-			};
-		private BiConsumer<String, Map.Entry<Message, Object[]>>
-			_processingErrorConsumer = (n, p) -> {
-			};
-		private BiConsumer<String, Map.Entry<Message, Object[]>>
-			_sizeExceededConsumer = (n, p) -> {
-			};
-		private BiConsumer<String, Map.Entry<Message, Object[]>>
-			_successConsumer = (n, p) -> {
-			};
-		private BiConsumer<String, Map.Entry<Message, Object[]>>
-			_virusFoundConsumer = (n, p) -> {
-			};
+		private BiConsumer<String, Message> _sizeExceededConsumer = (n, p) -> {
+		};
+		private BiConsumer<String, Message> _successConsumer = (n, p) -> {
+		};
+		private BiConsumer<String, Message> _virusFoundConsumer = (n, p) -> {
+		};
 
 	}
 
 	private MockEventListener(
-		BiConsumer<String, Map.Entry<Message, Object[]>> missingConsumer,
-		BiConsumer<String, Map.Entry<Message, Object[]>> prepareConsumer,
-		BiConsumer<String, Map.Entry<Message, Object[]>>
-			processingErrorConsumer,
-		BiConsumer<String, Map.Entry<Message, Object[]>> sizeExceededConsumer,
-		BiConsumer<String, Map.Entry<Message, Object[]>> successConsumer,
-		BiConsumer<String, Map.Entry<Message, Object[]>> virusFoundConsumer) {
+		BiConsumer<String, Message> missingConsumer,
+		BiConsumer<String, Message> prepareConsumer,
+		BiConsumer<String, Message> processingErrorConsumer,
+		BiConsumer<String, Message> sizeExceededConsumer,
+		BiConsumer<String, Message> successConsumer,
+		BiConsumer<String, Message> virusFoundConsumer) {
 
 		_missingConsumer = missingConsumer;
 		_prepareConsumer = prepareConsumer;
@@ -150,17 +137,11 @@ public class MockEventListener
 		_virusFoundConsumer = virusFoundConsumer;
 	}
 
-	private final BiConsumer<String, Map.Entry<Message, Object[]>>
-		_missingConsumer;
-	private final BiConsumer<String, Map.Entry<Message, Object[]>>
-		_prepareConsumer;
-	private final BiConsumer<String, Map.Entry<Message, Object[]>>
-		_processingErrorConsumer;
-	private final BiConsumer<String, Map.Entry<Message, Object[]>>
-		_sizeExceededConsumer;
-	private final BiConsumer<String, Map.Entry<Message, Object[]>>
-		_successConsumer;
-	private final BiConsumer<String, Map.Entry<Message, Object[]>>
-		_virusFoundConsumer;
+	private final BiConsumer<String, Message> _missingConsumer;
+	private final BiConsumer<String, Message> _prepareConsumer;
+	private final BiConsumer<String, Message> _processingErrorConsumer;
+	private final BiConsumer<String, Message> _sizeExceededConsumer;
+	private final BiConsumer<String, Message> _successConsumer;
+	private final BiConsumer<String, Message> _virusFoundConsumer;
 
 }

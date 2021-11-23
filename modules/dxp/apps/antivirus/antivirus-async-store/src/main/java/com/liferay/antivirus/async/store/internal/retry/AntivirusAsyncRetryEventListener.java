@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,12 +45,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = BiConsumer.class
 )
 public class AntivirusAsyncRetryEventListener
-	implements BiConsumer<String, Map.Entry<Message, Object[]>> {
+	implements BiConsumer<String, Message> {
 
 	@Override
-	public void accept(
-		String eventName, Map.Entry<Message, Object[]> eventData) {
-
+	public void accept(String eventName, Message message) {
 		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.valueOf(
 			eventName);
 
@@ -60,10 +57,10 @@ public class AntivirusAsyncRetryEventListener
 			(antivirusAsyncEvent == AntivirusAsyncEvent.SUCCESS) ||
 			(antivirusAsyncEvent == AntivirusAsyncEvent.VIRUS_FOUND)) {
 
-			_deleteJob(eventData.getKey());
+			_deleteJob(message);
 		}
 		else if (antivirusAsyncEvent == AntivirusAsyncEvent.PROCESSING_ERROR) {
-			_antivirusAsyncRetryScheduler.schedule(eventData.getKey());
+			_antivirusAsyncRetryScheduler.schedule(message);
 		}
 	}
 

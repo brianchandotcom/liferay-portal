@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 import org.osgi.framework.BundleContext;
@@ -52,11 +49,15 @@ public class AntivirusAsyncEventListenerManager {
 	}
 
 	public void onProcessingError(Message message, Exception exception) {
-		_onEvent(AntivirusAsyncEvent.PROCESSING_ERROR, message, exception);
+		message.put("exception", exception);
+
+		_onEvent(AntivirusAsyncEvent.PROCESSING_ERROR, message);
 	}
 
 	public void onSizeExceeded(Message message, Exception exception) {
-		_onEvent(AntivirusAsyncEvent.SIZE_EXCEEDED, message, exception);
+		message.put("exception", exception);
+
+		_onEvent(AntivirusAsyncEvent.SIZE_EXCEEDED, message);
 	}
 
 	public void onSuccess(Message message) {
@@ -66,8 +67,10 @@ public class AntivirusAsyncEventListenerManager {
 	public void onVirusFound(
 		Message message, Exception exception, String virusName) {
 
-		_onEvent(
-			AntivirusAsyncEvent.VIRUS_FOUND, message, exception, virusName);
+		message.put("exception", exception);
+		message.put("virusName", virusName);
+
+		_onEvent(AntivirusAsyncEvent.VIRUS_FOUND, message);
 	}
 
 	@Activate
@@ -96,12 +99,10 @@ public class AntivirusAsyncEventListenerManager {
 		_virusFoundConsumerServiceTrackerMap.close();
 	}
 
-	private List<BiConsumer<String, Map.Entry<Message, Object[]>>>
-		_getEventListeners(
-			AntivirusAsyncEvent antivirusAsyncEvent, String className) {
+	private List<BiConsumer<String, Message>> _getEventListeners(
+		AntivirusAsyncEvent antivirusAsyncEvent, String className) {
 
-		List<BiConsumer<String, Map.Entry<Message, Object[]>>> list =
-			Collections.emptyList();
+		List<BiConsumer<String, Message>> list = Collections.emptyList();
 
 		if (antivirusAsyncEvent == AntivirusAsyncEvent.MISSING) {
 			list = _missingConsumerServiceTrackerMap.getService(className);
@@ -131,30 +132,27 @@ public class AntivirusAsyncEventListenerManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_getServiceTrackerMap(
-				BundleContext bundleContext,
-				AntivirusAsyncEvent antivirusAsyncEvent) {
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_getServiceTrackerMap(
+			BundleContext bundleContext,
+			AntivirusAsyncEvent antivirusAsyncEvent) {
 
 		String eventName = antivirusAsyncEvent.name();
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext,
-			(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-				(Class<?>)BiConsumer.class,
+			(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 			StringBundler.concat("(antivirus.async.event=", eventName, ")"),
 			_SERVICE_REFERENCE_MAPPER);
 	}
 
 	private void _onEvent(
-		AntivirusAsyncEvent antivirusAsyncEvent, Message message,
-		Object... arguments) {
+		AntivirusAsyncEvent antivirusAsyncEvent, Message message) {
 
 		String className = message.getString("className");
 
-		List<BiConsumer<String, Map.Entry<Message, Object[]>>> eventListeners =
-			new ArrayList<>(_getEventListeners(antivirusAsyncEvent, className));
+		List<BiConsumer<String, Message>> eventListeners = new ArrayList<>(
+			_getEventListeners(antivirusAsyncEvent, className));
 
 		eventListeners.addAll(
 			_getEventListeners(antivirusAsyncEvent, _ANY_CLASS));
@@ -164,17 +162,12 @@ public class AntivirusAsyncEventListenerManager {
 				StringBundler.concat(
 					"Triggering Antivirus Async event listeners ",
 					eventListeners, " for ", antivirusAsyncEvent.name(), " on ",
-					message.getValues(), " with arguments ",
-					Arrays.toString(arguments)));
+					message.getValues()));
 		}
 
-		for (BiConsumer<String, Map.Entry<Message, Object[]>> eventListener :
-				eventListeners) {
-
+		for (BiConsumer<String, Message> eventListener : eventListeners) {
 			try {
-				eventListener.accept(
-					antivirusAsyncEvent.name(),
-					new AbstractMap.SimpleEntry<>(message, arguments));
+				eventListener.accept(antivirusAsyncEvent.name(), message);
 			}
 			catch (Throwable throwable) {
 				_log.error(
@@ -205,23 +198,17 @@ public class AntivirusAsyncEventListenerManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntivirusAsyncEventListenerManager.class);
 
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_missingConsumerServiceTrackerMap;
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_prepareConsumerServiceTrackerMap;
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_processingErrorConsumerServiceTrackerMap;
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_sizeExceededConsumerServiceTrackerMap;
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_successConsumerServiceTrackerMap;
-	private ServiceTrackerMap
-		<String, List<BiConsumer<String, Map.Entry<Message, Object[]>>>>
-			_virusFoundConsumerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_missingConsumerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_prepareConsumerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_processingErrorConsumerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_sizeExceededConsumerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_successConsumerServiceTrackerMap;
+	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+		_virusFoundConsumerServiceTrackerMap;
 
 }

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AntivirusAsyncStatisticsManager
 	extends StandardMBean
 	implements AntivirusAsyncStatisticsManagerMBean,
-			   BiConsumer<String, Map.Entry<Message, Object[]>> {
+			   BiConsumer<String, Message> {
 
 	@Activate
 	public AntivirusAsyncStatisticsManager(
@@ -75,9 +74,7 @@ public class AntivirusAsyncStatisticsManager
 	}
 
 	@Override
-	public void accept(
-		String eventName, Map.Entry<Message, Object[]> eventData) {
-
+	public void accept(String eventName, Message message) {
 		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.valueOf(
 			eventName);
 

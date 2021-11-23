@@ -39,7 +39,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
@@ -97,10 +96,9 @@ public class AsyncAntivirusEventTest {
 					null);
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Map.Entry<Message, Object[]>>>
+		ServiceRegistration<BiConsumer<String, Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-					(Class<?>)BiConsumer.class,
+				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 				new MockEventListener.Builder().missingConsumer(
 					(n, p) -> countDownLatch.countDown()
 				).build(),
@@ -174,10 +172,9 @@ public class AsyncAntivirusEventTest {
 					null);
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Map.Entry<Message, Object[]>>>
+		ServiceRegistration<BiConsumer<String, Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-					(Class<?>)BiConsumer.class,
+				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 				new MockEventListener.Builder().prepareConsumer(
 					(n, p) -> prepareEventFired.set(true)
 				).processingErrorConsumer(
@@ -187,13 +184,13 @@ public class AsyncAntivirusEventTest {
 					}
 				).build(),
 				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, -100
+				).put(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
 					new String[] {
 						AntivirusAsyncEvent.PREPARE.name(),
 						AntivirusAsyncEvent.PROCESSING_ERROR.name()
 					}
-				).put(
-					Constants.SERVICE_RANKING, -100
 				).build());
 
 		try {
@@ -278,10 +275,9 @@ public class AsyncAntivirusEventTest {
 					null);
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Map.Entry<Message, Object[]>>>
+		ServiceRegistration<BiConsumer<String, Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-					(Class<?>)BiConsumer.class,
+				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 				new MockEventListener.Builder().prepareConsumer(
 					(n, p) -> prepareEventFired.set(true)
 				).sizeExceededConsumer(
@@ -353,10 +349,9 @@ public class AsyncAntivirusEventTest {
 					null);
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Map.Entry<Message, Object[]>>>
+		ServiceRegistration<BiConsumer<String, Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-					(Class<?>)BiConsumer.class,
+				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 				new MockEventListener.Builder().prepareConsumer(
 					(n, p) -> prepareEventFired.set(true)
 				).successConsumer(
@@ -432,10 +427,9 @@ public class AsyncAntivirusEventTest {
 					null);
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Map.Entry<Message, Object[]>>>
+		ServiceRegistration<BiConsumer<String, Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Map.Entry<Message, Object[]>>>)
-					(Class<?>)BiConsumer.class,
+				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
 				new MockEventListener.Builder().prepareConsumer(
 					(n, p) -> prepareEventFired.set(true)
 				).virusFoundConsumer(

@@ -275,15 +275,24 @@ definition {
 
 	}
 
-	@description = "LRQA-71360 - Verify that the Time Zone -(UTC) Coordinated Universal Time- is selected by default"
-	@ignore = "Test Stub"
+	@description = "LRQA-71598 - Verify that the Time Zone selected by default follows the User's preferences."
 	@priority = "3"
-	test VerifyTimeZoneDefault {
+	test DefaultTimeZoneFollowsUserPreferences {
+		Navigator.gotoAccountSettings();
 
-		// TODO LRQA-71598 VerifyTimeZoneDefault pending implementation
+		UserNavigator.gotoPreferences();
 
+		Navigator.gotoNavNested(navNested = "Display Settings");
+
+		PortalSettings.configureTimeZone(timeZone = "(UTC) Coordinated Universal Time");
+		
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddMyCalendars();
+
+		Calendar.viewSelectedTimeZone(timeZone = "(UTC) Coordinated Universal Time");	
 	}
-
+	
 	@description = "LPS-60800, Verify that can save individual calendar permissions."
 	@priority = "3"
 	test ViewEntryPermissionsNotDefinedByRolePermissions {

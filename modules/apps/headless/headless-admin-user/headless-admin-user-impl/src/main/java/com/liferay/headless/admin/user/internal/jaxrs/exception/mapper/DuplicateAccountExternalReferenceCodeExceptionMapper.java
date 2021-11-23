@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.jaxrs.exception.mapper;
 
-import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
+import com.liferay.account.exception.AccountEntryDuplicateExternalReferenceCodeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -36,12 +36,12 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DuplicateAccountExternalReferenceCodeExceptionMapper
 	extends BaseExceptionMapper
-		<DuplicateAccountEntryExternalReferenceCodeException> {
+		<AccountEntryDuplicateExternalReferenceCodeException> {
 
 	@Override
 	protected Problem getProblem(
-		DuplicateAccountEntryExternalReferenceCodeException
-			duplicateAccountEntryExternalReferenceCodeException) {
+		AccountEntryDuplicateExternalReferenceCodeException
+			accountEntryDuplicateExternalReferenceCodeException) {
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,

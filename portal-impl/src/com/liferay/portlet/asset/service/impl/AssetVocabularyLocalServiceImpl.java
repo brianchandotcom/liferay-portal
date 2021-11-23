@@ -15,7 +15,7 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
-import com.liferay.asset.kernel.exception.DuplicateVocabularyExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.VocabularyDuplicateExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -677,7 +677,7 @@ public class AssetVocabularyLocalServiceImpl
 				groupId, externalReferenceCode);
 
 		if (assetVocabulary != null) {
-			throw new DuplicateVocabularyExternalReferenceCodeException(
+			throw new VocabularyDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate vocabulary external reference code ",
 					externalReferenceCode, " in group ", groupId));

@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.journal.exception;
+package com.liferay.wiki.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateArticleExternalReferenceCodeException
-	extends PortalException {
+public class NodeDuplicateExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
-	public DuplicateArticleExternalReferenceCodeException() {
+	public NodeDuplicateExternalReferenceCodeException() {
 	}
 
-	public DuplicateArticleExternalReferenceCodeException(String msg) {
+	public NodeDuplicateExternalReferenceCodeException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateArticleExternalReferenceCodeException(
+	public NodeDuplicateExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateArticleExternalReferenceCodeException(Throwable throwable) {
+	public NodeDuplicateExternalReferenceCodeException(Throwable throwable) {
 		super(throwable);
 	}
 

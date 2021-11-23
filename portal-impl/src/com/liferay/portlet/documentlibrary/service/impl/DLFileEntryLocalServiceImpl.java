@@ -17,7 +17,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
-import com.liferay.document.library.kernel.exception.DuplicateFileEntryExternalReferenceCodeException;
+import com.liferay.document.library.kernel.exception.FileEntryDuplicateExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
@@ -3602,7 +3602,7 @@ public class DLFileEntryLocalServiceImpl
 			groupId, externalReferenceCode);
 
 		if (dlFileEntry != null) {
-			throw new DuplicateFileEntryExternalReferenceCodeException(
+			throw new FileEntryDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate file entry external reference code ",
 					externalReferenceCode, " in group ", groupId));

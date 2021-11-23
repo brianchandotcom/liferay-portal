@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.exception.DuplicateEntryExternalReferenceCodeException;
+import com.liferay.blogs.exception.EntryDuplicateExternalReferenceCodeException;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryCoverImageCropException;
 import com.liferay.blogs.exception.EntryDisplayDateException;
@@ -2351,7 +2351,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			groupId, externalReferenceCode);
 
 		if (entry != null) {
-			throw new DuplicateEntryExternalReferenceCodeException(
+			throw new EntryDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate blogs entry external reference code ",
 					externalReferenceCode, " in group ", groupId));

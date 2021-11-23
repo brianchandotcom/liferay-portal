@@ -30,7 +30,7 @@ import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
-import com.liferay.message.boards.exception.DuplicateMessageExternalReferenceCodeException;
+import com.liferay.message.boards.exception.MessageDuplicateExternalReferenceCodeException;
 import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
@@ -2831,7 +2831,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			groupId, externalReferenceCode);
 
 		if (message != null) {
-			throw new DuplicateMessageExternalReferenceCodeException(
+			throw new MessageDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate message external reference code ",
 					externalReferenceCode, " in group ", groupId));

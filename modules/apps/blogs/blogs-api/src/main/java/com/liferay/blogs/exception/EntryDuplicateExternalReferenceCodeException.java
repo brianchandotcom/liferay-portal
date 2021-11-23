@@ -14,28 +14,28 @@
 
 package com.liferay.blogs.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateEntryExternalReferenceCodeException
-	extends PortalException {
+public class EntryDuplicateExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
-	public DuplicateEntryExternalReferenceCodeException() {
+	public EntryDuplicateExternalReferenceCodeException() {
 	}
 
-	public DuplicateEntryExternalReferenceCodeException(String msg) {
+	public EntryDuplicateExternalReferenceCodeException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateEntryExternalReferenceCodeException(
+	public EntryDuplicateExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateEntryExternalReferenceCodeException(Throwable throwable) {
+	public EntryDuplicateExternalReferenceCodeException(Throwable throwable) {
 		super(throwable);
 	}
 

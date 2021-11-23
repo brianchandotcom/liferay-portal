@@ -38,7 +38,7 @@ import com.liferay.journal.exception.ArticleIdException;
 import com.liferay.journal.exception.ArticleSmallImageNameException;
 import com.liferay.journal.exception.ArticleSmallImageSizeException;
 import com.liferay.journal.exception.ArticleTitleException;
-import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeException;
+import com.liferay.journal.exception.ArticleDuplicateExternalReferenceCodeException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.model.JournalArticle;
@@ -507,7 +507,7 @@ public class JournalArticleModelValidator
 			groupId, externalReferenceCode);
 
 		if (!articles.isEmpty()) {
-			throw new DuplicateArticleExternalReferenceCodeException(
+			throw new ArticleDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate journal article external reference code ",
 					externalReferenceCode, "in group ", groupId));

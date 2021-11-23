@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
-import com.liferay.wiki.exception.DuplicatePageExternalReferenceCodeException;
+import com.liferay.wiki.exception.PageDuplicateExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiNode;
@@ -125,7 +125,7 @@ public class WikiPageLocalServiceTest {
 		Assert.assertTrue(ListUtil.isNull(categories));
 	}
 
-	@Test(expected = DuplicatePageExternalReferenceCodeException.class)
+	@Test(expected = PageDuplicateExternalReferenceCodeException.class)
 	public void testAddPageWithExistingExternalReferenceCode()
 		throws Exception {
 

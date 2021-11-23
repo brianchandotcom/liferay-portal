@@ -27,7 +27,7 @@ import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
+import com.liferay.knowledge.base.exception.KBArticleDuplicateExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
@@ -2064,7 +2064,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			groupId, externalReferenceCode);
 
 		if (kbArticle != null) {
-			throw new DuplicateKBArticleExternalReferenceCodeException(
+			throw new KBArticleDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate knowledge base article external reference code ",
 					externalReferenceCode, " in group ", groupId));

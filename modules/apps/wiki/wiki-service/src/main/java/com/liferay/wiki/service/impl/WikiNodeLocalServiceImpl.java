@@ -55,7 +55,7 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.exception.DuplicateNodeExternalReferenceCodeException;
+import com.liferay.wiki.exception.NodeDuplicateExternalReferenceCodeException;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.importer.WikiImporter;
@@ -662,7 +662,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			groupId, externalReferenceCode);
 
 		if (wikiNode != null) {
-			throw new DuplicateNodeExternalReferenceCodeException(
+			throw new NodeDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate node external reference code ",
 					externalReferenceCode, " in group ", groupId));

@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeException;
+import com.liferay.journal.exception.ArticleDuplicateExternalReferenceCodeException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -277,7 +277,7 @@ public class JournalArticleLocalServiceTest {
 			article.getArticleId(), true);
 	}
 
-	@Test(expected = DuplicateArticleExternalReferenceCodeException.class)
+	@Test(expected = ArticleDuplicateExternalReferenceCodeException.class)
 	public void testDuplicatedExternalReferenceCode() throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(),

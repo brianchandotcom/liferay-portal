@@ -17,7 +17,7 @@ package com.liferay.knowledge.base.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.exception.DuplicateKBFolderExternalReferenceCodeException;
+import com.liferay.knowledge.base.exception.KBFolderDuplicateExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
 import com.liferay.knowledge.base.exception.KBFolderParentException;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
@@ -75,7 +75,7 @@ public class KBFolderLocalServiceTest {
 		_kbFolder = addKBFolder(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	@Test(expected = DuplicateKBFolderExternalReferenceCodeException.class)
+	@Test(expected = KBFolderDuplicateExternalReferenceCodeException.class)
 	public void testAddKBFolderWithExistingExternalReferenceCode()
 		throws Exception {
 

@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
+import com.liferay.knowledge.base.exception.KBArticleDuplicateExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
@@ -316,7 +316,7 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), null, null, null, _serviceContext);
 	}
 
-	@Test(expected = DuplicateKBArticleExternalReferenceCodeException.class)
+	@Test(expected = KBArticleDuplicateExternalReferenceCodeException.class)
 	public void testAddKBArticleWithExistingExternalReferenceCode()
 		throws Exception {
 

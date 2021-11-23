@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
-import com.liferay.document.library.kernel.exception.DuplicateFileEntryExternalReferenceCodeException;
+import com.liferay.document.library.kernel.exception.FileEntryDuplicateExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
@@ -596,7 +596,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFileVersion.getVersion());
 	}
 
-	@Test(expected = DuplicateFileEntryExternalReferenceCodeException.class)
+	@Test(expected = FileEntryDuplicateExternalReferenceCodeException.class)
 	public void testDuplicateFileEntryExternalReferenceCode() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 		String externalReferenceCode = StringUtil.randomString();

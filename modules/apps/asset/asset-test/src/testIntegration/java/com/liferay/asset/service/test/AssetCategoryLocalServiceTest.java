@@ -17,7 +17,7 @@ package com.liferay.asset.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
-import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.CategoryDuplicateExternalReferenceCodeException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -298,7 +298,7 @@ public class AssetCategoryLocalServiceTest {
 		_assetCategoryLocalService.deleteCategory(assetCategory, true);
 	}
 
-	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
+	@Test(expected = CategoryDuplicateExternalReferenceCodeException.class)
 	public void testDuplicateCategoryExternalReferenceCode() throws Exception {
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());

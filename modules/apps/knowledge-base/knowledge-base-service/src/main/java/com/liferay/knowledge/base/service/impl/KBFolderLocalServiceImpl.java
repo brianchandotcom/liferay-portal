@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.service.impl;
 
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.exception.DuplicateKBFolderExternalReferenceCodeException;
+import com.liferay.knowledge.base.exception.KBFolderDuplicateExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.DuplicateKBFolderNameException;
 import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
 import com.liferay.knowledge.base.exception.KBFolderParentException;
@@ -418,7 +418,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			groupId, externalReferenceCode);
 
 		if (kbFolder != null) {
-			throw new DuplicateKBFolderExternalReferenceCodeException(
+			throw new KBFolderDuplicateExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate knowledge base folder external reference code ",
 					externalReferenceCode, " in group ", groupId));

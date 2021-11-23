@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -160,24 +161,7 @@ public class ViewChangesDisplayContext {
 		return portletURL.toString();
 	}
 
-	public CTCollection getCtCollection() {
-		return _ctCollection;
-	}
-
-	public Map<String, Object> getDropdownReactData(
-			PermissionChecker permissionChecker)
-		throws Exception {
-
-		JSONArray jsonArray = _getDropdownItemsJSONArray(permissionChecker);
-
-		if (jsonArray.length() == 0) {
-			return null;
-		}
-
-		return Collections.singletonMap("dropdownItems", jsonArray);
-	}
-
-	public Map<String, Object> getReactData() throws PortalException {
+	public Map<String, Object> getReactData() throws Exception {
 		JSONObject contextViewJSONObject = null;
 
 		CTClosure ctClosure = null;
@@ -349,6 +333,80 @@ public class ViewChangesDisplayContext {
 		).put(
 			"deltaFromURL", ParamUtil.getString(_renderRequest, "delta")
 		).put(
+			"description",
+			() -> {
+				if (_ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
+
+					String description = _ctCollection.getDescription();
+
+					if (Validator.isNotNull(description)) {
+						description = description.concat(" | ");
+					}
+
+					Format format = FastDateFormatFactoryUtil.getDateTime(
+						_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
+
+					return description.concat(
+						_language.format(
+							_httpServletRequest, "published-by-x-on-x",
+							new Object[] {
+								_ctCollection.getUserName(),
+								format.format(_ctCollection.getStatusDate())
+							},
+							false));
+				}
+				else if (_ctCollection.getStatus() ==
+							WorkflowConstants.STATUS_SCHEDULED) {
+
+					String description = _ctCollection.getDescription();
+
+					if (_publishScheduler == null) {
+						return description;
+					}
+
+					ScheduledPublishInfo scheduledPublishInfo =
+						_publishScheduler.getScheduledPublishInfo(
+							_ctCollection);
+
+					if (scheduledPublishInfo != null) {
+						Format format = FastDateFormatFactoryUtil.getDateTime(
+							_themeDisplay.getLocale(),
+							_themeDisplay.getTimeZone());
+
+						if (Validator.isNotNull(description)) {
+							description = description.concat(" | ");
+						}
+
+						description = description.concat(
+							_language.format(
+								_httpServletRequest, "publishing-x",
+								new Object[] {
+									format.format(
+										scheduledPublishInfo.getStartDate())
+								},
+								false));
+
+						User user = _userLocalService.fetchUser(
+							scheduledPublishInfo.getUserId());
+
+						if (user != null) {
+							return StringBundler.concat(
+								description, " | ",
+								_language.format(
+									_httpServletRequest, "scheduled-by-x",
+									new Object[] {user.getFullName()}, false));
+						}
+
+						return description;
+					}
+
+					return StringPool.BLANK;
+				}
+
+				return _ctCollection.getDescription();
+			}
+		).put(
 			"discardURL",
 			PortletURLBuilder.createRenderURL(
 				_renderResponse
@@ -359,6 +417,9 @@ public class ViewChangesDisplayContext {
 			).setParameter(
 				"ctCollectionId", _ctCollection.getCtCollectionId()
 			).buildString()
+		).put(
+			"dropdownItems",
+			_getDropdownItemsJSONArray(_themeDisplay.getPermissionChecker())
 		).put(
 			"entryFromURL", ParamUtil.getString(_renderRequest, "entry")
 		).put(
@@ -397,12 +458,43 @@ public class ViewChangesDisplayContext {
 				return modelDataJSONObject;
 			}
 		).put(
+			"name", _ctCollection.getName()
+		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"orderByTypeFromURL",
 			ParamUtil.getString(_renderRequest, "orderByType")
 		).put(
 			"pageFromURL", ParamUtil.getString(_renderRequest, "page")
+		).put(
+			"publishURL",
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/change_tracking/view_conflicts"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
+		).put(
+			"rescheduleURL",
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/change_tracking/reschedule_publication"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).buildString()
+		).put(
+			"revertURL",
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/change_tracking/undo_ct_collection"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).setParameter(
+				"revert", true
+			).buildString()
 		).put(
 			"rootDisplayClasses",
 			() -> {
@@ -420,6 +512,17 @@ public class ViewChangesDisplayContext {
 
 				return rootDisplayClassesJSONArray;
 			}
+		).put(
+			"scheduleURL",
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/change_tracking/view_conflicts"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).setParameter(
+				"schedule", true
+			).buildString()
 		).put(
 			"showHideableFromURL",
 			ParamUtil.getBoolean(_renderRequest, "showHideable")
@@ -461,6 +564,42 @@ public class ViewChangesDisplayContext {
 			"sitesFromURL", ParamUtil.getString(_renderRequest, "sites")
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+		).put(
+			"statusLabel",
+			() -> {
+				if (_ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT) {
+
+					return _language.get(
+						_themeDisplay.getLocale(), "in-progress");
+				}
+				else if (_ctCollection.getStatus() ==
+							WorkflowConstants.STATUS_EXPIRED) {
+
+					return _language.get(
+						_themeDisplay.getLocale(), "out-of-date");
+				}
+				else if (_ctCollection.getStatus() ==
+							WorkflowConstants.STATUS_SCHEDULED) {
+
+					return _language.get(
+						_themeDisplay.getLocale(), "scheduled");
+				}
+
+				return _language.get(_themeDisplay.getLocale(), "published");
+			}
+		).put(
+			"statusStyle",
+			() -> {
+				if (_ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_EXPIRED) {
+
+					return "warning";
+				}
+
+				return WorkflowConstants.getStatusStyle(
+					_ctCollection.getStatus());
+			}
 		).put(
 			"typeNames",
 			() -> {
@@ -504,42 +643,6 @@ public class ViewChangesDisplayContext {
 		).put(
 			"usersFromURL", ParamUtil.getString(_renderRequest, "users")
 		).build();
-	}
-
-	public String getScheduledDescription() throws PortalException {
-		if (_publishScheduler == null) {
-			return StringPool.BLANK;
-		}
-
-		ScheduledPublishInfo scheduledPublishInfo =
-			_publishScheduler.getScheduledPublishInfo(_ctCollection);
-
-		if (scheduledPublishInfo != null) {
-			Format format = FastDateFormatFactoryUtil.getDateTime(
-				_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
-
-			String description = _language.format(
-				_httpServletRequest, "publishing-x",
-				new Object[] {
-					format.format(scheduledPublishInfo.getStartDate())
-				},
-				false);
-
-			User user = _userLocalService.fetchUser(
-				scheduledPublishInfo.getUserId());
-
-			if (user != null) {
-				return StringBundler.concat(
-					description, " | ",
-					_language.format(
-						_httpServletRequest, "scheduled-by-x",
-						new Object[] {user.getFullName()}, false));
-			}
-
-			return description;
-		}
-
-		return StringPool.BLANK;
 	}
 
 	public boolean hasChanges() {

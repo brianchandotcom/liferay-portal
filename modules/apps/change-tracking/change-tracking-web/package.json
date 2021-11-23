@@ -20,6 +20,7 @@
 		"@clayui/progress-bar": "3.40.0",
 		"@clayui/sticker": "3.40.0",
 		"@clayui/table": "3.40.0",
+		"@clayui/toolbar": "3.40.0",
 		"frontend-js-web": "*",
 		"moment": "^2.22.2",
 		"react": "16.12.0",

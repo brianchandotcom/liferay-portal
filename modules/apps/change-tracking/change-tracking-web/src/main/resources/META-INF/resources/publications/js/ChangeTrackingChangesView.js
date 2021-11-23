@@ -25,6 +25,7 @@ import ClayManagementToolbar, {
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
+import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
@@ -99,20 +100,29 @@ export default function ChangeTrackingChangesView({
 	defaultLocale,
 	deleteCTCommentURL,
 	deltaFromURL,
+	description,
 	discardURL,
+	dropdownItems,
 	entryFromURL,
 	expired,
 	getCTCommentsURL,
 	keywordsFromURL,
 	modelData,
+	name,
 	namespace,
 	orderByTypeFromURL,
 	pageFromURL,
+	publishURL,
+	rescheduleURL,
+	revertURL,
 	rootDisplayClasses,
+	scheduleURL,
 	showHideableFromURL,
 	siteNames,
 	sitesFromURL,
 	spritemap,
+	statusLabel,
+	statusStyle,
 	typeNames,
 	typesFromURL,
 	updateCTCommentURL,
@@ -2462,8 +2472,38 @@ export default function ChangeTrackingChangesView({
 		);
 	};
 
+	const renderPublicationsToolbar = () => {
+		return (
+			<ClayToolbar className="publications-tbar" light>
+				<div className="container-fluid container-fluid-max-xl">
+					<ClayToolbar.Nav>
+						<ClayToolbar.Item className="text-left" expand>
+							<ClayToolbar.Section>
+								<div className="publication-name">
+									<span>{name}</span>
+
+									<ClayLabel
+										displayType={statusStyle}
+										spritemap={spritemap}
+									>
+										{statusLabel}
+									</ClayLabel>
+								</div>
+
+								<div className="publication-description">
+									{description}
+								</div>
+							</ClayToolbar.Section>
+						</ClayToolbar.Item>
+					</ClayToolbar.Nav>
+				</div>
+			</ClayToolbar>
+		);
+	};
+
 	return (
 		<>
+			{renderPublicationsToolbar()}
 			{renderManagementToolbar()}
 			{renderResultsBar()}
 			<div

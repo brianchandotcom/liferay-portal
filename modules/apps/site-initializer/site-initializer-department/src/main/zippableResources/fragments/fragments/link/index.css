@@ -6,16 +6,16 @@
   text-decoration: none;
 }
 
-.link-arrow {
-  fill: var(--primary);
-  margin-left: var(--spacer-2);
-  width: 0.4em;
-}
-
 .department-link a:hover + .link-arrow {
   fill: var(--secondary);
   transform: translateX(5px);
   transition: all 0.1s ease-in-out;
+}
+
+.link-arrow {
+  fill: var(--primary);
+  margin-left: var(--spacer-2);
+  width: 0.4em;
 }
 
 .link-sm {

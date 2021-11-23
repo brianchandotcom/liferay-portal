@@ -1,32 +1,3 @@
-.home-header {
-  color: var(--white);
-  z-index: 0;
-}
-
-.home-header .row {
-  align-items: center;
-}
-
-.home-header:before {
-  background-color: var(--brand-color-1);
-  content: '';
-  height: 780px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 65vw;
-}
-
-.image-author {
-  color: var(--gray-900);
-  font-family: var(--font-family-monospace);
-  font-size: var(--font-size-sm);
-  left: -48px;
-  position: absolute;
-  top: 50vh;
-  transform: rotate(-90deg);
-}
-
 .hiring-call {
   background: var(--gray-900);
   border-radius: 50%;
@@ -62,17 +33,42 @@
   margin-top: var(--spacer-1);
 }
 
-.home-header-image {
-  margin-top: 10rem;
+.home-header {
+  color: var(--white);
+  z-index: 0;
+}
+
+.home-header .row {
+  align-items: center;
+}
+
+.home-header:before {
+  background-color: var(--brand-color-1);
+  content: '';
+  height: 780px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 65vw;
 }
 
 .home-header-content-box {
   padding-left: var(--spacer-6);
 }
 
+.home-header-image {
+  margin-top: 10rem;
+}
+
 .home-header-pre {
   font-family: var(--font-family-monospace);
   margin-bottom: var(--spacer-2);
+}
+
+.home-header-subtitle {
+  max-width: 100%;
+  width: 340px;
+  opacity: 80%;
 }
 
 .home-header-title {
@@ -84,14 +80,18 @@
   width: 480px;
 }
 
-.title-highlight {
-  color: var(--brand-color-4);
+.image-author {
+  color: var(--gray-900);
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-sm);
+  left: -48px;
+  position: absolute;
+  top: 50vh;
+  transform: rotate(-90deg);
 }
 
-.home-header-subtitle {
-  max-width: 100%;
-  width: 340px;
-  opacity: 80%;
+.title-highlight {
+  color: var(--brand-color-4);
 }
 
 @media (max-width: 1380px) {

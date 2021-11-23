@@ -26,22 +26,22 @@ a.entry-card:hover {
   z-index: 2;
 }
 
-.entry-card-image {
-  filter: grayscale(100%);
-  width: 100%;
+.entry-card:hover .entry-card-image {
+  filter: grayscale(0%);
 }
 
 .entry-card:hover .image-overlay {
   display: none;
 }
 
-.entry-card:hover .entry-card-image {
-  filter: grayscale(0%);
-}
-
 .entry-card-category {
   color: var(--gray-600);
   margin-bottom: var(--spacer-1);
+}
+
+.entry-card-image {
+  filter: grayscale(100%);
+  width: 100%;
 }
 
 .entry-card-title {

@@ -2,25 +2,13 @@ body {
   background-color: var(--primary);
 }
 
-.main-navbar .container-fluid,
-.main-navbar .container-fluid-max-xl {
-  padding: 0;
-}
-
-.position-absolute {
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 2;
-}
-
 .main-navbar {
   padding: 24px 0;
 }
 
-.main-navbar .navbar-logo {
-  width: 180px;
+.main-navbar .container-fluid,
+.main-navbar .container-fluid-max-xl {
+  padding: 0;
 }
 
 .main-navbar .container-fluid {
@@ -31,10 +19,6 @@ body {
   justify-content: flex-end;
 }
 
-.main-navbar .navbar-nav {
-  margin-right: var(--spacer-4);
-}
-
 .main-navbar .nav-item {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
@@ -43,4 +27,20 @@ body {
 .main-navbar .nav-item a {
   color: var(--white);
   padding: var(--spacer-3);
+}
+
+.main-navbar .navbar-logo {
+  width: 180px;
+}
+
+.main-navbar .navbar-nav {
+  margin-right: var(--spacer-4);
+}
+
+.position-absolute {
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
 }

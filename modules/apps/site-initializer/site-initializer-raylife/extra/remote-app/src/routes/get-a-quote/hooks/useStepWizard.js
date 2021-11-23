@@ -11,11 +11,14 @@ import {setSelectedStep} from '../context/actions';
 import {businessTotalFields} from '../utils/businessFields';
 import {AVAILABLE_STEPS, TOTAL_OF_FIELD} from '../utils/constants';
 import {propertyTotalFields} from '../utils/propertyFields';
+import {shouldLoadProgressData} from '../utils/util';
 
 export function useStepWizard() {
 	const form = useWatch();
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
 	const {dispatch, state} = useContext(AppContext);
+	const loadProgressData = shouldLoadProgressData();
+
 	const {
 		control: {_fields},
 	} = useFormContext();
@@ -31,50 +34,47 @@ export function useStepWizard() {
 	}, [state.selectedStep.section]);
 
 	useEffect(() => {
-		calculateAllSteps();
-	}, []);
+		if (loadProgressData) {
+			calculateAllSteps();
+		}
+	}, [loadProgressData]);
 
 	const calculateAllSteps = () => {
-		if (
-			Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT) &&
-			JSON.parse(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT))
-		) {
-			const stepName = Object.keys(form)[
-				Object.keys(form).length - 1
-			].toLowerCase();
+		const stepName = Object.keys(form)[
+			Object.keys(form).length - 1
+		]?.toLowerCase();
 
-			switch (stepName) {
-				case AVAILABLE_STEPS.BUSINESS.section:
-					setAllPercentages({
-						basics: 100,
-						business: 100,
-					});
-					break;
-				case AVAILABLE_STEPS.EMPLOYEES.section:
-					setAllPercentages({
-						basics: 100,
-						business: 100,
-						employees: 100,
-					});
-					break;
-				case AVAILABLE_STEPS.PROPERTY.section:
-					setAllPercentages({
-						basics: 100,
-						business: 100,
-						employees: 100,
-						property: 100,
-					});
-					break;
-				default:
-					break;
-			}
+		switch (stepName) {
+			case AVAILABLE_STEPS.BUSINESS.section:
+				setAllPercentages({
+					basics: 100,
+					business: 100,
+				});
+				break;
+			case AVAILABLE_STEPS.EMPLOYEES.section:
+				setAllPercentages({
+					basics: 100,
+					business: 100,
+					employees: 100,
+				});
+				break;
+			case AVAILABLE_STEPS.PROPERTY.section:
+				setAllPercentages({
+					basics: 100,
+					business: 100,
+					employees: 100,
+					property: 100,
+				});
+				break;
+			default:
+				break;
 		}
 	};
 
 	const _updateStepPercentage = () => {
 		switch (state.selectedStep.section) {
 			case AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section:
-				if (Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT)) {
+				if (loadProgressData) {
 					if (
 						state.selectedStep.subsection ===
 						AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION.subsection

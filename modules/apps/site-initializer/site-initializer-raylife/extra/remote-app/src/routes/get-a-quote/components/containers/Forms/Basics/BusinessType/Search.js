@@ -7,7 +7,6 @@ import {useFormContext} from 'react-hook-form';
 import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
 import {SearchInput} from '~/common/components/fragments/Forms/Input/Search';
 import {useCustomEvent} from '~/common/hooks/useCustomEvent';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
 import {calculatePercentage} from '~/common/utils';
 import {TIP_EVENT} from '~/common/utils/events';
 import {useBusinessTypes} from '~/routes/get-a-quote/hooks/useBusinessTypes';
@@ -17,6 +16,7 @@ import {
 	AVAILABLE_STEPS,
 	TOTAL_OF_FIELD,
 } from '~/routes/get-a-quote/utils/constants';
+import {shouldLoadProgressData} from '~/routes/get-a-quote/utils/util';
 
 import {BusinessTypeRadioGroup} from './RadioGroup';
 
@@ -34,6 +34,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 	const {businessTypes, isError, reload} = useBusinessTypes();
 	const {isSelected, updateState} = useTriggerContext();
 	const [isLoading, setIsLoading] = useState(false);
+	const loadProgressData = shouldLoadProgressData();
 
 	const templateName = 'i-am-unable-to-find-my-industry';
 	const selectedTrigger = isSelected(templateName);
@@ -54,10 +55,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 			}
 			await reload(searchTerm);
 			if (!searchTerm) {
-				if (
-					Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT) &&
-					JSON.parse(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT))
-				) {
+				if (loadProgressData) {
 					setPercentage(
 						calculatePercentage(
 							TOTAL_OF_FIELD.BASICS - 1,
@@ -102,11 +100,11 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 			type="button"
 		>
 			I am unable to find my industry
-			{selectedTrigger ? (
-				<ClayIcon symbol="question-circle-full" />
-			) : (
-				<ClayIcon symbol="question-circle" />
-			)}
+			<ClayIcon
+				symbol={
+					selectedTrigger ? 'question-circle-full' : 'question-circle'
+				}
+			/>
 		</button>
 	);
 
@@ -119,14 +117,14 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 			return <WarningBadge>{isError}</WarningBadge>;
 		}
 
-		if (!businessTypes.length) {
+		if (businessTypes.length) {
 			return (
 				<>
-					<WarningBadge>
-						There are no results for &quot;
-						{truncateSearch(form?.basics?.businessSearch)}
-						&quot;. Please try a different search.
-					</WarningBadge>
+					<BusinessTypeRadioGroup
+						businessTypes={businessTypes}
+						form={form}
+						setNewSelectedProduct={setNewSelectedProduct}
+					/>
 					{infoPanelButton()}
 				</>
 			);
@@ -134,11 +132,11 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 
 		return (
 			<>
-				<BusinessTypeRadioGroup
-					businessTypes={businessTypes}
-					form={form}
-					setNewSelectedProduct={setNewSelectedProduct}
-				/>
+				<WarningBadge>
+					There are no results for &quot;
+					{truncateSearch(form?.basics?.businessSearch)}
+					&quot;. Please try a different search.
+				</WarningBadge>
 				{infoPanelButton()}
 			</>
 		);

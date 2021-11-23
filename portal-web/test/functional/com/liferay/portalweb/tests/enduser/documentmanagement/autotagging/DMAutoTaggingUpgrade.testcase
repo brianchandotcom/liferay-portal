@@ -42,12 +42,12 @@ definition {
 
 		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Blue.jpg",
-			dmDocumentTitle = "DM Document JPG New",
+			dmDocumentTitle = "DM New Document JPG",
 			tagName = "jersey");
 
 		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF",
+			dmDocumentTitle = "DM New Document PDF",
 			tagName = "alice");
 
 		Upgrade.addAutoTaggedDM(
@@ -97,12 +97,12 @@ definition {
 
 		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Blue.jpg",
-			dmDocumentTitle = "DM Document JPG New",
+			dmDocumentTitle = "DM New Document JPG",
 			tagName = "jersey");
 
 		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF",
+			dmDocumentTitle = "DM New Document PDF",
 			tagName = "alice");
 
 		Upgrade.addAutoTaggedDM(

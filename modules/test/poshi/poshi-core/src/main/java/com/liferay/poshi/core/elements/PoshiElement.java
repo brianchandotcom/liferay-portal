@@ -913,6 +913,15 @@ public abstract class PoshiElement
 
 		return false;
 	}
+	protected boolean isValidMacroFileName(String poshiScriptInvocation) {
+		for (String macroFileName : PoshiContext.getMacroFileNames()) {
+			if (poshiScriptInvocation.matches(
+					"(?s)" + Pattern.quote(macroFileName) + "[\\.\\(]+.*")) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	protected boolean isValidPoshiScriptBlock(
 		Pattern poshiScriptBlockNamePattern, String poshiScript) {

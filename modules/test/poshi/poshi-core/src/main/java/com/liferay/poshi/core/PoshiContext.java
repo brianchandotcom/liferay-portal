@@ -95,6 +95,7 @@ public class PoshiContext {
 		_commandSummaries.clear();
 		_filePaths.clear();
 		_functionFileNames.clear();
+		_macroFileNames.clear();
 		_functionLocatorCounts.clear();
 		_namespacedClassCommandNamePropertiesMap.clear();
 		_namespaces.clear();
@@ -199,6 +200,11 @@ public class PoshiContext {
 
 	public static Set<String> getFunctionFileNames() {
 		return _functionFileNames;
+	}
+
+	public static Set<String> getMacroFileNames() {
+
+		return _macroFileNames;
 	}
 
 	public static int getFunctionLocatorCount(
@@ -1757,6 +1763,8 @@ public class PoshiContext {
 		Collections.synchronizedSet(new HashSet<>());
 	private static final Map<String, Integer> _functionLocatorCounts =
 		Collections.synchronizedMap(new HashMap<>());
+	private static final Set<String> _macroFileNames =
+			Collections.synchronizedSet(new HashSet<>());
 	private static final Pattern _namespaceClassCommandNamePattern =
 		Pattern.compile(
 			"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#" +
@@ -1837,6 +1845,17 @@ public class PoshiContext {
 							_namespace + "." +
 								StringUtil.replace(fileName, ".function", ""));
 					}
+
+
+				}
+
+				if (fileName.endsWith(".macro")) {
+					_macroFileNames.add(
+							StringUtil.replace(fileName, ".macro", ""));
+
+					_macroFileNames.add(
+							_namespace + "." +
+									StringUtil.replace(fileName, ".macro", ""));
 				}
 			}
 			catch (Exception exception) {

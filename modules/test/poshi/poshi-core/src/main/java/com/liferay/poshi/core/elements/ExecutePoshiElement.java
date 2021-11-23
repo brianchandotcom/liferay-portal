@@ -90,22 +90,6 @@ public class ExecutePoshiElement extends PoshiElement {
 			return;
 		}
 
-		if (isValidUtilityClassName(poshiScript)) {
-			addAttribute("class", getClassName(poshiScript));
-			addAttribute("method", getCommandName(poshiScript));
-
-			if (!PoshiContext.ignoreUtilClassesErrors()) {
-				List<String> methodParameters = getMethodParameters(
-					poshiScriptParentheticalContent);
-
-				for (String methodParameter : methodParameters) {
-					add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
-				}
-			}
-
-			return;
-		}
-
 		String executeCommandName = RegexUtil.getGroup(
 			poshiScript, "([^\\s]*?)\\(", 1);
 
@@ -142,7 +126,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			addAttribute("function", executeCommandName);
 		}
-		else {
+		else if (fileExtension.equals("macro") || isValidMacroFileName(poshiScript)){
 			addAttribute("macro", executeCommandName);
 
 			if (poshiScript.startsWith("var ")) {
@@ -153,6 +137,21 @@ public class ExecutePoshiElement extends PoshiElement {
 					add(returnPoshiNode);
 				}
 			}
+		}
+		else {
+			addAttribute("class", getClassName(poshiScript));
+			addAttribute("method", getCommandName(poshiScript));
+
+			if (!PoshiContext.ignoreUtilClassesErrors()) {
+				List<String> methodParameters = getMethodParameters(
+						poshiScriptParentheticalContent);
+
+				for (String methodParameter : methodParameters) {
+					add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
+				}
+			}
+
+			return;
 		}
 
 		for (String parameter :

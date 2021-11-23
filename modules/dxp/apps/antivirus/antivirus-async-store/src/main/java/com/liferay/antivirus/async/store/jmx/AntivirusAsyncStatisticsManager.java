@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
@@ -54,14 +54,13 @@ import org.osgi.service.component.annotations.Reference;
 		"jmx.objectname.cache.key=AntivirusAsyncStatistics"
 	},
 	service = {
-		AntivirusAsyncStatisticsManagerMBean.class, BiConsumer.class,
+		AntivirusAsyncStatisticsManagerMBean.class, Consumer.class,
 		DynamicMBean.class
 	}
 )
 public class AntivirusAsyncStatisticsManager
 	extends StandardMBean
-	implements AntivirusAsyncStatisticsManagerMBean,
-			   BiConsumer<String, Message> {
+	implements AntivirusAsyncStatisticsManagerMBean, Consumer<Message> {
 
 	@Activate
 	public AntivirusAsyncStatisticsManager(
@@ -74,9 +73,9 @@ public class AntivirusAsyncStatisticsManager
 	}
 
 	@Override
-	public void accept(String eventName, Message message) {
-		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.valueOf(
-			eventName);
+	public void accept(Message message) {
+		AntivirusAsyncEvent antivirusAsyncEvent =
+			(AntivirusAsyncEvent)message.get("antivirusAsyncEvent");
 
 		if (antivirusAsyncEvent == AntivirusAsyncEvent.PROCESSING_ERROR) {
 			_processingErrorCounter.incrementAndGet();

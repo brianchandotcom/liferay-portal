@@ -43,7 +43,7 @@ import java.util.Dictionary;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -152,25 +152,25 @@ public class AsyncAntivirusStatisticsTest {
 					).build());
 
 		@SuppressWarnings("unchecked")
-		ServiceRegistration<BiConsumer<String, Message>>
+		ServiceRegistration<Consumer<Message>>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
+				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
 				new MockEventListener.Builder().prepareConsumer(
-					(n, p) -> prepareEventFired.incrementAndGet()
+					message -> prepareEventFired.incrementAndGet()
 				).processingErrorConsumer(
-					(n, p) -> processingErrorEventFired.incrementAndGet()
+					message -> processingErrorEventFired.incrementAndGet()
 				).sizeExceededConsumer(
-					(n, p) -> {
+					message -> {
 						sizeExceededEventFired.incrementAndGet();
 						countDownLatch.countDown();
 					}
 				).successConsumer(
-					(n, p) -> {
+					message -> {
 						successEventFired.incrementAndGet();
 						countDownLatch.countDown();
 					}
 				).virusFoundConsumer(
-					(n, p) -> {
+					message -> {
 						virusFoundEventFired.incrementAndGet();
 						countDownLatch.countDown();
 					}

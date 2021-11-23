@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -42,15 +42,14 @@ import org.osgi.service.component.annotations.Reference;
 		"antivirus.async.event=SIZE_EXCEEDED", "antivirus.async.event=SUCCESS",
 		"antivirus.async.event=VIRUS_FOUND"
 	},
-	service = BiConsumer.class
+	service = Consumer.class
 )
-public class AntivirusAsyncRetryEventListener
-	implements BiConsumer<String, Message> {
+public class AntivirusAsyncRetryEventListener implements Consumer<Message> {
 
 	@Override
-	public void accept(String eventName, Message message) {
-		AntivirusAsyncEvent antivirusAsyncEvent = AntivirusAsyncEvent.valueOf(
-			eventName);
+	public void accept(Message message) {
+		AntivirusAsyncEvent antivirusAsyncEvent =
+			(AntivirusAsyncEvent)message.get("antivirusAsyncEvent");
 
 		if ((antivirusAsyncEvent == AntivirusAsyncEvent.MISSING) ||
 			(antivirusAsyncEvent == AntivirusAsyncEvent.SIZE_EXCEEDED) ||

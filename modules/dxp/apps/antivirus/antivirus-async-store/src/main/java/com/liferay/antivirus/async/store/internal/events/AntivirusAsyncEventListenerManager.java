@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -99,10 +99,10 @@ public class AntivirusAsyncEventListenerManager {
 		_virusFoundConsumerServiceTrackerMap.close();
 	}
 
-	private List<BiConsumer<String, Message>> _getEventListeners(
+	private List<Consumer<Message>> _getEventListeners(
 		AntivirusAsyncEvent antivirusAsyncEvent, String className) {
 
-		List<BiConsumer<String, Message>> list = Collections.emptyList();
+		List<Consumer<Message>> list = Collections.emptyList();
 
 		if (antivirusAsyncEvent == AntivirusAsyncEvent.MISSING) {
 			list = _missingConsumerServiceTrackerMap.getService(className);
@@ -132,7 +132,7 @@ public class AntivirusAsyncEventListenerManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_getServiceTrackerMap(
 			BundleContext bundleContext,
 			AntivirusAsyncEvent antivirusAsyncEvent) {
@@ -140,8 +140,7 @@ public class AntivirusAsyncEventListenerManager {
 		String eventName = antivirusAsyncEvent.name();
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext,
-			(Class<BiConsumer<String, Message>>)(Class<?>)BiConsumer.class,
+			bundleContext, (Class<Consumer<Message>>)(Class<?>)Consumer.class,
 			StringBundler.concat("(antivirus.async.event=", eventName, ")"),
 			_SERVICE_REFERENCE_MAPPER);
 	}
@@ -149,9 +148,11 @@ public class AntivirusAsyncEventListenerManager {
 	private void _onEvent(
 		AntivirusAsyncEvent antivirusAsyncEvent, Message message) {
 
+		message.put("antivirusAsyncEvent", antivirusAsyncEvent);
+
 		String className = message.getString("className");
 
-		List<BiConsumer<String, Message>> eventListeners = new ArrayList<>(
+		List<Consumer<Message>> eventListeners = new ArrayList<>(
 			_getEventListeners(antivirusAsyncEvent, className));
 
 		eventListeners.addAll(
@@ -161,13 +162,12 @@ public class AntivirusAsyncEventListenerManager {
 			_log.debug(
 				StringBundler.concat(
 					"Triggering Antivirus Async event listeners ",
-					eventListeners, " for ", antivirusAsyncEvent.name(), " on ",
-					message.getValues()));
+					eventListeners, " with ", message.getValues()));
 		}
 
-		for (BiConsumer<String, Message> eventListener : eventListeners) {
+		for (Consumer<Message> eventListener : eventListeners) {
 			try {
-				eventListener.accept(antivirusAsyncEvent.name(), message);
+				eventListener.accept(message);
 			}
 			catch (Throwable throwable) {
 				_log.error(
@@ -181,7 +181,7 @@ public class AntivirusAsyncEventListenerManager {
 
 	private static final String _ANY_CLASS = "<ANY_CLASS>";
 
-	private static final ServiceReferenceMapper<String, BiConsumer<String, ?>>
+	private static final ServiceReferenceMapper<String, Consumer<?>>
 		_SERVICE_REFERENCE_MAPPER = (serviceReference, emitter) -> {
 			List<String> classNames = StringUtil.asList(
 				serviceReference.getProperty("class.name"));
@@ -198,17 +198,17 @@ public class AntivirusAsyncEventListenerManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntivirusAsyncEventListenerManager.class);
 
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_missingConsumerServiceTrackerMap;
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_prepareConsumerServiceTrackerMap;
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_processingErrorConsumerServiceTrackerMap;
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_sizeExceededConsumerServiceTrackerMap;
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_successConsumerServiceTrackerMap;
-	private ServiceTrackerMap<String, List<BiConsumer<String, Message>>>
+	private ServiceTrackerMap<String, List<Consumer<Message>>>
 		_virusFoundConsumerServiceTrackerMap;
 
 }

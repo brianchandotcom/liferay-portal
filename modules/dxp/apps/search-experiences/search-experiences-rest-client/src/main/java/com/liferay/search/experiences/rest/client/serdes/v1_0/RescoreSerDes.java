@@ -60,11 +60,14 @@ public class RescoreSerDes {
 
 			sb.append("\"query\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(rescore.getQuery()));
-
-			sb.append("\"");
+			if (rescore.getQuery() instanceof String) {
+				sb.append("\"");
+				sb.append((String)rescore.getQuery());
+				sb.append("\"");
+			}
+			else {
+				sb.append(rescore.getQuery());
+			}
 		}
 
 		if (rescore.getQueryWeight() != null) {

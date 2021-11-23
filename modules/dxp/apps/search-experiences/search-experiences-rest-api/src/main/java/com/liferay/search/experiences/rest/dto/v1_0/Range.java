@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -274,6 +275,9 @@ public class Range implements Serializable {
 				sb.append((String)gt);
 				sb.append("\"");
 			}
+			else if (gt instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)gt));
+			}
 			else {
 				sb.append(gt);
 			}
@@ -290,6 +294,9 @@ public class Range implements Serializable {
 				sb.append("\"");
 				sb.append((String)gte);
 				sb.append("\"");
+			}
+			else if (gte instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)gte));
 			}
 			else {
 				sb.append(gte);
@@ -308,6 +315,9 @@ public class Range implements Serializable {
 				sb.append((String)lt);
 				sb.append("\"");
 			}
+			else if (lt instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)lt));
+			}
 			else {
 				sb.append(lt);
 			}
@@ -324,6 +334,9 @@ public class Range implements Serializable {
 				sb.append("\"");
 				sb.append((String)lte);
 				sb.append("\"");
+			}
+			else if (lte instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)lte));
 			}
 			else {
 				sb.append(lte);

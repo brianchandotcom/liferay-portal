@@ -74,11 +74,14 @@ public class MappingSerDes {
 
 			sb.append("\"itemReference\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(mapping.getItemReference()));
-
-			sb.append("\"");
+			if (mapping.getItemReference() instanceof String) {
+				sb.append("\"");
+				sb.append((String)mapping.getItemReference());
+				sb.append("\"");
+			}
+			else {
+				sb.append(mapping.getItemReference());
+			}
 		}
 
 		sb.append("}");

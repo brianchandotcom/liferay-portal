@@ -136,11 +136,14 @@ public class SettingsSerDes {
 
 			sb.append("\"themeSettings\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(settings.getThemeSettings()));
-
-			sb.append("\"");
+			if (settings.getThemeSettings() instanceof String) {
+				sb.append("\"");
+				sb.append((String)settings.getThemeSettings());
+				sb.append("\"");
+			}
+			else {
+				sb.append(settings.getThemeSettings());
+			}
 		}
 
 		sb.append("}");

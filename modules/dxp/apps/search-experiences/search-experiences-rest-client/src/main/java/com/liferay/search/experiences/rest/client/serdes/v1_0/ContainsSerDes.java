@@ -74,11 +74,14 @@ public class ContainsSerDes {
 
 			sb.append("\"value\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(contains.getValue()));
-
-			sb.append("\"");
+			if (contains.getValue() instanceof String) {
+				sb.append("\"");
+				sb.append((String)contains.getValue());
+				sb.append("\"");
+			}
+			else {
+				sb.append(contains.getValue());
+			}
 		}
 
 		if (contains.getValues() != null) {

@@ -62,11 +62,14 @@ public class CollectionConfigSerDes {
 
 			sb.append("\"collectionReference\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(collectionConfig.getCollectionReference()));
-
-			sb.append("\"");
+			if (collectionConfig.getCollectionReference() instanceof String) {
+				sb.append("\"");
+				sb.append((String)collectionConfig.getCollectionReference());
+				sb.append("\"");
+			}
+			else {
+				sb.append(collectionConfig.getCollectionReference());
+			}
 		}
 
 		if (collectionConfig.getCollectionType() != null) {

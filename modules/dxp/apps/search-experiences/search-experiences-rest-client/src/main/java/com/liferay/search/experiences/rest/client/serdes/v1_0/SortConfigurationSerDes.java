@@ -62,11 +62,14 @@ public class SortConfigurationSerDes {
 
 			sb.append("\"sorts\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(sortConfiguration.getSorts()));
-
-			sb.append("\"");
+			if (sortConfiguration.getSorts() instanceof String) {
+				sb.append("\"");
+				sb.append((String)sortConfiguration.getSorts());
+				sb.append("\"");
+			}
+			else {
+				sb.append(sortConfiguration.getSorts());
+			}
 		}
 
 		sb.append("}");

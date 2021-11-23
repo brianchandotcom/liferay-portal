@@ -62,11 +62,14 @@ public class FieldSerDes {
 
 			sb.append("\"defaultValue\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(field.getDefaultValue()));
-
-			sb.append("\"");
+			if (field.getDefaultValue() instanceof String) {
+				sb.append("\"");
+				sb.append((String)field.getDefaultValue());
+				sb.append("\"");
+			}
+			else {
+				sb.append(field.getDefaultValue());
+			}
 		}
 
 		if (field.getFieldMappings() != null) {

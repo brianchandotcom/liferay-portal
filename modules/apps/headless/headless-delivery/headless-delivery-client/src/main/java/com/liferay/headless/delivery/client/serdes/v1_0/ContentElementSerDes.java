@@ -62,11 +62,14 @@ public class ContentElementSerDes {
 
 			sb.append("\"content\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(contentElement.getContent()));
-
-			sb.append("\"");
+			if (contentElement.getContent() instanceof String) {
+				sb.append("\"");
+				sb.append((String)contentElement.getContent());
+				sb.append("\"");
+			}
+			else {
+				sb.append(contentElement.getContent());
+			}
 		}
 
 		if (contentElement.getContentType() != null) {

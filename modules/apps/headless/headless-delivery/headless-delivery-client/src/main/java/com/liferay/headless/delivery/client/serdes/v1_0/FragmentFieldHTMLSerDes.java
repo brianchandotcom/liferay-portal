@@ -62,11 +62,14 @@ public class FragmentFieldHTMLSerDes {
 
 			sb.append("\"html\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragmentFieldHTML.getHtml()));
-
-			sb.append("\"");
+			if (fragmentFieldHTML.getHtml() instanceof String) {
+				sb.append("\"");
+				sb.append((String)fragmentFieldHTML.getHtml());
+				sb.append("\"");
+			}
+			else {
+				sb.append(fragmentFieldHTML.getHtml());
+			}
 		}
 
 		sb.append("}");

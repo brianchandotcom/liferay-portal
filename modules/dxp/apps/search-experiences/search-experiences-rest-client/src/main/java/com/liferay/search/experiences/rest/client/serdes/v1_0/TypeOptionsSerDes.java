@@ -74,11 +74,14 @@ public class TypeOptionsSerDes {
 
 			sb.append("\"max\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(typeOptions.getMax()));
-
-			sb.append("\"");
+			if (typeOptions.getMax() instanceof String) {
+				sb.append("\"");
+				sb.append((String)typeOptions.getMax());
+				sb.append("\"");
+			}
+			else {
+				sb.append(typeOptions.getMax());
+			}
 		}
 
 		if (typeOptions.getMin() != null) {
@@ -88,11 +91,14 @@ public class TypeOptionsSerDes {
 
 			sb.append("\"min\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(typeOptions.getMin()));
-
-			sb.append("\"");
+			if (typeOptions.getMin() instanceof String) {
+				sb.append("\"");
+				sb.append((String)typeOptions.getMin());
+				sb.append("\"");
+			}
+			else {
+				sb.append(typeOptions.getMin());
+			}
 		}
 
 		if (typeOptions.getNullable() != null) {
@@ -142,11 +148,14 @@ public class TypeOptionsSerDes {
 
 			sb.append("\"step\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(typeOptions.getStep()));
-
-			sb.append("\"");
+			if (typeOptions.getStep() instanceof String) {
+				sb.append("\"");
+				sb.append((String)typeOptions.getStep());
+				sb.append("\"");
+			}
+			else {
+				sb.append(typeOptions.getStep());
+			}
 		}
 
 		if (typeOptions.getUnit() != null) {

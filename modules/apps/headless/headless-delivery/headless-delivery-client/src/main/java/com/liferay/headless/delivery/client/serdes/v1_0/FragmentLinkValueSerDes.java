@@ -62,11 +62,14 @@ public class FragmentLinkValueSerDes {
 
 			sb.append("\"href\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragmentLinkValue.getHref()));
-
-			sb.append("\"");
+			if (fragmentLinkValue.getHref() instanceof String) {
+				sb.append("\"");
+				sb.append((String)fragmentLinkValue.getHref());
+				sb.append("\"");
+			}
+			else {
+				sb.append(fragmentLinkValue.getHref());
+			}
 		}
 
 		if (fragmentLinkValue.getTarget() != null) {

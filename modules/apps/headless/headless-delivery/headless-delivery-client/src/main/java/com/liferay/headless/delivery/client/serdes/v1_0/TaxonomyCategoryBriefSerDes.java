@@ -62,12 +62,18 @@ public class TaxonomyCategoryBriefSerDes {
 
 			sb.append("\"embeddedTaxonomyCategory\": ");
 
-			sb.append("\"");
+			if (taxonomyCategoryBrief.getEmbeddedTaxonomyCategory() instanceof
+					String) {
 
-			sb.append(
-				_escape(taxonomyCategoryBrief.getEmbeddedTaxonomyCategory()));
-
-			sb.append("\"");
+				sb.append("\"");
+				sb.append(
+					(String)
+						taxonomyCategoryBrief.getEmbeddedTaxonomyCategory());
+				sb.append("\"");
+			}
+			else {
+				sb.append(taxonomyCategoryBrief.getEmbeddedTaxonomyCategory());
+			}
 		}
 
 		if (taxonomyCategoryBrief.getTaxonomyCategoryId() != null) {

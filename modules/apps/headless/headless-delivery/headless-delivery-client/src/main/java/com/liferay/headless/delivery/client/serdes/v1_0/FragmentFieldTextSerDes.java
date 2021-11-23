@@ -72,11 +72,14 @@ public class FragmentFieldTextSerDes {
 
 			sb.append("\"text\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragmentFieldText.getText()));
-
-			sb.append("\"");
+			if (fragmentFieldText.getText() instanceof String) {
+				sb.append("\"");
+				sb.append((String)fragmentFieldText.getText());
+				sb.append("\"");
+			}
+			else {
+				sb.append(fragmentFieldText.getText());
+			}
 		}
 
 		sb.append("}");

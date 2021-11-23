@@ -114,11 +114,14 @@ public class SearchResponseSerDes {
 
 			sb.append("\"request\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(searchResponse.getRequest()));
-
-			sb.append("\"");
+			if (searchResponse.getRequest() instanceof String) {
+				sb.append("\"");
+				sb.append((String)searchResponse.getRequest());
+				sb.append("\"");
+			}
+			else {
+				sb.append(searchResponse.getRequest());
+			}
 		}
 
 		if (searchResponse.getRequestString() != null) {
@@ -142,11 +145,14 @@ public class SearchResponseSerDes {
 
 			sb.append("\"response\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(searchResponse.getResponse()));
-
-			sb.append("\"");
+			if (searchResponse.getResponse() instanceof String) {
+				sb.append("\"");
+				sb.append((String)searchResponse.getResponse());
+				sb.append("\"");
+			}
+			else {
+				sb.append(searchResponse.getResponse());
+			}
 		}
 
 		if (searchResponse.getResponseString() != null) {

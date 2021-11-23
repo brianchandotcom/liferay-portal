@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -236,6 +237,9 @@ public class ContentElement implements Serializable {
 				sb.append("\"");
 				sb.append((String)content);
 				sb.append("\"");
+			}
+			else if (content instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)content));
 			}
 			else {
 				sb.append(content);

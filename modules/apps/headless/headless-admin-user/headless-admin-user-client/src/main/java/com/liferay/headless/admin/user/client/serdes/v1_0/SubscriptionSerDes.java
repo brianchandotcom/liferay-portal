@@ -68,11 +68,14 @@ public class SubscriptionSerDes {
 
 			sb.append("\"contentId\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(subscription.getContentId()));
-
-			sb.append("\"");
+			if (subscription.getContentId() instanceof String) {
+				sb.append("\"");
+				sb.append((String)subscription.getContentId());
+				sb.append("\"");
+			}
+			else {
+				sb.append(subscription.getContentId());
+			}
 		}
 
 		if (subscription.getContentType() != null) {

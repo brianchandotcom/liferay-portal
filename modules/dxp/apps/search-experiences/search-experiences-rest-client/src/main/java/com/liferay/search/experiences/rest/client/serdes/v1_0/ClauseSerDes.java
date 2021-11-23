@@ -160,11 +160,14 @@ public class ClauseSerDes {
 
 			sb.append("\"query\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(clause.getQuery()));
-
-			sb.append("\"");
+			if (clause.getQuery() instanceof String) {
+				sb.append("\"");
+				sb.append((String)clause.getQuery());
+				sb.append("\"");
+			}
+			else {
+				sb.append(clause.getQuery());
+			}
 		}
 
 		if (clause.getType() != null) {

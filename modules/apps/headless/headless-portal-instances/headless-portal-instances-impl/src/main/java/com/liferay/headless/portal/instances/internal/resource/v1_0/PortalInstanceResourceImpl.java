@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
+import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -133,11 +135,17 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 					company.getMx());
 
-			defaultAdminUser.setScreenName(
-				administratorFirstName + administratorLastName);
 			defaultAdminUser.setEmailAddress(administratorEmailAddress);
 			defaultAdminUser.setFirstName(administratorFirstName);
 			defaultAdminUser.setLastName(administratorLastName);
+
+			ScreenNameGenerator screenNameGenerator =
+				ScreenNameGeneratorFactory.getInstance();
+
+			defaultAdminUser.setScreenName(
+				screenNameGenerator.generate(
+					company.getCompanyId(), defaultAdminUser.getUserId(),
+					administratorEmailAddress));
 
 			_userLocalService.updateUser(defaultAdminUser);
 		}

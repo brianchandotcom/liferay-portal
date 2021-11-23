@@ -55,13 +55,9 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_getTestCaseDependenciesFileLocations();
-
 		_getTestCaseFileNames();
 
 		_checkDependenciesFileReferences(absolutePath, fileName);
-
-		_getTestCaseGlobalDependenciesFileLocations();
 
 		_checkGlobalDependenciesFileReferences(absolutePath, fileName);
 
@@ -71,6 +67,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 	private synchronized void _checkDependenciesFileReferences(
 			String absolutePath, String fileName)
 		throws IOException {
+
+		_getTestCaseDependenciesFileLocations();
 
 		if (!_dependenciesFileLocationsMapIsReady) {
 			for (String testCaseFileName : _testCaseFileNames) {
@@ -146,6 +144,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 	private synchronized void _checkGlobalDependenciesFileReferences(
 			String absolutePath, String fileName)
 		throws IOException {
+
+		_getTestCaseGlobalDependenciesFileLocations();
 
 		if (!_dependenciesGlobalFileLocationsMapIsReady) {
 			for (String testCaseFileName : _testCaseFileNames) {

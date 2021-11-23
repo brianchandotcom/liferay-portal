@@ -44,6 +44,44 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-133818. Able to add Site Administration permissions for specific site."
+	@priority = "4"
+	test CanAddSitePermissionForSpecificSite {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addRegularRole(
+			roleKey = "Roles Regrole Name",
+			roleTitle = "Roles Regrole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+			roleTitle = "Roles Regrole Name",
+			siteNameScope = "${siteName}");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+			permissionNavigationValue = "Documents and Media",
+			siteNameScope = "${siteName}");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Documents",
+			siteNameScope = "${siteName}");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View Site and Asset Library Administration Menu",
+			permissionNavigationValue = "Site Settings > Site",
+			siteNameScope = "${siteName}");
+
+		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
+	}
+
 	@priority = "4"
 	test CanRemoveSiteInScope {
 		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#CanRemoveSiteInScope";

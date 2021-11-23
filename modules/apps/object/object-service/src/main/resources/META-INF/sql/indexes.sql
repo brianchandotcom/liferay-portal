@@ -24,6 +24,7 @@ create index IX_E27AC523 on ObjectLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
 create index IX_5F97F7CF on ObjectLayoutBox (objectLayoutTabId);
 create index IX_CDCBE8DC on ObjectLayoutBox (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_E992BFE1 on ObjectLayoutColumn (objectFieldId);
 create index IX_46CE5537 on ObjectLayoutColumn (objectLayoutRowId);
 create index IX_53BB1AD9 on ObjectLayoutColumn (uuid_[$COLUMN_LENGTH:75$], companyId);
 

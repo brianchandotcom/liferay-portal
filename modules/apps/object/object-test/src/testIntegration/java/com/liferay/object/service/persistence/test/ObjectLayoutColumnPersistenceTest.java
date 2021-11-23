@@ -206,6 +206,13 @@ public class ObjectLayoutColumnPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectFieldId() throws Exception {
+		_persistence.countByObjectFieldId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectFieldId(0L);
+	}
+
+	@Test
 	public void testCountByObjectLayoutRowId() throws Exception {
 		_persistence.countByObjectLayoutRowId(RandomTestUtil.nextLong());
 

@@ -340,6 +340,150 @@ public interface ObjectLayoutColumnPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the object layout columns where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @return the matching object layout columns
+	 */
+	public java.util.List<ObjectLayoutColumn> findByObjectFieldId(
+		long objectFieldId);
+
+	/**
+	 * Returns a range of all the object layout columns where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object layout columns
+	 * @param end the upper bound of the range of object layout columns (not inclusive)
+	 * @return the range of matching object layout columns
+	 */
+	public java.util.List<ObjectLayoutColumn> findByObjectFieldId(
+		long objectFieldId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object layout columns where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object layout columns
+	 * @param end the upper bound of the range of object layout columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object layout columns
+	 */
+	public java.util.List<ObjectLayoutColumn> findByObjectFieldId(
+		long objectFieldId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object layout columns where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object layout columns
+	 * @param end the upper bound of the range of object layout columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object layout columns
+	 */
+	public java.util.List<ObjectLayoutColumn> findByObjectFieldId(
+		long objectFieldId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object layout column in the ordered set where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object layout column
+	 * @throws NoSuchObjectLayoutColumnException if a matching object layout column could not be found
+	 */
+	public ObjectLayoutColumn findByObjectFieldId_First(
+			long objectFieldId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+				orderByComparator)
+		throws NoSuchObjectLayoutColumnException;
+
+	/**
+	 * Returns the first object layout column in the ordered set where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object layout column, or <code>null</code> if a matching object layout column could not be found
+	 */
+	public ObjectLayoutColumn fetchByObjectFieldId_First(
+		long objectFieldId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+			orderByComparator);
+
+	/**
+	 * Returns the last object layout column in the ordered set where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object layout column
+	 * @throws NoSuchObjectLayoutColumnException if a matching object layout column could not be found
+	 */
+	public ObjectLayoutColumn findByObjectFieldId_Last(
+			long objectFieldId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+				orderByComparator)
+		throws NoSuchObjectLayoutColumnException;
+
+	/**
+	 * Returns the last object layout column in the ordered set where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object layout column, or <code>null</code> if a matching object layout column could not be found
+	 */
+	public ObjectLayoutColumn fetchByObjectFieldId_Last(
+		long objectFieldId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+			orderByComparator);
+
+	/**
+	 * Returns the object layout columns before and after the current object layout column in the ordered set where objectFieldId = &#63;.
+	 *
+	 * @param objectLayoutColumnId the primary key of the current object layout column
+	 * @param objectFieldId the object field ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object layout column
+	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
+	 */
+	public ObjectLayoutColumn[] findByObjectFieldId_PrevAndNext(
+			long objectLayoutColumnId, long objectFieldId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
+				orderByComparator)
+		throws NoSuchObjectLayoutColumnException;
+
+	/**
+	 * Removes all the object layout columns where objectFieldId = &#63; from the database.
+	 *
+	 * @param objectFieldId the object field ID
+	 */
+	public void removeByObjectFieldId(long objectFieldId);
+
+	/**
+	 * Returns the number of object layout columns where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @return the number of matching object layout columns
+	 */
+	public int countByObjectFieldId(long objectFieldId);
+
+	/**
 	 * Returns all the object layout columns where objectLayoutRowId = &#63;.
 	 *
 	 * @param objectLayoutRowId the object layout row ID

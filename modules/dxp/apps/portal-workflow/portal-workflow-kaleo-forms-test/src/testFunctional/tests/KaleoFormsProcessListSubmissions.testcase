@@ -119,11 +119,43 @@ definition {
 	}
 
 	@description = "Verify that the user can filter by Modified Date ."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanFilterByModifiedDate {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70691 CanFilterByModifiedDate pending implementation
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process B");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
+
+
 
 	}
 

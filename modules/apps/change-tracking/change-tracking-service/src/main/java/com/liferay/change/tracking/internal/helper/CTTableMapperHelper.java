@@ -131,7 +131,7 @@ public class CTTableMapperHelper {
 			});
 	}
 
-	protected void setRightColumnName(String rightColumnName) {
+	public void setRightColumnName(String rightColumnName) {
 		_rightColumnName = rightColumnName;
 	}
 

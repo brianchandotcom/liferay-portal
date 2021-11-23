@@ -605,6 +605,9 @@ public class EditAssetListDisplayContext {
 		).put(
 			"availableSegmentsEntries", !getAvailableSegmentsEntries().isEmpty()
 		).put(
+			"collectionsVariationsPrioritization",
+			FFCollectionsVariationsPrioritizationConfigurationUtil.prioritizationEnabled()
+		).put(
 			"createNewSegmentURL",
 			() -> {
 				PortletURL segmentsPortletURL =
@@ -648,9 +651,6 @@ public class EditAssetListDisplayContext {
 		).put(
 			"validAssetListEntry",
 			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
-		).put(
-			"collectionsVariationsPrioritization",
-			FFCollectionsVariationsPrioritizationConfigurationUtil.prioritizationEnabled()
 		).build();
 	}
 
@@ -1236,11 +1236,11 @@ public class EditAssetListDisplayContext {
 	}
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRelLists =
 			getAssetListEntrySegmentsEntryRels();
 
 		Stream<AssetListEntrySegmentsEntryRel> stream =
-			assetListEntrySegmentsEntryRels.stream();
+			assetListEntrySegmentsEntryRelLists.stream();
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);

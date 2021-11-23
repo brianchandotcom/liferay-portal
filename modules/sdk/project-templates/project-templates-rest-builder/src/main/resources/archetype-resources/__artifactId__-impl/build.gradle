@@ -16,7 +16,7 @@ dependencies {
 #end
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api"
-	compileOnly group: "javax.xml.bind", name: "jaxb-api"
+	compileOnly group: "javax.xml.bind", name: "jaxb-api", version: "2.3.0"
 #if (!${liferayVersion.startsWith("7.1")})
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 #end

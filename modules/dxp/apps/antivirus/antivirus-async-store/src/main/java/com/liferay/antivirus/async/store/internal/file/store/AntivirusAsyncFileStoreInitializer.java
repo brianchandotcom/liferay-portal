@@ -197,9 +197,7 @@ public class AntivirusAsyncFileStoreInitializer
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
+		_serviceRegistration.unregister();
 	}
 
 	private Trigger _createTrigger(String jobName) {

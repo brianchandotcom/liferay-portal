@@ -692,8 +692,6 @@ definition {
 	@description = "This is a test for LPS-136951. It checks that Stacked stars can be added and removed from a wiki entry."
 	@priority = "5"
 	test CanRevokeStackedStarsFromWiki {
-		property custom.properties = "default.layout.template.id=1_column";
-
 		Ratings.configureRatingType(
 			applications = "Wiki",
 			portlet = "Ratings",

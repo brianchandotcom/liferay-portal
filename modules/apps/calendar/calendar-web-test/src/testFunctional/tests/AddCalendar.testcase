@@ -131,9 +131,9 @@ definition {
 	@description = "LRQA-71360 - Verify that the user can add multiple calendars with the same name"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanAddMultipleCalendars {
+	test CanAddCalendarsWithSameName {
 
-		// TODO LRQA-71605 CanAddMultipleCalendars pending implementation
+		// TODO LRQA-71605 CanAddCalendarsWithSameName pending implementation
 
 	}
 
@@ -209,15 +209,6 @@ definition {
 
 	}
 
-	@description = "LRQA-71360 - Verify that the translation icon for the -Description- field is in English-US by default"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DescriptionTranslationIconHasEnglishByDefault {
-
-		// TODO LRQA-71603 DescriptionTranslationIconHasEnglishByDefault pending implementation
-
-	}
-
 	@description = "LRQA-71360 - Verify that the name field is required"
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -227,12 +218,12 @@ definition {
 
 	}
 
-	@description = "LRQA-71360 - Verify that the translation icon for the -Name- field is in English-US by default"
+	@description = "Verify that the translation icon has the Instance Language by default"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test NameTranslationIconHasEnglishByDefault {
+	test TranslationIconHasInstanceLanguageByDefault {
 
-		// TODO LRQA-71601 NameTranslationIconHasEnglishByDefault pending implementation
+		// TODO LRQA-71601 TranslationIconHasInstanceLanguageByDefault pending implementation
 
 	}
 

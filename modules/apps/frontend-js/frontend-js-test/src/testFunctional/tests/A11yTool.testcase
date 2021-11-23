@@ -125,6 +125,56 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142325. Verifies a rule violation will be detected when a fragment with a violation is added to a page with no violations."
+	@priority = "4"
+	test CanDetectViolationInDynamicPage {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		task("Navigate to a page with no violations") {
+			Navigator.gotoPage(pageName = "Blank Test Page");
+
+			// Workaround for side panel sometimes displaying previous violations inccorectly LPS-138624
+
+			if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+				Refresh();
+			}
+
+			if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+				VerifyElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_NO_VIOLATIONS");
+			}
+
+			AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task("Add a widget with a rule violation") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blank Test Page",
+				widgetName = "JS A11y Sample Web");
+		}
+
+		task("Assert the rule violation is highlighted and appear on the side panel") {
+			// Workaround for side panel sometimes not displaying LPS-141442
+
+			while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+				Refresh();
+			}
+
+			AssertElementPresent(
+				key_text = "",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-142324. Verifies the correct target and code is displayed."
 	@priority = "4"
 	test CanDisplayTargetCode {

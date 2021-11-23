@@ -1232,8 +1232,9 @@ public class EditAssetListDisplayContext {
 	}
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRelList =
-			getAssetListEntrySegmentsEntryRels();
+		List<AssetListEntrySegmentsEntryRel>
+			assetListEntrySegmentsEntryRelList =
+				getAssetListEntrySegmentsEntryRels();
 
 		Stream<AssetListEntrySegmentsEntryRel> stream =
 			assetListEntrySegmentsEntryRelList.stream();

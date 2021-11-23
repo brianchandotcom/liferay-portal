@@ -9,7 +9,7 @@ import java.util.*
 
 int startCount = 1;
 
-int numCount = 301;
+int numCount = 401;
 
 companyId = com.liferay.portal.kernel.util.PortalUtil.getCompanyId(actionRequest)
 userId = com.liferay.portal.kernel.util.PortalUtil.getUserId(actionRequest)

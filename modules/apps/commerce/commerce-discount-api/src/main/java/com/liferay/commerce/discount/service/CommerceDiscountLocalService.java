@@ -649,6 +649,10 @@ public interface CommerceDiscountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getValidCommerceDiscountsCount(
+		long commerceDiscountId, long cpDefinitionId, long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getValidCommerceDiscountsCount(
 		long commerceAccountId, long[] commerceAccountGroupIds,
 		long commerceChannelId, long commerceDiscountId);
 

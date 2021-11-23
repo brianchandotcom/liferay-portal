@@ -1043,6 +1043,14 @@ public class CommerceDiscountLocalServiceWrapper
 
 	@Override
 	public int getValidCommerceDiscountsCount(
+		long commerceDiscountId, long cpDefinitionId, long cpInstanceId) {
+
+		return _commerceDiscountLocalService.getValidCommerceDiscountsCount(
+			commerceDiscountId, cpDefinitionId, cpInstanceId);
+	}
+
+	@Override
+	public int getValidCommerceDiscountsCount(
 		long commerceAccountId, long[] commerceAccountGroupIds,
 		long commerceChannelId, long commerceDiscountId) {
 

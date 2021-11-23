@@ -16,6 +16,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
+import userEvent from '@testing-library/user-event';
 
 import VocabulariesSelectionBox from '../../../src/main/resources/META-INF/resources/js/VocabulariesSelectionBox';
 
@@ -204,5 +205,45 @@ describe('VocabulariesSelectionBox', () => {
 			'#availableAssetVocabularyIds option:disabled'
 		);
 		expect(disabledVocabularies.length).toBe(0);
+	});
+
+	it('prevents to move more than two vocaularies from Available to In Use', () => {
+		const {container} = render(
+			<VocabulariesSelectionBox {...mockPropsWithoutSelected} />
+		);
+
+		const availableSelect = container.querySelector(
+			'#availableAssetVocabularyIds'
+		);
+
+		userEvent.selectOptions(availableSelect, ['extension']);
+
+		// We need to fire change event after the select options
+
+		fireEvent.change(availableSelect);
+
+		let checkedVocabularies = container.querySelectorAll(
+			'#availableAssetVocabularyIds option:checked'
+		);
+		const leftToRightButton = container.querySelector(
+			'.transfer-button-ltr'
+		);
+
+		expect(checkedVocabularies.length).toBe(1);
+		expect(leftToRightButton.disabled).toBe(false);
+
+		userEvent.selectOptions(availableSelect, [
+			'extension',
+			'test',
+			'stage',
+		]);
+		fireEvent.change(availableSelect);
+
+		checkedVocabularies = container.querySelectorAll(
+			'#availableAssetVocabularyIds option:checked'
+		);
+
+		expect(checkedVocabularies.length).toBe(3);
+		expect(leftToRightButton.disabled).toBe(true);
 	});
 });

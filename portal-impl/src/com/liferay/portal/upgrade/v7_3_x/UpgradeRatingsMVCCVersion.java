@@ -14,12 +14,12 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
-import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.upgrade.PortalMVCCVersionUpgradeProcess;
 
 /**
  * @author Preston Crary
  */
-public class UpgradeRatingsMVCCVersion extends MVCCVersionUpgradeProcess {
+public class UpgradeRatingsMVCCVersion extends PortalMVCCVersionUpgradeProcess {
 
 	@Override
 	protected String[] getExcludedTableNames() {

@@ -60,6 +60,10 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 
 		_checkDependenciesFileReferences(absolutePath, fileName);
 
+		_getTestCaseGlobalDependenciesFileLocations();
+
+		_checkGlobalDependenciesFileReferences(absolutePath, fileName);
+
 		return content;
 	}
 
@@ -131,6 +135,63 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		}
 
 		_dependenciesFileLocationsMapIsReady = true;
+	}
+
+	private synchronized void _checkGlobalDependenciesFileReferences(
+			String absolutePath, String fileName)
+		throws IOException {
+
+		if (!_dependenciesGlobalFileLocationsMapIsReady) {
+			for (String testCaseFileName : _testCaseFileNames) {
+				File testCaseFile = new File(testCaseFileName);
+
+				String testCaseFileContent = FileUtil.read(testCaseFile);
+
+				for (Map.Entry<String, Set<String>> entry :
+						_dependenciesGlobalFileLocationsMap.entrySet()) {
+
+					String dependenciesFileLocation = entry.getKey();
+
+					String dependenciesFileName =
+						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
+
+					if (testCaseFileContent.contains(
+							StringPool.QUOTE + dependenciesFileName +
+								StringPool.QUOTE)) {
+
+						Set<String> referencesFiles = entry.getValue();
+
+						referencesFiles.add(testCaseFileName);
+
+						_dependenciesGlobalFileLocationsMap.put(
+							dependenciesFileLocation, referencesFiles);
+					}
+				}
+			}
+		}
+
+		for (Map.Entry<String, Set<String>> entry :
+				_dependenciesGlobalFileLocationsMap.entrySet()) {
+
+			Set<String> referencesFiles = entry.getValue();
+
+			if (referencesFiles.size() == 1) {
+				for (String referencesFile : referencesFiles) {
+					if (referencesFile.equals(absolutePath)) {
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Test dependencies file '", entry.getKey(),
+								"' is only referenced by one module, move it ",
+								"to module dependencies directory"));
+
+						break;
+					}
+				}
+			}
+		}
+
+		_dependenciesGlobalFileLocationsMapIsReady = true;
 	}
 
 	private synchronized void _getTestCaseDependenciesFileLocations()
@@ -286,6 +347,82 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		}
 	}
 
+	private synchronized void _getTestCaseGlobalDependenciesFileLocations()
+		throws IOException {
+
+		if (!_dependenciesGlobalFileLocationsMap.isEmpty()) {
+			return;
+		}
+
+		File directory = new File(
+			getPortalDir(), _GLOBAL_DEPENDENCIES_DIRECTORY);
+
+		Path dirPath = directory.toPath();
+
+		Files.walkFileTree(
+			dirPath, EnumSet.noneOf(FileVisitOption.class), 25,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (ArrayUtil.contains(
+							_SKIP_DIR_NAMES,
+							String.valueOf(dirPath.getFileName()))) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					String absolutePath = SourceUtil.getAbsolutePath(dirPath);
+
+					if (absolutePath.matches(".+/dependencies/.+\\..+")) {
+						_dependenciesGlobalFileLocationsMap.put(
+							SourceUtil.getAbsolutePath(absolutePath),
+							new TreeSet<>());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					File dirFile = dirPath.toFile();
+
+					File[] dependenciesFiles = dirFile.listFiles(
+						new FileFilter() {
+
+							@Override
+							public boolean accept(File file) {
+								if (!file.isFile()) {
+									return false;
+								}
+
+								return true;
+							}
+
+						});
+
+					for (File dependenciesFile : dependenciesFiles) {
+						_dependenciesGlobalFileLocationsMap.put(
+							SourceUtil.getAbsolutePath(
+								dependenciesFile.getPath()),
+							new TreeSet<>());
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		for (Map.Entry<String, Set<String>> entry :
+				_dependenciesGlobalFileLocationsMap.entrySet()) {
+
+			System.out.println(entry.getKey());
+		}
+	}
+
+	private static final String _GLOBAL_DEPENDENCIES_DIRECTORY =
+		"portal-web/test/functional/com/liferay/portalweb/dependencies";
+
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".gradle", ".idea", ".m2", ".releng", ".settings", "bin",
 		"build", "classes", "node_modules", "node_modules_cache", "poshi",
@@ -299,6 +436,9 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 	private static final Map<String, Set<String>>
 		_dependenciesFileLocationsMap = new HashMap<>();
 	private static boolean _dependenciesFileLocationsMapIsReady;
+	private static final Map<String, Set<String>>
+		_dependenciesGlobalFileLocationsMap = new HashMap<>();
+	private static boolean _dependenciesGlobalFileLocationsMapIsReady;
 	private static final List<String> _testCaseFileNames = new ArrayList<>();
 
 }

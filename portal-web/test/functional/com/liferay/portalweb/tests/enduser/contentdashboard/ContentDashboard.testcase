@@ -1970,7 +1970,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: doc");
 		}
-
 	}
 
 	@description = "LPS-117419 When the item selector for tags displays all available tags and there's a tag that is created in two different sites with the same name, the repeated tag shows only once, the filter results retrieve contents labeled with those categories from the two sites and there's only one filter applied"
@@ -2246,7 +2245,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: mp3");
 		}
-
 	}
 
 	@description = "LPS-133354 Given The Extension filter modal
@@ -2305,7 +2303,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: zip");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2335,7 +2332,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: json");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2365,7 +2361,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: pptx");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2395,7 +2390,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: xls");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2425,7 +2419,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: docx");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2455,7 +2448,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: pdf");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal
@@ -2485,7 +2477,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Extension: mp4");
 		}
-
 	}
 
 	@description = "LPS-131793: Given the categorization section in Documents and Media
@@ -2530,7 +2521,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_BY_EXTENSION_EMPTY",
 				value1 = "No results were found.");
 		}
-
 	}
 
 	@description = "LPS-122873 When the user configure the audit graph to have just one vocabulary, the relative ordering of the categories remain the same"
@@ -2943,7 +2933,6 @@ definition {
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "3 Results for");
 		}
-
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal

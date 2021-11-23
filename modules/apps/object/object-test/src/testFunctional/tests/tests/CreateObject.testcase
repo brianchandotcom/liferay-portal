@@ -1497,7 +1497,6 @@ definition {
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
-	@ignore = "true"
 	@priority = "4"
 	test CanSetDifferentLanguageForFieldLabel {
 		ObjectAdmin.addObjectViaAPI(

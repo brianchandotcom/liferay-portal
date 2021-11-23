@@ -90,6 +90,15 @@ public class ${schemaName}SerDes {
 
 				<#if allSchemas[propertyType]??>
 					sb.append(String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
+				<#elseif stringUtil.equals(propertyType, "Object")>
+					if (${schemaVarName}.get${capitalizedPropertyName}() instanceof String) {
+						sb.append("\"");
+						sb.append((String)${schemaVarName}.get${capitalizedPropertyName}());
+						sb.append("\"");
+					}
+					else {
+						sb.append(${schemaVarName}.get${capitalizedPropertyName}());
+					}
 				<#else>
 					<#if propertyType?contains("[]")>
 						sb.append("[");

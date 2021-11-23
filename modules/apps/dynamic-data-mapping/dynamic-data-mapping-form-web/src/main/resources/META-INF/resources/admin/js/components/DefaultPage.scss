@@ -3,6 +3,12 @@
 .lfr-ddm__default-page {
 	margin-top: 2rem;
 
+	&-buttons {
+		display: flex;
+		gap: 1rem;
+		margin-top: 3rem;
+	}
+
 	&-container {
 		background-color: $white;
 		border: thin solid $gray-300;

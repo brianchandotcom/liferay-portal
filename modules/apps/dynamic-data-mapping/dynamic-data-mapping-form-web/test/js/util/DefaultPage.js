@@ -36,4 +36,43 @@ describe('DefaultPage', () => {
 		expect(getByText('Page description')).toBeInTheDocument();
 		expect(getByText('Page title')).toBeInTheDocument();
 	});
+
+	it('shows submit again button when Limit to one submission per user is disabled', () => {
+		const {getByText} = render(<DefaultPage />);
+
+		expect(getByText('submit-again')).toBeInTheDocument();
+	});
+
+	it('hides submit again button when Limit to one submission per user is enabled', () => {
+		const {queryByText} = render(
+			<DefaultPage limitToOneSubmissionPerUser />
+		);
+
+		expect(queryByText('submit-again')).not.toBeInTheDocument();
+	});
+
+	it('hides partial results button if no url is provided', () => {
+		const {queryByText} = render(
+			<DefaultPage showPartialResultsToRespondents />
+		);
+
+		expect(queryByText('see-partial-results')).not.toBeInTheDocument();
+	});
+
+	it('shows partial results button when Show partial results to respondents is enabled', () => {
+		const {queryByText} = render(
+			<DefaultPage
+				formReportDataURL="http://liferay.com/"
+				showPartialResultsToRespondents
+			/>
+		);
+
+		expect(queryByText('see-partial-results')).toBeInTheDocument();
+	});
+
+	it('hides partial results button when Show partial results to respondents is disabled', () => {
+		const {queryByText} = render(<DefaultPage />);
+
+		expect(queryByText('see-partial-results')).not.toBeInTheDocument();
+	});
 });

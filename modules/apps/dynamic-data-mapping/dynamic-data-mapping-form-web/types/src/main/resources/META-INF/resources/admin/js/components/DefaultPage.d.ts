@@ -18,7 +18,10 @@ declare const DefaultPage: React.FC<IProps>;
 export default DefaultPage;
 interface IProps {
 	formDescription?: string;
+	formReportDataURL?: string;
 	formTitle: string;
+	limitToOneSubmissionPerUser?: boolean;
 	pageDescription: string;
 	pageTitle: string;
+	showPartialResultsToRespondents?: boolean;
 }

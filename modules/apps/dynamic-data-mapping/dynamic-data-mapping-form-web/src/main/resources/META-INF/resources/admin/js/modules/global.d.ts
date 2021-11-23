@@ -39,6 +39,8 @@ type LocalizedTextKey =
 	| 'error'
 	| 'please-add-at-least-one-field'
 	| 'respondents-can-see-all-submitted-form-data'
+	| 'see-partial-results'
+	| 'submit-again'
 	| 'understood';
 
 type LocalizedValue<T> = {

@@ -75,6 +75,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				<%
 				String pageDescription;
 				String pageTitle;
+				boolean showPartialResultsToRespondents = ddmFormDisplayContext.isFFShowPartialResultsEnabled() && ddmFormDisplayContext.isShowPartialResultsToRespondents();
 
 				if (ddmFormDisplayContext.isShowSuccessPage()) {
 					DDMFormSuccessPageSettings ddmFormSuccessPageSettings = ddmFormDisplayContext.getDDMFormSuccessPageSettings();
@@ -99,11 +100,17 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						HashMapBuilder.<String, Object>put(
 							"formDescription", formInstance.getDescription(displayLocale)
 						).put(
+							"formReportDataURL", formReportDataURL.toString()
+						).put(
 							"formTitle", formInstance.getName(displayLocale)
+						).put(
+							"limitToOneSubmissionPerUser", ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled()
 						).put(
 							"pageDescription", pageDescription
 						).put(
 							"pageTitle", pageTitle
+						).put(
+							"showPartialResultsToRespondents", showPartialResultsToRespondents
 						).build()
 					%>'
 				/>

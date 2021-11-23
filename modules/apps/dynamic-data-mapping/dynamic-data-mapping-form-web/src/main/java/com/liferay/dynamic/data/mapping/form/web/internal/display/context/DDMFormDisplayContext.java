@@ -568,6 +568,11 @@ public class DDMFormDisplayContext {
 		return _autosaveEnabled;
 	}
 
+	public boolean isFFShowPartialResultsEnabled() {
+		return _ffSubmissionsSettingsConfigurationActivator.
+			showPartialResultsEnabled();
+	}
+
 	public boolean isFormAvailable() throws PortalException {
 		if (isPreview()) {
 			return true;

@@ -100,4 +100,6 @@ public class CommerceDiscountConstants {
 	public static final String VALIDATOR_TYPE_PRE_QUALIFICATION =
 		"pre-qualification";
 
+	public static final String VALIDATOR_TYPE_TARGET = "target";
+
 }

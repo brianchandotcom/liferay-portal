@@ -865,7 +865,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Long _addDocumentFolder(
-			Long documentFolderId, String resourcePath,
+			Long documentFolderId, long groupId, String resourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -902,14 +902,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 		else {
 			documentFolder = documentFolderResource.postSiteDocumentFolder(
-				serviceContext.getScopeGroupId(), documentFolder);
+				groupId, documentFolder);
 		}
 
 		return documentFolder.getId();
 	}
 
 	private Map<String, String> _addDocuments(
-			Long documentFolderId, String parentResourcePath,
+			Long documentFolderId, long groupId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -934,8 +934,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				documentsStringUtilReplaceValues.putAll(
 					_addDocuments(
 						_addDocumentFolder(
-							documentFolderId, resourcePath, serviceContext),
-						resourcePath, serviceContext));
+							documentFolderId, groupId, resourcePath,
+							serviceContext),
+						groupId, resourcePath, serviceContext));
 
 				continue;
 			}
@@ -983,7 +984,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				document = documentResource.postSiteDocument(
-					serviceContext.getScopeGroupId(),
+					groupId,
 					MultipartBody.of(
 						Collections.singletonMap(
 							"file",
@@ -1024,8 +1025,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private Map<String, String> _addDocuments(ServiceContext serviceContext)
 		throws Exception {
 
-		return _addDocuments(
-			null, "/site-initializer/documents", serviceContext);
+		Group group = _groupLocalService.getCompanyGroup(
+			serviceContext.getCompanyId());
+
+		return HashMapBuilder.putAll(
+			_addDocuments(
+				null, group.getGroupId(), "/site-initializer/documents/company",
+				serviceContext)
+		).putAll(
+			_addDocuments(
+				null, serviceContext.getScopeGroupId(),
+				"/site-initializer/documents/group", serviceContext)
+		).build();
 	}
 
 	private void _addFragmentEntries(ServiceContext serviceContext)

@@ -1327,10 +1327,9 @@ definition {
 			entryTitle = "Digital Transformation or Digital Experience?",
 			tagName = "DXP");
 
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Digital Transformation or Digital Experience?");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -1366,19 +1365,19 @@ definition {
 	}
 
 	macro editTagsAndDeleteAutoTaggedDM {
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${dmDocumentTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -1388,10 +1387,9 @@ definition {
 
 		Button.clickPublish();
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 

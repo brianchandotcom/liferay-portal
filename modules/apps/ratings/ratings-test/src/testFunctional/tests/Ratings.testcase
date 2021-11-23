@@ -783,11 +783,10 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Knowledge Base");
-
-		AssetListsAdmin.gotoEntry(assetListName = "Knowledge Base Article Title");
+		KBArticle.openToKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
 
 		Ratings.rateStackedStars(ratingStarCount = "3");
 

@@ -1033,12 +1033,14 @@ AUI.add(
 
 						uploadURL = instance.get('uploadURL');
 
-						instance._uploadURL = Liferay.Util.addParams(
-							{
-								redirect,
-								ts: Date.now(),
-							},
-							uploadURL
+						instance._uploadURL = instance._decodeURI(
+							Liferay.Util.addParams(
+								{
+									redirect,
+									ts: Date.now(),
+								},
+								uploadURL
+							)
 						);
 					}
 

@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION_NAME</td>
-	<td>//div[contains(@class,'menu-open')]//a[@data-languageid='${key_locale}']</td>
+	<td>//div[contains(@class,'menu-open')]//a[@data-languageid]//span[contains(@class,'text')][normalize-space(text())='${key_locale}']</td>
 	<td></td>
 </tr>
 </tbody>

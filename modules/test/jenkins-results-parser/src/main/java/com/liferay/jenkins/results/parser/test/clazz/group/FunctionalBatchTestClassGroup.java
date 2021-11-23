@@ -217,8 +217,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					portalWorkingDirectory,
 					"portal-web/test/test-portal-web-ext.properties"));
 
-			properties.setProperty("ignore.errors.util.classes", "true");
-
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirPath)) {
 				properties.setProperty("test.base.dir.name", testBaseDirPath);
 			}

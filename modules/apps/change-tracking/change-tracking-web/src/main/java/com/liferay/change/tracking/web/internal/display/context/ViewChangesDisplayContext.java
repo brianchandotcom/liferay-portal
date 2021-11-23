@@ -99,18 +99,17 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewChangesDisplayContext {
 
 	public ViewChangesDisplayContext(
-			long activeCTCollectionId,
-			BasePersistenceRegistry basePersistenceRegistry,
-			CTClosureFactory ctClosureFactory, CTCollection ctCollection,
-			CTConfiguration ctConfiguration,
-			CTDisplayRendererRegistry ctDisplayRendererRegistry,
-			CTEntryLocalService ctEntryLocalService,
-			CTSchemaVersionLocalService ctSchemaVersionLocalService,
-			GroupLocalService groupLocalService, Language language,
-			Portal portal, PublishScheduler publishScheduler,
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			UserLocalService userLocalService)
-		throws PortalException {
+		long activeCTCollectionId,
+		BasePersistenceRegistry basePersistenceRegistry,
+		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
+		CTConfiguration ctConfiguration,
+		CTDisplayRendererRegistry ctDisplayRendererRegistry,
+		CTEntryLocalService ctEntryLocalService,
+		CTSchemaVersionLocalService ctSchemaVersionLocalService,
+		GroupLocalService groupLocalService, Language language,
+		Portal portal, PublishScheduler publishScheduler,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		UserLocalService userLocalService) {
 
 		_activeCTCollectionId = activeCTCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;
@@ -752,6 +751,12 @@ public class ViewChangesDisplayContext {
 	private JSONArray _getDropdownItemsJSONArray(
 			PermissionChecker permissionChecker)
 		throws Exception {
+
+		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(_ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED)) {
+
+			return null;
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -2495,6 +2495,23 @@ export default function ChangeTrackingChangesView({
 								</div>
 							</ClayToolbar.Section>
 						</ClayToolbar.Item>
+
+						{dropdownItems && dropdownItems.length > 0 && (
+							<ClayToolbar.Item>
+								<ClayDropDownWithItems
+									items={dropdownItems}
+									spritemap={spritemap}
+									trigger={
+										<ClayButtonWithIcon
+											displayType="unstyled"
+											small
+											spritemap={spritemap}
+											symbol="ellipsis-v"
+										/>
+									}
+								/>
+							</ClayToolbar.Item>
+						)}
 					</ClayToolbar.Nav>
 				</div>
 			</ClayToolbar>

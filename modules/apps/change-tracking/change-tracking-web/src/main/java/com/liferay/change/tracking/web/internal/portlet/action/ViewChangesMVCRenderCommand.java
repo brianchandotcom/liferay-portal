@@ -27,7 +27,6 @@ import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;

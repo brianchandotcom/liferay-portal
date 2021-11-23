@@ -20,7 +20,7 @@ import React, {useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import SortableListItemMoreActions from './SortableListItemMoreActions';
-import {dragIsOutOfBounds} from './utils/index';
+import {dragIsOutOfBounds, getDndStyles} from './utils/index';
 
 const ItemTypes = {
 	SORTABLE_LIST_ITEM: 'sortableListItem',
@@ -80,14 +80,6 @@ const SortableListItem = ({
 
 	drag(drop(ref));
 
-	const style = {
-		backgroundColor: isItemBeingDragged ? 'var(--gray-200)' : '',
-		borderColor: isItemBeingDragged ? '#80ACFF' : 'transparent',
-		color: isItemBeingDragged ? 'var(--gray-500)' : '',
-		cursor: 'grab',
-		opacity: isDragging ? 0.6 : 1,
-	};
-
 	const handleReorder = ({direction, index}) => {
 		handleItemMove({direction, index, saveAfterMove: true});
 	};
@@ -109,7 +101,7 @@ const SortableListItem = ({
 			onMouseEnter={handleOnMouseEnter}
 			onMouseLeave={handleOnMouseLeave}
 			ref={ref}
-			style={style}
+			style={getDndStyles({isDragging, isItemBeingDragged})}
 		>
 			<ClayList.ItemField className="sortable-list-item__drag-icon">
 				{showDragIcon && <ClayIcon symbol="drag" />}

@@ -41,4 +41,12 @@ const dragIsOutOfBounds = ({dragIndex, hoverIndex, monitor, ref}) => {
 	return draggingDownwards || draggingUpwards;
 };
 
-export {buildItemsPriorityURL, dragIsOutOfBounds};
+const getDndStyles = ({isDragging, isItemBeingDragged}) => ({
+	backgroundColor: isItemBeingDragged ? 'var(--gray-200)' : '',
+	borderColor: isItemBeingDragged ? '#80ACFF' : 'transparent',
+	color: isItemBeingDragged ? 'var(--gray-500)' : '',
+	cursor: 'grab',
+	opacity: isDragging ? 0.6 : 1,
+});
+
+export {buildItemsPriorityURL, dragIsOutOfBounds, getDndStyles};

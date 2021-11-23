@@ -665,7 +665,7 @@ definition {
 			discountTarget = "Product Groups",
 			discountType = "Percentage");
 
-		var timeString = selenium.getElementValue( locator1 = "TextInput#EXPIRATION_DATE_TIME");
+		var timeString = selenium.getElementValue("TextInput#EXPIRATION_DATE_TIME");
 
 		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
 		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");

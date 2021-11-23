@@ -1159,10 +1159,10 @@ definition {
 				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 			if ("${i}" == "1") {
-				var ship1Id = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+				var ship1Id = selenium.getText("CommerceEntry#HEADER_ID");
 			}
 			else {
-				var ship2Id = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+				var ship2Id = selenium.getText("CommerceEntry#HEADER_ID");
 			}
 		}
 

@@ -853,7 +853,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "U-Joint");
 
-		var productId = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+		var productId = selenium.getText("CommerceEntry#HEADER_ID");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 

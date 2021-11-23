@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Entry Card",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

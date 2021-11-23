@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.address.web.internal.portlet.action;
+package com.liferay.commerce.address.web.internal.portlet.action.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;

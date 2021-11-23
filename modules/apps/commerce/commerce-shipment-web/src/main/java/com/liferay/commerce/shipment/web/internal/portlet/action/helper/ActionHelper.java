@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipment.web.internal.portlet.action;
+package com.liferay.commerce.shipment.web.internal.portlet.action.helper;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceShipment;

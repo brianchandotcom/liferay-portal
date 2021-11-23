@@ -15,7 +15,7 @@
 package com.liferay.commerce.address.web.internal.portlet;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
-import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.address.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;

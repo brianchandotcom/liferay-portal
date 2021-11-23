@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.options.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
-import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.options.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

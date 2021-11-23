@@ -17,7 +17,7 @@ package com.liferay.commerce.shipment.web.internal.display.context;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
-import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.shipment.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

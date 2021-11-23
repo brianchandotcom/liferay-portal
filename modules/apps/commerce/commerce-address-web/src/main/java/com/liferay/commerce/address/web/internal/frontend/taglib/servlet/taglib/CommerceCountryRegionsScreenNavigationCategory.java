@@ -15,7 +15,7 @@
 package com.liferay.commerce.address.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext;
-import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.address.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.commerce.address.web.internal.servlet.taglib.ui.constants.CommerceCountryScreenNavigationConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;

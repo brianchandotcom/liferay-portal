@@ -17,7 +17,7 @@ package com.liferay.commerce.product.options.web.internal.portlet;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.options.web.internal.display.context.CPSpecificationOptionDisplayContext;
-import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.options.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.petra.lang.SafeCloseable;

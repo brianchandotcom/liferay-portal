@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.address.content.web.internal.portlet.action;
+package com.liferay.commerce.cart.content.web.internal.portlet.action.helper;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -31,34 +31,33 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, service = ActionHelper.class)
 public class ActionHelper {
 
-	public CommerceAddress getCommerceAddress(RenderRequest renderRequest)
+	public CommerceOrder getCommerceOrder(RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceAddress commerceAddress =
-			(CommerceAddress)renderRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_ADDRESS);
+		CommerceOrder commerceOrder = (CommerceOrder)renderRequest.getAttribute(
+			CommerceWebKeys.COMMERCE_ORDER);
 
-		if (commerceAddress != null) {
-			return commerceAddress;
+		if (commerceOrder != null) {
+			return commerceOrder;
 		}
 
-		long commerceAddressId = ParamUtil.getLong(
-			renderRequest, "commerceAddressId");
+		long commerceOrderId = ParamUtil.getLong(
+			renderRequest, "commerceOrderId");
 
-		if (commerceAddressId > 0) {
-			commerceAddress = _commerceAddressService.fetchCommerceAddress(
-				commerceAddressId);
+		if (commerceOrderId > 0) {
+			commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				commerceOrderId);
 		}
 
-		if (commerceAddress != null) {
+		if (commerceOrder != null) {
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_ADDRESS, commerceAddress);
+				CommerceWebKeys.COMMERCE_ORDER, commerceOrder);
 		}
 
-		return commerceAddress;
+		return commerceOrder;
 	}
 
 	@Reference
-	private CommerceAddressService _commerceAddressService;
+	private CommerceOrderService _commerceOrderService;
 
 }

@@ -903,24 +903,28 @@ public abstract class PoshiElement
 	}
 
 	protected boolean isValidFunctionFileName(String poshiScriptInvocation) {
-		for (String functionFileName : PoshiContext.getFunctionFileNames()) {
-			if (poshiScriptInvocation.matches(
-					"(?s)" + Pattern.quote(functionFileName) + "[\\.\\(]+.*")) {
+		poshiScriptInvocation = poshiScriptInvocation.trim();
 
-				return true;
-			}
-		}
+		String className = getClassName(poshiScriptInvocation);
 
-		return false;
+		Set<String> functionFileNames = PoshiContext.getFunctionFileNames();
+
+		return functionFileNames.contains(className);
 	}
+
 	protected boolean isValidMacroFileName(String poshiScriptInvocation) {
-		for (String macroFileName : PoshiContext.getMacroFileNames()) {
-			if (poshiScriptInvocation.matches(
-					"(?s)" + Pattern.quote(macroFileName) + "[\\.\\(]+.*")) {
-				return true;
-			}
+		poshiScriptInvocation = poshiScriptInvocation.trim();
+
+		if (poshiScriptInvocation.startsWith("var ")) {
+			poshiScriptInvocation = getValueFromAssignment(
+				poshiScriptInvocation);
 		}
-		return false;
+
+		String className = getClassName(poshiScriptInvocation);
+
+		Set<String> macroFileNames = PoshiContext.getMacroFileNames();
+
+		return macroFileNames.contains(className);
 	}
 
 	protected boolean isValidPoshiScriptBlock(

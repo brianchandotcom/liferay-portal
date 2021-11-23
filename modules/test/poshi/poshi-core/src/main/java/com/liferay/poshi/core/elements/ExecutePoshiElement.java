@@ -121,12 +121,10 @@ public class ExecutePoshiElement extends PoshiElement {
 				executeCommandName, '.', '#');
 		}
 
-		if (fileExtension.equals("function") ||
-			isValidFunctionFileName(poshiScript)) {
-
+		if (isValidFunctionFileName(poshiScript)) {
 			addAttribute("function", executeCommandName);
 		}
-		else if (fileExtension.equals("macro") || isValidMacroFileName(poshiScript)){
+		else if (isValidMacroFileName(poshiScript)) {
 			addAttribute("macro", executeCommandName);
 
 			if (poshiScript.startsWith("var ")) {

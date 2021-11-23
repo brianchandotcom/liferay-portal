@@ -448,67 +448,6 @@ definition {
 			title = "Translation of WC WebContent Title to es-ES");
 	}
 
-	@description = "This test covers LPS-125966. This ensures that a warning message shows when viewing a translation that its web content has been deleted."
-	@priority = "4"
-	@refactordone
-	test CanViewTranslateAfterWebContentDeleted {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
-
-		Translations.changeTargetLocale(
-			currentTargetLocale = "ar-SA",
-			newTargetLocale = "es-ES");
-
-		Translations.viewBaseFields(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Translations.translateFields(
-			webContentContent = "WC WebContent Contenido",
-			webContentDescription = "WC WebContent Descripción",
-			webContentTitle = "WC WebContent Título");
-
-		PortletEntry.publish();
-
-		JSONWebcontent.moveWebContentToTrash(
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		Translations.openTranslationAdmin(siteURLKey = "guest");
-
-		AssertConsoleTextNotPresent(value1 = "com.liferay.journal.exception.NoSuchArticleException");
-
-		Translations.viewTranslationEntry(
-			language = "es-ES",
-			status = "Approved",
-			title = "Translation of Translation to es-ES");
-
-		AssertClick(
-			key_rowEntry = "Translation of Translation to es-ES",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "Translation of Translation to es-ES");
-
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "Info:You do not have permissions to translate to any of the available languages.");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.deleteCP(
-			assetName = "WC WebContent Title",
-			assetType = "Web Content Article");
-
-		Translations.openTranslationAdmin(siteURLKey = "guest");
-
-		Translations.viewEmptyState();
-	}
-
 	@description = "This test covers LPS-142411. It ensures that a translation entry is not shown after deleting translated content page with new experience."
 	@priority = "4"
 	test EntryIsNotShownAfterDeletingTranslatedPage {
@@ -565,6 +504,67 @@ definition {
 			layoutName = "Test Content Page Name");
 
 		Translations.openTranslationAdmin(siteURLKey = "test-site-name");
+
+		Translations.viewEmptyState();
+	}
+
+	@description = "This test covers LPS-125966. This ensures that a warning message shows when viewing a translation that its web content has been deleted."
+	@priority = "4"
+	@refactordone
+	test WarningAppearsForTranslationAfterWCIsDeleted {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		JSONWebcontent.moveWebContentToTrash(
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.journal.exception.NoSuchArticleException");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of Translation to es-ES");
+
+		AssertClick(
+			key_rowEntry = "Translation of Translation to es-ES",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "Translation of Translation to es-ES");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not have permissions to translate to any of the available languages.");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "WC WebContent Title",
+			assetType = "Web Content Article");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
 
 		Translations.viewEmptyState();
 	}

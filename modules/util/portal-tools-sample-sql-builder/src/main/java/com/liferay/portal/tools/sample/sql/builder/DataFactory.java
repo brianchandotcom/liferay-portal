@@ -2093,8 +2093,7 @@ public class DataFactory {
 			JSONFactoryUtil.createJSONArray(
 				StringUtil.read(
 					getResourceInputStream(
-						"commerce_data" +
-							"/commerce_theme_portlet_settings.json"))));
+						"commerce/commerce_theme_portlet_settings.json"))));
 	}
 
 	public CompanyModel newCompanyModel() {
@@ -3831,10 +3830,10 @@ public class DataFactory {
 					_readFile(
 						_getFragmentComponentInputStream("heading", "html")),
 					_readFile(
-						"fragment_component_data" +
+						"fragment_component" +
 							"/fragment_component_heading_configuration.json"),
 					_readFile(
-						"fragment_component_data" +
+						"fragment_component" +
 							"/fragment_component_heading_editValue.json"),
 					0, headingRenderNamespace));
 			fragmentEntryLinkModels.add(
@@ -3845,11 +3844,11 @@ public class DataFactory {
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "html")),
 					_readFile(
-						"fragment_component_data" +
+						"fragment_component" +
 							"/fragment_component_paragraph_configuration.json"),
 					_replaceReleaseInfo(
 						_readFile(
-							"fragment_component_data" +
+							"fragment_component" +
 								"/fragment_component_paragraph_editValue." +
 									"json")),
 					0, paragraphRenderNamespace));
@@ -3859,10 +3858,10 @@ public class DataFactory {
 					_readFile(
 						_getFragmentComponentInputStream("image", "html")),
 					_readFile(
-						"fragment_component_data" +
+						"fragment_component" +
 							"/fragment_component_image_configuration.json"),
 					_readFile(
-						"fragment_component_data" +
+						"fragment_component" +
 							"/fragment_component_image_editValue.json"),
 					0, imageRenderNamespace));
 		}

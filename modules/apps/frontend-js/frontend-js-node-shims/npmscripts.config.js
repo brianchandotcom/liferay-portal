@@ -17,7 +17,6 @@ module.exports = {
 		bundler: {
 			exclude: {
 				'*': ['test?(s)/**/*', 'test.js'],
-				'vm-browserify': ['example/**/*', 'test/**/*'],
 			},
 		},
 	},

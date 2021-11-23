@@ -289,9 +289,8 @@ function Target({
 				return dataProvider;
 			case 'calculate':
 				return fields.filter(({type}) => type === 'numeric');
-			case 'show':
-			case 'require':
 			case 'enable':
+			case 'show':
 				return fields.filter(({hideField}) => !hideField);
 			case 'jump-to-page': {
 				const startIndex = conditions.reduce(
@@ -303,6 +302,11 @@ function Target({
 
 				return pages.filter((page, index) => index > startIndex);
 			}
+			case 'require':
+				return fields.filter(
+					({dataType, hideField}) => dataType && !hideField
+				);
+
 			default:
 				return [];
 		}

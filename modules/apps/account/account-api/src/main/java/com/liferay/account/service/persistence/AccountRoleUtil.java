@@ -270,6 +270,73 @@ public class AccountRoleUtil {
 	}
 
 	/**
+	 * Returns all the account roles that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByCompanyId(long companyId) {
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().filterFindByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the account roles before and after the current account role in the ordered set of account roles that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param accountRoleId the primary key of the current account role
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account role
+	 * @throws NoSuchRoleException if a account role with the primary key could not be found
+	 */
+	public static AccountRole[] filterFindByCompanyId_PrevAndNext(
+			long accountRoleId, long companyId,
+			OrderByComparator<AccountRole> orderByComparator)
+		throws com.liferay.account.exception.NoSuchRoleException {
+
+		return getPersistence().filterFindByCompanyId_PrevAndNext(
+			accountRoleId, companyId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the account roles where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -286,6 +353,16 @@ public class AccountRoleUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of account roles that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching account roles that the user has permission to view
+	 */
+	public static int filterCountByCompanyId(long companyId) {
+		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
 	/**
@@ -442,6 +519,128 @@ public class AccountRoleUtil {
 	}
 
 	/**
+	 * Returns all the account roles that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long accountEntryId) {
+
+		return getPersistence().filterFindByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles that the user has permissions to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the account roles before and after the current account role in the ordered set of account roles that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountRoleId the primary key of the current account role
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account role
+	 * @throws NoSuchRoleException if a account role with the primary key could not be found
+	 */
+	public static AccountRole[] filterFindByAccountEntryId_PrevAndNext(
+			long accountRoleId, long accountEntryId,
+			OrderByComparator<AccountRole> orderByComparator)
+		throws com.liferay.account.exception.NoSuchRoleException {
+
+		return getPersistence().filterFindByAccountEntryId_PrevAndNext(
+			accountRoleId, accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account roles that the user has permission to view where accountEntryId = any &#63;.
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long[] accountEntryIds) {
+
+		return getPersistence().filterFindByAccountEntryId(accountEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long[] accountEntryIds, int start, int end) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles that the user has permission to view where accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long[] accountEntryIds, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryIds, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns all the account roles where accountEntryId = any &#63;.
 	 *
 	 * <p>
@@ -547,6 +746,26 @@ public class AccountRoleUtil {
 	 */
 	public static int countByAccountEntryId(long[] accountEntryIds) {
 		return getPersistence().countByAccountEntryId(accountEntryIds);
+	}
+
+	/**
+	 * Returns the number of account roles that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the number of matching account roles that the user has permission to view
+	 */
+	public static int filterCountByAccountEntryId(long accountEntryId) {
+		return getPersistence().filterCountByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns the number of account roles that the user has permission to view where accountEntryId = any &#63;.
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @return the number of matching account roles that the user has permission to view
+	 */
+	public static int filterCountByAccountEntryId(long[] accountEntryIds) {
+		return getPersistence().filterCountByAccountEntryId(accountEntryIds);
 	}
 
 	/**

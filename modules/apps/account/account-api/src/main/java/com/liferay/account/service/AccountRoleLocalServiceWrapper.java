@@ -149,7 +149,9 @@ public class AccountRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteAccountRolesByCompanyId(long companyId) {
+	public void deleteAccountRolesByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_accountRoleLocalService.deleteAccountRolesByCompanyId(companyId);
 	}
 

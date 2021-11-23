@@ -117,6 +117,7 @@ const SortableList = ({items, namespace, savePriorityURL}) => {
 
 SortableList.propTypes = {
 	items: PropTypes.array.isRequired,
+	namespace: PropTypes.string.isRequired,
 	savePriorityURL: PropTypes.string.isRequired,
 };
 

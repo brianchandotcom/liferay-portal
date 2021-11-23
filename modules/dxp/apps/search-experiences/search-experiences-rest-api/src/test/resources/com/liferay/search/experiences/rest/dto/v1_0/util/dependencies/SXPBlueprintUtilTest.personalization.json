@@ -234,47 +234,41 @@
 							{
 								"fields": [
 									{
+										"defaultValue": "expando__keyword__custom_fields__location_geolocation",
 										"helpText": "A geopoint field",
 										"label": "Field",
 										"name": "field",
-										"uiType": "text",
-										"valueDefinition": {
-											"defaultValueString": "expando__keyword__custom_fields__location_geolocation",
-											"type": "String"
-										}
+										"type": "text"
 									},
 									{
+										"defaultValue": 0.3,
 										"label": "Decay",
 										"name": "decay",
-										"uiType": "slider",
-										"valueDefinition": {
-											"defaultValueFloat": 0.3,
-											"maxValueFloat": 0.99,
-											"minValueFloat": 0.01,
-											"stepValueFloat": 0.1,
-											"type": "Float"
+										"type": "slider",
+										"typeOptions": {
+											"max": 0.99,
+											"min": 0.01,
+											"step": 0.1
 										}
 									},
 									{
+										"defaultValue": 100,
 										"label": "Scale",
 										"name": "scale",
-										"uiType": "number",
-										"unit": "km",
-										"unitSuffix": "km",
-										"valueDefinition": {
-											"defaultValueInteger": 100,
-											"minValueInteger": 0,
-											"type": "Integer"
+										"type": "number",
+										"typeOptions": {
+											"min": 0,
+											"unit": "km",
+											"unitSuffix": "km"
 										}
 									},
 									{
+										"defaultValue": 2,
 										"label": "Boost",
 										"name": "boost",
-										"uiType": "number",
-										"valueDefinition": {
-											"defaultValueInteger": 2,
-											"minValueInteger": 0,
-											"type": "Integer"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
 										}
 									}
 								]
@@ -348,13 +342,12 @@
 							{
 								"fields": [
 									{
+										"defaultValue": 20,
 										"label": "Boost",
 										"name": "boost",
-										"uiType": "number",
-										"valueDefinition": {
-											"defaultValueInteger": 20,
-											"minValueInteger": 0,
-											"type": "Integer"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
 										}
 									}
 								]
@@ -409,13 +402,12 @@
 							{
 								"fields": [
 									{
+										"defaultValue": 10,
 										"label": "Boost",
 										"name": "boost",
-										"uiType": "number",
-										"valueDefinition": {
-											"defaultValueInteger": 10,
-											"minValueInteger": 0,
-											"type": "Integer"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
 										}
 									}
 								]

@@ -87,28 +87,43 @@
 							"context": "query",
 							"occur": "must",
 							"query": {
-								"wrapper": {
-									"query": {
-										"multi_match": {
-											"boost": 1,
-											"fields": [
-												"localized_title${context.language_id}^2",
-												"title${context.language_id}^2",
-												"name${context.language_id}^2",
-												"name^2",
-												"description^1",
-												"description^1",
-												"content${context.language_id}",
-												"content",
-												"specificationOptionsValuesNames",
-												"externalReferenceCode"
-											],
-											"fuzziness": "AUTO",
-											"minimum_should_match": "1",
-											"operator": "or",
-											"query": "${keywords}",
-											"type": "best_fields"
-										}
+								"multi_match": {
+									"boost": 1,
+									"fields": [
+										"localized_title${context.language_id}^2",
+										"title${context.language_id}^2",
+										"name${context.language_id}^2",
+										"name^2",
+										"description^1",
+										"description^1",
+										"content${context.language_id}",
+										"content",
+										"specificationOptionsValuesNames",
+										"externalReferenceCode"
+									],
+									"fuzziness": "AUTO",
+									"minimum_should_match": "1",
+									"operator": "or",
+									"query": "${keywords}",
+									"type": "best_fields"
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"function_score": {
+									"boost": 10,
+									"field_value_factor": {
+										"factor": 1.2,
+										"field": "versionCount_sortable",
+										"missing": 1,
+										"modifier": "sqrt"
 									}
 								}
 							}
@@ -121,17 +136,43 @@
 							"context": "query",
 							"occur": "should",
 							"query": {
-								"wrapper": {
-									"query": {
-										"function_score": {
-											"boost": 10,
-											"field_value_factor": {
-												"factor": 1.2,
-												"field": "versionCount_sortable",
-												"missing": 1,
-												"modifier": "sqrt"
+								"bool": {
+									"must": [
+										{
+											"terms": {
+												"entryClassName": [
+													"com.liferay.portal.kernel.model.Layout",
+													"com.liferay.journal.model.JournalArticle"
+												]
+											}
+										},
+										{
+											"term": {
+												"defaultLanguageId": {
+													"boost": 20,
+													"value": "${context.language_id}"
+												}
 											}
 										}
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"function_score": {
+									"boost": 30,
+									"field_value_factor": {
+										"factor": 1.5,
+										"field": "content${context.language_id}_length_sortable",
+										"missing": 1,
+										"modifier": "ln"
 									}
 								}
 							}
@@ -144,52 +185,96 @@
 							"context": "query",
 							"occur": "should",
 							"query": {
-								"wrapper": {
-									"query": {
-										"bool": {
-											"must": [
-												{
-													"terms": {
-														"entryClassName": [
-															"com.liferay.portal.kernel.model.Layout",
-															"com.liferay.journal.model.JournalArticle"
-														]
-													}
-												},
-												{
-													"term": {
-														"defaultLanguageId": {
-															"boost": 20,
-															"value": "${context.language_id}"
+								"function_score": {
+									"boost": 2,
+									"gauss": {
+										"modified": {
+											"decay": 0.5,
+											"offset": "0d",
+											"origin": "${time.current_date|dateFormat=yyyyMMddHHmmss}",
+											"scale": "10d"
+										}
+									}
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"term": {
+									"assetTagNames.raw": {
+										"boost": 40,
+										"value": "${keywords}"
+									}
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"multi_match": {
+									"boost": 10,
+									"fields": [
+										"localized_title${context.language_id}^2",
+										"title${context.language_id}^2",
+										"name${context.language_id}^2",
+										"name^2",
+										"description${context.language_id}",
+										"description",
+										"content${context.language_id}",
+										"content",
+										"specificationOptionsValuesNames",
+										"externalReferenceCode"
+									],
+									"operator": "and",
+									"query": "${keywords}",
+									"type": "phrase"
+								}
+							}
+						}
+					]
+				},
+				{
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "filter",
+							"query": {
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"entryClassName": "com.liferay.portal.kernel.model.User"
 														}
 													}
-												}
-											]
-										}
-									}
-								}
-							}
-						}
-					]
-				},
-				{
-					"clauses": [
-						{
-							"context": "query",
-							"occur": "should",
-							"query": {
-								"wrapper": {
-									"query": {
-										"function_score": {
-											"boost": 30,
-											"field_value_factor": {
-												"factor": 1.5,
-												"field": "content${context.language_id}_length_sortable",
-												"missing": 1,
-												"modifier": "ln"
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"defaultUser": false
+														}
+													}
+												]
 											}
 										}
-									}
+									]
 								}
 							}
 						}
@@ -199,22 +284,33 @@
 					"clauses": [
 						{
 							"context": "query",
-							"occur": "should",
+							"occur": "filter",
 							"query": {
-								"wrapper": {
-									"query": {
-										"function_score": {
-											"boost": 2,
-											"gauss": {
-												"modified": {
-													"decay": 0.5,
-													"offset": "0d",
-													"origin": "${time.current_date|dateFormat=yyyyMMddHHmmss}",
-													"scale": "10d"
-												}
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"exists": {
+															"field": "hidden"
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"hidden": false
+														}
+													}
+												]
 											}
 										}
-									}
+									]
 								}
 							}
 						}
@@ -224,49 +320,33 @@
 					"clauses": [
 						{
 							"context": "query",
-							"occur": "should",
+							"occur": "filter",
 							"query": {
-								"wrapper": {
-									"query": {
-										"term": {
-											"assetTagNames.raw": {
-												"boost": 40,
-												"value": "${keywords}"
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"exists": {
+															"field": "discussion"
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"discussion": false
+														}
+													}
+												]
 											}
 										}
-									}
-								}
-							}
-						}
-					]
-				},
-				{
-					"clauses": [
-						{
-							"context": "query",
-							"occur": "should",
-							"query": {
-								"wrapper": {
-									"query": {
-										"multi_match": {
-											"boost": 10,
-											"fields": [
-												"localized_title${context.language_id}^2",
-												"title${context.language_id}^2",
-												"name${context.language_id}^2",
-												"name^2",
-												"description${context.language_id}",
-												"description",
-												"content${context.language_id}",
-												"content",
-												"specificationOptionsValuesNames",
-												"externalReferenceCode"
-											],
-											"operator": "and",
-											"query": "${keywords}",
-											"type": "phrase"
-										}
-									}
+									]
 								}
 							}
 						}
@@ -278,35 +358,42 @@
 							"context": "query",
 							"occur": "filter",
 							"query": {
-								"wrapper": {
-									"query": {
-										"bool": {
-											"should": [
-												{
-													"bool": {
-														"must_not": [
-															{
-																"term": {
-																	"entryClassName": "com.liferay.portal.kernel.model.User"
-																}
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"entryClassName": {
+																"value": "com.liferay.journal.model.JournalArticle"
 															}
-														]
+														}
 													}
-												},
-												{
-													"bool": {
-														"must": [
-															{
-																"term": {
-																	"defaultUser": false
-																}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"term": {
+															"entryClassName": {
+																"value": "com.liferay.journal.model.JournalArticle"
 															}
-														]
+														}
+													},
+													{
+														"term": {
+															"head": {
+																"value": true
+															}
+														}
 													}
-												}
-											]
+												]
+											}
 										}
-									}
+									]
 								}
 							}
 						}
@@ -318,35 +405,8 @@
 							"context": "query",
 							"occur": "filter",
 							"query": {
-								"wrapper": {
-									"query": {
-										"bool": {
-											"should": [
-												{
-													"bool": {
-														"must_not": [
-															{
-																"exists": {
-																	"field": "hidden"
-																}
-															}
-														]
-													}
-												},
-												{
-													"bool": {
-														"must": [
-															{
-																"term": {
-																	"hidden": false
-																}
-															}
-														]
-													}
-												}
-											]
-										}
-									}
+								"term": {
+									"status": 0
 								}
 							}
 						}
@@ -358,181 +418,69 @@
 							"context": "query",
 							"occur": "filter",
 							"query": {
-								"wrapper": {
-									"query": {
-										"bool": {
-											"should": [
-												{
-													"bool": {
-														"must_not": [
-															{
-																"exists": {
-																	"field": "discussion"
-																}
-															}
-														]
+								"bool": {
+									"should": [
+										{
+											"bool": {
+												"must_not": [
+													{
+														"exists": {
+															"field": "displayDate"
+														}
 													}
-												},
-												{
-													"bool": {
-														"must": [
-															{
-																"term": {
-																	"discussion": false
-																}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"range": {
+															"displayDate_sortable": {
+																"from": "-9223372036854775808",
+																"include_lower": true,
+																"include_upper": true,
+																"to": "${time.current_date|dateFormat=timestamp}"
 															}
-														]
+														}
 													}
-												}
-											]
+												],
+												"must_not": [
+													{
+														"exists": {
+															"field": "expirationDate"
+														}
+													}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must": [
+													{
+														"range": {
+															"displayDate_sortable": {
+																"from": "-9223372036854775808",
+																"include_lower": true,
+																"include_upper": true,
+																"to": "${time.current_date|dateFormat=timestamp}"
+															}
+														}
+													},
+													{
+														"range": {
+															"expirationDate_sortable": {
+																"from": "${time.current_date|dateFormat=timestamp}",
+																"include_lower": true,
+																"include_upper": true,
+																"to": "9223372036854775807"
+															}
+														}
+													}
+												]
+											}
 										}
-									}
-								}
-							}
-						}
-					]
-				},
-				{
-					"clauses": [
-						{
-							"context": "query",
-							"occur": "filter",
-							"query": {
-								"wrapper": {
-									"query": {
-										"bool": {
-											"should": [
-												{
-													"bool": {
-														"must_not": [
-															{
-																"term": {
-																	"entryClassName": {
-																		"value": "com.liferay.journal.model.JournalArticle"
-																	}
-																}
-															}
-														]
-													}
-												},
-												{
-													"bool": {
-														"must": [
-															{
-																"term": {
-																	"entryClassName": {
-																		"value": "com.liferay.journal.model.JournalArticle"
-																	}
-																}
-															},
-															{
-																"term": {
-																	"head": {
-																		"value": true
-																	}
-																}
-															}
-														]
-													}
-												}
-											]
-										}
-									}
-								}
-							}
-						}
-					]
-				},
-				{
-					"clauses": [
-						{
-							"context": "query",
-							"occur": "filter",
-							"query": {
-								"wrapper": {
-									"query": {
-										"term": {
-											"status": 0
-										}
-									}
-								}
-							}
-						}
-					]
-				},
-				{
-					"clauses": [
-						{
-							"context": "query",
-							"occur": "filter",
-							"query": {
-								"wrapper": {
-									"query": {
-										"bool": {
-											"should": [
-												{
-													"bool": {
-														"must_not": [
-															{
-																"exists": {
-																	"field": "displayDate"
-																}
-															}
-														]
-													}
-												},
-												{
-													"bool": {
-														"must": [
-															{
-																"range": {
-																	"displayDate_sortable": {
-																		"from": "-9223372036854775808",
-																		"include_lower": true,
-																		"include_upper": true,
-																		"to": "${time.current_date|dateFormat=timestamp}"
-																	}
-																}
-															}
-														],
-														"must_not": [
-															{
-																"exists": {
-																	"field": "expirationDate"
-																}
-															}
-														]
-													}
-												},
-												{
-													"bool": {
-														"must": [
-															{
-																"range": {
-																	"displayDate_sortable": {
-																		"from": "-9223372036854775808",
-																		"include_lower": true,
-																		"include_upper": true,
-																		"to": "${time.current_date|dateFormat=timestamp}"
-																	}
-																}
-															},
-															{
-																"range": {
-																	"expirationDate_sortable": {
-																		"from": "${time.current_date|dateFormat=timestamp}",
-																		"include_lower": true,
-																		"include_upper": true,
-																		"to": "9223372036854775807"
-																	}
-																}
-															}
-														]
-													}
-												}
-											]
-										}
-									}
+									]
 								}
 							}
 						}
@@ -546,19 +494,22 @@
 	"description_i18n": {
 		"en_US": "A Sample Blueprint with custom clauses for content driven sites. Emphasizes content qualities like freshness, length and updates in calculating relevance."
 	},
-	"elementDefinitions": [
+	"elementInstances": [
 		{
-			"category": "match",
-			"configuration": {
-				"queryConfiguration": {
-					"queryEntries": [
-						{
-							"clauses": [
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Search for a text match over multiple text fields"
+				},
+				"elementDefinition": {
+					"category": "match",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
 								{
-									"context": "query",
-									"occur": "must",
-									"query": {
-										"wrapper": {
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "must",
 											"query": {
 												"multi_match": {
 													"boost": "${configuration.boost}",
@@ -572,157 +523,154 @@
 												}
 											}
 										}
-									}
+									]
 								}
 							]
 						}
-					]
-				}
-			},
-			"description_i18n": {
-				"en_US": "Search for a text match over multiple text fields"
-			},
-			"icon": "picture",
-			"title_i18n": {
-				"en_US": "Text Match Over Multiple Fields"
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
+					},
+					"icon": "picture",
+					"uiConfiguration": {
+						"fieldSets": [
 							{
-								"defaultValue": [
+								"fields": [
 									{
-										"boost": "2",
-										"field": "localized_title",
-										"locale": "${context.language_id}"
+										"defaultValue": [
+											{
+												"boost": "2",
+												"field": "localized_title",
+												"locale": "${context.language_id}"
+											},
+											{
+												"boost": "1",
+												"field": "content",
+												"locale": "${context.language_id}"
+											}
+										],
+										"label": "Fields",
+										"name": "fields",
+										"type": "fieldMappingList",
+										"typeOptions": {
+											"boost": true
+										}
 									},
 									{
-										"boost": "1",
-										"field": "content",
-										"locale": "${context.language_id}"
+										"defaultValue": "or",
+										"label": "Operator",
+										"name": "operator",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "OR",
+													"value": "or"
+												},
+												{
+													"label": "AND",
+													"value": "and"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": "best_fields",
+										"label": "Match Type",
+										"name": "type",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "Best Fields",
+													"value": "best_fields"
+												},
+												{
+													"label": "Most Fields",
+													"value": "most_fields"
+												},
+												{
+													"label": "Cross Fields",
+													"value": "cross_fields"
+												},
+												{
+													"label": "Phrase",
+													"value": "phrase"
+												},
+												{
+													"label": "Phrase Prefix",
+													"value": "phrase_prefix"
+												},
+												{
+													"label": "Boolean Prefix",
+													"value": "bool_prefix"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": "AUTO",
+										"helpText": "Only use fuzziness with the following match types: most fields, best fields, bool prefix.",
+										"label": "Fuzziness",
+										"name": "fuzziness",
+										"type": "select",
+										"typeOptions": {
+											"nullable": true,
+											"options": [
+												{
+													"label": "Auto",
+													"value": "AUTO"
+												},
+												{
+													"label": "0",
+													"value": "0"
+												},
+												{
+													"label": "1",
+													"value": "1"
+												},
+												{
+													"label": "2",
+													"value": "2"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": "1",
+										"label": "Minimum Should Match",
+										"name": "minimum_should_match",
+										"type": "text",
+										"typeOptions": {
+											"nullable": true
+										}
+									},
+									{
+										"defaultValue": "",
+										"helpText": "Only use slop with the following match types: phrase, phrase prefix.",
+										"label": "Slop",
+										"name": "slop",
+										"type": "number",
+										"typeOptions": {
+											"min": 0,
+											"nullable": true,
+											"step": 1
+										}
+									},
+									{
+										"defaultValue": 1,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
 									}
-								],
-								"label": "Fields",
-								"name": "fields",
-								"type": "fieldMappingList",
-								"typeOptions": {
-									"boost": true
-								}
-							},
-							{
-								"defaultValue": "or",
-								"label": "Operator",
-								"name": "operator",
-								"type": "select",
-								"typeOptions": {
-									"options": [
-										{
-											"label": "OR",
-											"value": "or"
-										},
-										{
-											"label": "AND",
-											"value": "and"
-										}
-									]
-								}
-							},
-							{
-								"defaultValue": "best_fields",
-								"label": "Match Type",
-								"name": "type",
-								"type": "select",
-								"typeOptions": {
-									"options": [
-										{
-											"label": "Best Fields",
-											"value": "best_fields"
-										},
-										{
-											"label": "Most Fields",
-											"value": "most_fields"
-										},
-										{
-											"label": "Cross Fields",
-											"value": "cross_fields"
-										},
-										{
-											"label": "Phrase",
-											"value": "phrase"
-										},
-										{
-											"label": "Phrase Prefix",
-											"value": "phrase_prefix"
-										},
-										{
-											"label": "Boolean Prefix",
-											"value": "bool_prefix"
-										}
-									]
-								}
-							},
-							{
-								"defaultValue": "AUTO",
-								"helpText": "Only use fuzziness with the following match types: most fields, best fields, bool prefix.",
-								"label": "Fuzziness",
-								"name": "fuzziness",
-								"type": "select",
-								"typeOptions": {
-									"nullable": true,
-									"options": [
-										{
-											"label": "Auto",
-											"value": "AUTO"
-										},
-										{
-											"label": "0",
-											"value": "0"
-										},
-										{
-											"label": "1",
-											"value": "1"
-										},
-										{
-											"label": "2",
-											"value": "2"
-										}
-									]
-								}
-							},
-							{
-								"defaultValue": "1",
-								"label": "Minimum Should Match",
-								"name": "minimum_should_match",
-								"type": "text",
-								"typeOptions": {
-									"nullable": true
-								}
-							},
-							{
-								"defaultValue": "",
-								"helpText": "Only use slop with the following match types: phrase, phrase prefix.",
-								"label": "Slop",
-								"name": "slop",
-								"type": "number",
-								"typeOptions": {
-									"min": 0,
-									"nullable": true,
-									"step": 1
-								}
-							},
-							{
-								"defaultValue": 1,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Text Match Over Multiple Fields"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 1,
@@ -788,114 +736,118 @@
 			}
 		},
 		{
-			"configuration": {
-				"category": "boost",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "should",
-						"query": {
-							"wrapper": {
-								"query": {
-									"function_score": {
-										"boost": "${configuration.boost}",
-										"field_value_factor": {
-											"factor": "${configuration.factor}",
-											"field": "versionCount_sortable",
-											"missing": 1,
-											"modifier": "${configuration.modifier}"
-										}
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Boost contents edited more often"
 				},
-				"icon": "thumbs-up",
-				"title_i18n": {
-					"en_US": "Boost Contents With More Versions"
-				}
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
-							{
-								"defaultValue": 10,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
-							},
-							{
-								"defaultValue": 1.2,
-								"label": "Factor",
-								"name": "factor",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
-							},
-							{
-								"defaultValue": "sqrt",
-								"label": "Modifier",
-								"name": "modifier",
-								"type": "select",
-								"typeOptions": {
-									"options": [
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
 										{
-											"label": "None",
-											"value": "none"
-										},
-										{
-											"label": "log",
-											"value": "log"
-										},
-										{
-											"label": "log1p",
-											"value": "log1p"
-										},
-										{
-											"label": "log2p",
-											"value": "log2p"
-										},
-										{
-											"label": "ln",
-											"value": "ln"
-										},
-										{
-											"label": "ln1p",
-											"value": "ln1p"
-										},
-										{
-											"label": "ln2p",
-											"value": "ln2p"
-										},
-										{
-											"label": "Square",
-											"value": "square"
-										},
-										{
-											"label": "Square Root",
-											"value": "sqrt"
-										},
-										{
-											"label": "Reciprocal",
-											"value": "reciprocal"
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"function_score": {
+													"boost": "${configuration.boost}",
+													"field_value_factor": {
+														"factor": "${configuration.factor}",
+														"field": "versionCount_sortable",
+														"missing": 1,
+														"modifier": "${configuration.modifier}"
+													}
+												}
+											}
 										}
 									]
 								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": 10,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									},
+									{
+										"defaultValue": 1.2,
+										"label": "Factor",
+										"name": "factor",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									},
+									{
+										"defaultValue": "sqrt",
+										"label": "Modifier",
+										"name": "modifier",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "None",
+													"value": "none"
+												},
+												{
+													"label": "log",
+													"value": "log"
+												},
+												{
+													"label": "log1p",
+													"value": "log1p"
+												},
+												{
+													"label": "log2p",
+													"value": "log2p"
+												},
+												{
+													"label": "ln",
+													"value": "ln"
+												},
+												{
+													"label": "ln1p",
+													"value": "ln1p"
+												},
+												{
+													"label": "ln2p",
+													"value": "ln2p"
+												},
+												{
+													"label": "Square",
+													"value": "square"
+												},
+												{
+													"label": "Square Root",
+													"value": "sqrt"
+												},
+												{
+													"label": "Reciprocal",
+													"value": "reciprocal"
+												}
+											]
+										}
+									}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Boost Contents With More Versions"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 10,
@@ -904,180 +856,188 @@
 			}
 		},
 		{
-			"configuration": {
-				"category": "boost",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "should",
-						"query": {
-							"wrapper": {
-								"query": {
-									"bool": {
-										"must": [
-											{
-												"terms": {
-													"entryClassName": [
-														"com.liferay.portal.kernel.model.Layout",
-														"com.liferay.journal.model.JournalArticle"
-													]
-												}
-											},
-											{
-												"term": {
-													"defaultLanguageId": {
-														"boost": "${configuration.boost}",
-														"value": "${context.language_id}"
-													}
-												}
-											}
-										]
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Boost contents having the current session language as the default language"
 				},
-				"icon": "thumbs-up",
-				"title_i18n": {
-					"en_US": "Boost Contents for the Current Language"
-				}
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
-							{
-								"defaultValue": 20,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"bool": {
+													"must": [
+														{
+															"terms": {
+																"entryClassName": [
+																	"com.liferay.portal.kernel.model.Layout",
+																	"com.liferay.journal.model.JournalArticle"
+																]
+															}
+														},
+														{
+															"term": {
+																"defaultLanguageId": {
+																	"boost": "${configuration.boost}",
+																	"value": "${context.language_id}"
+																}
+															}
+														}
+													]
+												}
+											}
+										}
+									]
 								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": 20,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Boost Contents for the Current Language"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 20
 			}
 		},
 		{
-			"configuration": {
-				"category": "boost",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "should",
-						"query": {
-							"wrapper": {
-								"query": {
-									"function_score": {
-										"boost": "${configuration.boost}",
-										"field_value_factor": {
-											"factor": "${configuration.factor}",
-											"field": "content${context.language_id}_length_sortable",
-											"missing": 1,
-											"modifier": "${configuration.modifier}"
-										}
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Boost contents with longer content translation for the current language"
 				},
-				"icon": "thumbs-up",
-				"title_i18n": {
-					"en_US": "Boost Longer Contents"
-				}
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
-							{
-								"defaultValue": 30,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
-							},
-							{
-								"defaultValue": 1.5,
-								"label": "Factor",
-								"name": "factor",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
-							},
-							{
-								"defaultValue": "ln",
-								"label": "Modifier",
-								"name": "modifier",
-								"type": "select",
-								"typeOptions": {
-									"options": [
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
 										{
-											"label": "None",
-											"value": "none"
-										},
-										{
-											"label": "log",
-											"value": "log"
-										},
-										{
-											"label": "log1p",
-											"value": "log1p"
-										},
-										{
-											"label": "log2p",
-											"value": "log2p"
-										},
-										{
-											"label": "ln",
-											"value": "ln"
-										},
-										{
-											"label": "ln1p",
-											"value": "ln1p"
-										},
-										{
-											"label": "ln2p",
-											"value": "ln2p"
-										},
-										{
-											"label": "Square",
-											"value": "square"
-										},
-										{
-											"label": "sqrt",
-											"value": "sqrt"
-										},
-										{
-											"label": "Reciprocal",
-											"value": "reciprocal"
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"function_score": {
+													"boost": "${configuration.boost}",
+													"field_value_factor": {
+														"factor": "${configuration.factor}",
+														"field": "content${context.language_id}_length_sortable",
+														"missing": 1,
+														"modifier": "${configuration.modifier}"
+													}
+												}
+											}
 										}
 									]
 								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": 30,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									},
+									{
+										"defaultValue": 1.5,
+										"label": "Factor",
+										"name": "factor",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									},
+									{
+										"defaultValue": "ln",
+										"label": "Modifier",
+										"name": "modifier",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "None",
+													"value": "none"
+												},
+												{
+													"label": "log",
+													"value": "log"
+												},
+												{
+													"label": "log1p",
+													"value": "log1p"
+												},
+												{
+													"label": "log2p",
+													"value": "log2p"
+												},
+												{
+													"label": "ln",
+													"value": "ln"
+												},
+												{
+													"label": "ln1p",
+													"value": "ln1p"
+												},
+												{
+													"label": "ln2p",
+													"value": "ln2p"
+												},
+												{
+													"label": "Square",
+													"value": "square"
+												},
+												{
+													"label": "sqrt",
+													"value": "sqrt"
+												},
+												{
+													"label": "Reciprocal",
+													"value": "reciprocal"
+												}
+											]
+										}
+									}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Boost Longer Contents"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 30,
@@ -1086,90 +1046,94 @@
 			}
 		},
 		{
-			"configuration": {
-				"category": "boost",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "should",
-						"query": {
-							"wrapper": {
-								"query": {
-									"function_score": {
-										"boost": "${configuration.boost}",
-										"gauss": {
-											"modified": {
-												"decay": "${configuration.decay}",
-												"offset": "${configuration.offset}",
-												"origin": "${time.current_date|dateFormat=yyyyMMddHHmmss}",
-												"scale": "${configuration.scale}"
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Give a gaussian boost to contents modified recently"
 				},
-				"icon": "thumbs-up",
-				"title_i18n": {
-					"en_US": "Boost Freshness"
-				}
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
-							{
-								"defaultValue": 0.5,
-								"label": "Decay",
-								"name": "decay",
-								"type": "slider",
-								"typeOptions": {
-									"max": 0.99,
-									"min": 0.01,
-									"step": 0.01
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"function_score": {
+													"boost": "${configuration.boost}",
+													"gauss": {
+														"modified": {
+															"decay": "${configuration.decay}",
+															"offset": "${configuration.offset}",
+															"origin": "${time.current_date|dateFormat=yyyyMMddHHmmss}",
+															"scale": "${configuration.scale}"
+														}
+													}
+												}
+											}
+										}
+									]
 								}
-							},
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
 							{
-								"defaultValue": 0,
-								"label": "Offset",
-								"name": "offset",
-								"type": "number",
-								"typeOptions": {
-									"min": 0,
-									"unit": "days",
-									"unitSuffix": "d"
-								}
-							},
-							{
-								"defaultValue": 10,
-								"label": "Scale",
-								"name": "scale",
-								"type": "number",
-								"typeOptions": {
-									"min": 0,
-									"unit": "days",
-									"unitSuffix": "d"
-								}
-							},
-							{
-								"defaultValue": 2,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
+								"fields": [
+									{
+										"defaultValue": 0.5,
+										"label": "Decay",
+										"name": "decay",
+										"type": "slider",
+										"typeOptions": {
+											"max": 0.99,
+											"min": 0.01,
+											"step": 0.01
+										}
+									},
+									{
+										"defaultValue": 0,
+										"label": "Offset",
+										"name": "offset",
+										"type": "number",
+										"typeOptions": {
+											"min": 0,
+											"unit": "days",
+											"unitSuffix": "d"
+										}
+									},
+									{
+										"defaultValue": 10,
+										"label": "Scale",
+										"name": "scale",
+										"type": "number",
+										"typeOptions": {
+											"min": 0,
+											"unit": "days",
+											"unitSuffix": "d"
+										}
+									},
+									{
+										"defaultValue": 2,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Boost Freshness"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 2,
@@ -1179,159 +1143,167 @@
 			}
 		},
 		{
-			"configuration": {
-				"category": "boost",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "should",
-						"query": {
-							"wrapper": {
-								"query": {
-									"term": {
-										"assetTagNames.raw": {
-											"boost": "${configuration.boost}",
-											"value": "${keywords}"
-										}
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Boost contents having an exact keyword match to a tag"
 				},
-				"icon": "thumbs-up",
-				"title_i18n": {
-					"en_US": "Boost Tags Match"
-				}
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
-							{
-								"defaultValue": 40,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"term": {
+													"assetTagNames.raw": {
+														"boost": "${configuration.boost}",
+														"value": "${keywords}"
+													}
+												}
+											}
+										}
+									]
 								}
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": 40,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Boost Tags Match"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 40
 			}
 		},
 		{
-			"configuration": {
-				"category": "boost",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "should",
-						"query": {
-							"wrapper": {
-								"query": {
-									"multi_match": {
-										"boost": "${configuration.boost}",
-										"fields": "${configuration.fields}",
-										"operator": "and",
-										"query": "${keywords}",
-										"type": "${configuration.type}"
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Boost contents matching all the words in the search phrase"
 				},
-				"icon": "thumbs-up",
-				"title_i18n": {
-					"en_US": "Boost All Keywords Match"
-				}
-			},
-			"uiConfiguration": {
-				"fieldSets": [
-					{
-						"fields": [
-							{
-								"defaultValue": [
-									{
-										"boost": 2,
-										"field": "localized_title",
-										"locale": "${context.language_id}"
-									},
-									{
-										"boost": 1,
-										"field": "content",
-										"locale": "${context.language_id}"
-									}
-								],
-								"label": "Field",
-								"name": "fields",
-								"type": "fieldMappingList",
-								"typeOptions": {
-									"boost": true
-								}
-							},
-							{
-								"defaultValue": "best_fields",
-								"label": "Match Type",
-								"name": "type",
-								"type": "select",
-								"typeOptions": {
-									"options": [
+				"elementDefinition": {
+					"category": "boost",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
 										{
-											"label": "Best Fields",
-											"value": "best_fields"
-										},
-										{
-											"label": "Most Fields",
-											"value": "most_fields"
-										},
-										{
-											"label": "Cross Fields",
-											"value": "cross_fields"
-										},
-										{
-											"label": "Phrase",
-											"value": "phrase"
-										},
-										{
-											"label": "Phrase Prefix",
-											"value": "phrase_prefix"
-										},
-										{
-											"label": "Boolean Prefix",
-											"value": "bool_prefix"
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"multi_match": {
+													"boost": "${configuration.boost}",
+													"fields": "${configuration.fields}",
+													"operator": "and",
+													"query": "${keywords}",
+													"type": "${configuration.type}"
+												}
+											}
 										}
 									]
 								}
-							},
+							]
+						}
+					},
+					"icon": "thumbs-up",
+					"uiConfiguration": {
+						"fieldSets": [
 							{
-								"defaultValue": 10,
-								"label": "Boost",
-								"name": "boost",
-								"type": "number",
-								"typeOptions": {
-									"min": 0
-								}
+								"fields": [
+									{
+										"defaultValue": [
+											{
+												"boost": 2,
+												"field": "localized_title",
+												"locale": "${context.language_id}"
+											},
+											{
+												"boost": 1,
+												"field": "content",
+												"locale": "${context.language_id}"
+											}
+										],
+										"label": "Field",
+										"name": "fields",
+										"type": "fieldMappingList",
+										"typeOptions": {
+											"boost": true
+										}
+									},
+									{
+										"defaultValue": "best_fields",
+										"label": "Match Type",
+										"name": "type",
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "Best Fields",
+													"value": "best_fields"
+												},
+												{
+													"label": "Most Fields",
+													"value": "most_fields"
+												},
+												{
+													"label": "Cross Fields",
+													"value": "cross_fields"
+												},
+												{
+													"label": "Phrase",
+													"value": "phrase"
+												},
+												{
+													"label": "Phrase Prefix",
+													"value": "phrase_prefix"
+												},
+												{
+													"label": "Boolean Prefix",
+													"value": "bool_prefix"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": 10,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
 							}
 						]
 					}
-				]
+				},
+				"title_i18n": {
+					"en_US": "Boost All Keywords Match"
+				}
 			},
 			"uiConfigurationValues": {
 				"boost": 10,
@@ -1392,363 +1364,387 @@
 			}
 		},
 		{
-			"configuration": {
-				"category": "hide",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "filter",
-						"query": {
-							"wrapper": {
-								"query": {
-									"bool": {
-										"should": [
-											{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Hide the instance default user account from being searched"
+				},
+				"elementDefinition": {
+					"category": "hide",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "filter",
+											"query": {
 												"bool": {
-													"must_not": [
+													"should": [
 														{
-															"term": {
-																"entryClassName": "com.liferay.portal.kernel.model.User"
+															"bool": {
+																"must_not": [
+																	{
+																		"term": {
+																			"entryClassName": "com.liferay.portal.kernel.model.User"
+																		}
+																	}
+																]
 															}
-														}
-													]
-												}
-											},
-											{
-												"bool": {
-													"must": [
+														},
 														{
-															"term": {
-																"defaultUser": false
+															"bool": {
+																"must": [
+																	{
+																		"term": {
+																			"defaultUser": false
+																		}
+																	}
+																]
 															}
 														}
 													]
 												}
 											}
-										]
-									}
+										}
+									]
 								}
-							}
+							]
 						}
+					},
+					"icon": "hidden",
+					"uiConfiguration": {
 					}
-				],
-				"conditions": {
 				},
-				"description_i18n": {
-					"en_US": "Hide the instance default user account from being searched"
-				},
-				"icon": "hidden",
 				"title_i18n": {
 					"en_US": "Hide Default User"
 				}
 			},
-			"uiConfiguration": {
-			},
 			"uiConfigurationValues": {
 			}
 		},
 		{
-			"configuration": {
-				"category": "hide",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "filter",
-						"query": {
-							"wrapper": {
-								"query": {
-									"bool": {
-										"should": [
-											{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Hide assets which are marked not searchable"
+				},
+				"elementDefinition": {
+					"category": "hide",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "filter",
+											"query": {
 												"bool": {
-													"must_not": [
+													"should": [
 														{
-															"exists": {
-																"field": "hidden"
+															"bool": {
+																"must_not": [
+																	{
+																		"exists": {
+																			"field": "hidden"
+																		}
+																	}
+																]
 															}
-														}
-													]
-												}
-											},
-											{
-												"bool": {
-													"must": [
+														},
 														{
-															"term": {
-																"hidden": false
+															"bool": {
+																"must": [
+																	{
+																		"term": {
+																			"hidden": false
+																		}
+																	}
+																]
 															}
 														}
 													]
 												}
 											}
-										]
-									}
+										}
+									]
 								}
-							}
+							]
 						}
+					},
+					"icon": "hidden",
+					"uiConfiguration": {
 					}
-				],
-				"conditions": {
 				},
-				"description_i18n": {
-					"en_US": "Hide assets which are marked not searchable"
-				},
-				"icon": "hidden",
 				"title_i18n": {
 					"en_US": "Hide Hidden Contents"
 				}
 			},
-			"uiConfiguration": {
-			},
 			"uiConfigurationValues": {
 			}
 		},
 		{
-			"configuration": {
-				"category": "hide",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "filter",
-						"query": {
-							"wrapper": {
-								"query": {
-									"bool": {
-										"should": [
-											{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Do not search for comments"
+				},
+				"elementDefinition": {
+					"category": "hide",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "filter",
+											"query": {
 												"bool": {
-													"must_not": [
+													"should": [
 														{
-															"exists": {
-																"field": "discussion"
+															"bool": {
+																"must_not": [
+																	{
+																		"exists": {
+																			"field": "discussion"
+																		}
+																	}
+																]
 															}
-														}
-													]
-												}
-											},
-											{
-												"bool": {
-													"must": [
+														},
 														{
-															"term": {
-																"discussion": false
+															"bool": {
+																"must": [
+																	{
+																		"term": {
+																			"discussion": false
+																		}
+																	}
+																]
 															}
 														}
 													]
 												}
 											}
-										]
-									}
+										}
+									]
 								}
-							}
+							]
 						}
+					},
+					"icon": "hidden",
+					"uiConfiguration": {
 					}
-				],
-				"conditions": {
 				},
-				"description_i18n": {
-					"en_US": "Do not search for comments"
-				},
-				"icon": "hidden",
 				"title_i18n": {
 					"en_US": "Hide Comments"
 				}
 			},
-			"uiConfiguration": {
-			},
 			"uiConfigurationValues": {
 			}
 		},
 		{
-			"configuration": {
-				"category": "filter",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "filter",
-						"query": {
-							"wrapper": {
-								"query": {
-									"bool": {
-										"should": [
-											{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Show only the latest HEAD version of Web Content articles"
+				},
+				"elementDefinition": {
+					"category": "filter",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "filter",
+											"query": {
 												"bool": {
-													"must_not": [
+													"should": [
 														{
-															"term": {
-																"entryClassName": {
-																	"value": "com.liferay.journal.model.JournalArticle"
-																}
-															}
-														}
-													]
-												}
-											},
-											{
-												"bool": {
-													"must": [
-														{
-															"term": {
-																"entryClassName": {
-																	"value": "com.liferay.journal.model.JournalArticle"
-																}
+															"bool": {
+																"must_not": [
+																	{
+																		"term": {
+																			"entryClassName": {
+																				"value": "com.liferay.journal.model.JournalArticle"
+																			}
+																		}
+																	}
+																]
 															}
 														},
 														{
-															"term": {
-																"head": {
-																	"value": true
-																}
+															"bool": {
+																"must": [
+																	{
+																		"term": {
+																			"entryClassName": {
+																				"value": "com.liferay.journal.model.JournalArticle"
+																			}
+																		}
+																	},
+																	{
+																		"term": {
+																			"head": {
+																				"value": true
+																			}
+																		}
+																	}
+																]
 															}
 														}
 													]
 												}
 											}
-										]
-									}
+										}
+									]
 								}
-							}
+							]
 						}
+					},
+					"icon": "filter",
+					"uiConfiguration": {
 					}
-				],
-				"conditions": {
 				},
-				"description_i18n": {
-					"en_US": "Show only the latest HEAD version of Web Content articles"
-				},
-				"icon": "filter",
 				"title_i18n": {
 					"en_US": "Limit Search to HEAD Version"
 				}
 			},
-			"uiConfiguration": {
-			},
 			"uiConfigurationValues": {
 			}
 		},
 		{
-			"configuration": {
-				"category": "filter",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "filter",
-						"query": {
-							"wrapper": {
-								"query": {
-									"term": {
-										"status": 0
-									}
-								}
-							}
-						}
-					}
-				],
-				"conditions": {
-				},
+			"sxpElement": {
 				"description_i18n": {
 					"en_US": "Limit search to contents that have been published"
 				},
-				"icon": "filter",
+				"elementDefinition": {
+					"category": "filter",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "filter",
+											"query": {
+												"term": {
+													"status": 0
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"icon": "filter",
+					"uiConfiguration": {
+					}
+				},
 				"title_i18n": {
 					"en_US": "Limit Search to Published Contents"
 				}
 			},
-			"uiConfiguration": {
-			},
 			"uiConfigurationValues": {
 			}
 		},
 		{
-			"configuration": {
-				"category": "filter",
-				"clauses": [
-					{
-						"context": "query",
-						"occur": "filter",
-						"query": {
-							"wrapper": {
-								"query": {
-									"bool": {
-										"should": [
-											{
+			"sxpElement": {
+				"description_i18n": {
+					"en_US": "Show only contents with a valid display date"
+				},
+				"elementDefinition": {
+					"category": "filter",
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "filter",
+											"query": {
 												"bool": {
-													"must_not": [
+													"should": [
 														{
-															"exists": {
-																"field": "displayDate"
-															}
-														}
-													]
-												}
-											},
-											{
-												"bool": {
-													"must": [
-														{
-															"range": {
-																"displayDate_sortable": {
-																	"from": "-9223372036854775808",
-																	"include_lower": true,
-																	"include_upper": true,
-																	"to": "${time.current_date|dateFormat=timestamp}"
-																}
-															}
-														}
-													],
-													"must_not": [
-														{
-															"exists": {
-																"field": "expirationDate"
-															}
-														}
-													]
-												}
-											},
-											{
-												"bool": {
-													"must": [
-														{
-															"range": {
-																"displayDate_sortable": {
-																	"from": "-9223372036854775808",
-																	"include_lower": true,
-																	"include_upper": true,
-																	"to": "${time.current_date|dateFormat=timestamp}"
-																}
+															"bool": {
+																"must_not": [
+																	{
+																		"exists": {
+																			"field": "displayDate"
+																		}
+																	}
+																]
 															}
 														},
 														{
-															"range": {
-																"expirationDate_sortable": {
-																	"from": "${time.current_date|dateFormat=timestamp}",
-																	"include_lower": true,
-																	"include_upper": true,
-																	"to": "9223372036854775807"
-																}
+															"bool": {
+																"must": [
+																	{
+																		"range": {
+																			"displayDate_sortable": {
+																				"from": "-9223372036854775808",
+																				"include_lower": true,
+																				"include_upper": true,
+																				"to": "${time.current_date|dateFormat=timestamp}"
+																			}
+																		}
+																	}
+																],
+																"must_not": [
+																	{
+																		"exists": {
+																			"field": "expirationDate"
+																		}
+																	}
+																]
+															}
+														},
+														{
+															"bool": {
+																"must": [
+																	{
+																		"range": {
+																			"displayDate_sortable": {
+																				"from": "-9223372036854775808",
+																				"include_lower": true,
+																				"include_upper": true,
+																				"to": "${time.current_date|dateFormat=timestamp}"
+																			}
+																		}
+																	},
+																	{
+																		"range": {
+																			"expirationDate_sortable": {
+																				"from": "${time.current_date|dateFormat=timestamp}",
+																				"include_lower": true,
+																				"include_upper": true,
+																				"to": "9223372036854775807"
+																			}
+																		}
+																	}
+																]
 															}
 														}
 													]
 												}
 											}
-										]
-									}
+										}
+									]
 								}
-							}
+							]
 						}
+					},
+					"icon": "filter",
+					"uiConfiguration": {
 					}
-				],
-				"conditions": {
 				},
-				"description_i18n": {
-					"en_US": "Show only contents with a valid display date"
-				},
-				"icon": "filter",
 				"title_i18n": {
 					"en_US": "Scheduling Aware"
 				}
-			},
-			"uiConfiguration": {
 			},
 			"uiConfigurationValues": {
 			}

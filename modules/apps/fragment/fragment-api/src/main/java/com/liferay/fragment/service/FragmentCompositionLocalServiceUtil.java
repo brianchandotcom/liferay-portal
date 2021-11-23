@@ -477,22 +477,6 @@ public class FragmentCompositionLocalServiceUtil {
 			description, data, previewFileEntryId, status);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateFragmentComposition(long, long, long, String, String, String, long, int)}
-	 */
-	@Deprecated
-	public static FragmentComposition updateFragmentComposition(
-			long userId, long fragmentCompositionId, String name,
-			String description, String data, long previewFileEntryId,
-			int status)
-		throws PortalException {
-
-		return getService().updateFragmentComposition(
-			userId, fragmentCompositionId, name, description, data,
-			previewFileEntryId, status);
-	}
-
 	public static FragmentComposition updateFragmentComposition(
 			long fragmentCompositionId, String name)
 		throws PortalException {

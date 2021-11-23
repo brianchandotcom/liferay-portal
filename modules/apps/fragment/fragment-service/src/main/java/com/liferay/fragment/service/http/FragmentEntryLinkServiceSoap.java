@@ -63,41 +63,6 @@ import java.rmi.RemoteException;
 @Deprecated
 public class FragmentEntryLinkServiceSoap {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFragmentEntryLink(long, long, long, long, long, String,
-	 String, String, String, String, String, int, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.fragment.model.FragmentEntryLinkSoap
-			addFragmentEntryLink(
-				long groupId, long originalFragmentEntryLinkId,
-				long fragmentEntryId, long segmentsExperienceId,
-				long classNameId, long classPK, String css, String html,
-				String js, String configuration, String editableValues,
-				String namespace, int position, String rendererKey,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.fragment.model.FragmentEntryLink returnValue =
-				FragmentEntryLinkServiceUtil.addFragmentEntryLink(
-					groupId, originalFragmentEntryLinkId, fragmentEntryId,
-					segmentsExperienceId, classNameId, classPK, css, html, js,
-					configuration, editableValues, namespace, position,
-					rendererKey, serviceContext);
-
-			return com.liferay.fragment.model.FragmentEntryLinkSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.fragment.model.FragmentEntryLinkSoap
 			addFragmentEntryLink(
 				long groupId, long originalFragmentEntryLinkId,
@@ -178,30 +143,6 @@ public class FragmentEntryLinkServiceSoap {
 
 			return com.liferay.fragment.model.FragmentEntryLinkSoap.toSoapModel(
 				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateFragmentEntryLinks(long, long, long[], String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static void updateFragmentEntryLinks(
-			long groupId, long classNameId, long classPK,
-			long[] fragmentEntryIds, String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			FragmentEntryLinkServiceUtil.updateFragmentEntryLinks(
-				groupId, classNameId, classPK, fragmentEntryIds, editableValues,
-				serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

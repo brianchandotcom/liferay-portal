@@ -54,30 +54,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 			fragmentEntryLink);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFragmentEntryLink(long, long, long, long, long, long,
-	 String, String, String, String, String, String, int, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntryLink addFragmentEntryLink(
-			long userId, long groupId, long originalFragmentEntryLinkId,
-			long fragmentEntryId, long segmentsExperienceId, long classNameId,
-			long classPK, String css, String html, String js,
-			String configuration, String editableValues, String namespace,
-			int position, String rendererKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			userId, groupId, originalFragmentEntryLinkId, fragmentEntryId,
-			segmentsExperienceId, classNameId, classPK, css, html, js,
-			configuration, editableValues, namespace, position, rendererKey,
-			serviceContext);
-	}
-
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
 			long userId, long groupId, long originalFragmentEntryLinkId,
@@ -442,22 +418,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getAllFragmentEntryLinksByFragmentEntryId(long, long, int,
-	 int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
-		long groupId, long fragmentEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
-			orderByComparator) {
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
-			groupId, fragmentEntryId, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFragmentEntryLinksByPlid(long, long)}
 	 */
 	@Deprecated
@@ -467,42 +427,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
 			groupId, classNameId, classPK);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getLayoutPageTemplateFragmentEntryLinksByFragmentEntryId(
-	 long, long, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
-		long groupId, long fragmentEntryId, long classNameId,
-		int layoutPageTemplateType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
-			orderByComparator) {
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
-			groupId, fragmentEntryId, classNameId, layoutPageTemplateType,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFragmentEntryLinks(long, long, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
-		long groupId, long fragmentEntryId, long classNameId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
-			orderByComparator) {
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
-			groupId, fragmentEntryId, classNameId, start, end,
-			orderByComparator);
 	}
 
 	@Override
@@ -537,23 +461,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.
 			getFragmentEntryLinksBySegmentsExperienceId(
 				groupId, segmentsExperienceId, plid);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFragmentEntryLinksBySegmentsExperienceId(long, long,
-	 long)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<FragmentEntryLink>
-		getFragmentEntryLinksBySegmentsExperienceId(
-			long groupId, long segmentsExperienceId, long classNameId,
-			long classPK) {
-
-		return _fragmentEntryLinkLocalService.
-			getFragmentEntryLinksBySegmentsExperienceId(
-				groupId, segmentsExperienceId, classNameId, classPK);
 	}
 
 	@Override
@@ -612,45 +519,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 	@Override
 	public int getFragmentEntryLinksCount() {
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinksCount();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getAllFragmentEntryLinksCountByFragmentEntryId(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId) {
-		return _fragmentEntryLinkLocalService.getFragmentEntryLinksCount(
-			groupId, fragmentEntryId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFragmentEntryLinksCount(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentEntryLinksCount(
-		long groupId, long fragmentEntryId, long classNameId) {
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLinksCount(
-			groupId, fragmentEntryId, classNameId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
-	 long, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getFragmentEntryLinksCount(
-		long groupId, long fragmentEntryId, long classNameId,
-		int layoutPageTemplateType) {
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLinksCount(
-			groupId, fragmentEntryId, classNameId, layoutPageTemplateType);
 	}
 
 	@Override
@@ -746,18 +614,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateClassedModel(long)}
-	 */
-	@Deprecated
-	@Override
-	public void updateClassedModel(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_fragmentEntryLinkLocalService.updateClassedModel(classNameId, classPK);
-	}
-
-	/**
 	 * Updates the fragment entry link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -782,29 +638,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, position);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateFragmentEntryLink(long, long, long, long, long,
-	 String, String, String, String, String, String, int,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntryLink updateFragmentEntryLink(
-			long userId, long fragmentEntryLinkId,
-			long originalFragmentEntryLinkId, long fragmentEntryId,
-			long classNameId, long classPK, String css, String html, String js,
-			String configuration, String editableValues, String namespace,
-			int position,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			userId, fragmentEntryLinkId, originalFragmentEntryLinkId,
-			fragmentEntryId, classNameId, classPK, css, html, js, configuration,
-			editableValues, namespace, position, serviceContext);
 	}
 
 	@Override
@@ -839,24 +672,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateFragmentEntryLinks(long, long, long, long[], String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void updateFragmentEntryLinks(
-			long userId, long groupId, long classNameId, long classPK,
-			long[] fragmentEntryIds, String editableValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			userId, groupId, classNameId, classPK, fragmentEntryIds,
-			editableValues, serviceContext);
 	}
 
 	@Override

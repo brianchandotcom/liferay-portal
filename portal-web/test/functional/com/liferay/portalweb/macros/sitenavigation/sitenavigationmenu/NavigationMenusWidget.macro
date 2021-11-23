@@ -89,11 +89,11 @@ definition {
 	macro viewMenuItemsOrder {
 		var index = "1";
 
-		for (var pageName : list "${pageNameList}") {
+		for (var menuItem : list "${menuItemList}") {
 			AssertTextEquals.assertPartialText(
 				key_index = "${index}",
 				locator1 = "NavigationMenusWidget#MENU_ITEM",
-				value1 = "${pageName}");
+				value1 = "${menuItem}");
 
 			var index = ${index} + 1;
 		}

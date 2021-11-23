@@ -2245,7 +2245,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		NavigationMenusWidget.viewMenuItemsOrder(pageNameList = "Staging Test Page,Test Page 1,Test Page 2");
+		NavigationMenusWidget.viewMenuItemsOrder(menuItemList = "Staging Test Page,Test Page 1,Test Page 2");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

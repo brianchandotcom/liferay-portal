@@ -462,6 +462,8 @@ definition {
 
 		Search.searchCP(searchTerm = "Name");
 
+		WaitForVisible(locator1 = "Search#SEARCH_INFO");
+
 		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS")) {
 			Click(locator1 = "Icon#VERTICAL_ELLIPSIS");
 

@@ -94,8 +94,8 @@ public class PoshiContext {
 		_commandSummaries.clear();
 		_filePaths.clear();
 		_functionFileNames.clear();
-		_macroFileNames.clear();
 		_functionLocatorCounts.clear();
+		_macroFileNames.clear();
 		_namespacedClassCommandNamePropertiesMap.clear();
 		_namespaces.clear();
 		_overrideClassNames.clear();

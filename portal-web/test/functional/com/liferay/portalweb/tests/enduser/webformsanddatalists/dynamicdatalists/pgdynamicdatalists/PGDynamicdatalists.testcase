@@ -1043,7 +1043,7 @@ definition {
 
 		DDLRecord.viewViaDDLDisplayPG(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean");
 
@@ -1057,10 +1057,10 @@ definition {
 			field = "Boolean",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean",
-			fieldPredefinedValue = "Yes");
+			fieldPredefinedValue = "True");
 
 		DDLRecord.populateFieldBoolean(
-			ddlRecordFieldData = "No",
+			ddlRecordFieldData = "False",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean");
 
@@ -1068,7 +1068,7 @@ definition {
 
 		DDLRecord.viewViaDDLDisplayPG(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "No",
+			ddlRecordFieldData = "False",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean");
 	}

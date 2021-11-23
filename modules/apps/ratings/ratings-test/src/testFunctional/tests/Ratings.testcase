@@ -843,15 +843,13 @@ definition {
 
 		Ratings.rateStackedStars(ratingStarCount = "3");
 
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_STAR_RESULT",
-			value1 = "(1 Vote)");
+		Ratings.viewRateStackedStar(
+			averageStarCount = "3.0",
+			ratingStarCount = "3");
 
 		Ratings.revokeStackedStarsRating();
 
-		AssertTextNotPresent(
-			locator1 = "Ratings#AVERAGE_STAR_RESULT",
-			value1 = "(1 Vote)");
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
 	}
 
 	@priority = "3"

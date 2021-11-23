@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -100,10 +101,9 @@ public class AsyncAntivirusEventTest {
 				new EventListenerBuilder().register(
 					AntivirusAsyncEvent.MISSING, countDownLatch::countDown
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
+				MapUtil.singletonDictionary(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {AntivirusAsyncEvent.MISSING.name()}
-				).build());
+					new String[] {AntivirusAsyncEvent.MISSING.name()}));
 
 		try {
 
@@ -153,9 +153,7 @@ public class AsyncAntivirusEventTest {
 			schedulerHelperServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncRetryScheduler.class,
 				message -> retryScheduled.set(true),
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_RANKING, 100
-				).build());
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
 		ServiceRegistration<AntivirusScanner>
 			antivirusScannerServiceRegistration =
@@ -280,13 +278,12 @@ public class AsyncAntivirusEventTest {
 				).register(
 					AntivirusAsyncEvent.SIZE_EXCEEDED, countDownLatch::countDown
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
+				MapUtil.singletonDictionary(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
 					new String[] {
 						AntivirusAsyncEvent.PREPARE.name(),
 						AntivirusAsyncEvent.SIZE_EXCEEDED.name()
-					}
-				).build());
+					}));
 
 		try {
 
@@ -352,13 +349,12 @@ public class AsyncAntivirusEventTest {
 				).register(
 					AntivirusAsyncEvent.SUCCESS, countDownLatch::countDown
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
+				MapUtil.singletonDictionary(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
 					new String[] {
 						AntivirusAsyncEvent.PREPARE.name(),
 						AntivirusAsyncEvent.SUCCESS.name()
-					}
-				).build());
+					}));
 
 		try {
 
@@ -429,13 +425,12 @@ public class AsyncAntivirusEventTest {
 				).register(
 					AntivirusAsyncEvent.VIRUS_FOUND, countDownLatch::countDown
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
+				MapUtil.singletonDictionary(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
 					new String[] {
 						AntivirusAsyncEvent.PREPARE.name(),
 						AntivirusAsyncEvent.VIRUS_FOUND.name()
-					}
-				).build());
+					}));
 
 		try {
 

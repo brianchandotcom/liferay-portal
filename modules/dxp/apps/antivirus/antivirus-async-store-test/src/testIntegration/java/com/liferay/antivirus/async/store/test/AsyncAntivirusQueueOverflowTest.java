@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -94,9 +95,7 @@ public class AsyncAntivirusQueueOverflowTest {
 					retryScheduled.incrementAndGet();
 					countDownLatch.countDown();
 				},
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_RANKING, 100
-				).build());
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
 		ServiceRegistration<AntivirusScanner>
 			antivirusScannerServiceRegistration =

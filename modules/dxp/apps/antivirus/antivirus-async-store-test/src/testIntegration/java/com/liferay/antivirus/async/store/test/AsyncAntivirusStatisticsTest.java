@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -107,9 +108,7 @@ public class AsyncAntivirusStatisticsTest {
 					retryScheduled.incrementAndGet();
 					countDownLatch.countDown();
 				},
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_RANKING, 100
-				).build());
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
 		ServiceRegistration<AntivirusScanner>
 			antivirusScannerServiceRegistration =
@@ -146,9 +145,8 @@ public class AsyncAntivirusStatisticsTest {
 									AntivirusScannerException.PROCESS_FAILURE);
 							}
 						}),
-					HashMapDictionaryBuilder.<String, Object>put(
-						Constants.SERVICE_RANKING, 100
-					).build());
+					MapUtil.singletonDictionary(
+						Constants.SERVICE_RANKING, 100));
 
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(

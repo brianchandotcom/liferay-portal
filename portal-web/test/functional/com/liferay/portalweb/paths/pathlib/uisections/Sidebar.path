@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>DDM_FIELD_REFERENCE</td>
-	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input[contains(@class,'form-control') and (@type='text')]</td>
 	<td></td>
 </tr>
 <tr>

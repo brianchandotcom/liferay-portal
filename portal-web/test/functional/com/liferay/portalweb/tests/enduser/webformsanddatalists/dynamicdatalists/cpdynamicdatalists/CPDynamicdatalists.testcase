@@ -2416,7 +2416,7 @@ definition {
 			ddlListName = "List Name");
 
 		DDLRecord.populateFieldBoolean(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			fieldFieldLabel = "Boolean Edit",
 			fieldName = "BooleanEdit");
 

@@ -69,6 +69,7 @@ public class PinDTOConverter implements DTOConverter<CSDiagramEntry, Pin> {
 						return _mappedProductDTOConverter.toDTO(
 							new MappedProductDTOConverterContext(
 								pinDTOConverterContext.getCommerceContext(),
+								pinDTOConverterContext.getCompanyId(),
 								csDiagramEntry.getCSDiagramEntryId(),
 								dtoConverterContext.getLocale()));
 					});

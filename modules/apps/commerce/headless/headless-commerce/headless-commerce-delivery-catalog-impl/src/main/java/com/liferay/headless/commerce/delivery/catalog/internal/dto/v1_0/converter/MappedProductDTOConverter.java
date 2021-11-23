@@ -19,6 +19,8 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -34,11 +36,13 @@ import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -84,6 +88,9 @@ public class MappedProductDTOConverter
 			_csDiagramEntryService.getCSDiagramEntry(
 				(Long)mappedProductDTOConverterContext.getId());
 
+		CommerceContext commerceContext =
+			mappedProductDTOConverterContext.getCommerceContext();
+
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(
 				csDiagramEntry.getCProductId());
@@ -93,12 +100,16 @@ public class MappedProductDTOConverter
 		return new MappedProduct() {
 			{
 				actions = dtoConverterContext.getActions();
+				availability = _getAvailability(
+					mappedProductDTOConverterContext.getCompanyId(),
+					commerceContext.getCommerceChannelGroupId(),
+					cpInstance.getSku(), cpInstance,
+					mappedProductDTOConverterContext.getLocale());
 				id = csDiagramEntry.getCSDiagramEntryId();
 				options = _getOptions(cpInstance);
 				price = _getPrice(
-					mappedProductDTOConverterContext.getCommerceContext(),
-					cpInstance, mappedProductDTOConverterContext.getLocale(),
-					1);
+					commerceContext, cpInstance,
+					mappedProductDTOConverterContext.getLocale(), 1);
 				productId = csDiagramEntry.getCProductId();
 				quantity = csDiagramEntry.getQuantity();
 				sequence = csDiagramEntry.getSequence();
@@ -184,6 +195,35 @@ public class MappedProductDTOConverter
 					});
 			}
 		};
+	}
+
+	private Availability _getAvailability(
+			long companyId, long commerceChannelGroupId, String sku,
+			CPInstance cpInstance, Locale locale)
+		throws Exception {
+
+		Availability availability = new Availability();
+		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+			companyId, commerceChannelGroupId, sku);
+
+		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
+			if (stockQuantity > 0) {
+				availability.setLabel_i18n(
+					LanguageUtil.get(locale, "available"));
+				availability.setLabel("available");
+			}
+			else {
+				availability.setLabel_i18n(
+					LanguageUtil.get(locale, "unavailable"));
+				availability.setLabel("unavailable");
+			}
+		}
+
+		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
+			availability.setStockQuantity(stockQuantity);
+		}
+
+		return availability;
 	}
 
 	private String[] _getFormattedDiscountPercentages(
@@ -328,6 +368,9 @@ public class MappedProductDTOConverter
 	}
 
 	@Reference
+	private CommerceInventoryEngine _commerceInventoryEngine;
+
+	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
@@ -335,6 +378,9 @@ public class MappedProductDTOConverter
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;
 
 	@Reference
 	private CPDefinitionOptionRelLocalService

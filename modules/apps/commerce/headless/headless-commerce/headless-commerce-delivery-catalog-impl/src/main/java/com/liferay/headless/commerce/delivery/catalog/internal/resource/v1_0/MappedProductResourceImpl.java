@@ -154,8 +154,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 
 		return _mappedProductDTOConverter.toDTO(
 			new MappedProductDTOConverterContext(
-				commerceContext, csDiagramEntryId,
-				contextAcceptLanguage.getPreferredLocale()));
+				commerceContext, contextCompany.getCompanyId(),
+				csDiagramEntryId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference

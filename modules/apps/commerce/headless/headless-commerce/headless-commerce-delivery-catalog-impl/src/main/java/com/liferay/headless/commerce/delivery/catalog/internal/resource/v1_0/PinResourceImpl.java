@@ -130,7 +130,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		return _pinDTOConverter.toDTO(
 			new PinDTOConverterContext(
-				commerceContext, csDiagramPinId,
+				commerceContext, contextCompany.getCompanyId(), csDiagramPinId,
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 

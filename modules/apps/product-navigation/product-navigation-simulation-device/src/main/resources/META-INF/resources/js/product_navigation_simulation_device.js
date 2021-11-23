@@ -363,7 +363,10 @@ AUI.add(
 						Liferay.Util.openWindow(
 							{
 								cache: false,
-								dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
+								dialog: {
+									...DIALOG_DEFAULTS,
+									...dialogConfig,
+								},
 								dialogIframe: DIALOG_IFRAME_DEFAULTS,
 								id: instance._dialogId,
 								iframeId: 'simulationDeviceIframe',

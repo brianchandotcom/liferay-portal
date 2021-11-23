@@ -68,12 +68,10 @@ AUI.add(
 				_formatRootNode() {
 					var instance = this;
 
-					return new A.Do.AlterReturn(
-						'Modified label attribute',
-						A.merge(A.Do.currentRetVal, {
-							label: instance.get(STR_HOST).get('root').label,
-						})
-					);
+					return new A.Do.AlterReturn('Modified label attribute', {
+						...A.Do.currentRetVal,
+						label: instance.get(STR_HOST).get('root').label,
+					});
 				},
 
 				_onTreeAppend(event) {

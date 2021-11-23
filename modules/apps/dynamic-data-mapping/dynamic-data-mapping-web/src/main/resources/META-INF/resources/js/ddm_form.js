@@ -161,23 +161,17 @@ AUI.add(
 
 				var FieldClass = getFieldClass(fieldDefinition.type);
 
-				var field = new FieldClass(
-					A.merge(
-						instance.getAttrs(
-							AObject.keys(DDMPortletSupport.ATTRS)
-						),
-						{
-							container: fieldNode,
-							dataType: fieldDefinition.dataType,
-							definition,
-							displayLocale,
-							instanceId: fieldInstanceId,
-							name: fieldName,
-							parent: instance,
-							values: instance.get('values'),
-						}
-					)
-				);
+				var field = new FieldClass({
+					...instance.getAttrs(AObject.keys(DDMPortletSupport.ATTRS)),
+					container: fieldNode,
+					dataType: fieldDefinition.dataType,
+					definition,
+					displayLocale,
+					instanceId: fieldInstanceId,
+					name: fieldName,
+					parent: instance,
+					values: instance.get('values'),
+				});
 
 				var form = instance.getForm();
 

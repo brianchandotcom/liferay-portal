@@ -241,9 +241,10 @@ AUI.add(
 						triggers.indexOf(trigger)
 					];
 
-					instance.setAttrs(
-						A.merge(instance._triggerConfigDefaults, triggerConfig)
-					);
+					instance.setAttrs({
+						...instance._triggerConfigDefaults,
+						...triggerConfig,
+					});
 
 					instance._trigger = trigger;
 				}
@@ -281,11 +282,11 @@ AUI.add(
 					return item !== 'value';
 				});
 
-				instance._triggerConfigDefaults = A.merge(
-					TRIGGER_CONFIG_DEFAULTS
-				);
+				instance._triggerConfigDefaults = TRIGGER_CONFIG_DEFAULTS;
 
-				A.mix(
+				// eslint-disable-next-line prefer-object-spread
+				Object.assign(
+					{},
 					instance._triggerConfigDefaults,
 					instance.getAttrs(),
 					false,

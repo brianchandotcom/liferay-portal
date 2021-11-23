@@ -559,6 +559,7 @@ AUI.add(
 				);
 
 				if (!editorForm) {
+					// eslint-disable-next-line @liferay/aui/no-merge
 					config = A.merge(
 						{
 							builder: instance.get('builder'),
@@ -579,6 +580,7 @@ AUI.add(
 			showEditorForm(editorFormClass, container, value, config) {
 				var instance = this;
 
+				// eslint-disable-next-line @liferay/aui/no-merge
 				config = A.merge(
 					{
 						render: container,
@@ -656,6 +658,7 @@ AUI.add(
 
 				strings: {
 					valueFn() {
+						// eslint-disable-next-line @liferay/aui/no-merge
 						return A.merge(KaleoDesignerStrings, {
 							assignmentTypeLabel:
 								KaleoDesignerStrings.assignmentType,
@@ -1236,6 +1239,7 @@ AUI.add(
 
 				strings: {
 					valueFn() {
+						// eslint-disable-next-line @liferay/aui/no-merge
 						return A.merge(KaleoDesignerStrings, {
 							assignmentTypeLabel:
 								KaleoDesignerStrings.recipientType,
@@ -1712,6 +1716,7 @@ AUI.add(
 
 					instance.set('recipients', localRecipients);
 
+					// eslint-disable-next-line @liferay/aui/no-merge
 					return A.merge(
 						NotificationsEditorForm.superclass.getValue.apply(
 							this,
@@ -1892,6 +1897,7 @@ AUI.add(
 
 			instance.set('recipients', localRecipients);
 
+			// eslint-disable-next-line @liferay/aui/no-merge
 			return A.merge(
 				NotificationsEditorForm.superclass.getValue.apply(
 					this,

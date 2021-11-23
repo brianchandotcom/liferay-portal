@@ -39,12 +39,10 @@ AUI.add(
 				_formatNode() {
 					var currentRetVal = A.Do.currentRetVal;
 
-					return new A.Do.AlterReturn(
-						'Modified type attribute',
-						A.merge(currentRetVal, {
-							type: 'liferay-radio',
-						})
-					);
+					return new A.Do.AlterReturn('Modified type attribute', {
+						...currentRetVal,
+						type: 'liferay-radio',
+					});
 				},
 
 				_formatNodeLabel(node, cssClass, label, title) {
@@ -75,10 +73,7 @@ AUI.add(
 
 					return new A.Do.AlterReturn(
 						'Modified cssClass, label and type attributes',
-						A.merge(A.Do.currentRetVal, {
-							labelEl,
-							type: 'liferay-radio',
-						})
+						{...A.Do.currentRetVal, labelEl, type: 'liferay-radio'}
 					);
 				},
 

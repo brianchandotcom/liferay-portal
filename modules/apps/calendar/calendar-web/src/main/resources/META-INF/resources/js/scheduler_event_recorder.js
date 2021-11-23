@@ -630,7 +630,8 @@ AUI.add(
 						arguments
 					);
 
-					return A.merge(templateData, {
+					return {
+						...templateData,
 						acceptLinkEnabled: instance._hasWorkflowStatusPermission(
 							schedulerEvent,
 							CalendarWorkflow.STATUS_APPROVED
@@ -661,7 +662,7 @@ AUI.add(
 						startTime: templateData.startDate,
 						status: schedulerEvent.get('status'),
 						workflowStatus: CalendarWorkflow,
-					});
+					};
 				},
 
 				getUpdatedSchedulerEvent(optAttrMap) {
@@ -689,7 +690,7 @@ AUI.add(
 
 					return SchedulerEventRecorder.superclass.getUpdatedSchedulerEvent.call(
 						instance,
-						A.merge(attrMap, optAttrMap)
+						{...attrMap, ...optAttrMap}
 					);
 				},
 

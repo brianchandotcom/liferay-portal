@@ -687,10 +687,11 @@ AUI.add(
 								A.bind(this._sort, this)
 							);
 
-							var facade = A.merge(options, {
+							var facade = {
+								...options,
 								models,
 								src: 'sort',
-							});
+							};
 
 							if (options.silent) {
 								this._defResetFn(facade);

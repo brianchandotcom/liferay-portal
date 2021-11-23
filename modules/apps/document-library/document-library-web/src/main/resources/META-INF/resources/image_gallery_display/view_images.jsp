@@ -240,13 +240,17 @@ PortletURL embeddedPlayerURL = PortletURLBuilder.createRenderURL(
 							'<iframe frameborder="0" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}" width="{width}"></iframe>',
 						matcher: /(.+)&mediaGallery=1/,
 						mediaRegex: /(.+)&mediaGallery=1/,
-						options: A.merge(A.MediaViewerPlugin.DEFAULT_OPTIONS, {
-							mp3PreviewURL: '',
-							mp4PreviewURL: '',
-							oggPreviewURL: '',
-							ogvPreviewURL: '',
-							thumbnailURL: '',
-						}),
+						options: Object.assign(
+							{},
+							A.MediaViewerPlugin.DEFAULT_OPTIONS,
+							{
+								mp3PreviewURL: '',
+								mp4PreviewURL: '',
+								oggPreviewURL: '',
+								ogvPreviewURL: '',
+								thumbnailURL: '',
+							}
+						),
 					},
 				},
 				fn: A.MediaViewerPlugin,

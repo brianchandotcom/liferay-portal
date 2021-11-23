@@ -276,17 +276,14 @@ AUI.add(
 
 					var canvasRegion = instance.canvasRegion;
 
-					return A.merge(
-						{
-							boundingBox:
-								'#' + portletNamespace + 'editorWrapper',
-							height: canvasRegion.height,
-							mode: 'xml',
-							tabSize: 4,
-							width: canvasRegion.width,
-						},
-						val
-					);
+					return {
+						boundingBox: '#' + portletNamespace + 'editorWrapper',
+						height: canvasRegion.height,
+						mode: 'xml',
+						tabSize: 4,
+						width: canvasRegion.width,
+						...val,
+					};
 				},
 
 				_setContentTabView(val) {
@@ -330,7 +327,7 @@ AUI.add(
 						];
 					}
 
-					return A.merge(defaultValue, val);
+					return {...defaultValue, ...val};
 				},
 
 				_setDefinition(val) {

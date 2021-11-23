@@ -252,6 +252,7 @@ AUI.add(
 				var returnVal;
 
 				if (instance._useAnimation) {
+					// eslint-disable-next-line @liferay/aui/no-merge
 					var animationConfig = A.merge(instance._animationConfig, {
 						top: -instance._notice.get('offsetHeight') + STR_PX,
 					});

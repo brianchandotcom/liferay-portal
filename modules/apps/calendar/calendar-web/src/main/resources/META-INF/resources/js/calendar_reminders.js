@@ -101,16 +101,15 @@ AUI.add(
 						var value = val[i];
 
 						buffer.push(
-							tplReminder.parse(
-								A.merge(strings, {
-									disabled: !value.interval,
-									i,
-									portletNamespace,
-									time: Liferay.Time.getDescription(
-										value.interval
-									),
-								})
-							)
+							tplReminder.parse({
+								...strings,
+								disabled: !value.interval,
+								i,
+								portletNamespace,
+								time: Liferay.Time.getDescription(
+									value.interval
+								),
+							})
 						);
 					}
 

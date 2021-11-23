@@ -25,6 +25,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -158,8 +159,8 @@ public class ObjectFieldLocalServiceImpl
 					objectField.getDBColumnName()));
 		}
 
-		// TODO What happens if you delete an object field that is associated to
-		// an object layout?
+		_objectLayoutColumnPersistence.removeByObjectFieldId(
+			objectField.getObjectFieldId());
 
 		return objectField;
 	}
@@ -380,6 +381,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
 
 	private final Set<String> _reservedNames = SetUtil.fromArray(
 		"companyid", "createdate", "groupid", "id", "lastpublishdate",

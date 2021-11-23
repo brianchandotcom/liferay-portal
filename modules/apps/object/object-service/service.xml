@@ -286,6 +286,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ObjectFieldId" return-type="Collection">
+			<finder-column name="objectFieldId" />
+		</finder>
 		<finder name="ObjectLayoutRowId" return-type="Collection">
 			<finder-column name="objectLayoutRowId" />
 		</finder>

@@ -18,17 +18,13 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccesso
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 
 import java.util.Locale;
@@ -69,25 +65,10 @@ public class NumericDDMFormFieldValueAccessor
 
 		Value value = ddmFormFieldValue.getValue();
 
-		String valueString = value.getString(locale);
-
-		if (Validator.isNotNull(valueString) &&
-			NumberUtil.hasDecimalSeparator(valueString)) {
-
-			DecimalFormat decimalFormat =
-				NumericDDMFormFieldUtil.getDecimalFormat(locale);
-
-			DecimalFormatSymbols decimalFormatSymbols =
-				decimalFormat.getDecimalFormatSymbols();
-
-			valueString = StringUtil.replace(
-				valueString,
-				valueString.charAt(
-					NumberUtil.getDecimalSeparatorIndex(valueString)),
-				decimalFormatSymbols.getDecimalSeparator());
-		}
-
-		return _getParsedValue(locale, valueString);
+		return _getParsedValue(
+			locale,
+			NumericDDMFormFieldUtil.getFormattedValue(
+				locale, value.getString(locale)));
 	}
 
 	private BigDecimal _getParsedValue(Locale locale, String value) {

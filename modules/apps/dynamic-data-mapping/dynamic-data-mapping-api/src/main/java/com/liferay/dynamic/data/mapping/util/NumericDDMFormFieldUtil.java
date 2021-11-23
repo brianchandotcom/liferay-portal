@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
@@ -41,6 +44,21 @@ public class NumericDDMFormFieldUtil {
 		decimalFormat.setParseBigDecimal(true);
 
 		return decimalFormat;
+	}
+
+	public static String getFormattedValue(Locale locale, String value) {
+		if (Validator.isNull(value) || !NumberUtil.hasDecimalSeparator(value)) {
+			return value;
+		}
+
+		DecimalFormat decimalFormat = getDecimalFormat(locale);
+
+		DecimalFormatSymbols decimalFormatSymbols =
+			decimalFormat.getDecimalFormatSymbols();
+
+		return StringUtil.replace(
+			value, value.charAt(NumberUtil.getDecimalSeparatorIndex(value)),
+			decimalFormatSymbols.getDecimalSeparator());
 	}
 
 }

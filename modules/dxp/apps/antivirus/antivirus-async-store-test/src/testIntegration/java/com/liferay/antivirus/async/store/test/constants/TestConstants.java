@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.antivirus.async.store.test;
+package com.liferay.antivirus.async.store.test.constants;
 
 /**
  * @author Raymond Augé

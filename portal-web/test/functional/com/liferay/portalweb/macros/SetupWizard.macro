@@ -152,7 +152,11 @@ definition {
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-		Click(locator1 = "Button#DONE");
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if ("${testRunEnvironment}" == "EE") {
+			Click(locator1 = "Button#DONE");
+		}
 
 		User.viewLoggedInPG();
 	}

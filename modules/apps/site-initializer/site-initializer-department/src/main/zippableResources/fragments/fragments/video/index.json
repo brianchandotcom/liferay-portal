@@ -1,0 +1,78 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "URL",
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "Autoplay",
+					"name": "autoPlay",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Loop",
+					"name": "loop",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "Mute",
+					"name": "mute",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Hide controls",
+					"name": "hideControls",
+					"type": "checkbox"
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "Width",
+					"name": "videoWidth",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "Height",
+					"name": "videoHeight",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "flex-start",
+					"label": "Align",
+					"name": "align",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "left",
+								"value": "flex-start"
+							},
+							{
+								"label": "center",
+								"value": "center"
+							},
+							{
+								"label": "right",
+								"value": "flex-end"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

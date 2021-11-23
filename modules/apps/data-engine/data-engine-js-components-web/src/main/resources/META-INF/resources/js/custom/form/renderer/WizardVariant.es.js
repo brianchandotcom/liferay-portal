@@ -55,7 +55,12 @@ export function Container({
 }) {
 	const [showReport, setShowReport] = useState(false);
 
-	const {formReportDataURL, showSubmitButton, submitLabel} = useConfig();
+	const {
+		ffShowPartialResultsEnabled,
+		formReportDataURL,
+		showSubmitButton,
+		submitLabel,
+	} = useConfig();
 
 	const {resource} = useResource({
 		fetch,
@@ -84,6 +89,7 @@ export function Container({
 							onClick={() => setShowReport(false)}
 						>
 							<ClayIcon symbol="order-arrow-left" />
+
 							{Liferay.Language.get('back')}
 						</ClayButton>
 					</div>
@@ -171,7 +177,11 @@ export function Container({
 
 							{!pages.length && showSubmitButton && (
 								<ClayButton
-									className="float-left lfr-ddm-form-submit"
+									className={
+										ffShowPartialResultsEnabled
+											? 'float-left'
+											: 'float-right'
+									}
 									id="ddm-form-submit"
 									type="submit"
 								>

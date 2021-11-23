@@ -32,6 +32,7 @@ export function PaginationControls({
 }) {
 	const {
 		cancelLabel,
+		ffShowPartialResultsEnabled,
 		redirectURL,
 		showCancelButton,
 		showPartialResultsToRespondents,
@@ -49,7 +50,9 @@ export function PaginationControls({
 		<div className="lfr-ddm-form-pagination-controls">
 			{activePage > 0 && (
 				<ClayButton
-					className="float-left lfr-ddm-form-pagination-prev"
+					className={`${
+						ffShowPartialResultsEnabled ? 'float-left' : ''
+					} lfr-ddm-form-pagination-prev`}
 					displayType="secondary"
 					onClick={() =>
 						dispatch(
@@ -71,7 +74,11 @@ export function PaginationControls({
 
 			{activePage < total - 1 && (
 				<ClayButton
-					className="float-left lfr-ddm-form-pagination-next"
+					className={`${
+						ffShowPartialResultsEnabled
+							? 'float-left'
+							: 'float-right'
+					}  lfr-ddm-form-pagination-next`}
 					displayType="primary"
 					onClick={() =>
 						dispatch(
@@ -93,7 +100,11 @@ export function PaginationControls({
 
 			{activePage === total - 1 && !readOnly && showSubmitButton && (
 				<ClayButton
-					className="float-left lfr-ddm-form-submit"
+					className={
+						ffShowPartialResultsEnabled
+							? 'float-left'
+							: 'float-right'
+					}
 					id="ddm-form-submit"
 					type="submit"
 				>
@@ -112,11 +123,10 @@ export function PaginationControls({
 				</div>
 			)}
 
-			{showPartialResultsToRespondents && (
+			{ffShowPartialResultsEnabled && showPartialResultsToRespondents && (
 				<ClayButton
-					className="float-right lfr-ddm-form-see-partial-results"
+					className="float-right"
 					displayType="secondary"
-					id="ddm-form-submit"
 					onClick={() => onClick()}
 				>
 					{Liferay.Language.get('see-partial-results')}

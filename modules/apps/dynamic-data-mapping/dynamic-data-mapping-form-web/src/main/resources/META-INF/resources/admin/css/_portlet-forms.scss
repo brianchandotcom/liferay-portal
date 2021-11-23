@@ -55,7 +55,7 @@
 
 		.ddm-form-name {
 			font-size: 32px;
-			font-weight: 300;
+			font-weight: 600;
 			padding: $baseline * 5 0 0 0;
 
 			p {
@@ -99,6 +99,14 @@
 
 	.form-feedback-item {
 		font-size: 14px;
+	}
+
+	.horizontal-line {
+		background-color: #cdced9;
+		height: 1px;
+		margin-bottom: 40px;
+		margin-top: 40px;
+		padding: 0 10px;
 	}
 
 	.lfr-ddm-form-page-description {

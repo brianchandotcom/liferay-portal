@@ -57,7 +57,7 @@ export function Container({
 
 					{!pages.length && showSubmitButton && (
 						<ClayButton
-							className="float-right lfr-ddm-form-submit"
+							className="float-right"
 							id="ddm-form-submit"
 							type="submit"
 						>

@@ -13,14 +13,10 @@
 								"context": "query",
 								"occur": "should",
 								"query": {
-									"wrapper": {
-										"query": {
-											"term": {
-												"entryClassName": {
-													"boost": "${configuration.boost}",
-													"value": "${configuration.entry_class_name}"
-												}
-											}
+									"term": {
+										"entryClassName": {
+											"boost": "${configuration.boost}",
+											"value": "${configuration.entry_class_name}"
 										}
 									}
 								}
@@ -38,16 +34,15 @@
 						{
 							"label": "Asset Type",
 							"name": "entry_class_name",
-							"uiType": "searchableType"
+							"type": "searchableType"
 						},
 						{
+							"defaultValue": 10,
 							"label": "Boost",
 							"name": "boost",
-							"uiType": "number",
-							"valueDefinition": {
-								"defaultValueInteger": 10,
-								"minValueInteger": 0,
-								"type": "Integer"
+							"type": "number",
+							"typeOptions": {
+								"min": 0
 							}
 						}
 					]

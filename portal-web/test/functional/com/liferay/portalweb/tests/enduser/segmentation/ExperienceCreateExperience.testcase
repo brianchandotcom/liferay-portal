@@ -3062,12 +3062,46 @@ definition {
 	}
 
 	@description = "LPS-90586: Validate if the user can cancel the confirmation from delete alert and your experience is not deleted"
-	@ignore = "true"
 	@priority = "3"
 	test CancelDeletingExperience {
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
-		// TODO LPS-90586 CancelDeletingExperience pending implementation
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
 
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+			
+			Refresh();
+		}
+
+		task("try to delete an experience and click cancel button") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
+
+			Confirm.dismissAlert();
+
+			AssertElementPresent(
+				key_experienceName = "Segment Name Experience",
+				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			PageEditor.clickPublish();
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can change the background color of some section in the experiences that can be different from other experiences (already published)"
@@ -3089,21 +3123,117 @@ definition {
 	}
 
 	@description = "LPS-90586: Validate if all experiences were deleted, only the Default experience will appear"
-	@ignore = "true"
 	@priority = "5"
 	test CheckDefaultAfterDeletingExperiences {
+		property portal.acceptance = "true";
 
-		// TODO LPS-90586 CheckDefaultAfterDeletingExperiences pending implementation
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
+		task ("Create Email Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment Email Address",
+				text = "test@liferay.com");
+		}
+
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+			
+			Refresh();
+			
+		}
+
+		task ("Create an experience with Segment Email") {
+			PageEditor.addExperience(
+				experienceName = "Segment Email Experience",
+				segmentName = "Segment Email Address");
+
+			Refresh();
+		}
+
+		task ("Delete all experiences") {
+			for(var experienceName : list "Segment Name Experience,Segment Email Experience") {
+				var key_experienceName = "${newExperience}";
+
+				Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+				ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
+
+				AssertConfirm(value1 = "Do you want to delete this experience? Its content will be deleted.");
+
+				Alert.viewSuccessMessage();
+
+				AssertElementNotPresent(
+					key_experienceName = "${newExperience}",
+					locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+
+				Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+			}
+		}
+
+		task ("Assert that Experience Default button is present") {
+			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			PageEditor.clickPublish();
+		}
 	}
 
 	@description = "LPS-90586: Validate if the Default experience doesn't offer a delete button"
-	@ignore = "true"
 	@priority = "3"
 	test CheckDefaultDeleteButton {
+		task ("Add Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
 
-		// TODO LPS-90586 CheckDefaultDeleteButton pending implementation
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
+		task ("Create an experience and add on content page") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "Name Experience",
+				segmentName = "Anyone");
+
+			Refresh();
+		}
+
+		task ("Assert that 'Default' can not be deleted") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
+
+			AssertConfirm(value1 = "Do you want to delete this experience? Its content will be deleted.");
+
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_experienceName = "Name Experience",
+				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+			
+			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
+
+			PageEditor.clickPublish();
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can create the content in the experiences that can be different from others experiences"

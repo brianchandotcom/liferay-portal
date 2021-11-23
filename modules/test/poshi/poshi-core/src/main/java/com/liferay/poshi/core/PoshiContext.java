@@ -1476,16 +1476,33 @@ public class PoshiContext {
 		List<PoshiFileCallable> testPoshiFileCallables = new ArrayList<>();
 
 		for (URL url : urls) {
-			String fileName = url.getFile();
+			File file = new File(url.getFile());
 
-			if (fileName.contains(".macro")) {
+			String fileName = file.getName();
+
+			if (fileName.endsWith(".function")) {
+				_functionFileNames.add(
+					StringUtil.replace(fileName, ".function", ""));
+
+				_functionFileNames.add(
+					namespace + "." +
+						StringUtil.replace(fileName, ".function", ""));
+			}
+
+			if (fileName.endsWith(".macro")) {
+				_macroFileNames.add(StringUtil.replace(fileName, ".macro", ""));
+
+				_macroFileNames.add(
+					namespace + "." +
+						StringUtil.replace(fileName, ".macro", ""));
+
 				macroPoshiFileCallables.add(
 					new PoshiFileCallable(url, namespace));
 
 				continue;
 			}
 
-			if (fileName.contains(".testcase") || fileName.contains(".prose")) {
+			if (fileName.endsWith(".testcase") || fileName.endsWith(".prose")) {
 				testPoshiFileCallables.add(
 					new PoshiFileCallable(url, namespace));
 
@@ -1836,26 +1853,6 @@ public class PoshiContext {
 
 				if (rootElement.attributeValue("override") == null) {
 					_filePaths.put(_namespace + "." + fileName, filePath);
-
-					if (fileName.endsWith(".function")) {
-						_functionFileNames.add(
-							StringUtil.replace(fileName, ".function", ""));
-
-						_functionFileNames.add(
-							_namespace + "." +
-								StringUtil.replace(fileName, ".function", ""));
-					}
-
-
-				}
-
-				if (fileName.endsWith(".macro")) {
-					_macroFileNames.add(
-							StringUtil.replace(fileName, ".macro", ""));
-
-					_macroFileNames.add(
-							_namespace + "." +
-									StringUtil.replace(fileName, ".macro", ""));
 				}
 			}
 			catch (Exception exception) {

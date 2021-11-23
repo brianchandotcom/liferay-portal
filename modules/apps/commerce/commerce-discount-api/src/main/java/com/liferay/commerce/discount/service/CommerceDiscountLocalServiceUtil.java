@@ -909,6 +909,13 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static int getValidCommerceDiscountsCount(
+		long commerceDiscountId, long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getValidCommerceDiscountsCount(
+			commerceDiscountId, cpDefinitionId, cpInstanceId);
+	}
+
+	public static int getValidCommerceDiscountsCount(
 		long commerceAccountId, long[] commerceAccountGroupIds,
 		long commerceChannelId, long commerceDiscountId) {
 

@@ -46,9 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
-		"antivirus.async.event=PROCESSING_ERROR",
-		"antivirus.async.event=SIZE_EXCEEDED", "antivirus.async.event=SUCCESS",
-		"antivirus.async.event=VIRUS_FOUND",
 		"destination.target=(destination.name=" + AntivirusAsyncConstants.ANTIVIRUS_DESTINATION + ")",
 		"jmx.objectname=com.liferay.antivirus:classification=antivirus_async,name=AntivirusAsyncStatistics",
 		"jmx.objectname.cache.key=AntivirusAsyncStatistics"

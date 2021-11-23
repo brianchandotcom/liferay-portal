@@ -35,14 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	property = {
-		"antivirus.async.event=MISSING",
-		"antivirus.async.event=PROCESSING_ERROR",
-		"antivirus.async.event=SIZE_EXCEEDED", "antivirus.async.event=SUCCESS",
-		"antivirus.async.event=VIRUS_FOUND"
-	},
-	service = Consumer.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = Consumer.class
 )
 public class AntivirusAsyncRetryEventListener implements Consumer<Message> {
 

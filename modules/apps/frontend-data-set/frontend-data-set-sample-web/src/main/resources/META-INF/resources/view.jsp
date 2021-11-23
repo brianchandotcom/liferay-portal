@@ -20,8 +20,9 @@
 FrontendDataSetSampleDisplayContext frontendDataSetSampleDisplayContext = (FrontendDataSetSampleDisplayContext)request.getAttribute(FrontendDataSetSampleWebKeys.FRONTEND_DATA_SET_SAMPLE_DISPLAY_CONTEXT);
 %>
 
-<frontent-data-set:headless-display
+<frontend-data-set:headless-display
 	apiURL="<%= frontendDataSetSampleDisplayContext.getAPIURL() %>"
+	customViewsEnabled="<%= true %>"
 	formId="fm"
 	frontendDataSetActionDropdownItems="<%= frontendDataSetSampleDisplayContext.getFrontendDataSetActionDropdownItems() %>"
 	id="<%= FrontendDataSetSampleFrontendDataSetNames.FRONTEND_DATA_SET_SAMPLES %>"

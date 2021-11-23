@@ -2,6 +2,7 @@
 
 @import 'global';
 
+@import 'apps/get-a-quote/progress-saved';
 @import 'apps/quote-comparison';
 @import 'apps/selected-quote';
 
@@ -14,6 +15,7 @@
 @import 'components/fragments/step';
 @import 'components/fragments/switch';
 @import 'components/fragments/typography';
+@import 'components/modal';
 @import 'components/progress-bar';
 @import 'components/quote-comparison';
 @import 'components/template';

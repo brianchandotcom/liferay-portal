@@ -79,21 +79,21 @@ definition {
 
 			NavigationMenusAdmin.addTranslation(
 				itemName = "Test Page Name",
-				locale = "es_ES",
+				locale = "es-ES",
 				translation = "Nombre de la página de prueba");
 		}
 
 		task ("Add a Spanish translation for the submenu item") {
 			NavigationMenusAdmin.addTranslation(
 				itemName = "Submenu Name",
-				locale = "es_ES",
+				locale = "es-ES",
 				translation = "Submenú Nombre");
 		}
 
 		task ("Add a Spanish translation for the URL item") {
 			NavigationMenusAdmin.addTranslation(
 				itemName = "Liferay",
-				locale = "es_ES",
+				locale = "es-ES",
 				translation = "Liferay (Spanish)");
 		}
 
@@ -112,7 +112,7 @@ definition {
 
 			PortletEntry.changeLocale(
 				fieldName = "Nombre",
-				locale = "es_ES");
+				locale = "es-ES");
 
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
@@ -128,7 +128,7 @@ definition {
 
 			PortletEntry.changeLocale(
 				fieldName = "Nombre",
-				locale = "es_ES");
+				locale = "es-ES");
 
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
@@ -144,7 +144,7 @@ definition {
 
 			PortletEntry.changeLocale(
 				fieldName = "Nombre",
-				locale = "es_ES");
+				locale = "es-ES");
 
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
@@ -199,7 +199,7 @@ definition {
 		task ("Change the name locale to Spanish") {
 			PortletEntry.changeLocale(
 				fieldName = "Name",
-				locale = "es_ES");
+				locale = "es-ES");
 		}
 
 		task ("View localized name shown in sidebar") {

@@ -343,7 +343,7 @@ definition {
 				locator1 = "WC#LOCALIZED_BUTTON");
 
 			Click(
-				key_locale = "es_ES",
+				key_locale = "es-ES",
 				locator1 = "Translation#LOCALIZATION_NAME");
 
 			Type(

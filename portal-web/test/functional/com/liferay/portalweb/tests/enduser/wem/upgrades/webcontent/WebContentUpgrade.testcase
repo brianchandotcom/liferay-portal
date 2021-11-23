@@ -266,7 +266,7 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			PortletEntry.changeLocale(locale = "en_US");
+			PortletEntry.changeLocale(locale = "en-US");
 
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "PaginaOrigem",
@@ -280,7 +280,7 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			PortletEntry.changeLocale(locale = "en_US");
+			PortletEntry.changeLocale(locale = "en-US");
 
 			WebContent.assertFieldOnWebContent(fieldFieldLabel = "HomePage");
 
@@ -709,7 +709,7 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			PortletEntry.changeLocale(locale = "en_US");
+			PortletEntry.changeLocale(locale = "en-US");
 
 			WebContent.assertFieldOnWebContent(fieldFieldLabel = "Label UF Release");
 

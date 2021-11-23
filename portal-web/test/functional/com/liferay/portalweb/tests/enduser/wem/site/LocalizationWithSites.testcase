@@ -783,9 +783,9 @@ definition {
 
 		Page.viewFriendlyURLLanguageOptionsPG(
 			assertUnavailableLanguages = "true",
-			currentLanguageList = "es_ES,pt_BR",
+			currentLanguageList = "es-ES,pt-BR",
 			fieldName = "Nombre",
-			unavailableLanguageList = "en_US");
+			unavailableLanguageList = "en-US");
 	}
 
 }

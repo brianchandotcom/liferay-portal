@@ -51,13 +51,12 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
-			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME",
-			value1 = "lexicon-icon-en-us");
+			key_text = "en-us",
+			locator1 = "MenuItem#ANY_ICON");
 
-		AssertElementPresent(
-			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME",
+		AssertTextEquals(
+			key_localizedLanguage = "en-US",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 			value1 = "Default");
 	}
 

@@ -79,7 +79,7 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Help Text");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		PortletEntry.inputName(name = "DM Tipo de Documento");
 
@@ -95,7 +95,7 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",

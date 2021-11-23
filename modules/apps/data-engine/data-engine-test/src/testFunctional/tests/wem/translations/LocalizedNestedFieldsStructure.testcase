@@ -49,8 +49,8 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
-			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME");
+			key_text = "en-us",
+			locator1 = "MenuItem#ANY_ICON");
 	}
 
 	@description = "This test ensures that when the user changes the language, the title remains the default until the user changes it."
@@ -264,7 +264,7 @@ definition {
 				value1 = "${fieldFieldLabel} Field Help Text");
 		}
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -535,7 +535,7 @@ definition {
 				value1 = "${fieldFieldLabel} Field Help Text");
 		}
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -621,7 +621,7 @@ definition {
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",

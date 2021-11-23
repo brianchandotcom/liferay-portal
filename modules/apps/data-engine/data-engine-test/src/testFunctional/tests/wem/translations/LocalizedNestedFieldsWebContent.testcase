@@ -406,13 +406,12 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
-			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME",
-			value1 = "lexicon-icon-en-us");
+			key_text = "en-us",
+			locator1 = "MenuItem#ANY_ICON");
 
-		AssertElementPresent(
-			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME",
+		AssertTextEquals(
+			key_localizedLanguage = "en-US",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 			value1 = "Default");
 	}
 
@@ -491,14 +490,14 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "10/10/2020",
 			webContentText = "Este é um campo de texto",
 			webContentTitle = "Título do conteúdo da web");
 
-		PortletEntry.changeLocale(locale = "en_US");
+		PortletEntry.changeLocale(locale = "en-US");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "01/01/2021",

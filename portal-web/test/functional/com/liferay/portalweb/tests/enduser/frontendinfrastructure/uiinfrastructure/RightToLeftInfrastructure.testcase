@@ -42,7 +42,7 @@ definition {
 
 		Navigator.ensureLocaleURL(locale = "ar");
 
-		PortletEntry.changeLocale(locale = "ar_SA");
+		PortletEntry.changeLocale(locale = "ar-SA");
 
 		WebContent.addCP(webContentTitle = "WC Title");
 

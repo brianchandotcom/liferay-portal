@@ -625,7 +625,7 @@ definition {
 		task ("Assert the default enabled locales in Web Content match what is normally available") {
 			Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
-			for (var language : list "ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE") {
+			for (var language : list "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE") {
 				AssertElementPresent(
 					key_locale = "${language}",
 					locator1 = "Translation#LOCALIZATION_NAME");

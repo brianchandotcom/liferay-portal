@@ -208,8 +208,8 @@ definition {
 		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
 
 		WebContentStructures.addLocalization(
-			locale = "fr_FR",
-			locale2 = "zh_CN",
+			locale = "fr-FR",
+			locale2 = "zh-CN",
 			localization1Name = "nom de la structure de wc",
 			localization2Name = "wc 结构名称");
 
@@ -230,8 +230,8 @@ definition {
 			templateName = "WC Template Name");
 
 		WebContentTemplates.localizeTemplateName(
-			locale = "fr_FR",
-			locale2 = "zh_CN",
+			locale = "fr-FR",
+			locale2 = "zh-CN",
 			localization1Name = "nom de la template de wc",
 			localization2Name = "wc 模板名称",
 			templateName = "WC Template Name");

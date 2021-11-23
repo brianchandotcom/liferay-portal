@@ -254,7 +254,7 @@ definition {
 
 		DataEngine.toggleFieldRepeatable(fieldsetLabel = "New Fieldset");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
 
@@ -268,7 +268,7 @@ definition {
 
 		DataEngine.addRepeatableField(fieldLabel = "New Fieldset");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addCP(webContentTitle = "Web Content Title pt-BR");
 
@@ -276,7 +276,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -480,13 +480,13 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = "WC Title");
 
-		PortletEntry.changeLocale(locale = "es_ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -945,7 +945,7 @@ definition {
 			webContentText = "This is a text",
 			webContentTitle = "WC Title");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(webContentTitle = "Título do conteúdo da web");
 
@@ -953,7 +953,7 @@ definition {
 			fieldLabel = "Text pt-BR",
 			text = "Este é um campo de texto");
 
-		PortletEntry.changeLocale(locale = "es_ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.addWithStructureCP(webContentTitle = "WC Title ES");
 
@@ -974,7 +974,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "This is a text");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -985,7 +985,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "Este é um campo de texto");
 
-		PortletEntry.changeLocale(locale = "es_ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",

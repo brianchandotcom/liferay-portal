@@ -123,7 +123,7 @@ definition {
 
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page when enable Live."
 	@priority = "3"
-	test ViewCollectionItemInformation {
+	test ViewCollectionItemInformationInStaging {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

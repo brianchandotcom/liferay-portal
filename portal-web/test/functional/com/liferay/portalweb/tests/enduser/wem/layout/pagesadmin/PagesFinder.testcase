@@ -276,12 +276,19 @@ definition {
 	@description = "This is a test for LPS-129406. The user that has all permissions for Web Content in Content & Data role can not add a page via Page Tree Panel."
 	@priority = "4"
 	test CannotAddPageWithAllWebContentPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "Userfn",
 				userLastName = "Userln",
 				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign the user to site") {

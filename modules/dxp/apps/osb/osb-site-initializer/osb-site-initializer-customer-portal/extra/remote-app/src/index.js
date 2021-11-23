@@ -1,3 +1,4 @@
+import {ApolloProvider} from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -7,6 +8,7 @@ import ClayProvider from '~/common/providers/ClayProvider';
 import SharedStyle from '~/common/styles/global.scss';
 import CustomerPortal from '~/routes/customer-portal';
 import Onboarding from '~/routes/onboarding';
+import apolloClient from './apolloClient';
 
 const CustomerPortalApplication = ({liferaywebdavurl, page, route}) => {
 	if (route === 'portal') {
@@ -24,11 +26,15 @@ class CustomerPortalWebComponent extends WebComponent {
 
 		ReactDOM.render(
 			<ClayProvider>
-				<CustomerPortalApplication
-					liferaywebdavurl={super.getAttribute('liferaywebdavurl')}
-					page={super.getAttribute('page')}
-					route={super.getAttribute('route')}
-				/>
+				<ApolloProvider client={apolloClient}>
+					<CustomerPortalApplication
+						liferaywebdavurl={super.getAttribute(
+							'liferaywebdavurl'
+						)}
+						page={super.getAttribute('page')}
+						route={super.getAttribute('route')}
+					/>
+				</ApolloProvider>
 			</ClayProvider>,
 			this.mountPoint
 		);

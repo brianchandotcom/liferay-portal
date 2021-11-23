@@ -35,6 +35,11 @@
 	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][5]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGINATION_NUMBER</td>
+	<td>//*[contains(@class, 'page-link') and contains(text(), '${key_pageNumber}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -201,11 +201,37 @@ definition {
 	}
 
 	@description = "Verify that user can nagivate through pages."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanNavigateThroughPages {
 
-		// TODO LRQA-70697 CanNavigateThroughPages pending implementation
+		for (var kfProcessName : list "1,2,3,4"){
+
+			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+
+			KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Liferay");
+
+			KaleoFormsAdmin.saveProcessRecord();
+
+			Navigator.gotoBack();
+		}
+
+		AssertElementNotPresent(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT");
+
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Liferay");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		KaleoFormsAdmin.viewNextFieldSetPage();
+
+		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
+
+		KaleoFormsNewSubmissions.viewPaginationNumber(pageNumberList = "2");
+
+
 
 	}
 

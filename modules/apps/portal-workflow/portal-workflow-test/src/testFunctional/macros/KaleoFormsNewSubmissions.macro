@@ -70,7 +70,6 @@ definition {
 				value1 = "${ddlPhoneOffice}");
 		}
 	}
-
 	macro editDLLRecordContacts {
 		DDLRecord.editPG(ddlListName = "${ddlListName}");
 
@@ -164,7 +163,6 @@ definition {
 	macro viewEllipsisMenu {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "${menuItem}");
 	}
-
 	macro viewStatusDDL {
 		AssertElementPresent(
 			key_status = "${status}",
@@ -189,6 +187,14 @@ definition {
 			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
 			value1 = "${errorMessage}");
 	}
+	macro viewPaginationNumber {
+		for (var pageNumber : list "${pageNumberList}") {
+			var key_pageNumber = "${pageNumber}";
+
+			AssertElementPresent(locator1 = "KaleoFormsNewSubmissions#PAGINATION_NUMBER");
+		}
+	}
+
 
 	macro viewOrderTable {
         var rowNumber = "1";

@@ -38,14 +38,6 @@ public interface FragmentEntryProcessorHelper {
 
 	public String getEditableValue(JSONObject jsonObject, Locale locale);
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getEditableValue(JSONObject, Locale)}
-	 */
-	@Deprecated
-	public String getEditableValue(
-		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds);
-
 	public long getFileEntryId(
 			long classNameId, long classPK, String fieldId, Locale locale)
 		throws PortalException;

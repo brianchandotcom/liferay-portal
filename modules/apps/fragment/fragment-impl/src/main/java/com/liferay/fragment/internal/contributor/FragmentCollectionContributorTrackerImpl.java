@@ -70,17 +70,6 @@ public class FragmentCollectionContributorTrackerImpl
 		return _serviceTrackerMap.getService(fragmentCollectionKey);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by #getFragmentEntries
-	 */
-	@Deprecated
-	@Override
-	public Map<String, FragmentEntry>
-		getFragmentCollectionContributorEntries() {
-
-		return getFragmentEntries();
-	}
-
 	@Override
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors() {

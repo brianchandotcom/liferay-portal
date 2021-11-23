@@ -41,14 +41,4 @@ public interface FragmentServiceConfiguration {
 	)
 	public boolean propagateChanges();
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	@Meta.AD(
-		deflt = "false", description = "enable-configuration-help",
-		name = "enable-configuration", required = false
-	)
-	public boolean enableConfiguration();
-
 }

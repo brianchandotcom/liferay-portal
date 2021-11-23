@@ -19,11 +19,8 @@ import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.exception.InvalidFragmentCompositionKeyException;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -236,26 +233,8 @@ public abstract class BaseFragmentCollectionContributor
 	@Reference
 	protected FragmentCompositionLocalService fragmentCompositionLocalService;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	protected FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
-
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	protected FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	protected FragmentEntryValidator fragmentEntryValidator;
 
 	private Map<Locale, String> _getContributedCollectionNames()
 		throws Exception {

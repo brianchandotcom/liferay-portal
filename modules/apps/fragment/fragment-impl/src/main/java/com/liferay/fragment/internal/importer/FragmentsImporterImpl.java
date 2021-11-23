@@ -87,26 +87,6 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentsImporterImpl implements FragmentsImporter {
 
 	@Override
-	public List<String> importFile(
-			long userId, long groupId, long fragmentCollectionId, File file,
-			boolean overwrite)
-		throws Exception {
-
-		List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
-			importFragmentEntries(
-				userId, groupId, fragmentCollectionId, file, overwrite);
-
-		Stream<FragmentsImporterResultEntry> stream =
-			fragmentsImporterResultEntries.stream();
-
-		return stream.map(
-			FragmentsImporterResultEntry::getName
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	@Override
 	public List<FragmentsImporterResultEntry> importFragmentEntries(
 			long userId, long groupId, long fragmentCollectionId, File file,
 			boolean overwrite)

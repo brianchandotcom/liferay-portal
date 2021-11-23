@@ -181,20 +181,6 @@ public class FragmentEntryConfigurationParserImpl
 		return configurationDefaultValuesJSONObject;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getConfigurationJSONObject(String, String)}
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getConfigurationJSONObject(
-			String configuration, String editableValues,
-			long[] segmentsExperienceIds)
-		throws JSONException {
-
-		return getConfigurationJSONObject(configuration, editableValues);
-	}
-
 	@Override
 	public Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration) {
@@ -238,19 +224,6 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		return contextObjects;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getContextObjects(JSONObject, String)}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Object> getContextObjects(
-		JSONObject configurationValuesJSONObject, String configuration,
-		long[] segmentsExperienceIds) {
-
-		return getContextObjects(configurationValuesJSONObject, configuration);
 	}
 
 	@Override
@@ -340,20 +313,6 @@ public class FragmentEntryConfigurationParserImpl
 		return _getFieldValue(FragmentConfigurationFieldDataType.STRING, value);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #getFieldValue(String, String, Locale, String)}
-	 */
-	@Deprecated
-	@Override
-	public Object getFieldValue(
-		FragmentConfigurationField fragmentConfigurationField, String value) {
-
-		return getFieldValue(
-			fragmentConfigurationField, LocaleUtil.getMostRelevantLocale(),
-			value);
-	}
-
 	@Override
 	public Object getFieldValue(
 		String configuration, String editableValues, Locale locale,
@@ -400,18 +359,6 @@ public class FragmentEntryConfigurationParserImpl
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Object getFieldValue(
-		String configuration, String editableValues,
-		long[] segmentsExperienceIds, String name) {
-
-		return getFieldValue(configuration, editableValues, name);
-	}
-
-	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * #getFieldValue(String, String, Locale, String)}
 	 */
@@ -455,27 +402,6 @@ public class FragmentEntryConfigurationParserImpl
 			});
 
 		return fragmentConfigurationFields;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getSegmentedConfigurationValues(
-		long[] segmentsExperienceIds,
-		JSONObject configurationValuesJSONObject) {
-
-		return configurationValuesJSONObject;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isPersonalizationSupported(JSONObject jsonObject) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -26,16 +26,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentsImporter {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #importFragmentEntries}
-	 */
-	@Deprecated
-	public List<String> importFile(
-			long userId, long groupId, long fragmentCollectionId, File file,
-			boolean overwrite)
-		throws Exception;
-
 	public List<FragmentsImporterResultEntry> importFragmentEntries(
 			long userId, long groupId, long fragmentCollectionId, File file,
 			boolean overwrite)

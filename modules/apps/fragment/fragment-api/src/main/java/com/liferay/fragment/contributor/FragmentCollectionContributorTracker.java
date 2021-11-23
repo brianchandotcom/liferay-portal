@@ -33,12 +33,6 @@ public interface FragmentCollectionContributorTracker {
 	public FragmentCollectionContributor getFragmentCollectionContributor(
 		String fragmentCollectionKey);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by #getFragmentEntries
-	 */
-	@Deprecated
-	public Map<String, FragmentEntry> getFragmentCollectionContributorEntries();
-
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors();
 

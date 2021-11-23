@@ -144,18 +144,6 @@ public class FragmentEntryProcessorHelperImpl
 		return _getEditableValueByLocale(jsonObject, locale);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getEditableValue(JSONObject, Locale)}
-	 */
-	@Deprecated
-	@Override
-	public String getEditableValue(
-		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds) {
-
-		return _getEditableValueByLocale(jsonObject, locale);
-	}
-
 	@Override
 	public long getFileEntryId(
 			long classNameId, long classPK, String fieldId, Locale locale)

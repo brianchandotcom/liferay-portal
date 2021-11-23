@@ -78,7 +78,7 @@ public class CommerceChannelRelFinderImpl
 
 			if (Validator.isNotNull(name)) {
 				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(CommerceChannel.name)", StringPool.LIKE, true,
+					sql, "LOWER(CommerceChannel.name)", StringPool.LIKE, true,
 					keywords);
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
@@ -167,7 +167,7 @@ public class CommerceChannelRelFinderImpl
 
 			if (Validator.isNotNull(name)) {
 				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(CommerceChannel.name)", StringPool.LIKE, true,
+					sql, "LOWER(CommerceChannel.name)", StringPool.LIKE, true,
 					keywords);
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}

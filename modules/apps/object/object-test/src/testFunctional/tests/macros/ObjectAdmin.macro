@@ -544,10 +544,6 @@ definition {
 		Click(locator1 = "ObjectAdmin#OBJECT_RELATIONSHIPS_TAB");
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> LPS-140873 Add RelationshipTabReappearsWhenReactivatedOneToMany Test
 	macro markLayoutAsDefault {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 

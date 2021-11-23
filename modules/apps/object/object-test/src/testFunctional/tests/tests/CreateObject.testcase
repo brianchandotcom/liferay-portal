@@ -4056,7 +4056,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is displayed again when the child object is reactivated (One to Many)"
 	@priority = "4"
 	test RelationshipTabReappearsWhenReactivatedOneToMany {
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
@@ -4125,6 +4124,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
@@ -4136,9 +4139,9 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
-		
-
+		AssertElementPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"

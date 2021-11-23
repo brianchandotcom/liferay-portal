@@ -202,11 +202,6 @@ public class PoshiContext {
 		return _functionFileNames;
 	}
 
-	public static Set<String> getMacroFileNames() {
-
-		return _macroFileNames;
-	}
-
 	public static int getFunctionLocatorCount(
 		String className, String namespace) {
 
@@ -237,6 +232,10 @@ public class PoshiContext {
 
 		return _commandSummaries.get(
 			"macro#" + namespace + "." + classCommandName);
+	}
+
+	public static Set<String> getMacroFileNames() {
+		return _macroFileNames;
 	}
 
 	public static Element getMacroRootElement(
@@ -1784,7 +1783,7 @@ public class PoshiContext {
 	private static final Map<String, Integer> _functionLocatorCounts =
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Set<String> _macroFileNames =
-			Collections.synchronizedSet(new HashSet<>());
+		Collections.synchronizedSet(new HashSet<>());
 	private static final Pattern _namespaceClassCommandNamePattern =
 		Pattern.compile(
 			"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#" +

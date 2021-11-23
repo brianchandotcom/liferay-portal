@@ -100,11 +100,6 @@ public class MappedProductDTOConverter
 		return new MappedProduct() {
 			{
 				actions = dtoConverterContext.getActions();
-				availability = _getAvailability(
-					mappedProductDTOConverterContext.getCompanyId(),
-					commerceContext.getCommerceChannelGroupId(),
-					cpInstance.getSku(), cpInstance,
-					mappedProductDTOConverterContext.getLocale());
 				id = csDiagramEntry.getCSDiagramEntryId();
 				options = _getOptions(cpInstance);
 				price = _getPrice(
@@ -116,6 +111,19 @@ public class MappedProductDTOConverter
 				sku = csDiagramEntry.getSku();
 				skuId = GetterUtil.getLong(csDiagramEntry.getCPInstanceId());
 
+				setAvailability(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return _getAvailability(
+							mappedProductDTOConverterContext.getCompanyId(),
+							commerceContext.getCommerceChannelGroupId(),
+							cpInstance,
+							mappedProductDTOConverterContext.getLocale(),
+							cpInstance.getSku());
+					});
 				setProductConfiguration(
 					() -> {
 						if (cpDefinition == null) {
@@ -216,8 +224,8 @@ public class MappedProductDTOConverter
 	}
 
 	private Availability _getAvailability(
-			long companyId, long commerceChannelGroupId, String sku,
-			CPInstance cpInstance, Locale locale)
+			long commerceChannelGroupId, long companyId, CPInstance cpInstance,
+			Locale locale, String sku)
 		throws Exception {
 
 		Availability availability = new Availability();

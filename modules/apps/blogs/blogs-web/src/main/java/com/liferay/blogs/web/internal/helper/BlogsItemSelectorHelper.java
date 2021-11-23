@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal;
+package com.liferay.blogs.web.internal.helper;
 
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;

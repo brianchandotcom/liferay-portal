@@ -15,7 +15,7 @@
 package com.liferay.comment.taglib.internal.context;
 
 import com.liferay.comment.taglib.internal.context.helper.DiscussionRequestHelper;
-import com.liferay.comment.taglib.internal.context.util.DiscussionTaglibHelper;
+import com.liferay.comment.taglib.internal.context.helper.DiscussionTaglibHelper;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.display.context.CommentSectionDisplayContext;

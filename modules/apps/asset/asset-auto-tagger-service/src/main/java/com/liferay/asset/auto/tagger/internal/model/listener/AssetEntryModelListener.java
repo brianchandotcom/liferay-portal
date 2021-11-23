@@ -14,8 +14,8 @@
 
 package com.liferay.asset.auto.tagger.internal.model.listener;
 
-import com.liferay.asset.auto.tagger.internal.AssetAutoTaggerHelper;
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
+import com.liferay.asset.auto.tagger.internal.helper.AssetAutoTaggerHelper;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;

@@ -1633,7 +1633,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 try {
 	def bundleContext = SystemBundleUtil.getBundleContext();
 
-	def serviceReference = bundleContext.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.AssetEntriesCheckerHelper");
+	def serviceReference = bundleContext.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.helper.AssetEntriesCheckerHelper");
 
 	def assetEntriesCheckerHelper = bundleContext.getService(serviceReference);
 

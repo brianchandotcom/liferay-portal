@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal;
+package com.liferay.change.tracking.internal.helper;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.PortalCache;

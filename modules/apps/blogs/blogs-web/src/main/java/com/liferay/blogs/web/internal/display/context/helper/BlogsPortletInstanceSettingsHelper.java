@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.display.context;
+package com.liferay.blogs.web.internal.display.context.helper;
 
 import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

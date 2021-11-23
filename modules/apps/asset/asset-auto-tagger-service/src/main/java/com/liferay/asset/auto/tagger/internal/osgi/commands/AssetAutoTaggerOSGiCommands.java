@@ -17,7 +17,7 @@ package com.liferay.asset.auto.tagger.internal.osgi.commands;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.asset.auto.tagger.internal.AssetAutoTaggerHelper;
+import com.liferay.asset.auto.tagger.internal.helper.AssetAutoTaggerHelper;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;

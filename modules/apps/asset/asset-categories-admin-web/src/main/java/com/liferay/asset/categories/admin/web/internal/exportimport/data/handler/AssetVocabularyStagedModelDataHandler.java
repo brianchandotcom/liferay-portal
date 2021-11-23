@@ -14,6 +14,8 @@
 
 package com.liferay.asset.categories.admin.web.internal.exportimport.data.handler;
 
+import com.liferay.asset.categories.admin.web.internal.exportimport.data.handler.helper.AssetVocabularySettingsExportHelper;
+import com.liferay.asset.categories.admin.web.internal.exportimport.data.handler.helper.AssetVocabularySettingsImportHelper;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;

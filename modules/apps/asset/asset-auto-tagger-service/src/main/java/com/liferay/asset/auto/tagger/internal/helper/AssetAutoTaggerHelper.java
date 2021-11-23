@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.internal;
+package com.liferay.asset.auto.tagger.internal.helper;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;

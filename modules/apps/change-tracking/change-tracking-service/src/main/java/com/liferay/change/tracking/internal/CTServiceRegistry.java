@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.internal;
 
+import com.liferay.change.tracking.internal.helper.CTTableMapperHelper;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.spi.exception.CTEventException;
 import com.liferay.change.tracking.spi.listener.CTEventListener;

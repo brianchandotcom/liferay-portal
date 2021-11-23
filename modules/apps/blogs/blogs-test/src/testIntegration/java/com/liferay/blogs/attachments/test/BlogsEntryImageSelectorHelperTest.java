@@ -79,7 +79,7 @@ public class BlogsEntryImageSelectorHelperTest {
 		}
 
 		Class<?> clazz = bundle.loadClass(
-			"com.liferay.blogs.web.internal.util." +
+			"com.liferay.blogs.web.internal.helper." +
 				"BlogsEntryImageSelectorHelper");
 
 		_constructor = clazz.getConstructor(

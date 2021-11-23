@@ -686,20 +686,14 @@ definition {
 	@description = "LPS-135397 - Verify if it's not possible to add a Tab with Relationship Type in an Object without Relashionsip"
 	@priority = "4"
 	test CannotAddRelationshibTabWithoutRelationship {
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-
-
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
 			objectName = "CustomObject");
-
-
-
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -711,26 +705,15 @@ definition {
 
 		ObjectAdmin.goToLayoutTabOnLayouts();
 
-		ObjectAdmin.addTabFieldsOnLayout(
-			tabName = "Field Tab"
-		);
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
 
-		ObjectAdmin.addTabRelationshipsOnLayout(
-			tabName = "Relationship Tab"
-		);
+		ObjectAdmin.addTabRelationshipsOnLayout(tabName = "Relationship Tab");
 
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 
 		ObjectAdmin.assertObjectLayoutRelationshipFieldRequiredError();
-
-		
-
-
-
-
-		
-
-
-
 	}
 
 	@description = "LPS-135397 - Verify that the Relationship tab cannot be added first"

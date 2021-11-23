@@ -374,15 +374,9 @@ definition {
 	}
 
 	macro assertObjectLayoutRelationshipFieldRequiredError {
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR"
-		);
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR");
 
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE"
-		);
-
-
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
 	}
 
 	macro assertObjectNameFieldRequired {
@@ -544,9 +538,6 @@ definition {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
 		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
-
-
-
 	}
 
 	macro gotoRelationshipsTab {

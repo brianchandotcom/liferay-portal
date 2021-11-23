@@ -52,6 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AntivirusAsyncRetrySchedulerImpl
 	implements AntivirusAsyncRetryScheduler {
 
+	@Override
 	public void schedule(Message message) {
 		String jobName = message.getString("jobName");
 
@@ -71,10 +72,10 @@ public class AntivirusAsyncRetrySchedulerImpl
 
 				Set<Map.Entry<String, Object>> entrySet = map.entrySet();
 
-				for (Iterator<Map.Entry<String, Object>> iterator =
-						entrySet.iterator();
-					 iterator.hasNext();) {
+				Iterator<Map.Entry<String, Object>> iterator =
+					entrySet.iterator();
 
+				while (iterator.hasNext()) {
 					Map.Entry<String, Object> entry = iterator.next();
 
 					if (entry.getValue() instanceof TransientValue) {

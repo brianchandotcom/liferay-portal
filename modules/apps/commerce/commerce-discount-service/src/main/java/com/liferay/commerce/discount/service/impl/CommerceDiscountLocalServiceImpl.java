@@ -1023,6 +1023,28 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public int getValidCommerceDiscountsCount(
+		long commerceDiscountId, long cpDefinitionId, long cpInstanceId) {
+
+		return dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				CommerceDiscountTable.INSTANCE.commerceDiscountId
+			).from(
+				CommerceDiscountTable.INSTANCE
+			).innerJoinON(
+				CommerceDiscountRelTable.INSTANCE,
+				CommerceDiscountRelTable.INSTANCE.commerceDiscountId.eq(
+					CommerceDiscountTable.INSTANCE.commerceDiscountId)
+			).where(
+				CommerceDiscountTable.INSTANCE.commerceDiscountId.eq(
+					commerceDiscountId
+				).and(
+					_toTargetPredicate(cpDefinitionId, cpInstanceId)
+				)
+			));
+	}
+
+	@Override
+	public int getValidCommerceDiscountsCount(
 		long commerceAccountId, long[] commerceAccountGroupIds,
 		long commerceChannelId, long commerceDiscountId) {
 

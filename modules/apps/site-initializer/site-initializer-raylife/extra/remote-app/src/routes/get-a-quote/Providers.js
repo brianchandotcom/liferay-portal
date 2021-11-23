@@ -39,12 +39,14 @@ const InitProvider = ({children}) => {
 				initialData = LiferayAdapt.adaptToRaylifeApplicationToForm(
 					data
 				);
-			} else if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
+			}
+			else if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
 				initialData = JSON.parse(
 					Storage.getItem(STORAGE_KEYS.APPLICATION_FORM)
 				);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error.message);
 		}
 

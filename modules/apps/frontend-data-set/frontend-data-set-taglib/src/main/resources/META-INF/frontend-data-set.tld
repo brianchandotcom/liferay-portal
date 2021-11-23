@@ -32,6 +32,11 @@
 			<type>com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu</type>
 		</attribute>
 		<attribute>
+			<name>customViewsEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>formId</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

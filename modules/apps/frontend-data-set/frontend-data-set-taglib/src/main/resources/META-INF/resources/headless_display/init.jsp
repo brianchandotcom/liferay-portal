@@ -42,6 +42,7 @@ String apiURL = (String)request.getAttribute("frontend-data-set:headless-display
 String appURL = (String)request.getAttribute("frontend-data-set:headless-display:appURL");
 List<DropdownItem> bulkActionDropdownItems = (List<DropdownItem>)request.getAttribute("frontend-data-set:headless-display:bulkActionDropdownItems");
 CreationMenu creationMenu = (CreationMenu)request.getAttribute("frontend-data-set:headless-display:creationMenu");
+boolean customViewsEnabled = (boolean)request.getAttribute("frontend-data-set:headless-display:customViewsEnabled");
 String formId = (String)request.getAttribute("frontend-data-set:headless-display:formId");
 String formName = (String)request.getAttribute("frontend-data-set:headless-display:formName");
 List<FrontendDataSetActionDropdownItem> frontendDataSetActionDropdownItems = (List<FrontendDataSetActionDropdownItem>)request.getAttribute("frontend-data-set:headless-display:frontendDataSetActionDropdownItems");

@@ -149,6 +149,10 @@ public class HeadlessDisplayTag extends IncludeTag {
 		return _style;
 	}
 
+	public boolean isCustomViewsEnabled() {
+		return _customViewsEnabled;
+	}
+
 	public boolean isShowManagementBar() {
 		return _showManagementBar;
 	}
@@ -175,6 +179,10 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 	public void setCreationMenu(CreationMenu creationMenu) {
 		_creationMenu = creationMenu;
+	}
+
+	public void setCustomViewsEnabled(boolean customViewsEnabled) {
+		_customViewsEnabled = customViewsEnabled;
 	}
 
 	public void setFormId(String formId) {
@@ -278,6 +286,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_appURL = null;
 		_bulkActionDropdownItems = new ArrayList<>();
 		_creationMenu = new CreationMenu();
+		_customViewsEnabled = false;
 		_formId = null;
 		_formName = null;
 		_frontendDataSetActionDropdownItems = new ArrayList<>();
@@ -328,6 +337,9 @@ public class HeadlessDisplayTag extends IncludeTag {
 			_bulkActionDropdownItems);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:creationMenu", _creationMenu);
+		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:customViewsEnabled",
+			_customViewsEnabled);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:formId", _formId);
 		httpServletRequest.setAttribute(
@@ -462,6 +474,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 	private String _appURL;
 	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
 	private CreationMenu _creationMenu = new CreationMenu();
+	private boolean _customViewsEnabled;
 	private String _formId;
 	private String _formName;
 	private List<FrontendDataSetActionDropdownItem>

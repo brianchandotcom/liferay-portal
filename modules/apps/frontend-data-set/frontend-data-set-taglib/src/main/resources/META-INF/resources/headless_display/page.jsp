@@ -39,6 +39,8 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_trac
 	).put(
 		"currentURL", PortalUtil.getCurrentURL(request)
 	).put(
+		"customViewsEnabled", customViewsEnabled
+	).put(
 		"filters", frontendDataSetFiltersContext
 	).build();
 

@@ -2,11 +2,11 @@
 
 <#include "roles.ftl">
 
+<#include "company.ftl">
+
 <#include "asset.ftl">
 
 <#include "class_names.ftl">
-
-<#include "company.ftl">
 
 <#include "ddm.ftl">
 

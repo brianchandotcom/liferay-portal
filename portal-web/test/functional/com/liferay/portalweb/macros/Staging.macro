@@ -1049,7 +1049,7 @@ definition {
 	macro runGroovyScript {
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(fileName = "create-300-web-content-articles.groovy");
+		var script = TestCase.getFileContent(fileName = "create-400-web-content-articles.groovy");
 
 		Navigator.gotoNavItem(navItem = "Script");
 

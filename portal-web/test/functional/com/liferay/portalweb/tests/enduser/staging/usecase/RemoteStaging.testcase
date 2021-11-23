@@ -40,15 +40,7 @@ definition {
 	test AssertLongPublicationProcessMessage {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertLongPublicationProcessMessage";
 
-		ServerAdministration.openServerAdmin();
-
-		var script = TestCase.getFileContent(fileName = "create-300-web-content-articles.groovy");
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
-
-		Pause(locator1 = "60000");
+		Staging.runGroovyScript();
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
@@ -58,9 +50,13 @@ definition {
 			locator1 = "Message#TOOLTIP",
 			value1 = "Custom Publish Process");
 
+		Staging.publishCustomPublication(remoteStaging = "true");
+
 		Staging.publishCustomPublication(
+			checkContentNameList = "Web Content",
 			headerTitle = "New Publish Process",
 			inProcess = "true",
+			rangeAll = "true",
 			remoteStaging = "true");
 	}
 

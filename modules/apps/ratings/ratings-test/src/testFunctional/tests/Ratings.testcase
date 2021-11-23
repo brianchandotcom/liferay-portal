@@ -778,16 +778,6 @@ definition {
 			ratingType = "Stacked Stars",
 			siteURLKey = "guest");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

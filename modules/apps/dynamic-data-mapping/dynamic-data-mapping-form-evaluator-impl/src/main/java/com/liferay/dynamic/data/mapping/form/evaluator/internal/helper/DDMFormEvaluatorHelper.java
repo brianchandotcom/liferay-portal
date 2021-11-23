@@ -44,6 +44,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -436,6 +437,19 @@ public class DDMFormEvaluatorHelper {
 		if (value != null) {
 			valueString = value.getString(
 				_ddmFormEvaluatorEvaluateRequest.getLocale());
+		}
+
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
+			ddmFormEvaluatorFieldContextKey.getName());
+
+		if (Objects.equals(ddmFormField.getDataType(), "double") &&
+			Objects.equals(ddmFormField.getType(), "numeric")) {
+
+			confirmationValue = NumericDDMFormFieldUtil.getFormattedValue(
+				_ddmFormEvaluatorEvaluateRequest.getLocale(),
+				confirmationValue);
+			valueString = NumericDDMFormFieldUtil.getFormattedValue(
+				_ddmFormEvaluatorEvaluateRequest.getLocale(), valueString);
 		}
 
 		if (Objects.equals(confirmationValue, valueString)) {

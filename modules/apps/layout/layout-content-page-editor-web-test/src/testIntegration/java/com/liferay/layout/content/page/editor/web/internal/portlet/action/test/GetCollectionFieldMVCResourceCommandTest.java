@@ -137,7 +137,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, String.class
+				String.class, int.class, int.class, String.class, boolean.class,
+				String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -149,7 +150,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20,
-			"regular", StringPool.BLANK);
+			"regular", false, StringPool.BLANK);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
@@ -179,7 +180,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, String.class
+				String.class, int.class, int.class, String.class, boolean.class,
+				String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -195,7 +197,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 2, 20,
-			"regular", StringPool.BLANK);
+			"regular", false, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
@@ -232,7 +234,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, String.class
+				String.class, int.class, int.class, String.class, boolean.class,
+				String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -248,7 +251,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20,
-			"regular", StringPool.BLANK);
+			"regular", false, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 

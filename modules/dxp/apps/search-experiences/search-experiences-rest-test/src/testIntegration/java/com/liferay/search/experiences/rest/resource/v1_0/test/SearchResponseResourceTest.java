@@ -24,6 +24,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SearchResponse;
+import com.liferay.search.experiences.rest.client.dto.v1_0.util.SXPBlueprintUtil;
 import com.liferay.search.experiences.rest.client.pagination.Pagination;
 import com.liferay.search.experiences.rest.client.problem.Problem;
 
@@ -75,7 +76,8 @@ public class SearchResponseResourceTest
 	private SearchResponse _postSearch(String sxpBlueprintJSON)
 		throws Exception {
 
-		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(sxpBlueprintJSON);
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(
+			sxpBlueprintJSON);
 
 		Assert.assertNotNull(sxpBlueprint);
 

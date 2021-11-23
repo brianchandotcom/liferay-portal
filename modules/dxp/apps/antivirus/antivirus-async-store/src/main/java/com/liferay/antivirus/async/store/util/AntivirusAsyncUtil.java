@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Raymond Augé
  */
-public final class AntivirusAsyncUtil {
+public class AntivirusAsyncUtil {
 
 	public static String getFileIdentifier(Message message) {
 		String fileName = message.getString("fileName");
@@ -46,10 +46,6 @@ public final class AntivirusAsyncUtil {
 
 		return StringBundler.concat(
 			companyId, "-", repositoryId, "-", fileName, "-", versionLabel);
-	}
-
-	private AntivirusAsyncUtil() {
-		//
 	}
 
 }

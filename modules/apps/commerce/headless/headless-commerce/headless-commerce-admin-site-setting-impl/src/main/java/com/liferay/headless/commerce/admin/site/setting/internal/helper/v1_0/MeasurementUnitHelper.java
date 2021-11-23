@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0;
+package com.liferay.headless.commerce.admin.site.setting.internal.helper.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;

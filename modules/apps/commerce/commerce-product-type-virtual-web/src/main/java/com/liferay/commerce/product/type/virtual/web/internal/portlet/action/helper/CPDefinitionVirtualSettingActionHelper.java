@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
+package com.liferay.commerce.product.type.virtual.web.internal.portlet.action.helper;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;

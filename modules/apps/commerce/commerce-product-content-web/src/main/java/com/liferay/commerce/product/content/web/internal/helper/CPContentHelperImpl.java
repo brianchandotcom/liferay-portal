@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.util;
+package com.liferay.commerce.product.content.web.internal.helper;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.account.model.CommerceAccount;
@@ -32,6 +32,8 @@ import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.product.content.render.CPContentRendererRegistry;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.content.util.CPMedia;
+import com.liferay.commerce.product.content.web.internal.util.AdaptiveMediaCPMediaImpl;
+import com.liferay.commerce.product.content.web.internal.util.CPMediaImpl;
 import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;

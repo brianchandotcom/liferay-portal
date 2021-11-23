@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.web.internal.asset.display.page.portlet.helper.AssetDisplayPageFriendlyURLResolverHelper;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;

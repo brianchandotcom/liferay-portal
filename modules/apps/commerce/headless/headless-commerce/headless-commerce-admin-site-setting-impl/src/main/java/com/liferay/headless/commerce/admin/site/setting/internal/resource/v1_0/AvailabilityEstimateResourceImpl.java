@@ -15,7 +15,7 @@
 package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate;
-import com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0.AvailabilityEstimateHelper;
+import com.liferay.headless.commerce.admin.site.setting.internal.helper.v1_0.AvailabilityEstimateHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.AvailabilityEstimateResource;
 
 import javax.ws.rs.core.Response;

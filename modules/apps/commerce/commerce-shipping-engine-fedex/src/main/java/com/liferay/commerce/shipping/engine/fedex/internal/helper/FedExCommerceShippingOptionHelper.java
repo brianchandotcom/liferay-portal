@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.engine.fedex.internal.util;
+package com.liferay.commerce.shipping.engine.fedex.internal.helper;
 
 import com.fedex.ws.rate.v22.Address;
 import com.fedex.ws.rate.v22.ClientDetail;

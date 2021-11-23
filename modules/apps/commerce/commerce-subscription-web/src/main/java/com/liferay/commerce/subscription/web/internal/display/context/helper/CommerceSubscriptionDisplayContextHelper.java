@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.subscription.web.internal.display.context.util;
+package com.liferay.commerce.subscription.web.internal.display.context.helper;
 
 import com.liferay.commerce.configuration.CommerceSubscriptionConfiguration;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;

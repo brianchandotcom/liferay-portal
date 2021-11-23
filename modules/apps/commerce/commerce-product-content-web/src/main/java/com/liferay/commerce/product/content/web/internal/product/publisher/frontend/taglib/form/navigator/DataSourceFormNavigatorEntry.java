@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.product.publisher.frontend.taglib.form.navigator;
 
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
-import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
+import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHelper;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;

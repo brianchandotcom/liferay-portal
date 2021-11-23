@@ -1,6 +1,7 @@
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormContext} from 'react-hook-form';
+import ProgressSavedModal from '~/routes/get-a-quote/components/containers/Forms/Modal/ProgressSaved';
 
 import {WarningBadge} from '../Badges/Warning';
 
@@ -12,7 +13,29 @@ export function CardFormActionsWithSave({
 }) {
 	const {
 		formState: {errors},
+		getValues,
 	} = useFormContext();
+
+	const email = getValues('basics.businessInformation.business.email');
+	const emailHasError = !!errors?.basics?.businessInformation?.business
+		?.email;
+
+	const [showProgressModal, setShowProgressModal] = useState(false);
+	const [loading, setLoading] = useState(false);
+
+	const onClickSaveAndExit = async () => {
+		setLoading(true);
+
+		try {
+			await onSave();
+			setShowProgressModal(true);
+		}
+		catch (error) {
+			alert('Unable to save your information. Please try again');
+		}
+
+		setLoading(false);
+	};
 
 	return (
 		<>
@@ -34,7 +57,8 @@ export function CardFormActionsWithSave({
 					{onSave && (
 						<button
 							className="btn btn-outline"
-							onClick={onSave}
+							disabled={!email || emailHasError || loading}
+							onClick={onClickSaveAndExit}
 							type="button"
 						>
 							Save & Exit
@@ -53,6 +77,12 @@ export function CardFormActionsWithSave({
 						</button>
 					)}
 				</div>
+
+				<ProgressSavedModal
+					email={email}
+					onClose={() => setShowProgressModal(false)}
+					show={showProgressModal}
+				/>
 			</div>
 		</>
 	);

@@ -20,6 +20,90 @@ const adaptToBusinessType = (data) =>
  * @param {DataForm}  data Basics form object
  * @returns {BasicsFormApplicationRequest} Basics Form ready for application request
  */
+const adaptToRaylifeApplicationToForm = (data) => {
+	const basics = {
+
+		// businessCategoryId: '43004',
+
+		applicationId: data.id,
+		businessInformation: {
+			business: {
+				email: data.email,
+				location: {
+					address: data.address,
+					addressApt: data.addressApt,
+					city: data.city,
+					state: data.state,
+					zip: data.zip,
+				},
+				phone: data.phone,
+				website: data.website,
+			},
+			firstName: data.firstName,
+			lastName: data.lastName,
+		},
+		businessSearch: 'pet',
+		product: 'Pet Stores',
+		properties: {
+			naics: '453910',
+			segment: 'Retail',
+		},
+	};
+
+	const business = {
+		hasAutoPolicy: data.hasAutoPolicy,
+		hasSellProductsUnderOwnBrand: data.hasSellProductsUnderOwnBrand,
+		hasStoredCustomerInformation: data.hasStoredCustomerInformation,
+		legalEntity: data.legalEntity,
+		overallSales: data.overallSales,
+		salesMerchandise: data.salesMerchandise,
+		yearsOfExperience: data.yearsOfExperience,
+	};
+
+	const employees = {
+		annualPayrollForEmployees: data.annualPayrollForEmployees,
+		annualPayrollForOwner: data.annualPayrollForOwner,
+		businessOperatesYearRound: data.businessOperatesYearRound,
+		estimatedAnnualGrossRevenue: data.estimatedAnnualGrossRevenue,
+		fein: data.fein,
+		hasFein: data.hasFein,
+		partTimeEmployees: data.partTimeEmployees,
+		startBusinessAtYear: data.startBusinessAtYear,
+	};
+
+	const property = {
+		buildingSquareFeetOccupied: data.buildingSquareFeetOccupied,
+		doOwnBuildingAtAddress: data.doOwnBuildingAtAddress,
+		isPrimaryBusinessLocation: data.isPrimaryBusinessLocation,
+		isThereDivingBoards: data.isThereDivingBoards,
+		isThereSwimming: data.isThereSwimming,
+		stories: data.stories,
+		totalBuildingSquareFeet: data.totalBuildingSquareFeet,
+		yearBuilding: data.yearBuilding,
+	};
+
+	const formState = {
+		basics,
+		business,
+		employees,
+		property,
+	};
+
+	for (const form in formState) {
+		const formKeyHasAnyValue = Object.values(formState[form]).some(Boolean);
+
+		if (!formKeyHasAnyValue) {
+			delete formState[form];
+		}
+	}
+
+	return formState;
+};
+
+/**
+ * @param {DataForm}  data Basics form object
+ * @returns {BasicsFormApplicationRequest} Basics Form ready for application request
+ */
 const adaptToFormApplicationRequest = (form) => ({
 	address: form?.basics?.businessInformation?.business?.location?.address,
 	addressApt:
@@ -90,4 +174,5 @@ export const LiferayAdapt = {
 	adaptToBusinessType,
 	adaptToFormApplicationRequest,
 	adaptToProductQuote,
+	adaptToRaylifeApplicationToForm,
 };

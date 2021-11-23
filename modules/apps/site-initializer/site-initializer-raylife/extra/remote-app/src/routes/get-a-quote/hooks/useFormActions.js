@@ -58,7 +58,7 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 		return validated;
 	};
 
-	const _SaveData = async () => {
+	const onSave = async () => {
 		setError('continueButton', {});
 		try {
 			const response = await LiferayService.createOrUpdateRaylifeApplication(
@@ -81,7 +81,7 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 	};
 
 	const onPrevious = async () => {
-		await _SaveData();
+		await onSave();
 
 		if (previousSection) {
 			setSection(previousSection);
@@ -90,20 +90,12 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 		smoothScroll();
 	};
 
-	const onSave = async () => {
-		await _SaveData();
-
-		clearExitAlert();
-
-		window.location.href = liferaySiteName;
-	};
-
 	/**
 	 * @state disabled for now
 	 * @param {*} data
 	 */
 	const onNext = async () => {
-		await _SaveData();
+		await onSave();
 
 		clearExitAlert();
 

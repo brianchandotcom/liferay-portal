@@ -208,6 +208,7 @@ definition {
 	test ViewResultRankingsEntryArchive7310 {
 		property data.archive.type = "data-archive-search-result-rankings";
 		property portal.version = "7.3.10";
+		property remote.elasticsearch.enabled = "true";
 		property test.run.environment = "EE";
 
 		Upgrade.viewResultRankingsEntry();

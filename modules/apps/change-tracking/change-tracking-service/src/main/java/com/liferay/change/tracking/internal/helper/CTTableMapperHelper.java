@@ -88,6 +88,10 @@ public class CTTableMapperHelper {
 		}
 	}
 
+	public void setRightColumnName(String rightColumnName) {
+		_rightColumnName = rightColumnName;
+	}
+
 	public void undo(long fromCTCollectionId, long toCTCollectionId)
 		throws Exception {
 
@@ -129,10 +133,6 @@ public class CTTableMapperHelper {
 
 				return null;
 			});
-	}
-
-	public void setRightColumnName(String rightColumnName) {
-		_rightColumnName = rightColumnName;
 	}
 
 	private void _clearCache(

@@ -664,7 +664,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Page");
 
-
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		IFrame.closeFrame();

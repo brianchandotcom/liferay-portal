@@ -1026,25 +1026,19 @@ AUI.add(
 				_getUploadURL(folderId) {
 					var instance = this;
 
-					var uploadURL = instance._uploadURL;
-
-					if (!uploadURL) {
-						var redirect = instance.get('redirect');
-
-						uploadURL = instance.get('uploadURL');
-
+					if (!instance._uploadURL) {
 						instance._uploadURL = instance._decodeURI(
 							Liferay.Util.addParams(
 								{
-									redirect,
+									redirect: instance.get('redirect'),
 									ts: Date.now(),
 								},
-								uploadURL
+								instance.get('uploadURL')
 							)
 						);
 					}
 
-					return sub(uploadURL, {
+					return sub(instance._uploadURL, {
 						folderId,
 					});
 				},

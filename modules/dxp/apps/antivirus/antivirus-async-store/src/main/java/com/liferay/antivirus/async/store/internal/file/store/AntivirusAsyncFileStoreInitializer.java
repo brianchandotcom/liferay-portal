@@ -75,7 +75,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
 		"destination.name=" + AntivirusAsyncConstants.ANTIVIRUS_BATCH_DESTINATION,
-		"file.system.store=advanced", "file.system.store=default",
 		"osgi.command.function=scan", "osgi.command.scope=antivirus"
 	},
 	service = MessageListener.class

@@ -91,9 +91,7 @@ public class AsyncAntivirusEventTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> scannerWasCalled.set(true)
-					).build(),
+					new MockAntivirusScanner(() -> scannerWasCalled.set(true)),
 					null);
 
 		ServiceRegistration<AntivirusAsyncEventListener>
@@ -163,12 +161,11 @@ public class AsyncAntivirusEventTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> {
+					new MockAntivirusScanner(
+						() -> {
 							throw new AntivirusScannerException(
 								AntivirusScannerException.PROCESS_FAILURE);
-						}
-					).build(),
+						}),
 					null);
 
 		ServiceRegistration<AntivirusAsyncEventListener>
@@ -263,14 +260,13 @@ public class AsyncAntivirusEventTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> {
+					new MockAntivirusScanner(
+						() -> {
 							scannerWasCalled.set(true);
 
 							throw new AntivirusScannerException(
 								AntivirusScannerException.SIZE_LIMIT_EXCEEDED);
-						}
-					).build(),
+						}),
 					null);
 
 		ServiceRegistration<AntivirusAsyncEventListener>
@@ -341,9 +337,7 @@ public class AsyncAntivirusEventTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> scannerWasCalled.set(true)
-					).build(),
+					new MockAntivirusScanner(() -> scannerWasCalled.set(true)),
 					null);
 
 		ServiceRegistration<AntivirusAsyncEventListener>
@@ -413,14 +407,13 @@ public class AsyncAntivirusEventTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> {
+					new MockAntivirusScanner(
+						() -> {
 							scannerWasCalled.set(true);
 
 							throw new AntivirusVirusFoundException(
 								"Virus detected in stream", "foo.virus");
-						}
-					).build(),
+						}),
 					null);
 
 		ServiceRegistration<AntivirusAsyncEventListener>

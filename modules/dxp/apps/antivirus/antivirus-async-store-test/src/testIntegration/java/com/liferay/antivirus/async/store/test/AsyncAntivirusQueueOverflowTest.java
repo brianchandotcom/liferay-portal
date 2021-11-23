@@ -102,8 +102,8 @@ public class AsyncAntivirusQueueOverflowTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> {
+					new MockAntivirusScanner(
+						() -> {
 
 							// Add some delay so the queue will reliably
 							// overflow
@@ -116,8 +116,7 @@ public class AsyncAntivirusQueueOverflowTest {
 								// Ignore this
 
 							}
-						}
-					).build(),
+						}),
 					null);
 
 		ServiceRegistration<AntivirusAsyncEventListener>

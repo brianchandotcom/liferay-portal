@@ -16,7 +16,7 @@ package com.liferay.antivirus.async.store.test;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,14 +27,9 @@ import java.io.InputStream;
 public class MockAntivirusScanner implements AntivirusScanner {
 
 	public MockAntivirusScanner(
-		UnsafeConsumer<byte[], AntivirusScannerException> bytesConsumer,
-		UnsafeConsumer<File, AntivirusScannerException> fileConsumer,
-		UnsafeConsumer<InputStream, AntivirusScannerException>
-			inputStreamConsumer) {
+		UnsafeRunnable<AntivirusScannerException> unsafeRunnable) {
 
-		_bytesConsumer = bytesConsumer;
-		_fileConsumer = fileConsumer;
-		_inputStreamConsumer = inputStreamConsumer;
+		_unsafeRunnable = unsafeRunnable;
 	}
 
 	@Override
@@ -43,68 +38,20 @@ public class MockAntivirusScanner implements AntivirusScanner {
 	}
 
 	@Override
-	public void scan(byte[] bytes) throws AntivirusScannerException {
-		_bytesConsumer.accept(bytes);
+	public void scan(byte[] bytes) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void scan(File file) throws AntivirusScannerException {
-		_fileConsumer.accept(file);
+	public void scan(File file) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void scan(InputStream inputStream) throws AntivirusScannerException {
-		_inputStreamConsumer.accept(inputStream);
+		_unsafeRunnable.run();
 	}
 
-	public static class Builder {
-
-		public MockAntivirusScanner build() {
-			return new MockAntivirusScanner(
-				_bytesConsumer, _fileConsumer, _inputStreamConsumer);
-		}
-
-		public Builder bytesConsumer(
-			UnsafeConsumer<byte[], AntivirusScannerException> bytesConsumer) {
-
-			_bytesConsumer = bytesConsumer;
-
-			return this;
-		}
-
-		public Builder fileConsumer(
-			UnsafeConsumer<File, AntivirusScannerException> fileConsumer) {
-
-			_fileConsumer = fileConsumer;
-
-			return this;
-		}
-
-		public Builder inputStreamConsumer(
-			UnsafeConsumer<InputStream, AntivirusScannerException>
-				inputStreamConsumer) {
-
-			_inputStreamConsumer = inputStreamConsumer;
-
-			return this;
-		}
-
-		private UnsafeConsumer<byte[], AntivirusScannerException>
-			_bytesConsumer = i -> {
-			};
-		private UnsafeConsumer<File, AntivirusScannerException> _fileConsumer =
-			i -> {
-			};
-		private UnsafeConsumer<InputStream, AntivirusScannerException>
-			_inputStreamConsumer = i -> {
-			};
-
-	}
-
-	private final UnsafeConsumer<byte[], AntivirusScannerException>
-		_bytesConsumer;
-	private final UnsafeConsumer<File, AntivirusScannerException> _fileConsumer;
-	private final UnsafeConsumer<InputStream, AntivirusScannerException>
-		_inputStreamConsumer;
+	private final UnsafeRunnable<AntivirusScannerException> _unsafeRunnable;
 
 }

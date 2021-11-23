@@ -115,8 +115,8 @@ public class AsyncAntivirusStatisticsTest {
 			antivirusScannerServiceRegistration =
 				_bundleContext.registerService(
 					AntivirusScanner.class,
-					new MockAntivirusScanner.Builder().inputStreamConsumer(
-						inputStream -> {
+					new MockAntivirusScanner(
+						() -> {
 
 							// Add some delay so the queue will reliably
 							// overflow
@@ -145,8 +145,7 @@ public class AsyncAntivirusStatisticsTest {
 								throw new AntivirusScannerException(
 									AntivirusScannerException.PROCESS_FAILURE);
 							}
-						}
-					).build(),
+						}),
 					HashMapDictionaryBuilder.<String, Object>put(
 						Constants.SERVICE_RANKING, 100
 					).build());

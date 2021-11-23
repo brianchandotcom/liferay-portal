@@ -22,10 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration;
 import com.liferay.portal.store.file.system.safe.file.name.SafeFileNameStore;
 
-import java.io.File;
-
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -33,14 +30,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
- * @author Raymond Augé
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration",
@@ -49,18 +41,15 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class AdvancedFileSystemStoreRegister {
 
 	@Activate
-	public AdvancedFileSystemStoreRegister(
+	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_bundleContext = bundleContext;
+		AdvancedFileSystemStoreConfiguration
+			advancedFileSystemStoreConfiguration =
+				ConfigurableUtil.createConfigurable(
+					AdvancedFileSystemStoreConfiguration.class, properties);
 
-		_advancedFileSystemStoreConfiguration =
-			ConfigurableUtil.createConfigurable(
-				AdvancedFileSystemStoreConfiguration.class, properties);
-
-		if (Validator.isBlank(
-				_advancedFileSystemStoreConfiguration.rootDir())) {
-
+		if (Validator.isBlank(advancedFileSystemStoreConfiguration.rootDir())) {
 			throw new IllegalArgumentException(
 				"Advanced file system root directory is not set",
 				new FileSystemStoreRootDirException());
@@ -70,34 +59,7 @@ public class AdvancedFileSystemStoreRegister {
 			Store.class,
 			new SafeFileNameStore(
 				new AdvancedFileSystemStore(
-					_advancedFileSystemStoreConfiguration)),
-			MapUtil.singletonDictionary(
-				"store.type", AdvancedFileSystemStore.class.getName()));
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(file.system.store=advanced)"
-	)
-	protected void addInitializer(Consumer<File> initializer) {
-		if (_serviceRegistration != null) {
-			try {
-				_serviceRegistration.unregister();
-			}
-			catch (IllegalStateException illegalStateException) {
-
-				// This can be safely ignored
-
-			}
-		}
-
-		_serviceRegistration = _bundleContext.registerService(
-			Store.class,
-			new SafeFileNameStore(
-				new AdvancedFileSystemStore(
-					_advancedFileSystemStoreConfiguration, initializer)),
+					advancedFileSystemStoreConfiguration)),
 			MapUtil.singletonDictionary(
 				"store.type", AdvancedFileSystemStore.class.getName()));
 	}
@@ -107,28 +69,6 @@ public class AdvancedFileSystemStoreRegister {
 		_serviceRegistration.unregister();
 	}
 
-	protected void removeInitializer(Consumer<File> initializer) {
-		try {
-			_serviceRegistration.unregister();
-		}
-		catch (IllegalStateException illegalStateException) {
-
-			// This can be safely ignored
-
-		}
-
-		_serviceRegistration = _bundleContext.registerService(
-			Store.class,
-			new SafeFileNameStore(
-				new AdvancedFileSystemStore(
-					_advancedFileSystemStoreConfiguration)),
-			MapUtil.singletonDictionary(
-				"store.type", AdvancedFileSystemStore.class.getName()));
-	}
-
-	private final AdvancedFileSystemStoreConfiguration
-		_advancedFileSystemStoreConfiguration;
-	private final BundleContext _bundleContext;
-	private volatile ServiceRegistration<Store> _serviceRegistration;
+	private ServiceRegistration<Store> _serviceRegistration;
 
 }

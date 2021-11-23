@@ -15,6 +15,7 @@
 package com.liferay.antivirus.async.store.internal.events;
 
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
+import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -69,11 +69,10 @@ public class AntivirusAsyncEventListenerManager {
 	}
 
 	@Activate
-	@SuppressWarnings("unchecked")
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, (Class<Consumer<Message>>)(Class<?>)Consumer.class,
-			null, _SERVICE_REFERENCE_MAPPER);
+			bundleContext, AntivirusAsyncEventListener.class, null,
+			_SERVICE_REFERENCE_MAPPER);
 	}
 
 	@Deactivate
@@ -88,37 +87,41 @@ public class AntivirusAsyncEventListenerManager {
 
 		String className = message.getString("className");
 
-		List<Consumer<Message>> consumers = _serviceTrackerMap.getService(
-			className);
+		List<AntivirusAsyncEventListener> antivirusAsyncEventListeners =
+			_serviceTrackerMap.getService(className);
 
-		if (consumers != null) {
-			consumers.forEach(consumer -> consumer.accept(message));
+		if (antivirusAsyncEventListeners != null) {
+			antivirusAsyncEventListeners.forEach(
+				listener -> listener.receive(message));
 		}
 
-		consumers = _serviceTrackerMap.getService(_ANY_CLASS);
+		antivirusAsyncEventListeners = _serviceTrackerMap.getService(
+			_ANY_CLASS);
 
-		if (consumers != null) {
-			consumers.forEach(consumer -> consumer.accept(message));
+		if (antivirusAsyncEventListeners != null) {
+			antivirusAsyncEventListeners.forEach(
+				listener -> listener.receive(message));
 		}
 	}
 
 	private static final String _ANY_CLASS = "<ANY_CLASS>";
 
-	private static final ServiceReferenceMapper<String, Consumer<?>>
-		_SERVICE_REFERENCE_MAPPER = (serviceReference, emitter) -> {
-			List<String> classNames = StringUtil.asList(
-				serviceReference.getProperty("class.name"));
+	private static final ServiceReferenceMapper
+		<String, AntivirusAsyncEventListener> _SERVICE_REFERENCE_MAPPER =
+			(serviceReference, emitter) -> {
+				List<String> classNames = StringUtil.asList(
+					serviceReference.getProperty("class.name"));
 
-			for (String className : classNames) {
-				emitter.emit(className);
-			}
+				for (String className : classNames) {
+					emitter.emit(className);
+				}
 
-			if (classNames.isEmpty()) {
-				emitter.emit(_ANY_CLASS);
-			}
-		};
+				if (classNames.isEmpty()) {
+					emitter.emit(_ANY_CLASS);
+				}
+			};
 
-	private ServiceTrackerMap<String, List<Consumer<Message>>>
+	private ServiceTrackerMap<String, List<AntivirusAsyncEventListener>>
 		_serviceTrackerMap;
 
 }

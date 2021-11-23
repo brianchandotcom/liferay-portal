@@ -17,6 +17,7 @@ package com.liferay.antivirus.async.store.test;
 import com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration;
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
+import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
 import com.liferay.antivirus.async.store.test.constants.TestConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -42,7 +43,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,10 +96,9 @@ public class AsyncAntivirusEventTest {
 					).build(),
 					null);
 
-		@SuppressWarnings("unchecked")
-		ServiceRegistration<Consumer<Message>>
+		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
+				AntivirusAsyncEventListener.class,
 				new MockEventListener.Builder().missingConsumer(
 					message -> countDownLatch.countDown()
 				).build(),
@@ -172,10 +171,9 @@ public class AsyncAntivirusEventTest {
 					).build(),
 					null);
 
-		@SuppressWarnings("unchecked")
-		ServiceRegistration<Consumer<Message>>
+		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
+				AntivirusAsyncEventListener.class,
 				new MockEventListener.Builder().prepareConsumer(
 					message -> prepareEventFired.set(true)
 				).processingErrorConsumer(
@@ -275,10 +273,9 @@ public class AsyncAntivirusEventTest {
 					).build(),
 					null);
 
-		@SuppressWarnings("unchecked")
-		ServiceRegistration<Consumer<Message>>
+		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
+				AntivirusAsyncEventListener.class,
 				new MockEventListener.Builder().prepareConsumer(
 					message -> prepareEventFired.set(true)
 				).sizeExceededConsumer(
@@ -349,10 +346,9 @@ public class AsyncAntivirusEventTest {
 					).build(),
 					null);
 
-		@SuppressWarnings("unchecked")
-		ServiceRegistration<Consumer<Message>>
+		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
+				AntivirusAsyncEventListener.class,
 				new MockEventListener.Builder().prepareConsumer(
 					message -> prepareEventFired.set(true)
 				).successConsumer(
@@ -427,10 +423,9 @@ public class AsyncAntivirusEventTest {
 					).build(),
 					null);
 
-		@SuppressWarnings("unchecked")
-		ServiceRegistration<Consumer<Message>>
+		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
+				AntivirusAsyncEventListener.class,
 				new MockEventListener.Builder().prepareConsumer(
 					message -> prepareEventFired.set(true)
 				).virusFoundConsumer(

@@ -15,6 +15,7 @@
 package com.liferay.antivirus.async.store.test;
 
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
+import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 import java.util.function.Consumer;
@@ -22,10 +23,10 @@ import java.util.function.Consumer;
 /**
  * @author Raymond Augé
  */
-public class MockEventListener implements Consumer<Message> {
+public class MockEventListener implements AntivirusAsyncEventListener {
 
 	@Override
-	public void accept(Message eventPayload) {
+	public void receive(Message eventPayload) {
 		AntivirusAsyncEvent antivirusAsyncEvent =
 			(AntivirusAsyncEvent)eventPayload.get("antivirusAsyncEvent");
 

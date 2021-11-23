@@ -16,6 +16,7 @@ package com.liferay.antivirus.async.store.internal.retry;
 
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
+import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -23,8 +24,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-
-import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -35,12 +34,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, service = Consumer.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	service = AntivirusAsyncEventListener.class
 )
-public class AntivirusAsyncRetryEventListener implements Consumer<Message> {
+public class AntivirusAsyncRetryEventListener
+	implements AntivirusAsyncEventListener {
 
 	@Override
-	public void accept(Message message) {
+	public void receive(Message message) {
 		AntivirusAsyncEvent antivirusAsyncEvent =
 			(AntivirusAsyncEvent)message.get("antivirusAsyncEvent");
 

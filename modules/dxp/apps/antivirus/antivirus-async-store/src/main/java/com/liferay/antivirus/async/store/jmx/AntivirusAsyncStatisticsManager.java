@@ -16,6 +16,7 @@ package com.liferay.antivirus.async.store.jmx;
 
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
+import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
@@ -51,13 +51,14 @@ import org.osgi.service.component.annotations.Reference;
 		"jmx.objectname.cache.key=AntivirusAsyncStatistics"
 	},
 	service = {
-		AntivirusAsyncStatisticsManagerMBean.class, Consumer.class,
-		DynamicMBean.class
+		AntivirusAsyncEventListener.class,
+		AntivirusAsyncStatisticsManagerMBean.class, DynamicMBean.class
 	}
 )
 public class AntivirusAsyncStatisticsManager
 	extends StandardMBean
-	implements AntivirusAsyncStatisticsManagerMBean, Consumer<Message> {
+	implements AntivirusAsyncEventListener,
+			   AntivirusAsyncStatisticsManagerMBean {
 
 	@Activate
 	public AntivirusAsyncStatisticsManager(
@@ -67,26 +68,6 @@ public class AntivirusAsyncStatisticsManager
 		super(AntivirusAsyncStatisticsManagerMBean.class);
 
 		_destination = destination;
-	}
-
-	@Override
-	public void accept(Message message) {
-		AntivirusAsyncEvent antivirusAsyncEvent =
-			(AntivirusAsyncEvent)message.get("antivirusAsyncEvent");
-
-		if (antivirusAsyncEvent == AntivirusAsyncEvent.PROCESSING_ERROR) {
-			_processingErrorCounter.incrementAndGet();
-		}
-		else if (antivirusAsyncEvent == AntivirusAsyncEvent.SUCCESS) {
-			_totalScannedCounter.incrementAndGet();
-		}
-		else if (antivirusAsyncEvent == AntivirusAsyncEvent.SIZE_EXCEEDED) {
-			_sizeExceededCounter.incrementAndGet();
-		}
-		else if (antivirusAsyncEvent == AntivirusAsyncEvent.VIRUS_FOUND) {
-			_virusFoundCounter.incrementAndGet();
-			_totalScannedCounter.incrementAndGet();
-		}
 	}
 
 	@Override
@@ -152,6 +133,26 @@ public class AntivirusAsyncStatisticsManager
 	@Override
 	public boolean isAutoRefresh() {
 		return _autoRefresh;
+	}
+
+	@Override
+	public void receive(Message message) {
+		AntivirusAsyncEvent antivirusAsyncEvent =
+			(AntivirusAsyncEvent)message.get("antivirusAsyncEvent");
+
+		if (antivirusAsyncEvent == AntivirusAsyncEvent.PROCESSING_ERROR) {
+			_processingErrorCounter.incrementAndGet();
+		}
+		else if (antivirusAsyncEvent == AntivirusAsyncEvent.SUCCESS) {
+			_totalScannedCounter.incrementAndGet();
+		}
+		else if (antivirusAsyncEvent == AntivirusAsyncEvent.SIZE_EXCEEDED) {
+			_sizeExceededCounter.incrementAndGet();
+		}
+		else if (antivirusAsyncEvent == AntivirusAsyncEvent.VIRUS_FOUND) {
+			_virusFoundCounter.incrementAndGet();
+			_totalScannedCounter.incrementAndGet();
+		}
 	}
 
 	@Override

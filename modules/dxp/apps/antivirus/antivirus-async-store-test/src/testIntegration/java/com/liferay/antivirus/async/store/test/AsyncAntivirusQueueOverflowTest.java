@@ -16,6 +16,7 @@ package com.liferay.antivirus.async.store.test;
 
 import com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
+import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
 import com.liferay.antivirus.async.store.test.constants.TestConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -24,7 +25,6 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -37,7 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -121,10 +120,9 @@ public class AsyncAntivirusQueueOverflowTest {
 					).build(),
 					null);
 
-		@SuppressWarnings("unchecked")
-		ServiceRegistration<Consumer<Message>>
+		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
-				(Class<Consumer<Message>>)(Class<?>)Consumer.class,
+				AntivirusAsyncEventListener.class,
 				new MockEventListener.Builder().prepareConsumer(
 					message -> prepareEventFired.incrementAndGet()
 				).successConsumer(

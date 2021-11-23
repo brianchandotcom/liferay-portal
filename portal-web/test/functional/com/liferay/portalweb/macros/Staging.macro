@@ -1046,6 +1046,30 @@ definition {
 			remotePort = "${remotePort}");
 	}
 
+	macro runGroovyScript {
+		ServerAdministration.openServerAdmin();
+
+		var script = TestCase.getFileContent(fileName = "create-300-web-content-articles.groovy");
+
+		Navigator.gotoNavItem(navItem = "Script");
+
+		Select(
+			locator1 = "ServerAdministrationScript#LANGUAGE_SELECT",
+			value1 = "Groovy");
+
+		Type(
+			locator1 = "ServerAdministrationScript#SCRIPT_TEXT",
+			value1 = "${script}");
+
+		AssertClick(
+			locator1 = "ServerAdministrationScript#EXECUTE_BUTTON",
+			value1 = "Execute");
+
+		while (IsElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE")) {
+			Pause(locator1 = "4000");
+		}
+	}
+
 	macro saveLocalStagingConfiguration {
 		AssertClickNoError(
 			locator1 = "Button#SAVE",

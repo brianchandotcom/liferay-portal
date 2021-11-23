@@ -1293,7 +1293,7 @@ definition {
 
 		JSONGroup.addGroup(
 			groupName = "Site A",
-			type = "Private");
+			membershipType = "Private");
 
 		JSONGroup.addGroup(groupName = "Site X");
 

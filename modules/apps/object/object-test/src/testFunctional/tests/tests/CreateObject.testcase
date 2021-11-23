@@ -3230,12 +3230,12 @@ definition {
 
 	}
 
-	@description = "LPS-139603 - Verify that the Object Label is displayed on the Relationship tab when a Relationship is created"
+	@description = "LPS-139603 - Verify that the Object Name is displayed on the Relationship tab when a Relationship is created"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test ObjectLabelDisplayedOnTheRelationshipTab {
+	test ObjectNameDisplayedOnTheRelationshipTab {
 
-		// TODO LPS-141681 ObjectLabelDisplayedOnTheRelationshipTab pending implementation
+		// TODO LPS-141681 ObjectNameDisplayedOnTheRelationshipTab pending implementation
 
 	}
 

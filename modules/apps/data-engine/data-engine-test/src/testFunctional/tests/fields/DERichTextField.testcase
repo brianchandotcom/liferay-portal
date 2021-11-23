@@ -283,7 +283,7 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DEBuilder.addField(
-			fieldFieldLabel = "Rich Text",
+			fieldLabel = "Rich Text",
 			fieldName = "Rich Text");
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");

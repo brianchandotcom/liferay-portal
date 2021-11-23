@@ -1299,13 +1299,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		DDLRecord.viewViaDDLDisplayPG(
-			ddlListName = "List Name",
-			ddlRecordFieldData = "Text",
-			ddlRecordFieldDataTableDisplay = "Text",
-			field = "Text",
-			fieldFieldLabel = "Text",
-			userRole = "Guest");
+		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 	}
 
 	@priority = "3"

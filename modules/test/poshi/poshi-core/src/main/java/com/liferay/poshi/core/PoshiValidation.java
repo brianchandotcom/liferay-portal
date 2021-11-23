@@ -1606,10 +1606,6 @@ public class PoshiValidation {
 			Element element, String filePath, String className)
 		throws Exception {
 
-		if (PoshiContext.ignoreUtilClassesErrors()) {
-			return;
-		}
-
 		if (!className.startsWith("selenium")) {
 			if (!className.contains(".")) {
 				try {

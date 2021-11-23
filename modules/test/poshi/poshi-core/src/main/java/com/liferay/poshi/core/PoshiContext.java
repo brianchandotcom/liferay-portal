@@ -24,7 +24,6 @@ import com.liferay.poshi.core.prose.PoshiProseMatcher;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.FileUtil;
-import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.MathUtil;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
@@ -451,11 +450,6 @@ public class PoshiContext {
 		String className, String namespace) {
 
 		return _rootElements.get("test-case#" + namespace + "." + className);
-	}
-
-	public static boolean ignoreUtilClassesErrors() {
-		return GetterUtil.getBoolean(
-			PropsUtil.get("ignore.errors.util.classes"));
 	}
 
 	public static boolean isCommandElement(

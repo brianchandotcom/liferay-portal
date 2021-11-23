@@ -140,13 +140,11 @@ public class ExecutePoshiElement extends PoshiElement {
 			addAttribute("class", getClassName(poshiScript));
 			addAttribute("method", getCommandName(poshiScript));
 
-			if (!PoshiContext.ignoreUtilClassesErrors()) {
-				List<String> methodParameters = getMethodParameters(
-					poshiScriptParentheticalContent);
+			List<String> methodParameters = getMethodParameters(
+				poshiScriptParentheticalContent);
 
-				for (String methodParameter : methodParameters) {
-					add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
-				}
+			for (String methodParameter : methodParameters) {
+				add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
 			}
 
 			return;

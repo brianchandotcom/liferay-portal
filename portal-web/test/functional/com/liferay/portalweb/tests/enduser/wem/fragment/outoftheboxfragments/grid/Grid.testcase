@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109590. Assert no Container element is outside when add a Grid element to content page. Can nest a Grid fragment or multiple Grid inside one module of another one."
+	@description = "This is a use case for LPS-109590 and LPS-106776. Assert no Container element is outside when add a Grid element to content page. Can nest a Grid fragment or multiple Grid inside one module of another one."
 	@priority = "5"
 	@uitest
 	test AddGridToColumnOfAnotherGrid {
@@ -72,7 +72,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-108339. Can add several Grid elements to Container."
+	@description = "This is a use case for LPS-108339 and LPS-106776. Can add several Grid elements to Container."
 	@priority = "5"
 	@uitest
 	test AddGridToContainer {
@@ -233,7 +233,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106776 and LPS-102959. Configure the Grid element."
+	@description = "This is a use case for LPS-106776 and LPS-102959. Configure the Grid element."
 	@priority = "5"
 	@uitest
 	test ConfigureGrid {

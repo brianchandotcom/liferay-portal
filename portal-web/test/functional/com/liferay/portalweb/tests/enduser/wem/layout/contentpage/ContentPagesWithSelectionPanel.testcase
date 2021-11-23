@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-118271. Can change the order of the elements in page editor via Selection panel."
+	@description = "This is a test for LPS-118271 and LPS-106776. Can change the order of the elements in page editor via Selection panel. View Page Structure in react page editor."
 	@priority = "5"
 	test ChangeOrderOfElementsViaSelectionPanel {
 		property portal.acceptance = "true";

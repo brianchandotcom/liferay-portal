@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106776. Add a translation to inline content."
+	@description = "This is a use case for LPS-106776. Add a translation to inline content."
 	@priority = "5"
 	test AddTranslationToInlineContent {
 		property portal.acceptance = "true";

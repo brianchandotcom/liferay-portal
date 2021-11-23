@@ -77,7 +77,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-129360. The user could change the display style of Documents and Media in display page template."
+	@description = "This is a use case for LPS-129360 and LPS-106776. The user could change the display style of Documents and Media in display page template."
 	@priority = "4"
 	test ChangeDisplayStyleOfDocumentsAndMediaInDisplayPageTemplate {
 		task ("Add a Documents and Media widget to the display page template") {
@@ -428,7 +428,7 @@ definition {
 		}
 	}
 
-	@description = "User can edit a display page. This includes adding and removing fragments and includes editing text in fragment editable fields."
+	@description = "This is a use case for LPS-106776. User can edit a display page. This includes adding and removing fragments and includes editing text in fragment editable fields."
 	@priority = "5"
 	@uitest
 	test EditDisplayPageTemplate {

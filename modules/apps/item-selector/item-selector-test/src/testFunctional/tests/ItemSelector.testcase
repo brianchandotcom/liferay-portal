@@ -772,7 +772,7 @@ definition {
 		ItemSelector.searchDMImages(imageFileName = "Document_1.jpg");
 	}
 
-	@description = "This ensures that the background image of a fragment can be added."
+	@description = "This is a use case for LPS-106776. This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	@refactordone
 	test CanSelectBackgroundImageForFragment {

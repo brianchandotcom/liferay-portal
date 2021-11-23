@@ -483,7 +483,7 @@ definition {
 		}
 	}
 
-	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
+	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions. This is a use case for LPS-106776."
 	@priority = "5"
 	test ConfigurePageEditorAfterUpgrade721 {
 		property data.archive.type = "data-archive-page-editor";
@@ -506,6 +506,7 @@ definition {
 		Upgrade.configurePageEditor();
 	}
 
+	@description = "This is a use case for LPS-106776. Fragment configuration persists after upgrating."
 	@priority = "5"
 	test ViewContributedFragmentStyleAfterUpgrade721 {
 		property data.archive.type = "data-archive-contributed-fragments";

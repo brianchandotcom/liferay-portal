@@ -88,7 +88,7 @@ definition {
 		PageEditor.viewComment(fragmentComment = '''& < > " Escape Characters Comment''');
 	}
 
-	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
+	@description = "This is a use case for LPS-106776. This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = "5"
 	@refactordone
 	test CanDeleteComment {

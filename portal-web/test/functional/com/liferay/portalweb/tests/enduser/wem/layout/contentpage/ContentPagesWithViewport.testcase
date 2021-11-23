@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-119979. Customize the Layout of Grid in each viewport."
+	@description = "This is a test for LPS-119979 and LPS-106776. Customize the Layout of Grid in each viewport."
 	@priority = "4"
 	@uitest
 	test CustomizeLayoutOfGridInEachViewport {
@@ -315,7 +315,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-134844. Fragment view options can be reset to parent one."
+	@description = "This is a test for LPS-134844 and LPS-106776. Fragment view options can be reset to parent one."
 	@priority = "4"
 	@uitest
 	test FragmentViewOptionsCanBeResetToParentOne {

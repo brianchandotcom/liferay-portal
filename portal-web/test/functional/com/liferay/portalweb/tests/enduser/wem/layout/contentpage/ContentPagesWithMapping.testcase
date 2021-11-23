@@ -1663,7 +1663,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in content page."
+	@description = "This is a test for LPS-118979 and LPS-106776. The mappable fields are grouped by fieldset in content page."
 	@priority = "5"
 	test ViewMappableFieldsAreGroupedByFieldset {
 		property portal.acceptance = "true";

@@ -1122,7 +1122,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-122396. The outline of editable field should be dashed when hover on inline text item in Page Content panel."
+	@description = "This is a test for LPS-122396 and LPS-106776. The outline of editable field should be dashed when hover on inline text item in Page Content panel."
 	@priority = "5"
 	test ViewDashedOutlineOfEditableFieldWhenHoverOnInlineTextItems {
 		task ("Add a Heading fragment to page") {

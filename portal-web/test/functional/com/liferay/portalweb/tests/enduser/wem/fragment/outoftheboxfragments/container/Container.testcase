@@ -338,7 +338,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106776, LPS-111657 and LPS-120693. Configure the Flex Row and Fluid Container styles."
+	@description = "This is a use case for LPS-106776, LPS-111657 and LPS-120693. Configure the Flex Row and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexRowAndFluidContainerStyles {
 		property portal.acceptance = "true";
@@ -924,7 +924,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-107285. When the Container fragment is duplicated, the configuration of it and its components should also be duplicated."
+	@description = "This is a test for LPS-107285 and LPS-106776. When the Container fragment is duplicated, the configuration of it and its components should also be duplicated."
 	@priority = "4"
 	test ViewConfigurationDuplicatedInDuplicatedContainerWithHeading {
 		task ("Add a Container to page") {

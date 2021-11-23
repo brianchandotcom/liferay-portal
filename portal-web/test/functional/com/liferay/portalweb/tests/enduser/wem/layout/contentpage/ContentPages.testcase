@@ -512,7 +512,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-134844. Fragments can be hidden and shown."
+	@description = "This is a test for LPS-134844 and LPS-106776. Fragments can be hidden and shown. Could add widget to react page editor."
 	@priority = "5"
 	@uitest
 	test FragmentsCanBeHiddenAndShown {
@@ -926,7 +926,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106778. Reorganize fragments in page editor."
+	@description = "This is a use case for LPS-106776. Reorganize fragments in page editor."
 	@priority = "5"
 	@uitest
 	test ReorganizeFragmentsInPageEditor {
@@ -1156,7 +1156,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130083. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
+	@description = "This is a test for LPS-130083 and LPS-106776. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
 	@priority = "4"
 	@uitest
 	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {

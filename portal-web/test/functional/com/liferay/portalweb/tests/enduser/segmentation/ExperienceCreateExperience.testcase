@@ -72,7 +72,7 @@ definition {
 		}
 	}
 
-	@description = "When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
+	@description = "This is a use case for LPS-106776. When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
 	@priority = "5"
 	test AddNewAnyoneExperience {
 		property portal.acceptance = "true";

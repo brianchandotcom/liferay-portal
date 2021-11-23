@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241 and LPS-128667. The user could configure the Button fragment in page editor."
+	@description = "This is a test for LPS-98241 and LPS-128667 and LPS-106776. The user could configure the Button fragment in page editor."
 	@priority = "4"
 	test ConfigureBasicComponentButton {
 		task ("Add a widget page") {

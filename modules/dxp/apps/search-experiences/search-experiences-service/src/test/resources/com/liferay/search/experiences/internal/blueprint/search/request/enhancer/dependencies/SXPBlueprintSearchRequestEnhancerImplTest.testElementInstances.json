@@ -55,36 +55,37 @@
 							{
 								"fields": [
 									{
+										"defaultValue": "must",
 										"label": "Occur",
 										"name": "occur",
-										"options": [
-											{
-												"label": "MUST",
-												"value": "must"
-											},
-											{
-												"label": "SHOULD",
-												"value": "should"
-											},
-											{
-												"label": "MUST NOT",
-												"value": "must_not"
-											},
-											{
-												"label": "FILTER",
-												"value": "filter"
-											}
-										],
-										"uiType": "select",
-										"valueDefinition": {
-											"defaultValueString": "must",
-											"type": "String"
+										"type": "select",
+										"typeOptions": {
+											"options": [
+												{
+													"label": "MUST",
+													"value": "must"
+												},
+												{
+													"label": "SHOULD",
+													"value": "should"
+												},
+												{
+													"label": "MUST NOT",
+													"value": "must_not"
+												},
+												{
+													"label": "FILTER",
+													"value": "filter"
+												}
+											]
 										}
 									},
 									{
+										"defaultValue": {
+										},
 										"label": "Query",
 										"name": "query",
-										"uiType": "json"
+										"type": "json"
 									}
 								]
 							}
@@ -141,16 +142,15 @@
 									{
 										"label": "Asset Type",
 										"name": "entry_class_name",
-										"uiType": "searchableType"
+										"type": "searchableType"
 									},
 									{
+										"defaultValue": 10,
 										"label": "Boost",
 										"name": "boost",
-										"uiType": "number",
-										"valueDefinition": {
-											"defaultValueInteger": 10,
-											"minValueInteger": 0,
-											"type": "Integer"
+										"type": "number",
+										"typeOptions": {
+											"min": 0
 										}
 									}
 								]
@@ -191,7 +191,7 @@
 									{
 										"label": "Field",
 										"name": "field",
-										"uiType": "text"
+										"type": "text"
 									}
 								]
 							}

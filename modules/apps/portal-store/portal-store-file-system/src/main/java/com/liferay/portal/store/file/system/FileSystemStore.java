@@ -199,6 +199,10 @@ public class FileSystemStore implements Store {
 		return versions;
 	}
 
+	public File getRootDir() {
+		return _rootDir;
+	}
+
 	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,

@@ -17,6 +17,7 @@
 		]
 	},
 	"dependencies": {
+		"@apollo/client": "^3.4.17",
 		"@clayui/card": "^3.36.0",
 		"@clayui/core": "^3.36.0",
 		"@clayui/css": "^3.36.0",
@@ -27,6 +28,7 @@
 		"@craco/craco": "^6.3.0",
 		"classnames": "^2.3.1",
 		"formik": "^2.2.9",
+		"graphql": "^16.0.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-scripts": "^4.0.3"

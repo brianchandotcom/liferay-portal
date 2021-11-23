@@ -138,10 +138,6 @@ definition {
 		ServerAdministration.executeScript(
 			language = "Groovy",
 			script = "${script}");
-
-		if (isSet(longTimeRun)) {
-			Pause(locator1 = "60000");
-		}
 	}
 
 	@description = "This will shutdown the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."

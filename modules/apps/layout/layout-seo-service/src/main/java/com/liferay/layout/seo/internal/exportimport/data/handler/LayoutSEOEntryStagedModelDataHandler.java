@@ -170,7 +170,9 @@ public class LayoutSEOEntryStagedModelDataHandler
 				openGraphImageFileEntryId,
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
 				layoutSEOEntry.getOpenGraphTitleMap(),
-				_createServiceContext(layoutSEOEntry, portletDataContext));
+				_createServiceContext(
+					layoutSEOEntry, existingLayoutSEOEntry,
+					portletDataContext));
 		}
 		else {
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
@@ -186,12 +188,15 @@ public class LayoutSEOEntryStagedModelDataHandler
 				openGraphImageFileEntryId,
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
 				layoutSEOEntry.getOpenGraphTitleMap(),
-				_createServiceContext(layoutSEOEntry, portletDataContext));
+				_createServiceContext(
+					layoutSEOEntry, existingLayoutSEOEntry,
+					portletDataContext));
 		}
 	}
 
 	private ServiceContext _createServiceContext(
 			LayoutSEOEntry layoutSEOEntry,
+			LayoutSEOEntry existingLayoutSEOEntry,
 			PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -213,6 +218,12 @@ public class LayoutSEOEntryStagedModelDataHandler
 		serviceContext.setAttribute(
 			ddmStructure.getStructureId() + "ddmFormValues",
 			serializedDDMFormValues);
+
+		if (portletDataContext.isDataStrategyMirror() &&
+			(existingLayoutSEOEntry == null)) {
+
+			serviceContext.setUuid(layoutSEOEntry.getUuid());
+		}
 
 		return serviceContext;
 	}

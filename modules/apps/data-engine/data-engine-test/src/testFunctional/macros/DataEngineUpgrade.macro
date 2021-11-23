@@ -28,7 +28,7 @@ definition {
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
-		for (var locale : list "pt_BR,ca_ES") {
+		for (var locale : list "pt-BR,ca-ES") {
 			PortletEntry.changeLocale(locale = "${locale}");
 
 			for (var fieldFieldLabel : list "Text,Date,Number") {
@@ -54,7 +54,7 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with nested fields");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "23/02/2021",
@@ -65,7 +65,7 @@ definition {
 			webContentTextFieldLabel = "Text - pt_BR",
 			webContentTitle = "My Web Content based on My Structure with nested fields - pt_BR");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "24/02/2021",
@@ -128,7 +128,7 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "23/02/2021",
@@ -139,7 +139,7 @@ definition {
 			webContentTextFieldLabel = "Text - pt_BR",
 			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2 - pt_BR");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "24/02/2021",
@@ -211,7 +211,7 @@ definition {
 				fieldFieldLabelEdit = "${structureFieldName} - pt_BR Edited");
 		}
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		for (var structureFieldName : list "${fieldList}") {
 			DataEngine.editFieldLabel(
@@ -249,7 +249,7 @@ definition {
 			fieldFieldLabel = "Number - pt_BR Edited",
 			fieldName = "Numeric");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Text - ca_ES Edited",
@@ -281,7 +281,7 @@ definition {
 			fieldFieldLabel = "Text - pt_BR",
 			fieldFieldLabelEdit = "Text - pt_BR Edited");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text - ca_ES",
@@ -301,7 +301,7 @@ definition {
 			fieldFieldLabel = "Text - pt_BR Edited",
 			fieldName = "Text");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Text - ca_ES Edited",
@@ -329,7 +329,7 @@ definition {
 			fieldFieldLabel = "Date - pt_BR",
 			fieldFieldLabelEdit = "Date - pt_BR Edited");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "My Structure with Fieldsets level 0 - ca_ES",
@@ -363,7 +363,7 @@ definition {
 			fieldFieldLabel = "Date - pt_BR Edited",
 			fieldName = "Date");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		AssertElementPresent(
 			key_fieldsetLabel = "My Structure with Fieldsets level 0 - ca_ES Edited",
@@ -396,7 +396,7 @@ definition {
 			fieldFieldLabel = "Number - pt_BR",
 			fieldFieldLabelEdit = "Number - pt_BR Edited");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "My Structure with Fieldsets level 1 - ca_ES",
@@ -430,7 +430,7 @@ definition {
 			fieldFieldLabel = "Number - pt_BR Edited",
 			fieldName = "Numeric");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		AssertElementPresent(
 			key_fieldsetLabel = "My Structure with Fieldsets level 1 - ca_ES Edited",
@@ -456,7 +456,7 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
 
-		for (var locale : list "pt_BR,ca_ES") {
+		for (var locale : list "pt-BR,ca-ES") {
 			PortletEntry.changeLocale(locale = "${locale}");
 
 			WebContent.addWithStructureCP(
@@ -514,7 +514,7 @@ definition {
 				value1 = "${fields}");
 		}
 
-		for (var locale : list "pt_BR,ca_ES") {
+		for (var locale : list "pt-BR,ca-ES") {
 			PortletEntry.changeLocale(locale = "${locale}");
 
 			AssertTextEquals(
@@ -541,7 +541,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
 
-		for (var language : list "pt_BR,ca_ES") {
+		for (var language : list "pt-BR,ca-ES") {
 			PortletEntry.changeLocale(locale = "${language}");
 
 			AssertTextEquals(
@@ -672,7 +672,11 @@ definition {
 		}
 
 		for (var localeCode : list "${localeCodeList}") {
+			var localeCode = StringUtil.replace("${localeCode}", "_", "-");
+
 			PortletEntry.changeLocale(locale = "${localeCode}");
+
+			var localeCode = StringUtil.replace("${localeCode}", "-", "_");
 
 			for (var fieldLabel : list "${fieldList}") {
 				AssertElementPresent(
@@ -807,7 +811,7 @@ definition {
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "1.2");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -855,7 +859,7 @@ definition {
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "2,2");
 
-		PortletEntry.changeLocale(locale = "ca_ES");
+		PortletEntry.changeLocale(locale = "ca-ES");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",

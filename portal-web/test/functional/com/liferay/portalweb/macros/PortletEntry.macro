@@ -28,15 +28,16 @@ definition {
 		}
 		else {
 			Click(
-				key_locale = StringUtil.replace("${locale}", "-", "_"),
+				key_locale = "${locale}",
 				locator1 = "Translation#LOCALIZATION_NAME");
 		}
 	}
 
 	macro changeLocaleSummary {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_SUMMARY");
+
 		Click(
-			key_locale = StringUtil.replace("${locale}", "-", "_"),
+			key_locale = "${locale}",
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 

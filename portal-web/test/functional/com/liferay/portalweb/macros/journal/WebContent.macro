@@ -2001,11 +2001,11 @@ definition {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
-			key_locale = StringUtil.replace("${locale1}", "-", "_"),
+			key_locale = "${locale1}",
 			locator1 = "Translation#LOCALIZATION_NAME");
 
 		AssertElementNotPresent(
-			key_locale = StringUtil.replace("${locale2}", "-", "_"),
+			key_locale = "${locale2}",
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 

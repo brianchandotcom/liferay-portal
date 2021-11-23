@@ -32,7 +32,7 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		Click(
-			key_locale = StringUtil.replace("${locale}", "-", "_"),
+			key_locale = "${locale}",
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 

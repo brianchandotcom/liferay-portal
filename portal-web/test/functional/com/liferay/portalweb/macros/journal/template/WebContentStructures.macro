@@ -37,8 +37,6 @@ definition {
 	}
 
 	macro addLocalization {
-		var locale = StringUtil.replace("${locale}", "-", "_");
-
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		if (IsElementNotPresent(key_locale = "${locale}", locator1 = "Translation#LOCALIZATION_NAME")) {

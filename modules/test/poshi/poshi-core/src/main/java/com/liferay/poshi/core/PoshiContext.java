@@ -1132,10 +1132,13 @@ public class PoshiContext {
 			String[] includes, String... baseDirNames)
 		throws Exception {
 
+		List<URL> poshiURLs = new ArrayList<>();
+
 		for (String baseDirName : baseDirNames) {
-			_storeRootElements(
-				_getPoshiURLs(includes, baseDirName), _DEFAULT_NAMESPACE);
+			poshiURLs.addAll(_getPoshiURLs(includes, baseDirName));
 		}
+
+		_storeRootElements(poshiURLs, _DEFAULT_NAMESPACE);
 
 		if (!_duplicateLocatorMessages.isEmpty()) {
 			throw _getDuplicateLocatorsException();

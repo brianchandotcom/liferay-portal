@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -39,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -85,10 +86,15 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					String dependenciesFileName =
 						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
 
-					if (testCaseFileContent.contains(
-							StringPool.QUOTE + dependenciesFileName +
-								StringPool.QUOTE)) {
+					String s = Pattern.quote(dependenciesFileName);
 
+					Pattern dependenciesFileNamePattern = Pattern.compile(
+						"[\",]" + s + "[\",]");
+
+					Matcher matcher = dependenciesFileNamePattern.matcher(
+						testCaseFileContent);
+
+					while (matcher.find()) {
 						Set<String> referencesFiles = entry.getValue();
 
 						referencesFiles.add(testCaseFileName);
@@ -155,10 +161,15 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					String dependenciesFileName =
 						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
 
-					if (testCaseFileContent.contains(
-							StringPool.QUOTE + dependenciesFileName +
-								StringPool.QUOTE)) {
+					String s = Pattern.quote(dependenciesFileName);
 
+					Pattern dependenciesFileNamePattern = Pattern.compile(
+						"[\",]" + s + "[\",]");
+
+					Matcher matcher = dependenciesFileNamePattern.matcher(
+						testCaseFileContent);
+
+					while (matcher.find()) {
 						Set<String> referencesFiles = entry.getValue();
 
 						referencesFiles.add(testCaseFileName);
@@ -412,12 +423,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				}
 
 			});
-
-		for (Map.Entry<String, Set<String>> entry :
-				_dependenciesGlobalFileLocationsMap.entrySet()) {
-
-			System.out.println(entry.getKey());
-		}
 	}
 
 	private static final String _GLOBAL_DEPENDENCIES_DIRECTORY =

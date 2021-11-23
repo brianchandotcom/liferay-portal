@@ -255,7 +255,15 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				_embeddedPortletIds.set(embeddedPortletIds);
 			}
 
-			if (embeddedPortletIds.search(portlet.getRootPortletId()) > -1) {
+			String rootPortletId = portlet.getRootPortletId();
+
+			if (embeddedPortletIds.search(rootPortletId) > -1) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"The application can not include itself: " +
+							rootPortletId);
+				}
+
 				String errorMessage = LanguageUtil.get(
 					httpServletRequest,
 					"the-application-cannot-include-itself");
@@ -264,10 +272,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					"liferay-portlet:runtime:errorMessage", errorMessage);
 
 				PortalIncludeUtil.include(pageContext, _ERROR_PAGE);
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(errorMessage);
-				}
 
 				return;
 			}
@@ -342,7 +346,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					httpServletResponse, jsonObject);
 			}
 
-			embeddedPortletIds.push(portlet.getRootPortletId());
+			embeddedPortletIds.push(rootPortletId);
 
 			boolean lifecycleRender = themeDisplay.isLifecycleRender();
 

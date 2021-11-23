@@ -720,17 +720,15 @@ definition {
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page");
 
-		Ratings.rateStackedStars(ratingStarCount = "3");
+		Ratings.rateStackedStars(ratingStarCount = "5");
 
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_STAR_RESULT",
-			value1 = "(1 Vote)");
+		Ratings.viewRateStackedStar(
+			averageStarCount = "5.0",
+			ratingStarCount = "5");
 
 		Ratings.revokeStackedStarsRating();
 
-		AssertTextNotPresent(
-			locator1 = "Ratings#AVERAGE_STAR_RESULT",
-			value1 = "(1 Vote)");
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
 	}
 
 	@description = "This is a test for LPS-136954. It checks that stars can be added and removed from a document."

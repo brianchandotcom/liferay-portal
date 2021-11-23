@@ -1539,7 +1539,7 @@ definition {
 
 		Navigator._gotoPage(pageName = "Data Definition Page Name");
 
-		DDLList.viewDeleteRecordOptionViaDDLDisplayPG(ddlListRecordName = "Text");
+		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 
 		Navigator.closeSpecificWindow(
 			closeWindowTitle = "Data Definition Page Name - ${siteName}",
@@ -1570,7 +1570,7 @@ definition {
 
 		Navigator._gotoPage(pageName = "Data Definition Page Name");
 
-		DDLList.assertCannotDeleteRecordViaDDLDisplayPG();
+		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 	}
 
 	@priority = "4"

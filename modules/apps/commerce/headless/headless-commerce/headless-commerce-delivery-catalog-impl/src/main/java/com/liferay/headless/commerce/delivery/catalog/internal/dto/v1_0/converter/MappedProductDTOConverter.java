@@ -115,10 +115,6 @@ public class MappedProductDTOConverter
 				sequence = csDiagramEntry.getSequence();
 				sku = csDiagramEntry.getSku();
 				skuId = GetterUtil.getLong(csDiagramEntry.getCPInstanceId());
-				thumbnail = cpDefinition.getDefaultImageThumbnailSrc();
-				urls = LanguageUtils.getLanguageIdMap(
-					_cpDefinitionService.getUrlTitleMap(
-						cpDefinition.getCPDefinitionId()));
 
 				setProductConfiguration(
 					() -> {
@@ -153,6 +149,10 @@ public class MappedProductDTOConverter
 					});
 				setProductOptions(
 					() -> {
+						if (cpDefinition == null) {
+							return null;
+						}
+
 						List<ProductOption> productOptions = new ArrayList<>();
 
 						for (CPDefinitionOptionRel cpDefinitionOptionRel :
@@ -178,6 +178,14 @@ public class MappedProductDTOConverter
 
 						return cpInstance.getExternalReferenceCode();
 					});
+				setThumbnail(
+					() -> {
+						if (cpDefinition == null) {
+							return StringPool.BLANK;
+						}
+
+						return cpDefinition.getDefaultImageThumbnailSrc();
+					});
 				setType(
 					() -> {
 						if (csDiagramEntry.isDiagram()) {
@@ -192,6 +200,16 @@ public class MappedProductDTOConverter
 
 						return MappedProduct.Type.create(
 							Type.EXTERNAL.getValue());
+					});
+				setUrls(
+					() -> {
+						if (cpDefinition == null) {
+							return null;
+						}
+
+						return LanguageUtils.getLanguageIdMap(
+							_cpDefinitionService.getUrlTitleMap(
+								cpDefinition.getCPDefinitionId()));
 					});
 			}
 		};

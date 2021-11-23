@@ -29,4 +29,5 @@ public interface FFCollectionsVariationsPrioritizationConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
+
 }

@@ -281,8 +281,9 @@ public class ObjectField implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), DATE("Date"),
-		DOUBLE("Double"), INTEGER("Integer"), LONG("Long"), STRING("String");
+		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), CLOB("Clob"),
+		DATE("Date"), DOUBLE("Double"), INTEGER("Integer"), LONG("Long"),
+		STRING("String");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

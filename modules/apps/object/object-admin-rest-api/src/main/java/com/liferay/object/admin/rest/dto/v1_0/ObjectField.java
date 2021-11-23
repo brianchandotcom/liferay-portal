@@ -500,8 +500,9 @@ public class ObjectField implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), DATE("Date"),
-		DOUBLE("Double"), INTEGER("Integer"), LONG("Long"), STRING("String");
+		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), CLOB("Clob"),
+		DATE("Date"), DOUBLE("Double"), INTEGER("Integer"), LONG("Long"),
+		STRING("String");
 
 		@JsonCreator
 		public static Type create(String value) {

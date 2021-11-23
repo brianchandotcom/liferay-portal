@@ -122,7 +122,7 @@ components:
                 required:
                     type: boolean
                 type:
-                    enum: [BigDecimal, Boolean, Date, Double, Integer, Long, String]
+                    enum: [BigDecimal, Boolean, Clob, Date, Double, Integer, Long, String]
                     type: string
         ObjectLayout:
             properties:

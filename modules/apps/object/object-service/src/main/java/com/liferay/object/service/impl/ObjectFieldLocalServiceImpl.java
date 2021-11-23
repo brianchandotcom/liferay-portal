@@ -386,8 +386,8 @@ public class ObjectFieldLocalServiceImpl
 		"modifieddate", "status", "statusbyuserid", "statusbyusername",
 		"statusdate", "userid", "username");
 	private final Set<String> _types = SetUtil.fromArray(
-		"BigDecimal", "Blob", "Boolean", "Date", "Double", "Integer", "Long",
-		"String");
+		"BigDecimal", "Blob", "Boolean", "Clob", "Date", "Double", "Integer",
+		"Long", "String");
 
 	@Reference
 	private UserLocalService _userLocalService;

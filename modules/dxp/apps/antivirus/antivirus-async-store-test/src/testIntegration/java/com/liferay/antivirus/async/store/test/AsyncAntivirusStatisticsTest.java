@@ -153,22 +153,27 @@ public class AsyncAntivirusStatisticsTest {
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
-				new MockEventListener.Builder().prepareConsumer(
-					message -> prepareEventFired.incrementAndGet()
-				).processingErrorConsumer(
-					message -> processingErrorEventFired.incrementAndGet()
-				).sizeExceededConsumer(
-					message -> {
+				new EventListenerBuilder().register(
+					AntivirusAsyncEvent.PREPARE,
+					prepareEventFired::incrementAndGet
+				).register(
+					AntivirusAsyncEvent.PROCESSING_ERROR,
+					processingErrorEventFired::incrementAndGet
+				).register(
+					AntivirusAsyncEvent.SIZE_EXCEEDED,
+					() -> {
 						sizeExceededEventFired.incrementAndGet();
 						countDownLatch.countDown();
 					}
-				).successConsumer(
-					message -> {
+				).register(
+					AntivirusAsyncEvent.SUCCESS,
+					() -> {
 						successEventFired.incrementAndGet();
 						countDownLatch.countDown();
 					}
-				).virusFoundConsumer(
-					message -> {
+				).register(
+					AntivirusAsyncEvent.VIRUS_FOUND,
+					() -> {
 						virusFoundEventFired.incrementAndGet();
 						countDownLatch.countDown();
 					}

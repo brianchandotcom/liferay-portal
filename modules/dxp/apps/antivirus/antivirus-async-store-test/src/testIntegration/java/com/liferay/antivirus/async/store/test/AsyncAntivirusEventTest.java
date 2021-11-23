@@ -97,8 +97,8 @@ public class AsyncAntivirusEventTest {
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
-				new MockEventListener.Builder().missingConsumer(
-					message -> countDownLatch.countDown()
+				new EventListenerBuilder().register(
+					AntivirusAsyncEvent.MISSING, countDownLatch::countDown
 				).build(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
@@ -171,10 +171,12 @@ public class AsyncAntivirusEventTest {
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
-				new MockEventListener.Builder().prepareConsumer(
-					message -> prepareEventFired.set(true)
-				).processingErrorConsumer(
-					message -> {
+				new EventListenerBuilder().register(
+					AntivirusAsyncEvent.PREPARE,
+					() -> prepareEventFired.set(true)
+				).register(
+					AntivirusAsyncEvent.PROCESSING_ERROR,
+					() -> {
 						processingErrorEventFired.set(true);
 						countDownLatch.countDown();
 					}
@@ -272,10 +274,11 @@ public class AsyncAntivirusEventTest {
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
-				new MockEventListener.Builder().prepareConsumer(
-					message -> prepareEventFired.set(true)
-				).sizeExceededConsumer(
-					message -> countDownLatch.countDown()
+				new EventListenerBuilder().register(
+					AntivirusAsyncEvent.PREPARE,
+					() -> prepareEventFired.set(true)
+				).register(
+					AntivirusAsyncEvent.SIZE_EXCEEDED, countDownLatch::countDown
 				).build(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
@@ -343,10 +346,11 @@ public class AsyncAntivirusEventTest {
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
-				new MockEventListener.Builder().prepareConsumer(
-					message -> prepareEventFired.set(true)
-				).successConsumer(
-					message -> countDownLatch.countDown()
+				new EventListenerBuilder().register(
+					AntivirusAsyncEvent.PREPARE,
+					() -> prepareEventFired.set(true)
+				).register(
+					AntivirusAsyncEvent.SUCCESS, countDownLatch::countDown
 				).build(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,
@@ -419,10 +423,11 @@ public class AsyncAntivirusEventTest {
 		ServiceRegistration<AntivirusAsyncEventListener>
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
-				new MockEventListener.Builder().prepareConsumer(
-					message -> prepareEventFired.set(true)
-				).virusFoundConsumer(
-					message -> countDownLatch.countDown()
+				new EventListenerBuilder().register(
+					AntivirusAsyncEvent.PREPARE,
+					() -> prepareEventFired.set(true)
+				).register(
+					AntivirusAsyncEvent.VIRUS_FOUND, countDownLatch::countDown
 				).build(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					TestConstants.ANTIVIRUS_ASYNC_EVENT,

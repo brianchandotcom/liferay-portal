@@ -157,16 +157,6 @@ definition {
 
 	}
 
-	@description = "LPS-135401 - Verify that it is possible to add Relationship tab on both objects"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanAddRelationshipTabBothObjectsManyToMany {
-		property portal.acceptance = "true";
-
-		// TODO LPS-141660 CanAddRelationshipTabBothObjectsManyToMany pending implementation
-
-	}
-
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"
 	@priority = "4"
 	test CanCancelCreationCustomObject {

@@ -51,6 +51,23 @@ public class CommerceChannelServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
+			addOrUpdateCommerceChannel(
+				String externalReferenceCode, long siteGroupId, String name,
+				String type,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
+				String commerceCurrencyCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelService.addOrUpdateCommerceChannel(
+			externalReferenceCode, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
 			deleteCommerceChannel(long commerceChannelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

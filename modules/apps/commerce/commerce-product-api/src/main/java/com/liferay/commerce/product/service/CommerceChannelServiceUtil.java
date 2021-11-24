@@ -53,6 +53,21 @@ public class CommerceChannelServiceUtil {
 			serviceContext);
 	}
 
+	public static CommerceChannel addOrUpdateCommerceChannel(
+			String externalReferenceCode, long siteGroupId, String name,
+			String type,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
+			String commerceCurrencyCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceChannel(
+			externalReferenceCode, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			serviceContext);
+	}
+
 	public static CommerceChannel deleteCommerceChannel(long commerceChannelId)
 		throws PortalException {
 

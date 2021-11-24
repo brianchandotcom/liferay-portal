@@ -69,6 +69,23 @@ public class CommerceChannelLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
+			addOrUpdateCommerceChannel(
+				long userId, String externalReferenceCode, long siteGroupId,
+				String name, String type,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
+				String commerceCurrencyCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.addOrUpdateCommerceChannel(
+			userId, externalReferenceCode, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new commerce channel with the primary key. Does not add the commerce channel to the database.
 	 *

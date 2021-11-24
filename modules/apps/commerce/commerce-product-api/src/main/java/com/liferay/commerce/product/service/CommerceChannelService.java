@@ -68,6 +68,12 @@ public interface CommerceChannelService extends BaseService {
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceChannel addOrUpdateCommerceChannel(
+			String externalReferenceCode, long siteGroupId, String name,
+			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String commerceCurrencyCode, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommerceChannel deleteCommerceChannel(long commerceChannelId)
 		throws PortalException;
 

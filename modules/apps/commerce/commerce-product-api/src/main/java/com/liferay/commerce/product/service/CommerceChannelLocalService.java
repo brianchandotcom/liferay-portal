@@ -88,6 +88,14 @@ public interface CommerceChannelLocalService
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceChannel addOrUpdateCommerceChannel(
+			long userId, String externalReferenceCode, long siteGroupId,
+			String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			String commerceCurrencyCode, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce channel with the primary key. Does not add the commerce channel to the database.
 	 *

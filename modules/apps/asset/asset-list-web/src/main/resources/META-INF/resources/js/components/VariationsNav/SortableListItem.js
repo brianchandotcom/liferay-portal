@@ -110,7 +110,7 @@ const SortableListItem = ({
 			<ClayList.ItemField className="sortable-list-item__label">
 				<ClayList.ItemTitle>
 					<ClayLink href={sortableListItem.editAssetListEntryURL}>
-						{sortableListItem.label}
+						{sortableListItem.name}
 					</ClayLink>
 				</ClayList.ItemTitle>
 			</ClayList.ItemField>

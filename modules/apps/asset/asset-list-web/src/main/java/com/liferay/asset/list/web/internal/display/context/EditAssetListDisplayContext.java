@@ -599,10 +599,14 @@ public class EditAssetListDisplayContext {
 
 	public Map<String, Object> getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"assetEntryListSegmentsEntryRels",
+			"assetListEntrySegmentsEntryRels",
 			_getAssetListEntrySegmentsEntryRelJSONArray()
 		).put(
-			"availableSegmentsEntries", !getAvailableSegmentsEntries().isEmpty()
+			"segmentsEntriesAvailables",
+			() -> {
+			 	List segmentsEntriesAvailables = getAvailableSegmentsEntries();
+				return !segmentsEntriesAvailables.isEmpty();
+			}
 		).put(
 			"createNewSegmentURL",
 			() -> {
@@ -645,7 +649,7 @@ public class EditAssetListDisplayContext {
 				).buildString();
 			}
 		).put(
-			"validAssetListEntry",
+			"assetListEntryValid",
 			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
 		).build();
 	}
@@ -1273,7 +1277,7 @@ public class EditAssetListDisplayContext {
 						assetListEntrySegmentsEntryRel.getSegmentsEntryId()
 					).buildString()
 				).put(
-					"label",
+					"name",
 					getSegmentsEntryName(
 						assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
 						_themeDisplay.getLocale())

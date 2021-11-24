@@ -21,13 +21,13 @@ import React from 'react';
 import SortableList from './SortableList';
 
 const VariationsNav = ({
-	assetEntryListSegmentsEntryRels,
-	availableSegmentsEntries,
+	assetListEntrySegmentsEntryRels,
+	assetListEntryValid,
 	createNewSegmentURL,
 	openSelectSegmentsEntryDialogMethod,
 	portletNamespace,
+	segmentsEntriesAvailables,
 	updateVariationsPriorityURL,
-	validAssetListEntry,
 }) => {
 	const handleAddVariation = () => {
 		const callback = window[openSelectSegmentsEntryDialogMethod];
@@ -50,7 +50,7 @@ const VariationsNav = ({
 					<ClayButtonWithIcon
 						data-tooltip-align="top"
 						disabled={
-							!availableSegmentsEntries || !validAssetListEntry
+							!segmentsEntriesAvailables || !assetListEntryValid
 						}
 						displayType="unstyled"
 						onClick={handleAddVariation}
@@ -67,8 +67,8 @@ const VariationsNav = ({
 				)}
 			</p>
 
-			{!availableSegmentsEntries &&
-				assetEntryListSegmentsEntryRels.length < 2 && (
+			{!segmentsEntriesAvailables &&
+				assetListEntrySegmentsEntryRels.length < 2 && (
 					<p className="mb-3 small text-secondary">
 						<span>
 							{Liferay.Language.get(
@@ -85,7 +85,7 @@ const VariationsNav = ({
 				)}
 
 			<SortableList
-				items={assetEntryListSegmentsEntryRels}
+				items={assetListEntrySegmentsEntryRels}
 				namespace={portletNamespace}
 				savePriorityURL={updateVariationsPriorityURL}
 			/>
@@ -94,12 +94,12 @@ const VariationsNav = ({
 };
 
 VariationsNav.propTypes = {
-	assetEntryListSegmentsEntryRels: PropTypes.array.isRequired,
-	availableSegmentsEntries: PropTypes.bool.isRequired,
+	assetListEntrySegmentsEntryRels: PropTypes.array.isRequired,
+	assetListEntryValid: PropTypes.bool.isRequired,
 	createNewSegmentURL: PropTypes.string.isRequired,
 	openSelectSegmentsEntryDialogMethod: PropTypes.string.isRequired,
+	segmentsEntriesAvailables: PropTypes.bool.isRequired,
 	updateVariationsPriorityURL: PropTypes.string.isRequired,
-	validAssetListEntry: PropTypes.bool.isRequired,
 };
 
 export default VariationsNav;

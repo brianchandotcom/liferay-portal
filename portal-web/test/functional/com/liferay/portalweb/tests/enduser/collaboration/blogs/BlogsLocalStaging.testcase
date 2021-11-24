@@ -123,13 +123,47 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136789. It checks that a blog with a layout reference can be published."
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishBlogWithLayoutReference {
-		property portal.acceptance = "false";
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Site Name-staging",
+			site = "false");
 
-		// TODO LPS-136789 CanPublishBlogWithLayoutReference pending implementation
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name-staging");
 
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Staging Blogs Page");
 	}
 
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."

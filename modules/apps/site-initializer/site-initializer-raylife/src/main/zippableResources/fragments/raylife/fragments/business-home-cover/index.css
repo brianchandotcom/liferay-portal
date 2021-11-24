@@ -71,10 +71,6 @@ select {
 	color: var(--color-neutral-black);
 }
 
-.business-home-cover .business-home-cover-box p {
-	margin-top: var(--spacer-6-1, 2.5rem);
-}
-
 .business-home-cover .business-home-cover-image {
 	height: 521px;
 	max-width: 100%;
@@ -124,10 +120,26 @@ select {
 .business-home-cover .has-error .error-feedback {
 	align-items: center;
 	display: flex;
-	position: absolute;
+	position: relative;
 }
 
 .business-home-cover .error-feedback::before {
 	content: url('[resources:error.svg]');
 	margin-right: 4px;
+}
+
+.business-home-cover #email-container {
+	width: 265px;
+}
+
+.business-home-cover #email-container .error-feedback {
+	width: 100%;
+}
+
+.business-home-cover .new-quote-button:visited {
+	color: var(--color-action-primary-default) !important;
+}
+
+.business-home-cover a {
+	text-decoration: underline;
 }

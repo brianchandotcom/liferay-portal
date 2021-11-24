@@ -19,25 +19,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author André de Oliveira
  */
-public class MapUtil {
+public class UnpackUtil {
 
-	public static void unpack(Map<String, Object> values1) {
-		if (com.liferay.portal.kernel.util.MapUtil.isEmpty(values1)) {
-			return;
-		}
-
-		Map<String, Object> values2 = new HashMap<>(values1);
-
-		values2.forEach((name, value) -> values1.put(name, _unpack(value)));
-	}
-
-	private static Object _unpack(Object value) {
+	public static Object unpack(Object value) {
 		if (value instanceof Map) {
 			return JSONFactoryUtil.createJSONObject((Map<?, ?>)value);
 		}
@@ -62,6 +51,6 @@ public class MapUtil {
 		return value;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(MapUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(UnpackUtil.class);
 
 }

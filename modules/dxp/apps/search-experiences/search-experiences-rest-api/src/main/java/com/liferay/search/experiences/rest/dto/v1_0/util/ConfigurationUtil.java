@@ -14,10 +14,6 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
@@ -26,8 +22,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Rescore;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
-
-import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -50,12 +44,9 @@ public class ConfigurationUtil {
 		AggregationConfiguration aggregationConfiguration =
 			configuration.getAggregationConfiguration();
 
-		if ((aggregationConfiguration != null) &&
-			(aggregationConfiguration.getAggs() instanceof Map)) {
-
+		if (aggregationConfiguration != null) {
 			aggregationConfiguration.setAggs(
-				JSONFactoryUtil.createJSONObject(
-					(Map<?, ?>)aggregationConfiguration.getAggs()));
+				UnpackUtil.unpack(aggregationConfiguration.getAggs()));
 		}
 
 		QueryConfiguration queryConfiguration =
@@ -78,45 +69,28 @@ public class ConfigurationUtil {
 		SortConfiguration sortConfiguration =
 			configuration.getSortConfiguration();
 
-		if ((sortConfiguration != null) &&
-			(sortConfiguration.getSorts() != null)) {
-
+		if (sortConfiguration != null) {
 			sortConfiguration.setSorts(
-				JSONFactoryUtil.createJSONArray(
-					(Object[])sortConfiguration.getSorts()));
+				UnpackUtil.unpack(sortConfiguration.getSorts()));
 		}
 
 		return configuration;
 	}
 
 	private static void _unpack(Clause clause) {
-		if (clause.getQuery() instanceof Map) {
-			clause.setQuery(
-				JSONFactoryUtil.createJSONObject((Map<?, ?>)clause.getQuery()));
+		if (clause == null) {
+			return;
 		}
-		else if (clause.getQuery() instanceof String) {
-			try {
-				clause.setQuery(
-					JSONFactoryUtil.createJSONObject(
-						(String)clause.getQuery()));
-			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(jsonException, jsonException);
-				}
-			}
-		}
+
+		clause.setQuery(UnpackUtil.unpack(clause.getQuery()));
 	}
 
 	private static void _unpack(Rescore rescore) {
-		if (rescore.getQuery() instanceof Map) {
-			rescore.setQuery(
-				JSONFactoryUtil.createJSONObject(
-					(Map<?, ?>)rescore.getQuery()));
+		if (rescore == null) {
+			return;
 		}
-	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurationUtil.class);
+		rescore.setQuery(UnpackUtil.unpack(rescore.getQuery()));
+	}
 
 }

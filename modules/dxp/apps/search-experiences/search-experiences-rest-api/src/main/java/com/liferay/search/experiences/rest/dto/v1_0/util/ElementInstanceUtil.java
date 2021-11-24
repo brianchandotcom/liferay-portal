@@ -16,9 +16,13 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -58,7 +62,15 @@ public class ElementInstanceUtil {
 			elementInstance.setSxpElement(SXPElementUtil.unpack(sxpElement));
 		}
 
-		MapUtil.unpack(elementInstance.getUiConfigurationValues());
+		if (MapUtil.isNotEmpty(elementInstance.getUiConfigurationValues())) {
+			Map<String, Object> values1 =
+				elementInstance.getUiConfigurationValues();
+
+			Map<String, Object> values2 = new HashMap<>(values1);
+
+			values2.forEach(
+				(name, value) -> values1.put(name, UnpackUtil.unpack(value)));
+		}
 
 		return elementInstance;
 	}

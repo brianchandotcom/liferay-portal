@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -59,11 +58,7 @@ public class ElementDefinitionUtil {
 			return;
 		}
 
-		if (field.getDefaultValue() instanceof Object[]) {
-			field.setDefaultValue(
-				JSONFactoryUtil.createJSONArray(
-					(Object[])field.getDefaultValue()));
-		}
+		field.setDefaultValue(UnpackUtil.unpack(field.getDefaultValue()));
 	}
 
 	private static void _unpack(UiConfiguration uiConfiguration) {

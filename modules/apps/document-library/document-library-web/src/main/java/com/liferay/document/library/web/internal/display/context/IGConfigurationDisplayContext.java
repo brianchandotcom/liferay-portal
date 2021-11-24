@@ -110,7 +110,6 @@ public class IGConfigurationDisplayContext {
 	}
 
 	public long getRepositoryId() throws PortalException {
-		_initFolder();
 		_initRepository();
 
 		return _repositoryId;
@@ -141,6 +140,7 @@ public class IGConfigurationDisplayContext {
 
 		folderItemSelectorCriterion.setIgnoreRootFolder(true);
 		folderItemSelectorCriterion.setSelectedFolderId(getRootFolderId());
+		folderItemSelectorCriterion.setRepositoryId(getRepositoryId());
 		folderItemSelectorCriterion.setShowGroupSelector(true);
 
 		return _itemSelector.getItemSelectorURL(
@@ -226,8 +226,6 @@ public class IGConfigurationDisplayContext {
 
 		_folder = folder;
 
-		_initRepository();
-
 		if (_folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
 			TrashCapability trashCapability = _folder.getRepositoryCapability(
 				TrashCapability.class);
@@ -252,6 +250,10 @@ public class IGConfigurationDisplayContext {
 
 		if (_repositoryId != 0) {
 			return;
+		}
+
+		if (_folder == null) {
+			_folder = _getFolder();
 		}
 
 		if (_folder != null) {

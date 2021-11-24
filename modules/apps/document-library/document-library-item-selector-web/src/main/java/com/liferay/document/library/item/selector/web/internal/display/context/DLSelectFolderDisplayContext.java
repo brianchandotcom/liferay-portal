@@ -224,6 +224,15 @@ public class DLSelectFolderDisplayContext {
 
 				return getFolderName();
 			}
+		).put(
+			"repositoryid",
+			() -> {
+				if (folder != null) {
+					return folder.getRepositoryId();
+				}
+
+				return getRepositoryId();
+			}
 		).build();
 	}
 

@@ -1410,6 +1410,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String path : resourcePaths) {
+			if (resourcePath.endsWith(".list-type-entries.json")) {
+				continue;
+			}
+
 			String json = _read(path);
 
 			ListTypeDefinition listTypeDefinition = ListTypeDefinition.toDTO(

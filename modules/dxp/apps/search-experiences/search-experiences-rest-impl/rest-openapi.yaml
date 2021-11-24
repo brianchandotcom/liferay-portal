@@ -743,6 +743,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPBlueprint"
             tags: ["SXPBlueprint"]
+    /sxp-blueprints/export:
+        get:
+            operationId: getSXPBlueprintExport
+            parameters:
+                - in: query
+                  name: sxpBlueprintId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+            tags: ["SXPBlueprint"]
     /sxp-blueprints/validate:
         post:
             operationId: postSXPBlueprintValidate
@@ -895,6 +915,26 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SXPElement"
+            tags: ["SXPElement"]
+    /sxp-elements/export:
+        get:
+            operationId: getSXPElementExport
+            parameters:
+                - in: path
+                  name: sxpElementId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
             tags: ["SXPElement"]
     /sxp-elements/validate:
         post:

@@ -29,6 +29,7 @@ const defaultProps = {
 	defaultLanguageId: 'en_US',
 	elementId: 'elementId',
 	friendlyURLEntryURL: 'friendly_url_history',
+	localizable: true,
 };
 
 const fetchResponse = {

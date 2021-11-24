@@ -26,9 +26,16 @@ definition {
 		var testName = StringUtil.extractLast("${testName}", ".");
 		var testName = StringUtil.extractFirst("${testName}", "#");
 		var testFileName = StringUtil.split("**/${testName}.testcase");
-		var testFilePath = FileUtil.getIncludedResourceURLs("${testFileName}", "${projectDir}");
-		var testFilePath = StringUtil.valueOf("${testFilePath}");
-		var testFilePath = RegexUtil.replace("${testFilePath}", "\[(.*)\]", "1");
+
+		var testFilePaths = FileUtil.getIncludedResourceURLs("${testFileName}", "${projectDir}/portal-web");
+		var testFilePaths = StringUtil.valueOf("${testFilePaths}");
+
+		if ("${testFilePaths}" == "[]") {
+			var testFilePaths = FileUtil.getIncludedResourceURLs("${testFileName}", "${projectDir}/modules");
+			var testFilePaths = StringUtil.valueOf("${testFilePaths}");
+		}
+
+		var testFilePath = RegexUtil.replace("${testFilePaths}", "\[(.*)\]", "1");
 		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:");
 		var testFileParentDir = StringUtil.extractFirst("${testFilePath}", "${testName}.testcase");
 		var dependenciesDir = "${testFileParentDir}${testDependenciesDir}";

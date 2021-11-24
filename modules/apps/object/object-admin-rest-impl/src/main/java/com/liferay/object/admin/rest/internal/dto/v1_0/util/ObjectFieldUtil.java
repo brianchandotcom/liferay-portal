@@ -43,6 +43,8 @@ public class ObjectFieldUtil {
 				listTypeDefinitionId =
 					serviceBuilderObjectField.getListTypeDefinitionId();
 				name = serviceBuilderObjectField.getName();
+				relationshipType = ObjectField.RelationshipType.create(
+					serviceBuilderObjectField.getRelationshipType());
 				required = serviceBuilderObjectField.isRequired();
 				type = ObjectField.Type.create(
 					serviceBuilderObjectField.getType());

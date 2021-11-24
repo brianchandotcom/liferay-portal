@@ -424,11 +424,11 @@ definition {
 		if (isSet(optionFieldLabel)) {
 			var index = "${optionIndex}";
 			var key_optionFieldLabel = "${optionFieldLabel}";
-			var optionReference = selenium.getElementValue(locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT");
+			var optionReference = selenium.getElementValue("Sidebar#OPTION_FIELD_REFERENCE_INPUT");
 		}
 		else {
 			var index = "${optionIndex}";
-			var optionReference = selenium.getElementValue(locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT");
+			var optionReference = selenium.getElementValue("Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT");
 		}
 
 		Click(locator1 = "Sidebar#BACK");

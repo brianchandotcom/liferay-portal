@@ -162,9 +162,11 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-		WebContentStructures.addLocalization(
-			locale = "pt_BR",
-			localization1Name = "${structureTitlePT}");
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContentStructures.addName(structureName = "${structureTitlePT}");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabelEN}",

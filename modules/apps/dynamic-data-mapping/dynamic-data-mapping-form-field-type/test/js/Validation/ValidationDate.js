@@ -18,7 +18,6 @@ import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import ValidationDate from '../../../src/main/resources/META-INF/resources/Validation/ValidationDate';
-import mockPages from '../__mocks__/mock_Pages';
 
 const globalLanguageDirection = Liferay.Language.direction;
 
@@ -48,11 +47,6 @@ const validations = [
 		value: 'dateRange',
 	},
 ];
-
-const state = {
-	builderPages: mockPages,
-	editingLanguageId: 'en_US',
-};
 
 const generateParameter = () => ({
 	en_US: {
@@ -250,45 +244,5 @@ describe('ValidationDate', () => {
 		expect(operation).toHaveValue('minus');
 		expect(quantity).toHaveValue(1);
 		expect(unit).toHaveValue('days');
-	});
-
-	it('', () => {
-		const parameter = {
-			en_US: {
-				endsOn: {
-					date: 'responseDate',
-					dateFieldName: 'Date12345853',
-					quantity: -1,
-					type: 'dateField',
-					unit: 'days',
-				},
-			},
-		};
-
-		const localizedValue = jest.fn(() => parameter['en_US']);
-
-		const {getAllByRole} = render(
-			<ValidationDateProvider
-				defaultLanguageId="en_US"
-				editingLanguageId="en_US"
-				localizedValue={localizedValue}
-				name="validationDate"
-				onChange={() => {}}
-				parameter={parameter}
-				selectedValidation={{
-					label: '',
-					name: 'pastDates',
-					parameterMessage: '',
-					template: 'pastDates({name}, "{parameter}")',
-				}}
-				state={state}
-				validations={validations}
-				visible={true}
-			/>
-		);
-
-		const test = getAllByRole('input');
-
-		expect(acceptedDate).toHaveValue('pastDates');
 	});
 });

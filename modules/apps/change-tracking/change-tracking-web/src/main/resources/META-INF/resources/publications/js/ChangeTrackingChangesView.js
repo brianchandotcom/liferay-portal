@@ -127,6 +127,7 @@ export default function ChangeTrackingChangesView({
 	statusStyle,
 	typeNames,
 	typesFromURL,
+	unscheduleURL,
 	updateCTCommentURL,
 	userInfo,
 	usersFromURL,
@@ -2474,6 +2475,36 @@ export default function ChangeTrackingChangesView({
 		);
 	};
 
+	const renderToolbarAction = (displayType, label, symbol, url) => {
+		if (!url) {
+			return '';
+		}
+
+		return (
+			<ClayToolbar.Item>
+				<a
+					className={classNames(
+						'btn btn-' + displayType + ' btn-sm',
+						{
+							disabled: changes.length === 0 || expired,
+						}
+					)}
+					href={setParameter(
+						url,
+						'redirect',
+						window.location.pathname + window.location.search
+					)}
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon spritemap={spritemap} symbol={symbol} />
+					</span>
+
+					{label}
+				</a>
+			</ClayToolbar.Item>
+		);
+	};
+
 	const renderPublicationsToolbar = () => {
 		return (
 			<ClayToolbar className="publications-tbar" light>
@@ -2497,9 +2528,46 @@ export default function ChangeTrackingChangesView({
 								</div>
 							</ClayToolbar.Section>
 						</ClayToolbar.Item>
+
 						<ClayToolbar.Item>
 							<ManageCollaborators {...collaboratorsData} />
 						</ClayToolbar.Item>
+
+						{renderToolbarAction(
+							'secondary',
+							Liferay.Language.get('schedule'),
+							'calendar',
+							scheduleURL
+						)}
+
+						{renderToolbarAction(
+							'primary',
+							Liferay.Language.get('publish'),
+							'change',
+							publishURL
+						)}
+
+						{renderToolbarAction(
+							'secondary',
+							Liferay.Language.get('unschedule'),
+							'times-circle',
+							unscheduleURL
+						)}
+
+						{renderToolbarAction(
+							'primary',
+							Liferay.Language.get('reschedule'),
+							'calendar',
+							rescheduleURL
+						)}
+
+						{renderToolbarAction(
+							'secondary',
+							Liferay.Language.get('revert'),
+							'undo',
+							revertURL
+						)}
+
 						{dropdownItems && dropdownItems.length > 0 && (
 							<ClayToolbar.Item>
 								<ClayDropDownWithItems

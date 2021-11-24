@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.closure.CTClosure;
 import com.liferay.change.tracking.closure.CTClosureFactory;
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -126,16 +128,6 @@ public class ViewChangesDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
-
-		int count = _ctEntryLocalService.getCTCollectionCTEntriesCount(
-			_ctCollection.getCtCollectionId());
-
-		if (count > 0) {
-			_hasChanges = true;
-		}
-		else {
-			_hasChanges = false;
-		}
 
 		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
 
@@ -470,33 +462,63 @@ public class ViewChangesDisplayContext {
 			"pageFromURL", ParamUtil.getString(_renderRequest, "page")
 		).put(
 			"publishURL",
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/view_conflicts"
-			).setParameter(
-				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).buildString()
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
+			}
 		).put(
 			"rescheduleURL",
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/reschedule_publication"
-			).setParameter(
-				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).buildString()
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_SCHEDULED) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/reschedule_publication"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
+			}
 		).put(
 			"revertURL",
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/undo_ct_collection"
-			).setParameter(
-				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).setParameter(
-				"revert", true
-			).buildString()
+			() -> {
+				if (_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_APPROVED) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/undo_ct_collection"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).setParameter(
+					"revert", true
+				).buildString();
+			}
 		).put(
 			"rootDisplayClasses",
 			() -> {
@@ -516,15 +538,27 @@ public class ViewChangesDisplayContext {
 			}
 		).put(
 			"scheduleURL",
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/view_conflicts"
-			).setParameter(
-				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).setParameter(
-				"schedule", true
-			).buildString()
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) ||
+					!PropsValues.SCHEDULER_ENABLED ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).setParameter(
+					"schedule", true
+				).buildString();
+			}
 		).put(
 			"showHideableFromURL",
 			ParamUtil.getBoolean(_renderRequest, "showHideable")
@@ -596,6 +630,26 @@ public class ViewChangesDisplayContext {
 		).put(
 			"typesFromURL", ParamUtil.getString(_renderRequest, "types")
 		).put(
+			"unscheduleURL",
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_SCHEDULED) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/change_tracking/unschedule_publication"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
+			}
+		).put(
 			"updateCTCommentURL",
 			() -> {
 				ResourceURL updateCTCommentURL =
@@ -619,10 +673,6 @@ public class ViewChangesDisplayContext {
 		).put(
 			"usersFromURL", ParamUtil.getString(_renderRequest, "users")
 		).build();
-	}
-
-	public boolean hasChanges() {
-		return _hasChanges;
 	}
 
 	public boolean isExpired(CTCollection ctCollection) {
@@ -1132,7 +1182,6 @@ public class ViewChangesDisplayContext {
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 	private final GroupLocalService _groupLocalService;
-	private final boolean _hasChanges;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;

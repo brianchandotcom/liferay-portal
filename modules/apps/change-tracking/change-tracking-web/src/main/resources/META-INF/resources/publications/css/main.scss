@@ -378,6 +378,11 @@ table.publications-render-view {
 		padding-left: 0;
 	}
 
+	.btn.active {
+		background-color: rgba(39, 40, 51, 0.06);
+		color: #272833;
+	}
+
 	.publication-name {
 		color: #272833;
 		font-size: 18px;

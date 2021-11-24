@@ -2029,24 +2029,6 @@ export default function ChangeTrackingChangesView({
 							toggled={renderState.showHideable}
 						/>
 					</ClayManagementToolbar.Item>
-
-					<ClayManagementToolbar.Item
-						data-tooltip-align="top"
-						title={Liferay.Language.get('comments')}
-					>
-						<ClayButton
-							className={classNames(
-								'nav-link nav-link-monospaced',
-								{
-									active: showComments,
-								}
-							)}
-							displayType="unstyled"
-							onClick={() => setShowComments(!showComments)}
-						>
-							<ClayIcon spritemap={spritemap} symbol="comments" />
-						</ClayButton>
-					</ClayManagementToolbar.Item>
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 		);
@@ -2567,6 +2549,27 @@ export default function ChangeTrackingChangesView({
 							'undo',
 							revertURL
 						)}
+
+						<ClayToolbar.Item
+							data-tooltip-align="top"
+							title={Liferay.Language.get('comments')}
+						>
+							<ClayButton
+								className={classNames(
+									'nav-link nav-link-monospaced',
+									{
+										active: showComments,
+									}
+								)}
+								displayType="unstyled"
+								onClick={() => setShowComments(!showComments)}
+							>
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="comments"
+								/>
+							</ClayButton>
+						</ClayToolbar.Item>
 
 						{dropdownItems && dropdownItems.length > 0 && (
 							<ClayToolbar.Item>

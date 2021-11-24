@@ -139,17 +139,11 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addEntryContent(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		PortletEntry.publish();
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",

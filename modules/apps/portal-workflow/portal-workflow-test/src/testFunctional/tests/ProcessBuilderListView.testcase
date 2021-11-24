@@ -178,10 +178,6 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -189,7 +185,7 @@ definition {
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		AssertElementPresent(
+		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "Workflow is in use. Remove its assignment to this asset: Blogs Entry.");
 

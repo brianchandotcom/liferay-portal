@@ -32,6 +32,7 @@ import {CSSTransition} from 'react-transition-group';
 
 import ChangeTrackingComments from './ChangeTrackingComments';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
+import ManageCollaborators from './ManageCollaborators';
 
 const DIRECTION_NEXT = 'next';
 const DIRECTION_PREV = 'prev';
@@ -92,6 +93,7 @@ export default function ChangeTrackingChangesView({
 	activeCTCollection,
 	changeTypesFromURL,
 	changes,
+	collaboratorsData,
 	columnFromURL,
 	contextView,
 	ctCollectionId,
@@ -2495,7 +2497,9 @@ export default function ChangeTrackingChangesView({
 								</div>
 							</ClayToolbar.Section>
 						</ClayToolbar.Item>
-
+						<ClayToolbar.Item>
+							<ManageCollaborators {...collaboratorsData} />
+						</ClayToolbar.Item>
 						{dropdownItems && dropdownItems.length > 0 && (
 							<ClayToolbar.Item>
 								<ClayDropDownWithItems

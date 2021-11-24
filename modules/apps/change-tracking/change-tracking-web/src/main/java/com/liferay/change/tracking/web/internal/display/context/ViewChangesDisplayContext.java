@@ -39,7 +39,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -106,10 +105,10 @@ public class ViewChangesDisplayContext {
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		CTSchemaVersionLocalService ctSchemaVersionLocalService,
-		GroupLocalService groupLocalService, Language language,
-		Portal portal, PublishScheduler publishScheduler,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		UserLocalService userLocalService) {
+		GroupLocalService groupLocalService, Language language, Portal portal,
+		PublicationsDisplayContext publicationsDisplayContext,
+		PublishScheduler publishScheduler, RenderRequest renderRequest,
+		RenderResponse renderResponse, UserLocalService userLocalService) {
 
 		_activeCTCollectionId = activeCTCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;
@@ -122,6 +121,7 @@ public class ViewChangesDisplayContext {
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
+		_publicationsDisplayContext = publicationsDisplayContext;
 		_publishScheduler = publishScheduler;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -284,6 +284,9 @@ public class ViewChangesDisplayContext {
 		).put(
 			"changeTypesFromURL",
 			ParamUtil.getString(_renderRequest, "changeTypes")
+		).put(
+			"collaboratorsData",
+			_publicationsDisplayContext.getCollaboratorsReactData(_ctCollection)
 		).put(
 			"columnFromURL", ParamUtil.getString(_renderRequest, "column")
 		).put(
@@ -565,40 +568,14 @@ public class ViewChangesDisplayContext {
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
 			"statusLabel",
-			() -> {
-				if (_ctCollection.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT) {
-
-					return _language.get(
-						_themeDisplay.getLocale(), "in-progress");
-				}
-				else if (_ctCollection.getStatus() ==
-							WorkflowConstants.STATUS_EXPIRED) {
-
-					return _language.get(
-						_themeDisplay.getLocale(), "out-of-date");
-				}
-				else if (_ctCollection.getStatus() ==
-							WorkflowConstants.STATUS_SCHEDULED) {
-
-					return _language.get(
-						_themeDisplay.getLocale(), "scheduled");
-				}
-
-				return _language.get(_themeDisplay.getLocale(), "published");
-			}
+			_language.get(
+				_themeDisplay.getLocale(),
+				_publicationsDisplayContext.getStatusLabel(
+					_ctCollection.getStatus()))
 		).put(
 			"statusStyle",
-			() -> {
-				if (_ctCollection.getStatus() ==
-						WorkflowConstants.STATUS_EXPIRED) {
-
-					return "warning";
-				}
-
-				return WorkflowConstants.getStatusStyle(
-					_ctCollection.getStatus());
-			}
+			_publicationsDisplayContext.getStatusStyle(
+				_ctCollection.getStatus())
 		).put(
 			"typeNames",
 			() -> {
@@ -929,7 +906,7 @@ public class ViewChangesDisplayContext {
 	private <T extends BaseModel<T>> void _populateEntryValues(
 			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
 			Set<Long> classPKs, Map<Long, String> typeNameCacheMap)
-		throws PortalException {
+		throws Exception {
 
 		Map<Serializable, T> baseModelMap = null;
 		Map<Serializable, T> ctModelMap = null;
@@ -1159,6 +1136,7 @@ public class ViewChangesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
+	private final PublicationsDisplayContext _publicationsDisplayContext;
 	private final PublishScheduler _publishScheduler;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

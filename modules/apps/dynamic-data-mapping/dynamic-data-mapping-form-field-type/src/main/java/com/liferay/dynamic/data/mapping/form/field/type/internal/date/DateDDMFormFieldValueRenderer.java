@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -62,7 +64,12 @@ public class DateDDMFormFieldValueRenderer
 			try {
 				SimpleDateFormat simpleDateFormat =
 					(SimpleDateFormat)DateFormat.getDateInstance(
-						DateFormat.SHORT, locale);
+						DateFormat.SHORT,
+						Optional.ofNullable(
+							LocaleThreadLocal.getThemeDisplayLocale()
+						).orElse(
+							locale
+						));
 
 				String pattern = simpleDateFormat.toPattern();
 

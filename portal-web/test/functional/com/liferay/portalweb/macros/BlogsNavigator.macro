@@ -198,7 +198,9 @@ definition {
 	}
 
 	macro openBlogsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet");
 	}
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.

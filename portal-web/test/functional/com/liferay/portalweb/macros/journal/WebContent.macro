@@ -2620,32 +2620,6 @@ definition {
 		}
 	}
 
-	macro viewTranslationStatusWithWorkflowCP {
-		WebContentNavigator.gotoViewStatus(
-			translationStatus = "true",
-			webContentStatus = "PENDING",
-			webContentTitle = "${webContentTitle}");
-
-		AssertTextEquals(
-			key_status = "Pending",
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
-
-		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "content",
-			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-		AssertTextEquals(
-			locator1 = "CKEditor#BODY",
-			value1 = "${webContentContent}");
-
-		SelectFrameTop();
-	}
-
 	macro viewUserEditCP {
 		AssertTextEquals.assertPartialText(
 			key_webContentTitle = "${webContentTitle}",

@@ -45,7 +45,11 @@
 	<td>//*[contains(@class,'nav-link') and contains(.,'${key_tabName}')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>SOURCE_WAPPER</td>
+	<td>//div[contains(@class, 'workflow-definition-content-source-wrapper')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -180,7 +180,11 @@ definition {
 
 		Button.clickPublish();
 
-		Alert.viewErrorMessage(errorMessage = "Please name your workflow before publishing.");
+		if (IsElementPresent(locator1 = "ProcessBuilderSource#SOURCE_WAPPER")){
+			Alert.viewErrorMessage(errorMessage = "Please add a workflow title before publishing.");
+		} else {
+			Alert.viewErrorMessage(errorMessage = "Please name your workflow before publishing.");
+		}
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -322,7 +322,7 @@ definition {
 			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
 			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
 			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-			var displayDateMinuteFuture = ${displayDateMinute} + 14;
+			var displayDateMinuteFuture = ${displayDateMinute} + 8;
 			var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
 
 			WebContent.editDisplayDate(
@@ -388,7 +388,7 @@ definition {
 			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
 			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
 			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-			var displayDateMinuteFuture = ${displayDateMinute} + 6;
+			var displayDateMinuteFuture = ${displayDateMinute} + 3;
 			var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
 
 			WebContent.editDisplayDate(
@@ -447,7 +447,7 @@ definition {
 				locator1 = "Message#WARNING_SPECIFIC",
 				value1 = "WC WebContent Title New Company is scheduled and will be displayed");
 
-			Pause(locator1 = "120000");
+			Pause(locator1 = "240000");
 
 			Refresh();
 			

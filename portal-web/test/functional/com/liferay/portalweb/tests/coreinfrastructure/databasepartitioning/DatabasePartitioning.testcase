@@ -330,14 +330,6 @@ definition {
 				displayTime = "${displayTime}");
 
 			PortletEntry.publish();
-
-			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title New Company");
-
-			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
-				addOrRemoveViewPermission = "Remove",
-				roleList = "guest");
-
-			IFrame.closeFrame();
 		}
 
 		task ("Add a page and WebContent display select a WebContent article") {
@@ -396,14 +388,6 @@ definition {
 				displayTime = "${displayTime}");
 
 			PortletEntry.publish();
-
-			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title Default Company");
-
-			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
-				addOrRemoveViewPermission = "Remove",
-				roleList = "Guest");
-
-			IFrame.closeFrame();
 		}
 
 		task ("Add a page and WebContent display select a WebContent article") {

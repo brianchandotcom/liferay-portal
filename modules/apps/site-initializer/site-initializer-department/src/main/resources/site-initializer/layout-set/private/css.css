@@ -15,7 +15,7 @@ h4,
 h5,
 h6 {
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-sm);
+  line-height: 1.25;
 }
 
 /*-----GENERAL-----*/
@@ -37,4 +37,16 @@ a .btn-link {
 a:hover,
 .btn-link:hover {
   color: var(--secondary);
+}
+
+/*-----LAYOUT-----*/
+
+.row {
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.row > div {
+  padding-left: 16px;
+  padding-right: 16px;
 }

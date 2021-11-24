@@ -974,6 +974,66 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
 	}
 
+	test SearchSynonymSetsBeyondTen {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Synonyms");
+
+		var i = "1";
+		var j = "2";
+		var k = "3";
+
+		for (var title : list "ABC,BCD,CDE,DEF,EFG,FGH,GHI,HIJ") {
+			SearchTuning.addSynonymSet(synonyms = "${i}${j}${k} Building,${title} Building");
+			var i = ${i} + 1;
+			var j = ${j} + 1;
+			var k = ${k} + 1;
+		}
+
+		SearchTuning.addSynonymSet(synonyms = "901 Building,IJK Building");
+
+		SearchTuning.addSynonymSet(synonyms = "012 Building,JKL Building");
+
+		SearchTuning.addSynonymSet(synonyms = "101 Building,AAA Building");
+
+		JSONWebcontent.addWebContent(
+			content = "CDE Building",
+			groupName = "Guest",
+			title = "Web Content Article 1");
+
+		JSONWebcontent.addWebContent(
+			content = "AAA Building",
+			groupName = "Guest",
+			title = "Web Content Article 2");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "345 Building");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Web Content Article 1",
+			searchAssetType = "Web Content Article",
+			highlightedSearchAssetSummary = "CDE");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Web Content Article 1",
+			searchAssetType = "Web Content Article",
+			highlightedSearchAssetSummary = "Building");
+
+		SearchPortlets.searchEmbedded(searchTerm = "101 Building");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Web Content Article 2",
+			searchAssetType = "Web Content Article",
+			highlightedSearchAssetSummary = "AAA");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Web Content Article 2",
+			searchAssetType = "Web Content Article",
+			highlightedSearchAssetSummary = "Building");
+	}
+
 	@priority = "5"
 	test SearchWithSynonyms {
 		property portal.acceptance = "true";

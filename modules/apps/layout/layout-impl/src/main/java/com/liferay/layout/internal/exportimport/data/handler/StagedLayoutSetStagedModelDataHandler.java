@@ -31,6 +31,7 @@ import com.liferay.exportimport.lar.ThemeExporter;
 import com.liferay.exportimport.lar.ThemeImporter;
 import com.liferay.layout.internal.exportimport.staged.model.repository.StagedLayoutSetStagedModelRepository;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -797,8 +798,15 @@ public class StagedLayoutSetStagedModelDataHandler
 			if (action.equals(Constants.SKIP) ||
 				hasSkippedSiblingLayout(layoutElement, siblingActionsMap)) {
 
-				// We do not want to update priorities if there are elements at
-				// the same level of the page hierarchy with the SKIP action
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"We do not want to update layout ",
+							layoutElement.attributeValue("uuid"),
+							" priority because there are elements at the same ",
+							"level of the page hierarchy with the SKIP ",
+							"action"));
+				}
 
 				continue;
 			}
@@ -809,10 +817,16 @@ public class StagedLayoutSetStagedModelDataHandler
 
 				Layout layout = layouts.get(layoutId);
 
-				// Layout might not have been imported due to a controlled
-				// error. See SitesImpl#addMergeFailFriendlyURLLayout.
-
 				if (layout == null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Layout ", layoutElement.attributeValue("uuid"),
+								" might not have been imported due to a ",
+								"controlled error. See ",
+								"SitesImpl#addMergeFailFriendlyURLLayout."));
+					}
+
 					continue;
 				}
 

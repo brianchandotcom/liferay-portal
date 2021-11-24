@@ -49,7 +49,7 @@ public class UpgradePortletPreferences
 			portletPreferences.getValue("displayStyle", null));
 
 		List<String> displayStyleOutOfTheBox = Arrays.asList(
-			"relative-with-breadcrumb", "from-level-2-with-title",
+			"[custom]", "relative-with-breadcrumb", "from-level-2-with-title",
 			"from-level-1-with-title,from-level-1",
 			"from-level-1-to-all-sublevels", "from-level-0");
 

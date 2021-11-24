@@ -405,7 +405,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		var fieldReference = selenium.getElementValue(locator1 = "Sidebar#DDM_FIELD_REFERENCE");
+		var fieldReference = selenium.getElementValue("Sidebar#DDM_FIELD_REFERENCE");
 
 		Click(locator1 = "Sidebar#BACK");
 

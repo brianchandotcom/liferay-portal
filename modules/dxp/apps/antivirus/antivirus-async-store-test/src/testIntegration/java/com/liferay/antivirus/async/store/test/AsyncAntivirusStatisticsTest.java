@@ -19,7 +19,6 @@ import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.antivirus.async.store.jmx.AntivirusAsyncStatisticsManagerMBean;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
-import com.liferay.antivirus.async.store.test.constants.TestConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
@@ -27,6 +26,7 @@ import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundExceptio
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
@@ -40,7 +40,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
 import java.util.Random;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -86,12 +85,8 @@ public class AsyncAntivirusStatisticsTest {
 	public void testStatistics() throws Exception {
 		int numberOfFilesToProcess = 100;
 
-		CountDownLatch countDownLatch = new CountDownLatch(
-			numberOfFilesToProcess);
-
 		AtomicInteger prepareEventFired = new AtomicInteger();
 		AtomicInteger processingErrorEventFired = new AtomicInteger();
-		AtomicInteger retryScheduled = new AtomicInteger();
 		AtomicInteger sizeExceededEventFired = new AtomicInteger();
 		AtomicInteger successEventFired = new AtomicInteger();
 		AtomicInteger virusFoundEventFired = new AtomicInteger();
@@ -102,8 +97,6 @@ public class AsyncAntivirusStatisticsTest {
 			schedulerHelperServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncRetryScheduler.class,
 				message -> {
-					retryScheduled.incrementAndGet();
-					countDownLatch.countDown();
 				},
 				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
@@ -113,19 +106,6 @@ public class AsyncAntivirusStatisticsTest {
 					AntivirusScanner.class,
 					new MockAntivirusScanner(
 						() -> {
-
-							// Add some delay so the queue will reliably
-							// overflow
-
-							try {
-								Thread.sleep(50);
-							}
-							catch (InterruptedException interruptedException) {
-
-								// Ignore this
-
-							}
-
 							int choice = random.nextInt(4);
 
 							if (choice == 1) {
@@ -156,35 +136,15 @@ public class AsyncAntivirusStatisticsTest {
 					processingErrorEventFired::incrementAndGet
 				).register(
 					AntivirusAsyncEvent.SIZE_EXCEEDED,
-					() -> {
-						sizeExceededEventFired.incrementAndGet();
-						countDownLatch.countDown();
-					}
+					sizeExceededEventFired::incrementAndGet
 				).register(
 					AntivirusAsyncEvent.SUCCESS,
-					() -> {
-						successEventFired.incrementAndGet();
-						countDownLatch.countDown();
-					}
+					successEventFired::incrementAndGet
 				).register(
 					AntivirusAsyncEvent.VIRUS_FOUND,
-					() -> {
-						virusFoundEventFired.incrementAndGet();
-						countDownLatch.countDown();
-					}
+					virusFoundEventFired::incrementAndGet
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_RANKING, -100
-				).put(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {
-						AntivirusAsyncEvent.PREPARE.name(),
-						AntivirusAsyncEvent.PROCESSING_ERROR.name(),
-						AntivirusAsyncEvent.SIZE_EXCEEDED.name(),
-						AntivirusAsyncEvent.SUCCESS.name(),
-						AntivirusAsyncEvent.VIRUS_FOUND.name()
-					}
-				).build());
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
 
 		try {
 
@@ -217,14 +177,6 @@ public class AsyncAntivirusStatisticsTest {
 						for (int i = numberOfFilesToProcess; i > 0; i--) {
 							DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 						}
-
-						// Wait for the terminating operation. The mock scanner
-						// will throw a AntivirusScannerException indicating a
-						// processing error (like would result from network
-						// errors) triggering the PROCESSING_ERROR event so
-						// count down the latch
-
-						countDownLatch.await();
 					}
 
 					// The first event is PREPARE which is triggered before the
@@ -292,7 +244,8 @@ public class AsyncAntivirusStatisticsTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					AntivirusAsyncConfiguration.class.getName(), dictionary)) {
+					AntivirusAsyncConfiguration.class.getName(), dictionary);
+			SafeCloseable safeCloseable = SyncDestinationUtil.sync()) {
 
 			unsafeRunnable.run();
 		}

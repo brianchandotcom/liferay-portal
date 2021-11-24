@@ -18,7 +18,6 @@ import com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfigurati
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
-import com.liferay.antivirus.async.store.test.constants.TestConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -78,20 +76,14 @@ public class AsyncAntivirusQueueOverflowTest {
 	public void testQueueOverflow() throws Exception {
 		int numberOfFilesToProcess = 10;
 
-		CountDownLatch countDownLatch = new CountDownLatch(
-			numberOfFilesToProcess);
-
 		AtomicInteger prepareEventFired = new AtomicInteger();
+
 		AtomicInteger retryScheduled = new AtomicInteger();
-		AtomicInteger successEventFired = new AtomicInteger();
 
 		ServiceRegistration<AntivirusAsyncRetryScheduler>
 			schedulerHelperServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncRetryScheduler.class,
-				message -> {
-					retryScheduled.incrementAndGet();
-					countDownLatch.countDown();
-				},
+				message -> retryScheduled.incrementAndGet(),
 				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
 		ServiceRegistration<AntivirusScanner>
@@ -100,17 +92,10 @@ public class AsyncAntivirusQueueOverflowTest {
 					AntivirusScanner.class,
 					new MockAntivirusScanner(
 						() -> {
-
-							// Add some delay so the queue will reliably
-							// overflow
-
 							try {
-								Thread.sleep(200);
+								Thread.sleep(Long.MAX_VALUE);
 							}
 							catch (InterruptedException interruptedException) {
-
-								// Ignore this
-
 							}
 						}),
 					null);
@@ -124,19 +109,9 @@ public class AsyncAntivirusQueueOverflowTest {
 				).register(
 					AntivirusAsyncEvent.SUCCESS,
 					() -> {
-						successEventFired.incrementAndGet();
-						countDownLatch.countDown();
 					}
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_RANKING, -100
-				).put(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {
-						AntivirusAsyncEvent.PREPARE.name(),
-						AntivirusAsyncEvent.SUCCESS.name()
-					}
-				).build());
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
 
 		try {
 
@@ -157,25 +132,11 @@ public class AsyncAntivirusQueueOverflowTest {
 						DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 					}
 
-					// Wait for the terminating operation. The mock scanner
-					// will throw a AntivirusScannerException indicating a
-					// processing error (like would result from network
-					// errors) triggering the PROCESSING_ERROR event so
-					// count down the latch
-
-					countDownLatch.await();
-
 					// The first event is PREPARE which is triggered before the
 					// message is sent. Ensure it was called 10 times
 
 					Assert.assertEquals(
 						numberOfFilesToProcess, prepareEventFired.get());
-
-					// At least one SUCCESS event should have resulted
-
-					Assert.assertTrue(
-						String.valueOf(successEventFired.get()),
-						successEventFired.get() > 0);
 
 					// When the number of incoming scan requests overflows the
 					// the queue they are persisted into the scheduler as retry

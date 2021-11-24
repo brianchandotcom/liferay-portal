@@ -19,7 +19,6 @@ import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEvent;
 import com.liferay.antivirus.async.store.events.AntivirusAsyncEventListener;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
-import com.liferay.antivirus.async.store.test.constants.TestConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
@@ -27,6 +26,7 @@ import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundExceptio
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.messaging.Message;
@@ -42,7 +42,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Assert;
@@ -84,7 +83,7 @@ public class AsyncAntivirusEventTest {
 
 	@Test
 	public void testMissing() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(1);
+		AtomicBoolean missingFired = new AtomicBoolean();
 
 		AtomicBoolean scannerWasCalled = new AtomicBoolean();
 
@@ -99,11 +98,9 @@ public class AsyncAntivirusEventTest {
 			eventListenerServiceRegistration = _bundleContext.registerService(
 				AntivirusAsyncEventListener.class,
 				new EventListenerBuilder().register(
-					AntivirusAsyncEvent.MISSING, countDownLatch::countDown
+					AntivirusAsyncEvent.MISSING, () -> missingFired.set(true)
 				).build(),
-				MapUtil.singletonDictionary(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {AntivirusAsyncEvent.MISSING.name()}));
+				null);
 
 		try {
 
@@ -124,11 +121,7 @@ public class AsyncAntivirusEventTest {
 						AntivirusAsyncConstants.ANTIVIRUS_DESTINATION,
 						dummyAntivirusMessage);
 
-					// Wait for the terminating operation. We know the file
-					// being added does not exist which triggers the MISSING
-					// event so count down the latch
-
-					countDownLatch.await();
+					Assert.assertTrue(missingFired.get());
 
 					// Finally ensure the scanner was not called
 
@@ -143,7 +136,6 @@ public class AsyncAntivirusEventTest {
 
 	@Test
 	public void testProcessingError() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(1);
 		AtomicBoolean prepareEventFired = new AtomicBoolean();
 		AtomicBoolean processingErrorEventFired = new AtomicBoolean();
 
@@ -174,20 +166,9 @@ public class AsyncAntivirusEventTest {
 					() -> prepareEventFired.set(true)
 				).register(
 					AntivirusAsyncEvent.PROCESSING_ERROR,
-					() -> {
-						processingErrorEventFired.set(true);
-						countDownLatch.countDown();
-					}
+					() -> processingErrorEventFired.set(true)
 				).build(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_RANKING, -100
-				).put(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {
-						AntivirusAsyncEvent.PREPARE.name(),
-						AntivirusAsyncEvent.PROCESSING_ERROR.name()
-					}
-				).build());
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
 
 		try {
 
@@ -214,14 +195,6 @@ public class AsyncAntivirusEventTest {
 								LoggerTestUtil.ERROR)) {
 
 						DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
-
-						// Wait for the terminating operation. The mock scanner
-						// will throw a AntivirusScannerException indicating a
-						// processing error (like would result from network
-						// errors) triggering the PROCESSING_ERROR event so
-						// count down the latch
-
-						countDownLatch.await();
 					}
 
 					// The first event is PREPARE which is triggered before the
@@ -251,8 +224,8 @@ public class AsyncAntivirusEventTest {
 
 	@Test
 	public void testSizeExceeded() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(1);
 		AtomicBoolean prepareEventFired = new AtomicBoolean();
+		AtomicBoolean sizeExceededFired = new AtomicBoolean();
 
 		AtomicBoolean scannerWasCalled = new AtomicBoolean();
 
@@ -276,14 +249,10 @@ public class AsyncAntivirusEventTest {
 					AntivirusAsyncEvent.PREPARE,
 					() -> prepareEventFired.set(true)
 				).register(
-					AntivirusAsyncEvent.SIZE_EXCEEDED, countDownLatch::countDown
+					AntivirusAsyncEvent.SIZE_EXCEEDED,
+					() -> sizeExceededFired.set(true)
 				).build(),
-				MapUtil.singletonDictionary(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {
-						AntivirusAsyncEvent.PREPARE.name(),
-						AntivirusAsyncEvent.SIZE_EXCEEDED.name()
-					}));
+				null);
 
 		try {
 
@@ -302,12 +271,7 @@ public class AsyncAntivirusEventTest {
 
 					DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 
-					// Wait for the terminating operation. The mock scanner will
-					// throw a AntivirusScannerException indicating the size
-					// exceeds the maximum triggering the SIZE_EXCEEDED event so
-					// count down the latch
-
-					countDownLatch.await();
+					Assert.assertTrue(sizeExceededFired.get());
 
 					// The first event is PREPARE which is triggered before the
 					// message is sent but indicates that the
@@ -328,8 +292,8 @@ public class AsyncAntivirusEventTest {
 
 	@Test
 	public void testSuccess() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(1);
 		AtomicBoolean prepareEventFired = new AtomicBoolean();
+		AtomicBoolean successFired = new AtomicBoolean();
 
 		AtomicBoolean scannerWasCalled = new AtomicBoolean();
 
@@ -347,14 +311,9 @@ public class AsyncAntivirusEventTest {
 					AntivirusAsyncEvent.PREPARE,
 					() -> prepareEventFired.set(true)
 				).register(
-					AntivirusAsyncEvent.SUCCESS, countDownLatch::countDown
+					AntivirusAsyncEvent.SUCCESS, () -> successFired.set(true)
 				).build(),
-				MapUtil.singletonDictionary(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {
-						AntivirusAsyncEvent.PREPARE.name(),
-						AntivirusAsyncEvent.SUCCESS.name()
-					}));
+				null);
 
 		try {
 
@@ -373,11 +332,7 @@ public class AsyncAntivirusEventTest {
 
 					DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 
-					// Wait for the terminating operation. We know the file
-					// being added does not contain a virus so count down the
-					// latch on SUCCESS
-
-					countDownLatch.await();
+					Assert.assertTrue(successFired.get());
 
 					// The first event is PREPARE which is triggered before the
 					// message is sent but indicates that the
@@ -398,8 +353,8 @@ public class AsyncAntivirusEventTest {
 
 	@Test
 	public void testVirusFound() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(1);
 		AtomicBoolean prepareEventFired = new AtomicBoolean();
+		AtomicBoolean virusFoundFired = new AtomicBoolean();
 
 		AtomicBoolean scannerWasCalled = new AtomicBoolean();
 
@@ -423,14 +378,10 @@ public class AsyncAntivirusEventTest {
 					AntivirusAsyncEvent.PREPARE,
 					() -> prepareEventFired.set(true)
 				).register(
-					AntivirusAsyncEvent.VIRUS_FOUND, countDownLatch::countDown
+					AntivirusAsyncEvent.VIRUS_FOUND,
+					() -> virusFoundFired.set(true)
 				).build(),
-				MapUtil.singletonDictionary(
-					TestConstants.ANTIVIRUS_ASYNC_EVENT,
-					new String[] {
-						AntivirusAsyncEvent.PREPARE.name(),
-						AntivirusAsyncEvent.VIRUS_FOUND.name()
-					}));
+				null);
 
 		try {
 
@@ -449,11 +400,7 @@ public class AsyncAntivirusEventTest {
 
 					DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 
-					// Wait for the terminating operation. The mock scanner will
-					// throw a AntivirusVirusFoundException triggering the
-					// VIRUS_FOUND event so count down the latch
-
-					countDownLatch.await();
+					Assert.assertTrue(virusFoundFired.get());
 
 					// The first event is PREPARE which is triggered before the
 					// message is sent but indicates that the
@@ -497,7 +444,8 @@ public class AsyncAntivirusEventTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					AntivirusAsyncConfiguration.class.getName(), dictionary)) {
+					AntivirusAsyncConfiguration.class.getName(), dictionary);
+			SafeCloseable safeCloseable = SyncDestinationUtil.sync()) {
 
 			unsafeRunnable.run();
 		}

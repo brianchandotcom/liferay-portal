@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.search.index;
 
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 
 import java.util.Date;
@@ -26,6 +27,11 @@ import java.util.Map;
  * @author Rafael Praxedes
  */
 public interface TaskWorkflowMetricsIndexer {
+
+	public default Document addTask(AddTaskRequest addTaskRequest) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
 	public Document addTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,

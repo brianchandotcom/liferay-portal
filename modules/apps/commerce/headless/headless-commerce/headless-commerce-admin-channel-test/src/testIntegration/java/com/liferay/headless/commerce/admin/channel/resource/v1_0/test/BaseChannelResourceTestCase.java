@@ -493,6 +493,188 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteChannelByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Channel channel = testDeleteChannelByExternalReferenceCode_addChannel();
+
+		assertHttpResponseStatusCode(
+			204,
+			channelResource.deleteChannelByExternalReferenceCodeHttpResponse(
+				channel.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			channelResource.getChannelByExternalReferenceCodeHttpResponse(
+				channel.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			channelResource.getChannelByExternalReferenceCodeHttpResponse(
+				channel.getExternalReferenceCode()));
+	}
+
+	protected Channel testDeleteChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCode() throws Exception {
+		Channel postChannel =
+			testGetChannelByExternalReferenceCode_addChannel();
+
+		Channel getChannel = channelResource.getChannelByExternalReferenceCode(
+			postChannel.getExternalReferenceCode());
+
+		assertEquals(postChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Channel testGetChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetChannelByExternalReferenceCode()
+		throws Exception {
+
+		Channel channel = testGraphQLChannel_addChannel();
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"channelByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												channel.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/channelByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetChannelByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"channelByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPatchChannelByExternalReferenceCode() throws Exception {
+		Channel postChannel =
+			testPatchChannelByExternalReferenceCode_addChannel();
+
+		Channel randomPatchChannel = randomPatchChannel();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Channel patchChannel =
+			channelResource.patchChannelByExternalReferenceCode(
+				postChannel.getExternalReferenceCode(), randomPatchChannel);
+
+		Channel expectedPatchChannel = postChannel.clone();
+
+		_beanUtilsBean.copyProperties(expectedPatchChannel, randomPatchChannel);
+
+		Channel getChannel = channelResource.getChannelByExternalReferenceCode(
+			patchChannel.getExternalReferenceCode());
+
+		assertEquals(expectedPatchChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Channel testPatchChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutChannelByExternalReferenceCode() throws Exception {
+		Channel postChannel =
+			testPutChannelByExternalReferenceCode_addChannel();
+
+		Channel randomChannel = randomChannel();
+
+		Channel putChannel = channelResource.putChannelByExternalReferenceCode(
+			postChannel.getExternalReferenceCode(), randomChannel);
+
+		assertEquals(randomChannel, putChannel);
+		assertValid(putChannel);
+
+		Channel getChannel = channelResource.getChannelByExternalReferenceCode(
+			putChannel.getExternalReferenceCode());
+
+		assertEquals(randomChannel, getChannel);
+		assertValid(getChannel);
+
+		Channel newChannel =
+			testPutChannelByExternalReferenceCode_createChannel();
+
+		putChannel = channelResource.putChannelByExternalReferenceCode(
+			newChannel.getExternalReferenceCode(), newChannel);
+
+		assertEquals(newChannel, putChannel);
+		assertValid(putChannel);
+
+		getChannel = channelResource.getChannelByExternalReferenceCode(
+			putChannel.getExternalReferenceCode());
+
+		assertEquals(newChannel, getChannel);
+
+		Assert.assertEquals(
+			newChannel.getExternalReferenceCode(),
+			putChannel.getExternalReferenceCode());
+	}
+
+	protected Channel testPutChannelByExternalReferenceCode_createChannel()
+		throws Exception {
+
+		return randomChannel();
+	}
+
+	protected Channel testPutChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteChannel() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel = testDeleteChannel_addChannel();

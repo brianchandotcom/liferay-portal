@@ -76,6 +76,49 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteChannelByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource ->
+				channelResource.deleteChannelByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Channel patchChannelByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("channel") Channel channel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource ->
+				channelResource.patchChannelByExternalReferenceCode(
+					externalReferenceCode, channel));
+	}
+
+	@GraphQLField
+	public Channel updateChannelByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("channel") Channel channel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource ->
+				channelResource.putChannelByExternalReferenceCode(
+					externalReferenceCode, channel));
+	}
+
+	@GraphQLField
 	public boolean deleteChannel(@GraphQLName("channelId") Long channelId)
 		throws Exception {
 

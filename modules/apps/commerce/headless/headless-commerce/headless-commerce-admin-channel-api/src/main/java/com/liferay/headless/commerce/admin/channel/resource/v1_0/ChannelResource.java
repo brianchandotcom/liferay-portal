@@ -67,6 +67,22 @@ public interface ChannelResource {
 	public Response postChannelBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteChannelByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Channel getChannelByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Channel patchChannelByExternalReferenceCode(
+			String externalReferenceCode, Channel channel)
+		throws Exception;
+
+	public Channel putChannelByExternalReferenceCode(
+			String externalReferenceCode, Channel channel)
+		throws Exception;
+
 	public void deleteChannel(Long channelId) throws Exception;
 
 	public Response deleteChannelBatch(String callbackURL, Object object)

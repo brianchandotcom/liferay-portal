@@ -2400,6 +2400,23 @@ definition {
 			roleTitle = "Records Manager Name",
 			userEmailAddress = "userea2@liferay.com");
 
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(ddlDataDefinitionName = "Employee Profile Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Boolean",
+			fieldFieldLabel = "Employee",
+			fieldName = "Employee");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Dynamic Data Lists Page");
@@ -2417,17 +2434,6 @@ definition {
 			ddlListDescription = "Liferay Employee Profiles",
 			ddlListName = "Employees");
 
-		DDLDataDefinition.addViaDDLDisplayPG(
-			ddlDataDefinitionDescription = "Data Definition Description",
-			ddlDataDefinitionName = "Employee Profile Data Definition");
-
-		DynamicDataMapping.addField(
-			field = "Boolean",
-			fieldFieldLabel = "Employee",
-			fieldName = "Employee");
-
-		DDLDataDefinition.saveViaDDLDisplayPG();
-
 		DDLDataDefinition.selectViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
 
 		DDLList.saveViaDDLDisplayPG();
@@ -2437,7 +2443,7 @@ definition {
 		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
 
 		DDLRecord.populateFieldBoolean(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			fieldFieldLabel = "Employee",
 			fieldName = "Employee");
 

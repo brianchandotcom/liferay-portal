@@ -33,6 +33,10 @@ public interface TaskWorkflowMetricsIndexer {
 			"This method needs to be implemented");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addTask(AddTaskRequest)}
+	 */
+	@Deprecated
 	public Document addTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		List<Assignment> assignments, String className, long classPK,

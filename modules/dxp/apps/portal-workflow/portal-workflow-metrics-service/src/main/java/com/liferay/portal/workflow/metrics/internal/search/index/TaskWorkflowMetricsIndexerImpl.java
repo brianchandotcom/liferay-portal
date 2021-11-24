@@ -200,6 +200,10 @@ public class TaskWorkflowMetricsIndexerImpl
 		return document;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addTask(AddTaskRequest)}
+	 */
+	@Deprecated
 	@Override
 	public Document addTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,

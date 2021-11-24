@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
+	enabled = false,
 	property = "model.class.name=com.liferay.search.experiences.model.SXPElement",
 	service = AopService.class
 )

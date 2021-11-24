@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = {})
+@Component(enabled = false, immediate = true, service = {})
 public class SXPBlueprintAdminPortletResourcePermissionRegistrar {
 
 	@Activate

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
 		"panel.category.key=" + SXPPanelCategoryKeys.CONTROL_PANEL_SEARCH_EXPERIENCES

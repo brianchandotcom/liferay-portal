@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
+	enabled = false,
 	property = {
 		"json.web.service.context.name=sxp",
 		"json.web.service.context.path=SXPBlueprint",

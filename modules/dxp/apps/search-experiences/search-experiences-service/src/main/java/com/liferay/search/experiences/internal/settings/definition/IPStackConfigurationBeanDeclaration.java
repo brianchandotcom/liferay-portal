@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(service = ConfigurationBeanDeclaration.class)
+@Component(enabled = false, service = ConfigurationBeanDeclaration.class)
 public class IPStackConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

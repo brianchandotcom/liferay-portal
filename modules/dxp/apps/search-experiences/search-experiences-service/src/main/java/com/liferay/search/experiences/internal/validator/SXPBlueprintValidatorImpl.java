@@ -33,7 +33,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SXPBlueprintValidator.class)
+@Component(
+	enabled = false, immediate = true, service = SXPBlueprintValidator.class
+)
 public class SXPBlueprintValidatorImpl implements SXPBlueprintValidator {
 
 	@Override

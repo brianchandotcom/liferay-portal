@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(enabled = false, immediate = true, service = Indexer.class)
 public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 
 	public static final String CLASS_NAME = SXPElement.class.getName();

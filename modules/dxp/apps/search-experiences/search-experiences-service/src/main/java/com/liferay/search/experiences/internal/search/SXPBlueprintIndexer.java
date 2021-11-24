@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(enabled = false, immediate = true, service = Indexer.class)
 public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 
 	public static final String CLASS_NAME = SXPBlueprint.class.getName();

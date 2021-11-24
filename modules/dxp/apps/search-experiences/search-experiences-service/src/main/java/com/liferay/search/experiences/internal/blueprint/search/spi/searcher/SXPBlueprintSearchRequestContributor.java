@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = "search.request.contributor.id=com.liferay.search.experiences.blueprint",
 	service = SearchRequestContributor.class
 )

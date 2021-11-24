@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Kevin Tan
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
 		"mvc.command.name=/sxp_blueprint_admin/edit_sxp_blueprint"

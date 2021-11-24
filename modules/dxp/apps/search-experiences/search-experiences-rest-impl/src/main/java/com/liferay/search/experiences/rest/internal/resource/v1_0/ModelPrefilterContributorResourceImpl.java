@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Brian Wing Shun Chan
  */
 @Component(
+	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/model-prefilter-contributor.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = ModelPrefilterContributorResource.class

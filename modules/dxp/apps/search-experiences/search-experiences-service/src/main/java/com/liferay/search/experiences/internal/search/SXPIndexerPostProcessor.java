@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"indexer.class.name=com.liferay.blogs.model.BlogsEntry",
 		"indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",

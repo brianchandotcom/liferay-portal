@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = {})
+@Component(enabled = false, immediate = true, service = {})
 public class SXPPermission {
 
 	public static boolean contains(

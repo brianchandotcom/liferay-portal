@@ -418,7 +418,10 @@ public class ViewChangesDisplayContext {
 			"entryFromURL", ParamUtil.getString(_renderRequest, "entry")
 		).put(
 			"expired",
-			_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED
+			(_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED) ||
+			((_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
+			 !_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				 _ctCollection.getSchemaVersionId()))
 		).put(
 			"getCTCommentsURL",
 			() -> {
@@ -673,11 +676,6 @@ public class ViewChangesDisplayContext {
 		).put(
 			"usersFromURL", ParamUtil.getString(_renderRequest, "users")
 		).build();
-	}
-
-	public boolean isExpired(CTCollection ctCollection) {
-		return !_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
-			ctCollection.getSchemaVersionId());
 	}
 
 	private JSONObject _getContextViewJSONObject(

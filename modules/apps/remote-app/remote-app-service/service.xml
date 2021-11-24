@@ -35,6 +35,12 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>RemoteAppEntryCustomElementCSSURLs</exception>

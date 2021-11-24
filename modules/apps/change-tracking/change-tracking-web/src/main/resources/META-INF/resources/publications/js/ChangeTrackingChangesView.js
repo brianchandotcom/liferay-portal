@@ -1601,7 +1601,9 @@ export default function ChangeTrackingChangesView({
 
 	const setParameter = useCallback(
 		(url, name, value) => {
-			return url + '&' + namespace + name + '=' + value;
+			return (
+				url + '&' + namespace + name + '=' + encodeURIComponent(value)
+			);
 		},
 		[namespace]
 	);

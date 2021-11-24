@@ -33,7 +33,9 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
+import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
@@ -187,6 +189,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		LayoutSetLocalService layoutSetLocalService,
 		ListTypeDefinitionResource listTypeDefinitionResource,
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
+		ListTypeEntryResource listTypeEntryResource,
+		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService, Portal portal,
@@ -235,6 +239,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutSetLocalService = layoutSetLocalService;
 		_listTypeDefinitionResource = listTypeDefinitionResource;
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
+		_listTypeEntryResource = listTypeEntryResource;
+		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -325,14 +331,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
-			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
-				_invoke(() -> _addListTypeDefinitions(serviceContext));
-
-			_invoke(
-				() -> _addObjectDefinitions(
-					listTypeDefinitionsStringUtilReplaceValues,
-					serviceContext));
-
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addAssetListEntries(
@@ -356,6 +354,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addLayoutPageTemplates(
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues, serviceContext));
+
+			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
+				_invoke(() -> _addListTypeDefinitions(serviceContext));
+
+			_invoke(
+				() -> _addObjectDefinitions(
+					listTypeDefinitionsStringUtilReplaceValues,
+					serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -1440,8 +1446,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			listTypeDefinitionsStringUtilReplaceValues.put(
-				"LIST_TYPE_DEFINITION_NAME:" + listTypeDefinition.getName(),
+				"LIST_TYPE_DEFINITION_ID:" + listTypeDefinition.getName(),
 				String.valueOf(listTypeDefinition.getId()));
+
+			String entryJSON = _read(
+				StringUtil.replace(path, ".json", ".list-type-entries.json"));
+
+			if (entryJSON == null) {
+				continue;
+			}
+
+			JSONArray entriesjsonArray = _jsonFactory.createJSONArray(
+				entryJSON);
+
+			ListTypeEntryResource.Builder listTypeEntryResourceBuilder =
+				_listTypeEntryResourceFactory.create();
+
+			ListTypeEntryResource listTypeEntryResource =
+				listTypeEntryResourceBuilder.user(
+					serviceContext.fetchUser()
+				).build();
+
+			for (Object entry : entriesjsonArray) {
+				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
+					entry.toString());
+
+				listTypeEntryResource.postListTypeDefinitionListTypeEntry(
+					listTypeDefinition.getId(), listTypeEntry);
+			}
 		}
 
 		return listTypeDefinitionsStringUtilReplaceValues;
@@ -2399,6 +2431,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ListTypeDefinitionResource _listTypeDefinitionResource;
 	private final ListTypeDefinitionResource.Factory
 		_listTypeDefinitionResourceFactory;
+	private final ListTypeEntryResource _listTypeEntryResource;
+	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

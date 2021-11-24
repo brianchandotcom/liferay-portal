@@ -309,8 +309,8 @@ definition {
 			WebContentNavigator.gotoAddCP();
 
 			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title");
+				webContentContent = "WC WebContent Content New Company",
+				webContentTitle = "WC WebContent Title New Company");
 
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayMonth = DateUtil.getCurrentMonth();
@@ -331,7 +331,7 @@ definition {
 
 			PortletEntry.publish();
 
-			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title");
+			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title New Company");
 
 			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 				addOrRemoveViewPermission = "Remove",
@@ -353,17 +353,15 @@ definition {
 
 			Portlet.addPG(portletName = "Web Content Display");
 
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title New Company");
 
 			IFrame.closeFrame();
 		}
 
-		task ("View the warning message shown in Web Content Display") {
-			AssertTextEquals.assertPartialText(
-				key_warningMessage = "WC WebContent Title is scheduled and will be displayed",
-				locator1 = "Message#WARNING_SPECIFIC",
-				value1 = "WC WebContent Title is scheduled and will be displayed");
-		}
+		AssertTextEquals.assertPartialText(
+			key_warningMessage = "WC WebContent Title New Company is scheduled and will be displayed",
+			locator1 = "Message#WARNING_SPECIFIC",
+			value1 = "WC WebContent Title New Company is scheduled and will be displayed");
 
 		task ("Add a WebContent article on default Company") {
 			SignOut.signOut();
@@ -377,8 +375,8 @@ definition {
 			WebContentNavigator.gotoAddCP();
 
 			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title");
+				webContentContent = "WC WebContent Content Default Company",
+				webContentTitle = "WC WebContent Title Default Company");
 
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayMonth = DateUtil.getCurrentMonth();
@@ -399,7 +397,7 @@ definition {
 
 			PortletEntry.publish();
 
-			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title");
+			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title Default Company");
 
 			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 				addOrRemoveViewPermission = "Remove",
@@ -419,24 +417,22 @@ definition {
 
 			Portlet.addPG(portletName = "Web Content Display");
 
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title Default Company");
 
 			IFrame.closeFrame();
 		}
 
-		task ("View the warning message shown in Web Content Display") {
-			AssertTextEquals.assertPartialText(
-				key_warningMessage = "WC WebContent Title is scheduled and will be displayed",
-				locator1 = "Message#WARNING_SPECIFIC",
-				value1 = "WC WebContent Title is scheduled and will be displayed");
-		}
+		AssertTextEquals.assertPartialText(
+			key_warningMessage = "WC WebContent Title Default Company is scheduled and will be displayed",
+			locator1 = "Message#WARNING_SPECIFIC",
+			value1 = "WC WebContent Title Default Company is scheduled and will be displayed");
 
 		task ("View WebContent Article Publish on default Company") {
 			Pause(locator1 = "180000");
 
 			Refresh();
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");
 		}
 
 		task ("New Company publish it's WebContent Article") {
@@ -447,15 +443,15 @@ definition {
 				pageName = "Web Content Display Page");
 
 			AssertTextEquals.assertPartialText(
-				key_warningMessage = "WC WebContent Title is scheduled and will be displayed",
+				key_warningMessage = "WC WebContent Title New Company is scheduled and will be displayed",
 				locator1 = "Message#WARNING_SPECIFIC",
-				value1 = "WC WebContent Title is scheduled and will be displayed");
+				value1 = "WC WebContent Title New Company is scheduled and will be displayed");
 
 			Pause(locator1 = "120000");
 
 			Refresh();
 			
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content New Company");
 		}
 
 		task ("WebContent Article not repulish on default Company") {
@@ -465,7 +461,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "Web Content Display Page");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");
 		}
 	}
 

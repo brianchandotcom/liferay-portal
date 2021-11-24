@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
-import com.liferay.portal.search.similar.results.web.internal.util.http.HttpHelperImpl;
+import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperImpl;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.DestinationHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

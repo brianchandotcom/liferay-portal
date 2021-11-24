@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.similar.results.web.internal.util.http;
+package com.liferay.portal.search.similar.results.web.internal.helper;
 
 /**
  * @author André de Oliveira

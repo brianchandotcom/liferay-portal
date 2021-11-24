@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.similar.results.web.internal.util.http;
+package com.liferay.portal.search.similar.results.web.internal.helper;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

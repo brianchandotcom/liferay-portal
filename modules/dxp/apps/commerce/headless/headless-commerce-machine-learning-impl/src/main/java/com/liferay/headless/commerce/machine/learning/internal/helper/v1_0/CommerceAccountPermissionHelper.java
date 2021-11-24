@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.headless.commerce.machine.learning.internal.util.v1_0;
+package com.liferay.headless.commerce.machine.learning.internal.helper.v1_0;
 
 import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -34,6 +34,7 @@ import com.liferay.sharepoint.rest.repository.internal.document.library.reposito
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFileVersion;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFolder;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointModel;
+import com.liferay.sharepoint.rest.repository.internal.helper.SharepointURLHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;

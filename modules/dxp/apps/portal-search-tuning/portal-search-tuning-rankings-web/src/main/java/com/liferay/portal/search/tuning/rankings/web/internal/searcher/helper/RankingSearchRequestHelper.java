@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.searcher;
+package com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.filter.ComplexQueryPart;

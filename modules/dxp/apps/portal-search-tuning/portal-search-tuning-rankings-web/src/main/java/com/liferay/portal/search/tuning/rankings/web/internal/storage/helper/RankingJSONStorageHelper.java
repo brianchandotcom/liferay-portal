@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.storage;
+package com.liferay.portal.search.tuning.rankings.web.internal.storage.helper;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;

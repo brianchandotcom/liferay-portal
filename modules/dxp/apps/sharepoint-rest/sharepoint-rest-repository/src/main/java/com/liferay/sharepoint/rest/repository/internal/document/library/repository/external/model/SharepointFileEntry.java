@@ -19,7 +19,7 @@ import com.liferay.document.library.repository.external.ExtRepositoryFileVersion
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.sharepoint.rest.repository.internal.util.SharepointURLHelper;
+import com.liferay.sharepoint.rest.repository.internal.helper.SharepointURLHelper;
 
 import java.util.Date;
 

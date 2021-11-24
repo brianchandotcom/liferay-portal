@@ -15,7 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.forecast.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.commerce.machine.learning.internal.search.index.CommerceMLSearchEngineHelper;
+import com.liferay.commerce.machine.learning.internal.search.index.helper.CommerceMLSearchEngineHelper;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;

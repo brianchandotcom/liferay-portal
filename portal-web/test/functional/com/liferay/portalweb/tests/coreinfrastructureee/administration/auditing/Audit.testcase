@@ -20,38 +20,42 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		task ("Enable log context and Incoming X-Request-ID") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Audit",
-			configurationName = "Audit Log Context",
-			configurationScope = "System Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Audit",
+				configurationName = "Audit Log Context",
+				configurationScope = "System Scope");
 
-		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
+			Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
 
-		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
+			Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
 
-		PortletEntry.save();
+			PortletEntry.save();
+		}
 
-		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+		task ("Assert that audit information is present in the logs") {
+			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-		var curl =
-		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
+			var curl =
+			'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
 
-		var userId = JSONCurlUtil.get("${curl}");
+			var userId = JSONCurlUtil.get("${curl}");
 
-		AssertConsoleTextPresent(
-			value1 = "xRequestId",
-			value2 = "sessionId",
-			value3 = "companyId:${companyId}",
-			value4 = "virtualHostName",
-			value5 = "clientIP",
-			value6 = "emailAddress",
-			value7 = "serverName",
-			value8 = "userId:${userId}");
+			AssertConsoleTextPresent(
+				value1 = "xRequestId",
+				value2 = "sessionId",
+				value3 = "companyId:${companyId}",
+				value4 = "virtualHostName",
+				value5 = "clientIP",
+				value6 = "emailAddress",
+				value7 = "serverName",
+				value8 = "userId:${userId}");
+		}
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-2: Verify that Console outputs a different X-Request-ID if an invalid X-Request-ID was inputted."
@@ -64,18 +68,20 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+		task ("Assert that console outputs a different X-Request-ID than invalid inputted X-Request-ID") {
+			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-		// Shorter than 20 characters
+			// Shorter than 20 characters
 
-		var invalidXRequestId = "invalidXRID";
+			var invalidXRequestId = "invalidXRID";
 
-		var curl =
-		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
+			var curl =
+			'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
 
-		var userId = JSONCurlUtil.get("${curl}");
+			var userId = JSONCurlUtil.get("${curl}");
 
-		AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
+			AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
+		}
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-3: Verify that Console outputs the same X-Request-ID as inputted X-Request-ID."
@@ -88,16 +94,18 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
-		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+		task ("Assert that console outputs the same X-Request-ID as inputted X-Request-ID") {
+			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-		var validXRequestId = StringUtil.randomString("40");
+			var validXRequestId = StringUtil.randomString("40");
 
-		var curl =
-		'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
+			var curl =
+			'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
 
-		var userId = JSONCurlUtil.get("${curl}");
+			var userId = JSONCurlUtil.get("${curl}");
 
-		AssertConsoleTextPresent(value1 = "${validXRequestId}");
+			AssertConsoleTextPresent(value1 = "${validXRequestId}");
+		}
 	}
 
 }

@@ -50,6 +50,15 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 	public InfoItemFieldValues getInfoItemFieldValues(
 		Layout layout, long segmentsExperienceId) {
 
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			return InfoItemFieldValues.builder(
+			).infoFieldValues(
+				_getLayoutInfoFieldValues(layout, segmentsExperienceId)
+			).infoItemReference(
+				_getInfoItemReference(layout, segmentsExperienceId)
+			).build();
+		}
+
 		return InfoItemFieldValues.builder(
 		).infoFieldValue(
 			new InfoFieldValue<>(

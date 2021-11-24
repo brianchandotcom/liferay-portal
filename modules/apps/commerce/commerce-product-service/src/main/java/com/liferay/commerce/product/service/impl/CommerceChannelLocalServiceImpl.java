@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelSiteGroupIdException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.base.CommerceChannelLocalServiceBaseImpl;
@@ -68,14 +69,24 @@ public class CommerceChannelLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
+		CommerceChannel commerceChannel = null;
+
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
+		}
+		else {
+			commerceChannel =
+				commerceChannelLocalService.fetchByExternalReferenceCode(
+					externalReferenceCode, user.getCompanyId());
+
+			if (commerceChannel != null) {
+				throw new DuplicateCommerceChannelException();
+			}
 		}
 
 		long commerceChannelId = counterLocalService.increment();
 
-		CommerceChannel commerceChannel = commerceChannelPersistence.create(
-			commerceChannelId);
+		commerceChannel = commerceChannelPersistence.create(commerceChannelId);
 
 		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 		commerceChannel.setCompanyId(user.getCompanyId());
@@ -111,6 +122,40 @@ public class CommerceChannelLocalServiceImpl
 		resourceLocalService.addModelResources(commerceChannel, serviceContext);
 
 		return commerceChannel;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceChannel addOrUpdateCommerceChannel(
+			long userId, String externalReferenceCode, long siteGroupId,
+			String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			String commerceCurrencyCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceChannel commerceChannel = null;
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			User user = userLocalService.getUser(userId);
+
+			commerceChannel =
+				commerceChannelLocalService.fetchByExternalReferenceCode(
+					externalReferenceCode, user.getCompanyId());
+		}
+
+		if (commerceChannel == null) {
+			return commerceChannelLocalService.addCommerceChannel(
+				externalReferenceCode, siteGroupId, name, type,
+				typeSettingsUnicodeProperties, commerceCurrencyCode,
+				serviceContext);
+		}
+
+		return commerceChannelLocalService.updateCommerceChannel(
+			commerceChannel.getCommerceChannelId(), siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

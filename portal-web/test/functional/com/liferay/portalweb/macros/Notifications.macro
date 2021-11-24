@@ -295,4 +295,14 @@ definition {
 			value1 = "${contentBody}");
 	}
 
+	macro waitForNotificationFlexibly {
+		Pause(locator1 = "${waitingTime}");
+
+		while (IsElementNotPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) {
+			Pause(locator1 = "${flexibleRefreshingTime}");
+
+			Refresh();
+		}
+	}
+
 }

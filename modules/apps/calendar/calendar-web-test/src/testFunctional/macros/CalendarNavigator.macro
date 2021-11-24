@@ -243,4 +243,12 @@ definition {
 		}
 	}
 
+	macro gotoEditCalendarsManage {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${calendarManage}");
+
+		Calendar._editName(calendarName = "${editNameCalendarManage}");
+	}
+
 }

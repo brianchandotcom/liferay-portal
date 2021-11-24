@@ -827,5 +827,11 @@ definition {
 			locator1 = "Calendar#SMALL_CALENDAR_WEEK_START_DAY",
 			value1 = "${weekStartDay}");
 	}
+	
+	macro viewNameMyCalendars {
+		AssertElementPresent(
+			key_userCalendarName = "${userCalendarName}",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR");		
+	}
 
 }

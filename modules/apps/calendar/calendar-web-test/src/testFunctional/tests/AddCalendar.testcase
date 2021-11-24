@@ -211,11 +211,31 @@ definition {
 
 	@description = "LRQA-71360 - Verify that the name field is required"
 	@ignore = "Test Stub"
+	@priority = "4"
+	test DescriptionTranslationIconHasEnglishByDefault {
+
+		// TODO LRQA-71603 DescriptionTranslationIconHasEnglishByDefault pending implementation
+
+	}
+
+	@description = "LRQA-71597 - Verify that the name is a required field"
 	@priority = "5"
 	test NameFieldIsRequired {
+		CalendarNavigator.gotoMyCalendarsManage();
 
-		// TODO LRQA-71597 NameFieldIsRequired pending implementation
+		CalendarNavigator.gotoEditCalendarsManage(
+			calendarManage = "Test Test",
+			editNameCalendarManage = "");
 
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid name.");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.viewNameMyCalendars(userCalendarName = "Test Test");
+
+		
 	}
 
 	@description = "This is a use case for LPS-45062."

@@ -29,14 +29,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.text.Format;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -109,6 +113,9 @@ public class ObjectEntryRowInfoItemRenderer
 	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
 		throws PortalException {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry);
 
@@ -138,9 +145,6 @@ public class ObjectEntryRowInfoItemRenderer
 						entry.getKey());
 
 					if (objectField.getListTypeDefinitionId() != 0) {
-						ServiceContext serviceContext =
-							ServiceContextThreadLocal.getServiceContext();
-
 						ListTypeEntry listTypeEntry =
 							_listTypeEntryLocalService.fetchListTypeEntry(
 								objectField.getListTypeDefinitionId(),
@@ -151,6 +155,14 @@ public class ObjectEntryRowInfoItemRenderer
 					}
 					else if (Validator.isNull(
 								objectField.getRelationshipType())) {
+
+						if (Objects.equals(objectField.getType(), "Date")) {
+							Format dateFormat =
+								FastDateFormatFactoryUtil.getDate(
+									serviceContext.getLocale());
+
+							return dateFormat.format(entry.getValue());
+						}
 
 						return Optional.ofNullable(
 							entry.getValue()

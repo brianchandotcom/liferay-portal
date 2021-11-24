@@ -44,13 +44,17 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.io.Serializable;
 
+import java.text.Format;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -217,6 +221,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			ObjectField objectField, Map<String, Serializable> values)
 		throws PortalException {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		if (Objects.equals(
 				_getInfoFieldType(objectField), ImageInfoFieldType.INSTANCE)) {
 
@@ -230,9 +237,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			return webImage;
 		}
 		else if (objectField.getListTypeDefinitionId() != 0) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
 			ListTypeEntry listTypeEntry =
 				_listTypeEntryLocalService.fetchListTypeEntry(
 					objectField.getListTypeDefinitionId(),
@@ -247,6 +251,12 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			if (objectEntry != null) {
 				return objectEntry.getTitleValue();
 			}
+		}
+		else if (Objects.equals(objectField.getType(), "Date")) {
+			Format dateFormat = FastDateFormatFactoryUtil.getDate(
+				serviceContext.getLocale());
+
+			return dateFormat.format((Date)values.get(objectField.getName()));
 		}
 
 		return values.get(objectField.getName());

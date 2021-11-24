@@ -287,18 +287,13 @@ definition {
 				value1 = "1");
 
 			SystemSettings.saveConfiguration();
-
 		}
 
 		task ("Add a new Company") {
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			SignOut.signOut();
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 
 			User.firstLoginUI(
 				password = "test",

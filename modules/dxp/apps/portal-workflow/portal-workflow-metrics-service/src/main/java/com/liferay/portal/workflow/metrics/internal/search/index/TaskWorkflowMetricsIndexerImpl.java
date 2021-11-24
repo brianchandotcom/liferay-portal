@@ -30,6 +30,7 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
+import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
@@ -55,15 +56,7 @@ public class TaskWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements TaskWorkflowMetricsIndexer {
 
 	@Override
-	public Document addTask(
-		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
-		List<Assignment> assignments, String className, long classPK,
-		long companyId, boolean completed, Date completionDate,
-		Long completionUserId, Date createDate, boolean instanceCompleted,
-		Date instanceCompletionDate, long instanceId, Date modifiedDate,
-		String name, long nodeId, long processId, String processVersion,
-		long taskId, long userId) {
-
+	public Document addTask(AddTaskRequest addTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		documentBuilder.setValue("active", Boolean.TRUE);
@@ -72,9 +65,10 @@ public class TaskWorkflowMetricsIndexerImpl
 		List<Long> assignmentIds = new ArrayList<>();
 
 		_populateTaskAssignments(
-			assignmentGroupIds, assignmentIds, assignments);
+			assignmentGroupIds, assignmentIds, addTaskRequest.getAssignments());
 
-		String assignmentType = _getAssignmentType(assignments);
+		String assignmentType = _getAssignmentType(
+			addTaskRequest.getAssignments());
 
 		if (!assignmentIds.isEmpty()) {
 			documentBuilder.setLongs(
@@ -83,22 +77,24 @@ public class TaskWorkflowMetricsIndexerImpl
 		}
 
 		documentBuilder.setString(
-			"className", className
+			"className", addTaskRequest.getClassName()
 		).setLong(
-			"classPK", classPK
+			"classPK", addTaskRequest.getClassPK()
 		).setLong(
-			"companyId", companyId
+			"companyId", addTaskRequest.getCompanyId()
 		).setValue(
-			"completed", completed
+			"completed", addTaskRequest.isCompleted()
 		);
 
-		if (completed) {
+		if (addTaskRequest.isCompleted()) {
 			documentBuilder.setDate(
-				"completionDate", getDate(completionDate)
+				"completionDate", getDate(addTaskRequest.getCompletionDate())
 			).setLong(
-				"completionUserId", completionUserId
+				"completionUserId", addTaskRequest.getCompletionUserId()
 			);
 		}
+
+		Date createDate = addTaskRequest.getCreateDate();
 
 		documentBuilder.setDate(
 			"createDate", getDate(createDate)
@@ -109,37 +105,42 @@ public class TaskWorkflowMetricsIndexerImpl
 			"deleted", false
 		);
 
-		if (completed) {
+		if (addTaskRequest.isCompleted()) {
 			documentBuilder.setLong(
-				"duration", _getDuration(completionDate, createDate));
+				"duration",
+				_getDuration(addTaskRequest.getCompletionDate(), createDate));
 		}
 
 		documentBuilder.setValue(
-			"instanceCompleted", instanceCompleted
+			"instanceCompleted", addTaskRequest.isInstanceCompleted()
 		).setDate(
-			"instanceCompletionDate", getDate(instanceCompletionDate)
+			"instanceCompletionDate",
+			getDate(addTaskRequest.getInstanceCompletionDate())
 		).setLong(
-			"instanceId", instanceId
+			"instanceId", addTaskRequest.getInstanceId()
 		).setDate(
-			"modifiedDate", getDate(modifiedDate)
+			"modifiedDate", getDate(addTaskRequest.getModifiedDate())
 		).setString(
-			"name", name
+			"name", addTaskRequest.getName()
 		).setLong(
-			"nodeId", nodeId
+			"nodeId", addTaskRequest.getNodeId()
 		).setLong(
-			"processId", processId
+			"processId", addTaskRequest.getProcessId()
 		).setLong(
-			"taskId", taskId
+			"taskId", addTaskRequest.getTaskId()
 		).setString(
-			"uid", digest(companyId, taskId)
+			"uid",
+			digest(addTaskRequest.getCompanyId(), addTaskRequest.getTaskId())
 		).setLong(
-			"userId", userId
+			"userId", addTaskRequest.getUserId()
 		).setString(
-			"version", processVersion
+			"version", addTaskRequest.getProcessVersion()
 		);
 
-		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
-		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
+		setLocalizedField(
+			documentBuilder, "assetTitle", addTaskRequest.getAssetTitleMap());
+		setLocalizedField(
+			documentBuilder, "assetType", addTaskRequest.getAssetTypeMap());
 
 		Document document = documentBuilder.build();
 
@@ -147,7 +148,7 @@ public class TaskWorkflowMetricsIndexerImpl
 			() -> {
 				addDocument(document);
 
-				if (completed) {
+				if (addTaskRequest.isCompleted()) {
 					return;
 				}
 
@@ -155,10 +156,12 @@ public class TaskWorkflowMetricsIndexerImpl
 
 				UpdateDocumentRequest updateDocumentRequest =
 					new UpdateDocumentRequest(
-						_instanceWorkflowMetricsIndex.getIndexName(companyId),
+						_instanceWorkflowMetricsIndex.getIndexName(
+							addTaskRequest.getCompanyId()),
 						WorkflowMetricsIndexerUtil.digest(
 							_instanceWorkflowMetricsIndex.getIndexType(),
-							companyId, instanceId),
+							addTaskRequest.getCompanyId(),
+							addTaskRequest.getInstanceId()),
 						scriptBuilder.idOrCode(
 							StringUtil.read(
 								getClass(),
@@ -173,13 +176,15 @@ public class TaskWorkflowMetricsIndexerImpl
 							).put(
 								"assigneeIds", assignmentIds
 							).put(
-								"assigneeName", _getAssigneeName(assignments)
+								"assigneeName",
+								_getAssigneeName(
+									addTaskRequest.getAssignments())
 							).put(
 								"assigneeType", assignmentType
 							).put(
-								"taskId", taskId
+								"taskId", addTaskRequest.getTaskId()
 							).put(
-								"taskName", name
+								"taskName", addTaskRequest.getName()
 							).build()
 						).scriptType(
 							ScriptType.INLINE
@@ -195,6 +200,62 @@ public class TaskWorkflowMetricsIndexerImpl
 			});
 
 		return document;
+	}
+
+	@Override
+	public Document addTask(
+		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
+		List<Assignment> assignments, String className, long classPK,
+		long companyId, boolean completed, Date completionDate,
+		Long completionUserId, Date createDate, boolean instanceCompleted,
+		Date instanceCompletionDate, long instanceId, Date modifiedDate,
+		String name, long nodeId, long processId, String processVersion,
+		long taskId, long userId) {
+
+		AddTaskRequest.Builder builder = new AddTaskRequest.Builder();
+
+		return addTask(
+			builder.setAssetTitleMap(
+				assetTitleMap
+			).setAssetTypeMap(
+				assetTypeMap
+			).setAssignments(
+				assignments
+			).setClassName(
+				className
+			).setClassPK(
+				classPK
+			).setCompanyId(
+				companyId
+			).setCompleted(
+				completed
+			).setCompletionDate(
+				completionDate
+			).setCompletionUserId(
+				completionUserId
+			).setCreateDate(
+				createDate
+			).setInstanceCompleted(
+				instanceCompleted
+			).setInstanceCompletionDate(
+				instanceCompletionDate
+			).setInstanceId(
+				instanceId
+			).setModifiedDate(
+				modifiedDate
+			).setName(
+				name
+			).setNodeId(
+				nodeId
+			).setProcessId(
+				processId
+			).setProcessVersion(
+				processVersion
+			).setTaskId(
+				taskId
+			).setUserId(
+				userId
+			).build());
 	}
 
 	@Override

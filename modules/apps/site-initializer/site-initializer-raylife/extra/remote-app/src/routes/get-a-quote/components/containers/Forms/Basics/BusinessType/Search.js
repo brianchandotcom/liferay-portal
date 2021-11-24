@@ -16,7 +16,7 @@ import {
 	AVAILABLE_STEPS,
 	TOTAL_OF_FIELD,
 } from '~/routes/get-a-quote/utils/constants';
-import {shouldLoadProgressData} from '~/routes/get-a-quote/utils/util';
+import {getLoadedContentFlag} from '~/routes/get-a-quote/utils/util';
 
 import {BusinessTypeRadioGroup} from './RadioGroup';
 
@@ -34,7 +34,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 	const {businessTypes, isError, reload} = useBusinessTypes();
 	const {isSelected, updateState} = useTriggerContext();
 	const [isLoading, setIsLoading] = useState(false);
-	const loadProgressData = shouldLoadProgressData();
+	const {applicationId, backToEdit} = getLoadedContentFlag();
 
 	const templateName = 'i-am-unable-to-find-my-industry';
 	const selectedTrigger = isSelected(templateName);
@@ -55,7 +55,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 			}
 			await reload(searchTerm);
 			if (!searchTerm) {
-				if (loadProgressData) {
+				if (applicationId || backToEdit) {
 					setPercentage(
 						calculatePercentage(
 							TOTAL_OF_FIELD.BASICS - 1,

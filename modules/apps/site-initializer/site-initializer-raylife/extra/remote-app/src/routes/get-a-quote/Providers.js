@@ -6,10 +6,29 @@ import {LiferayAdapt} from '~/common/services/liferay/adapter';
 import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
 import {AppProvider} from '~/routes/get-a-quote/context/AppContext';
 import {getRaylifeApplicationById} from './services/RaylifeApplication';
-import {getApplicationIdSearchParam} from './utils/util';
+import {getLoadedContentFlag} from './utils/util';
+
+const contentFlag = getLoadedContentFlag();
+
+const getDefaultValues = () => {
+	const applicationForm = Storage.getItem(STORAGE_KEYS.APPLICATION_FORM);
+
+	if (contentFlag.backToEdit && applicationForm) {
+		return JSON.parse(applicationForm);
+	}
+
+	return {};
+};
 
 const Providers = ({children, initialValues}) => {
-	const form = useForm({defaultValues: initialValues, mode: 'onChange'});
+	const defaultValues = contentFlag.applicationId
+		? initialValues
+		: getDefaultValues();
+
+	const form = useForm({
+		defaultValues,
+		mode: 'onChange',
+	});
 
 	return (
 		<AppProvider>
@@ -23,13 +42,13 @@ const Providers = ({children, initialValues}) => {
 };
 
 const InitProvider = ({children}) => {
-	const [initialValues, setInitialValues] = useState({});
+	const [initialValues, setInitialValues] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const applicationId = contentFlag.applicationId;
 
 	const getInitialData = async () => {
 		setLoading(true);
 
-		const applicationId = getApplicationIdSearchParam();
 		let initialData = {};
 
 		try {
@@ -40,14 +59,8 @@ const InitProvider = ({children}) => {
 					data
 				);
 			}
-			else if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
-				initialData = JSON.parse(
-					Storage.getItem(STORAGE_KEYS.APPLICATION_FORM)
-				);
-			}
-		}
-		catch (error) {
-			console.warn(error.message);
+		} catch (error) {
+			console.error(error.message);
 		}
 
 		setInitialValues(initialData);

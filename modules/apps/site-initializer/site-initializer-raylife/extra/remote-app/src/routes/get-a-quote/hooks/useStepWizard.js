@@ -11,13 +11,15 @@ import {setSelectedStep} from '../context/actions';
 import {businessTotalFields} from '../utils/businessFields';
 import {AVAILABLE_STEPS, TOTAL_OF_FIELD} from '../utils/constants';
 import {propertyTotalFields} from '../utils/propertyFields';
-import {shouldLoadProgressData} from '../utils/util';
+import {getLoadedContentFlag} from '../utils/util';
 
 export function useStepWizard() {
 	const form = useWatch();
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
 	const {dispatch, state} = useContext(AppContext);
-	const loadProgressData = shouldLoadProgressData();
+	const {applicationId, backToEdit} = getLoadedContentFlag();
+
+	const loadInitialData = applicationId || backToEdit;
 
 	const {
 		control: {_fields},
@@ -34,10 +36,10 @@ export function useStepWizard() {
 	}, [state.selectedStep.section]);
 
 	useEffect(() => {
-		if (loadProgressData) {
+		if (loadInitialData) {
 			calculateAllSteps();
 		}
-	}, [loadProgressData]);
+	}, [loadInitialData]);
 
 	const calculateAllSteps = () => {
 		const stepName = Object.keys(form)[
@@ -74,7 +76,7 @@ export function useStepWizard() {
 	const _updateStepPercentage = () => {
 		switch (state.selectedStep.section) {
 			case AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section:
-				if (loadProgressData) {
+				if (loadInitialData) {
 					if (
 						state.selectedStep.subsection ===
 						AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION.subsection
@@ -97,8 +99,7 @@ export function useStepWizard() {
 							state.selectedStep.percentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
-					}
-					else {
+					} else {
 						if (form?.basics?.businessCategoryId) {
 							return setPercentage(
 								100,

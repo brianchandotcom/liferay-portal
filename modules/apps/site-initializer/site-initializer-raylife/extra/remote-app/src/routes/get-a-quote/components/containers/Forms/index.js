@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
-import {shouldLoadProgressData} from '~/routes/get-a-quote/utils/util';
+import {getLoadedContentFlag} from '~/routes/get-a-quote/utils/util';
 
 import {FormBasicBusinessInformation} from './Basics/BusinessInformation';
 import {FormBasicBusinessType} from './Basics/BusinessType';
@@ -18,7 +18,7 @@ export function Forms({form}) {
 	const {selectedStep, setSection} = useStepWizard();
 	const [loaded, setLoaded] = useState(false);
 	const [loadedSections, setLoadedSections] = useState(false);
-	const loadProgressData = shouldLoadProgressData();
+	const {backToEdit} = getLoadedContentFlag();
 
 	useEffect(() => {
 		if (!loaded && form) {
@@ -28,10 +28,9 @@ export function Forms({form}) {
 	}, [form]);
 
 	useEffect(() => {
-		if (loadProgressData) {
+		if (backToEdit) {
 			loadSections();
-		}
-		else {
+		} else {
 			setLoadedSections(true);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,11 +51,9 @@ export function Forms({form}) {
 
 				if (stepBasicName === 'businessInformation') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION);
-				}
-				else if (stepBasicName === 'business-type') {
+				} else if (stepBasicName === 'business-type') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
-				}
-				else {
+				} else {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}
 				break;

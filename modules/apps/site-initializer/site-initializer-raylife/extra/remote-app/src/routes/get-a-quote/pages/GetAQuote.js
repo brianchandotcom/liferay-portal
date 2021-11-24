@@ -42,15 +42,13 @@ const QuoteApp = () => {
 		<div className="form-area">
 			<Steps />
 
-			<div>
+			<main>
 				<h2 className="title title-area">
 					<FormTitle />
 				</h2>
 
 				<Forms form={form} />
-			</div>
-
-			<div className="info-area"></div>
+			</main>
 		</div>
 	);
 };

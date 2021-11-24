@@ -22,10 +22,8 @@ const adaptToBusinessType = (data) =>
  */
 const adaptToRaylifeApplicationToForm = (data) => {
 	const basics = {
-
-		// businessCategoryId: '43004',
-
 		applicationId: data.id,
+		businessCategoryId: '43004',
 		businessInformation: {
 			business: {
 				email: data.email,
@@ -44,6 +42,7 @@ const adaptToRaylifeApplicationToForm = (data) => {
 		},
 		businessSearch: 'pet',
 		product: 'Pet Stores',
+		productQuote: 43359,
 		properties: {
 			naics: '453910',
 			segment: 'Retail',

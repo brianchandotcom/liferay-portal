@@ -7,10 +7,11 @@ export function getApplicationIdSearchParam() {
 	return applicationId;
 }
 
-export function shouldLoadProgressData() {
-	return (
-		getApplicationIdSearchParam() ||
-		(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT) &&
-			JSON.parse(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT)))
-	);
+export function getLoadedContentFlag() {
+	return {
+		applicationId: getApplicationIdSearchParam(),
+		backToEdit:
+			Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT) &&
+			JSON.parse(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT)),
+	};
 }

@@ -388,7 +388,8 @@ definition {
 			filePath = "",
 			successFileName = "WebContentTitle-en_US-es_ES.xlf",
 			successFileNumber = "1 File Published",
-			webContentTitle = "WebContentTitle");
+			webContentTitle = "WebContentTitle",
+			workflow = "true");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 
@@ -503,7 +504,8 @@ definition {
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US_translated.zip",
 			filePath = "",
-			webContentTitle = "WebContentTitle");
+			webContentTitle = "WebContentTitle",
+			workflow = "true");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 
@@ -740,7 +742,7 @@ definition {
 			fileName = "WebContentTitle-en_US-fr_FR.xlf",
 			filePath = "/WebContentTitle-en_US",
 			webContentTitle = "WebContentTitle",
-			workflowResubmit = "true");
+			workflow = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

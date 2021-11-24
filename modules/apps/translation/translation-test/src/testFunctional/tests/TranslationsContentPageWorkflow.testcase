@@ -78,7 +78,8 @@ definition {
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
 			filePath = "/TranslationContentPage-en_US",
-			pageName = "TranslationContentPage");
+			pageName = "TranslationContentPage",
+			workflow = "true");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 
@@ -402,7 +403,8 @@ definition {
 			pageName = "ContentPage",
 			successFileName = "ContentPage-en_US-es_ES.xlf",
 			successFileName2 = "ContentPage-en_US-zh_CN.xlf",
-			successFileNumber = "All Files Published");
+			successFileNumber = "All Files Published",
+			workflow = "true");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 
@@ -553,7 +555,8 @@ definition {
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
 			filePath = "/TranslationContentPage-en_US",
-			pageName = "TranslationContentPage");
+			pageName = "TranslationContentPage",
+			workflow = "true");
 
 		Navigator.openURL();
 

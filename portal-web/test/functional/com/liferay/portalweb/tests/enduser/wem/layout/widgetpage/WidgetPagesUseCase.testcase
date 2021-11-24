@@ -574,7 +574,7 @@ definition {
 		}
 
 		task ("Delete default friendly url") {
-			Page.deleteFriendlyURLPG(friendlyUrlLocalized = "en_US");
+			Page.deleteFriendlyURLPG(friendlyUrlLocalized = "en-US");
 		}
 
 		task ("View no error thrown on console when navigating to page") {

@@ -183,8 +183,8 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
-			webContentContent = "Alice's Adventures in Wonderland",
-			webContentTitle = "Web Content Title");
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
 
 		PortletEntry.publish();
 
@@ -195,14 +195,14 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
 		AssertTextEquals(
-			key_tagName = "adventures",
+			key_tagName = "${tagName}",
 			locator1 = "AssetCategorization#TAG",
-			value1 = "adventures");
+			value1 = "${tagName}");
 	}
 
 	macro addContentPage {
@@ -1458,37 +1458,35 @@ definition {
 	macro editTagsAndDeleteAutoTaggedWebContent {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "${tagName}");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.removeTag(tagName = "dxp");
+		AssetCategorization.removeTag(tagName = "${tagName}");
 
 		AssetCategorization.addTag(tagName = "new tag");
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.viewNoTag(tagName = "dxp");
+		AssetCategorization.viewNoTag(tagName = "${tagName}");
 
 		AssetCategorization.viewTag(tagName = "new tag");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContent.deleteCP(
-			siteURLKey = "site-name",
-			webContentTitle = "Digital Transformation or Digital Experience?");
+		WebContent.moveToRecycleBinCP(webContentTitle = "${webContentTitle}");
 	}
 
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {

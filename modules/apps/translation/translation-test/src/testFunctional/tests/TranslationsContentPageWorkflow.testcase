@@ -201,7 +201,8 @@ definition {
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP_utf8.xlf",
 			filePath = "/TranslationContentPage-en_US",
-			pageName = "TranslationContentPage");
+			pageName = "TranslationContentPage",
+			workflow = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -927,7 +928,8 @@ definition {
 			contentPageTranslation = "true",
 			fileName = "TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf",
 			filePath = "/TranslationContentPage-en_US",
-			pageName = "TranslationContentPage");
+			pageName = "TranslationContentPage",
+			workflow = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

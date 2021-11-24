@@ -3,10 +3,21 @@
 		{
 			"fields": [
 				{
-					"dataType": "object",
-					"label": "text-color",
-					"name": "textColor",
-					"type": "colorPalette"
+					"dataType": "string",
+					"defaultValue": "regular",
+					"label": "card-type",
+					"name": "cardType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "regular"
+							},
+							{
+								"value": "featured"
+							}
+						]
+					}
 				}
 			]
 		}

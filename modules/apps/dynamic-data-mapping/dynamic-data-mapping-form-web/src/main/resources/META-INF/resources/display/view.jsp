@@ -129,7 +129,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							<%
 							DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
 
-							String fieldLabelValue = msvv.getFieldLabelValue(themeDisplay.getLocale());
+							String fieldLabelValue = msvv.getFieldLabelValue(displayLocale);
 
 							if (Validator.isNull(fieldLabelValue)) {
 								fieldLabelValue = msvv.getFieldName();
@@ -144,7 +144,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							<%
 							DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 
-							String fieldLabelValue = rv.getFieldLabelValue(themeDisplay.getLocale());
+							String fieldLabelValue = rv.getFieldLabelValue(displayLocale);
 
 							if (Validator.isNull(fieldLabelValue)) {
 								fieldLabelValue = rv.getFieldName();

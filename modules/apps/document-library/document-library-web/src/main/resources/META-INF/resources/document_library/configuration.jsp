@@ -42,6 +42,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
+			<aui:input name="preferences--repositoryId--" type="hidden" value="<%= dlAdminDisplayContext.getRepositoryId() %>" />
 			<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= dlAdminDisplayContext.getRootFolderId() %>" />
 			<aui:input name="preferences--displayViews--" type="hidden" />
 			<aui:input name="preferences--entryColumns--" type="hidden" />
@@ -162,6 +163,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								};
 
 								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+
+								var repositoryIdElement = document.querySelector(
+									'#<portlet:namespace />repositoryId'
+								);
+
+								if (repositoryIdElement != null) {
+									repositoryIdElement.value = selectedItem.repositoryid;
+								}
 
 								var rootFolderInTrashWarning = document.querySelector(
 									'#<portlet:namespace />rootFolderInTrash'

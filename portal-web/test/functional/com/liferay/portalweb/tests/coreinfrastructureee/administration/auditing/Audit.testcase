@@ -58,25 +58,11 @@ definition {
 	@priority = "5"
 	test AssertInvalidXRequestId {
 		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Audit",
-			configurationName = "Audit Log Context",
-			configurationScope = "System Scope");
-
-		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
-
-		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
-
-		PortletEntry.save();
 
 		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
@@ -96,25 +82,11 @@ definition {
 	@priority = "5"
 	test AssertValidXRequestId {
 		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Audit",
-			configurationName = "Audit Log Context",
-			configurationScope = "System Scope");
-
-		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
-
-		Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_USE_X-REQUEST-ID");
-
-		PortletEntry.save();
 
 		Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 

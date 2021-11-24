@@ -264,4 +264,218 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This is a use case for LRQA-66285 to Schedule WebContent changes with DB Partitioning activated across various Companies."
+	@priority = "4"
+	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
+		property database.types = "mysql";
+		property custom.properties = "database.partition.enabled=true";
+		property test.name.skip.portal.instance = "DatabasePartitioning#Schedule WebContent changes with DB Partitioning activated across various Companies";
+
+		task ("Edit Check Interval") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+			
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+			
+			Type(
+				key_text = "Check Interval",
+				locator1 = "TextInput#ANY",
+				value1 = "1");
+
+			SystemSettings.saveConfiguration();
+
+		}
+
+		task ("Add a new Company") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			SignOut.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Add a WebContent article on new Company") {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Web Content");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayMonth = DateUtil.getCurrentMonth();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var displayDate = "${displayMonth}/${displayDateDay}/${displayDateYear}";
+
+			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+			var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
+			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
+			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+			var displayDateMinuteFuture = ${displayDateMinute} + 14;
+			var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
+
+			WebContent.editDisplayDate(
+				displayDate = "${displayDate}",
+				displayTime = "${displayTime}");
+
+			PortletEntry.publish();
+
+			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Remove",
+				roleList = "guest");
+
+			IFrame.closeFrame();
+
+		}
+
+		task ("Add a page and WebContent display select a WebContent article") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.addPublicPage(pageName = "Web Content Display Page");
+
+			Navigator.gotoPage(
+				baseURL = "www.able.com:8080",
+				pageName = "Web Content Display Page");
+
+			Portlet.addPG(portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			IFrame.closeFrame();
+
+		}
+
+		task ("View the warning message shown in Web Content Display") {
+			AssertTextEquals.assertPartialText(
+				key_warningMessage = "WC WebContent Title is scheduled and will be displayed",
+				locator1 = "Message#WARNING_SPECIFIC",
+				value1 = "WC WebContent Title is scheduled and will be displayed");
+		}
+
+		task ("Add a WebContent article on default Company") {
+			SignOut.signOut();
+
+			User.firstLoginPG();		
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Web Content");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayMonth = DateUtil.getCurrentMonth();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var displayDate = "${displayMonth}/${displayDateDay}/${displayDateYear}";
+
+			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+			var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
+			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
+			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+			var displayDateMinuteFuture = ${displayDateMinute} + 6;
+			var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
+
+			WebContent.editDisplayDate(
+				displayDate = "${displayDate}",
+				displayTime = "${displayTime}");
+
+			PortletEntry.publish();
+
+			PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Remove",
+				roleList = "Guest");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Add a page and WebContent display select a WebContent article") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.addPublicPage(pageName = "Web Content Display Page");
+
+			Navigator.gotoPage(pageName = "Web Content Display Page");
+
+			Portlet.addPG(portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			IFrame.closeFrame();
+
+		}
+
+		task ("View the warning message shown in Web Content Display") {
+			AssertTextEquals.assertPartialText(
+				key_warningMessage = "WC WebContent Title is scheduled and will be displayed",
+				locator1 = "Message#WARNING_SPECIFIC",
+				value1 = "WC WebContent Title is scheduled and will be displayed");
+		}
+
+		task ("View WebContent Article Publish on default Company") {
+			Pause(locator1 = "180000");
+
+			Refresh();
+
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		}
+
+		task ("New Company publish it's WebContent Article") {
+			SignOut.signOut();
+
+			Navigator.gotoPage(
+				baseURL = "www.able.com:8080",
+				pageName = "Web Content Display Page");
+
+			AssertTextEquals.assertPartialText(
+				key_warningMessage = "WC WebContent Title is scheduled and will be displayed",
+				locator1 = "Message#WARNING_SPECIFIC",
+				value1 = "WC WebContent Title is scheduled and will be displayed");
+
+			Pause(locator1 = "120000");
+
+			Refresh();
+			
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		}
+
+		task ("WebContent Article not repulish on default Company") {
+			SignOut.signOut();
+
+			User.firstLoginPG();
+
+			Navigator.gotoPage(pageName = "Web Content Display Page");
+
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		}
+	}
+
 }

@@ -343,7 +343,6 @@ definition {
 				roleList = "guest");
 
 			IFrame.closeFrame();
-
 		}
 
 		task ("Add a page and WebContent display select a WebContent article") {
@@ -362,7 +361,6 @@ definition {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 			IFrame.closeFrame();
-
 		}
 
 		task ("View the warning message shown in Web Content Display") {
@@ -429,7 +427,6 @@ definition {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 			IFrame.closeFrame();
-
 		}
 
 		task ("View the warning message shown in Web Content Display") {

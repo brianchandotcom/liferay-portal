@@ -25,12 +25,16 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.snapshot.TranslationSnapshot;
@@ -42,6 +46,7 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.PortletRequest;
@@ -218,38 +223,80 @@ public class TranslationEntryAssetRenderer
 
 	private Optional<String> _getInfoItemTitleOptional(Locale locale) {
 		try {
+			EntryReference entryReference = _resolveIndirectEntryReference(
+				locale);
+
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
-					_translationEntry.getClassName());
+					entryReference.getClassName());
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					_translationEntry.getClassName());
+					entryReference.getClassName());
 
 			Object object = infoItemObjectProvider.getInfoItem(
-				_translationEntry.getClassPK());
+				entryReference.getClassPK());
 
-			InfoFieldValue<Object> titleInfoFieldValue =
-				infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
-
-			if (titleInfoFieldValue != null) {
-				return Optional.ofNullable(
-					(String)titleInfoFieldValue.getValue(locale));
-			}
-
-			InfoFieldValue<Object> nameInfoFieldValue =
-				infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
-
-			return Optional.ofNullable(
-				(String)nameInfoFieldValue.getValue(locale));
+			return _getTitleOptional(
+				object, infoItemFieldValuesProvider, locale
+			).map(
+				title -> title + entryReference.getSuffix()
+			);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
 			return Optional.empty();
 		}
+	}
+
+	private Optional<String> _getTitleOptional(
+		Object object,
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Locale locale) {
+
+		InfoFieldValue<Object> titleInfoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
+
+		if (titleInfoFieldValue != null) {
+			return Optional.ofNullable(
+				(String)titleInfoFieldValue.getValue(locale));
+		}
+
+		InfoFieldValue<Object> nameInfoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
+
+		return Optional.ofNullable((String)nameInfoFieldValue.getValue(locale));
+	}
+
+	private EntryReference _resolveIndirectEntryReference(Locale locale) {
+		if (!Objects.equals(
+				_translationEntry.getClassName(),
+				SegmentsExperience.class.getName())) {
+
+			return new EntryReference(
+				_translationEntry.getClassName(),
+				_translationEntry.getClassPK(), StringPool.BLANK);
+		}
+
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				_translationEntry.getClassPK());
+
+		if (segmentsExperience == null) {
+			return new EntryReference(
+				_translationEntry.getClassName(),
+				_translationEntry.getClassPK(), StringPool.BLANK);
+		}
+
+		return new EntryReference(
+			segmentsExperience.getClassName(), segmentsExperience.getClassPK(),
+			StringBundler.concat(
+				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+				segmentsExperience.getName(locale),
+				StringPool.CLOSE_PARENTHESIS));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -259,5 +306,31 @@ public class TranslationEntryAssetRenderer
 	private final TranslationEntry _translationEntry;
 	private final TranslationInfoFieldChecker _translationInfoFieldChecker;
 	private final TranslationSnapshotProvider _translationSnapshotProvider;
+
+	private static class EntryReference {
+
+		public EntryReference(String className, long classPK, String suffix) {
+			_className = className;
+			_classPK = classPK;
+			_suffix = suffix;
+		}
+
+		public String getClassName() {
+			return _className;
+		}
+
+		public long getClassPK() {
+			return _classPK;
+		}
+
+		public String getSuffix() {
+			return _suffix;
+		}
+
+		private final String _className;
+		private final long _classPK;
+		private final String _suffix;
+
+	}
 
 }

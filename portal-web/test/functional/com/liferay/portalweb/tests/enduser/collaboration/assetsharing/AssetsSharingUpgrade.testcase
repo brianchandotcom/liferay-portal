@@ -29,6 +29,8 @@ definition {
 		Upgrade.viewSharedBlog();
 
 		Upgrade.revokeAndUpdateSharedEntry();
+
+		Upgrade.viewNoShareOptionAfterDisabled();
 	}
 
 	@priority = "5"
@@ -42,6 +44,8 @@ definition {
 		Upgrade.viewSharedBlog();
 
 		Upgrade.revokeAndUpdateSharedEntry();
+
+		Upgrade.viewNoShareOptionAfterDisabled();
 	}
 
 }

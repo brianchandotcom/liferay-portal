@@ -17,19 +17,19 @@ export const emptyStateNoSegments = {
 	updateVariationsPriorityURL:
 		'http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_asset_list_web_portlet_AssetListPortlet_mvcRenderCommandName=%2Fasset_list%2Fupdate_variations_priority&p_p_auth=V5P1LU54',
 	componentId: null,
-	assetEntryListSegmentsEntryRels: [
+	assetListEntrySegmentsEntryRels: [
 		{
 			active: true,
 			assetListEntrySegmentsEntryRelId: 0,
 			deleteAssetListEntryVariationURL: '',
-			label: 'Anyone',
+			name: 'Anyone',
 			editAssetListEntryURL: 'edit-asset-list-entry-url',
 		},
 	],
 	openSelectSegmentsEntryDialogMethod: 'openSelectSegmentsEntryDialogMethod',
 	portletId: 'com_liferay_asset_list_web_portlet_AssetListPortlet',
-	validAssetListEntry: false,
-	availableSegmentsEntries: false,
+	assetListEntryValid: false,
+	segmentsEntriesAvailables: false,
 	locale: {
 		ISO3Country: 'USA',
 		ISO3Language: 'eng',
@@ -52,51 +52,51 @@ export const emptyStateNoSegments = {
 
 export const emptyStateOneAvailableSegments = {
 	...emptyStateNoSegments,
-	availableSegmentsEntries: true,
+	segmentsEntriesAvailables: true,
 };
 
 export const listWithTwoVariations = {
 	...emptyStateNoSegments,
 	...emptyStateOneAvailableSegments,
-	assetEntryListSegmentsEntryRels: [
+	assetListEntrySegmentsEntryRels: [
 		{
 			active: true,
 			assetListEntrySegmentsEntryRelId: 0,
 			deleteAssetListEntryVariationURL: '',
-			label: 'Anyone',
+			name: 'Anyone',
 			editAssetListEntryURL: 'edit-asset-list-entry-url-0',
 		},
 		{
 			active: false,
 			assetListEntrySegmentsEntryRelId: 1,
 			deleteAssetListEntryVariationURL: 'delete-asset-list-entry-url-1',
-			label: 'Liferayers',
+			name: 'Liferayers',
 			editAssetListEntryURL: 'edit-asset-list-entry-url-1',
 		},
 	],
-	validAssetListEntry: true,
+	assetListEntryValid: true,
 };
 
 export const listWithFourVariationsAndNoMoreSegmentsEntries = {
 	...emptyStateNoSegments,
 	...emptyStateOneAvailableSegments,
 	...listWithTwoVariations,
-	assetEntryListSegmentsEntryRels: [
-		...listWithTwoVariations.assetEntryListSegmentsEntryRels,
+	assetListEntrySegmentsEntryRels: [
+		...listWithTwoVariations.assetListEntrySegmentsEntryRels,
 		{
 			active: false,
 			assetListEntrySegmentsEntryRelId: 2,
 			deleteAssetListEntryVariationURL: 'delete-asset-list-entry-url-2',
-			label: 'Admins',
+			name: 'Admins',
 			editAssetListEntryURL: 'edit-asset-list-entry-url-2',
 		},
 		{
 			active: false,
 			assetListEntrySegmentsEntryRelId: 3,
 			deleteAssetListEntryVariationURL: 'delete-asset-list-entry-url-3',
-			label: 'Random',
+			name: 'Random',
 			editAssetListEntryURL: 'edit-asset-list-entry-url-3',
 		},
 	],
-	availableSegmentsEntries: false,
+	segmentsEntriesAvailables: false,
 };

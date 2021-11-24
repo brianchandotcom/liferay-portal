@@ -44,7 +44,7 @@ public class SXPBlueprintUtil {
 		return sxpBlueprint2;
 	}
 
-	protected static SXPBlueprint unpack(SXPBlueprint sxpBlueprint) {
+	public static SXPBlueprint unpack(SXPBlueprint sxpBlueprint) {
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
 		if (configuration != null) {

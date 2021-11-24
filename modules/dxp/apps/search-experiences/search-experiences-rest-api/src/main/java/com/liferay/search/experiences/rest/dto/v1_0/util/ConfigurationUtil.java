@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -90,6 +91,15 @@ public class ConfigurationUtil {
 		if (clause.getQuery() instanceof Map) {
 			clause.setQuery(
 				JSONFactoryUtil.createJSONObject((Map<?, ?>)clause.getQuery()));
+		}
+		else if (clause.getQuery() instanceof String) {
+			try {
+				clause.setQuery(
+					JSONFactoryUtil.createJSONObject(
+						(String)clause.getQuery()));
+			}
+			catch (JSONException jsonException) {
+			}
 		}
 	}
 

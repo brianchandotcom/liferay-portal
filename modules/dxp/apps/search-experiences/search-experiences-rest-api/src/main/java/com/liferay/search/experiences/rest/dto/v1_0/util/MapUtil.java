@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import java.util.HashMap;
@@ -31,18 +32,28 @@ public class MapUtil {
 
 		Map<String, Object> values2 = new HashMap<>(values1);
 
-		values2.forEach(
-			(name, value) -> {
-				if (value instanceof Map) {
-					values1.put(
-						name,
-						JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-				}
-				else if (value instanceof Object[]) {
-					values1.put(
-						name, JSONFactoryUtil.createJSONArray((Object[])value));
-				}
-			});
+		values2.forEach((name, value) -> values1.put(name, _unpack(value)));
+	}
+
+	private static Object _unpack(Object value) {
+		if (value instanceof Map) {
+			return JSONFactoryUtil.createJSONObject((Map<?, ?>)value);
+		}
+
+		if (value instanceof Object[]) {
+			return JSONFactoryUtil.createJSONArray((Object[])value);
+		}
+
+		if (value instanceof String) {
+			try {
+				return JSONFactoryUtil.createJSONObject((String)value);
+			}
+			catch (JSONException jsonException) {
+				return value;
+			}
+		}
+
+		return value;
 	}
 
 }

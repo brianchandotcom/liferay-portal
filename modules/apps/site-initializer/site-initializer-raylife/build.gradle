@@ -50,13 +50,13 @@ processResources {
 	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
 		dependsOn buildExtraRemoteApp
 
-		into("site-initializer/documents/remote-app") {
+		into("site-initializer/documents/company/remote-app") {
 			from new File(projectDir, "extra/remote-app/build/static/js")
 			include "*.js"
 		}
 	}
 	else {
-		into("site-initializer/documents/remote-app") {
+		into("site-initializer/documents/company/remote-app") {
 			from zipTree(configurations.extraRemoteApp.singleFile)
 		}
 	}

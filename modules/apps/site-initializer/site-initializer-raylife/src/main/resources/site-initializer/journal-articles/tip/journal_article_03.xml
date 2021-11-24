@@ -14,7 +14,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pharetra felis eget dictum vestibulum. Nullam vulputate dolor erat, in facilisis nisl luctus nec.<br /> <br /> If you have questions or need help click the chat button in the bottom right to chat with an Agent.</p>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcakpfv" name="titleIcon" type="image">
-		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/help_circle_full.svg$]]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/help_circle_full.svg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcafeqv" name="listIcon" type="image">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
@@ -26,7 +26,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[<p><a href="https://www.liferay.com/home" target="_blank">Learn More</a></p>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcafpqv" name="externalLinkIcon" type="image">
-		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/launch_rounded.svg$]]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/launch_rounded.svg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="txfghpqv" name="pageOptions" type="checkbox_multiple">
 		<dynamic-content language-id="en_US"><![CDATA[dismissible]]></dynamic-content>

@@ -14,7 +14,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Buying insurance</strong> is rated 3rd out of the 100 <strong>most undesirable tasks</strong> that business owners have to do. The only two worse items are firing employees and paying taxes. That's why we <strong>reinvented the insurance buying process</strong> to make it as quick and easy as possible!</p>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcakpfv" name="titleIcon" type="image">
-		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/help_circle_full.svg$]]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/help_circle_full.svg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcafeqv" name="listIcon" type="image">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>

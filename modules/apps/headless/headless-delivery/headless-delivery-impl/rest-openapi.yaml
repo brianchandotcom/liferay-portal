@@ -3106,7 +3106,12 @@ components:
                     # @review
                     description:
                         The type of pagination.
-                    enum: [None, Regular, Simple]
+                    enum: [
+                        None,
+                        Numeric,
+                        # "Deprecated as of Cavenaugh (7.4.x), replaced by Numeric"
+                        Regular,
+                        Simple]
                     type: string
                 showAllItems:
                     # @review

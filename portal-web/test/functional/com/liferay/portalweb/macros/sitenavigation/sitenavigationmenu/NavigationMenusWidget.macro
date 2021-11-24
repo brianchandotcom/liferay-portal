@@ -90,7 +90,7 @@ definition {
 		var index = "1";
 
 		for (var menuItem : list "${menuItemList}") {
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				key_index = "${index}",
 				locator1 = "NavigationMenusWidget#MENU_ITEM",
 				value1 = "${menuItem}");

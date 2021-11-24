@@ -19,22 +19,6 @@
 		return;
 	}
 
-	const templateHTML =
-		'<a' +
-		' class="cke_button cke_button__{name} {cssClass}"' +
-		' hidefocus="true"' +
-		' id="{id}"' +
-		' onclick="CKEDITOR.tools.callFunction({clickFn},event,this);return false;"' +
-		' role="button"' +
-		' tabindex="-1"' +
-		' title="{title}"' +
-		'>' +
-		'<span class="cke_button_icon cke_button__{icon}_icon">&nbsp;</span>' +
-		'<span class="cke_button_label cke_button__{label}_label" style="display:inline-block;">{label}</span>' +
-		'</a>';
-
-	const template = CKEDITOR.addTemplate('balloonToolbarButton', templateHTML);
-
 	CKEDITOR.ui.balloonToolbarButton = CKEDITOR.tools.createClass({
 		// eslint-disable-next-line
 		$: function (definition) {
@@ -75,6 +59,28 @@
 					id,
 				};
 
+				const template = new CKEDITOR.template((data) => {
+					const output = [
+						`<a class="cke_button cke_button__{name} {cssClass}" hidefocus="true" id="{id}" onclick="CKEDITOR.tools.callFunction({clickFn},event,this);return false;" role="button" tabindex="-1" title="{title}">`,
+					];
+
+					if (data.icon) {
+						output.push(
+							'<span class="cke_button_icon cke_button__{icon}_icon">&nbsp;</span>'
+						);
+					}
+
+					if (data.label) {
+						output.push(
+							'<span class="cke_button_label cke_button__{label}_label" style="display:inline-block;">{label}</span>'
+						);
+					}
+
+					output.push('</a>');
+
+					return output.join('');
+				});
+
 				const clickFn = CKEDITOR.tools.addFunction(() => {
 					instance.execute();
 				});
@@ -85,7 +91,7 @@
 					cssClass: this.cssClass ? this.cssClass : '',
 					icon: this.icon,
 					id,
-					label: this.label || '',
+					label: this.label,
 					title: this.title || '',
 				};
 

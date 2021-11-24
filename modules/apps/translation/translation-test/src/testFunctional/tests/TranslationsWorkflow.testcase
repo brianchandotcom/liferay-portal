@@ -145,7 +145,7 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Web Content Article");
+			workflowResourceValue = "Translation");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -669,7 +669,7 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Web Content Article");
+			workflowResourceValue = "Translation");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

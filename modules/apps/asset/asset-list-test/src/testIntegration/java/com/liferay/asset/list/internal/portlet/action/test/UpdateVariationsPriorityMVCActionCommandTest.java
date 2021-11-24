@@ -99,7 +99,7 @@ public class UpdateVariationsPriorityMVCActionCommandTest {
 		};
 
 		mockLiferayPortletActionRequest.addParameter(
-			"variationsPriority", StringUtils.join(priorities, ","));
+			"variations_priority", StringUtils.join(priorities, ","));
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",

@@ -197,11 +197,12 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		DMDocument.addDMShortcutCP(
+		DMDocument.addDMShortcutPG(
+			contentPage = "Test Content Page Name",
 			dmDocumentTitle = "Document_1.jpg",
 			siteName = "Site Name");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
 
 		AssertVisible(
 			key_dmDocumentFileName = "Document_1.jpg",

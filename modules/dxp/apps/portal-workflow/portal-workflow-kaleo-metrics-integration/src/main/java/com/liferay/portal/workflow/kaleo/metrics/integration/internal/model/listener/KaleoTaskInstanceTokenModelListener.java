@@ -55,33 +55,10 @@ public class KaleoTaskInstanceTokenModelListener
 					return null;
 				}
 
-				List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
-					_kaleoTaskAssignmentInstanceLocalService.
-						getKaleoTaskAssignmentInstances(
-							kaleoTaskInstanceToken.
-								getKaleoTaskInstanceTokenId());
-
 				_taskWorkflowMetricsIndexer.addTask(
-					_indexerHelper.createAssetTitleLocalizationMap(
-						kaleoTaskInstanceToken.getClassName(),
-						kaleoTaskInstanceToken.getClassPK(),
-						kaleoTaskInstanceToken.getGroupId()),
-					_indexerHelper.createAssetTypeLocalizationMap(
-						kaleoTaskInstanceToken.getClassName(),
-						kaleoTaskInstanceToken.getGroupId()),
-					_indexerHelper.toAssignments(kaleoTaskAssignmentInstances),
-					kaleoTaskInstanceToken.getClassName(),
-					kaleoTaskInstanceToken.getClassPK(),
-					kaleoTaskInstanceToken.getCompanyId(), false, null, null,
-					kaleoTaskInstanceToken.getCreateDate(), false, null,
-					kaleoTaskInstanceToken.getKaleoInstanceId(),
-					kaleoTaskInstanceToken.getModifiedDate(),
-					kaleoTaskInstanceToken.getKaleoTaskName(),
-					kaleoTaskInstanceToken.getKaleoTaskId(),
-					kaleoTaskInstanceToken.getKaleoDefinitionId(),
-					kaleoDefinitionVersion.getVersion(),
-					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-					kaleoTaskInstanceToken.getUserId());
+					_indexerHelper.createAddTaskRequest(
+						null, kaleoTaskInstanceToken,
+						kaleoDefinitionVersion.getVersion()));
 
 				return null;
 			});

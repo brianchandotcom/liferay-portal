@@ -11,7 +11,7 @@ definition {
 		User.firstLoginUI();
 	}
 
-	@description = "LPS-133646 and LPS-133653 TC-1: Asserting that information is present in the logs after enabling log context & Incoming X-Request-ID."
+	@description = "LPS-133646 and LPS-133653 TC-1: Verify that information is present in the logs after enabling log context & Incoming X-Request-ID."
 	@priority = "5"
 	@uitest
 	test AssertAuditConsoleInformationIsPresentAfterEnabledLog {
@@ -54,7 +54,7 @@ definition {
 			value8 = "userId:${userId}");
 	}
 
-	@description = "LPS-133646 and LPS-133653 TC-2: Asserting that Console output the same X-Request-ID as inputted X-Request-ID."
+	@description = "LPS-133646 and LPS-133653 TC-2: Verify that Console outputs a different X-Request-ID if an invalid X-Request-ID was inputted."
 	@priority = "5"
 	test AssertInvalidXRequestId {
 		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
@@ -78,7 +78,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
 	}
 
-	@description = "LPS-133646 and LPS-133653 TC-3: Asserting that Console output a different X-Request-ID if an invalid X-Request-ID was inputted."
+	@description = "LPS-133646 and LPS-133653 TC-3: Verify that Console outputs the same X-Request-ID as inputted X-Request-ID."
 	@priority = "5"
 	test AssertValidXRequestId {
 		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";

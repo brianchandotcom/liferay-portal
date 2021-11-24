@@ -3328,11 +3328,17 @@ public interface PropsKeys {
 	public static final String UNICODE_TEXT_NORMALIZER_FORM =
 		"unicode.text.normalizer.form";
 
+	public static final String UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE =
+		"upgrade.concurrent.process.list.max.size";
+
 	public static final String UPGRADE_DATABASE_AUTO_RUN =
 		"upgrade.database.auto.run";
 
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		"upgrade.database.transactions.disabled";
+
+	public static final String UPGRADE_JDBC_RESULT_SET_FETCH_SIZE =
+		"upgrade.jdbc.result.set.fetch.size";
 
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";

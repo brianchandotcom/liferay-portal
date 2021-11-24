@@ -8,7 +8,9 @@ definition {
 	property testray.testcase.product.edition = "EE";
 
 	setUp {
-		User.firstLoginUI();
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-1: Verify that information is present in the logs after enabling log context & Incoming X-Request-ID."

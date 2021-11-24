@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>STAGING_CONTENT_CHECKBOX</td>
-	<td>//input[(@type='checkbox') and contains(@id,'${key_contentName}')] | //span[contains(.,'${key_contentName}')]/..//input[(@type='checkbox')]</td>
+	<td>//input[(@type='checkbox') and contains(@id,'${key_contentName}')] | //input[(@type='checkbox')]//following-sibling::span[contains(@class,'label')][normalize-space(text())='${key_contentName}']</td>
 	<td></td>
 </tr>
 <tr>

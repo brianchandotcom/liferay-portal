@@ -13,3 +13,4 @@ Export-Package:\
 	com.liferay.search.experiences.service.persistence,\
 	com.liferay.search.experiences.util.comparator,\
 	com.liferay.search.experiences.validator
+Liferay-Enterprise-App: dxp.only=true;product.id=22b7e30f-34d4-4a63-9696-56987ad66e4e

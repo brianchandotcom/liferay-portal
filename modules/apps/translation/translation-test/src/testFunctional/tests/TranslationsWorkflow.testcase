@@ -188,12 +188,12 @@ definition {
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -705,14 +705,14 @@ definition {
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
@@ -734,19 +734,19 @@ definition {
 
 		Workflow.resubmitTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Update");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WebContentTitle",
-			workflowAssetType = "Web Content Article",
+			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");

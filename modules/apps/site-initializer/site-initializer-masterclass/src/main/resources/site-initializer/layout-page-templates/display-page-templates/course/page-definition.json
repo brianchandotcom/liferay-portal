@@ -1877,7 +1877,7 @@
 												"classPKReferences": {
 													"en_US": {
 														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/logos.svg$]"
+														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos.svg$]"
 													}
 												},
 												"fragmentImageConfiguration": {

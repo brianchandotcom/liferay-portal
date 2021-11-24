@@ -6,7 +6,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="KFMtELi0" name="Image" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/teacher_jane_cooper.jpg$]]]>
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/teacher_jane_cooper.jpg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="sAsGecZS" name="Info" type="text">

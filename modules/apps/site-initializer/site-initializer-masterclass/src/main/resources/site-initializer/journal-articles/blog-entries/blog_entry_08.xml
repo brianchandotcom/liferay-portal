@@ -9,7 +9,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="bMNTozJr" name="MainImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/blog_08.jpg$]]]>
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/blog_08.jpg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="wAbSpc0d" name="ImageAuthor" type="text">

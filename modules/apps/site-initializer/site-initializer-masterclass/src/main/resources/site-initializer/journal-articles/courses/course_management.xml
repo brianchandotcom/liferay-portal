@@ -12,12 +12,12 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="1pCS00XC" name="VideoThumbnail" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/thumb_video_management.jpg$]]]>
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/thumb_video_management.jpg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="UQIv4nRI" name="Video" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[<p>
-<video controls=""><source src="[$DOCUMENT_URL:/site-initializer/documents/video_management.mp4$]" type="video/mp4" /></video>
+<video controls=""><source src="[$DOCUMENT_URL:/site-initializer/documents/group/video_management.mp4$]" type="video/mp4" /></video>
 </p>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="" instance-id="jSnynw83" name="FeaturesFieldSet" type="fieldset">

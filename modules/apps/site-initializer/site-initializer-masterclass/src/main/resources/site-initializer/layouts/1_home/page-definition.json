@@ -966,7 +966,7 @@
 												"classPKReferences": {
 													"en_US": {
 														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/logos.svg$]"
+														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos.svg$]"
 													}
 												},
 												"fragmentImageConfiguration": {
@@ -1270,7 +1270,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/method_01.jpg$]"
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/method_01.jpg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -1830,7 +1830,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/method_02.jpg$]"
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/method_02.jpg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -2027,7 +2027,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/method_03.jpg$]"
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/method_03.jpg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -2718,7 +2718,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/form_3.jpg$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/form_3.jpg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {

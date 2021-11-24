@@ -321,7 +321,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/smile.svg$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/smile.svg$]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -422,7 +422,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/dollar.svg$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/dollar.svg$]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -522,7 +522,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/calendar.svg$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/calendar.svg$]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {

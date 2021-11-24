@@ -143,9 +143,15 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 							<%
 							DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
+
+							String fieldLabelValue = rv.getFieldLabelValue(themeDisplay.getLocale());
+
+							if (Validator.isNull(fieldLabelValue)) {
+								fieldLabelValue = rv.getFieldName();
+							}
 							%>
 
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= NoSuchFormInstanceException.class %>" message="the-selected-form-no-longer-exists" />

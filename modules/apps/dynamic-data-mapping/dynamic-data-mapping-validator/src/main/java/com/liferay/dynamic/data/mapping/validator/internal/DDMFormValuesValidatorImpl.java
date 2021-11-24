@@ -383,7 +383,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		throws DDMFormValuesValidationException {
 
 		if (ddmFormField == null) {
-			throw new MustSetValidField(ddmFormFieldValue.getName());
+			throw new MustSetValidField(
+				ddmFormField.getLabel(), ddmFormFieldValue.getName());
 		}
 
 		DDMFormValues ddmFormValues = ddmFormFieldValue.getDDMFormValues();
@@ -408,7 +409,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 		if (Validator.isNull(ddmFormField.getDataType())) {
 			if (value != null) {
-				throw new MustNotSetValue(ddmFormField.getName());
+				throw new MustNotSetValue(
+					ddmFormField.getLabel(), ddmFormField.getName());
 			}
 		}
 		else {
@@ -416,7 +418,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				(ddmFormField.isRequired() &&
 				 isNull(ddmFormField, ddmFormFieldValue))) {
 
-				throw new RequiredValue(ddmFormField.getName());
+				throw new RequiredValue(
+					ddmFormField.getLabel(), ddmFormField.getName());
 			}
 
 			if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||
@@ -444,11 +447,13 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 
 		if (!availableLocales.equals(value.getAvailableLocales())) {
-			throw new MustSetValidAvailableLocales(ddmFormField.getName());
+			throw new MustSetValidAvailableLocales(
+				ddmFormField.getLabel(), ddmFormField.getName());
 		}
 
 		if (!defaultLocale.equals(value.getDefaultLocale())) {
-			throw new MustSetValidDefaultLocale(ddmFormField.getName());
+			throw new MustSetValidDefaultLocale(
+				ddmFormField.getLabel(), ddmFormField.getName());
 		}
 	}
 
@@ -458,11 +463,13 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		throws DDMFormValuesValidationException {
 
 		if (ddmFormField.isRequired() && ddmFormFieldValues.isEmpty()) {
-			throw new RequiredValue(ddmFormField.getName());
+			throw new RequiredValue(
+				ddmFormField.getLabel(), ddmFormField.getName());
 		}
 
 		if (!ddmFormField.isRepeatable() && (ddmFormFieldValues.size() > 1)) {
-			throw new MustSetValidValuesSize(ddmFormField.getName());
+			throw new MustSetValidValuesSize(
+				ddmFormField.getLabel(), ddmFormField.getName());
 		}
 	}
 

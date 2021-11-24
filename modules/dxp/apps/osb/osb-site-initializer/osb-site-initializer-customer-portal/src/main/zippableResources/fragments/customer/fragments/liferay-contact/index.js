@@ -22,12 +22,15 @@ const contactRole = fragmentElement.querySelector(
 const contactEmail = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-email'
 );
+const contactTitle = fragmentElement.querySelector(
+	'#customer-portal-liferay-contact-title'
+);
 
 (async () => {
 	try {
-		window.addEventListener(eventName, ({detail: project}) => {
+		window.addEventListener(eventName, ({ detail: project }) => {
 			contactName.classList.toggle('skeleton');
-
+			contactTitle.classList.toggle('skeleton');
 			contactRole.classList.toggle('skeleton');
 			contactEmail.classList.toggle('skeleton');
 

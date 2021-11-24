@@ -28,8 +28,6 @@ const getStatus = (slaCurrent, slaFuture) => {
 const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
 
-	console.error({userAccount});
-
 	const {data, loading} = useQuery(getKoroneikiAccounts, {
 		variables: {
 			filter: userAccount.accountBriefs

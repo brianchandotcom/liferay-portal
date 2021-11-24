@@ -22,14 +22,14 @@ const Overview = ({userAccount}) => {
 		getKoroneikiAccounts,
 		{
 			variables: {
-				filter: `accountKeys eq '${project.accountKey}'`,
+				filter: `accountKey eq '${project.accountKey}'`,
 			},
 		}
 	);
 
 	useEffect(() => {
 		if (!isLoading && data) {
-			const koroneikiAccount = data.koroneikiAccounts[0];
+			const koroneikiAccount = data.c?.koroneikiAccounts?.items[0];
 
 			dispatch({
 				payload: koroneikiAccount,

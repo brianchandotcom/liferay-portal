@@ -70,15 +70,8 @@ const usePageGuard = (
 
 	const {data} = useQuery(pageGuard, {
 		variables: {
-			accountFlagsFilter: {
-				filter: `accountKey eq ${externalReferenceCode} 
-				and name eq onboarding 
-				and userUuid eq ${userAccount.externalReferenceCode} 
-				and value eq 1`,
-			},
-			accountRolePage: {
-				accountId: userAccount.id,
-			},
+			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq 'onboarding' and userUuid eq '${userAccount.externalReferenceCode}' and value eq 1`,
+			accountId: userAccount.id
 		},
 	});
 
@@ -92,8 +85,8 @@ const usePageGuard = (
 				!guard(
 					userAccount.accountBriefs,
 					externalReferenceCode,
-					data.accountFlags,
-					data.accountAccountRoles
+					data.c?.accountFlags?.items,
+					data.accountAccountRoles?.items
 				).validate
 			) {
 				const {
@@ -102,8 +95,8 @@ const usePageGuard = (
 				} = alternativeGuard(
 					userAccount.accountBriefs,
 					externalReferenceCode,
-					data.accountFlags,
-					data.accountAccountRoles
+					data.c?.accountFlags?.items,
+					data.accountAccountRoles?.items
 				);
 
 				if (alternativeValidate) {

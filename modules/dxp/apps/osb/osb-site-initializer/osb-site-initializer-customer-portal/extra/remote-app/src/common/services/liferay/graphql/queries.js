@@ -65,16 +65,16 @@ export const getKoroneikiAccounts = gql`
 `;
 
 export const pageGuard = gql`
-	query accountAccountRoles($accountRolePage: AccountRolePage) {
-		accountAccountRoles(accountRolePage: $accountRolePage) {
+	query accountRolesAndAccountFlags(
+		$accountId: Long
+		$accountFlagsFilter: String
+	) {
+		accountAccountRoles(accountId: $accountId) {
 			items {
 				id
 				name
 			}
 		}
-	}
-
-	query accountFlags($accountFlagsFilter: AccountFlagPage) {
 		c {
 			accountFlags(filter: $accountFlagsFilter) {
 				items {

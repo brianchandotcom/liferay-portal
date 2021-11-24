@@ -1449,15 +1449,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"LIST_TYPE_DEFINITION_ID:" + listTypeDefinition.getName(),
 				String.valueOf(listTypeDefinition.getId()));
 
-			String entryJSON = _read(
+			String listTypeEntriesJSON = _read(
 				StringUtil.replace(path, ".json", ".list-type-entries.json"));
 
-			if (entryJSON == null) {
+			if (listTypeEntriesJSON == null) {
 				continue;
 			}
 
 			JSONArray entriesjsonArray = _jsonFactory.createJSONArray(
-				entryJSON);
+				listTypeEntriesJSON);
 
 			ListTypeEntryResource.Builder listTypeEntryResourceBuilder =
 				_listTypeEntryResourceFactory.create();

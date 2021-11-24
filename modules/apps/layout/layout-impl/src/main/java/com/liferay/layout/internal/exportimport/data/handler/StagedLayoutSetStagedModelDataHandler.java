@@ -849,7 +849,13 @@ public class StagedLayoutSetStagedModelDataHandler
 		for (long plid : updatedPlids) {
 			Layout layout = _layoutLocalService.fetchLayout(plid);
 
-			layout.setPriority(layoutPriorities.get(plid));
+			int newLayoutPriority = layoutPriorities.get(plid);
+
+			if (layout.getPriority() == newLayoutPriority) {
+				continue;
+			}
+
+			layout.setPriority(newLayoutPriority);
 
 			_layoutLocalService.updateLayout(layout);
 

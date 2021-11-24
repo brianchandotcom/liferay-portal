@@ -1,5 +1,8 @@
 {
 	"articleId": "ENTRY-03",
+	"assetCategoryERCs": [
+		"DEPCAT0003"
+	],
 	"ddmStructureKey": "ENTRY",
 	"ddmTemplateKey": "ENTRY",
 	"folder": "Blog Entries",

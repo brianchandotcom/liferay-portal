@@ -1,5 +1,8 @@
 {
 	"articleId": "MEMBER-01",
+	"assetCategoryERCs": [
+		"DEPCAT0001"
+	],
 	"ddmStructureKey": "MEMBER",
 	"ddmTemplateKey": "MEMBER",
 	"folder": "Team Members",

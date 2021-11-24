@@ -1,5 +1,8 @@
 {
 	"articleId": "POSITION-06",
+	"assetCategoryERCs": [
+		"DEPCAT0003"
+	],
 	"ddmStructureKey": "POSITION",
 	"ddmTemplateKey": "POSITION",
 	"folder": "Job Positions",

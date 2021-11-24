@@ -1,5 +1,6 @@
 {
 	"description": "Description of the Department vocabulary",
+	"externalReferenceCode": "DEPVOC0001",
 	"name": "Department",
 	"viewableBy": "Anyone"
 }

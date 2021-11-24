@@ -13,13 +13,17 @@
 					"defaultLanguageId": "en_US",
 					"fields": [
 						{
+							"autocomplete": false,
 							"confirmationErrorMessage": {
 								"en_US": ""
 							},
 							"confirmationLabel": {
 								"en_US": ""
 							},
+							"dataSourceType": "manual",
 							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
 							"direction": "[\"vertical\"]",
 							"displayStyle": "singleline",
 							"fieldNamespace": "",
@@ -33,6 +37,15 @@
 							"localizable": true,
 							"name": "Name",
 							"nativeField": false,
+							"options": [
+								{
+									"label": {
+										"en_US": "Option"
+									},
+									"reference": "",
+									"value": "Option"
+								}
+							],
 							"placeholder": {
 								"en_US": ""
 							},
@@ -76,6 +89,51 @@
 							"visibilityExpression": ""
 						},
 						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[\"vertical\"]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Role",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Role"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Role",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
 							"dataType": "date",
 							"fieldNamespace": "",
 							"fieldReference": "JoiningDate",
@@ -87,16 +145,11 @@
 							"localizable": true,
 							"name": "JoiningDate",
 							"nativeField": false,
-							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
-							"requiredErrorMessage": {
-								"en_US": ""
-							},
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
@@ -105,15 +158,19 @@
 							"visibilityExpression": ""
 						},
 						{
+							"autocomplete": false,
 							"confirmationErrorMessage": {
 								"en_US": ""
 							},
 							"confirmationLabel": {
 								"en_US": ""
 							},
+							"dataSourceType": "manual",
 							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
 							"direction": "[\"vertical\"]",
-							"displayStyle": "multiline",
+							"displayStyle": "singleline",
 							"fieldNamespace": "",
 							"fieldReference": "ShortDescription",
 							"hideField": false,
@@ -125,6 +182,15 @@
 							"localizable": true,
 							"name": "ShortDescription",
 							"nativeField": false,
+							"options": [
+								{
+									"label": {
+										"en_US": "Option"
+									},
+									"reference": "",
+									"value": "Option"
+								}
+							],
 							"placeholder": {
 								"en_US": ""
 							},
@@ -155,14 +221,10 @@
 							"localizable": true,
 							"name": "FullDescription",
 							"predefinedValue": {
-								"en_US": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
-							"requiredErrorMessage": {
-								"en_US": ""
-							},
 							"showLabel": true,
 							"tip": {
 								"en_US": ""

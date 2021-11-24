@@ -157,7 +157,11 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		ControlMenu.viewHeaderTitle(headerTitle = "Staging Blogs Page");
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 	}
 
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."

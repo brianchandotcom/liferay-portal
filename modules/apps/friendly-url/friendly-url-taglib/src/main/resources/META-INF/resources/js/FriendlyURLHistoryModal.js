@@ -203,7 +203,9 @@ const FriendlyURLHistoryModal = ({
 							elementId
 						);
 
-						urlTitleInput.value = urlTitle;
+						if (urlTitleInput) {
+							urlTitleInput.value = urlTitle;
+						}
 					}
 				}
 				else {

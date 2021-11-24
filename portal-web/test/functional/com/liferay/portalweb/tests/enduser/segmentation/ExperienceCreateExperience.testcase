@@ -3272,21 +3272,98 @@ definition {
 	}
 
 	@description = "LPS-91876: Validate if when the user tries to edit the name of some Experience can be edited with success"
-	@ignore = "true"
 	@priority = "5"
 	test EditExperienceName {
+		property portal.acceptance = "true";
 
-		// TODO LPS-91876 EditExperienceName pending implementation
+		task ("Create an experience and add on content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+			
+			Refresh();
+		}
+
+		task ("Change experience's name") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+
+			Type(
+				locator1 = "PageEditor#EXPERIENCE_NAME",
+				value1 = "NewAnyoneExperience edited");
+			
+			Click(locator1 = "Button#SAVE");
+
+			Refresh();
+		}
+
+		task ("Assert that experience's name is changed"){
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			AssertElementPresent(
+				key_experienceName = "NewAnyoneExperience edited",
+				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+
+			PageEditor.clickPublish();
+		}
 	}
 
 	@description = "LPS-91876: Validate if when the user tries to edit the segment associated of some Experience can be changed with success"
-	@ignore = "true"
 	@priority = "3"
 	test EditExperienceSegment {
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
-		// TODO LPS-91876 EditExperienceSegment pending implementation
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
 
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Anyone");
+
+			Refresh();
+		}
+
+		task ("Change experience's segment") {
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+
+			Select(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Name Segment");
+
+			Click(locator1 = "Button#SAVE");
+
+			Refresh();
+		}
+
+		task ("Assert that experience's segment is changed"){
+			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+			AssertElementPresent(
+				key_experienceName = "Segment Name Experience",
+				key_segmentName = "Name Segment",
+				locator1 = "PageEditor#EXPERIENCE_SEGMENT_NAMES",
+				value1 = "Name Segment");
+			
+			PageEditor.clickPublish();
+		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions and segments are available and interact with the New Segment by New Experience"

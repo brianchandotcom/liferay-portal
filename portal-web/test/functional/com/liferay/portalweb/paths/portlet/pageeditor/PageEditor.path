@@ -331,6 +331,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_SEGMENT_NAMES</td>
+	<td>//span[contains(@class,'text-truncate-inline')]//span[text()='${key_experienceName}']/parent::span/following-sibling::span[text()='${key_segmentName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_SELECT_ITEM</td>
 	<td>//div[contains(@class,'toolbar-experience')]//ul//*[text()='${key_experienceName}']</td>
 	<td></td>

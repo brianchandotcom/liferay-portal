@@ -853,7 +853,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			webContentColor = "000000",
 			webContentDate = "03/02/2021",
-			webContentLocaleFieldLabel = "pt_BR",
+			webContentLocaleFieldLabel = "pt-BR",
 			webContentMultipleSelection = "Option 2",
 			webContentNumeric = "13",
 			webContentRichText = "Este é um campo de texto completo",

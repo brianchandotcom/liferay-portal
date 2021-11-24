@@ -100,7 +100,7 @@ public class DEDataDefinitionFieldLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DEDataDefinitionFieldLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,deDataDefinitionFieldLinkId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ddmStructureId LONG,fieldName VARCHAR(75) null,lastPublishDate DATE null,primary key (deDataDefinitionFieldLinkId, ctCollectionId))";
+		"create table DEDataDefinitionFieldLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,deDataDefinitionFieldLinkId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ddmStructureId LONG,fieldName VARCHAR(255) null,lastPublishDate DATE null,primary key (deDataDefinitionFieldLinkId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DEDataDefinitionFieldLink";

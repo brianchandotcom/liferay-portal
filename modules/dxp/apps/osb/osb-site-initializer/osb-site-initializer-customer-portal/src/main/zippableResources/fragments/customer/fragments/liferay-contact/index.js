@@ -28,7 +28,7 @@ const contactTitle = fragmentElement.querySelector(
 
 (async () => {
 	try {
-		window.addEventListener(eventName, ({ detail: project }) => {
+		window.addEventListener(eventName, ({detail: project}) => {
 			contactName.classList.toggle('skeleton');
 			contactTitle.classList.toggle('skeleton');
 			contactRole.classList.toggle('skeleton');

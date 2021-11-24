@@ -104,6 +104,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
 		throws Exception {
 
+		SXPBlueprintUtil.unpack(sxpBlueprint);
+
 		return _sxpBlueprintDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),

@@ -51,7 +51,12 @@ public class DEServiceUpgrade implements UpgradeStepRegistrator {
 				DEDataDefinitionFieldLinkUpgradeProcess());
 
 		registry.register(
-			"2.1.1", "2.2.0",
+			"2.1.1", "2.1.2",
+			new com.liferay.data.engine.internal.upgrade.v2_1_2.
+				DEDataDefinitionFieldLinkUpgradeProcess());
+
+		registry.register(
+			"2.1.2", "2.2.0",
 			new UpgradeMVCCVersion() {
 
 				@Override

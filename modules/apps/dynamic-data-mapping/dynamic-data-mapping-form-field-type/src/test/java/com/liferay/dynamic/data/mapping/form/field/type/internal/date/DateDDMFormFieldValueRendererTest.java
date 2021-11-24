@@ -14,36 +14,32 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.date;
 
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Bruno Basto
  */
-public class DateDDMFormFieldValueRendererTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+@PrepareForTest(LocaleThreadLocal.class)
+@RunWith(PowerMockRunner.class)
+public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -52,52 +48,93 @@ public class DateDDMFormFieldValueRendererTest {
 	}
 
 	@Test
-	public void testRender() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+	public void testRenderDisplayLocaleBrazil() {
+		mockStatic(LocaleThreadLocal.class);
 
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			"birthday", "Birthday", "date", "string", false, false, false);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
+		when(
+			LocaleThreadLocal.getThemeDisplayLocale()
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"birthday", new UnlocalizedValue("2015-01-25"));
 
-		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		Assert.assertEquals(
+			"25/01/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"25/01/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.HUNGARY));
+		Assert.assertEquals(
+			"25/01/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
+	}
 
-		DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer =
-			new DateDDMFormFieldValueRenderer();
+	@Test
+	public void testRenderDisplayLocaleNull() {
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"birthday", new UnlocalizedValue("2015-01-25"));
 
 		Assert.assertEquals(
 			"25/01/2015",
-			dateDDMFormFieldValueRenderer.render(
+			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.BRAZIL));
 		Assert.assertEquals(
 			"25.01.2015",
-			dateDDMFormFieldValueRenderer.render(
+			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.GERMANY));
 		Assert.assertEquals(
 			"2015.01.25.",
-			dateDDMFormFieldValueRenderer.render(
+			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.HUNGARY));
 		Assert.assertEquals(
 			"2015/01/25",
-			dateDDMFormFieldValueRenderer.render(
+			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.JAPAN));
 		Assert.assertEquals(
 			"01/25/2015",
-			dateDDMFormFieldValueRenderer.render(
+			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 
 		ddmFormFieldValue.setValue(new UnlocalizedValue(""));
 
 		Assert.assertEquals(
 			StringPool.BLANK,
-			dateDDMFormFieldValueRenderer.render(
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
+	}
+
+	@Test
+	public void testRenderDisplayLocaleUS() {
+		mockStatic(LocaleThreadLocal.class);
+
+		when(
+			LocaleThreadLocal.getThemeDisplayLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"birthday", new UnlocalizedValue("2015-01-25"));
+
+		Assert.assertEquals(
+			"01/25/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"01/25/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.HUNGARY));
+		Assert.assertEquals(
+			"01/25/2015",
+			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
@@ -115,5 +152,8 @@ public class DateDDMFormFieldValueRendererTest {
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
 	}
+
+	private final DateDDMFormFieldValueRenderer _dateDDMFormFieldValueRenderer =
+		new DateDDMFormFieldValueRenderer();
 
 }

@@ -100,8 +100,6 @@ definition {
 		PortletEntry.inputTitle(title = "Web Content Title");
 
 		DERenderer.addBoldContentonRichText();
-
-		DERenderer.assertDataInColorField();
 	}
 
 	@description = "This is a test for LRQA-69427. This test verifies that upon clicking on the Preview Icon from the Source option, a modal is displayed"

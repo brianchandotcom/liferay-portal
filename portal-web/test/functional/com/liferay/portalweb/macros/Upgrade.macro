@@ -72,21 +72,21 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
-			entryContent = "Alice's Adventures in Wonderland",
-			entryTitle = "Blogs Entry Title");
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}");
 
 		Pause(locator1 = "3000");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		AssertClick.assertTextClickAt(
-			key_entryTitle = "Blogs Entry Title",
+			key_entryTitle = "${entryTitle}",
 			locator1 = "BlogsEntry#TITLE_LINK",
-			value1 = "Blogs Entry Title");
+			value1 = "${entryTitle}");
 
 		BlogsEntry.viewAutoTag(
-			entryTitle = "Blogs Entry Title",
-			tagName = "adventures");
+			entryTitle = "${entryTitle}",
+			tagName = "${tagName}");
 	}
 
 	macro addAutoTaggedDM {
@@ -1372,49 +1372,49 @@ definition {
 
 	macro editTagsAndDeleteAutoTaggedBlogsEntry {
 		BlogsNavigator.openToBlogEntry(
-			entryTitle = "digital-transformation-or-digital-experience-?",
+			entryTitle = "${entryTitleKey}",
 			layoutName = "test-page",
 			siteURLKey = "site-name");
 
 		BlogsEntry.viewAutoTag(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			tagName = "DXP");
+			entryTitle = "${entryTitle}",
+			tagName = "${tagName}");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
-		BlogsNavigator.gotoEditCP(entryTitle = "Digital Transformation or Digital Experience?");
+		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.removeTag(tagName = "dxp");
+		AssetCategorization.removeTag(tagName = "${tagName}");
 
 		AssetCategorization.addTag(tagName = "new tag");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToBlogEntry(
-			entryTitle = "digital-transformation-or-digital-experience-?",
+			entryTitle = "${entryTitleKey}",
 			layoutName = "test-page",
 			siteURLKey = "site-name");
 
 		BlogsEntry.viewNoTag(
-			entryTitle = "Digital Transformation or Digital Experience?",
-			tagName = "DXP");
+			entryTitle = "${entryTitle}",
+			tagName = "${tagName}");
 
 		BlogsEntry.viewAutoTag(
-			entryTitle = "Digital Transformation or Digital Experience?",
+			entryTitle = "${entryTitle}",
 			tagName = "new tag");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
-			entryTitle = "Digital Transformation or Digital Experience?");
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}");
 
 		BlogsEntry.viewNoPG(
-			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
-			entryTitle = "Digital Transformation or Digital Experience?");
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}");
 	}
 
 	macro editTagsAndDeleteAutoTaggedDM {

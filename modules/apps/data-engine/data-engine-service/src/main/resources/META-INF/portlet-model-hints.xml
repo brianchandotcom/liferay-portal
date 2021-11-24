@@ -13,7 +13,9 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="ddmStructureId" type="long" />
-		<field name="fieldName" type="String" />
+		<field name="fieldName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.data.engine.model.DEDataListView">

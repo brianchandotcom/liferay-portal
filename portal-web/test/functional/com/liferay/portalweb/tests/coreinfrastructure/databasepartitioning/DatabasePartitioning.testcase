@@ -264,12 +264,11 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This is a use case for LRQA-66285 to Schedule WebContent changes with DB Partitioning activated across various Companies."
 	@priority = "4"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property database.types = "mysql";
 		property custom.properties = "database.partition.enabled=true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#Schedule WebContent changes with DB Partitioning activated across various Companies";
+		property test.name.skip.portal.instance = "DatabasePartitioning#ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompaniess";
 
 		task ("Edit Check Interval") {
 			ApplicationsMenu.gotoPortlet(

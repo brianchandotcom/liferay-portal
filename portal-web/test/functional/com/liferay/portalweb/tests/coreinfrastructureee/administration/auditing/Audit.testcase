@@ -13,6 +13,7 @@ definition {
 
 	@description = "LPS-133646 and LPS-133653 TC-1: Asserting that information is present in the logs after enabling log context & Incoming X-Request-ID."
 	@priority = "5"
+	@uitest
 	test AssertAuditConsoleInformationIsPresentAfterEnabledLog {
 		property test.name.skip.portal.instance = "Audit#AssertAuditConsoleInformationIsPresentAfterEnabledLog";
 

@@ -150,6 +150,10 @@
 		<column name="typeSettings" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="AssetListEntryId" return-type="Collection">

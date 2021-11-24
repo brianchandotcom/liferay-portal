@@ -641,13 +641,41 @@ public class WorkflowMetricsRESTTestHelper {
 			}
 		}
 
+		AddTaskRequest.Builder addTaskRequestBuilder =
+			new AddTaskRequest.Builder();
+
 		_taskWorkflowMetricsIndexer.addTask(
-			_createLocalizationMap(task.getAssetTitle()),
-			_createLocalizationMap(task.getAssetType()), assignments,
-			task.getClassName(), task.getClassPK(), companyId, false, null,
-			null, task.getDateCreated(), false, null, instance.getId(),
-			task.getDateModified(), task.getName(), task.getNodeId(),
-			task.getProcessId(), task.getProcessVersion(), task.getId(), 0);
+			addTaskRequestBuilder.setAssetTitleMap(
+				_createLocalizationMap(task.getAssetTitle())
+			).setAssetTypeMap(
+				_createLocalizationMap(task.getAssetType())
+			).setAssignments(
+				assignments
+			).setClassName(
+				task.getClassName()
+			).setClassPK(
+				task.getClassPK()
+			).setCompanyId(
+				companyId
+			).setCreateDate(
+				task.getDateCreated()
+			).setInstanceId(
+				instance.getId()
+			).setModifiedDate(
+				task.getDateModified()
+			).setName(
+				task.getName()
+			).setNodeId(
+				task.getNodeId()
+			).setProcessId(
+				task.getProcessId()
+			).setProcessVersion(
+				task.getProcessVersion()
+			).setTaskId(
+				task.getId()
+			).setUserId(
+				0
+			).build());
 
 		_assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),

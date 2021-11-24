@@ -49,6 +49,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
@@ -175,27 +176,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 	@Override
 	public Task postProcessTask(Long processId, Task task) throws Exception {
-		List<Assignment> assignments = new ArrayList<>();
-
-		Assignee assignee = task.getAssignee();
-
-		if ((assignee != null) && (assignee.getId() != null)) {
-			User user = _userLocalService.fetchUser(assignee.getId());
-
-			assignments.add(
-				new UserAssignment(assignee.getId(), user.getFullName()));
-		}
-
 		return TaskUtil.toTask(
 			_taskWorkflowMetricsIndexer.addTask(
-				LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n()),
-				LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n()),
-				assignments, task.getClassName(), task.getClassPK(),
-				contextCompany.getCompanyId(), false, null, null,
-				task.getDateCreated(), false, null, task.getInstanceId(),
-				task.getDateModified(), task.getName(), task.getNodeId(),
-				processId, task.getProcessVersion(), task.getId(),
-				contextUser.getUserId()),
+				_toAddTaskRequest(processId, task)),
 			_language, contextAcceptLanguage.getPreferredLocale(), _portal,
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				contextAcceptLanguage.getPreferredLocale(),
@@ -676,6 +659,61 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		).collect(
 			Collectors.toCollection(LinkedList::new)
 		);
+	}
+
+	private AddTaskRequest _toAddTaskRequest(Long processId, Task task) {
+		AddTaskRequest.Builder addTaskRequestBuilder =
+			new AddTaskRequest.Builder();
+
+		return addTaskRequestBuilder.assetTitleMap(
+			LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n())
+		).assetTypeMap(
+			LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n())
+		).assignments(
+			() -> {
+				List<Assignment> assignments = new ArrayList<>();
+
+				Assignee assignee = task.getAssignee();
+
+				if ((assignee != null) && (assignee.getId() != null)) {
+					User user = _userLocalService.fetchUser(assignee.getId());
+
+					assignments.add(
+						new UserAssignment(
+							assignee.getId(), user.getFullName()));
+				}
+
+				return assignments;
+			}
+		).className(
+			task.getClassName()
+		).classPK(
+			task.getClassPK()
+		).companyId(
+			contextCompany.getCompanyId()
+		).completed(
+			false
+		).createDate(
+			task.getDateCreated()
+		).instanceCompleted(
+			false
+		).instanceId(
+			task.getInstanceId()
+		).modifiedDate(
+			task.getDateModified()
+		).name(
+			task.getName()
+		).nodeId(
+			task.getNodeId()
+		).processId(
+			processId
+		).processVersion(
+			task.getProcessVersion()
+		).taskId(
+			task.getId()
+		).userId(
+			contextUser.getUserId()
+		).build();
 	}
 
 	@Reference

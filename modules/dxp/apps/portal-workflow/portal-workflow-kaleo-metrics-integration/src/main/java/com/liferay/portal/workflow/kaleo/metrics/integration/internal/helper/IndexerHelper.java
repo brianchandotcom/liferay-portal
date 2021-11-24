@@ -30,7 +30,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
+import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
@@ -53,6 +57,70 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = IndexerHelper.class)
 public class IndexerHelper {
+
+	public AddTaskRequest createAddTaskRequest(
+		KaleoInstance kaleoInstance,
+		KaleoTaskInstanceToken kaleoTaskInstanceToken, String processVersion) {
+
+		AddTaskRequest.Builder addTaskRequestBuilder =
+			new AddTaskRequest.Builder();
+
+		addTaskRequestBuilder.assetTitleMap(
+			createAssetTitleLocalizationMap(
+				kaleoTaskInstanceToken.getClassName(),
+				kaleoTaskInstanceToken.getClassPK(),
+				kaleoTaskInstanceToken.getGroupId())
+		).assetTypeMap(
+			createAssetTypeLocalizationMap(
+				kaleoTaskInstanceToken.getClassName(),
+				kaleoTaskInstanceToken.getGroupId())
+		).assignments(
+			() -> toAssignments(
+				_kaleoTaskAssignmentInstanceLocalService.
+					getKaleoTaskAssignmentInstances(
+						kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()))
+		).className(
+			kaleoTaskInstanceToken.getClassName()
+		).classPK(
+			kaleoTaskInstanceToken.getClassPK()
+		).companyId(
+			kaleoTaskInstanceToken.getCompanyId()
+		).completed(
+			kaleoTaskInstanceToken.isCompleted()
+		).completionDate(
+			kaleoTaskInstanceToken.getCompletionDate()
+		).completionUserId(
+			kaleoTaskInstanceToken.getCompletionUserId()
+		).createDate(
+			kaleoTaskInstanceToken.getCreateDate()
+		);
+
+		if (kaleoInstance != null) {
+			addTaskRequestBuilder.instanceCompleted(
+				kaleoInstance.isCompleted()
+			).instanceCompletionDate(
+				kaleoInstance.getCompletionDate()
+			);
+		}
+
+		return addTaskRequestBuilder.instanceId(
+			kaleoTaskInstanceToken.getKaleoInstanceId()
+		).modifiedDate(
+			kaleoTaskInstanceToken.getModifiedDate()
+		).name(
+			kaleoTaskInstanceToken.getKaleoTaskName()
+		).nodeId(
+			kaleoTaskInstanceToken.getKaleoTaskId()
+		).processId(
+			kaleoTaskInstanceToken.getKaleoDefinitionId()
+		).processVersion(
+			processVersion
+		).taskId(
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()
+		).userId(
+			kaleoTaskInstanceToken.getUserId()
+		).build();
+	}
 
 	public Map<Locale, String> createAssetTitleLocalizationMap(
 		String className, long classPK, long groupId) {
@@ -174,6 +242,10 @@ public class IndexerHelper {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private KaleoTaskAssignmentInstanceLocalService
+		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

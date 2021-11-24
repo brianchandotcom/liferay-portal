@@ -292,6 +292,11 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testGetSXPElementExport() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSXPElementValidate() throws Exception {
 		SXPElement randomSXPElement = randomSXPElement();
 

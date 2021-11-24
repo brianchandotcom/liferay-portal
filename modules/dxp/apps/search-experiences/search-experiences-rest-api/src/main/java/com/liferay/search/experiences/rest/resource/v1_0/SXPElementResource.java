@@ -67,6 +67,8 @@ public interface SXPElementResource {
 			SXPElement sxpElement, String callbackURL, Object object)
 		throws Exception;
 
+	public String getSXPElementExport(Long sxpElementId) throws Exception;
+
 	public SXPElement postSXPElementValidate(String string) throws Exception;
 
 	public void deleteSXPElement(Long sxpElementId) throws Exception;

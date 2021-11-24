@@ -235,6 +235,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprintExport(sxpBlueprintId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPBlueprintExport(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.getSXPBlueprintExport(
+				sxpBlueprintId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, createDate, description, description_i18n, elementInstances, id, modifiedDate, title, title_i18n, userName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -267,6 +284,23 @@ public class Query {
 			sxpElementResource -> new SXPElementPage(
 				sxpElementResource.getSXPElementsPage(
 					search, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElementExport(sxpElementId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String sXPElementExport(
+			@GraphQLName("sxpElementId") Long sxpElementId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.getSXPElementExport(
+				sxpElementId));
 	}
 
 	/**
@@ -337,6 +371,26 @@ public class Query {
 						getSearchableAssetNameLanguagePage(languageId)));
 	}
 
+	@GraphQLTypeExtension(SXPElement.class)
+	public class GetSXPElementExportTypeExtension {
+
+		public GetSXPElementExportTypeExtension(SXPElement sXPElement) {
+			_sXPElement = sXPElement;
+		}
+
+		@GraphQLField
+		public String export() throws Exception {
+			return _applyComponentServiceObjects(
+				_sxpElementResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				sxpElementResource -> sxpElementResource.getSXPElementExport(
+					_sXPElement.getId()));
+		}
+
+		private SXPElement _sXPElement;
+
+	}
+
 	@GraphQLTypeExtension(ElementInstance.class)
 	public class GetSXPElementTypeExtension {
 
@@ -354,6 +408,27 @@ public class Query {
 		}
 
 		private ElementInstance _elementInstance;
+
+	}
+
+	@GraphQLTypeExtension(SXPBlueprint.class)
+	public class GetSXPBlueprintExportTypeExtension {
+
+		public GetSXPBlueprintExportTypeExtension(SXPBlueprint sXPBlueprint) {
+			_sXPBlueprint = sXPBlueprint;
+		}
+
+		@GraphQLField
+		public String export() throws Exception {
+			return _applyComponentServiceObjects(
+				_sxpBlueprintResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				sxpBlueprintResource ->
+					sxpBlueprintResource.getSXPBlueprintExport(
+						_sXPBlueprint.getId()));
+		}
+
+		private SXPBlueprint _sXPBlueprint;
 
 	}
 

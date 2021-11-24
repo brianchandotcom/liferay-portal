@@ -68,6 +68,8 @@ public interface SXPBlueprintResource {
 			SXPBlueprint sxpBlueprint, String callbackURL, Object object)
 		throws Exception;
 
+	public String getSXPBlueprintExport(Long sxpBlueprintId) throws Exception;
+
 	public SXPBlueprint postSXPBlueprintValidate(String string)
 		throws Exception;
 

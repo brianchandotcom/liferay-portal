@@ -212,33 +212,39 @@ public class ObjectEntryDTOConverter
 				String[] objectFieldNameParts = objectFieldName.split(
 					StringPool.UNDERLINE);
 
-				String relationshipName = objectFieldNameParts[1];
 				String relationshipIdName = objectFieldNameParts[3];
 
-				Optional<UriInfo> uriInfoOptional =
-					dtoConverterContext.getUriInfoOptional();
+				long objectEntryId = 0;
 
-				long objectEntryId = (long)serializable;
+				if (serializable != null) {
+					objectEntryId = (long)serializable;
 
-				if ((objectEntryId != 0) &&
-					uriInfoOptional.map(
-						UriInfo::getQueryParameters
-					).map(
-						queryParameters -> queryParameters.getFirst(
-							"nestedFields")
-					).map(
-						nestedFields -> nestedFields.contains(relationshipName)
-					).orElse(
-						false
-					)) {
+					String relationshipName = objectFieldNameParts[1];
 
-					map.put(
-						relationshipName,
-						toDTO(
-							_getDTOConverterContext(
-								dtoConverterContext, objectEntryId),
-							_objectEntryLocalService.getObjectEntry(
-								objectEntryId)));
+					Optional<UriInfo> uriInfoOptional =
+						dtoConverterContext.getUriInfoOptional();
+
+					if ((objectEntryId != 0) &&
+						uriInfoOptional.map(
+							UriInfo::getQueryParameters
+						).map(
+							queryParameters -> queryParameters.getFirst(
+								"nestedFields")
+						).map(
+							nestedFields -> nestedFields.contains(
+								relationshipName)
+						).orElse(
+							false
+						)) {
+
+						map.put(
+							relationshipName,
+							toDTO(
+								_getDTOConverterContext(
+									dtoConverterContext, objectEntryId),
+								_objectEntryLocalService.getObjectEntry(
+									objectEntryId)));
+					}
 				}
 
 				map.put(relationshipIdName, objectEntryId);

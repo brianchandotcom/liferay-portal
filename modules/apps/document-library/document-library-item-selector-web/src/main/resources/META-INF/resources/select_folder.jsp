@@ -19,7 +19,7 @@
 <%
 DLSelectFolderDisplayContext dlSelectFolderDisplayContext = (DLSelectFolderDisplayContext)request.getAttribute(DLSelectFolderDisplayContext.class.getName());
 
-DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlSelectFolderDisplayContext.getFolder(), ParamUtil.getString(request, "displayStyle"), request, liferayPortletResponse, dlSelectFolderDisplayContext.getIteratorPortletURL(liferayPortletResponse), dlSelectFolderDisplayContext.isShowGroupSelector());
+DLBreadcrumbUtil.addPortletBreadcrumbEntries(ParamUtil.getString(request, "displayStyle"), dlSelectFolderDisplayContext.getFolder(), request, liferayPortletResponse, dlSelectFolderDisplayContext.getIteratorPortletURL(liferayPortletResponse), dlSelectFolderDisplayContext.getRepositoryId(), dlSelectFolderDisplayContext.isShowGroupSelector());
 %>
 
 <clay:container-fluid>
@@ -89,7 +89,7 @@ DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlSelectFolderDisplayContext.getFol
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<aui:button cssClass="selector-button" data="<%= dlSelectFolderDisplayContext.getSelectorButtonData(curFolder) %>" disabled="<%= dlSelectFolderDisplayContext.isSelectButtonDisabled(curFolder.getFolderId()) %>" value="select" />
+					<aui:button cssClass="selector-button" data="<%= dlSelectFolderDisplayContext.getSelectorButtonData(curFolder) %>" disabled="<%= dlSelectFolderDisplayContext.isSelectButtonDisabled(curFolder.getFolderId(), curFolder.getRepositoryId()) %>" value="select" />
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

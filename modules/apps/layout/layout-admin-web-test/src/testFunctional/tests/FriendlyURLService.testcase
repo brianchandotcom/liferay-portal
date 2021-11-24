@@ -80,7 +80,7 @@ definition {
 			pageName = "Test Source Page");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/pagina-de-prueba");
 
 		PortletEntry.inputName(name = "Pagina de prueba");
@@ -88,7 +88,7 @@ definition {
 		Button.clickSave();
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/nueva-pagina-de-prueba");
 
 		Button.clickSave();
@@ -208,7 +208,7 @@ definition {
 			pageName = "Test Source Page");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/pagina-de-prueba");
 
 		PortletEntry.inputName(name = "Pagina de prueba");
@@ -230,7 +230,7 @@ definition {
 			pageName = "Test Source Page");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/nueva-pagina-de-prueba");
 
 		Button.clickSave();
@@ -318,7 +318,7 @@ definition {
 			pageName = "Test Source Page");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/^_^");
 
 		PortletEntry.inputName(name = "Pagina de prueba");
@@ -350,7 +350,7 @@ definition {
 		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/pagina-de-prueba");
 
 		PortletEntry.inputName(name = "Pagina de prueba");
@@ -358,7 +358,7 @@ definition {
 		Button.clickSave();
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es_ES",
+			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/nueva-pagina-de-prueba");
 
 		Button.clickSave();
@@ -367,7 +367,7 @@ definition {
 
 		PortletEntry.changeLocale(
 			friendlyURLHistory = "true",
-			localizedFriendlyURL = "es_ES");
+			localizedFriendlyURL = "es-ES");
 
 		Page.viewActiveURL(activeURL = "/nueva-pagina-de-prueba");
 

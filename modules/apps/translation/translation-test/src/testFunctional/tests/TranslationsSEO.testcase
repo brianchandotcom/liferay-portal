@@ -46,7 +46,7 @@ definition {
 			siteURLKey = "test-site-name");
 
 		Page.addPageTranslations(
-			pageTranslation = "es_ES",
+			pageTranslation = "es-ES",
 			pageTranslationName = "Página de traducción");
 
 		TranslationsSEO.disableOnlyTranslatedHreflangs(configurationScope = "System Settings");
@@ -230,7 +230,7 @@ definition {
 			siteURLKey = "test-site-name");
 
 		Page.addPageTranslations(
-			pageTranslation = "es_ES",
+			pageTranslation = "es-ES",
 			pageTranslationName = "Página de traducción");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");

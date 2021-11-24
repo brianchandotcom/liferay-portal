@@ -58,7 +58,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#BACK");
 
-		Depot.viewGeneralLanguageOptions(currentLanguageList = "es_ES");
+		Depot.viewGeneralLanguageOptions(currentLanguageList = "es-ES");
 
 		AssertElementPresent(
 			key_unnamedTitle = "Repositorio sin nombre",

@@ -125,6 +125,10 @@ components:
                     type: integer
                 name:
                     type: string
+                relationshipType:
+                    enum: [oneToMany, oneToOne]
+                    readOnly: true
+                    type: string
                 required:
                     type: boolean
                 type:

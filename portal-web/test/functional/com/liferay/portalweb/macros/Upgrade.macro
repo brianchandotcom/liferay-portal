@@ -1428,25 +1428,19 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${dmDocumentTitle}");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		Panel.expandPanel(panel = "Categorization");
+		DMDocument.selectDocuments(dmDocumentTitle = "${dmDocumentTitle}");
 
-		AssetCategorization.removeTag(tagName = "${tagName}");
+		Click(locator1 = "Icon#EDIT_TAGS");
 
-		AssetCategorization.addTag(tagName = "new tag");
-
-		Button.clickPublish();
+		DMDocument.editTags(tagName = "new tag");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
-
-		AutoTagging.assertNoAutoTag(tagName = "${tagName}");
 
 		AutoTagging.assertAutoTagPresent(tagName = "new tag");
 

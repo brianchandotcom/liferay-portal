@@ -56,7 +56,7 @@ definition {
 			Page.viewPanelPortletListPG(
 				componentName = "Collaboration",
 				pageName = "Test Page Name",
-				portletNameList = "Blogs,Blogs Aggregator,Invite Members,Message Boards,Microblogs,Microblogs Status Update,My Subscriptions,Questions,Recent Bloggers");
+				portletNameList = "Blogs,Blogs Aggregator,Invite Members,Message Boards,Questions,Recent Bloggers");
 		}
 
 		task ("Add a blogs entry") {

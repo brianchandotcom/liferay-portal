@@ -85,7 +85,7 @@ definition {
 			pageName = "Staging Test Page");
 
 		Page.viewPageFriendlyURLPG(
-			friendlyUrlLocalized = "de_DE",
+			friendlyUrlLocalized = "de-DE",
 			pageName = "german");
 	}
 

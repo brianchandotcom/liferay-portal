@@ -571,6 +571,14 @@ public class PoshiContext {
 			"Completed reading Poshi files in " + duration + "ms.");
 	}
 
+	public static void setFunctionFileNames(String... functionFileNames) {
+		Collections.addAll(_functionFileNames, functionFileNames);
+	}
+
+	public static void setMacroFileNames(String... macroFileNames) {
+		Collections.addAll(_macroFileNames, macroFileNames);
+	}
+
 	public static void setTestCaseNamespacedClassCommandName(
 		String testCaseNamespacedClassCommandName) {
 

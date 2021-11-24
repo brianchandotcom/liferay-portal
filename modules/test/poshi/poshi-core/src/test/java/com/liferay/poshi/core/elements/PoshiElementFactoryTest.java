@@ -43,6 +43,16 @@ public class PoshiElementFactoryTest {
 				"/testFunctional/functions";
 
 		PoshiContext.readFiles(poshiFileNames, poshiFileDir);
+
+		PoshiContext.setFunctionFileNames("WaitForSPARefresh");
+
+		String[] macroFileNames = {
+			"Alert", "AlloyEditor", "Blogs", "FormFields", "KaleoDesigner",
+			"Navigator", "PortalInstances", "ProductMenu", "SignIn", "Smoke",
+			"TableEcho", "TestCase", "User"
+		};
+
+		PoshiContext.setMacroFileNames(macroFileNames);
 	}
 
 	@Test

@@ -125,6 +125,8 @@ definition {
 	@description = "This is a test for LPS-136789. It checks that a blog with a layout reference can be published."
 	@priority = "3"
 	test CanPublishBlogWithLayoutReference {
+		var portalURL = PropsUtil.get("portal.url");
+
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
 			displayPageTemplateEntryName = "Display Page Name",
@@ -162,6 +164,8 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+		AssertLocation(value1 = "${portalURL}/web/site-name/b/blogs-entry-title");
 	}
 
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."

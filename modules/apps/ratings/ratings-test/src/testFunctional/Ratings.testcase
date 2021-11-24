@@ -604,14 +604,14 @@ definition {
 			siteURLKey = "guest");
 
 		JSONLayout.addPublicLayout(
-            groupName = "Guest",
-            layoutName = "Wiki Test Page");
+			groupName = "Guest",
+			layoutName = "Wiki Test Page");
 
-        JSONLayout.addWidgetToPublicLayout(
-            column = "1",
-            groupName = "Guest",
-            layoutName = "Wiki Test Page",
-            widgetName = "Wiki");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki");
 
 		JSONWiki.addWikiPage(
 			groupName = "Guest",

@@ -58,7 +58,7 @@
 															"fieldKey": "previewImage",
 															"itemReference": {
 																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/assets/liferay_brand.svg$]"
+																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/assets/liferay_brand.svg$]"
 															}
 														}
 													}

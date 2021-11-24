@@ -2,9 +2,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/runtime-main.js$]"
 		],
 		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {
@@ -20,9 +20,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/runtime-main.js$]"
 		],
 		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {
@@ -39,9 +39,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/runtime-main.js$]"
 		],
 		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {

@@ -172,7 +172,7 @@ definition {
 
 			Page.addPageTranslations(
 				page = "Test Page Name",
-				pageTranslation = "es_ES",
+				pageTranslation = "es-ES",
 				pageTranslationName = "Nombre de la página de prueba");
 		}
 

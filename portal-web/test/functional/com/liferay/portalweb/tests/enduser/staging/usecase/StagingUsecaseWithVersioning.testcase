@@ -1062,7 +1062,7 @@ definition {
 
 		Page.addPageTranslations(
 			page = "Page1",
-			pageTranslation = "es_ES",
+			pageTranslation = "es-ES",
 			pageTranslationName = "Página1");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
@@ -1082,7 +1082,7 @@ definition {
 
 		Page.addPageTranslations(
 			page = "Page2",
-			pageTranslation = "es_ES",
+			pageTranslation = "es-ES",
 			pageTranslationName = "Página2");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");

@@ -569,7 +569,7 @@ definition {
 				pageName = "Test Page Name");
 
 			Page.addFriendlyURLLocalizedPG(
-				friendlyUrlLocalized = "de_DE",
+				friendlyUrlLocalized = "de-DE",
 				localizedFriendlyURL = "/german");
 		}
 

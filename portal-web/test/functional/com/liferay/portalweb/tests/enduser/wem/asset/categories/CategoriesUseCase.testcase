@@ -843,7 +843,7 @@ definition {
 
 			Category.addCategoryLocalizationCP(
 				categoryName = "Category Name",
-				locale = "de_DE",
+				locale = "de-DE",
 				localizationName = "Kategorienamen",
 				vocabularyName = "Vocabulary Name");
 		}

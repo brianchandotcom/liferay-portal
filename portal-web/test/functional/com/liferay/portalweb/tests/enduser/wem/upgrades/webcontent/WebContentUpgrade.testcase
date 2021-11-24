@@ -207,7 +207,7 @@ definition {
 			NavItem.gotoStructures();
 
 			WebContentStructures.copyCP(
-				locale = "en_US",
+				locale = "en-US",
 				structureCopyLocalName = "WC Structure Copy En-US Name",
 				structureCopyName = "WC Structure Copy Name",
 				structureName = "WC Structure Name");
@@ -691,7 +691,7 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			PortletEntry.changeLocale(locale = "en_US");
+			PortletEntry.changeLocale(locale = "en-US");
 
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Label UF Comunicado",

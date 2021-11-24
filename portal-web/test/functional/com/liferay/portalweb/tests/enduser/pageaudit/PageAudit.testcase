@@ -93,7 +93,7 @@ definition {
 				pageName = "Content Page");
 
 			Page.addFriendlyURLLocalizedPG(
-				friendlyUrlLocalized = "fr_FR",
+				friendlyUrlLocalized = "fr-FR",
 				localizedFriendlyURL = "");
 
 			PortletEntry.inputName(name = "Principal");

@@ -43,7 +43,7 @@ definition {
 
 		Page.addPageTranslations(
 			page = "Home",
-			pageTranslation = "es_ES",
+			pageTranslation = "es-ES",
 			pageTranslationName = "Casa");
 
 		Navigator.openSiteURL(siteName = "Test Site Name");
@@ -73,7 +73,7 @@ definition {
 
 		Page.addPageTranslations(
 			page = "Blog Page",
-			pageTranslation = "es_ES",
+			pageTranslation = "es-ES",
 			pageTranslationName = "Blog Página");
 
 		Navigator.openSiteURL(siteName = "Test Site Name");

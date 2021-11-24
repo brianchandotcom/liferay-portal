@@ -37,11 +37,11 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		PortletEntry.inputLocalizedName(
-			language = "es_ES",
+			language = "es-ES",
 			localizedName = "Nombre del Sitio");
 
 		PortletEntry.inputLocalizedName(
-			language = "zh_CN",
+			language = "zh-CN",
 			localizedName = "站点名称");
 
 		PortletEntry.save();
@@ -373,7 +373,7 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		PortletEntry.inputLocalizedName(
-			language = "es_ES",
+			language = "es-ES",
 			localizedName = "Nombre del Sitio");
 
 		PortletEntry.save();
@@ -551,11 +551,11 @@ definition {
 			pageName = "Language Page");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "hu_HU",
+			friendlyUrlLocalized = "hu-HU",
 			localizedFriendlyURL = "/teszt");
 
 		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "en_US",
+			friendlyUrlLocalized = "en-US",
 			localizedFriendlyURL = "/test");
 
 		Button.clickSave();

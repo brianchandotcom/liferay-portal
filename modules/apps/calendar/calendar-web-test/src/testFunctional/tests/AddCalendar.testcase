@@ -146,13 +146,22 @@ definition {
 
 	}
 
-	@description = "LRQA-71360 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
-	@ignore = "Test Stub"
+	@description = "LRQA-71596 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
 	@priority = "4"
 	test CanChooseAColor {
+		CalendarNavigator.gotoAddMyCalendars();
 
-		// TODO LRQA-71596 CanChooseAColor pending implementation
+		Calendar._editName(calendarName = "Calendar Name");
 
+		Calendar.chooseCalendarColor(myCalendarColor = "8C66D9");
+
+		Button.clickSave();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.viewColorMyCalendars(myCalendarColor = "8C66D9");
+
+		
 	}
 
 	@description = "Verify that the user can Enable Comments on Calendar"

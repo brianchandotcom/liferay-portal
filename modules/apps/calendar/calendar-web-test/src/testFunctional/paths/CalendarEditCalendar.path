@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_MY_CALENDAR_COLOR</td>
+	<td>//div[contains(@class,'simple-color-picker-item') and contains(@style,'${key_myCalendarColor}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -118,7 +118,7 @@ describe('VariationsNav Initial State', () => {
 		rerender(
 			_getComponent({
 				...emptyStateOneAvailableSegments,
-				validAssetListEntry: true,
+				assetListEntryValid: true,
 			})
 		);
 

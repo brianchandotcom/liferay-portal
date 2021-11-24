@@ -1677,9 +1677,11 @@ definition {
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		Pause(locator1 = "120000");
-
 		Navigator.openURL();
+
+		Notifications.waitForNotificationFlexibly(
+			flexibleRefreshingTime = "3000",
+			waitingTime = "120000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -1778,9 +1780,11 @@ definition {
 			enableReviewDate = "true",
 			increaseMinutes = "2");
 
-		Pause(locator1 = "120000");
-
 		Navigator.openURL();
+
+		Notifications.waitForNotificationFlexibly(
+			flexibleRefreshingTime = "3000",
+			waitingTime = "120000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -1983,9 +1987,11 @@ definition {
 			enableExpirationDate = "true",
 			increaseMinutes = "2");
 
-		Pause(locator1 = "120000");
-
 		Navigator.openURL();
+
+		Notifications.waitForNotificationFlexibly(
+			flexibleRefreshingTime = "3000",
+			waitingTime = "120000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

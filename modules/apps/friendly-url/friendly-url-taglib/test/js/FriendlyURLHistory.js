@@ -160,6 +160,12 @@ describe('FriendlyURLHistory', () => {
 				'.modal-content li.list-group-item'
 			);
 
+			// LPS-141143
+
+			expect(
+				Array.from(listUrlItems).map(({textContent}) => textContent)
+			).toMatchSnapshot();
+
 			expect(listUrlItems.length).toBe(3);
 		});
 

@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.search.index;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -45,6 +46,13 @@ public interface TaskWorkflowMetricsIndexer {
 		Date instanceCompletionDate, long instanceId, Date modifiedDate,
 		String name, long nodeId, long processId, String processVersion,
 		long taskId, long userId);
+
+	public default Document completeTask(
+		CompleteTaskRequest completeTaskRequest) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
 	public Document completeTask(
 		long companyId, Date completionDate, long completionUserId,

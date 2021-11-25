@@ -59,7 +59,8 @@ const InitProvider = ({children}) => {
 					data
 				);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error.message);
 		}
 
@@ -69,6 +70,7 @@ const InitProvider = ({children}) => {
 
 	useEffect(() => {
 		getInitialData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (loading) {

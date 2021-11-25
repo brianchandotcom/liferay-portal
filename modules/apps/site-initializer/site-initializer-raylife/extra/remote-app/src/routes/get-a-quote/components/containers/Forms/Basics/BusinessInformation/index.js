@@ -21,7 +21,8 @@ const setFormPath = (value) => `basics.businessInformation.${value}`;
 const getSelectedProductName = () => {
 	try {
 		return JSON.parse(Storage.getItem(STORAGE_KEYS.PRODUCT))?.productName;
-	} catch (error) {
+	}
+	catch (error) {
 		return '';
 	}
 };

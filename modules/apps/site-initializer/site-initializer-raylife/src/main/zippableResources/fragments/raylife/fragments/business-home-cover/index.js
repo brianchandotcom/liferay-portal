@@ -78,7 +78,7 @@ continueQuoteButton.onclick = async function () {
 	);
 
 	if (!raylifeApplicationResponse.items.length) {
-		errorFeedback.innerHTML = `We’re unable to find a quote associated with this address. Please try again or <u>Start a New Quote</u>.`;
+		errorFeedback.innerHTML = `We're unable to find a quote associated with this address. Please try again or <u>Start a New Quote</u>.`;
 
 		return;
 	}

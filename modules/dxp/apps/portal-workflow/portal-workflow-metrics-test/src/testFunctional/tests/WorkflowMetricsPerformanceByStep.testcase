@@ -42,9 +42,36 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanFilterByEachExistingVersion {
+		Workflow.openWorkflowListView();
 
-		// TODO LRQA-68927 CanFilterByEachExistingVersion pending implementation
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		Workflow.updateDefinition(workflowDefinitionTitle = "Single Approver Updated");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.clickUpdate();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Update");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepTooltip();
+
+		Click(
+			key_dateRange = "All Versions",
+			key_title = "",
+			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+
+		AssertElementPresent(
+			key_dateRange = "1.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dateRange = "2.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dateRange = "3.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 	}
 
 	@description = "LPS-101075 - Verify that the filter is available on the card in the Performance tab"

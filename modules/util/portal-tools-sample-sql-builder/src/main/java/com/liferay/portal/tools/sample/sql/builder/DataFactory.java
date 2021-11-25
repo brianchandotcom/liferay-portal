@@ -4024,17 +4024,30 @@ public class DataFactory {
 	public List<LayoutModel> newGroupLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		layoutModels.add(
-			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "document_library", "",
-				DLPortletKeys.DOCUMENT_LIBRARY + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
-		layoutModels.add(
-			newLayoutModel(groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
+		if (BenchmarksPropsValues.MAX_BLOGS_ENTRY_COUNT != 0) {
+			layoutModels.add(
+				newLayoutModel(
+					groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
+		}
+
+		if (BenchmarksPropsValues.MAX_DL_FOLDER_COUNT != 0) {
+			layoutModels.add(
+				newLayoutModel(
+					groupId, "document_library", "",
+					DLPortletKeys.DOCUMENT_LIBRARY + ","));
+		}
+
+		if (BenchmarksPropsValues.MAX_MB_CATEGORY_COUNT != 0) {
+			layoutModels.add(
+				newLayoutModel(
+					groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
+		}
+
+		if (BenchmarksPropsValues.MAX_WIKI_NODE_COUNT != 0) {
+			layoutModels.add(
+				newLayoutModel(
+					groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
+		}
 
 		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
 			layoutModels.add(

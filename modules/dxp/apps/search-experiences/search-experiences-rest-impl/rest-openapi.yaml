@@ -84,6 +84,12 @@ components:
                             type: object
                         lte:
                             type: object
+                        value:
+                            type: object
+                        values:
+                            items:
+                                type: object
+                            type: array
                         parameterName:
                             type: string
                     type: object
@@ -254,6 +260,8 @@ components:
                                                     properties:
                                                         boost:
                                                             type: boolean
+                                                        format:
+                                                            type: string
                                                         max:
                                                             type: object
                                                         min:

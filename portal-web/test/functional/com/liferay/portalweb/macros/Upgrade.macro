@@ -2230,6 +2230,12 @@ definition {
 			key_assetTitle = "DM Document Title In Depot",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
+		Search.searchCP(searchTerm = "DM Document Title In Depot");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title In Depot",
+			searchAssetType = "Document");
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.editCP(
@@ -2290,6 +2296,20 @@ definition {
 		DMDocument.viewDocumentTypePG(
 			numericFieldLabel = "Amount",
 			numericValue = "1234");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.deleteCP(
+			assetName = "DM Document Title With DM Type",
+			assetType = "Document");
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
 	}
 
 	macro validateDepotEntries {

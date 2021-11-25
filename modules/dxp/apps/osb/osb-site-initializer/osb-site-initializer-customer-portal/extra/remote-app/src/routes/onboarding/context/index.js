@@ -1,12 +1,12 @@
 import {useQuery} from '@apollo/client';
 import {createContext, useEffect, useReducer} from 'react';
-import FormProvider from '~/common/providers/FormProvider';
-import {LiferayTheme} from '~/common/services/liferay';
-import {getUserAccountById} from '~/common/services/liferay/graphql/queries';
+import FormProvider from '../../../common/providers/FormProvider';
+import {LiferayTheme} from '../../../common/services/liferay';
+import {getUserAccountById} from '../../../common/services/liferay/graphql/queries';
 import {
 	PARAMS_KEYS,
 	SearchParams,
-} from '~/common/services/liferay/search-params';
+} from '../../../common/services/liferay/search-params';
 import {
 	getInitialDxpAdmin,
 	getInitialInvite,

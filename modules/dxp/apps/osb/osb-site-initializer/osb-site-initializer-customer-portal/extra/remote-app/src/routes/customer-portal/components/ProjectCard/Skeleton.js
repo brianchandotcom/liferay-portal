@@ -1,5 +1,5 @@
 import ClayCard from '@clayui/card';
-import Skeleton from '~/common/components/Skeleton';
+import Skeleton from '../../../../common/components/Skeleton';
 
 const ProjectCardSkeleton = () => {
 	return (

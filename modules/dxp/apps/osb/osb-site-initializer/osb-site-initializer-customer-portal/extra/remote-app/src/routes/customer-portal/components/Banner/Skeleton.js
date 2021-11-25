@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import Skeleton from '~/common/components/Skeleton';
+import Skeleton from '../../../../common/components/Skeleton';
 import {AppContext} from '../../context';
 
 const BannerSkeleton = () => {

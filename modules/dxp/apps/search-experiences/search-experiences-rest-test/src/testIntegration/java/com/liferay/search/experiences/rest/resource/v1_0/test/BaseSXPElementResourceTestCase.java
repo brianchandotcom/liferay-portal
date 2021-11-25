@@ -292,11 +292,6 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
-	public void testGetSXPElementExport() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPostSXPElementValidate() throws Exception {
 		SXPElement randomSXPElement = randomSXPElement();
 
@@ -470,6 +465,11 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSXPElementExport() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected SXPElement testGraphQLSXPElement_addSXPElement()

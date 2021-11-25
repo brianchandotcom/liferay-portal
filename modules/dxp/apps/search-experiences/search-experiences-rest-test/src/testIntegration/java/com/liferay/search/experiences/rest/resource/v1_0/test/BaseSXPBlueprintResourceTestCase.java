@@ -296,11 +296,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
-	public void testGetSXPBlueprintExport() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPostSXPBlueprintValidate() throws Exception {
 		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
 
@@ -483,6 +478,11 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSXPBlueprintExport() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected SXPBlueprint testGraphQLSXPBlueprint_addSXPBlueprint()

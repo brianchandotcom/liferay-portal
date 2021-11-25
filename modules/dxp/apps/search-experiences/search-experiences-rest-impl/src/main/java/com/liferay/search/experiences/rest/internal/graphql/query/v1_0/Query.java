@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -235,23 +236,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprintExport(sxpBlueprintId: ___){}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public String sXPBlueprintExport(
-			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpBlueprintResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpBlueprintResource -> sxpBlueprintResource.getSXPBlueprintExport(
-				sxpBlueprintId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, createDate, description, description_i18n, elementInstances, id, modifiedDate, title, title_i18n, userName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -263,6 +247,23 @@ public class Query {
 			_sxpBlueprintResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpBlueprintResource -> sxpBlueprintResource.getSXPBlueprint(
+				sxpBlueprintId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprintExport(sxpBlueprintId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Response sXPBlueprintExport(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.getSXPBlueprintExport(
 				sxpBlueprintId));
 	}
 
@@ -289,23 +290,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElementExport(sxpElementId: ___){}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public String sXPElementExport(
-			@GraphQLName("sxpElementId") Long sxpElementId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpElementResource -> sxpElementResource.getSXPElementExport(
-				sxpElementId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElement(sxpElementId: ___){createDate, description, description_i18n, elementDefinition, hidden, id, modifiedDate, readOnly, title, title_i18n, type, userName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -316,6 +300,23 @@ public class Query {
 			_sxpElementResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.getSXPElement(
+				sxpElementId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElementExport(sxpElementId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Response sXPElementExport(
+			@GraphQLName("sxpElementId") Long sxpElementId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.getSXPElementExport(
 				sxpElementId));
 	}
 
@@ -379,7 +380,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public String export() throws Exception {
+		public Response export() throws Exception {
 			return _applyComponentServiceObjects(
 				_sxpElementResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -419,7 +420,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public String export() throws Exception {
+		public Response export() throws Exception {
 			return _applyComponentServiceObjects(
 				_sxpBlueprintResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

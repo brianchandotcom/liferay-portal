@@ -318,58 +318,34 @@ public class TaskWorkflowMetricsIndexerImpl
 		return document;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #completeTask(CompleteTaskRequest)}
+	 */
+	@Deprecated
 	@Override
 	public Document completeTask(
 		long companyId, Date completionDate, long completionUserId,
 		long duration, Date modifiedDate, long taskId, long userId) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		CompleteTaskRequest.Builder completeTaskRequestBuilder =
+			new CompleteTaskRequest.Builder();
 
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setValue(
-			"completed", true
-		).setDate(
-			"completionDate", getDate(completionDate)
-		).setLong(
-			"completionUserId", completionUserId
-		).setLong(
-			"duration", duration
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setLong(
-			"taskId", taskId
-		).setString(
-			"uid", digest(companyId, taskId)
-		).setLong(
-			"userId", userId
-		);
-
-		Document document = documentBuilder.build();
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				updateDocument(document);
-
-				_deleteTask(companyId, taskId);
-
-				BooleanQuery booleanQuery = queries.booleanQuery();
-
-				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", companyId),
-					queries.term("taskId", taskId));
-
-				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-					companyId,
-					HashMapBuilder.<String, Object>put(
-						"completionDate", document.getDate("completionDate")
-					).put(
-						"completionUserId", document.getLong("completionUserId")
-					).build(),
-					booleanQuery);
-			});
-
-		return document;
+		return completeTask(
+			completeTaskRequestBuilder.setCompanyId(
+				companyId
+			).setCompletionDate(
+				completionDate
+			).setCompletionUserId(
+				completionUserId
+			).setDuration(
+				duration
+			).setModifiedDate(
+				modifiedDate
+			).setTaskId(
+				taskId
+			).setUserId(
+				userId
+			).build());
 	}
 
 	@Override

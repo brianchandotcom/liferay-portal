@@ -54,6 +54,10 @@ public interface TaskWorkflowMetricsIndexer {
 			"This method needs to be implemented");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #completeTask(CompleteTaskRequest)}
+	 */
+	@Deprecated
 	public Document completeTask(
 		long companyId, Date completionDate, long completionUserId,
 		long duration, Date modifiedDate, long taskId, long userId);

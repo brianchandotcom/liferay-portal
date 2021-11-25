@@ -15,8 +15,9 @@ import React from 'react';
 import BaseNode from '../BaseNode';
 
 export default function StartNode({
-	data: {description} = {},
+	data: {description, label} = {},
 	descriptionSidebar,
+	id,
 	...otherProps
 }) {
 	return (
@@ -25,7 +26,8 @@ export default function StartNode({
 			description={description}
 			descriptionSidebar={descriptionSidebar}
 			icon="play"
-			label={Liferay.Language.get('start')}
+			id={id}
+			label={label ?? Liferay.Language.get('start')}
 			type="start"
 			{...otherProps}
 		/>

@@ -15,8 +15,9 @@ import React from 'react';
 import BaseNode from '../BaseNode';
 
 export default function EndNode({
-	data: {description} = {},
+	data: {description, label} = {},
 	descriptionSidebar,
+	id,
 	...otherProps
 }) {
 	return (
@@ -25,7 +26,8 @@ export default function EndNode({
 			description={description}
 			descriptionSidebar={descriptionSidebar}
 			icon="flag-full"
-			label={Liferay.Language.get('end')}
+			id={id}
+			label={label ?? Liferay.Language.get('end')}
 			type="end"
 			{...otherProps}
 		/>

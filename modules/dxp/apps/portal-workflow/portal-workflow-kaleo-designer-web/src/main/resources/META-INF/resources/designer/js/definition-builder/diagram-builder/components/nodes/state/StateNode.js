@@ -17,6 +17,7 @@ import BaseNode from '../BaseNode';
 export default function StateNode({
 	data: {description, label} = {},
 	descriptionSidebar,
+	id,
 	...otherProps
 }) {
 	return (
@@ -25,6 +26,7 @@ export default function StateNode({
 			description={description}
 			descriptionSidebar={descriptionSidebar}
 			icon="circle"
+			id={id}
 			label={label ?? Liferay.Language.get('state')}
 			type="state"
 			{...otherProps}

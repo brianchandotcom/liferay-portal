@@ -32,6 +32,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRelModel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelModel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.util.AssetHelper;
@@ -75,6 +76,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -840,26 +842,20 @@ public class AssetListAssetEntryProviderImpl
 	private long _getFirstSegmentsEntryId(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
-		LongStream longStream = Arrays.stream(segmentsEntryIds);
+		Stream<AssetListEntrySegmentsEntryRel> stream =
+			_assetListEntrySegmentsEntryRelLocalService
+				.fetchAssetListEntrySegmentsEntryRels(
+					assetListEntry.getAssetListEntryId(), segmentsEntryIds)
+				.stream();
 
-		return longStream.filter(
-			segmentsEntryId -> {
-				if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
-					return false;
-				}
+		return stream.min(
+			Comparator.comparing(
+				AssetListEntrySegmentsEntryRel::getPriority))
+			.map(
+				AssetListEntrySegmentsEntryRelModel::getAssetListEntrySegmentsEntryRelId)
+			.orElse(SegmentsEntryConstants.ID_DEFAULT);
 
-				AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-					_assetListEntrySegmentsEntryRelLocalService.
-						fetchAssetListEntrySegmentsEntryRel(
-							assetListEntry.getAssetListEntryId(),
-							segmentsEntryId);
 
-				return assetListEntrySegmentsEntryRel != null;
-			}
-		).findFirst(
-		).orElse(
-			SegmentsEntryConstants.ID_DEFAULT
-		);
 	}
 
 	private String[] _getKeywords(UnicodeProperties unicodeProperties) {

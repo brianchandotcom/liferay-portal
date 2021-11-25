@@ -382,8 +382,8 @@ definition {
 
 	@description = "This ensures that the translator can select which base language she wants to translate."
 	@priority = "5"
-	@refactorneeded
-	test TranslateWebContent {
+	@refactordone
+	test CanTranslateWebContent {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

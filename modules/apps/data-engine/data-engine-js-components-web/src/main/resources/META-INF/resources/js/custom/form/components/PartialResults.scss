@@ -1,0 +1,43 @@
+@import 'atlas-variables';
+
+.lfr-de__partial-results {
+	&--background {
+		background: $light;
+		min-height: 100%;
+	}
+
+	&-back-button {
+		padding-left: 0;
+		position: relative;
+		top: -12rem;
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		&--description {
+			top: -14rem;
+		}
+	}
+
+	&-entries {
+		height: 124px;
+		padding-top: 24px;
+	}
+
+	&-header {
+		background-color: $white;
+		height: 124px;
+		padding-top: 24px;
+	}
+
+	&-subtitle {
+		color: $secondary;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	&-title {
+		font-size: 2rem;
+	}
+}

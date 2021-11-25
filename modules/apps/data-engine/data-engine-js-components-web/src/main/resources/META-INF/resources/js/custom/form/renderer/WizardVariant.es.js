@@ -13,17 +13,14 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useResource} from '@clayui/data-provider';
-import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import * as DefaultVariant from '../../../core/components/PageRenderer/DefaultVariant.es';
 import {useConfig} from '../../../core/hooks/useConfig.es';
-import FormReport from '../../form-report/index';
 import {MultiStep} from '../components/MultiStep.es';
 import {PaginationControls} from '../components/PaginationControls.es';
+import PartialResults from '../components/PartialResults';
 
 export function Column({children, column, columnRef, editable, ...otherProps}) {
 	const firstField = column.fields[0];
@@ -62,84 +59,27 @@ export function Container({
 		submitLabel,
 	} = useConfig();
 
-	const {resource} = useResource({
-		fetch,
-		link: formReportDataURL,
-	});
-
 	const onClick = () => {
 		setShowReport(true);
 	};
 
 	if (showReport) {
-		const showPartialResultsToRespondentsElement = document.querySelector(
-			'[id$="showPartialResultsToRespondents"]'
+		const alertElement = document.querySelector(
+			'.lfr-ddm__show-partial-results-alert'
 		);
 
-		showPartialResultsToRespondentsElement.style.display = 'none';
+		alertElement.classList.add(
+			'lfr-ddm__show-partial-results-alert--hidden'
+		);
 	}
 
 	return (
 		<>
 			{showReport ? (
-				<>
-					<div className="ddm-form-page-back">
-						<ClayButton
-							displayType="link"
-							onClick={() => setShowReport(false)}
-						>
-							<ClayIcon symbol="order-arrow-left" />
-
-							{Liferay.Language.get('back')}
-						</ClayButton>
-					</div>
-
-					<div
-						className="portlet-ddm-form-report"
-						id="container-portlet-ddm-form-report"
-					>
-						<div className="portlet-ddm-form-report-header">
-							<div className="container-fluid">
-								<div className="align-items-center">
-									<span className="portlet-ddm-form-report-header-title text-truncate">
-										{resource?.totalItems === 1
-											? Liferay.Util.sub(
-													Liferay.Language.get(
-														'x-entry'
-													),
-													[resource?.totalItems]
-											  )
-											: Liferay.Util.sub(
-													Liferay.Language.get(
-														'x-entries'
-													),
-													[resource?.totalItems]
-											  )}
-									</span>
-								</div>
-
-								<div className="align-items-center">
-									<span className="portlet-ddm-form-report-header-subtitle text-truncate">
-										{resource?.totalItems > 0
-											? resource?.lastModifiedDate
-											: Liferay.Language.get(
-													'there-are-no-entries'
-											  )}
-									</span>
-								</div>
-							</div>
-						</div>
-
-						<FormReport
-							data={resource?.data}
-							fields={resource?.fields}
-							formReportRecordsFieldValuesURL={
-								resource?.formReportRecordsFieldValuesURL
-							}
-							portletNamespace={resource?.portletNamespace}
-						/>
-					</div>
-				</>
+				<PartialResults
+					onShow={() => setShowReport(false)}
+					reportDataURL={formReportDataURL}
+				/>
 			) : (
 				<div className="ddm-form-page-container wizard">
 					{pages.length > 1 && pageIndex === activePage && (

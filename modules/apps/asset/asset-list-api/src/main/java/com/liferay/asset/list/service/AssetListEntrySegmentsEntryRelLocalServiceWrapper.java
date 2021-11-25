@@ -321,6 +321,16 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<AssetListEntrySegmentsEntryRel>
+		fetchAssetListEntrySegmentsEntryRels(
+			long assetListEntryId, long[] segmentsEntryId) {
+
+		return _assetListEntrySegmentsEntryRelLocalService.
+			fetchAssetListEntrySegmentsEntryRels(
+				assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

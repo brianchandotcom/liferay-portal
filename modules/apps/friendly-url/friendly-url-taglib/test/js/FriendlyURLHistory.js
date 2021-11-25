@@ -154,11 +154,13 @@ describe('FriendlyURLHistory', () => {
 		});
 
 		it('renders the old friendly urls', async () => {
-			const listItems = await waitForElement(() =>
-				result.getAllByRole('listitem')
+			await waitForElement(() => result.getAllByRole('listitem'));
+
+			const listUrlItems = result.baseElement.querySelectorAll(
+				'.modal-content li.list-group-item'
 			);
 
-			expect(listItems.length).toBe(4);
+			expect(listUrlItems.length).toBe(3);
 		});
 
 		it('deletes the third old friendly url', async () => {

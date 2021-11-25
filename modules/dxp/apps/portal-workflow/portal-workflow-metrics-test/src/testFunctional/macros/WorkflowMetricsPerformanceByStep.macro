@@ -17,6 +17,13 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
 	}
 
+	macro clickViewAllSteps {
+		Click(
+			key_stepsNumber = "${stepsNumber}",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS",
+			value1 = "${valueSteps}");
+	}
+
 	macro goToPerformanceTab {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 	}
@@ -43,6 +50,14 @@ definition {
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+	}
+
+	macro selectProcessVersion {
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION");
+
+		Click(
+			key_versionOption = "${versionOption}",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_OPTION");
 	}
 
 	macro viewPerformanceByStepTooltip {

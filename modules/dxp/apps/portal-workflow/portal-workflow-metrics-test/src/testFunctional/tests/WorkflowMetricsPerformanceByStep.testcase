@@ -110,8 +110,41 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanNotSelectMoreThanOneVersion {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-68934 CanNotSelectMoreThanOneVersion pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		Workflow.updateDefinition(workflowDefinitionTitle = "Single Approver Updated");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.clickUpdate();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetricsPerformanceByStep.clickViewAllSteps(
+			stepsNumber = "1",
+			valueSteps = "View All Steps (1)");
+
+		WorkflowMetricsPerformanceByStep.selectProcessVersion(versionOption = "1.0");
+
+		WorkflowMetricsPerformanceByStep.selectProcessVersion(versionOption = "2.0");
+
+		AssertElementPresent(
+			key_versionOption = "2.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_SELECTED");
+
+		AssertElementNotPresent(
+			key_versionOption = "1.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_SELECTED");
 
 	}
 

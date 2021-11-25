@@ -90,6 +90,21 @@
 	<td>//td[contains(text(),'${key_stepName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION</td>
+	<td>//button[contains(.,'Process Version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_OPTION</td>
+	<td>//span[contains(@class, 'dropdown-item control-hidden')]//div[contains(.,'${key_versionOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_SELECTED</td>
+	<td>//span[contains(@class, 'active')]//div[contains(.,'${key_versionOption}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

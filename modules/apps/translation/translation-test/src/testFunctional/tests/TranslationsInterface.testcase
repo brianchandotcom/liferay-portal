@@ -57,9 +57,11 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			version = "1.1",
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 

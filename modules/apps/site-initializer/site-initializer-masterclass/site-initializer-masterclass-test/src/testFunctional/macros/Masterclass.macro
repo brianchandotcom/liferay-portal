@@ -6,9 +6,30 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCustomCP(
-			siteName = "${siteName}",
-			siteTemplateName = "Masterclass");
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Masterclass");
+
+		PortletEntry.inputName(name = "${siteName}");
+
+		Modal.save();
+
+		while (IsElementNotPresent(locator1 = "Raylife#SITE_TITLE", siteTitle = "${siteName}")) {
+			WaitForPageLoad();
+		}
+
+		Click(locator1 = "ProductMenu#TOGGLE");
+
+		WaitForElementPresent(
+			locator1 = "Raylife#SITE_TITLE",
+			siteTitle = "${siteName}");
 	}
 
+	macro previewPageandAssertFragment {
+		PageEditor.openPreviewMode();
+
+		AssertElementPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Masterclass#FRAGMENT_NAME");
+	}
 }

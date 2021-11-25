@@ -201,11 +201,11 @@ definition {
 	@priority = "4"
 	test CanNotUnpublishWorkflowInUse {
 		Workflow.openWorkflowProcessBuilderConfiguration();
-		
+
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
-		
+
 		Workflow.openWorkflowListView();
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Single Approver");
@@ -214,9 +214,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Unpublish");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "Workflow is in use. Remove its assignment to this asset: Blogs Entry.");
+		Alert.viewErrorMessage(errorMessage =  "Workflow is in use. Remove its assignment to this asset: Blogs Entry.");
 
 		Navigator.gotoBack();
 

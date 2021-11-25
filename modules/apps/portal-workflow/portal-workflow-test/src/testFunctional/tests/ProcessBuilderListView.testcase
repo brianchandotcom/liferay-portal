@@ -167,16 +167,19 @@ definition {
 	@description = "Verify that the user can not unpublish a Workflow is in use and system displays an error message"
 	@priority = "5"
 	test CanNotUnpublishWorkflowInUse {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Comment");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -185,9 +188,7 @@ definition {
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "Workflow is in use. Remove its assignment to this asset: Blogs Entry.");
+		Alert.viewErrorMessage(errorMessage = "Workflow is in use. Remove its assignment to these Assets: Blogs Entry, Calendar Event and 1 More.");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}

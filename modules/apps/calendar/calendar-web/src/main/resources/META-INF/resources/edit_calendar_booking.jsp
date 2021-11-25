@@ -575,6 +575,10 @@ while (manageableCalendarsIterator.hasNext()) {
 			var A = AUI();
 
 			<c:if test="<%= invitable %>">
+				var calendarContainer = Liferay.component(
+					'<portlet:namespace />calendarContainer'
+				);
+
 				var childCalendarIds = Object.keys(
 					calendarContainer.get('availableCalendars')
 				);

@@ -72,157 +72,493 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136183. Can use a Masterclass Border and Classroom Header fragments"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-136183. Can use a Masterclass Border fragment"
 	@priority = "3"
-	test CanUseMasterclassBorderandHeader {
+	test CanUseMasterclassBorder {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Border fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Border");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "component-border");
+		}
 	}
 
-	@description = "This is a test for LPS-136183. Can use a Masterclass button and link fragments"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-136183. Can use a Masterclass Classroom Header fragment"
 	@priority = "3"
-	test CanUseMasterclassButtonandLink {
+	test CanUseMasterclassClassroomHeader {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Classroom Header fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Classroom Header");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-classroom-header");
+		}
 	}
 
-	@description = "This is a test for LPS-136183. Can use a Masterclass  container and image fragments"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-136183. Can use a Masterclass button fragment"
 	@priority = "3"
-	test CanUseMasterclassContainerandImage {
+	test CanUseMasterclassButton {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Button fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Button");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-button");
+		}
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass link fragment"
+	@priority = "3"
+	test CanUseMasterclassLink {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Drag and Drop the Masterclass Link fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
+
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Link");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-link");
+		}
+	}
+
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Container fragment"
+	@priority = "3"
+	test CanUseMasterclassContainer {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Drag and Drop the Masterclass Container fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
+
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Container");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-container");
+		}
+	}
+
+	@description = "This is a test for LPS-136183. Can use a Masterclass Image fragment"
+	@priority = "3"
+	test CanUseMasterclassImage {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Drag and Drop the Masterclass Image fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
+
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Image");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "component-image");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Cookie Banner fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassCookieBanner {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Cookie Banner fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Cookie Banner");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "cookie-banner");
+
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Footer fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassFooter {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Footer fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Footer");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-footer");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Heading fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassHeading {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Heading");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "component-heading");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Hero fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassHero {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Hero fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Hero");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "container-fluid-max-xl hero");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Map Video fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassMapVideo {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Video Map fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Video Map");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "component-video");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Navbar fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassNavbar {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Navbar fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Navbar");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-navbar");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Private Header fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassPrivateHeader {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Private Header fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
+
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Private Header");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-private-header");
+		}
 
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Sign In fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassSignIn {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Sign In fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Sign In");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "sign-in vh-100");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Subscribe Form fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassSubscribeForm {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Subscribe Form fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Subscribe Form");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "newsletter-form");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Tabs fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassTabs {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Tabs fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Tabs");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "masterclass-tabs");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Text Block fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassTextBlock {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Text Block fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Text Block");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "component-text-block");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Video fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassVideo {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Video fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Video");
+
+			PageEditor.gotoConfiguration(fragmentName = "Masterclass Video");
+
+			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "video");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Video Player fragment"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUseMasterclassVideoPlayer {
+		task ("Create a new Page by Json") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		// TODO Create the automation about the LPS-136183.
+		task ("Drag and Drop the Masterclass Video Player fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
 
+			PageEditor.addFragment(
+				collectionName = "Masterclass",
+				fragmentName = "Masterclass Video Player");
+		}
+
+		task ("Preview the Page and Assert the fragment is present") {
+			Masterclass.previewPageandAssertFragment(fragmentName = "courses");
+		}
 	}
 
 	@description = "This is a test for LPS-141370. Can change the Number of Blogs in the List at Display Page Template of Blogs"
 	@priority = "4"
 	test ChangetheNumberofBlogsinBlogsListatDPT {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
-		}
-
 		task ("Go to Display Page Templates") {
 			ProductMenu.gotoPortlet(
 				category = "Design",

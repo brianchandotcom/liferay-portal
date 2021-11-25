@@ -1238,6 +1238,13 @@ definition {
 
 		DDLList.saveViaDDLDisplayPG();
 
+		Navigator.openURL();
+
+		DDLList.editUserViewPermissionCP(
+			addOrRemoveViewPermission = "Add",
+			ddlListName = "List Name",
+			roleList = "Guest");
+
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
 		DDLRecord.addViaDDLDisplayPG(

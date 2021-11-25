@@ -30,8 +30,6 @@ definition {
 
 		Upgrade.validateCollections();
 
-		Upgrade.validateDepotSettings();
-
 		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
 
 		Upgrade.revokeAndUpdateSharedEntry(
@@ -53,6 +51,8 @@ definition {
 		Upgrade.addAutoTaggedWebContent(depotName = "Test Depot Name");
 
 		Upgrade.validateDepotEntries();
+
+		Upgrade.validateDepotSettings();
 	}
 
 	@priority = "5"

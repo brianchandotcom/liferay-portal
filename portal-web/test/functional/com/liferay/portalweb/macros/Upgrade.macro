@@ -2385,17 +2385,43 @@ definition {
 			depotName = "Test Depot Name For Settings",
 			portlet = "Asset Library Settings");
 
-		Depot.viewDepotConfiguration(
-			configuration = "disabled",
-			toggleSwitchLabel = "Enable Sharing");
+		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
+			Depot.viewDepotConfiguration(
+				configuration = "disabled",
+				toggleSwitchLabel = "${toggleSwitchLabel}");
+		}
 
-		Depot.viewDepotConfiguration(
-			configuration = "disabled",
-			toggleSwitchLabel = "Enable Auto Tagging");
+		Depot.configureAutoTagging(autoTagging = "Enabled");
+
+		Depot.configureSharing(sharing = "Enabled");
+
+		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
+			Depot.viewDepotConfiguration(
+				configuration = "enabled",
+				toggleSwitchLabel = "${toggleSwitchLabel}");
+		}
 
 		DepotNavigator.gotoLanguages();
 
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Asset Library Settings");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		Depot.configureSharing(sharing = "Disabled");
+
+		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
+			Depot.viewDepotConfiguration(
+				configuration = "disabled",
+				toggleSwitchLabel = "${toggleSwitchLabel}");
+		}
 	}
 
 	macro validateDepotWCAndStructure {

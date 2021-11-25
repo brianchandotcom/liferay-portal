@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
+	compileOnly group: "com.liferay", name: "com.sun.el.javax.el", version: "3.0.1.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "javax.servlet.jsp.jstl", version: "1.2.3.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.apache.aries.spifly.dynamic.framework.extension", version: "1.2.3.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.9.8.LIFERAY-PATCHED-5"
@@ -45,7 +46,6 @@ dependencies {
 	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-json_1.1_spec", version: "1.5"
 	compileOnly group: "org.apache.johnzon", name: "johnzon-core", version: "1.2.11"
 	compileOnly group: "org.eclipse.platform", name: "org.eclipse.equinox.console", version: "1.4.300"
-	compileOnly group: "org.glassfish", name: "javax.el", version: "3.0.1-b10"
 	compileOnly group: "org.jboss.classfilewriter", name: "jboss-classfilewriter", version: "1.2.3.Final"
 	compileOnly group: "org.jboss.logging", name: "jboss-logging", version: "3.3.2.Final"
 	compileOnly group: "org.jboss.weld", name: "weld-osgi-bundle", version: "3.0.5.Final"
@@ -71,12 +71,12 @@ deploy {
 
 deployDependencies {
 	from configurations.compileOnly
+	rename(/com.sun.el.javax.el-(.+)\.jar/, "javax.el" + renameSuffix)
 	rename(/geronimo-annotation_1\.3_spec-(.+)\.jar/, "geronimo-annotation_1.3_spec" + renameSuffix)
 	rename(/geronimo-atinject_1\.0_spec-(.+)\.jar/, "geronimo-atinject_1.0_spec" + renameSuffix)
 	rename(/geronimo-interceptor_1\.2_spec-(.+)\.jar/, "geronimo-interceptor_1.2_spec" + renameSuffix)
 	rename(/geronimo-jcdi_2\.0_spec-(.+)\.jar/, "geronimo-jcdi_2.0_spec" + renameSuffix)
 	rename(/geronimo-json_1\.1_spec-(.+)\.jar/, "geronimo-json_1.1_spec" + renameSuffix)
-	rename(/javax.el-(.+)\.jar/, "javax.el" + renameSuffix)
 }
 
 deployReqTestLibs {

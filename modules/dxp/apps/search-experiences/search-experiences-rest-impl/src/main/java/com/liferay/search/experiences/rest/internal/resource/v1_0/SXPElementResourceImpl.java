@@ -14,9 +14,12 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -33,6 +36,8 @@ import com.liferay.search.experiences.service.SXPElementService;
 
 import java.util.Collections;
 import java.util.HashMap;
+
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +67,38 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpElementService.getSXPElement(sxpElementId));
+	}
+
+	@Override
+	public Response getSXPElementExport(Long sxpElementId) throws Exception {
+		com.liferay.search.experiences.model.SXPElement sxpElement =
+			_sxpElementService.getSXPElement(sxpElementId);
+
+		return Response.ok(
+		).entity(
+			JSONUtil.put(
+				"description_i18n",
+				_jsonFactory.createJSONObject(
+					_jsonFactory.looseSerialize(sxpElement.getDescriptionMap()))
+			).put(
+				"elementDefinition",
+				_jsonFactory.createJSONObject(
+					sxpElement.getElementDefinitionJSON())
+			).put(
+				"title_i18n",
+				_jsonFactory.createJSONObject(
+					_jsonFactory.looseSerialize(sxpElement.getTitleMap()))
+			).put(
+				"type", sxpElement.getType()
+			)
+		).header(
+			"Content-Disposition",
+			StringBundler.concat(
+				"attachment; filename=\"",
+				sxpElement.getTitle(
+					contextAcceptLanguage.getPreferredLocale(), true),
+				".json\"")
+		).build();
 	}
 
 	@Override
@@ -179,6 +216,9 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SXPElementDTOConverter _sxpElementDTOConverter;

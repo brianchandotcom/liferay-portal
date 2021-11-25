@@ -140,37 +140,69 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 								String label = translateDisplayContext.getInfoFieldLabel(infoField);
 								boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 								String name = infoField.getName();
+
+								String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
+
+								List<String> sourceStringValues = translateDisplayContext.getSourceStringValues(infoField, translateDisplayContext.getSourceLocale());
+								List<String> targetStringValues = translateDisplayContext.getTargetStringValues(infoField, translateDisplayContext.getTargetLocale());
+
+								Iterator<String> sourceStringValuesIterator = sourceStringValues.iterator();
+								Iterator<String> targetStringValuesIterator = targetStringValues.iterator();
 							%>
 
 								<c:choose>
 									<c:when test="<%= translateDisplayContext.isAutoTranslateEnabled() %>">
-										<clay:row>
-											<clay:content-col
-												cssClass="col-autotranslate-content"
-												expand="<%= true %>"
-											>
-												<%@ include file="/translate_field.jspf" %>
-											</clay:content-col>
 
-											<clay:content-col
-												cssClass="col-autotranslate-button"
-											>
-												<clay:button
-													disabled="<%= true %>"
-													displayType="secondary"
-													monospaced="<%= true %>"
+										<%
+										while (sourceStringValuesIterator.hasNext() && targetStringValuesIterator.hasNext()) {
+											String sourceContent = sourceStringValuesIterator.next();
+											String targetContent = targetStringValuesIterator.next();
+										%>
+
+											<clay:row>
+												<clay:content-col
+													cssClass="col-autotranslate-content"
+													expand="<%= true %>"
 												>
-													<clay:icon
-														symbol="automatic-translate"
-													/>
+													<%@ include file="/translate_field.jspf" %>
+												</clay:content-col>
 
-													<span class="sr-only"><liferay-ui:message key="location" /></span>
-												</clay:button>
-											</clay:content-col>
-										</clay:row>
+												<clay:content-col
+													cssClass="col-autotranslate-button"
+												>
+													<clay:button
+														disabled="<%= true %>"
+														displayType="secondary"
+														monospaced="<%= true %>"
+													>
+														<clay:icon
+															symbol="automatic-translate"
+														/>
+
+														<span class="sr-only"><liferay-ui:message key="location" /></span>
+													</clay:button>
+												</clay:content-col>
+											</clay:row>
+
+										<%
+										}
+										%>
+
 									</c:when>
 									<c:otherwise>
-										<%@ include file="/translate_field.jspf" %>
+
+										<%
+										while (sourceStringValuesIterator.hasNext() && targetStringValuesIterator.hasNext()) {
+											String sourceContent = sourceStringValuesIterator.next();
+											String targetContent = targetStringValuesIterator.next();
+										%>
+
+											<%@ include file="/translate_field.jspf" %>
+
+										<%
+										}
+										%>
+
 									</c:otherwise>
 								</c:choose>
 

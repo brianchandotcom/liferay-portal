@@ -371,9 +371,11 @@ Translate.propTypes = {
 					id: PropTypes.string.isRequired,
 					label: PropTypes.string.isRequired,
 					multiline: PropTypes.bool,
-					sourceContent: PropTypes.string.isRequired,
+					sourceContent: PropTypes.arrayOf(PropTypes.string)
+						.isRequired,
 					sourceContentDir: PropTypes.string.isRequired,
-					targetContent: PropTypes.string,
+					targetContent: PropTypes.arrayOf(PropTypes.string)
+						.isRequired,
 					targetContentDir: PropTypes.string,
 				})
 			),

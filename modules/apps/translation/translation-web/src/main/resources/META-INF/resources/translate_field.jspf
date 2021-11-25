@@ -18,12 +18,6 @@
 	<clay:col
 		md="6"
 	>
-
-		<%
-		List<String> sourceContent = translateDisplayContext.getSourceStringValues(infoField, translateDisplayContext.getSourceLocale());
-		String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
-		%>
-
 		<c:choose>
 			<c:when test="<%= html %>">
 				<label class="control-label">
@@ -43,11 +37,6 @@
 	<clay:col
 		md="6"
 	>
-
-		<%
-		List<String> targetContent = translateDisplayContext.getTargetStringValues(infoField, translateDisplayContext.getTargetLocale());
-		%>
-
 		<c:choose>
 			<c:when test="<%= html %>">
 				<label class="control-label">

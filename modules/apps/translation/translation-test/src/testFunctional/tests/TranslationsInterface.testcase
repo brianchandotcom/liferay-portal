@@ -190,6 +190,90 @@ definition {
 			webContentNumericFieldLabel = "Decimal");
 	}
 
+	@description = "This ensures that the translator can select which target language she wants to translate into custom rich text."
+	@priority = "5"
+	test CanTranslateCustomizedWCWithRichText {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			description = "WC WebContent Description",
+			source = "true",
+			webContentRichText = '''<h2 class="text-center">This is a HTML title</h2>''',
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentDescription = "WC WebContent Description",
+			webContentRichText = "This is a HTML title",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentDescription = "WC WebContent Descripción",
+			webContentSourceHTML = '''<h2 class="text-center">Este es un título HTML</h2>''',
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewTargetFields(
+			webContentDescription = "WC WebContent Descripción",
+			webContentHTML = "Este es un título HTML",
+			webContentTitle = "WC WebContent Título");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewWithStructureCP(
+			description = "WC WebContent Descripción",
+			webContentLocaleFieldLabel = "es-ES",
+			webContentRichText = "Este es un título HTML",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleTranslated = "WC WebContent Título");
+	}
+
 	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields."
 	@priority = "5"
 	test CanTranslateCustomizedWCWithTextFields {

@@ -213,6 +213,9 @@ public class BuildFactory {
 			_BUILD_URL_SUFFIX_REGEX),
 		JenkinsResultsParserUtil.combine(
 			".*?Test/+[^/]+/+(?<master>test-[0-9]-[0-9]{1,2})/",
+			"(?<jobName>[^/]+)/?", _BUILD_URL_SUFFIX_REGEX),
+		JenkinsResultsParserUtil.combine(
+			"file:/.*", "(?<master>test-[0-9]-[0-9]{1,2})/",
 			"(?<jobName>[^/]+)/?", _BUILD_URL_SUFFIX_REGEX));
 
 }

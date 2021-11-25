@@ -5212,9 +5212,9 @@ com/liferay/commerce/shipping/engine/fedex/internal/frontend/taglib/servlet/tagl
 com/liferay/commerce/shipping/engine/fedex/internal/helper/FedExCommerceShippingOptionHelper._getAmount(Lcom/fedex/ws/rate/v22/Money;)Ljava/math/BigDecimal;:SAFE
 com/liferay/commerce/shipping/engine/fedex/internal/helper/FedExCommerceShippingOptionHelper._getPrice(JI)Ljava/math/BigDecimal;:SAFE
 com/liferay/commerce/shipping/engine/fedex/internal/helper/FedExCommerceShippingOptionHelper._getPrice(Ljava/util/List;)Ljava/math/BigDecimal;:SAFE
+com/liferay/commerce/shipping/engine/fedex/internal/settings/definition/FedExCommerceShippingEngineGroupServiceConfigurationBeanDeclaration.getConfigurationBeanClass()Ljava/lang/Class;:SAFE
 com/liferay/commerce/shipping/engine/fixed/internal/search/CommerceShippingFixedOptionIndexer.doGetSummary(Lcom/liferay/portal/kernel/search/Document;Ljava/util/Locale;Ljava/lang/String;Ljavax/portlet/PortletRequest;Ljavax/portlet/PortletResponse;)Lcom/liferay/portal/kernel/search/Summary;:NULL
 com/liferay/commerce/shipping/engine/fixed/internal/search/CommerceShippingFixedOptionIndexer.getClassName()Ljava/lang/String;:SAFE
-com/liferay/commerce/shipping/engine/fedex/internal/settings/definition/FedExCommerceShippingEngineGroupServiceConfigurationBeanDeclaration.getConfigurationBeanClass()Ljava/lang/Class;:SAFE
 com/liferay/commerce/shipping/engine/fixed/model/CommerceShippingFixedOption$1.get(Lcom/liferay/commerce/shipping/engine/fixed/model/CommerceShippingFixedOption;)Ljava/lang/Long;:SAFE
 com/liferay/commerce/shipping/engine/fixed/model/CommerceShippingFixedOption$1.get(Ljava/lang/Object;)Ljava/lang/Object;:SAFE
 com/liferay/commerce/shipping/engine/fixed/model/CommerceShippingFixedOption$1.getAttributeClass()Ljava/lang/Class;:SAFE

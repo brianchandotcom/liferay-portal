@@ -191,6 +191,29 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 			assetListEntrySegmentsEntryRel);
 	}
 
+	@Override
+	public void updateVariationsPriority(long[] variationsPriority) {
+		for (int priority = 0; priority < variationsPriority.length;
+			 priority++) {
+
+			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+				null;
+			try {
+				assetListEntrySegmentsEntryRel =
+					getAssetListEntrySegmentsEntryRel(
+						variationsPriority[priority]);
+			}
+			catch (PortalException portalException) {
+				portalException.printStackTrace();
+			}
+
+			assetListEntrySegmentsEntryRel.setPriority(priority);
+
+			updateAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel);
+		}
+	}
+
 	@Reference
 	private AssetListEntryAssetEntryRelPersistence
 		_assetListEntryAssetEntryRelPersistence;

@@ -103,7 +103,7 @@ describe('FriendlyURLHistory', () => {
 	});
 
 	it('renders a button', () => {
-		const {getByRole} = renderComponent({...defaultProps});
+		const {getByRole} = renderComponent(defaultProps);
 
 		historyButton = getByRole('button');
 
@@ -111,7 +111,7 @@ describe('FriendlyURLHistory', () => {
 	});
 
 	it('renders a restore icon inside the button', () => {
-		renderComponent({...defaultProps});
+		renderComponent(defaultProps);
 
 		expect(historyButton.querySelector('svg').classList).toContain(
 			'lexicon-icon-restore'
@@ -128,7 +128,7 @@ describe('FriendlyURLHistory', () => {
 		beforeEach(async () => {
 			fetch.mockResponseOnce(JSON.stringify(fetchResponse));
 
-			result = renderComponent({...defaultProps});
+			result = renderComponent(defaultProps);
 
 			historyButton = result.getByRole('button');
 
@@ -185,8 +185,9 @@ describe('FriendlyURLHistory', () => {
 			});
 
 			expect(
-				document.querySelectorAll('.modal-content li.list-group-item')
-					.length
+				result.baseElement.querySelectorAll(
+					'.modal-content li.list-group-item'
+				).length
 			).toBe(2);
 
 			expect(fetch.mock.calls.length).toEqual(2);
@@ -211,8 +212,9 @@ describe('FriendlyURLHistory', () => {
 			expect(fetch.mock.calls.length).toEqual(3);
 
 			expect(
-				document.querySelector('.modal-content .active-url-text')
-					.innerHTML
+				result.baseElement.querySelector(
+					'.modal-content .active-url-text'
+				).textContent
 			).toBe('/test-2');
 		});
 	});

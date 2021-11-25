@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ANY_TAB_ON_ENTRY</td>
+		<td>//a[contains(text(),'${key_tabName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_BLOCK_BUTTON</td>
 		<td>//button[contains(@class,'btn btn-sm btn-secondary')]</td>
 		<td></td>
@@ -38,6 +43,11 @@
 	<tr>
 		<td>ADD_FIELD_ON_BLOCK</td>
 		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>BASIC_INFO_NAME_FIELD</td>
+		<td>//input[contains(@id,'objectLayoutName')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -103,6 +113,16 @@
 	<tr>
 		<td>ENTRY_RELATIONSHIP_TAB</td>
 		<td>//a[contains(text(),'${key_tabName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LABEL_FIELD_GROUP_TITLE</td>
+		<td>//div[@class='ddm-field-types-fieldset__nested']//label[@class = 'text-uppercase' and contains(text(),'${key_labelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LABEL_FIELD_ENTRY</td>
+		<td>//div[@class='ddm-field-types-fieldset__nested']//label[text() = '${key_labelName}']</td>\
 		<td></td>
 	</tr>
 	<tr>

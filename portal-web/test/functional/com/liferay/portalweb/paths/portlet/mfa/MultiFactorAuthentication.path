@@ -43,11 +43,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_OTP_DISABLE</td>
-	<td>//span[@class='form-text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

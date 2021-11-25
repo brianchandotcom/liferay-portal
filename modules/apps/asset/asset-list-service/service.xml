@@ -166,6 +166,10 @@
 			<finder-column name="assetListEntryId" />
 			<finder-column name="segmentsEntryId" />
 		</finder>
+		<finder name="A_S_C" return-type="Collection">
+			<finder-column name="assetListEntryId" />
+			<finder-column arrayable-operator="OR" name="segmentsEntryId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="AssetListEntryUsage" remote-service="false" uuid="true">
 

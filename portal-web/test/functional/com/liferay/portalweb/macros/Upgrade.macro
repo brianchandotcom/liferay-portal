@@ -2334,6 +2334,16 @@ definition {
 	}
 
 	macro validateDepotWCAndStructure {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Search Results");
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
@@ -2341,6 +2351,12 @@ definition {
 		AssertVisible(
 			key_assetTitle = "WC WebContent Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Search.searchCP(searchTerm = "WC WebContent Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content Article");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -2400,6 +2416,16 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text Edit",
 			webContentTitle = "Web Content Title With Structure");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title With Structure");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentStructures.deleteCP(structureName = "WC Structure Name");
 	}
 
 	macro viewAndAccessRedirects {

@@ -18,8 +18,8 @@ export default function ({
 	assetCategory,
 	categorySelectorUrl,
 	itemSelectorUrl,
-	locale,
 	portletNamespace,
+	title,
 }) {
 	const displayPageItemRemove = document.getElementById(
 		`${portletNamespace}displayPageItemRemove`
@@ -140,13 +140,10 @@ export default function ({
 
 	const classPK = document.getElementById(`${portletNamespace}classPK`);
 
-	const assetCategoryId = assetCategory?.getCategoryId();
+	const assetCategoryId = assetCategory?.categoryId;
 
 	if (assetCategoryId) {
-		const categoryNode = createLabel(
-			`category-${assetCategoryId}`,
-			assetCategory.getTitle(locale)
-		);
+		const categoryNode = createLabel(`category-${assetCategoryId}`, title);
 
 		categoriesContainer?.appendChild(categoryNode);
 		classPK.value = assetCategoryId;

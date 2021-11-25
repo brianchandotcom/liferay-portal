@@ -109,9 +109,9 @@ if (cpDisplayLayout != null) {
 		).put(
 			"itemSelectorUrl", categoryCPDisplayLayoutDisplayContext.getItemSelectorUrl(renderRequest)
 		).put(
-			"locale", locale
-		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
+		).put(
+			"title", assetCategory.getTitle(locale)
 		).build()
 	%>'
 	module="js/EditAssetCategoryCPDisplayLayout"

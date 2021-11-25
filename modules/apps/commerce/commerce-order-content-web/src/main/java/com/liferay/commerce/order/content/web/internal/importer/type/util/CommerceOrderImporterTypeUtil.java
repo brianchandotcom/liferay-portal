@@ -64,6 +64,16 @@ public class CommerceOrderImporterTypeUtil {
 
 		ServiceContext serviceContext = _getServiceContext(userLocalService);
 
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			commerceOrderItemService.addCommerceOrderItem(
+				tempCommerceOrder.getCommerceOrderId(),
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(), 0,
+				commerceContext, serviceContext);
+		}
+
 		for (CommerceOrderImporterItemImpl commerceOrderImporterItemImpl :
 				commerceOrderImporterItemImpls) {
 

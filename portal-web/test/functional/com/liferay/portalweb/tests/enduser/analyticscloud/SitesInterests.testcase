@@ -38,7 +38,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Site overview interests card shows what the top interests are"
 	@priority = "5"
 	test ShowsSitesTopInterests {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		var pageNameList = "sports,technology,science";
 

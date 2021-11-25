@@ -720,7 +720,7 @@ definition {
 	@description = "Forms visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

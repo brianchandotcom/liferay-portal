@@ -2079,7 +2079,7 @@ definition {
 			navTab = "Shared by Me",
 			siteURLKey = "guest");
 
-		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "DM Document Title 1");
+		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "${dmDocumentTitleView}");
 
 		DMDocumentSharing.removeCollaborator(
 			collaboratorList = "user1fn",
@@ -2089,21 +2089,23 @@ definition {
 			navTab = "Shared by Me",
 			siteURLKey = "guest");
 
-		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "Blogs Entry Title");
+		if (isSet(blogsEntryTitleView)) {
+			Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "${blogsEntryTitleView}");
 
-		DMDocumentSharing.removeCollaborator(
-			collaboratorList = "user2fn",
-			sharedByMe = "true");
+			DMDocumentSharing.removeCollaborator(
+				collaboratorList = "user2fn",
+				sharedByMe = "true");
 
-		User.logoutPG();
+			User.logoutPG();
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "user2@liferay.com");
 
-		DMDocumentSharing.editViaSharedwithMe(
-			entryTitle = "Blogs Entry Title Can Update",
-			entryTitleEdit = "Blogs Entry Title Can Update Edit");
+			DMDocumentSharing.editViaSharedwithMe(
+				entryTitle = "${blogsEntryTitleUpdate}",
+				entryTitleEdit = "${blogsEntryTitleUpdate} Edit");
+			}
 
 		User.logoutPG();
 
@@ -2112,8 +2114,8 @@ definition {
 			userEmailAddress = "user1@liferay.com");
 
 		DMDocumentSharing.editViaSharedwithMe(
-			dmDocumentTitle = "DM Document Title Can Update",
-			entryTitleEdit = "DM Document Title Can Update Edit");
+			dmDocumentTitle = "${dmDocumentTitleUpdate}",
+			entryTitleEdit = "${dmDocumentTitleUpdate} Edit");
 	}
 
 	macro submitNewWorkflow {

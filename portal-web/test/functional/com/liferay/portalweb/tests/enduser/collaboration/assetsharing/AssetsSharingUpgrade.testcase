@@ -28,7 +28,11 @@ definition {
 
 		Upgrade.viewSharedBlog();
 
-		Upgrade.revokeAndUpdateSharedEntry();
+		Upgrade.revokeAndUpdateSharedEntry(
+			dmDocumentTitleUpdate = "DM Document Title Can Update",
+			dmDocumentTitleView = "DM Document Title 1",
+			blogsEntryTitleUpdate = "Blogs Entry Title Can Update",
+			blogsEntryTitleView = "Blogs Entry Title");
 
 		Upgrade.viewNoShareOptionAfterDisabled();
 	}
@@ -43,7 +47,11 @@ definition {
 
 		Upgrade.viewSharedBlog();
 
-		Upgrade.revokeAndUpdateSharedEntry();
+		Upgrade.revokeAndUpdateSharedEntry(
+			dmDocumentTitleUpdate = "DM Document Title Can Update",
+			dmDocumentTitleView = "DM Document Title 1",
+			blogsEntryTitleUpdate = "Blogs Entry Title Can Update",
+			blogsEntryTitleView = "Blogs Entry Title");
 
 		Upgrade.viewNoShareOptionAfterDisabled();
 	}

@@ -21,11 +21,14 @@ export default function BaseNode({
 	description,
 	descriptionSidebar,
 	icon,
+	id,
 	label,
 	type,
 	...otherProps
 }) {
-	const {availableArea} = useContext(DiagramBuilderContext);
+	const {availableArea, selectedNode, setSelectedNode} = useContext(
+		DiagramBuilderContext
+	);
 
 	const borderAreaColor = availableArea ? 'blue' : 'red';
 	const displayBorderArea = !descriptionSidebar && availableArea !== null;
@@ -38,14 +41,27 @@ export default function BaseNode({
 		description = nodeDescription[type];
 	}
 
+	if (selectedNode?.id === id) {
+		className = `${className} selected`;
+	}
+
 	return (
-		<div style={{position: 'relative'}}>
+		<div className="base-node">
 			{displayBorderArea && (
 				<div className={`node-border-area ${borderAreaColor}`} />
 			)}
 
 			<div
 				className={`node ${className}`}
+				onClick={() => {
+					if (!descriptionSidebar) {
+						setSelectedNode({
+							data: {description, label},
+							id,
+							type,
+						});
+					}
+				}}
 				style={{
 					position: displayBorderArea ? 'absolute' : 'unset',
 				}}

@@ -1,3 +1,7 @@
+.base-node {
+	position: relative;
+}
+
 .node {
 	align-items: center;
 	background: #fff;
@@ -67,4 +71,8 @@
 		background: #f48989;
 		border: 2px solid #da1414;
 	}
+}
+
+.node.selected {
+	border: 2px solid #80acff;
 }

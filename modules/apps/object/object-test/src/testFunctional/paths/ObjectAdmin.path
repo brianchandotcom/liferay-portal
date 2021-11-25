@@ -216,6 +216,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_LAYOUTS_FIELD_INPUT_HAS_REQUIRED_ERROR</td>
+		<td>//div[contains(@class,'form-group has-error')]//label[contains(text(),'Field')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR</td>
 		<td>//div[contains(@class,'form-group has-error')]//label[contains(text(),'Relationship')]</td>
 		<td></td>

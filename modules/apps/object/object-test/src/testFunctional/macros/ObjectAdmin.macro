@@ -1,16 +1,16 @@
 definition {
 
 	macro addLayoutBlockViaUI {
-		Click(locator1 = "ObjectAdmin#ADD_BLOCK_BUTTON");
+        Click(locator1 = "ObjectAdmin#ADD_BLOCK_BUTTON");
+            Type(
+                locator1 = "ObjectAdmin#TAB_LABEL_NAME",
+                value1 = "${blockName}");
+            Click(
+                key_tab = "Save",
+                locator1 = "Button#TAB_SUBMIT_BTN");
 
-		Type(
-			locator1 = "ObjectAdmin#TAB_LABEL_NAME",
-			value1 = "${blockName}");
-
-		Click(
-			key_tab = "Save",
-			locator1 = "Button#TAB_SUBMIT_BTN");
-	}
+				
+    }
 
 	macro addNewObject {
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
@@ -321,6 +321,24 @@ definition {
 	macro assertLabelFieldRequired {
 		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
 	}
+
+	macro assertNotPossibleAddFieldOnBlockWithoutChooseOptionField {
+		Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_FIELD_INPUT_HAS_REQUIRED_ERROR");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
+
+
+
+
+	}
+
+
 
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");

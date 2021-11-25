@@ -2685,11 +2685,36 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FieldOptionRequired {
 
-		// TODO LPS-141509 FieldOptionRequired pending implementation
+		ObjectAdmin.addObjectViaAPI(
+            labelName = "Custom Object",
+            objectName = "CustomObject",
+            pluralLabelName = "Custom Objects");
+
+        ObjectAdmin.addObjectLayoutViaAPI(
+            layoutName = "Layout Name",
+            objectName = "CustomObject");
+
+        ObjectAdmin.openObjectAdmin();
+
+        ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+        ObjectAdmin.goToLayoutsTab();
+
+        ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+        ObjectAdmin.goToLayoutTabOnLayouts();
+
+        ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+        ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
+
+		ObjectAdmin.assertNotPossibleAddFieldOnBlockWithoutChooseOptionField();
+
+
+
 
 	}
 

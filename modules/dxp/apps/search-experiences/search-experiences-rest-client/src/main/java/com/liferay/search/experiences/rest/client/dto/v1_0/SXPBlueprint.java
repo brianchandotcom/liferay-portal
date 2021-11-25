@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.SXPBlueprintSerDes
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -55,6 +56,27 @@ public class SXPBlueprint implements Cloneable, Serializable {
 	}
 
 	protected Configuration configuration;
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setCreateDate(
+		UnsafeSupplier<Date, Exception> createDateUnsafeSupplier) {
+
+		try {
+			createDate = createDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date createDate;
 
 	public String getDescription() {
 		return description;
@@ -140,6 +162,27 @@ public class SXPBlueprint implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public void setModifiedDate(
+		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+
+		try {
+			modifiedDate = modifiedDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date modifiedDate;
+
 	public String getTitle() {
 		return title;
 	}
@@ -182,6 +225,27 @@ public class SXPBlueprint implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> title_i18n;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setUserName(
+		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
+
+		try {
+			userName = userNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String userName;
 
 	@Override
 	public SXPBlueprint clone() throws CloneNotSupportedException {

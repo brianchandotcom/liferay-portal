@@ -70,6 +70,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -183,6 +184,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		sxpElement.setDescription(regex);
 		sxpElement.setTitle(regex);
+		sxpElement.setUserName(regex);
 
 		String json = SXPElementSerDes.toJSON(sxpElement);
 
@@ -192,6 +194,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		Assert.assertEquals(regex, sxpElement.getDescription());
 		Assert.assertEquals(regex, sxpElement.getTitle());
+		Assert.assertEquals(regex, sxpElement.getUserName());
 	}
 
 	@Test
@@ -548,6 +551,14 @@ public abstract class BaseSXPElementResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (sxpElement.getCreateDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (sxpElement.getDescription() == null) {
 					valid = false;
@@ -582,6 +593,14 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (sxpElement.getModifiedDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("readOnly", additionalAssertFieldName)) {
 				if (sxpElement.getReadOnly() == null) {
 					valid = false;
@@ -608,6 +627,14 @@ public abstract class BaseSXPElementResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (sxpElement.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userName", additionalAssertFieldName)) {
+				if (sxpElement.getUserName() == null) {
 					valid = false;
 				}
 
@@ -705,6 +732,17 @@ public abstract class BaseSXPElementResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getCreateDate(),
+						sxpElement2.getCreateDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getDescription(),
@@ -760,6 +798,17 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getModifiedDate(),
+						sxpElement2.getModifiedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("readOnly", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getReadOnly(), sxpElement2.getReadOnly())) {
@@ -794,6 +843,16 @@ public abstract class BaseSXPElementResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getType(), sxpElement2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getUserName(), sxpElement2.getUserName())) {
 
 					return false;
 				}
@@ -898,6 +957,37 @@ public abstract class BaseSXPElementResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("createDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sxpElement.getCreateDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sxpElement.getCreateDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(sxpElement.getCreateDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
 			sb.append(String.valueOf(sxpElement.getDescription()));
@@ -926,6 +1016,38 @@ public abstract class BaseSXPElementResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("modifiedDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							sxpElement.getModifiedDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sxpElement.getModifiedDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(sxpElement.getModifiedDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("readOnly")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -947,6 +1069,14 @@ public abstract class BaseSXPElementResourceTestCase {
 		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("userName")) {
+			sb.append("'");
+			sb.append(String.valueOf(sxpElement.getUserName()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -993,13 +1123,17 @@ public abstract class BaseSXPElementResourceTestCase {
 	protected SXPElement randomSXPElement() throws Exception {
 		return new SXPElement() {
 			{
+				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				hidden = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
+				modifiedDate = RandomTestUtil.nextDate();
 				readOnly = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				type = RandomTestUtil.randomInt();
+				userName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

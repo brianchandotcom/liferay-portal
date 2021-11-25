@@ -70,6 +70,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -183,6 +184,7 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		sxpBlueprint.setDescription(regex);
 		sxpBlueprint.setTitle(regex);
+		sxpBlueprint.setUserName(regex);
 
 		String json = SXPBlueprintSerDes.toJSON(sxpBlueprint);
 
@@ -192,6 +194,7 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		Assert.assertEquals(regex, sxpBlueprint.getDescription());
 		Assert.assertEquals(regex, sxpBlueprint.getTitle());
+		Assert.assertEquals(regex, sxpBlueprint.getUserName());
 	}
 
 	@Test
@@ -570,6 +573,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (sxpBlueprint.getCreateDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (sxpBlueprint.getDescription() == null) {
 					valid = false;
@@ -594,6 +605,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (sxpBlueprint.getModifiedDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (sxpBlueprint.getTitle() == null) {
 					valid = false;
@@ -604,6 +623,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
 				if (sxpBlueprint.getTitle_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userName", additionalAssertFieldName)) {
+				if (sxpBlueprint.getUserName() == null) {
 					valid = false;
 				}
 
@@ -714,6 +741,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getCreateDate(),
+						sxpBlueprint2.getCreateDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpBlueprint1.getDescription(),
@@ -757,6 +795,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getModifiedDate(),
+						sxpBlueprint2.getModifiedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpBlueprint1.getTitle(), sxpBlueprint2.getTitle())) {
@@ -771,6 +820,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				if (!equals(
 						(Map)sxpBlueprint1.getTitle_i18n(),
 						(Map)sxpBlueprint2.getTitle_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getUserName(),
+						sxpBlueprint2.getUserName())) {
 
 					return false;
 				}
@@ -880,6 +940,38 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("createDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							sxpBlueprint.getCreateDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sxpBlueprint.getCreateDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(sxpBlueprint.getCreateDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
 			sb.append(String.valueOf(sxpBlueprint.getDescription()));
@@ -903,6 +995,39 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("modifiedDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							sxpBlueprint.getModifiedDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							sxpBlueprint.getModifiedDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(sxpBlueprint.getModifiedDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("title")) {
 			sb.append("'");
 			sb.append(String.valueOf(sxpBlueprint.getTitle()));
@@ -914,6 +1039,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		if (entityFieldName.equals("title_i18n")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("userName")) {
+			sb.append("'");
+			sb.append(String.valueOf(sxpBlueprint.getUserName()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -960,10 +1093,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	protected SXPBlueprint randomSXPBlueprint() throws Exception {
 		return new SXPBlueprint() {
 			{
+				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				modifiedDate = RandomTestUtil.nextDate();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				userName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

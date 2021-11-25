@@ -4057,11 +4057,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getPortalLibDir() {
-		return PropsValues.LIFERAY_LIB_PORTAL_DIR;
-	}
-
-	@Override
 	public InetAddress getPortalLocalInetAddress(boolean secure) {
 		InetSocketAddress inetSocketAddress = null;
 

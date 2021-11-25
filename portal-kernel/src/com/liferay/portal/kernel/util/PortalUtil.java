@@ -1317,10 +1317,6 @@ public class PortalUtil {
 		return _portal.getPortalInetSocketAddressEventListeners();
 	}
 
-	public static String getPortalLibDir() {
-		return _portal.getPortalLibDir();
-	}
-
 	public static InetAddress getPortalLocalInetAddress(boolean secure) {
 		return _portal.getPortalLocalInetAddress(secure);
 	}

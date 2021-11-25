@@ -57,9 +57,10 @@ public class DirectDeployTask extends BasePortalToolsTask {
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>(3);
 
-		File appServerLibPortalDir = _getAppServerLibPortalDir();
+		File appServerShieldedContainerLibPortalDir =
+			_getAppServerShieldedContainerLibPortalDir();
 
-		String path = appServerLibPortalDir.getAbsolutePath();
+		String path = appServerShieldedContainerLibPortalDir.getAbsolutePath();
 
 		args.add(path + "/util-bridges.jar");
 		args.add(path + "/util-java.jar");
@@ -86,9 +87,14 @@ public class DirectDeployTask extends BasePortalToolsTask {
 		jvmArgs.add(
 			"-Dexternal-properties=com/liferay/portal/tools/dependencies" +
 				"/portal-tools.properties");
+
+		String appServerShieldedContainerLibPortalDir =
+			FileUtil.getAbsolutePath(
+				_getAppServerShieldedContainerLibPortalDir());
+
 		jvmArgs.add(
-			"-Dliferay.lib.portal.dir=" +
-				FileUtil.getAbsolutePath(_getAppServerLibPortalDir()));
+			"-Dliferay.shielded.container.lib.portal.dir=" +
+				appServerShieldedContainerLibPortalDir);
 
 		String webAppType = getWebAppType();
 
@@ -213,8 +219,9 @@ public class DirectDeployTask extends BasePortalToolsTask {
 		return "Deployer";
 	}
 
-	private File _getAppServerLibPortalDir() {
-		return new File(getAppServerPortalDir(), "WEB-INF/lib");
+	private File _getAppServerShieldedContainerLibPortalDir() {
+		return new File(
+			getAppServerPortalDir(), "WEB-INF/shielded-container-lib");
 	}
 
 	private Object _appServerDeployDir;

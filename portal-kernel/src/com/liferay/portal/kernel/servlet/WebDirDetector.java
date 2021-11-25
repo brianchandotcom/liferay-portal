@@ -56,8 +56,8 @@ public class WebDirDetector {
 		String rootDir = StringUtil.replace(
 			libDir, CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
-		if (rootDir.endsWith("/WEB-INF/lib/")) {
-			rootDir = rootDir.substring(0, rootDir.length() - 12);
+		if (rootDir.endsWith("/WEB-INF/shielded-container-lib/")) {
+			rootDir = rootDir.substring(0, rootDir.length() - 31);
 		}
 
 		return rootDir;

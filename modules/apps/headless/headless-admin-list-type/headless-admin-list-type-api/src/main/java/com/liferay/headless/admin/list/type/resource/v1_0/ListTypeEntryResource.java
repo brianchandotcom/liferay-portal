@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.list.type.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -58,7 +59,9 @@ public interface ListTypeEntryResource {
 	}
 
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-			Long listTypeDefinitionId, String search, Pagination pagination)
+			Long listTypeDefinitionId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(

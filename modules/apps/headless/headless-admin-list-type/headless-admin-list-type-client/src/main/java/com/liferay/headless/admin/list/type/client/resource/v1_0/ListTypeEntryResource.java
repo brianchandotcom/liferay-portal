@@ -22,6 +22,7 @@ import com.liferay.headless.admin.list.type.client.problem.Problem;
 import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeEntrySerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -41,12 +42,15 @@ public interface ListTypeEntryResource {
 	}
 
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-			Long listTypeDefinitionId, String search, Pagination pagination)
+			Long listTypeDefinitionId, String search, List<String> aggregations,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getListTypeDefinitionListTypeEntriesPageHttpResponse(
-				Long listTypeDefinitionId, String search, Pagination pagination)
+				Long listTypeDefinitionId, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(
@@ -175,12 +179,15 @@ public interface ListTypeEntryResource {
 		implements ListTypeEntryResource {
 
 		public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-				Long listTypeDefinitionId, String search, Pagination pagination)
+				Long listTypeDefinitionId, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getListTypeDefinitionListTypeEntriesPageHttpResponse(
-					listTypeDefinitionId, search, pagination);
+					listTypeDefinitionId, search, aggregations, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -222,7 +229,8 @@ public interface ListTypeEntryResource {
 		public HttpInvoker.HttpResponse
 				getListTypeDefinitionListTypeEntriesPageHttpResponse(
 					Long listTypeDefinitionId, String search,
-					Pagination pagination)
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -250,11 +258,19 @@ public interface ListTypeEntryResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

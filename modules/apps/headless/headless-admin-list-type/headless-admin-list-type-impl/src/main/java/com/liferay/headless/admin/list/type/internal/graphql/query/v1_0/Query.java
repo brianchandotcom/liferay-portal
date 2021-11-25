@@ -119,14 +119,17 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionListTypeEntries(listTypeDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionListTypeEntries(aggregation: ___, filter: ___, listTypeDefinitionId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ListTypeEntryPage listTypeDefinitionListTypeEntries(
 			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId,
 			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -135,7 +138,13 @@ public class Query {
 			listTypeEntryResource -> new ListTypeEntryPage(
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 					listTypeDefinitionId, search,
-					Pagination.of(page, pageSize))));
+					_aggregationBiFunction.apply(
+						listTypeEntryResource, aggregations),
+					_filterBiFunction.apply(
+						listTypeEntryResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						listTypeEntryResource, sortsString))));
 	}
 
 	/**

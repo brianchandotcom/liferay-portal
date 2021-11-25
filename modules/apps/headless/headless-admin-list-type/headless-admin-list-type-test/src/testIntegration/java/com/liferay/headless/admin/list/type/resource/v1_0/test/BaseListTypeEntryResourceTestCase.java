@@ -28,6 +28,7 @@ import com.liferay.headless.admin.list.type.client.pagination.Page;
 import com.liferay.headless.admin.list.type.client.pagination.Pagination;
 import com.liferay.headless.admin.list.type.client.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeEntrySerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -56,6 +58,8 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +71,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -206,7 +211,8 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, null, Pagination.of(1, 10));
+				listTypeDefinitionId, null, null, null, Pagination.of(1, 10),
+				null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -218,7 +224,8 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 			page =
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-					irrelevantListTypeDefinitionId, null, Pagination.of(1, 2));
+					irrelevantListTypeDefinitionId, null, null, null,
+					Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -237,7 +244,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				listTypeDefinitionId, randomListTypeEntry());
 
 		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-			listTypeDefinitionId, null, Pagination.of(1, 10));
+			listTypeDefinitionId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -249,6 +256,75 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		listTypeEntryResource.deleteListTypeEntry(listTypeEntry1.getId());
 
 		listTypeEntryResource.deleteListTypeEntry(listTypeEntry2.getId());
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long listTypeDefinitionId =
+			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
+
+		ListTypeEntry listTypeEntry1 = randomListTypeEntry();
+
+		listTypeEntry1 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, listTypeEntry1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> page =
+				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+					listTypeDefinitionId, null, null,
+					getFilterString(entityField, "between", listTypeEntry1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeEntry1),
+				(List<ListTypeEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long listTypeDefinitionId =
+			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
+
+		ListTypeEntry listTypeEntry1 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, randomListTypeEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeEntry listTypeEntry2 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, randomListTypeEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> page =
+				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+					listTypeDefinitionId, null, null,
+					getFilterString(entityField, "eq", listTypeEntry1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeEntry1),
+				(List<ListTypeEntry>)page.getItems());
+		}
 	}
 
 	@Test
@@ -272,7 +348,8 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page1 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, null, Pagination.of(1, 2));
+				listTypeDefinitionId, null, null, null, Pagination.of(1, 2),
+				null);
 
 		List<ListTypeEntry> listTypeEntries1 =
 			(List<ListTypeEntry>)page1.getItems();
@@ -282,7 +359,8 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page2 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, null, Pagination.of(2, 2));
+				listTypeDefinitionId, null, null, null, Pagination.of(2, 2),
+				null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -294,11 +372,143 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page3 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, null, Pagination.of(1, 3));
+				listTypeDefinitionId, null, null, null, Pagination.of(1, 3),
+				null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(listTypeEntry1, listTypeEntry2, listTypeEntry3),
 			(List<ListTypeEntry>)page3.getItems());
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithSortDateTime()
+		throws Exception {
+
+		testGetListTypeDefinitionListTypeEntriesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				BeanUtils.setProperty(
+					listTypeEntry1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithSortInteger()
+		throws Exception {
+
+		testGetListTypeDefinitionListTypeEntriesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				BeanUtils.setProperty(listTypeEntry1, entityField.getName(), 0);
+				BeanUtils.setProperty(listTypeEntry2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithSortString()
+		throws Exception {
+
+		testGetListTypeDefinitionListTypeEntriesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				Class<?> clazz = listTypeEntry1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				java.lang.reflect.Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						listTypeEntry1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						listTypeEntry2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						listTypeEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						listTypeEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						listTypeEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						listTypeEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetListTypeDefinitionListTypeEntriesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ListTypeEntry, ListTypeEntry, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long listTypeDefinitionId =
+			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
+
+		ListTypeEntry listTypeEntry1 = randomListTypeEntry();
+		ListTypeEntry listTypeEntry2 = randomListTypeEntry();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, listTypeEntry1, listTypeEntry2);
+		}
+
+		listTypeEntry1 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, listTypeEntry1);
+
+		listTypeEntry2 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, listTypeEntry2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> ascPage =
+				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+					listTypeDefinitionId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(listTypeEntry1, listTypeEntry2),
+				(List<ListTypeEntry>)ascPage.getItems());
+
+			Page<ListTypeEntry> descPage =
+				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+					listTypeDefinitionId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(listTypeEntry2, listTypeEntry1),
+				(List<ListTypeEntry>)descPage.getItems());
+		}
 	}
 
 	protected ListTypeEntry
@@ -497,6 +707,9 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()
 		throws Exception {

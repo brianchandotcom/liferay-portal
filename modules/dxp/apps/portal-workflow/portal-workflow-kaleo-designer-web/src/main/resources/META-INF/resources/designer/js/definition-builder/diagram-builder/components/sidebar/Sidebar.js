@@ -9,32 +9,52 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
-import {nodeDescription, nodeTypes} from '../nodes/utils';
+import {DiagramBuilderContext} from '../../DiagramBuilderContext';
+import SelectedNodeInfo from './SelectedNodeInfo';
+import SidebarBody from './SidebarBody';
+import SidebarHeader from './SidebarHeader';
 
 export default function Sidebar() {
-	const onDragStart = (event, nodeType) => {
-		event.dataTransfer.setData('application/reactflow', nodeType);
-		event.dataTransfer.effectAllowed = 'move';
-	};
+	const {selectedNode, setSelectedNode, setSelectedNodeNewId} = useContext(
+		DiagramBuilderContext
+	);
+	const [errors, setErrors] = useState({
+		id: false,
+		label: false,
+	});
+
+	useEffect(() => {
+		setSelectedNodeNewId(null);
+		setErrors({
+			id: false,
+			label: false,
+		});
+	}, [selectedNode?.id, setSelectedNodeNewId]);
 
 	return (
 		<div className="sidebar">
-			<div className="sidebar-header">
-				<span className="title">{Liferay.Language.get('nodes')}</span>
-			</div>
+			<SidebarHeader
+				backButtonFunction={() => {
+					setSelectedNode(null);
+					setSelectedNodeNewId(null);
+					setErrors({
+						id: false,
+						label: false,
+					});
+				}}
+				showBackButton={selectedNode}
+				title={
+					selectedNode
+						? selectedNode.type
+						: Liferay.Language.get('nodes')
+				}
+			/>
 
-			<div className="sidebar-body">
-				{Object.entries(nodeTypes).map(([key, Component], index) => (
-					<Component
-						descriptionSidebar={nodeDescription[key]}
-						draggable
-						key={index}
-						onDragStart={(event) => onDragStart(event, key)}
-					/>
-				))}
-			</div>
+			<SidebarBody displayDefaultContent={!selectedNode}>
+				<SelectedNodeInfo errors={errors} setErrors={setErrors} />
+			</SidebarBody>
 		</div>
 	);
 }

@@ -2214,7 +2214,7 @@ definition {
 			assetListName = "Depot Dynamic Asset List",
 			depotName = "Test Depot Name");
 
-		for (var assetTitle : list "DM Document Title With DM Type,DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing,DM Document Title In Site") {
+		for (var assetTitle : list "DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing,DM Document Title In Site") {
 			AssertVisible(
 				key_assetTitle = "${assetTitle}",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE");

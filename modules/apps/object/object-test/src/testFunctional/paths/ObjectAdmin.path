@@ -36,6 +36,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>LAYOUT_BASIC_INFO_NAME_FIELD</td>
+		<td>//input[@id='objectLayoutName']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_FIELD_ON_BLOCK</td>
 		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
 		<td></td>
@@ -343,6 +348,11 @@
 	<tr>
 		<td>TAB_TYPE</td>
 		<td>//div[@class = 'form-group']//h4[@class = 'layout-tab__tab-types__title' and contains(text(),'${key_type}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TABLE_LIST_TITLE</td>
+		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -1420,12 +1420,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		for (String path : resourcePaths) {
+		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".list-type-entries.json")) {
 				continue;
 			}
 
-			String json = _read(path);
+			String json = _read(resourcePath);
 
 			ListTypeDefinition listTypeDefinition = ListTypeDefinition.toDTO(
 				json);
@@ -1465,13 +1465,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String.valueOf(listTypeDefinition.getId()));
 
 			String listTypeEntriesJSON = _read(
-				StringUtil.replace(path, ".json", ".list-type-entries.json"));
+				StringUtil.replace(resourcePath, ".json", ".list-type-entries.json"));
 
 			if (listTypeEntriesJSON == null) {
 				continue;
 			}
 
-			JSONArray entriesjsonArray = _jsonFactory.createJSONArray(
+			JSONArray jsonArray = _jsonFactory.createJSONArray(
 				listTypeEntriesJSON);
 
 			ListTypeEntryResource.Builder listTypeEntryResourceBuilder =
@@ -1482,9 +1482,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.fetchUser()
 				).build();
 
-			for (Object entry : entriesjsonArray) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
 				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
-					entry.toString());
+					jsonObject.toString());
 
 				listTypeEntryResource.postListTypeDefinitionListTypeEntry(
 					listTypeDefinition.getId(), listTypeEntry);

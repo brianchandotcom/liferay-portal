@@ -2155,6 +2155,12 @@ definition {
 		DMDocumentSharing.editViaSharedwithMe(
 			dmDocumentTitle = "${dmDocumentTitleUpdate}",
 			entryTitleEdit = "${dmDocumentTitleUpdate} Edit");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	macro submitNewWorkflow {

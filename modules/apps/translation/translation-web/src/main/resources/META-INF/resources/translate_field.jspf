@@ -20,7 +20,7 @@
 	>
 
 		<%
-		String sourceContent = translateDisplayContext.getSourceStringValue(infoField, translateDisplayContext.getSourceLocale());
+		List<String> sourceContent = translateDisplayContext.getSourceStringValues(infoField, translateDisplayContext.getSourceLocale());
 		String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
 		%>
 
@@ -45,7 +45,7 @@
 	>
 
 		<%
-		String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
+		List<String> targetContent = translateDisplayContext.getTargetStringValues(infoField, translateDisplayContext.getTargetLocale());
 		%>
 
 		<c:choose>

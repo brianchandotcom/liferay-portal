@@ -16,6 +16,11 @@
 		"length": 7,
 		"minStockQuantity": 5,
 		"name": "Test Commerce Product",
+		"options": [
+			{
+				"key": "test-option-1"
+			}
+		],
 		"price": 29.0,
 		"promoPrice": 18.0,
 		"sku": "TEST001",

@@ -1,0 +1,8 @@
+[
+	{
+		"ddmFormFieldTypeName": "text",
+		"externalReferenceCode": "TESTOPT001",
+		"key": "test-option-1",
+		"required": false
+	}
+]

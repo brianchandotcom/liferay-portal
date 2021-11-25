@@ -27,9 +27,12 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -289,6 +292,7 @@ public class BundleSiteInitializerTest {
 			"Test Commerce Catalog 2", commerceCatalog2.getName());
 
 		_assertCPDefinition(group);
+		_assertCPOption(group);
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -358,6 +362,33 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"test_commerce_product.png", fileEntry.getFileName());
+	}
+
+	private void _assertCPOption(Group group) throws Exception {
+		CPOption cpOption = _cpOptionLocalService.fetchCPOption(
+			group.getCompanyId(), "test-option-1");
+
+		Assert.assertNotNull(cpOption);
+		Assert.assertEquals("test-option-1", cpOption.getKey());
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TEST001", group.getCompanyId());
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			cpDefinition.getCPDefinitionOptionRels();
+
+		Assert.assertEquals(
+			cpDefinitionOptionRels.toString(), 1,
+			cpDefinitionOptionRels.size());
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRels.get(0);
+
+		cpOption = cpDefinitionOptionRel.getCPOption();
+
+		Assert.assertEquals("test-option-1", cpOption.getKey());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -646,6 +677,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private CPOptionLocalService _cpOptionLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

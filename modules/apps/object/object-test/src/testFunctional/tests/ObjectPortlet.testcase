@@ -1694,7 +1694,6 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
@@ -1728,9 +1727,7 @@ definition {
 			roleTitle = "Administrator",
 			userEmailAddress = "userea@liferay.com");
 
-
 		Navigator.openURL();
-
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1742,10 +1739,6 @@ definition {
 			column = "Author",
 			authorName = "Test Test"
 		);
-
-
-		
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a BigDecimal entry and label on layout"

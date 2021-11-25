@@ -20,8 +20,6 @@ definition {
 		AssertElementPresent(
 			key_entry = "${authorName}",
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
-
-			
 	}
 
 	macro assertDeleteEntryButtonNotPresent {

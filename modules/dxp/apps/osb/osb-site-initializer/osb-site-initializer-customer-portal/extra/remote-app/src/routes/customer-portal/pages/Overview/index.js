@@ -4,8 +4,8 @@ import {
 	onboardingPageGuard,
 	overviewPageGuard,
 	usePageGuard,
-} from '~/common/hooks/usePageGuard';
-import {getKoroneikiAccounts} from '~/common/services/liferay/graphql/queries';
+} from '../../../../common/hooks/usePageGuard';
+import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {CUSTOM_EVENTS} from '../../utils/constants';

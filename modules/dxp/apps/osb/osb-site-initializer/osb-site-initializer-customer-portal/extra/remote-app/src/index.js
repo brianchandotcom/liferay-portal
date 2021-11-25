@@ -2,13 +2,11 @@ import {ApolloProvider} from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {WebComponent} from '~/common/WebComponent';
-import ClayProvider from '~/common/providers/ClayProvider';
-
-import SharedStyle from '~/common/styles/global.scss';
-import CustomerPortal from '~/routes/customer-portal';
-import Onboarding from '~/routes/onboarding';
+import './common/styles/global.scss';
 import apolloClient from './apolloClient';
+import ClayProvider from './common/providers/ClayProvider';
+import CustomerPortal from './routes/customer-portal';
+import Onboarding from './routes/onboarding';
 
 const CustomerPortalApplication = ({liferaywebdavurl, page, route}) => {
 	if (route === 'portal') {
@@ -20,10 +18,8 @@ const CustomerPortalApplication = ({liferaywebdavurl, page, route}) => {
 	}
 };
 
-class CustomerPortalWebComponent extends WebComponent {
+class CustomerPortalWebComponent extends HTMLElement {
 	connectedCallback() {
-		super.connectedCallback(SharedStyle);
-
 		ReactDOM.render(
 			<ClayProvider>
 				<ApolloProvider client={apolloClient}>
@@ -36,7 +32,7 @@ class CustomerPortalWebComponent extends WebComponent {
 					/>
 				</ApolloProvider>
 			</ClayProvider>,
-			this.mountPoint
+			this
 		);
 	}
 }

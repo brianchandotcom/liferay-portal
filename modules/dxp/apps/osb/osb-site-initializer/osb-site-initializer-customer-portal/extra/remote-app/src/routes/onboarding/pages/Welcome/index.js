@@ -1,10 +1,10 @@
 import {useContext} from 'react';
-import BaseButton from '~/common/components/BaseButton';
+import BaseButton from '../../../../common/components/BaseButton';
 import {
 	onboardingPageGuard,
 	overviewPageGuard,
 	usePageGuard,
-} from '~/common/hooks/usePageGuard';
+} from '../../../../common/hooks/usePageGuard';
 import Layout from '../../components/Layout';
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';

@@ -1,6 +1,7 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
-import BaseButton from '~/common/components/BaseButton';
+
+import BaseButton from '../../../../common/components/BaseButton';
 import StatusTag from '../StatusTag';
 import ProjectCardSkeleton from './Skeleton';
 

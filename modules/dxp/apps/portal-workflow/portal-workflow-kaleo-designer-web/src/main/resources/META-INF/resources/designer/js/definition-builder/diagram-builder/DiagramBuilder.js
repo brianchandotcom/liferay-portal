@@ -10,19 +10,20 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import ReactFlow, {
 	Background,
 	Controls,
 	ReactFlowProvider,
+	isNode,
 } from 'react-flow-renderer';
 
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
-import {nodeTypes} from './components/nodes/utils';
+import {defaultNodes, nodeTypes} from './components/nodes/utils';
 import Sidebar from './components/sidebar/Sidebar';
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+let id = 2;
+const getId = () => `node_${id++}`;
 
 const isOverlapping = (elementPosition, newElementPosition) => {
 	const isInHorizontalBounds =
@@ -53,19 +54,10 @@ const isPositionAvailable = (elements, newElementPosition) => {
 export default function DiagramBuilder({version}) {
 	const reactFlowWrapperRef = useRef(null);
 	const [availableArea, setAvailableArea] = useState(null);
+	const [elements, setElements] = useState(defaultNodes);
 	const [reactFlowInstance, setReactFlowInstance] = useState(null);
-	const startNode = {
-		id: '0',
-		position: {x: 300, y: 100},
-		type: 'start',
-	};
-	const endNode = {
-		id: '1',
-		position: {x: 300, y: 400},
-		type: 'end',
-	};
-
-	const [elements, setElements] = useState([startNode, endNode]);
+	const [selectedNode, setSelectedNode] = useState(null);
+	const [selectedNodeNewId, setSelectedNodeNewId] = useState(null);
 
 	const onDragOver = (event) => {
 		const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
@@ -125,8 +117,57 @@ export default function DiagramBuilder({version}) {
 		setReactFlowInstance(reactFlowInstance);
 	};
 
+	useEffect(() => {
+		if (selectedNode && selectedNode.data.label !== '') {
+			setElements((elements) =>
+				elements.map((element) => {
+					if (isNode(element) && element.id === selectedNode.id) {
+						element = {
+							...element,
+							data: {
+								...element.data,
+								...selectedNode.data,
+							},
+						};
+					}
+
+					return element;
+				})
+			);
+		}
+	}, [selectedNode]);
+
+	useEffect(() => {
+		if (selectedNodeNewId && selectedNodeNewId.trim() !== '') {
+			setElements((elements) =>
+				elements.map((element) => {
+					if (isNode(element) && element.id === selectedNode.id) {
+						element = {
+							...element,
+							id: selectedNodeNewId,
+						};
+
+						setSelectedNodeNewId(null);
+
+						setSelectedNode(element);
+					}
+
+					return element;
+				})
+			);
+		}
+	}, [selectedNode, selectedNodeNewId]);
+
+	const contextProps = {
+		availableArea,
+		selectedNode,
+		selectedNodeNewId,
+		setSelectedNode,
+		setSelectedNodeNewId,
+	};
+
 	return (
-		<DiagramBuilderContextProvider availableArea={availableArea}>
+		<DiagramBuilderContextProvider {...contextProps}>
 			<div className="diagram-builder">
 				<div className="diagram-area" ref={reactFlowWrapperRef}>
 					<ReactFlowProvider>

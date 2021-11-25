@@ -13,6 +13,19 @@ import EndNode from './state/EndNode';
 import StartNode from './state/StartNode';
 import StateNode from './state/StateNode';
 
+const defaultNodes = [
+	{
+		id: 'node_0',
+		position: {x: 300, y: 100},
+		type: 'start',
+	},
+	{
+		id: 'node_1',
+		position: {x: 300, y: 400},
+		type: 'end',
+	},
+];
+
 const nodeDescription = {
 	end: Liferay.Language.get('conclude-the-workflow'),
 	start: Liferay.Language.get('begin-a-workflow'),
@@ -25,4 +38,4 @@ const nodeTypes = {
 	state: StateNode,
 };
 
-export {nodeDescription, nodeTypes};
+export {defaultNodes, nodeDescription, nodeTypes};

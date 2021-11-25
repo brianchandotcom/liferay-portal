@@ -69,8 +69,6 @@ definition {
 		task ("View pages order in Staging site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			WaitForPageLoad();
-
 			Page.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
@@ -94,8 +92,6 @@ definition {
 
 		task ("View pages order in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			WaitForPageLoad();
 
 			Page.viewPagesOrder(
 				depth = "2",

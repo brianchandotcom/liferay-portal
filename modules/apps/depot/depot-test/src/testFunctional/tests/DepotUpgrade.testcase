@@ -30,6 +30,17 @@ definition {
 
 		Upgrade.validateCollections();
 
+		Upgrade.validateDepotSettings();
+
+		Upgrade.validateDepotEntries();
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewDepotAutotaggingAndSharingArchive73101 {
+		property data.archive.type = "data-archive-depot";
+		property portal.version = "7.3.10.1";
+
 		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
 
 		Upgrade.revokeAndUpdateSharedEntry(
@@ -80,8 +91,6 @@ definition {
 			dmDocumentTitle = "Document New Google Text AutoTagging",
 			tagName = "computers");
 
-		Upgrade.addAutoTaggedWebContent(depotName = "Test Depot Name");
-
 		Upgrade.editTagsAndDeleteAutoTaggedWebContent(
 			depotName = "Test Depot Name",
 			tagName = "dxp",
@@ -113,11 +122,8 @@ definition {
 			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''',
 			wcTagName = "herbert,industrial",
 			wcTagNum = "5");
-
-		Upgrade.validateDepotEntries();
-
-		Upgrade.validateDepotSettings();
 	}
+
 
 	@priority = "5"
 	@refactorneeded

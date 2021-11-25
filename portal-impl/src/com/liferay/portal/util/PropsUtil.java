@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
@@ -367,55 +366,32 @@ public class PropsUtil {
 		SystemProperties.set(
 			PropsKeys.LIFERAY_LIB_GLOBAL_SHARED_DIR, globalSharedLibDir);
 
-		// Global lib directory
-
-		String globalLibDir = _getLibDir(CentralizedThreadLocal.class);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Global lib directory " + globalLibDir);
-		}
-
-		SystemProperties.set(PropsKeys.LIFERAY_LIB_GLOBAL_DIR, globalLibDir);
-
-		// Portal lib directory
-
-		ClassLoader classLoader = PropsUtil.class.getClassLoader();
-
-		String portalLibDir = WebDirDetector.getLibDir(classLoader);
-
-		String portalLibDirProperty = System.getProperty(
-			PropsKeys.LIFERAY_LIB_PORTAL_DIR);
-
-		if (portalLibDirProperty != null) {
-			if (!portalLibDirProperty.endsWith(StringPool.SLASH)) {
-				portalLibDirProperty += StringPool.SLASH;
-			}
-
-			portalLibDir = portalLibDirProperty;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Portal lib directory " + portalLibDir);
-		}
-
-		SystemProperties.set(PropsKeys.LIFERAY_LIB_PORTAL_DIR, portalLibDir);
-
 		// Portal shielded container lib directory
+
+		String portalShieldedContainerLibDir = _getLibDir(PropsUtil.class);
 
 		String portalShieldedContainerLibDirProperty = System.getProperty(
 			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR);
 
-		if (portalShieldedContainerLibDirProperty == null) {
-			portalShieldedContainerLibDirProperty = portalLibDir;
+		if (portalShieldedContainerLibDirProperty != null) {
+			if (!portalShieldedContainerLibDirProperty.endsWith(
+					StringPool.SLASH)) {
+
+				portalShieldedContainerLibDirProperty += StringPool.SLASH;
+			}
+
+			portalShieldedContainerLibDir =
+				portalShieldedContainerLibDirProperty;
 		}
 
 		SystemProperties.set(
 			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
-			portalShieldedContainerLibDirProperty);
+			portalShieldedContainerLibDir);
 
 		// Portal web directory
 
-		String portalWebDir = WebDirDetector.getRootDir(portalLibDir);
+		String portalWebDir = WebDirDetector.getRootDir(
+			portalShieldedContainerLibDir);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Portal web directory " + portalWebDir);

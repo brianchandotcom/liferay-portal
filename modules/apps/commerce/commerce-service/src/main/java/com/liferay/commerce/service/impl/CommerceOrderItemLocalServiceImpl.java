@@ -133,13 +133,6 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
 			json, quantity, shippedQuantity, commerceContext, serviceContext);
 
-		CPMeasurementUnit cpMeasurementUnit =
-			_cpMeasurementUnitLocalService.getCPMeasurementUnit(
-				user.getCompanyId(), "pc");
-
-		commerceOrderItem.setCPMeasurementUnitId(
-			cpMeasurementUnit.getCPMeasurementUnitId());
-
 		commerceOrderItem = commerceOrderItemPersistence.update(
 			commerceOrderItem);
 
@@ -192,9 +185,6 @@ public class CommerceOrderItemLocalServiceImpl
 			_setCommerceOrderItemDiscountValue(
 				childCommerceOrderItem,
 				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
-
-			childCommerceOrderItem.setCPMeasurementUnitId(
-				cpMeasurementUnit.getCPMeasurementUnitId());
 
 			commerceOrderItemPersistence.update(childCommerceOrderItem);
 		}
@@ -487,12 +477,14 @@ public class CommerceOrderItemLocalServiceImpl
 			null, decimalQuantity.intValue(), shippedQuantity, null,
 			serviceContext);
 
-		CPMeasurementUnit cpMeasurementUnit =
-			_cpMeasurementUnitLocalService.getCPMeasurementUnit(
-				user.getCompanyId(), cpMeasurementUnitKey);
+		if (!Validator.isBlank(cpMeasurementUnitKey)) {
+			CPMeasurementUnit cpMeasurementUnit =
+				_cpMeasurementUnitLocalService.getCPMeasurementUnit(
+					user.getCompanyId(), cpMeasurementUnitKey);
 
-		commerceOrderItem.setCPMeasurementUnitId(
-			cpMeasurementUnit.getCPMeasurementUnitId());
+			commerceOrderItem.setCPMeasurementUnitId(
+				cpMeasurementUnit.getCPMeasurementUnitId());
+		}
 
 		commerceOrderItem.setDecimalQuantity(decimalQuantity);
 

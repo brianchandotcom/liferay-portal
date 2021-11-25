@@ -336,6 +336,9 @@ components:
             properties:
                 configuration:
                     $ref: "#/components/schemas/Configuration"
+                createDate:
+                    format: date
+                    type: string
                 description:
                     type: string
                 description_i18n:
@@ -349,15 +352,23 @@ components:
                 id:
                     format: int64
                     type: integer
+                modifiedDate:
+                    format: date
+                    type: string
                 title:
                     type: string
                 title_i18n:
                     additionalProperties:
                         type: string
                     type: object
+                userName:
+                    type: string
             type: object
         SXPElement:
             properties:
+                createDate:
+                    format: date
+                    type: string
                 description:
                     type: string
                 description_i18n:
@@ -371,6 +382,9 @@ components:
                 id:
                     format: int64
                     type: integer
+                modifiedDate:
+                    format: date
+                    type: string
                 readOnly:
                     type: boolean
                 title:
@@ -381,6 +395,8 @@ components:
                     type: object
                 type:
                     type: integer
+                userName:
+                    type: string
             type: object
         SXPParameterContributorDefinition:
             properties:

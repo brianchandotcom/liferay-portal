@@ -104,9 +104,15 @@ public class BlogsContentEditorConfigContributor
 				).buildString());
 		}
 
-		jsonObject.put("toolbarText", "Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,SourceEditor");
-
-		jsonObject.put("extraPlugins", "itemselector,stylescombo,ballooneditor,videoembed,insertbutton,codemirror");
+		jsonObject.put(
+			"extraPlugins",
+			"itemselector,stylescombo,ballooneditor," +
+				"videoembed,insertbutton,codemirror"
+		).put(
+			"toolbarText",
+			"Styles,Bold,Italic,Underline,BulletedList" +
+				",NumberedList,TextLink,SourceEditor"
+		);
 	}
 
 	private String _getAllowedContentLists() {

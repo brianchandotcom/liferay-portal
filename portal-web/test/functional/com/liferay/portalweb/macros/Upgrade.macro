@@ -125,20 +125,24 @@ definition {
 
 		GogoShell.executeCommand(commandName = "assetAutoTagger:tagAllUntagged ${companyId}");
 
-		GogoShell.viewOutput(outputContent = "Added ${blogTagNum} tags to asset entry ${blogEntryTitle}");
+		if (isSet(blogEntryTitle)) {
+			GogoShell.viewOutput(outputContent = "Added ${blogTagNum} tags to asset entry ${blogEntryTitle}");
+		}
 
 		GogoShell.viewOutput(outputContent = "Added ${dmTagNum} tags to asset entry ${dmDocumentTitle}");
 
 		GogoShell.viewOutput(outputContent = "Added ${wcTagNum} tags to asset entry ${webContentTitleXml}");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		if (isSet(blogEntryTitle)) {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		BlogsNavigator.gotoEntryCP(entryTitle = "${blogEntryTitle}");
+			BlogsNavigator.gotoEntryCP(entryTitle = "${blogEntryTitle}");
 
-		Panel.expandPanel(panel = "Categorization");
+			Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "${blogTagName}") {
-			AssetCategorization.viewTag(tagName = "${tagName}");
+			for (var tagName : list "${blogTagName}") {
+				AssetCategorization.viewTag(tagName = "${tagName}");
+			}
 		}
 
 		if (isSet(depotName)) {
@@ -1418,7 +1422,12 @@ definition {
 	}
 
 	macro editTagsAndDeleteAutoTaggedDM {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
@@ -1426,7 +1435,12 @@ definition {
 
 		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -1436,7 +1450,12 @@ definition {
 
 		DMDocument.editTags(tagName = "new tag");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
@@ -1444,13 +1463,23 @@ definition {
 
 		AutoTagging.assertAutoTagPresent(tagName = "new tag");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
 
 		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
 	}
 
 	macro editTagsAndDeleteAutoTaggedWebContent {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
@@ -1458,7 +1487,12 @@ definition {
 
 		AssetCategorization.viewTag(tagName = "${tagName}");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
@@ -1478,7 +1512,12 @@ definition {
 
 		AssetCategorization.viewTag(tagName = "new tag");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
 
 		WebContent.moveToRecycleBinCP(webContentTitle = "${webContentTitle}");
 	}

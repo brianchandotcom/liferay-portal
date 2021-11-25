@@ -24,8 +24,8 @@ definition {
 
 	@description = "This ensures that translate side by side shows the latest values after editing the web content article."
 	@priority = "5"
-	@refactorneeded
-	test EditWCAfterSideBySideTranslation {
+	@refactordone
+	test CanEditWCAfterSideBySideTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",

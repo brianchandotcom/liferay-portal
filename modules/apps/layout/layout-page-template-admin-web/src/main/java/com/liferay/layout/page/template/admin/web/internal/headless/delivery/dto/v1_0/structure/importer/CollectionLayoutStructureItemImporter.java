@@ -280,9 +280,12 @@ public class CollectionLayoutStructureItemImporter
 
 		if (Objects.equals(
 				paginationType,
+				PageCollectionDefinition.PaginationType.NUMERIC.getValue()) ||
+			Objects.equals(
+				paginationType,
 				PageCollectionDefinition.PaginationType.REGULAR.getValue())) {
 
-			return "regular";
+			return "numeric";
 		}
 
 		if (Objects.equals(

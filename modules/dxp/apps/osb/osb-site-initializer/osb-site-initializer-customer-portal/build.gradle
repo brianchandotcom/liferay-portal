@@ -51,6 +51,11 @@ processResources {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app") {
+			from new File(projectDir, "extra/remote-app/build/static/css")
+			include "*.css"
+		}
+
+		into("site-initializer/documents/company/remote-app") {
 			from new File(projectDir, "extra/remote-app/build/static/js")
 			include "*.js"
 		}
@@ -102,6 +107,8 @@ zipExtraRemoteApp {
 		destinationDir new File(buildDir, "dist")
 		from new File(projectDir, "extra/remote-app/build/static/js")
 		include "*.js"
+		from new File(projectDir, "extra/remote-app/build/static/css")
+		include "*.css"
 	}
 }
 

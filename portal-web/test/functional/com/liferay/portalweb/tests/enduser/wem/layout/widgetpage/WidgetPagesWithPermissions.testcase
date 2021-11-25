@@ -1,0 +1,518 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		else {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+
+			JSONUser.tearDownNonAdminUsers();
+
+			Role.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "The guest cannot view private content and page."
+	@priority = "3"
+	test CannotViewPrivateContentAndPageAsGuest {
+		property custom.properties = "auth.login.prompt.enabled=true";
+		property testray.component.names = "Message Boards";
+
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
+
+		task ("Add a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Blogs and Message Boards widgets to public page") {
+			for (var widgetName : list "Blogs,Message Boards") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("Add a blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.addEntryWithPermissions(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				viewableBy = "Site Members");
+		}
+
+		task ("Add a message boards thread") {
+			MessageboardsThread.addPGWithPermissions(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				viewableBySelection = "Site Members");
+		}
+
+		task ("Get blogs and message boards URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var blogEntryId = JSONBlog.getBlogEntryId(
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+
+			var messageId = JSONMBMessage.getMessageIdByName(
+				groupName = "Test Site Name",
+				threadSubject = "MB Thread Message Subject");
+
+			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+		}
+
+		task ("Log out") {
+			UserBar.signOut();
+		}
+
+		task ("View login page when reaching private page") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Test Private Page",
+				siteName = "Test Site Name");
+
+			User.viewLoginPG();
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
+		}
+
+		task ("View blogs entry is not shown for Guest") {
+			Navigator.openSpecificURL(url = "${blogEntryURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
+
+		task ("View message boards not shown for Guest") {
+			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
+	}
+
+	@description = "The user without permissions cannot view private content and page."
+	@priority = "5"
+	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property testray.component.names = "Message Boards,Training";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
+
+		task ("Add a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Blogs and Message Boards widget to public page") {
+			for (var widgetName : list "Blogs,Message Boards") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("Add a blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.addEntryWithPermissions(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				viewableBy = "Site Members");
+		}
+
+		task ("Add a message boards thread") {
+			MessageboardsThread.addPGWithPermissions(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				viewableBySelection = "Site Members");
+		}
+
+		task ("Get blogs and message boards URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var blogEntryId = JSONBlog.getBlogEntryId(
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+
+			var messageId = JSONMBMessage.getMessageIdByName(
+				groupName = "Test Site Name",
+				threadSubject = "MB Thread Message Subject");
+
+			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View private page is not shown for new user") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+
+		task ("View blogs entry is not shown for new user") {
+			Navigator.openSpecificURL(url = "${blogEntryURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
+
+		task ("View message boards is not shown for new user") {
+			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the required permissions.");
+		}
+	}
+
+	@description = "User admin can choose when a private widget page will be visible to assigned role."
+	@priority = "5"
+	test CannotViewPrivatePageAsUserWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+		property testray.component.names = "Permissions,Roles,Training";
+
+		task ("Add a private widget page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the regular role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Remove View permission of private widget page on Site Member") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PermissionsInline.gotoSitePageCP(
+				pageName = "Test Page Name",
+				privacy = "Private Pages");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Site Member");
+		}
+
+		task ("Grant View permission of private widget page on Regular Role") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View private page is shown") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			AssertTextNotPresent(value1 = "The requested resource could not be found");
+		}
+
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
+
+		task ("Remove View permission of private widget page on Regular Role") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PermissionsInline.gotoSitePageCP(
+				pageName = "Test Page Name",
+				privacy = "Private Pages");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View private page is not shown") {
+			Navigator.openPrivateSitePageURL(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+
+			AssertTextPresent(value1 = "The requested resource could not be found");
+		}
+	}
+
+	@description = "This is a use case for LPS-121346. The Home page is shown when access to a non existing page."
+	@priority = "3"
+	test ViewNotFoundWhenAccessToNonExistingPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the power role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Access a non existing page") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name");
+		}
+
+		task ("View not found error in home page") {
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+
+			AssertElementNotPresent(
+				key_portletTitleName = "Profile",
+				locator1 = "Home#PORTLET_HEADER");
+		}
+	}
+
+	@description = "The site member could view private content and page."
+	@priority = "3"
+	test ViewPrivateContentAndPageAsSiteMember {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property testray.component.names = "Message Boards";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the new user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
+
+		task ("Add a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Blogs and Message Boards widget to public page") {
+			for (var widgetName : list "Blogs,Message Boards") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("Add a blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Blogs.addEntryWithPermissions(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				viewableBy = "Site Members");
+		}
+
+		task ("Add a message boards thread") {
+			MessageboardsThread.addPGWithPermissions(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				viewableBySelection = "Site Members");
+		}
+
+		task ("Get blogs and message boards URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var blogEntryId = JSONBlog.getBlogEntryId(
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+
+			var messageId = JSONMBMessage.getMessageIdByName(
+				groupName = "Test Site Name",
+				threadSubject = "MB Thread Message Subject");
+
+			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View private page is shown for site member") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Test Private Page",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
+		}
+
+		task ("View blogs entry is shown for site member") {
+			Navigator.openSpecificURL(url = "${blogEntryURL}");
+
+			BlogsNavigator.gotoPG(
+				blogEntryURL = "${blogEntryURL}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("View message boards is shown for site member") {
+			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+
+			MessageboardsThread.gotoPG(
+				lastPostUserName = "Test Test",
+				messageBoardsThreadURL = "${messageBoardsThreadURL}",
+				replyCount = "1",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+
+			MessageboardsThread.viewPG(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
+	}
+
+}

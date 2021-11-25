@@ -32,6 +32,7 @@ import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
@@ -256,6 +257,63 @@ public class TaskWorkflowMetricsIndexerImpl
 			).setUserId(
 				userId
 			).build());
+	}
+
+	@Override
+	public Document completeTask(CompleteTaskRequest completeTaskRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setLong(
+			"companyId", completeTaskRequest.getCompanyId()
+		).setValue(
+			"completed", true
+		).setDate(
+			"completionDate", getDate(completeTaskRequest.getCompletionDate())
+		).setLong(
+			"completionUserId", completeTaskRequest.getCompletionUserId()
+		).setLong(
+			"duration", completeTaskRequest.getDuration()
+		).setDate(
+			"modifiedDate", getDate(completeTaskRequest.getModifiedDate())
+		).setLong(
+			"taskId", completeTaskRequest.getTaskId()
+		).setString(
+			"uid",
+			digest(
+				completeTaskRequest.getCompanyId(),
+				completeTaskRequest.getTaskId())
+		).setLong(
+			"userId", completeTaskRequest.getUserId()
+		);
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				updateDocument(document);
+
+				_deleteTask(
+					completeTaskRequest.getCompanyId(),
+					completeTaskRequest.getTaskId());
+
+				BooleanQuery booleanQuery = queries.booleanQuery();
+
+				booleanQuery.addMustQueryClauses(
+					queries.term(
+						"companyId", completeTaskRequest.getCompanyId()),
+					queries.term("taskId", completeTaskRequest.getTaskId()));
+
+				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+					completeTaskRequest.getCompanyId(),
+					HashMapBuilder.<String, Object>put(
+						"completionDate", document.getDate("completionDate")
+					).put(
+						"completionUserId", document.getLong("completionUserId")
+					).build(),
+					booleanQuery);
+			});
+
+		return document;
 	}
 
 	@Override

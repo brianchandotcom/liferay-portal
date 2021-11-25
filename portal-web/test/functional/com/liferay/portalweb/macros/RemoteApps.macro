@@ -41,6 +41,66 @@ definition {
 			value1 = "${entryName}");
 	}
 
+	macro addCustomElementAllFields {
+		LexiconEntry.gotoAdd();
+
+		Select(
+				locator1 = "Select#TYPE",
+				value1 = "Custom Element");
+
+		RemoteAppsEntry.addCustomElementAllFields(
+				entryName = "${entryName}",
+				entryHTMLName = "${entryHTMLName}",
+				entryURL = "${entryURL}",
+				entryCSSURL = "${entryCSSURL}",
+				entryProperties = "${entryProperties}");
+
+		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
+
+		PortletEntry.publish();
+	}
+
+	macro editCustomElement {
+
+		TripleClick(
+				key_text = "Name",
+				locator1 = "TextInput#ANY");
+
+		Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryName}");
+
+		TripleClick(
+				key_text = "HTML Element Name",
+				locator1 = "TextInput#ANY");
+
+		Type(
+				key_text = "HTML Element Name",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryHTMLName}");
+
+		TripleClick(
+				key_text = "CSS URL",
+				locator1 = "TextInput#ANY");
+
+		Type(
+				key_text = "CSS URL",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryCSSURL}");
+
+		TripleClick(
+				key_text = "Properties",
+				locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES");
+
+		Type(
+				key_text = "Properties",
+				locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+				value1 = "${entryProperties}");
+
+		PortletEntry.publish();
+	}
+
 	macro deleteRemoteApp {
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
 
@@ -107,9 +167,9 @@ definition {
 
 		AssertTextEquals(
 			custom_entryCSSURL = "${entryCSSURL}",
-			key_text = "URL",
-			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
-			value1 = "${entryURL}");
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryCSSURL}");
 
 		AssertTextEquals(
 			custom_entryProperties = "${entryProperties}",
@@ -154,5 +214,4 @@ definition {
 			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE",
 			value1 = "${entryURL}");
 	}
-
 }

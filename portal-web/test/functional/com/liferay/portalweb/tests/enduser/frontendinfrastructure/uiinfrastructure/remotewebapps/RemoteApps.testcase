@@ -260,6 +260,50 @@ definition {
 	}
 
 
+	@description = "Verify that remote app of type Custom Element can be edited"
+	@priority = "4"
+	test CustomElementCanBeEdited {
+		property portal.acceptance = "true";
+
+		var customElementName = "New Counter";
+		var customElementHTMLName = "new-counter";
+		var customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js";
+		var newCustomElementName = "Vanilla Counter Edited";
+		var newCustomElementTMLName = "vanilla-counter-edited";
+		var newCustomElementCSSURL = "http://remote-component-test.wincent.com/index.css";
+		var newCustomElementProperties = "test-data-user=QAuser";
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		RemoteApps.addCustomElement(
+				entryHTMLName = "${customElementHTMLName}",
+				entryName = "${customElementName}",
+				entryURL = "${customElementURL}");
+
+		Click(
+				key_tableEntryName = "${customElementName}",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+		RemoteApps.editCustomElement(
+				entryName = "${newCustomElementName}",
+				entryHTMLName = "${newCustomElementTMLName}",
+				entryCSSURL = "${newCustomElementCSSURL}",
+				entryProperties = "${newCustomElementProperties}");
+
+		RemoteApps.viewTableEntryName(entryName = "${newCustomElementName}");
+
+		Click(
+				key_tableEntryName = "${newCustomElementName}",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+		RemoteApps.viewCustomElementFields(
+				entryName = "${newCustomElementName}",
+				entryHTMLName = "${newCustomElementTMLName}",
+				entryURL = "${customElementURL}",
+				entryCSSURL = "${newCustomElementCSSURL}",
+				entryProperties = "${newCustomElementProperties}");
+	}
+
 	@description = "Verify that the fields of a Custom Element from a Remote App can be saved"
 	@priority = "5"
 	test CustomElementFieldsCanBeSaved {
@@ -293,7 +337,6 @@ definition {
 				entryCSSURL = "${customElementCSSURL}",
 				entryProperties = "${customElementProperties}");
 	}
-
 
 	@description = "Verify that remote app type IFrame can display property fields"
 	@priority = "4"

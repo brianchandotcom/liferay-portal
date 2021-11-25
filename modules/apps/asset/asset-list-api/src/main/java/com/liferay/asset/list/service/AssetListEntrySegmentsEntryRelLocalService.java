@@ -388,6 +388,8 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 		updateAssetListEntrySegmentsEntryRelTypeSettings(
 			long assetListEntryId, long segmentsEntryId, String typeSettings);
 
+	public void updateVariationsPriority(long[] variationsPriority);
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<AssetListEntrySegmentsEntryRel> getCTPersistence();
@@ -403,7 +405,4 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 				updateUnsafeFunction)
 		throws E;
 
-	@Override
-	@Transactional()
-	public void updateVariationsPriority();
 }

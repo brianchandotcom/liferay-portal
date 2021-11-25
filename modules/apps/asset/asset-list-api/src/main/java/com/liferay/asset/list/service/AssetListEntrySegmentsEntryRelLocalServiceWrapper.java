@@ -537,6 +537,12 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 	}
 
 	@Override
+	public void updateVariationsPriority(long[] variationsPriority) {
+		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(
+			variationsPriority);
+	}
+
+	@Override
 	public CTPersistence<AssetListEntrySegmentsEntryRel> getCTPersistence() {
 		return _assetListEntrySegmentsEntryRelLocalService.getCTPersistence();
 	}

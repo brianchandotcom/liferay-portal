@@ -478,6 +478,10 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
+	public static void updateVariationsPriority(long[] variationsPriority) {
+		getService().updateVariationsPriority(variationsPriority);
+	}
+
 	public static AssetListEntrySegmentsEntryRelLocalService getService() {
 		return _service;
 	}

@@ -60,12 +60,6 @@ definition {
 		ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
 
 		ObjectAdmin.assertBlockIsPresent(fieldBlockName = "Block Name");
-
-
-
-
-
-
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add Entries with Custom Layout Created"

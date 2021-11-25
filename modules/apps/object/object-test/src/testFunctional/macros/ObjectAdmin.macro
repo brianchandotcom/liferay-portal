@@ -3,16 +3,13 @@ definition {
 	macro addLayoutBlockViaUI {
 		Click(locator1 = "ObjectAdmin#ADD_BLOCK_BUTTON");
 
-			Type(
-				locator1 = "ObjectAdmin#TAB_LABEL_NAME",
-				value1 = "${blockName}");
+		Type(
+			locator1 = "ObjectAdmin#TAB_LABEL_NAME",
+			value1 = "${blockName}");
 
-			Click(
-				key_tab = "Save",
-				locator1 = "Button#TAB_SUBMIT_BTN");
-
-
-
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
 	macro addNewObject {
@@ -294,22 +291,11 @@ definition {
 	}
 
 	macro assertBlockIsPresent {
-
 		AssertElementPresent(
 			locator1 = "ObjectAdmin#FIELD_BLOCK_NAME",
-			key_fieldBlockName = "${fieldBlockName}"
+			key_fieldBlockName = "${fieldBlockName}");
 
-		);
-
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#FIELD_BLOCK_ADD_FIELD_BUTTON"
-
-		);
-
-
-
-
-
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_BLOCK_ADD_FIELD_BUTTON");
 	}
 
 	macro assertFieldTabIsPresent {
@@ -572,11 +558,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
 		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
-
-
-
 	}
-
 
 	macro gotoRelationshipsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_RELATIONSHIPS_TAB");

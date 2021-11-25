@@ -16,6 +16,16 @@
 	<td>//tr[contains(.,'${key_calendarName}')]/td[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CALENDAR_TABLE_NAME_AND_VIEW_DEFAULT</td>
+	<td>//tr[contains(.,'${key_calendarName}') and contains(.,'${key_calendarDefault}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CALENDAR</td>
+	<td>//span[contains(text(),'Add Calendar')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -183,12 +183,31 @@ definition {
 	}
 
 	@description = "Verify that the user can make the new Calendar as the Default Calendar"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanMakeNewCalendarAsDefault {
+		CalendarNavigator.gotoMyCalendarsManage();
+		
+		Calendar.viewManageCalendarDefault(
+			calendarName = "Test Test",
+			calendarDefault = "Yes");
 
-		// TODO LRQA-71595 CanMakeNewCalendarAsDefault pending implementation
+		Calendar.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
 
+		Calendar.checkboxOption(checkboxName = "Default Calendar");
+
+		PortletEntry.save();
+
+		Navigator.gotoBack();
+
+		Calendar.viewManageCalendarDefault(
+			calendarName = "Test Test",
+			calendarDefault = "No");
+
+		Calendar.viewManageCalendarDefault(
+			calendarName = "Calendar Name",
+			calendarDefault = "Yes");
+
+			
 	}
 
 	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Anyone"

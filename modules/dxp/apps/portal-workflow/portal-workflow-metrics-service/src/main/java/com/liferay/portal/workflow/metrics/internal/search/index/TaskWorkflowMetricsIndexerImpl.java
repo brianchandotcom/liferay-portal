@@ -34,6 +34,7 @@ import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
+import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
@@ -494,6 +495,116 @@ public class TaskWorkflowMetricsIndexerImpl
 							"tasks", queries.term("tasks.taskId", taskId)),
 						scriptBuilder.build(),
 						_instanceWorkflowMetricsIndex.getIndexName(companyId));
+
+				updateByQueryDocumentRequest.setRefresh(true);
+
+				searchEngineAdapter.execute(updateByQueryDocumentRequest);
+			});
+
+		return document;
+	}
+
+	@Override
+	public Document updateTask(UpdateTaskRequest updateTaskRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		List<Long> assignmentGroupIds = new ArrayList<>();
+		List<Long> assignmentIds = new ArrayList<>();
+
+		_populateTaskAssignments(
+			assignmentGroupIds, assignmentIds,
+			updateTaskRequest.getAssignments());
+
+		String assignmentType = _getAssignmentType(
+			updateTaskRequest.getAssignments());
+
+		if (!assignmentIds.isEmpty()) {
+			documentBuilder.setLongs(
+				"assigneeIds", assignmentIds.toArray(new Long[0]));
+			documentBuilder.setString("assigneeType", assignmentType);
+		}
+
+		documentBuilder.setLong(
+			"companyId", updateTaskRequest.getCompanyId()
+		).setDate(
+			"modifiedDate", getDate(updateTaskRequest.getModifiedDate())
+		).setLong(
+			"taskId", updateTaskRequest.getTaskId()
+		).setString(
+			"uid",
+			digest(
+				updateTaskRequest.getCompanyId(), updateTaskRequest.getTaskId())
+		).setLong(
+			"userId", updateTaskRequest.getUserId()
+		);
+
+		setLocalizedField(
+			documentBuilder, "assetTitle",
+			updateTaskRequest.getAssetTitleMap());
+		setLocalizedField(
+			documentBuilder, "assetType", updateTaskRequest.getAssetTypeMap());
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				updateDocument(document);
+
+				if (Objects.isNull(document.getLongs("assigneeIds"))) {
+					return;
+				}
+
+				BooleanQuery booleanQuery = queries.booleanQuery();
+
+				booleanQuery.addMustQueryClauses(
+					queries.term("companyId", document.getLong("companyId")),
+					queries.term("taskId", document.getLong("taskId")));
+
+				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+					updateTaskRequest.getCompanyId(),
+					HashMapBuilder.<String, Object>put(
+						"assigneeIds", assignmentIds
+					).put(
+						"assigneeType", assignmentType
+					).build(),
+					booleanQuery);
+
+				ScriptBuilder scriptBuilder = scripts.builder();
+
+				scriptBuilder.idOrCode(
+					StringUtil.read(
+						getClass(),
+						"dependencies/workflow-metrics-update-task-" +
+							"script.painless")
+				).language(
+					"painless"
+				).putParameter(
+					"task",
+					HashMapBuilder.<String, Object>put(
+						"assigneeGroupIds", assignmentGroupIds
+					).put(
+						"assigneeIds", assignmentIds
+					).put(
+						"assigneeName",
+						_getAssigneeName(updateTaskRequest.getAssignments())
+					).put(
+						"assigneeType", assignmentType
+					).put(
+						"taskId", updateTaskRequest.getTaskId()
+					).build()
+				).scriptType(
+					ScriptType.INLINE
+				);
+
+				UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
+					new UpdateByQueryDocumentRequest(
+						queries.nested(
+							"tasks",
+							queries.term(
+								"tasks.taskId", updateTaskRequest.getTaskId())),
+						scriptBuilder.build(),
+						_instanceWorkflowMetricsIndex.getIndexName(
+							updateTaskRequest.getCompanyId()));
 
 				updateByQueryDocumentRequest.setRefresh(true);
 

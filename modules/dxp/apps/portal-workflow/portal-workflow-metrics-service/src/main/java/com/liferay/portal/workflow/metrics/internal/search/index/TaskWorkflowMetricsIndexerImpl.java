@@ -37,18 +37,16 @@ import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.time.Duration;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -379,107 +377,35 @@ public class TaskWorkflowMetricsIndexerImpl
 		return _taskWorkflowMetricsIndex.getIndexType();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateTask(UpdateTaskRequest)}
+	 */
+	@Deprecated
 	@Override
 	public Document updateTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		List<Assignment> assignments, long companyId, Date modifiedDate,
 		long taskId, long userId) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		UpdateTaskRequest.Builder updateTaskRequestBuilder =
+			new UpdateTaskRequest.Builder();
 
-		List<Long> assignmentGroupIds = new ArrayList<>();
-		List<Long> assignmentIds = new ArrayList<>();
-
-		_populateTaskAssignments(
-			assignmentGroupIds, assignmentIds, assignments);
-
-		String assignmentType = _getAssignmentType(assignments);
-
-		if (!assignmentIds.isEmpty()) {
-			documentBuilder.setLongs(
-				"assigneeIds", assignmentIds.toArray(new Long[0]));
-			documentBuilder.setString("assigneeType", assignmentType);
-		}
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setLong(
-			"taskId", taskId
-		).setString(
-			"uid", digest(companyId, taskId)
-		).setLong(
-			"userId", userId
-		);
-
-		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
-		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
-
-		Document document = documentBuilder.build();
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				updateDocument(document);
-
-				if (Objects.isNull(document.getLongs("assigneeIds"))) {
-					return;
-				}
-
-				BooleanQuery booleanQuery = queries.booleanQuery();
-
-				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", document.getLong("companyId")),
-					queries.term("taskId", document.getLong("taskId")));
-
-				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-					companyId,
-					HashMapBuilder.<String, Object>put(
-						"assigneeIds", assignmentIds
-					).put(
-						"assigneeType", assignmentType
-					).build(),
-					booleanQuery);
-
-				ScriptBuilder scriptBuilder = scripts.builder();
-
-				scriptBuilder.idOrCode(
-					StringUtil.read(
-						getClass(),
-						"dependencies/workflow-metrics-update-task-" +
-							"script.painless")
-				).language(
-					"painless"
-				).putParameter(
-					"task",
-					HashMapBuilder.<String, Object>put(
-						"assigneeGroupIds", assignmentGroupIds
-					).put(
-						"assigneeIds", assignmentIds
-					).put(
-						"assigneeName", _getAssigneeName(assignments)
-					).put(
-						"assigneeType", assignmentType
-					).put(
-						"taskId", taskId
-					).build()
-				).scriptType(
-					ScriptType.INLINE
-				);
-
-				UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
-					new UpdateByQueryDocumentRequest(
-						queries.nested(
-							"tasks", queries.term("tasks.taskId", taskId)),
-						scriptBuilder.build(),
-						_instanceWorkflowMetricsIndex.getIndexName(companyId));
-
-				updateByQueryDocumentRequest.setRefresh(true);
-
-				searchEngineAdapter.execute(updateByQueryDocumentRequest);
-			});
-
-		return document;
+		return updateTask(
+			updateTaskRequestBuilder.setAssetTitleMap(
+				assetTitleMap
+			).setAssetTypeMap(
+				assetTypeMap
+			).setAssignments(
+				assignments
+			).setCompanyId(
+				companyId
+			).setModifiedDate(
+				modifiedDate
+			).setTaskId(
+				taskId
+			).setUserId(
+				userId
+			).build());
 	}
 
 	@Override

@@ -65,6 +65,10 @@ public interface TaskWorkflowMetricsIndexer {
 
 	public void deleteTask(long companyId, long taskId);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateTask(UpdateTaskRequest)}
+	 */
+	@Deprecated
 	public Document updateTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		List<Assignment> assignments, long companyId, Date modifiedDate,

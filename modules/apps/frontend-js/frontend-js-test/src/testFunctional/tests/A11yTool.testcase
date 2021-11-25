@@ -131,7 +131,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B&quot;true&quot;";
 
-		task("Navigate to a page with no violations") {
+		task ("Navigate to a page with no violations") {
 			Navigator.gotoPage(pageName = "Blank Test Page");
 
 			// Workaround for side panel sometimes displaying previous violations inccorectly LPS-138624
@@ -149,14 +149,15 @@ definition {
 			AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
 		}
 
-		task("Add a widget with a rule violation") {
+		task ("Add a widget with a rule violation") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Blank Test Page",
 				widgetName = "JS A11y Sample Web");
 		}
 
-		task("Assert the rule violation is highlighted and appear on the side panel") {
+		task ("Assert the rule violation is highlighted and appear on the side panel") {
+
 			// Workaround for side panel sometimes not displaying LPS-141442
 
 			while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {

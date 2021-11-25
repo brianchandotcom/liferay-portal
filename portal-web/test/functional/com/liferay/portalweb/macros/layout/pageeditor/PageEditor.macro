@@ -1413,6 +1413,22 @@ definition {
 		}
 	}
 
+	macro editCDLayoutAndMaxNumber {
+		Click.clickNoWaitForVisible(
+			key_collectionDisplay = "${fragmentName}",
+			locator1 = "Masterclass#COLLECTION_DISPLAY");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		Select(
+			locator1 = "Masterclass#LAYOUT_SELECT",
+			value1 = "${layoutColumns}");
+
+		Type(
+			locator1 = "Masterclass#MAX_NUMBER_OF_ITEMS",
+			value1 = "${maxNumber}");
+	}
+
 	macro editCollectionDisplay {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -1630,22 +1646,6 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "${maxNumberOfItemsPerPage}");
 		}
-	}
-
-	macro editCDLayoutAndMaxNumber {
-		Click.clickNoWaitForVisible(
-			key_collectionDisplay = "${fragmentName}",
-			locator1 = "Masterclass#COLLECTION_DISPLAY");
-
-		Navigator.gotoNavTab(navTab = "General");
-
-		Select(
-			locator1 = "Masterclass#LAYOUT_SELECT",
-			value1 = "${layoutColumns}");
-
-		Type(
-			locator1 = "Masterclass#MAX_NUMBER_OF_ITEMS",
-			value1 = "${maxNumber}");
 	}
 
 	macro editCollectionFilter {

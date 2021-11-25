@@ -39,16 +39,16 @@ definition {
 	}
 
 	macro markStyleBookAsDefault {
-        StyleBooksAdmin.gotoStyleBookEllipsisItem(
-            styleBookName = "${styleBookName}",
-            item = "Mark as Default");
+		StyleBooksAdmin.gotoStyleBookEllipsisItem(
+			item = "Mark as Default",
+			styleBookName = "${styleBookName}");
 
 		AssertConfirm(value1 = "${confirmMessage}");
-		
-        LexiconCard.viewCardSticker(
-            card = "${styleBookName}",
-            icon = "check-circle");
-    }
+
+		LexiconCard.viewCardSticker(
+			card = "${styleBookName}",
+			icon = "check-circle");
+	}
 
 	macro openStyleBooksAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_style_book_web_internal_portlet_StyleBookPortlet");

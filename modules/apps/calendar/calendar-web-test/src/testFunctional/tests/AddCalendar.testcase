@@ -119,21 +119,21 @@ definition {
 			pageName = "Calendar Page");
 	}
 
-	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanAddCalendarWithNoAsciiCharactersOnNameField {
-
-		// TODO LRQA-71606 CanAddCalendarWithNoAsciiCharactersOnNameField pending implementation
-
-	}
-
 	@description = "LRQA-71360 - Verify that the user can add multiple calendars with the same name"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddCalendarsWithSameName {
 
 		// TODO LRQA-71605 CanAddCalendarsWithSameName pending implementation
+
+	}
+
+	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddCalendarWithNoAsciiCharactersOnNameField {
+
+		// TODO LRQA-71606 CanAddCalendarWithNoAsciiCharactersOnNameField pending implementation
 
 	}
 
@@ -152,6 +152,33 @@ definition {
 	test CanChooseAColor {
 
 		// TODO LRQA-71596 CanChooseAColor pending implementation
+
+	}
+
+	@description = "Verify that the user can Enable Comments on Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEnableComments {
+
+		// TODO LRQA-71797 CanEnableComments pending implementation
+
+	}
+
+	@description = "Verify that the user can Enable Ratings on Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEnableRatings {
+
+		// TODO LRQA-71798 CanEnableRatings pending implementation
+
+	}
+
+	@description = "Verify that the user can make the new Calendar as the Default Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanMakeNewCalendarAsDefault {
+
+		// TODO LRQA-71595 CanMakeNewCalendarAsDefault pending implementation
 
 	}
 
@@ -182,48 +209,12 @@ definition {
 
 	}
 
-	@description = "Verify that the user can make the new Calendar as the Default Calendar"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanMakeNewCalendarAsDefault {
-
-		// TODO LRQA-71595 CanMakeNewCalendarAsDefault pending implementation
-
-	}
-
-	@description = "Verify that the user can Enable Comments on Calendar"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanEnableComments {
-
-		// TODO LRQA-71797 CanEnableComments pending implementation
-
-	}
-
-	@description = "Verify that the user can Enable Ratings on Calendar"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanEnableRatings {
-
-		// TODO LRQA-71798 CanEnableRatings pending implementation
-
-	}
-
 	@description = "LRQA-71360 - Verify that the name field is required"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test NameFieldIsRequired {
 
 		// TODO LRQA-71597 NameFieldIsRequired pending implementation
-
-	}
-
-	@description = "Verify that the translation icon has the Instance Language by default"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test TranslationIconHasInstanceLanguageByDefault {
-
-		// TODO LRQA-71601 TranslationIconHasInstanceLanguageByDefault pending implementation
 
 	}
 
@@ -273,6 +264,15 @@ definition {
 		CalendarEvent.resizeViaEventBlock();
 
 		Alert.viewSuccessMessage();
+	}
+
+	@description = "Verify that the translation icon has the Instance Language by default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TranslationIconHasInstanceLanguageByDefault {
+
+		// TODO LRQA-71601 TranslationIconHasInstanceLanguageByDefault pending implementation
+
 	}
 
 	@description = "LRQA-71360 - Verify that the Time Zone -(UTC) Coordinated Universal Time- is selected by default"

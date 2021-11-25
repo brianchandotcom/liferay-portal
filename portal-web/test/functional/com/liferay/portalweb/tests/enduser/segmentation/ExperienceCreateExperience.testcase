@@ -3083,11 +3083,11 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Segment Name Experience",
 				segmentName = "Name Segment");
-			
+
 			Refresh();
 		}
 
-		task("try to delete an experience and click cancel button") {
+		task ("try to delete an experience and click cancel button") {
 			Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
 			ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
@@ -3155,9 +3155,8 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Segment Name Experience",
 				segmentName = "Name Segment");
-			
+
 			Refresh();
-			
 		}
 
 		task ("Create an experience with Segment Email") {
@@ -3169,7 +3168,7 @@ definition {
 		}
 
 		task ("Delete all experiences") {
-			for(var experienceName : list "Segment Name Experience,Segment Email Experience") {
+			for (var experienceName : list "Segment Name Experience,Segment Email Experience") {
 				var key_experienceName = "${newExperience}";
 
 				Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
@@ -3229,7 +3228,7 @@ definition {
 			AssertElementNotPresent(
 				key_experienceName = "Name Experience",
 				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
-			
+
 			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
 
 			PageEditor.clickPublish();

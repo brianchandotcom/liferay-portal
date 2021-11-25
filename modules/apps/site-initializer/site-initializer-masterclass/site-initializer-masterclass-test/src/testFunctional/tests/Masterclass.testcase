@@ -69,7 +69,7 @@ definition {
 				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
 				locator2 = "color",
 				value1 = "rgba(255, 255, 255, 1)");
-		 }
+		}
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Border and Classroom Header fragments"
@@ -452,7 +452,6 @@ definition {
 				key_colummnsNumber = "3",
 				locator1 = "Masterclass#COLUMNS_NUMBER");
 		}
-
 	}
 
 	@description = "This is a test for LPS-141370. View a List of Blogs in the Blog Detail View"
@@ -473,7 +472,6 @@ definition {
 				key_colummnsNumber = "3",
 				locator1 = "Masterclass#COLUMNS_NUMBER");
 		}
-		
 	}
 
 	@description = "This is a test for LPS-141768. View list to the three available courses pages"
@@ -598,8 +596,8 @@ definition {
 
 			AssertElementPresent(
 				key_card = "Inherited from Master",
-				locator1 = "StyleBookEditor#STYLE_BOOK_CARD_SELECTED",
-				key_styleBookName = "Masterclass Modern");
+				key_styleBookName = "Masterclass Modern",
+				locator1 = "StyleBookEditor#STYLE_BOOK_CARD_SELECTED");
 		}
 	}
 

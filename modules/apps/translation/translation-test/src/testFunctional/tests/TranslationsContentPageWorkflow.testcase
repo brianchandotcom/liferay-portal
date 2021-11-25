@@ -867,7 +867,6 @@ definition {
 			value1 = "esta es la nueva experiencia");
 	}
 
-
 	@description = "This ensures that the imported translation for a content page experience can not be merged after rejecting through the workflow."
 	@priority = "5"
 	test RejectedTranslationWillNotBeAppliedToExperience {

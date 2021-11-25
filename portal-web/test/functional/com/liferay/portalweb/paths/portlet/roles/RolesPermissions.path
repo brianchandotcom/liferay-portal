@@ -305,6 +305,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
+    <td>//input[contains(@value,'GroupPagesPortletVIEW')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -346,6 +351,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX</td>
+	<td>//input[contains(@value,'GroupVIEW')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -364,6 +374,11 @@
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_UPDATE_CHECKBOX</td>
 	<td>//input[contains(@value,'LayoutUPDATE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX</td>
+	<td>//input[contains(@value,'LayoutVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

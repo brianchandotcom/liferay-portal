@@ -398,21 +398,117 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140613. View if the Student can have permissions set"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SetStudentPermission {
+		task ("Add Pages permissions to Student under the Site and Asset Library Administration tab"){
+            ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
+            
+			Role.definePermissionCP(
+                permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
+                permissionDefinitionValue = "View",
+                roleTitle = "Student",
+                roleType = "Site");
 
-		// TODO Create the automation about the LPS-140613.
+			ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
 
+			Role.definePermissionCP(
+                permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX",
+                permissionDefinitionValue = "View",
+                roleTitle = "Student",
+                roleType = "Site");
+
+			ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
+
+			Role.definePermissionCP(
+                permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX",
+                permissionDefinitionValue = "View",
+                roleTitle = "Student",
+                roleType = "Site");	
+		}
+
+		task ("View table permissions to Student") {
+		
+			AssertElementPresent(
+				key_permissionDefinitionValue = "Pages",
+				key_permissionNavigationValue = "Pages: View",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			
+			AssertElementPresent(
+				key_permissionDefinitionValue = "Pages",
+				key_permissionNavigationValue = "Page: View",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			
+			AssertElementPresent(
+				key_permissionDefinitionValue = "Site Settings",
+				key_permissionNavigationValue = "Site: View",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+		}
 	}
 
 	@description = "This is a test for LPS-140613. View if the Teacher can have permissions set"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SetTeacherPermission {
+		task ("Add Pages permissions to Teacher under the Site and Asset Library Administration tab"){
+            ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
+            
+			Role.definePermissionCP(
+                permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
+                permissionDefinitionValue = "View",
+                roleTitle = "Teacher",
+                roleType = "Site");
 
-		// TODO Create the automation about the LPS-140613.
+			ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
 
+			Role.definePermissionCP(
+                permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX",
+                permissionDefinitionValue = "View",
+                roleTitle = "Teacher",
+                roleType = "Site");
+
+			ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
+
+			Role.definePermissionCP(
+                permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX",
+                permissionDefinitionValue = "View",
+                roleTitle = "Teacher",
+                roleType = "Site");	
+		}
+
+		task ("View table permissions to Teacher") {
+		
+			AssertElementPresent(
+				key_permissionDefinitionValue = "Pages",
+				key_permissionNavigationValue = "Pages: View",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			
+			AssertElementPresent(
+				key_permissionDefinitionValue = "Pages",
+				key_permissionNavigationValue = "Page: View",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			
+			AssertElementPresent(
+				key_permissionDefinitionValue = "Site Settings",
+				key_permissionNavigationValue = "Site: View",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+		}
 	}
 
 	@description = "This is a test for LPS-141768. View the three available courses in Home content page"
@@ -729,21 +825,54 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140613. View the Student and Teacher are present in Site Roles"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewStudentandTeacheronSiteRoles {
-
-		// TODO Create the automation about the LPS-140613.
-
-	}
+		task ("Go to Site Roles"){
+            ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
+            RoleNavigator.gotoRoleType(roleType = "Site");
+        }
+        task ("Assert the Student and Teacher are present"){
+            for (var roleTitle : list "Student,Teacher") {
+                AssertElementPresent(
+                    key_itemName = "${roleTitle}",
+                    locator1 = "ListGroupItem#ITEM_NAME_LINK",
+                    value1 = "${roleTitle}");
+            }
+        }
+    }
 
 	@description = "This is a test for LPS-140613. View permissions for Student and Teacher"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewStudentandTeacherPermissions {
+		task ("Go to Site Roles"){
+            ApplicationsMenu.gotoPortlet(
+                category = "Users",
+                panel = "Control Panel",
+                portlet = "Roles");
+            RoleNavigator.gotoRoleType(roleType = "Site");
+        }
+		 task ("Set all permissons for Student"){
+            PermissionsInline.gotoRolePermissions(roleName = "Student");
 
-		// TODO Create the automation about the LPS-140613.
+            Role.definePermissionPG(
+				permissionsList = "CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_DEFINE_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX,CONTENT_PERMISSIONS_MANAGE_ANNOUNCEMENTS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Student");
 
-	}
+			IFrame.closeFrame();
+        }
+
+		 task ("Set all permissons for Teacher"){
+			PermissionsInline.gotoRolePermissions(roleName = "Teacher");
+
+            Role.definePermissionPG(
+				permissionsList = "CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_DEFINE_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX,CONTENT_PERMISSIONS_MANAGE_ANNOUNCEMENTS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Teacher");
+
+			IFrame.closeFrame();
+		 }
+    }
 
 }

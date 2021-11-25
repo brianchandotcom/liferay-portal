@@ -53,6 +53,11 @@ public abstract class BaseRemoteAppEntryUADAnonymizer
 			autoAnonymizeAssetEntry(remoteAppEntry, anonymousUser);
 		}
 
+		if (remoteAppEntry.getStatusByUserId() == userId) {
+			remoteAppEntry.setStatusByUserId(anonymousUser.getUserId());
+			remoteAppEntry.setStatusByUserName(anonymousUser.getFullName());
+		}
+
 		remoteAppEntryLocalService.updateRemoteAppEntry(remoteAppEntry);
 	}
 

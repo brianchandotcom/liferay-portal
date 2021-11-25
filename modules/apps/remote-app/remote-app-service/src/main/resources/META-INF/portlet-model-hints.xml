@@ -19,7 +19,7 @@
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field localized="true" name="description" type="String">
+		<field name="description" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/html" modes="ALL" />
 		</field>
@@ -38,5 +38,9 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="type" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

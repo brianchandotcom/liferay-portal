@@ -73,16 +73,16 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, boolean instanceable,
+			String description, String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String friendlyURLMapping, String iFrameURL,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			long userId, String description, String friendlyURLMapping,
+			String iFrameURL, boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
 	/**
@@ -327,15 +327,17 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String friendlyURLMapping, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			String description, String friendlyURLMapping,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String friendlyURLMapping, String iFrameURL,
+			long remoteAppEntryId, String description,
+			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties)
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	/**
@@ -350,5 +352,10 @@ public interface RemoteAppEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateRemoteAppEntry(RemoteAppEntry remoteAppEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
+		throws PortalException;
 
 }

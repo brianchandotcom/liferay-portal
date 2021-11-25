@@ -43,30 +43,6 @@ public class SXPBlueprintDTOConverter
 	}
 
 	@Override
-	public SXPBlueprint toDTO(
-		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
-
-		return new SXPBlueprint() {
-			{
-				configuration = ConfigurationUtil.toConfiguration(
-					sxpBlueprint.getConfigurationJSON());
-				createDate = sxpBlueprint.getCreateDate();
-				description = sxpBlueprint.getDescription();
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					true, sxpBlueprint.getDescriptionMap());
-				elementInstances = ElementInstanceUtil.toElementInstances(
-					sxpBlueprint.getElementInstancesJSON());
-				id = sxpBlueprint.getSXPBlueprintId();
-				modifiedDate = sxpBlueprint.getModifiedDate();
-				title = sxpBlueprint.getTitle();
-				title_i18n = LocalizedMapUtil.getI18nMap(
-					true, sxpBlueprint.getTitleMap());
-				userName = sxpBlueprint.getUserName();
-			}
-		};
-	}
-
-	@Override
 	public SXPBlueprint toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
@@ -101,6 +77,30 @@ public class SXPBlueprintDTOConverter
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getTitleMap());
+				userName = sxpBlueprint.getUserName();
+			}
+		};
+	}
+
+	@Override
+	public SXPBlueprint toDTO(
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
+
+		return new SXPBlueprint() {
+			{
+				configuration = ConfigurationUtil.toConfiguration(
+					sxpBlueprint.getConfigurationJSON());
+				createDate = sxpBlueprint.getCreateDate();
+				description = sxpBlueprint.getDescription();
+				description_i18n = LocalizedMapUtil.getI18nMap(
+					true, sxpBlueprint.getDescriptionMap());
+				elementInstances = ElementInstanceUtil.toElementInstances(
+					sxpBlueprint.getElementInstancesJSON());
+				id = sxpBlueprint.getSXPBlueprintId();
+				modifiedDate = sxpBlueprint.getModifiedDate();
+				title = sxpBlueprint.getTitle();
+				title_i18n = LocalizedMapUtil.getI18nMap(
+					true, sxpBlueprint.getTitleMap());
 				userName = sxpBlueprint.getUserName();
 			}
 		};

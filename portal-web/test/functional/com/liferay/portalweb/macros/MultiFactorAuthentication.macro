@@ -334,7 +334,10 @@ definition {
 
 			Button.click(button = "Submit");
 
-			AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FAILED_MESSAGE");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Multi-factor authentication has failed.");
+
 			AssertElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 		else {

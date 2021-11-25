@@ -743,26 +743,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPBlueprint"
             tags: ["SXPBlueprint"]
-    /sxp-blueprints/export:
-        get:
-            operationId: getSXPBlueprintExport
-            parameters:
-                - in: query
-                  name: sxpBlueprintId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json:
-                            schema:
-                                type: string
-                        application/xml:
-                            schema:
-                                type: string
-            tags: ["SXPBlueprint"]
     /sxp-blueprints/validate:
         post:
             operationId: postSXPBlueprintValidate
@@ -866,6 +846,32 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPBlueprint"
             tags: ["SXPBlueprint"]
+    /sxp-blueprints/{sxpBlueprintId}/export:
+        get:
+            operationId: getSXPBlueprintExport
+            parameters:
+                - in: path
+                  name: sxpBlueprintId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                format: binary
+                                type: string
+                        application/xml:
+                            schema:
+                                format: binary
+                                type: string
+                    headers:
+                        Content-Disposition:
+                            schema:
+                                type: string
+            tags: ["SXPBlueprint"]
     /sxp-elements:
         get:
             operationId: getSXPElementsPage
@@ -915,26 +921,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SXPElement"
-            tags: ["SXPElement"]
-    /sxp-elements/export:
-        get:
-            operationId: getSXPElementExport
-            parameters:
-                - in: path
-                  name: sxpElementId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json:
-                            schema:
-                                type: string
-                        application/xml:
-                            schema:
-                                type: string
             tags: ["SXPElement"]
     /sxp-elements/validate:
         post:
@@ -1038,6 +1024,32 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SXPElement"
+            tags: ["SXPElement"]
+    /sxp-elements/{sxpElementId}/export:
+        get:
+            operationId: getSXPElementExport
+            parameters:
+                - in: path
+                  name: sxpElementId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                format: binary
+                                type: string
+                        application/xml:
+                            schema:
+                                format: binary
+                                type: string
+                    headers:
+                        Content-Disposition:
+                            schema:
+                                type: string
             tags: ["SXPElement"]
     /sxp-parameter-contributor-definitions:
         get:

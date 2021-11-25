@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_OTP_VERIFY_SUBMIT_EMAIL_BUTTON_DISABLED</td>
+	<td>//button[@disabled][contains(@type,'submit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_OTP_VERIFY_SUCCESS_MESSAGE</td>
 	<td>//span[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>

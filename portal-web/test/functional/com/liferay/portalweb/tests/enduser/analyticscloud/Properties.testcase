@@ -405,9 +405,9 @@ definition {
 			var propertyID2 = ACSettings.getPropertyId(propertyName = "Name of property 2");
 			var propertyID3 = ACSettings.getPropertyId(propertyName = "Name of property 3");
 
-			var differenceID2 = MathUtil.difference(value1 = "${propertyID2}", value2 = "${propertyID1}");
+			var differenceID2 = MathUtil.difference("${propertyID2}","${propertyID1}");
 
-			var differenceID3 = MathUtil.difference(value1 = "${propertyID3}", value2 = "${propertyID2}");
+			var differenceID3 = MathUtil.difference("${propertyID3}","${propertyID2}");
 
 			TestUtils.assertNotEquals(
 				actual = "${differenceID2}",

@@ -180,7 +180,7 @@ definition {
 
 		Button.clickPublish();
 
-		if (IsElementPresent(locator1 = "ProcessBuilderSource#SOURCE_WAPPER")){
+		if (IsElementPresent(locator1 = "ProcessBuilderSource#SOURCE_WAPPER")) {
 			Alert.viewErrorMessage(errorMessage = "Please add a workflow title before publishing.");
 		}
 		else {

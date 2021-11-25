@@ -35,9 +35,11 @@ definition {
 		task ("Assert Disable multi-factor authentication system-wide message is present in Multi-Factor Authentication System configuration") {
 			MultiFactorAuthentication.openToConfigInSystemSettings();
 
-			AssertTextEquals(
-				locator1 = "MultiFactorAuthentication#EMAIL_OTP_DISABLE",
-				value1 = "Disable multi-factor authentication system-wide.");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Disable Multi-Factor Authentication",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewSettingsText(settingsText = "Disable multi-factor authentication system-wide.");
 		}
 
 		task ("Assert default descriptions at multifactor authentication") {

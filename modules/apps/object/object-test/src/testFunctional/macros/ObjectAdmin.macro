@@ -7,9 +7,7 @@ definition {
                 value1 = "${blockName}");
             Click(
                 key_tab = "Save",
-                locator1 = "Button#TAB_SUBMIT_BTN");
-
-				
+                locator1 = "Button#TAB_SUBMIT_BTN");	
     }
 
 	macro addNewObject {
@@ -332,13 +330,7 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_FIELD_INPUT_HAS_REQUIRED_ERROR");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
-
-
-
-
 	}
-
-
 
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");

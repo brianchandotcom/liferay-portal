@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.data.set.taglib.internal.servlet;
 
-import com.liferay.frontend.data.set.filter.FrontendDataSetFilterSerializer;
-import com.liferay.frontend.data.set.view.FrontendDataSetViewSerializer;
+import com.liferay.frontend.data.set.filter.FDSFilterSerializer;
+import com.liferay.frontend.data.set.view.FDSViewSerializer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -40,18 +40,16 @@ public class ServletContextUtil {
 		return _servletContext.getContextPath();
 	}
 
-	public static FrontendDataSetFilterSerializer
-		getFrontendDataSetFilterSerializer() {
-
-		return _frontendDataSetFilterSerializer;
+	public static FDSFilterSerializer getFDSFilterSerializer() {
+		return _fdsFilterSerializer;
 	}
 
-	public static String getFrontendDataSetSettingsNamespace(
+	public static String getFDSSettingsNamespace(
 		HttpServletRequest httpServletRequest, String id) {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("FrontendDataSet£");
+		sb.append("FDS£");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -72,10 +70,8 @@ public class ServletContextUtil {
 		return sb.toString();
 	}
 
-	public static FrontendDataSetViewSerializer
-		getFrontendDataSetViewSerializer() {
-
-		return _frontendDataSetViewSerializer;
+	public static FDSViewSerializer getFDSViewSerializer() {
+		return _fdsViewSerializer;
 	}
 
 	public static ServletContext getServletContext() {
@@ -83,17 +79,17 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setFrontendDataSetFilterSerializer(
-		FrontendDataSetFilterSerializer frontendDataSetFilterSerializer) {
+	protected void setFDSFilterSerializer(
+		FDSFilterSerializer fdsFilterSerializer) {
 
-		_frontendDataSetFilterSerializer = frontendDataSetFilterSerializer;
+		_fdsFilterSerializer = fdsFilterSerializer;
 	}
 
 	@Reference(unbind = "-")
-	protected void setFrontendDataSetViewSerializer(
-		FrontendDataSetViewSerializer frontendDataSetDisplayViewSerializer) {
+	protected void setFDSViewSerializer(
+		FDSViewSerializer fdsDisplayViewSerializer) {
 
-		_frontendDataSetViewSerializer = frontendDataSetDisplayViewSerializer;
+		_fdsViewSerializer = fdsDisplayViewSerializer;
 	}
 
 	@Reference(unbind = "-")
@@ -109,9 +105,8 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private static FrontendDataSetFilterSerializer
-		_frontendDataSetFilterSerializer;
-	private static FrontendDataSetViewSerializer _frontendDataSetViewSerializer;
+	private static FDSFilterSerializer _fdsFilterSerializer;
+	private static FDSViewSerializer _fdsViewSerializer;
 	private static Portal _portal;
 	private static ServletContext _servletContext;
 

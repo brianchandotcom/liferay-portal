@@ -17,9 +17,9 @@
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.frontend.data.set.model.FrontendDataSetActionDropdownItem" %><%@
-page import="com.liferay.frontend.data.set.model.FrontendDataSetPaginationEntry" %><%@
-page import="com.liferay.frontend.data.set.model.FrontendDataSetSortItemList" %><%@
+<%@ page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %><%@
+page import="com.liferay.frontend.data.set.model.FDSPaginationEntry" %><%@
+page import="com.liferay.frontend.data.set.model.FDSSortItemList" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -43,13 +43,13 @@ String appURL = (String)request.getAttribute("frontend-data-set:headless-display
 List<DropdownItem> bulkActionDropdownItems = (List<DropdownItem>)request.getAttribute("frontend-data-set:headless-display:bulkActionDropdownItems");
 CreationMenu creationMenu = (CreationMenu)request.getAttribute("frontend-data-set:headless-display:creationMenu");
 boolean customViewsEnabled = (boolean)request.getAttribute("frontend-data-set:headless-display:customViewsEnabled");
+List<FDSActionDropdownItem> fdsActionDropdownItems = (List<FDSActionDropdownItem>)request.getAttribute("frontend-data-set:headless-display:fdsActionDropdownItems");
+Object fdsDisplayViewsContext = request.getAttribute("frontend-data-set:headless-display:fdsDisplayViewsContext");
+Object fdsFiltersContext = request.getAttribute("frontend-data-set:headless-display:fdsFiltersContext");
+List<FDSPaginationEntry> fdsPaginationEntries = (List<FDSPaginationEntry>)request.getAttribute("frontend-data-set:headless-display:fdsPaginationEntries");
+FDSSortItemList fdsSortItemList = (FDSSortItemList)request.getAttribute("frontend-data-set:headless-display:fdsSortItemList");
 String formId = (String)request.getAttribute("frontend-data-set:headless-display:formId");
 String formName = (String)request.getAttribute("frontend-data-set:headless-display:formName");
-List<FrontendDataSetActionDropdownItem> frontendDataSetActionDropdownItems = (List<FrontendDataSetActionDropdownItem>)request.getAttribute("frontend-data-set:headless-display:frontendDataSetActionDropdownItems");
-Object frontendDataSetDisplayViewsContext = request.getAttribute("frontend-data-set:headless-display:frontendDataSetDisplayViewsContext");
-Object frontendDataSetFiltersContext = request.getAttribute("frontend-data-set:headless-display:frontendDataSetFiltersContext");
-List<FrontendDataSetPaginationEntry> frontendDataSetPaginationEntries = (List<FrontendDataSetPaginationEntry>)request.getAttribute("frontend-data-set:headless-display:frontendDataSetPaginationEntries");
-FrontendDataSetSortItemList frontendDataSetSortItemList = (FrontendDataSetSortItemList)request.getAttribute("frontend-data-set:headless-display:frontendDataSetSortItemList");
 String id = (String)request.getAttribute("frontend-data-set:headless-display:id");
 int itemsPerPage = (int)request.getAttribute("frontend-data-set:headless-display:itemsPerPage");
 String namespace = (String)request.getAttribute("frontend-data-set:headless-display:namespace");

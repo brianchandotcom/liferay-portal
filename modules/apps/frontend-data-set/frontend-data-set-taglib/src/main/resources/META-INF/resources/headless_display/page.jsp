@@ -41,7 +41,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_trac
 	).put(
 		"customViewsEnabled", customViewsEnabled
 	).put(
-		"filters", frontendDataSetFiltersContext
+		"filters", fdsFiltersContext
 	).build();
 
 	if (Validator.isNotNull(formName)) {
@@ -53,7 +53,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_trac
 	}
 
 	props.put("id", id);
-	props.put("itemsActions", frontendDataSetActionDropdownItems);
+	props.put("itemsActions", fdsActionDropdownItems);
 	props.put("namespace", namespace);
 
 	if (Validator.isNotNull(nestedItemsKey)) {
@@ -67,7 +67,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_trac
 	props.put(
 		"pagination",
 		HashMapBuilder.<String, Object>put(
-			"deltas", frontendDataSetPaginationEntries
+			"deltas", fdsPaginationEntries
 		).put(
 			"initialDelta", itemsPerPage
 		).put(
@@ -88,17 +88,17 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_trac
 	props.put("showManagementBar", showManagementBar);
 	props.put("showPagination", showPagination);
 	props.put("showSearch", showSearch);
-	props.put("sorting", frontendDataSetSortItemList);
+	props.put("sorting", fdsSortItemList);
 
 	if (Validator.isNotNull(style)) {
 		props.put("style", style);
 	}
 
-	props.put("views", frontendDataSetDisplayViewsContext);
+	props.put("views", fdsDisplayViewsContext);
 	%>
 
 	<react:component
-		module="js/FrontendDataSetTag"
+		module="js/FDSTag"
 		props="<%= props %>"
 	/>
 </div>

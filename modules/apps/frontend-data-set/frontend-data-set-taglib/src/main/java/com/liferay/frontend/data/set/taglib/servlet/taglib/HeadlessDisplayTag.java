@@ -14,13 +14,13 @@
 
 package com.liferay.frontend.data.set.taglib.servlet.taglib;
 
-import com.liferay.frontend.data.set.filter.FrontendDataSetFilterSerializer;
-import com.liferay.frontend.data.set.model.FrontendDataSetActionDropdownItem;
-import com.liferay.frontend.data.set.model.FrontendDataSetPaginationEntry;
-import com.liferay.frontend.data.set.model.FrontendDataSetSortItem;
-import com.liferay.frontend.data.set.model.FrontendDataSetSortItemList;
+import com.liferay.frontend.data.set.filter.FDSFilterSerializer;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSPaginationEntry;
+import com.liferay.frontend.data.set.model.FDSSortItem;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.data.set.view.FrontendDataSetViewSerializer;
+import com.liferay.frontend.data.set.view.FDSViewSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -60,9 +60,9 @@ public class HeadlessDisplayTag extends IncludeTag {
 			}
 
 			_setActiveViewSettingsJSON();
-			_setFrontendDataSetViewsContext();
-			_setFrontendDataSetFiltersContext();
-			_setFrontendDataSetPaginationEntries();
+			_setFDSViewsContext();
+			_setFDSFiltersContext();
+			_setFDSPaginationEntries();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -87,22 +87,20 @@ public class HeadlessDisplayTag extends IncludeTag {
 		return _creationMenu;
 	}
 
+	public List<FDSActionDropdownItem> getFdsActionDropdownItems() {
+		return _fdsActionDropdownItems;
+	}
+
+	public List<FDSSortItem> getFdsSortItemList() {
+		return _fdsSortItemList;
+	}
+
 	public String getFormId() {
 		return _formId;
 	}
 
 	public String getFormName() {
 		return _formName;
-	}
-
-	public List<FrontendDataSetActionDropdownItem>
-		getFrontendDataSetActionDropdownItems() {
-
-		return _frontendDataSetActionDropdownItems;
-	}
-
-	public List<FrontendDataSetSortItem> getFrontendDataSetSortItemList() {
-		return _frontendDataSetSortItemList;
 	}
 
 	public String getId() {
@@ -185,26 +183,22 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_customViewsEnabled = customViewsEnabled;
 	}
 
+	public void setFdsActionDropdownItems(
+		List<FDSActionDropdownItem> fdsActionDropdownItems) {
+
+		_fdsActionDropdownItems = fdsActionDropdownItems;
+	}
+
+	public void setFdsSortItemList(FDSSortItemList fdsSortItemList) {
+		_fdsSortItemList = fdsSortItemList;
+	}
+
 	public void setFormId(String formId) {
 		_formId = formId;
 	}
 
 	public void setFormName(String formName) {
 		_formName = formName;
-	}
-
-	public void setFrontendDataSetActionDropdownItems(
-		List<FrontendDataSetActionDropdownItem>
-			frontendDataSetActionDropdownItems) {
-
-		_frontendDataSetActionDropdownItems =
-			frontendDataSetActionDropdownItems;
-	}
-
-	public void setFrontendDataSetSortItemList(
-		FrontendDataSetSortItemList frontendDataSetSortItemList) {
-
-		_frontendDataSetSortItemList = frontendDataSetSortItemList;
 	}
 
 	public void setId(String id) {
@@ -229,11 +223,9 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 	@Override
 	public void setPageContext(PageContext pageContext) {
-		_frontendDataSetViewSerializer =
-			ServletContextUtil.getFrontendDataSetViewSerializer();
+		_fdsViewSerializer = ServletContextUtil.getFDSViewSerializer();
 
-		_frontendDataSetFilterSerializer =
-			ServletContextUtil.getFrontendDataSetFilterSerializer();
+		_fdsFilterSerializer = ServletContextUtil.getFDSFilterSerializer();
 
 		super.setPageContext(pageContext);
 
@@ -287,15 +279,15 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_bulkActionDropdownItems = new ArrayList<>();
 		_creationMenu = new CreationMenu();
 		_customViewsEnabled = false;
+		_fdsActionDropdownItems = new ArrayList<>();
+		_fdsFiltersContext = null;
+		_fdsFilterSerializer = null;
+		_fdsPaginationEntries = null;
+		_fdsSortItemList = new FDSSortItemList();
+		_fdsViewsContext = null;
+		_fdsViewSerializer = null;
 		_formId = null;
 		_formName = null;
-		_frontendDataSetActionDropdownItems = new ArrayList<>();
-		_frontendDataSetFiltersContext = null;
-		_frontendDataSetFilterSerializer = null;
-		_frontendDataSetPaginationEntries = null;
-		_frontendDataSetSortItemList = new FrontendDataSetSortItemList();
-		_frontendDataSetViewsContext = null;
-		_frontendDataSetViewSerializer = null;
 		_id = null;
 		_itemsPerPage = 0;
 		_namespace = null;
@@ -341,27 +333,24 @@ public class HeadlessDisplayTag extends IncludeTag {
 			"frontend-data-set:headless-display:customViewsEnabled",
 			_customViewsEnabled);
 		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:fdsActionDropdownItems",
+			_fdsActionDropdownItems);
+		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:fdsDisplayViewsContext",
+			_fdsViewsContext);
+		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:fdsFiltersContext",
+			_fdsFiltersContext);
+		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:fdsPaginationEntries",
+			_fdsPaginationEntries);
+		httpServletRequest.setAttribute(
+			"frontend-data-set:headless-display:fdsSortItemList",
+			_fdsSortItemList);
+		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:formId", _formId);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:formName", _formName);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:" +
-				"frontendDataSetActionDropdownItems",
-			_frontendDataSetActionDropdownItems);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:" +
-				"frontendDataSetDisplayViewsContext",
-			_frontendDataSetViewsContext);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:frontendDataSetFiltersContext",
-			_frontendDataSetFiltersContext);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:" +
-				"frontendDataSetPaginationEntries",
-			_frontendDataSetPaginationEntries);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:frontendDataSetSortItemList",
-			_frontendDataSetSortItemList);
 		httpServletRequest.setAttribute(
 			"frontend-data-set:headless-display:id", _id);
 		httpServletRequest.setAttribute(
@@ -400,22 +389,18 @@ public class HeadlessDisplayTag extends IncludeTag {
 			"frontend-data-set:headless-display:style", _style);
 	}
 
-	private List<FrontendDataSetPaginationEntry>
-		_getFrontendDataSetPaginationEntries() {
-
-		List<FrontendDataSetPaginationEntry> frontendDataSetPaginationEntries =
-			new ArrayList<>();
+	private List<FDSPaginationEntry> _getFdsPaginationEntries() {
+		List<FDSPaginationEntry> fdsPaginationEntries = new ArrayList<>();
 
 		for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
 			if (curDelta > SearchContainer.MAX_DELTA) {
 				continue;
 			}
 
-			frontendDataSetPaginationEntries.add(
-				new FrontendDataSetPaginationEntry(null, curDelta));
+			fdsPaginationEntries.add(new FDSPaginationEntry(null, curDelta));
 		}
 
-		return frontendDataSetPaginationEntries;
+		return fdsPaginationEntries;
 	}
 
 	private void _setActiveViewSettingsJSON() {
@@ -425,41 +410,34 @@ public class HeadlessDisplayTag extends IncludeTag {
 			PortletPreferencesFactoryUtil.getPortalPreferences(
 				httpServletRequest);
 
-		String frontendDataSetSettingsNamespace =
-			ServletContextUtil.getFrontendDataSetSettingsNamespace(
-				httpServletRequest, _id);
-
 		_activeViewSettingsJSON = portalPreferences.getValue(
-			frontendDataSetSettingsNamespace, "activeViewSettingsJSON");
+			ServletContextUtil.getFDSSettingsNamespace(httpServletRequest, _id),
+			"activeViewSettingsJSON");
 	}
 
-	private void _setFrontendDataSetFiltersContext() {
-		_frontendDataSetFiltersContext =
-			_frontendDataSetFilterSerializer.serialize(
-				_id, PortalUtil.getLocale(getRequest()));
+	private void _setFDSFiltersContext() {
+		_fdsFiltersContext = _fdsFilterSerializer.serialize(
+			_id, PortalUtil.getLocale(getRequest()));
 	}
 
-	private void _setFrontendDataSetPaginationEntries() {
-		_frontendDataSetPaginationEntries =
-			_getFrontendDataSetPaginationEntries();
+	private void _setFDSPaginationEntries() {
+		_fdsPaginationEntries = _getFdsPaginationEntries();
 
-		Stream<FrontendDataSetPaginationEntry> stream =
-			_frontendDataSetPaginationEntries.stream();
+		Stream<FDSPaginationEntry> stream = _fdsPaginationEntries.stream();
 
-		FrontendDataSetPaginationEntry frontendDataSetPaginationEntry =
-			stream.filter(
-				entry -> entry.getLabel() == _itemsPerPage
-			).findAny(
-			).orElse(
-				null
-			);
+		FDSPaginationEntry fdsPaginationEntry = stream.filter(
+			entry -> entry.getLabel() == _itemsPerPage
+		).findAny(
+		).orElse(
+			null
+		);
 
-		_paginationSelectedEntry = _frontendDataSetPaginationEntries.indexOf(
-			frontendDataSetPaginationEntry);
+		_paginationSelectedEntry = _fdsPaginationEntries.indexOf(
+			fdsPaginationEntry);
 	}
 
-	private void _setFrontendDataSetViewsContext() {
-		_frontendDataSetViewsContext = _frontendDataSetViewSerializer.serialize(
+	private void _setFDSViewsContext() {
+		_fdsViewsContext = _fdsViewSerializer.serialize(
 			_id, PortalUtil.getLocale(getRequest()));
 	}
 
@@ -475,18 +453,16 @@ public class HeadlessDisplayTag extends IncludeTag {
 	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
 	private CreationMenu _creationMenu = new CreationMenu();
 	private boolean _customViewsEnabled;
+	private List<FDSActionDropdownItem> _fdsActionDropdownItems =
+		new ArrayList<>();
+	private Object _fdsFiltersContext;
+	private FDSFilterSerializer _fdsFilterSerializer;
+	private List<FDSPaginationEntry> _fdsPaginationEntries;
+	private FDSSortItemList _fdsSortItemList = new FDSSortItemList();
+	private Object _fdsViewsContext;
+	private FDSViewSerializer _fdsViewSerializer;
 	private String _formId;
 	private String _formName;
-	private List<FrontendDataSetActionDropdownItem>
-		_frontendDataSetActionDropdownItems = new ArrayList<>();
-	private Object _frontendDataSetFiltersContext;
-	private FrontendDataSetFilterSerializer _frontendDataSetFilterSerializer;
-	private List<FrontendDataSetPaginationEntry>
-		_frontendDataSetPaginationEntries;
-	private FrontendDataSetSortItemList _frontendDataSetSortItemList =
-		new FrontendDataSetSortItemList();
-	private Object _frontendDataSetViewsContext;
-	private FrontendDataSetViewSerializer _frontendDataSetViewSerializer;
 	private String _id;
 	private int _itemsPerPage;
 	private String _namespace;

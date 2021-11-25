@@ -37,24 +37,24 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>fdsActionDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
+		</attribute>
+		<attribute>
+			<name>fdsSortItemList</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
+		</attribute>
+		<attribute>
 			<name>formId</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>formName</name>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>frontendDataSetActionDropdownItems</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.List</type>
-		</attribute>
-		<attribute>
-			<name>frontendDataSetSortItemList</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<name>id</name>

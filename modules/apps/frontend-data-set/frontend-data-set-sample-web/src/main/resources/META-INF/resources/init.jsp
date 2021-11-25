@@ -19,9 +19,9 @@
 <%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetSampleFrontendDataSetNames" %><%@
-page import="com.liferay.frontend.data.set.sample.web.internal.constants.FrontendDataSetSampleWebKeys" %><%@
-page import="com.liferay.frontend.data.set.sample.web.internal.display.context.FrontendDataSetSampleDisplayContext" %>
+<%@ page import="com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames" %><%@
+page import="com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleWebKeys" %><%@
+page import="com.liferay.frontend.data.set.sample.web.internal.display.context.FDSSampleDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

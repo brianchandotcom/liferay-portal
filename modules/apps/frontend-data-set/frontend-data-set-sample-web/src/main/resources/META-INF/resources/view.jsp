@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FrontendDataSetSampleDisplayContext frontendDataSetSampleDisplayContext = (FrontendDataSetSampleDisplayContext)request.getAttribute(FrontendDataSetSampleWebKeys.FRONTEND_DATA_SET_SAMPLE_DISPLAY_CONTEXT);
+FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)request.getAttribute(FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <frontend-data-set:headless-display
-	apiURL="<%= frontendDataSetSampleDisplayContext.getAPIURL() %>"
+	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	customViewsEnabled="<%= true %>"
+	fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
 	formId="fm"
-	frontendDataSetActionDropdownItems="<%= frontendDataSetSampleDisplayContext.getFrontendDataSetActionDropdownItems() %>"
-	id="<%= FrontendDataSetSampleFrontendDataSetNames.FRONTEND_DATA_SET_SAMPLES %>"
+	id="<%= FDSSampleFDSNames.FDS_SAMPLES %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

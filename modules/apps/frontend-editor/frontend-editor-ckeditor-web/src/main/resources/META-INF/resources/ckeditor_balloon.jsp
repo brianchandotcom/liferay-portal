@@ -20,6 +20,12 @@
 String contents = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
 Map<String, Object> editorData = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
 String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
+
+String onChangeMethod = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
+
+if (Validator.isNotNull(onChangeMethod)) {
+	onChangeMethod = namespace + onChangeMethod;
+}
 %>
 
 <div>
@@ -32,6 +38,8 @@ String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEd
 				"contents", contents
 			).put(
 				"name", HtmlUtil.escapeAttribute(name)
+			).put(
+				"onChangeMethodName", HtmlUtil.escapeJS(onChangeMethod)
 			).build()
 		%>'
 	/>

@@ -442,11 +442,9 @@ definition {
 		var key_fieldName = "${fieldName}";
 		var key_uploadFileName = "${uploadFileName}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "FormFields#UPLOAD_FILE_NAME",
 			value1 = "${uploadFileName}");
-
-		AssertElementPresent(locator1 = "FormFields#UPLOAD_DOWNLOAD_ICON");
 	}
 
 }

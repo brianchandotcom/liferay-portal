@@ -606,7 +606,7 @@ definition {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			key_fieldName = "${uploadFieldName}",
 			locator1 = "FormFields#UPLOAD_FIELD",
-			value1 = "Document -_.jpg");
+			value1 = "Document_1.jpg");
 
 		WaitForElementPresent(locator1 = "FormFields#UPLOAD_FIELD_CLEAR_BUTTON");
 
@@ -615,7 +615,7 @@ definition {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			key_fieldName = "${uploadFieldName}",
 			locator1 = "FormFields#UPLOAD_FIELD",
-			value1 = "Document -_.jpg");
+			value1 = "Document_1.jpg");
 
 		FormPortlet.submitSuccessfully();
 
@@ -634,7 +634,7 @@ definition {
 		FormsAdmin.viewUploadFile(
 			fieldLabel = "Upload Field",
 			fieldName = "${uploadFieldName}",
-			uploadFileName = "Document -_ (1).jpg");
+			uploadFileName = "Document_1");
 	}
 
 	@description = "Verify that changes to the Field can be canceled"

@@ -71,7 +71,7 @@ const usePageGuard = (
 	const {data} = useQuery(pageGuard, {
 		variables: {
 			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq 'onboarding' and userUuid eq '${userAccount.externalReferenceCode}' and value eq 1`,
-			accountId: userAccount.id
+			accountId: userAccount.id,
 		},
 	});
 

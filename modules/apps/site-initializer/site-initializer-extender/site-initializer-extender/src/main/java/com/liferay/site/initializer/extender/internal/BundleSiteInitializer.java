@@ -1465,7 +1465,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String.valueOf(listTypeDefinition.getId()));
 
 			String listTypeEntriesJSON = _read(
-				StringUtil.replace(resourcePath, ".json", ".list-type-entries.json"));
+				StringUtil.replace(
+					resourcePath, ".json", ".list-type-entries.json"));
 
 			if (listTypeEntriesJSON == null) {
 				continue;
@@ -1483,13 +1484,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).build();
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
-
 				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
-					jsonObject.toString());
+					String.valueOf(jsonArray.getJSONObject(i)));
 
-				listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-					listTypeDefinition.getId(), listTypeEntry);
+				Page<ListTypeEntry> listTypeEntriesPage =
+					listTypeEntryResource.
+						getListTypeDefinitionListTypeEntriesPage(
+							listTypeDefinition.getId(), null, null,
+							listTypeEntryResource.toFilter(
+								StringBundler.concat(
+									"key eq '", listTypeEntry.getKey(), "'")),
+							null, null);
+
+				ListTypeEntry existingListTypeEntry =
+					listTypeEntriesPage.fetchFirstItem();
+
+				if (existingListTypeEntry == null) {
+					listTypeEntryResource.postListTypeDefinitionListTypeEntry(
+						listTypeDefinition.getId(), listTypeEntry);
+				}
+				else {
+					listTypeEntryResource.putListTypeEntry(
+						existingListTypeEntry.getId(), listTypeEntry);
+				}
 			}
 		}
 

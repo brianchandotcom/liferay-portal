@@ -32,6 +32,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRelModel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelModel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.util.AssetHelper;
@@ -76,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -895,13 +897,20 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords, int start, int end) {
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(
-				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<AssetListEntryAssetEntryRel > assetListEntryAssetEntryRels = new ArrayList<>();
 
-		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
-			return Collections.emptyList();
+		segmentsEntryIds = _sortSegmentsByPriority(assetListEntry, segmentsEntryIds);
+
+		for (int i = 0; i < segmentsEntryIds.length; i++){
+			assetListEntryAssetEntryRels.addAll(
+				ListUtil.sort(
+				_getAssetListEntryAssetEntryRels(
+					assetListEntry, new long[] {segmentsEntryIds[i]}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+					Comparator.comparing(
+						AssetListEntryAssetEntryRelModel::getPosition)
+			)
+			);
 		}
 
 		List<Long> assetEntryIds = ListUtil.toList(
@@ -931,6 +940,24 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return Collections.emptyList();
+	}
+
+	private long[] _sortSegmentsByPriority(AssetListEntry assetListEntry, long[] segmentsEntryIds) {
+		LongStream longStream = Arrays.stream(segmentsEntryIds);
+
+		Stream<AssetListEntrySegmentsEntryRel>
+			assetListEntrySegmentsEntryRelStream = longStream
+			.mapToObj(segmentsEntryId ->
+				_assetListEntrySegmentsEntryRelLocalService.
+					fetchAssetListEntrySegmentsEntryRel(
+						assetListEntry.getAssetListEntryId(),
+						segmentsEntryId)
+			);
+
+		return assetListEntrySegmentsEntryRelStream.sorted(
+			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
+		).mapToLong(AssetListEntrySegmentsEntryRelModel::getSegmentsEntryId)
+			.toArray();
 	}
 
 	private int _getManualAssetEntriesCount(

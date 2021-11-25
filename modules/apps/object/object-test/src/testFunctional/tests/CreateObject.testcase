@@ -2217,13 +2217,13 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-		SelectFrame(locator1 = "IFrame#IFRAME");	
+		SelectFrame(locator1 = "IFrame#IFRAME");
 
 		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = "1",
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -2242,10 +2242,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 

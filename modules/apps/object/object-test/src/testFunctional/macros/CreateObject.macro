@@ -19,12 +19,9 @@ definition {
 	}
 
 	macro assertFieldAddedOnBlock {
-		
 		AssertElementPresent(
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
-
-		
 	}
 
 	macro assertFieldName {

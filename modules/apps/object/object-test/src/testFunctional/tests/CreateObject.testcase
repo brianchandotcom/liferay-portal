@@ -63,7 +63,6 @@ definition {
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with one column"
 	@priority = "4"
 	test CanAddFieldForBlockOneColumn {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -96,21 +95,14 @@ definition {
 			tabName = "Field Tab",
 			blockName = "Block Name",
 			fieldLabelName = "Custom Field",
-			columnsNumber = "1"
-			);
+			columnsNumber = "1");
 
 		CreateObject.assertFieldAddedOnBlock(fieldLabelName = "Custom Field");
-
-		
-
-
-
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with three columns"
 	@priority = "4"
 	test CanAddFieldForBlockThreeColumns {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -143,19 +135,14 @@ definition {
 			tabName = "Field Tab",
 			blockName = "Block Name",
 			fieldLabelName = "Custom Field",
-			columnsNumber = "3"
-			);
+			columnsNumber = "3");
 
 		CreateObject.assertFieldAddedOnBlock(fieldLabelName = "Custom Field");
-
-		
-
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with two columns"
 	@priority = "4"
 	test CanAddFieldForBlockTwoColumns {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -188,12 +175,9 @@ definition {
 			tabName = "Field Tab",
 			blockName = "Block Name",
 			fieldLabelName = "Custom Field",
-			columnsNumber = "2"
-			);
+			columnsNumber = "2");
 
 		CreateObject.assertFieldAddedOnBlock(fieldLabelName = "Custom Field");
-
-
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Tab with Fields Type"
@@ -651,9 +635,9 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Field",
-				fieldType = "String");
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "String");
 
 		Refresh();
 

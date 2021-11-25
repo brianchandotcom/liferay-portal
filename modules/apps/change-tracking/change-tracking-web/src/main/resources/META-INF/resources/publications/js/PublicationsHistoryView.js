@@ -194,7 +194,7 @@ const PublicationsHistoryListItem = ({entry, spritemap, userInfo}) => {
 
 	let title = '';
 
-	if (!entry.hasViewPermission) {
+	if (!entry.hasRevertPermission || !entry.hasViewPermission) {
 		title = Liferay.Language.get(
 			'you-do-not-have-permission-to-revert-this-publication'
 		);
@@ -237,6 +237,7 @@ const PublicationsHistoryListItem = ({entry, spritemap, userInfo}) => {
 					<a
 						className={`${
 							entry.expired ||
+							!entry.hasRevertPermission ||
 							!entry.hasViewPermission ||
 							!publishedValue
 								? 'disabled'
@@ -263,7 +264,7 @@ const PublicationsHistoryTableRow = ({entry, spritemap, userInfo}) => {
 
 	let title = '';
 
-	if (!entry.hasViewPermission) {
+	if (!entry.hasRevertPermission || !entry.hasViewPermission) {
 		title = Liferay.Language.get(
 			'you-do-not-have-permission-to-revert-this-publication'
 		);
@@ -308,6 +309,7 @@ const PublicationsHistoryTableRow = ({entry, spritemap, userInfo}) => {
 					<a
 						className={`${
 							entry.expired ||
+							!entry.hasRevertPermission ||
 							!entry.hasViewPermission ||
 							!publishedValue
 								? 'disabled'

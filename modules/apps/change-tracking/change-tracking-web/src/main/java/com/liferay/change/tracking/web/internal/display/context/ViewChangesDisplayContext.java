@@ -32,6 +32,7 @@ import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAd
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -506,8 +507,11 @@ public class ViewChangesDisplayContext {
 		).put(
 			"revertURL",
 			() -> {
-				if (_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_APPROVED) {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_APPROVED) ||
+					!CTPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						CTActionKeys.ADD_PUBLICATION)) {
 
 					return null;
 				}

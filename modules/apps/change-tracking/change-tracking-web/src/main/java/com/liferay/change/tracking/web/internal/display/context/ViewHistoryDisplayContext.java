@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTProcess;
@@ -22,6 +23,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
@@ -183,6 +185,11 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 					"expired",
 					!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 						ctCollection.getSchemaVersionId())
+				).put(
+					"hasRevertPermission",
+					CTPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						CTActionKeys.ADD_PUBLICATION)
 				).put(
 					"hasViewPermission",
 					_ctCollectionModelResourcePermission.contains(

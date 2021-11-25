@@ -24,6 +24,20 @@
 		}
 	}
 
+	.sidebar-body {
+		.panel .sheet-subtitle {
+			align-items: center;
+			cursor: pointer;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		span svg:hover {
+			color: #6b6c7e !important;
+		}
+	}
+
 	.sidebar-header {
 		align-items: center;
 		border-bottom: 1px solid #e7e7ed;
@@ -34,6 +48,10 @@
 			color: #272833;
 			font-size: 20px;
 			font-weight: 700;
+
+			&:first-letter {
+				text-transform: capitalize;
+			}
 		}
 	}
 }

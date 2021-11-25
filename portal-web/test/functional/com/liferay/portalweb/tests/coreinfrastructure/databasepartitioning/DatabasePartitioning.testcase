@@ -2,6 +2,7 @@
 definition {
 
 	property database.partition.enabled = "true";
+	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Partitioning";
@@ -19,7 +20,6 @@ definition {
 	@priority = "4"
 	test AddMultipleCompanies {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
-		property database.types = "mysql";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddMultipleCompanies";
 
 		PortalInstances.openVirtualInstancesAdmin();
@@ -89,7 +89,6 @@ definition {
 	@priority = "5"
 	test AddNewCompany {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
-		property database.types = "mysql";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
@@ -133,7 +132,6 @@ definition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
-		property database.types = "mysql";
 		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompanyWithCluster";
 
@@ -220,7 +218,6 @@ definition {
 	@priority = "5"
 	test RestartPortal {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
-		property database.types = "mysql";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#RestartPortal";
 
@@ -266,8 +263,6 @@ definition {
 
 	@priority = "4"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
-		property database.types = "mysql";
-		property custom.properties = "database.partition.enabled=true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompaniess";
 
 		task ("Edit Check Interval") {

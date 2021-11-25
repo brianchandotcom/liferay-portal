@@ -12,6 +12,18 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro assertAuthorColumnDisplaysUserName {
+		AssertElementPresent(
+			key_column = "${column}",
+			locator1 = "ObjectPortlet#ENTRY_COLUMN");
+
+		AssertElementPresent(
+			key_entry = "${authorName}",
+			locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			
+	}
+
 	macro assertDeleteEntryButtonNotPresent {
 		AssertElementNotPresent(
 			key_entry = "${entry}",

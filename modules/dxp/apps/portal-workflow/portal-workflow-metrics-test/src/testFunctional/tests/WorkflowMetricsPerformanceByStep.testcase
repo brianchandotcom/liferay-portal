@@ -842,9 +842,85 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test PageDisplaysSameStepsAsCard {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-68930 PageDisplaysSameStepsAsCard pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "update");
+
+		KaleoDesigner.editNodeName(nodeName = "update2");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "review");
+
+		KaleoDesigner.editNodeName(nodeName = "review2");
+
+		Button.click(button = "Update");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		Click(
+			key_stepsNumber = "3",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		AssertElementPresent(
+			key_stepName = "Review",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementPresent(
+			key_stepName = "review2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementPresent(
+			key_stepName = "update2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		Navigator.gotoBack();
+
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#ALL_VERSIONS_DROPDOWN");
+
+		Click(
+			key_versionOption = "1.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#ALL_VERSIONS_DROPDOWN_OPTION");
+
+		Click(
+			key_stepsNumber = "1",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		AssertElementPresent(
+			key_stepName = "Review",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementNotPresent(
+			key_stepName = "review2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementNotPresent(
+			key_stepName = "update2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
 	}
 
 	@description = "LPS-100677 - Verify that the search is an approximate match aka LIKE search type or character by character comparison"

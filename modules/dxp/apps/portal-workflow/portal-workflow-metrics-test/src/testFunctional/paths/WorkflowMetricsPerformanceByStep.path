@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>ALL_VERSIONS_DROPDOWN</td>
+	<td>//button[contains(.,'All Versions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_VERSIONS_DROPDOWN_OPTION</td>
+	<td>//span[contains(@class, 'dropdown-item control-hidden')]//div[contains(.,'${key_versionOption}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATE_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'filter-dropdown-button')])[2]</td>
 	<td></td>

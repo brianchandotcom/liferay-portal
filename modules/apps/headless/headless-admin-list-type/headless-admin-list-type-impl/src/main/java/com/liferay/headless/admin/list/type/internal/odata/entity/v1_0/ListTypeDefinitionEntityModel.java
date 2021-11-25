@@ -26,9 +26,9 @@ import java.util.Map;
 /**
  * @author José Abelenda
  */
-public class ListTypedefinitionEntityModel implements EntityModel {
+public class ListTypeDefinitionEntityModel implements EntityModel {
 
-	public ListTypedefinitionEntityModel() {
+	public ListTypeDefinitionEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new DateTimeEntityField(
 				"dateCreated",

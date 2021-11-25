@@ -2255,7 +2255,7 @@ definition {
 			assetListName = "Depot Dynamic Asset List",
 			depotName = "Test Depot Name");
 
-		for (var assetTitle : list "DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing,DM Document Title In Site") {
+		for (var assetTitle : list "DM Without Autotagging,DM Document Title Sharing,DM Document Title In Site") {
 			AssetPublisherPortlet.viewAssetPG(assetTitle = "${assetTitle}");
 		}
 
@@ -2271,7 +2271,7 @@ definition {
 
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title In Site");
 
-		for (var assetTitle : list "DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing") {
+		for (var assetTitle : list "DM Without Autotagging,DM Document Title Sharing") {
 			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "${assetTitle}");
 		}
 

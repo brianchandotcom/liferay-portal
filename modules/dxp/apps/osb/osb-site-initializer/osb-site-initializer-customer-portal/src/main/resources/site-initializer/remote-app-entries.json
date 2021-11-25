@@ -1,6 +1,8 @@
 [
 	{
-		"cssURLs": "",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
@@ -18,7 +20,9 @@
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-ONBOARDING$]"
 	},
 	{
-		"cssURLs": "",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
@@ -37,7 +41,9 @@
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL-HOME$]"
 	},
 	{
-		"cssURLs": "",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",

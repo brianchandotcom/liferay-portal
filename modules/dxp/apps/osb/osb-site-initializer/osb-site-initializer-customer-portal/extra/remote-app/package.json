@@ -43,7 +43,7 @@
 	"name": "@liferay/site-initializer-customer-portal",
 	"private": true,
 	"scripts": {
-		"build": "react-scripts build",
+		"build": "react-scripts build && ./rename-chunks.sh",
 		"format": "eslint src --ext js",
 		"run-serve": "yarn build && npx serve ./build",
 		"serve": "npx serve ./build",

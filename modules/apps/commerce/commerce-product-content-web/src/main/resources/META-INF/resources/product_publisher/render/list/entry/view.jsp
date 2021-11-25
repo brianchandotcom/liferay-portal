@@ -86,6 +86,7 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 						<commerce-ui:add-to-cart
 							block="<%= true %>"
 							CPCatalogEntry="<%= cpCatalogEntry %>"
+							options='<%= "[]" %>'
 						/>
 					</c:otherwise>
 				</c:choose>

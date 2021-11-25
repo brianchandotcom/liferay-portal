@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -390,8 +389,14 @@ public class PropsUtil {
 
 		// Portal web directory
 
-		String portalWebDir = WebDirDetector.getRootDir(
-			portalShieldedContainerLibDir);
+		String portalWebDir = StringUtil.replace(
+			portalShieldedContainerLibDir, CharPool.BACK_SLASH,
+			CharPool.FORWARD_SLASH);
+
+		if (portalWebDir.endsWith("/WEB-INF/shielded-container-lib/")) {
+			portalWebDir = portalWebDir.substring(
+				0, portalWebDir.length() - 31);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Portal web directory " + portalWebDir);

@@ -1116,12 +1116,58 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify it is not possible to set a layout as default without all the required fields on the first tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSetLayoutDefaultWithoutAllRequiredFieldsOnFirstTab {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141520 CannotSetLayoutDefaultWithoutAllRequiredFieldsOnFirstTab pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field Required",
+			fieldName = "customObjectFieldRequired",
+			fieldType = "String",
+			isRequired = "true",
+			objectName = "CustomObject");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field Not Required",
+			fieldName = "customObjectFieldNotRequired",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "2",
+			fieldLabelName = "Custom Field Not Required",
+			tabName = "Field Tab");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+		Button.clickSave();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "All required object fields must be associated to the first tab of a default object layout");
 	}
 
 	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"

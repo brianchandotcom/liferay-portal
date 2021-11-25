@@ -403,4 +403,7 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 				updateUnsafeFunction)
 		throws E;
 
+	@Override
+	@Transactional()
+	public void updateVariationsPriority();
 }

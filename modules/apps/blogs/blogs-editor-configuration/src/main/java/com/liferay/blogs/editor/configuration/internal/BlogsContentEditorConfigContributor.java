@@ -94,6 +94,10 @@ public class BlogsContentEditorConfigContributor
 					"/blogs/upload_temp_image"
 				).buildString());
 		}
+
+		jsonObject.put("toolbarText", "Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,SourceEditor");
+
+		jsonObject.put("extraPlugins", "itemselector,stylescombo,ballooneditor,videoembed,insertbutton,codemirror");
 	}
 
 	private String _getAllowedContentLists() {

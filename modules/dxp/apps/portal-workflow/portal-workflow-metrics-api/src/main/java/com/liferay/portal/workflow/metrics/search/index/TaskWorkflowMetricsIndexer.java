@@ -18,6 +18,7 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -68,5 +69,10 @@ public interface TaskWorkflowMetricsIndexer {
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		List<Assignment> assignments, long companyId, Date modifiedDate,
 		long taskId, long userId);
+
+	public default Document updateTask(UpdateTaskRequest updateTaskRequest) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
 }

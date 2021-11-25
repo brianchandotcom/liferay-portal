@@ -2666,9 +2666,8 @@ definition {
 	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
 	@priority = "4"
 	test FieldOptionRequired {
-
 		ObjectAdmin.addObjectViaAPI(
-            labelName = "Custom Object",
+			labelName = "Custom Object",
             objectName = "CustomObject",
             pluralLabelName = "Custom Objects");
 
@@ -2691,10 +2690,6 @@ definition {
         ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
 
 		ObjectAdmin.assertNotPossibleAddFieldOnBlockWithoutChooseOptionField();
-
-
-
-
 	}
 
 	@description = "LPS-140097 - Verify that other fields are not deleted when a Relationship field is deleted after a Relationship is deleted"

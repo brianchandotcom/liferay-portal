@@ -608,15 +608,11 @@ definition {
 			tabName = "Field Tab",
 			blockName = "Block Name",
 			fieldLabelName = "Custom Field",
-			columnsNumber = "1"
-			);
+			columnsNumber = "1");
 
 		CreateObject.deleteFieldOnBlock();
-	
+
 		CreateObject.assertFieldNotPresentInBlock(fieldLabelName = "Custom Field");
-		
-
-
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"

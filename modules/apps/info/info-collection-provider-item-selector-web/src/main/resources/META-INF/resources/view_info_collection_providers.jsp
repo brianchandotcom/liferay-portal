@@ -172,6 +172,10 @@ SearchContainer<InfoCollectionProvider<?>> searchContainer = infoCollectionProvi
 			var domElement = target.closest('li');
 
 			if (domElement == null) {
+				domElement = target.closest('dd');
+			}
+
+			if (domElement == null) {
 				domElement = target.closest('tr');
 			}
 

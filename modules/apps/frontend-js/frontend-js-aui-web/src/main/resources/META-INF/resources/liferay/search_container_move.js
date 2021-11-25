@@ -45,7 +45,7 @@ AUI.add(
 
 				rowSelector: {
 					validator: Lang.isString,
-					value: 'li,tr',
+					value: 'dd,li,tr',
 				},
 
 				tooltipClass: {

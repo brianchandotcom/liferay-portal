@@ -21,7 +21,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -408,12 +408,96 @@ definition {
 	}
 
 	@description = "LPS-93726: Validate if, on content set personalized variations, the same content can match different content set variations"
-	@ignore = "true"
 	@priority = "3"
 	test SelectAssetToDifferentVariations {
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		// TODO LPS-93726 SelectAssetToDifferentVariations pending implementation
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
 
+		task ("Create a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With Test User",
+				text = "Test");
+		}
+
+		task ("Create a manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Add a personalized variation to collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "WC WebContent Title",
+				assetType = "Basic Web Content");
+		}
+
+		task ("Select the Web Content Article as item type and Basic Web Content as item subtype and link the web content article to the Collection") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "WC WebContent Title",
+				assetType = "Basic Web Content",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection Test");
+		}
+
+		task ("View web content article matching with Collection for that variation in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+	
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content");
+		}
+
+		task ("Logout and View web content article matching with Collection for default variation in Asset Publisher") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+	
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content");
+		}
 	}
 
 	@description = "LPS-111468: Having the Content recommendation not enabled in Collection, when a visitor that has viewed a content in its display page visits the home page, the asset publisher shows all content (term-related and term-non-related)"
@@ -426,21 +510,170 @@ definition {
 	}
 
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Dynamic Content Sets, he can apply in some portlet (assert publisher) to use"
-	@ignore = "true"
 	@priority = "5"
 	test UseDynamicCollectionAtPortlet {
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		// TODO LPS-93726 UseDynamicCollectionAtPortlet pending implementation
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
 
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create a web content article") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With Test User",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Add a personalized variation to collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
+		}
+
+		task ("Configure asset types to collection") {
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Filter that variation by category") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Select the created Dynamic Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection Test");
+		}
+
+		task ("View web content articles matching with dynamic Collection display in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+	
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content");
+		}
 	}
 
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Manual Content Sets, he can apply in some portlet (assert publisher) to use"
-	@ignore = "true"
 	@priority = "5"
 	test UseManualCollectionAtPortlet {
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		// TODO LPS-93726 UseManualCollectionAtPortlet pending implementation
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
 
+		task ("Create a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With Test User",
+				text = "Test");
+		}
+
+		task ("Create a manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Add a personalized variation to collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
+		}
+
+		task ("Select the Web Content Article as item type and Basic Web Content as item subtype and link the web content article to the Collection") {
+			AssetListsAdmin.selectAsset(
+				assetName = "WC WebContent Title",
+				assetType = "Basic Web Content",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection Test");
+		}
+
+		task ("View web content articles matching with dynamic Collection display in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+	
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content");
+		}
 	}
 
 	@description = "LPS-86283: Validate if, the name of the variation is provided by the name of the segment	"

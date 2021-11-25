@@ -221,6 +221,10 @@ definition {
 	}
 
 	macro configureItemTypeInManualCollection {
+		if (isSet(variationName)) {
+			Navigator.gotoNavTab(navTab = "${variationName}");
+		}
+
 		if (isSet(itemType)) {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",

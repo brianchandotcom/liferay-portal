@@ -85,6 +85,112 @@ definition {
 			webContentTitle = "WC WebContent Título editar");
 	}
 
+	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields."
+	@priority = "5"
+	test CanTranslateCustomizedWCWithTextFields {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text Box",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldType = "Multiple Lines",
+			webContentText = "This is a Text Box field",
+			webContentTextFieldLabel = "Text Box");
+
+		WebContent.addWithStructureCP(
+			description = "WC WebContent Description",
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			fieldType = "Multiple Lines",
+			webContentText = "This is a Text Box field",
+			webContentTextFieldLabel = "Text Box");
+
+		Translations.viewBaseFields(
+			webContentDescription = "WC WebContent Description",
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentDescription = "WC WebContent Descripción",
+			webContentText = "Mensaje de texto",
+			webContentTextBox = "Este es un cuadro de texto.",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewTargetFields(
+			webContentDescription = "WC WebContent Descripción",
+			webContentText = "Mensaje de texto",
+			webContentTextBox = "Este es un cuadro de texto.",
+			webContentTitle = "WC WebContent Título");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewWithStructureCP(
+			description = "WC WebContent Descripción",
+			webContentLocaleFieldLabel = "es-ES",
+			webContentText = "Mensaje de texto",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleTranslated = "WC WebContent Título");
+
+		WebContent.viewWithStructureCP(
+			fieldType = "Multiple Lines",
+			predefinedValue = "true",
+			webContentText = "Este es un cuadro de texto.",
+			webContentTextFieldLabel = "Text Box");
+	}
+
 	@description = "This ensures that the translator can select which target language she wants to translate."
 	@priority = "5"
 	@refactorneeded

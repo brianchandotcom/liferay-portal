@@ -90,7 +90,7 @@ public class OrderItemUtil {
 				commerceOrderItemService.importCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
-					GetterUtil.getString(orderItem.getUnitOfMeasure(), "pc"),
+					GetterUtil.getString(orderItem.getUnitOfMeasure()),
 					decimalQuantity,
 					GetterUtil.get(orderItem.getShippedQuantity(), 0),
 					serviceContext);

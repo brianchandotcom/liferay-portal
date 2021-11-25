@@ -14,6 +14,11 @@
 
 package com.liferay.frontend.taglib.clay.data.set.view.table;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Marco Leo
  */
@@ -81,6 +86,43 @@ public class ClayTableSchemaField {
 
 	public void setSortingOrder(SortingOrder sortingOrder) {
 		_sortingOrder = sortingOrder;
+	}
+
+	public JSONObject toJSONObject() {
+		return JSONUtil.put(
+			"actionId", getActionId()
+		).put(
+			"contentRenderer", getContentRenderer()
+		).put(
+			"contentRendererModuleURL", getContentRendererModuleURL()
+		).put(
+			"expand", isExpand()
+		).put(
+			"fieldName",
+			() -> {
+				String fieldName = getFieldName();
+
+				if (fieldName.contains(StringPool.PERIOD)) {
+					return StringUtil.split(fieldName, StringPool.PERIOD);
+				}
+
+				return fieldName;
+			}
+		).put(
+			"sortable", isSortable()
+		).put(
+			"sortingOrder",
+			() -> {
+				ClayTableSchemaField.SortingOrder sortingOrder =
+					getSortingOrder();
+
+				if (sortingOrder != null) {
+					return StringUtil.toLowerCase(sortingOrder.toString());
+				}
+
+				return null;
+			}
+		);
 	}
 
 	public enum SortingOrder {

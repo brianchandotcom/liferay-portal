@@ -1,0 +1,76 @@
+{
+	"description_i18n": {
+		"en_US": "Boost contents in a category for user accounts created withing the given time"
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": "${configuration.boost}",
+											"value": "${configuration.asset_category_id}"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"parameterName": "${user.create_date}",
+								"values": [
+									"${time.current_date|modifier=-${configuration.time_range},dateFormat=yyyyMMdd}",
+									"${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						},
+						{
+							"defaultValue": 30,
+							"label": "Time range",
+							"name": "time_range",
+							"type": "number",
+							"typeOptions": {
+								"unit": "days",
+								"unitSuffix": "d"
+							}
+						},
+						{
+							"defaultValue": 20,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents in a Category for New User Accounts"
+	}
+}

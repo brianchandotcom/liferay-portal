@@ -1,0 +1,54 @@
+{
+	"description_i18n": {
+		"en_US": "Boost contents having at least one of the given tags"
+	},
+	"elementDefinition": {
+		"category": "boost",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetTagNames.raw": "${configuration.asset_tags}",
+										"boost": "${configuration.boost}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Tags",
+							"name": "asset_tags",
+							"type": "multiselect"
+						},
+						{
+							"defaultValue": 5,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Tagged Contents"
+	}
+}

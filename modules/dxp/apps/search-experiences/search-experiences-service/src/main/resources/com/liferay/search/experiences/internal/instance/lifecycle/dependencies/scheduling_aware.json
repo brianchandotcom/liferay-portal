@@ -1,0 +1,92 @@
+{
+	"description_i18n": {
+		"en_US": "Show only contents with a valid display date"
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "displayDate"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"range": {
+																"displayDate_sortable": {
+																	"from": "-9223372036854775808",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "${time.current_date|dateFormat=timestamp}"
+																}
+															}
+														}
+													],
+													"must_not": [
+														{
+															"exists": {
+																"field": "expirationDate"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"range": {
+																"displayDate_sortable": {
+																	"from": "-9223372036854775808",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "${time.current_date|dateFormat=timestamp}"
+																}
+															}
+														},
+														{
+															"range": {
+																"expirationDate_sortable": {
+																	"from": "${time.current_date|dateFormat=timestamp}",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "9223372036854775807"
+																}
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "filter"
+	},
+	"title_i18n": {
+		"en_US": "Scheduling Aware"
+	}
+}

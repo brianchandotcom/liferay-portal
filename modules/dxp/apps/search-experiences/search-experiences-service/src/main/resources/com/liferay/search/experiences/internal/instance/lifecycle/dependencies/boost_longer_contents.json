@@ -1,0 +1,113 @@
+{
+	"description_i18n": {
+		"en_US": "Boost contents with longer content translation for the current language"
+	},
+	"elementDefinition": {
+		"category": "boost",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": "${configuration.boost}",
+										"field_value_factor": {
+											"factor": "${configuration.factor}",
+											"field": "content${context.language_id}_length_sortable",
+											"missing": 1,
+											"modifier": "${configuration.modifier}"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"defaultValue": 30,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						},
+						{
+							"defaultValue": 1.5,
+							"label": "Factor",
+							"name": "factor",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						},
+						{
+							"defaultValue": "ln",
+							"label": "Modifier",
+							"name": "modifier",
+							"type": "select",
+							"typeOptions": {
+								"options": [
+									{
+										"label": "None",
+										"value": "none"
+									},
+									{
+										"label": "log",
+										"value": "log"
+									},
+									{
+										"label": "log1p",
+										"value": "log1p"
+									},
+									{
+										"label": "log2p",
+										"value": "log2p"
+									},
+									{
+										"label": "ln",
+										"value": "ln"
+									},
+									{
+										"label": "ln1p",
+										"value": "ln1p"
+									},
+									{
+										"label": "ln2p",
+										"value": "ln2p"
+									},
+									{
+										"label": "Square",
+										"value": "square"
+									},
+									{
+										"label": "sqrt",
+										"value": "sqrt"
+									},
+									{
+										"label": "Reciprocal",
+										"value": "reciprocal"
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Longer Contents"
+	}
+}

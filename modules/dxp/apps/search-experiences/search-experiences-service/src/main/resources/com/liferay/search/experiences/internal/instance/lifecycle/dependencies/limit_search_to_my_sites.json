@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to the current site."
+		"en_US": "Limit search scope to the sites user is member of"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -13,8 +13,8 @@
 								"context": "query",
 								"occur": "filter",
 								"query": {
-									"term": {
-										"scopeGroupId": "${context.scope_group_id}"
+									"terms": {
+										"scopeGroupId": "${user.group_ids}"
 									}
 								}
 							}
@@ -26,6 +26,6 @@
 		"icon": "filter"
 	},
 	"title_i18n": {
-		"en_US": "Limit Search to the Current Site"
+		"en_US": "Limit Search to My Sites"
 	}
 }

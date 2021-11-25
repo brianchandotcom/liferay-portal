@@ -1,0 +1,44 @@
+{
+	"description_i18n": {
+		"en_US": "Limit search scope to the given sites"
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupId": "${configuration.scope_group_ids}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "filter",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Group IDs",
+							"name": "scope_group_ids",
+							"type": "multiselect"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Limit Search to These Sites"
+	}
+}

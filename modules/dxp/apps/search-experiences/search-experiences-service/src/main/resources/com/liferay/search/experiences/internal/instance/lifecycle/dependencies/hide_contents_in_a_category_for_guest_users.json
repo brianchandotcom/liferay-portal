@@ -1,0 +1,58 @@
+{
+	"description_i18n": {
+		"en_US": "Hide contents in a category if user is not logged in"
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": "${configuration.asset_category_id}"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "${user.is_signed_in}",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "hidden",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Hide Contents in a Category for Guest Users"
+	}
+}

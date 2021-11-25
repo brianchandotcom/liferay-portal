@@ -1,0 +1,52 @@
+{
+	"description_i18n": {
+		"en_US": "Hide contents in a category"
+	},
+	"elementDefinition": {
+		"category": "hide",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": "${configuration.asset_category_id}"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "hidden",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Hide Contents in a Category"
+	}
+}

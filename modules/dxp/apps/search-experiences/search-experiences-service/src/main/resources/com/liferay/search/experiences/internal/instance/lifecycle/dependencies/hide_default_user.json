@@ -1,0 +1,54 @@
+{
+	"description_i18n": {
+		"en_US": "Hide the instance default user account from being searched"
+	},
+	"elementDefinition": {
+		"category": "hide",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"term": {
+																"entryClassName": "com.liferay.portal.kernel.model.User"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"defaultUser": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "hidden"
+	},
+	"title_i18n": {
+		"en_US": "Hide Default User"
+	}
+}

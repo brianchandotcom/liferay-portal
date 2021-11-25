@@ -1,0 +1,62 @@
+{
+	"description_i18n": {
+		"en_US": "Boost Contents in a category, if user is not logged in"
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": "${configuration.boost}",
+											"value": "${configuration.asset_category_id}"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "${user.is_signed_in}",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						},
+						{
+							"defaultValue": 20,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents in a Category for Guest Users"
+	}
+}

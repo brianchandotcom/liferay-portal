@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to the current site."
+		"en_US": "Limit search to contents that have been published"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -14,7 +14,7 @@
 								"occur": "filter",
 								"query": {
 									"term": {
-										"scopeGroupId": "${context.scope_group_id}"
+										"status": 0
 									}
 								}
 							}
@@ -26,6 +26,6 @@
 		"icon": "filter"
 	},
 	"title_i18n": {
-		"en_US": "Limit Search to the Current Site"
+		"en_US": "Limit Search to Published Contents"
 	}
 }

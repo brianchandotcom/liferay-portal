@@ -1,0 +1,60 @@
+{
+	"description_i18n": {
+		"en_US": "Show only published contents on live sites, published and staged contents on staging sites"
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "stagingGroup"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"stagingGroup": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "${context.is_staging_group}",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "filter"
+	},
+	"title_i18n": {
+		"en_US": "Staging Aware"
+	}
+}

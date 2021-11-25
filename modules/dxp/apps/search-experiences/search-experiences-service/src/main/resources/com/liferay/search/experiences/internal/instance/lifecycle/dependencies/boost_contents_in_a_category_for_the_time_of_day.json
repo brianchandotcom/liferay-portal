@@ -1,0 +1,87 @@
+{
+	"description_i18n": {
+		"en_US": "Boost contents in a category based on the time of day"
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": "${configuration.boost}",
+											"value": "${configuration.asset_category_id}"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "${time.time_of_day}",
+								"value": "${configuration.time_of_day}"
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						},
+						{
+							"label": "Time of Day",
+							"name": "time_of_day",
+							"type": "select",
+							"typeOptions": {
+								"options": [
+									{
+										"label": "Morning (4am - 12am)",
+										"value": "morning"
+									},
+									{
+										"label": "Afternoon (12pm - 5pm)",
+										"value": "afternoon"
+									},
+									{
+										"label": "Evening (5pm - 8pm)",
+										"value": "evening"
+									},
+									{
+										"label": "Night (8pm - 4am)",
+										"value": "night"
+									}
+								]
+							}
+						},
+						{
+							"defaultValue": 20,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents in a Category for the Time of Day"
+	}
+}

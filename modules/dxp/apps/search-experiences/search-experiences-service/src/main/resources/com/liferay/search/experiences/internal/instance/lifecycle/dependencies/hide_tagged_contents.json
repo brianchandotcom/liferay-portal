@@ -1,0 +1,53 @@
+{
+	"description_i18n": {
+		"en_US": "Hide contents tagged with"
+	},
+	"elementDefinition": {
+		"category": "hide",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetTagNames.raw": {
+														"value": "${configuration.asset_tag}"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "hidden",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"helpText": "Add asset tag value",
+							"label": "Asset Tag",
+							"name": "asset_tag",
+							"type": "text"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Hide Tagged Contents"
+	}
+}

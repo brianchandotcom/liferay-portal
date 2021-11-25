@@ -1,0 +1,61 @@
+{
+	"description_i18n": {
+		"en_US": "Show Web Contents in a category higher in the results, if searchphrase contains any of the given keywords"
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": "${configuration.boost}",
+											"value": "${configuration.asset_category_id}"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						},
+						{
+							"label": "Keywords",
+							"name": "keywords",
+							"type": "multiselect"
+						},
+						{
+							"defaultValue": 10,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents in a Category by Keyword Match"
+	}
+}

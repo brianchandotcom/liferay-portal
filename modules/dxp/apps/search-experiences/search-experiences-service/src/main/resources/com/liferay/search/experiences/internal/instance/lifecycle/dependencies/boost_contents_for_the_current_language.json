@@ -1,0 +1,65 @@
+{
+	"description_i18n": {
+		"en_US": "Boost contents having the current session language as the default language"
+	},
+	"elementDefinition": {
+		"category": "boost",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"bool": {
+										"must": [
+											{
+												"terms": {
+													"entryClassName": [
+														"com.liferay.portal.kernel.model.Layout",
+														"com.liferay.journal.model.JournalArticle"
+													]
+												}
+											},
+											{
+												"term": {
+													"defaultLanguageId": {
+														"boost": "${configuration.boost}",
+														"value": "${context.language_id}"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"defaultValue": 20,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents for the Current Language"
+	}
+}

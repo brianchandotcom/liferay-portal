@@ -1,0 +1,88 @@
+{
+	"description_i18n": {
+		"en_US": "Enable searching using the Lucene syntax"
+	},
+	"elementDefinition": {
+		"category": "match",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "must",
+								"query": {
+									"simple_query_string": {
+										"boost": "${configuration.boost}",
+										"default_operator": "${configuration.operator}",
+										"fields": "${configuration.fields}",
+										"query": "${keywords}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "picture",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"defaultValue": [
+								{
+									"boost": "2",
+									"field": "localized_title",
+									"locale": "${context.language_id}"
+								},
+								{
+									"boost": "2",
+									"field": "content",
+									"locale": "${context.language_id}"
+								}
+							],
+							"label": "Fields",
+							"name": "fields",
+							"type": "fieldMappingList",
+							"typeOptions": {
+								"boost": true
+							}
+						},
+						{
+							"label": "Operator",
+							"name": "operator",
+							"type": "select",
+							"typeOptions": {
+								"options": [
+									{
+										"label": "OR",
+										"value": "or"
+									},
+									{
+										"label": "AND",
+										"value": "and"
+									}
+								]
+							}
+						},
+						{
+							"defaultValue": 1,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Search with the Lucene Syntax"
+	}
+}

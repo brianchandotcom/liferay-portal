@@ -1,0 +1,49 @@
+{
+	"description_i18n": {
+		"en_US": "Filter results by one or multiple terms. At least one has to match"
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"${configuration.field}": "${configuration.values}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "filter",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Field",
+							"name": "field",
+							"type": "fieldMapping"
+						},
+						{
+							"label": "Values",
+							"name": "values",
+							"type": "multiselect"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Filter by Exact Terms Match"
+	}
+}

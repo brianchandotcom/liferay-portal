@@ -1,0 +1,65 @@
+{
+	"description_i18n": {
+		"en_US": "Show selected Web Contents higher in the results, if given keywords exist in the searchphrase"
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"articleId_String_sortable": "${configuration.article_ids}",
+										"boost": "${configuration.boost}"
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "${keywords}",
+								"value": "${configuration.values}"
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Article IDs",
+							"name": "article_ids",
+							"type": "multiselect"
+						},
+						{
+							"label": "Keywords",
+							"name": "values",
+							"type": "multiselect"
+						},
+						{
+							"defaultValue": 20,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Web Contents by Keyword Match"
+	}
+}

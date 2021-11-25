@@ -1,0 +1,54 @@
+{
+	"description_i18n": {
+		"en_US": "Do not search for comments"
+	},
+	"elementDefinition": {
+		"category": "hide",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "discussion"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"discussion": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "hidden"
+	},
+	"title_i18n": {
+		"en_US": "Hide Comments"
+	}
+}

@@ -1,0 +1,54 @@
+{
+	"description_i18n": {
+		"en_US": "Limit search to contents created within the given time"
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"range": {
+										"createDate": {
+											"from": "${configuration.start_date}",
+											"include_lower": true,
+											"include_upper": true,
+											"to": "${configuration.end_date}"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "filter",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Create Date: From",
+							"name": "start_date",
+							"type": "date"
+						},
+						{
+							"label": "Create Date: To",
+							"name": "end_date",
+							"type": "date"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Limit Search to Contents Created Within a Period of Time"
+	}
+}

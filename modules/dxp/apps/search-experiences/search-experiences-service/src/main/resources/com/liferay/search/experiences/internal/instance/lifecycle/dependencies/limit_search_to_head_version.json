@@ -1,0 +1,65 @@
+{
+	"description_i18n": {
+		"en_US": "Show only the latest HEAD version of Web Content articles"
+	},
+	"elementDefinition": {
+		"category": "filter",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"term": {
+																"entryClassName": {
+																	"value": "com.liferay.journal.model.JournalArticle"
+																}
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"entryClassName": {
+																	"value": "com.liferay.journal.model.JournalArticle"
+																}
+															}
+														},
+														{
+															"term": {
+																"head": {
+																	"value": true
+																}
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "filter"
+	},
+	"title_i18n": {
+		"en_US": "Limit Search to HEAD Version"
+	}
+}

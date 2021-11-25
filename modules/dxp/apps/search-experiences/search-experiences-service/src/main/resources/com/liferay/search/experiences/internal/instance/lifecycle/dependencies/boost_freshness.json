@@ -1,0 +1,89 @@
+{
+	"description_i18n": {
+		"en_US": "Give a gaussian boost to contents modified recently"
+	},
+	"elementDefinition": {
+		"category": "boost",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": "${configuration.boost}",
+										"gauss": {
+											"modified": {
+												"decay": "${configuration.decay}",
+												"offset": "${configuration.offset}",
+												"origin": "${time.current_date|dateFormat=yyyyMMddHHmmss}",
+												"scale": "${configuration.scale}"
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"defaultValue": 0.5,
+							"label": "Decay",
+							"name": "decay",
+							"type": "slider",
+							"typeOptions": {
+								"max": 0.99,
+								"min": 0.01,
+								"step": 0.01
+							}
+						},
+						{
+							"defaultValue": 0,
+							"label": "Offset",
+							"name": "offset",
+							"type": "number",
+							"typeOptions": {
+								"min": 0,
+								"unit": "days",
+								"unitSuffix": "d"
+							}
+						},
+						{
+							"defaultValue": 10,
+							"label": "Scale",
+							"name": "scale",
+							"type": "number",
+							"typeOptions": {
+								"min": 0,
+								"unit": "days",
+								"unitSuffix": "d"
+							}
+						},
+						{
+							"defaultValue": 2,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Freshness"
+	}
+}

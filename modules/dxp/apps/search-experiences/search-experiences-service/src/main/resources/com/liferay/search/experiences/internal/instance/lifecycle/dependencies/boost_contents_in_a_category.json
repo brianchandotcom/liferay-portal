@@ -1,0 +1,54 @@
+{
+	"description_i18n": {
+		"en_US": "Boost and promote contents in a given category"
+	},
+	"elementDefinition": {
+		"category": "boost",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetCategoryIds": "${configuration.asset_category_ids}",
+										"boost": "${configuration.boost}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category IDs",
+							"name": "asset_category_ids",
+							"type": "multiselect"
+						},
+						{
+							"defaultValue": 10,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents in a Category"
+	}
+}

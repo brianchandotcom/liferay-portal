@@ -2215,9 +2215,7 @@ definition {
 			depotName = "Test Depot Name");
 
 		for (var assetTitle : list "DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing,DM Document Title In Site") {
-			AssertVisible(
-				key_assetTitle = "${assetTitle}",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "${assetTitle}");
 		}
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");

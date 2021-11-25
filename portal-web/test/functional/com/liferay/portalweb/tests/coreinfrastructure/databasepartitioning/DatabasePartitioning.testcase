@@ -312,22 +312,7 @@ definition {
 				webContentContent = "WC WebContent Content New Company",
 				webContentTitle = "WC WebContent Title New Company");
 
-			var displayDateDay = DateUtil.getCurrentDate();
-			var displayMonth = DateUtil.getCurrentMonth();
-			var displayDateYear = DateUtil.getCurrentYear();
-			var displayDate = "${displayMonth}/${displayDateDay}/${displayDateYear}";
-
-			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
-			var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
-			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
-			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
-			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-			var displayDateMinuteFuture = ${displayDateMinute} + 8;
-			var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
-
-			WebContent.editDisplayDate(
-				displayDate = "${displayDate}",
-				displayTime = "${displayTime}");
+			WebContent.increaseDisplayDate(minuteIncrease = "8");
 
 			PortletEntry.publish();
 		}
@@ -370,22 +355,7 @@ definition {
 				webContentContent = "WC WebContent Content Default Company",
 				webContentTitle = "WC WebContent Title Default Company");
 
-			var displayDateDay = DateUtil.getCurrentDate();
-			var displayMonth = DateUtil.getCurrentMonth();
-			var displayDateYear = DateUtil.getCurrentYear();
-			var displayDate = "${displayMonth}/${displayDateDay}/${displayDateYear}";
-
-			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
-			var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
-			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
-			var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
-			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-			var displayDateMinuteFuture = ${displayDateMinute} + 3;
-			var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
-
-			WebContent.editDisplayDate(
-				displayDate = "${displayDate}",
-				displayTime = "${displayTime}");
+			WebContent.increaseDisplayDate(minuteIncrease = "3");
 
 			PortletEntry.publish();
 		}

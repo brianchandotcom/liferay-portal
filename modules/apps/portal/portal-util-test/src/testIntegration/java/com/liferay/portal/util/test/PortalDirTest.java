@@ -1,0 +1,58 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.util.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Dante Wang
+ */
+@RunWith(Arquillian.class)
+public class PortalDirTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testPortalDir() {
+		File portalWebInfDir = new File(
+			PropsValues.LIFERAY_WEB_PORTAL_DIR, "WEB-INF");
+
+		Assert.assertTrue(
+			"LIFERAY_WEB_PORTAL_DIR should be parent dir for \"WEB-INF\": " +
+				PropsValues.LIFERAY_WEB_PORTAL_DIR,
+			portalWebInfDir.isDirectory());
+
+		Assert.assertTrue(
+			"LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR should point to " +
+				"\"WEB-INF/shielded-container-lib/\": " +
+					PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
+			PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR.endsWith(
+				"WEB-INF/shielded-container-lib/"));
+	}
+
+}

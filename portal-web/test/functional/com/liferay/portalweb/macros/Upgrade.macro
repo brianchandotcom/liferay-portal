@@ -2219,6 +2219,26 @@ definition {
 				key_assetTitle = "${assetTitle}",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE");
 		}
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.removeScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			scopeName = "Current Asset Library");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title In Site");
+
+		for (var assetTitle : list "DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing") {
+			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "${assetTitle}");
+		}
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Dynamic Asset List");
 	}
 
 	macro validateDepotDMAndType {

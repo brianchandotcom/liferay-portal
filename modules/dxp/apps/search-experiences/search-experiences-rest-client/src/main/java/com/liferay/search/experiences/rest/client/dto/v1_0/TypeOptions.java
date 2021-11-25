@@ -55,6 +55,27 @@ public class TypeOptions implements Cloneable, Serializable {
 
 	protected Boolean boost;
 
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	public void setFormat(
+		UnsafeSupplier<String, Exception> formatUnsafeSupplier) {
+
+		try {
+			format = formatUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String format;
+
 	public Object getMax() {
 		return max;
 	}

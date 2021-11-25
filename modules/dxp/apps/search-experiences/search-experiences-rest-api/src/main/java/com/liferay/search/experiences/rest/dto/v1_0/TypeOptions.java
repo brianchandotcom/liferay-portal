@@ -86,6 +86,34 @@ public class TypeOptions implements Serializable {
 	protected Boolean boost;
 
 	@Schema
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	@JsonIgnore
+	public void setFormat(
+		UnsafeSupplier<String, Exception> formatUnsafeSupplier) {
+
+		try {
+			format = formatUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String format;
+
+	@Schema
 	@Valid
 	public Object getMax() {
 		return max;
@@ -340,6 +368,20 @@ public class TypeOptions implements Serializable {
 			sb.append("\"boost\": ");
 
 			sb.append(boost);
+		}
+
+		if (format != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"format\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(format));
+
+			sb.append("\"");
 		}
 
 		if (max != null) {

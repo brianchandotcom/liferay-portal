@@ -152,6 +152,48 @@ public class Range implements Cloneable, Serializable {
 
 	protected String parameterName;
 
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+	public void setValue(
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object value;
+
+	public Object[] getValues() {
+		return values;
+	}
+
+	public void setValues(Object[] values) {
+		this.values = values;
+	}
+
+	public void setValues(
+		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
+
+		try {
+			values = valuesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object[] values;
+
 	@Override
 	public Range clone() throws CloneNotSupportedException {
 		return (Range)super.clone();

@@ -137,6 +137,44 @@ public class RangeSerDes {
 			sb.append("\"");
 		}
 
+		if (range.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(range.getValue()));
+
+			sb.append("\"");
+		}
+
+		if (range.getValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"values\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < range.getValues().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(range.getValues()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < range.getValues().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -197,6 +235,20 @@ public class RangeSerDes {
 			map.put("parameterName", String.valueOf(range.getParameterName()));
 		}
 
+		if (range.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(range.getValue()));
+		}
+
+		if (range.getValues() == null) {
+			map.put("values", null);
+		}
+		else {
+			map.put("values", String.valueOf(range.getValues()));
+		}
+
 		return map;
 	}
 
@@ -245,6 +297,16 @@ public class RangeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "parameterName")) {
 				if (jsonParserFieldValue != null) {
 					range.setParameterName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					range.setValue((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "values")) {
+				if (jsonParserFieldValue != null) {
+					range.setValues((Object[])jsonParserFieldValue);
 				}
 			}
 		}

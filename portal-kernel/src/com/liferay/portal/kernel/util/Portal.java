@@ -873,8 +873,6 @@ public interface Portal {
 	public PortalInetSocketAddressEventListener[]
 		getPortalInetSocketAddressEventListeners();
 
-	public String getPortalLibDir();
-
 	public InetAddress getPortalLocalInetAddress(boolean secure);
 
 	public int getPortalLocalPort(boolean secure);

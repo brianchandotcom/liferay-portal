@@ -33,8 +33,40 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanChooseEspecifcVersionOnPage {
+		Workflow.openWorkflowListView();
 
-		// TODO LRQA-68933 CanChooseEspecifcVersionOnPage pending implementation
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		Workflow.updateDefinition(workflowDefinitionTitle = "Single Approver Updated");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.clickUpdate();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Update");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepTooltip();
+
+		WorkflowMetricsPerformanceByStep.clickViewAllSteps(
+			stepsNumber = "1",
+			valueSteps = "View All Steps (1)");
+
+		Click(
+			key_dateRange = "Process Version",
+			key_title = "",
+			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+
+		AssertElementPresent(
+			key_dateRange = "1.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dateRange = "2.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dateRange = "3.0",
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 
 	}
 

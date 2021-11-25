@@ -162,7 +162,7 @@ definition {
 		task ("Configure OTP failed attempts allowed and retry time out") {
 			MultiFactorAuthentication.emailOTPConfiguration(
 				failedAttemptsAllowed = "1",
-				retryTimeout = "5");
+				retryTimeout = "10");
 		}
 
 		task ("Sign out and login") {
@@ -177,27 +177,16 @@ definition {
 			MultiFactorAuthentication.sendOTPEmailPG();
 		}
 
-		task ("Verify password test is not valid for test test") {
-			MultiFactorAuthentication.verifyOTP(
-				portalURL = "${portalURL}",
-				recipient = "test test",
-				userEmailAddress = "test@liferay.com",
-				userPassword = "test",
-				validOTP = "false");
+		task ("Enter wrong password to reached the maximum allowed failed attempt") {
+			MultiFactorAuthentication.verifyOTP(validOTP = "false");
 
-			AssertElementPresent(
-				key_fieldName = "emailOTPSentSubject",
-				locator1 = "Message#ERROR");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_2",
+				value1 = "You have reached the maximum allowed failed attempts. Please retry again in 10 seconds.");
 		}
 
-		task ("Verify password test is valid for Test test") {
-			Pause(locator1 = "5000");
-
-			MultiFactorAuthentication.verifyOTP(
-				portalURL = "${portalURL}",
-				recipient = "Test Test",
-				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+		task ("Assert user cannot login portal before retry time out") {
+			AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SUBMIT_EMAIL_BUTTON_DISABLED");
 		}
 	}
 

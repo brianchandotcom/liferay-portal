@@ -71,6 +71,21 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
+		if (build.isFromArchive()) {
+			try {
+				JenkinsResultsParserUtil.write(
+					buildDatabaseFile,
+					JenkinsResultsParserUtil.toString(
+						build.getBuildURL() + "/build-database.json"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to write build-database.json", ioException);
+			}
+
+			return;
+		}
+
 		String distNodes = System.getenv("DIST_NODES");
 		String distPath = System.getenv("DIST_PATH");
 

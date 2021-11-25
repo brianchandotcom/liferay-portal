@@ -68,7 +68,6 @@ definition {
 
 	macro assertToggleCollapsibleChecked {
 		AssertChecked.assertCheckedNotVisible(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
-		
 	}
 
 	macro assertToggleMandatory {
@@ -81,7 +80,6 @@ definition {
 
 	macro checkToggleCollapsible {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
-
 	}
 
 	macro checkToggleInactive {

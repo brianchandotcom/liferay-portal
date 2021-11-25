@@ -60,6 +60,7 @@ public class SXPElementDTOConverter
 
 		return new SXPElement() {
 			{
+				createDate = sxpElement.getCreateDate();
 				description = sxpElement.getDescription(
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
@@ -68,12 +69,14 @@ public class SXPElementDTOConverter
 				elementDefinition = ElementDefinitionUtil.toElementDefinition(
 					sxpElement.getElementDefinitionJSON());
 				id = sxpElement.getSXPElementId();
+				modifiedDate = sxpElement.getModifiedDate();
 				readOnly = sxpElement.getReadOnly();
 				title = sxpElement.getTitle(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpElement.getTitleMap());
 				type = sxpElement.getType();
+				userName = sxpElement.getUserName();
 			}
 		};
 	}

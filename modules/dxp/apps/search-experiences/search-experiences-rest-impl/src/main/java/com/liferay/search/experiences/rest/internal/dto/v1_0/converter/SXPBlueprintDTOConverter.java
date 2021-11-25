@@ -63,6 +63,7 @@ public class SXPBlueprintDTOConverter
 			{
 				configuration = ConfigurationUtil.toConfiguration(
 					sxpBlueprint.getConfigurationJSON());
+				createDate = sxpBlueprint.getCreateDate();
 				description = sxpBlueprint.getDescription(
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
@@ -71,10 +72,12 @@ public class SXPBlueprintDTOConverter
 				elementInstances = ElementInstanceUtil.toElementInstances(
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
+				modifiedDate = sxpBlueprint.getModifiedDate();
 				title = sxpBlueprint.getTitle(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getTitleMap());
+				userName = sxpBlueprint.getUserName();
 			}
 		};
 	}
@@ -87,15 +90,18 @@ public class SXPBlueprintDTOConverter
 			{
 				configuration = ConfigurationUtil.toConfiguration(
 					sxpBlueprint.getConfigurationJSON());
+				createDate = sxpBlueprint.getCreateDate();
 				description = sxpBlueprint.getDescription();
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpBlueprint.getDescriptionMap());
 				elementInstances = ElementInstanceUtil.toElementInstances(
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
+				modifiedDate = sxpBlueprint.getModifiedDate();
 				title = sxpBlueprint.getTitle();
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpBlueprint.getTitleMap());
+				userName = sxpBlueprint.getUserName();
 			}
 		};
 	}

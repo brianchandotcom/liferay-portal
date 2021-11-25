@@ -762,6 +762,22 @@ public abstract class TopLevelBuild extends BaseBuild {
 	protected void archiveJSON() {
 		super.archiveJSON();
 
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
+
+		try {
+			JSONObject buildDatabaseJSONObject = new JSONObject(
+				JenkinsResultsParserUtil.read(
+					buildDatabase.getBuildDatabaseFile()));
+
+			writeArchiveFile(
+				buildDatabaseJSONObject.toString(4),
+				getArchivePath() + "/build-database.json");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to archive build database file", ioException);
+		}
+
 		try {
 			Properties buildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();

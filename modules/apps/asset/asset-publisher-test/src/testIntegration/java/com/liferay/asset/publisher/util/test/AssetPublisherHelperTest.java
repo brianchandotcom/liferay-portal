@@ -533,7 +533,7 @@ public class AssetPublisherHelperTest {
 		AssetTestUtil.addTag(_firstGroup.getGroupId(), assetTagName1);
 		serviceContext.setAssetTagNames(new String[] {assetTagName1});
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalTestUtil.addArticle(
 			_firstGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
@@ -566,10 +566,12 @@ public class AssetPublisherHelperTest {
 
 		long journalArticleClassNameID =
 			journalArticleClassName.getClassNameId();
+
 		assetEntryQuery.setClassNameIds(new long[] {journalArticleClassNameID});
 
 		long[] tagids = assetEntryQuery.getAllTagIds();
-		Assert.assertEquals(1, tagids.length);
+
+		Assert.assertTrue(tagids.length > 0);
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -585,7 +587,7 @@ public class AssetPublisherHelperTest {
 				_firstGroup.getGroupId(), TestPropsValues.getUserId(),
 				assetEntryQuery.getClassNameIds(), null);
 
-		Assert.assertEquals(0, assetEntryResults.size());
+		Assert.assertTrue(assetEntryResults.isEmpty());
 	}
 
 	protected PortletPreferences getAssetPublisherPortletPreferences(

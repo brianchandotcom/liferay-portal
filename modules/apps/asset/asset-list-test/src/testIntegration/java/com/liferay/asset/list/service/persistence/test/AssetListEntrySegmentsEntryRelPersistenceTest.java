@@ -280,6 +280,21 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_S_C() throws Exception {
+		_persistence.countByA_S_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByA_S_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByA_S_CArrayable() throws Exception {
+		_persistence.countByA_S_C(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetListEntrySegmentsEntryRel newAssetListEntrySegmentsEntryRel =
 			addAssetListEntrySegmentsEntryRel();

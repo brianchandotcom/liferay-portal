@@ -16,6 +16,11 @@
 	<td>//div[contains(@class,'hero-pre') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_NAME</td>
+	<td>//html[contains(@class,'ltr yui3-js-enabled')]//*[contains(@class,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
 <!--PAGE_EDITOR-->
 <tr>
 	<td>COLLECTION_DISPLAY</td>

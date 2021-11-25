@@ -30,6 +30,8 @@ definition {
 
 		Upgrade.validateCollections();
 
+		Upgrade.validateDepotSettings();
+
 		Upgrade.viewSharedDocument(
 			depot = "true",
 			dmDocumentTitle = "DM Document Title Sharing");

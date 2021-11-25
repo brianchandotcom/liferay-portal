@@ -2373,6 +2373,31 @@ definition {
 			locator1 = "Card#CARD_TITLE_LINK");
 	}
 
+	macro validateDepotSettings {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.viewApplication(
+			applicationList = "Collections",
+			depotName = "Test Depot Name For Settings",
+			noApplication = "true");
+
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name For Settings",
+			portlet = "Asset Library Settings");
+
+		Depot.viewDepotConfiguration(
+			configuration = "disabled",
+			toggleSwitchLabel = "Enable Sharing");
+
+		Depot.viewDepotConfiguration(
+			configuration = "disabled",
+			toggleSwitchLabel = "Enable Auto Tagging");
+
+		DepotNavigator.gotoLanguages();
+
+		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
+	}
+
 	macro validateDepotWCAndStructure {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",

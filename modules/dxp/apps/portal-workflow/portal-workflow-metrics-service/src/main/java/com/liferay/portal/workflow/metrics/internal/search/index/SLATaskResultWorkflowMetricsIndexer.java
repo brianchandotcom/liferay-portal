@@ -50,6 +50,8 @@ public class SLATaskResultWorkflowMetricsIndexer
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
+		documentBuilder.setValue("active", true);
+
 		if (workflowMetricsSLATaskResult.getAssigneeIds() != null) {
 			documentBuilder.setLongs(
 				"assigneeIds", workflowMetricsSLATaskResult.getAssigneeIds());

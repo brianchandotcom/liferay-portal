@@ -256,7 +256,9 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setLong(
+		documentBuilder.setValue(
+			"active", true
+		).setLong(
 			"companyId", companyId
 		).setValue(
 			"completed", false

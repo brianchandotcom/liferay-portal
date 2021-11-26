@@ -90,6 +90,7 @@ public class KaleoInstanceModelListener
 		}
 		else {
 			_instanceWorkflowMetricsIndexer.updateInstance(
+				kaleoInstance.isActive(),
 				_indexerHelper.createAssetTitleLocalizationMap(
 					kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
 					kaleoInstance.getGroupId()),

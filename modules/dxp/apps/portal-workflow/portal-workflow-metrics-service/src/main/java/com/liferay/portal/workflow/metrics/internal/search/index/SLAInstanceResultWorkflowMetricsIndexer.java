@@ -53,8 +53,11 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setLong(
-			"companyId", workflowMetricsSLAInstanceResult.getCompanyId());
+		documentBuilder.setValue(
+			"active", true
+		).setLong(
+			"companyId", workflowMetricsSLAInstanceResult.getCompanyId()
+		);
 
 		if (workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
 				null) {

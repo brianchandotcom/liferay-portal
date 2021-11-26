@@ -604,44 +604,4 @@ definition {
 			fieldName = "Upload");
 	}
 
-	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Web Content Field on the Document Type builder."
-	@priority = "4"
-	test CanEditLabelPlaceholderAndHelpTextInWebContentField {
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Web Content",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Web Content",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.saveCP();
-
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Web Content",
-			fieldHelp = "Help Text",
-			fieldName = "Web Content");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Web Content",
-			fieldFieldLabelEdit = "Web Content Edited");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Web Content Edited",
-			fieldHelp = "Help Text Edited");
-
-		WebContentStructures.saveCP();
-
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Web Content Edited",
-			fieldHelp = "Help Text Edited",
-			fieldName = "Web Content");
-	}
-
 }

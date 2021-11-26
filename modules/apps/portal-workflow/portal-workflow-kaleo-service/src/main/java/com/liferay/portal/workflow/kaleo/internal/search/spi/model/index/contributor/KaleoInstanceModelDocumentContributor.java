@@ -46,6 +46,7 @@ public class KaleoInstanceModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, KaleoInstance kaleoInstance) {
+		document.addKeyword("active", kaleoInstance.isActive());
 		document.addDateSortable(
 			Field.CREATE_DATE, kaleoInstance.getCreateDate());
 		document.addDateSortable(

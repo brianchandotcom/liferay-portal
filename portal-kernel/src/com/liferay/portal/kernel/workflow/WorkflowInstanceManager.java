@@ -85,6 +85,16 @@ public interface WorkflowInstanceManager {
 		throws WorkflowException;
 
 	public default List<WorkflowInstance> search(
+			long companyId, Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default List<WorkflowInstance> search(
 			long companyId, Long userId, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
@@ -95,9 +105,31 @@ public interface WorkflowInstanceManager {
 	}
 
 	public default int searchCount(
+			long companyId, Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default int searchCount(
 			long companyId, Long userId, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default WorkflowModelSearchResult<WorkflowInstance>
+			searchWorkflowInstances(
+				long companyId, Long userId, Boolean active,
+				String assetClassName, String assetTitle,
+				String assetDescription, String nodeName,
+				String kaleoDefinitionName, Boolean completed,
+				boolean searchByActiveWorkflowHandlers, int start, int end,
+				OrderByComparator<WorkflowInstance> orderByComparator)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -155,6 +187,14 @@ public interface WorkflowInstanceManager {
 		return startWorkflowInstance(
 			companyId, groupId, userId, workflowDefinitionName,
 			workflowDefinitionVersion, transitionName, workflowContext);
+	}
+
+	public default WorkflowInstance updateActive(
+			long userId, long companyId, long workflowInstanceId,
+			boolean active)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	public WorkflowInstance updateWorkflowContext(

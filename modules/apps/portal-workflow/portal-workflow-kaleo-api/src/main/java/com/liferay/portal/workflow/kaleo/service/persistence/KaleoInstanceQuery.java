@@ -85,12 +85,20 @@ public class KaleoInstanceQuery implements Serializable {
 		return _userId;
 	}
 
+	public Boolean isActive() {
+		return _active;
+	}
+
 	public Boolean isCompleted() {
 		return _completed;
 	}
 
 	public boolean isSearchByActiveWorkflowHandlers() {
 		return _searchByActiveWorkflowHandlers;
+	}
+
+	public void setActive(Boolean active) {
+		_active = active;
 	}
 
 	public void setAssetDescription(String assetDescription) {
@@ -155,6 +163,7 @@ public class KaleoInstanceQuery implements Serializable {
 		_userId = userId;
 	}
 
+	private Boolean _active;
 	private String _assetDescription;
 	private String _assetTitle;
 	private String[] _classNames;

@@ -103,6 +103,10 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		return _workflowInstanceId;
 	}
 
+	public boolean isActive() {
+		return _active;
+	}
+
 	@Override
 	public boolean isComplete() {
 		if (getEndDate() != null) {
@@ -110,6 +114,10 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		}
 
 		return false;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
 	}
 
 	public void setChildrenWorkflowInstances(
@@ -162,6 +170,7 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		_workflowInstanceId = workflowInstanceId;
 	}
 
+	private boolean _active;
 	private List<WorkflowInstance> _childrenWorkflowInstances =
 		new ArrayList<>();
 	private List<String> _currentNodeNames;

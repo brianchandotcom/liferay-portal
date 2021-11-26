@@ -84,6 +84,7 @@ public class KaleoInstanceModelPreFilterContributor
 			booleanFilter.add(innerBooleanFilter, BooleanClauseOccur.MUST);
 		}
 
+		appendActiveTerm(booleanFilter, kaleoInstanceQuery);
 		appendClassNameIdsTerm(booleanFilter, kaleoInstanceQuery);
 		appendClassPKTerm(booleanFilter, kaleoInstanceQuery);
 		appendCompletedTerm(booleanFilter, kaleoInstanceQuery);
@@ -93,6 +94,18 @@ public class KaleoInstanceModelPreFilterContributor
 		appendKaleoInstanceIdTerm(booleanFilter, kaleoInstanceQuery);
 		appendRootKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceQuery);
 		appendUserIdTerm(booleanFilter, kaleoInstanceQuery);
+	}
+
+	protected void appendActiveTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Boolean active = kaleoInstanceQuery.isActive();
+
+		if (active == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm("active", active);
 	}
 
 	protected void appendAssetDescriptionTerm(

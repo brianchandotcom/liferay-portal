@@ -129,6 +129,19 @@ public class WorkflowInstanceManagerUtil {
 	}
 
 	public static List<WorkflowInstance> search(
+			long companyId, Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		return _workflowInstanceManager.search(
+			companyId, userId, active, assetClassName, assetTitle,
+			assetDescription, nodeName, kaleoDefinitionName, completed, start,
+			end, orderByComparator);
+	}
+
+	public static List<WorkflowInstance> search(
 			long companyId, Long userId, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
@@ -142,6 +155,17 @@ public class WorkflowInstanceManagerUtil {
 	}
 
 	public static int searchCount(
+			long companyId, Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed)
+		throws WorkflowException {
+
+		return _workflowInstanceManager.searchCount(
+			companyId, userId, active, assetClassName, assetTitle,
+			assetDescription, nodeName, kaleoDefinitionName, completed);
+	}
+
+	public static int searchCount(
 			long companyId, Long userId, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed)
@@ -150,6 +174,22 @@ public class WorkflowInstanceManagerUtil {
 		return _workflowInstanceManager.searchCount(
 			companyId, userId, assetClassName, assetTitle, assetDescription,
 			nodeName, kaleoDefinitionName, completed);
+	}
+
+	public static WorkflowModelSearchResult<WorkflowInstance>
+			searchWorkflowInstances(
+				long companyId, Long userId, Boolean active,
+				String assetClassName, String assetTitle,
+				String assetDescription, String nodeName,
+				String kaleoDefinitionName, Boolean completed,
+				boolean searchByActiveWorkflowHandlers, int start, int end,
+				OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		return _workflowInstanceManager.searchWorkflowInstances(
+			companyId, userId, active, assetClassName, assetTitle,
+			assetDescription, nodeName, kaleoDefinitionName, completed,
+			searchByActiveWorkflowHandlers, start, end, orderByComparator);
 	}
 
 	public static WorkflowModelSearchResult<WorkflowInstance>

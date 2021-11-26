@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.model.SegmentsExperience;
@@ -221,28 +222,69 @@ public class TranslationEntryAssetRenderer
 		}
 	}
 
+	private ObjectValuePair<InfoItemReference, String>
+		_getInfoItemReferenceSuffixObjectValuePair(Locale locale) {
+
+		if (!Objects.equals(
+				_translationEntry.getClassName(),
+				SegmentsExperience.class.getName())) {
+
+			return new ObjectValuePair<>(
+				new InfoItemReference(
+					_translationEntry.getClassName(),
+					_translationEntry.getClassPK()),
+				StringPool.BLANK);
+		}
+
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				_translationEntry.getClassPK());
+
+		if (segmentsExperience == null) {
+			return new ObjectValuePair<>(
+				new InfoItemReference(
+					_translationEntry.getClassName(),
+					_translationEntry.getClassPK()),
+				StringPool.BLANK);
+		}
+
+		return new ObjectValuePair<>(
+			new InfoItemReference(
+				segmentsExperience.getClassName(),
+				segmentsExperience.getClassPK()),
+			StringBundler.concat(
+				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+				segmentsExperience.getName(locale),
+				StringPool.CLOSE_PARENTHESIS));
+	}
+
 	private Optional<String> _getInfoItemTitleOptional(Locale locale) {
 		try {
-			EntryReference entryReference = _resolveIndirectEntryReference(
-				locale);
+			ObjectValuePair<InfoItemReference, String>
+				infoItemReferenceSuffixObjectValuePair =
+					_getInfoItemReferenceSuffixObjectValuePair(locale);
+
+			InfoItemReference infoItemReference =
+				infoItemReferenceSuffixObjectValuePair.getKey();
 
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
-					entryReference.getClassName());
+					infoItemReference.getClassName());
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					entryReference.getClassName());
+					infoItemReference.getClassName());
 
 			Object object = infoItemObjectProvider.getInfoItem(
-				entryReference.getClassPK());
+				infoItemReference.getInfoItemIdentifier());
 
 			return _getTitleOptional(
 				object, infoItemFieldValuesProvider, locale
 			).map(
-				title -> title + entryReference.getSuffix()
+				title ->
+					title + infoItemReferenceSuffixObjectValuePair.getValue()
 			);
 		}
 		catch (Exception exception) {
@@ -271,34 +313,6 @@ public class TranslationEntryAssetRenderer
 		return Optional.ofNullable((String)nameInfoFieldValue.getValue(locale));
 	}
 
-	private EntryReference _resolveIndirectEntryReference(Locale locale) {
-		if (!Objects.equals(
-				_translationEntry.getClassName(),
-				SegmentsExperience.class.getName())) {
-
-			return new EntryReference(
-				_translationEntry.getClassName(),
-				_translationEntry.getClassPK(), StringPool.BLANK);
-		}
-
-		SegmentsExperience segmentsExperience =
-			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				_translationEntry.getClassPK());
-
-		if (segmentsExperience == null) {
-			return new EntryReference(
-				_translationEntry.getClassName(),
-				_translationEntry.getClassPK(), StringPool.BLANK);
-		}
-
-		return new EntryReference(
-			segmentsExperience.getClassName(), segmentsExperience.getClassPK(),
-			StringBundler.concat(
-				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-				segmentsExperience.getName(locale),
-				StringPool.CLOSE_PARENTHESIS));
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TranslationEntryAssetRenderer.class);
 
@@ -306,31 +320,5 @@ public class TranslationEntryAssetRenderer
 	private final TranslationEntry _translationEntry;
 	private final TranslationInfoFieldChecker _translationInfoFieldChecker;
 	private final TranslationSnapshotProvider _translationSnapshotProvider;
-
-	private static class EntryReference {
-
-		public EntryReference(String className, long classPK, String suffix) {
-			_className = className;
-			_classPK = classPK;
-			_suffix = suffix;
-		}
-
-		public String getClassName() {
-			return _className;
-		}
-
-		public long getClassPK() {
-			return _classPK;
-		}
-
-		public String getSuffix() {
-			return _suffix;
-		}
-
-		private final String _className;
-		private final long _classPK;
-		private final String _suffix;
-
-	}
 
 }

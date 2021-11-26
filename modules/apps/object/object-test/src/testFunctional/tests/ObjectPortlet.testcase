@@ -1684,9 +1684,9 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Test 2");
 	}
 
-	@description = "LPS-138755 - Add an entry with another user and make sure the author value is correctly displayed"
+	@description = "LPS-138755 - Add an entry and make sure the author value is correctly displayed"
 	@priority = "5"
-	test CanViewAnotherUserNameOnAuthorColumn {
+	test CanViewUserNameOnAuthorColumn {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -1708,37 +1708,13 @@ definition {
 			objectName = "CustomObject",
 			value = "Text test");
 
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
 		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");	
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertAuthorColumnDisplaysUserName(
 			column = "Author",
-			authorName = "Test Test"
-		);
+			authorName = "Test Test");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a BigDecimal entry and label on layout"

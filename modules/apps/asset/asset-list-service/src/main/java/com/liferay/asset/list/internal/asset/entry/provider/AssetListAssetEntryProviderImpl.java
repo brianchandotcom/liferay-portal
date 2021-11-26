@@ -77,7 +77,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -842,25 +841,24 @@ public class AssetListAssetEntryProviderImpl
 	private long _getFirstSegmentsEntryId(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
-		if (segmentsEntryIds.length == 0){
+		if (segmentsEntryIds.length == 0) {
 			return SegmentsEntryConstants.ID_DEFAULT;
 		}
 
 		LongStream longStream = Arrays.stream(segmentsEntryIds);
 
 		Stream<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelStream = longStream
-			.mapToObj(segmentsEntryId ->
-				_assetListEntrySegmentsEntryRelLocalService.
-					fetchAssetListEntrySegmentsEntryRel(
-						assetListEntry.getAssetListEntryId(),
-						segmentsEntryId)
-			);
+			assetListEntrySegmentsEntryRelStream = longStream.mapToObj(
+				segmentsEntryId ->
+					_assetListEntrySegmentsEntryRelLocalService.
+						fetchAssetListEntrySegmentsEntryRel(
+							assetListEntry.getAssetListEntryId(),
+							segmentsEntryId));
 
 		return assetListEntrySegmentsEntryRelStream.min(
-			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority))
-			.get()
-			.getSegmentsEntryId();
+			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
+		).get(
+		).getSegmentsEntryId();
 	}
 
 	private String[] _getKeywords(UnicodeProperties unicodeProperties) {
@@ -897,20 +895,20 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords, int start, int end) {
 
-		List<AssetListEntryAssetEntryRel > assetListEntryAssetEntryRels = new ArrayList<>();
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			new ArrayList<>();
 
-		segmentsEntryIds = _sortSegmentsByPriority(assetListEntry, segmentsEntryIds);
+		segmentsEntryIds = _sortSegmentsByPriority(
+			assetListEntry, segmentsEntryIds);
 
-		for (int i = 0; i < segmentsEntryIds.length; i++){
+		for (long segmentId : segmentsEntryIds) {
 			assetListEntryAssetEntryRels.addAll(
 				ListUtil.sort(
-				_getAssetListEntryAssetEntryRels(
-					assetListEntry, new long[] {segmentsEntryIds[i]}, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS),
+					_getAssetListEntryAssetEntryRels(
+						assetListEntry, new long[] {segmentId},
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					Comparator.comparing(
-						AssetListEntryAssetEntryRelModel::getPosition)
-			)
-			);
+						AssetListEntryAssetEntryRelModel::getPosition)));
 		}
 
 		List<Long> assetEntryIds = ListUtil.toList(
@@ -940,24 +938,6 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return Collections.emptyList();
-	}
-
-	private long[] _sortSegmentsByPriority(AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-		LongStream longStream = Arrays.stream(segmentsEntryIds);
-
-		Stream<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelStream = longStream
-			.mapToObj(segmentsEntryId ->
-				_assetListEntrySegmentsEntryRelLocalService.
-					fetchAssetListEntrySegmentsEntryRel(
-						assetListEntry.getAssetListEntryId(),
-						segmentsEntryId)
-			);
-
-		return assetListEntrySegmentsEntryRelStream.sorted(
-			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
-		).mapToLong(AssetListEntrySegmentsEntryRelModel::getSegmentsEntryId)
-			.toArray();
 	}
 
 	private int _getManualAssetEntriesCount(
@@ -1189,6 +1169,26 @@ public class AssetListAssetEntryProviderImpl
 			siteGroupId, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
+	}
+
+	private long[] _sortSegmentsByPriority(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
+
+		LongStream longStream = Arrays.stream(segmentsEntryIds);
+
+		Stream<AssetListEntrySegmentsEntryRel>
+			assetListEntrySegmentsEntryRelStream = longStream.mapToObj(
+				segmentsEntryId ->
+					_assetListEntrySegmentsEntryRelLocalService.
+						fetchAssetListEntrySegmentsEntryRel(
+							assetListEntry.getAssetListEntryId(),
+							segmentsEntryId));
+
+		return assetListEntrySegmentsEntryRelStream.sorted(
+			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
+		).mapToLong(
+			AssetListEntrySegmentsEntryRelModel::getSegmentsEntryId
+		).toArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -183,34 +183,6 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 				assetListEntrySegmentsEntryRel2));
 	}
 
-	public void testUpdateVariationsPriority() throws Exception {
-
-		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
-			_group.getGroupId());
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry);
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry);
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel3 =
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry);
-
-		long[] priorities = {
-				assetListEntrySegmentsEntryRel3.
-					getAssetListEntrySegmentsEntryRelId(),
-				assetListEntrySegmentsEntryRel2.
-					getAssetListEntrySegmentsEntryRelId(),
-				assetListEntrySegmentsEntryRel1.
-					getAssetListEntrySegmentsEntryRelId()
-		};
-
-		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(priorities);
-	}
-
-
 	@Test
 	public void testUpdateAssetListEntrySegmentsEntryRelTypeSettings()
 		throws Exception {
@@ -240,6 +212,33 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 			typeSettingsUpdated);
 	}
 
+	@Test
+	public void testUpdateVariationsPriority() throws Exception {
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel3 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+
+		long[] priorities = {
+			assetListEntrySegmentsEntryRel3.
+				getAssetListEntrySegmentsEntryRelId(),
+			assetListEntrySegmentsEntryRel2.
+				getAssetListEntrySegmentsEntryRelId(),
+			assetListEntrySegmentsEntryRel1.
+				getAssetListEntrySegmentsEntryRelId()
+		};
+
+		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(
+			priorities);
+	}
 
 	private void _assertSameAssetListEntrySegmentsEntryRel(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1,

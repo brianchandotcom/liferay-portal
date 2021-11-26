@@ -602,11 +602,8 @@ public class EditAssetListDisplayContext {
 			"assetListEntrySegmentsEntryRels",
 			_getAssetListEntrySegmentsEntryRelJSONArray()
 		).put(
-			"segmentsEntriesAvailables",
-			() -> {
-			 	List segmentsEntriesAvailables = getAvailableSegmentsEntries();
-				return !segmentsEntriesAvailables.isEmpty();
-			}
+			"assetListEntryValid",
+			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
 		).put(
 			"createNewSegmentURL",
 			() -> {
@@ -634,6 +631,14 @@ public class EditAssetListDisplayContext {
 					"openSelectSegmentsEntryDialog";
 			}
 		).put(
+			"segmentsEntriesAvailables",
+			() -> {
+				List<SegmentsEntry> segmentsEntriesAvailables =
+					getAvailableSegmentsEntries();
+
+				return !segmentsEntriesAvailables.isEmpty();
+			}
+		).put(
 			"updateVariationsPriorityURL",
 			() -> {
 				PortletURL assetListPortletURL =
@@ -648,9 +653,6 @@ public class EditAssetListDisplayContext {
 					"/asset_list/update_variations_priority"
 				).buildString();
 			}
-		).put(
-			"assetListEntryValid",
-			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
 		).build();
 	}
 

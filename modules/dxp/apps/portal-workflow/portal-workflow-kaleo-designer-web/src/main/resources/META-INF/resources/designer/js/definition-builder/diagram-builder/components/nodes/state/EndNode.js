@@ -37,4 +37,5 @@ export default function EndNode({
 EndNode.propTypes = {
 	data: PropTypes.object,
 	descriptionSidebar: PropTypes.string,
+	id: PropTypes.string.isRequired,
 };

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import {nodeDescription, nodeTypes} from '../nodes/utils';
@@ -18,7 +19,7 @@ const onDragStart = (event, nodeType) => {
 	event.dataTransfer.effectAllowed = 'move';
 };
 
-export default function SidebarBody({children, displayDefaultContent}) {
+export default function SidebarBody({children, displayDefaultContent = true}) {
 	return (
 		<div className="sidebar-body">
 			{displayDefaultContent
@@ -34,3 +35,8 @@ export default function SidebarBody({children, displayDefaultContent}) {
 		</div>
 	);
 }
+
+SidebarBody.protoTypes = {
+	children: PropTypes.any,
+	displayDefaultContent: PropTypes.bool,
+};

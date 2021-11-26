@@ -11,6 +11,7 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
@@ -146,3 +147,8 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 		</SidebarPanel>
 	);
 }
+
+SelectedNodeInfo.propTypes = {
+	errors: PropTypes.object.isRequired,
+	setErrors: PropTypes.func.isRequired,
+};

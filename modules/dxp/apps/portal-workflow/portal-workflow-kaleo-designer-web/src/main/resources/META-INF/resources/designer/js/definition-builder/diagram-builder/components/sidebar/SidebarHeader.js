@@ -10,11 +10,12 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function SidebarHeader({
-	backButtonFunction,
-	showBackButton,
+	backButtonFunction = () => {},
+	showBackButton = false,
 	title,
 }) {
 	return (
@@ -32,3 +33,9 @@ export default function SidebarHeader({
 		</div>
 	);
 }
+
+SidebarHeader.propTypes = {
+	backButtonFunction: PropTypes.func,
+	showBackButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+	title: PropTypes.string.isRequired,
+};

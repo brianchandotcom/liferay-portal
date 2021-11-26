@@ -37,4 +37,5 @@ export default function StateNode({
 StateNode.propTypes = {
 	data: PropTypes.object,
 	descriptionSidebar: PropTypes.string,
+	id: PropTypes.string.isRequired,
 };

@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 export default function SidebarPanel({children, panelTitle}) {
@@ -42,3 +43,8 @@ export default function SidebarPanel({children, panelTitle}) {
 		</div>
 	);
 }
+
+SidebarPanel.propTypes = {
+	children: PropTypes.any,
+	panelTitle: PropTypes.string.isRequired,
+};

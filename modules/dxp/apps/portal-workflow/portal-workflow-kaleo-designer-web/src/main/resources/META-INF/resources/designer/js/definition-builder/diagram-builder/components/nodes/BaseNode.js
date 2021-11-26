@@ -100,6 +100,7 @@ BaseNode.propTypes = {
 	description: PropTypes.string,
 	descriptionSidebar: PropTypes.string,
 	icon: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	type: PropTypes.string.isRequired,
 };

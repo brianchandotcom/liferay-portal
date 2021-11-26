@@ -318,7 +318,9 @@ definition {
 		}
 
 		task ("View assets can be aditable via collection items in pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
 			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
 				WaitForLiferayEvent.initializeLiferayEventLog();

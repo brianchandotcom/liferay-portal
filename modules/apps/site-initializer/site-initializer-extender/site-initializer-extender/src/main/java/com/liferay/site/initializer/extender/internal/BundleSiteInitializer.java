@@ -132,6 +132,7 @@ import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -1949,53 +1950,80 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				jsonObject.getString("name"), serviceContext);
 
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				SiteNavigationMenuItemTypeConstants.LAYOUT);
+		_addSiteNavigationMenuItems(
+			jsonObject, siteNavigationMenu, 0, serviceContext);
+	}
+
+	private void _addSiteNavigationMenuItems(
+			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
+			long parentSiteNavigationMenuItemId, ServiceContext serviceContext)
+		throws Exception {
 
 		for (Object object :
-				JSONUtil.toObjectArray(jsonObject.getJSONArray("pages"))) {
+				JSONUtil.toObjectArray(jsonObject.getJSONArray("menuItems"))) {
 
-			JSONObject pageJSONObject = (JSONObject)object;
+			JSONObject siteMenuItemJSONObject = (JSONObject)object;
 
-			boolean privateLayout = pageJSONObject.getBoolean("privateLayout");
-			String friendlyURL = pageJSONObject.getString("friendlyURL");
+			String type = siteMenuItemJSONObject.getString("type");
 
-			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-				serviceContext.getScopeGroupId(), privateLayout, friendlyURL);
+			String typeSettings = null;
 
-			if (layout == null) {
-				continue;
+			if (type.equals(SiteNavigationMenuItemTypeConstants.LAYOUT)) {
+				boolean privateLayout = siteMenuItemJSONObject.getBoolean(
+					"privateLayout");
+				String friendlyURL = siteMenuItemJSONObject.getString(
+					"friendlyURL");
+
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					serviceContext.getScopeGroupId(), privateLayout,
+					friendlyURL);
+
+				if (layout == null) {
+					return;
+				}
+
+				SiteNavigationMenuItemType siteNavigationMenuItemType =
+					_siteNavigationMenuItemTypeRegistry.
+						getSiteNavigationMenuItemType(
+							SiteNavigationMenuItemTypeConstants.LAYOUT);
+
+				typeSettings =
+					siteNavigationMenuItemType.getTypeSettingsFromLayout(
+						layout);
+			}
+			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					new UnicodeProperties();
+
+				typeSettingsUnicodeProperties.setProperty(
+					"name", siteMenuItemJSONObject.getString("name"));
+			}
+			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					new UnicodeProperties();
+
+				typeSettingsUnicodeProperties.setProperty(
+					"name", siteMenuItemJSONObject.getString("name"));
+				typeSettingsUnicodeProperties.setProperty(
+					"url", siteMenuItemJSONObject.getString("url"));
+				typeSettingsUnicodeProperties.setProperty(
+					"useNewTab", siteMenuItemJSONObject.getString("useNewTab"));
+
+				typeSettings = typeSettingsUnicodeProperties.toString();
 			}
 
-			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				siteNavigationMenu.getSiteNavigationMenuId(), 0,
-				SiteNavigationMenuItemTypeConstants.LAYOUT,
-				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					siteNavigationMenu.getSiteNavigationMenuId(),
+					parentSiteNavigationMenuItemId, type, typeSettings,
+					serviceContext);
+
+			_addSiteNavigationMenuItems(
+				siteMenuItemJSONObject, siteNavigationMenu,
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext);
-		}
-
-		for (Object object :
-				JSONUtil.toObjectArray(jsonObject.getJSONArray("urls"))) {
-
-			JSONObject urlJSONObject = (JSONObject)object;
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				new UnicodeProperties();
-
-			typeSettingsUnicodeProperties.setProperty(
-				"name", urlJSONObject.getString("name"));
-			typeSettingsUnicodeProperties.setProperty(
-				"url", urlJSONObject.getString("url"));
-			typeSettingsUnicodeProperties.setProperty(
-				"useNewTab", urlJSONObject.getString("useNewTab"));
-
-			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				siteNavigationMenu.getSiteNavigationMenuId(), 0,
-				SiteNavigationMenuItemTypeConstants.URL,
-				typeSettingsUnicodeProperties.toString(), serviceContext);
 		}
 	}
 

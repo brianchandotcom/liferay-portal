@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.portal.kernel.search.Field;
@@ -129,36 +130,24 @@ public class ObjectActionResourceImpl
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
 
-		return new ObjectAction() {
-			{
-				actions = HashMapBuilder.put(
-					"delete",
-					addAction(
-						ActionKeys.DELETE, "deleteObjectAction", permissionName,
-						objectAction.getObjectDefinitionId())
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, "getObjectAction", permissionName,
-						objectAction.getObjectDefinitionId())
-				).put(
-					"update",
-					addAction(
-						ActionKeys.UPDATE, "putObjectAction", permissionName,
-						objectAction.getObjectDefinitionId())
-				).build();
-				active = objectAction.isActive();
-				dateCreated = objectAction.getCreateDate();
-				dateModified = objectAction.getModifiedDate();
-				id = objectAction.getObjectActionId();
-				name = objectAction.getName();
-				objectActionExecutorKey =
-					objectAction.getObjectActionExecutorKey();
-				objectActionTriggerKey =
-					objectAction.getObjectActionTriggerKey();
-				parameters = objectAction.getParametersUnicodeProperties();
-			}
-		};
+		return ObjectActionUtil.toObjectAction(
+			HashMapBuilder.put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectAction", permissionName,
+					objectAction.getObjectDefinitionId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectAction", permissionName,
+					objectAction.getObjectDefinitionId())
+			).put(
+				"update",
+				addAction(
+					ActionKeys.UPDATE, "putObjectAction", permissionName,
+					objectAction.getObjectDefinitionId())
+			).build(),
+			objectAction);
 	}
 
 	@Reference

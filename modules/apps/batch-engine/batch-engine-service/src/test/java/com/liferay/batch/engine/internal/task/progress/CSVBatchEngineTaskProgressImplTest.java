@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -27,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Matija Petanjek
  */
-public class JSONLBatchEngineTaskProgressImplTest
+public class CSVBatchEngineTaskProgressImplTest
 	extends BaseBatchEngineTaskProgressImplTestCase {
 
 	@ClassRule
@@ -36,9 +38,9 @@ public class JSONLBatchEngineTaskProgressImplTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetTotalItemsCount() throws Exception {
-		_testGetTotalItemsCount(0);
+	public void testGetTotalItems() throws Exception {
 		_testGetTotalItemsCount(PRODUCTS_COUNT);
+		_testGetTotalItemsCount(0);
 	}
 
 	private void _testGetTotalItemsCount(int expectedTotalItemsCount)
@@ -46,11 +48,22 @@ public class JSONLBatchEngineTaskProgressImplTest
 
 		StringBundler sb = new StringBundler();
 
-		for (int i = 0; i < expectedTotalItemsCount; i++) {
-			sb.append(productJSONObject);
+		Iterator<String> iterator = productJSONObject.keys();
 
-			if (i < (PRODUCTS_COUNT - 1)) {
-				sb.append(StringPool.NEW_LINE);
+		while (iterator.hasNext()) {
+			sb.append(iterator.next());
+
+			if (iterator.hasNext()) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		for (int i = 0; i < expectedTotalItemsCount; i++) {
+			sb.append(StringPool.NEW_LINE);
+
+			for (String key : productJSONObject.keySet()) {
+				sb.append(productJSONObject.getString(key));
+				sb.append(StringPool.COMMA);
 			}
 		}
 
@@ -58,11 +71,10 @@ public class JSONLBatchEngineTaskProgressImplTest
 			expectedTotalItemsCount,
 			_batchEngineTaskProgress.getTotalItemsCount(
 				compress(
-					sb.toString(),
-					BatchEngineTaskContentType.JSONL.toString())));
+					sb.toString(), BatchEngineTaskContentType.CSV.toString())));
 	}
 
 	private static final BatchEngineTaskProgress _batchEngineTaskProgress =
-		new JSONLBatchEngineTaskProgressImpl();
+		new CSVBatchEngineTaskProgressImpl();
 
 }

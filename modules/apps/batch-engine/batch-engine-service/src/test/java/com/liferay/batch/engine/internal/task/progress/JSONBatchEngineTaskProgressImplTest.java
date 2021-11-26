@@ -51,7 +51,7 @@ public class JSONBatchEngineTaskProgressImplTest
 		sb.append(StringPool.OPEN_BRACKET);
 
 		for (int i = 0; i < expectedTotalItemsCount; i++) {
-			sb.append(productJSON);
+			sb.append(productJSONObject);
 
 			if (i < (PRODUCTS_COUNT - 1)) {
 				sb.append(StringPool.COMMA);

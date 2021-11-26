@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.task.progress;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,7 +57,7 @@ public abstract class BaseBatchEngineTaskProgressImplTestCase {
 
 	protected static final int PRODUCTS_COUNT = 10;
 
-	protected final String productJSON = JSONUtil.put(
+	protected final JSONObject productJSONObject = JSONUtil.put(
 		"active", true
 	).put(
 		"catalogId", 111
@@ -68,6 +69,6 @@ public abstract class BaseBatchEngineTaskProgressImplTestCase {
 		"tags", new String[0]
 	).put(
 		"workflowStatusInfo", MapUtil.singletonDictionary("code", 0)
-	).toString();
+	);
 
 }

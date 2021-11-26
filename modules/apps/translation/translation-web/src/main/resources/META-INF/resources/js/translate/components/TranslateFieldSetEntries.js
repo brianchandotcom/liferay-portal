@@ -99,6 +99,7 @@ const TranslateFieldEditor = ({
 	fieldStatus,
 	id,
 	label,
+	name,
 	sourceContent,
 	sourceContentDir,
 	targetContent,
@@ -159,7 +160,7 @@ const TranslateFieldEditor = ({
 						ref={editorRef}
 					/>
 
-					<input defaultValue={content} name={id} type="hidden" />
+					<input defaultValue={content} name={name} type="hidden" />
 
 					<TranslateFieldFeedback
 						message={fieldStatus.message}
@@ -176,6 +177,7 @@ const TranslateFieldInput = ({
 	id,
 	label,
 	multiline,
+	name,
 	onChange = noop,
 	sourceContent,
 	sourceContentDir,
@@ -211,7 +213,7 @@ const TranslateFieldInput = ({
 					component={multiline ? 'textarea' : undefined}
 					dir={targetContentDir}
 					id={id}
-					name={id}
+					name={name}
 					onChange={(event) => {
 						const data = event.target.value;
 						onChange(data);
@@ -237,7 +239,7 @@ const TranslateFieldSetEntries = ({
 	portletNamespace,
 	targetFieldsContent,
 }) =>
-	infoFieldSetEntries.map(({fields, legend}) => (
+	infoFieldSetEntries.map(({fields: fieldsSets, legend}) => (
 		<React.Fragment key={legend}>
 			<ClayLayout.Row
 				className={classNames({
@@ -253,39 +255,44 @@ const TranslateFieldSetEntries = ({
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
-			{fields.map((field) => {
-				const fieldProps = {
-					...field,
-					fieldStatus: {
-						message: targetFieldsContent[field.id].message,
-						status: targetFieldsContent[field.id].status,
-					},
-					id: `${portletNamespace}${field.id}`,
-					onChange: (content) => {
-						onChange({content, id: field.id});
-					},
-					targetContent: targetFieldsContent[field.id].content,
-				};
+			{fieldsSets.map((fieldSet) =>
+				fieldSet.sourceContent.map((sourceContent, index) => {
+					const id = `${fieldSet.id}${index}`;
+					const fieldProps = {
+						...fieldSet,
+						fieldStatus: {
+							message: targetFieldsContent[id].message,
+							status: targetFieldsContent[id].status,
+						},
+						id: `${portletNamespace}${id}`,
+						name: `${portletNamespace}${fieldSet.id}`,
+						onChange: (content) => {
+							onChange({content, id});
+						},
+						sourceContent,
+						targetContent: targetFieldsContent[id].content,
+					};
 
-				return (
-					<TranslateAutoTranslateRow
-						autoTranslateEnabled={autoTranslateEnabled}
-						fieldStatus={fieldProps.fieldStatus}
-						handleAutoTranslateClick={() =>
-							fetchAutoTranslateField(field.id)
-						}
-						key={field.id}
-						label={fieldProps.label}
-						sourceContent={fieldProps.sourceContent}
-					>
-						{field.html ? (
-							<TranslateFieldEditor {...fieldProps} />
-						) : (
-							<TranslateFieldInput {...fieldProps} />
-						)}
-					</TranslateAutoTranslateRow>
-				);
-			})}
+					return (
+						<TranslateAutoTranslateRow
+							autoTranslateEnabled={autoTranslateEnabled}
+							fieldStatus={fieldProps.fieldStatus}
+							handleAutoTranslateClick={() =>
+								fetchAutoTranslateField(id)
+							}
+							key={id}
+							label={fieldProps.label}
+							sourceContent={fieldProps.sourceContent}
+						>
+							{fieldSet.html ? (
+								<TranslateFieldEditor {...fieldProps} />
+							) : (
+								<TranslateFieldInput {...fieldProps} />
+							)}
+						</TranslateAutoTranslateRow>
+					);
+				})
+			)}
 		</React.Fragment>
 	));
 

@@ -12,10 +12,11 @@
  * details.
  */
 
-import {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import {PagesVisitor, useFormState} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
 
+import DDMSelect from './DDMSelect';
 import StartEndDate from './StartEndDate';
 
 import './ValidationDate.scss';
@@ -138,7 +139,7 @@ const ValidationDate = ({
 			<div className="ddm__validation-date-accepted-date">
 				<label>{Liferay.Language.get('accepted-date')}</label>
 
-				<ClaySelectWithOption
+				<DDMSelect
 					disabled={readOnly || localizationMode}
 					name="selectedValidation"
 					onChange={({target: {value}}) => {

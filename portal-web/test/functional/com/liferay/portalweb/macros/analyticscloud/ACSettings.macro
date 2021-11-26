@@ -483,7 +483,7 @@ definition {
 
 		Click(locator1 = "ACDataControlAndPrivacy#SELECT_USER");
 
-		var email = selenium.getText(locator1 = "ACDataControlAndPrivacy#SELECTED_USER");
+		var email = selenium.getText("ACDataControlAndPrivacy#SELECTED_USER");
 
 		Button.clickSave();
 

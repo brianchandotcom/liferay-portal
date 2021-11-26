@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Eduardo García
+ * @author Yurena Cabrera
  */
 @RunWith(Arquillian.class)
 public class AssetListEntrySegmentsEntryRelServiceTest {
@@ -182,6 +183,34 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 				assetListEntrySegmentsEntryRel2));
 	}
 
+	public void testUpdateVariationsPriority() throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel3 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+
+		long[] priorities = {
+				assetListEntrySegmentsEntryRel3.
+					getAssetListEntrySegmentsEntryRelId(),
+				assetListEntrySegmentsEntryRel2.
+					getAssetListEntrySegmentsEntryRelId(),
+				assetListEntrySegmentsEntryRel1.
+					getAssetListEntrySegmentsEntryRelId()
+		};
+
+		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(priorities);
+	}
+
+
 	@Test
 	public void testUpdateAssetListEntrySegmentsEntryRelTypeSettings()
 		throws Exception {
@@ -210,6 +239,7 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 			assetListEntrySegmentsEntryRelUpdated.getTypeSettings(),
 			typeSettingsUpdated);
 	}
+
 
 	private void _assertSameAssetListEntrySegmentsEntryRel(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1,

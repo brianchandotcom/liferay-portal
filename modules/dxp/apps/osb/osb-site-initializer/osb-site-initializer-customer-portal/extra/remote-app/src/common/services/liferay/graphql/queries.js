@@ -1,8 +1,8 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 
-export const getUserAccountById = gql`
-	query userAccount($userAccountId: Long) {
-		userAccount(userAccountId: $userAccountId) {
+export const getUserAccount = gql`
+	query getUserAccount($id: Long!) {
+		userAccount(userAccountId: $id) {
 			id
 			name
 			image
@@ -17,7 +17,7 @@ export const getUserAccountById = gql`
 `;
 
 export const getDXPCDataCenterRegions = gql`
-	query dXPCDataCenterRegions {
+	query getDXPCDataCenterRegions {
 		c {
 			dXPCDataCenterRegions {
 				items {
@@ -30,23 +30,9 @@ export const getDXPCDataCenterRegions = gql`
 `;
 
 export const getKoroneikiAccounts = gql`
-	query koroneikiAccounts(
-		$aggregation: [String]
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-		$search: String
-		$sort: String
-	) {
+	query getKoroneikiAccounts($filter: String) {
 		c {
-			koroneikiAccounts(
-				aggregation: $aggregation
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-				search: $search
-				sort: $sort
-			) {
+			koroneikiAccounts(filter: $filter) {
 				items {
 					accountKey
 					code
@@ -64,9 +50,9 @@ export const getKoroneikiAccounts = gql`
 	}
 `;
 
-export const pageGuard = gql`
-	query accountRolesAndAccountFlags(
-		$accountId: Long
+export const getAccountRolesAndAccountFlags = gql`
+	query getAccountRolesAndAccountFlags(
+		$accountId: Long!
 		$accountFlagsFilter: String
 	) {
 		accountAccountRoles(accountId: $accountId) {
@@ -82,6 +68,22 @@ export const pageGuard = gql`
 					name
 					userUuid
 				}
+			}
+		}
+	}
+`;
+
+export const addAccountFlag = gql`
+	mutation addAccountFlag($accountFlag: InputC_AccountFlag!){
+  		c {
+			createAccountFlag(
+				AccountFlag: $accountFlag
+			){
+				accountFlagId
+				accountKey
+				name
+				userUuid
+				value
 			}
 		}
 	}

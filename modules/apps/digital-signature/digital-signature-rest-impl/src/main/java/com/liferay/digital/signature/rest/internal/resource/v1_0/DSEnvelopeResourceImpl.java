@@ -54,10 +54,10 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 		return DSEnvelopeUtil.toDSEnvelope(
 			_dsEnvelopeManager.addDSEnvelope(
 				contextCompany.getCompanyId(), siteId,
-				_getFileEntryData(siteId, dsEnvelope)));
+				_getDSEnvelope(siteId, dsEnvelope)));
 	}
 
-	private com.liferay.digital.signature.model.DSEnvelope _getFileEntryData(
+	private com.liferay.digital.signature.model.DSEnvelope _getDSEnvelope(
 			Long siteId, DSEnvelope dsEnvelope)
 		throws Exception {
 

@@ -25,6 +25,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceExcept
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.oauth2.sdk.ParseException;
+import com.nimbusds.oauth2.sdk.auth.ClientAuthenticationMethod;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.Issuer;
@@ -52,7 +53,9 @@ public class OpenIdConnectMetadataFactoryImpl
 	implements OpenIdConnectMetadataFactory {
 
 	public OpenIdConnectMetadataFactoryImpl(
-			String providerName, String registeredIdTokenSigningAlg,
+			String clientAuthenticationType,
+			String clientAuthenticationJWSAlgorithm, String providerName,
+			String registeredIdTokenSigningAlg,
 			String[] idTokenSigningAlgValues, String issuerURL,
 			String[] subjectTypes, String jwksURL,
 			String authorizationEndPointURL, String tokenEndPointURL,
@@ -92,7 +95,9 @@ public class OpenIdConnectMetadataFactoryImpl
 			_oidcProviderMetadata.setUserInfoEndpointURI(
 				new URI(userInfoEndPointURL));
 
-			_initOpenIdConnectClientMetadata(registeredIdTokenSigningAlg);
+			_initOpenIdConnectClientMetadata(
+				clientAuthenticationType, clientAuthenticationJWSAlgorithm,
+				registeredIdTokenSigningAlg);
 
 			refreshClientMetadata(_oidcProviderMetadata);
 		}
@@ -114,20 +119,24 @@ public class OpenIdConnectMetadataFactoryImpl
 	}
 
 	public OpenIdConnectMetadataFactoryImpl(
-		String providerName, URL discoveryEndPointURL) {
-
-		this(providerName, discoveryEndPointURL, 0, null);
-	}
-
-	public OpenIdConnectMetadataFactoryImpl(
-		String providerName, URL discoveryEndPointURL, long cacheInMilliseconds,
+		String clientAuthenticationType,
+		String clientAuthenticationJWSAlgorithm, String providerName,
+		URL discoveryEndPointURL, long cacheInMilliseconds,
 		String registeredIdTokenSigningAlg) {
 
 		_providerName = providerName;
 		_discoveryEndPointURL = discoveryEndPointURL;
 		_cacheInMilliseconds = cacheInMilliseconds;
 
-		_initOpenIdConnectClientMetadata(registeredIdTokenSigningAlg);
+		_initOpenIdConnectClientMetadata(
+			clientAuthenticationType, clientAuthenticationJWSAlgorithm,
+			registeredIdTokenSigningAlg);
+	}
+
+	public OpenIdConnectMetadataFactoryImpl(
+		String providerName, URL discoveryEndPointURL) {
+
+		this(null, null, providerName, discoveryEndPointURL, 0, null);
 	}
 
 	@Override
@@ -241,6 +250,8 @@ public class OpenIdConnectMetadataFactoryImpl
 	}
 
 	private void _initOpenIdConnectClientMetadata(
+		String clientAuthenticationType,
+		String clientAuthenticationJWSAlgorithm,
 		String registeredIdTokenSigningAlg) {
 
 		_oidcClientMetadata = new OIDCClientMetadata();
@@ -260,6 +271,56 @@ public class OpenIdConnectMetadataFactoryImpl
 					"Using the default ID token signing algorithm " +
 						jwsAlgorithm.getName());
 			}
+		}
+
+		ClientAuthenticationMethod clientAuthenticationMethod =
+			ClientAuthenticationMethod.parse(clientAuthenticationType);
+
+		if (clientAuthenticationMethod.equals(
+				ClientAuthenticationMethod.CLIENT_SECRET_BASIC)) {
+
+			return;
+		}
+
+		_oidcClientMetadata.setTokenEndpointAuthMethod(
+			clientAuthenticationMethod);
+
+		if (clientAuthenticationMethod.equals(
+				ClientAuthenticationMethod.CLIENT_SECRET_POST)) {
+
+			return;
+		}
+
+		if (Validator.isNull(clientAuthenticationJWSAlgorithm)) {
+			throw new IllegalArgumentException(
+				"A client authentication JWS Algorithm must be set if client " +
+					"authentication type is neither Client Secret Basic nor " +
+						"Client Secret Post");
+		}
+
+		_oidcClientMetadata.setTokenEndpointAuthJWSAlg(
+			JWSAlgorithm.parse(clientAuthenticationJWSAlgorithm));
+
+		if (clientAuthenticationMethod.equals(
+				ClientAuthenticationMethod.CLIENT_SECRET_JWT)) {
+
+			if (!JWSAlgorithm.Family.HMAC_SHA.contains(
+					_oidcClientMetadata.getTokenEndpointAuthJWSAlg())) {
+
+				throw new IllegalArgumentException(
+					"Client Secret JWT expects a HMAC_SHA based symmetric " +
+						"JWS algorithm");
+			}
+
+			return;
+		}
+
+		if (!clientAuthenticationMethod.equals(
+				ClientAuthenticationMethod.PRIVATE_KEY_JWT)) {
+
+			throw new IllegalArgumentException(
+				"We do not support Client Authentication types other than " +
+					"those listed in configuration");
 		}
 	}
 

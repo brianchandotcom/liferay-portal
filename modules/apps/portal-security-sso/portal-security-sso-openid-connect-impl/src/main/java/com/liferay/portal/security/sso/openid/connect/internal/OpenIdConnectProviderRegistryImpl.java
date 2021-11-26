@@ -190,7 +190,9 @@ public class OpenIdConnectProviderRegistryImpl
 				configurationPid, openIdConnectProviderConfiguration.scopes(),
 				getOpenIdConnectMetadataFactory(
 					openIdConnectProviderConfiguration),
-				openIdConnectProviderConfiguration.tokenConnectionTimeout());
+				openIdConnectProviderConfiguration.tokenConnectionTimeout(),
+				openIdConnectProviderConfiguration.
+					clientAuthenticationPrivateKey());
 		}
 		catch (Exception exception) {
 			throw new ConfigurationException(
@@ -213,6 +215,9 @@ public class OpenIdConnectProviderRegistryImpl
 				openIdConnectProviderConfiguration.discoveryEndPoint())) {
 
 			return new OpenIdConnectMetadataFactoryImpl(
+				openIdConnectProviderConfiguration.clientAuthenticationType(),
+				openIdConnectProviderConfiguration.
+					clientAuthenticationJWSAlgorithm(),
 				openIdConnectProviderConfiguration.providerName(),
 				new URL(openIdConnectProviderConfiguration.discoveryEndPoint()),
 				openIdConnectProviderConfiguration.
@@ -222,6 +227,9 @@ public class OpenIdConnectProviderRegistryImpl
 		}
 
 		return new OpenIdConnectMetadataFactoryImpl(
+			openIdConnectProviderConfiguration.clientAuthenticationType(),
+			openIdConnectProviderConfiguration.
+				clientAuthenticationJWSAlgorithm(),
 			openIdConnectProviderConfiguration.providerName(),
 			openIdConnectProviderConfiguration.registeredIdTokenSigningAlg(),
 			openIdConnectProviderConfiguration.idTokenSigningAlgValues(),

@@ -14,15 +14,32 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
+import com.nimbusds.oauth2.sdk.auth.ClientAuthenticationMethod;
+import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
+import com.nimbusds.oauth2.sdk.auth.ClientSecretJWT;
+import com.nimbusds.oauth2.sdk.auth.ClientSecretPost;
+import com.nimbusds.oauth2.sdk.auth.PrivateKeyJWT;
+import com.nimbusds.oauth2.sdk.auth.Secret;
+import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
+
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.interfaces.ECPrivateKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 
 /**
  * @author Thuong Dinh
  * @author Edward C. Han
+ * @author Arthur Chan
  */
 public class OpenIdConnectProviderImpl
 	implements OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata> {
@@ -31,7 +48,7 @@ public class OpenIdConnectProviderImpl
 		String name, String clientId, String clientSecret,
 		String configurationPid, String scopes,
 		OpenIdConnectMetadataFactory openIdConnectMetadataFactory,
-		int tokenConnectionTimeout) {
+		int tokenConnectionTimeout, String clientAuthenticationPrivateKey) {
 
 		// TODO LPS-139642
 
@@ -42,6 +59,64 @@ public class OpenIdConnectProviderImpl
 		_scopes = scopes;
 		_openIdConnectMetadataFactory = openIdConnectMetadataFactory;
 		_tokenConnectionTimeout = tokenConnectionTimeout;
+		_clientAuthenticationPrivateKey = clientAuthenticationPrivateKey;
+	}
+
+	public ClientAuthentication getClientAuthentication() throws Exception {
+		OIDCProviderMetadata oidcProviderMetadata = getOIDCProviderMetadata();
+
+		OIDCClientMetadata oidcClientMetadata = getOIDCClientMetadata();
+
+		ClientAuthenticationMethod clientAuthenticationMethod =
+			oidcClientMetadata.getTokenEndpointAuthMethod();
+
+		ClientID clientID = new ClientID(_clientId);
+
+		Secret secret = new Secret(_clientSecret);
+
+		if (clientAuthenticationMethod.equals(
+				ClientAuthenticationMethod.CLIENT_SECRET_BASIC)) {
+
+			return new ClientSecretBasic(clientID, secret);
+		}
+		else if (clientAuthenticationMethod.equals(
+					ClientAuthenticationMethod.CLIENT_SECRET_POST)) {
+
+			return new ClientSecretPost(clientID, secret);
+		}
+		else if (clientAuthenticationMethod.equals(
+					ClientAuthenticationMethod.CLIENT_SECRET_JWT)) {
+
+			return new ClientSecretJWT(
+				clientID, oidcProviderMetadata.getTokenEndpointURI(),
+				oidcClientMetadata.getTokenEndpointAuthJWSAlg(), secret);
+		}
+		else if (clientAuthenticationMethod.equals(
+					ClientAuthenticationMethod.PRIVATE_KEY_JWT)) {
+
+			if (JWSAlgorithm.Family.EC.contains(
+					oidcClientMetadata.getTokenEndpointAuthJWSAlg())) {
+
+				return new PrivateKeyJWT(
+					clientID, oidcProviderMetadata.getTokenEndpointURI(),
+					oidcClientMetadata.getTokenEndpointAuthJWSAlg(),
+					(ECPrivateKey)_convertToPrivateKey(
+						KeyFactory.getInstance("EC"),
+						_clientAuthenticationPrivateKey),
+					null, null);
+			}
+
+			return new PrivateKeyJWT(
+				clientID, oidcProviderMetadata.getTokenEndpointURI(),
+				oidcClientMetadata.getTokenEndpointAuthJWSAlg(),
+				(RSAPrivateKey)_convertToPrivateKey(
+					KeyFactory.getInstance("RSA"),
+					_clientAuthenticationPrivateKey),
+				null, null);
+		}
+
+		throw new IllegalArgumentException(
+			"Unsupported Client Authentication type");
 	}
 
 	@Override
@@ -85,6 +160,18 @@ public class OpenIdConnectProviderImpl
 		return _tokenConnectionTimeout;
 	}
 
+	private PrivateKey _convertToPrivateKey(
+			KeyFactory keyFactory, String clientAuthenticationPrivateKey)
+		throws Exception {
+
+		byte[] privateKeyBytes = Base64.decode(clientAuthenticationPrivateKey);
+
+		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKeyBytes);
+
+		return keyFactory.generatePrivate(spec);
+	}
+
+	private final String _clientAuthenticationPrivateKey;
 	private final String _clientId;
 	private final String _clientSecret;
 	private final String _configurationPid;

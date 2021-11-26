@@ -345,6 +345,13 @@ public class ObjectLayoutLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectLayout>
+		getObjectLayouts(long objectDefinitionId) {
+
+		return _objectLayoutLocalService.getObjectLayouts(objectDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayout>
 		getObjectLayouts(long objectDefinitionId, int start, int end) {
 
 		return _objectLayoutLocalService.getObjectLayouts(

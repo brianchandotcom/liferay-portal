@@ -279,6 +279,9 @@ public interface ObjectLayoutLocalService
 	public List<ObjectLayout> getObjectLayouts(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayout> getObjectLayouts(long objectDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectLayout> getObjectLayouts(
 		long objectDefinitionId, int start, int end);
 

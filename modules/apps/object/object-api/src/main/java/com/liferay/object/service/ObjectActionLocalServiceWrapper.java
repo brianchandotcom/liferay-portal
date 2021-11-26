@@ -334,6 +334,13 @@ public class ObjectActionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectAction>
+		getObjectActions(long objectDefinitionId) {
+
+		return _objectActionLocalService.getObjectActions(objectDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectAction>
 		getObjectActions(
 			long objectDefinitionId, String objectActionTriggerKey) {
 

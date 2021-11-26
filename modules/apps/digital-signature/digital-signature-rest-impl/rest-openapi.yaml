@@ -4,6 +4,8 @@ components:
             properties:
                 data:
                     type: string
+                fileEntryExternalReferenceCode:
+                    type: string
                 fileExtension:
                     type: string
                 id:

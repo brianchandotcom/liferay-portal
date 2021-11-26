@@ -53,6 +53,31 @@ public class DSDocument implements Cloneable, Serializable {
 
 	protected String data;
 
+	public String getFileEntryExternalReferenceCode() {
+		return fileEntryExternalReferenceCode;
+	}
+
+	public void setFileEntryExternalReferenceCode(
+		String fileEntryExternalReferenceCode) {
+
+		this.fileEntryExternalReferenceCode = fileEntryExternalReferenceCode;
+	}
+
+	public void setFileEntryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			fileEntryExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			fileEntryExternalReferenceCode =
+				fileEntryExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fileEntryExternalReferenceCode;
+
 	public String getFileExtension() {
 		return fileExtension;
 	}

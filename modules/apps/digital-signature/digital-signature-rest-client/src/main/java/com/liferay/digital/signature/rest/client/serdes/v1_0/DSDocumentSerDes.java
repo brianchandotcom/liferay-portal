@@ -67,6 +67,20 @@ public class DSDocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (dsDocument.getFileEntryExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsDocument.getFileEntryExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (dsDocument.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -148,6 +162,15 @@ public class DSDocumentSerDes {
 			map.put("data", String.valueOf(dsDocument.getData()));
 		}
 
+		if (dsDocument.getFileEntryExternalReferenceCode() == null) {
+			map.put("fileEntryExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"fileEntryExternalReferenceCode",
+				String.valueOf(dsDocument.getFileEntryExternalReferenceCode()));
+		}
+
 		if (dsDocument.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
@@ -201,6 +224,15 @@ public class DSDocumentSerDes {
 			if (Objects.equals(jsonParserFieldName, "data")) {
 				if (jsonParserFieldValue != null) {
 					dsDocument.setData((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fileEntryExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					dsDocument.setFileEntryExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {

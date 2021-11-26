@@ -82,6 +82,38 @@ public class DSDocument implements Serializable {
 	protected String data;
 
 	@Schema
+	public String getFileEntryExternalReferenceCode() {
+		return fileEntryExternalReferenceCode;
+	}
+
+	public void setFileEntryExternalReferenceCode(
+		String fileEntryExternalReferenceCode) {
+
+		this.fileEntryExternalReferenceCode = fileEntryExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setFileEntryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			fileEntryExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			fileEntryExternalReferenceCode =
+				fileEntryExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fileEntryExternalReferenceCode;
+
+	@Schema
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -224,6 +256,20 @@ public class DSDocument implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(data));
+
+			sb.append("\"");
+		}
+
+		if (fileEntryExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileEntryExternalReferenceCode));
 
 			sb.append("\"");
 		}

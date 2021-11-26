@@ -76,16 +76,6 @@ public class ConfigurationSerDes {
 				String.valueOf(configuration.getAggregationConfiguration()));
 		}
 
-		if (configuration.getFacet() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"facet\": ");
-
-			sb.append(String.valueOf(configuration.getFacet()));
-		}
-
 		if (configuration.getGeneral() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -171,13 +161,6 @@ public class ConfigurationSerDes {
 				String.valueOf(configuration.getAggregationConfiguration()));
 		}
 
-		if (configuration.getFacet() == null) {
-			map.put("facet", null);
-		}
-		else {
-			map.put("facet", String.valueOf(configuration.getFacet()));
-		}
-
 		if (configuration.getGeneral() == null) {
 			map.put("general", null);
 		}
@@ -252,12 +235,6 @@ public class ConfigurationSerDes {
 					configuration.setAggregationConfiguration(
 						AggregationConfigurationSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "facet")) {
-				if (jsonParserFieldValue != null) {
-					configuration.setFacet(
-						FacetSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "general")) {

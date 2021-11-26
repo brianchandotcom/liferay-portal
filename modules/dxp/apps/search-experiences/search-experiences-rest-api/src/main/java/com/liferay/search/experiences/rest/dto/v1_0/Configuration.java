@@ -121,33 +121,6 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
-	public Facet getFacet() {
-		return facet;
-	}
-
-	public void setFacet(Facet facet) {
-		this.facet = facet;
-	}
-
-	@JsonIgnore
-	public void setFacet(UnsafeSupplier<Facet, Exception> facetUnsafeSupplier) {
-		try {
-			facet = facetUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Facet facet;
-
-	@Schema
-	@Valid
 	public General getGeneral() {
 		return general;
 	}
@@ -339,16 +312,6 @@ public class Configuration implements Serializable {
 			sb.append("\"aggregationConfiguration\": ");
 
 			sb.append(String.valueOf(aggregationConfiguration));
-		}
-
-		if (facet != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"facet\": ");
-
-			sb.append(String.valueOf(facet));
 		}
 
 		if (general != null) {

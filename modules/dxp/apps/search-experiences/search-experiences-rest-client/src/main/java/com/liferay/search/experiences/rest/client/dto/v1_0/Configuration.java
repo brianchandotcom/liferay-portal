@@ -81,25 +81,6 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected AggregationConfiguration aggregationConfiguration;
 
-	public Facet getFacet() {
-		return facet;
-	}
-
-	public void setFacet(Facet facet) {
-		this.facet = facet;
-	}
-
-	public void setFacet(UnsafeSupplier<Facet, Exception> facetUnsafeSupplier) {
-		try {
-			facet = facetUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Facet facet;
-
 	public General getGeneral() {
 		return general;
 	}

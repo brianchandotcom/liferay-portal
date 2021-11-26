@@ -1190,7 +1190,7 @@ ${runtimeInstance}
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
-		WebContentDisplayPortlet.configureSetupPG(userToolNameList = "DOC,ODT,PDF,TXT");
+		WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Download as DOC,Download as ODT,Download as PDF,Download as TXT");
 
 		WebContentDisplayPortlet.saveConfiguration();
 

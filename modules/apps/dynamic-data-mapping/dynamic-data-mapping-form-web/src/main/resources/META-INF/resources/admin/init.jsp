@@ -53,6 +53,7 @@ page import="com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationException" %><%@
+page import="com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

@@ -374,7 +374,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			ddmFormFieldValidation, ddmFormFieldValue);
 
 		if (!valid) {
-			throw new MustSetValidValue(ddmFormField.getName());
+			throw new MustSetValidValue(
+				ddmFormField.getLabel(), ddmFormField.getName());
 		}
 	}
 

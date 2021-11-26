@@ -19,6 +19,18 @@ definition {
 			var parentFolderId = "0";
 		}
 
+		if (!(isSet(guestPermissions))) {
+			var guestPermissions = "true";
+		}
+
+		if (!(isSet(groupPermissions))) {
+			var groupPermissions = "true";
+		}
+
+		var serviceContext = JSONServiceContextUtil.setServiceContext(
+			addGroupPermissions = "${groupPermissions}",
+			addGuestPermissions = "${guestPermissions}");
+
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/add-folder \
 			-u test@liferay.com:test \
@@ -26,6 +38,7 @@ definition {
 			-d parentFolderId=${parentFolderId} \
 			-d name=${dmFolderName} \
 		 	-d description=${dmFolderDescription} \
+			-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Folder' with the following info using JSONWS:");

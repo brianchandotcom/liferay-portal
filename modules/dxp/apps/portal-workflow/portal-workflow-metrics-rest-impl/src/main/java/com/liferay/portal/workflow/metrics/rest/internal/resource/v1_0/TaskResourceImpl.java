@@ -52,6 +52,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
@@ -156,11 +157,25 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				new UserAssignment(assignee.getId(), user.getFullName()));
 		}
 
+		UpdateTaskRequest.Builder updateTaskRequestBuilder =
+			new UpdateTaskRequest.Builder();
+
 		_taskWorkflowMetricsIndexer.updateTask(
-			LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n()),
-			LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n()),
-			assignments, contextCompany.getCompanyId(), task.getDateModified(),
-			task.getId(), contextUser.getUserId());
+			updateTaskRequestBuilder.assetTitleMap(
+				LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n())
+			).assetTypeMap(
+				LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n())
+			).assignments(
+				assignments
+			).companyId(
+				contextCompany.getCompanyId()
+			).modifiedDate(
+				task.getDateModified()
+			).taskId(
+				task.getId()
+			).userId(
+				contextUser.getUserId()
+			).build());
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
 import java.time.Duration;
@@ -80,20 +81,31 @@ public class KaleoTaskInstanceTokenModelListener
 								getKaleoTaskInstanceTokenId());
 
 				if (!kaleoTaskAssignmentInstances.isEmpty()) {
+					UpdateTaskRequest.Builder updateTaskRequestBuilder =
+						new UpdateTaskRequest.Builder();
+
 					_taskWorkflowMetricsIndexer.updateTask(
-						_indexerHelper.createAssetTitleLocalizationMap(
-							kaleoTaskInstanceToken.getClassName(),
-							kaleoTaskInstanceToken.getClassPK(),
-							kaleoTaskInstanceToken.getGroupId()),
-						_indexerHelper.createAssetTypeLocalizationMap(
-							kaleoTaskInstanceToken.getClassName(),
-							kaleoTaskInstanceToken.getGroupId()),
-						_indexerHelper.toAssignments(
-							kaleoTaskAssignmentInstances),
-						kaleoTaskInstanceToken.getCompanyId(),
-						kaleoTaskInstanceToken.getModifiedDate(),
-						kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-						kaleoTaskInstanceToken.getUserId());
+						updateTaskRequestBuilder.assetTitleMap(
+							_indexerHelper.createAssetTitleLocalizationMap(
+								kaleoTaskInstanceToken.getClassName(),
+								kaleoTaskInstanceToken.getClassPK(),
+								kaleoTaskInstanceToken.getGroupId())
+						).assetTypeMap(
+							_indexerHelper.createAssetTypeLocalizationMap(
+								kaleoTaskInstanceToken.getClassName(),
+								kaleoTaskInstanceToken.getGroupId())
+						).assignments(
+							_indexerHelper.toAssignments(
+								kaleoTaskAssignmentInstances)
+						).companyId(
+							kaleoTaskInstanceToken.getCompanyId()
+						).modifiedDate(
+							kaleoTaskInstanceToken.getModifiedDate()
+						).taskId(
+							kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()
+						).userId(
+							kaleoTaskInstanceToken.getUserId()
+						).build());
 				}
 
 				return null;

@@ -51,6 +51,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
@@ -168,10 +169,25 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		getProcessTask(processId, taskId);
 
+		CompleteTaskRequest.Builder completeTaskRequestBuilder =
+			new CompleteTaskRequest.Builder();
+
 		_taskWorkflowMetricsIndexer.completeTask(
-			contextCompany.getCompanyId(), task.getDateCompletion(),
-			task.getCompletionUserId(), task.getDuration(),
-			task.getDateModified(), taskId, contextUser.getUserId());
+			completeTaskRequestBuilder.companyId(
+				contextCompany.getCompanyId()
+			).completionDate(
+				task.getDateCompletion()
+			).completionUserId(
+				task.getCompletionUserId()
+			).duration(
+				task.getDuration()
+			).modifiedDate(
+				task.getDateModified()
+			).taskId(
+				taskId
+			).userId(
+				contextUser.getUserId()
+			).build());
 	}
 
 	@Override

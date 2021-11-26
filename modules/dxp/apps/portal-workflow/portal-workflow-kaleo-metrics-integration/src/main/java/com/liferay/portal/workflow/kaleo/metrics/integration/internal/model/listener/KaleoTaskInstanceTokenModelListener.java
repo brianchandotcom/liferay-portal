@@ -23,6 +23,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
+import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
 import java.time.Duration;
@@ -124,18 +125,34 @@ public class KaleoTaskInstanceTokenModelListener
 			return;
 		}
 
-		Date createDate = kaleoTaskInstanceToken.getCreateDate();
-		Date completionDate = kaleoTaskInstanceToken.getCompletionDate();
-
-		Duration duration = Duration.between(
-			createDate.toInstant(), completionDate.toInstant());
+		CompleteTaskRequest.Builder completeTaskRequestBuilder =
+			new CompleteTaskRequest.Builder();
 
 		_taskWorkflowMetricsIndexer.completeTask(
-			kaleoTaskInstanceToken.getCompanyId(), completionDate,
-			kaleoTaskInstanceToken.getCompletionUserId(), duration.toMillis(),
-			kaleoTaskInstanceToken.getModifiedDate(),
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-			kaleoTaskInstanceToken.getUserId());
+			completeTaskRequestBuilder.companyId(
+				kaleoTaskInstanceToken.getCompanyId()
+			).completionDate(
+				kaleoTaskInstanceToken.getCompletionDate()
+			).completionUserId(
+				kaleoTaskInstanceToken.getCompletionUserId()
+			).duration(
+				() -> {
+					Date createDate = kaleoTaskInstanceToken.getCreateDate();
+					Date completionDate =
+						kaleoTaskInstanceToken.getCompletionDate();
+
+					Duration duration = Duration.between(
+						createDate.toInstant(), completionDate.toInstant());
+
+					return duration.toMillis();
+				}
+			).modifiedDate(
+				kaleoTaskInstanceToken.getModifiedDate()
+			).taskId(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()
+			).userId(
+				kaleoTaskInstanceToken.getUserId()
+			).build());
 	}
 
 	@Reference

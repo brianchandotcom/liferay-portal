@@ -48,6 +48,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
@@ -629,13 +630,25 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 
 		if (addTaskRequest.isCompleted()) {
+			CompleteTaskRequest.Builder completeTaskRequestBuilder =
+				new CompleteTaskRequest.Builder();
+
 			_taskWorkflowMetricsIndexer.completeTask(
-				addTaskRequest.getCompanyId(),
-				addTaskRequest.getCompletionDate(),
-				addTaskRequest.getCompletionUserId(),
-				durationAvg,
-				addTaskRequest.getModifiedDate(), addTaskRequest.getTaskId(),
-				0);
+				completeTaskRequestBuilder.companyId(
+					addTaskRequest.getCompanyId()
+				).completionDate(
+					addTaskRequest.getCompletionDate()
+				).completionUserId(
+					addTaskRequest.getCompletionUserId()
+				).duration(
+					durationAvg
+				).modifiedDate(
+					addTaskRequest.getModifiedDate()
+				).taskId(
+					addTaskRequest.getTaskId()
+				).userId(
+					0
+				).build());
 
 			_assertCount(
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -757,9 +770,25 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 
 		if (task.getCompleted()) {
+			CompleteTaskRequest.Builder completeTaskRequestBuilder =
+				new CompleteTaskRequest.Builder();
+
 			_taskWorkflowMetricsIndexer.completeTask(
-				companyId, task.getDateCompletion(), task.getCompletionUserId(),
-				task.getDuration(), task.getDateModified(), task.getId(), 0);
+				completeTaskRequestBuilder.companyId(
+					companyId
+				).completionDate(
+					task.getDateCompletion()
+				).completionUserId(
+					task.getCompletionUserId()
+				).duration(
+					task.getDuration()
+				).modifiedDate(
+					task.getDateModified()
+				).taskId(
+					task.getId()
+				).userId(
+					0
+				).build());
 
 			_assertCount(
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),

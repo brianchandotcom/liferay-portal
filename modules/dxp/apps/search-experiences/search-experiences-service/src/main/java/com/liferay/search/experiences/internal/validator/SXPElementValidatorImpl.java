@@ -85,9 +85,6 @@ public class SXPElementValidatorImpl implements SXPElementValidator {
 		if (type == 1) {
 			sb.append("{\"aggregation_element\": ");
 		}
-		else if (type == 5) {
-			sb.append("{\"facet_element\": ");
-		}
 		else if (type == 10) {
 			sb.append("{\"query_element\": ");
 		}

@@ -33,20 +33,23 @@ import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMe
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.time.Duration;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -345,6 +348,30 @@ public class TaskWorkflowMetricsIndexerImpl
 			).setUserId(
 				userId
 			).build());
+	}
+
+	@Override
+	public void deleteTask(DeleteTaskRequest deleteTaskRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setLong(
+			"companyId", deleteTaskRequest.getCompanyId()
+		).setLong(
+			"taskId", deleteTaskRequest.getTaskId()
+		).setString(
+			"uid",
+			digest(
+				deleteTaskRequest.getCompanyId(), deleteTaskRequest.getTaskId())
+		);
+
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				deleteDocument(documentBuilder);
+
+				_deleteTask(
+					deleteTaskRequest.getCompanyId(),
+					deleteTaskRequest.getTaskId());
+			});
 	}
 
 	@Override

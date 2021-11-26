@@ -219,7 +219,7 @@ definition {
 		}
 
 		else if ("${workflowResubmit}" == "true") {
-			PortletEntry.save();
+			PortletEntry.saveAsDraft();
 		}
 
 		else if ("${validateInvalidFile}" == "true") {

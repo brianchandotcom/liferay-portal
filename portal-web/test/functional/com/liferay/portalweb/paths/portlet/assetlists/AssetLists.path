@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ADD_VARIATION_ICON</td>
+	<td>//*[@class='navbar-nav'] //*[contains(@class, 'btn-sm')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_LIST_ELLIPSIS</td>
 	<td>//div[contains(@class,'dropdown')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]</td>
 	<td></td>

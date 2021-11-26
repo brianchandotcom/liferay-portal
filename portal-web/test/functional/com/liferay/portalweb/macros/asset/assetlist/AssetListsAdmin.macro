@@ -331,6 +331,13 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
+
+	macro openPersonalizedVariation {
+		Button.click(button = "New Personalized Variation");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro removeScope {
 		Click(
 			key_title = "${assetListTitle}",
@@ -476,7 +483,9 @@ definition {
 	}
 
 	macro viewCollectionItems {
-		AssetListsAdmin.gotoEntry(assetListName = "${assetListTitle}");
+		if (isSet(assetListTitle)) {
+			AssetListsAdmin.gotoEntry(assetListName = "${assetListTitle}");
+		}
 
 		if (isSet(personalizedVariation)) {
 			Navigator.gotoNavTab(navTab = "${personalizedVariation}");

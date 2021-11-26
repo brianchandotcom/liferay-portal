@@ -207,9 +207,111 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test ContentMatchesSegmentCriteria {
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		// TODO LPS-86283 ContentMatchesSegmentCriteria pending implementation
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
 
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_2",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Create two web content articles for each category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title 1");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title 2");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With Test User",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Naviate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Configure default variation") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Create and configure personalized variation") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_2",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("Select the created Dynamic Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection Test");
+		}
+
+		task ("View web content articles matching with dynamic Collection display in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+			
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetTitle = "WC WebContent Title 1");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetTitle = "WC WebContent Title 2");
+		}
 	}
 
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
@@ -358,9 +460,51 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NumberOfVariationsBySegments {
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment Test 1",
+				text = "Test");
+			
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment Test 2",
+				text = "Test");
+		}
 
-		// TODO LPS-86283 NumberOfVariationsBySegments pending implementation
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
 
+		task ("Add a personalized variation to collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment Test 1");
+		}
+
+		task ("Assert variation's name") {
+			Click(locator1 = "AssetLists#ADD_VARIATION_ICON");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementPresent(
+				key_tableEntry = "Segment Test 1",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+			
+			AssertElementNotPresent(
+				key_tableEntry = "Segment Test 1",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+		}
 	}
 
 	@description = "LPS-87232: Validate if, The content recommendation not will works if it is disabled, so in this way, the Liferay will show all content for the user"
@@ -402,9 +546,77 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test SearchingSegments {
+		task ("Create Segments") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment One",
+				text = "Test");
+			
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment Two",
+				text = "Test");
+		}
 
-		// TODO LPS-86283 SearchingSegments pending implementation
+		task ("Create a manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
 
+		task ("Navigate to Collection created") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Open New Personalized Variation modal") {
+			AssetListsAdmin.openPersonalizedVariation();
+		}
+
+		task ("Order segments") {
+			ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+			AssertTextEquals.assertPartialText(
+				index = "1",
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Segment One");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Segment Two");
+		}
+		
+		task ("Sort segments") {
+			ManagementBar.toggleViewOrder(order = "up");
+
+			AssertTextEquals.assertPartialText(
+				index = "1",
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Segment Two");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "LexiconTable#TABLE_ROW",
+				value1 = "Segment One");
+		}
+
+		task ("Search segments") {
+			Search.searchCP(searchTerm ="Two");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "Segment Two");
+
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Segment One");
+
+			Search.clearSearchResult();
+		}
 	}
 
 	@description = "LPS-93726: Validate if, on content set personalized variations, the same content can match different content set variations"
@@ -680,9 +892,36 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test VariationNameIsShown {
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment for VariationNameIsShown Test",
+				text = "Test");
+		}
 
-		// TODO LPS-86283 VariationNameIsShown pending implementation
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
 
+		task ("Add a personalized variation to collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment for VariationNameIsShown Test");
+		}
+
+		task ("Assert variation's name") {
+			AssertElementPresent(
+				key_title = "Segment for VariationNameIsShown Test",
+				locator1 = "Header#H3_TITLE");
+		}
 	}
 
 	@description = "This is a test for LPS-132626. Able to select all vocabularies when creating a collection."
@@ -841,9 +1080,66 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test ViewContentOfAVariant {
+		task ("Create categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
 
-		// TODO LPS-86283 ViewContentOfAVariant pending implementation
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category_1",
+				vocabularyName = "Vocabulary Name");
+		}
 
+		task ("Create a web content article") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					assetCategoryIds = "${categoryId1}",
+					content = "WC WebContent Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With Test User",
+				text = "Test");
+		}
+
+		task ("Create a Dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Add a personalized variation to collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
+		}
+
+		task ("Configure asset types to collection") {
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Filter that variation by category") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category_1",
+				queryAndOperator = "Any",
+				queryContains = "Contains");
+		}
+
+		task ("View content of that variant") {
+			AssetListsAdmin.viewCollectionItems(assetTitleList = "WC_Title_1,WC_Title_2,WC_Title_3");
+		}
 	}
 
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."

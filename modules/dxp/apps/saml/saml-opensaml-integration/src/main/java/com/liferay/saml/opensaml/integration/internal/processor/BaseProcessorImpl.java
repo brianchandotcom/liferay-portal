@@ -59,7 +59,7 @@ public abstract class BaseProcessorImpl
 	public M process(ServiceContext serviceContext) throws PortalException {
 		_preparePatches();
 
-		_consumePatches(_unsafeConsumers, serviceContext);
+		_consumePatches(serviceContext);
 
 		return _model;
 	}
@@ -276,22 +276,19 @@ public abstract class BaseProcessorImpl
 			return (V[])map.get(fieldExpression);
 		}
 
-		private String _prefix;
+		private final String _prefix;
 
 	}
 
 	protected abstract PC getProcessorContext(String prefix);
 
-	private void _consumePatches(
-			Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
-				unsafeConsumers,
-			ServiceContext serviceContext)
+	private void _consumePatches(ServiceContext serviceContext)
 		throws PortalException {
 
 		Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>> entry;
 
 		try {
-			while ((entry = unsafeConsumers.poll()) != null) {
+			while ((entry = _unsafeConsumers.poll()) != null) {
 				UnsafeConsumer<ServiceContext, ?> unsafeConsumer =
 					entry.getValue();
 

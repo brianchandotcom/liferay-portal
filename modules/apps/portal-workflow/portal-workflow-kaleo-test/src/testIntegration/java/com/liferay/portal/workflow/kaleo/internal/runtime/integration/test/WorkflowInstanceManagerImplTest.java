@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -113,6 +114,69 @@ public class WorkflowInstanceManagerImplTest
 	}
 
 	@Test
+	public void testSearchWorkflowInstancesWhenThereAreInactiveInstances()
+		throws Exception {
+
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler()) {
+
+			Class<?> clazz = getClass();
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
+
+			WorkflowModelSearchResult<WorkflowInstance>
+				workflowModelSearchResult =
+					workflowInstanceManager.searchWorkflowInstances(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), true, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, null, true, 0, 1,
+						WorkflowComparatorFactoryUtil.
+							getInstanceCompletedComparator(false));
+
+			List<WorkflowInstance> workflowInstances =
+				workflowModelSearchResult.getWorkflowModels();
+
+			Assert.assertEquals(
+				workflowInstances.toString(), 1, workflowInstances.size());
+
+			WorkflowInstance workflowInstance = workflowInstances.get(0);
+
+			workflowInstanceManager.updateActive(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				workflowInstance.getWorkflowInstanceId(), false);
+
+			workflowModelSearchResult =
+				workflowInstanceManager.searchWorkflowInstances(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					true, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
+					WorkflowComparatorFactoryUtil.
+						getInstanceCompletedComparator(false));
+
+			workflowInstances = workflowModelSearchResult.getWorkflowModels();
+
+			Assert.assertEquals(
+				workflowInstances.toString(), 0, workflowInstances.size());
+
+			workflowModelSearchResult =
+				workflowInstanceManager.searchWorkflowInstances(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
+					WorkflowComparatorFactoryUtil.
+						getInstanceCompletedComparator(false));
+
+			workflowInstances = workflowModelSearchResult.getWorkflowModels();
+
+			Assert.assertEquals(
+				workflowInstances.toString(), 1, workflowInstances.size());
+		}
+	}
+
+	@Test
 	public void testSearchWorkflowInstancesWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
@@ -190,6 +254,36 @@ public class WorkflowInstanceManagerImplTest
 
 			Assert.assertEquals(
 				workflowInstances.toString(), 1, workflowInstances.size());
+		}
+	}
+
+	@Test
+	public void testUpdateActive() throws Exception {
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler()) {
+
+			Class<?> clazz = getClass();
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
+
+			WorkflowInstanceLink workflowInstanceLink =
+				workflowInstanceLinkLocalService.getWorkflowInstanceLink(
+					TestPropsValues.getCompanyId(), 0, clazz.getName(), 1);
+
+			WorkflowInstance workflowInstance =
+				workflowInstanceManager.getWorkflowInstance(
+					workflowInstanceLink.getCompanyId(),
+					workflowInstanceLink.getWorkflowInstanceId());
+
+			Assert.assertTrue(workflowInstance.isActive());
+
+			workflowInstance = workflowInstanceManager.updateActive(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				workflowInstance.getWorkflowInstanceId(), false);
+
+			Assert.assertFalse(workflowInstance.isActive());
 		}
 	}
 

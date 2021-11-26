@@ -301,6 +301,7 @@ public class NodeMetricResourceImpl
 		}
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("active", true),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("completed", completed),
 			_queries.term("deleted", Boolean.FALSE),
@@ -340,6 +341,7 @@ public class NodeMetricResourceImpl
 		booleanQuery.addFilterQueryClauses(filterBooleanQuery);
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("active", Boolean.TRUE),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE));
 	}

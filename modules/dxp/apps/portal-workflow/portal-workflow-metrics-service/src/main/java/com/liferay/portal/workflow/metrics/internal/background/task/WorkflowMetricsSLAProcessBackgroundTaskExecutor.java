@@ -222,6 +222,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		}
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("active", true),
 			_queries.term("completed", completed),
 			_queries.term("deleted", false),
 			_queries.rangeTerm("instanceId", false, false, instanceId, null),
@@ -242,7 +243,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("deleted", false),
+			_queries.term("active", true), _queries.term("deleted", false),
 			_queries.rangeTerm(
 				"instanceId", true, true, startInstanceId, endInstanceId),
 			_queries.term("processId", processId),
@@ -264,7 +265,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("deleted", false),
+			_queries.term("active", true), _queries.term("deleted", false),
 			_queries.rangeTerm(
 				"instanceId", true, true, startInstanceId, endInstanceId),
 			_queries.term("processId", processId));

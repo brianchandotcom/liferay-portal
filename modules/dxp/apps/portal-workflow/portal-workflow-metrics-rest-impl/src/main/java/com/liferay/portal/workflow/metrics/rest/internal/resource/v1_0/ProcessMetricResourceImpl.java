@@ -234,6 +234,7 @@ public class ProcessMetricResourceImpl
 		}
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("active", Boolean.TRUE),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_createBooleanQuery(completed),
@@ -311,6 +312,7 @@ public class ProcessMetricResourceImpl
 		}
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("active", Boolean.TRUE),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_createProcessIdTermsQuery(processIds));

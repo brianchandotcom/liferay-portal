@@ -137,6 +137,10 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 
 		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
 
+		if (ddmFormField == null) {
+			return _defaultDDMFormFieldValueAccessor;
+		}
+
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
 				ddmFormField.getType());

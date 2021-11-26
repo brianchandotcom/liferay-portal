@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -75,6 +76,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
@@ -834,6 +836,10 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition);
 			}
 
+			if (active != originalActive) {
+				_updateWorkflowInstances(objectDefinition);
+			}
+
 			return objectDefinitionPersistence.update(objectDefinition);
 		}
 
@@ -865,6 +871,31 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setScope(scope);
 
 		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
+	private void _updateWorkflowInstances(ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryPersistence.findByODI_NotS(
+				objectDefinition.getObjectDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			WorkflowInstanceLink workflowInstanceLink =
+				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+					objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId());
+
+			if (workflowInstanceLink != null) {
+				_workflowInstanceManager.updateActive(
+					objectDefinition.getUserId(),
+					objectDefinition.getCompanyId(),
+					workflowInstanceLink.getWorkflowInstanceId(),
+					objectDefinition.isActive());
+			}
+		}
 	}
 
 	private void _validateActive(
@@ -1089,6 +1120,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Reference(target = "(model.pre.filter.contributor.id=WorkflowStatus)")
 	private ModelPreFilterContributor _workflowStatusModelPreFilterContributor;

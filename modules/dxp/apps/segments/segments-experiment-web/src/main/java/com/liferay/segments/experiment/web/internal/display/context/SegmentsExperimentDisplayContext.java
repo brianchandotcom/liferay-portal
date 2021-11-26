@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -475,15 +476,26 @@ public class SegmentsExperimentDisplayContext {
 			return _segmentsExperienceId;
 		}
 
-		LongStream longStream = Arrays.stream(
-			GetterUtil.getLongValues(
-				_httpServletRequest.getAttribute(
-					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS)));
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(_httpServletRequest);
 
-		_segmentsExperienceId = longStream.findFirst(
-		).orElse(
-			SegmentsExperienceConstants.ID_DEFAULT
-		);
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			originalHttpServletRequest, "p_s_e_id", -1);
+
+		if (selectedSegmentsExperienceId != -1) {
+			_segmentsExperienceId = selectedSegmentsExperienceId;
+		}
+		else {
+			LongStream longStream = Arrays.stream(
+				GetterUtil.getLongValues(
+					_httpServletRequest.getAttribute(
+						SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS)));
+
+			_segmentsExperienceId = longStream.findFirst(
+			).orElse(
+				SegmentsExperienceConstants.ID_DEFAULT
+			);
+		}
 
 		return _segmentsExperienceId;
 	}

@@ -24,6 +24,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
@@ -116,9 +117,15 @@ public class KaleoTaskInstanceTokenModelListener
 	public void onBeforeRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws ModelListenerException {
 
+		DeleteTaskRequest.Builder deleteTaskRequestBuilder =
+			new DeleteTaskRequest.Builder();
+
 		_taskWorkflowMetricsIndexer.deleteTask(
-			kaleoTaskInstanceToken.getCompanyId(),
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+			deleteTaskRequestBuilder.companyId(
+				kaleoTaskInstanceToken.getCompanyId()
+			).taskId(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()
+			).build());
 	}
 
 	@Override

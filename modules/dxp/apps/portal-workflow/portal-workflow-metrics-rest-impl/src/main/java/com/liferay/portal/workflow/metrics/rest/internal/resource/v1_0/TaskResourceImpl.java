@@ -52,6 +52,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
@@ -91,8 +92,15 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	public void deleteProcessTask(Long processId, Long taskId)
 		throws Exception {
 
+		DeleteTaskRequest.Builder deleteTaskRequestBuilder =
+			new DeleteTaskRequest.Builder();
+
 		_taskWorkflowMetricsIndexer.deleteTask(
-			contextCompany.getCompanyId(), taskId);
+			deleteTaskRequestBuilder.companyId(
+				contextCompany.getCompanyId()
+			).taskId(
+				taskId
+			).build());
 	}
 
 	@Override

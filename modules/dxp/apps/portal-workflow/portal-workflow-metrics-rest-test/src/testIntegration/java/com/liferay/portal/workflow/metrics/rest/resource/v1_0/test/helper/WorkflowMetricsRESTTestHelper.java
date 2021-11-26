@@ -151,8 +151,9 @@ public class WorkflowMetricsRESTTestHelper {
 
 		_assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
-			"companyId", companyId, "deleted", false, "instanceId",
-			instance.getId(), "processId", instance.getProcessId());
+			"active", true, "companyId", companyId, "deleted", false,
+			"instanceId", instance.getId(), "processId",
+			instance.getProcessId());
 
 		return instance;
 	}
@@ -573,9 +574,10 @@ public class WorkflowMetricsRESTTestHelper {
 
 		_assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
-			"companyId", companyId, "deleted", false, "instanceId",
-			instance.getId(), "processId", task.getProcessId(), "nodeId",
-			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
+			"active", true, "companyId", companyId, "deleted", false,
+			"instanceId", instance.getId(), "processId", task.getProcessId(),
+			"nodeId", task.getNodeId(), "name", task.getName(), "taskId",
+			task.getId());
 
 		_assertCount(
 			booleanQuery -> booleanQuery.addMustQueryClauses(
@@ -911,6 +913,8 @@ public class WorkflowMetricsRESTTestHelper {
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
 		documentBuilder.setValue(
+			"active", true
+		).setValue(
 			"companyId", companyId
 		).setValue(
 			"deleted", false
@@ -962,6 +966,8 @@ public class WorkflowMetricsRESTTestHelper {
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
 		documentBuilder.setValue(
+			"active", true
+		).setValue(
 			"assigneeIds", assigneeId
 		).setValue(
 			"assigneeType", User.class.getName()

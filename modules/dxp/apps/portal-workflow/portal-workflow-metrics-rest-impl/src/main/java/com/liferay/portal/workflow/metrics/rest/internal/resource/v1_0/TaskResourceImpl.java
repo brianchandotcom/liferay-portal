@@ -456,6 +456,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("active", Boolean.TRUE),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId),

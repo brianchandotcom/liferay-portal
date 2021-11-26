@@ -1684,39 +1684,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Test 2");
 	}
 
-	@description = "LPS-138755 - Add an entry and make sure the author value is correctly displayed"
-	@priority = "5"
-	test CanViewUserNameOnAuthorColumn {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject",
-			value = "Text test");
-
-		Navigator.openURL();
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
-
-		ObjectPortlet.assertAuthorColumnDisplaysUserName(
-			column = "Author",
-			authorName = "Test Test");
-	}
-
 	@description = "LPS-135396 - Verify it is possible to view a BigDecimal entry and label on layout"
 	@priority = "4"
 	test CanViewBigDecimalEntryOnLayout {
@@ -2021,6 +1988,39 @@ definition {
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
 		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "Text Test");
+	}
+
+	@description = "LPS-138755 - Add an entry and make sure the author value is correctly displayed"
+	@priority = "5"
+	test CanViewUserNameOnAuthorColumn {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Text test");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertAuthorColumnDisplaysUserName(
+			authorName = "Test Test",
+			column = "Author");
 	}
 
 	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Workflow Status are displayed"

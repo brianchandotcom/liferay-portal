@@ -50,6 +50,7 @@ import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
+import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
@@ -65,11 +66,21 @@ import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndex
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.junit.Assert;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 import java.io.Serializable;
-
 import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -82,21 +93,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.time.DateUtils;
-
-import org.junit.Assert;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -604,11 +600,25 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 
 		if (ListUtil.isNotEmpty(addTaskRequest.getAssignments())) {
+			UpdateTaskRequest.Builder updateTaskRequestBuilder =
+				new UpdateTaskRequest.Builder();
+
 			_taskWorkflowMetricsIndexer.updateTask(
-				addTaskRequest.getAssetTitleMap(),
-				addTaskRequest.getAssetTypeMap(),
-				addTaskRequest.getAssignments(), addTaskRequest.getCompanyId(),
-				new Date(), addTaskRequest.getTaskId(), 0);
+				updateTaskRequestBuilder.setAssetTitleMap(
+					addTaskRequest.getAssetTitleMap()
+				).setAssetTypeMap(
+					addTaskRequest.getAssetTypeMap()
+				).setAssignments(
+					addTaskRequest.getAssignments()
+				).setCompanyId(
+					addTaskRequest.getCompanyId()
+				).setModifiedDate(
+					new Date()
+				).setTaskId(
+					addTaskRequest.getTaskId()
+				).setUserId(
+					0
+				).build());
 
 			Assignment assignment = assignments.get(0);
 
@@ -752,10 +762,25 @@ public class WorkflowMetricsRESTTestHelper {
 			instance.getId(), "processId", task.getProcessId());
 
 		if (!assignments.isEmpty()) {
+			UpdateTaskRequest.Builder updateTaskRequestBuilder =
+				new UpdateTaskRequest.Builder();
+
 			_taskWorkflowMetricsIndexer.updateTask(
-				_createLocalizationMap(task.getAssetTitle()),
-				_createLocalizationMap(task.getAssetType()), assignments,
-				companyId, new Date(), task.getId(), 0);
+				updateTaskRequestBuilder.setAssetTitleMap(
+					_createLocalizationMap(task.getAssetTitle())
+				).setAssetTypeMap(
+					_createLocalizationMap(task.getAssetType())
+				).setAssignments(
+					assignments
+				).setCompanyId(
+					companyId
+				).setModifiedDate(
+					new Date()
+				).setTaskId(
+					task.getId()
+				).setUserId(
+					0
+				).build());
 
 			Assignment assignment = assignments.get(0);
 

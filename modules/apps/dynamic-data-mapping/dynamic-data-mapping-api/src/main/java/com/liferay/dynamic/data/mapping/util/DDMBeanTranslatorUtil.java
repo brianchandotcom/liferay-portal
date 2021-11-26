@@ -33,20 +33,8 @@ public class DDMBeanTranslatorUtil {
 		return getDDMBeanTranslator().translate(ddmForm);
 	}
 
-	public static com.liferay.dynamic.data.mapping.kernel.DDMForm translate(
-		DDMForm ddmForm) {
-
-		return getDDMBeanTranslator().translate(ddmForm);
-	}
-
 	public static DDMFormField translate(
 		com.liferay.dynamic.data.mapping.kernel.DDMFormField ddmFormField) {
-
-		return getDDMBeanTranslator().translate(ddmFormField);
-	}
-
-	public static com.liferay.dynamic.data.mapping.kernel.DDMFormField
-		translate(DDMFormField ddmFormField) {
 
 		return getDDMBeanTranslator().translate(ddmFormField);
 	}
@@ -55,6 +43,18 @@ public class DDMBeanTranslatorUtil {
 		com.liferay.dynamic.data.mapping.kernel.DDMFormValues ddmFormValues) {
 
 		return getDDMBeanTranslator().translate(ddmFormValues);
+	}
+
+	public static com.liferay.dynamic.data.mapping.kernel.DDMForm translate(
+		DDMForm ddmForm) {
+
+		return getDDMBeanTranslator().translate(ddmForm);
+	}
+
+	public static com.liferay.dynamic.data.mapping.kernel.DDMFormField
+		translate(DDMFormField ddmFormField) {
+
+		return getDDMBeanTranslator().translate(ddmFormField);
 	}
 
 	public static com.liferay.dynamic.data.mapping.kernel.DDMFormValues

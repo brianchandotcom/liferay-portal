@@ -14,16 +14,22 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -217,12 +223,26 @@ public class ObjectDefinitionResourceImpl
 				label = LocalizedMapUtil.getI18nMap(
 					objectDefinition.getLabelMap());
 				name = objectDefinition.getShortName();
+				objectActions = transformToArray(
+					_objectActionLocalService.getObjectActions(
+						objectDefinition.getObjectDefinitionId()),
+					objectAction -> ObjectActionUtil.toObjectAction(
+						null, objectAction),
+					ObjectAction.class);
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
 					objectField -> ObjectFieldUtil.toObjectField(
 						null, objectField),
 					ObjectField.class);
+				objectLayouts = transformToArray(
+					_objectLayoutLocalService.getObjectLayouts(
+						objectDefinition.getObjectDefinitionId()),
+					objectLayout -> ObjectLayoutUtil.toObjectLayout(
+						null, objectLayout),
+					ObjectLayout.class);
+				pluralLabel = LocalizedMapUtil.getI18nMap(
+					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
 				scope = objectDefinition.getScope();
 				status = new Status() {
@@ -246,9 +266,15 @@ public class ObjectDefinitionResourceImpl
 		new ObjectDefinitionEntityModel();
 
 	@Reference
+	private ObjectActionLocalService _objectActionLocalService;
+
+	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectLayoutLocalService _objectLayoutLocalService;
 
 }

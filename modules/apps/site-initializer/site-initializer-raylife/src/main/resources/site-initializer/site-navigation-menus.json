@@ -1,27 +1,32 @@
 [
 	{
-		"name": "Public Menu",
-		"pages": [
+		"menuItems": [
 			{
 				"friendlyURL": "/business-insurance",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/claims",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/risk-control",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/about-us",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/contact",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			}
-		]
+		],
+		"name": "Public Menu"
 	}
 ]

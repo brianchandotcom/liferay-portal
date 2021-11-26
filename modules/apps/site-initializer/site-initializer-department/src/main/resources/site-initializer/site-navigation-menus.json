@@ -1,36 +1,42 @@
 [
 	{
-		"name": "Main Navigation",
-		"pages": [
+		"menuItems": [
 			{
 				"friendlyURL": "/team",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/careers",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/blog",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			}
-		]
+		],
+		"name": "Main Navigation"
 	},
 	{
-		"name": "Footer Navigation",
-		"pages": [
+		"menuItems": [
 			{
 				"friendlyURL": "/privacy-policy",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/cookie-settings",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/github",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			}
-		]
+		],
+		"name": "Footer Navigation"
 	}
 ]

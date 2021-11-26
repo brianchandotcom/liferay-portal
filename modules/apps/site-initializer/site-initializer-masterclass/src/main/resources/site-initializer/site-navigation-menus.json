@@ -1,36 +1,42 @@
 [
 	{
-		"name": "Main Navigation",
-		"pages": [
+		"menuItems": [
 			{
 				"friendlyURL": "/courses",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/blog",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/apply",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			}
-		]
+		],
+		"name": "Main Navigation"
 	},
 	{
-		"name": "Private Area Navigation",
-		"pages": [
+		"menuItems": [
 			{
 				"friendlyURL": "/my-learning",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/notifications",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			},
 			{
 				"friendlyURL": "/account-settings",
-				"privateLayout": false
+				"privateLayout": false,
+				"type": "layout"
 			}
-		]
+		],
+		"name": "Private Area Navigation"
 	}
 ]

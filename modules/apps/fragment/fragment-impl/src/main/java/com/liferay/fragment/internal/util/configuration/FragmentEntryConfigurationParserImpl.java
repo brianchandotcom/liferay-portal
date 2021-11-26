@@ -82,7 +82,9 @@ public class FragmentEntryConfigurationParserImpl
 
 			defaultValuesJSONObject.put(
 				fragmentConfigurationField.getName(),
-				getFieldValue(fragmentConfigurationField, null));
+				getFieldValue(
+					fragmentConfigurationField,
+					LocaleUtil.getMostRelevantLocale(), null));
 		}
 
 		return defaultValuesJSONObject;

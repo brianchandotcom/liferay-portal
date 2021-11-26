@@ -509,8 +509,10 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.updateFragmentEntry(
-			getUserId(), fragmentEntryId, name, css, html, js, cacheable,
-			configuration, fragmentEntry.getPreviewFileEntryId(), status);
+			getUserId(), fragmentEntryId,
+			fragmentEntry.getFragmentCollectionId(), name, css, html, js,
+			cacheable, configuration, fragmentEntry.getPreviewFileEntryId(),
+			status);
 	}
 
 	@Override
@@ -528,8 +530,9 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.updateFragmentEntry(
-			getUserId(), fragmentEntryId, name, css, html, js, cacheable,
-			configuration, previewFileEntryId, status);
+			getUserId(), fragmentEntryId,
+			fragmentEntry.getFragmentCollectionId(), name, css, html, js,
+			cacheable, configuration, previewFileEntryId, status);
 	}
 
 	@Override

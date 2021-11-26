@@ -117,7 +117,7 @@ public class FragmentsImporterTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_fragmentsImporter.importFile(
+			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file, false);
 		}
 		finally {
@@ -146,7 +146,7 @@ public class FragmentsImporterTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_fragmentsImporter.importFile(
+			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file, false);
 		}
 		finally {
@@ -180,7 +180,7 @@ public class FragmentsImporterTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_fragmentsImporter.importFile(
+			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file, false);
 		}
 		finally {
@@ -221,7 +221,7 @@ public class FragmentsImporterTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_fragmentsImporter.importFile(
+			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file, false);
 		}
 		finally {
@@ -360,7 +360,7 @@ public class FragmentsImporterTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_fragmentsImporter.importFile(
+			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file, false);
 		}
 		finally {

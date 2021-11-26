@@ -237,8 +237,9 @@ public class FragmentCompositionServiceImpl
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCompositionLocalService.updateFragmentComposition(
-			getUserId(), fragmentCompositionId, name, description, data,
-			previewFileEntryId, status);
+			getUserId(), fragmentCompositionId,
+			fragmentComposition.getFragmentCollectionId(), name, description,
+			data, previewFileEntryId, status);
 	}
 
 	@Reference

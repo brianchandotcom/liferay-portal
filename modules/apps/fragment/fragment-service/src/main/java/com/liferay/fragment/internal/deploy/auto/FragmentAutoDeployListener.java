@@ -190,7 +190,8 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 			groupId = group.getGroupId();
 		}
 
-		_fragmentsImporter.importFile(user.getUserId(), groupId, 0, file, true);
+		_fragmentsImporter.importFragmentEntries(
+			user.getUserId(), groupId, 0, file, true);
 
 		if ((company != null) && (group != null) &&
 			(company.getGroupId() != group.getGroupId())) {

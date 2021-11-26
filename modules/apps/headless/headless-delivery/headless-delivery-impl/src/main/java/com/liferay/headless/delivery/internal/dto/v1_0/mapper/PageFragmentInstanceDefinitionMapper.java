@@ -162,7 +162,7 @@ public class PageFragmentInstanceDefinitionMapper {
 							getConfigurationJSONObject(
 								fragmentEntryLink.getConfiguration(),
 								fragmentEntryLink.getEditableValues(),
-								new long[] {0L});
+								LocaleUtil.getMostRelevantLocale());
 
 					Set<String> keys = jsonObject.keySet();
 

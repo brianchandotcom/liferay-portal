@@ -29,6 +29,10 @@ public class BatchEngineTaskProgressFactory {
 	public BatchEngineTaskProgress create(
 		BatchEngineTaskContentType batchEngineTaskContentType) {
 
+		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
+			return new CSVBatchEngineTaskProgressImpl();
+		}
+
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
 			return new JSONBatchEngineTaskProgressImpl();
 		}

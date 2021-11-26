@@ -374,24 +374,21 @@ public class TaskWorkflowMetricsIndexerImpl
 			});
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #deleteTask(DeleteTaskRequest)}
+	 */
+	@Deprecated
 	@Override
 	public void deleteTask(long companyId, long taskId) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DeleteTaskRequest.Builder deleteTaskRequestBuilder =
+			new DeleteTaskRequest.Builder();
 
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setLong(
-			"taskId", taskId
-		).setString(
-			"uid", digest(companyId, taskId)
-		);
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				deleteDocument(documentBuilder);
-
-				_deleteTask(companyId, taskId);
-			});
+		deleteTask(
+			deleteTaskRequestBuilder.setCompanyId(
+				companyId
+			).setTaskId(
+				taskId
+			).build());
 	}
 
 	@Override

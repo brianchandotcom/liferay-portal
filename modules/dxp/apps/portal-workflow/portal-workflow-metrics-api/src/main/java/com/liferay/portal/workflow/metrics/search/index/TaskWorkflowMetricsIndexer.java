@@ -69,6 +69,10 @@ public interface TaskWorkflowMetricsIndexer {
 			"This method needs to be implemented");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #deleteTask(DeleteTaskRequest)}
+	 */
+	@Deprecated
 	public void deleteTask(long companyId, long taskId);
 
 	/**

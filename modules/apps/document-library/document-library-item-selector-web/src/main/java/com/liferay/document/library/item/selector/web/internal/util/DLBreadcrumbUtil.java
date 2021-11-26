@@ -42,7 +42,7 @@ public class DLBreadcrumbUtil {
 			String displayStyle, Folder folder,
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			PortletURL portletURL, boolean showGroupSelector)
+			PortletURL portletURL, boolean showGroupSelector, long repositoryId)
 		throws Exception {
 
 		if (showGroupSelector) {
@@ -52,14 +52,13 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter("displayStyle", displayStyle);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
-			portletURL, themeDisplay.getScopeGroupId(),
-			_getRootFolderName(folder, httpServletRequest, showGroupSelector));
+			portletURL,
+			_getRepositoryId(folder, httpServletRequest, repositoryId),
+			_getRootFolderName(
+				httpServletRequest, showGroupSelector,
+				_getRepositoryId(folder, httpServletRequest, repositoryId)));
 
 		if (folder != null) {
 			List<Folder> ancestorFolders = folder.getAncestors();
@@ -108,9 +107,28 @@ public class DLBreadcrumbUtil {
 			httpServletRequest, title, portletURL.toString());
 	}
 
+	private static long _getRepositoryId(
+		Folder folder, HttpServletRequest httpServletRequest,
+		long repositoryId) {
+
+		if (repositoryId != 0) {
+			return repositoryId;
+		}
+
+		if (folder != null) {
+			return folder.getRepositoryId();
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
+	}
+
 	private static String _getRootFolderName(
-			Folder folder, HttpServletRequest httpServletRequest,
-			boolean showGroupSelector)
+			HttpServletRequest httpServletRequest, boolean showGroupSelector,
+			long repositoryId)
 		throws Exception {
 
 		if (!showGroupSelector) {
@@ -123,8 +141,8 @@ public class DLBreadcrumbUtil {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (folder != null) {
-			group = GroupServiceUtil.getGroup(folder.getGroupId());
+		if (repositoryId != 0) {
+			group = GroupServiceUtil.getGroup(repositoryId);
 		}
 
 		return group.getDescriptiveName(themeDisplay.getLocale());

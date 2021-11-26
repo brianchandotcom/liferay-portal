@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"display.index:Integer=0", "prefix=",
-		"processing.index:Integer=" + Integer.MAX_VALUE
+		"display.index:Integer=0", "prefix=", "processing.index:Integer=-1"
 	},
 	service = UserFieldExpressionHandler.class
 )

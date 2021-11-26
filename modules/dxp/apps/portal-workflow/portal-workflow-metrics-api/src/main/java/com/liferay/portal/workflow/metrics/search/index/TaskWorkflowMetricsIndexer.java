@@ -18,6 +18,7 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 
 import java.util.Date;
@@ -46,6 +47,8 @@ public interface TaskWorkflowMetricsIndexer {
 	public Document completeTask(
 		long companyId, Date completionDate, long completionUserId,
 		long duration, Date modifiedDate, long taskId, long userId);
+
+	public void deleteTask(DeleteTaskRequest deleteTaskRequest);
 
 	public void deleteTask(long companyId, long taskId);
 

@@ -281,7 +281,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 				objectLayoutTab.getObjectLayoutBoxes(),
 				this::_toObjectLayoutBox));
 		serviceBuilderObjectLayoutTab.setObjectRelationshipId(
-			objectLayoutTab.getObjectRelationshipId());
+			GetterUtil.getLong(objectLayoutTab.getObjectRelationshipId()));
 		serviceBuilderObjectLayoutTab.setPriority(
 			objectLayoutTab.getPriority());
 

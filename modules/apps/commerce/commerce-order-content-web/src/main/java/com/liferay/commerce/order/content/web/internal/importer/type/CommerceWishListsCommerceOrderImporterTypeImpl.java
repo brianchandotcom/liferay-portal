@@ -176,12 +176,16 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			CommerceWishListItem commerceWishListItem)
 		throws Exception {
 
-		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
-			new CommerceOrderImporterItemImpl();
-
-		CPInstance cpInstance = _cpInstanceLocalService.getCProductInstance(
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
 			commerceWishListItem.getCProductId(),
 			commerceWishListItem.getCPInstanceUuid());
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
+			new CommerceOrderImporterItemImpl();
 
 		commerceOrderImporterItemImpl.setCPInstanceId(
 			cpInstance.getCPInstanceId());

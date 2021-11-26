@@ -94,9 +94,12 @@ public abstract class BaseProcessorImpl
 
 			_processorContext = processorContext;
 
-			_patchingQueue = _getPatchingQueue(
-				modelGetterFunction, processingIndex, _unsafeConsumers,
-				publicIdentifier, updateFunction);
+			_unsafeConsumers.add(
+				new AbstractMap.SimpleEntry<>(
+					processingIndex,
+					serviceContext -> _patchModel(
+						publicIdentifier, modelGetterFunction, _patchingQueue,
+						updateFunction, serviceContext)));
 		}
 
 		public <V> void handleUnsafeObjectArray(
@@ -216,7 +219,8 @@ public abstract class BaseProcessorImpl
 				(object, values) -> unsafeBiConsumer.accept(object, values[0]));
 		}
 
-		private final Queue<UnsafeConsumer<T, ?>> _patchingQueue;
+		private final Queue<UnsafeConsumer<T, ?>> _patchingQueue =
+			new LinkedList<>();
 		private final ProcessorContext<M> _processorContext;
 
 	}
@@ -301,26 +305,6 @@ public abstract class BaseProcessorImpl
 
 			throw new PortalException(throwable);
 		}
-	}
-
-	private <T extends BaseModel<T>> Queue<UnsafeConsumer<T, ?>>
-		_getPatchingQueue(
-			Function<M, T> modelGetterFunction, int processingIndex,
-			Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
-				processingQueue,
-			String publicIdentifier,
-			ProcessorContext.UpdateFunction<T> updateFunction) {
-
-		Queue<UnsafeConsumer<T, ?>> queue = new LinkedList<>();
-
-		processingQueue.add(
-			new AbstractMap.SimpleEntry<>(
-				processingIndex,
-				serviceContext -> _patchModel(
-					publicIdentifier, modelGetterFunction, queue,
-					updateFunction, serviceContext)));
-
-		return queue;
 	}
 
 	private <T extends BaseModel<T>> T _patchModel(

@@ -114,11 +114,6 @@ components:
                         aggs:
                             type: object
                     type: object
-                facet:
-                    properties:
-                        enabled:
-                            type: boolean
-                    type: object
                 general:
                     properties:
                         clauseContributorsExcludes:

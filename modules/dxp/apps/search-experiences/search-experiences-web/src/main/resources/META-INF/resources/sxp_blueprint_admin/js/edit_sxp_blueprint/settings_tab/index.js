@@ -20,7 +20,6 @@ function SettingsTab({
 	advancedConfig,
 	aggregationConfig,
 	errors,
-	facetConfig,
 	highlightConfig,
 	parameterConfig,
 	setFieldTouched,
@@ -71,12 +70,6 @@ function SettingsTab({
 					</label>
 
 					{_renderEditor('aggregationConfig', aggregationConfig)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label>{Liferay.Language.get('facet-configuration')}</label>
-
-					{_renderEditor('facetConfig', facetConfig)}
 				</ClayForm.Group>
 
 				<ClayForm.Group>

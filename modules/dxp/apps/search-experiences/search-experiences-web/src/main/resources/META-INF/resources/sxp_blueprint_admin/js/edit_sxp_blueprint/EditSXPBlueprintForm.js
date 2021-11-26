@@ -98,7 +98,6 @@ function EditSXPBlueprintForm({
 		advancedConfig,
 		aggregationConfig,
 		applyIndexerClauses,
-		facetConfig,
 		frameworkConfig,
 		highlightConfig,
 		parameterConfig,
@@ -108,7 +107,6 @@ function EditSXPBlueprintForm({
 		aggregationConfiguration: aggregationConfig
 			? JSON.parse(aggregationConfig)
 			: {},
-		facet: facetConfig ? JSON.parse(facetConfig) : {},
 		general: frameworkConfig,
 		highlight: highlightConfig ? JSON.parse(highlightConfig) : {},
 		parameters: parameterConfig ? JSON.parse(parameterConfig) : {},
@@ -326,7 +324,6 @@ function EditSXPBlueprintForm({
 		[
 			'advancedConfig',
 			'aggregationConfig',
-			'facetConfig',
 			'highlightConfig',
 			'parameterConfig',
 			'sortConfig',
@@ -365,7 +362,6 @@ function EditSXPBlueprintForm({
 					id: index,
 				})
 			),
-			facetConfig: JSON.stringify(initialConfiguration.facet, null, '\t'),
 			frameworkConfig: initialConfiguration.general || {},
 			highlightConfig: JSON.stringify(
 				initialConfiguration.highlight,
@@ -595,7 +591,6 @@ function EditSXPBlueprintForm({
 						advancedConfig={formik.values.advancedConfig}
 						aggregationConfig={formik.values.aggregationConfig}
 						errors={formik.errors}
-						facetConfig={formik.values.facetConfig}
 						highlightConfig={formik.values.highlightConfig}
 						parameterConfig={formik.values.parameterConfig}
 						setFieldTouched={formik.setFieldTouched}

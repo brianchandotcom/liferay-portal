@@ -117,7 +117,6 @@ export const QUERY_SXP_ELEMENTS = [
 export const INITIAL_CONFIGURATION = {
 	advanced: DEFAULT_ADVANCED_CONFIGURATION,
 	aggregationConfiguration: {},
-	facet: {},
 	general: {},
 	highlight: DEFAULT_HIGHLIGHT_CONFIGURATION,
 	parameters: DEFAULT_PARAMETER_CONFIGURATION,

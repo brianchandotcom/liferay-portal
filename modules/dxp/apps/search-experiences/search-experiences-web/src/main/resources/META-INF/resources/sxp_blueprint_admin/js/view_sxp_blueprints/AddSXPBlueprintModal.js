@@ -129,7 +129,6 @@ const AddModal = ({
 	const _getConfiguration = () => ({
 		advanced: DEFAULT_ADVANCED_CONFIGURATION,
 		aggregationConfiguration: {},
-		facet: {},
 		general: {
 			clauseContributorsExcludes:
 				framework === FRAMEWORK_TYPES.ALL

@@ -29,7 +29,6 @@ const CONFIGURATION_FIELD_NAME = {
 	aggregation_configuration: Liferay.Language.get(
 		'aggregation-configuration'
 	),
-	facet_configuration: Liferay.Language.get('facet-configuration'),
 	highlight_configuration: Liferay.Language.get('highlight-configuration'),
 	parameter_configuration: Liferay.Language.get('parameter-configuration'),
 	query_configuration: Liferay.Language.get('query-configuration'),

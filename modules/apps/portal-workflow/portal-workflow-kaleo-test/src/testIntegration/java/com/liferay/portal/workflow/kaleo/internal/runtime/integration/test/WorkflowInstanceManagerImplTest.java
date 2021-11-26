@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
@@ -36,8 +35,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Feliphe Marinho
@@ -58,103 +55,103 @@ public class WorkflowInstanceManagerImplTest
 					getResourceInputStream(
 						"join-xor-workflow-definition.xml")));
 
-		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = registryWorkflowHandler(
-				workflowDefinition.getName());
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler(workflowDefinition.getName())) {
 
-		Class<?> clazz = getClass();
+			Class<?> clazz = getClass();
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			clazz.getName(), 1, null, new ServiceContext());
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
 
-		Assert.assertEquals(
-			1,
-			workflowInstanceManager.searchCount(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, workflowDefinition.getName(), false));
-
-		workflowHandlerServiceRegistration.unregister();
+			Assert.assertEquals(
+				1,
+				workflowInstanceManager.searchCount(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, workflowDefinition.getName(), false));
+		}
 	}
 
 	@Test
 	public void testSearchWorkflowInstancesWhenThereAreActiveParallelTasks()
 		throws Exception {
 
-		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				FileUtil.getBytes(
-					getResourceInputStream(
-						"join-xor-workflow-definition.xml")));
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler(
+					_workflowDefinitionManager.deployWorkflowDefinition(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(),
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(),
+						FileUtil.getBytes(
+							getResourceInputStream(
+								"join-xor-workflow-definition.xml"))))) {
 
-		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = registryWorkflowHandler(
-				workflowDefinition.getName());
+			Class<?> clazz = getClass();
 
-		Class<?> clazz = getClass();
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			clazz.getName(), 1, null, new ServiceContext());
+			WorkflowModelSearchResult<WorkflowInstance>
+				workflowModelSearchResult =
+					workflowInstanceManager.searchWorkflowInstances(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), null, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, null, true, 0, 1,
+						WorkflowComparatorFactoryUtil.
+							getInstanceCompletedComparator(false));
 
-		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
-			workflowInstanceManager.searchWorkflowInstances(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
-				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
-					false));
+			List<WorkflowInstance> workflowInstances =
+				workflowModelSearchResult.getWorkflowModels();
 
-		List<WorkflowInstance> workflowInstances =
-			workflowModelSearchResult.getWorkflowModels();
-
-		Assert.assertEquals(
-			workflowInstances.toString(), 1, workflowInstances.size());
-
-		workflowHandlerServiceRegistration.unregister();
+			Assert.assertEquals(
+				workflowInstances.toString(), 1, workflowInstances.size());
+		}
 	}
 
 	@Test
 	public void testSearchWorkflowInstancesWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
-		Class<?> clazz = getClass();
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler()) {
 
-		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = registryWorkflowHandler();
+			Class<?> clazz = getClass();
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			clazz.getName(), 1, null, new ServiceContext());
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
+
+			WorkflowModelSearchResult<WorkflowInstance>
+				workflowModelSearchResult =
+					workflowInstanceManager.searchWorkflowInstances(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), null, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, null, true, 0, 1,
+						WorkflowComparatorFactoryUtil.
+							getInstanceCompletedComparator(false));
+
+			List<WorkflowInstance> workflowInstances =
+				workflowModelSearchResult.getWorkflowModels();
+
+			Assert.assertEquals(
+				workflowInstances.toString(), 1, workflowInstances.size());
+		}
 
 		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
 			workflowInstanceManager.searchWorkflowInstances(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
 				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
 					false));
 
 		List<WorkflowInstance> workflowInstances =
 			workflowModelSearchResult.getWorkflowModels();
-
-		Assert.assertEquals(
-			workflowInstances.toString(), 1, workflowInstances.size());
-
-		workflowHandlerServiceRegistration.unregister();
-
-		workflowModelSearchResult =
-			workflowInstanceManager.searchWorkflowInstances(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, null, true, 0, 1,
-				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
-					false));
-
-		workflowInstances = workflowModelSearchResult.getWorkflowModels();
 
 		Assert.assertEquals(
 			workflowInstances.toString(), 0, workflowInstances.size());
@@ -164,36 +161,36 @@ public class WorkflowInstanceManagerImplTest
 	public void testSearchWorkflowInstancesWhenTwoUsersSubmitAnEntry()
 		throws Exception {
 
-		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = registryWorkflowHandler();
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler()) {
 
-		Class<?> clazz = getClass();
+			Class<?> clazz = getClass();
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			clazz.getName(), 1, null, new ServiceContext());
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
 
-		User user = UserTestUtil.addUser(TestPropsValues.getCompanyId());
+			User user = UserTestUtil.addUser(TestPropsValues.getCompanyId());
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, user.getUserId(),
-			clazz.getName(), 2, null, new ServiceContext());
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, user.getUserId(),
+				clazz.getName(), 2, null, new ServiceContext());
 
-		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
-			workflowInstanceManager.searchWorkflowInstances(
-				TestPropsValues.getCompanyId(), user.getUserId(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, null, true, 0, 2,
-				WorkflowComparatorFactoryUtil.getInstanceCompletedComparator(
-					false));
+			WorkflowModelSearchResult<WorkflowInstance>
+				workflowModelSearchResult =
+					workflowInstanceManager.searchWorkflowInstances(
+						TestPropsValues.getCompanyId(), user.getUserId(), null,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, null, true, 0, 2,
+						WorkflowComparatorFactoryUtil.
+							getInstanceCompletedComparator(false));
 
-		List<WorkflowInstance> workflowInstances =
-			workflowModelSearchResult.getWorkflowModels();
+			List<WorkflowInstance> workflowInstances =
+				workflowModelSearchResult.getWorkflowModels();
 
-		workflowHandlerServiceRegistration.unregister();
-
-		Assert.assertEquals(
-			workflowInstances.toString(), 1, workflowInstances.size());
+			Assert.assertEquals(
+				workflowInstances.toString(), 1, workflowInstances.size());
+		}
 	}
 
 	@Inject

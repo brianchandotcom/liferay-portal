@@ -108,7 +108,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -142,7 +141,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -1187,14 +1185,30 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	public void testSearchWorkflowTasksWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
-		ServiceRegistration<WorkflowHandler<?>>
-			workflowHandlerServiceRegistration = registryWorkflowHandler();
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler()) {
 
-		Class<?> clazz = getClass();
+			Class<?> clazz = getClass();
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
-			clazz.getName(), 1, null, new ServiceContext());
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
+
+			WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
+				_workflowTaskManager.searchWorkflowTasks(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					StringPool.BLANK, new String[] {StringPool.BLANK}, null,
+					null, null, null, null, null, null, true, true, null, null,
+					false, 0, 1,
+					WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+						false));
+
+			List<WorkflowTask> workflowTasks =
+				workflowModelSearchResult.getWorkflowModels();
+
+			Assert.assertEquals(
+				workflowTasks.toString(), 1, workflowTasks.size());
+		}
 
 		WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
 			_workflowTaskManager.searchWorkflowTasks(
@@ -1207,18 +1221,6 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 		List<WorkflowTask> workflowTasks =
 			workflowModelSearchResult.getWorkflowModels();
-
-		Assert.assertEquals(workflowTasks.toString(), 1, workflowTasks.size());
-
-		workflowHandlerServiceRegistration.unregister();
-
-		workflowModelSearchResult = _workflowTaskManager.searchWorkflowTasks(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringPool.BLANK, new String[] {StringPool.BLANK}, null, null, null,
-			null, null, null, null, true, true, null, null, false, 0, 1,
-			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(false));
-
-		workflowTasks = workflowModelSearchResult.getWorkflowModels();
 
 		Assert.assertEquals(workflowTasks.toString(), 0, workflowTasks.size());
 	}

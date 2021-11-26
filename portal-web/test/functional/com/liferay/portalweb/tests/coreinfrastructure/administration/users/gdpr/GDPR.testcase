@@ -1174,6 +1174,96 @@ definition {
 			tableEntryPartialTextList = "Document_1.txt,Edit DM Document Description");
 	}
 
+	@description = "Test is asserting that entries are still anonymous after activating user."
+	@priority = "3"
+	test EntriesAreStillAnonymousAfterActivatingUser {
+		task ("Sign in as User and add DM folder1 and Document_2.docx.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMFolder.addCP(dmFolderName = "Folder1");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_2.docx",
+				dmDocumentTitle = "Document_2");
+		}
+
+		task ("Sign in as Test Test and deactivate the user usersn.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			User.openUsersAdmin();
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+		}
+
+		task ("Select multiple entries and anonymize Folder1 and Document_2.docx.") {
+			GDPR.filterByApplications(
+				applications = "Documents and Media",
+				itemsCount = "2");
+
+			GDPR.anonymizeMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
+		}
+
+		task ("Assert Folder1 and Document_2.docx have been anonymized.") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+				value1 = "Anonymous Anonymous");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+			Click.clickAt(locator1 = "Icon#INFO");
+
+			AssertTextPresent(
+				locator1 = "Sidebar#SIDEBAR",
+				value1 = "Anonymous Anonymous");
+		}
+
+		task ("Activate user usersn from inactive list.") {
+			User.openUsersAdmin();
+
+			User.activateCP(
+				userName = "userfn userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Assert Folder1 and Document_2.docx are still anonymous.") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+				value1 = "Anonymous Anonymous");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+			Click.clickAt(locator1 = "Icon#INFO");
+
+			AssertTextPresent(
+				locator1 = "Sidebar#SIDEBAR",
+				value1 = "Anonymous Anonymous");
+		}
+	}
+
 	@description = "LPS-77750 This test asserts that the details of the entry display when user clicks on the Info icon."
 	@priority = "3"
 	test EntryDetailsDisplayInInfoPanel {

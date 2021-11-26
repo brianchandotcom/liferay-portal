@@ -33,6 +33,7 @@ import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMe
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
@@ -369,6 +370,30 @@ public class TaskWorkflowMetricsIndexerImpl
 			});
 
 		return document;
+	}
+
+	@Override
+	public void deleteTask(DeleteTaskRequest deleteTaskRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setLong(
+			"companyId", deleteTaskRequest.getCompanyId()
+		).setLong(
+			"taskId", deleteTaskRequest.getTaskId()
+		).setString(
+			"uid",
+			digest(
+				deleteTaskRequest.getCompanyId(), deleteTaskRequest.getTaskId())
+		);
+
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				deleteDocument(documentBuilder);
+
+				_deleteTask(
+					deleteTaskRequest.getCompanyId(),
+					deleteTaskRequest.getTaskId());
+			});
 	}
 
 	@Override

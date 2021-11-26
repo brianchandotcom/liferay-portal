@@ -454,6 +454,29 @@ public class KaleoInstanceLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
 		search(
+			Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+					orderByComparator,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _kaleoInstanceLocalService.search(
+			userId, active, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #search(Long,
+	 Boolean, String, String, String, String, String, Boolean,
+	 int, int, OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+		search(
 			Long userId, String assetClassName, String assetTitle,
 			String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
@@ -470,6 +493,24 @@ public class KaleoInstanceLocalServiceWrapper
 
 	@Override
 	public int searchCount(
+		Long userId, Boolean active, String assetClassName, String assetTitle,
+		String assetDescription, String nodeName, String kaleoDefinitionName,
+		Boolean completed,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _kaleoInstanceLocalService.searchCount(
+			userId, active, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchCount(Long, Boolean, String, String, String, String,
+	 String, Boolean, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed,
@@ -480,6 +521,35 @@ public class KaleoInstanceLocalServiceWrapper
 			kaleoDefinitionName, completed, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+				searchKaleoInstances(
+					Long userId, Boolean active, String assetClassName,
+					String assetTitle, String assetDescription, String nodeName,
+					String kaleoDefinitionName, Boolean completed,
+					boolean searchByActiveWorkflowHandlers, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
+							orderByComparator,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoInstanceLocalService.searchKaleoInstances(
+			userId, active, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed,
+			searchByActiveWorkflowHandlers, start, end, orderByComparator,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchKaleoInstances(Long, Boolean, String, String, String,
+	 String, String, Boolean, boolean, int, int,
+	 OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
@@ -499,6 +569,15 @@ public class KaleoInstanceLocalServiceWrapper
 			userId, assetClassName, assetTitle, assetDescription, nodeName,
 			kaleoDefinitionName, completed, searchByActiveWorkflowHandlers,
 			start, end, orderByComparator, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance updateActive(
+			long userId, long kaleoInstanceId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoInstanceLocalService.updateActive(
+			userId, kaleoInstanceId, active);
 	}
 
 	/**

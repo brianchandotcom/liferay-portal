@@ -92,6 +92,7 @@ create table KaleoInstance (
 	kaleoDefinitionName VARCHAR(200) null,
 	kaleoDefinitionVersion INTEGER,
 	rootKaleoInstanceTokenId LONG,
+	active_ BOOLEAN,
 	className VARCHAR(200) null,
 	classPK LONG,
 	completed BOOLEAN,

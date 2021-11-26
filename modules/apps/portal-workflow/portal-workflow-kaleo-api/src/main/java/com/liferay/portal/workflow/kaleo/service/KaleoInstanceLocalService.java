@@ -326,6 +326,20 @@ public interface KaleoInstanceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoInstance> search(
+		Long userId, Boolean active, String assetClassName, String assetTitle,
+		String assetDescription, String nodeName, String kaleoDefinitionName,
+		Boolean completed, int start, int end,
+		OrderByComparator<KaleoInstance> orderByComparator,
+		ServiceContext serviceContext);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #search(Long,
+	 Boolean, String, String, String, String, String, Boolean,
+	 int, int, OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoInstance> search(
 		Long userId, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, int start, int end,
@@ -334,10 +348,39 @@ public interface KaleoInstanceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(
+		Long userId, Boolean active, String assetClassName, String assetTitle,
+		String assetDescription, String nodeName, String kaleoDefinitionName,
+		Boolean completed, ServiceContext serviceContext);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchCount(Long, Boolean, String, String, String, String,
+	 String, Boolean, ServiceContext)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, ServiceContext serviceContext);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
+			Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed,
+			boolean searchByActiveWorkflowHandlers, int start, int end,
+			OrderByComparator<KaleoInstance> orderByComparator,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchKaleoInstances(Long, Boolean, String, String, String,
+	 String, String, Boolean, boolean, int, int,
+	 OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
 			Long userId, String assetClassName, String assetTitle,
@@ -346,6 +389,11 @@ public interface KaleoInstanceLocalService
 			boolean searchByActiveWorkflowHandlers, int start, int end,
 			OrderByComparator<KaleoInstance> orderByComparator,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoInstance updateActive(
+			long userId, long kaleoInstanceId, boolean active)
 		throws PortalException;
 
 	/**

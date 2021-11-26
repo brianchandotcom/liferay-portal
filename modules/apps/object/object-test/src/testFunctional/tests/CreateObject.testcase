@@ -3102,11 +3102,9 @@ definition {
 	@description = "LPS-139005 - Verify that the Object entries are displayed again on Page fragments from an Object that was reactivated"
 	@priority = "4"
 	test ObjectEntriesReappearsPageFragmentsWhenReactivated {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
-			objectName = "CustomObject",
+			objectName = "CustomObject142598",
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
@@ -3114,13 +3112,13 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject142598");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject142598");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject142598",
 			value = "Test 1");
 
 		Navigator.openURL();

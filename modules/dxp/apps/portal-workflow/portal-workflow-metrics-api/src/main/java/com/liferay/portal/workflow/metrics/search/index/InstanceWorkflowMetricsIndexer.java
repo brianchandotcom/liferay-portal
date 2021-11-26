@@ -37,8 +37,21 @@ public interface InstanceWorkflowMetricsIndexer {
 
 	public void deleteInstance(long companyId, long instanceId);
 
-	public Document updateInstance(
+	public default Document updateInstance(
+		boolean active, Map<Locale, String> assetTitleMap,
+		Map<Locale, String> assetTypeMap, long companyId, long instanceId,
+		Date modifiedDate) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default Document updateInstance(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
-		long companyId, long instanceId, Date modifiedDate);
+		long companyId, long instanceId, Date modifiedDate) {
+
+		return updateInstance(
+			true, assetTitleMap, assetTypeMap, companyId, instanceId,
+			modifiedDate);
+	}
 
 }

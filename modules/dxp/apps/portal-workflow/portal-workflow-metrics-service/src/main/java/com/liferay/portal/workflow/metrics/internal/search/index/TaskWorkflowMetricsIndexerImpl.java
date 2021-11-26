@@ -66,6 +66,8 @@ public class TaskWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
+		documentBuilder.setValue("active", Boolean.TRUE);
+
 		List<Long> assignmentGroupIds = new ArrayList<>();
 		List<Long> assignmentIds = new ArrayList<>();
 

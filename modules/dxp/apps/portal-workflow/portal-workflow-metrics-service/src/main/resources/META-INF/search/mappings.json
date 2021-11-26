@@ -414,6 +414,10 @@
 			}
 		],
 		"properties": {
+			"active": {
+				"store": true,
+				"type": "boolean"
+			},
 			"assetTitle": {
 				"store": true,
 				"term_vector": "with_positions_offsets",
@@ -1122,6 +1126,10 @@
 			}
 		],
 		"properties": {
+			"active": {
+				"store": true,
+				"type": "boolean"
+			},
 			"companyId": {
 				"store": true,
 				"type": "long"
@@ -1198,6 +1206,10 @@
 			}
 		],
 		"properties": {
+			"active": {
+				"store": true,
+				"type": "boolean"
+			},
 			"assigneeIds": {
 				"store": true,
 				"type": "long"
@@ -1694,6 +1706,10 @@
 			}
 		],
 		"properties": {
+			"active": {
+				"store": true,
+				"type": "boolean"
+			},
 			"assetTitle": {
 				"store": true,
 				"term_vector": "with_positions_offsets",

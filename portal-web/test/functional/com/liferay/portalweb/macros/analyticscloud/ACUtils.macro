@@ -401,6 +401,7 @@ definition {
 		var cleanCurl = '''
 			${analyticsCloudAsahCuratorURL}/admin/sessions/close \
 			-H 'Content-Type: application/json' \
+			-H 'osb-asah-project-id: osbasah' \
 			-d '{
 				"query": {
 					"match_all": {}

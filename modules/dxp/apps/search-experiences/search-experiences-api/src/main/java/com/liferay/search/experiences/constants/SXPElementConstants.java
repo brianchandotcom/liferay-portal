@@ -21,8 +21,6 @@ public class SXPElementConstants {
 
 	public static final int TYPE_AGGREGATION = 1;
 
-	public static final int TYPE_FACET = 5;
-
 	public static final int TYPE_QUERY = 10;
 
 	public static final int TYPE_SUGGESTER = 15;

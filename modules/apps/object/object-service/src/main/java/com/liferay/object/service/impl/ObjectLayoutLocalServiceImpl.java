@@ -160,6 +160,20 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectLayout> getObjectLayouts(long objectDefinitionId) {
+		List<ObjectLayout> objectLayouts =
+			objectLayoutPersistence.findByObjectDefinitionId(
+				objectDefinitionId);
+
+		for (ObjectLayout objectLayout : objectLayouts) {
+			objectLayout.setObjectLayoutTabs(
+				_getObjectLayoutTabs(objectLayout));
+		}
+
+		return objectLayouts;
+	}
+
+	@Override
 	public List<ObjectLayout> getObjectLayouts(
 		long objectDefinitionId, int start, int end) {
 

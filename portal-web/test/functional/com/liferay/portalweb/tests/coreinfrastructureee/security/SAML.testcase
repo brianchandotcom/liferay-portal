@@ -1505,7 +1505,7 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
 			PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -1515,11 +1515,12 @@ definition {
 		}
 
 		task ("Open able.com:9080 and add LDAP server") {
+
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			var baseURL = PropsUtil.get("portal.url");
+			Navigator.gotoLoginPage();
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
+			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
 			PortalSettings.addLDAPServer(
 				baseURL = "http://www.able.com:9080",
@@ -1553,6 +1554,11 @@ definition {
 		}
 
 		task ("Login and reindex search indexes") {
+
+			User.firstLoginUI(
+            	password = "test",
+            	userEmailAddress = "test@liferay.com");
+
 			SearchAdministration.executeReindex();
 		}
 
@@ -1581,19 +1587,15 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 			SAML.loginIfProductMenuNotOpened();
-		}
 
-		task ("Login and reindex search indexes") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoServiceProvider();
 
 			SAMLPortlet.configureServiceProvider(LDAPImport = "enable");
 		}
 
-		task ("Logout from able.com:9080, login at able.com:9080 as ldapuseremail, logout from able.com:9080, login at able.com:9080 as test@lifera.com ") {
+		task ("Logout from able.com:9080, login at able.com:9080 as ldapuseremail, logout from able.com:9080, login at able.com:9080 as test@liferay.com ") {
 			User.logoutPG(specificURL = "http://www.able.com:9080");
 
 			User.firstLoginUI(
@@ -1609,10 +1611,9 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("View CP") {
-			var baseURL = PropsUtil.get("portal.url");
+		task ("View CP at able.com:9080") {
 
-			Navigator.openSpecificURL(url = "${baseURL}group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",

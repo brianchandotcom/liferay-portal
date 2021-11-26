@@ -45,6 +45,11 @@ public interface InstanceWorkflowMetricsIndexer {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateInstance(boolean, Map, Map, long, long, Date)}
+	 */
+	@Deprecated
 	public default Document updateInstance(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		long companyId, long instanceId, Date modifiedDate) {

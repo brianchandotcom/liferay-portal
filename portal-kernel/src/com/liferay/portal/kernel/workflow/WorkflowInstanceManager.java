@@ -94,6 +94,12 @@ public interface WorkflowInstanceManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #search(long,
+	 *             Long, Boolean, String, String, String, String, String,
+	 *             Boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public default List<WorkflowInstance> search(
 			long companyId, Long userId, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
@@ -113,6 +119,12 @@ public interface WorkflowInstanceManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #searchCount(long, Long, Boolean, String, String, String,
+	 *             String, String, Boolean)}
+	 */
+	@Deprecated
 	public default int searchCount(
 			long companyId, Long userId, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
@@ -135,6 +147,13 @@ public interface WorkflowInstanceManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #searchWorkflowInstances(long, Long, Boolean, String, String,
+	 *             String, String, String, Boolean, boolean, int, int,
+	 *             OrderByComparator)}
+	 */
+	@Deprecated
 	public default WorkflowModelSearchResult<WorkflowInstance>
 			searchWorkflowInstances(
 				long companyId, Long userId, String assetClassName,

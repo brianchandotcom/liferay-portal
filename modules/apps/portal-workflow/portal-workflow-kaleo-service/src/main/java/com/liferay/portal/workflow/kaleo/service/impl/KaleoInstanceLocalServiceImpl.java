@@ -366,6 +366,12 @@ public class KaleoInstanceLocalServiceImpl
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #search(Long,
+	 *             Boolean, String, String, String, String, String, Boolean,
+	 *             int, int, OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public List<KaleoInstance> search(
 		Long userId, String assetClassName, String assetTitle,
@@ -392,6 +398,12 @@ public class KaleoInstanceLocalServiceImpl
 			completed, false, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #searchCount(Long, Boolean, String, String, String, String,
+	 *             String, Boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,
@@ -435,6 +447,13 @@ public class KaleoInstanceLocalServiceImpl
 			hits.getLength());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #searchKaleoInstances(Long, Boolean, String, String, String,
+	 *             String, String, Boolean, boolean, int, int,
+	 *             OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
 			Long userId, String assetClassName, String assetTitle,

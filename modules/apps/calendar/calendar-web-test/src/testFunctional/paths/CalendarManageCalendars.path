@@ -26,6 +26,11 @@
 	<td>//span[contains(text(),'Add Calendar')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_CALENDAR_TABLE_NAME_BY_POSITION</td>
+	<td>//tr[${key_rowNumber}]//td[contains(.,'${key_calendarName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

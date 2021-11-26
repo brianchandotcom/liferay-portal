@@ -127,6 +127,31 @@ definition {
 		// TODO LRQA-71605 CanAddCalendarsWithSameName pending implementation
 
 	}
+	
+	@description = "LRQA-71605 - Verify that the user can add multiple calendars with the same name"
+	@priority = "4"
+	test CanAddCalendarsWithSameName {
+		for (var calendarsName : list "Same Name Calendar,Same Name Calendar") {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			CalendarNavigator.gotoMyCalendarsManage();
+
+			Calendar.addMyCalendarByManageCalendars(calendarName = "${calendarsName}");
+
+			PortletEntry.save();
+		}
+
+		Navigator.gotoBack();
+
+		Calendar.viewManegeCalendarsByPosition(
+			rowNumber = "1",
+			calendarName = "Same Name Calendar");
+
+		Calendar.viewManegeCalendarsByPosition(
+			rowNumber = "2",
+			calendarName = "Same Name Calendar");
+			
+	}
 
 	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
 	@ignore = "Test Stub"

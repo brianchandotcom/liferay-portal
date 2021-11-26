@@ -864,4 +864,11 @@ definition {
 			checkboxName = "${checkboxName}",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
+	macro viewManegeCalendarsByPosition {
+		AssertElementPresent(
+			key_rowNumber = "${rowNumber}",
+			key_calendarName = "${calendarName}",
+			locator1 = "CalendarManageCalendars#VIEW_CALENDAR_TABLE_NAME_BY_POSITION");
+	}
+
 }

@@ -662,6 +662,14 @@ public abstract class BaseInstanceResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (instance.getActive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assetTitle", additionalAssertFieldName)) {
 				if (instance.getAssetTitle() == null) {
 					valid = false;
@@ -888,6 +896,16 @@ public abstract class BaseInstanceResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getActive(), instance2.getActive())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("assetTitle", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1191,6 +1209,11 @@ public abstract class BaseInstanceResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("assetTitle")) {
 			sb.append("'");
 			sb.append(String.valueOf(instance.getAssetTitle()));
@@ -1426,6 +1449,7 @@ public abstract class BaseInstanceResourceTestCase {
 	protected Instance randomInstance() throws Exception {
 		return new Instance() {
 			{
+				active = RandomTestUtil.randomBoolean();
 				assetTitle = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				assetType = StringUtil.toLowerCase(

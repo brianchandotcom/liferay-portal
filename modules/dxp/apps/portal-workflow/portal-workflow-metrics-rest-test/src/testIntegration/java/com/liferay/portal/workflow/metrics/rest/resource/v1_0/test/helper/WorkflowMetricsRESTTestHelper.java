@@ -48,6 +48,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
@@ -628,13 +629,25 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 
 		if (addTaskRequest.isCompleted()) {
+			CompleteTaskRequest.Builder completeTaskRequestBuilder =
+				new CompleteTaskRequest.Builder();
+
 			_taskWorkflowMetricsIndexer.completeTask(
-				addTaskRequest.getCompanyId(),
-				addTaskRequest.getCompletionDate(),
-				addTaskRequest.getCompletionUserId(),
-				durationAvg,
-				addTaskRequest.getModifiedDate(), addTaskRequest.getTaskId(),
-				0);
+				completeTaskRequestBuilder.setCompanyId(
+					addTaskRequest.getCompanyId()
+				).setCompletionDate(
+					addTaskRequest.getCompletionDate()
+				).setCompletionUserId(
+					addTaskRequest.getCompletionUserId()
+				).setDuration(
+					durationAvg
+				).setModifiedDate(
+					addTaskRequest.getModifiedDate()
+				).setTaskId(
+					addTaskRequest.getTaskId()
+				).setUserId(
+					0
+				).build());
 
 			_assertCount(
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(

@@ -96,7 +96,6 @@ definition {
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AddProcessWithNewFieldSetAndWorkflowViaSourceTab {
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#AddProcessWithNewFieldSetAndWorkflowViaSourceTab";
@@ -1311,7 +1310,6 @@ definition {
 			kfProcessName = "Kaleo Forms Process Edited");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test EditProcessNewFieldSet {
 		Navigator.openURL();
@@ -1434,7 +1432,6 @@ definition {
 			kfProcessName = "Kaleo Forms Process");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test EditProcessNewWorkflowViaSourceTab {
 		property portal.acceptance = "true";

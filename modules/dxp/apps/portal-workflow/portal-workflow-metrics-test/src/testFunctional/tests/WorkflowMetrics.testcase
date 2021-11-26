@@ -934,7 +934,6 @@ definition {
 	}
 
 	@description = "LRQA-53660 Automate LPS-87571 [Reports] Filter the list of items for a certain process"
-	@ignore = "true"
 	@priority = "5"
 	test FilterAllItemsList {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

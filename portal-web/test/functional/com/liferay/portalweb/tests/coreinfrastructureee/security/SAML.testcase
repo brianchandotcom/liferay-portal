@@ -1447,7 +1447,7 @@ definition {
 				userEmailAddress = "test@www.able.com");
 		}
 
-		task ("Login at able.com:8008") {
+		task ("Login at able.com:8080") {
 
 			// Test starts here
 
@@ -2093,7 +2093,7 @@ definition {
 			SAML.addVirtualInstances(virtualHosts = "www.able.com");
 		}
 
-		task ("Setup IdP samlidp at localhost:8008") {
+		task ("Setup IdP samlidp at localhost:8080") {
 			User.logoutPG();
 
 			// Setup localhost as IDP role
@@ -2162,7 +2162,7 @@ definition {
 				spURL = "http://www.able.com:8080");
 		}
 
-		task ("Logout from able.com:8080 and single deactivfate CP user") {
+		task ("Logout from able.com:8080 and single deactivate CP user") {
 			User.logoutPG(specificURL = "http://www.able.com:8080");
 
 			User.firstLoginUI();
@@ -2264,7 +2264,7 @@ definition {
 			SAMLRole.convertEncryptionCertificate();
 		}
 
-		task ("Importe certificate and private key") {
+		task ("Import certificate and private key") {
 			SAMLRole.importCertificateAndPrivateKey(
 				certificateUsage = "ENCRYPTION",
 				keyStoreAlias = "samlsp-encryption");
@@ -2739,7 +2739,7 @@ definition {
 				userResolution = "dynamic");
 		}
 
-		task ("Enable SP roles and add SP conigurations to localhost:8080 and baker.com:8080 IdP") {
+		task ("Enable SP roles and add SP configurations to localhost:8080 and baker.com:8080 IdP") {
 			SAML.enableSPRoles(
 				samlEntityID = "${serviceProviderEntityId}",
 				spURL = "http://www.able.com:8080",
@@ -2842,7 +2842,7 @@ definition {
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
 
-		task ("Configura samlidp as IdP and samlsp as SP") {
+		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 			SAML.configureLiferaySAMLAsSP(
@@ -2852,7 +2852,7 @@ definition {
 				spURL = "http://www.able.com:9080");
 		}
 
-		task ("Add categoty levels and log out") {
+		task ("Add category levels and log out") {
 			ApplicationsMenu.gotoPortlet(
 				category = "System",
 				panel = "Control Panel",
@@ -2884,7 +2884,7 @@ definition {
 	test ValidateVulnerabilitiesXMLAttacks {
 		property test.name.skip.portal.instance = "SAML#ValidateVulnerabilitiesXMLAttacks";
 
-		task ("Configura samlidp as IdP and samlsp as SP") {
+		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 			SAML.configureLiferaySAMLAsSP(
@@ -3046,7 +3046,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129934 - Using virtual instances. View IdP single logout with multiple SPs."
+	@description = "This is a use case for LPS-129934. View IdP single logout with multiple SPs - Using virtual instances."
 	@priority = "4"
 	test ViewIdPSingleLogoutWithMultipleSPs {
 		property portal.upstream = "true";
@@ -3069,7 +3069,7 @@ definition {
 				webId = "www.baker.com");
 		}
 
-		task ("Edit user screen name to localhsot") {
+		task ("Edit user screen name to localhost") {
 			MyAccount.openMyAccountAdmin();
 
 			User.editUserInformation(userScreenNameEdit = "localhost");
@@ -3117,7 +3117,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("login and configure saml entity Id to samlidp") {
+		task ("Login and configure saml entity Id to samlidp") {
 			User.firstLoginUI();
 
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
@@ -3276,7 +3276,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("Login and vconfigure samlidp as IdP") {
+		task ("Login and configure samlidp as IdP") {
 			User.firstLoginUI();
 
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
@@ -3436,7 +3436,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("logout and assert urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST message present on console") {
+		task ("Logout and assert urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST message present on console") {
 			User.logoutPG(specificURL = "http://www.able.com:9080");
 
 			User.viewLoggedOutPG();
@@ -3531,7 +3531,7 @@ definition {
 				userScreenName = "test");
 		}
 
-		task ("logout from able.com:8080 and take screenshot") {
+		task ("Logout from able.com:8080 and take screenshot") {
 			User.logoutPG(specificURL = "http://www.able.com:8080");
 
 			takeScreenshot();
@@ -3552,7 +3552,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("Logut from localhost:8080") {
+		task ("Logout from localhost:8080") {
 			User.logoutPG(specificURL = "http://localhost:8080");
 
 			User.viewLoggedOutPG();
@@ -3666,7 +3666,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("Deelete SAML connection samlidp and samlidp2") {
+		task ("Delete SAML connection samlidp and samlidp2") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Security",
 				panel = "Control Panel",
@@ -4105,7 +4105,7 @@ definition {
 			SAML.enableSAMLDebugLogs();
 		}
 
-		task ("Add virtal instance able.com") {
+		task ("Add virtual instance able.com") {
 
 			// Add new virtual instance and setup SAML link between IdP and SP
 
@@ -4336,7 +4336,7 @@ definition {
 			AssertConsoleTextPresent(value1 = "Resolving user with user field expression: uuid");
 		}
 
-		task ("Execute SP initiatied SSO baker.com:8080 and logout") {
+		task ("Execute SP initiated SSO baker.com:8080 and logout") {
 			SAML.executeSPInitiatedSSO(
 				password = "test",
 				spURL = "http://www.baker.com:8080",
@@ -4358,7 +4358,7 @@ definition {
 
 		// Log in to able.com with updated user and verify attributes
 
-		task ("Execute SP initiatied SSO able.com:8080 and confirm user information") {
+		task ("Execute SP initiated SSO able.com:8080 and confirm user information") {
 			SAML.executeSPInitiatedSSO(
 				password = "test",
 				spURL = "http://www.able.com:8080",
@@ -4398,7 +4398,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-125272 User profile matchup when NameID is transient, and screenName is in SAML Attributes list."
+	@description = "LPS-125272 User profile match up when NameID is transient, and screenName is in SAML Attributes list."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithTransientNameId {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithTransientNameId";

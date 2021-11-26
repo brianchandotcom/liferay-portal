@@ -89,7 +89,7 @@ public class CPDefinitionVirtualTest {
 		frutillaRule.scenario(
 			"Add product definition"
 		).given(
-			"I add a product definition"
+			"I add a virtual product definition"
 		).when(
 			"ignoreSKUCombinations is true"
 		).and(
@@ -117,7 +117,7 @@ public class CPDefinitionVirtualTest {
 		frutillaRule.scenario(
 			"Update virtual product with shippable true"
 		).given(
-			"I add a product definition with shippable false"
+			"I add a a virtual product definition with shippable false"
 		).when(
 			"shippable is now set to true"
 		).then(

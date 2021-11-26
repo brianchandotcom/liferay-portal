@@ -272,7 +272,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                 >
                   <label
                     class="control-label"
-                    for="_mock_TranslationPortlet_infoField--title--"
+                    for="_mock_TranslationPortlet_infoField--title--0"
                   >
                     Title
                   </label>
@@ -281,7 +281,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               <input
                 class="form-control"
                 dir="ltr"
-                id="_mock_TranslationPortlet_infoField--title--"
+                id="_mock_TranslationPortlet_infoField--title--0"
                 name="_mock_TranslationPortlet_infoField--title--"
                 type="text"
                 value="mock title"
@@ -325,11 +325,11 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                 Description
               </label>
               <div
-                id="_mock_TranslationPortlet_infoField--description--Container"
+                id="_mock_TranslationPortlet_infoField--description--0Container"
               >
                 <div
-                  id="_mock_TranslationPortlet_infoField--description--"
-                  name="_mock_TranslationPortlet_infoField--description--"
+                  id="_mock_TranslationPortlet_infoField--description--0"
+                  name="_mock_TranslationPortlet_infoField--description--0"
                 />
               </div>
               <input
@@ -398,11 +398,11 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                 Content
               </label>
               <div
-                id="_mock_TranslationPortlet_infoField--content--Container"
+                id="_mock_TranslationPortlet_infoField--content--0Container"
               >
                 <div
-                  id="_mock_TranslationPortlet_infoField--content--"
-                  name="_mock_TranslationPortlet_infoField--content--"
+                  id="_mock_TranslationPortlet_infoField--content--0"
+                  name="_mock_TranslationPortlet_infoField--content--0"
                 />
               </div>
               <input
@@ -710,7 +710,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     >
                       <label
                         class="control-label"
-                        for="_mock_TranslationPortlet_infoField--title--"
+                        for="_mock_TranslationPortlet_infoField--title--0"
                       >
                         Title
                       </label>
@@ -719,7 +719,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   <input
                     class="form-control"
                     dir="ltr"
-                    id="_mock_TranslationPortlet_infoField--title--"
+                    id="_mock_TranslationPortlet_infoField--title--0"
                     name="_mock_TranslationPortlet_infoField--title--"
                     type="text"
                     value="mock title"
@@ -794,11 +794,11 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     Description
                   </label>
                   <div
-                    id="_mock_TranslationPortlet_infoField--description--Container"
+                    id="_mock_TranslationPortlet_infoField--description--0Container"
                   >
                     <div
-                      id="_mock_TranslationPortlet_infoField--description--"
-                      name="_mock_TranslationPortlet_infoField--description--"
+                      id="_mock_TranslationPortlet_infoField--description--0"
+                      name="_mock_TranslationPortlet_infoField--description--0"
                     />
                   </div>
                   <input
@@ -898,11 +898,11 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     Content
                   </label>
                   <div
-                    id="_mock_TranslationPortlet_infoField--content--Container"
+                    id="_mock_TranslationPortlet_infoField--content--0Container"
                   >
                     <div
-                      id="_mock_TranslationPortlet_infoField--content--"
-                      name="_mock_TranslationPortlet_infoField--content--"
+                      id="_mock_TranslationPortlet_infoField--content--0"
+                      name="_mock_TranslationPortlet_infoField--content--0"
                     />
                   </div>
                   <input
@@ -1272,7 +1272,7 @@ exports[`Translate renders with experiences selector 1`] = `
                     >
                       <label
                         class="control-label"
-                        for="_mock_TranslationPortlet_infoField--title--"
+                        for="_mock_TranslationPortlet_infoField--title--0"
                       >
                         Title
                       </label>
@@ -1281,7 +1281,7 @@ exports[`Translate renders with experiences selector 1`] = `
                   <input
                     class="form-control"
                     dir="ltr"
-                    id="_mock_TranslationPortlet_infoField--title--"
+                    id="_mock_TranslationPortlet_infoField--title--0"
                     name="_mock_TranslationPortlet_infoField--title--"
                     type="text"
                     value="mock title"
@@ -1356,11 +1356,11 @@ exports[`Translate renders with experiences selector 1`] = `
                     Description
                   </label>
                   <div
-                    id="_mock_TranslationPortlet_infoField--description--Container"
+                    id="_mock_TranslationPortlet_infoField--description--0Container"
                   >
                     <div
-                      id="_mock_TranslationPortlet_infoField--description--"
-                      name="_mock_TranslationPortlet_infoField--description--"
+                      id="_mock_TranslationPortlet_infoField--description--0"
+                      name="_mock_TranslationPortlet_infoField--description--0"
                     />
                   </div>
                   <input
@@ -1460,11 +1460,11 @@ exports[`Translate renders with experiences selector 1`] = `
                     Content
                   </label>
                   <div
-                    id="_mock_TranslationPortlet_infoField--content--Container"
+                    id="_mock_TranslationPortlet_infoField--content--0Container"
                   >
                     <div
-                      id="_mock_TranslationPortlet_infoField--content--"
-                      name="_mock_TranslationPortlet_infoField--content--"
+                      id="_mock_TranslationPortlet_infoField--content--0"
+                      name="_mock_TranslationPortlet_infoField--content--0"
                     />
                   </div>
                   <input

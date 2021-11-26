@@ -36,9 +36,9 @@ const baseProps = {
 					id: 'infoField--title--',
 					label: 'Title',
 					multiline: false,
-					sourceContent: 'mock title',
+					sourceContent: ['mock title'],
 					sourceContentDir: 'ltr',
-					targetContent: 'mock title',
+					targetContent: ['mock title'],
 					targetContentDir: 'ltr',
 					targetLanguageId: 'es_ES',
 				},
@@ -48,9 +48,9 @@ const baseProps = {
 					id: 'infoField--description--',
 					label: 'Description',
 					multiline: false,
-					sourceContent: '<p>mock summary</p>',
+					sourceContent: ['<p>mock summary</p>'],
 					sourceContentDir: 'ltr',
-					targetContent: '<p>mock summary</p>',
+					targetContent: ['<p>mock summary</p>'],
 					targetContentDir: 'ltr',
 					targetLanguageId: 'es_ES',
 				},
@@ -65,9 +65,9 @@ const baseProps = {
 					id: 'infoField--content--',
 					label: 'Content',
 					multiline: true,
-					sourceContent: '<p>mock content</p>',
+					sourceContent: ['<p>mock content</p>'],
 					sourceContentDir: 'ltr',
-					targetContent: '<p>mock content</p',
+					targetContent: ['<p>mock content</p'],
 					targetContentDir: 'ltr',
 					targetLanguageId: 'es_ES',
 				},
@@ -168,7 +168,7 @@ describe('Translate', () => {
 					fields: [
 						{
 							...baseProps.infoFieldSetEntries[1].fields[0],
-							sourceContent: '',
+							sourceContent: [''],
 						},
 					],
 				},
@@ -188,9 +188,10 @@ describe('Translate', () => {
 			fetch.mockResponseOnce(
 				JSON.stringify({
 					fields: {
-						'infoField--content--': '<p>simulacro de contenido</p>',
-						'infoField--description--': '<p>resumen simulado</p>',
-						'infoField--title--': 'título simulado&#39;',
+						'infoField--content--0':
+							'<p>simulacro de contenido</p>',
+						'infoField--description--0': '<p>resumen simulado</p>',
+						'infoField--title--0': 'título simulado&#39;',
 					},
 					sourceLanguageId: 'en_US',
 					targetLanguageId: 'es_ES',
@@ -225,9 +226,11 @@ describe('Translate', () => {
 				const request = JSON.parse(body);
 
 				expect(url).toBe(baseProps.getAutoTranslateURL);
-				expect(request.fields[infoFieldContent.id]).toBe(
-					infoFieldContent.sourceContent
+
+				expect(request.fields[`${infoFieldContent.id}0`]).toBe(
+					infoFieldContent.sourceContent[0]
 				);
+
 				expect(request.sourceLanguageId).toBe(
 					baseProps.sourceLanguageId
 				);

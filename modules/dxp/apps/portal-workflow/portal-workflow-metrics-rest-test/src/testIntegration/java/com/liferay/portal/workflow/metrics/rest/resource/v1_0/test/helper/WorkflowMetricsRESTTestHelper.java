@@ -50,6 +50,7 @@ import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
+import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
@@ -604,11 +605,25 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 
 		if (ListUtil.isNotEmpty(addTaskRequest.getAssignments())) {
+			UpdateTaskRequest.Builder updateTaskRequestBuilder =
+				new UpdateTaskRequest.Builder();
+
 			_taskWorkflowMetricsIndexer.updateTask(
-				addTaskRequest.getAssetTitleMap(),
-				addTaskRequest.getAssetTypeMap(),
-				addTaskRequest.getAssignments(), addTaskRequest.getCompanyId(),
-				new Date(), addTaskRequest.getTaskId(), 0);
+				updateTaskRequestBuilder.setAssetTitleMap(
+					addTaskRequest.getAssetTitleMap()
+				).setAssetTypeMap(
+					addTaskRequest.getAssetTypeMap()
+				).setAssignments(
+					addTaskRequest.getAssignments()
+				).setCompanyId(
+					addTaskRequest.getCompanyId()
+				).setModifiedDate(
+					new Date()
+				).setTaskId(
+					addTaskRequest.getTaskId()
+				).setUserId(
+					0
+				).build());
 
 			Assignment assignment = assignments.get(0);
 

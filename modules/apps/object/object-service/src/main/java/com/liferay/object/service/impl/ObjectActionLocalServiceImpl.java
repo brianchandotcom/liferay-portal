@@ -122,6 +122,12 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectAction> getObjectActions(long objectDefinitionId) {
+		return objectActionPersistence.findByObjectDefinitionId(
+			objectDefinitionId);
+	}
+
+	@Override
 	public List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey) {
 

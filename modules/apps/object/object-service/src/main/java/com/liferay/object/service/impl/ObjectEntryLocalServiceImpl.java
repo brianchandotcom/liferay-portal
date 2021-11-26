@@ -98,11 +98,17 @@ import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.io.StringReader;
 
 import java.math.BigDecimal;
 
+import java.nio.charset.StandardCharsets;
+
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -118,6 +124,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.io.IOUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -960,6 +968,9 @@ public class ObjectEntryLocalServiceImpl
 		else if (sqlType == Types.BOOLEAN) {
 			return resultSet.getBoolean(name);
 		}
+		else if (sqlType == Types.CLOB) {
+			return resultSet.getClob(name);
+		}
 		else if (sqlType == Types.DATE) {
 			return resultSet.getTimestamp(name);
 		}
@@ -1244,6 +1255,21 @@ public class ObjectEntryLocalServiceImpl
 
 			values.put(name, (Boolean)object);
 		}
+		else if (clazz == Clob.class) {
+			Clob clob = (Clob)object;
+
+			try {
+				InputStream inputStream = clob.getAsciiStream();
+
+				values.put(
+					name,
+					GetterUtil.getString(
+						IOUtils.toString(inputStream, StandardCharsets.UTF_8)));
+			}
+			catch (IOException | SQLException exception) {
+				throw new SystemException(exception);
+			}
+		}
 		else if (clazz == Date.class) {
 			values.put(name, (Date)object);
 		}
@@ -1326,6 +1352,10 @@ public class ObjectEntryLocalServiceImpl
 		}
 		else if (sqlType == Types.BOOLEAN) {
 			preparedStatement.setBoolean(index, GetterUtil.getBoolean(value));
+		}
+		else if (sqlType == Types.CLOB) {
+			preparedStatement.setClob(
+				index, new StringReader(String.valueOf(value)));
 		}
 		else if (sqlType == Types.DATE) {
 			String valueString = GetterUtil.getString(value);

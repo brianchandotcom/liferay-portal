@@ -771,13 +771,40 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136838. It checks that a guest cannot view a folder without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test GuestCannotViewFolder {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		// TODO LPS-136838 GuestCannotViewFolder pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
+		JSONFolder.addFolder(
+		 	dmFolderDescription = "DM Folder Description",
+		 	dmFolderName = "DM Folder Name",
+		 	groupName = "Guest");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertElementNotPresent(
+			locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE",
+			key_dmDocumentTitle = "DM Folder Name");
 	}
 
 	@description = "This is a test for LPS-136832. It checks that a guest cannot access a folder without permissions."

@@ -290,13 +290,9 @@ definition {
 	}
 
 	@description = "Verify that the user is not able to search by Workflow description"
-	@ignore = "true"
 	@priority = "3"
 	test CanSearchByDescription {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		task ("Search for existing Description") {
 			ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");

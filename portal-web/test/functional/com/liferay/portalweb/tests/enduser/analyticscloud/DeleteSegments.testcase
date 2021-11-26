@@ -44,6 +44,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8595 | Test Summary: Delete a criteria"
 	@priority = "3"
 	test CanDeleteCriteria {
+		property portal.upstream = "quarantine";
+		
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -104,6 +106,8 @@ definition {
 	@description = "Delete a dynamic segment"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
+		property portal.upstream = "quarantine";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -158,6 +162,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8597 | Test Summary: Delete a Segment via the Segment List"
 	@priority = "4"
 	test CanDeleteSegmentViaSegmentList {
+		property portal.upstream = "quarantine";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -218,6 +224,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8138 | Test Summary: Delete a static segment"
 	@priority = "5"
 	test CanDeleteStaticSegment {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -408,6 +416,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8594 | Test Summary: Deleting a data source causes individuals to be removed from segment"
 	@priority = "4"
 	test DeleteDataSourceIndividualsRemovedSegment {
+		property portal.upstream = "quarantine";
+		
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

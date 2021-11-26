@@ -151,6 +151,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -208,6 +210,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -353,6 +357,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedBrowser {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("View the blog") {
@@ -403,6 +409,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8385 | Test Summary: Blogs views by technology card shows views by the expected device"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedDevice {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("View the blog") {
@@ -447,6 +455,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
 	@priority = "5"
 	test CanBlogsListSearchable {
+		property portal.upstream = "quarantine";
+		
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
@@ -487,6 +497,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
 	@priority = "5"
 	test CanNavigatesToBlogsOverviewPage {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -600,6 +612,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Blogs known individuals list shows individuals who have viewed the blog"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,dxp,liferay";
 
 		var emailList = "ac@liferay.com,dxp@liferay.com,liferay@liferay.com";
@@ -672,6 +686,8 @@ definition {
 	@description = "View all blogs in the property in assets"
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {
+		property portal.upstream = "quarantine";
+
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

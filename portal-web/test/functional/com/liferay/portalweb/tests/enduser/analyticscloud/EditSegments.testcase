@@ -38,6 +38,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
 	@priority = "3"
 	test AssertSegmentOverviewShowsCriteria {
+		property portal.upstream = "quarantine";
+
 		task ("Create Blog and Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
 		}
@@ -104,6 +106,7 @@ definition {
 	@priority = "5"
 	test CanEditDynamicSegmentCheckEditSaved {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -209,6 +212,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -280,6 +285,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
 	@priority = "5"
 	test CanRenameIndividualsSegment {
+		property portal.upstream = "quarantine";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -340,6 +347,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8585 | Test Summary: It is not possible to add a duplicate user to a static segment"
 	@priority = "4"
 	test CantDuplicateUserToStaticSegment {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -391,6 +400,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8589 | Test Summary: Editor shows static segment label"
 	@priority = "3"
 	test EditorShowsStaticSegmentLabel {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -437,6 +448,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
 	@priority = "3"
 	test PaginateListOfMembersToBeAddedToTheSegment {
+		property portal.upstream = "quarantine";
+		
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
 
 		var nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7";
@@ -556,6 +569,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"
 	@priority = "3"
 	test SegmentListKebabMenuContainsEditAndDeleteButtons {
+		property portal.upstream = "quarantine";
+
 		task ("Create user and sincronize it") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -612,6 +627,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"
 	@priority = "3"
 	test SortSegmentAddMembersModal {
+		property portal.upstream = "quarantine";
+
 		var users = "ac,liferay,dxp";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
@@ -689,6 +706,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8590 | Test Summary: Undo Adding a Segment Member in the Edit Modal"
 	@priority = "4"
 	test UndoAddingSegmentMemberInTheEditModal {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -840,6 +859,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8593 | Test Summary: Undo Deleting a Segment Member in the Edit Modal"
 	@priority = "4"
 	test UndoDeletingASegmentMemberInTheEditModal {
+		property portal.upstream = "quarantine";
+		
 		var users = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -925,6 +946,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8596 | Test Summary: Undo one static member from being added"
 	@priority = "3"
 	test UndoOneStaticMemberFromBeingAdded {
+		property portal.upstream = "quarantine";
+
 		var users = "ac,ac2,ac3";
 
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";

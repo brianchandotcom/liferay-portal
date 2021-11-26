@@ -665,6 +665,8 @@ definition {
 	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
 	@priority = "5"
 	test ViewAssetAddedByDXPDataSource {
+		property portal.upstream = "quarantine";
+		
 		property portal.release = "true";
 
 		task ("Create site, page and add a blog to the page") {

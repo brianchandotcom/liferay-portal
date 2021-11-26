@@ -205,6 +205,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -360,6 +362,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
 	@priority = "5"
 	test CanNavigateToWebContentOverviewPage {
+		property portal.upstream = "quarantine";
+		
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -411,6 +415,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
 	@priority = "5"
 	test CanSearchWebContentList {
+		property portal.upstream = "quarantine";
+		
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
 		task ("Add pages and add web content to earch of the page") {
@@ -602,6 +608,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
+		property portal.upstream = "quarantine";
+
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 
 		var usernameList = "ac,liferay,dxp";
@@ -670,6 +678,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
 	@priority = "5"
 	test ViewAllWebContentShownInAssetList {
+		property portal.upstream = "quarantine";
+
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {
@@ -722,6 +732,8 @@ definition {
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
+		property portal.upstream = "quarantine";
+
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -911,6 +923,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8453 | Test Summary: Web content submissions by technology card shows views by expected device"
 	@priority = "5"
 	test WebContentTechnologyCardShowsViewsByExpectedDevice {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(

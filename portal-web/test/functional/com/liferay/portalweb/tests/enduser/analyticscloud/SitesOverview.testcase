@@ -35,6 +35,7 @@ definition {
 	@priority = "3"
 	test CanViewSitesOverviewDashboardCards {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -50,6 +51,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8260 | Test Summary: Site report page returns all cards filled out according to the site selected in the Site dropdown field"
 	@priority = "5"
 	test SiteReportPageReturnsAllCardsFilledAccordingSiteSelected {
+		property portal.upstream = "quarantine";
+
 		ACUtils.addSiteAndPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -72,6 +75,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8266 | Test Summary: Sites Report page has an empty state If no data source is connect"
 	@priority = "4"
 	test SitesReportPageHasEmptyStateIfNoDataSourceConnect {
+		property portal.upstream = "quarantine";
+
 		task ("Create site and page, connect the AC and disconnect") {
 			ACUtils.addSiteAndPage();
 
@@ -108,6 +113,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8261 | Test Summary: Make sure the Site Reports is the home page of AC"
 	@priority = "5"
 	test ViewSitesReportsAsHomePageAC {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();

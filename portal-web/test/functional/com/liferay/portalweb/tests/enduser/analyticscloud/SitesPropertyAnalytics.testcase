@@ -121,6 +121,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
 	@priority = "3"
 	test AssertChartTicksSiteMetricsStandardized {
+		property portal.upstream = "quarantine";
+		
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

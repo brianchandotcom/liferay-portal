@@ -23,6 +23,8 @@ definition {
 	@description = "Automation ID: LRAC-8129 | Test Summary: Show data source lists"
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
+		property portal.upstream = "quarantine";
+		
 		var dataSourceList = "";
 
 		for (var n : list "1,2,3") {

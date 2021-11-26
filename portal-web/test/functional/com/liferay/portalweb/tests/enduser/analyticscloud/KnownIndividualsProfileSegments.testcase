@@ -196,6 +196,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = "3"
 	test OrderIndividualsAssociatedSegments {
+		property portal.upstream = "quarantine";
+
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		task ("Get site assigned property name") {
@@ -343,6 +345,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9003 | Test Summary: Individuals Segment list has pagination"
 	@priority = "3"
 	test PaginateIndividualsSegmentList {
+		property portal.upstream = "quarantine";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -435,6 +439,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
+		property portal.upstream = "quarantine";
+		
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
 		task ("Get site assigned property name") {

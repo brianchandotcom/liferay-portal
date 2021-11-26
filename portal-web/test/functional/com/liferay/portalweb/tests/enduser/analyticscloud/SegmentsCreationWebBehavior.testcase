@@ -38,6 +38,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9220 | Test Summary: Create a segment with behavior of commenting on a blog"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentCommentingBlog {
+		property portal.upstream = "quarantine";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -272,6 +274,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9222 | Test Summary: Create a Web Behavior since X days"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentSinceXdays {
+		property portal.upstream = "quarantine";
+		
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSinceXdays";
 
 		ACUtils.createWCAndAddToPage();
@@ -865,6 +869,8 @@ definition {
 	@description = "Add segment using a web behavior 'since' some time"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
+		property portal.upstream = "quarantine";
+		
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
 
 		ACUtils.createBlogsAndAddToPage();

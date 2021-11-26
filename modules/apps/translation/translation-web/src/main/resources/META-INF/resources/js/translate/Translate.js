@@ -36,14 +36,17 @@ const getInfoFields = (infoFieldSetEntries = []) => {
 	const targetFields = {};
 
 	infoFieldSetEntries.forEach(({fields}) => {
-		fields.forEach(({id, sourceContent, targetContent}) => {
-			sourceFields[id] = sourceContent;
+		fields.forEach(({id: idSet, sourceContent, targetContent}) => {
+			sourceContent.forEach((content, index) => {
+				const id = `${idSet}${index}`;
 
-			targetFields[id] = {
-				content: targetContent,
-				message: '',
-				status: '',
-			};
+				sourceFields[id] = content;
+				targetFields[id] = {
+					content: targetContent[index],
+					message: '',
+					status: '',
+				};
+			});
 		});
 	});
 

@@ -298,6 +298,10 @@ public class ObjectActionLocalServiceUtil {
 		return getService().getObjectActions(start, end);
 	}
 
+	public static List<ObjectAction> getObjectActions(long objectDefinitionId) {
+		return getService().getObjectActions(objectDefinitionId);
+	}
+
 	public static List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey) {
 

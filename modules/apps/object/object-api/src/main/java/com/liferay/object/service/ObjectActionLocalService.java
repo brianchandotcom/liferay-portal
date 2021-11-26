@@ -272,6 +272,9 @@ public interface ObjectActionLocalService
 	public List<ObjectAction> getObjectActions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectAction> getObjectActions(long objectDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey);
 

@@ -1208,6 +1208,516 @@ public class ObjectActionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"objectAction.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
+	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
+	private FinderPath _finderPathCountByObjectDefinitionId;
+
+	/**
+	 * Returns all the object actions where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object actions
+	 */
+	@Override
+	public List<ObjectAction> findByObjectDefinitionId(
+		long objectDefinitionId) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object actions where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object actions
+	 * @param end the upper bound of the range of object actions (not inclusive)
+	 * @return the range of matching object actions
+	 */
+	@Override
+	public List<ObjectAction> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end) {
+
+		return findByObjectDefinitionId(objectDefinitionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object actions where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object actions
+	 * @param end the upper bound of the range of object actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object actions
+	 */
+	@Override
+	public List<ObjectAction> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end,
+		OrderByComparator<ObjectAction> orderByComparator) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object actions where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object actions
+	 * @param end the upper bound of the range of object actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object actions
+	 */
+	@Override
+	public List<ObjectAction> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end,
+		OrderByComparator<ObjectAction> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByObjectDefinitionId;
+				finderArgs = new Object[] {objectDefinitionId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByObjectDefinitionId;
+			finderArgs = new Object[] {
+				objectDefinitionId, start, end, orderByComparator
+			};
+		}
+
+		List<ObjectAction> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectAction>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectAction objectAction : list) {
+					if (objectDefinitionId !=
+							objectAction.getObjectDefinitionId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_OBJECTACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectActionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId);
+
+				list = (List<ObjectAction>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first object action in the ordered set where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction findByObjectDefinitionId_First(
+			long objectDefinitionId,
+			OrderByComparator<ObjectAction> orderByComparator)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = fetchByObjectDefinitionId_First(
+			objectDefinitionId, orderByComparator);
+
+		if (objectAction != null) {
+			return objectAction;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectDefinitionId=");
+		sb.append(objectDefinitionId);
+
+		sb.append("}");
+
+		throw new NoSuchObjectActionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first object action in the ordered set where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction fetchByObjectDefinitionId_First(
+		long objectDefinitionId,
+		OrderByComparator<ObjectAction> orderByComparator) {
+
+		List<ObjectAction> list = findByObjectDefinitionId(
+			objectDefinitionId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last object action in the ordered set where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction findByObjectDefinitionId_Last(
+			long objectDefinitionId,
+			OrderByComparator<ObjectAction> orderByComparator)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = fetchByObjectDefinitionId_Last(
+			objectDefinitionId, orderByComparator);
+
+		if (objectAction != null) {
+			return objectAction;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectDefinitionId=");
+		sb.append(objectDefinitionId);
+
+		sb.append("}");
+
+		throw new NoSuchObjectActionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last object action in the ordered set where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction fetchByObjectDefinitionId_Last(
+		long objectDefinitionId,
+		OrderByComparator<ObjectAction> orderByComparator) {
+
+		int count = countByObjectDefinitionId(objectDefinitionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ObjectAction> list = findByObjectDefinitionId(
+			objectDefinitionId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63;.
+	 *
+	 * @param objectActionId the primary key of the current object action
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object action
+	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
+	 */
+	@Override
+	public ObjectAction[] findByObjectDefinitionId_PrevAndNext(
+			long objectActionId, long objectDefinitionId,
+			OrderByComparator<ObjectAction> orderByComparator)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = findByPrimaryKey(objectActionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectAction[] array = new ObjectActionImpl[3];
+
+			array[0] = getByObjectDefinitionId_PrevAndNext(
+				session, objectAction, objectDefinitionId, orderByComparator,
+				true);
+
+			array[1] = objectAction;
+
+			array[2] = getByObjectDefinitionId_PrevAndNext(
+				session, objectAction, objectDefinitionId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectAction getByObjectDefinitionId_PrevAndNext(
+		Session session, ObjectAction objectAction, long objectDefinitionId,
+		OrderByComparator<ObjectAction> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_OBJECTACTION_WHERE);
+
+		sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ObjectActionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(objectDefinitionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(objectAction)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectAction> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the object actions where objectDefinitionId = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 */
+	@Override
+	public void removeByObjectDefinitionId(long objectDefinitionId) {
+		for (ObjectAction objectAction :
+				findByObjectDefinitionId(
+					objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(objectAction);
+		}
+	}
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object actions
+	 */
+	@Override
+	public int countByObjectDefinitionId(long objectDefinitionId) {
+		FinderPath finderPath = _finderPathCountByObjectDefinitionId;
+
+		Object[] finderArgs = new Object[] {objectDefinitionId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OBJECTACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2 =
+			"objectAction.objectDefinitionId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByO_A_OATK;
 	private FinderPath _finderPathWithoutPaginationFindByO_A_OATK;
 	private FinderPath _finderPathCountByO_A_OATK;
@@ -2450,6 +2960,24 @@ public class ObjectActionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_finderPathWithPaginationFindByObjectDefinitionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"objectDefinitionId"}, true);
+
+		_finderPathWithoutPaginationFindByObjectDefinitionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByObjectDefinitionId", new String[] {Long.class.getName()},
+			new String[] {"objectDefinitionId"}, true);
+
+		_finderPathCountByObjectDefinitionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByObjectDefinitionId", new String[] {Long.class.getName()},
+			new String[] {"objectDefinitionId"}, false);
 
 		_finderPathWithPaginationFindByO_A_OATK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_A_OATK",

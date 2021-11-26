@@ -11,6 +11,8 @@ dependencies {
 	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle")
 	testIntegrationCompile project(":apps:site:site-api")
+	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")
+	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
 	testIntegrationCompile project(":apps:style-book:style-book-api")
 	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

@@ -85,6 +85,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -158,6 +163,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutSets(group);
 			_assertObjectDefinition(group);
 			_assertPermissions(group);
+			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 		}
 		finally {
@@ -629,6 +635,43 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(2, role4.getType());
 	}
 
+	private void _assertSiteNavigationMenu(Group group) {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
+				group.getGroupId(), "Test Site Navigation Menu");
+
+		Assert.assertNotNull(siteNavigationMenu);
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				siteNavigationMenu.getSiteNavigationMenuId());
+
+		Assert.assertEquals(
+			siteNavigationMenuItems.toString(), 3,
+			siteNavigationMenuItems.size());
+
+		SiteNavigationMenuItem siteNavigationMenuItem1 =
+			siteNavigationMenuItems.get(0);
+
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.LAYOUT,
+			siteNavigationMenuItem1.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem2 =
+			siteNavigationMenuItems.get(1);
+
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.URL,
+			siteNavigationMenuItem2.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem3 =
+			siteNavigationMenuItems.get(2);
+
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.NODE,
+			siteNavigationMenuItem3.getType());
+	}
+
 	private void _assertStyleBookEntry(Group group) {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -732,6 +775,13 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Inject
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

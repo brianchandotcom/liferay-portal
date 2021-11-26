@@ -321,6 +321,8 @@ definition {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				WaitForLiferayEvent.initializeLiferayEventLog();
+
 				SitePages.gotoPageMenuItem(
 					menuItem = "View Collection Items",
 					pageName = "Test Collection Page Name");
@@ -341,6 +343,8 @@ definition {
 			PagesFinder.goToPagesFinder();
 
 			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				WaitForLiferayEvent.initializeLiferayEventLog();
+
 				PagesFinder.gotoPageEllipsisItem(
 					item = "View Collection Items",
 					pageName = "Test Collection Page Name");

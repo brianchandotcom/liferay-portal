@@ -197,7 +197,10 @@ public class CPDefinitionLocalServiceImpl
 		if (StringUtil.equalsIgnoreCase(
 				productTypeName, VirtualCPTypeConstants.NAME)) {
 
-			shippable = false;
+			cpDefinition.setShippable(false);
+		}
+		else {
+			cpDefinition.setShippable(shippable);
 		}
 
 		cpDefinition.setGroupId(groupId);
@@ -208,7 +211,6 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
-		cpDefinition.setShippable(shippable);
 		cpDefinition.setFreeShipping(freeShipping);
 		cpDefinition.setShipSeparately(shipSeparately);
 		cpDefinition.setShippingExtraPrice(shippingExtraPrice);
@@ -1601,7 +1603,10 @@ public class CPDefinitionLocalServiceImpl
 		if (StringUtil.equalsIgnoreCase(
 				productTypeName, VirtualCPTypeConstants.NAME)) {
 
-			shippable = false;
+			cpDefinition.setShippable(false);
+		}
+		else {
+			cpDefinition.setShippable(shippable);
 		}
 
 		if (cpDefinitionLocalService.isVersionable(cpDefinition)) {
@@ -1618,7 +1623,6 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
-		cpDefinition.setShippable(shippable);
 		cpDefinition.setFreeShipping(freeShipping);
 		cpDefinition.setShipSeparately(shipSeparately);
 		cpDefinition.setShippingExtraPrice(shippingExtraPrice);

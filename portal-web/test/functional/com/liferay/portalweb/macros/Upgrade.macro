@@ -4411,10 +4411,6 @@ definition {
 			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view or delete it.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
-		AssertVisible(locator1 = "Publications#PUBLISH_DISABLED_NAV_BAR");
-
-		AssertVisible(locator1 = "Publications#SCHEDULE_DISABLED_NAV_BAR");
-
 		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.deletePublication(publicationName = "Publication 2 Name");

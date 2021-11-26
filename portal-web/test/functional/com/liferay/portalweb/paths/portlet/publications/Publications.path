@@ -186,11 +186,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_DISABLED_NAV_BAR</td>
-	<td>//a[contains(@class,'btn-sm disabled') and contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLISH_NAV_BAR</td>
 	<td>//li[contains(@class,'tbar-item')]/a[contains(.,'Publish')]</td>
 	<td></td>
@@ -228,11 +223,6 @@
 <tr>
 	<td>SCHEDULE_BUTTON</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='Schedule']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULE_DISABLED_NAV_BAR</td>
-	<td>//a[contains(@class,'btn-sm disabled') and contains(.,'Schedule')]</td>
 	<td></td>
 </tr>
 <tr>

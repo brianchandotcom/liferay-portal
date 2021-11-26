@@ -896,14 +896,31 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).toString());
 		}
 
-		if (documentFolderId != null) {
-			documentFolder =
-				documentFolderResource.postDocumentFolderDocumentFolder(
-					documentFolderId, documentFolder);
+		Page<DocumentFolder> listDocumentFoldersPage =
+			documentFolderResource.getSiteDocumentFoldersPage(
+				groupId, true, null, null,
+				documentFolderResource.toFilter(
+					StringBundler.concat(
+						"name eq '", documentFolder.getName(), "'")),
+				null, null);
+
+		DocumentFolder existingDocumentFolder =
+			listDocumentFoldersPage.fetchFirstItem();
+
+		if (existingDocumentFolder == null) {
+			if (documentFolderId != null) {
+				documentFolder =
+					documentFolderResource.postDocumentFolderDocumentFolder(
+						documentFolderId, documentFolder);
+			}
+			else {
+				documentFolder = documentFolderResource.postSiteDocumentFolder(
+					groupId, documentFolder);
+			}
 		}
 		else {
-			documentFolder = documentFolderResource.postSiteDocumentFolder(
-				groupId, documentFolder);
+			documentFolder = documentFolderResource.putDocumentFolder(
+				existingDocumentFolder.getId(), documentFolder);
 		}
 
 		return documentFolder.getId();
@@ -972,28 +989,74 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Document document = null;
 
 			if (documentFolderId != null) {
-				document = documentResource.postDocumentFolderDocument(
-					documentFolderId,
-					MultipartBody.of(
-						Collections.singletonMap(
-							"file",
-							new BinaryFile(
-								MimeTypesUtil.getContentType(fileName),
-								fileName, urlConnection.getInputStream(),
-								urlConnection.getContentLength())),
-						__ -> _objectMapper, values));
+				Page<Document> listDocumentsPage =
+					documentResource.getDocumentFolderDocumentsPage(
+						documentFolderId, false, null, null,
+						documentResource.toFilter(
+							StringBundler.concat("title eq '", fileName, "'")),
+						null, null);
+
+				Document existingDocument = listDocumentsPage.fetchFirstItem();
+
+				if (existingDocument == null) {
+					document = documentResource.postDocumentFolderDocument(
+						documentFolderId,
+						MultipartBody.of(
+							Collections.singletonMap(
+								"file",
+								new BinaryFile(
+									MimeTypesUtil.getContentType(fileName),
+									fileName, urlConnection.getInputStream(),
+									urlConnection.getContentLength())),
+							__ -> _objectMapper, values));
+				}
+				else {
+					document = documentResource.putDocument(
+						existingDocument.getId(),
+						MultipartBody.of(
+							Collections.singletonMap(
+								"file",
+								new BinaryFile(
+									MimeTypesUtil.getContentType(fileName),
+									fileName, urlConnection.getInputStream(),
+									urlConnection.getContentLength())),
+							__ -> _objectMapper, values));
+				}
 			}
 			else {
-				document = documentResource.postSiteDocument(
-					groupId,
-					MultipartBody.of(
-						Collections.singletonMap(
-							"file",
-							new BinaryFile(
-								MimeTypesUtil.getContentType(fileName),
-								fileName, urlConnection.getInputStream(),
-								urlConnection.getContentLength())),
-						__ -> _objectMapper, values));
+				Page<Document> listDocumentsPage =
+					documentResource.getSiteDocumentsPage(
+						groupId, false, null, null,
+						documentResource.toFilter(
+							StringBundler.concat("title eq '", fileName, "'")),
+						null, null);
+
+				Document existingDocument = listDocumentsPage.fetchFirstItem();
+
+				if (existingDocument == null) {
+					document = documentResource.postSiteDocument(
+						groupId,
+						MultipartBody.of(
+							Collections.singletonMap(
+								"file",
+								new BinaryFile(
+									MimeTypesUtil.getContentType(fileName),
+									fileName, urlConnection.getInputStream(),
+									urlConnection.getContentLength())),
+							__ -> _objectMapper, values));
+				}
+				else {
+					document = documentResource.putDocument(
+						existingDocument.getId(),
+						MultipartBody.of(
+							Collections.singletonMap(
+								"file",
+								new BinaryFile(
+									MimeTypesUtil.getContentType(fileName),
+									fileName, urlConnection.getInputStream(),
+									urlConnection.getContentLength())),
+							__ -> _objectMapper, values));
+				}
 			}
 
 			String key = resourcePath;

@@ -17,6 +17,7 @@ package com.liferay.portal.security.sso.openid.connect.internal.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
+import com.liferay.portal.security.sso.openid.connect.internal.OpenIdConnectProviderImpl;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -30,7 +31,6 @@ import com.nimbusds.oauth2.sdk.RefreshTokenGrant;
 import com.nimbusds.oauth2.sdk.TokenErrorResponse;
 import com.nimbusds.oauth2.sdk.TokenRequest;
 import com.nimbusds.oauth2.sdk.TokenResponse;
-import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
 import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
@@ -101,12 +101,20 @@ public class OpenIdConnectTokenRequestUtil {
 
 		URI uri = oidcProviderMetadata.getTokenEndpointURI();
 
-		ClientID clientID = new ClientID(openIdConnectProvider.getClientId());
-		Secret secret = new Secret(openIdConnectProvider.getClientSecret());
+		OpenIdConnectProviderImpl openIdConnectProviderImpl =
+			(OpenIdConnectProviderImpl)openIdConnectProvider;
 
-		TokenRequest tokenRequest = new TokenRequest(
-			uri, new ClientSecretBasic(clientID, secret),
-			authorizationCodeGrant);
+		TokenRequest tokenRequest = null;
+
+		try {
+			tokenRequest = new TokenRequest(
+				uri, openIdConnectProviderImpl.getClientAuthentication(),
+				authorizationCodeGrant);
+		}
+		catch (Exception exception) {
+			throw new OpenIdConnectServiceException.ProviderException(
+				exception.getMessage());
+		}
 
 		HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
 
@@ -134,7 +142,8 @@ public class OpenIdConnectTokenRequestUtil {
 			OIDCTokens oidcTokens = oidcTokenResponse.getOIDCTokens();
 
 			_validate(
-				clientID, secret, nonce,
+				new ClientID(openIdConnectProvider.getClientId()),
+				new Secret(openIdConnectProvider.getClientSecret()), nonce,
 				openIdConnectProvider.getOIDCClientMetadata(),
 				oidcProviderMetadata, oidcTokens,
 				openIdConnectProvider.getTokenConnectionTimeout());

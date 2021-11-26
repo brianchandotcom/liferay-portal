@@ -122,4 +122,36 @@ public interface OpenIdConnectProviderConfiguration {
 	)
 	public String registeredIdTokenSigningAlg();
 
+	@Meta.AD(
+		deflt = "client_secret_basic",
+		description = "client-authentication-type-help",
+		name = "client-authentication-type",
+		optionLabels = {
+			"Client Secret Basic", "Client Secret Post", "Client Secret JWT",
+			"Private Key JWT"
+		},
+		optionValues = {
+			"client_secret_basic", "client_secret_post", "client_secret_jwt",
+			"private_key_jwt"
+		}
+	)
+	public String clientAuthenticationType();
+
+	@Meta.AD(
+		deflt = "NONE",
+		description = "client-authentication-jws-algorithm-help",
+		name = "client-authentication-jws-algorithm",
+		optionValues = {
+			"NONE", "HS256", "HS512", "RS256", "RS512", "ES256", "ES512"
+		},
+		required = false
+	)
+	public String clientAuthenticationJWSAlgorithm();
+
+	@Meta.AD(
+		deflt = "", description = "client-authentication-private-key-help",
+		name = "client-authentication-private-key", required = false
+	)
+	public String clientAuthenticationPrivateKey();
+
 }

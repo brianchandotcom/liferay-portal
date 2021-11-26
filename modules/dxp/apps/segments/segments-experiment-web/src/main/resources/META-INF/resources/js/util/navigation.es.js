@@ -13,6 +13,7 @@ const EXPERIENCE_ID_URL_KEY = 'segmentsExperienceId';
 
 const EXPERIENCE_KEY_URL_KEY = 'segmentsExperienceKey';
 const EXPERIMENT_KEY_URL_KEY = 'segmentsExperimentKey';
+const SELECTED_EXPERIENCE_FOR_VIEW_OR_EDIT_MODE_URL_KEY = 'p_s_e_id';
 
 /**
  * Generates standard navigation between Experiences
@@ -32,8 +33,13 @@ export function navigateToExperience(
 
 	urlSearchParams.delete(EXPERIENCE_KEY_URL_KEY);
 	urlSearchParams.delete(EXPERIMENT_KEY_URL_KEY);
+	urlSearchParams.delete(SELECTED_EXPERIENCE_FOR_VIEW_OR_EDIT_MODE_URL_KEY);
 
 	urlSearchParams.set(EXPERIENCE_ID_URL_KEY, experienceId);
+	urlSearchParams.set(
+		SELECTED_EXPERIENCE_FOR_VIEW_OR_EDIT_MODE_URL_KEY,
+		experienceId
+	);
 	currentUrl.search = urlSearchParams.toString();
 
 	const newUrl = currentUrl.toString();

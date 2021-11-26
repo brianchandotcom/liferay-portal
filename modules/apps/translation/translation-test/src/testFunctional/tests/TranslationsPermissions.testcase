@@ -83,13 +83,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		LexiconEntry.openEntryMenu(rowEntry = "WC WebContent Title");
-
-		for (var menuItem : list "Translate,Export for Translation,Import Translation") {
-			AssertElementNotPresent(
-				key_menuItem = "${menuItem}",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
+		Translations.viewTranslationOptions(
+			noOptions = "true",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that the user can not translate a web content without any languages permissions."
@@ -150,13 +146,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		LexiconEntry.openEntryMenu(rowEntry = "WC WebContent Title");
-
-		for (var menuItem : list "Translate,Export for Translation,Import Translation") {
-			AssertElementNotPresent(
-				key_menuItem = "${menuItem}",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
+		Translations.viewTranslationOptions(
+			noOptions = "true",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."

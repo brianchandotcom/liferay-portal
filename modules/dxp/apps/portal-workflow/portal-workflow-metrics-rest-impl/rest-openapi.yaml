@@ -158,6 +158,8 @@ components:
             description:
                 https://www.schema.org/Instance
             properties:
+                active:
+                    type: boolean
                 assetTitle:
                     readOnly: true
                     type: string

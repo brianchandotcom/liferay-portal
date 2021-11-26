@@ -107,7 +107,11 @@ portletDisplay.setURLBack(backURL);
 					let shouldSubmitForm = true;
 
 					fields.forEach((field) => {
-						if (field.type === 'text' && field.value.length > 280) {
+						if (
+							field.type === 'text' &&
+							field.displayStyle === 'singleline' &&
+							field.value.length > 280
+						) {
 							shouldSubmitForm = false;
 
 							Liferay.Util.openToast({

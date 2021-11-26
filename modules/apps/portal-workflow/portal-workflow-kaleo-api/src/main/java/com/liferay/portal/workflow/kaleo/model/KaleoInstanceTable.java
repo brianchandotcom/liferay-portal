@@ -69,6 +69,8 @@ public class KaleoInstanceTable extends BaseTable<KaleoInstanceTable> {
 		createColumn(
 			"rootKaleoInstanceTokenId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<KaleoInstanceTable, Boolean> active = createColumn(
+		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<KaleoInstanceTable, String> className = createColumn(
 		"className", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoInstanceTable, Long> classPK = createColumn(

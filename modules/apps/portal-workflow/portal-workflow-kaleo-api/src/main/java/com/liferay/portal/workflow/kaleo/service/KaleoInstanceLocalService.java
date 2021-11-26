@@ -326,7 +326,7 @@ public interface KaleoInstanceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoInstance> search(
-		Long userId, String assetClassName, String assetTitle,
+		Long userId, Boolean active, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator,
@@ -334,18 +334,23 @@ public interface KaleoInstanceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(
-		Long userId, String assetClassName, String assetTitle,
+		Long userId, Boolean active, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
-			Long userId, String assetClassName, String assetTitle,
-			String assetDescription, String nodeName,
+			Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			boolean searchByActiveWorkflowHandlers, int start, int end,
 			OrderByComparator<KaleoInstance> orderByComparator,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoInstance updateActive(
+			long userId, long kaleoInstanceId, boolean active)
 		throws PortalException;
 
 	/**

@@ -137,6 +137,7 @@
 		</field>
 		<field name="kaleoDefinitionVersion" type="int" />
 		<field name="rootKaleoInstanceTokenId" type="long" />
+		<field name="active" type="boolean" />
 		<field name="className" type="String">
 			<hint name="max-length">200</hint>
 		</field>

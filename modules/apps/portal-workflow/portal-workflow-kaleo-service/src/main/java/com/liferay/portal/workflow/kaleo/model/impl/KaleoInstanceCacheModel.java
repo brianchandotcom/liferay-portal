@@ -77,7 +77,7 @@ public class KaleoInstanceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,6 +105,8 @@ public class KaleoInstanceCacheModel
 		sb.append(kaleoDefinitionVersion);
 		sb.append(", rootKaleoInstanceTokenId=");
 		sb.append(rootKaleoInstanceTokenId);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append(", className=");
 		sb.append(className);
 		sb.append(", classPK=");
@@ -163,6 +165,7 @@ public class KaleoInstanceCacheModel
 
 		kaleoInstanceImpl.setKaleoDefinitionVersion(kaleoDefinitionVersion);
 		kaleoInstanceImpl.setRootKaleoInstanceTokenId(rootKaleoInstanceTokenId);
+		kaleoInstanceImpl.setActive(active);
 
 		if (className == null) {
 			kaleoInstanceImpl.setClassName("");
@@ -218,6 +221,8 @@ public class KaleoInstanceCacheModel
 		kaleoDefinitionVersion = objectInput.readInt();
 
 		rootKaleoInstanceTokenId = objectInput.readLong();
+
+		active = objectInput.readBoolean();
 		className = objectInput.readUTF();
 
 		classPK = objectInput.readLong();
@@ -264,6 +269,8 @@ public class KaleoInstanceCacheModel
 
 		objectOutput.writeLong(rootKaleoInstanceTokenId);
 
+		objectOutput.writeBoolean(active);
+
 		if (className == null) {
 			objectOutput.writeUTF("");
 		}
@@ -297,6 +304,7 @@ public class KaleoInstanceCacheModel
 	public String kaleoDefinitionName;
 	public int kaleoDefinitionVersion;
 	public long rootKaleoInstanceTokenId;
+	public boolean active;
 	public String className;
 	public long classPK;
 	public boolean completed;

@@ -274,6 +274,27 @@ public interface KaleoInstanceModel
 	public void setRootKaleoInstanceTokenId(long rootKaleoInstanceTokenId);
 
 	/**
+	 * Returns the active of this kaleo instance.
+	 *
+	 * @return the active of this kaleo instance
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this kaleo instance is active.
+	 *
+	 * @return <code>true</code> if this kaleo instance is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this kaleo instance is active.
+	 *
+	 * @param active the active of this kaleo instance
+	 */
+	public void setActive(boolean active);
+
+	/**
 	 * Returns the class name of this kaleo instance.
 	 *
 	 * @return the class name of this kaleo instance

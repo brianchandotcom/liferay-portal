@@ -698,13 +698,32 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136835. It checks that a guest cannot subscribe to a folder without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test GuestCannotSubscribeToFolder {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		// TODO LPS-136835 GuestCannotSubscribeToFolder pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+	
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		Click(locator1 = "Icon#INFO");
+
+		AssertElementNotPresent(locator1 = "Icon#SUBSCRIBE");
 	}
 
 	@description = "This is a test for LPS-136836. It checks that a guest cannot update comments in a file without permissions."

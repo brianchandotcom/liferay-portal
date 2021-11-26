@@ -110,6 +110,7 @@ public class KaleoInstanceLocalServiceImpl
 		kaleoInstance.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoInstance.setKaleoDefinitionName(kaleoDefinitionName);
 		kaleoInstance.setKaleoDefinitionVersion(kaleoDefinitionVersion);
+		kaleoInstance.setActive(true);
 		kaleoInstance.setClassName(
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
@@ -265,7 +266,7 @@ public class KaleoInstanceLocalServiceImpl
 
 		return _toKaleoInstances(
 			doSearch(
-				userId, null, null, null, null, null,
+				userId, null, null, null, null, null, null,
 				getClassNames(assetClassName), assetClassPK, completed, false,
 				start, end, orderByComparator, serviceContext));
 	}
@@ -279,8 +280,8 @@ public class KaleoInstanceLocalServiceImpl
 
 		return _toKaleoInstances(
 			doSearch(
-				userId, null, null, null, null, null, assetClassNames, null,
-				completed, false, start, end, orderByComparator,
+				userId, null, null, null, null, null, null, assetClassNames,
+				null, completed, false, start, end, orderByComparator,
 				serviceContext));
 	}
 
@@ -294,7 +295,7 @@ public class KaleoInstanceLocalServiceImpl
 
 		return _toKaleoInstances(
 			doSearch(
-				null, null, null, null, kaleoDefinitionName,
+				null, null, null, null, null, kaleoDefinitionName,
 				kaleoDefinitionVersion, null, null, completed, false, start,
 				end, orderByComparator, serviceContext));
 	}
@@ -313,8 +314,9 @@ public class KaleoInstanceLocalServiceImpl
 		Boolean completed, ServiceContext serviceContext) {
 
 		return doSearchCount(
-			userId, null, null, null, null, null, getClassNames(assetClassName),
-			assetClassPK, completed, false, serviceContext);
+			userId, null, null, null, null, null, null,
+			getClassNames(assetClassName), assetClassPK, completed, false,
+			serviceContext);
 	}
 
 	@Override
@@ -323,7 +325,7 @@ public class KaleoInstanceLocalServiceImpl
 		ServiceContext serviceContext) {
 
 		return doSearchCount(
-			userId, null, null, null, null, null, assetClassNames, null,
+			userId, null, null, null, null, null, null, assetClassNames, null,
 			completed, false, serviceContext);
 	}
 
@@ -333,13 +335,14 @@ public class KaleoInstanceLocalServiceImpl
 		boolean completed, ServiceContext serviceContext) {
 
 		return doSearchCount(
-			null, null, null, null, kaleoDefinitionName, kaleoDefinitionVersion,
-			null, null, completed, false, serviceContext);
+			null, null, null, null, null, kaleoDefinitionName,
+			kaleoDefinitionVersion, null, null, completed, false,
+			serviceContext);
 	}
 
 	@Override
 	public List<KaleoInstance> search(
-		Long userId, String assetClassName, String assetTitle,
+		Long userId, Boolean active, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator,
@@ -348,9 +351,9 @@ public class KaleoInstanceLocalServiceImpl
 		try {
 			BaseModelSearchResult<KaleoInstance> baseModelSearchResult =
 				searchKaleoInstances(
-					userId, assetClassName, assetTitle, assetDescription,
-					nodeName, kaleoDefinitionName, completed, false, start, end,
-					orderByComparator, serviceContext);
+					userId, active, assetClassName, assetTitle,
+					assetDescription, nodeName, kaleoDefinitionName, completed,
+					false, start, end, orderByComparator, serviceContext);
 
 			return baseModelSearchResult.getBaseModels();
 		}
@@ -365,20 +368,20 @@ public class KaleoInstanceLocalServiceImpl
 
 	@Override
 	public int searchCount(
-		Long userId, String assetClassName, String assetTitle,
+		Long userId, Boolean active, String assetClassName, String assetTitle,
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, ServiceContext serviceContext) {
 
 		return doSearchCount(
-			userId, assetTitle, assetDescription, nodeName, kaleoDefinitionName,
-			null, getClassNames(assetClassName), null, completed, false,
-			serviceContext);
+			userId, active, assetTitle, assetDescription, nodeName,
+			kaleoDefinitionName, null, getClassNames(assetClassName), null,
+			completed, false, serviceContext);
 	}
 
 	@Override
 	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
-			Long userId, String assetClassName, String assetTitle,
-			String assetDescription, String nodeName,
+			Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			boolean searchByActiveWorkflowHandlers, int start, int end,
 			OrderByComparator<KaleoInstance> orderByComparator,
@@ -386,10 +389,10 @@ public class KaleoInstanceLocalServiceImpl
 		throws PortalException {
 
 		Hits hits = doSearch(
-			userId, assetTitle, assetDescription, nodeName, kaleoDefinitionName,
-			null, getClassNames(assetClassName), null, completed,
-			searchByActiveWorkflowHandlers, start, end, orderByComparator,
-			serviceContext);
+			userId, active, assetTitle, assetDescription, nodeName,
+			kaleoDefinitionName, null, getClassNames(assetClassName), null,
+			completed, searchByActiveWorkflowHandlers, start, end,
+			orderByComparator, serviceContext);
 
 		return new BaseModelSearchResult<>(
 			Stream.of(
@@ -405,6 +408,21 @@ public class KaleoInstanceLocalServiceImpl
 				Collectors.toList()
 			),
 			hits.getLength());
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public KaleoInstance updateActive(
+			long userId, long kaleoInstanceId, boolean active)
+		throws PortalException {
+
+		KaleoInstance kaleoInstance = kaleoInstancePersistence.findByPrimaryKey(
+			kaleoInstanceId);
+
+		kaleoInstance.setUserId(userId);
+		kaleoInstance.setActive(active);
+
+		return kaleoInstancePersistence.update(kaleoInstance);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -460,11 +478,11 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	protected Hits doSearch(
-			Long userId, String assetTitle, String assetDescription,
-			String currentKaleoNodeName, String kaleoDefinitionName,
-			Integer kaleoDefinitionVersion, String[] classNames, Long classPK,
-			Boolean completed, boolean searchByActiveWorkflowHandlers,
-			int start, int end,
+			Long userId, Boolean active, String assetTitle,
+			String assetDescription, String currentKaleoNodeName,
+			String kaleoDefinitionName, Integer kaleoDefinitionVersion,
+			String[] classNames, Long classPK, Boolean completed,
+			boolean searchByActiveWorkflowHandlers, int start, int end,
 			OrderByComparator<KaleoInstance> orderByComparator,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -472,6 +490,7 @@ public class KaleoInstanceLocalServiceImpl
 		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
 
+		kaleoInstanceQuery.setActive(active);
 		kaleoInstanceQuery.setAssetDescription(assetDescription);
 		kaleoInstanceQuery.setAssetTitle(assetTitle);
 		kaleoInstanceQuery.setCurrentKaleoNodeName(currentKaleoNodeName);
@@ -496,7 +515,7 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	protected int doSearchCount(
-		Long userId, String assetTitle, String assetDescription,
+		Long userId, Boolean active, String assetTitle, String assetDescription,
 		String currentKaleoNodeName, String kaleoDefinitionName,
 		Integer kaleoDefinitionVersion, String[] classNames, Long classPK,
 		boolean completed, boolean searchByActiveWorkflowHandlers,
@@ -505,6 +524,7 @@ public class KaleoInstanceLocalServiceImpl
 		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
 
+		kaleoInstanceQuery.setActive(active);
 		kaleoInstanceQuery.setAssetDescription(assetDescription);
 		kaleoInstanceQuery.setAssetTitle(assetTitle);
 		kaleoInstanceQuery.setCurrentKaleoNodeName(currentKaleoNodeName);

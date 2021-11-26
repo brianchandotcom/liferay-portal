@@ -59,6 +59,10 @@ public interface WorkflowInstance extends WorkflowModel {
 
 	public long getWorkflowInstanceId();
 
+	public default boolean isActive() {
+		return true;
+	}
+
 	public boolean isComplete();
 
 	public void setParentWorkflowInstance(

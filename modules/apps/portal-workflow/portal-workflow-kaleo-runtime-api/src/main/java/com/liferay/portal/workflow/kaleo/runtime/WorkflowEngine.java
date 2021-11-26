@@ -103,8 +103,8 @@ public interface WorkflowEngine {
 		throws WorkflowException;
 
 	public default List<WorkflowInstance> search(
-			Long userId, String assetClassName, String assetTitle,
-			String assetDescription, String nodeName,
+			Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator,
 			ServiceContext serviceContext)
@@ -114,8 +114,8 @@ public interface WorkflowEngine {
 	}
 
 	public default int searchCount(
-			Long userId, String assetClassName, String assetTitle,
-			String assetDescription, String nodeName,
+			Long userId, Boolean active, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			ServiceContext serviceContext)
 		throws WorkflowException {
@@ -125,8 +125,8 @@ public interface WorkflowEngine {
 
 	public default WorkflowModelSearchResult<WorkflowInstance>
 			searchWorkflowInstances(
-				Long userId, String assetClassName, String assetTitle,
-				String assetDescription, String nodeName,
+				Long userId, Boolean active, String assetClassName,
+				String assetTitle, String assetDescription, String nodeName,
 				String kaleoDefinitionName, Boolean completed,
 				boolean searchByActiveWorkflowHandlers, int start, int end,
 				OrderByComparator<WorkflowInstance> orderByComparator,
@@ -164,6 +164,14 @@ public interface WorkflowEngine {
 			long workflowInstanceId, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws WorkflowException;
+
+	public default WorkflowInstance updateWorkflowInstanceActive(
+			long userId, long companyId, long workflowInstanceId,
+			boolean active)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public void validateWorkflowDefinition(InputStream inputStream)
 		throws WorkflowException;

@@ -199,7 +199,7 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 
 	@Override
 	public List<WorkflowInstance> search(
-			long companyId, Long userId, String assetClassName,
+			long companyId, Long userId, Boolean active, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator)
@@ -210,14 +210,14 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 		serviceContext.setCompanyId(companyId);
 
 		return _workflowEngine.search(
-			userId, assetClassName, assetTitle, assetDescription, nodeName,
-			kaleoDefinitionName, completed, start, end, orderByComparator,
-			serviceContext);
+			userId, active, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator, serviceContext);
 	}
 
 	@Override
 	public int searchCount(
-			long companyId, Long userId, String assetClassName,
+			long companyId, Long userId, Boolean active, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed)
 		throws WorkflowException {
@@ -227,13 +227,13 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 		serviceContext.setCompanyId(companyId);
 
 		return _workflowEngine.searchCount(
-			userId, assetClassName, assetTitle, assetDescription, nodeName,
-			kaleoDefinitionName, completed, serviceContext);
+			userId, active, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed, serviceContext);
 	}
 
 	@Override
 	public WorkflowModelSearchResult<WorkflowInstance> searchWorkflowInstances(
-			long companyId, Long userId, String assetClassName,
+			long companyId, Long userId, Boolean active, String assetClassName,
 			String assetTitle, String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			boolean searchByActiveWorkflowHandlers, int start, int end,
@@ -245,9 +245,10 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 		serviceContext.setCompanyId(companyId);
 
 		return _workflowEngine.searchWorkflowInstances(
-			userId, assetClassName, assetTitle, assetDescription, nodeName,
-			kaleoDefinitionName, completed, searchByActiveWorkflowHandlers,
-			start, end, orderByComparator, serviceContext);
+			userId, active, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed,
+			searchByActiveWorkflowHandlers, start, end, orderByComparator,
+			serviceContext);
 	}
 
 	@Override
@@ -320,6 +321,16 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 		return _workflowEngine.startWorkflowInstance(
 			workflowDefinitionName, workflowDefinitionVersion, transitionName,
 			workflowContext, serviceContext, waitForCompletion);
+	}
+
+	@Override
+	public WorkflowInstance updateActive(
+			long userId, long companyId, long workflowInstanceId,
+			boolean active)
+		throws WorkflowException {
+
+		return _workflowEngine.updateWorkflowInstanceActive(
+			userId, companyId, workflowInstanceId, active);
 	}
 
 	@Override

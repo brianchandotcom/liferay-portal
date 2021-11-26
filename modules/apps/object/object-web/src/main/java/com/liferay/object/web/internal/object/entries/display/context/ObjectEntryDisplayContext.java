@@ -688,6 +688,9 @@ public class ObjectEntryDisplayContext {
 		else if (StringUtil.equals(type, "Boolean")) {
 			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
 		}
+		else if (StringUtil.equals(type, "Clob")) {
+			ddmFormField.setProperty("displayStyle", "multiline");
+		}
 		else if (StringUtil.equals(type, "Integer") ||
 				 StringUtil.equals(type, "Long")) {
 

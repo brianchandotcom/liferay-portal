@@ -3184,7 +3184,7 @@ definition {
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
-			objectName = "CustomObject",
+			objectName = "CustomObject140887",
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
@@ -3192,9 +3192,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject140887");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140887");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -3208,12 +3208,12 @@ definition {
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject140887",
 			value = "Test");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject140887",
 			value = "Test 2");
 
 		ObjectAdmin.openMyWorkflowTasks();

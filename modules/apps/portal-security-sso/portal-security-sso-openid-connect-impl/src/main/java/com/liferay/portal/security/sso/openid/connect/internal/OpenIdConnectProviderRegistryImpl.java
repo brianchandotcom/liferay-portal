@@ -27,6 +27,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
 
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
@@ -66,6 +67,8 @@ public class OpenIdConnectProviderRegistryImpl
 	public void deleted(String pid) {
 		Dictionary<String, ?> properties = _configurationPidsProperties.remove(
 			pid);
+
+		_openIdConnectSessionLocalService.deleteOpenIdConnectSessions(pid);
 
 		long companyId = GetterUtil.getLong(properties.get("companyId"));
 
@@ -313,5 +316,8 @@ public class OpenIdConnectProviderRegistryImpl
 
 	private final Map<String, Dictionary<String, ?>>
 		_configurationPidsProperties = new ConcurrentHashMap<>();
+
+	@Reference
+	private OpenIdConnectSessionLocalService _openIdConnectSessionLocalService;
 
 }

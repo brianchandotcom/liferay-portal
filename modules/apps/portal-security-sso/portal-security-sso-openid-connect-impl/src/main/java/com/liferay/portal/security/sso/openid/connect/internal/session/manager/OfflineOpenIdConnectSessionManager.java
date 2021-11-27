@@ -15,7 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect.internal.session.manager;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,17 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 public class OfflineOpenIdConnectSessionManager {
 
 	public void endOpenIdConnectSession(long openIdConnectSessionId) {
-		OpenIdConnectSession openIdConnectSession =
-			_openIdConnectSessionLocalService.fetchOpenIdConnectSession(
-				openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			return;
-		}
-
-		_openIdConnectSessionLocalService.deleteOpenIdConnectSession(
-			openIdConnectSession);
-
 		try {
 			_openIdConnectTokenRefreshScheduler.unschedule(
 				openIdConnectSessionId);
@@ -204,14 +192,6 @@ public class OfflineOpenIdConnectSessionManager {
 		}
 
 		_bundleContext = null;
-
-		for (OpenIdConnectSession openIdConnectSession :
-				_openIdConnectSessionLocalService.getOpenIdConnectSessions(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			_openIdConnectSessionLocalService.deleteOpenIdConnectSession(
-				openIdConnectSession);
-		}
 	}
 
 	private void _extendOpenIdConnectSession(

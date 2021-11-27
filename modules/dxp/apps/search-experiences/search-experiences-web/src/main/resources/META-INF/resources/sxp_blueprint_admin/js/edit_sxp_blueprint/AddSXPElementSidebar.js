@@ -290,9 +290,11 @@ function AddSXPElementSidebar(props) {
 	const {defaultLocale} = useContext(ThemeContext);
 	const [querySXPElements, setQuerySXPElements] = useState(null);
 
+	// TODO check pagesize
+
 	useEffect(() => {
 		fetchData(
-			'/o/search-experiences-rest/v1.0/sxp-elements',
+			'/o/search-experiences-rest/v1.0/sxp-elements?pageSize=200',
 			{method: 'GET'},
 			(responseContent) =>
 				setQuerySXPElements(

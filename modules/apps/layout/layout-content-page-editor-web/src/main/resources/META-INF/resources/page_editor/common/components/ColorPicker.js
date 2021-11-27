@@ -94,7 +94,7 @@ const ColorPicker = ({
 					small={small}
 				>
 					<ClayInput.GroupItem shrink>
-						<ClayInput.GroupText className="page-editor__ColorPicker__input-group-text--rounded-left">
+						<ClayInput.GroupText className="page-editor__color-picker__input-group-text--rounded-left">
 							<Splotch
 								className="dropdown-toggle"
 								disabled={disabled}
@@ -137,7 +137,7 @@ const ColorPicker = ({
 									/>
 								) : (
 									<ClayEmptyState
-										className="mt-4 page-editor__ColorPicker__empty-result"
+										className="mt-4 page-editor__color-picker__empty-result"
 										description={Liferay.Language.get(
 											'try-again-with-a-different-search'
 										)}
@@ -184,7 +184,10 @@ const Splotch = React.forwardRef(
 
 const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
 	Object.keys(colors).map((category) => (
-		<div className="page-editor__ColorPicker__color-palette" key={category}>
+		<div
+			className="page-editor__color-picker__color-palette"
+			key={category}
+		>
 			<span className="mb-0 p-3 sheet-subtitle">{category}</span>
 
 			{Object.keys(colors[category]).map((tokenSet) => (

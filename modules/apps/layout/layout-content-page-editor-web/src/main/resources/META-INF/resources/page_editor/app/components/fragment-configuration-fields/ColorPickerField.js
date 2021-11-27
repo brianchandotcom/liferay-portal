@@ -98,18 +98,19 @@ export function ColorPickerField({field, onValueSelect, value}) {
 				</ClayInput.GroupItem>
 
 				{color && (
-					<ClayButtonWithIcon
-						className="ml-2"
-						displayType="secondary"
-						onClick={() => {
-							setColor('');
+					<ClayInput.GroupItem shrink>
+						<ClayButtonWithIcon
+							displayType="secondary"
+							onClick={() => {
+								setColor('');
 
-							onValueSelect(field.name, '');
-						}}
-						small
-						symbol="times-circle"
-						title={Liferay.Language.get('clear-selection')}
-					/>
+								onValueSelect(field.name, '');
+							}}
+							small
+							symbol="times-circle"
+							title={Liferay.Language.get('clear-selection')}
+						/>
+					</ClayInput.GroupItem>
 				)}
 			</ClayInput.Group>
 		</ClayForm.Group>

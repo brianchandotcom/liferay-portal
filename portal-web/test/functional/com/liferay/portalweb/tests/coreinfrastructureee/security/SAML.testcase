@@ -223,7 +223,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("Add external app") {
+		task ("Add OAuth 2 external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "http://www.able.com:9080",
@@ -245,7 +245,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("Authorize app and launch request") {
+		task ("Authorize OAuth 2 app and launch request") {
 			OAuth2.authorizeMyApplication(
 				clientId = "abc123",
 				clientSecret = "abc123",
@@ -334,7 +334,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		task ("Add external app") {
+		task ("Add OAuth 2 external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
 				baseURL = "http://www.able.com:9080",
@@ -344,7 +344,7 @@ definition {
 				clientSecret = "abc123");
 		}
 
-		task ("Add app permission role") {
+		task ("Add OAuth 2 app permission role") {
 			OAuth2.addApplicationPermissionToRole(
 				applicationName = "Third-party Application",
 				userRole = "user");
@@ -356,7 +356,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("Authorize app and launch request") {
+		task ("Authorize OAuth 2 app and launch request") {
 			OAuth2.authorizeMyApplication(
 				clientId = "abc123",
 				clientSecret = "abc123",

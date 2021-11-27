@@ -32,6 +32,7 @@ definition {
 		}
 	}
 
+	@description = "Export and import work in organization and add child site from imported site template."
 	@priority = "5"
 	test AddChildSiteFromImportedSiteTemplate {
 		property portal.acceptance = "true";
@@ -154,6 +155,7 @@ definition {
 		}
 	}
 
+	@description = "Add 2 organization sites and deactive organization site using new created user."
 	@priority = "5"
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -278,45 +280,7 @@ definition {
 		Page.viewInactiveRequestMessage(resource = "site");
 	}
 
-	@priority = "3"
-	test MySitesDropDownDoesNotShowUserOrganizationOnTop {
-		property testray.component.names = "Site Administration,Users and Organization";
-
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-
-		for (var siteNameListsCount : list "Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name") {
-			Site.openSitesAdmin();
-
-			Site.addCP(
-				siteName = "${siteNameListsCount}",
-				siteTemplateName = "Site Template Name",
-				siteType = "Site Template");
-		}
-
-		JSONOrganization.addOrganization(organizationName = "Site Organization Name");
-
-		User.openUsersAdmin();
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addSiteCP(
-			orgName = "Site Organization Name",
-			siteTemplateName = "Site Template Name");
-
-		User.openUsersAdmin();
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.assignUser(
-			orgName = "Site Organization Name",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userName = "Test Test",
-			userScreenName = "test");
-
-		Navigator.openSiteURL(siteName = "Site Organization Name");
-	}
-
+	@description = "Assert user can't assign user group with regular role with assign memebers."
 	@priority = "3"
 	test OnlySiteOwnersCanAssignSiteRolesToUserGroups {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -399,6 +363,7 @@ definition {
 			userLoginFullName = "test test");
 	}
 
+	@description = "Private virtual hosts redirects to private page."
 	@priority = "4"
 	test PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage {
 		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
@@ -453,6 +418,7 @@ definition {
 		AssertLocation(value1 = "http://www.able.com:8080/test-private-page");
 	}
 
+	@description = "Assert user can't assign user group with regular role with assign memebers."
 	@priority = "3"
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
@@ -585,6 +551,7 @@ definition {
 		MockMock.deleteMail(asset = "http://www.baker.com:8080: Email Address Verification");
 	}
 
+	@description = "This test is based on LPS-14245 and it is designed to have the User test if the LayouImporter checks when the Page Names are different but the Friendly URL is the same. The User will assert no errors display when a User is assigned to a User Group with the same Friendly URL. The User will also assert that they can enter a Friendly URL through the Site Manager with adding a slash."
 	@priority = "3"
 	test SiteFriendlyURLLayoutImporter {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -652,6 +619,7 @@ definition {
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
 	}
 
+	@description = "In one coummuty site and one edited site with page template, can deactive Community site."
 	@priority = "3"
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -734,6 +702,7 @@ definition {
 		Page.viewInactiveRequestMessage(resource = "site");
 	}
 
+	@description = "Manage demo site virtual URL, friendly URL and logo, add JS to page, export and import page with child pages."
 	@priority = "4"
 	test SitesDemoSiteManagement {
 		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
@@ -913,6 +882,7 @@ definition {
 		}
 	}
 
+	@description = "Check site teams permissions to see it is able to view page."
 	@priority = "4"
 	test SiteTeamsPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1038,6 +1008,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@description = "Add site team name with XSS."
 	@priority = "4"
 	test SiteTeamsXSS {
 		property testray.component.names = "Site Administration,XSS";

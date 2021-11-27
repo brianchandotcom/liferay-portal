@@ -578,9 +578,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
-				"tokenOptimizationEnabled",
-				_ffLayoutContentPageEditorConfiguration.
-					tokenOptimizationEnabled()
+				"tokenReuseEnabled",
+				_ffLayoutContentPageEditorConfiguration.tokenReuseEnabled()
 			).put(
 				"unmarkItemForDeletionURL",
 				getFragmentEntryActionURL(

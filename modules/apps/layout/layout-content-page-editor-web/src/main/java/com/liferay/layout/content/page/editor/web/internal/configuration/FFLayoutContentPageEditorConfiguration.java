@@ -30,7 +30,7 @@ public interface FFLayoutContentPageEditorConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean createLayoutPageTemplateEntryEnabled();
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean tokenOptimizationEnabled();
+	@Meta.AD(deflt = "false", required = false)
+	public boolean tokenReuseEnabled();
 
 }

@@ -119,6 +119,34 @@ public interface OpenIdConnectSessionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the user ID of this open ID connect session.
+	 *
+	 * @return the user ID of this open ID connect session
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this open ID connect session.
+	 *
+	 * @param userId the user ID of this open ID connect session
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this open ID connect session.
+	 *
+	 * @return the user uuid of this open ID connect session
+	 */
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this open ID connect session.
+	 *
+	 * @param userUuid the user uuid of this open ID connect session
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
 	 * Returns the access token of this open ID connect session.
 	 *
 	 * @return the access token of this open ID connect session
@@ -132,6 +160,21 @@ public interface OpenIdConnectSessionModel
 	 * @param accessToken the access token of this open ID connect session
 	 */
 	public void setAccessToken(String accessToken);
+
+	/**
+	 * Returns the configuration pid of this open ID connect session.
+	 *
+	 * @return the configuration pid of this open ID connect session
+	 */
+	@AutoEscape
+	public String getConfigurationPid();
+
+	/**
+	 * Sets the configuration pid of this open ID connect session.
+	 *
+	 * @param configurationPid the configuration pid of this open ID connect session
+	 */
+	public void setConfigurationPid(String configurationPid);
 
 	/**
 	 * Returns the id token of this open ID connect session.

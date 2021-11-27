@@ -3,7 +3,9 @@ create table OpenIdConnectSession (
 	openIdConnectSessionId LONG not null primary key,
 	companyId LONG,
 	modifiedDate DATE null,
+	userId LONG,
 	accessToken VARCHAR(3000) null,
+	configurationPid VARCHAR(256) null,
 	idToken VARCHAR(3999) null,
 	providerName VARCHAR(75) null,
 	refreshToken VARCHAR(2000) null

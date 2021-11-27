@@ -78,7 +78,7 @@ public class OpenIdConnectSessionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,8 +88,12 @@ public class OpenIdConnectSessionCacheModel
 		sb.append(companyId);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", userId=");
+		sb.append(userId);
 		sb.append(", accessToken=");
 		sb.append(accessToken);
+		sb.append(", configurationPid=");
+		sb.append(configurationPid);
 		sb.append(", idToken=");
 		sb.append(idToken);
 		sb.append(", providerName=");
@@ -118,11 +122,20 @@ public class OpenIdConnectSessionCacheModel
 			openIdConnectSessionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		openIdConnectSessionImpl.setUserId(userId);
+
 		if (accessToken == null) {
 			openIdConnectSessionImpl.setAccessToken("");
 		}
 		else {
 			openIdConnectSessionImpl.setAccessToken(accessToken);
+		}
+
+		if (configurationPid == null) {
+			openIdConnectSessionImpl.setConfigurationPid("");
+		}
+		else {
+			openIdConnectSessionImpl.setConfigurationPid(configurationPid);
 		}
 
 		if (idToken == null) {
@@ -159,7 +172,10 @@ public class OpenIdConnectSessionCacheModel
 
 		companyId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		userId = objectInput.readLong();
 		accessToken = objectInput.readUTF();
+		configurationPid = objectInput.readUTF();
 		idToken = objectInput.readUTF();
 		providerName = objectInput.readUTF();
 		refreshToken = objectInput.readUTF();
@@ -174,11 +190,20 @@ public class OpenIdConnectSessionCacheModel
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(userId);
+
 		if (accessToken == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(accessToken);
+		}
+
+		if (configurationPid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(configurationPid);
 		}
 
 		if (idToken == null) {
@@ -207,7 +232,9 @@ public class OpenIdConnectSessionCacheModel
 	public long openIdConnectSessionId;
 	public long companyId;
 	public long modifiedDate;
+	public long userId;
 	public String accessToken;
+	public String configurationPid;
 	public String idToken;
 	public String providerName;
 	public String refreshToken;

@@ -123,6 +123,427 @@ public class OpenIdConnectSessionUtil {
 	}
 
 	/**
+	 * Returns all the open ID connect sessions where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the open ID connect sessions where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of open ID connect sessions
+	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
+	 * @return the range of matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the open ID connect sessions where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of open ID connect sessions
+	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<OpenIdConnectSession> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the open ID connect sessions where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of open ID connect sessions
+	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<OpenIdConnectSession> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first open ID connect session in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching open ID connect session
+	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession findByUserId_First(
+			long userId,
+			OrderByComparator<OpenIdConnectSession> orderByComparator)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first open ID connect session in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession fetchByUserId_First(
+		long userId,
+		OrderByComparator<OpenIdConnectSession> orderByComparator) {
+
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last open ID connect session in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching open ID connect session
+	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession findByUserId_Last(
+			long userId,
+			OrderByComparator<OpenIdConnectSession> orderByComparator)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last open ID connect session in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession fetchByUserId_Last(
+		long userId,
+		OrderByComparator<OpenIdConnectSession> orderByComparator) {
+
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where userId = &#63;.
+	 *
+	 * @param openIdConnectSessionId the primary key of the current open ID connect session
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next open ID connect session
+	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
+	 */
+	public static OpenIdConnectSession[] findByUserId_PrevAndNext(
+			long openIdConnectSessionId, long userId,
+			OrderByComparator<OpenIdConnectSession> orderByComparator)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByUserId_PrevAndNext(
+			openIdConnectSessionId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the open ID connect sessions where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	 * Returns the number of open ID connect sessions where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching open ID connect sessions
+	 */
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
+	 * Returns all the open ID connect sessions where configurationPid = &#63;.
+	 *
+	 * @param configurationPid the configuration pid
+	 * @return the matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByConfigurationPid(
+		String configurationPid) {
+
+		return getPersistence().findByConfigurationPid(configurationPid);
+	}
+
+	/**
+	 * Returns a range of all the open ID connect sessions where configurationPid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param start the lower bound of the range of open ID connect sessions
+	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
+	 * @return the range of matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByConfigurationPid(
+		String configurationPid, int start, int end) {
+
+		return getPersistence().findByConfigurationPid(
+			configurationPid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the open ID connect sessions where configurationPid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param start the lower bound of the range of open ID connect sessions
+	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByConfigurationPid(
+		String configurationPid, int start, int end,
+		OrderByComparator<OpenIdConnectSession> orderByComparator) {
+
+		return getPersistence().findByConfigurationPid(
+			configurationPid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the open ID connect sessions where configurationPid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param start the lower bound of the range of open ID connect sessions
+	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching open ID connect sessions
+	 */
+	public static List<OpenIdConnectSession> findByConfigurationPid(
+		String configurationPid, int start, int end,
+		OrderByComparator<OpenIdConnectSession> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByConfigurationPid(
+			configurationPid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first open ID connect session in the ordered set where configurationPid = &#63;.
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching open ID connect session
+	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession findByConfigurationPid_First(
+			String configurationPid,
+			OrderByComparator<OpenIdConnectSession> orderByComparator)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByConfigurationPid_First(
+			configurationPid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first open ID connect session in the ordered set where configurationPid = &#63;.
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession fetchByConfigurationPid_First(
+		String configurationPid,
+		OrderByComparator<OpenIdConnectSession> orderByComparator) {
+
+		return getPersistence().fetchByConfigurationPid_First(
+			configurationPid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last open ID connect session in the ordered set where configurationPid = &#63;.
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching open ID connect session
+	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession findByConfigurationPid_Last(
+			String configurationPid,
+			OrderByComparator<OpenIdConnectSession> orderByComparator)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByConfigurationPid_Last(
+			configurationPid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last open ID connect session in the ordered set where configurationPid = &#63;.
+	 *
+	 * @param configurationPid the configuration pid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession fetchByConfigurationPid_Last(
+		String configurationPid,
+		OrderByComparator<OpenIdConnectSession> orderByComparator) {
+
+		return getPersistence().fetchByConfigurationPid_Last(
+			configurationPid, orderByComparator);
+	}
+
+	/**
+	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where configurationPid = &#63;.
+	 *
+	 * @param openIdConnectSessionId the primary key of the current open ID connect session
+	 * @param configurationPid the configuration pid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next open ID connect session
+	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
+	 */
+	public static OpenIdConnectSession[] findByConfigurationPid_PrevAndNext(
+			long openIdConnectSessionId, String configurationPid,
+			OrderByComparator<OpenIdConnectSession> orderByComparator)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByConfigurationPid_PrevAndNext(
+			openIdConnectSessionId, configurationPid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the open ID connect sessions where configurationPid = &#63; from the database.
+	 *
+	 * @param configurationPid the configuration pid
+	 */
+	public static void removeByConfigurationPid(String configurationPid) {
+		getPersistence().removeByConfigurationPid(configurationPid);
+	}
+
+	/**
+	 * Returns the number of open ID connect sessions where configurationPid = &#63;.
+	 *
+	 * @param configurationPid the configuration pid
+	 * @return the number of matching open ID connect sessions
+	 */
+	public static int countByConfigurationPid(String configurationPid) {
+		return getPersistence().countByConfigurationPid(configurationPid);
+	}
+
+	/**
+	 * Returns the open ID connect session where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the matching open ID connect session
+	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession findByU_C(
+			long userId, String configurationPid)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().findByU_C(userId, configurationPid);
+	}
+
+	/**
+	 * Returns the open ID connect session where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession fetchByU_C(
+		long userId, String configurationPid) {
+
+		return getPersistence().fetchByU_C(userId, configurationPid);
+	}
+
+	/**
+	 * Returns the open ID connect session where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
+	 */
+	public static OpenIdConnectSession fetchByU_C(
+		long userId, String configurationPid, boolean useFinderCache) {
+
+		return getPersistence().fetchByU_C(
+			userId, configurationPid, useFinderCache);
+	}
+
+	/**
+	 * Removes the open ID connect session where userId = &#63; and configurationPid = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the open ID connect session that was removed
+	 */
+	public static OpenIdConnectSession removeByU_C(
+			long userId, String configurationPid)
+		throws com.liferay.portal.security.sso.openid.connect.persistence.
+			exception.NoSuchSessionException {
+
+		return getPersistence().removeByU_C(userId, configurationPid);
+	}
+
+	/**
+	 * Returns the number of open ID connect sessions where userId = &#63; and configurationPid = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the number of matching open ID connect sessions
+	 */
+	public static int countByU_C(long userId, String configurationPid) {
+		return getPersistence().countByU_C(userId, configurationPid);
+	}
+
+	/**
 	 * Caches the open ID connect session in the entity cache if it is enabled.
 	 *
 	 * @param openIdConnectSession the open ID connect session

@@ -15,6 +15,7 @@
 package com.liferay.portal.security.sso.openid.connect.persistence.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.base.OpenIdConnectSessionLocalServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,10 +40,23 @@ import org.osgi.service.component.annotations.Component;
 public class OpenIdConnectSessionLocalServiceImpl
 	extends OpenIdConnectSessionLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalServiceUtil</code>.
-	 */
+	@Override
+	public void deleteOpenIdConnectSessions(long userId) {
+		openIdConnectSessionPersistence.removeByUserId(userId);
+	}
+
+	@Override
+	public void deleteOpenIdConnectSessions(String configurationPid) {
+		openIdConnectSessionPersistence.removeByConfigurationPid(
+			configurationPid);
+	}
+
+	@Override
+	public OpenIdConnectSession fetchOpenIdConnectSession(
+		String configurationPid, long userId) {
+
+		return openIdConnectSessionPersistence.fetchByU_C(
+			userId, configurationPid);
+	}
 
 }

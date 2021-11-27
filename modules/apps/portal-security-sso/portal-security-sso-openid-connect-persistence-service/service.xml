@@ -14,13 +14,28 @@
 
 		<column name="companyId" type="long" />
 		<column name="modifiedDate" type="Date" />
+		<column name="userId" type="long" />
 
 		<!-- Other fields -->
 
 		<column name="accessToken" type="String" />
+		<column name="configurationPid" type="String" />
 		<column name="idToken" type="String" />
 		<column name="providerName" type="String" />
 		<column name="refreshToken" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ConfigurationPid" return-type="Collection">
+			<finder-column name="configurationPid" />
+		</finder>
+		<finder name="U_C" return-type="OpenIdConnectSession" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="configurationPid" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateOpenIdConnectSession</exception>

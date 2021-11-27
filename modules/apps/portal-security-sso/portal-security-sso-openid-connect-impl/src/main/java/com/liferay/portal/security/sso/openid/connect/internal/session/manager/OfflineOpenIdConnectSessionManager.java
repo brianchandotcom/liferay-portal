@@ -15,7 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect.internal.session.manager;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -49,7 +48,6 @@ import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
 
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -206,12 +204,6 @@ public class OfflineOpenIdConnectSessionManager {
 		}
 
 		_bundleContext = null;
-
-		List<?> clusterNodes = ClusterExecutorUtil.getClusterNodes();
-
-		if ((clusterNodes != null) && (clusterNodes.size() > 1)) {
-			return;
-		}
 
 		for (OpenIdConnectSession openIdConnectSession :
 				_openIdConnectSessionLocalService.getOpenIdConnectSessions(

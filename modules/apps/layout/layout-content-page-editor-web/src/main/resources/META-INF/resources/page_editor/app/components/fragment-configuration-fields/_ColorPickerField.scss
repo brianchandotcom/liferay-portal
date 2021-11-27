@@ -20,6 +20,12 @@ html#{$cadmin-selector} {
 					border-color: transparent;
 				}
 			}
+
+			&:not(:hover)
+				.page-editor__color-picker-field__action-button
+				button:not(:focus) {
+				opacity: 0;
+			}
 		}
 	}
 }

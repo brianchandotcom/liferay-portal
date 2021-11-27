@@ -30,6 +30,18 @@ html#{$cadmin-selector} {
 					}
 				}
 			}
+
+			&__selector {
+				&.btn {
+					padding: 6px 9px;
+				}
+
+				&-splotch {
+					border: 1px solid $cadmin-gray-300;
+					height: 20px;
+					width: 20px;
+				}
+			}
 		}
 	}
 }

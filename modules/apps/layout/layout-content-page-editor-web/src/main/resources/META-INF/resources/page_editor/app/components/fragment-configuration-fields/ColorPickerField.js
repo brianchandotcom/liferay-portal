@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,6 +22,7 @@ import ColorPicker from '../../../common/components/ColorPicker';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {config} from '../../config/index';
 import {ColorPaletteField} from './ColorPaletteField';
 
 const COLOR_PICKER_TYPE = 'ColorPicker';
@@ -73,44 +75,87 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			<label>{field.label}</label>
 
 			<ClayInput.Group>
-				<ClayInput.GroupItem prepend shrink>
-					<ColorPicker
-						colors={colors}
-						onValueChange={({name, value}) => {
-							setColor(value);
-
-							onValueSelect(field.name, name);
-						}}
-						showHex={false}
-						value={color}
-					/>
-				</ClayInput.GroupItem>
-
-				<ClayInput.GroupItem append>
-					<ClayInput
-						readOnly
-						value={
-							tokenValues[value]
-								? tokenValues[value].label
-								: Liferay.Language.get('default')
-						}
-					/>
-				</ClayInput.GroupItem>
-
-				{color && (
-					<ClayInput.GroupItem shrink>
-						<ClayButtonWithIcon
-							displayType="secondary"
-							onClick={() => {
-								setColor('');
-
-								onValueSelect(field.name, '');
+				{config.tokenReuseEnabled ? (
+					<ClayInput.GroupItem>
+						<ColorPicker
+							colors={colors}
+							label={
+								value
+									? tokenValues[value]?.label || ''
+									: Liferay.Language.get('default')
+							}
+							onValueChange={({name, value}) => {
+								setColor(value);
+								onValueSelect(field.name, name);
 							}}
-							small
-							symbol="times-circle"
-							title={Liferay.Language.get('clear-selection')}
+							value={color}
 						/>
 					</ClayInput.GroupItem>
+				) : (
+					<>
+						<ClayInput.GroupItem prepend shrink>
+							<ColorPicker
+								colors={colors}
+								onValueChange={({name, value}) => {
+									setColor(value);
+									onValueSelect(field.name, name);
+								}}
+								showHex={false}
+								value={color}
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem append>
+							<ClayInput
+								readOnly
+								value={
+									tokenValues[value]
+										? tokenValues[value].label
+										: Liferay.Language.get('default')
+								}
+							/>
+						</ClayInput.GroupItem>
+					</>
+				)}
+
+				{color && (
+					<>
+						{config.tokenReuseEnabled && (
+							<ClayInput.GroupItem shrink>
+								<ClayButtonWithIcon
+									className="border-0"
+									displayType="secondary"
+									onClick={() => {
+										setColor(tokenValues[value].value);
+										onValueSelect(
+											field.name,
+											tokenValues[value].value
+										);
+									}}
+									small
+									symbol="link"
+									title={Liferay.Language.get('detach-token')}
+								/>
+							</ClayInput.GroupItem>
+						)}
+
+						<ClayInput.GroupItem shrink>
+							<ClayButtonWithIcon
+								className={classNames({
+									'border-0': config.tokenReuseEnabled,
+								})}
+								displayType="secondary"
+								onClick={() => {
+									setColor('');
+
+									onValueSelect(field.name, '');
+								}}
+								small
+								symbol="times-circle"
+								title={Liferay.Language.get('clear-selection')}
+							/>
+						</ClayInput.GroupItem>
+					</>
 				)}
 			</ClayInput.Group>
 		</ClayForm.Group>

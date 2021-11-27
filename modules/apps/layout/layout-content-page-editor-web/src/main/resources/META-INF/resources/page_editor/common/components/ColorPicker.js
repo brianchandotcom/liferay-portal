@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
@@ -19,12 +20,15 @@ import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+import {config} from '../../app/config/index';
 import SearchForm from '../../common/components/SearchForm';
 
 const ColorPicker = ({
 	colors,
 	disabled,
+	label = null,
 	onValueChange = () => {},
+	showSelector = true,
 	small,
 	value = '#FFFFFF',
 }) => {
@@ -85,7 +89,83 @@ const ColorPicker = ({
 		[colors, searchValue]
 	);
 
-	return (
+	return config.tokenReuseEnabled ? (
+		<div
+			className="page-editor__color-picker w-100"
+			ref={triggerElementRef}
+		>
+			{showSelector ? (
+				<ClayButton
+					className="align-items-center border-0 d-flex page-editor__color-picker__selector w-100"
+					displayType="secondary"
+					onClick={() => {
+						setActive((active) => !active);
+
+						if (splotchRef.current) {
+							splotchRef.current.focus();
+						}
+					}}
+				>
+					<span className="c-inner" tabIndex="-1">
+						<span
+							className="mr-3 page-editor__color-picker__selector-splotch rounded-circle"
+							style={{
+								background: `${value}`,
+							}}
+						/>
+
+						{label}
+					</span>
+				</ClayButton>
+			) : (
+				<ClayButtonWithIcon
+					displayType="secondary"
+					onClick={() => setActive(!active)}
+					small
+					symbol="theme"
+					title={Liferay.Language.get('value-from-stylebook')}
+				/>
+			)}
+
+			<DropDown.Menu
+				active={active}
+				alignElementRef={triggerElementRef}
+				className="clay-color-dropdown-menu px-0"
+				containerProps={{
+					className: 'cadmin',
+				}}
+				focusRefOnEsc={splotchRef}
+				onSetActive={setActive}
+				ref={dropdownContainerRef}
+			>
+				{active ? (
+					<>
+						<SearchForm
+							className="flex-grow-1 px-3"
+							onChange={setSearchValue}
+						/>
+						{Object.keys(filteredColors).length ? (
+							<ColorPalette
+								colors={filteredColors}
+								onSetActive={setActive}
+								onValueChange={onValueChange}
+								splotchRef={splotchRef}
+							/>
+						) : (
+							<ClayEmptyState
+								className="mt-4 page-editor__color-picker__empty-result"
+								description={Liferay.Language.get(
+									'try-again-with-a-different-search'
+								)}
+								imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+								title={Liferay.Language.get('no-results-found')}
+							/>
+						)}
+					</>
+				) : null}
+			</DropDown.Menu>
+		</div>
+	) : (
 		<FocusScope arrowKeysUpDown={false}>
 			<div className="clay-color-picker">
 				<ClayInput.Group
@@ -161,7 +241,9 @@ const Splotch = React.forwardRef(
 		return (
 			<button
 				className={classNames(
-					'btn clay-color-btn clay-color-btn-bordered lfr-portal-tooltip rounded',
+					`btn clay-color-btn clay-color-btn-bordered lfr-portal-tooltip rounded${
+						config.tokenReuseEnabled ? '-circle' : ''
+					}`,
 					{
 						active,
 						[className]: !!className,

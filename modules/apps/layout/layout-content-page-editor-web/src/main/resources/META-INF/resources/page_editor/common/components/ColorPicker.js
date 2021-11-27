@@ -119,6 +119,9 @@ const ColorPicker = ({
 				</ClayButton>
 			) : (
 				<ClayButtonWithIcon
+					className={classNames({
+						'border-0': config.tokenReuseEnabled,
+					})}
 					displayType="secondary"
 					onClick={() => setActive(!active)}
 					small

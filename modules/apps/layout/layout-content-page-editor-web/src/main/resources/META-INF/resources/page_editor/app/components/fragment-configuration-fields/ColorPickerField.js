@@ -12,25 +12,41 @@
  * details.
  */
 
+import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import ColorPicker from '../../../common/components/ColorPicker';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
+import {useId} from '../../utils/useId';
 import {ColorPaletteField} from './ColorPaletteField';
 
 const COLOR_PICKER_TYPE = 'ColorPicker';
 
+const debouncedOnValueSelect = debounce(
+	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
+	300
+);
+
 export function ColorPickerField({field, onValueSelect, value}) {
 	const {tokenValues} = useStyleBook();
-	const [color, setColor] = useControlledState(tokenValues[value]?.value);
+	const [color, setColor] = useControlledState(
+		config.tokenReuseEnabled
+			? tokenValues[value]?.value || value
+			: tokenValues[value]?.value
+	);
 	const colors = {};
+	const [customColors, setCustomColors] = useState([value || '']);
+	const id = useId();
+	const [isToken, setIsToken] = useState(!value || !!tokenValues[value]);
 
 	Object.values(tokenValues)
 		.filter((token) => token.editorType === COLOR_PICKER_TYPE)
@@ -71,26 +87,71 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	}
 
 	return (
-		<ClayForm.Group small>
+		<ClayForm.Group className="page-editor__color-picker-field" small>
 			<label>{field.label}</label>
 
 			<ClayInput.Group>
 				{config.tokenReuseEnabled ? (
-					<ClayInput.GroupItem>
-						<ColorPicker
-							colors={colors}
-							label={
-								value
-									? tokenValues[value]?.label || ''
-									: Liferay.Language.get('default')
-							}
-							onValueChange={({name, value}) => {
-								setColor(value);
-								onValueSelect(field.name, name);
-							}}
-							value={color}
-						/>
-					</ClayInput.GroupItem>
+					isToken ? (
+						<ClayInput.GroupItem>
+							<ColorPicker
+								colors={colors}
+								label={
+									value
+										? tokenValues[value]?.label || ''
+										: Liferay.Language.get('default')
+								}
+								onValueChange={({name, value}) => {
+									setColor(value);
+									onValueSelect(field.name, name);
+								}}
+								value={color}
+							/>
+						</ClayInput.GroupItem>
+					) : (
+						<ClayInput.GroupItem>
+							<ClayInput.Group className="page-editor__color-picker-field__color-picker">
+								<ClayInput.GroupItem prepend shrink>
+									<ClayColorPicker
+										colors={customColors}
+										dropDownContainerProps={{
+											className: 'cadmin',
+										}}
+										onColorsChange={setCustomColors}
+										onValueChange={(color) => {
+											setColor(`#${color}`);
+											debouncedOnValueSelect(
+												onValueSelect,
+												field.name,
+												`#${color}`
+											);
+										}}
+										showHex={false}
+										showPalette={false}
+										value={color?.replace('#', '') ?? ''}
+									/>
+								</ClayInput.GroupItem>
+
+								<ClayInput.GroupItem append>
+									<ClayAutocomplete>
+										<ClayAutocomplete.Input
+											className="page-editor__color-picker-field__autocomplete__input"
+											id={id}
+											onChange={(event) => {
+												setColor(event.target.value);
+												debouncedOnValueSelect(
+													onValueSelect,
+													field.name,
+													event.target.value
+												);
+											}}
+											value={color}
+										/>
+									</ClayAutocomplete>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayInput.GroupItem>
+					)
 				) : (
 					<>
 						<ClayInput.GroupItem prepend shrink>
@@ -122,20 +183,39 @@ export function ColorPickerField({field, onValueSelect, value}) {
 					<>
 						{config.tokenReuseEnabled && (
 							<ClayInput.GroupItem shrink>
-								<ClayButtonWithIcon
-									className="border-0"
-									displayType="secondary"
-									onClick={() => {
-										setColor(tokenValues[value].value);
-										onValueSelect(
-											field.name,
-											tokenValues[value].value
-										);
-									}}
-									small
-									symbol="link"
-									title={Liferay.Language.get('detach-token')}
-								/>
+								{isToken ? (
+									<ClayButtonWithIcon
+										className="border-0"
+										displayType="secondary"
+										onClick={() => {
+											setIsToken(false);
+											setColor(tokenValues[value].value);
+											setCustomColors([
+												tokenValues[value].value,
+											]);
+											onValueSelect(
+												field.name,
+												tokenValues[value].value
+											);
+										}}
+										small
+										symbol="link"
+										title={Liferay.Language.get(
+											'detach-token'
+										)}
+									/>
+								) : (
+									<ColorPicker
+										colors={colors}
+										onValueChange={({name, value}) => {
+											setColor(value);
+											setIsToken(true);
+											onValueSelect(field.name, name);
+										}}
+										showSelector={false}
+										value={color}
+									/>
+								)}
 							</ClayInput.GroupItem>
 						)}
 
@@ -147,7 +227,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 								displayType="secondary"
 								onClick={() => {
 									setColor('');
-
+									setIsToken(true);
 									onValueSelect(field.name, '');
 								}}
 								small

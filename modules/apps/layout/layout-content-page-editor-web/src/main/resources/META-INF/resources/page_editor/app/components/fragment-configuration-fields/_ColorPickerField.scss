@@ -1,0 +1,25 @@
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__color-picker-field {
+			.input-group
+				> .input-group-item
+				> .form-control.page-editor__color-picker-field__autocomplete__input {
+				background-color: transparent;
+				border-radius: 0 4px 4px 0;
+				font-weight: 600;
+				transition: none;
+			}
+
+			.clay-color > .input-group-item > .input-group-text {
+				border-radius: 4px 0 0 4px;
+			}
+
+			&__color-picker:not(:hover) {
+				.clay-color > .input-group-item > .input-group-text,
+				.page-editor__color-picker-field__autocomplete__input {
+					border-color: transparent;
+				}
+			}
+		}
+	}
+}

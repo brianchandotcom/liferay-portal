@@ -31,6 +31,12 @@ html#{$cadmin-selector} {
 				}
 			}
 
+			&__search-form {
+				& + .page-editor__color-picker__color-palette .sheet-subtitle {
+					border-width: 0;
+				}
+			}
+
 			&__selector {
 				&.btn {
 					padding: 6px 9px;

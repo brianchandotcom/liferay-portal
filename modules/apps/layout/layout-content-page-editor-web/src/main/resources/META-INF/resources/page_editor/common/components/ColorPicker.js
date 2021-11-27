@@ -144,7 +144,7 @@ const ColorPicker = ({
 				{active ? (
 					<>
 						<SearchForm
-							className="flex-grow-1 px-3"
+							className="flex-grow-1 mb-2 page-editor__color-picker__search-form px-3"
 							onChange={setSearchValue}
 						/>
 						{Object.keys(filteredColors).length ? (
@@ -208,7 +208,7 @@ const ColorPicker = ({
 						{active ? (
 							<>
 								<SearchForm
-									className="flex-grow-1 px-3"
+									className="flex-grow-1 mb-2 page-editor__color-picker__search-form px-3"
 									onChange={setSearchValue}
 								/>
 								{Object.keys(filteredColors).length ? (

@@ -321,7 +321,7 @@ public class ObjectDefinitionServiceTest {
 					objectDefinition.getObjectDefinitionId(), 0, 0,
 					objectDefinition.isActive(),
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
-					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope());
 		}
 		finally {

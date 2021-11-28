@@ -919,7 +919,7 @@ public class ObjectDefinitionLocalServiceTest {
 					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 					objectDefinition.isActive(),
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
-					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope());
 
 			Assert.fail();
@@ -940,7 +940,7 @@ public class ObjectDefinitionLocalServiceTest {
 				objectField.getObjectFieldId(), objectField.getObjectFieldId(),
 				objectDefinition.isActive(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
-				LocalizedMapUtil.getLocalizedMap("Ables"),
+				false, LocalizedMapUtil.getLocalizedMap("Ables"),
 				objectDefinition.getScope());
 
 		Assert.assertEquals(
@@ -955,7 +955,7 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition.getObjectDefinitionId(), 0, 0,
 				objectDefinition.isActive(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
-				LocalizedMapUtil.getLocalizedMap("Ables"),
+				false, LocalizedMapUtil.getLocalizedMap("Ables"),
 				objectDefinition.getScope());
 
 		Assert.assertEquals(0, objectDefinition.getDescriptionObjectFieldId());
@@ -974,7 +974,7 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition.getObjectDefinitionId(), 0, 0,
 				objectDefinition.isActive(),
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
-				LocalizedMapUtil.getLocalizedMap("Bakers"),
+				false, LocalizedMapUtil.getLocalizedMap("Bakers"),
 				objectDefinition.getScope());
 
 		Assert.assertFalse(objectDefinition.isActive());
@@ -994,7 +994,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(), 0, 0, true,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
-				null, LocalizedMapUtil.getLocalizedMap("Charlies"),
+				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope());
 
 		Assert.assertTrue(objectDefinition.isActive());
@@ -1140,7 +1140,7 @@ public class ObjectDefinitionLocalServiceTest {
 					objectRelationship.getObjectFieldId2(), 0,
 					objectDefinition2.isActive(),
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
-					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition2.getScope());
 
 			Assert.fail();

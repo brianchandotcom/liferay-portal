@@ -153,6 +153,7 @@ public class ObjectDefinitionResourceImpl
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),
+				objectDefinition.getPortlet(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
 				objectDefinition.getScope()));
@@ -222,6 +223,7 @@ public class ObjectDefinitionResourceImpl
 					objectField -> ObjectFieldUtil.toObjectField(
 						null, objectField),
 					ObjectField.class);
+				portlet = objectDefinition.getPortlet();
 				scope = objectDefinition.getScope();
 				status = new Status() {
 					{

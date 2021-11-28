@@ -141,10 +141,13 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		httpSession = httpServletRequest.getSession();
 
+		OpenIdConnectProviderImpl openIdConnectProviderImpl =
+			(OpenIdConnectProviderImpl)openIdConnectProvider;
+
 		long openIdConnectSessionId =
 			_offlineOpenIdConnectSessionManager.startOpenIdConnectSession(
-				oidcTokens,
-				openIdConnectAuthenticationSession.getProviderName());
+				openIdConnectProviderImpl.getConfigurationPid(), oidcTokens,
+				openIdConnectAuthenticationSession.getProviderName(), userId);
 
 		httpSession.setAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION,

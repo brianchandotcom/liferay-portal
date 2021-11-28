@@ -122,18 +122,26 @@ public class OfflineOpenIdConnectSessionManager {
 	}
 
 	public long startOpenIdConnectSession(
-		OIDCTokens oidcTokens, String providerName) {
+		String configurationPid, OIDCTokens oidcTokens, String providerName,
+		long userId) {
 
 		OpenIdConnectSession openIdConnectSession =
-			_openIdConnectSessionLocalService.createOpenIdConnectSession(
-				_counterLocalService.increment(
-					OpenIdConnectSession.class.getName()));
+			_openIdConnectSessionLocalService.fetchOpenIdConnectSession(
+				configurationPid, userId);
+
+		if (openIdConnectSession == null) {
+			openIdConnectSession =
+				_openIdConnectSessionLocalService.createOpenIdConnectSession(
+					_counterLocalService.increment(
+						OpenIdConnectSession.class.getName()));
+		}
 
 		AccessToken accessToken = oidcTokens.getAccessToken();
 
 		_updateOpenIdConnectSession(
-			accessToken, oidcTokens.getIDTokenString(),
-			oidcTokens.getRefreshToken(), openIdConnectSession, providerName);
+			accessToken, configurationPid, oidcTokens.getIDTokenString(),
+			oidcTokens.getRefreshToken(), openIdConnectSession, providerName,
+			userId);
 
 		if (openIdConnectSession.getRefreshToken() != null) {
 			try {
@@ -268,10 +276,12 @@ public class OfflineOpenIdConnectSessionManager {
 	}
 
 	private void _updateOpenIdConnectSession(
-		AccessToken accessToken, String idTokenString,
+		AccessToken accessToken, String configurationPid, String idTokenString,
 		RefreshToken refreshToken, OpenIdConnectSession openIdConnectSession,
-		String providerName) {
+		String providerName, long userId) {
 
+		openIdConnectSession.setUserId(userId);
+		openIdConnectSession.setConfigurationPid(configurationPid);
 		openIdConnectSession.setIdToken(idTokenString);
 		openIdConnectSession.setProviderName(providerName);
 

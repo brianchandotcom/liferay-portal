@@ -261,6 +261,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(_toJSON(objectDefinition.getPluralLabel()));
 		}
 
+		if (objectDefinition.getPortlet() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"portlet\": ");
+
+			sb.append(objectDefinition.getPortlet());
+		}
+
 		if (objectDefinition.getScope() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -426,6 +436,13 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getPluralLabel()));
 		}
 
+		if (objectDefinition.getPortlet() == null) {
+			map.put("portlet", null);
+		}
+		else {
+			map.put("portlet", String.valueOf(objectDefinition.getPortlet()));
+		}
+
 		if (objectDefinition.getScope() == null) {
 			map.put("scope", null);
 		}
@@ -566,6 +583,11 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.setPluralLabel(
 						(Map)ObjectDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "portlet")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setPortlet((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scope")) {

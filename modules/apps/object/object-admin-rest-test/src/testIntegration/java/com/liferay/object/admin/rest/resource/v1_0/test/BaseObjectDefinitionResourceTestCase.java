@@ -952,6 +952,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("portlet", additionalAssertFieldName)) {
+				if (objectDefinition.getPortlet() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (objectDefinition.getScope() == null) {
 					valid = false;
@@ -1208,6 +1216,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!equals(
 						(Map)objectDefinition1.getPluralLabel(),
 						(Map)objectDefinition2.getPluralLabel())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("portlet", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getPortlet(),
+						objectDefinition2.getPortlet())) {
 
 					return false;
 				}
@@ -1478,6 +1497,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("portlet")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("scope")) {
 			sb.append("'");
 			sb.append(String.valueOf(objectDefinition.getScope()));
@@ -1549,6 +1573,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				panelCategoryKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				portlet = RandomTestUtil.randomBoolean();
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				system = RandomTestUtil.randomBoolean();
 			}

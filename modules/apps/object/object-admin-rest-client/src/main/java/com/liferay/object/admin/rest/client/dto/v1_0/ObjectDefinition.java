@@ -310,6 +310,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Map<String, String> pluralLabel;
 
+	public Boolean getPortlet() {
+		return portlet;
+	}
+
+	public void setPortlet(Boolean portlet) {
+		this.portlet = portlet;
+	}
+
+	public void setPortlet(
+		UnsafeSupplier<Boolean, Exception> portletUnsafeSupplier) {
+
+		try {
+			portlet = portletUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean portlet;
+
 	public String getScope() {
 		return scope;
 	}

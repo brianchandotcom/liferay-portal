@@ -164,6 +164,25 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		};
 	}
 
+	private ObjectLayoutBox _toObjectLayoutBox(
+		com.liferay.object.model.ObjectLayoutBox
+			serviceBuilderObjectLayoutBox) {
+
+		return new ObjectLayoutBox() {
+			{
+				collapsable = serviceBuilderObjectLayoutBox.getCollapsable();
+				id = serviceBuilderObjectLayoutBox.getObjectLayoutBoxId();
+				name = LocalizedMapUtil.getI18nMap(
+					serviceBuilderObjectLayoutBox.getNameMap());
+				objectLayoutRows = transformToArray(
+					serviceBuilderObjectLayoutBox.getObjectLayoutRows(),
+					objectLayoutRow -> _toObjectLayoutRow(objectLayoutRow),
+					ObjectLayoutRow.class);
+				priority = serviceBuilderObjectLayoutBox.getPriority();
+			}
+		};
+	}
+
 	private com.liferay.object.model.ObjectLayoutBox _toObjectLayoutBox(
 		ObjectLayoutBox objectLayoutBox) {
 
@@ -184,21 +203,17 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		return serviceBuilderObjectLayoutBox;
 	}
 
-	private ObjectLayoutBox _toObjectLayoutBox(
-		com.liferay.object.model.ObjectLayoutBox
-			serviceBuilderObjectLayoutBox) {
+	private ObjectLayoutColumn _toObjectLayoutColumn(
+		com.liferay.object.model.ObjectLayoutColumn
+			serviceBuilderObjectLayoutColumn) {
 
-		return new ObjectLayoutBox() {
+		return new ObjectLayoutColumn() {
 			{
-				collapsable = serviceBuilderObjectLayoutBox.getCollapsable();
-				id = serviceBuilderObjectLayoutBox.getObjectLayoutBoxId();
-				name = LocalizedMapUtil.getI18nMap(
-					serviceBuilderObjectLayoutBox.getNameMap());
-				objectLayoutRows = transformToArray(
-					serviceBuilderObjectLayoutBox.getObjectLayoutRows(),
-					objectLayoutRow -> _toObjectLayoutRow(objectLayoutRow),
-					ObjectLayoutRow.class);
-				priority = serviceBuilderObjectLayoutBox.getPriority();
+				id = serviceBuilderObjectLayoutColumn.getObjectLayoutColumnId();
+				objectFieldId =
+					serviceBuilderObjectLayoutColumn.getObjectFieldId();
+				priority = serviceBuilderObjectLayoutColumn.getPriority();
+				size = serviceBuilderObjectLayoutColumn.getSize();
 			}
 		};
 	}
@@ -220,17 +235,19 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		return serviceBuilderObjectLayoutColumn;
 	}
 
-	private ObjectLayoutColumn _toObjectLayoutColumn(
-		com.liferay.object.model.ObjectLayoutColumn
-			serviceBuilderObjectLayoutColumn) {
+	private ObjectLayoutRow _toObjectLayoutRow(
+		com.liferay.object.model.ObjectLayoutRow
+			serviceBuilderObjectLayoutRow) {
 
-		return new ObjectLayoutColumn() {
+		return new ObjectLayoutRow() {
 			{
-				id = serviceBuilderObjectLayoutColumn.getObjectLayoutColumnId();
-				objectFieldId =
-					serviceBuilderObjectLayoutColumn.getObjectFieldId();
-				priority = serviceBuilderObjectLayoutColumn.getPriority();
-				size = serviceBuilderObjectLayoutColumn.getSize();
+				id = serviceBuilderObjectLayoutRow.getObjectLayoutRowId();
+				objectLayoutColumns = transformToArray(
+					serviceBuilderObjectLayoutRow.getObjectLayoutColumns(),
+					objectLayoutColumn -> _toObjectLayoutColumn(
+						objectLayoutColumn),
+					ObjectLayoutColumn.class);
+				priority = serviceBuilderObjectLayoutRow.getPriority();
 			}
 		};
 	}
@@ -251,19 +268,22 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		return serviceBuilderObjectLayoutRow;
 	}
 
-	private ObjectLayoutRow _toObjectLayoutRow(
-		com.liferay.object.model.ObjectLayoutRow
-			serviceBuilderObjectLayoutRow) {
+	private ObjectLayoutTab _toObjectLayoutTab(
+		com.liferay.object.model.ObjectLayoutTab
+			serviceBuilderObjectLayoutTab) {
 
-		return new ObjectLayoutRow() {
+		return new ObjectLayoutTab() {
 			{
-				id = serviceBuilderObjectLayoutRow.getObjectLayoutRowId();
-				objectLayoutColumns = transformToArray(
-					serviceBuilderObjectLayoutRow.getObjectLayoutColumns(),
-					objectLayoutColumn -> _toObjectLayoutColumn(
-						objectLayoutColumn),
-					ObjectLayoutColumn.class);
-				priority = serviceBuilderObjectLayoutRow.getPriority();
+				id = serviceBuilderObjectLayoutTab.getObjectLayoutTabId();
+				name = LocalizedMapUtil.getI18nMap(
+					serviceBuilderObjectLayoutTab.getNameMap());
+				objectLayoutBoxes = transformToArray(
+					serviceBuilderObjectLayoutTab.getObjectLayoutBoxes(),
+					objectLayoutBox -> _toObjectLayoutBox(objectLayoutBox),
+					ObjectLayoutBox.class);
+				objectRelationshipId =
+					serviceBuilderObjectLayoutTab.getObjectRelationshipId();
+				priority = serviceBuilderObjectLayoutTab.getPriority();
 			}
 		};
 	}
@@ -286,26 +306,6 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			objectLayoutTab.getPriority());
 
 		return serviceBuilderObjectLayoutTab;
-	}
-
-	private ObjectLayoutTab _toObjectLayoutTab(
-		com.liferay.object.model.ObjectLayoutTab
-			serviceBuilderObjectLayoutTab) {
-
-		return new ObjectLayoutTab() {
-			{
-				id = serviceBuilderObjectLayoutTab.getObjectLayoutTabId();
-				name = LocalizedMapUtil.getI18nMap(
-					serviceBuilderObjectLayoutTab.getNameMap());
-				objectLayoutBoxes = transformToArray(
-					serviceBuilderObjectLayoutTab.getObjectLayoutBoxes(),
-					objectLayoutBox -> _toObjectLayoutBox(objectLayoutBox),
-					ObjectLayoutBox.class);
-				objectRelationshipId =
-					serviceBuilderObjectLayoutTab.getObjectRelationshipId();
-				priority = serviceBuilderObjectLayoutTab.getPriority();
-			}
-		};
 	}
 
 	@Reference

@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -58,7 +59,7 @@ public interface SXPElementResource {
 	}
 
 	public Page<SXPElement> getSXPElementsPage(
-			String search, Pagination pagination)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;

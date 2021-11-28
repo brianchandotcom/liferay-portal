@@ -41,11 +41,13 @@ public interface SXPBlueprintResource {
 	}
 
 	public Page<SXPBlueprint> getSXPBlueprintsPage(
-			String search, Pagination pagination)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSXPBlueprintsPageHttpResponse(
-			String search, Pagination pagination)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
@@ -184,11 +186,13 @@ public interface SXPBlueprintResource {
 		implements SXPBlueprintResource {
 
 		public Page<SXPBlueprint> getSXPBlueprintsPage(
-				String search, Pagination pagination)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSXPBlueprintsPageHttpResponse(search, pagination);
+				getSXPBlueprintsPageHttpResponse(
+					search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -228,7 +232,8 @@ public interface SXPBlueprintResource {
 		}
 
 		public HttpInvoker.HttpResponse getSXPBlueprintsPageHttpResponse(
-				String search, Pagination pagination)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -256,11 +261,19 @@ public interface SXPBlueprintResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

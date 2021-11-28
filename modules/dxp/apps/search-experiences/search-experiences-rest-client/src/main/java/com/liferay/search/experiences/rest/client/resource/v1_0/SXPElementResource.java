@@ -41,11 +41,13 @@ public interface SXPElementResource {
 	}
 
 	public Page<SXPElement> getSXPElementsPage(
-			String search, Pagination pagination)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSXPElementsPageHttpResponse(
-			String search, Pagination pagination)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
@@ -178,11 +180,13 @@ public interface SXPElementResource {
 	public static class SXPElementResourceImpl implements SXPElementResource {
 
 		public Page<SXPElement> getSXPElementsPage(
-				String search, Pagination pagination)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSXPElementsPageHttpResponse(search, pagination);
+				getSXPElementsPageHttpResponse(
+					search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -222,7 +226,8 @@ public interface SXPElementResource {
 		}
 
 		public HttpInvoker.HttpResponse getSXPElementsPageHttpResponse(
-				String search, Pagination pagination)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -250,11 +255,19 @@ public interface SXPElementResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

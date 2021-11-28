@@ -42,6 +42,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * @author Fabio Diego Mastrorilli
  * @author Gianmarco Brunialti Masera
  * @author Ivica Cardic
  */
@@ -135,8 +136,20 @@ public class AddToCartTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public boolean getBlock() {
-		return _block;
+	public String getAlignment() {
+		return _alignment;
+	}
+
+	public String getSize() {
+		return _size;
+	}
+
+	public boolean getInline() {
+		return _inline;
+	}
+
+	public boolean getIconOnly() {
+		return _iconOnly;
 	}
 
 	public CPCatalogEntry getCPCatalogEntry() {
@@ -159,7 +172,10 @@ public class AddToCartTag extends IncludeTag {
 	public void setAttributes(HttpServletRequest httpServletRequest) {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		setNamespacedAttribute(httpServletRequest, "block", _block);
+		setNamespacedAttribute(httpServletRequest, "alignment", _alignment);
+		setNamespacedAttribute(httpServletRequest, "size", _size);
+		setNamespacedAttribute(httpServletRequest, "inline", _inline);
+		setNamespacedAttribute(httpServletRequest, "iconOnly", _iconOnly);
 		setNamespacedAttribute(
 			httpServletRequest, "commerceAccountId", _commerceAccountId);
 		setNamespacedAttribute(
@@ -184,8 +200,17 @@ public class AddToCartTag extends IncludeTag {
 			httpServletRequest, "stockQuantity", _stockQuantity);
 	}
 
-	public void setBlock(boolean block) {
-		_block = block;
+	public void setAlignment(String alignment) {
+		_alignment = alignment;
+	}
+	public void setSize(String size) {
+		_size = size;
+	}
+	public void setInline(boolean inline) {
+		_inline = inline;
+	}
+	public void setIconOnly(boolean iconOnly) {
+		_iconOnly = iconOnly;
 	}
 
 	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -224,7 +249,10 @@ public class AddToCartTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_block = false;
+		_alignment = "center";
+		_iconOnly = false;
+		_inline = false;
+		_size = "md";
 		_commerceAccountId = 0;
 		_commerceChannelGroupId = 0;
 		_commerceChannelId = 0;
@@ -257,7 +285,10 @@ public class AddToCartTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(AddToCartTag.class);
 
-	private boolean _block;
+	private String _alignment;
+	private boolean _iconOnly;
+	private boolean _inline;
+	private String _size;
 	private long _commerceAccountId;
 	private long _commerceChannelGroupId;
 	private long _commerceChannelId;

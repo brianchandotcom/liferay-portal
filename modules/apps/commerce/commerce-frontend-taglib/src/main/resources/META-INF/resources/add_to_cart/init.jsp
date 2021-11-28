@@ -30,7 +30,10 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-String block = (String)request.getAttribute("liferay-commerce:add-to-cart:block");
+String alignment = (String)request.getAttribute("liferay-commerce:add-to-cart:alignment");
+String size = (String)request.getAttribute("liferay-commerce:add-to-cart:size");
+String inline = (String)request.getAttribute("liferay-commerce:add-to-cart:inline");
+String iconOnly = (String)request.getAttribute("liferay-commerce:add-to-cart:iconOnly");
 String disabled = (String)request.getAttribute("liferay-commerce:add-to-cart:disabled");
 String commerceAccountId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceAccountId");
 String commerceChannelGroupId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceChannelGroupId");

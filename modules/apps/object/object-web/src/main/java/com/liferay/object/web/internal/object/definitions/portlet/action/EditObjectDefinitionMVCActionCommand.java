@@ -71,6 +71,7 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "panelCategoryOrder");
 		String panelCategoryKey = ParamUtil.getString(
 			actionRequest, "panelCategoryKey");
+		boolean portlet = ParamUtil.getBoolean(actionRequest, "portlet");
 		Map<Locale, String> pluralLabelMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "pluralLabel");
 		String scope = ParamUtil.getString(actionRequest, "scope");
@@ -79,7 +80,7 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId, descriptionObjectFieldId,
 				titleObjectFieldId, active, labelMap, name, panelCategoryOrder,
-				panelCategoryKey, pluralLabelMap, scope);
+				panelCategoryKey, portlet, pluralLabelMap, scope);
 
 			if (StringUtil.equals(
 					ParamUtil.getString(actionRequest, Constants.CMD),

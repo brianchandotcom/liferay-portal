@@ -3089,17 +3089,6 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com",
 				userScreenName = "test");
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.able.com:9080",
-				userEmailAddress = "test@www.able.com");
-
-			User.openUsersAdmin(baseURL = "http://www.able.com:9080");
-
-			User.editEmailAddressCP(
-				password = "test",
-				userEmailAddress = "test@liferay.com",
-				userScreenName = "test");
 
 			User.logoutPG(specificURL = "http://www.able.com:9080");
 

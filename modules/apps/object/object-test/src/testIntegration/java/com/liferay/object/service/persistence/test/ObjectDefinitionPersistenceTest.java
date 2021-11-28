@@ -164,6 +164,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setPluralLabel(RandomTestUtil.randomString());
 
+		newObjectDefinition.setPortlet(RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setScope(RandomTestUtil.randomString());
 
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
@@ -235,6 +237,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getPluralLabel(),
 			newObjectDefinition.getPluralLabel());
+		Assert.assertEquals(
+			existingObjectDefinition.isPortlet(),
+			newObjectDefinition.isPortlet());
 		Assert.assertEquals(
 			existingObjectDefinition.getScope(),
 			newObjectDefinition.getScope());
@@ -350,8 +355,8 @@ public class ObjectDefinitionPersistenceTest {
 			"active", true, "dbTableName", true, "label", true, "className",
 			true, "name", true, "panelAppOrder", true, "panelCategoryKey", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "scope", true, "system", true, "version", true,
-			"status", true);
+			"pluralLabel", true, "portlet", true, "scope", true, "system", true,
+			"version", true, "status", true);
 	}
 
 	@Test
@@ -689,6 +694,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
 
 		objectDefinition.setPluralLabel(RandomTestUtil.randomString());
+
+		objectDefinition.setPortlet(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setScope(RandomTestUtil.randomString());
 

@@ -563,6 +563,27 @@ public interface ObjectDefinitionModel
 		Map<Locale, String> pluralLabelMap, Locale defaultLocale);
 
 	/**
+	 * Returns the portlet of this object definition.
+	 *
+	 * @return the portlet of this object definition
+	 */
+	public boolean getPortlet();
+
+	/**
+	 * Returns <code>true</code> if this object definition is portlet.
+	 *
+	 * @return <code>true</code> if this object definition is portlet; <code>false</code> otherwise
+	 */
+	public boolean isPortlet();
+
+	/**
+	 * Sets whether this object definition is portlet.
+	 *
+	 * @param portlet the portlet of this object definition
+	 */
+	public void setPortlet(boolean portlet);
+
+	/**
 	 * Returns the scope of this object definition.
 	 *
 	 * @return the scope of this object definition

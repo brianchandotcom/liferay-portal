@@ -46,6 +46,7 @@
 		<field localized="true" name="pluralLabel" type="String">
 			<validator name="required" />
 		</field>
+		<field name="portlet" type="boolean" />
 		<field name="scope" type="String" />
 		<field name="system" type="boolean" />
 		<field name="version" type="int" />

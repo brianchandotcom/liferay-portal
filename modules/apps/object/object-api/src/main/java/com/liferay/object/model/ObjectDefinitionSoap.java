@@ -55,6 +55,7 @@ public class ObjectDefinitionSoap implements Serializable {
 			model.getPKObjectFieldDBColumnName());
 		soapModel.setPKObjectFieldName(model.getPKObjectFieldName());
 		soapModel.setPluralLabel(model.getPluralLabel());
+		soapModel.setPortlet(model.isPortlet());
 		soapModel.setScope(model.getScope());
 		soapModel.setSystem(model.isSystem());
 		soapModel.setVersion(model.getVersion());
@@ -284,6 +285,18 @@ public class ObjectDefinitionSoap implements Serializable {
 		_pluralLabel = pluralLabel;
 	}
 
+	public boolean getPortlet() {
+		return _portlet;
+	}
+
+	public boolean isPortlet() {
+		return _portlet;
+	}
+
+	public void setPortlet(boolean portlet) {
+		_portlet = portlet;
+	}
+
 	public String getScope() {
 		return _scope;
 	}
@@ -340,6 +353,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
 	private String _pluralLabel;
+	private boolean _portlet;
 	private String _scope;
 	private boolean _system;
 	private int _version;

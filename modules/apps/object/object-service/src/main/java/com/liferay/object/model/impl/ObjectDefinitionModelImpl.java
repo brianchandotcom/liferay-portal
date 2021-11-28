@@ -95,8 +95,9 @@ public class ObjectDefinitionModelImpl
 		{"panelAppOrder", Types.VARCHAR}, {"panelCategoryKey", Types.VARCHAR},
 		{"pkObjectFieldDBColumnName", Types.VARCHAR},
 		{"pkObjectFieldName", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
-		{"scope", Types.VARCHAR}, {"system_", Types.BOOLEAN},
-		{"version", Types.INTEGER}, {"status", Types.INTEGER}
+		{"portlet", Types.BOOLEAN}, {"scope", Types.VARCHAR},
+		{"system_", Types.BOOLEAN}, {"version", Types.INTEGER},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -123,6 +124,7 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("pkObjectFieldDBColumnName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pkObjectFieldName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pluralLabel", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("portlet", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
@@ -130,7 +132,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,descriptionObjectFieldId LONG,titleObjectFieldId LONG,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,descriptionObjectFieldId LONG,titleObjectFieldId LONG,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -239,6 +241,7 @@ public class ObjectDefinitionModelImpl
 			soapModel.getPKObjectFieldDBColumnName());
 		model.setPKObjectFieldName(soapModel.getPKObjectFieldName());
 		model.setPluralLabel(soapModel.getPluralLabel());
+		model.setPortlet(soapModel.isPortlet());
 		model.setScope(soapModel.getScope());
 		model.setSystem(soapModel.isSystem());
 		model.setVersion(soapModel.getVersion());
@@ -508,6 +511,11 @@ public class ObjectDefinitionModelImpl
 			"pluralLabel",
 			(BiConsumer<ObjectDefinition, String>)
 				ObjectDefinition::setPluralLabel);
+		attributeGetterFunctions.put("portlet", ObjectDefinition::getPortlet);
+		attributeSetterBiConsumers.put(
+			"portlet",
+			(BiConsumer<ObjectDefinition, Boolean>)
+				ObjectDefinition::setPortlet);
 		attributeGetterFunctions.put("scope", ObjectDefinition::getScope);
 		attributeSetterBiConsumers.put(
 			"scope",
@@ -1145,6 +1153,27 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public boolean getPortlet() {
+		return _portlet;
+	}
+
+	@JSON
+	@Override
+	public boolean isPortlet() {
+		return _portlet;
+	}
+
+	@Override
+	public void setPortlet(boolean portlet) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_portlet = portlet;
+	}
+
+	@JSON
+	@Override
 	public String getScope() {
 		if (_scope == null) {
 			return "";
@@ -1406,6 +1435,7 @@ public class ObjectDefinitionModelImpl
 			getPKObjectFieldDBColumnName());
 		objectDefinitionImpl.setPKObjectFieldName(getPKObjectFieldName());
 		objectDefinitionImpl.setPluralLabel(getPluralLabel());
+		objectDefinitionImpl.setPortlet(isPortlet());
 		objectDefinitionImpl.setScope(getScope());
 		objectDefinitionImpl.setSystem(isSystem());
 		objectDefinitionImpl.setVersion(getVersion());
@@ -1460,6 +1490,8 @@ public class ObjectDefinitionModelImpl
 			this.<String>getColumnOriginalValue("pkObjectFieldName"));
 		objectDefinitionImpl.setPluralLabel(
 			this.<String>getColumnOriginalValue("pluralLabel"));
+		objectDefinitionImpl.setPortlet(
+			this.<Boolean>getColumnOriginalValue("portlet"));
 		objectDefinitionImpl.setScope(
 			this.<String>getColumnOriginalValue("scope"));
 		objectDefinitionImpl.setSystem(
@@ -1669,6 +1701,8 @@ public class ObjectDefinitionModelImpl
 			objectDefinitionCacheModel.pluralLabel = null;
 		}
 
+		objectDefinitionCacheModel.portlet = isPortlet();
+
 		objectDefinitionCacheModel.scope = getScope();
 
 		String scope = objectDefinitionCacheModel.scope;
@@ -1797,6 +1831,7 @@ public class ObjectDefinitionModelImpl
 	private String _pkObjectFieldName;
 	private String _pluralLabel;
 	private String _pluralLabelCurrentLanguageId;
+	private boolean _portlet;
 	private String _scope;
 	private boolean _system;
 	private int _version;
@@ -1853,6 +1888,7 @@ public class ObjectDefinitionModelImpl
 			"pkObjectFieldDBColumnName", _pkObjectFieldDBColumnName);
 		_columnOriginalValues.put("pkObjectFieldName", _pkObjectFieldName);
 		_columnOriginalValues.put("pluralLabel", _pluralLabel);
+		_columnOriginalValues.put("portlet", _portlet);
 		_columnOriginalValues.put("scope", _scope);
 		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("version", _version);
@@ -1922,13 +1958,15 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("pluralLabel", 524288L);
 
-		columnBitmasks.put("scope", 1048576L);
+		columnBitmasks.put("portlet", 1048576L);
 
-		columnBitmasks.put("system_", 2097152L);
+		columnBitmasks.put("scope", 2097152L);
 
-		columnBitmasks.put("version", 4194304L);
+		columnBitmasks.put("system_", 4194304L);
 
-		columnBitmasks.put("status", 8388608L);
+		columnBitmasks.put("version", 8388608L);
+
+		columnBitmasks.put("status", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

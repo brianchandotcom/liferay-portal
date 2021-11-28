@@ -373,7 +373,7 @@ public class ObjectDefinitionServiceHttp {
 				long descriptionObjectFieldId, long titleObjectFieldId,
 				boolean active,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				String panelAppOrder, String panelCategoryKey,
+				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
 				String scope)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -387,7 +387,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId, descriptionObjectFieldId,
 				titleObjectFieldId, active, labelMap, name, panelAppOrder,
-				panelCategoryKey, pluralLabelMap, scope);
+				panelCategoryKey, portlet, pluralLabelMap, scope);
 
 			Object returnObj = null;
 
@@ -445,7 +445,7 @@ public class ObjectDefinitionServiceHttp {
 		_updateCustomObjectDefinitionParameterTypes8 = new Class[] {
 			Long.class, long.class, long.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, String.class
+			boolean.class, java.util.Map.class, String.class
 		};
 
 }

@@ -432,13 +432,13 @@ public class ObjectDefinitionLocalServiceUtil {
 			Long objectDefinitionId, long descriptionObjectFieldId,
 			long titleObjectFieldId, boolean active,
 			Map<java.util.Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
+			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			Map<java.util.Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
 			objectDefinitionId, descriptionObjectFieldId, titleObjectFieldId,
-			active, labelMap, name, panelAppOrder, panelCategoryKey,
+			active, labelMap, name, panelAppOrder, panelCategoryKey, portlet,
 			pluralLabelMap, scope);
 	}
 

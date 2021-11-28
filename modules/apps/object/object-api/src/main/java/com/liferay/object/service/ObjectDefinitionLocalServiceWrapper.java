@@ -489,14 +489,14 @@ public class ObjectDefinitionLocalServiceWrapper
 				Long objectDefinitionId, long descriptionObjectFieldId,
 				long titleObjectFieldId, boolean active,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				String panelAppOrder, String panelCategoryKey,
+				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
 				String scope)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
 			objectDefinitionId, descriptionObjectFieldId, titleObjectFieldId,
-			active, labelMap, name, panelAppOrder, panelCategoryKey,
+			active, labelMap, name, panelAppOrder, panelCategoryKey, portlet,
 			pluralLabelMap, scope);
 	}
 

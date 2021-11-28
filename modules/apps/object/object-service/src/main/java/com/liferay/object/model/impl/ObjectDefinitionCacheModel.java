@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -120,6 +120,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(pkObjectFieldName);
 		sb.append(", pluralLabel=");
 		sb.append(pluralLabel);
+		sb.append(", portlet=");
+		sb.append(portlet);
 		sb.append(", scope=");
 		sb.append(scope);
 		sb.append(", system=");
@@ -240,6 +242,8 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setPluralLabel(pluralLabel);
 		}
 
+		objectDefinitionImpl.setPortlet(portlet);
+
 		if (scope == null) {
 			objectDefinitionImpl.setScope("");
 		}
@@ -284,6 +288,8 @@ public class ObjectDefinitionCacheModel
 		pkObjectFieldDBColumnName = objectInput.readUTF();
 		pkObjectFieldName = objectInput.readUTF();
 		pluralLabel = objectInput.readUTF();
+
+		portlet = objectInput.readBoolean();
 		scope = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
@@ -389,6 +395,8 @@ public class ObjectDefinitionCacheModel
 			objectOutput.writeUTF(pluralLabel);
 		}
 
+		objectOutput.writeBoolean(portlet);
+
 		if (scope == null) {
 			objectOutput.writeUTF("");
 		}
@@ -423,6 +431,7 @@ public class ObjectDefinitionCacheModel
 	public String pkObjectFieldDBColumnName;
 	public String pkObjectFieldName;
 	public String pluralLabel;
+	public boolean portlet;
 	public String scope;
 	public boolean system;
 	public int version;

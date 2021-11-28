@@ -65,6 +65,7 @@ public class ObjectDefinitionWrapper
 			"pkObjectFieldDBColumnName", getPKObjectFieldDBColumnName());
 		attributes.put("pkObjectFieldName", getPKObjectFieldName());
 		attributes.put("pluralLabel", getPluralLabel());
+		attributes.put("portlet", isPortlet());
 		attributes.put("scope", getScope());
 		attributes.put("system", isSystem());
 		attributes.put("version", getVersion());
@@ -195,6 +196,12 @@ public class ObjectDefinitionWrapper
 
 		if (pluralLabel != null) {
 			setPluralLabel(pluralLabel);
+		}
+
+		Boolean portlet = (Boolean)attributes.get("portlet");
+
+		if (portlet != null) {
+			setPortlet(portlet);
 		}
 
 		String scope = (String)attributes.get("scope");
@@ -539,6 +546,16 @@ public class ObjectDefinitionWrapper
 		return model.getPluralLabelMap();
 	}
 
+	/**
+	 * Returns the portlet of this object definition.
+	 *
+	 * @return the portlet of this object definition
+	 */
+	@Override
+	public boolean getPortlet() {
+		return model.getPortlet();
+	}
+
 	@Override
 	public String getPortletId() {
 		return model.getPortletId();
@@ -672,6 +689,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean isApproved() {
 		return model.isApproved();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object definition is portlet.
+	 *
+	 * @return <code>true</code> if this object definition is portlet; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPortlet() {
+		return model.isPortlet();
 	}
 
 	/**
@@ -973,6 +1000,16 @@ public class ObjectDefinitionWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setPluralLabelMap(pluralLabelMap, defaultLocale);
+	}
+
+	/**
+	 * Sets whether this object definition is portlet.
+	 *
+	 * @param portlet the portlet of this object definition
+	 */
+	@Override
+	public void setPortlet(boolean portlet) {
+		model.setPortlet(portlet);
 	}
 
 	/**

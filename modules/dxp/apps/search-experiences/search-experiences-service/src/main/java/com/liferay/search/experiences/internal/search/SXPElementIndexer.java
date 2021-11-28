@@ -59,8 +59,8 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 	public SXPElementIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.UID, "hidden", "readOnly");
+			Field.GROUP_ID, Field.HIDDEN, Field.MODIFIED_DATE,
+			Field.SCOPE_GROUP_ID, Field.UID, "readOnly");
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
@@ -108,8 +108,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 
 		String[] localizedFieldNames =
 			_searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {Field.CONTENT, Field.DESCRIPTION, Field.TITLE},
-				searchContext);
+				new String[] {Field.DESCRIPTION, Field.TITLE}, searchContext);
 
 		queryConfig.addHighlightFieldNames(localizedFieldNames);
 	}
@@ -128,8 +127,8 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 		Document document = getBaseModelDocument(CLASS_NAME, sxpElement);
 
 		document.addDate(Field.MODIFIED_DATE, sxpElement.getModifiedDate());
-		document.addNumber(Field.TYPE, sxpElement.getType());
-		document.addKeyword("hidden", sxpElement.isHidden());
+		document.addKeyword(Field.HIDDEN, sxpElement.isHidden());
+		document.addKeyword(Field.TYPE, sxpElement.getType());
 		document.addKeyword("readOnly", sxpElement.isReadOnly());
 
 		for (Locale locale :
@@ -142,13 +141,8 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				sxpElement.getDescription(locale));
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					"localized_" + Field.TITLE, languageId),
-				sxpElement.getTitle(locale));
 			document.addTextSortable(
-				LocalizationUtil.getLocalizedName(
-					"localized_" + Field.TITLE, languageId),
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				sxpElement.getTitle(locale));
 		}
 

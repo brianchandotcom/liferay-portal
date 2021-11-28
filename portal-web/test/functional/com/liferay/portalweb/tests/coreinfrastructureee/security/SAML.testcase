@@ -395,7 +395,7 @@ definition {
 		task ("Add samlidp as identity provider") {
 			SAMLNavigation.gotoIdentityProviderConnections();
 
-			SAMLPortlet.addIdentityProviderConnectionWithBasicSetup(idpEntityID = "samlidp");
+			SAMLPortlet.addIdentityProviderConnectionWithBasicSetupWithEmptyUserMapping(idpEntityID = "samlidp");
 		}
 
 		task ("Assert No mapping selected") {

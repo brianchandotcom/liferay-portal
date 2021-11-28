@@ -2128,9 +2128,7 @@ definition {
 		task ("Convert encryption certificate") {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAML.downloadCertificate(certificate = "ENCRYPTION");
 

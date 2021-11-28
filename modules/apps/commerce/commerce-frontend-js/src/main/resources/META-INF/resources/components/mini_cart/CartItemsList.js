@@ -36,8 +36,8 @@ function CartItemsList() {
 			{cartItems.length > 0 ? (
 				<>
 					<div className="mini-cart-cart-items">
-						{cartItems.map((item) => (
-							<CartViews.Item item={item} key={item.id} />
+						{cartItems.map((cartItem) => (
+							<CartViews.Item key={cartItem.id} {...cartItem} />
 						))}
 					</div>
 

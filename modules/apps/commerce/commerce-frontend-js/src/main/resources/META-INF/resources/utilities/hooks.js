@@ -15,6 +15,8 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 
+import {GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER} from '../components/add_to_cart/constants';
+import CommerceCookie from './cookies';
 import {
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
@@ -86,13 +88,19 @@ export function useCommerceAccount(initialCommerceAccount) {
 	return commerceAccount;
 }
 
-export function useCommerceCart(initialCart) {
+const orderCookie = new CommerceCookie(GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER);
+
+export function useCommerceCart(initialCart, channelGroupId) {
 	const [commerceCart, setCommerceCart] = useState(initialCart);
 
 	useEffect(() => {
 		function handleOrderUpdate(order) {
 			if (commerceCart.id !== order.id) {
 				setCommerceCart(order);
+
+				if (channelGroupId) {
+					orderCookie.setValue(channelGroupId, order.orderUUID);
+				}
 			}
 		}
 
@@ -101,7 +109,7 @@ export function useCommerceCart(initialCart) {
 		return () => {
 			Liferay.detach(CURRENT_ORDER_UPDATED, handleOrderUpdate);
 		};
-	}, [commerceCart]);
+	}, [commerceCart, channelGroupId]);
 
 	return commerceCart;
 }

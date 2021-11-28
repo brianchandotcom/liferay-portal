@@ -21,62 +21,54 @@ import ListQuantitySelector from './ListQuantitySelector';
 
 function QuantitySelector({
 	allowedQuantities,
-	componentId,
 	disabled,
-	large,
+	maxQuantity,
+	minQuantity,
+	multipleQuantity,
 	name,
 	onUpdate,
 	quantity,
-	...quantitySettings
+	size,
 }) {
-	const commonProps = {
-		'className': classnames({
-			'form-control-lg': large,
-			'quantity-selector': true,
-		}),
-		'data-component-id': componentId,
-		disabled,
-		name,
-		onUpdate,
-		quantity,
-	};
+	const Selector =
+		allowedQuantities?.length > 0
+			? ListQuantitySelector
+			: InputQuantitySelector;
 
 	return (
-		<>
-			{allowedQuantities?.length > 0 ? (
-				<ListQuantitySelector
-					{...commonProps}
-					allowedQuantities={allowedQuantities}
-				/>
-			) : (
-				<InputQuantitySelector {...commonProps} {...quantitySettings} />
-			)}
-		</>
+		<Selector
+			allowedQuantities={allowedQuantities}
+			className={classnames({
+				[`form-control-${size}`]: size,
+				'quantity-selector': true,
+			})}
+			disabled={disabled}
+			maxQuantity={maxQuantity}
+			minQuantity={minQuantity}
+			multipleQuantity={multipleQuantity}
+			name={name}
+			onUpdate={onUpdate}
+			quantity={quantity}
+		/>
 	);
 }
 
 QuantitySelector.defaultProps = {
-	allowedQuantities: [],
 	disabled: false,
-	large: false,
-	maxQuantity: 99,
 	minQuantity: 1,
 	multipleQuantity: 1,
-	onUpdate: () => {},
 	quantity: 1,
 };
 
 QuantitySelector.propTypes = {
-	allowedQuantities: PropTypes.arrayOf(PropTypes.number),
-	componentId: PropTypes.string,
 	disabled: PropTypes.bool,
-	large: PropTypes.bool,
 	maxQuantity: PropTypes.number,
 	minQuantity: PropTypes.number,
 	multipleQuantity: PropTypes.number,
 	name: PropTypes.string,
-	onUpdate: PropTypes.func,
+	onUpdate: PropTypes.func.isRequired,
 	quantity: PropTypes.number,
+	size: PropTypes.oneOf(['sm', 'md', 'lg']),
 };
 
 export default QuantitySelector;

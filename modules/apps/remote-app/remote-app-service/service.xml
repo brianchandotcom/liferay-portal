@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.remote.app" short-no-such-exception-enabled="false">
 	<namespace>RemoteApp</namespace>
-	<entity local-service="true" name="RemoteAppEntry" remote-service="true" trash-enabled="false" uuid="true">
+	<entity external-reference-code="true" local-service="true" name="RemoteAppEntry" remote-service="true" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -37,6 +37,7 @@
 		<column name="statusDate" type="Date" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateRemoteAppEntry</exception>
 		<exception>RemoteAppEntryCustomElementCSSURLs</exception>
 		<exception>RemoteAppEntryCustomElementHTMLElementName</exception>
 		<exception>RemoteAppEntryCustomElementURLs</exception>

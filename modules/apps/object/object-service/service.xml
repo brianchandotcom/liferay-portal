@@ -63,6 +63,7 @@
 		<column method-name="PKObjectFieldDBColumnName" name="pkObjectFieldDBColumnName" type="String" />
 		<column method-name="PKObjectFieldName" name="pkObjectFieldName" type="String" />
 		<column localized="true" name="pluralLabel" type="String" />
+		<column name="portlet" type="boolean" />
 		<column name="scope" type="String" />
 		<column name="system" type="boolean" />
 		<column name="version" type="int" />

@@ -82,6 +82,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                portlet:
+                    type: boolean
                 scope:
                     type: string
                 status:

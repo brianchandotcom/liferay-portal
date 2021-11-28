@@ -524,8 +524,8 @@ public class ObjectDefinitionLocalServiceImpl
 			Long objectDefinitionId, long descriptionObjectFieldId,
 			long titleObjectFieldId, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			String scope)
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -538,8 +538,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _updateObjectDefinition(
 			objectDefinition, descriptionObjectFieldId, titleObjectFieldId,
-			active, null, labelMap, name, panelAppOrder, panelCategoryKey, null,
-			null, pluralLabelMap, scope);
+			active, null, labelMap, name, panelAppOrder, panelCategoryKey,
+			portlet, null, null, pluralLabelMap, scope);
 	}
 
 	@Activate
@@ -802,9 +802,9 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition, long descriptionObjectFieldId,
 			long titleObjectFieldId, boolean active, String dbTableName,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope)
+			String panelCategoryKey, boolean portlet,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		boolean originalActive = objectDefinition.isActive();
@@ -820,6 +820,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setActive(active);
 		objectDefinition.setPanelAppOrder(panelAppOrder);
 		objectDefinition.setPanelCategoryKey(panelCategoryKey);
+		objectDefinition.setPortlet(portlet);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 

@@ -30,7 +30,9 @@ definition {
 		}
 	}
 
+	@description = "Able to add site team."
 	@priority = "4"
+	@uitest
 	test AddSiteTeam {
 		property testray.component.names = "Site Administration";
 
@@ -45,6 +47,7 @@ definition {
 			teamName = "Site Team Name");
 	}
 
+	@description = "Able to assign user to site team."
 	@priority = "4"
 	test AddSiteTeamAssignUser {
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -81,7 +84,9 @@ definition {
 			userLastName = "userln");
 	}
 
+	@description = "Able to assign user to user group."
 	@priority = "4"
+	@uitest
 	test AddSiteTeamAssignUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
@@ -119,6 +124,7 @@ definition {
 			userGroupName = "User Group Name");
 	}
 
+	@description = "Able to add multiple site teams."
 	@priority = "5"
 	test AddSiteTeamMultiple {
 		property portal.acceptance = "true";
@@ -155,7 +161,9 @@ definition {
 			teamName = "Site Team3 Name");
 	}
 
+	@description = "Able to remove user after assigning to site team."
 	@priority = "5"
+	@uitest
 	test AddSiteTeamRemoveUser {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -201,7 +209,9 @@ definition {
 		Team.viewNoMembersCP(teamName = "Site Team Name");
 	}
 
+	@description = "Able to remove user group after assigning to site team."
 	@priority = "4"
+	@uitest
 	test AddSiteTeamRemoveUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
@@ -248,6 +258,8 @@ definition {
 		Team.viewNoMembersCP(teamName = "Site Team Name");
 	}
 
+	@description = "Able to find user group in site team."
+	@priority = "4"
 	test AddSiteTeamSearchUserGroups {
 		property testray.component.names = "Site Administration,User Groups";
 
@@ -289,6 +301,8 @@ definition {
 			searchTerm = "&quot;User Group Name 2&quot;");
 	}
 
+	@description = "Able to find user in site team."
+	@priority = "5"
 	test AddSiteTeamSearchUsers {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
@@ -335,7 +349,10 @@ definition {
 		}
 	}
 
+
+	@description = "Able to delete site team."
 	@priority = "5"
+	@uitest
 	test DeleteSiteTeam {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration";
@@ -353,7 +370,9 @@ definition {
 		Team.viewDefaultCP(teamName = "Site Team Name");
 	}
 
+	@description = "Able to edit site team."
 	@priority = "5"
+	@uitest
 	test EditSiteTeam {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration";
@@ -374,4 +393,157 @@ definition {
 			teamName = "Site Team Name Edit");
 	}
 
+	@description = "Check site teams permissions to see it is able to view page."
+	@priority = "4"
+	test SiteTeamsPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.component.names = "Permissions,Site Administration";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+
+		SitePages.addPublicPage(
+			pageName = "Blog Page Template",
+			pageTemplateName = "Blog");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		User.openUsersAdmin();
+
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn1");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editUserSiteCP(
+			siteName = "Site Name",
+			userScreenName = "usersn2");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.assignMembersCP(
+			teamName = "Site Team Name",
+			userScreenName = "usersn1");
+
+		PermissionsInline.gotoPagePG(
+			pageName = "Blog Page Template",
+			site = "Site Name");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page Template",
+			siteName = "Site Name");
+
+		PermissionsInline.gotoPagePG(
+			pageName = "Blog Page Template",
+			site = "Site Name");
+
+		for (var permissionsInLineUncheckListsCount : list "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.removePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineUncheckListsCount}",
+				roleTitle = "Site Member");
+		}
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page Template",
+			siteName = "Site Name");
+
+		PermissionsInline.gotoPagePG(
+			pageName = "Blog Page Template",
+			site = "Site Name");
+
+		for (var permissionsInLineCheckListsCount : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
+			Team.definePermissionPG(
+				permissionDefinitionKey = "${permissionsInLineCheckListsCount}",
+				teamName = "Site Team Name");
+		}
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page Template",
+			siteName = "Site Name");
+
+		PageTemplatesAdminGlobalSite.viewDefaultPortletPG(
+			pageTemplateName = "Blog",
+			portletTitleList = "Blogs,Tag Cloud,Recent Bloggers");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssertElementNotPresent(locator1 = "Home#PAGE");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+
+	@description = "Add site team name with XSS."
+	@priority = "4"
+	test SiteTeamsXSS {
+		property testray.component.names = "Site Administration,XSS";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.addCP(
+			teamDescription = '''<script>alert(123);</script>''',
+			teamName = '''<script>alert(123);</script>''');
+
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.assignDefaultSiteTeam(teamName = '''<script>alert(123);</script>''');
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
 }

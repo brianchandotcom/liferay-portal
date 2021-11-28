@@ -500,9 +500,7 @@ definition {
 		}
 
 		task ("Add CP able.com and baker.com") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+			Navigator.openSpecificURL(url = "http://localhost:9080/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",

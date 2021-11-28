@@ -60,7 +60,7 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.UID);
+			Field.STATUS, Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
@@ -108,8 +108,7 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 
 		String[] localizedFieldNames =
 			_searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {Field.CONTENT, Field.DESCRIPTION, Field.TITLE},
-				searchContext);
+				new String[] {Field.DESCRIPTION, Field.TITLE}, searchContext);
 
 		queryConfig.addHighlightFieldNames(localizedFieldNames);
 	}
@@ -131,6 +130,7 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 		Document document = getBaseModelDocument(CLASS_NAME, sxpBlueprint);
 
 		document.addDate(Field.MODIFIED_DATE, sxpBlueprint.getModifiedDate());
+		document.addKeyword(Field.STATUS, sxpBlueprint.getStatus());
 
 		for (Locale locale :
 				LanguageUtil.getCompanyAvailableLocales(
@@ -142,13 +142,8 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				sxpBlueprint.getDescription(locale));
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					"localized_" + Field.TITLE, languageId),
-				sxpBlueprint.getTitle(locale));
 			document.addTextSortable(
-				LocalizationUtil.getLocalizedName(
-					"localized_" + Field.TITLE, languageId),
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				sxpBlueprint.getTitle(locale));
 		}
 

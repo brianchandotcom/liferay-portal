@@ -31,8 +31,6 @@ function Opener() {
 
 	useEffect(() => {
 		setNumberOfItems(initialItemsQuantity);
-
-		return () => {};
 	}, [initialItemsQuantity, setNumberOfItems]);
 
 	useEffect(() => {

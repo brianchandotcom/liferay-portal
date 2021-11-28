@@ -16,15 +16,17 @@ import ClayButton from '@clayui/button';
 import classnames from 'classnames';
 import React, {useContext, useState} from 'react';
 
+import ServiceProvider from '../../ServiceProvider/index';
 import {PRODUCT_REMOVED_FROM_CART} from '../../utilities/eventsDefinitions';
 import {liferayNavigate} from '../../utilities/index';
 import {ALL} from '../add_to_cart/constants';
 import MiniCartContext from './MiniCartContext';
 import {REMOVE_ALL_ITEMS, VIEW_DETAILS} from './util/constants';
 
+const CartResource = ServiceProvider.DeliveryCartAPI('v1');
+
 function CartItemsListActions() {
 	const {
-		CartResource,
 		actionURLs,
 		cartState,
 		labels,
@@ -59,11 +61,9 @@ function CartItemsListActions() {
 					{cartItems.length > 0 && (
 						<>
 							<span className="items">{cartItems.length}</span>
-							{` ${
-								cartItems.length > 1
-									? Liferay.Language.get('products')
-									: Liferay.Language.get('product')
-							}`}
+							{' ' + cartItems.length > 1
+								? Liferay.Language.get('products')
+								: Liferay.Language.get('product')}
 						</>
 					)}
 				</div>

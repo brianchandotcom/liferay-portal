@@ -2,7 +2,6 @@
 
 .add-to-cart-wrapper {
 	.quantity-selector {
-		margin: 0.5rem 0;
 		max-width: 6.125rem;
 	}
 }
@@ -24,16 +23,9 @@
 	}
 
 	&.btn-block {
-		margin-top: 0.375rem;
-
 		.text-truncate-inline {
 			max-width: calc(100% - 24px);
 		}
-	}
-
-	&.btn-lg {
-		max-width: 12rem;
-		min-width: 10rem;
 	}
 
 	&.icon-only {
@@ -105,8 +97,4 @@
 			}
 		}
 	}
-}
-
-.product-detail-actions .add-to-cart {
-	margin: 0 !important;
 }

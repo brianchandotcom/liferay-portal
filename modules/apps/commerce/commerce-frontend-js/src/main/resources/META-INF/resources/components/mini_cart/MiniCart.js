@@ -14,7 +14,7 @@
 
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
 import {
@@ -44,6 +44,8 @@ import {regenerateOrderDetailURL, summaryDataMapper} from './util/index';
 import {DEFAULT_LABELS} from './util/labels';
 import {resolveCartViews} from './util/views';
 
+const CartResource = ServiceProvider.DeliveryCartAPI('v1');
+
 function MiniCart({
 	cartActionURLs,
 	cartViews,
@@ -57,11 +59,6 @@ function MiniCart({
 	summaryDataMapper,
 	toggleable,
 }) {
-	const CartResource = useMemo(
-		() => ServiceProvider.DeliveryCartAPI('v1'),
-		[]
-	);
-
 	const [isOpen, setIsOpen] = useState(!toggleable);
 	const [isUpdating, setIsUpdating] = useState(false);
 	const [actionURLs, setActionURLs] = useState(cartActionURLs);
@@ -72,7 +69,9 @@ function MiniCart({
 	});
 
 	const closeCart = () => setIsOpen(false);
+
 	const openCart = () => setIsOpen(true);
+
 	const resetCartState = useCallback(
 		({accountId = 0}) =>
 			setCartState({
@@ -113,17 +112,17 @@ function MiniCart({
 						return latestCartState;
 					});
 
-					return Promise.resolve({
+					return {
 						actionURLs: latestActionURLs,
 						cartState: latestCartState,
-					});
+					};
 				})
 				.then(({actionURLs, cartState}) => {
 					onAddToCart(actionURLs, cartState);
 				})
 				.catch(showErrorNotification);
 		},
-		[CartResource, onAddToCart]
+		[onAddToCart]
 	);
 
 	useEffect(() => {
@@ -155,7 +154,6 @@ function MiniCart({
 	return (
 		<MiniCartContext.Provider
 			value={{
-				CartResource,
 				CartViews,
 				actionURLs,
 				cartState,

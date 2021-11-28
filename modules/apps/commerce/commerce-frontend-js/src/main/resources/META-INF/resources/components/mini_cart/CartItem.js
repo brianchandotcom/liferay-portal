@@ -17,8 +17,10 @@ import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
+import ServiceProvider from '../../ServiceProvider/index';
+import {debouncePromise} from '../../utilities/debounce';
 import {PRODUCT_REMOVED_FROM_CART} from '../../utilities/eventsDefinitions';
 import Price from '../price/Price';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
@@ -31,24 +33,41 @@ import {
 	REMOVAL_TIMEOUT,
 } from './util/constants';
 import {generateProductPageURL, parseOptions} from './util/index';
-function CartItem({item: cartItem}) {
-	const {
-		adaptiveMediaImageHTMLTag,
-		cartItems: childItems,
-		errorMessages,
-		id: cartItemId,
-		name,
-		options: rawOptions,
-		price,
-		productURLs,
-		quantity,
-		settings,
-		sku,
-		skuId,
-	} = cartItem;
+
+const CartResource = ServiceProvider.DeliveryCartAPI('v1');
+
+const deboncedUpdateItemQuantity = debouncePromise(
+	(cartItemId, quantity) =>
+		CartResource.updateItemById(cartItemId, {
+			quantity,
+		}),
+	300
+);
+
+function CartItem({
+	adaptiveMediaImageHTMLTag,
+	cartItems: childItems,
+	errorMessages,
+	id: cartItemId,
+	name,
+	options: rawOptions,
+	price,
+	productURLs,
+	quantity: cartItemQuantity,
+	settings,
+	sku,
+	skuId,
+}) {
+	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
+	const [selectorQuantity, setSelectorQuantity] = useState(cartItemQuantity);
+	const isMounted = useIsMounted();
+	const options = parseOptions(rawOptions);
+
+	useEffect(() => {
+		setSelectorQuantity(cartItemQuantity);
+	}, [cartItemQuantity]);
 
 	const {
-		CartResource,
 		actionURLs,
 		cartState,
 		displayDiscountLevels,
@@ -62,15 +81,7 @@ function CartItem({item: cartItem}) {
 		actionURLs.productURLSeparator
 	);
 
-	const isMounted = useIsMounted();
-
-	const {id: orderId} = cartState;
-	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
-
-	const options = parseOptions(rawOptions);
-
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const showErrors = () => {
+	const showErrors = useCallback(() => {
 		if (isMounted()) {
 			setItemState({
 				...INITIAL_ITEM_STATE,
@@ -82,7 +93,7 @@ function CartItem({item: cartItem}) {
 				}, REMOVAL_ERRORS_TIMEOUT),
 			});
 		}
-	};
+	}, [isMounted]);
 
 	const cancelRemoveItem = (event) => {
 		event.stopPropagation();
@@ -126,7 +137,7 @@ function CartItem({item: cartItem}) {
 									return;
 								}
 
-								updateCartModel({id: orderId});
+								updateCartModel({id: cartState.id});
 
 								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
 									skuId,
@@ -183,28 +194,23 @@ function CartItem({item: cartItem}) {
 
 			<div className="mini-cart-item-quantity">
 				<QuantitySelector
-					onUpdate={(freshQuantity) => {
-						if (freshQuantity && freshQuantity !== quantity) {
-							setIsUpdating(true);
+					onUpdate={(newQuantity) => {
+						setSelectorQuantity(newQuantity);
+						setIsUpdating(true);
 
-							CartResource.updateItemById(cartItemId, {
-								...cartItem,
-								quantity: freshQuantity,
+						deboncedUpdateItemQuantity(cartItemId, newQuantity)
+							.then(() => {
+								if (isMounted()) {
+									setIsUpdating(false);
+									updateCartModel({id: cartState.id});
+								}
 							})
-								.then(() => {
-									if (isMounted()) {
-										updateCartModel({id: orderId});
-									}
-								})
-								.catch(showErrors)
-								.finally(() => {
-									if (isMounted()) {
-										setIsUpdating(false);
-									}
-								});
-						}
+							.catch((...errors) => {
+								setIsUpdating(false);
+								showErrors(...errors);
+							});
 					}}
-					quantity={quantity}
+					quantity={selectorQuantity}
 					{...settings}
 				/>
 			</div>
@@ -249,7 +255,6 @@ function CartItem({item: cartItem}) {
 				<span>
 					<ClayButton
 						displayType="link"
-						href="#"
 						onClick={cancelRemoveItem}
 						small
 						type="button"

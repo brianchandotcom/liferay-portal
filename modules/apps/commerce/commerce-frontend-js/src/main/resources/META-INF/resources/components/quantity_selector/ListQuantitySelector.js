@@ -13,34 +13,29 @@
  */
 
 import {ClaySelectWithOption} from '@clayui/form';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 function ListQuantitySelector({
 	allowedQuantities,
+	className,
+	disabled,
+	name,
 	onUpdate,
-	quantity: startingQuantity,
-	...props
+	quantity,
 }) {
-	const [startingAllowedQuantity] = allowedQuantities;
-	const [selectedQuantity, setSelectedQuantity] = useState(
-		Math.max(startingQuantity, startingAllowedQuantity)
-	);
-
-	useEffect(() => {
-		onUpdate(selectedQuantity);
-	}, [onUpdate, selectedQuantity]);
-
 	return (
 		<ClaySelectWithOption
-			{...props}
-			onChange={({target}) =>
-				setSelectedQuantity(parseInt(target.value, 10))
-			}
+			className={className}
+			disabled={disabled}
+			name={name}
+			onChange={({target}) => {
+				onUpdate(Number(target.value));
+			}}
 			options={allowedQuantities.map((value) => ({
-				label: value.toString(),
+				label: String(value),
 				value,
 			}))}
-			value={selectedQuantity.toString()}
+			value={quantity}
 		/>
 	);
 }

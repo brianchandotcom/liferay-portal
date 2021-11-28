@@ -13,63 +13,39 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-
-import QuantityControls, {UPDATE_AFTER} from './utils/index';
+import React from 'react';
 
 function InputQuantitySelector({
+	className,
+	disabled,
 	maxQuantity,
 	minQuantity,
 	multipleQuantity,
+	name,
 	onUpdate,
-	quantity: startingQuantity,
-	...props
+	quantity,
 }) {
-	const quantityControls = useMemo(
-		() =>
-			new QuantityControls({
-				maxQuantity,
-				minQuantity,
-				multipleQuantity,
-			}),
-		[maxQuantity, minQuantity, multipleQuantity]
-	);
-
-	const [selectedQuantity, setSelectedQuantity] = useState(
-		Math.max(startingQuantity, quantityControls.min)
-	);
-
-	const keypressDebounceRef = useRef();
-
-	useEffect(() => {
-		clearTimeout(keypressDebounceRef.current);
-
-		keypressDebounceRef.current = setTimeout(() => {
-			setSelectedQuantity(() => {
-				const quantity = quantityControls.getLowerBound(
-					selectedQuantity > quantityControls.max
-						? quantityControls.max
-						: selectedQuantity
-				);
-
-				onUpdate(quantity);
-
-				return quantity;
-			});
-		}, UPDATE_AFTER);
-	}, [onUpdate, quantityControls, selectedQuantity]);
-
 	return (
 		<ClayInput
-			{...props}
-			{...quantityControls.getConfiguration()}
-			onChange={({target}) =>
-				setSelectedQuantity(parseInt(target.value, 10))
-			}
+			className={className}
+			disabled={disabled}
+			max={maxQuantity}
+			min={minQuantity}
+			name={name}
+			onChange={({target}) => {
+				onUpdate(Number(target.value));
+			}}
+			step={multipleQuantity}
 			type="number"
-			value={selectedQuantity.toString()}
+			value={String(quantity)}
 		/>
 	);
 }
+
+InputQuantitySelector.defaultProps = {
+	maxQuantity: '',
+	minQuantity: 1,
+	multipleQuantity: '',
+};
 
 export default InputQuantitySelector;

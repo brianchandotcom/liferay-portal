@@ -13294,6 +13294,18 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="websphere.ssl.truststore.enabled" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="websphere" />
+				<equals arg1="${websphere.ssl.truststore.enabled}" arg2="true" />
+			</and>
+			<then>
+				<antcall target="setup-websphere-ssl-truststore" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="theme.file.name" />
 
 		<if>
@@ -13645,6 +13657,15 @@ url=${short.hostname}:8080</echo>
 
 	<target name="setup-testable-tomcat">
 		<setup-testable-tomcat />
+	</target>
+
+	<target name="setup-websphere-ssl-truststore">
+		<replace
+			file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
+		>
+			<replacetoken><![CDATA[genericJvmArguments="]]></replacetoken>
+			<replacevalue expandproperties="true"><![CDATA[genericJvmArguments="-Djavax.net.ssl.trustStore=${app.server.websphere.dir}/java/8.0/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.ssl.trustStoreType=jks ]]></replacevalue>
+		</replace>
 	</target>
 
 	<target name="start-app-server">

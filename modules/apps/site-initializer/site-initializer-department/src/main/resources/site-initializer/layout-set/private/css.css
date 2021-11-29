@@ -2,7 +2,7 @@
 
 /*Montserrat*/
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Roboto+Mono&display=swap');
 
 /*Roboto Mono*/
 
@@ -14,8 +14,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: var(--font-weight-bold);
-  line-height: 1.25;
+	font-weight: var(--font-weight-bold);
+	line-height: 1.25;
 }
 
 /*-----GENERAL-----*/
@@ -30,23 +30,76 @@ p {
 
 a,
 a .btn-link {
-  color: var(--primary);
-  text-decoration: none;
+	color: var(--primary);
+	text-decoration: none;
 }
 
 a:hover,
 .btn-link:hover {
-  color: var(--secondary);
+	color: var(--secondary);
+}
+
+/*-----COMPONENTS-----*/
+
+/*Buttons*/
+
+.department-btn.btn {
+	border-radius: 0;
+	box-shadow: var(--box-shadow);
+	font-family: var(--font-family-sans-serif);
+	font-weight: var(--font-weight-bolder);
+	padding: calc(var(--spacer-1) * 2) var(--spacer-4);
+}
+
+.department-btn.btn:hover {
+	box-shadow: var(--box-shadow-lg);
+	transform: translateY(-4px);
+	transition: 0.2s;
+}
+.department-btn.btn-lg {
+	font-size: var(--font-size-base);
+}
+
+.department-btn.btn-link {
+	padding: 0;
+}
+
+.department-btn.btn-link a {
+	color: inherit;
+}
+
+.department-btn.btn-sm {
+	font-size: var(--font-size-sm);
+}
+
+/*Form Controls*/
+
+.form-control {
+	background-color: var(--white);
+	border: var(--white);
+	border-radius: 0;
+	box-shadow: var(--box-shadow);
+	font-family: var(--font-family-sans-serif);
+	height: auto;
+	padding: calc(var(--spacer-1) * 2) var(--spacer-4);
+}
+
+.form-control-sm {
+	font-size: var(--font-size-sm);
+}
+
+.form-control-lg {
+	font-size: var(--font-size-base);
 }
 
 /*-----LAYOUT-----*/
 
 .row {
-  margin-left: -16px;
-  margin-right: -16px;
+	margin-left: -16px;
+	margin-right: -16px;
 }
 
 .row > div {
-  padding-left: 16px;
-  padding-right: 16px;
+	padding-left: 16px;
+	padding-right: 16px;
 }

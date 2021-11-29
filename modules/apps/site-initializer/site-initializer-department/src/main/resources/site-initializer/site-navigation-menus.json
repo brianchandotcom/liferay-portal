@@ -15,6 +15,11 @@
 				"friendlyURL": "/blog",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"friendlyURL": "/resources",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "Main Navigation"

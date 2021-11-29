@@ -19,6 +19,7 @@ import com.liferay.asset.categories.admin.web.internal.configuration.AssetCatego
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.category.property.exception.CategoryPropertyKeyException;
 import com.liferay.asset.category.property.exception.CategoryPropertyValueException;
+import com.liferay.asset.category.property.exception.DuplicateCategoryPropertyException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
@@ -28,7 +29,6 @@ import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
-import com.liferay.asset.kernel.exception.DuplicateCategoryPropertyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;

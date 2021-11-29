@@ -83,12 +83,51 @@ definition {
 	}
 
 	@description = "Verify that a notification is sent when the Translation is rejected"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test NotificationIsSentOnReject {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-70762 NotificationIsSentOnReject pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Workflow.webContentGoToAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Refresh();
+
+		Translations.gotoTranslate(webContentTitle = "Web Content Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "pt-BR");
+
+		Button.clickSubmitForPublication();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation of Web Content Title to pt-BR",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Translation of Web Content Title to pt-BR",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Notifications.gotoNotifications();
+
+		AssertElementPresent(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Your submission was rejected by Test Test, please modify and resubmit.");
 	}
 
 	@description = "Verify that the Translation status changes after approval"
@@ -101,7 +140,6 @@ definition {
 	}
 
 	@description = "Verify that the Translation status does not change when the Translation is rejected"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TranslationStatusDoesNotChangeAfterReject {
 		Workflow.openWorkflowProcessBuilderConfiguration();

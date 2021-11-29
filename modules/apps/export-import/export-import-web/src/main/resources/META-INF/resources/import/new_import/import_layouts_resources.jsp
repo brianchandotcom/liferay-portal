@@ -156,18 +156,12 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 				</dl>
 			</aui:fieldset>
 
-			<c:choose>
-				<c:when test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
+			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
+				<c:choose>
+					<c:when test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
 						<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
 
 						<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
-
-						<%
-						String taglibThemeSettingsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "theme-settings") + ":</span> " + LanguageUtil.get(request, "export-import-theme-settings-help");
-						%>
-
-						<aui:input label="<%= taglibThemeSettingsLabel %>" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
 
 						<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
 
@@ -180,12 +174,18 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 						%>
 
 						<aui:input label="<%= taglibDeleteMissingLayoutsLabel %>" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
-					</aui:fieldset>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="privateLayout" type="hidden" value="<%= true %>" />
-				</c:otherwise>
-			</c:choose>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="privateLayout" type="hidden" value="<%= true %>" />
+					</c:otherwise>
+				</c:choose>
+
+				<%
+				String taglibThemeSettingsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "theme-settings") + ":</span> " + LanguageUtil.get(request, "export-import-theme-settings-help");
+				%>
+
+				<aui:input label="<%= taglibThemeSettingsLabel %>" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+			</aui:fieldset>
 
 			<%
 			List<Portlet> dataPortlets = ListUtil.sort(manifestSummary.getDataPortlets(), new PortletTitleComparator(application, locale));

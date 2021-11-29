@@ -9,15 +9,15 @@
  * distribution rights of the Software.
  */
 
-import ClayLabel from '@clayui/label';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
 import AddToCart from 'commerce-frontend-js/components/add_to_cart/AddToCart';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import {getProduct} from '../utilities/data';
-import {formatProductOptions, getProductURL} from '../utilities/index';
+import {
+	formatProductOptions,
+	getProductName,
+	getProductURL,
+} from '../utilities/index';
 import Price from './Price';
 
 function SkuContent({
@@ -31,23 +31,25 @@ function SkuContent({
 	productBaseURL,
 	quantity,
 	quantityDetails,
-	sku,
 }) {
+	const productURL = getProductURL(productBaseURL, product.urls);
+	const productName = getProductName(product);
+
 	return (
 		<div className="diagram-storefront-tooltip row">
-			{product.urlImage && (
+			{product.thumbnail && (
 				<div className="col-auto">
 					<ClaySticker className="fill-cover" size="xl">
 						<ClaySticker.Image
-							alt={product.name}
-							src={product.urlImage}
+							alt={productName}
+							src={product.thumbnail}
 						/>
 					</ClaySticker>
 				</div>
 			)}
 
 			<div className="col">
-				<div className="mb-1">
+				{/* <div className="mb-1">
 					{sku?.availability && (
 						<ClayLabel
 							displayType={
@@ -59,12 +61,10 @@ function SkuContent({
 							{sku.availability.label_i18n}
 						</ClayLabel>
 					)}
-				</div>
+				</div> */}
 
 				<h4 className="component-title mb-1">
-					<a href={getProductURL(productBaseURL, product.urls)}>
-						{product.name}
-					</a>
+					<a href={productURL}>{productName}</a>
 				</h4>
 
 				<p>
@@ -72,59 +72,59 @@ function SkuContent({
 				</p>
 			</div>
 
-			{sku && (
-				<div className="col-auto text-right">
-					<Price className="mb-1" {...sku.price} />
+			<div className="col-auto text-right">
+				<Price className="mb-1" {...product.price} />
 
-					<AddToCart
-						channel={{
-							currencyCode,
-							groupId: channelGroupId,
-							id: channelId,
-						}}
-						cpInstance={{
-							accountId,
-							isInCart: false,
-							options: formatProductOptions(
-								sku.options,
-								product.productOptions
-							),
-							skuId: sku.id,
-						}}
-						orderId={cartId}
-						orderUUID={orderUUID}
-						quantity={quantity}
-						settings={{
-							alignment: 'full-width',
-							block: true,
-							iconOnly: true,
-							withQuantity: {
-								allowedQuantities:
-									quantityDetails.allowedOrderQuantities,
-								maxQuantity: quantityDetails.maxOrderQuantity,
-								minQuantity: quantityDetails.minOrderQuantity,
-								multipleQuantity:
-									quantityDetails.multipleOrderQuantity,
-							},
-						}}
-					/>
-				</div>
-			)}
+				<AddToCart
+					accountId={accountId}
+					cartId={cartId}
+					cartUUID={orderUUID}
+					channel={{
+						currencyCode,
+						groupId: channelGroupId,
+						id: channelId,
+					}}
+					cpInstance={{
+						inCart: false,
+						options: formatProductOptions(
+							product.options,
+							product.productOptions
+						),
+						quantity,
+						skuId: product.skuId,
+					}}
+					settings={{
+						alignment: 'full-width',
+						iconOnly: true,
+						inline: false,
+						quantityDetails: {
+							allowedQuantities:
+								quantityDetails.allowedOrderQuantities,
+							maxQuantity: quantityDetails.maxOrderQuantity,
+							minQuantity: quantityDetails.minOrderQuantity,
+							multipleQuantity:
+								quantityDetails.multipleOrderQuantity,
+						},
+						size: 'sm',
+					}}
+				/>
+			</div>
 		</div>
 	);
 }
 
 function DiagramContent({product, productBaseURL}) {
 	const productURL = getProductURL(productBaseURL, product.urls);
+	const productName = getProductName(product);
 
 	return (
 		<div className="row">
-			{product.urlImage && (
+			{product.thumbnail && (
 				<div className="col-auto">
 					<ClaySticker className="fill-cover" size="xl">
 						<ClaySticker.Image
-							alt={product.name}
-							src={product.urlImage}
+							alt={productName}
+							src={product.thumbnail}
 						/>
 					</ClaySticker>
 				</div>
@@ -132,7 +132,7 @@ function DiagramContent({product, productBaseURL}) {
 
 			<div className="col">
 				<h4 className="component-title">
-					<a href={productURL}>{product.name}</a>
+					<a href={productURL}>{productName}</a>
 				</h4>
 			</div>
 
@@ -175,67 +175,24 @@ function StorefrontTooltipContent({
 	productBaseURL,
 	selectedPin,
 }) {
-	const [product, setProduct] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const isMounted = useIsMounted();
+	const product = selectedPin.mappedProduct;
 
-	useEffect(() => {
-		if (selectedPin.mappedProduct.type === 'external') {
-			setProduct(selectedPin.mappedProduct);
-
-			return;
-		}
-
-		setLoading(true);
-
-		getProduct(selectedPin.mappedProduct.productId, channelId, accountId)
-			.then((product) => {
-				if (!isMounted()) {
-					return;
-				}
-
-				setProduct({
-					type: selectedPin.mappedProduct.type,
-					...product,
-				});
-			})
-			.catch(() => {
-				setProduct({
-					...selectedPin.mappedProduct,
-					type: 'external',
-				});
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [accountId, channelId, isMounted, selectedPin]);
-
-	const currentSku = product
-		? product?.skus?.find(
-				(skuData) => skuData.sku === selectedPin.mappedProduct.sku
-		  )
-		: null;
-	const Renderer = product && ContentsMap[product.type];
+	const Renderer = ContentsMap[product.type];
 
 	return (
 		<div>
-			{loading && <ClayLoadingIndicator className="my-3" small />}
-
-			{!loading && product && (
-				<Renderer
-					accountId={accountId}
-					cartId={cartId}
-					channelGroupId={channelGroupId}
-					channelId={channelId}
-					currencyCode={currencyCode}
-					orderUUID={orderUUID}
-					product={product}
-					productBaseURL={productBaseURL}
-					quantity={selectedPin.mappedProduct.quantity}
-					quantityDetails={product?.productConfiguration || {}}
-					sku={currentSku}
-				/>
-			)}
+			<Renderer
+				accountId={accountId}
+				cartId={cartId}
+				channelGroupId={channelGroupId}
+				channelId={channelId}
+				currencyCode={currencyCode}
+				orderUUID={orderUUID}
+				product={selectedPin.mappedProduct}
+				productBaseURL={productBaseURL}
+				quantity={product.quantity}
+				quantityDetails={product?.productConfiguration || {}}
+			/>
 		</div>
 	);
 }

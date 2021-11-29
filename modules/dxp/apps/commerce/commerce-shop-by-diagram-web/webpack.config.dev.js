@@ -93,6 +93,10 @@ module.exports = {
 	],
 	resolve: {
 		alias: {
+			'@liferay/frontend-data-set-web': path.resolve(
+				__dirname,
+				'../../../../node_modules/@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/index.js'
+			),
 			'@liferay/frontend-js-react-web': path.resolve(
 				__dirname,
 				'../../../../node_modules/@liferay/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts'
@@ -105,6 +109,10 @@ module.exports = {
 				__dirname,
 				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/add_to_cart/AddToCart.js'
 			),
+			'commerce-frontend-js/components/add_to_cart/AddToCartButton': path.resolve(
+				__dirname,
+				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/add_to_cart/AddToCartButton.js'
+			),
 			'commerce-frontend-js/components/autocomplete/Autocomplete': path.resolve(
 				__dirname,
 				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/autocomplete/Autocomplete.js'
@@ -112,6 +120,10 @@ module.exports = {
 			'commerce-frontend-js/components/infinite_scroller/InfiniteScroller': path.resolve(
 				__dirname,
 				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/infinite_scroller/InfiniteScroller.js'
+			),
+			'commerce-frontend-js/components/quantity_selector/QuantitySelector': path.resolve(
+				__dirname,
+				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/components/quantity_selector/QuantitySelector.js'
 			),
 			'commerce-frontend-js/utilities/hooks': path.resolve(
 				__dirname,

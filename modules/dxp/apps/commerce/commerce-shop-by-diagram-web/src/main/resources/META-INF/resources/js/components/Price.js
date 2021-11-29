@@ -12,6 +12,10 @@
 import classNames from 'classnames';
 import React from 'react';
 
+function formatPrice(price) {
+	return price.replaceAll(' ', '\u00A0');
+}
+
 function Price({className, ...priceDetails}) {
 	const finalPrice =
 		priceDetails.finalPrice ||
@@ -22,13 +26,13 @@ function Price({className, ...priceDetails}) {
 	return finalPrice !== price ? (
 		<div className={classNames('text-right', className)}>
 			<small className="d-block font-weight-bold mb-n1">
-				<del>{price}</del>
+				<del>{formatPrice(price)}</del>
 			</small>
 
-			<strong className="text-danger">{finalPrice}</strong>
+			<strong className="text-danger">{formatPrice(finalPrice)}</strong>
 		</div>
 	) : (
-		<strong>{finalPrice}</strong>
+		<strong>{formatPrice(finalPrice)}</strong>
 	);
 }
 

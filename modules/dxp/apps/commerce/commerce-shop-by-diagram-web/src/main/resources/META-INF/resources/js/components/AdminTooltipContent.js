@@ -287,7 +287,11 @@ function AdminTooltipContent({
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
-				<ClayButton disabled={disabled} type="submit">
+				<ClayButton
+					disabled={disabled}
+					monospaced={saving}
+					type="submit"
+				>
 					{saving ? <ClayLoadingIndicator small /> : saveMessage}
 				</ClayButton>
 			</div>

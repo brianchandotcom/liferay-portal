@@ -587,56 +587,104 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Apply Page in Desktop size"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test MasterclassApplyinDesktopSize {
+		task ("Go to Apply Page") {
+			Navigator.gotoSitePage(
+				pageName = "Apply",
+				siteName = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "desktop",
+				elementsList = "navbar,heading,text-block,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Apply Page in Mobile size"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test MasterclassApplyinMobileSize {
+		task ("Go to Apply Page") {
+			Navigator.gotoSitePage(
+				pageName = "Apply",
+				siteName = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "smartphone",
+				elementsList = "navbar,heading,text-block,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Apply Page in Tablet size"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test MasterclassApplyinTabletSize {
+		task ("Go to Apply Page") {
+			Navigator.gotoSitePage(
+				pageName = "Apply",
+				siteName = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "tablet",
+				elementsList = "navbar,heading,text-block,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Blog Page in Desktop size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassBloginDesktopSize {
+		task ("Go to Blog Page") {
+			Navigator.gotoSitePage(
+				pageName = "Blog",
+				siteName = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "desktop",
+				elementsList = "navbar,heading,text-block,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Blog Page in Mobile size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassBloginMobileSize {
+		task ("Go to Blog Page") {
+			Navigator.gotoSitePage(
+				pageName = "Blog",
+				siteName = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "smartphone",
+				elementsList = "navbar,heading,text-block,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Blog Page in Tablet size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassBloginTabletSize {
+		task ("Go to Blog Page") {
+			Navigator.gotoSitePage(
+				pageName = "Blog",
+				siteName = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "tablet",
+				elementsList = "navbar,heading,text-block,footer");
+		}
 
 	}
 
@@ -644,80 +692,183 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassHomeinDesktopSize {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "desktop",
+				elementsList = "navbar,hero,align-items-lg-start,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Mobile size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassHomeinMobileSize {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "smartphone",
+				elementsList = "navbar,hero,align-items-lg-start,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Tablet size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassHomeinTabletSize {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "tablet",
+				elementsList = "navbar,hero,align-items-lg-start,footer");
+		}
 
 	}
 
-	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Mobile size"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Desktop size"
 	@priority = "4"
 	test MasterclassMyLearninginDesktopSize {
+		task ("Go to My Learning Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		// TODO Create the automation about the LPS-140611.
+			SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "My Learning");	
+		}
+
+		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "desktop",
+				elementsList = "navbar,private-header,portlet-body,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Mobile size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassMyLearninginMobileSize {
+		task ("Go to My Learning Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		// TODO Create the automation about the LPS-140611.
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "My Learning");	
+		}
+
+		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "smartphone",
+				elementsList = "navbar,private-header,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Tablet size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassMyLearninginTabletSize {
+		task ("Go to My Learning Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		// TODO Create the automation about the LPS-140611.
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "My Learning");	
+		}
+
+		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "tablet",
+				elementsList = "navbar,private-header,footer");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Desktop size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassSignIninDesktopSize {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Go to Sign In Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Sign In");	
+		}
+
+		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "desktop",
+				elementsList = "sign-in-logo,sign-in-form");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Mobile size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassSignIninMobileSize {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Go to Sign In Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Sign In");	
+		}
+
+		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "smartphone",
+				elementsList = "sign-in-logo,sign-in-form");
+		}
 
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Tablet size"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassSignIninTabletSize {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		}
 
-		// TODO Create the automation about the LPS-140611.
+		task ("Go to Sign In Page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "View",
+				pageName = "Sign In");	
+		}
+
+		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
+			Masterclass.simulateAndViewPageElements(
+				deviceType = "tablet",
+				elementsList = "sign-in-logo,sign-in-form");
+		}
 
 	}
 

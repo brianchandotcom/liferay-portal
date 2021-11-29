@@ -257,8 +257,7 @@ public class WorkflowDefinitionDisplayContext {
 				workflowDefinitionLinks.get(0);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink.getClassName()),
-				getConfigureAssignementLink()
+				getLocalizedAssetName(workflowDefinitionLink.getClassName())
 			};
 		}
 		else if (workflowDefinitionLinks.size() == 2) {
@@ -269,8 +268,7 @@ public class WorkflowDefinitionDisplayContext {
 
 			return new Object[] {
 				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
-				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
-				getConfigureAssignementLink()
+				getLocalizedAssetName(workflowDefinitionLink2.getClassName())
 			};
 		}
 		else {
@@ -284,7 +282,7 @@ public class WorkflowDefinitionDisplayContext {
 			return new Object[] {
 				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
 				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
-				moreAssets, getConfigureAssignementLink()
+				moreAssets
 			};
 		}
 	}
@@ -313,13 +311,13 @@ public class WorkflowDefinitionDisplayContext {
 			return StringPool.BLANK;
 		}
 		else if (workflowDefinitionLinks.size() == 1) {
-			return "workflow-is-in-use.-remove-its-assignment-to-x-x";
+			return "workflow-is-in-use.-remove-its-assignment-to-x";
 		}
 		else if (workflowDefinitionLinks.size() == 2) {
-			return "workflow-is-in-use.-remove-its-assignments-to-x-and-x-x";
+			return "workflow-is-in-use.-remove-its-assignment-to-x-and-x";
 		}
 
-		return "workflow-is-in-use.-remove-its-assignment-to-x-x-and-x-more-x";
+		return "workflow-is-in-use.-remove-its-assignment-to-x-x-and-x-more";
 	}
 
 	public Date getModifiedDate(WorkflowDefinition workflowDefinition) {

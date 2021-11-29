@@ -42,7 +42,7 @@ public class DLBreadcrumbUtil {
 			String displayStyle, Folder folder,
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			PortletURL portletURL, long repositoryId, boolean showGroupSelector)
+			PortletURL portletURL, boolean showGroupSelector)
 		throws Exception {
 
 		if (showGroupSelector) {
@@ -52,9 +52,13 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter("displayStyle", displayStyle);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
-			portletURL, _getRepositoryId(httpServletRequest, repositoryId),
+			portletURL, themeDisplay.getScopeGroupId(),
 			_getRootFolderName(folder, httpServletRequest, showGroupSelector));
 
 		if (folder != null) {
@@ -97,25 +101,11 @@ public class DLBreadcrumbUtil {
 		long folderId, HttpServletRequest httpServletRequest,
 		PortletURL portletURL, long repositoryId, String title) {
 
-		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, title, portletURL.toString());
-	}
-
-	private static long _getRepositoryId(
-		HttpServletRequest httpServletRequest, long repositoryId) {
-
-		if (repositoryId == 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			repositoryId = themeDisplay.getScopeGroupId();
-		}
-
-		return repositoryId;
 	}
 
 	private static String _getRootFolderName(

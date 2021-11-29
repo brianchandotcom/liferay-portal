@@ -34,12 +34,12 @@ definition {
 	}
 
 	macro simulateAndViewPageElements {
-      	MobileDevice.previewPG(deviceType = "${deviceType}");
+		MobileDevice.previewPG(deviceType = "${deviceType}");
 
 		for (var element : list "${elementsList}") {
-            AssertElementPresent(
-            	key_fragmentName = "${element}",
-            	locator1 = "Masterclass#FRAGMENTS_IN_SIMULATION");
+			AssertElementPresent(
+			key_fragmentName = "${element}",
+			locator1 = "Masterclass#FRAGMENTS_IN_SIMULATION");
 		}
 	}
 }

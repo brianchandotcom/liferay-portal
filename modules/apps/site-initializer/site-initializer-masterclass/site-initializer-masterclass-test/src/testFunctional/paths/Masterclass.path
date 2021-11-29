@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENTS_IN_SIMULATION</td>
+	<td>//*[contains(@class,'has-edit-mode-menu controls-visible  yui3-skin-sam signed-in public-page site lfr-has-simulation-panel')]//*[contains(@class,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_NAME</td>
 	<td>//html[contains(@class,'ltr yui3-js-enabled')]//*[contains(@class,'${key_fragmentName}')]</td>
 	<td></td>

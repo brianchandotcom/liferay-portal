@@ -216,6 +216,7 @@ public class DLViewDisplayContext {
 			new FolderItemSelectorReturnType());
 		folderItemSelectorCriterion.setFolderId(getFolderId());
 		folderItemSelectorCriterion.setSelectedFolderId(getFolderId());
+		folderItemSelectorCriterion.setSelectedRepositoryId(getRepositoryId());
 
 		PortletURL portletURL = itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_renderRequest),

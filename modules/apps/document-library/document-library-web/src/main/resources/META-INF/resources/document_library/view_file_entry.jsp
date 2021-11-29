@@ -180,6 +180,7 @@ FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelector
 folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
 folderItemSelectorCriterion.setFolderId(fileEntry.getFolderId());
 folderItemSelectorCriterion.setSelectedFolderId(fileEntry.getFolderId());
+folderItemSelectorCriterion.setSelectedRepositoryId(fileEntry.getRepositoryId());
 
 PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
 %>

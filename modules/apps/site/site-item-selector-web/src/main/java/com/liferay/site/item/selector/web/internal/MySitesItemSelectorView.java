@@ -19,6 +19,8 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -68,8 +70,12 @@ public class MySitesItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "my-sites");
+			_portal.getResourceBundle(locale),
+			permissionChecker.isCompanyAdmin() ? "all-sites" : "my-sites");
 	}
 
 	@Override

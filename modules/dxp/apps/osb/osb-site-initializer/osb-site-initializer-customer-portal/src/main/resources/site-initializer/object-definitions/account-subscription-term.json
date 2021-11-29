@@ -7,23 +7,21 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Key"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "accountKey",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Subscription ERC"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "accountSubscriptionERC",
 			"required": false,
 			"type": "String"
@@ -31,11 +29,10 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Subscription Group ERC"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "accountSubscriptionGroupERC",
 			"required": false,
 			"type": "String"
@@ -43,11 +40,10 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "End Date"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "endDate",
 			"required": false,
 			"type": "Date"
@@ -55,11 +51,10 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Instance Size"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "instanceSize",
 			"required": false,
 			"type": "String"
@@ -67,11 +62,10 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Quantity"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "quantity",
 			"required": false,
 			"type": "Integer"
@@ -79,11 +73,10 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Start Date"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "startDate",
 			"required": false,
 			"type": "Date"
@@ -91,11 +84,10 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Status"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "subscriptionTermStatus",
 			"required": false,
 			"type": "String"

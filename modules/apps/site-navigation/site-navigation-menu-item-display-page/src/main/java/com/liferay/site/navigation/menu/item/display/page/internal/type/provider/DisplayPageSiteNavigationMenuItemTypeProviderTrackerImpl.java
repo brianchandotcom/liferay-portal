@@ -14,15 +14,29 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.type.provider;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfigurationUtil;
+import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
+import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeSiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -74,11 +88,36 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl.class);
 
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+
+	@Reference
+	private Portal _portal;
+
 	private final Map<String, ServiceRegistration<SiteNavigationMenuItemType>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker
 		<InfoItemDetailsProvider<?>, InfoItemDetailsProvider<?>>
 			_serviceTracker;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.display.page)",
+		unbind = "-"
+	)
+	private ServletContext _servletContext;
 
 	private class InfoItemDetailsProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -98,7 +137,56 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 		public InfoItemDetailsProvider<?> addingService(
 			ServiceReference<InfoItemDetailsProvider<?>> serviceReference) {
 
-			return _bundleContext.getService(serviceReference);
+			InfoItemDetailsProvider<?> infoItemDetailsProvider =
+				_bundleContext.getService(serviceReference);
+
+			if (!FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
+					displayPageTypesEnabled()) {
+
+				return infoItemDetailsProvider;
+			}
+
+			InfoItemClassDetails infoItemClassDetails =
+				infoItemDetailsProvider.getInfoItemClassDetails();
+
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				_layoutDisplayPageProviderTracker.
+					getLayoutDisplayPageProviderByClassName(
+						infoItemClassDetails.getClassName());
+
+			if (layoutDisplayPageProvider == null) {
+				return infoItemDetailsProvider;
+			}
+
+			try {
+				_serviceRegistrations.put(
+					infoItemClassDetails.getClassName(),
+					_bundleContext.registerService(
+						SiteNavigationMenuItemType.class,
+						new DisplayPageTypeSiteNavigationMenuItemType(
+							_assetDisplayPageFriendlyURLProvider,
+							new DisplayPageTypeContext(
+								infoItemClassDetails,
+								_infoItemServiceTracker.getFirstInfoItemService(
+									InfoItemFormVariationsProvider.class,
+									infoItemClassDetails.getClassName()),
+								layoutDisplayPageProvider),
+							_itemSelector, _jspRenderer, _portal,
+							_servletContext),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"service.ranking:Integer", "300"
+						).put(
+							"site.navigation.menu.item.type",
+							infoItemClassDetails.getClassName()
+						).build()));
+			}
+			catch (Throwable throwable) {
+				_bundleContext.ungetService(serviceReference);
+
+				throw throwable;
+			}
+
+			return infoItemDetailsProvider;
 		}
 
 		@Override

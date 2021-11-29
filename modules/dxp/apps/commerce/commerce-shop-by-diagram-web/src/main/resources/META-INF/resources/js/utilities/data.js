@@ -13,15 +13,20 @@ import {fetch} from 'frontend-js-web';
 
 import {HEADERS} from './constants';
 
-export const PINS_ENDPOINT = '/o/headless-commerce-admin-catalog/v1.0';
+export const PINS_ADMIN_ENDPOINT_BASE =
+	'/o/headless-commerce-admin-catalog/v1.0';
+export const PINS_FRONTSTORE_ENDPOINT_BASE =
+	'/o/headless-commerce-delivery-catalog/v1.0';
 
-export function loadPins(productId) {
+export function loadPins(productId, channelId = null) {
 	const url = new URL(
-		`${PINS_ENDPOINT}/products/${productId}/pins`,
+		channelId
+			? `${PINS_FRONTSTORE_ENDPOINT_BASE}/channels/${channelId}/products/${productId}/pins`
+			: `${PINS_ADMIN_ENDPOINT_BASE}/products/${productId}/pins`,
 		themeDisplay.getPortalURL()
 	);
 
-	url.searchParams.set('pageSize', 100);
+	url.searchParams.set('pageSize', 200);
 
 	return fetch(url, {
 		headers: HEADERS,
@@ -32,7 +37,7 @@ export function loadPins(productId) {
 
 export function deletePin(pinId) {
 	const url = new URL(
-		`${PINS_ENDPOINT}/pins/${pinId}`,
+		`${PINS_ADMIN_ENDPOINT_BASE}/pins/${pinId}`,
 		themeDisplay.getPortalURL()
 	);
 
@@ -51,8 +56,8 @@ export function savePin(
 	productId
 ) {
 	const baseURL = pinId
-		? `${PINS_ENDPOINT}/pins/${pinId}`
-		: `${PINS_ENDPOINT}/products/${productId}/pins`;
+		? `${PINS_ADMIN_ENDPOINT_BASE}/pins/${pinId}`
+		: `${PINS_ADMIN_ENDPOINT_BASE}/products/${productId}/pins`;
 
 	const url = new URL(baseURL, themeDisplay.getPortalURL());
 
@@ -80,7 +85,7 @@ export function savePin(
 
 export function updateGlobalPinsRadius(diagramId, radius, namespace) {
 	const url = new URL(
-		`${PINS_ENDPOINT}/diagrams/${diagramId}`,
+		`${PINS_ADMIN_ENDPOINT_BASE}/diagrams/${diagramId}`,
 		themeDisplay.getPortalURL()
 	);
 
@@ -99,9 +104,12 @@ export function updateGlobalPinsRadius(diagramId, radius, namespace) {
 	});
 }
 
-export function getMappedProducts(productId, query, page, pageSize) {
+export function getMappedProducts(productId, channelId, query, page, pageSize) {
 	const url = new URL(
-		`${PINS_ENDPOINT}/products/${productId}/mapped-products`,
+		channelId
+			? `${PINS_FRONTSTORE_ENDPOINT_BASE}/channels/${channelId}/products/${productId}/mapped-products`
+			: `${PINS_ADMIN_ENDPOINT_BASE}/products/${productId}/mapped-products`,
+
 		themeDisplay.getPortalURL()
 	);
 
@@ -118,43 +126,4 @@ export function getMappedProducts(productId, query, page, pageSize) {
 	return fetch(url, {
 		headers: HEADERS,
 	}).then((response) => response.json());
-}
-
-const products = new Map();
-
-export function getProduct(productId, channelId, accountId) {
-	const fetchedProduct = products.get(productId);
-
-	if (fetchedProduct) {
-		return Promise.resolve(fetchedProduct);
-	}
-
-	const productURL = new URL(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}`,
-		themeDisplay.getPortalURL()
-	);
-
-	if (accountId) {
-		productURL.searchParams.set('accountId', accountId);
-	}
-
-	productURL.searchParams.set('nestedFields', 'skus,images,productOptions');
-
-	return fetch(productURL, {
-		headers: HEADERS,
-	}).then((response) => {
-		if (response.status === 404) {
-			return null;
-		}
-
-		if (!response.ok) {
-			return response.json().then(Promise.reject);
-		}
-
-		return response.json().then((product) => {
-			products.set(productId, product);
-
-			return product;
-		});
-	});
 }

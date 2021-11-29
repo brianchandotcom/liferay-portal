@@ -63,7 +63,7 @@ function Diagram({
 	const [tooltipData, setTooltipData] = useState(false);
 
 	useTableHandlers(chartInstanceRef, productId, () =>
-		loadPins(productId).then(setPins)
+		loadPins(productId, !isAdmin && channelId).then(setPins)
 	);
 
 	useEffect(() => {
@@ -76,8 +76,8 @@ function Diagram({
 	}, [pinsRadius, diagramId, namespace]);
 
 	useEffect(() => {
-		loadPins(productId).then(setPins);
-	}, [productId]);
+		loadPins(productId, !isAdmin && channelId).then(setPins);
+	}, [channelId, isAdmin, productId]);
 
 	useEffect(() => {
 		if (pins) {

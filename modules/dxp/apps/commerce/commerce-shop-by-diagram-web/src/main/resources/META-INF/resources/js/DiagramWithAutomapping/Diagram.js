@@ -27,13 +27,13 @@ import React, {
 import AdminTooltipContent from '../components/AdminTooltipContent';
 import DiagramFooter from '../components/DiagramFooter';
 import Sequence from '../components/Sequence';
+import StorefrontTooltipContent from '../components/StorefrontTooltipContent';
+import TooltipProvider from '../components/TooltipProvider';
 import {DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
 import {loadPins} from '../utilities/data';
 import D3Handler from './D3Handler';
 
 import '../../css/diagram.scss';
-import StorefrontTooltipContent from '../components/StorefrontTooltipContent';
-import TooltipProvider from '../components/TooltipProvider';
 
 function Diagram({
 	cartId: initialCartId,
@@ -63,8 +63,8 @@ function Diagram({
 	const [highlightedTexts, setHighlightedTexts] = useState([]);
 
 	useEffect(() => {
-		loadPins(productId).then(setPins);
-	}, [productId]);
+		loadPins(productId, !isAdmin && channelId).then(setPins);
+	}, [channelId, isAdmin, productId]);
 
 	useEffect(() => {
 		chartInstanceRef.current?.updatePins(pins);
@@ -163,7 +163,7 @@ function Diagram({
 		}
 
 		function handlePinsUpdatedByTable() {
-			loadPins(productId).then(setPins);
+			loadPins(productId, !isAdmin && channelId).then(setPins);
 		}
 
 		Liferay.on(DIAGRAM_TABLE_EVENTS.SELECT_PIN, handleSelectPinByTable);
@@ -195,7 +195,7 @@ function Diagram({
 				handlePinsUpdatedByTable
 			);
 		};
-	}, [handleMouseEnterOnLabel, labels, pins, productId]);
+	}, [channelId, handleMouseEnterOnLabel, isAdmin, labels, pins, productId]);
 
 	useLayoutEffect(() => {
 		chartInstanceRef.current = new D3Handler(

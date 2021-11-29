@@ -191,6 +191,13 @@ $diagram-height: 700px;
 	height: $diagram-height;
 	max-height: $diagram-height;
 
+	.full-height-content {
+		flex-grow: 1;
+		padding-bottom: map-get($spacers, 5);
+		padding-top: map-get($spacers, 5);
+		text-align: center;
+	}
+
 	.inline-scroller {
 		flex-grow: 1;
 		max-height: none;
@@ -208,6 +215,10 @@ $diagram-height: 700px;
 		padding: map-get($spacers, 3);
 		transform: translate(0, -50%);
 		width: 400px;
+
+		.loading-animation {
+			margin: 0;
+		}
 	}
 
 	.fill-cover .sticker-img {
@@ -218,4 +229,9 @@ $diagram-height: 700px;
 		transform: none;
 		width: 100%;
 	}
+}
+
+.shop-by-diagram-table .btn-add-to-order {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }

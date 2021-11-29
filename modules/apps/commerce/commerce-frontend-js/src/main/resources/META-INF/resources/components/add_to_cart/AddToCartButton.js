@@ -31,6 +31,7 @@ function AddToCartButton({
 	cpInstances,
 	disabled,
 	onAdd,
+	onError,
 	settings,
 }) {
 	return (
@@ -51,11 +52,18 @@ function AddToCartButton({
 					.catch((error) => {
 						console.error(error);
 
-						showErrorNotification(
-							Liferay.Language.get(
-								'unable-to-add-product-to-the-cart'
-							)
-						);
+						const errorMessage =
+							cpInstances.length > 1
+								? Liferay.Language.get(
+										'unable-to-add-the-products-to-the-cart'
+								  )
+								: Liferay.Language.get(
+										'unable-to-add-the-product-to-the-cart'
+								  );
+
+						showErrorNotification(errorMessage);
+
+						onError(error);
 					})
 			}
 		>
@@ -85,6 +93,7 @@ AddToCartButton.defaultProps = {
 		},
 	],
 	onAdd: () => {},
+	onError: () => {},
 	settings: {
 		iconOnly: false,
 		inline: false,
@@ -113,6 +122,7 @@ AddToCartButton.propTypes = {
 		})
 	).isRequired,
 	onAdd: PropTypes.func.isRequired,
+	onError: PropTypes.func.isRequired,
 	settings: PropTypes.shape({
 		alignment: PropTypes.oneOf(['center', 'left', 'right', 'full-width']),
 		buttonText: PropTypes.string,

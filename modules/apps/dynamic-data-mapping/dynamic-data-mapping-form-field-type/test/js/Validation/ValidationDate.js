@@ -242,4 +242,198 @@ describe('ValidationDate', () => {
 		expect(quantity).toHaveValue(1);
 		expect(unit).toHaveValue('days');
 	});
+
+	it('shows date field on dropdown', () => {
+        const builderPages = [
+            {
+                rows: [
+                    {
+                        columns: [
+                            {
+                                fields: [
+                                    {
+                                        fieldName: 'Date12345678',
+                                        label: 'Date A',
+                                        type: 'date',
+                                    },
+                                ],
+                                size: 12,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
+
+		const parameter = {
+			en_US: {
+				endsOn: {
+					date: 'responseDate',
+					quantity: -1,
+					type: 'responseDate',
+					unit: 'days',
+				},
+			},
+		};
+
+        const localizedValue = jest.fn(() => parameter['en_US']);
+
+        const {getAllByRole} = render(
+            <ValidationDateProvider
+                builderPages={builderPages}
+                defaultLanguageId="en_US"
+                editingLanguageId="en_US"
+                localizedValue={localizedValue}
+                name="validationDate"
+                onChange={() => {}}
+                parameters={parameters}
+                selectedValidation={{
+                    label: '',
+                    name: 'pastDates',
+                    parameterMessage: '',
+                    template: 'pastDates({name}, "{parameter}")',
+                }}
+                validations={validations}
+                visible={true}
+            />
+        );
+
+        const availableDates = [
+            ...getAllByRole('button'),
+        ];
+
+        expect(availableDates[5]).toHaveValue('Date12345678');
+    });
+
+	it("doesn't show date field on dropdown when date field is repeatable", () => {
+        const builderPages = [
+            {
+                rows: [
+                    {
+                        columns: [
+                            {
+                                fields: [
+                                    {
+										repeatable: true,
+                                        fieldName: 'Date12345678',
+                                        label: 'Date A',
+                                        type: 'date',
+                                    },
+                                ],
+                                size: 12,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
+
+		const parameter = {
+			en_US: {
+				endsOn: {
+					date: 'responseDate',
+					quantity: -1,
+					type: 'responseDate',
+					unit: 'days',
+				},
+			},
+		};
+
+        const localizedValue = jest.fn(() => parameter['en_US']);
+
+        const {getAllByRole} = render(
+            <ValidationDateProvider
+                builderPages={builderPages}
+                defaultLanguageId="en_US"
+                editingLanguageId="en_US"
+                localizedValue={localizedValue}
+                name="validationDate"
+                onChange={() => {}}
+                parameters={parameters}
+                selectedValidation={{
+                    label: '',
+                    name: 'pastDates',
+                    parameterMessage: '',
+                    template: 'pastDates({name}, "{parameter}")',
+                }}
+                validations={validations}
+                visible={true}
+            />
+        );
+
+        const availableDates = [
+            ...getAllByRole('button'),
+        ];
+
+        expect(availableDates.length).toBe(5);
+    });
+
+	it('shows date fields inside custom date fields for Past dates and operation minus when quantity is negative', () => {		
+		const builderPages = [
+			{
+				rows: [
+					{
+						columns: [
+							{
+								fields: [
+									{
+										fieldName: 'Date12345678',
+										label: 'Date A',
+										type: 'date',
+									},
+								],
+								size: 12,
+							},
+						],
+					},
+				],
+			},
+		];
+
+		const parameter = {
+			en_US: {
+				endsOn: {
+					date: 'dateField',
+					quantity: -10,
+					type: 'customDate',
+					unit: 'days',
+				},
+			},
+		};
+
+		const localizedValue = jest.fn(() => parameter['en_US']);
+		const {getAllByRole} = render(
+			<ValidationDateProvider
+				builderPages={builderPages}
+				defaultLanguageId="en_US"
+				editingLanguageId="en_US"
+				localizedValue={localizedValue}
+				name="validationDate"
+				onChange={() => {}}
+				parameter={parameter}
+				selectedValidation={{
+					label: '',
+					name: 'pastDates',
+					parameterMessage: '',
+					template: 'pastDates({name}, "{parameter}")',
+				}}
+				validations={validations}
+				visible={true}
+			/>
+		);
+
+		const [acceptedDate, operation, quantity, unit] = [
+			...getAllByRole('textbox'),
+		];	
+
+        const availableDates = [
+            ...getAllByRole('button'),
+        ];
+
+        expect(availableDates[7]).toHaveValue('Date12345678');
+		expect(acceptedDate).toHaveValue('pastDates');
+		expect(operation).toHaveValue('minus');
+		expect(quantity).toHaveValue(10);
+		expect(unit).toHaveValue('days');
+	});
 });

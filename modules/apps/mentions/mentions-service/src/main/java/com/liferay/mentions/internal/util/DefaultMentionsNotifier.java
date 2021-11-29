@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -128,11 +128,11 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 				if (layout != null) {
 					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(mentionedUser);
+						_permissionCheckerFactory.create(mentionedUser);
 
-					if (!LayoutPermissionUtil.contains(
+					if (!_layoutPermission.contains(
 							permissionChecker, layout, true, ActionKeys.VIEW) ||
-						!PortletPermissionUtil.contains(
+						!_portletPermission.contains(
 							permissionChecker, layout, themeDisplay.getPpid(),
 							ActionKeys.VIEW)) {
 
@@ -212,11 +212,20 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		_userLocalService = userLocalService;
 	}
 
+	@Reference
+	private LayoutPermission _layoutPermission;
+
 	private MentionsMatcherRegistry _mentionsMatcherRegistry;
 	private MentionsUserFinder _mentionsUserFinder;
 
 	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 	private UserLocalService _userLocalService;
 

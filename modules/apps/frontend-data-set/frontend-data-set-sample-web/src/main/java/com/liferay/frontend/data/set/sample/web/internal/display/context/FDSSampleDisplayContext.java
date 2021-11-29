@@ -38,7 +38,7 @@ public class FDSSampleDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/c/datasetdisplaysamples";
+		return "/o/c/fdssamples";
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {

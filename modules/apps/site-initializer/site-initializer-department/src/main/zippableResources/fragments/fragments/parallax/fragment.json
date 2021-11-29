@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Member Card",
+	"name": "Parallax",
 	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

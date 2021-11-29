@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "null",
+					"label": "class-name",
+					"name": "classContainerName",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

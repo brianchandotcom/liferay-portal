@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Member Card",
+	"name": "Class Container",
 	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

@@ -450,8 +450,6 @@ definition {
 			fieldValue = "test");
 
 		FormPortlet.submit();
-
-		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
 	}
 
 	@description = "LPS-60818 - Verify that a Form can require CAPTCHA before being accessed"

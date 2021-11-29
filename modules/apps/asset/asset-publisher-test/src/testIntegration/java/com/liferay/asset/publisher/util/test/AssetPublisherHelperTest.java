@@ -565,10 +565,9 @@ public class AssetPublisherHelperTest {
 					JournalArticle.class.getName())
 			});
 
+		long[] tagIds = assetEntryQuery.getAllTagIds();
 
-		long[] tagids = assetEntryQuery.getAllTagIds();
-
-		Assert.assertTrue(tagids.length > 0);
+		Assert.assertTrue(tagIds.length > 0);
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());

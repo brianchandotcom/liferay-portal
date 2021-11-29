@@ -20,7 +20,6 @@
 		"@clayui/core": "^3.32.0",
 		"@clayui/css": "3.33.1",
 		"@clayui/icon": "3.32.0",
-		"@craco/craco": "6.2.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
 		"axios": "^0.22.0",
 		"react": "^17.0.2",
@@ -30,10 +29,8 @@
 		"react-scripts": "4.0.3"
 	},
 	"devDependencies": {
-		"babel-plugin-root-import": "^6.6.0",
 		"eslint": "^7.32.0",
-		"json-server": "^0.16.3",
-		"sass-to-string": "^1.5.1"
+		"json-server": "^0.16.3"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -44,12 +41,12 @@
 	"name": "@liferay/site-initializer-raylife-d2c",
 	"private": true,
 	"scripts": {
-		"build": "craco build",
+		"build": "react-scripts build",
 		"lint": "eslint src --ext js",
 		"mock": "json-server -p 3333 -d 200 ./mock/db.json --routes ./mock/routes.json",
 		"run": "yarn build && npx serve ./build",
 		"serve": "npx serve ./build",
-		"start": "craco start"
+		"start": "react-scripts start"
 	},
 	"version": "1.0.0"
 }

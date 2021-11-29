@@ -2590,12 +2590,72 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with two columns"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewEntryWithTwoColumns {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141512 CanViewEntryWithTwoColumns pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+		}
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "2",
+			fieldList = "Custom Field A,Custom Field B",
+			tabName = "Field Tab");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		Navigator.openURL();
+		
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE",
+			key_fieldColumnNumber = "0",
+			key_fieldLabel = "Custom Field A");
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE",
+			key_fieldColumnNumber = "1",
+			key_fieldLabel = "Custom Field B");
 
 	}
 

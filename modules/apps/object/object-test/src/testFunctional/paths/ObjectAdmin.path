@@ -146,6 +146,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELD_COLUMN_POSITION_ON_ENTRY_PAGE</td>
+		<td>//div[@data-ddm-field-column='${key_fieldColumnNumber}']//label[contains(text(),'${key_fieldLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>NAME_CUSTOM_OBJECT</td>
 		<td>//input[@id='objectDefinitionName']</td>
 		<td></td>

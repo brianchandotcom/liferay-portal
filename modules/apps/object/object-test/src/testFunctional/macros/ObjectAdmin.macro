@@ -235,21 +235,44 @@ definition {
 				key_tab = "Save",
 				locator1 = "Button#TAB_SUBMIT_BTN");
 
-			Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
+			if (isSet(fieldList)) {
+				for (var fieldLabelName : list "${fieldList}") {
 
-			Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
+					Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
 
-			Click(
-				key_optionName = "${fieldLabelName}",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+					Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
 
-			Click(
-				key_columnsNumber = "${columnsNumber}",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_COLUMN_NUMBER");
+					Click(
+						key_optionName = "${fieldLabelName}",
+						locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
 
-			Click(
-				key_tab = "Save",
-				locator1 = "Button#TAB_SUBMIT_BTN");
+					Click(
+						key_columnsNumber = "${columnsNumber}",
+						locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_COLUMN_NUMBER");
+
+					Click(
+						key_tab = "Save",
+						locator1 = "Button#TAB_SUBMIT_BTN");
+				}
+
+			}
+			else {
+				Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
+
+				Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
+
+				Click(
+					key_optionName = "${fieldLabelName}",
+					locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+
+				Click(
+					key_columnsNumber = "${columnsNumber}",
+					locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_COLUMN_NUMBER");
+
+				Click(
+					key_tab = "Save",
+					locator1 = "Button#TAB_SUBMIT_BTN");
+			}
 		}
 	}
 

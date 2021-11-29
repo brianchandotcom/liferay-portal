@@ -9,6 +9,7 @@ copyClassicTheme {
 	from("../frontend-theme-classic/src/") {
 		exclude "**/WEB-INF/**"
 		exclude "/images/**"
+		exclude "/css/custom_properties/_custom_properties_set.scss"
 	}
 
 	includeEmptyDirs = false

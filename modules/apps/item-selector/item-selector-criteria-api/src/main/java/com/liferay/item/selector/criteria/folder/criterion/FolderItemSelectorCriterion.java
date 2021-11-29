@@ -29,6 +29,10 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _selectedFolderId;
 	}
 
+	public long getSelectedRepositoryId() {
+		return _selectedRepositoryId;
+	}
+
 	public boolean isIgnoreRootFolder() {
 		return _ignoreRootFolder;
 	}
@@ -53,6 +57,10 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_selectedFolderId = selectedFolderId;
 	}
 
+	public void setSelectedRepositoryId(long selectedRepositoryId) {
+		_selectedRepositoryId = selectedRepositoryId;
+	}
+
 	public void setShowGroupSelector(boolean showGroupSelector) {
 		_showGroupSelector = showGroupSelector;
 	}
@@ -64,6 +72,7 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private long _folderId;
 	private boolean _ignoreRootFolder;
 	private long _selectedFolderId;
+	private long _selectedRepositoryId;
 	private boolean _showGroupSelector;
 	private boolean _showMountFolder;
 

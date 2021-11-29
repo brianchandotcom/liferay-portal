@@ -71,8 +71,28 @@ const baseProps = {
 					targetContentDir: 'ltr',
 					targetLanguageId: 'es_ES',
 				},
+				{
+					editorConfiguration: {},
+					html: true,
+					id: 'infoField--repeteableContent--',
+					label: 'Content',
+					multiline: true,
+					sourceContent: [
+						'<p>mock source repeteable field 1</p>',
+						'<p>mock source repeteable field 2</p>',
+						'<p>mock source repeteable field 3</p>',
+					],
+					sourceContentDir: 'ltr',
+					targetContent: [
+						'<p>mock target repeteable field 1</p>',
+						'<p>mock target repeteable field 2</p>',
+						'<p>mock target repeteable field 3</p>',
+					],
+					targetContentDir: 'ltr',
+					targetLanguageId: 'es_ES',
+				},
 			],
-			legend: 'Content (Basic Web Content)',
+			legend: 'Content with repeateable fields',
 		},
 	],
 	portletId: 'mock_TranslationPortlet',
@@ -191,6 +211,12 @@ describe('Translate', () => {
 						'infoField--content--0':
 							'<p>simulacro de contenido</p>',
 						'infoField--description--0': '<p>resumen simulado</p>',
+						'infoField--repeteableContent--0':
+							'<p>campo repetible de fuente simulada 1</p>',
+						'infoField--repeteableContent--1':
+							'<p>campo repetible de fuente simulada 2</p>',
+						'infoField--repeteableContent--2':
+							'<p>campo repetible de fuente simulada 3</p>',
 						'infoField--title--0': 'título simulado&#39;',
 					},
 					sourceLanguageId: 'en_US',

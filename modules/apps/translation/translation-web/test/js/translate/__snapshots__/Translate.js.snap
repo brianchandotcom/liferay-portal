@@ -349,7 +349,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             <div
               class="fieldset-title"
             >
-              Content (Basic Web Content)
+              Content with repeateable fields
             </div>
           </div>
           <div
@@ -358,7 +358,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             <div
               class="fieldset-title"
             >
-              Content (Basic Web Content)
+              Content with repeateable fields
             </div>
           </div>
         </div>
@@ -409,6 +409,159 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                 name="_mock_TranslationPortlet_infoField--content--"
                 type="hidden"
                 value="<p>mock content</p"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Content
+              </label>
+              <div
+                class="translation-editor-preview"
+                dir="ltr"
+              >
+                <p>
+                  mock source repeteable field 1
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Content
+              </label>
+              <div
+                id="_mock_TranslationPortlet_infoField--repeteableContent--0Container"
+              >
+                <div
+                  id="_mock_TranslationPortlet_infoField--repeteableContent--0"
+                  name="_mock_TranslationPortlet_infoField--repeteableContent--0"
+                />
+              </div>
+              <input
+                name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                type="hidden"
+                value="<p>mock target repeteable field 1</p>"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Content
+              </label>
+              <div
+                class="translation-editor-preview"
+                dir="ltr"
+              >
+                <p>
+                  mock source repeteable field 2
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Content
+              </label>
+              <div
+                id="_mock_TranslationPortlet_infoField--repeteableContent--1Container"
+              >
+                <div
+                  id="_mock_TranslationPortlet_infoField--repeteableContent--1"
+                  name="_mock_TranslationPortlet_infoField--repeteableContent--1"
+                />
+              </div>
+              <input
+                name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                type="hidden"
+                value="<p>mock target repeteable field 2</p>"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Content
+              </label>
+              <div
+                class="translation-editor-preview"
+                dir="ltr"
+              >
+                <p>
+                  mock source repeteable field 3
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Content
+              </label>
+              <div
+                id="_mock_TranslationPortlet_infoField--repeteableContent--2Container"
+              >
+                <div
+                  id="_mock_TranslationPortlet_infoField--repeteableContent--2"
+                  name="_mock_TranslationPortlet_infoField--repeteableContent--2"
+                />
+              </div>
+              <input
+                name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                type="hidden"
+                value="<p>mock target repeteable field 3</p>"
               />
             </div>
           </div>
@@ -843,7 +996,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             <div
               class="fieldset-title"
             >
-              Content (Basic Web Content)
+              Content with repeateable fields
             </div>
           </div>
           <div
@@ -852,7 +1005,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             <div
               class="fieldset-title"
             >
-              Content (Basic Web Content)
+              Content with repeateable fields
             </div>
           </div>
         </div>
@@ -909,6 +1062,252 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     name="_mock_TranslationPortlet_infoField--content--"
                     type="hidden"
                     value="<p>mock content</p"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-x-field-Content"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-x-field-Content
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    class="translation-editor-preview"
+                    dir="ltr"
+                  >
+                    <p>
+                      mock source repeteable field 1
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    id="_mock_TranslationPortlet_infoField--repeteableContent--0Container"
+                  >
+                    <div
+                      id="_mock_TranslationPortlet_infoField--repeteableContent--0"
+                      name="_mock_TranslationPortlet_infoField--repeteableContent--0"
+                    />
+                  </div>
+                  <input
+                    name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                    type="hidden"
+                    value="<p>mock target repeteable field 1</p>"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-x-field-Content"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-x-field-Content
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    class="translation-editor-preview"
+                    dir="ltr"
+                  >
+                    <p>
+                      mock source repeteable field 2
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    id="_mock_TranslationPortlet_infoField--repeteableContent--1Container"
+                  >
+                    <div
+                      id="_mock_TranslationPortlet_infoField--repeteableContent--1"
+                      name="_mock_TranslationPortlet_infoField--repeteableContent--1"
+                    />
+                  </div>
+                  <input
+                    name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                    type="hidden"
+                    value="<p>mock target repeteable field 2</p>"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-x-field-Content"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-x-field-Content
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    class="translation-editor-preview"
+                    dir="ltr"
+                  >
+                    <p>
+                      mock source repeteable field 3
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    id="_mock_TranslationPortlet_infoField--repeteableContent--2Container"
+                  >
+                    <div
+                      id="_mock_TranslationPortlet_infoField--repeteableContent--2"
+                      name="_mock_TranslationPortlet_infoField--repeteableContent--2"
+                    />
+                  </div>
+                  <input
+                    name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                    type="hidden"
+                    value="<p>mock target repeteable field 3</p>"
                   />
                 </div>
               </div>
@@ -1405,7 +1804,7 @@ exports[`Translate renders with experiences selector 1`] = `
             <div
               class="fieldset-title"
             >
-              Content (Basic Web Content)
+              Content with repeateable fields
             </div>
           </div>
           <div
@@ -1414,7 +1813,7 @@ exports[`Translate renders with experiences selector 1`] = `
             <div
               class="fieldset-title"
             >
-              Content (Basic Web Content)
+              Content with repeateable fields
             </div>
           </div>
         </div>
@@ -1471,6 +1870,252 @@ exports[`Translate renders with experiences selector 1`] = `
                     name="_mock_TranslationPortlet_infoField--content--"
                     type="hidden"
                     value="<p>mock content</p"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-x-field-Content"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-x-field-Content
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    class="translation-editor-preview"
+                    dir="ltr"
+                  >
+                    <p>
+                      mock source repeteable field 1
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    id="_mock_TranslationPortlet_infoField--repeteableContent--0Container"
+                  >
+                    <div
+                      id="_mock_TranslationPortlet_infoField--repeteableContent--0"
+                      name="_mock_TranslationPortlet_infoField--repeteableContent--0"
+                    />
+                  </div>
+                  <input
+                    name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                    type="hidden"
+                    value="<p>mock target repeteable field 1</p>"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-x-field-Content"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-x-field-Content
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    class="translation-editor-preview"
+                    dir="ltr"
+                  >
+                    <p>
+                      mock source repeteable field 2
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    id="_mock_TranslationPortlet_infoField--repeteableContent--1Container"
+                  >
+                    <div
+                      id="_mock_TranslationPortlet_infoField--repeteableContent--1"
+                      name="_mock_TranslationPortlet_infoField--repeteableContent--1"
+                    />
+                  </div>
+                  <input
+                    name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                    type="hidden"
+                    value="<p>mock target repeteable field 2</p>"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-x-field-Content"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-x-field-Content
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    class="translation-editor-preview"
+                    dir="ltr"
+                  >
+                    <p>
+                      mock source repeteable field 3
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Content
+                  </label>
+                  <div
+                    id="_mock_TranslationPortlet_infoField--repeteableContent--2Container"
+                  >
+                    <div
+                      id="_mock_TranslationPortlet_infoField--repeteableContent--2"
+                      name="_mock_TranslationPortlet_infoField--repeteableContent--2"
+                    />
+                  </div>
+                  <input
+                    name="_mock_TranslationPortlet_infoField--repeteableContent--"
+                    type="hidden"
+                    value="<p>mock target repeteable field 3</p>"
                   />
                 </div>
               </div>

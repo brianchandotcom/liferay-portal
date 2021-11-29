@@ -159,6 +159,9 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			var WIN = A.config.win;
 
 			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true,
+				},
 				id: A.guid(),
 				refreshWindow: WIN,
 				title: '<liferay-ui:message key="forms" />',

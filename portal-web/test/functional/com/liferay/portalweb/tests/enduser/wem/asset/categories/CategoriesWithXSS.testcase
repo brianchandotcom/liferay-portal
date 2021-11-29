@@ -65,9 +65,7 @@ definition {
 		var structureName = '''<script>alert(456)</script>''';
 
 		task ("Add a document type with XSS name") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMNavigator.gotoDocumentType();
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeFieldNames = "Text",

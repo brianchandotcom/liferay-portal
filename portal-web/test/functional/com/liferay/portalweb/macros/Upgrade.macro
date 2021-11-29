@@ -1049,9 +1049,7 @@ definition {
 	macro deleteDocumentTypesAndMetadataSets {
 		JSONRecycleBin.emptyRecycleBin();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name Edit");
 
@@ -2231,9 +2229,7 @@ definition {
 			numericFieldLabel = "Number",
 			numericValue = "1234");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentType();
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 		DMDocumentType.edit(
 			dmDocumentTypeName = "DM Document Type Name",

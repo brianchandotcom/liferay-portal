@@ -468,9 +468,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test DMCanFormatTextWithEditorToolbar {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "wysiwyg-site-name");
-
-		DMNavigator.gotoDocumentType();
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "wysiwyg-site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",

@@ -1136,9 +1136,7 @@ definition {
 		}
 
 		task ("Add a custom document type with a Text field") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMNavigator.gotoDocumentType();
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeFieldNames = "Text",
@@ -1891,9 +1889,7 @@ definition {
 		}
 
 		task ("Add a custom document type with a Text field") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMNavigator.gotoDocumentType();
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeFieldNames = "Text",

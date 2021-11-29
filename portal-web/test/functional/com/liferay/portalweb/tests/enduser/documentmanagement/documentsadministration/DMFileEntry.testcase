@@ -138,9 +138,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddWithDocumentTypeViaMultipleUpload {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -286,9 +284,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanChangeDocumentType {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -1857,9 +1853,7 @@ definition {
 	test CanViewDocumentWithEditedDisplayPageTemplate {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMNavigator.gotoDocumentType();
+		DMNavigator.openToAddDocumentType(siteURLKey = "test-site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",

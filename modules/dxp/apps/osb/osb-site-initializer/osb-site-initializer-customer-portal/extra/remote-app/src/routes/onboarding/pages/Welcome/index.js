@@ -24,7 +24,7 @@ const Welcome = ({ userAccount }) => {
 	const [createAccountFlag, { called, loading }] = useMutation(addAccountFlag);
 
 	useEffect(() => {
-		if (!isLoadingPageGuard && !called && !loading) {
+		if (!isLoadingPageGuard && !called) {
 			createAccountFlag({
 				variables: {
 					accountFlag: {
@@ -37,7 +37,7 @@ const Welcome = ({ userAccount }) => {
 			});
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [called, isLoadingPageGuard, loading, project]);
+	}, [called, isLoadingPageGuard, project]);
 
 	if (isLoadingPageGuard || (called && loading)) {
 		return <WelcomeSkeleton />;

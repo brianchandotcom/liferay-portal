@@ -51,9 +51,16 @@ processResources {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app") {
-			from new File(projectDir, "extra/remote-app/build/static/js")
-			include "*.js"
+			from(new File(projectDir, "extra/remote-app/build/static/css")) {
+				include "*.css"
+			}
+
+			from(new File(projectDir, "extra/remote-app/build/static/js")) {
+				include "*.js"
+			}
 		}
+
+		rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 	}
 	else {
 		into("site-initializer/documents/company/remote-app") {
@@ -100,8 +107,16 @@ zipExtraRemoteApp {
 
 		archiveName "extra-remote-app.zip"
 		destinationDir new File(buildDir, "dist")
-		from new File(projectDir, "extra/remote-app/build/static/js")
-		include "*.js"
+
+		from(new File(projectDir, "extra/remote-app/build/static/css")) {
+			include "*.css"
+		}
+
+		from(new File(projectDir, "extra/remote-app/build/static/js")) {
+			include "*.js"
+		}
+
+		rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 	}
 }
 

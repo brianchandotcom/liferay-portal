@@ -110,6 +110,10 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		return _segmentsSegmentsEntryIds;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long[] getSegmentsExperienceIds() {
 		return _segmentsExperienceIds;
@@ -167,6 +171,10 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_segmentsSegmentsEntryIds = segmentsSegmentsEntryIds;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setSegmentsExperienceIds(long[] segmentsExperienceIds) {
 		_segmentsExperienceIds = segmentsExperienceIds;
 	}

@@ -113,6 +113,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				getSelectedItems: getSelectedItems,
 				inputPlaceholder:
 					'<%= LanguageUtil.get(request, "find-or-create-an-option") %>',
+				itemCreatedMessage: '<%= LanguageUtil.get(request, "option-created") %>',
 				itemSelectedMessage: '<%= LanguageUtil.get(request, "option-selected") %>',
 				itemsKey: 'id',
 				linkedDatasetsId: [

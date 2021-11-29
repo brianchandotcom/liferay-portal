@@ -147,6 +147,7 @@
 		<column name="js" type="String" />
 		<column name="cacheable" type="boolean" />
 		<column name="configuration" type="String" />
+		<column name="icon" type="String" />
 		<column name="previewFileEntryId" type="long" />
 		<column name="readOnly" type="boolean" />
 		<column name="type" type="int" />

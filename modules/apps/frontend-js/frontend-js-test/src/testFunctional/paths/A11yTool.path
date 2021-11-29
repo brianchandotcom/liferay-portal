@@ -86,12 +86,22 @@
 <!--POPOVERS-->
 <tr>
 	<td>HIGHLIGHTED_ELEMENT_POPOVER_IMPACT</td>
-	<td>//*[contains(@class, 'clay-popover-bottom show')]//*[contains(@class,'text-secondary') and contains(.,'${key_impact}')]</td>
+	<td>//*[contains(@class, 'a11y-popover')]//*[contains(@class,'text-secondary') and contains(.,'${key_impact}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HIGHLIGHTED_ELEMENT_POPOVER_ITEM</td>
-	<td>//*[contains(@class, 'clay-popover-bottom show')]//*[contains(@class,'popover-body')]//*[contains(@class,'list-group-item')]</td>
+	<td>//*[contains(@class, 'a11y-popover')]//*[contains(@class,'popover-body')]//*[contains(@class,'list-group-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_POPOVER_TITLE</td>
+	<td>//*[contains(@class, 'a11y-popover')]//*[contains(@class,'list-group-title') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIGHLIGHTED_ELEMENT_POPOVER_DESCRIPTION</td>
+	<td>//*[contains(@class, 'a11y-popover')]//*[contains(@class,'list-group-subtext') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <!--SIDE PANEL COMPONENT VIEW-->

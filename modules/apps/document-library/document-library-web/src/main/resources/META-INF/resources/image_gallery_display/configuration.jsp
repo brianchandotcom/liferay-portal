@@ -132,6 +132,14 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 
 					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 
+					var repositoryIdElement = document.querySelector(
+						'#<portlet:namespace />repositoryId'
+					);
+
+					if (repositoryIdElement != null) {
+						repositoryIdElement.value = selectedItem.repositoryid;
+					}
+
 					var rootFolderInTrashWarning = document.querySelector(
 						'#<portlet:namespace />rootFolderInTrash'
 					);

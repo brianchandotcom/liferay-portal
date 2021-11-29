@@ -50,8 +50,6 @@ public class IGUtil {
 
 		long rootFolderId = getRootFolderId(httpServletRequest);
 
-		long repositoryId = getRepositoryId(folder, httpServletRequest);
-
 		List<Folder> ancestorFolders = Collections.emptyList();
 
 		if ((folder != null) && (folder.getFolderId() != rootFolderId)) {
@@ -77,8 +75,6 @@ public class IGUtil {
 		for (Folder ancestorFolder : ancestorFolders) {
 			portletURL.setParameter(
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
-			portletURL.setParameter(
-				"repositoryId", String.valueOf(repositoryId));
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				httpServletRequest, ancestorFolder.getName(),
@@ -92,7 +88,6 @@ public class IGUtil {
 		}
 
 		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, folder.getName(), portletURL.toString());
@@ -110,20 +105,6 @@ public class IGUtil {
 		addPortletBreadcrumbEntries(
 			DLAppLocalServiceUtil.getFolder(folderId), httpServletRequest,
 			renderResponse);
-	}
-
-	protected static long getRepositoryId(
-			Folder folder, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				httpServletRequest,
-				PortalUtil.getPortletId(httpServletRequest));
-
-		return GetterUtil.getLong(
-			portletPreferences.getValue(
-				"repositoryId", String.valueOf(folder.getRepositoryId())));
 	}
 
 	protected static long getRootFolderId(HttpServletRequest httpServletRequest)

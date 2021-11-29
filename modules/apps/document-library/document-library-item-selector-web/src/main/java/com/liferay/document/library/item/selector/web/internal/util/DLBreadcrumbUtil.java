@@ -39,10 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DLBreadcrumbUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			String displayStyle, Folder folder,
+			Folder folder, String displayStyle,
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			PortletURL portletURL, long repositoryId, boolean showGroupSelector)
+			PortletURL portletURL, boolean showGroupSelector)
 		throws Exception {
 
 		if (showGroupSelector) {
@@ -54,8 +54,8 @@ public class DLBreadcrumbUtil {
 
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
-			portletURL, _getRepositoryId(httpServletRequest, repositoryId),
-			_getRootFolderName(folder, httpServletRequest, showGroupSelector));
+			_getRootFolderName(folder, httpServletRequest, showGroupSelector),
+			portletURL);
 
 		if (folder != null) {
 			List<Folder> ancestorFolders = folder.getAncestors();
@@ -65,13 +65,12 @@ public class DLBreadcrumbUtil {
 			for (Folder ancestorFolder : ancestorFolders) {
 				_addPortletBreadcrumbEntry(
 					ancestorFolder.getFolderId(), httpServletRequest,
-					portletURL, ancestorFolder.getRepositoryId(),
-					ancestorFolder.getName());
+					ancestorFolder.getName(), portletURL);
 			}
 
 			_addPortletBreadcrumbEntry(
-				folder.getFolderId(), httpServletRequest, portletURL,
-				folder.getRepositoryId(), folder.getName());
+				folder.getFolderId(), httpServletRequest, folder.getName(),
+				portletURL);
 		}
 	}
 
@@ -94,28 +93,13 @@ public class DLBreadcrumbUtil {
 	}
 
 	private static void _addPortletBreadcrumbEntry(
-		long folderId, HttpServletRequest httpServletRequest,
-		PortletURL portletURL, long repositoryId, String title) {
+		long folderId, HttpServletRequest httpServletRequest, String title,
+		PortletURL portletURL) {
 
 		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, title, portletURL.toString());
-	}
-
-	private static long _getRepositoryId(
-		HttpServletRequest httpServletRequest, long repositoryId) {
-
-		if (repositoryId == 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			repositoryId = themeDisplay.getScopeGroupId();
-		}
-
-		return repositoryId;
 	}
 
 	private static String _getRootFolderName(

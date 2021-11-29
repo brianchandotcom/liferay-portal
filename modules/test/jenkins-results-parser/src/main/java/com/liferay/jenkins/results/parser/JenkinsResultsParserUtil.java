@@ -3539,6 +3539,17 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
+					url.startsWith("https://release.liferay.com")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new BasicHTTPAuthorization(
+						buildProperties.getProperty(
+							"jenkins.admin.user.password"),
+						buildProperties.getProperty("jenkins.admin.user.name"));
+				}
+
+				if ((httpAuthorizationHeader == null) &&
 					url.matches("https://liferay.spiraservice.net.+")) {
 
 					Properties buildProperties = getBuildProperties();
@@ -3808,6 +3819,19 @@ public class JenkinsResultsParserUtil {
 				combine(
 					"Downloading ", url.toString(), " to ",
 					getCanonicalPath(file)));
+
+			String urlString = url.toString();
+
+			if (urlString.startsWith("https://release.liferay.com")) {
+				String replacement = combine(
+					"https://", getBuildProperty("jenkins.admin.user.name"),
+					":", getBuildProperty("jenkins.admin.user.password"),
+					"@$1");
+
+				url = new URL(
+					urlString.replaceAll(
+						"https://(release\\.liferay\\.com.*)", replacement));
+			}
 
 			FileUtils.copyURLToFile(url, file, 10000, 10000);
 		}

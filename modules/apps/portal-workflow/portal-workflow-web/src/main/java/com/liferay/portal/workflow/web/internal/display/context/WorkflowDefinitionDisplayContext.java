@@ -272,8 +272,6 @@ public class WorkflowDefinitionDisplayContext {
 			};
 		}
 		else {
-			int moreAssets = workflowDefinitionLinks.size() - 2;
-
 			WorkflowDefinitionLink workflowDefinitionLink1 =
 				workflowDefinitionLinks.get(0);
 			WorkflowDefinitionLink workflowDefinitionLink2 =
@@ -282,7 +280,7 @@ public class WorkflowDefinitionDisplayContext {
 			return new Object[] {
 				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
 				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
-				moreAssets
+				workflowDefinitionLinks.size() - 2
 			};
 		}
 	}

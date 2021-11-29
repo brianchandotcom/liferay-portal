@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.info.item.updater;
+package com.liferay.layout.admin.web.internal.friendly.url.info.item.updater;
 
 import com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;

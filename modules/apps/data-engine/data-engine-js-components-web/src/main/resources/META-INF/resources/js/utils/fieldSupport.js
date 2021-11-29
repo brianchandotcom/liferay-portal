@@ -461,17 +461,12 @@ export function getField(pages, fieldName) {
 }
 
 export function getParentField(pages, fieldName) {
-	let parentField = null;
 	const visitor = new PagesVisitor(pages);
 
-	visitor.visitFields((field) => {
+	return visitor.findField((field) => {
 		const nestedFieldsVisitor = new PagesVisitor(field.nestedFields || []);
 
-		if (nestedFieldsVisitor.containsField(fieldName)) {
-			parentField = field;
-		}
-
-		return false;
+		return nestedFieldsVisitor.containsField(fieldName);
 	});
 }
 

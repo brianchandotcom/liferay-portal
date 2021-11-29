@@ -2640,10 +2640,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		LexiconEntry.gotoAdd();
 

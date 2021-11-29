@@ -35,7 +35,7 @@ definition {
 	}
 
 	test AssertGuestCartIsTransferredToAccount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
@@ -133,7 +133,7 @@ definition {
 	}
 
 	test AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
@@ -1020,7 +1020,7 @@ definition {
 	}
 
 	test GuestCheckoutWithNoShippableProduct {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
@@ -1159,7 +1159,7 @@ definition {
 	}
 
 	test UserAccountIsNotCombinedWithExistingGuestAccount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "GuestCheckout#UserAccountIsNotCombinedWithExistingGuestAccount";
 
 		ApplicationsMenu.gotoPortlet(

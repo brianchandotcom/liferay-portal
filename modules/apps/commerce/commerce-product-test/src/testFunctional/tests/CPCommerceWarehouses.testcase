@@ -28,7 +28,7 @@ definition {
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
 	@priority = "3"
 	test AddEditAndRemoveItemToWarehouse {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 
@@ -1121,7 +1121,7 @@ definition {
 	@description = "This is a test for COMMERCE-5708. As a product specialist i want to update the quantity of a product inside a warehouse"
 	@priority = "3"
 	test UpdateInventorySKUQuantity {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

@@ -128,7 +128,7 @@ definition {
 	@description = "This is a test for COMMERCE-6225. Price Modifier lifecycle"
 	@priority = "3"
 	test AddEditAndDeletePriceModifier {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

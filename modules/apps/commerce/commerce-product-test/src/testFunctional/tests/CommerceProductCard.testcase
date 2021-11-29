@@ -28,7 +28,7 @@ definition {
 	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
 	@priority = "3"
 	test AddProductToWishListFromProductCard {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1038,7 +1038,7 @@ definition {
 	@description = "COMMERCE-5867. As a buyer, I want to be able to remove a product from my wish list, by clicking on an Add To Wish List button, if already active"
 	@priority = "3"
 	test RemoveProductFromWishList {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

@@ -28,7 +28,7 @@ definition {
 	@description = "This is a test for COMMERCE-6231. Discount lifecycle"
 	@priority = "3"
 	test AddEditAndDeleteDiscountEntry {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance ="CPCommerceDiscounts#AddEditAndDeleteDiscountEntry";
 
 		// TODO Review

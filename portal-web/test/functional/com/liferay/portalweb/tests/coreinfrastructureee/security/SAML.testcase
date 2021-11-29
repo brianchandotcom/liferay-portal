@@ -1309,9 +1309,7 @@ definition {
 		}
 
 		task ("Add IdP connection") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 

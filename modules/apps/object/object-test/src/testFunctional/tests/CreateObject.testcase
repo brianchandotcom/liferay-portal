@@ -2639,7 +2639,7 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		Navigator.openURL();
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -2648,15 +2648,14 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(
-			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE",
 			key_fieldColumnNumber = "0",
-			key_fieldLabel = "Custom Field A");
+			key_fieldLabel = "Custom Field A",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 
 		AssertElementPresent(
-			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE",
 			key_fieldColumnNumber = "1",
-			key_fieldLabel = "Custom Field B");
-
+			key_fieldLabel = "Custom Field B",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 	}
 
 	@description = "LPS-135400 - There is an explanation about each Relationship type"

@@ -237,7 +237,6 @@ definition {
 
 			if (isSet(fieldList)) {
 				for (var fieldLabelName : list "${fieldList}") {
-
 					Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
 
 					Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
@@ -254,7 +253,6 @@ definition {
 						key_tab = "Save",
 						locator1 = "Button#TAB_SUBMIT_BTN");
 				}
-
 			}
 			else {
 				Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");

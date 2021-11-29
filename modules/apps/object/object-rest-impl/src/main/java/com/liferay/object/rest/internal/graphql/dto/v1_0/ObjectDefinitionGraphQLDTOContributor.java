@@ -20,6 +20,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -41,6 +42,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,11 +64,32 @@ public class ObjectDefinitionGraphQLDTOContributor
 				objectDefinition.getPKObjectFieldName(), Long.class));
 
 		for (ObjectField objectField : objectFields) {
-			graphQLDTOProperties.add(
-				GraphQLDTOProperty.of(
-					objectField.getName(),
-					_typedClasses.getOrDefault(
-						objectField.getType(), Object.class)));
+			if (Objects.equals(
+					objectField.getRelationshipType(), "oneToMany")) {
+
+				String objectFieldName = objectField.getName();
+
+				String[] objectFieldNameParts = objectFieldName.split(
+					StringPool.UNDERLINE);
+
+				String relationshipIdName = objectFieldNameParts[3];
+
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(relationshipIdName, Long.class));
+
+				String relationshipName = StringUtil.replaceLast(
+					relationshipIdName, "Id", "");
+
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(relationshipName, Object.class));
+			}
+			else {
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(
+						objectField.getName(),
+						_typedClasses.getOrDefault(
+							objectField.getType(), Object.class)));
+			}
 		}
 
 		return new ObjectDefinitionGraphQLDTOContributor(

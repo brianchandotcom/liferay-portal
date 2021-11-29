@@ -461,6 +461,7 @@
 		<column name="kaleoDefinitionId" type="long" />
 		<column name="kaleoDefinitionVersionId" type="long" />
 		<column name="name" type="String" />
+		<column localized="true" name="label" type="String" />
 		<column name="metadata" type="String" />
 		<column name="description" type="String" />
 		<column name="type" type="String" />

@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_PROCESS_MESSAGE</td>
+	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text') and contains(.,'${key_messaage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_PROCESS_SPECIFIC_APPLICATION_SUCCESSFUL</td>
 	<td>//div[contains(.,'${key_application}')]//span[contains(.,'Successful')]</td>
 	<td></td>

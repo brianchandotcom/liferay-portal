@@ -114,9 +114,50 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test TranslationStatusIsPendingOnReject {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-70805 TranslationStatusIsPendingOnReject pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Workflow.webContentGoToAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Refresh();
+
+		Translations.gotoTranslate(webContentTitle = "Web Content Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "pt-BR");
+
+		Button.clickSubmitForPublication();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation of Web Content Title to pt-BR",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Translation of Web Content Title to pt-BR",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		WorkflowTranslation.openTranslationProcessesAdmin();
+
+		Translations.viewTranslationEntry(
+			language = "pt-BR",
+			status = "Pending",
+			title = "Translation of Web Content Title to pt-BR");
 	}
 
 }

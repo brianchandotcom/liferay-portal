@@ -62,8 +62,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 
 		String content = _renderLayoutData(
 			data, fragmentRendererController, httpServletRequest,
-			httpServletResponse, mode, parameterMap, locale,
-			segmentsExperienceIds);
+			httpServletResponse, mode, parameterMap, locale);
 
 		if (layoutAdaptiveMediaProcessor == null) {
 			return content;
@@ -93,8 +92,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 		FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String mode,
-		Map<String, Object> parameterMap, Locale locale,
-		long[] segmentsExperienceIds) {
+		Map<String, Object> parameterMap, Locale locale) {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
@@ -110,7 +108,6 @@ public class LayoutPageTemplateStructureRenderUtil {
 		fragmentRendererContext.setFieldValues(parameterMap);
 		fragmentRendererContext.setLocale(locale);
 		fragmentRendererContext.setMode(mode);
-		fragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 
 		return fragmentRendererController.render(
 			fragmentRendererContext, httpServletRequest, httpServletResponse);
@@ -120,8 +117,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 		String data, FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String mode,
-		Map<String, Object> parameterMap, Locale locale,
-		long[] segmentsExperienceIds) {
+		Map<String, Object> parameterMap, Locale locale) {
 
 		StringBundler sb = new StringBundler();
 
@@ -150,8 +146,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 				_renderFragmentEntryLink(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
 					fragmentRendererController, httpServletRequest,
-					httpServletResponse, mode, parameterMap, locale,
-					segmentsExperienceIds));
+					httpServletResponse, mode, parameterMap, locale));
 		}
 
 		return sb.toString();

@@ -110,9 +110,6 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			long segmentsExperienceId = ParamUtil.getLong(
 				resourceRequest, "segmentsExperienceId");
 
-			defaultFragmentRendererContext.setSegmentsExperienceIds(
-				new long[] {segmentsExperienceId});
-
 			defaultFragmentRendererContext.
 				setCollectionStyledLayoutStructureItemIds(
 					LayoutStructureUtil.

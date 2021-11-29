@@ -64,8 +64,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
@@ -465,8 +463,6 @@ public class RenderLayoutStructureDisplayContext {
 				_getPreviewVersion());
 			defaultFragmentRendererContext.setSegmentsEntryIds(
 				_getSegmentsEntryIds());
-			defaultFragmentRendererContext.setSegmentsExperienceIds(
-				_getSegmentsExperienceIds());
 		}
 
 		if (LayoutStructureItemUtil.hasAncestor(
@@ -1153,26 +1149,6 @@ public class RenderLayoutStructureDisplayContext {
 		return _segmentsEntryIds;
 	}
 
-	private long[] _getSegmentsExperienceIds() {
-		long[] selectedSegmentsExperienceIds = ParamUtil.getLongValues(
-			_httpServletRequest, "segmentsExperienceId");
-
-		if (selectedSegmentsExperienceIds.length > 0) {
-			return selectedSegmentsExperienceIds;
-		}
-
-		if (_segmentsExperienceIds != null) {
-			return _segmentsExperienceIds;
-		}
-
-		_segmentsExperienceIds = GetterUtil.getLongValues(
-			_httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
-
-		return _segmentsExperienceIds;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderLayoutStructureDisplayContext.class);
 
@@ -1189,7 +1165,6 @@ public class RenderLayoutStructureDisplayContext {
 	private Integer _previewType;
 	private String _previewVersion;
 	private long[] _segmentsEntryIds;
-	private long[] _segmentsExperienceIds;
 	private final boolean _showPreview;
 	private final ThemeDisplay _themeDisplay;
 

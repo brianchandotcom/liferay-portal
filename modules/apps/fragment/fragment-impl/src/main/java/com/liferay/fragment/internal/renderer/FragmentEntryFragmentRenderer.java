@@ -292,8 +292,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext.getPreviewVersion());
 		defaultFragmentEntryProcessorContext.setSegmentsEntryIds(
 			fragmentRendererContext.getSegmentsEntryIds());
-		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
-			fragmentRendererContext.getSegmentsExperienceIds());
 
 		String css = StringPool.BLANK;
 

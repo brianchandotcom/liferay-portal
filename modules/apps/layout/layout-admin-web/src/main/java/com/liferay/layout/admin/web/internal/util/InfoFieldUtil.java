@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -127,8 +126,6 @@ public class InfoFieldUtil {
 
 		defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
 		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
-		defaultFragmentRendererContext.setSegmentsExperienceIds(
-			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 
 		return fragmentRendererController.render(
 			defaultFragmentRendererContext, httpServletRequest,

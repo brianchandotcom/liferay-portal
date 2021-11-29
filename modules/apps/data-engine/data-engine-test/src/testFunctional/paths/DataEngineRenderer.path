@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>IMAGE_INPUT_INDEXED</td>
-	<td>xpath=((//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}'])[${index}]/ancestor::div[contains(@class,'form-group')]//input[not(contains(@type,'hidden'))])</td>
+	<td>xpath=(//div//label[text()='${fieldLabel}']//following-sibling::div//input[contains(@class, 'field') and contains(@type, 'text')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,7 +42,7 @@ public class DLBreadcrumbUtil {
 			String displayStyle, Folder folder,
 			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			PortletURL portletURL, boolean showGroupSelector)
+			PortletURL portletURL, long repositoryId, boolean showGroupSelector)
 		throws Exception {
 
 		if (showGroupSelector) {
@@ -51,14 +52,10 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter("displayStyle", displayStyle);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
-			portletURL, themeDisplay.getScopeGroupId(),
-			_getRootFolderName(httpServletRequest, showGroupSelector));
+			portletURL, _getRepositoryId(httpServletRequest, repositoryId),
+			_getRootFolderName(folder, httpServletRequest, showGroupSelector));
 
 		if (folder != null) {
 			List<Folder> ancestorFolders = folder.getAncestors();
@@ -107,8 +104,23 @@ public class DLBreadcrumbUtil {
 			httpServletRequest, title, portletURL.toString());
 	}
 
+	private static long _getRepositoryId(
+		HttpServletRequest httpServletRequest, long repositoryId) {
+
+		if (repositoryId == 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			repositoryId = themeDisplay.getScopeGroupId();
+		}
+
+		return repositoryId;
+	}
+
 	private static String _getRootFolderName(
-			HttpServletRequest httpServletRequest, boolean showGroupSelector)
+			Folder folder, HttpServletRequest httpServletRequest,
+			boolean showGroupSelector)
 		throws Exception {
 
 		if (!showGroupSelector) {
@@ -120,6 +132,10 @@ public class DLBreadcrumbUtil {
 				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
+
+		if (folder != null) {
+			group = GroupServiceUtil.getGroup(folder.getGroupId());
+		}
 
 		return group.getDescriptiveName(themeDisplay.getLocale());
 	}

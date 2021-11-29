@@ -19,7 +19,7 @@
 <%
 DLSelectFolderDisplayContext dlSelectFolderDisplayContext = (DLSelectFolderDisplayContext)request.getAttribute(DLSelectFolderDisplayContext.class.getName());
 
-DLBreadcrumbUtil.addPortletBreadcrumbEntries(ParamUtil.getString(request, "displayStyle"), dlSelectFolderDisplayContext.getFolder(), request, liferayPortletResponse, dlSelectFolderDisplayContext.getIteratorPortletURL(liferayPortletResponse), dlSelectFolderDisplayContext.isShowGroupSelector());
+DLBreadcrumbUtil.addPortletBreadcrumbEntries(ParamUtil.getString(request, "displayStyle"), dlSelectFolderDisplayContext.getFolder(), request, liferayPortletResponse, dlSelectFolderDisplayContext.getIteratorPortletURL(liferayPortletResponse), dlSelectFolderDisplayContext.getRepositoryId(), dlSelectFolderDisplayContext.isShowGroupSelector());
 %>
 
 <clay:container-fluid>

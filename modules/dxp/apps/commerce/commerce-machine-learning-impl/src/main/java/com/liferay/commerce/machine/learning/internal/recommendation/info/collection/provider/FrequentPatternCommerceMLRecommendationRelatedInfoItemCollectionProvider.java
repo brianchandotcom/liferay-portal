@@ -41,11 +41,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
+	configurationPid = "com.liferay.commerce.machine.learning.internal.recommendation.configuration.CommerceMLRecommendationsCollectionProviderConfiguration",
 	enabled = false, immediate = true,
 	service = RelatedInfoItemCollectionProvider.class
 )
 public class
 	FrequentPatternCommerceMLRecommendationRelatedInfoItemCollectionProvider
+		extends BaseCommerceMLRecommendationCollectionProvider
 		implements RelatedInfoItemCollectionProvider
 			<CPDefinition, CPDefinition> {
 
@@ -110,6 +112,12 @@ public class
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "frequent-pattern-recommendations");
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return commerceMLRecommendationsCollectionProviderConfiguration.
+			alsoBoughtProductRecommendationsCollectionProviderEnabled();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

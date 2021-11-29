@@ -51,12 +51,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
+	configurationPid = "com.liferay.commerce.machine.learning.internal.recommendation.configuration.CommerceMLRecommendationsCollectionProviderConfiguration",
 	enabled = false, immediate = true,
 	service = {
 		InfoCollectionProvider.class, RelatedInfoItemCollectionProvider.class
 	}
 )
 public class UserCommerceMLRecommendationRelatedInfoItemCollectionProvider
+	extends BaseCommerceMLRecommendationCollectionProvider
 	implements RelatedInfoItemCollectionProvider<CPDefinition, CPDefinition> {
 
 	@Override
@@ -150,6 +152,12 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProvider
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
 			locale, "user-interaction-based-product-recommendations");
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return commerceMLRecommendationsCollectionProviderConfiguration.
+			userPersonalizedRecommendationsCollectionProviderEnabled();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

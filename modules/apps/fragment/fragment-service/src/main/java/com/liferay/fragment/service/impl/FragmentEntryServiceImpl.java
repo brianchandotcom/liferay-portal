@@ -82,6 +82,24 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			int type, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.addFragmentEntry(
+			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
+			css, html, js, cacheable, configuration, icon, previewFileEntryId,
+			type, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js,
 			String configuration, long previewFileEntryId, int type, int status,
 			ServiceContext serviceContext)
@@ -478,6 +496,26 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.updateFragmentEntry(
 			getUserId(), fragmentEntryId, fragmentCollectionId, name, css, html,
 			js, cacheable, configuration, previewFileEntryId, status);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, long fragmentCollectionId, String name,
+			String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			int status)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry =
+			fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentEntry.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.updateFragmentEntry(
+			getUserId(), fragmentEntryId, fragmentCollectionId, name, css, html,
+			js, cacheable, configuration, icon, previewFileEntryId, status);
 	}
 
 	@Override

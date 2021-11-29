@@ -189,8 +189,9 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "route: quote-comparison"
 												},
-												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE-QUOTE-COMPARISON$]"
+												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE$]"
 											}
 										},
 										"type": "Widget"

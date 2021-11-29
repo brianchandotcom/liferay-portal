@@ -83,9 +83,10 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"portletSetupPortletDecoratorId": "barebone"
+													"portletSetupPortletDecoratorId": "barebone",
+													"properties": "route: get-a-quote"
 												},
-												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE-GET-A-QUOTE$]"
+												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE$]"
 											}
 										},
 										"type": "Widget"

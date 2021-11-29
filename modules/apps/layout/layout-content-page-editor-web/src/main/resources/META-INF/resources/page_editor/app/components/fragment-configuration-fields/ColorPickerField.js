@@ -15,6 +15,7 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
+import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
@@ -38,6 +39,7 @@ const debouncedOnValueSelect = debounce(
 
 export function ColorPickerField({field, onValueSelect, value}) {
 	const {tokenValues} = useStyleBook();
+	const [activeDropdown, setActiveDropdown] = useState(false);
 	const [color, setColor] = useControlledState(
 		config.tokenReuseEnabled
 			? tokenValues[value]?.value || value
@@ -48,31 +50,37 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	const id = useId();
 	const [isToken, setIsToken] = useState(!value || !!tokenValues[value]);
 
-	Object.values(tokenValues)
-		.filter((token) => token.editorType === COLOR_PICKER_TYPE)
-		.forEach(
-			({
-				label,
-				name,
-				tokenCategoryLabel: category,
-				tokenSetLabel: tokenSet,
-				value,
-			}) => {
-				const color = {label, name, value};
+	const tokenColorValues = Object.values(tokenValues).filter(
+		(token) => token.editorType === COLOR_PICKER_TYPE
+	);
 
-				if (Object.keys(colors).includes(category)) {
-					if (Object.keys(colors[category]).includes(tokenSet)) {
-						colors[category][tokenSet].push(color);
-					}
-					else {
-						colors[category][tokenSet] = [color];
-					}
+	const filteredTokenColorValues = tokenColorValues.filter((token) =>
+		token.label.toLowerCase().includes(color)
+	);
+
+	tokenColorValues.forEach(
+		({
+			label,
+			name,
+			tokenCategoryLabel: category,
+			tokenSetLabel: tokenSet,
+			value,
+		}) => {
+			const color = {label, name, value};
+
+			if (Object.keys(colors).includes(category)) {
+				if (Object.keys(colors[category]).includes(tokenSet)) {
+					colors[category][tokenSet].push(color);
 				}
 				else {
-					colors[category] = {[tokenSet]: [color]};
+					colors[category][tokenSet] = [color];
 				}
 			}
-		);
+			else {
+				colors[category] = {[tokenSet]: [color]};
+			}
+		}
+	);
 
 	if (!Object.keys(colors).length) {
 		return (
@@ -137,16 +145,51 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										<ClayAutocomplete.Input
 											className="page-editor__color-picker-field__autocomplete__input"
 											id={id}
-											onChange={(event) => {
-												setColor(event.target.value);
-												debouncedOnValueSelect(
-													onValueSelect,
+											onBlur={(event) => {
+												onValueSelect(
 													field.name,
 													event.target.value
 												);
 											}}
+											onChange={(event) => {
+												setActiveDropdown(true);
+												setColor(event.target.value);
+											}}
 											value={color}
 										/>
+
+										<ClayAutocomplete.DropDown
+											active={
+												activeDropdown &&
+												filteredTokenColorValues.length
+											}
+											closeOnClickOutside={true}
+											onSetActive={setActiveDropdown}
+										>
+											<ClayDropDown.ItemList>
+												{filteredTokenColorValues.map(
+													(token) => (
+														<ClayAutocomplete.Item
+															key={token.name}
+															match={color}
+															onClick={() => {
+																setColor(
+																	token.value
+																);
+																setIsToken(
+																	true
+																);
+																onValueSelect(
+																	field.name,
+																	token.name
+																);
+															}}
+															value={token.label}
+														/>
+													)
+												)}
+											</ClayDropDown.ItemList>
+										</ClayAutocomplete.DropDown>
 									</ClayAutocomplete>
 								</ClayInput.GroupItem>
 							</ClayInput.Group>

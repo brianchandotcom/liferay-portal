@@ -17,29 +17,30 @@
 <%@ include file="/add_to_cart/init.jsp" %>
 
 <%
-	String spacer = size == "sm" ? "1" : "3";
-	String spaceDirection = GetterUtil.getBoolean(inline) ? "ml" : "mt";
+String spacer = size.equals("sm") ? "1" : "3";
+String spaceDirection = GetterUtil.getBoolean(inline) ? "ml" : "mt";
 
-	String buttonCssClasses = "btn btn-add-to-cart btn-" + size + " " + spaceDirection + "-" + spacer;
-	String selectorCssClasses = "form-control quantity-selector form-control-" + size;
-	String wrapperCssClasses = "add-to-cart-wrapper align-items-center d-flex";
+String buttonCssClasses = "btn btn-add-to-cart btn-" + size + " " + spaceDirection + "-" + spacer;
 
-	if (GetterUtil.getBoolean(iconOnly)) {
-		buttonCssClasses = buttonCssClasses.concat(" icon-only");
-	}
+String selectorCssClasses = "form-control quantity-selector form-control-" + size;
+String wrapperCssClasses = "add-to-cart-wrapper align-items-center d-flex";
 
-	if (!GetterUtil.getBoolean(inline)) {
-		wrapperCssClasses = wrapperCssClasses.concat(" flex-column");
-	}
+if (GetterUtil.getBoolean(iconOnly)) {
+	buttonCssClasses = buttonCssClasses.concat(" icon-only");
+}
 
-	if (GetterUtil.getString(alignment) == "center") {
-		wrapperCssClasses = wrapperCssClasses.concat(" align-items-center");
-	}
+if (!GetterUtil.getBoolean(inline)) {
+	wrapperCssClasses = wrapperCssClasses.concat(" flex-column");
+}
 
-	if (GetterUtil.getString(alignment) == "full-width") {
-		buttonCssClasses = buttonCssClasses.concat(" btn-block");
-		wrapperCssClasses = wrapperCssClasses.concat(" align-items-center");
-	}
+if (alignment.equals("center")) {
+	wrapperCssClasses = wrapperCssClasses.concat(" align-items-center");
+}
+
+if (alignment.equals("full-width")) {
+	buttonCssClasses = buttonCssClasses.concat(" btn-block");
+	wrapperCssClasses = wrapperCssClasses.concat(" align-items-center");
+}
 %>
 
 <div class="add-to-cart mb-2" id="<%= addToCartId %>">
@@ -67,11 +68,11 @@
 			stockQuantity: <%= stockQuantity %>,
 		},
 		cartId: <%= commerceOrderId %>,
+		disabled: <%= disabled %>,
 		settings: {
 			alignment: '<%= alignment %>',
 			iconOnly: <%= iconOnly %>,
 			inline: <%= inline %>,
-			disabled: <%= disabled %>,
 			namespace: '<%= namespace %>',
 			size: '<%= size %>',
 		},
@@ -80,10 +81,10 @@
 	<c:if test="<%= productSettingsModel != null %>">
 
 		<%
-			JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 		%>
 
-		props.settings.quantityDetails  = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
+		props.settings.quantityDetails = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
 	</c:if>
 
 	AddToCart.default('<%= addToCartId %>', '<%= addToCartId %>', props);

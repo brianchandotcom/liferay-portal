@@ -113,6 +113,27 @@ html {
 	.portlet-content-editable {
 		min-height: 28px;
 	}
+
+	.shop-by-diagram-table {
+		input[type='checkbox']:not(.compare-checkbox-input) {
+			position: absolute;
+		}
+
+		input[type='number'].quantity-selector {
+			padding: 0.5rem;
+		}
+
+		.btn-add-to-cart {
+			border-radius: 0 0 2px 2px;
+			border-width: 0;
+			font-size: 16px;
+			padding: 1.4rem 1rem;
+		}
+	}
+
+	.shop-by-diagram .management-bar {
+		padding-right: 1rem;
+	}
 }
 
 #wrapper {

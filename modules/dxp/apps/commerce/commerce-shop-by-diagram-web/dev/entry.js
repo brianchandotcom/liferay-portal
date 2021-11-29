@@ -18,20 +18,20 @@ import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/
 render(
 	Diagram,
 	{
-		cartId: '44217',
-		channelGroupId: '42720',
-		channelId: '42719',
-		commerceAccountId: '44204',
+		cartId: '43882',
+		channelGroupId: '42398',
+		channelId: '42397',
+		commerceAccountId: '43879',
 		commerceCurrencyCode: 'USD',
 		datasetDisplayId: 'csDiagramMappedProducts',
-		diagramId: '44184',
+		diagramId: '43917',
 		imageURL:
-			'/documents/20118/0/giphy.gif/dcf2c620-05fc-3eeb-f582-3e77198d9e44?version=1.0&t=1636543710147&download=true',
+			'/documents/20123/0/photo1636565451.jpeg/90d4ac8f-b028-0a3e-c6b4-a5f71ed26258?version=1.0&t=1637676256470&download=true',
 		isAdmin: true,
-		orderUUID: '4f5d1e8a-4590-fa24-bc57-da90f45e99a1',
+		orderUUID: 'a711bf49-a2d3-2c8d-23c9-abaff7d288a5',
 		pinsRadius: 1.0,
 		productBaseURL: 'http://localhost:8080/group/minium/p/',
-		productId: '44164',
+		productId: '43898',
 	},
 	document.getElementById('shop-by-diagram')
 );
@@ -39,8 +39,20 @@ render(
 render(
 	DiagramTable,
 	{
-		isAdmin: false,
-		productId: '44164',
+		cartId: '43882',
+		channelGroupId: '42398',
+		channelId: '42397',
+		commerceAccountId: '43879',
+		commerceCurrencyCode: 'USD',
+		datasetDisplayId: 'csDiagramMappedProducts',
+		diagramId: '43917',
+		imageURL:
+			'/documents/20123/0/photo1636565451.jpeg/90d4ac8f-b028-0a3e-c6b4-a5f71ed26258?version=1.0&t=1637676256470&download=true',
+		isAdmin: true,
+		orderUUID: 'a711bf49-a2d3-2c8d-23c9-abaff7d288a5',
+		pinsRadius: 1.0,
+		productBaseURL: 'http://localhost:8080/group/minium/p/',
+		productId: '43898',
 	},
 	document.getElementById('shop-by-diagram-table')
 );
@@ -48,20 +60,20 @@ render(
 render(
 	Diagram,
 	{
-		cartId: '44217',
-		channelGroupId: '42720',
-		channelId: '42719',
-		commerceAccountId: '44204',
+		cartId: '43882',
+		channelGroupId: '42398',
+		channelId: '42397',
+		commerceAccountId: '43879',
 		commerceCurrencyCode: 'USD',
 		datasetDisplayId: 'csDiagramMappedProducts',
-		diagramId: '44184',
+		diagramId: '43917',
 		imageURL:
-			'/documents/20118/0/giphy.gif/dcf2c620-05fc-3eeb-f582-3e77198d9e44?version=1.0&t=1636543710147&download=true',
+			'/documents/20123/0/photo1636565451.jpeg/90d4ac8f-b028-0a3e-c6b4-a5f71ed26258?version=1.0&t=1637676256470&download=true',
 		isAdmin: false,
-		orderUUID: '4f5d1e8a-4590-fa24-bc57-da90f45e99a1',
+		orderUUID: 'a711bf49-a2d3-2c8d-23c9-abaff7d288a5',
 		pinsRadius: 1.0,
 		productBaseURL: 'http://localhost:8080/group/minium/p/',
-		productId: '44164',
+		productId: '43898',
 	},
 	document.getElementById('shop-by-diagram-front')
 );
@@ -69,8 +81,20 @@ render(
 render(
 	DiagramTable,
 	{
+		cartId: '43882',
+		channelGroupId: '42398',
+		channelId: '42397',
+		commerceAccountId: '43879',
+		commerceCurrencyCode: 'USD',
+		datasetDisplayId: 'csDiagramMappedProducts',
+		diagramId: '43917',
+		imageURL:
+			'/documents/20123/0/photo1636565451.jpeg/90d4ac8f-b028-0a3e-c6b4-a5f71ed26258?version=1.0&t=1637676256470&download=true',
 		isAdmin: false,
-		productId: '44164',
+		orderUUID: 'a711bf49-a2d3-2c8d-23c9-abaff7d288a5',
+		pinsRadius: 1.0,
+		productBaseURL: 'http://localhost:8080/group/minium/p/',
+		productId: '43898',
 	},
 	document.getElementById('shop-by-diagram-table-front')
 );
@@ -78,20 +102,19 @@ render(
 render(
 	DiagramWithAutomapping,
 	{
-		cartId: '44217',
-		channelGroupId: '42720',
-		channelId: '42719',
-		commerceAccountId: '44204',
+		channelGroupId: '42299',
+		channelId: '42298',
+		commerceAccountId: '42490',
 		commerceCurrencyCode: 'USD',
+		componentId: null,
 		datasetDisplayId: 'csDiagramMappedProducts',
-		diagramId: '44184',
+		diagramId: '44282',
 		imageURL:
-			'/documents/20118/0/giphy.gif/dcf2c620-05fc-3eeb-f582-3e77198d9e44?version=1.0&t=1636543710147&download=true',
-		isAdmin: true,
-		orderUUID: '4f5d1e8a-4590-fa24-bc57-da90f45e99a1',
+			'/documents/20118/0/308056.svg/9b34c14b-e0de-0a9f-edcf-bbe5c65453c3?version=1.0&t=1636995007978&download=true',
+		isAdmin: false,
 		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
-		productBaseURL: 'http://localhost:8080/group/minium/p/',
-		productId: '44164',
+		productBaseURL: 'http://localhost:8080/group/demo/p/',
+		productId: '43898',
 	},
 	document.getElementById('shop-by-diagram-automapping')
 );
@@ -99,8 +122,15 @@ render(
 render(
 	DiagramTable,
 	{
+		cartId: '44095',
+		channelGroupId: '42621',
+		channelId: '42620',
+		commerceAccountId: '44092',
+		commerceCurrencyCode: 'USD',
+		diagramId: '44070',
 		isAdmin: false,
-		productId: '46505',
+		orderUUID: '4442e7de-97b3-d418-4db9-d04f4f6ce8ac',
+		productId: '43898',
 	},
 	document.getElementById('shop-by-diagram-automapping-table')
 );

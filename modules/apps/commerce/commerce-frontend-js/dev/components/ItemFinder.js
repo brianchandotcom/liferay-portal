@@ -21,8 +21,8 @@ import '../../src/main/resources/META-INF/resources/styles/main.scss';
 import {showErrorNotification} from '../../src/main/resources/META-INF/resources/utilities/notifications';
 
 const headers = new Headers({
-	Accept: 'application/json',
-	Authorization: 'Basic ' + btoa('test@liferay.com' + ':' + 'test'),
+	'Accept': 'application/json',
+	'Authorization': 'Basic ' + btoa('test@liferay.com' + ':' + 'test'),
 	'Content-Type': 'application/json',
 });
 

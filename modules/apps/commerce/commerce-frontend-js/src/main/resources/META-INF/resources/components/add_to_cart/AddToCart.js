@@ -42,6 +42,7 @@ function AddToCart({
 	cartUUID: initialCartUUID,
 	channel,
 	cpInstance: initialCpInstance,
+	disabled: initialDisabled,
 	settings,
 }) {
 	const cart = useCommerceCart(
@@ -59,7 +60,7 @@ function AddToCart({
 
 	const disabled = useMemo(() => {
 		if (
-			settings.disabled ||
+			initialDisabled ||
 			!account?.id ||
 			cpInstance.purchasable === false
 		) {
@@ -71,7 +72,7 @@ function AddToCart({
 		}
 
 		return cpInstance.stockQuantity < cpInstance.quantity;
-	}, [account, cpInstance, settings.disabled]);
+	}, [account, cpInstance, initialDisabled]);
 
 	useEffect(() => {
 		setCpInstance({
@@ -181,9 +182,9 @@ AddToCart.propTypes = {
 		skuId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 			.isRequired,
 	}),
+	disabled: PropTypes.bool,
 	settings: PropTypes.shape({
 		alignment: PropTypes.oneOf(['center', 'left', 'right', 'full-width']),
-		disabled: PropTypes.bool,
 		inline: PropTypes.bool,
 		namespace: PropTypes.string,
 		quantityDetails: PropTypes.shape({

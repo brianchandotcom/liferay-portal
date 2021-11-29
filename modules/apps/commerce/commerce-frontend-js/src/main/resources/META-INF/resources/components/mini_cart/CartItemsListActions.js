@@ -61,9 +61,9 @@ function CartItemsListActions() {
 					{cartItems.length > 0 && (
 						<>
 							<span className="items">{cartItems.length}</span>
-							{' ' + cartItems.length > 1
-								? Liferay.Language.get('products')
-								: Liferay.Language.get('product')}
+							{cartItems.length > 1
+								? ' ' + Liferay.Language.get('products')
+								: ' ' + Liferay.Language.get('product')}
 						</>
 					)}
 				</div>

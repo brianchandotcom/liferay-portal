@@ -18,12 +18,16 @@ import {
 	useCommerceAccount,
 	useCommerceCart,
 } from 'commerce-frontend-js/utilities/hooks';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import { formatInitialQuantities, formatProductOptions } from '../utilities/index';
 
 import {DIAGRAM_EVENTS, DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
 import {getMappedProducts} from '../utilities/data';
+import {
+	formatInitialQuantities,
+	formatProductOptions,
+} from '../utilities/index';
 import ManagementBar from './ManagementBar';
 import MappedProductRow from './MappedProductRow';
 import TableHead from './TableHead';
@@ -32,19 +36,19 @@ const PAGE_SIZE = 15;
 
 function formatCpInstances(skusId, products, quantities) {
 	return skusId.map((skuId) => {
-		const product = products.find(product => product.skuId === skuId);
+		const product = products.find((product) => product.skuId === skuId);
 
 		const options = formatProductOptions(
 			product.options,
 			product.productOptions
-		)
+		);
 
 		return {
 			inCart: false,
 			options,
-			quantity: quantities[skusId] || product.initialQuantity,
+			quantity: quantities[skuId] || product.initialQuantity,
 			skuId,
-		}
+		};
 	});
 }
 
@@ -101,8 +105,8 @@ function DiagramTable({
 			PAGE_SIZE
 		).then((data) => {
 			setLoaderActive(false);
-			
-			const fetchedProducts = formatInitialQuantities(data.items)
+
+			const fetchedProducts = formatInitialQuantities(data.items);
 
 			setMappedProducts((mappedProducts) =>
 				mappedProducts && currentPage > 1
@@ -116,7 +120,9 @@ function DiagramTable({
 
 	const selectableSkusId = (mappedProducts || []).reduce(
 		(skusId, product) =>
-			product.type === 'sku' ? [...skusId, product.skuId] : skusId,
+			product.type === 'sku' && product.availability.label === 'available'
+				? [...skusId, product.skuId]
+				: skusId,
 		[]
 	);
 
@@ -188,7 +194,10 @@ function DiagramTable({
 										isAdmin={isAdmin}
 										key={product.id}
 										product={product}
-										quantity={newQuantities[product.skuId] || product.initialQuantity}
+										quantity={
+											newQuantities[product.skuId] ||
+											product.initialQuantity
+										}
 										selectedSkusId={selectedSkusId}
 										setNewQuantity={(newQuantity) => {
 											setNewQuantities({
@@ -220,11 +229,30 @@ function DiagramTable({
 						newQuantities
 					)}
 					disabled={!commerceAccount.id || !selectedSkusId.length}
+					hideIcon={true}
+					onAdd={() => {
+						const message =
+							selectedSkusId.length === 1
+								? Liferay.Language.get(
+										'the-product-was-successfully-added-to-the-cart'
+								  )
+								: Liferay.Util.sub(
+										Liferay.Language.get(
+											'x-products-were-successfully-added-to-the-cart'
+										),
+										selectedSkusId.length
+								  );
+
+						openToast({
+							message,
+							type: 'success',
+						});
+					}}
 					settings={{
 						alignment: 'full-width',
 						buttonText: Liferay.Language.get(
-							'add-selected-product-to-order'
-						)
+							'add-selected-products-to-the-order'
+						),
 					}}
 				/>
 			)}

@@ -187,7 +187,7 @@
 </tr>
 <tr>
 	<td>DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT</td>
-	<td>//span[text()='${key_slaName}']/following-sibling::span[contains(text(), 'PM') or contains(text(), 'AM')]</td>
+	<td>//span[contains(text(),'${key_slaName}')]/following-sibling::span[contains(text(), 'PM') or contains(text(), 'AM')]</td>
 	<td></td>
 </tr>
 <tr>

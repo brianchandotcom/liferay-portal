@@ -1,4 +1,5 @@
 create unique index IX_C8D3E29 on CSDiagramEntry (CPDefinitionId, sequence[$COLUMN_LENGTH:75$]);
+create index IX_129C0EC6 on CSDiagramEntry (CPInstanceId);
 
 create index IX_B0DD2127 on CSDiagramPin (CPDefinitionId);
 

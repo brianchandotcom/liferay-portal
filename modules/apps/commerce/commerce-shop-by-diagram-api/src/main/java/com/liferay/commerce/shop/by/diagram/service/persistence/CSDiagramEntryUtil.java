@@ -299,6 +299,182 @@ public class CSDiagramEntryUtil {
 	}
 
 	/**
+	 * Returns all the cs diagram entries where CPInstanceId = &#63;.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @return the matching cs diagram entries
+	 */
+	public static List<CSDiagramEntry> findByCPInstanceId(long CPInstanceId) {
+		return getPersistence().findByCPInstanceId(CPInstanceId);
+	}
+
+	/**
+	 * Returns a range of all the cs diagram entries where CPInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param start the lower bound of the range of cs diagram entries
+	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
+	 * @return the range of matching cs diagram entries
+	 */
+	public static List<CSDiagramEntry> findByCPInstanceId(
+		long CPInstanceId, int start, int end) {
+
+		return getPersistence().findByCPInstanceId(CPInstanceId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cs diagram entries where CPInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param start the lower bound of the range of cs diagram entries
+	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cs diagram entries
+	 */
+	public static List<CSDiagramEntry> findByCPInstanceId(
+		long CPInstanceId, int start, int end,
+		OrderByComparator<CSDiagramEntry> orderByComparator) {
+
+		return getPersistence().findByCPInstanceId(
+			CPInstanceId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the cs diagram entries where CPInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param start the lower bound of the range of cs diagram entries
+	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cs diagram entries
+	 */
+	public static List<CSDiagramEntry> findByCPInstanceId(
+		long CPInstanceId, int start, int end,
+		OrderByComparator<CSDiagramEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCPInstanceId(
+			CPInstanceId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first cs diagram entry in the ordered set where CPInstanceId = &#63;.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cs diagram entry
+	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
+	 */
+	public static CSDiagramEntry findByCPInstanceId_First(
+			long CPInstanceId,
+			OrderByComparator<CSDiagramEntry> orderByComparator)
+		throws com.liferay.commerce.shop.by.diagram.exception.
+			NoSuchCSDiagramEntryException {
+
+		return getPersistence().findByCPInstanceId_First(
+			CPInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first cs diagram entry in the ordered set where CPInstanceId = &#63;.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
+	 */
+	public static CSDiagramEntry fetchByCPInstanceId_First(
+		long CPInstanceId,
+		OrderByComparator<CSDiagramEntry> orderByComparator) {
+
+		return getPersistence().fetchByCPInstanceId_First(
+			CPInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cs diagram entry
+	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
+	 */
+	public static CSDiagramEntry findByCPInstanceId_Last(
+			long CPInstanceId,
+			OrderByComparator<CSDiagramEntry> orderByComparator)
+		throws com.liferay.commerce.shop.by.diagram.exception.
+			NoSuchCSDiagramEntryException {
+
+		return getPersistence().findByCPInstanceId_Last(
+			CPInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
+	 */
+	public static CSDiagramEntry fetchByCPInstanceId_Last(
+		long CPInstanceId,
+		OrderByComparator<CSDiagramEntry> orderByComparator) {
+
+		return getPersistence().fetchByCPInstanceId_Last(
+			CPInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CPInstanceId = &#63;.
+	 *
+	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cs diagram entry
+	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
+	 */
+	public static CSDiagramEntry[] findByCPInstanceId_PrevAndNext(
+			long CSDiagramEntryId, long CPInstanceId,
+			OrderByComparator<CSDiagramEntry> orderByComparator)
+		throws com.liferay.commerce.shop.by.diagram.exception.
+			NoSuchCSDiagramEntryException {
+
+		return getPersistence().findByCPInstanceId_PrevAndNext(
+			CSDiagramEntryId, CPInstanceId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the cs diagram entries where CPInstanceId = &#63; from the database.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 */
+	public static void removeByCPInstanceId(long CPInstanceId) {
+		getPersistence().removeByCPInstanceId(CPInstanceId);
+	}
+
+	/**
+	 * Returns the number of cs diagram entries where CPInstanceId = &#63;.
+	 *
+	 * @param CPInstanceId the cp instance ID
+	 * @return the number of matching cs diagram entries
+	 */
+	public static int countByCPInstanceId(long CPInstanceId) {
+		return getPersistence().countByCPInstanceId(CPInstanceId);
+	}
+
+	/**
 	 * Returns the cs diagram entry where CPDefinitionId = &#63; and sequence = &#63; or throws a <code>NoSuchCSDiagramEntryException</code> if it could not be found.
 	 *
 	 * @param CPDefinitionId the cp definition ID

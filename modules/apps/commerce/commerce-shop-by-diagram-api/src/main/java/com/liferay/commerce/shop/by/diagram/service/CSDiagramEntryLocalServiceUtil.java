@@ -241,6 +241,13 @@ public class CSDiagramEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<CSDiagramEntry> getCPDefinitionRelatedCSDiagramEntries(
+		long cpDefinitionId) {
+
+		return getService().getCPDefinitionRelatedCSDiagramEntries(
+			cpDefinitionId);
+	}
+
 	/**
 	 * Returns a range of all the cs diagram entries.
 	 *

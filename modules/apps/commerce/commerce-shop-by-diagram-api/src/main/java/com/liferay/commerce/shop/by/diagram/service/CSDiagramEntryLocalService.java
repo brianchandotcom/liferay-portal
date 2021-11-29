@@ -220,6 +220,10 @@ public interface CSDiagramEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CSDiagramEntry> getCPDefinitionRelatedCSDiagramEntries(
+		long cpDefinitionId);
+
 	/**
 	 * Returns a range of all the cs diagram entries.
 	 *

@@ -272,6 +272,15 @@ public class CSDiagramEntryLocalServiceWrapper
 		return _csDiagramEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry>
+			getCPDefinitionRelatedCSDiagramEntries(long cpDefinitionId) {
+
+		return _csDiagramEntryLocalService.
+			getCPDefinitionRelatedCSDiagramEntries(cpDefinitionId);
+	}
+
 	/**
 	 * Returns a range of all the cs diagram entries.
 	 *

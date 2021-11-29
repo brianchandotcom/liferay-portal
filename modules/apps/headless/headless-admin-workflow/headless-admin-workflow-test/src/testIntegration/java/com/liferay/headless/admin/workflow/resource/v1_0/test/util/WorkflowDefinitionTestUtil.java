@@ -26,6 +26,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class WorkflowDefinitionTestUtil {
 
 	public static WorkflowDefinition addWorkflowDefinition() throws Exception {
+		return addWorkflowDefinition("workflow-definition.xml");
+	}
+
+	public static WorkflowDefinition addWorkflowDefinition(
+			String workflowDefinitionFileName)
+		throws Exception {
+
 		WorkflowDefinitionResource.Builder builder =
 			WorkflowDefinitionResource.builder();
 
@@ -44,7 +51,8 @@ public class WorkflowDefinitionTestUtil {
 				{
 					active = true;
 					content = WorkflowDefinitionTestUtil.getContent(
-						RandomTestUtil.randomString(), workflowDefinitionName);
+						RandomTestUtil.randomString(),
+						workflowDefinitionFileName, workflowDefinitionName);
 					dateCreated = RandomTestUtil.nextDate();
 					dateModified = RandomTestUtil.nextDate();
 					description = StringUtil.toLowerCase(
@@ -59,12 +67,13 @@ public class WorkflowDefinitionTestUtil {
 	}
 
 	public static String getContent(
-		String workflowDefinitionDescription, String workflowDefinitionName) {
+		String workflowDefinitionDescription, String workflowDefinitionFileName,
+		String workflowDefinitionName) {
 
 		return StringUtil.replace(
 			StringUtil.read(
 				WorkflowDefinitionTestUtil.class,
-				"dependencies/workflow-definition.xml"),
+				"dependencies/" + workflowDefinitionFileName),
 			new String[] {
 				"[$WORKFLOW-DEFINITION-DESCRIPTION$]",
 				"[$WORKFLOW-DEFINITION-NAME$]"

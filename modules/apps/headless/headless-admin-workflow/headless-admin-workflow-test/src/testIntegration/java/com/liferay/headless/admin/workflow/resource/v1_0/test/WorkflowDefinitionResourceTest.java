@@ -196,7 +196,7 @@ public class WorkflowDefinitionResourceTest
 		workflowDefinition.setActive(true);
 		workflowDefinition.setContent(
 			WorkflowDefinitionTestUtil.getContent(
-				workflowDefinition.getDescription(),
+				workflowDefinition.getDescription(), "workflow-definition.xml",
 				workflowDefinition.getName()));
 		workflowDefinition.setNodes(
 			new Node[] {

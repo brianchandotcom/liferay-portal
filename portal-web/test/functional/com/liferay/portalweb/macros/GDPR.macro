@@ -187,6 +187,20 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${userName}");
 	}
 
+	macro deleteExportedPersonalData {
+		for (var application : list "${applications}") {
+			var key_rowEntry = "${application}";
+
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteMultipleEntriesCP {
 		for (var rowEntry : list "${rowEntry}") {
 			LexiconEntry.selectEntry(rowEntry = "${rowEntry}");

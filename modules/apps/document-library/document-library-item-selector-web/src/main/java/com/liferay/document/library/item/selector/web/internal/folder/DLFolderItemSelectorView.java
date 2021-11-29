@@ -108,6 +108,9 @@ public class DLFolderItemSelectorView
 		long folderId = BeanParamUtil.getLong(
 			itemSelectorCriterion, (HttpServletRequest)servletRequest,
 			"folderId");
+		long selectedRepositoryId = BeanParamUtil.getLong(
+			itemSelectorCriterion, (HttpServletRequest)servletRequest,
+			"selectedRepositoryId");
 
 		servletRequest.setAttribute(
 			DLSelectFolderDisplayContext.class.getName(),
@@ -117,6 +120,7 @@ public class DLFolderItemSelectorView
 				BeanParamUtil.getLong(
 					itemSelectorCriterion, (HttpServletRequest)servletRequest,
 					"selectedFolderId", folderId),
+				selectedRepositoryId,
 				_isShowGroupSelector(itemSelectorCriterion)));
 
 		requestDispatcher.include(servletRequest, servletResponse);

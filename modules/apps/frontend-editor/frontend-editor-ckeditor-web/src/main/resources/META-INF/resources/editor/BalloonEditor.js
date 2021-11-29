@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef} from 'react';
+import React from 'react';
 
 import {Editor} from './Editor';
 import DEFAULT_BALLOON_EDITOR_CONFIG from './config/DefaultBalloonEditorConfiguration';
@@ -22,167 +22,95 @@ import '../css/main.scss';
 
 const EMPTY_OBJECT = {};
 
-const BalloonEditor = React.forwardRef(
-	(
-		{
-			config = EMPTY_OBJECT,
-			contents,
-			name,
-			onChange,
-			onChangeMethodName,
-			...otherProps
-		},
-		ref
-	) => {
-		const editorConfig = {
-			...DEFAULT_BALLOON_EDITOR_CONFIG,
-			...config,
-		};
+const BalloonEditor = ({
+	config = EMPTY_OBJECT,
+	contents,
+	name,
+	...otherProps
+}) => {
+	const editorConfig = {
+		...DEFAULT_BALLOON_EDITOR_CONFIG,
+		...config,
+	};
 
-		const editorRef = useRef();
+	return (
+		<Editor
+			config={editorConfig}
+			data={contents}
+			name={name}
+			onBeforeLoad={(CKEDITOR) => {
+				CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
+					languageId: themeDisplay.getLanguageId(),
+				};
 
-		const getHTML = useCallback(() => {
-			let data = contents;
+				CKEDITOR.disableAutoInline = true;
 
-			const editor = editorRef.current.editor;
+				CKEDITOR.getNextZIndex = function () {
+					return CKEDITOR.dialog._.currentZIndex
+						? CKEDITOR.dialog._.currentZIndex + 10
+						: Liferay.zIndex.WINDOW + 10;
+				};
+			}}
+			onInstanceReady={(event) => {
+				const editor = event.editor;
 
-			if (editor && editor.instanceReady) {
-				data = editor.getData();
+				const editable = editor.editable();
 
-				if (
-					CKEDITOR.env.gecko &&
-					CKEDITOR.tools.trim(data) === '<br />'
-				) {
-					data = '';
+				// `floatPanel` plugin requires `id` to be `cke_${editor.name}`
+
+				editable.setAttribute('id', `cke_${editor.name}`);
+
+				editable.attachClass('liferay-editable');
+
+				const balloonToolbars = editor.balloonToolbars;
+
+				if (editorConfig.toolbarText) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarText,
+						cssSelector: '*',
+					});
 				}
 
-				data = data.replace(/(\u200B){7}/, '');
-			}
-
-			return data;
-		}, [contents]);
-
-		const editorRefsCallback = useCallback(
-			(element) => {
-				if (ref) {
-					ref.current = element;
-				}
-				editorRef.current = element;
-			},
-			[ref, editorRef]
-		);
-
-		const onChangeCallback = () => {
-			if (!onChangeMethodName && !onChange) {
-				return;
-			}
-
-			const editor = editorRef.current.editor;
-
-			if (editor.checkDirty()) {
-				if (onChangeMethodName) {
-					window[onChangeMethodName](getHTML());
-				}
-				else {
-					onChange(getHTML());
+				if (editorConfig.toolbarImage) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarImage,
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+						widgets: 'image,image2',
+					});
 				}
 
-				editor.resetDirty();
-			}
-		};
+				if (editorConfig.toolbarTable) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarTable,
+						cssSelector: 'td',
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+					});
+				}
 
-		useEffect(() => {
-			window[name] = {
-				getHTML,
-				getText() {
-					return contents;
-				},
-			};
-		}, [name, contents, getHTML]);
-
-		return (
-			<Editor
-				config={editorConfig}
-				data={contents}
-				name={name}
-				onBeforeLoad={(CKEDITOR) => {
-					CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
-						languageId: themeDisplay.getLanguageId(),
-					};
-
-					CKEDITOR.disableAutoInline = true;
-
-					CKEDITOR.getNextZIndex = function () {
-						return CKEDITOR.dialog._.currentZIndex
-							? CKEDITOR.dialog._.currentZIndex + 10
-							: Liferay.zIndex.WINDOW + 10;
-					};
-				}}
-				onChange={onChangeCallback}
-				onInstanceReady={(event) => {
-					const editor = event.editor;
-
-					const editable = editor.editable();
-
-					// `floatPanel` plugin requires `id` to be `cke_${editor.name}`
-
-					editable.setAttribute('id', `cke_${editor.name}`);
-
-					editable.attachClass('liferay-editable');
-
-					const balloonToolbars = editor.balloonToolbars;
-
-					if (editorConfig.toolbarText) {
-						balloonToolbars.create({
-							buttons: editorConfig.toolbarText,
-							cssSelector: '*',
-						});
-					}
-
-					if (editorConfig.toolbarImage) {
-						balloonToolbars.create({
-							buttons: editorConfig.toolbarImage,
-							priority:
-								window.CKEDITOR.plugins.balloontoolbar.PRIORITY
-									.HIGH,
-							widgets: 'image,image2',
-						});
-					}
-
-					if (editorConfig.toolbarTable) {
-						balloonToolbars.create({
-							buttons: editorConfig.toolbarTable,
-							cssSelector: 'td',
-							priority:
-								window.CKEDITOR.plugins.balloontoolbar.PRIORITY
-									.HIGH,
-						});
-					}
-
-					if (editorConfig.toolbarVideo) {
-						balloonToolbars.create({
-							buttons: editorConfig.toolbarVideo,
-							priority:
-								window.CKEDITOR.plugins.balloontoolbar.PRIORITY
-									.HIGH,
-							widgets: 'videoembed',
-						});
-					}
-				}}
-				ref={editorRefsCallback}
-				type="inline"
-				{...otherProps}
-			/>
-		);
-	}
-);
+				if (editorConfig.toolbarVideo) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarVideo,
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+						widgets: 'videoembed',
+					});
+				}
+			}}
+			type="inline"
+			{...otherProps}
+		/>
+	);
+};
 
 BalloonEditor.propTypes = {
 	config: PropTypes.object,
 	contents: PropTypes.string,
 	name: PropTypes.string,
-	onChange: PropTypes.func,
-	onChangeMethodName: PropTypes.string,
 };
 
 export default BalloonEditor;

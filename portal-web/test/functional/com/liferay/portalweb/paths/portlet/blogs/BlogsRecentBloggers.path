@@ -11,6 +11,21 @@
 
 <tbody>
 <tr>
+	<td>NUMBER_OF_POST</td>
+	<td>//div[contains(@class,'blogger-post-count')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_OF_RATINGS</td>
+	<td>//div[contains(@class,'blogger-stars')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST_DATE</td>
+	<td>//div[contains(@class,'blogger-date')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_NAME_LINK</td>
 	<td>//div[contains(@id,'recent_bloggers')]//a[contains(@href,'/c/blogs/find_entry')]//span[contains(.,'${key_userName}')]</td>
 	<td></td>

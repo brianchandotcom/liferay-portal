@@ -18,6 +18,7 @@ import React, {useState} from 'react';
 
 import '../css/main.scss';
 import ButtonGuide from './guides/ButtonGuide';
+import CardGuide from './guides/CardGuide';
 import ColorGuide from './guides/ColorGuide';
 import FormGuide from './guides/FormGuide';
 import GeneralGuide from './guides/GeneralGuide';
@@ -54,6 +55,11 @@ const TABS = [
 		content: <LabelGuide />,
 		hash: '#labels',
 		label: Liferay.Language.get('labels'),
+	},
+	{
+		content: <CardGuide />,
+		hash: '#cards',
+		label: Liferay.Language.get('cards'),
 	},
 ];
 

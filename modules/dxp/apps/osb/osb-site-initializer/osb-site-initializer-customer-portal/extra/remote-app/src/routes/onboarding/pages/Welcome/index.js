@@ -39,7 +39,7 @@ const Welcome = ({ userAccount }) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [called, isLoadingPageGuard, project]);
 
-	if (isLoadingPageGuard || (called && loading)) {
+	if (isLoadingPageGuard || loading) {
 		return <WelcomeSkeleton />;
 	}
 

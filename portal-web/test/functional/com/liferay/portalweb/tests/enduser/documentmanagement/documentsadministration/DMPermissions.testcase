@@ -1062,13 +1062,61 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136848. It checks that a site member cannot subscribe to a folder without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test SiteMemberCannotSubscribeToFolder {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-136848 SiteMemberCannotSubscribeToFolder pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+		 	dmFolderDescription = "DM Folder Description",
+		 	dmFolderName = "DM Folder Name",
+		 	groupName = "Guest");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Site Member");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		Click(locator1 = "Icon#INFO");
+
+		AssertElementNotPresent(locator1 = "Icon#SUBSCRIBE");
 	}
 
 	@description = "This is a test for LPS-136849. It checks that a site member cannot update comments without permissions."

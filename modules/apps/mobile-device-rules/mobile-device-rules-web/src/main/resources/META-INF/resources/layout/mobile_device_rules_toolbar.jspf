@@ -24,7 +24,7 @@
 	</div>
 </c:if>
 
-<aui:script>
+<aui:script require="frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
 	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
 		dialog.hide();
 
@@ -53,6 +53,8 @@
 
 				if (uniqueRuleGroupInstancesContainer) {
 					uniqueRuleGroupInstancesContainer.innerHTML = response;
+
+					runScriptsInElement.default(uniqueRuleGroupInstancesContainer);
 				}
 			});
 	}

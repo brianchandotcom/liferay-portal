@@ -1,0 +1,7 @@
+definition {
+
+	macro openTranslationProcessesAdmin {
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_translation_web_internal_portlet_TranslationPortlet");
+	}
+
+}

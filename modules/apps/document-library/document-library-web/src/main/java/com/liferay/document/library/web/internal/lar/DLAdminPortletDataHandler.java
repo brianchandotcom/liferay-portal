@@ -186,7 +186,6 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 		portletPreferences.setValue("fileEntryColumns", StringPool.BLANK);
 		portletPreferences.setValue("folderColumns", StringPool.BLANK);
 		portletPreferences.setValue("foldersPerPage", StringPool.BLANK);
-		portletPreferences.setValue("repositoryId", StringPool.BLANK);
 		portletPreferences.setValue("rootFolderId", StringPool.BLANK);
 		portletPreferences.setValue("showFoldersSearch", StringPool.BLANK);
 		portletPreferences.setValue("showSubfolders", StringPool.BLANK);

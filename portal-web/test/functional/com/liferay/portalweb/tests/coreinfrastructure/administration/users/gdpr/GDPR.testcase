@@ -253,7 +253,8 @@ definition {
 
 		GDPR.anonymizeAllEntriesinApplicationCP(
 			applications = "Documents and Media",
-			itemsCount = "3");
+			applicationItemsCount = "3",
+			totalItemsCount = "3");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "Documents and Media");
 
@@ -433,7 +434,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "5");
+			applicationItemsCount = "5",
+			totalItemsCount = "5");
 
 		GDPR.anonymizeMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
 
@@ -487,7 +489,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Blogs",
-			itemsCount = "2");
+			applicationItemsCount = "2",
+			totalItemsCount = "2");
 
 		GDPR.anonymizeSingleEntryViaInfoPanel(rowEntry = "Blogs Entry 1");
 
@@ -683,7 +686,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "5");
+			applicationItemsCount = "5",
+			totalItemsCount = "5");
 
 		AssertTextPresent(value1 = "DLFOLDER");
 
@@ -693,7 +697,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "3");
+			applicationItemsCount = "3",
+			totalItemsCount = "3");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -878,7 +883,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "3");
+			applicationItemsCount = "3",
+			totalItemsCount = "3");
 
 		for (var orderBy : list "Name,Description") {
 			ManagementBar.setFilterAndOrder(orderBy = "${orderBy}");
@@ -968,7 +974,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "All Applications",
-			itemsCount = "1");
+			applicationItemsCount = "1",
+			totalItemsCount = "1");
 
 		GDPR.deleteAllEntriesCP();
 
@@ -1031,7 +1038,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "All Applications",
-			itemsCount = "4");
+			applicationItemsCount = "4",
+			totalItemsCount = "4");
 
 		GDPR.deleteAllEntriesCP();
 
@@ -1077,7 +1085,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "All Applications",
-			itemsCount = "1");
+			applicationItemsCount = "1",
+			totalItemsCount = "1");
 
 		GDPR.deleteAllEntriesCP();
 
@@ -1112,7 +1121,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Blogs",
-			itemsCount = "1");
+			applicationItemsCount = "1",
+			totalItemsCount = "1");
 
 		GDPR.deleteSingleEntryCP(rowEntry = "Blogs Entry Title");
 
@@ -1152,7 +1162,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "1");
+			applicationItemsCount = "1",
+			totalItemsCount = "1");
 
 		GDPR.editEntryCP(
 			applications = "Documents and Media",
@@ -1204,7 +1215,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "2");
+			applicationItemsCount = "2",
+			totalItemsCount = "2");
 
 		AssertTextPresent(value1 = "DLFOLDER");
 
@@ -1423,7 +1435,8 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "All Applications",
-			itemsCount = "6");
+			applicationItemsCount = "6",
+			totalItemsCount = "6");
 
 		for (var applicationsCount : list "Blogs (2),Documents and Media (4)") {
 			AssertTextPresent(value1 = "${applicationsCount}");

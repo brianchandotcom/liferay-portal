@@ -1676,6 +1676,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinition.getScope(),
 					ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
+				if (existingObjectDefinition != null) {
+					continue;
+				}
+
 				groupId = 0;
 			}
 

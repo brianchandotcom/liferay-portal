@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Translation"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanApproveTranslation {
 		Workflow.openWorkflowProcessBuilderConfiguration();
@@ -105,13 +104,72 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test TranslationStatusDoesNotChangeAfterReject {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-70763 TranslationStatusDoesNotChangeAfterReject pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Workflow.webContentGoToAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Refresh();
+
+		Translations.gotoTranslate(webContentTitle = "Web Content Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "pt-BR");
+
+		Button.clickSubmitForPublication();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		Click.clickNoMouseOver(
+			key_currentLocale = StringUtil.lowerCase("en-US"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		AssertTextEquals(
+			key_localizedLanguage = "pt-BR",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+			value1 = "Not Translated");
+
+		Navigator.gotoBack();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation of Web Content Title to pt-BR",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Translation of Web Content Title to pt-BR",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		Click.clickNoMouseOver(
+			key_currentLocale = StringUtil.lowerCase("en-US"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		AssertTextEquals(
+			key_localizedLanguage = "pt-BR",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+			value1 = "Not Translated");
 	}
 
 	@description = "Verify that the Translation status still Pending when the Translation is rejected"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TranslationStatusIsPendingOnReject {
 		Workflow.openWorkflowProcessBuilderConfiguration();

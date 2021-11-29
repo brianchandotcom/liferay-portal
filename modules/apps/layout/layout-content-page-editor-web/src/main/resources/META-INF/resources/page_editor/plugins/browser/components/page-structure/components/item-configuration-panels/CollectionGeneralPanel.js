@@ -453,8 +453,7 @@ export function CollectionGeneralPanel({item}) {
 					)}
 
 					{(!item.config.paginationType ||
-						(item.config.paginationType &&
-							!item.config.showAllItems)) && (
+						!item.config.showAllItems) && (
 						<ClayForm.Group
 							className={classNames({
 								'has-warning': numberOfItemsError,

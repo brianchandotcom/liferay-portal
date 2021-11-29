@@ -9,18 +9,30 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import '../../css/definition-builder/main.scss';
+import {DefinitionBuilderContextProvider} from './DefinitionBuilderContext';
 import DiagramBuilder from './diagram-builder/DiagramBuilder';
 import UpperToolbar from './shared/components/toolbar/UpperToolbar';
 
 export default function (props) {
-	return (
-		<div className="definition-builder-app">
-			<UpperToolbar {...props} />
+	const [selectedLanguageId, setSelectedLanguageId] = useState('');
+	const defaultLanguageId = themeDisplay.getLanguageId();
 
-			<DiagramBuilder version={props.version} />
-		</div>
+	const contextProps = {
+		defaultLanguageId,
+		selectedLanguageId,
+		setSelectedLanguageId,
+	};
+
+	return (
+		<DefinitionBuilderContextProvider {...contextProps}>
+			<div className="definition-builder-app">
+				<UpperToolbar {...props} />
+
+				<DiagramBuilder version={props.version} />
+			</div>
+		</DefinitionBuilderContextProvider>
 	);
 }

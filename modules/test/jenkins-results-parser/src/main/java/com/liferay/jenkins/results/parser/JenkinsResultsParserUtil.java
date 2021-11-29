@@ -3539,6 +3539,17 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
+					url.startsWith("https://release.liferay.com")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new BasicHTTPAuthorization(
+						buildProperties.getProperty(
+							"jenkins.admin.user.password"),
+						buildProperties.getProperty("jenkins.admin.user.name"));
+				}
+
+				if ((httpAuthorizationHeader == null) &&
 					url.matches("https://liferay.spiraservice.net.+")) {
 
 					Properties buildProperties = getBuildProperties();

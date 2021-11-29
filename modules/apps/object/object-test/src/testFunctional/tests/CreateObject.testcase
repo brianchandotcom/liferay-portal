@@ -2885,7 +2885,7 @@ definition {
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout",
 			objectName = "CustomObject");
-	
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
@@ -2920,9 +2920,9 @@ definition {
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
 			value = "Entry 1");
-	
+
 		Navigator.openURL();
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -2936,8 +2936,7 @@ definition {
 
 		AssertElementPresent(
 			key_tabName = "Relationship Tab",
-			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");	
-
+			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many will allow to delete only the entry with relation but not its relations"

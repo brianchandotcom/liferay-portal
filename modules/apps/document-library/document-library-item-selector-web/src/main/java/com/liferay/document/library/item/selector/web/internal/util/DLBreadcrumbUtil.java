@@ -100,8 +100,8 @@ public class DLBreadcrumbUtil {
 		long folderId, HttpServletRequest httpServletRequest,
 		PortletURL portletURL, long repositoryId, String title) {
 
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
+		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, title, portletURL.toString());

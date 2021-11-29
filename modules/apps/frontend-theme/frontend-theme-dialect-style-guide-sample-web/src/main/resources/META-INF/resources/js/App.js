@@ -27,32 +27,42 @@ import TypographyGuide from './guides/TypographyGuide';
 const TABS = [
 	{
 		content: <ColorGuide />,
+		hash: '#colors',
 		label: Liferay.Language.get('colors'),
 	},
 	{
 		content: <TypographyGuide />,
+		hash: '#typography',
 		label: Liferay.Language.get('typography'),
 	},
 	{
 		content: <GeneralGuide />,
+		hash: '#general',
 		label: Liferay.Language.get('general'),
 	},
 	{
 		content: <ButtonGuide />,
+		hash: '#buttons',
 		label: Liferay.Language.get('buttons'),
 	},
 	{
 		content: <FormGuide />,
+		hash: '#forms',
 		label: Liferay.Language.get('forms'),
 	},
 	{
 		content: <LabelGuide />,
+		hash: '#labels',
 		label: Liferay.Language.get('labels'),
 	},
 ];
 
 export default function App() {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState(
+		TABS.findIndex((tab) => tab.hash === location.hash) >= 0
+			? location.hash
+			: TABS[0].hash
+	);
 
 	return (
 		<div className="dialect-style-guide">
@@ -68,25 +78,31 @@ export default function App() {
 				<ClayTabs modern>
 					{TABS.map((tab, i) => (
 						<ClayTabs.Item
-							active={activeTabKeyValue === i}
+							active={activeTabKeyValue === tab.hash}
+							href={tab.hash}
 							id={`tab-${i}`}
 							innerProps={{
-								'aria-controls': `tabpanel-${i}`,
+								'aria-controls': `tabpanel-${tab.hash}`,
 							}}
 							key={tab.label}
-							onClick={() => setActiveTabKeyValue(i)}
+							onClick={() => setActiveTabKeyValue(tab.hash)}
 						>
 							{tab.label}
 						</ClayTabs.Item>
 					))}
 				</ClayTabs>
 
-				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-					{TABS.map((tab, i) => (
+				<ClayTabs.Content
+					activeIndex={TABS.findIndex(
+						(tab) => tab.hash === activeTabKeyValue
+					)}
+					fade
+				>
+					{TABS.map((tab) => (
 						<ClayTabs.TabPane
-							aria-labelledby={`tab-${i}`}
-							id={`tabpanel-${i}`}
-							key={tab.label}
+							aria-labelledby={`tab-${tab.hash}`}
+							id={`tabpanel-${tab.hash}`}
+							key={tab.hash}
 						>
 							{tab.content}
 						</ClayTabs.TabPane>

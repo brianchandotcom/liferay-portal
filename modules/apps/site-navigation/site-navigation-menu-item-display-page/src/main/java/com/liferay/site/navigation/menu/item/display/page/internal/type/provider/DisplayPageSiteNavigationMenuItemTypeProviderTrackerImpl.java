@@ -16,6 +16,7 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type.provide
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -23,6 +24,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -93,6 +95,9 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
+	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
+
+	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
@@ -148,6 +153,10 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 
 			InfoItemClassDetails infoItemClassDetails =
 				infoItemDetailsProvider.getInfoItemClassDetails();
+
+			if (!_hasDisplayPageInfoItemCapability(infoItemClassDetails)) {
+				return infoItemDetailsProvider;
+			}
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 				_layoutDisplayPageProviderTracker.
@@ -213,6 +222,22 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
+			}
+		}
+
+		private boolean _hasDisplayPageInfoItemCapability(
+			InfoItemClassDetails infoItemClassDetails) {
+
+			try {
+				_displayPageInfoItemCapability.verify(
+					infoItemClassDetails.getClassName());
+
+				return true;
+			}
+			catch (CapabilityVerificationException
+						capabilityVerificationException) {
+
+				return false;
 			}
 		}
 

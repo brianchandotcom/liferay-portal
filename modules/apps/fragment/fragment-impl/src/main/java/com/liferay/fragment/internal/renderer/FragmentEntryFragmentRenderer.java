@@ -242,7 +242,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		cacheKeySB.append(StringPool.DASH);
 		cacheKeySB.append(
 			StringUtil.merge(
-				fragmentRendererContext.getSegmentsExperienceIds(),
+				fragmentRendererContext.getSegmentsEntryIds(),
 				StringPool.SEMICOLON));
 
 		String content = StringPool.BLANK;

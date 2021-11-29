@@ -136,7 +136,7 @@ definition {
 
 			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
-			var currentContacts = selenium.getText(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER");
+			var currentContacts = selenium.getText("ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER");
 			var numberContacts = StringUtil.extractDigits("${currentContacts}");
 		}
 

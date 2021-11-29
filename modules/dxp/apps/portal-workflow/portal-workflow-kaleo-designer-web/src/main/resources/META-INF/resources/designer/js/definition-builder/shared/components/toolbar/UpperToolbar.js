@@ -17,8 +17,9 @@ import ClayLayout from '@clayui/layout';
 import ClayToolbar from '@clayui/toolbar';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {getAvailableLocalesObject} from '../../../util/availableLocales';
 
 export default function UpperToolbar({
@@ -28,13 +29,14 @@ export default function UpperToolbar({
 	translations,
 	version,
 }) {
+	const {
+		defaultLanguageId,
+		selectedLanguageId,
+		setSelectedLanguageId,
+	} = useContext(DefinitionBuilderContext);
 	const inputRef = useRef(null);
 
-	const defaultLanguageId = themeDisplay.getLanguageId();
-
 	const [definitionTitle, setDefinitionTitle] = useState(title);
-
-	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 
 	const availableLocales = getAvailableLocalesObject(
 		displayNames,

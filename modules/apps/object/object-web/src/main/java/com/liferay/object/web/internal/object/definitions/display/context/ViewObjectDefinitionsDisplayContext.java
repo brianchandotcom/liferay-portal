@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,6 +60,15 @@ public class ViewObjectDefinitionsDisplayContext {
 			getClayDataSetActionDropdownItems()
 		throws Exception {
 
+		LiferayPortletResponse liferayPortletResponse =
+			_objectRequestHelper.getLiferayPortletResponse();
+
+		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
+
+		resourceURL.setResourceID(
+			"/object_definitions/export_object_definition");
+		resourceURL.setParameter("objectDefinitionId", "{id}");
+
 		return Arrays.asList(
 			new ClayDataSetActionDropdownItem(
 				PortletURLBuilder.create(
@@ -69,6 +80,11 @@ public class ViewObjectDefinitionsDisplayContext {
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, null),
+			new ClayDataSetActionDropdownItem(
+				resourceURL.toString(), "export", "export",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(), "export-as-json"),
 				"get", null, null),
 			new ClayDataSetActionDropdownItem(
 				getAPIURL() + "/{id}", "trash", "delete",

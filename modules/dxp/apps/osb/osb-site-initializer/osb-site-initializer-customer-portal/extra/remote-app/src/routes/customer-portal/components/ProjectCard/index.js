@@ -1,7 +1,6 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 
-import BaseButton from '../../../../common/components/BaseButton';
 import StatusTag from '../StatusTag';
 import ProjectCardSkeleton from './Skeleton';
 
@@ -30,7 +29,7 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 				})}
 			>
 				<ClayCard.Description
-					className="text-neutral-3"
+					className="text-neutral-7"
 					displayType="title"
 					tag={isSmall ? 'h4' : 'h3'}
 					title={title}
@@ -84,16 +83,6 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 							</div>
 						)}
 					</ClayCard.Description>
-
-					{!isSmall && (
-						<BaseButton
-							appendIcon="angle-right"
-							borderless
-							className="p-0 text-brand-primary"
-						>
-							See details
-						</BaseButton>
-					)}
 				</div>
 			</ClayCard.Body>
 		</ClayCard>

@@ -116,7 +116,7 @@ const Home = ({userAccount}) => {
 								value={keyword}
 							/>
 
-							<h5 className="m-0 text-neutral-3">
+							<h5 className="m-0 text-neutral-7">
 								{projects.length} projects
 							</h5>
 						</div>

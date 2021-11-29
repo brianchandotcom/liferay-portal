@@ -4,18 +4,3 @@
 @import 'components/button';
 @import 'components/input';
 @import 'components/skeleton';
-
-:host {
-	--box-shadow-lg: var(--elevation-fluffy-3) rgba(11, 95, 255, 0.09);
-	--color-state-success-lighten-1: #eef8ec;
-	--display-line-height: 48px;
-	--color-state-error-lighten-2: #feefef;
-	--color-state-info-lighten-2: #eef2fa;
-	--form-input-error-bg: var(--color-state-error-lighten-2);
-	--form-input-success-bg: var(--color-state-success-lighten-1);
-	--form-input-font-weight: 700;
-	--form-input-label-font-weight: 700;
-	--form-input-placeholder-font-weight: 700;
-	--font-weight-normal: 400;
-	--text-paragraph-lg-line-height: 1.4;
-}

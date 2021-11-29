@@ -6,12 +6,12 @@ const Banner = ({userName}) => {
 	const [{assetsPath}] = useContext(AppContext);
 
 	return (
-		<div className="banner d-flex flex-column ml-5 rounded-left">
-			<div className="d-flex flex-column h-100 justify-content-between m-3 p-5 text-neutral-10">
+		<div className="banner d-flex flex-column ml-5 rounded-xl-left">
+			<div className="d-flex flex-column h-100 justify-content-between m-3 p-5 text-neutral-0">
 				<div className="display-4 font-weight-normal">
 					{'Welcome, '}
 
-					<span className="font-weight-bolder">{userName}!</span>
+					<span className="font-weight-bold">{userName}!</span>
 				</div>
 
 				<div>

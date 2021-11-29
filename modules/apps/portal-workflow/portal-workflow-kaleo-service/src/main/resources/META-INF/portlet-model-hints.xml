@@ -246,6 +246,7 @@
 		<field name="name" type="String">
 			<hint name="max-length">200</hint>
 		</field>
+		<field localized="true" name="label" type="String" />
 		<field name="metadata" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

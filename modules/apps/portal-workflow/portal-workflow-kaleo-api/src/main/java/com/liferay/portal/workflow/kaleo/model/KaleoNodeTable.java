@@ -56,6 +56,8 @@ public class KaleoNodeTable extends BaseTable<KaleoNodeTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<KaleoNodeTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KaleoNodeTable, String> label = createColumn(
+		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoNodeTable, String> metadata = createColumn(
 		"metadata", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoNodeTable, String> description = createColumn(

@@ -168,6 +168,7 @@ create table KaleoNode (
 	kaleoDefinitionId LONG,
 	kaleoDefinitionVersionId LONG,
 	name VARCHAR(200) null,
+	label STRING null,
 	metadata STRING null,
 	description STRING null,
 	type_ VARCHAR(20) null,

@@ -54,6 +54,7 @@ public class KaleoNodeWrapper
 		attributes.put(
 			"kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
 		attributes.put("name", getName());
+		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
@@ -132,6 +133,12 @@ public class KaleoNodeWrapper
 			setName(name);
 		}
 
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
+		}
+
 		String metadata = (String)attributes.get("metadata");
 
 		if (metadata != null) {
@@ -168,6 +175,11 @@ public class KaleoNodeWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
+	}
+
 	/**
 	 * Returns the company ID of this kaleo node.
 	 *
@@ -193,6 +205,11 @@ public class KaleoNodeWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getDefaultKaleoTransition();
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -265,6 +282,82 @@ public class KaleoNodeWrapper
 	@Override
 	public java.util.List<KaleoTransition> getKaleoTransitions() {
 		return model.getKaleoTransitions();
+	}
+
+	/**
+	 * Returns the label of this kaleo node.
+	 *
+	 * @return the label of this kaleo node
+	 */
+	@Override
+	public String getLabel() {
+		return model.getLabel();
+	}
+
+	/**
+	 * Returns the localized label of this kaleo node in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized label of this kaleo node
+	 */
+	@Override
+	public String getLabel(java.util.Locale locale) {
+		return model.getLabel(locale);
+	}
+
+	/**
+	 * Returns the localized label of this kaleo node in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this kaleo node. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getLabel(java.util.Locale locale, boolean useDefault) {
+		return model.getLabel(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized label of this kaleo node in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized label of this kaleo node
+	 */
+	@Override
+	public String getLabel(String languageId) {
+		return model.getLabel(languageId);
+	}
+
+	/**
+	 * Returns the localized label of this kaleo node in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this kaleo node
+	 */
+	@Override
+	public String getLabel(String languageId, boolean useDefault) {
+		return model.getLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getLabelCurrentLanguageId() {
+		return model.getLabelCurrentLanguageId();
+	}
+
+	@Override
+	public String getLabelCurrentValue() {
+		return model.getLabelCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized labels of this kaleo node.
+	 *
+	 * @return the locales and localized labels of this kaleo node
+	 */
+	@Override
+	public Map<java.util.Locale, String> getLabelMap() {
+		return model.getLabelMap();
 	}
 
 	/**
@@ -397,6 +490,21 @@ public class KaleoNodeWrapper
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	 * Sets the company ID of this kaleo node.
 	 *
@@ -475,6 +583,70 @@ public class KaleoNodeWrapper
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
 		model.setKaleoNodeId(kaleoNodeId);
+	}
+
+	/**
+	 * Sets the label of this kaleo node.
+	 *
+	 * @param label the label of this kaleo node
+	 */
+	@Override
+	public void setLabel(String label) {
+		model.setLabel(label);
+	}
+
+	/**
+	 * Sets the localized label of this kaleo node in the language.
+	 *
+	 * @param label the localized label of this kaleo node
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setLabel(String label, java.util.Locale locale) {
+		model.setLabel(label, locale);
+	}
+
+	/**
+	 * Sets the localized label of this kaleo node in the language, and sets the default locale.
+	 *
+	 * @param label the localized label of this kaleo node
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setLabel(
+		String label, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setLabel(label, locale, defaultLocale);
+	}
+
+	@Override
+	public void setLabelCurrentLanguageId(String languageId) {
+		model.setLabelCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized labels of this kaleo node from the map of locales and localized labels.
+	 *
+	 * @param labelMap the locales and localized labels of this kaleo node
+	 */
+	@Override
+	public void setLabelMap(Map<java.util.Locale, String> labelMap) {
+		model.setLabelMap(labelMap);
+	}
+
+	/**
+	 * Sets the localized labels of this kaleo node from the map of locales and localized labels, and sets the default locale.
+	 *
+	 * @param labelMap the locales and localized labels of this kaleo node
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setLabelMap(
+		Map<java.util.Locale, String> labelMap,
+		java.util.Locale defaultLocale) {
+
+		model.setLabelMap(labelMap, defaultLocale);
 	}
 
 	/**

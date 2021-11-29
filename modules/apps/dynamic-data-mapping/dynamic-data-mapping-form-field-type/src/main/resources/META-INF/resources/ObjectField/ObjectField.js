@@ -83,6 +83,9 @@ const ObjectField = ({
 				) {
 					return false;
 				}
+				else if (focusedFieldType === 'text' && type === 'Clob') {
+					return true;
+				}
 
 				return normalizedDataType.includes(type.toLowerCase());
 			}

@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.object.definitions.portlet.configuration.icon;
 
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.web.internal.configuration.activator.FFExportImportObjectDefinitionTypeConfigurationActivator;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 
@@ -44,7 +45,8 @@ public class ImportObjectDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return true;
+		return _ffExportImportObjectDefinitionTypeConfigurationActivator.
+			enabled();
 	}
 
 	@Override
@@ -54,5 +56,9 @@ public class ImportObjectDefinitionPortletConfigurationIcon
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private FFExportImportObjectDefinitionTypeConfigurationActivator
+		_ffExportImportObjectDefinitionTypeConfigurationActivator;
 
 }

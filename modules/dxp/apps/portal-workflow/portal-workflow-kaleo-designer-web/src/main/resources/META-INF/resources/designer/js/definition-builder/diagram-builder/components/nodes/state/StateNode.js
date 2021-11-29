@@ -10,8 +10,9 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import BaseNode from '../BaseNode';
 
 export default function StateNode({
@@ -20,6 +21,16 @@ export default function StateNode({
 	id,
 	...otherProps
 }) {
+	const {defaultLanguageId} = useContext(DefinitionBuilderContext);
+
+	if (!label || !label[defaultLanguageId]) {
+		const defaultLanguageId = themeDisplay.getLanguageId();
+
+		label = {
+			[defaultLanguageId]: Liferay.Language.get('state'),
+		};
+	}
+
 	return (
 		<BaseNode
 			className="state-node"
@@ -27,7 +38,7 @@ export default function StateNode({
 			descriptionSidebar={descriptionSidebar}
 			icon="circle"
 			id={id}
-			label={label ?? Liferay.Language.get('state')}
+			label={label}
 			type="state"
 			{...otherProps}
 		/>

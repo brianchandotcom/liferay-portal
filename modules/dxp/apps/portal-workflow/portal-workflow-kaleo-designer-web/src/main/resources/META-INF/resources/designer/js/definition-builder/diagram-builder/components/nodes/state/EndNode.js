@@ -10,8 +10,9 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import BaseNode from '../BaseNode';
 
 export default function EndNode({
@@ -20,6 +21,16 @@ export default function EndNode({
 	id,
 	...otherProps
 }) {
+	const {defaultLanguageId} = useContext(DefinitionBuilderContext);
+
+	if (!label || !label[defaultLanguageId]) {
+		const defaultLanguageId = themeDisplay.getLanguageId();
+
+		label = {
+			[defaultLanguageId]: Liferay.Language.get('end'),
+		};
+	}
+
 	return (
 		<BaseNode
 			className="end-node"
@@ -27,7 +38,7 @@ export default function EndNode({
 			descriptionSidebar={descriptionSidebar}
 			icon="flag-full"
 			id={id}
-			label={label ?? Liferay.Language.get('end')}
+			label={label}
 			type="end"
 			{...otherProps}
 		/>

@@ -13,6 +13,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import {nodeDescription} from './utils';
 
@@ -26,6 +27,9 @@ export default function BaseNode({
 	type,
 	...otherProps
 }) {
+	const {defaultLanguageId, selectedLanguageId} = useContext(
+		DefinitionBuilderContext
+	);
 	const {availableArea, selectedNode, setSelectedNode} = useContext(
 		DiagramBuilderContext
 	);
@@ -45,6 +49,20 @@ export default function BaseNode({
 		className = `${className} selected`;
 	}
 
+	let nodeLabel;
+
+	if (selectedLanguageId) {
+		if (!label[selectedLanguageId]) {
+			nodeLabel = label[defaultLanguageId];
+		}
+		else {
+			nodeLabel = label[selectedLanguageId];
+		}
+	}
+	else {
+		nodeLabel = label[defaultLanguageId];
+	}
+
 	return (
 		<div className="base-node">
 			{displayBorderArea && (
@@ -56,7 +74,10 @@ export default function BaseNode({
 				onClick={() => {
 					if (!descriptionSidebar) {
 						setSelectedNode({
-							data: {description, label},
+							data: {
+								description,
+								label,
+							},
 							id,
 							type,
 						});
@@ -78,9 +99,9 @@ export default function BaseNode({
 				<div className="node-info">
 					<span
 						className="node-label truncate-container"
-						title={label}
+						title={nodeLabel}
 					>
-						{label}
+						{nodeLabel}
 					</span>
 
 					<span
@@ -101,6 +122,6 @@ BaseNode.propTypes = {
 	descriptionSidebar: PropTypes.string,
 	icon: PropTypes.string.isRequired,
 	id: PropTypes.string.isRequired,
-	label: PropTypes.string,
+	label: PropTypes.object,
 	type: PropTypes.string.isRequired,
 };

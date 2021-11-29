@@ -38,16 +38,17 @@ const debouncedOnValueSelect = debounce(
 );
 
 export function ColorPickerField({field, onValueSelect, value}) {
+	const colors = {};
+	const id = useId();
 	const {tokenValues} = useStyleBook();
+
 	const [activeDropdown, setActiveDropdown] = useState(false);
 	const [color, setColor] = useControlledState(
 		config.tokenReuseEnabled
 			? tokenValues[value]?.value || value
 			: tokenValues[value]?.value
 	);
-	const colors = {};
 	const [customColors, setCustomColors] = useState([value || '']);
-	const id = useId();
 	const [isToken, setIsToken] = useState(!value || !!tokenValues[value]);
 
 	const tokenColorValues = Object.values(tokenValues).filter(
@@ -110,8 +111,8 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										: Liferay.Language.get('default')
 								}
 								onValueChange={({name, value}) => {
-									setColor(value);
 									onValueSelect(field.name, name);
+									setColor(value);
 								}}
 								value={color}
 							/>
@@ -127,12 +128,12 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										}}
 										onColorsChange={setCustomColors}
 										onValueChange={(color) => {
-											setColor(`#${color}`);
 											debouncedOnValueSelect(
 												onValueSelect,
 												field.name,
 												`#${color}`
 											);
+											setColor(`#${color}`);
 										}}
 										showHex={false}
 										showPalette={false}
@@ -234,11 +235,11 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										className="border-0"
 										displayType="secondary"
 										onClick={() => {
-											setIsToken(false);
 											setColor(tokenValues[value].value);
 											setCustomColors([
 												tokenValues[value].value,
 											]);
+											setIsToken(false);
 											onValueSelect(
 												field.name,
 												tokenValues[value].value

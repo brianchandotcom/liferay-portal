@@ -30,8 +30,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,33 +84,97 @@ public class XLIFF12InfoFormTranslationExporter
 
 		Element bodyElement = fileElement.addElement("body");
 
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoItemFieldValues.getInfoFieldValues();
+		Map<String, List<InfoFieldValue<Object>>> infoFieldValuesMap =
+			new LinkedHashMap<>();
 
-		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
 			InfoField infoField = infoFieldValue.getInfoField();
 
-			if (!_translationInfoFieldChecker.isTranslatable(infoField)) {
-				continue;
+			if (_translationInfoFieldChecker.isTranslatable(infoField)) {
+				List<InfoFieldValue<Object>> infoFieldValuesList =
+					infoFieldValuesMap.computeIfAbsent(
+						infoField.getName(), name -> new ArrayList<>());
+
+				infoFieldValuesList.add(infoFieldValue);
 			}
+		}
+
+		for (Map.Entry<String, List<InfoFieldValue<Object>>> entry :
+				infoFieldValuesMap.entrySet()) {
 
 			Element transUnitElement = bodyElement.addElement("trans-unit");
 
-			transUnitElement.addAttribute("id", infoField.getName());
+			transUnitElement.addAttribute("id", entry.getKey());
 
 			Element sourceElement = transUnitElement.addElement("source");
 
 			sourceElement.addAttribute(
 				"xml:lang", fileElement.attributeValue("source-language"));
+
+			List<InfoFieldValue<Object>> infoFieldValuesList = entry.getValue();
+
+			Stream<InfoFieldValue<Object>> stream =
+				infoFieldValuesList.stream();
+
 			sourceElement.addCDATA(
-				_getStringValue(infoFieldValue.getValue(sourceLocale)));
+				_getStringValue(
+					stream.map(
+						infoFieldValue -> (String)infoFieldValue.getValue(
+							sourceLocale)
+					).collect(
+						Collectors.joining(StringPool.COMMA_AND_SPACE)
+					)));
+
+			if (infoFieldValuesList.size() > 1) {
+				Element segSourceElement = transUnitElement.addElement(
+					"seg-source");
+
+				int mid = 0;
+
+				for (InfoFieldValue<Object> infoFieldValue :
+						infoFieldValuesList) {
+
+					Element mrkElement = segSourceElement.addElement("mrk");
+
+					mrkElement.addAttribute("mid", String.valueOf(mid));
+					mrkElement.addAttribute("mtype", "seg");
+					mrkElement.addCDATA(
+						(String)infoFieldValue.getValue(sourceLocale));
+
+					mid++;
+				}
+			}
 
 			Element targetElement = transUnitElement.addElement("target");
 
 			targetElement.addAttribute(
 				"xml:lang", fileElement.attributeValue("target-language"));
-			targetElement.addCDATA(
-				_getStringValue(infoFieldValue.getValue(targetLocale)));
+
+			if (infoFieldValuesList.size() > 1) {
+				int mid = 0;
+
+				for (InfoFieldValue<Object> infoFieldValue :
+						infoFieldValuesList) {
+
+					Element mrkElement = targetElement.addElement("mrk");
+
+					mrkElement.addAttribute("mid", String.valueOf(mid));
+					mrkElement.addAttribute("mtype", "seg");
+					mrkElement.addCDATA(
+						(String)infoFieldValue.getValue(targetLocale));
+
+					mid++;
+				}
+			}
+			else {
+				InfoFieldValue<Object> infoFieldValue = infoFieldValuesList.get(
+					0);
+
+				targetElement.addCDATA(
+					_getStringValue(infoFieldValue.getValue(targetLocale)));
+			}
 		}
 
 		String formattedString = document.formattedString();

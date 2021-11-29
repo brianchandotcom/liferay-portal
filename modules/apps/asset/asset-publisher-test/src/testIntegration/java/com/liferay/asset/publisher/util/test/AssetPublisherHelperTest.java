@@ -31,7 +31,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -560,14 +559,12 @@ public class AssetPublisherHelperTest {
 				overrideAllAssetCategoryIds, overrideAllAssetTagNames,
 				overrideAllKeywords);
 
-		ClassName journalArticleClassName =
-			_classNameLocalService.fetchClassName(
-				JournalArticle.class.getName());
+		assetEntryQuery.setClassNameIds(
+			new long[] {
+				_classNameLocalService.getClassNameId(
+					JournalArticle.class.getName())
+			});
 
-		long journalArticleClassNameID =
-			journalArticleClassName.getClassNameId();
-
-		assetEntryQuery.setClassNameIds(new long[] {journalArticleClassNameID});
 
 		long[] tagids = assetEntryQuery.getAllTagIds();
 

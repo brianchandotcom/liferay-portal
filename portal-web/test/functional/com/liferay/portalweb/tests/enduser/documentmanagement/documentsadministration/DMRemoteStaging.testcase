@@ -457,9 +457,7 @@ definition {
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
 		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToDocumentUsingCustomTypeAndSet";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -571,9 +569,7 @@ definition {
 	test PublishEditsToMetadataSet {
 		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToMetadataSet";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -650,9 +646,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Company",

@@ -31,9 +31,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddToAndRemoveFromDocumentType {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -73,9 +71,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteEntry {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.viewDefaultCP();
 
@@ -87,9 +83,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.delete(
 			metadataSetName = "DM Metadata Set Name",
@@ -102,9 +96,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test DeleteEntryViaManagementBar {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -114,9 +106,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.delete(
 			deleteViaManagementBar = "true",
@@ -127,9 +117,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test DeleteFields {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -155,9 +143,7 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMDocumentType.deleteFields(
 			dmDocumentTypeName = "DM Metadata Set Name",
@@ -184,9 +170,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithEditedImageField {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -220,9 +204,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Photo",
@@ -267,9 +249,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithEditedTextField {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -302,9 +282,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(textContent = "DM Document Text");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Company",
@@ -354,9 +332,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -391,9 +367,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(uploadFile = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Resume",

@@ -35,15 +35,7 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "Error:At least one field must be added.");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -904,9 +896,7 @@ definition {
 			numericValue = "123",
 			textContent = "DM Document Text");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Company",
@@ -1148,11 +1138,7 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name Empty");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 

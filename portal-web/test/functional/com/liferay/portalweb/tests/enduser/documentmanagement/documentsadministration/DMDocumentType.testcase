@@ -84,9 +84,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -137,9 +135,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddEntryWithNoTitle {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 

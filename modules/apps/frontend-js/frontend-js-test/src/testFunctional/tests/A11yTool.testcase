@@ -231,6 +231,57 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142327. Verifies the pop up displays detail information about the violation."
+	@priority = "3"
+	test CanDisplayViolationDetailsInPopUp {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Verfies there are violations on the page") {
+			VerifyElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			VerifyElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task ("Click on the icon next to the highlighted violation") {
+			Click(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task ("Assert the rule name is displayed") {
+			AssertElementPresent(
+				key_text = "button-name",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_TITLE");
+		}
+
+		task ("Assert the impact is displayed") {
+			AssertElementPresent(
+				key_impact = "critical",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+		}
+
+		task ("Assert a brief description is displayed") {
+			AssertElementPresent(
+				key_text = "Buttons must have discernible text",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_DESCRIPTION");
+		}
+
+		task ("Assert link to occurrence side panel is displayed") {
+			Click(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_ITEM");
+
+			AssertElementPresent(
+				key_text = "Occurrence 1",
+				locator1 = "A11yTool#VIOLATION_PANEL_COMPONENT_TITLE");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-142323. Verifies the side panel shows the violation occurrence when clicked from pop up."
 	@priority = "4"
 	test CanDisplayViolationDetailsInSidePanel {

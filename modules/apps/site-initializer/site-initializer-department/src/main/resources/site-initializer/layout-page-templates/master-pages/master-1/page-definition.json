@@ -179,6 +179,7 @@
 								"key": "footer"
 							},
 							"fragmentConfig": {
+								"marginBottom": 8
 							},
 							"fragmentFields": [
 								{

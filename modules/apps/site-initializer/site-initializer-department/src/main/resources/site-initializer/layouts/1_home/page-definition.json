@@ -1607,6 +1607,7 @@
 									"fragmentStyle": {
 										"backgroundColor": "",
 										"borderWidth": "0",
+										"marginBottom": "8",
 										"paddingBottom": "10",
 										"paddingTop": "10",
 										"textAlign": "",

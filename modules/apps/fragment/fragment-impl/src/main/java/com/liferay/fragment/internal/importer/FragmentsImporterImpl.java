@@ -221,8 +221,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, boolean cacheable,
-			String configuration, boolean readOnly, String typeLabel,
-			boolean overwrite)
+			String configuration, String icon, boolean readOnly,
+			String typeLabel, boolean overwrite)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -271,13 +271,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					fragmentCollection.getGroupId(), fragmentCollectionId,
 					fragmentEntryKey, name, css, html, js, cacheable,
-					configuration, 0, type, status,
+					configuration, icon, 0, type, status,
 					ServiceContextThreadLocal.getServiceContext());
 			}
 			else {
 				fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 					fragmentEntry.getFragmentEntryId(), fragmentCollectionId,
-					name, css, html, js, cacheable, configuration,
+					name, css, html, js, cacheable, configuration, icon,
 					fragmentEntry.getPreviewFileEntryId(), status);
 			}
 
@@ -688,6 +688,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String js = StringPool.BLANK;
 			boolean cacheable = false;
 			String configuration = StringPool.BLANK;
+			String icon = StringPool.BLANK;
 			boolean readOnly = false;
 			String typeLabel = StringPool.BLANK;
 
@@ -710,12 +711,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					zipFile, entry.getValue(),
 					jsonObject.getString("configurationPath"));
 				readOnly = jsonObject.getBoolean("readOnly");
+				icon = jsonObject.getString("icon");
 				typeLabel = jsonObject.getString("type");
 			}
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
-				cacheable, configuration, readOnly, typeLabel, overwrite);
+				cacheable, configuration, icon, readOnly, typeLabel, overwrite);
 
 			if (fragmentEntry == null) {
 				continue;
@@ -791,6 +793,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 							path + jsonObject.getString("configuration"),
 							path + jsonObject.getString("cssPath"),
 							path + jsonObject.getString("htmlPath"),
+							path + jsonObject.getString("icon"),
 							path + jsonObject.getString("jsPath"),
 							path + jsonObject.getString("thumbnailPath")
 						});

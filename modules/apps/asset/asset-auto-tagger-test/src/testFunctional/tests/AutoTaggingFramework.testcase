@@ -220,6 +220,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMAutoTagging#CanAddAutoTagAfterEnablingOpenNLP";
+		property websphere.ssl.truststore.enabled = "true";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",

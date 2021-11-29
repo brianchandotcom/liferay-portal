@@ -317,8 +317,8 @@ public class AssetPublisherHelperTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setScopeGroupId(_firstGroup.getGroupId());
 		themeDisplay.setLayout(LayoutTestUtil.addLayout(_firstGroup));
+		themeDisplay.setScopeGroupId(_firstGroup.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockLiferayPortletRenderRequest.setAttribute(

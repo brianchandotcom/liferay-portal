@@ -49,7 +49,7 @@ export async function addToCart(cpInstances, cartId, channel, accountId) {
 		return;
 	}
 
-	const fetchedCart = await CartResource.getCartById(cartId);
+	const fetchedCart = await CartResource.getCartByIdWithItems(cartId);
 	const updatedCartItems = fetchedCart.cartItems;
 
 	cpInstances.forEach((cpInstance) => {

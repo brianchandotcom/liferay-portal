@@ -24,43 +24,29 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 CSDiagramCPTypeDisplayContext csDiagramCPTypeDisplayContext = (CSDiagramCPTypeDisplayContext)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT);
 
 CSDiagramSetting csDiagramSetting = csDiagramCPTypeDisplayContext.getCSDiagramSetting(cpCatalogEntry.getCPDefinitionId());
+
+if (csDiagramSetting != null) {
+	CSDiagramType csDiagramType = csDiagramCPTypeDisplayContext.getCSDiagramType(csDiagramSetting.getType());
+
+	csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+}
+else {
 %>
 
-<div class="row">
-	<div class="col-lg-8 d-flex flex-column">
-		<commerce-ui:panel
-			bodyClasses="p-0"
-			elementClasses="flex-fill"
-			title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
-		>
-
-			<%
-			if (csDiagramSetting != null) {
-				CSDiagramType csDiagramType = csDiagramCPTypeDisplayContext.getCSDiagramType(csDiagramSetting.getType());
-
-				csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-			}
-			%>
-
-		</commerce-ui:panel>
+	<div class="row">
+		<div class="col-lg-8 d-flex flex-column">
+			<commerce-ui:panel
+				bodyClasses="p-0"
+				elementClasses="flex-fill"
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
+			>
+				<div class="p-3 text-center">
+					<liferay-ui:message key="the-diagram-is-not-available" />
+				</div>
+			</commerce-ui:panel>
+		</div>
 	</div>
 
-	<div class="col-lg-4">
-		<commerce-ui:panel
-			bodyClasses="p-0"
-			elementClasses="flex-fill"
-			title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
-		>
-			<react:component
-				module="js/DiagramTable/DiagramTable"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"isAdmin", true
-					).put(
-						"productId", cpCatalogEntry.getCProductId()
-					).build()
-				%>'
-			/>
-		</commerce-ui:panel>
-	</div>
-</div>
+<%
+}
+%>

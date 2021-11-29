@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
 import AddToCart from 'commerce-frontend-js/components/add_to_cart/AddToCart';
 import React from 'react';
@@ -49,19 +50,19 @@ function SkuContent({
 			)}
 
 			<div className="col">
-				{/* <div className="mb-1">
-					{sku?.availability && (
+				<div className="mb-1">
+					{product.availability && (
 						<ClayLabel
 							displayType={
-								sku.availability.label === 'available'
+								product.availability.label === 'available'
 									? 'success'
 									: 'danger'
 							}
 						>
-							{sku.availability.label_i18n}
+							{product.availability.label_i18n}
 						</ClayLabel>
 					)}
-				</div> */}
+				</div>
 
 				<h4 className="component-title mb-1">
 					<a href={productURL}>{productName}</a>
@@ -93,6 +94,7 @@ function SkuContent({
 						quantity,
 						skuId: product.skuId,
 					}}
+					disabled={product.availability.stockQuantity < 1}
 					settings={{
 						alignment: 'full-width',
 						iconOnly: true,

@@ -30,6 +30,7 @@ function AddToCartButton({
 	className,
 	cpInstances,
 	disabled,
+	hideIcon,
 	onAdd,
 	onError,
 	settings,
@@ -76,9 +77,11 @@ function AddToCartButton({
 				</span>
 			)}
 
-			<span className="cart-icon">
-				<ClayIcon symbol="shopping-cart" />
-			</span>
+			{!hideIcon && (
+				<span className="cart-icon">
+					<ClayIcon symbol="shopping-cart" />
+				</span>
+			)}
 		</ClayButton>
 	);
 }
@@ -92,6 +95,7 @@ AddToCartButton.defaultProps = {
 			options: '[]',
 		},
 	],
+	hideIcon: false,
 	onAdd: () => {},
 	onError: () => {},
 	settings: {
@@ -121,12 +125,13 @@ AddToCartButton.propTypes = {
 			skuId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	).isRequired,
+	disabled: PropTypes.bool,
+	hideIcon: PropTypes.bool,
 	onAdd: PropTypes.func.isRequired,
 	onError: PropTypes.func.isRequired,
 	settings: PropTypes.shape({
 		alignment: PropTypes.oneOf(['center', 'left', 'right', 'full-width']),
 		buttonText: PropTypes.string,
-		disabled: PropTypes.bool,
 		iconOnly: PropTypes.bool,
 		inline: PropTypes.bool,
 	}),

@@ -110,20 +110,25 @@ export function formatLabel(label) {
 }
 
 export function formatInitialQuantities(mappedProducts) {
-	return mappedProducts.map(mappedProduct => {
+	return mappedProducts.map((mappedProduct) => {
 		let initialQuantity;
 
-		if(mappedProduct?.productConfiguration?.allowedOrderQuantities.length > 1) {
-			initialQuantity = mappedProduct.productConfiguration.allowedOrderQuantities[0]
-		} else {
-			initialQuantity = Math.max(mappedProduct?.productConfiguration?.minOrderQuantity, mappedProduct.quantity)
+		if (mappedProduct.productConfiguration?.allowedOrderQuantities.length) {
+			initialQuantity =
+				mappedProduct.productConfiguration.allowedOrderQuantities[0];
+		}
+		else {
+			initialQuantity = Math.max(
+				mappedProduct.productConfiguration?.minOrderQuantity,
+				mappedProduct.quantity
+			);
 		}
 
 		return {
 			...mappedProduct,
-			initialQuantity
-		}
-	})
+			initialQuantity,
+		};
+	});
 }
 
 export function formatProductOptions(skuOptions, productOptions) {
@@ -131,24 +136,23 @@ export function formatProductOptions(skuOptions, productOptions) {
 
 	return optionsData.reduce((formattedOptions, optionData) => {
 		const [optionId, optionValueId] = optionData;
-	
+
 		const option = productOptions.find(
 			(productOption) => String(productOption.id) === String(optionId)
 		);
-	
+
 		const optionValue =
 			option &&
 			option.productOptionValues.find(
 				(productOptionValue) =>
 					String(productOptionValue.id) === String(optionValueId)
 			);
-	
+
 		return [
 			...formattedOptions,
-			{key: option.key, value: [optionValue.key]}
+			{key: option.key, value: [optionValue.key]},
 		];
-	}, [])
-
+	}, []);
 }
 
 export function getProductURL(productBaseURL, productURLs) {

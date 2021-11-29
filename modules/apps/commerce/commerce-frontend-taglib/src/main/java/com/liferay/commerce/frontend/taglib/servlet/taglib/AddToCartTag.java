@@ -140,18 +140,6 @@ public class AddToCartTag extends IncludeTag {
 		return _alignment;
 	}
 
-	public String getSize() {
-		return _size;
-	}
-
-	public boolean getInline() {
-		return _inline;
-	}
-
-	public boolean getIconOnly() {
-		return _iconOnly;
-	}
-
 	public CPCatalogEntry getCPCatalogEntry() {
 		return _cpCatalogEntry;
 	}
@@ -160,12 +148,28 @@ public class AddToCartTag extends IncludeTag {
 		return _cpInstanceId;
 	}
 
+	public boolean getIconOnly() {
+		return _iconOnly;
+	}
+
+	public boolean getInline() {
+		return _inline;
+	}
+
 	public String getNamespace() {
 		return _namespace;
 	}
 
 	public String getOptions() {
 		return _options;
+	}
+
+	public String getSize() {
+		return _size;
+	}
+
+	public void setAlignment(String alignment) {
+		_alignment = alignment;
 	}
 
 	@Override
@@ -200,25 +204,20 @@ public class AddToCartTag extends IncludeTag {
 			httpServletRequest, "stockQuantity", _stockQuantity);
 	}
 
-	public void setAlignment(String alignment) {
-		_alignment = alignment;
-	}
-	public void setSize(String size) {
-		_size = size;
-	}
-	public void setInline(boolean inline) {
-		_inline = inline;
-	}
-	public void setIconOnly(boolean iconOnly) {
-		_iconOnly = iconOnly;
-	}
-
 	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
 		_cpCatalogEntry = cpCatalogEntry;
 	}
 
 	public void setCPInstanceId(long cpInstanceId) {
 		_cpInstanceId = cpInstanceId;
+	}
+
+	public void setIconOnly(boolean iconOnly) {
+		_iconOnly = iconOnly;
+	}
+
+	public void setInline(boolean inline) {
+		_inline = inline;
 	}
 
 	public void setNamespace(String namespace) {
@@ -245,14 +244,15 @@ public class AddToCartTag extends IncludeTag {
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
+	public void setSize(String size) {
+		_size = size;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_alignment = "center";
-		_iconOnly = false;
-		_inline = false;
-		_size = "md";
 		_commerceAccountId = 0;
 		_commerceChannelGroupId = 0;
 		_commerceChannelId = 0;
@@ -265,11 +265,14 @@ public class AddToCartTag extends IncludeTag {
 		_cpContentHelper = null;
 		_cpInstanceId = 0;
 		_disabled = false;
+		_iconOnly = false;
 		_inCart = false;
+		_inline = false;
 		_namespace = StringPool.BLANK;
 		_options = null;
 		_productHelper = null;
 		_productSettingsModel = null;
+		_size = "md";
 		_stockQuantity = 0;
 	}
 
@@ -285,10 +288,7 @@ public class AddToCartTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(AddToCartTag.class);
 
-	private String _alignment;
-	private boolean _iconOnly;
-	private boolean _inline;
-	private String _size;
+	private String _alignment = "center";
 	private long _commerceAccountId;
 	private long _commerceChannelGroupId;
 	private long _commerceChannelId;
@@ -301,11 +301,14 @@ public class AddToCartTag extends IncludeTag {
 	private CPContentHelper _cpContentHelper;
 	private long _cpInstanceId;
 	private boolean _disabled;
+	private boolean _iconOnly;
 	private boolean _inCart;
+	private boolean _inline;
 	private String _namespace = StringPool.BLANK;
 	private String _options;
 	private ProductHelper _productHelper;
 	private ProductSettingsModel _productSettingsModel;
+	private String _size = "md";
 	private int _stockQuantity;
 
 }

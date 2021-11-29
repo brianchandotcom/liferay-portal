@@ -156,8 +156,8 @@ if (cpSku != null) {
 			<div class="align-items-center d-flex mt-3 product-detail-actions">
 				<commerce-ui:add-to-cart
 					alignment="left"
-					inline="<%= true %>"
 					CPCatalogEntry="<%= cpCatalogEntry %>"
+					inline="<%= true %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					options='<%= "[]" %>'
 					size="lg"

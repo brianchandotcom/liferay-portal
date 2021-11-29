@@ -94,51 +94,33 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 				</div>
 			</commerce-ui:panel>
 		</div>
+	</div>
 
-		<div class="col-lg-8 d-flex flex-column">
-			<commerce-ui:panel
-				bodyClasses="p-0"
-				elementClasses="flex-fill"
-				title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
-			>
+	<%
+	if (csDiagramSetting != null) {
+		csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+	}
+	else {
+	%>
 
-				<%
-				if (csDiagramSetting != null) {
-					csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-				}
-				else {
-				%>
-
+		<div class="row">
+			<div class="col-lg-8 d-flex flex-column">
+				<commerce-ui:panel
+					bodyClasses="p-0"
+					elementClasses="flex-fill"
+					title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
+				>
 					<div class="p-3 text-center">
 						<liferay-ui:message key="please-upload-a-file" />
 					</div>
-
-				<%
-				}
-				%>
-
-			</commerce-ui:panel>
+				</commerce-ui:panel>
+			</div>
 		</div>
 
-		<div class="col-lg-4">
-			<commerce-ui:panel
-				bodyClasses="p-0"
-				elementClasses="flex-fill"
-				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
-			>
-				<react:component
-					module="js/DiagramTable/DiagramTable"
-					props='<%=
-						HashMapBuilder.<String, Object>put(
-							"isAdmin", true
-						).put(
-							"productId", cpDefinition.getCProductId()
-						).build()
-					%>'
-				/>
-			</commerce-ui:panel>
-		</div>
-	</div>
+	<%
+	}
+	%>
+
 </aui:form>
 
 <liferay-frontend:component

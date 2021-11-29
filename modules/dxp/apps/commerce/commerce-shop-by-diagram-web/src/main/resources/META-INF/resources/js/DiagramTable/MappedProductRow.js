@@ -30,6 +30,8 @@ export default function MappedProductRow({
 	setNewQuantity,
 	setSelectedSkusId,
 }) {
+	const available = product.availability?.label === 'available';
+
 	return (
 		<ClayTable.Row
 			key={product.id}
@@ -40,7 +42,10 @@ export default function MappedProductRow({
 				<ClayTable.Cell>
 					<ClayCheckbox
 						checked={selectedSkusId.includes(product.skuId)}
-						disabled={product.type !== 'sku'}
+						disabled={
+							product.type !== 'sku' ||
+							(product.type === 'sku' && !available)
+						}
 						onChange={(event) => {
 							if (event.target.checked) {
 								setSelectedSkusId([
@@ -79,16 +84,19 @@ export default function MappedProductRow({
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className={classNames(isAdmin && 'text-right')}>
-				{isAdmin && product.quantity}
+				{isAdmin && product.type === 'sku' && product.quantity}
 
-				{!isAdmin && product.productConfiguration && product.type === 'sku' && (
-					<QuantitySelector
-						{...product.productConfiguration}
-						onUpdate={setNewQuantity}
-						quantity={quantity}
-						size="sm"
-					/>
-				)}
+				{!isAdmin &&
+					product.productConfiguration &&
+					product.type === 'sku' && (
+						<QuantitySelector
+							{...product.productConfiguration}
+							disabled={!available}
+							onUpdate={setNewQuantity}
+							quantity={quantity}
+							size="sm"
+						/>
+					)}
 			</ClayTable.Cell>
 
 			{!isAdmin && (

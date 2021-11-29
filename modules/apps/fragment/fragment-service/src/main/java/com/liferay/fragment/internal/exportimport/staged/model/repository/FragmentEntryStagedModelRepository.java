@@ -73,7 +73,8 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getFragmentCollectionId(),
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
+			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
 			fragmentEntry.getStatus(), serviceContext);
 	}
@@ -160,7 +161,7 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
-			fragmentEntry.getConfiguration(),
+			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getStatus());
 	}
 

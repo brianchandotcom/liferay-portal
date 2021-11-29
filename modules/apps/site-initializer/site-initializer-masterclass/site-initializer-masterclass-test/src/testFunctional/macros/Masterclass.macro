@@ -33,4 +33,13 @@ definition {
 			locator1 = "Masterclass#FRAGMENT_NAME");
 	}
 
+	macro simulateAndViewPageElements {
+      	MobileDevice.previewPG(deviceType = "${deviceType}");
+
+		for (var element : list "${elementsList}") {
+            AssertElementPresent(
+            	key_fragmentName = "${element}",
+            	locator1 = "Masterclass#FRAGMENTS_IN_SIMULATION");
+		}
+	}
 }

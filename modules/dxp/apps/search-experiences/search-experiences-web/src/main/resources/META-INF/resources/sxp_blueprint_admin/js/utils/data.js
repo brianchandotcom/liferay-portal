@@ -61,7 +61,7 @@ export const DEFAULT_PARAMETER_CONFIGURATION = {};
 export const DEFAULT_SORT_CONFIGURATION = {};
 
 export const BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION = {
-	excludes: [
+	clauseContributorsExcludes: [
 		'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
 		'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
 		'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor',
@@ -120,7 +120,7 @@ export const BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION = {
 		'com.liferay.segments.internal.search.spi.model.query.contributor.SegmentsEntryModelPreFilterContributor',
 		'com.liferay.segments.internal.search.spi.model.query.contributor.UserModelPreFilterContributor',
 	],
-	includes: [
+	clauseContributorsIncludes: [
 		'com.liferay.blogs.internal.search.spi.model.query.contributor.BlogsEntryModelPreFilterContributor',
 		'com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksEntryModelPreFilterContributor',
 		'com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksFolderModelPreFilterContributor',

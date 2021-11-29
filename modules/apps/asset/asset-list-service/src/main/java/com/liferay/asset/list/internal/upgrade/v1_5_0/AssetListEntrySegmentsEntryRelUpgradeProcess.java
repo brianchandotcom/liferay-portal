@@ -27,7 +27,7 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		alter(
 			AssetListEntrySegmentsEntryRelTable.class,
-			new UpgradeProcess.AlterTableAddColumn("priority", "INTEGER"));
+			new AlterTableAddColumn("priority", "INTEGER default 0 not null"));
 	}
 
 }

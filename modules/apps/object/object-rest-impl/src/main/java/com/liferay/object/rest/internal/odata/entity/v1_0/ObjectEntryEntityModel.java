@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.odata.entity.v1_0;
 
 import com.liferay.object.model.ObjectField;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.BooleanEntityField;
@@ -73,12 +74,29 @@ public class ObjectEntryEntityModel implements EntityModel {
 		).build();
 
 		for (ObjectField objectField : objectFields) {
-			_getEntityField(
-				objectField
-			).ifPresent(
-				entityField -> _entityFieldsMap.put(
-					objectField.getName(), entityField)
-			);
+			if (Objects.equals(
+					objectField.getRelationshipType(), "oneToMany")) {
+
+				String objectFieldName = objectField.getName();
+
+				String[] objectFieldNameParts = objectFieldName.split(
+					StringPool.UNDERLINE);
+
+				_entityFieldsMap.put(
+					objectFieldNameParts[3],
+					new IntegerEntityField(
+						objectFieldNameParts[3],
+						locale ->
+							"nestedFieldArray.value_long#" + objectFieldName));
+			}
+			else {
+				_getEntityField(
+					objectField
+				).ifPresent(
+					entityField -> _entityFieldsMap.put(
+						objectField.getName(), entityField)
+				);
+			}
 		}
 	}
 

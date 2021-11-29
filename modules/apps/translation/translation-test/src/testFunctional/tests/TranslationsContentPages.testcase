@@ -243,7 +243,7 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "ja-JP",
 			status = "Approved",
-			title = "Translation of Test Content Page Name to ja-JP");
+			title = "Translation of Test Content Page Name (Segment Email Experience) to ja-JP");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",

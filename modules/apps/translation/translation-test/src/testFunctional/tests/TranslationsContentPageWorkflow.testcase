@@ -711,19 +711,19 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.resubmitTaskByActions(
-			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
+			workflowAssetTitle = "Translation of Test Content Page Name (Segment Email Experience) to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Update");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
+			workflowAssetTitle = "Translation of Test Content Page Name (Segment Email Experience) to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
+			workflowAssetTitle = "Translation of Test Content Page Name (Segment Email Experience) to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
@@ -829,12 +829,12 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
+			workflowAssetTitle = "Translation of Test Content Page Name (Segment Email Experience) to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Translation of Test Content Page Name to es-ES",
+			workflowAssetTitle = "Translation of Test Content Page Name (Segment Email Experience) to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
@@ -843,7 +843,7 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",
-			title = "Translation of Test Content Page Name to es-ES");
+			title = "Translation of Test Content Page Name (Segment Email Experience) to es-ES");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",

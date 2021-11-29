@@ -112,7 +112,7 @@ public class
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			locale, "product-content-based-recommendations");
+			locale, "content-based-product-recommendations");
 	}
 
 	@Override

@@ -111,7 +111,7 @@ public class
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "frequent-pattern-recommendations");
+		return LanguageUtil.get(locale, "also-bought-product-recommendations");
 	}
 
 	@Override

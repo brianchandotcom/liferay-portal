@@ -150,8 +150,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			locale, "user-interaction-based-product-recommendations");
+		return LanguageUtil.get(locale, "user-personalized-recommendations");
 	}
 
 	@Override

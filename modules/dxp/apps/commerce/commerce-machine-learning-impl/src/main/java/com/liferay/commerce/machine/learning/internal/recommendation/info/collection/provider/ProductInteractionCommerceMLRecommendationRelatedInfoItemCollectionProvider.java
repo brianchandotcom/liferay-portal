@@ -110,7 +110,7 @@ public class
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "product-interaction-based-recommendations";
+		return "you-may-also-like-product-recommendations";
 	}
 
 	@Override

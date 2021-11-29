@@ -1,5 +1,6 @@
 !/css/_clay_variables.scss
 !/css/_custom.scss
+!/css/custom_properties/_custom_properties_set.scss
 !/css/dialect
 /css
 /templates

@@ -71,7 +71,7 @@ function renderEditSXPBlueprintForm(props) {
 	);
 }
 
-describe('EditSXPBlueprintForm', () => {
+describe.skip('EditSXPBlueprintForm', () => {
 	global.URL.createObjectURL = jest.fn();
 
 	it('renders the configuration set form', () => {

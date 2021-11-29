@@ -45,6 +45,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -78,10 +81,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		Map<Locale, String> importedLocaleTitleMap = new HashMap<>();
 		Map<Locale, String> importedLocaleDescriptionMap = new HashMap<>();
-		Map<Locale, Map<String, String>> importedLocaleContentMap =
+		Map<Locale, Map<String, List<String>>> importedLocaleContentMap =
 			new HashMap<>();
 		Set<Locale> translatedLocales = new HashSet<>();
-		Map<String, String> fieldNameContentMap = new HashMap<>();
+		Map<String, List<String>> fieldNameContentMap = new HashMap<>();
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
@@ -114,7 +117,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 								importedLocaleTitleMap.put(locale, valueString);
 							}
 							else {
-								fieldNameContentMap.put(fieldName, valueString);
+								List<String> values =
+									fieldNameContentMap.computeIfAbsent(
+										fieldName, name -> new ArrayList<>());
+
+								values.add(valueString);
 
 								importedLocaleContentMap.put(
 									locale, fieldNameContentMap);
@@ -183,18 +190,18 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 	private void _addNewTranslatedDDMField(
 			DDMStructure ddmStructure, Locale targetLocale, String ddmFieldName,
-			Fields ddmFields, String ddmFieldValue)
+			Fields ddmFields, List<String> ddmFieldValues)
 		throws Exception {
 
 		Field ddmField = new Field(
 			ddmStructure.getStructureId(), ddmFieldName,
 			Collections.emptyList(), ddmFields.getDefaultLocale());
 
-		ddmField.setValue(
+		ddmField.setValues(
 			targetLocale,
-			FieldConstants.getSerializable(
-				targetLocale, targetLocale,
-				ddmStructure.getFieldType(ddmFieldName), ddmFieldValue));
+			ListUtil.toList(
+				ddmFieldValues,
+				value -> _getSerializable(ddmField, value, targetLocale)));
 
 		ddmFields.put(ddmField);
 
@@ -261,6 +268,18 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		return Optional.empty();
 	}
 
+	private Serializable _getSerializable(
+		Field field, String value, Locale targetLocale) {
+
+		try {
+			return FieldConstants.getSerializable(
+				targetLocale, targetLocale, field.getDataType(), value);
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
 	private ServiceContext _getServiceContext(JournalArticle journalArticle)
 		throws Exception {
 
@@ -305,12 +324,12 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 	private String _getTranslatedContent(
 			String content, DDMStructure ddmStructure,
-			Map<Locale, Map<String, String>> importedLocaleContentMap,
+			Map<Locale, Map<String, List<String>>> importedLocaleContentMap,
 			Locale targetLocale)
 		throws Exception {
 
-		Map<String, String> contentFieldMap = importedLocaleContentMap.get(
-			targetLocale);
+		Map<String, List<String>> contentFieldMap =
+			importedLocaleContentMap.get(targetLocale);
 
 		if ((contentFieldMap == null) || contentFieldMap.isEmpty()) {
 			return content;
@@ -319,15 +338,17 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		Fields ddmFields = _journalConverter.getDDMFields(
 			ddmStructure, content);
 
-		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
+		for (Map.Entry<String, List<String>> entry :
+				contentFieldMap.entrySet()) {
+
 			Field field = ddmFields.get(entry.getKey());
 
 			if (field != null) {
-				field.setValue(
+				field.setValues(
 					targetLocale,
-					FieldConstants.getSerializable(
-						targetLocale, targetLocale, field.getDataType(),
-						entry.getValue()));
+					ListUtil.toList(
+						entry.getValue(),
+						value -> _getSerializable(field, value, targetLocale)));
 			}
 			else if (ddmStructure.hasField(entry.getKey())) {
 				_addNewTranslatedDDMField(

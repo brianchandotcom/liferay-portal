@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Pei-Jung Lan
@@ -56,10 +59,10 @@ public class AccountRoleDisplaySearchContainerFactory {
 		searchContainer.setId("accountRoles");
 		searchContainer.setOrderByCol("name");
 
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"account-role-order-by-type", "asc"));
 
 		searchContainer.setRowChecker(
 			new AccountRoleRowChecker(liferayPortletResponse));
@@ -81,7 +84,8 @@ public class AccountRoleDisplaySearchContainerFactory {
 					}
 				).build(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				new RoleNameComparator(orderByType.equals("asc")));
+				new RoleNameComparator(
+					Objects.equals(searchContainer.getOrderByType(), "asc")));
 
 		List<AccountRoleDisplay> accountRoleDisplays = TransformUtil.transform(
 			baseModelSearchResult.getBaseModels(),

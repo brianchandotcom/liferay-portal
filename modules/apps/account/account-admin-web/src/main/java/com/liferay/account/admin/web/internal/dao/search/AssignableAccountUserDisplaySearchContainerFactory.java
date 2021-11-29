@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,15 +70,15 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		searchContainer.setId("accountUsers");
 
-		String orderByCol = ParamUtil.getString(
-			liferayPortletRequest, "orderByCol", "last-name");
+		searchContainer.setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"assignable-account-user-order-by-col", "last-name"));
 
-		searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				"assignable-account-user-order-by-type", "asc"));
 
 		searchContainer.setRowChecker(rowChecker);
 
@@ -95,8 +97,8 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 				AccountConstants.ACCOUNT_ENTRY_ID_ANY,
 				_getEmailAddressDomains(accountEntryId, navigation), keywords,
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
-				searchContainer.getDelta(), orderByCol,
-				_isReverseOrder(orderByType));
+				searchContainer.getDelta(), searchContainer.getOrderByCol(),
+				_isReverseOrder(searchContainer.getOrderByType()));
 
 		searchContainer.setResults(
 			TransformUtil.transform(

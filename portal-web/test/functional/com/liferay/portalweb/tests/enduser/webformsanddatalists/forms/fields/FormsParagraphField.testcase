@@ -295,6 +295,10 @@ definition {
 			formPageCurrent = "Page 2",
 			formPageNext = "Page 3");
 
+		FormFields.editColor(
+			colorSwatchItem = "2BA676",
+			fieldLabel = "Color");
+
 		FormFields.viewUploadField(
 			fieldLabel = "Upload Field",
 			fieldName = "${fieldUploadField}");
@@ -304,10 +308,6 @@ definition {
 		ItemSelector.uploadFile(
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
-
-		FormFields.editColor(
-			colorSwatchItem = "2BA676",
-			fieldLabel = "Color");
 
 		FormPortlet.submitSuccessfully();
 

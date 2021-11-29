@@ -655,6 +655,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_MULTILINE_FIELD_2</td>
+	<td>//div[contains(@data-field-name,'Text')]//textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -58,7 +58,8 @@ definition {
 	macro anonymizeAllEntriesinApplicationCP {
 		GDPR.filterByApplications(
 			applications = "${applications}",
-			itemsCount = "${itemsCount}");
+			applicationItemsCount = "${applicationItemsCount}",
+			totalItemsCount = "${totalItemsCount}");
 
 		PortletEntry.selectAll();
 
@@ -160,7 +161,8 @@ definition {
 	macro deleteAndAnonymizeAllEntriesCP {
 		GDPR.filterByApplications(
 			applications = "All Applications",
-			itemsCount = "${itemsCount}");
+			applicationItemsCount = "${itemsCount}",
+			totalItemsCount = "${itemsCount}");
 
 		GDPR.deleteAllEntriesCP();
 
@@ -243,12 +245,12 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_applications = "${applications}",
 			locator1 = "DataErasure#APPLICATIONS_COUNT",
-			value1 = "${applications} (${itemsCount})");
+			value1 = "${applications} (${applicationItemsCount})");
 
 		AssertTextEquals.assertPartialText(
-			key_itemsCount = "${itemsCount}",
+			key_itemsCount = "${totalItemsCount}",
 			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
-			value1 = "Remaining Items: ${itemsCount}");
+			value1 = "Remaining Items: ${totalItemsCount}");
 	}
 
 	macro filterByScope {

@@ -123,19 +123,21 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			Layout layout = themeDisplay.getLayout();
+			if (themeDisplay != null) {
+				Layout layout = themeDisplay.getLayout();
 
-			if (layout != null) {
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(mentionedUser);
+				if (layout != null) {
+					PermissionChecker permissionChecker =
+						PermissionCheckerFactoryUtil.create(mentionedUser);
 
-				if (!LayoutPermissionUtil.contains(
-						permissionChecker, layout, true, ActionKeys.VIEW) ||
-					!PortletPermissionUtil.contains(
-						permissionChecker, layout, themeDisplay.getPpid(),
-						ActionKeys.VIEW)) {
+					if (!LayoutPermissionUtil.contains(
+							permissionChecker, layout, true, ActionKeys.VIEW) ||
+						!PortletPermissionUtil.contains(
+							permissionChecker, layout, themeDisplay.getPpid(),
+							ActionKeys.VIEW)) {
 
-					continue;
+						continue;
+					}
 				}
 			}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.shop.by.diagram.service.impl;
 
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.shop.by.diagram.exception.DuplicateCSDiagramEntryException;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.base.CSDiagramEntryLocalServiceBaseImpl;
@@ -27,8 +29,11 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,6 +112,25 @@ public class CSDiagramEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CSDiagramEntry> getCPDefinitionRelatedCSDiagramEntries(
+		long cpDefinitionId) {
+
+		Set<CSDiagramEntry> csDiagramEntries = new HashSet<>();
+
+		List<CPInstance> cpInstances =
+			_cpInstanceLocalService.getCPDefinitionApprovedCPInstances(
+				cpDefinitionId);
+
+		for (CPInstance cpInstance : cpInstances) {
+			csDiagramEntries.addAll(
+				csDiagramEntryPersistence.findByCPInstanceId(
+					cpInstance.getCPInstanceId()));
+		}
+
+		return new ArrayList<>(csDiagramEntries);
+	}
+
+	@Override
 	public List<CSDiagramEntry> getCSDiagramEntries(
 		long cpDefinitionId, int start, int end) {
 
@@ -163,6 +187,9 @@ public class CSDiagramEntryLocalServiceImpl
 			throw new DuplicateCSDiagramEntryException();
 		}
 	}
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

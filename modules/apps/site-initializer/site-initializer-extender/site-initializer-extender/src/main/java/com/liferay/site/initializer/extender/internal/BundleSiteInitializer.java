@@ -63,6 +63,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -1669,13 +1670,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
+			long groupId = serviceContext.getScopeGroupId();
+
+			if (Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+				groupId = 0;
+			}
+
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectEntriesJSON);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				_objectEntryLocalService.addObjectEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), objectDefinition.getId(),
+					serviceContext.getUserId(), groupId,
+					objectDefinition.getId(),
 					ObjectMapperUtil.readValue(
 						Serializable.class,
 						String.valueOf(jsonArray.getJSONObject(i))),

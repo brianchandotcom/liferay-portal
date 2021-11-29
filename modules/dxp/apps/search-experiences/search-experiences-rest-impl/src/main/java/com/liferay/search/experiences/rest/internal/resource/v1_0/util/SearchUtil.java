@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.Arrays;
@@ -36,6 +37,10 @@ public class SearchUtil extends com.liferay.portal.vulcan.util.SearchUtil {
 			AcceptLanguage acceptLanguage, BooleanQuery booleanQuery1,
 			String search)
 		throws Exception {
+
+		if (Validator.isBlank(search)) {
+			return;
+		}
 
 		BooleanQuery booleanQuery2 = new BooleanQueryImpl() {
 			{

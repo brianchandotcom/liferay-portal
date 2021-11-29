@@ -537,8 +537,6 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
 				value1 = "${siteName}");
 
-			var key_siteName = "${siteName}";
-
 			SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 			ApplicationsMenu.gotoPortlet(
@@ -551,8 +549,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
 				value1 = "Site Name");
-
-			var key_siteName = "Site Name";
 		}
 
 		task ("Remove permissions of regular role to go to view site and manage page") {

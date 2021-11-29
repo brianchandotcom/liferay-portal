@@ -14,10 +14,14 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import SidebarPanel from './SidebarPanel';
 
 export default function SelectedNodeInfo({errors, setErrors}) {
+	const {defaultLanguageId, selectedLanguageId} = useContext(
+		DefinitionBuilderContext
+	);
 	const {
 		selectedNode,
 		selectedNodeNewId,
@@ -51,16 +55,28 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 							setErrors({label: false});
 						}
 
+						const key =
+							selectedLanguageId !== ''
+								? selectedLanguageId
+								: defaultLanguageId;
+
 						setSelectedNode({
 							...selectedNode,
 							data: {
 								...selectedNode.data,
-								label: target.value,
+								label: {
+									...selectedNode.data.label,
+									[key]: target.value,
+								},
 							},
 						});
 					}}
 					type="text"
-					value={selectedNode?.data.label || ''}
+					value={
+						(selectedLanguageId
+							? selectedNode?.data.label[selectedLanguageId]
+							: selectedNode?.data.label[defaultLanguageId]) || ''
+					}
 				/>
 
 				<ClayForm.FeedbackItem>

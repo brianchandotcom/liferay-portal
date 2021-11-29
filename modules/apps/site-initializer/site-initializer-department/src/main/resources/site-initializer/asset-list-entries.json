@@ -121,5 +121,46 @@
 				}
 			]
 		}
+	},
+	{
+		"ddmStructureKey": "POSITION",
+		"title": "Featured Positions",
+		"unicodeProperties": {
+			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
+			"classNameIds": "com.liferay.journal.model.JournalArticle",
+			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory",
+			"orderBy": [
+				{
+					"key": "orderByColumn1",
+					"value": "title"
+				},
+				{
+					"key": "orderByColumn2",
+					"value": "title"
+				},
+				{
+					"key": "orderByType1",
+					"value": "ASC"
+				},
+				{
+					"key": "orderByType2",
+					"value": "ASC"
+				}
+			],
+			"query": [
+				{
+					"key": "queryAndOperator",
+					"value": "true"
+				},
+				{
+					"key": "queryContains",
+					"value": "true"
+				},
+				{
+					"key": "queryName",
+					"value": "assetTags"
+				}
+			]
+		}
 	}
 ]

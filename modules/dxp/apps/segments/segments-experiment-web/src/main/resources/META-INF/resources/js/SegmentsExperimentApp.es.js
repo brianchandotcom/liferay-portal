@@ -57,7 +57,6 @@ export default function ({context, props}) {
 			<SegmentsExperimentsSidebar
 				initialExperimentHistory={props.historySegmentsExperiments}
 				initialGoals={props.segmentsExperimentGoals}
-				initialSegmentsExperiences={props.segmentsExperiences}
 				initialSegmentsExperiment={props.segmentsExperiment}
 				initialSegmentsVariants={props.initialSegmentsVariants}
 				initialSelectedSegmentsExperienceId={

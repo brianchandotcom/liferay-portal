@@ -115,5 +115,4 @@ definition {
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY");
 	}
-
 }

@@ -12,59 +12,9 @@
  * details.
  */
 
-import {FIELD_TYPE_FIELDSET} from '../../../src/main/resources/META-INF/resources/js/utils/constants';
-import {
-	isFieldSetChild,
-	localizeField,
-} from '../../../src/main/resources/META-INF/resources/js/utils/fieldSupport';
+import {localizeField} from '../../../src/main/resources/META-INF/resources/js/utils/fieldSupport';
 
 describe('Field Support Utilities', () => {
-	describe('isFieldSetChild', () => {
-		it('returns true when a field is a child of a FieldSet', () => {
-			const pages = [
-				{
-					rows: [
-						{
-							columns: [
-								{
-									fields: [
-										{
-											ddmStructureId: 123,
-											fieldName: 'myFieldSet',
-											nestedFields: [
-												{
-													fieldName: 'fieldSetChild',
-												},
-											],
-											type: FIELD_TYPE_FIELDSET,
-										},
-										{
-											fieldName: 'notAFieldSet',
-										},
-										{
-											fieldName: 'otherFieldset',
-											nestedFields: [
-												{
-													fieldName: 'sectionChild',
-												},
-											],
-											type: FIELD_TYPE_FIELDSET,
-										},
-									],
-								},
-							],
-						},
-					],
-				},
-			];
-
-			expect(isFieldSetChild(pages, 'fieldSetChild')).toBe(true);
-			expect(isFieldSetChild(pages, 'myFieldSet')).toBe(false);
-			expect(isFieldSetChild(pages, 'notAFieldSet')).toBe(false);
-			expect(isFieldSetChild(pages, 'sectionChild')).toBe(false);
-		});
-	});
-
 	describe('localizeField', () => {
 		it('adds a new entry in localized value with default language value', () => {
 			const localizedField = localizeField(

@@ -146,30 +146,6 @@ export function getFieldIndexes(pages, fieldName) {
 	return indexes;
 }
 
-export function getParentField(pages, fieldName) {
-	let parentField;
-	const visitor = new PagesVisitor(pages);
-
-	visitor.mapFields(
-		(
-			field,
-			fieldIndex,
-			columnIndex,
-			rowIndex,
-			pageIndex,
-			currentParentField
-		) => {
-			if (field.fieldName === fieldName) {
-				parentField = currentParentField;
-			}
-		},
-		true,
-		true
-	);
-
-	return parentField;
-}
-
 export function isEmptyRow(pages, pageIndex, rowIndex) {
 	return pages[pageIndex].rows[
 		rowIndex

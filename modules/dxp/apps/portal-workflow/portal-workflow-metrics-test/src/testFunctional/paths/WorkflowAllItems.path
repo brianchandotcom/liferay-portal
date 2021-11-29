@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>DETAIL_PAGE_SLA_STATUS_INFO</td>
-	<td>//span[text()='${key_slaName}']/following-sibling::span[contains(text(), '${key_slaInfo}')]</td>
+	<td>//span[contains(text(),'${key_slaName}')]/following-sibling::span[contains(text(), '${key_slaInfo}')]</td>
 	<td></td>
 </tr>
 <tr>

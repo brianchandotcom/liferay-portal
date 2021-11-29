@@ -1235,8 +1235,6 @@ definition {
 	@description = "LPS-92053 - Verify that an item is considered overdue if it has at least one SLA overdue, regardless if it is resolved or open"
 	@priority = "4"
 	test ItemIsConsideredOverdueWhenItHasOneSlaOverdue {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");

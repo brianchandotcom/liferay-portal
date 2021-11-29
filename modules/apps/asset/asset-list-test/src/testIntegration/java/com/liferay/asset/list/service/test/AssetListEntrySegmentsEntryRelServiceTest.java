@@ -230,15 +230,40 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		long[] priorities = {
 			assetListEntrySegmentsEntryRel3.
 				getAssetListEntrySegmentsEntryRelId(),
-			assetListEntrySegmentsEntryRel2.
-				getAssetListEntrySegmentsEntryRelId(),
 			assetListEntrySegmentsEntryRel1.
+				getAssetListEntrySegmentsEntryRelId(),
+			assetListEntrySegmentsEntryRel2.
 				getAssetListEntrySegmentsEntryRelId()
 		};
 
 		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(
 			priorities);
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRelUpdated1 =
+			_assetListEntrySegmentsEntryRelLocalService.getAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel1.getAssetListEntrySegmentsEntryRelId());
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRelUpdated2 =
+			_assetListEntrySegmentsEntryRelLocalService.getAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel2.getAssetListEntrySegmentsEntryRelId());
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRelUpdated3 =
+			_assetListEntrySegmentsEntryRelLocalService.getAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel3.getAssetListEntrySegmentsEntryRelId());
+
+		Assert.assertEquals(
+			assetListEntrySegmentsEntryRelUpdated1.getPriority(), 1
+		);
+
+		Assert.assertEquals(
+			assetListEntrySegmentsEntryRelUpdated2.getPriority(), 2
+		);
+
+		Assert.assertEquals(
+			assetListEntrySegmentsEntryRelUpdated3.getPriority(), 0
+		);
 	}
+
 
 	private void _assertSameAssetListEntrySegmentsEntryRel(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1,

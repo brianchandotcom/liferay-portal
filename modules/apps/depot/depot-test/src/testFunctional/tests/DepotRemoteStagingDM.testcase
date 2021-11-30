@@ -760,8 +760,10 @@ definition {
 
 		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
+			groupName = "Remote Site",
+			layoutName = "Test Page",
+			portalURL = "http://localhost:9080",
 			portlet = "Open Graph",
-			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
@@ -820,8 +822,10 @@ definition {
 
 		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
+			groupName = "Remote Site",
+			layoutName = "Test Page",
+			portalURL = "http://localhost:9080",
 			portlet = "Open Graph",
-			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
@@ -1947,8 +1951,10 @@ definition {
 
 		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
+			groupName = "Remote Site",
+			layoutName = "Test Page",
+			portalURL = "http://localhost:9080",
 			portlet = "Open Graph",
-			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
@@ -1997,8 +2003,10 @@ definition {
 
 		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
+			groupName = "Remote Site",
+			layoutName = "Test Page",
+			portalURL = "http://localhost:9080",
 			portlet = "Open Graph",
-			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");

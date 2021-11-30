@@ -46,6 +46,7 @@ function Diagram({
 	isAdmin,
 	orderUUID,
 	pinsCSSSelectors,
+	productBaseURL,
 	productId,
 }) {
 	const commerceCart = useCommerceCart({id: initialCartId});
@@ -268,6 +269,7 @@ function Diagram({
 							channelId={channelId}
 							currencyCode={commerceCurrencyCode}
 							orderUUID={orderUUID}
+							productBaseURL={productBaseURL}
 							{...tooltipData}
 						/>
 					)}
@@ -297,6 +299,7 @@ Diagram.propTypes = {
 	isAdmin: PropTypes.bool.isRequired,
 	orderUUID: PropTypes.string,
 	pinsCSSSelectors: PropTypes.array.isRequired,
+	productBaseURL: PropTypes.string,
 	productId: PropTypes.string.isRequired,
 };
 

@@ -378,7 +378,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CheckOutDocumentWithCustomField {
-		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",

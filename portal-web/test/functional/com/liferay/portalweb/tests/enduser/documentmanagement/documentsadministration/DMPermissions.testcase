@@ -1083,9 +1083,7 @@ definition {
 		 	dmFolderName = "DM Folder Name",
 		 	groupName = "Guest");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
 

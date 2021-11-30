@@ -18,3 +18,7 @@ a:not(.btn):visited {
 	color: var(--link-visited-color);
 	text-decoration: var(--link-visited-text-decoration);
 }
+
+a:focus-visible {
+	outline-color: var(--color-focus);
+}

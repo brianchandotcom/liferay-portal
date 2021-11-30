@@ -263,26 +263,9 @@ definition {
 
 	@priority = "4"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
+		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
+		property osgi.module.configurations = "checkInterval=I&quot;1&quot;";
 		property test.name.skip.portal.instance = "DatabasePartitioning#ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies";
-
-		task ("Edit Check Interval") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-			
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Web Content",
-				configurationName = "Web Content",
-				configurationScope = "Virtual Instance Scope");
-			
-			Type(
-				key_text = "Check Interval",
-				locator1 = "TextInput#ANY",
-				value1 = "1");
-
-			SystemSettings.saveConfiguration();
-		}
 
 		task ("Add a new Company") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

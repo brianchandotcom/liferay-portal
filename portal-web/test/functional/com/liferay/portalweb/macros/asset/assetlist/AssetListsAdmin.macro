@@ -113,7 +113,12 @@ definition {
 	}
 
 	macro addPersonalizedVariation {
-		Button.click(button = "New Personalized Variation");
+		if (IsElementPresent(locator1 = "AssetLists#ADD_VARIATION_ICON")) {
+			Click(locator1 = "AssetLists#ADD_VARIATION_ICON");
+		}
+		else {
+			Button.click(button = "New Personalized Variation");
+		}
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -315,6 +320,31 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro enableCollectionsToCombineAssetsFromSegments {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Collections",
+			configurationScope = "System Scope");
+		
+		Click.javaScriptClick(
+			checkboxName = "${collectionType}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro gotoEntry {
 		Click(
 			key_title = "${assetListName}",
@@ -368,6 +398,26 @@ definition {
 			text = "${newAssetListTitle}");
 
 		Button.clickSave();
+	}
+
+	macro resetCollectionsToCombineAssetsFromSegments {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Collections",
+			configurationScope = "System Scope");
+		
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Reset Default Values");
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro selectAsset {

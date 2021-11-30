@@ -1414,9 +1414,7 @@ definition {
 	}
 
 	macro editCDLayoutAndMaxNumber {
-		Click.clickNoWaitForVisible(
-			key_collectionDisplay = "${fragmentName}",
-			locator1 = "Masterclass#COLLECTION_DISPLAY");
+		Click.clickNoWaitForVisible(locator1 = "Masterclass#COLLECTION_DISPLAY");
 
 		Navigator.gotoNavTab(navTab = "General");
 

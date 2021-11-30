@@ -80,6 +80,20 @@
 					{
 						"layoutColumnId": "column-1",
 						"layoutColumnPos": 2,
+						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_product_detail_related_diagrams",
+						"portletPreferences": {
+							"cpContentListRendererKey": "list-default",
+							"dataSource": "csDiagramEntryDataSource",
+							"diagram--cpTypeListEntryRendererKey": "list-entry-default",
+							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+							"paginationDelta": 5,
+							"renderSelection": "custom",
+							"selectionStyle": "dataSource"
+						}
+					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 3,
 						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_product_detail"
 					}
 				],

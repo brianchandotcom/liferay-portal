@@ -55,6 +55,7 @@ public class FragmentEntryVersionSoap implements Serializable {
 		soapModel.setJs(model.getJs());
 		soapModel.setCacheable(model.isCacheable());
 		soapModel.setConfiguration(model.getConfiguration());
+		soapModel.setIcon(model.getIcon());
 		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
 		soapModel.setReadOnly(model.isReadOnly());
 		soapModel.setType(model.getType());
@@ -289,6 +290,14 @@ public class FragmentEntryVersionSoap implements Serializable {
 		_configuration = configuration;
 	}
 
+	public String getIcon() {
+		return _icon;
+	}
+
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
 	public long getPreviewFileEntryId() {
 		return _previewFileEntryId;
 	}
@@ -377,6 +386,7 @@ public class FragmentEntryVersionSoap implements Serializable {
 	private String _js;
 	private boolean _cacheable;
 	private String _configuration;
+	private String _icon;
 	private long _previewFileEntryId;
 	private boolean _readOnly;
 	private int _type;

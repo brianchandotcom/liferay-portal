@@ -62,8 +62,6 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 
 	public int getGlobalUsageCount();
 
-	public String getIcon();
-
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
@@ -74,8 +72,6 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 	public void populateZipWriter(
 			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
 		throws Exception;
-
-	public void setIcon(String icon);
 
 	public void setImagePreviewURL(String imagePreviewURL);
 

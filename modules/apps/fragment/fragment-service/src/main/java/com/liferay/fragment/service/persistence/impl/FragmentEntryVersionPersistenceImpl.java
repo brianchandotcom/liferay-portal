@@ -15880,6 +15880,7 @@ public class FragmentEntryVersionPersistenceImpl
 		ctStrictColumnNames.add("js");
 		ctStrictColumnNames.add("cacheable");
 		ctStrictColumnNames.add("configuration");
+		ctStrictColumnNames.add("icon");
 		ctStrictColumnNames.add("previewFileEntryId");
 		ctStrictColumnNames.add("readOnly");
 		ctStrictColumnNames.add("type_");

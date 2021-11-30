@@ -91,6 +91,8 @@ public class FragmentEntryVersionTable
 	public final Column<FragmentEntryVersionTable, Clob> configuration =
 		createColumn(
 			"configuration", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryVersionTable, String> icon = createColumn(
+		"icon", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryVersionTable, Long> previewFileEntryId =
 		createColumn(
 			"previewFileEntryId", Long.class, Types.BIGINT,

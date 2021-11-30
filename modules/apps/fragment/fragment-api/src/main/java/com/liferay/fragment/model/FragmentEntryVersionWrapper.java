@@ -66,6 +66,7 @@ public class FragmentEntryVersionWrapper
 		attributes.put("js", getJs());
 		attributes.put("cacheable", isCacheable());
 		attributes.put("configuration", getConfiguration());
+		attributes.put("icon", getIcon());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
@@ -200,6 +201,12 @@ public class FragmentEntryVersionWrapper
 
 		if (configuration != null) {
 			setConfiguration(configuration);
+		}
+
+		String icon = (String)attributes.get("icon");
+
+		if (icon != null) {
+			setIcon(icon);
 		}
 
 		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
@@ -374,6 +381,16 @@ public class FragmentEntryVersionWrapper
 	@Override
 	public String getHtml() {
 		return model.getHtml();
+	}
+
+	/**
+	 * Returns the icon of this fragment entry version.
+	 *
+	 * @return the icon of this fragment entry version
+	 */
+	@Override
+	public String getIcon() {
+		return model.getIcon();
 	}
 
 	/**
@@ -784,6 +801,16 @@ public class FragmentEntryVersionWrapper
 	@Override
 	public void setHtml(String html) {
 		model.setHtml(html);
+	}
+
+	/**
+	 * Sets the icon of this fragment entry version.
+	 *
+	 * @param icon the icon of this fragment entry version
+	 */
+	@Override
+	public void setIcon(String icon) {
+		model.setIcon(icon);
 	}
 
 	/**

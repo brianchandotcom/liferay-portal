@@ -76,6 +76,7 @@
 		<field name="configuration" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="icon" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
@@ -156,6 +157,7 @@
 		<field name="configuration" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="icon" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />

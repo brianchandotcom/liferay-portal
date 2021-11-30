@@ -396,6 +396,21 @@ public interface FragmentEntryVersionModel
 	public void setConfiguration(String configuration);
 
 	/**
+	 * Returns the icon of this fragment entry version.
+	 *
+	 * @return the icon of this fragment entry version
+	 */
+	@AutoEscape
+	public String getIcon();
+
+	/**
+	 * Sets the icon of this fragment entry version.
+	 *
+	 * @param icon the icon of this fragment entry version
+	 */
+	public void setIcon(String icon);
+
+	/**
 	 * Returns the preview file entry ID of this fragment entry version.
 	 *
 	 * @return the preview file entry ID of this fragment entry version

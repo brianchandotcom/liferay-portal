@@ -971,6 +971,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 		draftFragmentEntry.setCacheable(publishedFragmentEntry.getCacheable());
 		draftFragmentEntry.setConfiguration(
 			publishedFragmentEntry.getConfiguration());
+		draftFragmentEntry.setIcon(publishedFragmentEntry.getIcon());
 		draftFragmentEntry.setPreviewFileEntryId(
 			publishedFragmentEntry.getPreviewFileEntryId());
 		draftFragmentEntry.setReadOnly(publishedFragmentEntry.getReadOnly());

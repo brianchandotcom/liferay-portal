@@ -1345,6 +1345,21 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                discontinued:
+                    example: false
+                    type: boolean
+                discontinuedDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                discontinuedSkuExternalReferenceCode:
+                    example: SKU0111
+                    type: string
+                discontinuedSkuId:
+                    example: 33135
+                    format: int64
+                    minimum: 0
+                    type: integer
                 displayDate:
                     example: 2017-07-21
                     format: date
@@ -1510,7 +1525,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.12'."
+        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.13'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

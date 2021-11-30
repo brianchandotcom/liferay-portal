@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
+import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
@@ -206,12 +207,12 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
-		long userId, String customElementCSSURLs,
-		String customElementHTMLElementName, String customElementURLs,
-		String externalReferenceCode, String description,
-		String friendlyURLMapping, boolean instanceable,
-		Map<Locale, String> nameMap, String portletCategoryName,
-		String properties, String sourceCodeURL)
+			long userId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			String externalReferenceCode, String description,
+			String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return null;
@@ -599,6 +600,24 @@ public class RemoteAppEntryLocalServiceImpl
 				throw new RemoteAppEntryCustomElementURLsException(
 					"Invalid custom element URL " + customElementURL);
 			}
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws DuplicateRemoteAppEntryException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryLocalService.
+				fetchRemoteAppEntryByExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+		if (remoteAppEntry != null) {
+			throw new DuplicateRemoteAppEntryException();
 		}
 	}
 

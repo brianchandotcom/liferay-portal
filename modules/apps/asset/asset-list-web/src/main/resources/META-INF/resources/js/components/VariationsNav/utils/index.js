@@ -12,7 +12,7 @@
  * details.
  */
 
-const VARIATIONS_PRIORITY_PARAM_NAME = 'variations_priority';
+const VARIATIONS_PRIORITY_PARAM_NAME = 'variationsPriority';
 
 const buildItemsPriorityURL = ({items, namespace, url}) => {
 	const urlWithPriorityParam = `${url}&${namespace}${VARIATIONS_PRIORITY_PARAM_NAME}=${items

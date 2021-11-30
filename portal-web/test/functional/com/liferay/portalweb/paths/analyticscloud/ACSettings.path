@@ -37,6 +37,11 @@
 	<td>//*[contains(@class, 'btn-link') and contains(@href,'${key_SettingsNavigation}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DEFINITIONS_OPTIONS</td>
+	<td>//a[contains(@href,'${key_DefinitionsOptions}')]</td>
+	<td></td>
+</tr>
 <!-- SETTINGS TOOLBAR -->
 <tr>
 	<td>DELETE_FROM_TOOLBAR</td>

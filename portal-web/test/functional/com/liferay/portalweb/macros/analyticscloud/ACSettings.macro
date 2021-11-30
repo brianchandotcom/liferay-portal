@@ -794,6 +794,9 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
 	}
 
+	macro goToEvents {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "events");
+	}
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}

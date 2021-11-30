@@ -782,19 +782,10 @@ definition {
 			widgetName = "Documents and Media");
 
 		JSONFolder.addFolder(
-		 	dmFolderDescription = "DM Folder Description",
-		 	dmFolderName = "DM Folder Name",
-		 	groupName = "Guest");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			guestPermissions = "false");
 
 		User.logoutPG();
 

@@ -27,12 +27,44 @@ definition {
 	}
 
 	@description = "Verify that is possible to Collapse a Fields Group"
-	@ignore = "true"
 	@priority = "3"
 	test CanBeCollapsed {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DEBuilder.collapsibleFieldsGroup(fieldsGroup = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Form.viewExpandedCollapseButton();
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		Form.viewCollapsedCollapseButton();
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to create Fields Group by adding a field from the sidebar into a field that is on the builder."

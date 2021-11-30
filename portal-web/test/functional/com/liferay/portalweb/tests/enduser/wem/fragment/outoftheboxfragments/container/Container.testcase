@@ -563,10 +563,10 @@ definition {
 				locator1 = "ControlMenu#HEADING",
 				value1 = "Display Page Name");
 
-			AssertVisible(
-				key_assetContent = "Web Content Content",
-				key_assetTitle = "Web Content Title",
-				locator1 = "PageEditor#ASSET_CONTENT");
+			ContentPages.viewFragmentText(
+				assetType = "journal",
+				fragmentName = "Display Page Content",
+				text = "Web Content Content");
 		}
 	}
 

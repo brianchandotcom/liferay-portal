@@ -565,6 +565,18 @@ definition {
 			value1 = "Preview");
 	}
 
+	macro removeAllNodeAssignments {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
+
+		while (IsElementPresent(locator1 = "KaleoDesignerEditWorkflow#ROLE_REMOVE_ICON")) {
+			Click(locator1 = "KaleoDesignerEditWorkflow#ROLE_REMOVE_ICON");
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+	}
+
 	macro restoreDraft {
 		var key_rowIndexNumber = "${rowIndexNumber}";
 

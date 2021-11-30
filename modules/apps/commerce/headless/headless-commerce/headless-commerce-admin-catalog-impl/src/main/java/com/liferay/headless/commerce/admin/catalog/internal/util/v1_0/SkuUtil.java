@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -43,6 +44,51 @@ public class SkuUtil {
 			CPInstanceService cpInstanceService, Sku sku,
 			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws PortalException {
+
+		long discontinuedCProductId = 0;
+		String discontinuedCPInstanceUuid = null;
+
+		if (sku.getDiscontinued()) {
+			CPInstance discontinuedCPInstance = null;
+
+			if (Validator.isNotNull(
+					sku.getDiscontinuedSkuExternalReferenceCode())) {
+
+				discontinuedCPInstance =
+					cpInstanceService.fetchByExternalReferenceCode(
+						sku.getDiscontinuedSkuExternalReferenceCode(),
+						cpDefinition.getCompanyId());
+			}
+
+			if ((discontinuedCPInstance == null) &&
+				(sku.getDiscontinuedSkuId() > 0)) {
+
+				discontinuedCPInstance = cpInstanceService.fetchCPInstance(
+					sku.getDiscontinuedSkuId());
+			}
+
+			if (discontinuedCPInstance != null) {
+				CPDefinition discontinuedCPDefinition =
+					discontinuedCPInstance.getCPDefinition();
+
+				discontinuedCProductId =
+					discontinuedCPDefinition.getCProductId();
+
+				discontinuedCPInstanceUuid =
+					discontinuedCPInstance.getCPInstanceUuid();
+			}
+		}
+
+		Calendar discontinuedCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		if (sku.getDiscontinuedDate() != null) {
+			discontinuedCalendar = DateConfigUtil.convertDateToCalendar(
+				sku.getDiscontinuedDate());
+		}
+
+		DateConfig discontinuedDateConfig = new DateConfig(
+			discontinuedCalendar);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -85,7 +131,11 @@ public class SkuUtil {
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(sku.getNeverExpire(), false), sku.getUnspsc(),
-			serviceContext);
+			GetterUtil.get(sku.getDiscontinued(), false),
+			discontinuedCPInstanceUuid, discontinuedCProductId,
+			discontinuedDateConfig.getMonth(), discontinuedDateConfig.getDay(),
+			discontinuedDateConfig.getYear(), discontinuedDateConfig.getHour(),
+			discontinuedDateConfig.getMinute(), serviceContext);
 	}
 
 	private static String _getOptions(Sku sku) {

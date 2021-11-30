@@ -151,6 +151,14 @@ definition {
 		}
 	}
 
+	macro collapsibleFieldsGroup {
+		Click(
+			key_fieldLabel = "${fieldsGroup}",
+			locator1 = "FormFields#LABEL");
+
+		FormFields.enableSwitch(fieldName = "Collapsible");
+	}
+
 	macro assertFieldOptionLabels {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 

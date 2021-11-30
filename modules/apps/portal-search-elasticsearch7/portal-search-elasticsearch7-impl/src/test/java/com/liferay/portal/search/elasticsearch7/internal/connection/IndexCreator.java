@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.helper.IndexCreationHelper;
+import com.liferay.portal.search.elasticsearch7.internal.connection.helper.LiferayIndexCreationHelper;
+
 import java.io.IOException;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;

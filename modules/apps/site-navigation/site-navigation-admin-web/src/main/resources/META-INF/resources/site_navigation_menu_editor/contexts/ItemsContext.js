@@ -15,10 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-const getFlatItems = (items) =>
-	items.reduce((acc, item) => {
-		return [...acc, item, ...getFlatItems(item.children)];
-	}, []);
+import getFlatItems from '../utils/getFlatItems';
 
 export const ItemsContext = React.createContext([]);
 export const SetItemsContext = React.createContext(() => {});

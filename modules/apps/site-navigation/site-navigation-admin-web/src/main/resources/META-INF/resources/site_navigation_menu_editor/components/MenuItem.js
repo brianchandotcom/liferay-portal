@@ -34,6 +34,7 @@ import {
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import deleteItem from '../utils/deleteItem';
+import getFlatItems from '../utils/getFlatItems';
 import getItemPath from '../utils/getItemPath';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
 
@@ -71,20 +72,27 @@ export function MenuItem({item}) {
 			}),
 			method: 'POST',
 		})
-			.then(() => {
-				const newItems = deleteItem(items, siteNavigationMenuItemId);
+			.then((response) => response.json())
+			.then(({siteNavigationMenuItems}) => {
+				const newItems = categoriesMultipleSelectionEnabled
+					? getFlatItems(siteNavigationMenuItems)
+					: deleteItem(items, siteNavigationMenuItemId);
 
 				setItems(newItems);
 
 				setSidebarPanelId(null);
 			})
-			.catch(() => {
+			.catch(({error}) => {
 				openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-error-occurred'
 					),
 					type: 'danger',
 				});
+
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 			});
 	};
 
@@ -100,12 +108,25 @@ export function MenuItem({item}) {
 				[`${portletNamespace}order`]: order,
 			}),
 			method: 'POST',
-		}).catch(() => {
-			openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
-				type: 'danger',
+		})
+			.then((response) => response.json())
+			.then(({siteNavigationMenuItems}) => {
+				const newItems = getFlatItems(siteNavigationMenuItems);
+
+				setItems(newItems);
+			})
+			.catch(({error}) => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 			});
-		});
 	};
 
 	const {handlerRef, isDragging} = useDragItem(item, updateMenuItemParent);

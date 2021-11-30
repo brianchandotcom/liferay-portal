@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -45,6 +47,11 @@ public class SXPBlueprintUtilTest {
 		}
 	}
 
+	private String _formatJSON(Object object) throws Exception {
+		return JSONUtil.toString(
+			JSONFactoryUtil.createJSONObject(String.valueOf(object)));
+	}
+
 	private void _testToSXPBlueprint(String fileName) throws Exception {
 		String json = StringUtil.read(
 			getClass(),
@@ -53,8 +60,8 @@ public class SXPBlueprintUtilTest {
 		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(json);
 
 		Assert.assertEquals(
-			fileName, sxpBlueprint.toString(),
-			String.valueOf(
+			fileName, _formatJSON(json),
+			_formatJSON(
 				SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint.toString())));
 	}
 

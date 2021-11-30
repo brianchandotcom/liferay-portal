@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Map;
@@ -41,6 +42,10 @@ public class UnpackUtil {
 		}
 
 		if (value instanceof String) {
+			if (Validator.isNull((String)value)) {
+				return value;
+			}
+
 			try {
 				return JSONFactoryUtil.createJSONObject((String)value);
 			}

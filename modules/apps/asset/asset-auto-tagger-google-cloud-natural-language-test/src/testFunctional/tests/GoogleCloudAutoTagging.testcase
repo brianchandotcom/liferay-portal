@@ -199,8 +199,6 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Commerce_Black.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Commerce_Black",
 			groupName = "Site Name",
@@ -344,8 +342,6 @@ definition {
 			groupName = "Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Commerce_Black.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Commerce_Black",

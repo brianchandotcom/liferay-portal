@@ -203,6 +203,20 @@ public class RemoteAppEntryLocalServiceImpl
 		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
+		long userId, String customElementCSSURLs,
+		String customElementHTMLElementName, String customElementURLs,
+		String externalReferenceCode, String description,
+		String friendlyURLMapping, boolean instanceable,
+		Map<Locale, String> nameMap, String portletCategoryName,
+		String properties, String sourceCodeURL)
+		throws PortalException {
+
+		return null;
+	}
+
 	@Override
 	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {

@@ -233,7 +233,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 								</span>
 							)}
 
-							{Liferay.Language.get('save')}
+							{Liferay.Language.get('create')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

@@ -1,6 +1,8 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useField} from 'formik';
 import {required, validate} from '../utils/validations.form';
+import WarningBadge from './WarningBadge';
 
 const Select = ({groupStyle, helper, label, validations, ...props}) => {
 	if (props.required) {
@@ -32,13 +34,23 @@ const Select = ({groupStyle, helper, label, validations, ...props}) => {
 				{`${label} `}
 
 				{props.required && (
-					<span className="ml-n1 text-danger text-paragraph-sm">
-						*
+					<span className="inline-item-after reference-mark text-warning">
+						<ClayIcon symbol="asterisk" />
 					</span>
 				)}
 
-				<ClaySelectWithOption {...field} {...props} />
+				<div className="position-relative">
+					<ClayIcon className="select-icon" symbol="caret-bottom" />
+
+					<ClaySelectWithOption {...field} {...props} />
+				</div>
 			</label>
+
+			{meta.touched && meta.error && props.required && (
+				<WarningBadge>
+					<span className="pl-1">{meta.error}</span>
+				</WarningBadge>
+			)}
 
 			{helper && <div>{helper}</div>}
 		</ClayForm.Group>

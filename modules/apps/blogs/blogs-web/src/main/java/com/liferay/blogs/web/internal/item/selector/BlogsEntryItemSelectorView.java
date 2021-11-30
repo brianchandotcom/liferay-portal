@@ -294,13 +294,10 @@ public class BlogsEntryItemSelectorView
 					_portletURL, null, "no-entries-were-found");
 
 			entriesSearchContainer.setOrderByCol(getOrderByCol());
-
-			entriesSearchContainer.setOrderByType(getOrderByType());
-
 			entriesSearchContainer.setOrderByComparator(
 				BlogsUtil.getOrderByComparator(
-					entriesSearchContainer.getOrderByCol(),
-					entriesSearchContainer.getOrderByType()));
+					getOrderByCol(), getOrderByType()));
+			entriesSearchContainer.setOrderByType(getOrderByType());
 
 			entriesSearchContainer.setTotal(
 				_blogsEntryService.getGroupEntriesCount(

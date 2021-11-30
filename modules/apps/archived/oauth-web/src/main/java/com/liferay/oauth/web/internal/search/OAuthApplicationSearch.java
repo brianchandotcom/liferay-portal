@@ -80,8 +80,8 @@ public class OAuthApplicationSearch extends SearchContainer<OAuthApplication> {
 			}
 
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
+			setOrderByType(orderByType);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

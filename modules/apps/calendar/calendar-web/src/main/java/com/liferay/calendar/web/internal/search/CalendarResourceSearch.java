@@ -90,13 +90,11 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 				portletRequest, CalendarPortletKeys.CALENDAR,
 				"users-resources-order-by-type", "asc");
 
-			OrderByComparator<CalendarResource> orderByComparator =
-				_getOrderByComparator(orderByCol, orderByType);
-
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
+			setOrderByComparator(
+				_getOrderByComparator(orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error(

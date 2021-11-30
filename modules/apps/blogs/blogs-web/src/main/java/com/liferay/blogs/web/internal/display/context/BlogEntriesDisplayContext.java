@@ -180,13 +180,9 @@ public class BlogEntriesDisplayContext {
 				"no-entries-were-found");
 
 		entriesSearchContainer.setOrderByCol(getOrderByCol());
-
-		entriesSearchContainer.setOrderByType(getOrderByType());
-
 		entriesSearchContainer.setOrderByComparator(
-			BlogsUtil.getOrderByComparator(
-				entriesSearchContainer.getOrderByCol(),
-				entriesSearchContainer.getOrderByType()));
+			BlogsUtil.getOrderByComparator(getOrderByCol(), getOrderByType()));
+		entriesSearchContainer.setOrderByType(getOrderByType());
 
 		entriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));

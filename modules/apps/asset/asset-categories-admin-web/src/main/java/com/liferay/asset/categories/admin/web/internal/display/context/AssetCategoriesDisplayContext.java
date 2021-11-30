@@ -245,11 +245,9 @@ public class AssetCategoriesDisplayContext {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<AssetCategory> orderByComparator =
-			new AssetCategoryCreateDateComparator(orderByAsc);
-
-		categoriesSearchContainer.setOrderByComparator(orderByComparator);
-
+		categoriesSearchContainer.setOrderByCol(_getOrderByCol());
+		categoriesSearchContainer.setOrderByComparator(
+			new AssetCategoryCreateDateComparator(orderByAsc));
 		categoriesSearchContainer.setOrderByType(orderByType);
 
 		EmptyOnClickRowChecker emptyOnClickRowChecker =

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -213,13 +212,10 @@ public class AssetListEntryUsagesDisplayContext {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<AssetListEntryUsage> orderByComparator =
-			new AssetListEntryUsageModifiedDateComparator(orderByAsc);
-
 		assetListEntryUsagesSearchContainer.setOrderByCol(_getOrderByCol());
 		assetListEntryUsagesSearchContainer.setOrderByComparator(
-			orderByComparator);
-		assetListEntryUsagesSearchContainer.setOrderByType(_getOrderByType());
+			new AssetListEntryUsageModifiedDateComparator(orderByAsc));
+		assetListEntryUsagesSearchContainer.setOrderByType(orderByType);
 
 		List<AssetListEntryUsage> assetListEntryUsages = null;
 
@@ -234,7 +230,7 @@ public class AssetListEntryUsagesDisplayContext {
 					AssetListEntryUsageConstants.TYPE_LAYOUT,
 					assetListEntryUsagesSearchContainer.getStart(),
 					assetListEntryUsagesSearchContainer.getEnd(),
-					orderByComparator);
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
 
 			assetListEntryUsagesCount = getPagesUsageCount();
 		}
@@ -247,7 +243,7 @@ public class AssetListEntryUsagesDisplayContext {
 					AssetListEntryUsageConstants.TYPE_PAGE_TEMPLATE,
 					assetListEntryUsagesSearchContainer.getStart(),
 					assetListEntryUsagesSearchContainer.getEnd(),
-					orderByComparator);
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
 
 			assetListEntryUsagesCount = getDisplayPagesUsageCount();
 		}
@@ -260,7 +256,7 @@ public class AssetListEntryUsagesDisplayContext {
 					AssetListEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
 					assetListEntryUsagesSearchContainer.getStart(),
 					assetListEntryUsagesSearchContainer.getEnd(),
-					orderByComparator);
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
 
 			assetListEntryUsagesCount = getDisplayPagesUsageCount();
 		}
@@ -272,7 +268,7 @@ public class AssetListEntryUsagesDisplayContext {
 					String.valueOf(getAssetListEntryId()),
 					assetListEntryUsagesSearchContainer.getStart(),
 					assetListEntryUsagesSearchContainer.getEnd(),
-					orderByComparator);
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
 
 			assetListEntryUsagesCount = getAllUsageCount();
 		}

@@ -376,7 +376,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only."
+	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only. Also verifies all violations are present when unfiltered."
 	@priority = "5"
 	test CanFilterViolationsByCriticalImpactOnly {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -408,6 +408,8 @@ definition {
 
 		task ("Filter impact by Critical") {
 			A11yTool.setFilter(filterType = "Critical");
+
+			FormFields.viewCheckboxChecked(fieldName = "Critical");
 		}
 
 		task ("Assert only critical violations are present on the side panel") {
@@ -462,6 +464,36 @@ definition {
 			AssertElementNotPresent(
 				key_impact = "serious",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+		}
+
+		task ("Unfilter impact by Critical") {
+			A11yTool.setFilter(filterType = "Critical");
+
+			FormFields.viewCheckboxNotChecked(fieldName = "Critical");
+		}
+
+		task ("Assert page has Minor, Moderate, Serious, and Critical set of violations") {
+			AssertElementPresent(
+				key_impact = "minor",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+			AssertElementPresent(
+				key_impact = "moderate",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+			AssertElementPresent(
+				key_impact = "serious",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+			AssertElementPresent(
+				key_impact = "critical",
+				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+		}
+
+		task ("Assert violations are highlighted with an icon") {
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
 		}
 
 		takeScreenshot();

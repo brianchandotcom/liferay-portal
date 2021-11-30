@@ -15,13 +15,13 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -38,6 +38,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.web.internal.helper.InfoItemHelper;
 import com.liferay.translation.web.internal.util.TranslationRequestUtil;
 
 import java.io.FileInputStream;
@@ -146,8 +147,16 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 		Object object = infoItemObjectProvider.getInfoItem(classPK);
 
-		InfoFieldValue<Object> infoFieldValue = _getTitleInfoFieldValue(
-			infoItemFieldValuesProvider, object);
+		InfoItemHelper infoItemHelper = new InfoItemHelper(
+			className, infoItemObjectProvider, infoItemFieldValuesProvider);
+
+		Optional<String> infoItemTitleOptional =
+			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
+
+		String infoItemTitle = infoItemTitleOptional.orElseGet(
+			() ->
+				LanguageUtil.get(locale, "model.resource." + className) +
+					StringPool.SPACE + classPK);
 
 		Optional<TranslationInfoItemFieldValuesExporter>
 			exportFileFormatOptional =
@@ -164,8 +173,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		for (String targetLanguageId : targetLanguageIds) {
 			zipWriter.addEntry(
 				_getXLIFFFileName(
-					className, classPK, (String)infoFieldValue.getValue(locale),
-					sourceLanguageId, targetLanguageId, locale),
+					className, classPK, infoItemTitle, sourceLanguageId,
+					targetLanguageId, locale),
 				translationInfoItemFieldValuesExporter.
 					exportInfoItemFieldValues(
 						infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -173,20 +182,6 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						LocaleUtil.fromLanguageId(sourceLanguageId),
 						LocaleUtil.fromLanguageId(targetLanguageId)));
 		}
-	}
-
-	private InfoFieldValue<Object> _getTitleInfoFieldValue(
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Object object) {
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
-
-		if (infoFieldValue != null) {
-			return infoFieldValue;
-		}
-
-		return infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 	}
 
 	private String _getXLIFFFileName(
@@ -229,14 +224,19 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
-		Object object = infoItemObjectProvider.getInfoItem(classPK);
+		InfoItemHelper infoItemHelper = new InfoItemHelper(
+			className, infoItemObjectProvider, infoItemFieldValuesProvider);
 
-		InfoFieldValue<Object> infoFieldValue = _getTitleInfoFieldValue(
-			infoItemFieldValuesProvider, object);
+		Optional<String> infoItemTitleOptional =
+			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
+
+		String infoItemTitle = infoItemTitleOptional.orElseGet(
+			() ->
+				LanguageUtil.get(locale, "model.resource." + className) +
+					StringPool.SPACE + classPK);
 
 		String escapedTitle = StringUtil.removeSubstrings(
-			(String)infoFieldValue.getValue(locale),
-			PropsValues.DL_CHAR_BLACKLIST);
+			infoItemTitle, PropsValues.DL_CHAR_BLACKLIST);
 
 		return StringBundler.concat(
 			escapedTitle, StringPool.DASH, sourceLanguageId, ".zip");

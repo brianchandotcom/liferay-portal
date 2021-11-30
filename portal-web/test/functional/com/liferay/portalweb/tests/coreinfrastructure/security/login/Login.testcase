@@ -88,10 +88,7 @@ definition {
 		task ("Login and add CP") {
 			User.firstLoginPG();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -271,10 +268,7 @@ definition {
 		task ("Login and add CP www.able.com") {
 			User.firstLoginPG();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -285,11 +279,6 @@ definition {
 		}
 
 		task ("add CP www.baker.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
 			PortalInstances.addCP(
 				mailDomain = "www.baker.com",
 				virtualHost = "www.baker.com",
@@ -390,10 +379,7 @@ definition {
 		task ("Login and add CP") {
 			User.firstLoginPG();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",

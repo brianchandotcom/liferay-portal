@@ -693,12 +693,77 @@ definition {
 	}
 
 	@description = "Verify that is possible to remove data from fields inside a Fields Group"
-	@ignore = "true"
 	@priority = "3"
 	test CanInputtedDataBeRemoved {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+		
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+		
+		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
+			value = "08/06/2021");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "");
+		
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+		
+		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
+			value = "");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "");
+		
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+
+		DERenderer.assertDataInDateField(
+			fieldLabel = "Date",
+			value = "__/__/____");
 	}
 
 	@description = "Verify that is possible to remove duplicated repeatable Fields Group"

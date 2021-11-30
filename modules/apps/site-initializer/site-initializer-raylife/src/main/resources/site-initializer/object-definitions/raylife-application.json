@@ -288,6 +288,16 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Policy Sent"
+			},
+			"name": "policySent",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Product"
 			},
 			"name": "product",

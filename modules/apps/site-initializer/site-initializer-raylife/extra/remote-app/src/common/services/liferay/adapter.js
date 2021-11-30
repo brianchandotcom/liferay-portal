@@ -132,6 +132,7 @@ const adaptToFormApplicationRequest = (form) => ({
 	overallSales: form?.business?.overallSales,
 	partTimeEmployees: form?.employees?.partTimeEmployees,
 	phone: form?.basics?.businessInformation?.business?.phone,
+	policySent: false,
 	product: form?.basics?.product,
 	productQuote: `${form?.basics?.productQuote}`,
 	salesMerchandise: form?.business?.salesMerchandise,

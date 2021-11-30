@@ -16,9 +16,10 @@ const applicationId = localStorage.getItem('raylife-application-id');
 const productId = localStorage.getItem('raylife-product-id');
 const businessType = JSON.parse(localStorage.getItem('raylife-product'));
 
-const fetchHeadless = async (url) => {
+const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${window.location.origin}/${url}`, {
+		...options,
 		headers: {
 			'Content-Type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
@@ -28,6 +29,46 @@ const fetchHeadless = async (url) => {
 	const data = await response.json();
 
 	return data;
+};
+
+const sendDigitalSignaturePolicy = async ({email, firstName, lastName}) => {
+	await fetchHeadless(
+		`o/digital-signature-rest/v1.0/sites/${themeDisplay.getSiteGroupId()}/ds-envelopes`,
+		{
+			body: JSON.stringify({
+				dsDocument: [
+					{
+						fileEntryExternalReferenceCode: 'RAY001',
+						fileExtension: 'pdf',
+						id: '123',
+						name: 'RaylifePolicy.pdf',
+					},
+				],
+				dsRecipient: [
+					{
+						emailAddress: email,
+						id: '123',
+						name: `${firstName} ${lastName}`,
+						status: 'sent',
+					},
+				],
+				emailBlurb:
+					'Thank you for purchasing Raylife Insurance for your business.  Please sign your policy document using DocuSign to complete your transaction and officially bind your policy.',
+				emailSubject: 'Please Sign Your Raylife Policy Document',
+				name: 'Raylife Insurance',
+				senderEmailAddress: email,
+				status: 'sent',
+			}),
+			method: 'POST',
+		}
+	);
+};
+
+const updateObjectPolicySent = async () => {
+	await fetchHeadless(`o/c/raylifeapplications/${applicationId}`, {
+		body: JSON.stringify({policySent: true}),
+		method: 'PATCH',
+	});
 };
 
 const setValueToElement = (element, value) => {
@@ -126,6 +167,11 @@ const main = async () => {
 			value: quoteComparison.moneyAndSecurities || false,
 		},
 	]);
+
+	if (!application.policySent) {
+		sendDigitalSignaturePolicy(application);
+		updateObjectPolicySent();
+	}
 };
 
 main();

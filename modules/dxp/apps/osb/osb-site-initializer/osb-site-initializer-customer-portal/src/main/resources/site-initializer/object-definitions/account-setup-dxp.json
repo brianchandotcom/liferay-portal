@@ -1,0 +1,68 @@
+{
+    "label": {
+      "en-US": "SetupDXP"
+    },
+    "name": "SetupDXP",
+    "objectFields": [
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Admins"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "admins",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Data Center Region"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "dataCenterRegion",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Project Id"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "projectId",
+        "required": false,
+        "type": "String"
+      },
+      {
+        "indexed": true,
+        "indexedAsKeyword": false,
+        "indexedLanguageId": "",
+        "label": {
+          "en-US": "Disaster Data Center Region"
+        },
+        "listTypeDefinitionId": 0,
+        "name": "disasterDataCenterRegion",
+        "required": false,
+        "type": "String"
+      }
+     
+    ],
+    "pluralLabel": {
+      "en_US": "SetupDXPs"
+    },
+    "scope": "site",
+  	"panelCategoryKey": "control_panel.object",
+    "status": {
+      "code": 0,
+      "label": "approved",
+      "label_i18n": "Approved"
+    },
+    "system": false
+  }

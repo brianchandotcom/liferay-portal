@@ -1,27 +1,25 @@
 import {gql} from '@apollo/client';
 
-export const getUserAccount = gql`
-	query getUserAccount($id: Long!) {
-		userAccount(userAccountId: $id) {
-			id
-			name
-			image
-			externalReferenceCode
-			accountBriefs {
-				id
-				name
-				externalReferenceCode
-			}
-		}
-	}
-`;
-
-export const getDXPCDataCenterRegions = gql`
-	query getDXPCDataCenterRegions {
+export const accountSubscription = gql`
+	query accountSubscriptions(
+		$aggregation: [String]
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+		$search: String
+		$sort: String
+	) {
 		c {
-			dXPCDataCenterRegions {
+			accountSubscriptions(
+				aggregation: $aggregation
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				search: $search
+				sort: $sort
+			) {
 				items {
-					dxpcDataCenterRegionId
+					accountKey
 					name
 				}
 			}
@@ -29,26 +27,62 @@ export const getDXPCDataCenterRegions = gql`
 	}
 `;
 
-export const getKoroneikiAccounts = gql`
-	query getKoroneikiAccounts($filter: String) {
+export const addAccountFlag = gql`
+	mutation addAccountFlag($accountFlag: InputC_AccountFlag!){
+  		c {
+			createAccountFlag(
+				AccountFlag: $accountFlag
+			){
+				accountFlagId
+				accountKey
+				name
+				userUuid
+				value
+			}
+		}
+	}
+`;
+
+export const bannedEmailDomains = gql`
+	query bannedEmailDomains(
+		$aggregation: [String]
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+		$search: String
+		$sort: String
+	) {
 		c {
-			koroneikiAccounts(filter: $filter) {
+			bannedEmailDomains(
+				aggregation: $aggregation
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				search: $search
+				sort: $sort
+			) {
 				items {
-					accountKey
-					code
-					slaCurrent
-					slaExpired
-					slaFuture
-					slaCurrentEndDate
-					region
-					liferayContactName
-					liferayContactRole
-					liferayContactEmailAddress
+					bannedEmailDomainId
+					domain
 				}
 			}
 		}
 	}
 `;
+
+export const createSetupDXP = gql`
+	mutation createSetupDXP($SetupDXP: InputC_SetupDXP!, $scopeKey: String) {
+		c {
+			createSetupDXP(SetupDXP: $SetupDXP, scopeKey: $scopeKey) {
+				admins
+				disasterDataCenterRegion
+				dataCenterRegion
+				projectId
+			}
+		}
+	}
+`;
+
 
 export const getAccountRolesAndAccountFlags = gql`
 	query getAccountRolesAndAccountFlags(
@@ -73,15 +107,81 @@ export const getAccountRolesAndAccountFlags = gql`
 	}
 `;
 
-export const addAccountFlag = gql`
-	mutation addAccountFlag($accountFlag: InputC_AccountFlag!) {
+
+export const getAccountSubscriptionGroupsByFilter = gql`
+	query accountSubscriptionGroups(
+		$aggregation: [String]
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+		$search: String
+		$sort: String
+	) {
 		c {
-			createAccountFlag(AccountFlag: $accountFlag) {
-				accountFlagId
-				accountKey
+			accountSubscriptionGroups(
+				aggregation: $aggregation
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				search: $search
+				sort: $sort
+			) {
+				items {
+					accountKey
+					name
+				}
+			}
+		}
+	}
+`;
+
+export const getDXPCDataCenterRegions = gql`
+	query getDXPCDataCenterRegions {
+		c {
+			dXPCDataCenterRegions {
+				items {
+					dxpcDataCenterRegionId
+					name
+					value
+				}
+			}
+		}
+	}
+`;
+
+export const getKoroneikiAccounts = gql`
+	query getKoroneikiAccounts($filter: String) {
+		c {
+			koroneikiAccounts(filter: $filter) {
+				items {
+					accountKey
+					code
+					dxpVersion
+					slaCurrent
+					slaExpired
+					slaFuture
+					slaCurrentEndDate
+					region
+					liferayContactName
+					liferayContactRole
+					liferayContactEmailAddress
+				}
+			}
+		}
+	}
+`;
+
+export const getUserAccount = gql`
+	query getUserAccount($id: Long!) {
+		userAccount(userAccountId: $id) {
+			id
+			name
+			image
+			externalReferenceCode
+			accountBriefs {
+				id
 				name
-				userUuid
-				value
+				externalReferenceCode
 			}
 		}
 	}

@@ -46,8 +46,7 @@ const overviewPageGuard = (accountBriefs, externalReferenceCode) => {
 	const getExternalReferenceCode = () => {
 		if (isValidExternalReferenceCode) {
 			return externalReferenceCode;
-		}
-		else if (accountBriefs.length === 1) {
+		} else if (accountBriefs.length === 1) {
 			return accountBriefs[0].externalReferenceCode;
 		}
 	};
@@ -101,12 +100,10 @@ const usePageGuard = (
 
 				if (alternativeValidate) {
 					window.location.href = location;
-				}
-				else {
+				} else {
 					window.location.href = `${window.location.origin}${liferaySiteName}`;
 				}
-			}
-			else {
+			} else {
 				setLoading(false);
 			}
 		}

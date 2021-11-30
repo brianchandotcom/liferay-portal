@@ -342,10 +342,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addDocuments(serviceContext));
 
 			_invoke(
-				() -> _addCPDefinitions(
-					documentsStringUtilReplaceValues, serviceContext));
-
-			_invoke(
 				() -> _addDDMTemplates(
 					_ddmStructureLocalService, serviceContext));
 			_invoke(
@@ -360,10 +356,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
 				_invoke(() -> _addListTypeDefinitions(serviceContext));
 
+			Map<String, String> objectDefinitionsStringUtilReplaceValues =
+				_invoke(
+					() -> _addObjectDefinitions(
+						listTypeDefinitionsStringUtilReplaceValues,
+						serviceContext));
+
 			_invoke(
-				() -> _addObjectDefinitions(
-					listTypeDefinitionsStringUtilReplaceValues,
-					serviceContext));
+				() -> _addCPDefinitions(
+					documentsStringUtilReplaceValues,
+					objectDefinitionsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -649,6 +651,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCommerceNotificationTemplate(
 			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -661,16 +664,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONObject commerceNotificationTemplateJSONObject =
 			JSONFactoryUtil.createJSONObject(json);
-
-		com.liferay.object.model.ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				serviceContext.getCompanyId(),
-				commerceNotificationTemplateJSONObject.getString(
-					"objectDefinitionName"));
-
-		if (objectDefinition == null) {
-			return;
-		}
 
 		CommerceChannel commerceChannel =
 			_commerceReferencesHolder.commerceChannelLocalService.
@@ -706,9 +699,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				commerceNotificationTemplateJSONObject.getString("to"),
 				commerceNotificationTemplateJSONObject.getString("cc"),
 				commerceNotificationTemplateJSONObject.getString("bcc"),
-				StringBundler.concat(
-					objectDefinition.getClassName(), "#",
-					commerceNotificationTemplateJSONObject.getString("action")),
+				StringUtil.replace(
+					commerceNotificationTemplateJSONObject.getString("type"),
+					"[$", "$]", objectDefinitionsStringUtilReplaceValues),
 				commerceNotificationTemplateJSONObject.getBoolean("enabled"),
 				_toMap(
 					commerceNotificationTemplateJSONObject.getString(
@@ -719,6 +712,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCommerceNotificationTemplates(
 			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -732,12 +726,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
 				commerceChannelId, documentsStringUtilReplaceValues,
-				resourcePath, serviceContext);
+				objectDefinitionsStringUtilReplaceValues, resourcePath,
+				serviceContext);
 		}
 	}
 
 	private void _addCPDefinitions(
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -758,7 +754,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
 		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues, serviceContext);
+			channel.getId(), documentsStringUtilReplaceValues,
+			objectDefinitionsStringUtilReplaceValues, serviceContext);
 	}
 
 	private void _addCPDefinitions(
@@ -1598,16 +1595,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addObjectDefinitions(
+	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> listTypeDefinitionsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
+
+		Map<String, String> objectDefinitionsStringUtilReplaceValues =
+			new HashMap<>();
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return objectDefinitionsStringUtilReplaceValues;
 		}
 
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
@@ -1662,6 +1662,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingObjectDefinition.getId(), objectDefinition);
 			}
 
+			objectDefinitionsStringUtilReplaceValues.put(
+				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
+				String.valueOf(objectDefinition.getId()));
+
 			String objectEntriesJSON = _read(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".object-entries.json"));
@@ -1696,6 +1700,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext);
 			}
 		}
+
+		return objectDefinitionsStringUtilReplaceValues;
 	}
 
 	private void _addPermissions(ServiceContext serviceContext)

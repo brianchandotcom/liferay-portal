@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.exception.CPInstanceDiscontinuedDateException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
@@ -109,6 +110,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String unspsc,
+			boolean discontinued, String discontinuedCPInstanceUuid,
+			long discontinuedCProductId, int discontinuedDateMonth,
+			int discontinuedDateDay, int discontinuedDateYear,
+			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -198,6 +203,16 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setStatusDate(serviceContext.getModifiedDate(date));
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
+		cpInstance.setDiscontinued(discontinued);
+		cpInstance.setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
+		cpInstance.setDiscontinuedCProductId(discontinuedCProductId);
+
+		Date discontinuedDate = PortalUtil.getDate(
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
+			discontinuedDateHour, discontinuedDateMinute, user.getTimeZone(),
+			CPInstanceDiscontinuedDateException.class);
+
+		cpInstance.setDiscontinuedDate(discontinuedDate);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
@@ -281,7 +296,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateHour, expirationDateMinute, neverExpire,
 			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, null, serviceContext);
+			maxSubscriptionCycles, deliverySubscriptionEnabled,
+			deliverySubscriptionLength, deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliveryMaxSubscriptionCycles, unspsc, false, null, 0, 0, 0, 0, 0,
+			0, serviceContext);
 	}
 
 	@Override
@@ -366,57 +385,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		return cpInstanceLocalService.addCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable, json, width, height, depth,
-			weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, null,
-			serviceContext);
-	}
-
-	@Override
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable, String json, double width, double height,
-			double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.addCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelLocalService.
-				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-					cpDefinitionId, json),
-			width, height, depth, weight, price, promoPrice, cost, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, false, false, 1, StringPool.BLANK, null, 0, unspsc,
-			serviceContext);
-	}
-
-	@Override
-	public CPInstance addOrUpdateCPInstance(
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable, String json, double width, double height,
-			double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
 		return addOrUpdateCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable, json, width, height, depth,
@@ -438,7 +406,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, ServiceContext serviceContext)
+			boolean neverExpire, String unspsc, boolean discontinued,
+			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			int discontinuedDateMonth, int discontinuedDateDay,
+			int discontinuedDateYear, int discontinuedDateHour,
+			int discontinuedDateMinute, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -456,18 +428,53 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, unspsc, serviceContext);
+					expirationDateMinute, neverExpire, unspsc, discontinued,
+					discontinuedCPInstanceUuid, discontinuedCProductId,
+					discontinuedDateMonth, discontinuedDateDay,
+					discontinuedDateYear, discontinuedDateHour,
+					discontinuedDateMinute, serviceContext);
 			}
 		}
 
 		return addCPInstance(
+			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
+			manufacturerPartNumber, purchasable,
+			cpDefinitionOptionRelLocalService.
+				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+					cpDefinitionId, json),
+			width, height, depth, weight, price, promoPrice, cost, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, false, false, 1, StringPool.BLANK, null, 0, false, 1,
+			StringPool.BLANK, null, 0, unspsc, discontinued,
+			discontinuedCPInstanceUuid, discontinuedCProductId,
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
+			discontinuedDateHour, discontinuedDateMinute, serviceContext);
+	}
+
+	@Override
+	public CPInstance addOrUpdateCPInstance(
+			String externalReferenceCode, long cpDefinitionId, long groupId,
+			String sku, String gtin, String manufacturerPartNumber,
+			boolean purchasable, String json, double width, double height,
+			double depth, double weight, BigDecimal price,
+			BigDecimal promoPrice, BigDecimal cost, boolean published,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String unspsc, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOrUpdateCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable, json, width, height, depth,
 			weight, price, promoPrice, cost, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			serviceContext);
+			false, null, 0, 0, 0, 0, 0, 0, serviceContext);
 	}
 
 	@Override
@@ -623,8 +630,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public void deleteCPInstances(long cpDefinitionId) throws PortalException {
 		List<CPInstance> cpInstances =
-			cpInstanceLocalService.getCPDefinitionInstances(
-				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 
 		for (CPInstance cpInstance : cpInstances) {
 			cpInstanceLocalService.deleteCPInstance(cpInstance);
@@ -974,7 +980,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateCPInstance(
+		return cpInstanceLocalService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
 			height, depth, weight, price, promoPrice, cost, published,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -994,7 +1000,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, ServiceContext serviceContext)
+			boolean neverExpire, String unspsc, boolean discontinued,
+			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			int discontinuedDateMonth, int discontinuedDateDay,
+			int discontinuedDateYear, int discontinuedDateHour,
+			int discontinuedDateMinute, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product instance
@@ -1056,6 +1066,16 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setStatusDate(serviceContext.getModifiedDate(date));
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
+		cpInstance.setDiscontinued(discontinued);
+		cpInstance.setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
+		cpInstance.setDiscontinuedCProductId(discontinuedCProductId);
+
+		Date discontinuedDate = PortalUtil.getDate(
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
+			discontinuedDateHour, discontinuedDateMinute, user.getTimeZone(),
+			CPInstanceDiscontinuedDateException.class);
+
+		cpInstance.setDiscontinuedDate(discontinuedDate);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
@@ -1095,6 +1115,57 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return cpInstance;
+	}
+
+	@Override
+	public CPInstance updateCPInstance(
+			long cpInstanceId, String sku, String gtin,
+			String manufacturerPartNumber, boolean purchasable, double width,
+			double height, double depth, double weight, BigDecimal price,
+			BigDecimal promoPrice, BigDecimal cost, boolean published,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String unspsc, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
+			cpInstanceId);
+
+		int discontinuedDateMonth = 0;
+		int discontinuedDateDay = 0;
+		int discontinuedDateYear = 0;
+		int discontinuedDateHour = 0;
+		int discontinuedDateMinute = 0;
+
+		if (cpInstance.isDiscontinued()) {
+			Date discontinuedDate = cpInstance.getDiscontinuedDate();
+
+			Calendar discontinuedDateCalendar = CalendarFactoryUtil.getCalendar(
+				discontinuedDate.getTime(), serviceContext.getTimeZone());
+
+			discontinuedDateMonth = discontinuedDateCalendar.get(
+				Calendar.MONTH);
+			discontinuedDateDay = discontinuedDateCalendar.get(
+				Calendar.DAY_OF_MONTH);
+			discontinuedDateYear = discontinuedDateCalendar.get(Calendar.YEAR);
+			discontinuedDateHour = discontinuedDateCalendar.get(Calendar.HOUR);
+			discontinuedDateMinute = discontinuedDateCalendar.get(
+				Calendar.MINUTE);
+		}
+
+		return cpInstanceLocalService.updateCPInstance(
+			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
+			height, depth, weight, price, promoPrice, cost, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, unspsc, cpInstance.isDiscontinued(),
+			cpInstance.getCPInstanceUuid(),
+			cpInstance.getDiscontinuedCProductId(), discontinuedDateMonth,
+			discontinuedDateDay, discontinuedDateYear, discontinuedDateHour,
+			discontinuedDateMinute, serviceContext);
 	}
 
 	@Override

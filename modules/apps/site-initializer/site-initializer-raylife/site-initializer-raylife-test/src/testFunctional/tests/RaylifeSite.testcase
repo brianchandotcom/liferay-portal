@@ -65,16 +65,16 @@ definition {
 			portlet = "Catalogs");
 
 		AssertElementPresent(
-			name = "Raylife",
-			locator1 = "Raylife#TABLE_CATALOG_NAME");
+			locator1 = "Raylife#TABLE_CATALOG_NAME",
+			name = "Raylife");
 
 		Click(
-			name = "Raylife",
-			locator1 = "Raylife#TABLE_CATALOG_NAME");
+			locator1 = "Raylife#TABLE_CATALOG_NAME",
+			name = "Raylife");
 
 		AssertElementPresent(
-			title = "Raylife",
-			locator1 = "Raylife#CATALOG_TITLE");
+			locator1 = "Raylife#CATALOG_TITLE",
+			title = "Raylife");
 	}
 
 	@description = "LPS-142180 - Verify if, when Raylife is created, Products related to Raylife are also created."

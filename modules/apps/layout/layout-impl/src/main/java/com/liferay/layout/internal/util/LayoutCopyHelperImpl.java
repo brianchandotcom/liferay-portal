@@ -231,11 +231,27 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					targetLayoutLayoutClassedModelUsages,
 					sourceLayoutLayoutClassedModelUsage)) {
 
+				long fragmentEntryLinkId = GetterUtil.getLong(
+					sourceLayoutLayoutClassedModelUsage.getContainerKey());
+
+				long containerKey = GetterUtil.getLong(
+					sourceLayoutLayoutClassedModelUsage.getContainerKey());
+
+				FragmentEntryLink fragmentEntryLink =
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						sourceLayout.getGroupId(), containerKey,
+						targetLayout.getPlid());
+
+				if (fragmentEntryLink != null) {
+					fragmentEntryLinkId =
+						fragmentEntryLink.getFragmentEntryLinkId();
+				}
+
 				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 					sourceLayoutLayoutClassedModelUsage.getGroupId(),
 					sourceLayoutLayoutClassedModelUsage.getClassNameId(),
 					sourceLayoutLayoutClassedModelUsage.getClassPK(),
-					sourceLayoutLayoutClassedModelUsage.getContainerKey(),
+					String.valueOf(fragmentEntryLinkId),
 					sourceLayoutLayoutClassedModelUsage.getContainerType(),
 					targetLayout.getPlid(), serviceContext);
 			}

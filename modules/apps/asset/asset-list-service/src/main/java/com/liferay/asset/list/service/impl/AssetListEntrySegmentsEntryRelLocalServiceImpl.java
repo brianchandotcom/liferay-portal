@@ -67,8 +67,8 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
 		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
 
-		assetListEntrySegmentsEntryRel.setPriority(assetListEntrySegmentsEntryRelPersistence.countByA_S_C(
-			assetListEntryId, segmentsEntryId));
+		assetListEntrySegmentsEntryRel.setPriority(assetListEntrySegmentsEntryRelPersistence.countByAssetListEntryId(
+			assetListEntryId));
 
 		return assetListEntrySegmentsEntryRelPersistence.update(
 			assetListEntrySegmentsEntryRel);

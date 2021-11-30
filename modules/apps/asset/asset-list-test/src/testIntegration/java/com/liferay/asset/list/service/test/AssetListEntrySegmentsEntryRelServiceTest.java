@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
 
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -261,6 +262,43 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 
 		Assert.assertEquals(
 			assetListEntrySegmentsEntryRelUpdated3.getPriority(), 0
+		);
+	}
+
+	@Test
+	public void testNewVariationCreationAssignTheRightPriority() throws Exception {
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel3 =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRelNew =
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry);
+
+		Assert.assertEquals(
+			1, assetListEntrySegmentsEntryRel1.getPriority()
+		);
+
+		Assert.assertEquals(
+			2, assetListEntrySegmentsEntryRel2.getPriority()
+		);
+
+		Assert.assertEquals(
+			3, assetListEntrySegmentsEntryRel3.getPriority()
+		);
+
+		Assert.assertEquals(
+			4, assetListEntrySegmentsEntryRelNew.getPriority()
 		);
 	}
 

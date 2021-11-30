@@ -28,6 +28,10 @@
 		top: -99999px;
 	}
 
+	.label.label-secondary {
+		max-width: fit-content;
+	}
+
 	.lexicon-icon-drag {
 		color: $gray-500;
 		height: 20px;

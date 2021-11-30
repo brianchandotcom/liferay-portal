@@ -16,6 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
@@ -185,9 +186,9 @@ export function MenuItem({item}) {
 										{title}
 									</ClayCard.Description>
 
-									<ClayCard.Description displayType="subtitle">
+									<ClayLabel displayType="secondary">
 										{type}
-									</ClayCard.Description>
+									</ClayLabel>
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol gutters>

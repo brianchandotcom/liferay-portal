@@ -13,20 +13,35 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {logError} from '../utils/logError';
 import TooltipTextRenderer from './TooltipTextRenderer';
 
-function DefaultRenderer({value}) {
+const Wrapper = ({options, ...props}) => {
+	return options.truncate ? (
+		<span
+			className={classNames(
+				'default-renderer__text-truncate',
+				'text-truncate'
+			)}
+		>
+			{props.children}
+		</span>
+	) : (
+		<>{props.children}</>
+	);
+};
+function DefaultRenderer({options, value}) {
 	if (
 		typeof value === 'number' ||
 		typeof value === 'string' ||
 		value === undefined ||
 		value === null
 	) {
-		return <>{value ?? ''}</>;
+		return <Wrapper options={options}>{value ?? ''}</Wrapper>;
 	}
 	else if (value.icon) {
 		return <ClayIcon symbol={value.icon} />;
@@ -34,8 +49,8 @@ function DefaultRenderer({value}) {
 	else if (!!value.iconSymbol && !!value.text) {
 		return <TooltipTextRenderer value={value} />;
 	}
-	else if (value.label) {
-		return <>{value.label}</>;
+	else if (value) {
+		return <Wrapper options={options}>{value}</Wrapper>;
 	}
 
 	logError(

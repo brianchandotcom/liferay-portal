@@ -19,6 +19,12 @@ package com.liferay.frontend.taglib.clay.data.set.view.table;
  */
 public interface ClayTableSchemaBuilder {
 
+	public <T extends ClayTableSchemaField> T addClayTableSchemaField(
+		Class<T> clazz, String fieldName);
+
+	public <T extends ClayTableSchemaField> T addClayTableSchemaField(
+		Class<T> clazz, String fieldName, String label);
+
 	public void addClayTableSchemaField(
 		ClayTableSchemaField clayTableSchemaField);
 

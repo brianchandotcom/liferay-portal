@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TYPE_YOUR_COMMENT_HERE</td>
+	<td>//label[contains(text(),'Type your comment here.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

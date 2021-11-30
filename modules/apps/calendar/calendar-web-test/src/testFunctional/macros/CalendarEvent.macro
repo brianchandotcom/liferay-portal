@@ -1957,4 +1957,12 @@ definition {
 		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
 	}
 
+	macro viewTypeYourCommentHere {
+		if (IsElementPresent(locator1 = "CalendarViewEventDetails#TYPE_YOUR_COMMENT_HERE")) {
+			AssertElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		}
+		else {
+			AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		}
+	}
 }

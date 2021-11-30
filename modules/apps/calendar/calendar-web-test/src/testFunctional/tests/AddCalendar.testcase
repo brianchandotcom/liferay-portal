@@ -118,15 +118,6 @@ definition {
 			color = "668CD9",
 			pageName = "Calendar Page");
 	}
-
-	@description = "LRQA-71360 - Verify that the user can add multiple calendars with the same name"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanAddCalendarsWithSameName {
-
-		// TODO LRQA-71605 CanAddCalendarsWithSameName pending implementation
-
-	}
 	
 	@description = "LRQA-71605 - Verify that the user can add multiple calendars with the same name"
 	@priority = "4"
@@ -136,21 +127,20 @@ definition {
 
 			CalendarNavigator.gotoMyCalendarsManage();
 
-			Calendar.addMyCalendarByManageCalendars(calendarName = "${calendarsName}");
+			CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "${calendarsName}");
 
 			PortletEntry.save();
 		}
 
 		Navigator.gotoBack();
 
-		Calendar.viewManegeCalendarsByPosition(
+		CalendarMyCalendars.viewManageCalendarsByPosition(
 			rowNumber = "1",
 			calendarName = "Same Name Calendar");
 
-		Calendar.viewManegeCalendarsByPosition(
+		CalendarMyCalendars.viewManageCalendarsByPosition(
 			rowNumber = "2",
 			calendarName = "Same Name Calendar");
-			
 	}
 
 	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
@@ -184,18 +174,51 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.viewColorMyCalendars(myCalendarColor = "8C66D9");
-
-		
+		CalendarMyCalendars.viewColorMyCalendars(myCalendarColor = "8C66D9");
 	}
 
-	@description = "Verify that the user can Enable Comments on Calendar"
-	@ignore = "Test Stub"
+	@description = "LRQA-71797 - Verify that the user can Enable Comments on Calendar"
 	@priority = "3"
 	test CanEnableComments {
+		CalendarNavigator.gotoMyCalendarsManage();
 
-		// TODO LRQA-71797 CanEnableComments pending implementation
+		CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
 
+		Uncheck(locator1 = "Checkbox#ENABLE_COMMENTS");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Calendar Name");
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "Test Test - Calendar Name",
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular");
+
+		CalendarEvent.viewTypeYourCommentHere();
+
+		CalendarMyCalendars.gotoCalendarSettings(calendarName = "Calendar Name");
+
+		CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
+
+		PortletEntry.save();
+		
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "Test Test - Calendar Name",
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular");
+
+		CalendarEvent.viewTypeYourCommentHere();
 	}
 
 	@description = "Verify that the user can Enable Ratings on Calendar"
@@ -207,32 +230,30 @@ definition {
 
 	}
 
-	@description = "Verify that the user can make the new Calendar as the Default Calendar"
+	@description = "LRQA-71595 - Verify that the user can make the new Calendar as the Default Calendar"
 	@priority = "3"
 	test CanMakeNewCalendarAsDefault {
 		CalendarNavigator.gotoMyCalendarsManage();
 		
-		Calendar.viewManageCalendarDefault(
+		CalendarMyCalendars.viewManageCalendarDefault(
 			calendarName = "Test Test",
 			calendarDefault = "Yes");
 
-		Calendar.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
+		CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
 
-		Calendar.checkboxOption(checkboxName = "Default Calendar");
+		CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
 
 		PortletEntry.save();
 
 		Navigator.gotoBack();
 
-		Calendar.viewManageCalendarDefault(
+		CalendarMyCalendars.viewManageCalendarDefault(
 			calendarName = "Test Test",
 			calendarDefault = "No");
 
-		Calendar.viewManageCalendarDefault(
+		CalendarMyCalendars.viewManageCalendarDefault(
 			calendarName = "Calendar Name",
-			calendarDefault = "Yes");
-
-			
+			calendarDefault = "Yes");		
 	}
 
 	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Anyone"
@@ -276,7 +297,7 @@ definition {
 	test NameFieldIsRequired {
 		CalendarNavigator.gotoMyCalendarsManage();
 
-		CalendarNavigator.gotoEditCalendarsManage(
+		CalendarMyCalendars.gotoEditCalendarsManage(
 			calendarManage = "Test Test",
 			editNameCalendarManage = "");
 
@@ -286,7 +307,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.viewNameMyCalendars(userCalendarName = "Test Test");
+		CalendarMyCalendars.viewNameMyCalendars(userCalendarName = "Test Test");
 
 		
 	}

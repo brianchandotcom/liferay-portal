@@ -1,0 +1,60 @@
+definition {
+    
+    macro viewNameMyCalendars {
+		AssertElementPresent(
+			key_userCalendarName = "${userCalendarName}",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR");		
+	}
+
+    macro viewColorMyCalendars {
+		AssertElementPresent(
+			key_color = "${myCalendarColor}",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR");
+	}
+
+    macro viewManageCalendarDefault {
+		AssertElementPresent(
+			key_calendarName = "${calendarName}",
+			key_calendarDefault = "${calendarDefault}",
+			locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME_AND_VIEW_DEFAULT");
+	}
+
+    macro addMyCalendarByManageCalendars {
+		Click(locator1 = "CalendarManageCalendars#ADD_CALENDAR");
+
+		Calendar._editName(calendarName = "${calendarName}");
+	}
+
+	macro checkboxOption {
+		Check(
+			checkboxName = "${checkboxName}",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
+    macro viewManageCalendarsByPosition {
+		AssertElementPresent(
+			key_rowNumber = "${rowNumber}",
+			key_calendarName = "${calendarName}",
+			locator1 = "CalendarManageCalendars#VIEW_CALENDAR_TABLE_NAME_BY_POSITION");
+	}
+
+    macro gotoEditCalendarsManage {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${calendarManage}");
+
+		Calendar._editName(calendarName = "${editNameCalendarManage}");
+	}
+
+    macro gotoCalendarSettings {
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+		Click(
+			key_calendarName = "${calendarName}",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
+
+		Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+    }
+}

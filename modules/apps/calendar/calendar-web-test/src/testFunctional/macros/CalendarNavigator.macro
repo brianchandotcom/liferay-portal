@@ -242,13 +242,4 @@ definition {
 			AssertElementPresent(locator1 = "CalendarAgendaView#SCHEDULER_VIEW_AGENDA");
 		}
 	}
-
-	macro gotoEditCalendarsManage {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${calendarManage}");
-
-		Calendar._editName(calendarName = "${editNameCalendarManage}");
-	}
-
 }

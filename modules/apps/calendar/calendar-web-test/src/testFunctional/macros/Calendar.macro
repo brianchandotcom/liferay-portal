@@ -828,47 +828,10 @@ definition {
 			value1 = "${weekStartDay}");
 	}
 	
-	macro viewNameMyCalendars {
-		AssertElementPresent(
-			key_userCalendarName = "${userCalendarName}",
-			locator1 = "Calendar#MY_CALENDARS_CALENDAR");		
-	}
-
 	macro chooseCalendarColor {
 		Click(
 			key_myCalendarColor = "${myCalendarColor}",
 			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
-	}
-
-	macro viewColorMyCalendars {
-		AssertElementPresent(
-			key_color = "${myCalendarColor}",
-			locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR");
-	}
-
-	macro viewManageCalendarDefault {
-		AssertElementPresent(
-			key_calendarName = "${calendarName}",
-			key_calendarDefault = "${calendarDefault}",
-			locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME_AND_VIEW_DEFAULT");
-	}
-
-	macro addMyCalendarByManageCalendars {
-		Click(locator1 = "CalendarManageCalendars#ADD_CALENDAR");
-
-		Calendar._editName(calendarName = "${calendarName}");
-	}
-
-	macro checkboxOption {
-		Check(
-			checkboxName = "${checkboxName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-	}
-	macro viewManegeCalendarsByPosition {
-		AssertElementPresent(
-			key_rowNumber = "${rowNumber}",
-			key_calendarName = "${calendarName}",
-			locator1 = "CalendarManageCalendars#VIEW_CALENDAR_TABLE_NAME_BY_POSITION");
 	}
 
 }

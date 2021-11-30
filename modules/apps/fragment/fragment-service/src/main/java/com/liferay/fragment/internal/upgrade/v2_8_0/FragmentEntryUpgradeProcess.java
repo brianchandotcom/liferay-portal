@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.internal.upgrade.v2_8_0;
 
-import com.liferay.fragment.internal.upgrade.v2_3_0.util.FragmentEntryTable;
+import com.liferay.fragment.internal.upgrade.v2_8_0.util.FragmentEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**

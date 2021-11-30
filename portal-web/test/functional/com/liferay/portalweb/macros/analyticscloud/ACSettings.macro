@@ -804,6 +804,12 @@ definition {
 		Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
 	}
 
+	macro goToDefinitionsOptions {
+		var key_DefinitionsOptions = "${definitionsOptions}";
+
+		Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
+	}
+
 	macro goToUsage {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "usage");
 	}

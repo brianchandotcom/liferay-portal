@@ -12,7 +12,7 @@ definition {
 	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
 	@priority = "5"
 	@uitest
-	test DefaultPortalLandingPage {
+	test RedirectToDefaultPortalLandingPageOnLogin {
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
 
 		task ("Login and configure landing page CP") {
@@ -257,7 +257,7 @@ definition {
 
 	@description = "This is a use case for LPS-105151. Users could login and logout using multiple OpenID Connect providers."
 	@priority = "4"
-	test MultipleOpenIDConnectProvider {
+	test LoginWithMultipleOpenIDConnectProviders {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#MultipleOpenIDConnectProvider";
 
@@ -298,7 +298,7 @@ definition {
 			PortalInstances.viewCP(virtualHost = "www.baker.com");
 		}
 
-		task ("Inable OpenID connection CP") {
+		task ("Enable OpenID connection CP") {
 			Navigator.openURL();
 
 			SystemSettings.openSystemSettingsAdmin();

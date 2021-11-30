@@ -95,6 +95,24 @@ public class RemoteAppEntryLocalServiceImpl
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
+		return addCustomElementRemoteAppEntry(
+			userId, customElementCSSURLs, customElementHTMLElementName,
+			customElementURLs, null, description, friendlyURLMapping,
+			instanceable, nameMap, portletCategoryName, properties,
+			sourceCodeURL);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry addCustomElementRemoteAppEntry(
+			long userId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			String externalReferenceCode, String description,
+			String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
+		throws PortalException {
+
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
 		customElementHTMLElementName = StringUtil.trim(
 			customElementHTMLElementName);

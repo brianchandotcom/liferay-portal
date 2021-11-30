@@ -81,6 +81,11 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setDeliveryMaxSubscriptionCycles(
 			model.getDeliveryMaxSubscriptionCycles());
 		soapModel.setUnspsc(model.getUnspsc());
+		soapModel.setDiscontinued(model.isDiscontinued());
+		soapModel.setDiscontinuedCPInstanceUuid(
+			model.getDiscontinuedCPInstanceUuid());
+		soapModel.setDiscontinuedCProductId(model.getDiscontinuedCProductId());
+		soapModel.setDiscontinuedDate(model.getDiscontinuedDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -476,6 +481,44 @@ public class CPInstanceSoap implements Serializable {
 		_unspsc = unspsc;
 	}
 
+	public boolean getDiscontinued() {
+		return _discontinued;
+	}
+
+	public boolean isDiscontinued() {
+		return _discontinued;
+	}
+
+	public void setDiscontinued(boolean discontinued) {
+		_discontinued = discontinued;
+	}
+
+	public String getDiscontinuedCPInstanceUuid() {
+		return _discontinuedCPInstanceUuid;
+	}
+
+	public void setDiscontinuedCPInstanceUuid(
+		String discontinuedCPInstanceUuid) {
+
+		_discontinuedCPInstanceUuid = discontinuedCPInstanceUuid;
+	}
+
+	public long getDiscontinuedCProductId() {
+		return _discontinuedCProductId;
+	}
+
+	public void setDiscontinuedCProductId(long discontinuedCProductId) {
+		_discontinuedCProductId = discontinuedCProductId;
+	}
+
+	public Date getDiscontinuedDate() {
+		return _discontinuedDate;
+	}
+
+	public void setDiscontinuedDate(Date discontinuedDate) {
+		_discontinuedDate = discontinuedDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -547,6 +590,10 @@ public class CPInstanceSoap implements Serializable {
 	private String _deliverySubscriptionTypeSettings;
 	private long _deliveryMaxSubscriptionCycles;
 	private String _unspsc;
+	private boolean _discontinued;
+	private String _discontinuedCPInstanceUuid;
+	private long _discontinuedCProductId;
+	private Date _discontinuedDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

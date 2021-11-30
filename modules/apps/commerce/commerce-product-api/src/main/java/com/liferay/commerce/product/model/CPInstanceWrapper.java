@@ -93,6 +93,11 @@ public class CPInstanceWrapper
 			"deliveryMaxSubscriptionCycles",
 			getDeliveryMaxSubscriptionCycles());
 		attributes.put("unspsc", getUnspsc());
+		attributes.put("discontinued", isDiscontinued());
+		attributes.put(
+			"discontinuedCPInstanceUuid", getDiscontinuedCPInstanceUuid());
+		attributes.put("discontinuedCProductId", getDiscontinuedCProductId());
+		attributes.put("discontinuedDate", getDiscontinuedDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -350,6 +355,32 @@ public class CPInstanceWrapper
 			setUnspsc(unspsc);
 		}
 
+		Boolean discontinued = (Boolean)attributes.get("discontinued");
+
+		if (discontinued != null) {
+			setDiscontinued(discontinued);
+		}
+
+		String discontinuedCPInstanceUuid = (String)attributes.get(
+			"discontinuedCPInstanceUuid");
+
+		if (discontinuedCPInstanceUuid != null) {
+			setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
+		}
+
+		Long discontinuedCProductId = (Long)attributes.get(
+			"discontinuedCProductId");
+
+		if (discontinuedCProductId != null) {
+			setDiscontinuedCProductId(discontinuedCProductId);
+		}
+
+		Date discontinuedDate = (Date)attributes.get("discontinuedDate");
+
+		if (discontinuedDate != null) {
+			setDiscontinuedDate(discontinuedDate);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -526,6 +557,46 @@ public class CPInstanceWrapper
 	@Override
 	public double getDepth() {
 		return model.getDepth();
+	}
+
+	/**
+	 * Returns the discontinued of this cp instance.
+	 *
+	 * @return the discontinued of this cp instance
+	 */
+	@Override
+	public boolean getDiscontinued() {
+		return model.getDiscontinued();
+	}
+
+	/**
+	 * Returns the discontinued cp instance uuid of this cp instance.
+	 *
+	 * @return the discontinued cp instance uuid of this cp instance
+	 */
+	@Override
+	public String getDiscontinuedCPInstanceUuid() {
+		return model.getDiscontinuedCPInstanceUuid();
+	}
+
+	/**
+	 * Returns the discontinued c product ID of this cp instance.
+	 *
+	 * @return the discontinued c product ID of this cp instance
+	 */
+	@Override
+	public long getDiscontinuedCProductId() {
+		return model.getDiscontinuedCProductId();
+	}
+
+	/**
+	 * Returns the discontinued date of this cp instance.
+	 *
+	 * @return the discontinued date of this cp instance
+	 */
+	@Override
+	public Date getDiscontinuedDate() {
+		return model.getDiscontinuedDate();
 	}
 
 	/**
@@ -906,6 +977,16 @@ public class CPInstanceWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this cp instance is discontinued.
+	 *
+	 * @return <code>true</code> if this cp instance is discontinued; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDiscontinued() {
+		return model.isDiscontinued();
+	}
+
+	/**
 	 * Returns <code>true</code> if this cp instance is a draft.
 	 *
 	 * @return <code>true</code> if this cp instance is a draft; <code>false</code> otherwise
@@ -1144,6 +1225,48 @@ public class CPInstanceWrapper
 	@Override
 	public void setDepth(double depth) {
 		model.setDepth(depth);
+	}
+
+	/**
+	 * Sets whether this cp instance is discontinued.
+	 *
+	 * @param discontinued the discontinued of this cp instance
+	 */
+	@Override
+	public void setDiscontinued(boolean discontinued) {
+		model.setDiscontinued(discontinued);
+	}
+
+	/**
+	 * Sets the discontinued cp instance uuid of this cp instance.
+	 *
+	 * @param discontinuedCPInstanceUuid the discontinued cp instance uuid of this cp instance
+	 */
+	@Override
+	public void setDiscontinuedCPInstanceUuid(
+		String discontinuedCPInstanceUuid) {
+
+		model.setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
+	}
+
+	/**
+	 * Sets the discontinued c product ID of this cp instance.
+	 *
+	 * @param discontinuedCProductId the discontinued c product ID of this cp instance
+	 */
+	@Override
+	public void setDiscontinuedCProductId(long discontinuedCProductId) {
+		model.setDiscontinuedCProductId(discontinuedCProductId);
+	}
+
+	/**
+	 * Sets the discontinued date of this cp instance.
+	 *
+	 * @param discontinuedDate the discontinued date of this cp instance
+	 */
+	@Override
+	public void setDiscontinuedDate(Date discontinuedDate) {
+		model.setDiscontinuedDate(discontinuedDate);
 	}
 
 	/**

@@ -210,6 +210,15 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setUnspsc(RandomTestUtil.randomString());
 
+		newCPInstance.setDiscontinued(RandomTestUtil.randomBoolean());
+
+		newCPInstance.setDiscontinuedCPInstanceUuid(
+			RandomTestUtil.randomString());
+
+		newCPInstance.setDiscontinuedCProductId(RandomTestUtil.nextLong());
+
+		newCPInstance.setDiscontinuedDate(RandomTestUtil.nextDate());
+
 		newCPInstance.setStatus(RandomTestUtil.nextInt());
 
 		newCPInstance.setStatusByUserId(RandomTestUtil.nextLong());
@@ -323,6 +332,18 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getDeliveryMaxSubscriptionCycles());
 		Assert.assertEquals(
 			existingCPInstance.getUnspsc(), newCPInstance.getUnspsc());
+		Assert.assertEquals(
+			existingCPInstance.isDiscontinued(),
+			newCPInstance.isDiscontinued());
+		Assert.assertEquals(
+			existingCPInstance.getDiscontinuedCPInstanceUuid(),
+			newCPInstance.getDiscontinuedCPInstanceUuid());
+		Assert.assertEquals(
+			existingCPInstance.getDiscontinuedCProductId(),
+			newCPInstance.getDiscontinuedCProductId());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingCPInstance.getDiscontinuedDate()),
+			Time.getShortTimestamp(newCPInstance.getDiscontinuedDate()));
 		Assert.assertEquals(
 			existingCPInstance.getStatus(), newCPInstance.getStatus());
 		Assert.assertEquals(
@@ -501,7 +522,9 @@ public class CPInstancePersistenceTest {
 			"maxSubscriptionCycles", true, "deliverySubscriptionEnabled", true,
 			"deliverySubscriptionLength", true, "deliverySubscriptionType",
 			true, "deliverySubscriptionTypeSettings", true,
-			"deliveryMaxSubscriptionCycles", true, "unspsc", true, "status",
+			"deliveryMaxSubscriptionCycles", true, "unspsc", true,
+			"discontinued", true, "discontinuedCPInstanceUuid", true,
+			"discontinuedCProductId", true, "discontinuedDate", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
 	}
@@ -893,6 +916,14 @@ public class CPInstancePersistenceTest {
 		cpInstance.setDeliveryMaxSubscriptionCycles(RandomTestUtil.nextLong());
 
 		cpInstance.setUnspsc(RandomTestUtil.randomString());
+
+		cpInstance.setDiscontinued(RandomTestUtil.randomBoolean());
+
+		cpInstance.setDiscontinuedCPInstanceUuid(RandomTestUtil.randomString());
+
+		cpInstance.setDiscontinuedCProductId(RandomTestUtil.nextLong());
+
+		cpInstance.setDiscontinuedDate(RandomTestUtil.nextDate());
 
 		cpInstance.setStatus(RandomTestUtil.nextInt());
 

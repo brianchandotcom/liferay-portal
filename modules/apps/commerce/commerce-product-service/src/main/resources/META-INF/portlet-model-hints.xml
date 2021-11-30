@@ -345,6 +345,10 @@
 		<field name="deliverySubscriptionTypeSettings" type="String" />
 		<field name="deliveryMaxSubscriptionCycles" type="long" />
 		<field name="unspsc" type="String" />
+		<field name="discontinued" type="boolean" />
+		<field name="discontinuedCPInstanceUuid" type="String" />
+		<field name="discontinuedCProductId" type="long" />
+		<field name="discontinuedDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

@@ -47,7 +47,7 @@ public class UpdateVariationsPriorityMVCActionCommand
 		throws Exception {
 
 		long[] variationsPriority = ParamUtil.getLongValues(
-			actionRequest, "variations_priority");
+			actionRequest, "variationsPriority");
 
 		for (int priority = 0; priority < variationsPriority.length;
 			 priority++) {

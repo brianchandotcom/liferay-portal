@@ -1219,22 +1219,12 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
+			groupPermissions = "false",
+			guestPermissions = "false",
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		PermissionsInline.gotoDocumentsAndMediaDocumentPG(
-			dmDocumentTitle = "DM Document Title",
-			pageName = "Documents and Media Page");
-
-		for (var roleTitle : list "guest,site-member") {
-			Role.removePermissionPG(
-				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "${roleTitle}");
-		}
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

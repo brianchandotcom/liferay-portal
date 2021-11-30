@@ -305,7 +305,7 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
-			
+
 			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC WebContent Title 1");
 
 			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title 2");

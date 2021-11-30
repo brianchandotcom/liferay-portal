@@ -93,7 +93,9 @@ definition {
 	macro _getPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/layout/get-layouts \

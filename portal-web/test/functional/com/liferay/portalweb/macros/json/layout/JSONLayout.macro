@@ -162,7 +162,7 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", portalURL = "${portalURL}", site = "${site}");
 
 		if (!(isSet(privateLayout))) {
 			privateLayout = "false";
@@ -171,6 +171,7 @@ definition {
 		JSONLayoutAPI._getPlidByName(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
+			portalURL = "${portalURL}",
 			privateLayout = "${privateLayout}");
 	}
 

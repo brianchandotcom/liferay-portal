@@ -45,11 +45,13 @@ public class DeleteSiteNavigationMenuItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		boolean deleteChildren = ParamUtil.getBoolean(
+			actionRequest, "deleteChildren");
 		long siteNavigationMenuItemId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuItemId");
 
 		_siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
-			siteNavigationMenuItemId);
+			deleteChildren, siteNavigationMenuItemId);
 	}
 
 	@Reference

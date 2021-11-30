@@ -23,4 +23,5 @@ public class DateTimeClayTableSchemaField extends BaseDateClayTableSchemaField {
 	public String getContentRenderer() {
 		return "datetime";
 	}
+
 }

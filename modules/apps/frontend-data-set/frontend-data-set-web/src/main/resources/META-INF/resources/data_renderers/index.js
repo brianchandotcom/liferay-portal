@@ -16,6 +16,7 @@ import ActionsLinkRenderer from './ActionLinkRenderer';
 import ActionsDropdownRenderer from './ActionsDropdownRenderer';
 import BooleanRenderer from './BooleanRenderer';
 import DateRenderer from './DateRenderer';
+import DateTimeRenderer from './DateTimeRenderer';
 import DefaultRenderer from './DefaultRenderer';
 import ImageRenderer from './ImageRenderer';
 import InputCheckboxRenderer from './InputCheckboxRenderer';
@@ -33,6 +34,7 @@ const dataRenderers = {
 	actionsDropdown: ActionsDropdownRenderer,
 	boolean: BooleanRenderer,
 	date: DateRenderer,
+	datetime: DateTimeRenderer,
 	default: DefaultRenderer,
 	image: ImageRenderer,
 	label: LabelRenderer,

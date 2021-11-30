@@ -77,7 +77,7 @@ export {App as DataSet};
 // Renderers API
 
 export {default as DataRenderers} from './data_renderers/index';
-export {default as DateRenderer} from './data_renderers/DateRenderer';
+export {default as DateTimeRenderer} from './data_renderers/DateTimeRenderer';
 export {default as StatusRenderer} from './data_renderers/StatusRenderer';
 
 // Data Set Events API

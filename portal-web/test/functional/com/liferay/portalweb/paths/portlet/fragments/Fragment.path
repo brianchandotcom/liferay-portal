@@ -24,7 +24,7 @@
 <!--CONTENT_DISPLAY_FRAGMENT-->
 <tr>
 	<td>CONTENT_DISPLAY_TEXT</td>
-	<td>xpath=(//div[contains(@data-analytics-asset-type,'${assetType}')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'${assetType}')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,7 +34,7 @@
 </tr>
 <tr>
 	<td>CONTENT_DISPLAY_IMAGE</td>
-	<td>xpath=(//div[contains(@data-analytics-asset-type,'${assetType}')])[${index}]//img[contains(@src,'${image}')]</td>
+	<td>xpath=(//div[contains(@class,'${assetType}')])[${index}]//img[contains(@src,'${image}')]</td>
 	<td></td>
 </tr>
 <tr>

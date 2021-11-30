@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_BAREBONE_ELLIPSIS_ICON</td>
-	<td>//section[contains(@id,'JournalContentPortlet')]//div[contains(@class,'portlet-content')][div//div[contains(@data-analytics-asset-title,'${key_webContentTitle}')]]//a[contains(@id,'JournalContentPortlet')][span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//section[contains(@id,'JournalContentPortlet')][.//*[contains(@class,'portlet-title')][normalize-space(text())='${key_webContentTitle}']]//div[contains(@class,'portlet-content')]//a[contains(@id,'JournalContentPortlet')][span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

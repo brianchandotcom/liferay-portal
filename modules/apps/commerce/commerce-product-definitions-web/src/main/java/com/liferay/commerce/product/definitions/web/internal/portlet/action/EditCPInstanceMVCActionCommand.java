@@ -30,6 +30,7 @@ import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOp
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -264,13 +265,14 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			CPDefinition cpDefinition =
 				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
-			String ddmFormValues = ParamUtil.getString(
-				actionRequest, "ddmFormValues");
-
 			cpInstance = _cpInstanceService.addCPInstance(
 				cpDefinitionId, cpDefinition.getGroupId(), sku, gtin,
-				manufacturerPartNumber, purchasable, ddmFormValues, published,
-				displayDateMonth, displayDateDay, displayDateYear,
+				manufacturerPartNumber, purchasable,
+				_cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+						cpDefinitionId,
+						ParamUtil.getString(actionRequest, "ddmFormValues")),
+				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, unspsc, serviceContext);
@@ -420,6 +422,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

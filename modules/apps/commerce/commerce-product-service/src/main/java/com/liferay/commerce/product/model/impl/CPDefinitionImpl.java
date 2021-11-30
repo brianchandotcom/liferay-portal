@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -200,7 +201,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	@Override
 	public List<CPInstance> getCPInstances() {
 		return CPInstanceLocalServiceUtil.getCPDefinitionInstances(
-			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			getCPDefinitionId(), WorkflowConstants.STATUS_ANY,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Override

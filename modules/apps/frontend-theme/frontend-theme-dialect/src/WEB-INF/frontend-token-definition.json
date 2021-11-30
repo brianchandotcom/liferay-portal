@@ -1290,6 +1290,19 @@
 						{
 							"defaultValue": "#fdcc4a",
 							"editorType": "ColorPicker",
+							"label": "color-chart-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-1"
+								}
+							],
+							"name": "colorChart1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ad9ee9",
+							"editorType": "ColorPicker",
 							"label": "color-chart-2",
 							"mappings": [
 								{
@@ -1301,7 +1314,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#ad9ee9",
+							"defaultValue": "#fe8856",
 							"editorType": "ColorPicker",
 							"label": "color-chart-3",
 							"mappings": [
@@ -1314,7 +1327,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#fe8856",
+							"defaultValue": "#002c62",
 							"editorType": "ColorPicker",
 							"label": "color-chart-4",
 							"mappings": [
@@ -1327,7 +1340,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#002c62",
+							"defaultValue": "#78cc88",
 							"editorType": "ColorPicker",
 							"label": "color-chart-5",
 							"mappings": [
@@ -1337,6 +1350,97 @@
 								}
 							],
 							"name": "colorChart5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#912600",
+							"editorType": "ColorPicker",
+							"label": "color-chart-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-6"
+								}
+							],
+							"name": "colorChart6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ff8585",
+							"editorType": "ColorPicker",
+							"label": "color-chart-7",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-7"
+								}
+							],
+							"name": "colorChart7",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#41a0a6",
+							"editorType": "ColorPicker",
+							"label": "color-chart-8",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-8"
+								}
+							],
+							"name": "colorChart8",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#3a6ba1",
+							"editorType": "ColorPicker",
+							"label": "color-chart-9",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-9"
+								}
+							],
+							"name": "colorChart9",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#4d006e",
+							"editorType": "ColorPicker",
+							"label": "color-chart-10",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-10"
+								}
+							],
+							"name": "colorChart10",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#8a6a00",
+							"editorType": "ColorPicker",
+							"label": "color-chart-11",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-11"
+								}
+							],
+							"name": "colorChart11",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#00520a",
+							"editorType": "ColorPicker",
+							"label": "color-chart-12",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-12"
+								}
+							],
+							"name": "colorChart12",
 							"type": "String"
 						}
 					],

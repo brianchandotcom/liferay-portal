@@ -225,7 +225,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		Object value = values.get(objectField.getName());
 
 		if ((value == null) ||
-			((value instanceof Long) && Objects.equals(value, 0L))) {
+			(Validator.isNotNull(objectField.getRelationshipType()) &&
+			 (value instanceof Long) && Objects.equals(value, 0L))) {
 
 			return StringPool.BLANK;
 		}

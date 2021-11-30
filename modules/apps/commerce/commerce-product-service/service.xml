@@ -1062,6 +1062,7 @@
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPDisplayLayoutEntry</exception>
 		<exception>CPDisplayLayoutLayoutUuid</exception>
+		<exception>CPInstanceDiscontinuedDate</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
 		<exception>CPInstanceJson</exception>

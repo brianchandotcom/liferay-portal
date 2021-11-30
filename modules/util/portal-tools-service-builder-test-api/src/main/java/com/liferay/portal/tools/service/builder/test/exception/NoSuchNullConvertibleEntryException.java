@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portal.tools.service.builder.test.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -27,7 +28,9 @@ public class NoSuchNullConvertibleEntryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchNullConvertibleEntryException(String msg, Throwable throwable) {
+	public NoSuchNullConvertibleEntryException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

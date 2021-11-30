@@ -61,6 +61,14 @@ public class NullConvertibleEntryLocalServiceUtil {
 		return getService().addNullConvertibleEntry(nullConvertibleEntry);
 	}
 
+	public static NullConvertibleEntry addNullConvertibleEntry(String name) {
+		return getService().addNullConvertibleEntry(name);
+	}
+
+	public static int countByName(String name) {
+		return getService().countByName(name);
+	}
+
 	/**
 	 * Creates a new null convertible entry with the primary key. Does not add the null convertible entry to the database.
 	 *
@@ -210,6 +218,10 @@ public class NullConvertibleEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static NullConvertibleEntry fetchByName(String name) {
+		return getService().fetchByName(name);
 	}
 
 	public static NullConvertibleEntry fetchNullConvertibleEntry(

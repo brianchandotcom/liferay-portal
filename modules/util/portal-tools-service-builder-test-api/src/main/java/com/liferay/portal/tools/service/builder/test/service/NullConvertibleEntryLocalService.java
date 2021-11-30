@@ -76,6 +76,10 @@ public interface NullConvertibleEntryLocalService
 	public NullConvertibleEntry addNullConvertibleEntry(
 		NullConvertibleEntry nullConvertibleEntry);
 
+	public NullConvertibleEntry addNullConvertibleEntry(String name);
+
+	public int countByName(String name);
+
 	/**
 	 * Creates a new null convertible entry with the primary key. Does not add the null convertible entry to the database.
 	 *
@@ -200,6 +204,9 @@ public interface NullConvertibleEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NullConvertibleEntry fetchByName(String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public NullConvertibleEntry fetchNullConvertibleEntry(

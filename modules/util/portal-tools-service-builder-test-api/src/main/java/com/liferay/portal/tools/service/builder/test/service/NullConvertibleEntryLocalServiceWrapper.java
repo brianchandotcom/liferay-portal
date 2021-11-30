@@ -54,6 +54,19 @@ public class NullConvertibleEntryLocalServiceWrapper
 			nullConvertibleEntry);
 	}
 
+	@Override
+	public
+		com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry
+			addNullConvertibleEntry(String name) {
+
+		return _nullConvertibleEntryLocalService.addNullConvertibleEntry(name);
+	}
+
+	@Override
+	public int countByName(String name) {
+		return _nullConvertibleEntryLocalService.countByName(name);
+	}
+
 	/**
 	 * Creates a new null convertible entry with the primary key. Does not add the null convertible entry to the database.
 	 *
@@ -237,6 +250,14 @@ public class NullConvertibleEntryLocalServiceWrapper
 
 		return _nullConvertibleEntryLocalService.dynamicQueryCount(
 			dynamicQuery, projection);
+	}
+
+	@Override
+	public
+		com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry
+			fetchByName(String name) {
+
+		return _nullConvertibleEntryLocalService.fetchByName(name);
 	}
 
 	@Override

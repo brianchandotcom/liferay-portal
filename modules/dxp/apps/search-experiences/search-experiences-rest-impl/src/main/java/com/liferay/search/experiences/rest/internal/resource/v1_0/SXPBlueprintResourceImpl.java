@@ -186,6 +186,8 @@ public class SXPBlueprintResourceImpl
 	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
 		throws Exception {
 
+		SXPBlueprintUtil.unpack(sxpBlueprint);
+
 		return _sxpBlueprintDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),

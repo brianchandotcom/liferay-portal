@@ -316,12 +316,11 @@ definition {
 	}
 
 	macro openToGroupPagesPortlet {
-		if (!(isSet(remoteStaging))) {
-			var plid = JSONLayout.getPlid(
-				groupName = "${groupName}",
-				layoutName = "${layoutName}",
-				site = "${site}");
-		}
+		var plid = JSONLayout.getPlid(
+			groupName = "${groupName}",
+			layoutName = "${layoutName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		if ("${portlet}" == "General") {
 			var screenNavigationEntryKey = "general";
@@ -342,7 +341,7 @@ definition {
 				var baseURL = PropsUtil.get("portal.url");
 			}
 
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=/configuration_admin/view_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=site-configuration-${screenNavigationEntryKey}");
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
 		}
 		else {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");

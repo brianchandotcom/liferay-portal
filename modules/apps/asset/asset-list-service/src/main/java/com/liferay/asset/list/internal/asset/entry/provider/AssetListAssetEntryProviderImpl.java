@@ -855,9 +855,9 @@ public class AssetListAssetEntryProviderImpl
 							assetListEntry.getAssetListEntryId(),
 							segmentsEntryId));
 
-		return assetListEntrySegmentsEntryRelStream
-			.filter(Objects::nonNull)
-			.min(
+		return assetListEntrySegmentsEntryRelStream.filter(
+			Objects::nonNull
+		).min(
 			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
 		).get(
 		).getSegmentsEntryId();

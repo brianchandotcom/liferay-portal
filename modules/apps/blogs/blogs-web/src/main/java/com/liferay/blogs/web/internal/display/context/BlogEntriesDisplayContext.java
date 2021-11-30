@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -136,6 +137,30 @@ public class BlogEntriesDisplayContext {
 		return displayStyle;
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
+			"entries-order-by-col", _getDefaultOrderByCol());
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
+			"entries-order-by-type", "asc");
+
+		return _orderByType;
+	}
+
 	public SearchContainer<BlogsEntry> getSearchContainer()
 		throws PortalException, PortletException {
 
@@ -154,15 +179,9 @@ public class BlogEntriesDisplayContext {
 				PortletURLUtil.clone(portletURL, _liferayPortletResponse), null,
 				"no-entries-were-found");
 
-		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", _getDefaultOrderByCol());
+		entriesSearchContainer.setOrderByCol(getOrderByCol());
 
-		entriesSearchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
-
-		entriesSearchContainer.setOrderByType(orderByType);
+		entriesSearchContainer.setOrderByType(getOrderByType());
 
 		entriesSearchContainer.setOrderByComparator(
 			BlogsUtil.getOrderByComparator(
@@ -274,10 +293,8 @@ public class BlogEntriesDisplayContext {
 				searchContext.setOwnerUserId(themeDisplay.getUserId());
 			}
 
-			String orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "relevance");
-			String orderByType = ParamUtil.getString(
-				_httpServletRequest, "orderByType", "asc");
+			String orderByCol = getOrderByCol();
+			String orderByType = getOrderByType();
 
 			Sort sort = null;
 
@@ -349,6 +366,8 @@ public class BlogEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final TrashHelper _trashHelper;
 

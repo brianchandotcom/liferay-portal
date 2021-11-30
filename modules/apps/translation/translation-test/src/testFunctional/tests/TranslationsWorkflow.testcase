@@ -640,14 +640,7 @@ definition {
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
-		Click.clickNoMouseOver(
-			key_currentLocale = StringUtil.lowerCase("en-US"),
-			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
-
-		AssertTextEquals(
-			key_localizedLanguage = "es-ES",
-			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
-			value1 = "Not Translated");
+		Translations.viewUntranslatedStatus(locale = "es-ES");
 	}
 
 	@description = "This ensures that an imported translation can be Rejected and Resubmited through the workflow."

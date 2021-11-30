@@ -100,7 +100,14 @@
 			}
 			%>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
+			<c:choose>
+				<c:when test='<%= msvv.getFieldName() == "expirationDate" %>'>
+					<liferay-ui:message key="please-enter-a-valid-expiration-date-only-future-dates-are-accepted" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= FormInstanceFieldSettingsException.MustSetValidValueForProperties.class %>">

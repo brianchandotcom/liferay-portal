@@ -136,10 +136,10 @@ select {
 	width: 100%;
 }
 
-.business-home-cover .new-quote-button:visited {
-	color: var(--color-action-primary-default) !important;
-}
-
 .business-home-cover a {
 	text-decoration: underline;
+}
+
+.business-home-cover a:visited {
+	color: var(--color-action-primary-default);
 }

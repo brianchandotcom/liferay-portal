@@ -31,6 +31,7 @@ const businessEmailDeliveredContainer = fragmentElement.querySelector(
 	'.business-email-delivered'
 );
 const continueQuoteButton = fragmentElement.querySelector('#continue-quote');
+const emailInput = fragmentElement.querySelector('#email');
 const emailContainer = fragmentElement.querySelector('#email-container');
 const getQuoteForm = fragmentElement.querySelector('#get-quote-form');
 const newQuoteButton = fragmentElement.querySelector('#new-quote-button');
@@ -61,26 +62,36 @@ newQuoteButton.onclick = function () {
 	retrieveQuoteContainer.classList.remove('d-none', 'invisible');
 };
 
+emailInput.oninput = function () {
+	if (emailInput.value) {
+		return continueQuoteButton.classList.remove('disabled');
+	}
+
+	continueQuoteButton.classList.add('disabled');
+};
+
 continueQuoteButton.onclick = async function () {
-	const email = newQuoteFormContainer.querySelector('input').value;
 	const errorFeedback = fragmentElement.querySelector(
 		'#email-container .error-feedback span'
 	);
 
-	if (!email) {
-		errorFeedback.innerText = `Type an email address to retrieve a quote.`;
+	if (
+		!new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(emailInput.value)
+	) {
+		errorFeedback.innerText = 'Please enter a valid email address';
 
 		return emailContainer.classList.add('has-error');
 	}
 
 	const raylifeApplicationResponse = await fetchHeadless(
-		`o/c/raylifeapplications/scopes/${scopeGroupId}?filter=contains(email, '${email}')`
+		`o/c/raylifeapplications/scopes/${scopeGroupId}?filter=email eq '${emailInput.value}'`
 	);
 
 	if (!raylifeApplicationResponse.items.length) {
-		errorFeedback.innerHTML = `We're unable to find a quote associated with this address. Please try again or <u>Start a New Quote</u>.`;
+		errorFeedback.innerHTML =
+			'We were unable to find your quote. Please start a new one.';
 
-		return;
+		return emailContainer.classList.add('has-error');
 	}
 
 	const raylifeApplication = raylifeApplicationResponse.items[0];
@@ -89,10 +100,13 @@ continueQuoteButton.onclick = async function () {
 
 	title.innerHTML = title.textContent.replace(
 		'{name}',
-		`${raylifeApplication.firstName} ${raylifeApplication.lastName}`
+		`${raylifeApplication.firstName}`
 	);
 
-	paragraph.innerHTML = paragraph.textContent.replace('{email}', email);
+	paragraph.innerHTML = paragraph.textContent.replace(
+		'{email}',
+		emailInput.value
+	);
 
 	businessEmailDeliveredContainer.classList.remove('d-none', 'invisible');
 	newQuoteFormContainer.classList.remove('d-flex', 'invisible');
@@ -102,7 +116,7 @@ continueQuoteButton.onclick = async function () {
 		body: JSON.stringify({
 			productName: 'Business Home Cover',
 			quoteRetrieveLink: `${origin}${window.location.pathname}/get-a-quote?applicationId=${raylifeApplication.id}`,
-			retrieveEmail: email,
+			retrieveEmail: emailInput.value,
 		}),
 		method: 'POST',
 	});
@@ -143,8 +157,7 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	}
-	else {
+	} else {
 		localStorage.setItem(
 			'raylife-product',
 			JSON.stringify({
@@ -184,8 +197,7 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 				new Option(taxonomyVocabulary.name, taxonomyVocabulary.id)
 			);
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();

@@ -681,7 +681,7 @@ definition {
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
 		property portal.upstream = "quarantine";
-		
+
 		var formNameList = "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3";
 
 		for (var n : list "1,2,3") {

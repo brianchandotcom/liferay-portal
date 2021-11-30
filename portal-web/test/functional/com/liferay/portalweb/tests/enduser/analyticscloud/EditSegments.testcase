@@ -449,7 +449,7 @@ definition {
 	@priority = "3"
 	test PaginateListOfMembersToBeAddedToTheSegment {
 		property portal.upstream = "quarantine";
-		
+
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
 
 		var nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7";
@@ -860,7 +860,7 @@ definition {
 	@priority = "4"
 	test UndoDeletingASegmentMemberInTheEditModal {
 		property portal.upstream = "quarantine";
-		
+
 		var users = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";

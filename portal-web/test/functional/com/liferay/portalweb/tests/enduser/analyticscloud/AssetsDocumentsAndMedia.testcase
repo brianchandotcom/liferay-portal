@@ -402,7 +402,7 @@ definition {
 	@priority = "5"
 	test CanNavigatesToDocumentsOverviewPage {
 		property portal.upstream = "quarantine";
-		
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -528,7 +528,7 @@ definition {
 	@priority = "5"
 	test DocumentsTechnologyCardShowsViewsByExpectedBrowser {
 		property portal.upstream = "quarantine";
-		
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Download the document") {

@@ -24,7 +24,7 @@ definition {
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
 		property portal.upstream = "quarantine";
-		
+
 		var dataSourceList = "";
 
 		for (var n : list "1,2,3") {

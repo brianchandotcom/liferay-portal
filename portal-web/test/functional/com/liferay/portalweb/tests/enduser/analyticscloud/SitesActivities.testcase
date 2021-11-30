@@ -440,7 +440,7 @@ definition {
 	@priority = "5"
 	test CanShownAnonAndKnownVisitorsLegend {
 		property portal.upstream = "quarantine";
-		
+
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -613,7 +613,7 @@ definition {
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowSitesDashboards {
 		property portal.upstream = "quarantine";
-		
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",

@@ -440,7 +440,7 @@ definition {
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
 		property portal.upstream = "quarantine";
-		
+
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
 		task ("Get site assigned property name") {

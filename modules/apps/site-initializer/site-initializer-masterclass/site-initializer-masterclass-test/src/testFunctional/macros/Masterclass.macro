@@ -32,4 +32,5 @@ definition {
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Masterclass#FRAGMENT_NAME");
 	}
+
 }

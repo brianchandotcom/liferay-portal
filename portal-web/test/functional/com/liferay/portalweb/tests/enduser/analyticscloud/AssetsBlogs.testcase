@@ -456,7 +456,7 @@ definition {
 	@priority = "5"
 	test CanBlogsListSearchable {
 		property portal.upstream = "quarantine";
-		
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");

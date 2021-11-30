@@ -361,7 +361,7 @@ definition {
 	@priority = "5"
 	test CanShowsCustomAssetList {
 		property portal.upstream = "quarantine";
-		
+
 		var assetName = "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {

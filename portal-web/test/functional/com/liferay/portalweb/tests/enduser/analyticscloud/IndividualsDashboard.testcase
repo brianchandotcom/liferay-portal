@@ -64,7 +64,7 @@ definition {
 	@priority = "3"
 	test CanExpandActivityInIndividualOverview {
 		property portal.upstream = "quarantine";
-		
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

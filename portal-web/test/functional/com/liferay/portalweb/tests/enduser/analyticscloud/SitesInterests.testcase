@@ -40,7 +40,7 @@ definition {
 	test ShowsSitesTopInterests {
 		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
-		
+
 		var pageNameList = "sports,technology,science";
 
 		task ("Connect DXP to AC") {

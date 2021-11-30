@@ -55,7 +55,7 @@ definition {
 
 	macro getRemoteAppEntryName {
 		WaitForSPARefresh();
-		
+
 		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name')]@value");
 
 		return "${remoteAppEntryValue}";

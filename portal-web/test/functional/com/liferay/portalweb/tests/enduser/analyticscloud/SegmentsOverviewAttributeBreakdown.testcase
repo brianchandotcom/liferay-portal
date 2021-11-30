@@ -39,7 +39,7 @@ definition {
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByBoolean {
 		property portal.upstream = "quarantine";
-		
+
 		var users = "user1,user2";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
@@ -122,7 +122,7 @@ definition {
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByDate {
 		property portal.upstream = "quarantine";
-		
+
 		var users = "ac1,ac2";
 
 		var emailList = "ac1@liferay.com,ac2@liferay.com";

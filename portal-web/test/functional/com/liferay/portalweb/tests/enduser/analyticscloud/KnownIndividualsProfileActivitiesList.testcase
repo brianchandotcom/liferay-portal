@@ -37,7 +37,7 @@ definition {
 	@priority = "5"
 	test IndividualActivitiesListShowsAccurateActivitiesWhenSwitchedTo24HourView {
 		property portal.upstream = "quarantine";
-		
+
 		var usernameList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";

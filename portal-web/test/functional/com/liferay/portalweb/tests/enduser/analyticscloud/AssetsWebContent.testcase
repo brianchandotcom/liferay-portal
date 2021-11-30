@@ -363,7 +363,7 @@ definition {
 	@priority = "5"
 	test CanNavigateToWebContentOverviewPage {
 		property portal.upstream = "quarantine";
-		
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -416,7 +416,7 @@ definition {
 	@priority = "5"
 	test CanSearchWebContentList {
 		property portal.upstream = "quarantine";
-		
+
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
 		task ("Add pages and add web content to earch of the page") {

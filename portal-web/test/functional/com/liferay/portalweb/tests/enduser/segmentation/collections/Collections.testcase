@@ -305,7 +305,7 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
-			
+
 			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC WebContent Title 1");
 
 			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title 2");
@@ -465,7 +465,7 @@ definition {
 				operator = "equals",
 				segmentName = "Segment Test 1",
 				text = "Test");
-			
+
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
 				groupName = "Test Site Name",
@@ -498,7 +498,7 @@ definition {
 			AssertElementPresent(
 				key_tableEntry = "Segment Test 1",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
-			
+
 			AssertElementNotPresent(
 				key_tableEntry = "Segment Test 1",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
@@ -635,7 +635,7 @@ definition {
 				operator = "equals",
 				segmentName = "Segment One",
 				text = "Test");
-			
+
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
 				groupName = "Test Site Name",
@@ -675,7 +675,7 @@ definition {
 				locator1 = "LexiconTable#TABLE_ROW",
 				value1 = "Segment Two");
 		}
-		
+
 		task ("Sort segments") {
 			ManagementBar.toggleViewOrder(order = "up");
 
@@ -691,7 +691,7 @@ definition {
 		}
 
 		task ("Search segments") {
-			Search.searchCP(searchTerm ="Two");
+			Search.searchCP(searchTerm = "Two");
 
 			LexiconTable.viewTableEntryTitle(tableEntry = "Segment Two");
 

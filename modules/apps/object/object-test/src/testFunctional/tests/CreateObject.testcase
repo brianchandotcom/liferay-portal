@@ -920,7 +920,7 @@ definition {
 
 		ObjectAdmin.goToLayoutTabOnLayouts();
 
-		CreateObject.assertCannotAddRelationshipTabFirst();	
+		CreateObject.assertCannotAddRelationshipTabFirst();
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"

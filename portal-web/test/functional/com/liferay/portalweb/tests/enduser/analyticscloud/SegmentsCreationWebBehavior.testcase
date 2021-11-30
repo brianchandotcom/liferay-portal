@@ -275,7 +275,6 @@ definition {
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentSinceXdays {
 		property portal.upstream = "quarantine";
-		
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSinceXdays";
 
 		ACUtils.createWCAndAddToPage();
@@ -870,7 +869,6 @@ definition {
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
 		property portal.upstream = "quarantine";
-		
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
 
 		ACUtils.createBlogsAndAddToPage();

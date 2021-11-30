@@ -260,4 +260,76 @@ definition {
 			eventTitle = "Calendar Event All Day Title");
 	}
 
+	@description = "LRQA-71885 - Verify that the user can search by Resource Description"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchByResourceDescription {
+
+		// TODO LRQA-71919 CanSearchByResourceDescription pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can filter by Global Scope"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByGlobalScope {
+
+		// TODO LRQA-71920 CanFilterByGlobalScope pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can filter by Current Scope"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByCurrentScope {
+
+		// TODO LRQA-71921 CanFilterByCurrentScope pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can filter by Active Resources"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByActiveResources {
+
+		// TODO LRQA-71922 CanFilterByActiveResources pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can filter by Nonactive Resources"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByNonactiveResources {
+
+		// TODO LRQA-71923 CanFilterByNonactiveResources pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can create a New Calendar for the Resource"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanCreateCalendarForResource {
+
+		// TODO LRQA-71924 CanCreateCalendarForResource pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can change Permissions for the Resource"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanChangeResourcePermissions {
+
+		// TODO LRQA-71925 CanChangeResourcePermissions pending implementation
+
+	}
+
+	@description = "LRQA-71885 - Verify that the user can Clear the search results"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanClearSearchResults {
+
+		// TODO LRQA-71926 CanClearSearchResults pending implementation
+
+	}
+
 }

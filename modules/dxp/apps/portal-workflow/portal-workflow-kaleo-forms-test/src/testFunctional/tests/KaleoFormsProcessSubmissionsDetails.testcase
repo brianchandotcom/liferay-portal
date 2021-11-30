@@ -117,4 +117,13 @@ definition {
 
 	}
 
+	@description = "Verify that the basic structure of workflow track approval is available."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewTrackApprovalBasicStructure {
+
+		// TODO LRQA-71869 CanViewTrackApprovalBasicStructure pending implementation
+
+	}
+
 }

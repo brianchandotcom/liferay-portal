@@ -1,0 +1,115 @@
+@component-name = "portal-calendar"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Calendar";
+
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Calendar.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			Page.tearDownCP();
+		}
+	}
+
+    @description = "LRQA-71889 - Verify that the user can apply configuration of Application Decorators in the calendar widget"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ApplyConfigurationDecorators {
+
+		// TODO LLRQA-71963 ApplyConfigurationDecorators pending implementation
+
+	}
+
+    @description = "LRQA-71889 - Verify that the user can modify Text Styles in the look and feel configuration page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ApplyModifiedTextStyles {
+
+		// TODO LRQA-71964 ApplyModifiedTextStyles pending implementation
+
+	}
+
+    @description = "LRQA-71889 - Verify that the user can modify background in the Background Style tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanModifyBackground {
+
+		// TODO LRQA-71965 CanModifyBackground pending implementation
+
+	}
+
+    @description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanModifyBorder {
+
+		// TODO LRQA-71966 CanModifyBorder pending implementation
+
+	}
+
+    @description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanModifyMarginAndPadding {
+
+		// TODO LRQA-71967 CanModifyMarginAndPadding pending implementation
+
+	}
+
+    @description = "LRQA-71889 - Verify that the user can set Advanced Styling on calendar"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanSetAdvancedStyling {
+
+		// TODO LRQA-71968 CanSetAdvancedStyling pending implementation
+
+	}
+
+}
+    
+

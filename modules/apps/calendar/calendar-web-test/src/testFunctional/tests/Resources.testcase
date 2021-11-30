@@ -79,4 +79,13 @@ definition {
 			calendarType = "Other Calendars");
 	}
 
+	@description = "LRQA-71886 - Verify that is possible to create an Inactive Resource"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAddInactiveResource {
+
+		// TODO LRQA-71918 CanAddInactiveResource pending implementation
+
+	}
+
 }

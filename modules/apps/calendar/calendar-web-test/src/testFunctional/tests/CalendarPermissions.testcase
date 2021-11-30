@@ -1,0 +1,95 @@
+@component-name = "portal-calendar"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Calendar";
+
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Calendar.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "LRQA-71890 - Verify that the user can change the number of entries on the permission page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanChangeTheNumberOfEntriesDIsplayed {
+
+		// TODO LRQA-71961 CanChangeTheNumberOfEntriesDIsplayed pending implementation
+
+	}
+
+    @description = "LRQA-71890 - Verify that the user can clear the result bar after a search"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanClearTheResultsOfASearch {
+
+		// TODO LRQA-71960 CanClearTheResultsOfASearch pending implementation
+
+	}
+	
+	@description = "LRQA-71890 - Verify that the user can search for a existent permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchOnPermissionsPage {
+
+		// TODO LRQA-71959 CanSearchOnPermissionsPage pending implementation
+
+	}
+
+    @description = "LRQA-71890 - Verify that when the user search for a non existent role, the system displays a message"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SystemDisplaysMessageWhenNoRoleIsFound {
+
+		// TODO LRQA-71962 SystemDisplaysMessageWhenNoRoleIsFound pending implementation
+
+	}
+
+}

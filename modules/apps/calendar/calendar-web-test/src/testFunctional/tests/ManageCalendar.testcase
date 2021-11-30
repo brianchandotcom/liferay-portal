@@ -65,6 +65,15 @@ definition {
 
 	}
 
+	@description = "LRQA-71360 - Verify that the user can not delete a Default Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanNotDeleteDefaultCalendar {
+
+		// TODO LRQA-71883 CanNotDeleteDefaultCalendar pending implementation
+
+	}
+
 	@priority = "3"
 	test ChangeCalendarTypeForAllDayEvent {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

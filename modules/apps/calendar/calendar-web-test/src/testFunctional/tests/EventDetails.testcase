@@ -64,6 +64,52 @@ definition {
 		}
 	}
 
+	@description = "LRQA-71888 - Verify that the user can decline an event via Scheduler"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeclineEventViaScheduler {
+
+		// TODO LRQA-71909 CanDeclineEventViaScheduler pending implementation
+
+	}
+
+
+	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteRateIntoAEvent {
+
+		// TODO LRQA-71911 CanDeleteRateIntoAEvent pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the user can edit event details via Scheduler"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEditEventViaScheduler {
+
+		// TODO LRQA-71908 CanEditEventViaScheduler pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the user can rate a event"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanRateAEvent {
+
+		// TODO LRQA-71910 CanRateAEvent pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the user can view the fields Title, Starts, Ends, Rresources in event details page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewValuesInEventDetailsPage {
+
+		// TODO LRQA-71904 CanViewValuesInEventDetailsPage pending implementation
+
+	}
+
 	@priority = "5"
 	test DeleteRegular {
 		property portal.acceptance = "true";
@@ -627,6 +673,51 @@ definition {
 		CalendarEvent.view(eventTitle = "Calendar Event Repeating Title Edit");
 	}
 
+	@description = "LRQA-71888 - Verify that the event status is -Approved- when the Calendar has no workflow assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EventStatusIsApprovedWhenNoWorkflowAssigned {
+
+		// TODO LRQA-71903 EventStatusIsApprovedWhenNoWorkflowAssigned pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the event status is Any when the user Maybe attend the event"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EventStatusIsAnyWhenUserMaybeAttend {
+
+		// TODO LRQA-71907 EventStatusIsAnyWhenUserMaybeAttend pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the event status is Denied when the user declines an event"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EventStatusIsDeniedWhenUserDeclines {
+
+		// TODO LRQA-71906 EventStatusIsDeniedWhenUserDeclines pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the event status is -Pending- when the Calendar has the Single Approver assigned"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test EventStatusIsPendingWhenWorkflowIsAssigned {
+
+		// TODO LRQA-71902 EventStatusIsPendingWhenWorkflowIsAssigned pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the buttons Maybe and Decline are displayed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MaybeAndDeclineButtonAreDisplayed {
+
+		// TODO LRQA-71905 MaybeAndDeclineButtonAreDisplayed pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-54548."
 	@priority = "4"
 	test SearchInSearchPortletWithTag {
@@ -758,7 +849,7 @@ definition {
 	@description = "This is a use case for LPS-75292."
 	@priority = "5"
 	test ViewCalendarEventDetailViaMailLink {
-		property test.name.skip.portal.instance = "CalendarManageEvent#ViewCalendarEventDetailViaMailLink";
+		property test.name.skip.portal.instance = "EventDetails#ViewCalendarEventDetailViaMailLink";
 		property test.smtp.server.enabled = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -861,5 +952,5 @@ definition {
 
 		CalendarEvent.viewDetailsResources(calendarName = "Test Test");
 	}
-
+	
 }

@@ -1,0 +1,104 @@
+@component-name = "portal-calendar"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Calendar";
+
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Calendar.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			Page.tearDownCP();
+		}
+	}
+
+    @description = "LRQA-71891 - Verify that the user can apply the selected template"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanApplySelectedTemplate {
+
+		// TODO LRQA-71972 CanApplySelectedTemplate pending implementation
+
+	}
+
+    @description = "LRQA-71891 - Verify that the user can delete a template"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteTemplate {
+
+		// TODO LRQA-71973 CanDeleteTemplate pending implementation
+
+	}
+
+	@description = "LRQA-71891 - Verify that the user can filter by Modified Date"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanFilterByTemplateModifiedDate {
+
+		// TODO LRQA-71975 CanFilterByTemplateModifiedDate pending implementation
+
+	}
+
+    @description = "LRQA-71891 - Verify that the user can filter by Name"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanFilterByTemplateName {
+
+		// TODO LRQA-71974 CanFilterByTemplateName pending implementation
+
+	}
+
+    @description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSaveCurrentConfigurationAsTemplate {
+
+		// TODO LRQA-71971 CanSaveCurrentConfigurationAsTemplate pending implementation
+
+	}
+
+}

@@ -28,113 +28,149 @@ definition {
 	test ActivateSite {
 		property test.name.skip.portal.instance = "Sites#ActivateSite";
 
-		SystemSettings.openSystemSettingsAdmin();
+		task ("Enable Show Inactive Request Message in system setting") {
+			SystemSettings.openSystemSettingsAdmin();
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Infrastructure",
-			configurationName = "Inactive Request Handler",
-			configurationScope = "System Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Inactive Request Handler",
+				configurationScope = "System Scope");
 
-		FormFields.enableCheckbox(fieldName = "Show Inactive Request Message");
+			FormFields.enableCheckbox(fieldName = "Show Inactive Request Message");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and add a page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Inactive the created site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.inactivateCP(siteName = "Site Name");
+			Site.inactivateCP(siteName = "Site Name");
+		}
 
-		var baseURL = PropsUtil.get("portal.url");
+		task ("View Inactive Request Message") {
+			var baseURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${baseURL}/web/site-name");
+			Navigator.openSpecificURL(url = "${baseURL}/web/site-name");
 
-		Page.viewInactiveRequestMessage(resource = "site");
+			Page.viewInactiveRequestMessage(resource = "site");
+		}
 
-		Site.openSitesAdmin();
+		task ("Active the created site") {
+			Site.openSitesAdmin();
 
-		Site.activateInactive(siteName = "Site Name");
+			Site.activateInactive(siteName = "Site Name");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("View no Inactive Request Message") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertTextNotPresent(value1 = "This site is inactive. Please contact the administrator.");
+			AssertTextNotPresent(value1 = "This site is inactive. Please contact the administrator.");
+		}
 	}
 
 	@description = "Add child site in child site."
 	@priority = "4"
 	test AddChildChildSite {
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		JSONGroup.addChildGroup(
-			groupName = "Child SiteName",
-			parentGroupName = "Site Name");
+		task ("Add a child site to the site") {
+			JSONGroup.addChildGroup(
+				groupName = "Child SiteName",
+				parentGroupName = "Site Name");
+		}
 
-		JSONGroup.addChildGroup(
-			grandParentGroupName = "Site Name",
-			groupName = "Child Child SiteName",
-			parentGroupName = "Child SiteName");
+		task ("Add a child site to the child site") {
+			JSONGroup.addChildGroup(
+				grandParentGroupName = "Site Name",
+				groupName = "Child Child SiteName",
+				parentGroupName = "Child SiteName");
+		}
 
-		Site.openSitesAdmin();
+		task ("View the child site to the site") {
+			Site.openSitesAdmin();
 
-		Site.viewChildCP(
-			childSiteName = "Child SiteName",
-			siteName = "Site Name");
+			Site.viewChildCP(
+				childSiteName = "Child SiteName",
+				siteName = "Site Name");
+		}
 
-		Site.viewChildCP(
-			childSiteName = "Child Child SiteName",
-			siteName = "Child SiteName");
+		task ("View the child site to the child site") {
+			Site.viewChildCP(
+				childSiteName = "Child Child SiteName",
+				siteName = "Child SiteName");
+		}
 	}
 
 	@description = "View public page via virtual host URL."
 	@priority = "3"
 	test AddPublicVirtualHostsSiteURL {
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and a page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Add a virtual host to the public page") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
+			Site.addVirtualHostsURLCP(
+				publicPageVirtualHostURL = "www.able.com",
+				publicVirtualHosts = "true");
+		}
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
+		task ("Visit public page by virtual host") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
 
-		Site.viewVirtualHostsURLPG(
-			pageName = "Site Page",
-			siteName = "Site Name",
-			sitePageURL = "http://www.able.com:8080/site-page");
+			Site.viewVirtualHostsURLPG(
+				pageName = "Site Page",
+				siteName = "Site Name",
+				sitePageURL = "http://www.able.com:8080/site-page");
+		}
 	}
 
 	@description = "Able to add a site with comma."
 	@priority = "3"
 	test AddSiteWithCommaInName {
-		JSONGroup.addGroup(groupName = "Site Name,");
+		task ("Add a site with comma") {
+			JSONGroup.addGroup(groupName = "Site Name,");
+		}
 
-		Site.openSitesAdmin();
+		task ("View the site added") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(siteName = "Site Name,");
+			Site.viewCP(siteName = "Site Name,");
+		}
 	}
 
 	@description = "Unable to add sanme site name."
 	@priority = "3"
 	test AddSiteWithInvalidDuplicateName {
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		Site.openSitesAdmin();
+		task ("Try to add a site with the same name and assert could not add it") {
+			Site.openSitesAdmin();
 
-		Site.viewCannotAdd(
-			siteName = "Site Name",
-			siteNameInvalid = "Duplicate");
+			Site.viewCannotAdd(
+				siteName = "Site Name",
+				siteNameInvalid = "Duplicate");
+		}
 	}
 
-	@description = "Unable to add site name with invalid characters * and numeric."
+	@description = "Unable to add site name with blank name, invalid characters * and numeric."
 	@priority = "3"
 	test AddSiteWithInvalidName {
 		for (var siteName : list " ,Site Name*,22222") {
@@ -149,43 +185,53 @@ definition {
 	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
 	@priority = "4"
 	test DeleteSiteFriendlyURL {
-		Site.openSitesAdmin();
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a public page and private page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Public Page");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Public Page");
+			JSONLayout.addPrivateLayout(
+				groupName = "Site Name",
+				layoutName = "Private Page");
+		}
 
-		JSONLayout.addPrivateLayout(
-			groupName = "Site Name",
-			layoutName = "Private Page");
+		task ("Edit friendly URL to null") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
+		}
 
-		Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
+		task ("View the the end of firend URL changes to site ID") {
+			var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Site Name", site = "true");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Site Name", site = "true");
+			AssertTextEquals(
+				locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
+				value1 = "/group-${siteID}");
+		}
 
-		AssertTextEquals(
-			locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
-			value1 = "/group-${siteID}");
+		task ("Assert can't access public page via old friendly URL") {
+			Navigator.openSiteURL(siteName = "site-name");
 
-		Navigator.openSiteURL(siteName = "site-name");
+			Page.viewNoPG(pageName = "Public Page");
 
-		Page.viewNoPG(pageName = "Public Page");
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
 
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
+		task ("Assert can't access private page via old friendly URL") {
+			Navigator.openPrivateSiteURL(siteName = "site-name");
 
-		Navigator.openPrivateSiteURL(siteName = "site-name");
+			Page.viewNoPG(pageName = "Private Page");
 
-		Page.viewNoPG(pageName = "Private Page");
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
 	}
 
 	@description = "Could edit site name."
@@ -193,17 +239,23 @@ definition {
 	test EditSite {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Edit site name") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.editCP(
-			siteName = "Site Name",
-			siteNameEdit = "Site Name Edit");
+			Site.editCP(
+				siteName = "Site Name",
+				siteNameEdit = "Site Name Edit");
+		}
 
-		Site.openSitesAdmin();
+		task ("View site name edited") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(siteName = "Site Name Edit");
+			Site.viewCP(siteName = "Site Name Edit");
+		}
 	}
 
 	@description = "Could edit friendly URL and access by it."
@@ -211,35 +263,43 @@ definition {
 	test EditSiteFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Site.openSitesAdmin();
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a public page and private page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPrivateLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		JSONLayout.addPrivateLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+		task ("Edit friendly URL to alpha") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
+		}
 
-		Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
+		task ("Access public page via edited friendly URL") {
+			Navigator.openSiteURL(siteName = "alpha");
 
-		Navigator.openSiteURL(siteName = "alpha");
+			Site.viewSiteFriendlyURLPG(
+				pageName = "Public Page",
+				siteName = "Site Name",
+				sitePageURL = "${portalURL}/web/alpha");
+		}
 
-		Site.viewSiteFriendlyURLPG(
-			pageName = "Public Page",
-			siteName = "Site Name",
-			sitePageURL = "${portalURL}/web/alpha");
+		task ("Access private page via edited friendly URL") {
+			Navigator.openPrivateSiteURL(siteName = "alpha");
 
-		Navigator.openPrivateSiteURL(siteName = "alpha");
-
-		Site.viewSiteFriendlyURLPG(
-			pageName = "Private Page",
-			siteName = "Site Name",
-			sitePageURL = "${portalURL}/group/alpha");
+			Site.viewSiteFriendlyURLPG(
+				pageName = "Private Page",
+				siteName = "Site Name",
+				sitePageURL = "${portalURL}/group/alpha");
+		}
 	}
 
 	@description = "Could not add invalid friendly URL and can access by former friendly URL."
@@ -250,28 +310,34 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and a public page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Edit friendly URL to have 2 slashes") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.editFriendlyURLCP(
-			friendlyURLInvalid = "true",
-			siteFriendlyURL = "/site-name",
-			siteFriendlyURLEdit = "/alpha/alpha");
+			Site.editFriendlyURLCP(
+				friendlyURLInvalid = "true",
+				siteFriendlyURL = "/site-name",
+				siteFriendlyURLEdit = "/alpha/alpha");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("View friendly URL doesn't change") {
+			SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Site Page");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Site Page");
 
-		Page.viewFriendlyURL(
-			pageName = "Site Page",
-			siteFriendlyURL = "${portalURL}/web/site-name");
+			Page.viewFriendlyURL(
+				pageName = "Site Page",
+				siteFriendlyURL = "${portalURL}/web/site-name");
+		}
 	}
 
 	@description = "Able to search and find site by site name."
@@ -301,25 +367,33 @@ definition {
 	@description = "Can not choose its own site as parent site in staging."
 	@priority = "3"
 	test SiteCannotBeItsOwnParentStaging {
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and a public page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+		task ("Enable local staging for the site") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("View page in staging and live site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Navigator.gotoStagedView();
+			Navigator.gotoStagedView();
 
-		Staging.viewStagingLocalLivePG();
+			Staging.viewStagingLocalLivePG();
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Assert could not select its own site as parent site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.selectParentSite(
-			chooseButtonAvailable = "false",
-			parentSiteName = "Site Name");
+			Site.selectParentSite(
+				chooseButtonAvailable = "false",
+				parentSiteName = "Site Name");
+		}
 	}
 
 	@description = "View Web Content Admin displayed in global site."
@@ -341,206 +415,284 @@ definition {
 	test ViewDisplayParentSiteViaSitesDirectory {
 		Site.openSitesAdmin();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and a public page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		JSONGroup.addChildGroup(
-			groupName = "Child SiteName",
-			parentGroupName = "Site Name");
+		task ("Add a child site to the site and a public page in it") {
+			JSONGroup.addChildGroup(
+				groupName = "Child SiteName",
+				parentGroupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Child SiteName",
-			layoutName = "Site Page",
-			parentGroupName = "Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Child SiteName",
+				layoutName = "Site Page",
+				parentGroupName = "Site Name");
+		}
 
-		JSONGroup.addChildGroup(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSiteName",
-			parentGroupName = "Child SiteName");
+		task ("Add a child site to the child site and a public page in it") {
+			JSONGroup.addChildGroup(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSiteName",
+				parentGroupName = "Child SiteName");
 
-		JSONLayout.addPublicLayout(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSiteName",
-			layoutName = "Site Page",
-			parentGroupName = "Child SiteName");
+			JSONLayout.addPublicLayout(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSiteName",
+				layoutName = "Site Page",
+				parentGroupName = "Child SiteName");
+		}
 
-		Site.openSitesAdmin();
+		task ("View the child site and child site of the child site") {
+			Site.openSitesAdmin();
 
-		Site.viewChildCP(
-			childSiteName = "Child SiteName",
-			siteName = "Site Name");
+			Site.viewChildCP(
+				childSiteName = "Child SiteName",
+				siteName = "Site Name");
 
-		Site.viewChildCP(
-			childSiteName = "Child ChildSiteName",
-			siteName = "Child SiteName");
+			Site.viewChildCP(
+				childSiteName = "Child ChildSiteName",
+				siteName = "Child SiteName");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Child SiteName",
-			layoutName = "Site Page",
-			parentGroupName = "Site Name",
-			widgetName = "Sites Directory");
+		task ("Add a Sites Directory to child site public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Child SiteName",
+				layoutName = "Site Page",
+				parentGroupName = "Site Name",
+				widgetName = "Sites Directory");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child SiteName");
+		task ("Go to child site public page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child SiteName");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+		task ("Configure Sites Directory to display in Parent Level") {
+			SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child SiteName");
+		task ("View parent site displayed") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child SiteName");
 
-		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		}
 	}
 
 	@description = "View sites in child site's Sites Directory."
 	@priority = "4"
 	test ViewSiteHierarchiesViaSitesDirectory {
-		Site.openSitesAdmin();
+		task ("Add a site and a public page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+		task ("Add a child site to the site and a public page in it") {
+			JSONGroup.addChildGroup(
+				groupName = "Child Site1Name",
+				parentGroupName = "Site Name");
 
-		JSONGroup.addChildGroup(
-			groupName = "Child Site1Name",
-			parentGroupName = "Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Child Site1Name",
+				layoutName = "Site Page",
+				parentGroupName = "Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Child Site1Name",
-			layoutName = "Site Page",
-			parentGroupName = "Site Name");
+		task ("Add a child site to the child site and a public page in it") {
+			JSONGroup.addChildGroup(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSite1Name",
+				parentGroupName = "Child Site1Name");
 
-		JSONGroup.addChildGroup(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSite1Name",
-			parentGroupName = "Child Site1Name");
+			JSONLayout.addPublicLayout(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSite1Name",
+				layoutName = "Site Page",
+				parentGroupName = "Child Site1Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSite1Name",
-			layoutName = "Site Page",
-			parentGroupName = "Child Site1Name");
+		task ("Add another child site to the child site and a public page in it") {
+			JSONGroup.addChildGroup(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSite2Name",
+				parentGroupName = "Child Site1Name");
 
-		JSONGroup.addChildGroup(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSite2Name",
-			parentGroupName = "Child Site1Name");
+			JSONLayout.addPublicLayout(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSite2Name",
+				layoutName = "Site Page",
+				parentGroupName = "Child Site1Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSite2Name",
-			layoutName = "Site Page",
-			parentGroupName = "Child Site1Name");
+		task ("Add another child site to the site and a public page in it") {
+			JSONGroup.addChildGroup(
+				groupName = "Child Site2Name",
+				parentGroupName = "Site Name");
 
-		JSONGroup.addChildGroup(
-			groupName = "Child Site2Name",
-			parentGroupName = "Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Child Site2Name",
+				layoutName = "Site Page",
+				parentGroupName = "Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Child Site2Name",
-			layoutName = "Site Page",
-			parentGroupName = "Site Name");
+		task ("Add a Sites Directory to the first child site public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Child Site1Name",
+				layoutName = "Site Page",
+				parentGroupName = "Site Name",
+				widgetName = "Sites Directory");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Child Site1Name",
-			layoutName = "Site Page",
-			parentGroupName = "Site Name",
-			widgetName = "Sites Directory");
+		task ("Go to first child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child Site1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child Site1Name");
+		task ("Configure Sites Directory to display in Top Level") {
+			SitesDirectory.configureSetupPG(directorySites = "Top Level");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Top Level");
+		task ("Go to first child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child Site1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child Site1Name");
+		task ("View Top level site displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		task ("Configure Sites Directory to display in Parent Level") {
+			SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+		task ("Go to first child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child Site1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child Site1Name");
+		task ("View Parent level site displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		task ("Configure Sites Directory to display in Siblings") {
+			SitesDirectory.configureSetupPG(directorySites = "Siblings");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Siblings");
+		task ("Go to first child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child Site1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child Site1Name");
+		task ("View Siblings sites displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
+			SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+		task ("Configure Sites Directory to display in Children") {
+			SitesDirectory.configureSetupPG(directorySites = "Children");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Children");
+		task ("Go to first child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child Site1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child Site1Name");
+		task ("View child sites displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
+			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+		task ("Add a Sites Directory to the first child site of first child site") {
+			JSONLayout.addWidgetToPublicLayout(
+				grandParentGroupName = "Site Name",
+				groupName = "Child ChildSite1Name",
+				layoutName = "Site Page",
+				parentGroupName = "Child Site1Name",
+				widgetName = "Sites Directory");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			grandParentGroupName = "Site Name",
-			groupName = "Child ChildSite1Name",
-			layoutName = "Site Page",
-			parentGroupName = "Child Site1Name",
-			widgetName = "Sites Directory");
+		task ("Go to first child child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child ChildSite1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child ChildSite1Name");
+		task ("Configure Sites Directory to display in Top Level") {
+			SitesDirectory.configureSetupPG(directorySites = "Top Level");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Top Level");
+		task ("Go to first child child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child ChildSite1Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child ChildSite1Name");
+		task ("View Top level site displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+		task ("Configure Sites Directory to display in Parent Level") {
+			SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+		}
+		task ("Go to first child child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child ChildSite1Name");
+		}
 
-		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+		task ("View Parent level sites displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child ChildSite1Name");
+			SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
+		task ("Configure Sites Directory to display in Siblings") {
+			SitesDirectory.configureSetupPG(directorySites = "Siblings");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+		task ("Go to first child child site page") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child ChildSite1Name");
+		}
+		task ("View Siblings sites displayed") {
+			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
 
-		SitesDirectory.configureSetupPG(directorySites = "Siblings");
+			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child ChildSite1Name");
+		task ("Configure Sites Directory to display in Children") {
+			SitesDirectory.configureSetupPG(directorySites = "Children");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
+		task ("Configure Sites Directory to display in Children") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page",
+				siteName = "Child ChildSite1Name");
+		}
 
-		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
-
-		SitesDirectory.configureSetupPG(directorySites = "Children");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Child ChildSite1Name");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No sites were found.");
+		task ("View no site fits this level") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No sites were found.");
+		}
 	}
 
 }

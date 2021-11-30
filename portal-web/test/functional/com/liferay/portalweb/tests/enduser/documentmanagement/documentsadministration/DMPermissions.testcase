@@ -755,7 +755,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
+		Comments.viewNoActions(entryComment = "DM Document Comment");
 	}
 
 	@description = "This is a test for LPS-136837. It checks that a guest cannot update a folder without permissions."

@@ -20,12 +20,12 @@
 ViewListTypeDefinitionsDisplayContext viewListTypeDefinitionsDisplayContext = (ViewListTypeDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<clay:headless-data-set-display
+<frontend-data-set:headless-display
 	apiURL="<%= viewListTypeDefinitionsDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= viewListTypeDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= viewListTypeDefinitionsDisplayContext.getCreationMenu() %>"
+	fdsActionDropdownItems="<%= viewListTypeDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
-	id="<%= ListTypeClayDataSetDisplayNames.LIST_TYPE_DEFINITIONS %>"
+	id="<%= ListTypeFDSNames.LIST_TYPE_DEFINITIONS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

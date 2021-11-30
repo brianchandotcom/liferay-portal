@@ -24,12 +24,12 @@ ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDef
 
 <c:choose>
 	<c:when test="<%= objectDefinition.isPortlet() || Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL) %>">
-		<clay:headless-data-set-display
+		<frontend-data-set:headless-display
 			apiURL="<%= viewObjectEntriesDisplayContext.getAPIURL() %>"
-			clayDataSetActionDropdownItems="<%= viewObjectEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= viewObjectEntriesDisplayContext.getCreationMenu() %>"
+			fdsActionDropdownItems="<%= viewObjectEntriesDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= viewObjectEntriesDisplayContext.getClayHeadlessDataSetDisplayId() %>"
+			id="<%= viewObjectEntriesDisplayContext.getFDSId() %>"
 			itemsPerPage="<%= 20 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

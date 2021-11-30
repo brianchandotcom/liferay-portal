@@ -49,12 +49,12 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 						/>
 					</clay:container-fluid>
 
-					<clay:headless-data-set-display
+					<frontend-data-set:headless-display
 						apiURL="<%= viewListTypeEntriesDisplayContext.getAPIURL() %>"
-						clayDataSetActionDropdownItems="<%= viewListTypeEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
 						creationMenu="<%= viewListTypeEntriesDisplayContext.getCreationMenu() %>"
+						fdsActionDropdownItems="<%= viewListTypeEntriesDisplayContext.getFDSActionDropdownItems() %>"
 						formName="fm"
-						id="<%= ListTypeClayDataSetDisplayNames.LIST_TYPE_DEFINITION_ITEMS %>"
+						id="<%= ListTypeFDSNames.LIST_TYPE_DEFINITION_ITEMS %>"
 						itemsPerPage="<%= 20 %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"
 						pageNumber="<%= 1 %>"

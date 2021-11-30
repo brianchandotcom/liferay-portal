@@ -14,7 +14,7 @@
 
 package com.liferay.object.web.internal.list.type.display.context;
 
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -54,30 +54,6 @@ public class ViewListTypeDefinitionsDisplayContext {
 		return "/o/headless-admin-list-type/v1.0/list-type-definitions";
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getClayDataSetActionDropdownItems()
-		throws Exception {
-
-		return Arrays.asList(
-			new ClayDataSetActionDropdownItem(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setMVCRenderCommandName(
-					"/list_type_definitions/edit_list_type_definition"
-				).setParameter(
-					"listTypeDefinitionId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"view", "view",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, "sidePanel"),
-			new ClayDataSetActionDropdownItem(
-				getAPIURL() + "/{id}", "trash", "delete",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
-	}
-
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -95,6 +71,29 @@ public class ViewListTypeDefinitionsDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		return Arrays.asList(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/list_type_definitions/edit_list_type_definition"
+				).setParameter(
+					"listTypeDefinitionId", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, "sidePanel"),
+			new FDSActionDropdownItem(
+				getAPIURL() + "/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

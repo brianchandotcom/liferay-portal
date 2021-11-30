@@ -2127,7 +2127,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#5e38ba",
+							"defaultValue": "initial",
 							"editorType": "ColorPicker",
 							"label": "link-visited-color",
 							"mappings": [

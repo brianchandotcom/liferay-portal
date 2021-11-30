@@ -1140,7 +1140,7 @@ definition {
 			sourceFileName = "Document_1.txt");
 
 		JSONDocument.addComment(
-			commentBody = "Comment mentioning",
+			commentBody = "DM Document Comment",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest");
 
@@ -1152,7 +1152,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
+		Comments.viewNoActions(entryComment = "DM Document Comment");
 	}
 
 	@description = "This is a test for LPS-136843. It checks that a site member cannot update the permissions of a file without permissions."

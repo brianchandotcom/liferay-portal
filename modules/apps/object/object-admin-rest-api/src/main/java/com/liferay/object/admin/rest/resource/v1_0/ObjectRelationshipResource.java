@@ -58,7 +58,8 @@ public interface ObjectRelationshipResource {
 	}
 
 	public Page<ObjectRelationship> getObjectDefinitionObjectRelationshipsPage(
-			Long objectDefinitionId, Pagination pagination)
+			Long objectDefinitionId, String search, Filter filter,
+			Pagination pagination)
 		throws Exception;
 
 	public ObjectRelationship postObjectDefinitionObjectRelationship(

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -56,6 +57,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -207,7 +209,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Page<ObjectRelationship> page =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, Pagination.of(1, 10));
+					objectDefinitionId, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -220,7 +222,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			page =
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
-						irrelevantObjectDefinitionId, Pagination.of(1, 2));
+						irrelevantObjectDefinitionId, null, null,
+						Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -241,7 +244,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		page =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, Pagination.of(1, 10));
+					objectDefinitionId, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -255,6 +258,78 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		objectRelationshipResource.deleteObjectRelationship(
 			objectRelationship2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectRelationshipsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId();
+
+		ObjectRelationship objectRelationship1 = randomObjectRelationship();
+
+		objectRelationship1 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, objectRelationship1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionObjectRelationshipsPage(
+						objectDefinitionId, null,
+						getFilterString(
+							entityField, "between", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectRelationshipsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId();
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, randomObjectRelationship());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, randomObjectRelationship());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionObjectRelationshipsPage(
+						objectDefinitionId, null,
+						getFilterString(entityField, "eq", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
 	}
 
 	@Test
@@ -279,7 +354,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, Pagination.of(1, 2));
+					objectDefinitionId, null, null, Pagination.of(1, 2));
 
 		List<ObjectRelationship> objectRelationships1 =
 			(List<ObjectRelationship>)page1.getItems();
@@ -290,7 +365,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Page<ObjectRelationship> page2 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, Pagination.of(2, 2));
+					objectDefinitionId, null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -303,7 +378,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Page<ObjectRelationship> page3 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, Pagination.of(1, 3));
+					objectDefinitionId, null, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -522,6 +597,9 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected ObjectRelationship
 			testGraphQLObjectRelationship_addObjectRelationship()

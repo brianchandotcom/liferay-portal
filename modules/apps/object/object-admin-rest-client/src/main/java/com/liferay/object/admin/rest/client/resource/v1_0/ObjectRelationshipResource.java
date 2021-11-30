@@ -41,12 +41,14 @@ public interface ObjectRelationshipResource {
 	}
 
 	public Page<ObjectRelationship> getObjectDefinitionObjectRelationshipsPage(
-			Long objectDefinitionId, Pagination pagination)
+			Long objectDefinitionId, String search, String filterString,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getObjectDefinitionObjectRelationshipsPageHttpResponse(
-				Long objectDefinitionId, Pagination pagination)
+				Long objectDefinitionId, String search, String filterString,
+				Pagination pagination)
 		throws Exception;
 
 	public ObjectRelationship postObjectDefinitionObjectRelationship(
@@ -177,12 +179,13 @@ public interface ObjectRelationshipResource {
 
 		public Page<ObjectRelationship>
 				getObjectDefinitionObjectRelationshipsPage(
-					Long objectDefinitionId, Pagination pagination)
+					Long objectDefinitionId, String search, String filterString,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getObjectDefinitionObjectRelationshipsPageHttpResponse(
-					objectDefinitionId, pagination);
+					objectDefinitionId, search, filterString, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -223,7 +226,8 @@ public interface ObjectRelationshipResource {
 
 		public HttpInvoker.HttpResponse
 				getObjectDefinitionObjectRelationshipsPageHttpResponse(
-					Long objectDefinitionId, Pagination pagination)
+					Long objectDefinitionId, String search, String filterString,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -246,6 +250,14 @@ public interface ObjectRelationshipResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

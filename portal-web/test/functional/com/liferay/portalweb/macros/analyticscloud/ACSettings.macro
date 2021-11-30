@@ -809,6 +809,10 @@ definition {
 	macro goToBehaviors {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "behaviors");
 	}
+
+	macro goToEventAttributes {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "event-attributes");
+	}
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}

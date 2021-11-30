@@ -817,6 +817,11 @@ definition {
 	macro goToSearch {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "search");
 	}
+
+	macro goToInterests {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "interest");
+	}
+
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}

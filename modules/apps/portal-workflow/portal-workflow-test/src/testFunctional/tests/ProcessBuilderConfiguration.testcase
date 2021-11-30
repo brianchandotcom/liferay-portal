@@ -227,26 +227,13 @@ definition {
 	@description = "Verify that the user is able to reverse sort direction"
 	@priority = "2"
 	test CanReverseSortDirection {
-		property portal.upstream = "quarantine";
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
+		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Resource");
 
 		Workflow.clickRevertSortDirection();
 
-		AssertElementPresent(
-			key_fieldName = "Wiki Page",
-			key_order = "1",
-			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
-
-		AssertElementPresent(
-			key_fieldName = "Blogs Entry",
-			key_order = "20",
-			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
+		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Wiki Page,Web Content Article,User");
 	}
 
 	@description = "Verify that the user is able to search by Asset Type"

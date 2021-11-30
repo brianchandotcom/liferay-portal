@@ -19,8 +19,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewTranslationsArchive73101 {
+	@refactordone
+	test CanViewTranslationsArchive73101 {
 		property data.archive.type = "data-archive-translations";
 		property portal.version = "7.3.10.1";
 

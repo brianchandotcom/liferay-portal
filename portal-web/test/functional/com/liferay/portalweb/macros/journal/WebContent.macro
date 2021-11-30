@@ -1548,11 +1548,7 @@ definition {
 	}
 
 	macro increaseDisplayDate {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayMonth = DateUtil.getCurrentMonth();
-		var displayDateYear = DateUtil.getCurrentYear();
-		var displayDate = "${displayMonth}/${displayDateDay}/${displayDateYear}";
-
+		var displayDate = selenium.getAttribute("//input[contains(@id,'displayDate')]@value");
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
 		var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
 		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");

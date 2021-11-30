@@ -29,12 +29,12 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
-<clay:headless-data-set-display
+<frontend-data-set:headless-display
 	apiURL="<%= objectDefinitionsRelationshipsDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= objectDefinitionsRelationshipsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= objectDefinitionsRelationshipsDisplayContext.getCreationMenu() %>"
+	fdsActionDropdownItems="<%= objectDefinitionsRelationshipsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
-	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_RELATIONSHIPS %>"
+	id="<%= ObjectDefinitionsFDSNames.OBJECT_RELATIONSHIPS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

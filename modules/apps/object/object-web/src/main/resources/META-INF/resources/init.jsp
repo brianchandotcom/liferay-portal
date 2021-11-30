@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -45,10 +46,10 @@ page import="com.liferay.object.model.ObjectLayoutTab" %><%@
 page import="com.liferay.object.model.ObjectRelationship" %><%@
 page import="com.liferay.object.scope.ObjectScopeProvider" %><%@
 page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
-page import="com.liferay.object.web.internal.list.type.constants.ListTypeClayDataSetDisplayNames" %><%@
+page import="com.liferay.object.web.internal.list.type.constants.ListTypeFDSNames" %><%@
 page import="com.liferay.object.web.internal.list.type.display.context.ViewListTypeDefinitionsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.list.type.display.context.ViewListTypeEntriesDisplayContext" %><%@
-page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsClayDataSetDisplayNames" %><%@
+page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames" %><%@
 page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext" %><%@
@@ -56,7 +57,7 @@ page import="com.liferay.object.web.internal.object.definitions.display.context.
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsLayoutsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext" %><%@
-page import="com.liferay.object.web.internal.object.entries.constants.ObjectEntriesClayDataSetDisplayNames" %><%@
+page import="com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDSNames" %><%@
 page import="com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@

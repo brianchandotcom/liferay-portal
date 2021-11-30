@@ -14,7 +14,7 @@
 
 package com.liferay.object.web.internal.object.entries.display.context;
 
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
@@ -81,40 +81,6 @@ public class ViewObjectEntriesDisplayContext {
 		}
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getClayDataSetActionDropdownItems()
-		throws Exception {
-
-		return Arrays.asList(
-			new ClayDataSetActionDropdownItem(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setMVCRenderCommandName(
-					"/object_entries/edit_object_entry"
-				).setParameter(
-					"objectEntryId", "{id}"
-				).buildString(),
-				"view", "view",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, null),
-			new ClayDataSetActionDropdownItem(
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(),
-					"are-you-sure-you-want-to-delete-this-entry"),
-				_apiURL + "/{id}", "trash", "delete",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"),
-			new ClayDataSetActionDropdownItem(
-				_getPermissionsURL(), null, "permissions",
-				LanguageUtil.get(
-					_objectRequestHelper.getRequest(), "permissions"),
-				"get", "permissions", "modal-permissions"));
-	}
-
-	public String getClayHeadlessDataSetDisplayId() {
-		return _objectRequestHelper.getPortletId();
-	}
-
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -145,6 +111,39 @@ public class ViewObjectEntriesDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		return Arrays.asList(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/object_entries/edit_object_entry"
+				).setParameter(
+					"objectEntryId", "{id}"
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, null),
+			new FDSActionDropdownItem(
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					"are-you-sure-you-want-to-delete-this-entry"),
+				_apiURL + "/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"),
+			new FDSActionDropdownItem(
+				_getPermissionsURL(), null, "permissions",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(), "permissions"),
+				"get", "permissions", "modal-permissions"));
+	}
+
+	public String getFDSId() {
+		return _objectRequestHelper.getPortletId();
 	}
 
 	public ObjectDefinition getObjectDefinition() {

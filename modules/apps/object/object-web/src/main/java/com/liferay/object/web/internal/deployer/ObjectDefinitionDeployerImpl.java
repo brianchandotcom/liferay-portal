@@ -17,9 +17,9 @@ package com.liferay.object.web.internal.deployer;
 import com.liferay.application.list.PanelApp;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -56,8 +56,8 @@ import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoLi
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.layout.display.page.ObjectEntryLayoutDisplayPageProvider;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
-import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.filter.ObjectEntryStatusClayTableDataSetFilter;
-import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.view.table.ObjectEntriesTableClayDataSetDisplayView;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectEntryStatusCheckBoxFDSFilter;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.view.table.ObjectEntriesTableFDSView;
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
@@ -102,20 +102,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
-				ClayDataSetDisplayView.class,
-				new ObjectEntriesTableClayDataSetDisplayView(
-					_clayTableSchemaBuilderFactory, objectDefinition,
+				FDSView.class,
+				new ObjectEntriesTableFDSView(
+					_fdsTableSchemaBuilderFactory, objectDefinition,
 					_objectFieldLocalService),
 				HashMapDictionaryBuilder.put(
-					"clay.data.set.display.name",
-					objectDefinition.getPortletId()
+					"frontend.data.set.name", objectDefinition.getPortletId()
 				).build()),
 			_bundleContext.registerService(
-				ClayDataSetFilter.class,
-				new ObjectEntryStatusClayTableDataSetFilter(),
+				FDSFilter.class, new ObjectEntryStatusCheckBoxFDSFilter(),
 				HashMapDictionaryBuilder.put(
-					"clay.data.set.display.name",
-					objectDefinition.getPortletId()
+					"frontend.data.set.name", objectDefinition.getPortletId()
 				).build()),
 			_bundleContext.registerService(
 				InfoItemCapabilitiesProvider.class,
@@ -328,13 +325,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private BundleContext _bundleContext;
 
 	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
-
-	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
 
 	@Reference
 	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

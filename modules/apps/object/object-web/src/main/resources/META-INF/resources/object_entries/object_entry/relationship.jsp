@@ -46,9 +46,9 @@ portletDisplay.setURLBack(backURL);
 			).build()
 		%>'
 		creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu() %>"
-		dataProviderKey="<%= ObjectEntriesClayDataSetDisplayNames.RELATED_MODELS %>"
+		dataProviderKey="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
 		formName="fm"
-		id="<%= ObjectEntriesClayDataSetDisplayNames.RELATED_MODELS %>"
+		id="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
 		itemsPerPage="<%= 20 %>"
 		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"

@@ -14,7 +14,7 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
@@ -61,55 +61,6 @@ public class ViewObjectDefinitionsDisplayContext {
 		return "/o/object-admin/v1.0/object-definitions";
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getClayDataSetActionDropdownItems()
-		throws Exception {
-
-		LiferayPortletResponse liferayPortletResponse =
-			_objectRequestHelper.getLiferayPortletResponse();
-
-		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
-
-		resourceURL.setParameter("objectDefinitionId", "{id}");
-		resourceURL.setResourceID(
-			"/object_definitions/export_object_definition");
-
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
-
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setMVCRenderCommandName(
-					"/object_definitions/edit_object_definition"
-				).setParameter(
-					"objectDefinitionId", "{id}"
-				).buildString(),
-				"view", "view",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, null));
-
-		if (_ffExportImportObjectDefinitionTypeConfigurationActivator.
-				enabled()) {
-
-			clayDataSetActionDropdownItems.add(
-				new ClayDataSetActionDropdownItem(
-					resourceURL.toString(), "export", "export",
-					LanguageUtil.get(
-						_objectRequestHelper.getRequest(), "export-as-json"),
-					"get", null, null));
-		}
-
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
-				getAPIURL() + "/{id}", "trash", "delete",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
-
-		return clayDataSetActionDropdownItems;
-	}
-
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -127,6 +78,53 @@ public class ViewObjectDefinitionsDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		LiferayPortletResponse liferayPortletResponse =
+			_objectRequestHelper.getLiferayPortletResponse();
+
+		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
+
+		resourceURL.setParameter("objectDefinitionId", "{id}");
+		resourceURL.setResourceID(
+			"/object_definitions/export_object_definition");
+
+		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
+
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/object_definitions/edit_object_definition"
+				).setParameter(
+					"objectDefinitionId", "{id}"
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, null));
+
+		if (_ffExportImportObjectDefinitionTypeConfigurationActivator.
+				enabled()) {
+
+			fdsActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					resourceURL.toString(), "export", "export",
+					LanguageUtil.get(
+						_objectRequestHelper.getRequest(), "export-as-json"),
+					"get", null, null));
+		}
+
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				getAPIURL() + "/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
+
+		return fdsActionDropdownItems;
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

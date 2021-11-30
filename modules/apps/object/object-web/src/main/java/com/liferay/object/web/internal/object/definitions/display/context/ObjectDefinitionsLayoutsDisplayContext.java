@@ -14,7 +14,7 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
-import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
@@ -56,30 +56,6 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 			getObjectDefinitionId() + "/object-layouts";
 	}
 
-	public List<ClayDataSetActionDropdownItem>
-			getClayDataSetActionDropdownItems()
-		throws Exception {
-
-		return Arrays.asList(
-			new ClayDataSetActionDropdownItem(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setMVCRenderCommandName(
-					"/object_definitions/edit_object_layout"
-				).setParameter(
-					"objectLayoutId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"view", "view",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, "sidePanel"),
-			new ClayDataSetActionDropdownItem(
-				"/o/object-admin/v1.0/object-layouts/{id}", "trash", "delete",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
-	}
-
 	public CreationMenu getCreationMenu() throws PortalException {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -98,6 +74,29 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		return Arrays.asList(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/object_definitions/edit_object_layout"
+				).setParameter(
+					"objectLayoutId", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, "sidePanel"),
+			new FDSActionDropdownItem(
+				"/o/object-admin/v1.0/object-layouts/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
 	}
 
 	public long getObjectDefinitionId() {

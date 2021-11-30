@@ -805,6 +805,10 @@ definition {
 	macro goToAccounts {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "accounts");
 	}
+
+	macro goToBehaviors {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "behaviors");
+	}
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}

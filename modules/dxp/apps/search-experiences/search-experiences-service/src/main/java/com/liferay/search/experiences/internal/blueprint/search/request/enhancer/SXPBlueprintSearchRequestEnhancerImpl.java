@@ -71,15 +71,6 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Override
 	public void enhance(
-		SearchRequestBuilder searchRequestBuilder, String sxpBlueprintJSON) {
-
-		_enhance(
-			searchRequestBuilder,
-			SXPBlueprintUtil.toSXPBlueprint(sxpBlueprintJSON));
-	}
-
-	@Override
-	public void enhance(
 		SearchRequestBuilder searchRequestBuilder,
 		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
 
@@ -93,6 +84,15 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	@Override
+	public void enhance(
+		SearchRequestBuilder searchRequestBuilder, String sxpBlueprintJSON) {
+
+		_enhance(
+			searchRequestBuilder,
+			SXPBlueprintUtil.toSXPBlueprint(sxpBlueprintJSON));
 	}
 
 	@Activate

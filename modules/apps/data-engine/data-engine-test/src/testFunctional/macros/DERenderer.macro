@@ -153,6 +153,10 @@ definition {
 			value1 = "${optionValue}");
 	}
 
+	macro clickCollapseFieldsGroup{
+		Click(locator1 = "Form#COLLAPSE_BUTTON");
+	}
+
 	macro assertDataInSingleSelectionField {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = "1";

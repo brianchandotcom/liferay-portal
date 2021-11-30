@@ -1,8 +1,8 @@
 import React from 'react';
-import {STATE_REGEX} from '~/common/utils/patterns';
-import {useLocation} from '~/routes/get-a-quote/hooks/useLocation';
-
 import {ControlledSelect} from '.';
+import {STATE_REGEX} from '../../../../../common/utils/patterns';
+
+import {useLocation} from '../../../../../routes/get-a-quote/hooks/useLocation';
 
 export function StatesControlledSelect({rules, ...props}) {
 	const {states} = useLocation();

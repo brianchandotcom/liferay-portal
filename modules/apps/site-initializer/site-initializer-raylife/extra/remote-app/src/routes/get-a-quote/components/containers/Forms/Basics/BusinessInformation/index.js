@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {ControlledInput} from '~/common/components/connectors/Controlled/Input';
-import {EmailControlledInput} from '~/common/components/connectors/Controlled/Input/Email';
-import {WebsiteControlledInput} from '~/common/components/connectors/Controlled/Input/Website';
-import {PhoneControlledInput} from '~/common/components/connectors/Controlled/Input/WithMask/Phone';
-import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
-import {useCustomEvent} from '~/common/hooks/useCustomEvent';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {TIP_EVENT} from '~/common/utils/events';
-import useFormActions from '~/routes/get-a-quote/hooks/useFormActions';
-import {useProductQuotes} from '~/routes/get-a-quote/hooks/useProductQuotes';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
+import {ControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input';
+import {EmailControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Email';
+import {WebsiteControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Website';
+import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
+import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
+import {STORAGE_KEYS, Storage} from '../../../../../../../common/services/liferay/storage';
+import {TIP_EVENT} from '../../../../../../../common/utils/events';
+import useFormActions from '../../../../../hooks/useFormActions';
+import {useProductQuotes} from '../../../../../hooks/useProductQuotes';
+import {useStepWizard} from '../../../../../hooks/useStepWizard';
+import {AVAILABLE_STEPS} from '../../../../../utils/constants';
 
 import {BusinessInformationAddress} from './Address';
 

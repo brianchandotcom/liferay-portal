@@ -1,7 +1,7 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {MoreInfoButton} from '~/common/components/fragments/Buttons/MoreInfo';
-import {Input} from '~/common/components/fragments/Forms/Input';
+import {MoreInfoButton} from '../../../fragments/Buttons/MoreInfo';
+import {Input} from '../../../fragments/Forms/Input';
 
 export function ControlledInput({
 	name,

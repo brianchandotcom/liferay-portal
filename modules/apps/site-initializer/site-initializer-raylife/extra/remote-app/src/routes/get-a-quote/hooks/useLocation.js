@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {GoogleMapsService} from '~/common/services/google-maps';
-import {MockService} from '~/common/services/mock';
+import {GoogleMapsService} from '../../../common/services/google-maps';
+import {MockService} from '../../../common/services/mock';
 
 export function useLocation() {
 	const [data, setData] = useState();

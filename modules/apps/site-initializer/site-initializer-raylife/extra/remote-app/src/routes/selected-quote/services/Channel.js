@@ -1,4 +1,4 @@
-import {axios} from '~/common/services/liferay/api';
+import {axios} from '../../../common/services/liferay/api';
 
 const DeliveryAPI = 'o/headless-commerce-admin-channel';
 const ChannelName = 'Raylife Channel';

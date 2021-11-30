@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react';
-import {LiferayService} from '~/common/services/liferay';
+import {LiferayService} from '../../../common/services/liferay';
 
 export function useBusinessTypes() {
 	const [data, setData] = useState();
@@ -8,6 +7,7 @@ export function useBusinessTypes() {
 
 	useEffect(() => {
 		loadBusinessTypes();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const loadBusinessTypes = async (search = '') => {

@@ -1,4 +1,4 @@
-import '~/types';
+import '../../../types';
 
 import {LiferayAdapt} from './adapter';
 import LiferayFetchAPI, {

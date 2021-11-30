@@ -1,7 +1,7 @@
 import React from 'react';
-import {ZIP_REGEX} from '~/common/utils/patterns';
-
 import {ControlledInputWithMask} from '.';
+
+import {ZIP_REGEX} from '../../../../../utils/patterns';
 
 export function ZIPControlledInput({rules = {}, inputProps = {}, ...props}) {
 	return (

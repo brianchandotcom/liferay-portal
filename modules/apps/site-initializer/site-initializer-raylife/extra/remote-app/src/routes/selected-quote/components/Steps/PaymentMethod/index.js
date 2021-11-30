@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 
 import {useContext, useEffect, useState} from 'react';
-import {LiferayService} from '~/common/services/liferay';
-import {SelectedQuoteContext} from '~/routes/selected-quote/context/SelectedQuoteContextProvider';
-import {getPaymentMethods} from '~/routes/selected-quote/services/Cart';
-import {updateOrderPaymentMethod} from '~/routes/selected-quote/services/Order';
+import {LiferayService} from '../../../../../common/services/liferay';
+import {SelectedQuoteContext} from '../../../context/SelectedQuoteContextProvider';
+import {getPaymentMethods} from '../../../services/Cart';
+import {updateOrderPaymentMethod} from '../../../services/Order';
 
 import RadioButton from './RadioButton';
 

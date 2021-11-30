@@ -1,21 +1,21 @@
 import React, {useEffect} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {NumberControlledInput} from '~/common/components/connectors/Controlled/Input/Number';
-import {PercentageControlledInput} from '~/common/components/connectors/Controlled/Input/WithMask/Percentage';
-import {LegalEntityControlledSelect} from '~/common/components/connectors/Controlled/Select/LegalEntity';
-import {ControlledSwitch} from '~/common/components/connectors/Controlled/Switch';
-import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
-import {TIP_EVENT} from '~/common/utils/events';
-import {PERCENTAGE_REGEX_MAX_100} from '~/common/utils/patterns';
-import useFormActions from '~/routes/get-a-quote/hooks/useFormActions';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {useTriggerContext} from '~/routes/get-a-quote/hooks/useTriggerContext';
+import {NumberControlledInput} from '../../../../../common/components/connectors/Controlled/Input/Number';
+import {PercentageControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Percentage';
+import {LegalEntityControlledSelect} from '../../../../../common/components/connectors/Controlled/Select/LegalEntity';
+import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
+import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {TIP_EVENT} from '../../../../../common/utils/events';
+import {PERCENTAGE_REGEX_MAX_100} from '../../../../../common/utils/patterns';
+import useFormActions from '../../../hooks/useFormActions';
+import {useStepWizard} from '../../../hooks/useStepWizard';
+import {useTriggerContext} from '../../../hooks/useTriggerContext';
 import {
 	validateOverallSales,
 	validateOwnBrandLabel,
 	validatePercentSales,
-} from '~/routes/get-a-quote/utils/businessFields';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
+} from '../../../utils/businessFields';
+import {AVAILABLE_STEPS} from '../../../utils/constants';
 
 const setFormPath = (value) => `business.${value}`;
 

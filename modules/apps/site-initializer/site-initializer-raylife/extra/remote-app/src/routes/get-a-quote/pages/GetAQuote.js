@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {useWatch} from 'react-hook-form';
-import {createExitAlert} from '~/common/utils/exitAlert';
+import {createExitAlert} from '../../../common/utils/exitAlert';
 
-import {Forms} from '~/routes/get-a-quote/components/containers/Forms';
-import {Steps} from '~/routes/get-a-quote/components/containers/Steps';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {useTriggerContext} from '~/routes/get-a-quote/hooks/useTriggerContext';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
 import Providers from '../Providers';
+import {Forms} from '../components/containers/Forms';
+import {Steps} from '../components/containers/Steps';
+import {useStepWizard} from '../hooks/useStepWizard';
+import {useTriggerContext} from '../hooks/useTriggerContext';
+import {AVAILABLE_STEPS} from '../utils/constants';
 
 const QuoteApp = () => {
 	const form = useWatch();

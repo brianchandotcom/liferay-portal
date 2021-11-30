@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {MockService} from '~/common/services/mock';
+import {MockService} from '../../../common/services/mock';
 
 export function useLegalEntity() {
 	const [data, setData] = useState();

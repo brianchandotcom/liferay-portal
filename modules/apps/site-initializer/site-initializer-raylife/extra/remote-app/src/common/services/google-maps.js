@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import '~/types';
+import '../../types';
 import {Loader} from '@googlemaps/js-api-loader';
 
 /**

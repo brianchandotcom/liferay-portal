@@ -1,5 +1,5 @@
-import {getItem} from '~/common/services/liferay/storage';
-import {NUMBER_REGEX, SYMBOL_REGEX} from '~/common/utils/patterns';
+import {getItem} from '../../../common/services/liferay/storage';
+import {NUMBER_REGEX, SYMBOL_REGEX} from '../../../common/utils/patterns';
 
 import {
 	CHECK_VALUE,

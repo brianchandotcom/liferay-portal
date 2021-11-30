@@ -1,7 +1,7 @@
 import React from 'react';
-import {WEBSITE_REGEX} from '~/common/utils/patterns';
-
 import {ControlledInput} from '.';
+
+import {WEBSITE_REGEX} from '../../../../utils/patterns';
 
 export function WebsiteControlledInput({rules, ...props}) {
 	return (

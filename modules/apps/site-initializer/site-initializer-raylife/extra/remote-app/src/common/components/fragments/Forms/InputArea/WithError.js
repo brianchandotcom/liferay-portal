@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
+import {WarningBadge} from '../../Badges/Warning';
 
 export function InputAreaWithError({children, className, error}) {
 	return (

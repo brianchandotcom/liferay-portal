@@ -1,5 +1,5 @@
-import {axios} from '~/common/services/liferay/api';
-import {getScopeGroupId} from '~/common/services/liferay/themeDisplay';
+import {axios} from '../../../common/services/liferay/api';
+import {getScopeGroupId} from '../../../common/services/liferay/themeDisplay';
 
 const QuoteRetrieveAPI = 'o/c/quoteretrieves';
 

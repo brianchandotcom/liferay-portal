@@ -1,6 +1,6 @@
 import {createContext, useEffect, useReducer} from 'react';
-import {LiferayService} from '~/common/services/liferay';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
+import {LiferayService} from '../../../common/services/liferay';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 
 export const SelectedQuoteContext = createContext();
 

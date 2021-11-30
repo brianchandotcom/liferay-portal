@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Template} from '~/common/components/Template';
-import ClayIconProvider from '~/common/context/ClayIconProvider';
-import {LiferayAdapt} from '~/common/services/liferay/adapter';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {AppProvider} from '~/routes/get-a-quote/context/AppContext';
+import {Template} from '../../common/components/Template';
+import ClayIconProvider from '../../common/context/ClayIconProvider';
+import {LiferayAdapt} from '../../common/services/liferay/adapter';
+import {STORAGE_KEYS, Storage} from '../../common/services/liferay/storage';
+import {AppProvider} from './context/AppContext';
 import {getRaylifeApplicationById} from './services/RaylifeApplication';
 import {getLoadedContentFlag} from './utils/util';
 

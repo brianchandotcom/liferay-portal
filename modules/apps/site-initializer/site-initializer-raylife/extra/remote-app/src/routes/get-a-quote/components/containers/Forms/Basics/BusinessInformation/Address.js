@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useRef} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {ControlledInput} from '~/common/components/connectors/Controlled/Input';
-import {ZIPControlledInput} from '~/common/components/connectors/Controlled/Input/WithMask/ZIP';
-import {StatesControlledSelect} from '~/common/components/connectors/Controlled/Select/States';
-import {Input} from '~/common/components/fragments/Forms/Input';
-import {useLocation} from '~/routes/get-a-quote/hooks/useLocation';
+import {ControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input';
+import {ZIPControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/ZIP';
+import {StatesControlledSelect} from '../../../../../../../common/components/connectors/Controlled/Select/States';
+import {Input} from '../../../../../../../common/components/fragments/Forms/Input';
+import {useLocation} from '../../../../../hooks/useLocation';
 
 const setFormPath = (value) =>
 	`basics.businessInformation.business.location.${value}`;

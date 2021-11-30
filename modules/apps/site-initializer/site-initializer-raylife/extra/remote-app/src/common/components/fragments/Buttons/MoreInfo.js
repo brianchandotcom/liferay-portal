@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import {useCustomEvent} from '~/common/hooks/useCustomEvent';
+import {useCustomEvent} from '../../../hooks/useCustomEvent';
 
 export function MoreInfoButton({callback, event, selected, value}) {
 	const [dispatchEvent] = useCustomEvent(event);

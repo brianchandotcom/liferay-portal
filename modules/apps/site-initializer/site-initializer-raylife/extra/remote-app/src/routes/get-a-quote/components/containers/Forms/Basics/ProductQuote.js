@@ -1,14 +1,14 @@
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
-import {MoreInfoButton} from '~/common/components/fragments/Buttons/MoreInfo';
-import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
-import {Radio} from '~/common/components/fragments/Forms/Radio';
-import {TIP_EVENT} from '~/common/utils/events';
-import useFormActions from '~/routes/get-a-quote/hooks/useFormActions';
-import {useProductQuotes} from '~/routes/get-a-quote/hooks/useProductQuotes';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {useTriggerContext} from '~/routes/get-a-quote/hooks/useTriggerContext';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
+import {MoreInfoButton} from '../../../../../../common/components/fragments/Buttons/MoreInfo';
+import {CardFormActionsWithSave} from '../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {Radio} from '../../../../../../common/components/fragments/Forms/Radio';
+import {TIP_EVENT} from '../../../../../../common/utils/events';
+import useFormActions from '../../../../hooks/useFormActions';
+import {useProductQuotes} from '../../../../hooks/useProductQuotes';
+import {useStepWizard} from '../../../../hooks/useStepWizard';
+import {useTriggerContext} from '../../../../hooks/useTriggerContext';
+import {AVAILABLE_STEPS} from '../../../../utils/constants';
 
 export function FormBasicProductQuote({form}) {
 	const {control} = useFormContext();

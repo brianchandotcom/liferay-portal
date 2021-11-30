@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
-import ProductComparison from '~/common/components/product-comparison';
-import {LiferayService} from '~/common/services/liferay';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
+import ProductComparison from '../../../common/components/product-comparison';
+import {LiferayService} from '../../../common/services/liferay';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 
 const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);

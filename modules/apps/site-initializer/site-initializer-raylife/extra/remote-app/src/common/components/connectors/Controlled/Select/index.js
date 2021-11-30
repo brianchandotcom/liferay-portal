@@ -1,7 +1,7 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {MoreInfoButton} from '~/common/components/fragments/Buttons/MoreInfo';
-import {Select} from '~/common/components/fragments/Forms/Select';
+import {MoreInfoButton} from '../../../../../common/components/fragments/Buttons/MoreInfo';
+import {Select} from '../../../../../common/components/fragments/Forms/Select';
 
 export function ControlledSelect({
 	name,

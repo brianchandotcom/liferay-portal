@@ -1,7 +1,7 @@
 import React from 'react';
-import {YEAR_REGEX} from '~/common/utils/patterns';
-
 import {ControlledInputWithMask} from '.';
+
+import {YEAR_REGEX} from '../../../../../utils/patterns';
 
 export function YearControlledInput({rules = {}, inputProps = {}, ...props}) {
 	return (

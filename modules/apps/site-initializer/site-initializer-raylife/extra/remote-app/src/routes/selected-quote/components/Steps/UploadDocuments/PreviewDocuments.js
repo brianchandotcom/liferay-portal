@@ -1,6 +1,6 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import ProgressBar from '~/common/components/progress-bar';
+import ProgressBar from '../../../../../common/components/progress-bar';
 
 const PreviewBody = ({
 	file,

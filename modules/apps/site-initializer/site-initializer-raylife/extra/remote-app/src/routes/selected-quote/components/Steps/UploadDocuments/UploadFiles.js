@@ -2,8 +2,8 @@
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-import {InfoBadge} from '~/common/components/fragments/Badges/Info';
-import {removeDocumentById} from '~/routes/selected-quote/services/DocumentsAndMedia';
+import {InfoBadge} from '../../../../../common/components/fragments/Badges/Info';
+import {removeDocumentById} from '../../../services/DocumentsAndMedia';
 import DropArea from '../../DropArea';
 import PreviewDocuments from './PreviewDocuments';
 

@@ -1,15 +1,14 @@
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
-import {LiferayService} from '~/common/services/liferay';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {clearExitAlert} from '~/common/utils/exitAlert';
-import {smoothScroll} from '~/common/utils/scroll';
-import {AppContext} from '~/routes/get-a-quote/context/AppContext';
-import {setSelectedProduct} from '~/routes/get-a-quote/context/actions';
-
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
+import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {LiferayService} from '../../../../../../../common/services/liferay';
+import {STORAGE_KEYS, Storage} from '../../../../../../../common/services/liferay/storage';
+import {clearExitAlert} from '../../../../../../../common/utils/exitAlert';
+import {smoothScroll} from '../../../../../../../common/utils/scroll';
+import {AppContext} from '../../../../../context/AppContext';
+import {setSelectedProduct} from '../../../../../context/actions';
+import {useStepWizard} from '../../../../../hooks/useStepWizard';
+import {AVAILABLE_STEPS} from '../../../../../utils/constants';
 import {BusinessTypeSearch} from './Search';
 
 export function FormBasicBusinessType({form}) {

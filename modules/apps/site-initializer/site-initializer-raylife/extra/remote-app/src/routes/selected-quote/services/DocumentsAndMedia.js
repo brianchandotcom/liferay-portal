@@ -1,6 +1,6 @@
-import {axios} from '~/common/services/liferay/api';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {getScopeGroupId} from '~/common/services/liferay/themeDisplay';
+import {axios} from '../../../common/services/liferay/api';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
+import {getScopeGroupId} from '../../../common/services/liferay/themeDisplay';
 
 const DeliveryAPI = 'o/headless-delivery';
 

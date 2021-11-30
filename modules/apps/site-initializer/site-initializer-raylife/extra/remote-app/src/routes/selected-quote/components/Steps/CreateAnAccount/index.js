@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
-import {EMAIL_REGEX} from '~/common/utils/patterns';
-import {
-	SendAccountRequest,
-	validadePassword,
-} from '~/routes/selected-quote/utils/CreateAccount';
+import {WarningBadge} from '../../../../../common/components/fragments/Badges/Warning';
+import {EMAIL_REGEX} from '../../../../../common/utils/patterns';
 import {
 	ACTIONS,
 	SelectedQuoteContext,
 } from '../../../context/SelectedQuoteContextProvider';
+import {
+	SendAccountRequest,
+	validadePassword,
+} from '../../../utils/CreateAccount';
 import {ListRules} from '../CreateAnAccount/ListRules';
 import {
 	CHECK_VALUE,

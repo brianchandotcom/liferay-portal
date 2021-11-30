@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {MoreInfoButton} from '~/common/components/fragments/Buttons/MoreInfo';
-import {InputWithMask} from '~/common/components/fragments/Forms/Input/WithMask';
+import {MoreInfoButton} from '../../../../fragments/Buttons/MoreInfo';
+import {InputWithMask} from '../../../../fragments/Forms/Input/WithMask';
 
 export function ControlledInputWithMask({
 	name,

@@ -1,6 +1,6 @@
 import {useContext} from 'react';
-import ProductComparison from '~/common/components/product-comparison';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
+import ProductComparison from '../../../../common/components/product-comparison';
+import {STORAGE_KEYS, Storage} from '../../../../common/services/liferay/storage';
 import {SelectedQuoteContext} from '../../context/SelectedQuoteContextProvider';
 
 const applicationId = Storage.getItem(STORAGE_KEYS.APPLICATION_ID);

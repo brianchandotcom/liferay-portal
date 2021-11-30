@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {LiferayService} from '~/common/services/liferay';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {clearExitAlert} from '~/common/utils/exitAlert';
-import {smoothScroll} from '~/common/utils/scroll';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {verifyInputAgentPage} from '~/routes/get-a-quote/utils/contact-agent';
+import {LiferayService} from '../../../common/services/liferay';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
+import {clearExitAlert} from '../../../common/utils/exitAlert';
+import {smoothScroll} from '../../../common/utils/scroll';
+import {useStepWizard} from '../hooks/useStepWizard';
+import {verifyInputAgentPage} from '../utils/contact-agent';
 
 const liferaySiteName = LiferayService.getLiferaySiteName();
 

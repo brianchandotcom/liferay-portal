@@ -1,7 +1,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect} from 'react';
-import useImperativeDisableScroll from '~/common/hooks/useImperativeDisableScroll';
+import useImperativeDisableScroll from '../../hooks/useImperativeDisableScroll';
 
 const MODAL_BACKGROUND_ID = 'modal-backdrop';
 

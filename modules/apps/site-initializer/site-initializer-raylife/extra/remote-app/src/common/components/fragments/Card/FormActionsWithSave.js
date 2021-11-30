@@ -1,7 +1,7 @@
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import ProgressSavedModal from '~/routes/get-a-quote/components/containers/Forms/Modal/ProgressSaved';
+import ProgressSavedModal from '../../../../routes/get-a-quote/components/containers/Forms/Modal/ProgressSaved';
 
 import {WarningBadge} from '../Badges/Warning';
 

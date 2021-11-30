@@ -1,5 +1,5 @@
-import {axios} from '~/common/services/liferay/api';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
+import {axios} from '../../../common/services/liferay/api';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 
 const DeliveryAPI = 'o/headless-commerce-admin-order';
 

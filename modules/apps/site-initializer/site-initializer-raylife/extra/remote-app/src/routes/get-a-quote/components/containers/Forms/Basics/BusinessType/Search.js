@@ -4,19 +4,19 @@ import useDebounce from 'lodash.debounce';
 
 import React, {useCallback, useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
-import {SearchInput} from '~/common/components/fragments/Forms/Input/Search';
-import {useCustomEvent} from '~/common/hooks/useCustomEvent';
-import {calculatePercentage} from '~/common/utils';
-import {TIP_EVENT} from '~/common/utils/events';
-import {useBusinessTypes} from '~/routes/get-a-quote/hooks/useBusinessTypes';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {useTriggerContext} from '~/routes/get-a-quote/hooks/useTriggerContext';
+import {WarningBadge} from '../../../../../../../common/components/fragments/Badges/Warning';
+import {SearchInput} from '../../../../../../../common/components/fragments/Forms/Input/Search';
+import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
+import {calculatePercentage} from '../../../../../../../common/utils';
+import {TIP_EVENT} from '../../../../../../../common/utils/events';
+import {useBusinessTypes} from '../../../../../hooks/useBusinessTypes';
+import {useStepWizard} from '../../../../../hooks/useStepWizard';
+import {useTriggerContext} from '../../../../../hooks/useTriggerContext';
 import {
 	AVAILABLE_STEPS,
 	TOTAL_OF_FIELD,
-} from '~/routes/get-a-quote/utils/constants';
-import {getLoadedContentFlag} from '~/routes/get-a-quote/utils/util';
+} from '../../../../../utils/constants';
+import {getLoadedContentFlag} from '../../../../../utils/util';
 
 import {BusinessTypeRadioGroup} from './RadioGroup';
 

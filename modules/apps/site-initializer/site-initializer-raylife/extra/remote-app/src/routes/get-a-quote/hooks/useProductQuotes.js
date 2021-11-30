@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react';
-import {LiferayService} from '~/common/services/liferay';
+import {LiferayService} from '../../../common/services/liferay';
 
 export function useProductQuotes() {
 	const [data, setData] = useState();

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import {useContext} from 'react';
-import {SelectedQuoteContext} from '~/routes/selected-quote/context/SelectedQuoteContextProvider';
+import {SelectedQuoteContext} from '../../context/SelectedQuoteContextProvider';
 
 const Panel = ({
 	children,

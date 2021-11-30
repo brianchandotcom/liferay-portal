@@ -1,6 +1,6 @@
-import '~/types';
-import {toSlug} from '~/common/utils';
-import {allowedProductQuote} from '~/routes/get-a-quote/utils/webContents';
+import '../../../types';
+import {allowedProductQuote} from '../../../routes/get-a-quote/utils/webContents';
+import {toSlug} from '../../utils';
 
 const _formatCommerceProductPrice = (price) => parseInt(price, 10);
 

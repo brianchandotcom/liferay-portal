@@ -1,21 +1,21 @@
 import {useContext, useState} from 'react';
-import {WarningBadge} from '~/common/components/fragments/Badges/Warning';
+import {WarningBadge} from '../../../../../common/components/fragments/Badges/Warning';
 
-import {ApplicationPropertiesContext} from '~/common/context/ApplicationPropertiesProvider';
-import {getItem} from '~/common/services/liferay/storage';
-import {smoothScroll} from '~/common/utils/scroll';
-import {getChannel} from '~/routes/selected-quote/services/Channel';
-import {createOrder} from '~/routes/selected-quote/services/Order';
-import {getSku} from '~/routes/selected-quote/services/Product';
+import {ApplicationPropertiesContext} from '../../../../../common/context/ApplicationPropertiesProvider';
+import {getItem} from '../../../../../common/services/liferay/storage';
+import {smoothScroll} from '../../../../../common/utils/scroll';
 import {
 	ACTIONS,
 	SelectedQuoteContext,
 } from '../../../context/SelectedQuoteContextProvider';
+import {getChannel} from '../../../services/Channel';
 import {
 	createDocumentInFolder,
 	createFolderIfNotExist,
 	createRootFolders,
 } from '../../../services/DocumentsAndMedia';
+import {createOrder} from '../../../services/Order';
+import {getSku} from '../../../services/Product';
 
 import UploadFiles from './UploadFiles';
 

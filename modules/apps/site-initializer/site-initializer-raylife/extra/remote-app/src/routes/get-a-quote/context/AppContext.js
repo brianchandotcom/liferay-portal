@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useReducer} from 'react';
-import {TIP_EVENT_DISMISS} from '~/common/utils/events';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
+import {TIP_EVENT_DISMISS} from '../../../common/utils/events';
+import {AVAILABLE_STEPS} from '../../../routes/get-a-quote/utils/constants';
 
 import {setSelectedTrigger} from './actions';
 import {reducer} from './reducer';

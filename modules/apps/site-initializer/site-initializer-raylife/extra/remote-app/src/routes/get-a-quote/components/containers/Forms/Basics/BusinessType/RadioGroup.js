@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
-import {Radio} from '~/common/components/fragments/Forms/Radio';
+import {Radio} from '../../../../../../../common/components/fragments/Forms/Radio';
 
 export function BusinessTypeRadioGroup({
 	businessTypes = [],

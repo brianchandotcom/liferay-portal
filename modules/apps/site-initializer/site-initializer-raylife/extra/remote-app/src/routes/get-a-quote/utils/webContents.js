@@ -1,4 +1,4 @@
-import {toSlug} from '~/common/utils';
+import {toSlug} from '../../../common/utils';
 
 const PRODUCT_QUOTE = [
 	'general-liability',

@@ -1,7 +1,7 @@
 import React from 'react';
-import {PHONE_REGEX} from '~/common/utils/patterns';
-
 import {ControlledInputWithMask} from '.';
+
+import {PHONE_REGEX} from '../../../../../utils/patterns';
 
 export function PhoneControlledInput({rules = {}, inputProps = {}, ...props}) {
 	return (

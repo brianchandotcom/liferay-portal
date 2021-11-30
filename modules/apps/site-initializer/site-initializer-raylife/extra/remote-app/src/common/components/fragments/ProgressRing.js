@@ -1,5 +1,5 @@
 import React from 'react';
-import {calculateCircumference, calculateOffset} from '~/common/utils';
+import {calculateCircumference, calculateOffset} from '../../utils';
 
 export function ProgressRing({
 	className,

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
-import {getLoadedContentFlag} from '~/routes/get-a-quote/utils/util';
+import {useStepWizard} from '../../../hooks/useStepWizard';
+import {AVAILABLE_STEPS} from '../../../utils/constants';
+import {getLoadedContentFlag} from '../../../utils/util';
 
 import {FormBasicBusinessInformation} from './Basics/BusinessInformation';
 import {FormBasicBusinessType} from './Basics/BusinessType';

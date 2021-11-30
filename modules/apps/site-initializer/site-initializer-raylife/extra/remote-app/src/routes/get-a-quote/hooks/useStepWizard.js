@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useContext, useEffect} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
-import {useCustomEvent} from '~/common/hooks/useCustomEvent';
-import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
-import {calculatePercentage, countCompletedFields} from '~/common/utils';
-import {TIP_EVENT} from '~/common/utils/events';
+import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
+import {calculatePercentage, countCompletedFields} from '../../../common/utils';
+import {TIP_EVENT} from '../../../common/utils/events';
 
 import {AppContext} from '../context/AppContext';
 import {setSelectedStep} from '../context/actions';

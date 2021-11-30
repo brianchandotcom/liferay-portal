@@ -1,7 +1,7 @@
 import React from 'react';
-import {EMAIL_REGEX} from '~/common/utils/patterns';
-
 import {ControlledInput} from '.';
+
+import {EMAIL_REGEX} from '../../../../utils/patterns';
 
 export function EmailControlledInput({rules, ...props}) {
 	return (

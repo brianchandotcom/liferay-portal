@@ -1,7 +1,7 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {MoreInfoButton} from '~/common/components/fragments/Buttons/MoreInfo';
-import {Switch} from '~/common/components/fragments/Forms/Switch';
+import {MoreInfoButton} from '../../../components/fragments/Buttons/MoreInfo';
+import {Switch} from '../../../components/fragments/Forms/Switch';
 
 export function ControlledSwitch({
 	name,

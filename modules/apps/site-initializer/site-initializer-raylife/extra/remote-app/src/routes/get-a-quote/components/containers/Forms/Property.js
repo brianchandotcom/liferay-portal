@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {NumberControlledInput} from '~/common/components/connectors/Controlled/Input/Number';
-import {SquareFeatControlledInput} from '~/common/components/connectors/Controlled/Input/WithMask/SquareFeet';
-import {YearControlledInput} from '~/common/components/connectors/Controlled/Input/WithMask/Year';
-import {ControlledSwitch} from '~/common/components/connectors/Controlled/Switch';
-import {CardFormActionsWithSave} from '~/common/components/fragments/Card/FormActionsWithSave';
-import {TIP_EVENT} from '~/common/utils/events';
-import useFormActions from '~/routes/get-a-quote/hooks/useFormActions';
-import {useStepWizard} from '~/routes/get-a-quote/hooks/useStepWizard';
-import {useTriggerContext} from '~/routes/get-a-quote/hooks/useTriggerContext';
-import {AVAILABLE_STEPS} from '~/routes/get-a-quote/utils/constants';
+import {NumberControlledInput} from '../../../../../common/components/connectors/Controlled/Input/Number';
+import {SquareFeatControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/SquareFeet';
+import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
+import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
+import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {TIP_EVENT} from '../../../../../common/utils/events';
+import useFormActions from '../../../hooks/useFormActions';
+import {useStepWizard} from '../../../hooks/useStepWizard';
+import {useTriggerContext} from '../../../hooks/useTriggerContext';
+import {AVAILABLE_STEPS} from '../../../utils/constants';
 import {
 	isHabitational,
 	isThereSwimming,
-} from '~/routes/get-a-quote/utils/propertyFields';
+} from '../../../utils/propertyFields';
 
 const setFormPath = (value) => `property.${value}`;
 

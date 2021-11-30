@@ -111,8 +111,6 @@ definition {
 	@description = "Verify that a Numeric Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -137,8 +135,6 @@ definition {
 	@description = "Verify that a Numeric Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -170,8 +166,6 @@ definition {
 	@description = "Verify that a Numeric Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -212,8 +206,6 @@ definition {
 	@description = "Verify that a Numeric Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -248,8 +240,6 @@ definition {
 	@description = "Verify that a Numeric Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -283,8 +273,6 @@ definition {
 	@description = "Verify that a Numeric Field can accept decimals when the numeric type set to Decimal"
 	@priority = "5"
 	test CanBeSetToAcceptDecimals {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 		Form.editName(formName = "Form 1");
 
@@ -317,8 +305,6 @@ definition {
 	@description = "Verify that a Numeric Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -363,8 +349,6 @@ definition {
 	@description = "Verify that a Form can be submitted with the Numeric Field"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -409,8 +393,6 @@ definition {
 	@description = "Verify that the "Is Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsEqualTo {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -456,8 +438,6 @@ definition {
 	@description = "Verify that the "Is Greater Than" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsGreaterThan {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -503,8 +483,6 @@ definition {
 	@description = "Verify that the "Is Greater Than Or Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsGreaterThanOrEqualTo {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -550,8 +528,6 @@ definition {
 	@description = "Verify that the "Is Less Than" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsLessThan {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -597,8 +573,6 @@ definition {
 	@description = "Verify that the "Is Less Than Or Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsLessThanOrEqualTo {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -644,8 +618,6 @@ definition {
 	@description = "Verify that the "Is Not Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsNotEqualTo {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -692,7 +664,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132839 ChangesCanBeCanceled pending implementation
@@ -702,8 +673,6 @@ definition {
 	@description = "Verify that a Numeric Field does not accept decimals by default"
 	@priority = "5"
 	test DoesNotAcceptDecimalsByDefault {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -735,8 +704,6 @@ definition {
 	@description = "Verify that a help text can be added"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1445,8 +1412,6 @@ definition {
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1472,8 +1437,6 @@ definition {
 	@description = "Verify that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1505,8 +1468,6 @@ definition {
 	@description = "Verify that a Numeric Field only accepts numbers"
 	@priority = "5"
 	test OnlyAcceptsNumbers {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1534,8 +1495,6 @@ definition {
 	@description = "Verify that a Placeholder Text can be set"
 	@priority = "5"
 	test PlaceholderTextCanBeSet {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1568,8 +1527,6 @@ definition {
 	@description = "Verify that a Predefined Value can be set"
 	@priority = "5"
 	test PredefinedValueCanBeSet {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1600,8 +1557,6 @@ definition {
 	@description = "Verify that Predefined Value has higher priority than Placeholder Text for the Numeric Field"
 	@priority = "4"
 	test PredefinedValueHasHigherPriorityThanPlaceholderText {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1638,8 +1593,6 @@ definition {
 	@description = "Verify that when erasing the Predefined Value in the Numeric Field it will be replaced by the Placeholder Text"
 	@priority = "4"
 	test PredefinedValueIsReplacedByPlaceholderText {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1668,8 +1621,6 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1697,7 +1648,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132837 TypeCanBeChanged pending implementation
@@ -1708,7 +1658,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ValidationIsResetAfterChangingFieldType {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132838 ValidationIsResetAfterChangingFieldType pending implementation

@@ -34,8 +34,6 @@ definition {
 	@description = "Verify that a Form with required fields can be partially filled out and submitted"
 	@priority = "5"
 	test CanBePartiallyFilledWithRequiredFields {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -74,8 +72,6 @@ definition {
 	@description = "Verify that a Form can be submitted"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -104,8 +100,6 @@ definition {
 	@description = "Verify that a Form can be submitted from the Forms Widget"
 	@priority = "5"
 	test CanBeSubmittedFromWidget {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -173,8 +167,6 @@ definition {
 	@description = "Verify that a Form that is partially filled out can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWhilePartiallyFilled {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -286,8 +278,6 @@ definition {
 	@description = "Verify that a Form with multiple pages can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWithMultiplePages {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -391,8 +381,6 @@ definition {
 	@description = "Verify that a Form can redirect a user after being submitted"
 	@priority = "5"
 	test CanRedirectUserAfterFormSubmission {
-		property forms.functional = "false";
-
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -547,8 +535,6 @@ definition {
 	@description = "Verify that a Form can require user authentication before being accessed"
 	@priority = "5"
 	test CanRequireUserAuthentication {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -601,8 +587,6 @@ definition {
 	@description = "Verify that a Form's Success Page can be restored"
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.deleteSuccessPage(formPageNumber = "2");
@@ -696,8 +680,6 @@ definition {
 	@description = "Verify that the Submit button's default value is restored if the Submit Button Label is left blank"
 	@priority = "4"
 	test SubmitButtonRestoredToDefaultIfLeftBlank {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -744,8 +726,6 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized"
 	@priority = "5"
 	test SubmitButtonTextCanBeCustomized {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -774,8 +754,6 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized multiple times"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedMultipleTimes {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -820,8 +798,6 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized with numbers"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithNumbers {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -850,8 +826,6 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized with special characters"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithSpecialCharacters {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -945,8 +919,6 @@ definition {
 	@description = "Verify that a Form's Success Page can be deleted"
 	@priority = "5"
 	test SuccessPageCanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.deleteSuccessPage(formPageNumber = "2");

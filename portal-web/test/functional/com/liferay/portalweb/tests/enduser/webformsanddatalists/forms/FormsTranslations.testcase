@@ -34,8 +34,6 @@ definition {
 	@description = "Verify that a translation can be added"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -66,8 +64,6 @@ definition {
 	@description = "Verify that multiple translations can be added"
 	@priority = "5"
 	test CanBeCreatedInMultipleLanguages {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -124,8 +120,6 @@ definition {
 	@description = "Verify that only one translation is supported for each language"
 	@priority = "5"
 	test CanBeCreatedOnlyOncePerLanguage {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -235,8 +229,6 @@ definition {
 	@description = "Verify that a translation can be deactivated"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -265,8 +257,6 @@ definition {
 	@description = "Verify that a translation can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -309,8 +299,6 @@ definition {
 	@description = "Verify that a translation can be previewed"
 	@priority = "5"
 	test CanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -347,8 +335,6 @@ definition {
 	@description = "Verify that a translation can be published"
 	@priority = "5"
 	test CanBePublished {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -391,8 +377,6 @@ definition {
 	@description = "Verify that a translated Form can be submitted"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -447,8 +431,6 @@ definition {
 	@description = "Verify that a Color field's Label and Help Text can be translated"
 	@priority = "5"
 	test ColorFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -493,8 +475,6 @@ definition {
 	@description = "Verify that a Date field's Label and Help Text can be translated"
 	@priority = "5"
 	test DateFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -811,8 +791,6 @@ definition {
 	@description = "Verify that Forms submitted in different languages show the appropriate country flags in View Entries"
 	@priority = "5"
 	test EntriesDisplayTheCorrectLanguageFlag {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -865,8 +843,6 @@ definition {
 	@description = "Verify that a field that is added in a translation is also added to the default language"
 	@priority = "5"
 	test FieldsAddedToTranslationAreAddedToDefaultLanguage {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -893,8 +869,6 @@ definition {
 	@description = "Verify that if a field is deleted on the translation, it is also deleted on the default language"
 	@priority = "5"
 	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -923,8 +897,6 @@ definition {
 	@description = "Verify that a Grid field's Label, Help Text and Options can be translated"
 	@priority = "5"
 	test GridFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1009,8 +981,6 @@ definition {
 	@description = "Verify that an Image field's Label and Help Text can be translated"
 	@priority = "5"
 	test ImageFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1055,8 +1025,6 @@ definition {
 	@description = "Verify that the properties of a field remain the same when adding a translation"
 	@priority = "5"
 	test MaintainPropertiesFromDefaultLanguage {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1090,8 +1058,6 @@ definition {
 	@description = "Verify that a Multiple Selection field's Label, Help Text and Options can be translated"
 	@priority = "5"
 	test MultipleSelectionFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1175,8 +1141,6 @@ definition {
 	@description = "Verify that a Numeric field's Label, Placeholder Text and Help Text can be translated"
 	@priority = "5"
 	test NumericFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1229,8 +1193,6 @@ definition {
 	@description = "Verify that a Paragraph field's Label and Body Text can be translated"
 	@priority = "5"
 	test ParagraphFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1275,7 +1237,6 @@ definition {
 	@description = "Verify that a Rich Text field's Label, Help Text and Predefined Value can be translated"
 	@priority = "5"
 	test RichTextFieldCanBeTranslated {
-		property forms.functional = "false";
 		property portal.upstream = "quarantine";
 
 		FormsAdmin.addForm();
@@ -1350,8 +1311,6 @@ definition {
 	@description = "Verify that a Select From List field's Label, Help Text and Options can be translated"
 	@priority = "5"
 	test SelectFromListFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1434,8 +1393,6 @@ definition {
 	@description = "Verify that a Separator field's Label and Help Text can be translated"
 	@priority = "5"
 	test SeparatorFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1480,8 +1437,6 @@ definition {
 	@description = "Verify that a Single Selection field's Label, Help Text and Options can be translated"
 	@priority = "5"
 	test SingleSelectionFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1627,8 +1582,6 @@ definition {
 	@description = "Verify that a Text field's Autocomplete Options can be translated"
 	@priority = "5"
 	test TextFieldAutocompleteOptionsCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -1681,8 +1634,6 @@ definition {
 	@description = "Verify that a Text field's Label, Placeholder Text and Help Text can be translated"
 	@priority = "5"
 	test TextFieldBasicPropertiesCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -1735,8 +1686,6 @@ definition {
 	@description = "Verify that a Text field's Predefined Value can be translated"
 	@priority = "5"
 	test TextFieldPredefinedValueCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1767,8 +1716,6 @@ definition {
 	@description = "Verify that an Upload field's Label and Help Text can be translated"
 	@priority = "5"
 	test UploadFieldCanBeTranslated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

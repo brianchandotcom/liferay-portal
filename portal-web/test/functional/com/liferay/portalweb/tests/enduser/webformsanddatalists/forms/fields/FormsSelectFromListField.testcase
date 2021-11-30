@@ -109,8 +109,6 @@ definition {
 	@description = "Verify that a Select From List Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -140,8 +138,6 @@ definition {
 	@description = "Verify that a Select From List Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -177,8 +173,6 @@ definition {
 	@description = "Verify that a Select From List Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -213,8 +207,6 @@ definition {
 	@description = "Verify that a Select From List Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -259,8 +251,6 @@ definition {
 	@description = "Verify that a Select From List Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -299,8 +289,6 @@ definition {
 	@description = "Verify that a Select From List Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetAsRepeatable {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -350,8 +338,6 @@ definition {
 	@description = "Verify that a Form can be submitted with the Select From List Field"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -395,7 +381,6 @@ definition {
 	@description = "Verify that a list can be created using Autofill"
 	@priority = "5"
 	test CanCreateListUsingAutofill {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingAutofill";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -570,7 +555,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131364 ChangesCanBeCanceled pending implementation
@@ -580,8 +564,6 @@ definition {
 	@description = "Verify that the Field References for the options can be edited"
 	@priority = "5"
 	test FieldReferenceOfOptionsCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -612,8 +594,6 @@ definition {
 	@description = "Verify that a Help Text can be added"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -640,8 +620,6 @@ definition {
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -668,8 +646,6 @@ definition {
 	@description = "Veriy that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -700,8 +676,6 @@ definition {
 	@description = "Verify that options can be added"
 	@priority = "5"
 	test OptionsCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -798,8 +772,6 @@ definition {
 	@description = "Verify that options can be rearranged"
 	@priority = "5"
 	test OptionsCanBeRearranged {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -839,8 +811,6 @@ definition {
 	@description = "Verify that options can be sorted alphabetically"
 	@priority = "5"
 	test OptionsCanBeSortedAlphabetically {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 		Form.editName(formName = "Form 1");
 
@@ -891,8 +861,6 @@ definition {
 	@description = "Verify that an option can be selected as a Predefined Value"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -930,8 +898,6 @@ definition {
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""
 	@priority = "5"
 	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -978,8 +944,6 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1013,7 +977,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131363 TypeCanBeChanged pending implementation

@@ -179,8 +179,6 @@ definition {
 	@description = "Verify that a Text Field can be Autocompleted from a list of options"
 	@priority = "4"
 	test CanBeAutocompletedUsingAList {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -223,8 +221,6 @@ definition {
 	@description = "Verify that a Text Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -245,8 +241,6 @@ definition {
 	@description = "Verify that a Text Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -287,8 +281,6 @@ definition {
 	@description = "Verify that a Text Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -502,8 +494,6 @@ definition {
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheContainsOption {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -623,8 +613,6 @@ definition {
 	@description = "Verify that the Does Not Match option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheDoesNotMatchOption {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 		Form.editName(formName = "Form 1");
 
@@ -673,8 +661,6 @@ definition {
 	@description = "Verify that the Is Not Email option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotEmailOption {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -727,8 +713,6 @@ definition {
 	@description = "Verify that the Is Not URL option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotURLOption {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -844,8 +828,6 @@ definition {
 	@description = "Verify that a Text Field can require Confirmation"
 	@priority = "5"
 	test CanRequireConfirmationWithValidation {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -894,7 +876,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test ChangesCanBeCanceled {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
@@ -904,8 +885,6 @@ definition {
 	@description = "Verify that the Confirmation can be placed Horizontally"
 	@priority = "5"
 	test ConfirmationBoxCanBePlacedHorizontally {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -963,8 +942,6 @@ definition {
 	@description = "Verify that the Confirmation Error Message can be edited"
 	@priority = "5"
 	test ConfirmationErrorMessageCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1014,8 +991,6 @@ definition {
 	@description = "Verify that the Confirmation Label can be edited"
 	@priority = "5"
 	test ConfirmationLabelCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 		Form.editName(formName = "Form 1");
 
@@ -1068,8 +1043,6 @@ definition {
 	@description = "Verify that a Help Text can be added to a Text Field"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1144,8 +1117,6 @@ definition {
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1171,8 +1142,6 @@ definition {
 	@description = "Veriy that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -1197,8 +1166,6 @@ definition {
 	@description = "Verify that Placeholder Text can be set"
 	@priority = "5"
 	test PlaceholderTextCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1219,8 +1186,6 @@ definition {
 	@description = "Verify that a Predefined Value can be set"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1249,8 +1214,6 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1378,8 +1341,6 @@ definition {
 	@description = "LPS-84111 - Verify that Text Field can be autosaved on form builder"
 	@priority = "5"
 	test TextFieldCanBeAutosaved {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName();
@@ -1421,7 +1382,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131334 TypeCanBeChanged pending implementation
@@ -1432,7 +1392,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ValidationIsResetAfterChangingFieldType {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131352 ValidationIsResetAfterChangingFieldType pending implementation

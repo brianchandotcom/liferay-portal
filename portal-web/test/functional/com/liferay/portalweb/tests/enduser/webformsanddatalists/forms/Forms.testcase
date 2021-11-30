@@ -384,8 +384,6 @@ definition {
 	@description = "Verify that a Form can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -427,8 +425,6 @@ definition {
 	@description = "Verify that a Form can be published from an autosaved draft"
 	@priority = "5"
 	test CanBeCreatedFromAutosavedDraft {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Test");
@@ -469,8 +465,6 @@ definition {
 	@description = "Verify that a Form can be created with more than one page"
 	@priority = "5"
 	test CanBeCreatedWithMultiplePages {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -562,8 +556,6 @@ definition {
 	@description = "Verify that a Form can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -586,8 +578,6 @@ definition {
 	@description = "Verify that a Form can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -620,8 +610,6 @@ definition {
 	@description = "Verify that a Form can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -820,8 +808,6 @@ definition {
 	@description = "Verify that a Form can be unpublished"
 	@priority = "5"
 	test CanBeUnpublished {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1549,8 +1535,6 @@ definition {
 	@description = "This is a use case for LPS-81578."
 	@priority = "4"
 	test GuestUserCanNotSeeFormAfterPermissionRemoved {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName();
@@ -1599,8 +1583,6 @@ definition {
 	@description = "Verify that multiple Forms can be deleted"
 	@priority = "5"
 	test MultipleFormsCanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1681,8 +1663,6 @@ definition {
 	@description = "Verify that Form Pages can be reordered"
 	@priority = "5"
 	test PagesCanBeReordered {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1741,8 +1721,6 @@ definition {
 	@description = "Verify that Form Pages can be reset"
 	@priority = "5"
 	test PagesCanBeReset {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1865,8 +1843,6 @@ definition {
 	@description = "Verify that a Form cannot be created without at least 1 field"
 	@priority = "5"
 	test ShouldHaveAtLeastOneField {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Click(locator1 = "Button#SAVE");
@@ -2754,8 +2730,6 @@ definition {
 	@description = "Verify that a Form autosaves after 1 minute by default"
 	@priority = "5"
 	test WillAutosaveAfterOneMinute {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

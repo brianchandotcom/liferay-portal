@@ -394,8 +394,6 @@ definition {
 	@description = "Verify that a Paragraph Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -421,8 +419,6 @@ definition {
 	@description = "Verify that a Paragraph Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -457,8 +453,6 @@ definition {
 	@description = "Verify that a Paragraph Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -520,8 +514,6 @@ definition {
 	@description = "Verify that a Paragraph Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -557,8 +549,6 @@ definition {
 	@description = "Verify that a Form can be submitted with the Paragraph Field"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -608,8 +598,6 @@ definition {
 	@description = "Verify that a Table can be deleted in the Body Text by highlighting the table and pressing backspace"
 	@priority = "4"
 	test CanDeleteATableUsingBackspace {
-		property forms.functional = "false";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -648,7 +636,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteATableUsingRightClick {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133010 CanDeleteATableUsingRightClick pending implementation
@@ -658,7 +645,6 @@ definition {
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"
 	@priority = "4"
 	test CanEditFormattingStyle {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanEditFormattingStyle";
 
 		FormsAdmin.addForm();
@@ -727,8 +713,6 @@ definition {
 	@description = "Verify that a Form cannot be saved or published without adding anything in the Body Text"
 	@priority = "5"
 	test CannotBeSavedOrPublishedWithoutBodyText {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -781,7 +765,6 @@ definition {
 	@description = "Verify that a link to a URL can be added to the Body Text"
 	@priority = "5"
 	test CanSupportALinkToAURL {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportALinkToAURL";
 
 		FormsAdmin.addForm();
@@ -808,7 +791,6 @@ definition {
 	@description = "Verify that Bulleted Lists can be added to the Body Text"
 	@priority = "5"
 	test CanSupportBulletedLists {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportBulletedLists";
 
 		FormsAdmin.addForm();
@@ -860,8 +842,6 @@ definition {
 	@description = "Verify that the Body Text supports HTML"
 	@priority = "5"
 	test CanSupportHTML {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -894,7 +874,6 @@ definition {
 	@description = "Verify that an Image can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportImages {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportImages";
 
 		FormsAdmin.addForm();
@@ -929,7 +908,6 @@ definition {
 	@description = "Verify that Numbered Lists can be added to the Body Text"
 	@priority = "5"
 	test CanSupportNumberedLists {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportNumberedLists";
 
 		FormsAdmin.addForm();
@@ -981,7 +959,6 @@ definition {
 	@description = "Verify that a Table can be created in the Body Text"
 	@priority = "4"
 	test CanSupportTables {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportTables";
 
 		FormsAdmin.addForm();
@@ -1018,7 +995,6 @@ definition {
 	@description = "Verify that a Video can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportVideos {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportVideos";
 
 		FormsAdmin.addForm();
@@ -1069,7 +1045,6 @@ definition {
 	@description = "Verify that inputs to the Body Text can be undone and redone"
 	@priority = "5"
 	test CanUndoAndRedo {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanUndoAndRedo";
 
 		FormsAdmin.addForm();
@@ -1120,8 +1095,6 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1150,7 +1123,6 @@ definition {
 	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"
 	@priority = "5"
 	test TextCanBeBoldedItalicizedAndUnderlined {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#TextCanBeBoldedItalicizedAndUnderlined";
 
 		FormsAdmin.addForm();
@@ -1203,8 +1175,6 @@ definition {
 	@description = "Verify that the Field Title can be edited"
 	@priority = "5"
 	test TitleCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

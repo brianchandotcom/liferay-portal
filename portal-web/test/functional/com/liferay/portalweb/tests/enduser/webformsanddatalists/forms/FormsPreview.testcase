@@ -38,7 +38,6 @@ definition {
 	@description = "Verify that a rule with an (Autofill) action can be previewed"
 	@priority = "5"
 	test AutofillRuleCanBePreviewed {
-		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsPreview#AutofillRuleCanBePreviewed";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -127,8 +126,6 @@ definition {
 	@description = "Verify that a rule with a (Calculate) action can be previewed"
 	@priority = "5"
 	test CalculateRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -187,8 +184,6 @@ definition {
 	@description = "Verify that a user can navigate to different pages of a preview"
 	@priority = "5"
 	test CanNavigateToDifferentPages {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -233,8 +228,6 @@ definition {
 	@description = "Verify that it is not possible to submit a preview of a Form"
 	@priority = "4"
 	test CannotBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -251,8 +244,6 @@ definition {
 	@description = "Verify that a user cannot navigate to a new page without completing a required field"
 	@priority = "5"
 	test CannotNavigateToANewPageWithoutCompletingARequiredField {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -301,8 +292,6 @@ definition {
 	@description = "Verify that a Color Field can be previewed"
 	@priority = "5"
 	test ColorFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -337,8 +326,6 @@ definition {
 	@description = "Verify that a rule with a (Contains) condition can be previewed"
 	@priority = "5"
 	test ContainsRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -389,8 +376,6 @@ definition {
 	@description = "Verify that a Date Field can be previewed"
 	@priority = "5"
 	test DateFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -426,8 +411,6 @@ definition {
 	@description = "Verify that a rule with a (Does not contain) condition can be previewed"
 	@priority = "5"
 	test DoesNotContainRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -478,8 +461,6 @@ definition {
 	@description = "Verify that a rule with an (Enable) action can be previewed"
 	@priority = "5"
 	test EnableRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -536,8 +517,6 @@ definition {
 	@description = "Verify that a Fieldsets can be previewed"
 	@priority = "5"
 	test FieldsetsCanBePreviewed {
-		property forms.functional = "true";
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
@@ -584,8 +563,6 @@ definition {
 	@description = "Verify that a Fields Groups can be previewed"
 	@priority = "5"
 	test FieldsGroupsCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -612,8 +589,6 @@ definition {
 	@description = "Verify that a Grid Field can be previewed"
 	@priority = "5"
 	test GridFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -692,8 +667,6 @@ definition {
 	@description = "Verify that an Image Field can be previewed"
 	@priority = "5"
 	test ImageFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -729,8 +702,6 @@ definition {
 	@description = "Verify that is is not possible to preview an invalid Form (ie. no Fields or a Paragraph field with no body text)"
 	@priority = "5"
 	test InvalidFormCannotBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -743,8 +714,6 @@ definition {
 	@description = "Verify that a rule with an (Is empty) condition can be previewed"
 	@priority = "5"
 	test IsEmptyRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -791,8 +760,6 @@ definition {
 	@description = "Verify that a rule with an (Is Equal To) condition can be previewed"
 	@priority = "5"
 	test IsEqualToRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -845,8 +812,6 @@ definition {
 	@description = "Verify that a rule with an (Is Not Empty) condition can be previewed"
 	@priority = "5"
 	test IsNotEmptyRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -893,8 +858,6 @@ definition {
 	@description = "Verify that a rule with an (Is Not Equal To) condition can be previewed"
 	@priority = "5"
 	test IsNotEqualToRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -947,8 +910,6 @@ definition {
 	@description = "Verify that a rule with a (Jump to Page) action can be previewed"
 	@priority = "5"
 	test JumpToPageRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1013,8 +974,6 @@ definition {
 	@description = "Verify that a Multiple Selection Field can be previewed"
 	@priority = "5"
 	test MultipleSelectionFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1061,8 +1020,6 @@ definition {
 	@description = "Verify that a Numeric Field can be previewed"
 	@priority = "5"
 	test NumericFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1103,8 +1060,6 @@ definition {
 	@description = "Verify that a Paragraph Field can be previewed"
 	@priority = "5"
 	test ParagraphFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1123,8 +1078,6 @@ definition {
 	@description = "Verify that a rule with a (Require) action can be previewed"
 	@priority = "5"
 	test RequireRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1167,8 +1120,6 @@ definition {
 	@description = "Verify that a Rich Text Field can be previewed"
 	@priority = "5"
 	test RichTextFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1203,8 +1154,6 @@ definition {
 	@description = "Verify that a Select From List Field can be previewed"
 	@priority = "5"
 	test SelectFromListFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1258,8 +1207,6 @@ definition {
 	@description = "Verify that a Separator Field can be previewed"
 	@priority = "5"
 	test SeparatorFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1284,8 +1231,6 @@ definition {
 	@description = "Verify that a rule with a (Show) action can be previewed"
 	@priority = "5"
 	test ShowRuleCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1334,8 +1279,6 @@ definition {
 	@description = "Verify that a Single Selection Field can be previewed"
 	@priority = "5"
 	test SingleSelectionFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1390,8 +1333,6 @@ definition {
 	@description = "Verify that a Text Field can be previewed"
 	@priority = "5"
 	test TextFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1430,8 +1371,6 @@ definition {
 	@description = "Verify that translations can be previewed"
 	@priority = "5"
 	test TranslationsCanBePreviewed {
-		property forms.functional = "false";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -1466,8 +1405,6 @@ definition {
 	@description = "Verify that an Upload Field can be previewed"
 	@priority = "5"
 	test UploadFieldCanBePreviewed {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

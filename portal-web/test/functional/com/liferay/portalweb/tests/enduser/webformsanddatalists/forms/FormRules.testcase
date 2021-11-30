@@ -38,8 +38,6 @@ definition {
 	@description = "Verify that the Action label of a Rule changes when the corresponding Field's Label is edited"
 	@priority = "5"
 	test ActionIsUpdatedWhenFieldLabelIsEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -211,8 +209,6 @@ definition {
 	@description = "Verify that a Rule is autosaved when exiting the Form without saving the Rule"
 	@priority = "5"
 	test AreSavedWhenExitingTheForm {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -265,8 +261,6 @@ definition {
 	@description = "Verify that a Rule can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -391,8 +385,6 @@ definition {
 	@description = "Verify that a Rule can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -631,8 +623,6 @@ definition {
 	@description = "Verify that the Condition label of a Rule changes when the corresponding Field's Label is edited"
 	@priority = "5"
 	test ConditionIsUpdatedWhenFieldLabelIsEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -801,8 +791,6 @@ definition {
 	@description = "Verify that a Rule creation can be canceled"
 	@priority = "5"
 	test CreationCanBeCanceled {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

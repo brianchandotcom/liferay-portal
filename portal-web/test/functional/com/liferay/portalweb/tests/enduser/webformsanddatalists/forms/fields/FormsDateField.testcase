@@ -140,8 +140,6 @@ definition {
 	@description = "Verify that a Date Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -164,8 +162,6 @@ definition {
 	@description = "Verify that a Date Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -198,8 +194,6 @@ definition {
 	@description = "Verify that a Date Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -244,8 +238,6 @@ definition {
 	@description = "Verify that a Date Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -365,8 +357,6 @@ definition {
 	@description = "Verify that a Date Field can be Repeatable"
 	@priority = "5"
 	test CanBeSetAsRepeatable {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -449,8 +439,6 @@ definition {
 	@description = "Verify that a Form can be submitted with the Date Field"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -570,7 +558,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132819 ChangesCanBeCanceled pending implementation
@@ -580,8 +567,6 @@ definition {
 	@description = "Verify that a help text can be added"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -617,8 +602,6 @@ definition {
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -644,8 +627,6 @@ definition {
 	@description = "Veriy that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -670,8 +651,6 @@ definition {
 	@description = "Verify that a Predefined Value can be applied"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -705,8 +684,6 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
-
 		FormsAdmin.addForm();
 		Form.editName(formName = "Form 1");
 
@@ -733,7 +710,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132818 TypeCanBeChanged pending implementation

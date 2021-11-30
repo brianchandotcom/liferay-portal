@@ -3574,36 +3574,206 @@ definition {
 	Create a segment;
 	Create an experience based on that segment;
 	Validate that in the simulation mode the default experience is shown when no segment is selected"
-	@ignore = "true"
 	@priority = "4"
 	test PreviewDefaultExperience {
+		property portal.acceptance = "true";
 
-		// TODO LPS-86292 PreviewDefaultExperience pending implementation
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+		}
+
+		task ("Add an element to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+			
+			Button.clickPublish();
+		}
+
+		task ("Go to simulation mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Select the segment on Simulation panel") {
+			Check.checkNotVisible(
+				checkboxName = "Name Segment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert that element is present not present in Default experience") {
+			AssertElementNotPresent(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+		}
 	}
 
 	@description = "LPS-86292: Validate if, on simulate view, after selecting a segment, the page updates related to the criteria of the segment
 	Create a segment;
 	Create an experience based on that segment;
 	Validate that in the simulation mode the experience is shown for that segment"
-	@ignore = "true"
 	@priority = "5"
 	test PreviewExperience {
+		property portal.acceptance = "true";
 
-		// TODO LPS-86292 PreviewExperience pending implementation
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+		}
+
+		task ("Add an element to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task("Priorize experience and publish page") {
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
+			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
+
+			Button.clickPublish();
+		}
+
+		task ("Go to simulation mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Select the segment on Simulation panel") {
+			Check.checkNotVisible(
+				checkboxName = "Name Segment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert that element is present at page") {
+			AssertElementPresent(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+		}
 	}
 
 	@description = "LPS-86292: Validate if, on simulate view, is possible to navigate inside the page under the selected segment criteria
 	Create a segment;
 	Create an experience based on that segment;
 	Validate that in the simulation mode its possible to navigate insided the page"
-	@ignore = "true"
 	@priority = "3"
 	test PreviewExperienceNavigation {
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
-		// TODO LPS-86292 PreviewExperienceNavigation pending implementation
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Home");
+		}
 
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+		}
+
+		task ("Add an element to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task("Priorize experience and publish page") {
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
+			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
+
+			Button.clickPublish();
+		}
+
+		task ("Go to simulation mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Select the segment on Simulation panel") {
+			Check.checkNotVisible(
+				checkboxName = "Name Segment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert that element is present") {
+			AssertElementPresent(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+		}
+
+		task ("Navigate to another page via Navigation Menu widget and assert that element is not present") {
+			Navigator._gotoPage(pageName = "Home");
+
+			AssertElementNotPresent(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can publish the content in the experiences that can be different from others experiences"

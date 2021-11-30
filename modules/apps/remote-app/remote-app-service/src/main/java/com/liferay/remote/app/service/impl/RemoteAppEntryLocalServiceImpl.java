@@ -125,10 +125,17 @@ public class RemoteAppEntryLocalServiceImpl
 
 		_validateFriendlyURLMapping(friendlyURLMapping);
 
-		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
-			counterLocalService.increment());
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
 
 		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
+
+		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
+			counterLocalService.increment());
 
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
@@ -139,6 +146,7 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setDescription(description);
+		remoteAppEntry.setExternalReferenceCode(externalReferenceCode);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setInstanceable(instanceable);
 		remoteAppEntry.setNameMap(nameMap);
@@ -215,7 +223,33 @@ public class RemoteAppEntryLocalServiceImpl
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
-		return null;
+		RemoteAppEntry remoteAppEntry = null;
+
+		User user = _userLocalService.getUser(userId);
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			remoteAppEntry =
+				remoteAppEntryLocalService.
+					fetchRemoteAppEntryByExternalReferenceCode(
+						user.getCompanyId(), externalReferenceCode);
+		}
+
+		if (remoteAppEntry == null) {
+			return addCustomElementRemoteAppEntry(
+				userId, customElementCSSURLs, customElementHTMLElementName,
+				customElementURLs, externalReferenceCode, description,
+				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+				properties, sourceCodeURL);
+		}
+
+		return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
+			remoteAppEntry.getRemoteAppEntryId(), customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs, description,
+			friendlyURLMapping, nameMap, portletCategoryName, properties,
+			sourceCodeURL);
 	}
 
 	@Override

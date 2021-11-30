@@ -196,6 +196,7 @@
 			<xs:complexContent>
 				<xs:extension base="action-timer-workflow-node-complex-type">
 					<xs:sequence>
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element name="script" type="xs:string" />
 						<xs:element name="script-language" type="script-language-type" />
 						<xs:element minOccurs="0" name="script-required-contexts" type="xs:string" />
@@ -210,6 +211,7 @@
 			<xs:complexContent>
 				<xs:extension base="action-timer-workflow-node-complex-type">
 					<xs:sequence>
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
@@ -221,6 +223,7 @@
 			<xs:complexContent>
 				<xs:extension base="action-timer-workflow-node-complex-type">
 					<xs:sequence>
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
@@ -232,10 +235,26 @@
 			<xs:complexContent>
 				<xs:extension base="action-timer-workflow-node-complex-type">
 					<xs:sequence>
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
 			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="labels">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" name="label">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="language-id" type="xs:string" use="required" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="state">
@@ -244,6 +263,7 @@
 				<xs:extension base="action-timer-workflow-node-complex-type">
 					<xs:sequence>
 						<xs:element default="false" minOccurs="0" name="initial" type="xs:boolean" />
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element minOccurs="0" ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
@@ -269,6 +289,7 @@
 								</xs:choice>
 							</xs:complexType>
 						</xs:element>
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element minOccurs="0" name="task-forms">
 							<xs:complexType>
 								<xs:sequence>

@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.constants.CommerceInventoryAvailabilityConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -57,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -229,11 +231,19 @@ public class MappedProductDTOConverter
 		throws Exception {
 
 		Availability availability = new Availability();
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			companyId, commerceChannelGroupId, sku);
 
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
-			if (stockQuantity > 0) {
+			String availabilityStatus =
+				_commerceInventoryEngine.getAvailabilityStatus(
+					cpInstance.getCompanyId(), commerceChannelGroupId,
+					_cpDefinitionInventoryEngine.getMinStockQuantity(
+						cpInstance),
+					cpInstance.getSku());
+
+			if (Objects.equals(
+					availabilityStatus,
+					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
+
 				availability.setLabel_i18n(
 					LanguageUtil.get(locale, "available"));
 				availability.setLabel("available");
@@ -246,7 +256,9 @@ public class MappedProductDTOConverter
 		}
 
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
-			availability.setStockQuantity(stockQuantity);
+			availability.setStockQuantity(
+				_commerceInventoryEngine.getStockQuantity(
+					companyId, commerceChannelGroupId, sku));
 		}
 
 		return availability;

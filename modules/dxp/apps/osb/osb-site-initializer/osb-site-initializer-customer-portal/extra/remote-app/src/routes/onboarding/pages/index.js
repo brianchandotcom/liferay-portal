@@ -3,6 +3,7 @@ import {AppContext} from '../context';
 import {steps} from '../utils/constants';
 import Invites from './Invites';
 import SetupDXP from './SetupDXP';
+import SuccessDXP from './SuccessDXP';
 import Welcome from './Welcome';
 
 const Pages = () => {
@@ -14,6 +15,9 @@ const Pages = () => {
 
 	if (step === steps.dxp) {
 		return <SetupDXP />;
+	}
+	if (step === steps.success) {
+		return <SuccessDXP />;
 	}
 
 	if (userAccount) {

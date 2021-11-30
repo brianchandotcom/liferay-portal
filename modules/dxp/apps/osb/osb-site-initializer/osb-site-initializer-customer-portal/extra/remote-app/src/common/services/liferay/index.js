@@ -7,8 +7,21 @@ const getUserId = () => {
 
 		// eslint-disable-next-line no-undef
 		return Liferay.ThemeDisplay.getUserId();
+	} catch (error) {
+		console.warn(error.message);
 	}
-	catch (error) {
+};
+
+const getScopeGroupId = () => {
+	try {
+		// eslint-disable-next-line no-undef
+		if (!Liferay.ThemeDisplay) {
+			new Error('themeDisplay is not defined');
+		}
+
+		// eslint-disable-next-line no-undef
+		return Liferay.ThemeDisplay.getScopeGroupId();
+	} catch (error) {
 		console.warn(error.message);
 	}
 };
@@ -28,8 +41,7 @@ const getLiferaySiteName = () => {
 			? pathSplit.slice(0, pathSplit.length - 1)
 			: pathSplit
 		).join('/')}`;
-	}
-	catch (error) {
+	} catch (error) {
 		console.warn('Not able to find Liferay PathName\n', error);
 	}
 
@@ -38,5 +50,6 @@ const getLiferaySiteName = () => {
 
 export const LiferayTheme = {
 	getLiferaySiteName,
+	getScopeGroupId,
 	getUserId,
 };

@@ -618,7 +618,7 @@ definition {
 
 		Ratings.rateThumb(
 			blogRating = "true",
-			ratingResult = "Rate this as good");		
+			ratingResult = "Rate this as good");
 
 		Navigator.gotoPage(pageName = "Recent Bloggers Page");
 

@@ -416,6 +416,8 @@ definition {
 	macro configureWorkflow {
 		var key_workflowResourceValue = "${workflowResourceValue}";
 
+		Pagination.changePagination(itemsPerPage = "40");
+
 		AssertClick.pauseAssertTextClickAt(
 			key_rowEntry = "${workflowResourceValue}",
 			locator1 = "Button#EDIT_ROW",

@@ -628,13 +628,11 @@ definition {
 			status = "Pending",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.delete(
+		Translations.deleteTranslationEntry(
 			confirmationText = "Are you sure you want to delete this? It will be deleted immediately.",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
+			translationEntry = "Translation of WC WebContent Title to es-ES");
 
-		AssertElementNotPresent(
-			key_rowEntry = "Translation of WC WebContent Title to es-ES",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		Translations.viewEmptyState();
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",

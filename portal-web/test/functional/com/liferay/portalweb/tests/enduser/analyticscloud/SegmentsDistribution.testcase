@@ -277,6 +277,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
+		property portal.upstream = "quarantine";
+		
 		var userList = "ac,dxp";
 
 		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";

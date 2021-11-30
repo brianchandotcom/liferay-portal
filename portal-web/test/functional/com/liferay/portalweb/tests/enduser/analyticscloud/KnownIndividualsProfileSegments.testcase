@@ -62,6 +62,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
 	@priority = "3"
 	test AssertIndividualOverviewAssociatedSegmentProfile {
+		property portal.upstream = "quarantine";
+		
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
 		task ("Get site assigned property name") {

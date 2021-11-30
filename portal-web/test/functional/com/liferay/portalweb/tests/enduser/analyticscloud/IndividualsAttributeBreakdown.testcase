@@ -63,6 +63,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8657 | Test Summary: Add a new breakdown by an attribute and assert that correct results appear"
 	@priority = "5"
 	test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
+		property portal.upstream = "quarantine";
+		
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

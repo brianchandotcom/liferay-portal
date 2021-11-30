@@ -93,6 +93,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8423 | Test Summary: Forms audience card shows expected amount of known and anonymous individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
+		property portal.upstream = "quarantine";
+		
 		var usernameList = "ac,ac2";
 
 		var emailList = "ac@liferay.com,ac2@liferay.com";
@@ -160,6 +162,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8424 | Test Summary: Forms audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
+		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,ac2";
 
 		var emailList = "ac@liferay.com,ac2@liferay.com";
@@ -254,6 +258,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
 	@priority = "5"
 	test CanFormsListSearchable {
+		property portal.upstream = "quarantine";
+
 		var formNameList = "Created Form Name,Created Form Name 1";
 
 		ACUtils.addPage(layoutName = "AC Page 1");
@@ -302,6 +308,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"
 	@priority = "5"
 	test CanNavigatesToFormsOverviewPage {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -433,6 +441,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8431 | Test Summary: Form abandonment card shows the expected amount of form abandonment based on how many times the form was started but not completed"
 	@priority = "5"
 	test FormAbandonmentCardShowsExpectedAmountFormAbandonment {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -533,6 +543,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {
+		property portal.upstream = "quarantine";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Form submit") {

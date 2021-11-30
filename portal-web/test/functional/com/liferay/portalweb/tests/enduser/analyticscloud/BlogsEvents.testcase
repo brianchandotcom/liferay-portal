@@ -351,6 +351,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8665 | Test Summary: Check blogDepthReached triggers (Level 3)"
 	@priority = "5"
 	test CheckBlogDepthReachedTo75AndCheckProperties {
+		property portal.upstream = "quarantine";
+		
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

@@ -498,6 +498,12 @@ definition {
 		IFrame.selectPermissionsFrame();
 	}
 
+	macro viewNoSubscribe {
+		Click(locator1 = "Icon#INFO");
+
+		AssertElementNotPresent(locator1 = "Icon#SUBSCRIBE");
+	}
+
 	macro viewPG {
 		var key_dmFolderName = "${dmFolderName}";
 

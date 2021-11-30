@@ -791,9 +791,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE",
-			key_dmDocumentTitle = "DM Folder Name");
+		DMPortlet.viewDefaultPG();
 	}
 
 	@description = "This is a test for LPS-136832. It checks that a guest cannot access a folder without permissions."

@@ -281,6 +281,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_REMOVE_ICON</td>
+	<td>//div[contains(@class,'cell-editor-focused')]//div[@class='celleditor-view-dynamic-views']//div[contains(@class,'celleditor-assignment-view')][1]//div[@class='celleditor-view-menu'][2]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

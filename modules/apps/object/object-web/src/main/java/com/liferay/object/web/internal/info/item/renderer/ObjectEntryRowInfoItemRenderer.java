@@ -141,6 +141,10 @@ public class ObjectEntryRowInfoItemRenderer
 			Collectors.toMap(
 				Map.Entry::getKey,
 				entry -> {
+					if (entry.getValue() == null) {
+						return StringPool.BLANK;
+					}
+
 					ObjectField objectField = objectFieldsMap.get(
 						entry.getKey());
 

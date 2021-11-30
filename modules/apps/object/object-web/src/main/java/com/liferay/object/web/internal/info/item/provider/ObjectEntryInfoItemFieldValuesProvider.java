@@ -36,6 +36,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -220,6 +221,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private Object _getValue(
 			ObjectField objectField, Map<String, Serializable> values)
 		throws PortalException {
+
+		Object value = values.get(objectField.getName());
+
+		if ((value == null) ||
+			((value instanceof Long) && Objects.equals(value, 0L))) {
+
+			return StringPool.BLANK;
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

@@ -2,9 +2,9 @@
 	{
 		"cssURLs": "",
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/raylife/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/raylife/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/raylife/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-apps/raylife/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-apps/raylife/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-apps/raylife/runtime-main.js$]"
 		],
 		"externalReferenceCode": "RAY001",
 		"htmlElementName": "liferay-remote-app-raylife",

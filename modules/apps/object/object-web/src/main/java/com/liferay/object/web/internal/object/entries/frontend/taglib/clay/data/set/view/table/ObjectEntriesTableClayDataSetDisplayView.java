@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClobClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.view.table.DateClayTableSchemaField;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -70,14 +72,30 @@ public class ObjectEntriesTableClayDataSetDisplayView
 				fieldName = fieldName + ".name";
 			}
 
-			ClayTableSchemaField clayTableSchemaField =
+			ClayTableSchemaField clayTableSchemaField = null;
+
+			if (Objects.equals(objectField.getType(), "Clob")) {
+				ClobClayTableSchemaField clobTypeClayTableSchemaField =
+					clayTableSchemaBuilder.addClayTableSchemaField(
+						ClobClayTableSchemaField.class, fieldName,
+						objectField.getLabel(locale, true));
+
+				clobTypeClayTableSchemaField.setTruncate(true);
+
+				clayTableSchemaField = clobTypeClayTableSchemaField;
+			}
+			else {
 				clayTableSchemaField =
 					clayTableSchemaBuilder.addClayTableSchemaField(
 						fieldName, objectField.getLabel(locale, true));
 
-			if (Objects.equals(objectField.getType(), "Boolean")) {
-				clayTableSchemaField.setContentRenderer("boolean");
+				if (Objects.equals(objectField.getType(), "Boolean")) {
+					clayTableSchemaField.setContentRenderer("boolean");
+				}
 			}
+
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				clayTableSchemaField);
 
 			if (!Objects.equals(objectField.getType(), "Blob") &&
 				objectField.isIndexed()) {

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Commerce Admin Catalog API
 Bundle-SymbolicName: com.liferay.headless.commerce.admin.catalog.api
-Bundle-Version: 16.1.4
+Bundle-Version: 16.2.0
 Export-Package:\
 	com.liferay.headless.commerce.admin.catalog.constants.v1_0,\
 	com.liferay.headless.commerce.admin.catalog.dto.v1_0,\

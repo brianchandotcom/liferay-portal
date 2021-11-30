@@ -610,12 +610,101 @@ definition {
 	}
 
 	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric");
+
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Date");
+
+		DERenderer.inputDataInTextField(
+			index = "1",
+			fieldLabel = "Text",
+			value = "This is a Text field 1");
+		
+		DERenderer.inputDataInNumericField(
+			index = "1",
+			fieldLabel = "Numeric",
+			value = "123");
+		
+		DERenderer.inputDataInDateField(
+			index = "1",
+			fieldLabel = "Date",
+			value = "08/06/2021");
+		
+		DERenderer.inputDataInTextField(
+			index = "2",
+			fieldLabel = "Text",
+			value = "This is a Text field 2");
+		
+		DERenderer.inputDataInNumericField(
+			index = "2",
+			fieldLabel = "Numeric",
+			value = "456");
+		
+		DERenderer.inputDataInDateField(
+			index = "2",
+			fieldLabel = "Date",
+			value = "09/06/2021");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			index = "1",
+			fieldLabel = "Text",
+			value = "This is a Text field 1");
+		
+		DERenderer.assertDataInNumericField(
+			index = "1",
+			fieldLabel = "Numeric",
+			value = "123");
+
+		DERenderer.assertDataInDateField(
+			index = "1",
+			fieldLabel = "Date",
+			value = "08/06/2021");
+
+		DERenderer.assertDataInTextField(
+			index = "2",
+			fieldLabel = "Text",
+			value = "This is a Text field 2");
+		
+		DERenderer.assertDataInNumericField(
+			index = "2",
+			fieldLabel = "Numeric",
+			value = "456");
+
+		DERenderer.assertDataInDateField(
+			index = "2",
+			fieldLabel = "Date",
+			value = "09/06/2021");
 	}
 
 	@description = "Verify that is possible to edit data inputted on a Fields Group"

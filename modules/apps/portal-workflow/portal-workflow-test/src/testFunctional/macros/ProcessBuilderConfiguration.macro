@@ -1,0 +1,23 @@
+definition {
+
+    macro chooseSortOption {
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		Click(
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM",
+			key_menuItem = "${key_menuItem}");
+	}
+    
+    macro viewSpecificOrder {
+		var resultOrder = "0";
+
+		for (var searchAssetTitle : list "${resultsList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "//tr[${resultOrder}]//td[1]//span[contains(text(),'${searchAssetTitle}')]",
+				resultOrder = "${resultOrder}",
+				value1 = "${searchAssetTitle}");
+		}
+	}
+}

@@ -178,35 +178,11 @@ definition {
 	@description = "Verify that the user is able to order by Resource"
 	@priority = "3"
 	test CanOrderByResource {
-		property portal.upstream = "quarantine";
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Resource");
 
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
-
-		Click(
-			key_menuItem = "Resource",
-			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
-
-		AssertTextEquals(
-			key_rowNumber = "1",
-			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
-			value1 = "Blogs Entry");
-
-		AssertTextEquals(
-			key_rowNumber = "14",
-			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
-			value1 = "Knowledge Base Article");
-
-		AssertTextEquals(
-			key_rowNumber = "20",
-			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
-			value1 = "Wiki Page");
+		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Blogs Entry,Calendar Event,Comment");
 	}
 
 	@description = "Verify that the user is able to order by Workflow"

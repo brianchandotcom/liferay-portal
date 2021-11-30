@@ -13,7 +13,7 @@
  */
 
 import ClayTable from '@clayui/table';
-import {DateRenderer, StatusRenderer} from '@liferay/frontend-data-set-web';
+import {DateTimeRenderer, StatusRenderer} from '@liferay/frontend-data-set-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -52,7 +52,7 @@ function OrdersTable({orders, selectOrderURL}) {
 						</ClayTable.Cell>
 
 						<ClayTable.Cell>
-							<DateRenderer value={order.modifiedDate} />
+							<DateTimeRenderer value={order.modifiedDate} />
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				))}

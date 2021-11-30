@@ -14,49 +14,32 @@
 
 import PropType from 'prop-types';
 
-function DateRenderer({options, value}) {
+function DateTimeRenderer({options, value}) {
 	if (!value) {
 		return null;
 	}
 
-	let timestamp = value;
-
-	if (typeof value === 'string') {
-		const date = value.split('T')[0];
-
-		const dateArray = date.split('-');
-
-		if (dateArray.length === 3) {
-			const [year, month, day] = dateArray;
-
-			timestamp = Date.UTC(Number(year), Number(month) - 1, Number(day));
-		}
-		else {
-			timestamp = Number(value);
-		}
-	}
-
-	const locale = themeDisplay.getBCP47LanguageId();
-
-	const dateOptions = {
-		day: options?.format?.day || 'numeric',
-		month: options?.format?.month || 'short',
-		timeZone: options?.format?.timeZone || 'UTC',
-		year: options?.format?.year || 'numeric',
+	const locale = themeDisplay.getLanguageId().replace('_', '-');
+	const dateOptions = options?.format || {
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		month: 'short',
+		second: 'numeric',
+		year: 'numeric',
 	};
-
 	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
-		timestamp
+		new Date(value)
 	);
 
 	return formattedDate;
 }
 
-DateRenderer.propTypes = {
+DateTimeRenderer.propTypes = {
 	options: PropType.shape({
 		format: PropType.object,
 	}),
 	value: PropType.string.isRequired,
 };
 
-export default DateRenderer;
+export default DateTimeRenderer;

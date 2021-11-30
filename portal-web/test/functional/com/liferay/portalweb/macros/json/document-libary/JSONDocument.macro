@@ -55,11 +55,16 @@ definition {
 			var dmDocumentDescription = "";
 		}
 
+		if (!(isSet(groupPermissions))) {
+			var guestPermissions = "true";
+		}
+
 		if (!(isSet(guestPermissions))) {
 			var guestPermissions = "true";
 		}
 
 		var serviceContext = JSONDocumentSetter.setServiceContext(
+			addGroupPermissions = "${groupPermissions}",
 			addGuestPermissions = "${guestPermissions}",
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",
@@ -135,6 +140,10 @@ definition {
 			var expirationDate = "2099-01-25 01:00";
 		}
 
+		if (!(isSet(groupPermissions))) {
+			var guestPermissions = "true";
+		}
+
 		if (!(isSet(guestPermissions))) {
 			var guestPermissions = "true";
 		}
@@ -156,6 +165,7 @@ definition {
 		}
 
 		var serviceContext = JSONDocumentSetter.setServiceContext(
+			addGroupPermissions = "${groupPermissions}",
 			addGuestPermissions = "${guestPermissions}",
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",

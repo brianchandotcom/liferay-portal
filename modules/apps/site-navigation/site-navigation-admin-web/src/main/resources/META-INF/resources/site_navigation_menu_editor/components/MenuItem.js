@@ -75,6 +75,8 @@ export function MenuItem({item}) {
 				const newItems = deleteItem(items, siteNavigationMenuItemId);
 
 				setItems(newItems);
+
+				setSidebarPanelId(null);
 			})
 			.catch(() => {
 				openToast({

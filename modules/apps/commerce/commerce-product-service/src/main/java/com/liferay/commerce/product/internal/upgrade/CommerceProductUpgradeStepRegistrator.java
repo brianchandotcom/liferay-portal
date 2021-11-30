@@ -226,6 +226,11 @@ public class CommerceProductUpgradeStepRegistrator
 
 		registry.register("3.5.0", "3.5.1", new DummyUpgradeStep());
 
+		registry.register(
+			"3.5.1", "3.6.0",
+			new com.liferay.commerce.product.internal.upgrade.v3_6_0.
+				CPInstanceUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

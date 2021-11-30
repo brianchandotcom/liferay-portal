@@ -51,6 +51,14 @@ public class SiteNavigationMenuItemServiceUtil {
 	}
 
 	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			boolean deleteChildren, long siteNavigationMenuItemId)
+		throws PortalException {
+
+		return getService().deleteSiteNavigationMenuItem(
+			deleteChildren, siteNavigationMenuItemId);
+	}
+
+	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 			long siteNavigationMenuItemId)
 		throws PortalException {
 

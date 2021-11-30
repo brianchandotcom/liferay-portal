@@ -61,6 +61,10 @@ public interface SiteNavigationMenuItemService extends BaseService {
 		throws PortalException;
 
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			boolean deleteChildren, long siteNavigationMenuItemId)
+		throws PortalException;
+
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 			long siteNavigationMenuItemId)
 		throws PortalException;
 

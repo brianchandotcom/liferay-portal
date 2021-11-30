@@ -118,6 +118,14 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			boolean deleteChildren, long siteNavigationMenuItemId)
+		throws PortalException {
+
+		return getService().deleteSiteNavigationMenuItem(
+			deleteChildren, siteNavigationMenuItemId);
+	}
+
 	/**
 	 * Deletes the site navigation menu item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

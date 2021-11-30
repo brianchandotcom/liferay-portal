@@ -49,6 +49,15 @@ public class SiteNavigationMenuItemServiceWrapper
 
 	@Override
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			boolean deleteChildren, long siteNavigationMenuItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
+			deleteChildren, siteNavigationMenuItemId);
+	}
+
+	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 			long siteNavigationMenuItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

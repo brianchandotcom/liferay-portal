@@ -37,6 +37,7 @@ const roles = {
 const steps = {
 	dxp: 2,
 	invites: 1,
+	success: 3,
 	welcome: 0,
 };
 

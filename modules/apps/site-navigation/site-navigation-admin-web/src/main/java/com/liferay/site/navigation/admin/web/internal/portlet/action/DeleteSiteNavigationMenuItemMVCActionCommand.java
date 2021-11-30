@@ -14,11 +14,22 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -45,16 +56,51 @@ public class DeleteSiteNavigationMenuItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		boolean deleteChildren = ParamUtil.getBoolean(
 			actionRequest, "deleteChildren");
 		long siteNavigationMenuItemId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuItemId");
 
-		_siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
-			deleteChildren, siteNavigationMenuItemId);
+		try {
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
+					deleteChildren, siteNavigationMenuItemId);
+
+			jsonObject.put(
+				"siteNavigationMenuItems",
+				SiteNavigationMenuPortletUtil.
+					getSiteNavigationMenuItemsJSONArray(
+						0, siteNavigationMenuItem.getSiteNavigationMenuId(),
+						_siteNavigationMenuItemTypeRegistry, themeDisplay));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteSiteNavigationMenuItemMVCActionCommand.class);
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

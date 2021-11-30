@@ -3128,9 +3128,12 @@ definition {
 			nestedFieldFieldLabel = "Integer");
 	}
 
-	@description = "This is a use case for LPS-63290."
-	@priority = "3"
+	@description = "This is a use case for LPS-63290 and LPS-72216."
+	@priority = "4"
 	test ViewRepeatableNestedFields {
+		property test.assert.javascript.errors = "true"; 
+		property test.assert.warning.exceptions = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3182,6 +3185,15 @@ definition {
 		DDLRecord.viewNestedFieldsRepeating(
 			nestedChildFieldFieldName = "DocumentsAndMedia",
 			nestedParentFieldFieldName = "Text");
+
+		DDLRecord.deleteRepeatableField(
+			fieldName = "Text",
+			fieldNumber = "2");
+
+		AssertElementNotPresent(
+			key_fieldName = "Text",
+			key_fieldNumber = "2",
+			locator1 = "DDLEditRecord#FIELD_DELETE");
 	}
 
 	@description = "This is a use case for LPS-60155."

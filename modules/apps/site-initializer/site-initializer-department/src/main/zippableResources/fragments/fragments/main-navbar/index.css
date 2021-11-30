@@ -1,5 +1,13 @@
 .main-navbar {
+	background-color: var(--brand-color-1);
+	background-color: transparent;
+	left: 0;
 	padding: 24px 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 99;
+	z-index: 2;
 }
 
 .main-navbar .container-fluid {
@@ -35,12 +43,4 @@
 
 .main-navbar .portlet {
 	margin-bottom: 0;
-}
-
-.position-absolute {
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: 2;
 }

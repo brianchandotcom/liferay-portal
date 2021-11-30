@@ -194,15 +194,6 @@ public class CPDefinitionLocalServiceImpl
 		CProduct cProduct = cProductLocalService.addCProduct(
 			externalReferenceCode, groupId, userId, new ServiceContext());
 
-		if (StringUtil.equalsIgnoreCase(
-				productTypeName, VirtualCPTypeConstants.NAME)) {
-
-			cpDefinition.setShippable(false);
-		}
-		else {
-			cpDefinition.setShippable(shippable);
-		}
-
 		cpDefinition.setGroupId(groupId);
 		cpDefinition.setCompanyId(user.getCompanyId());
 		cpDefinition.setUserId(user.getUserId());
@@ -213,6 +204,16 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 		cpDefinition.setFreeShipping(freeShipping);
 		cpDefinition.setShipSeparately(shipSeparately);
+
+		if (StringUtil.equalsIgnoreCase(
+				productTypeName, VirtualCPTypeConstants.NAME)) {
+
+			cpDefinition.setShippable(false);
+		}
+		else {
+			cpDefinition.setShippable(shippable);
+		}
+
 		cpDefinition.setShippingExtraPrice(shippingExtraPrice);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
@@ -1600,15 +1601,6 @@ public class CPDefinitionLocalServiceImpl
 			groupId, ddmStructureKey, metaTitleMap, metaDescriptionMap,
 			metaKeywordsMap, displayDate, expirationDate, productTypeName);
 
-		if (StringUtil.equalsIgnoreCase(
-				productTypeName, VirtualCPTypeConstants.NAME)) {
-
-			cpDefinition.setShippable(false);
-		}
-		else {
-			cpDefinition.setShippable(shippable);
-		}
-
 		if (cpDefinitionLocalService.isVersionable(cpDefinition)) {
 			cpDefinition = cpDefinitionLocalService.copyCPDefinition(
 				cpDefinitionId);
@@ -1625,6 +1617,16 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 		cpDefinition.setFreeShipping(freeShipping);
 		cpDefinition.setShipSeparately(shipSeparately);
+
+		if (StringUtil.equalsIgnoreCase(
+				productTypeName, VirtualCPTypeConstants.NAME)) {
+
+			cpDefinition.setShippable(false);
+		}
+		else {
+			cpDefinition.setShippable(shippable);
+		}
+
 		cpDefinition.setShippingExtraPrice(shippingExtraPrice);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);

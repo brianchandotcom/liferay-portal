@@ -25,6 +25,8 @@ import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -64,15 +66,10 @@ public class CommerceOrderImporterTypeUtil {
 
 		ServiceContext serviceContext = _getServiceContext(userLocalService);
 
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
-
-			commerceOrderItemService.addCommerceOrderItem(
-				tempCommerceOrder.getCommerceOrderId(),
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(), 0,
-				commerceContext, serviceContext);
-		}
+		_addPreviousCommerceOrderItems(
+			commerceContext, commerceOrder,
+			tempCommerceOrder.getCommerceOrderId(), commerceOrderItemService,
+			serviceContext);
 
 		for (CommerceOrderImporterItemImpl commerceOrderImporterItemImpl :
 				commerceOrderImporterItemImpls) {
@@ -82,7 +79,7 @@ public class CommerceOrderImporterTypeUtil {
 				// Temporary commerce order item
 
 				CommerceOrderItem commerceOrderItem =
-					commerceOrderItemService.addCommerceOrderItem(
+					commerceOrderItemService.addOrUpdateCommerceOrderItem(
 						tempCommerceOrder.getCommerceOrderId(),
 						commerceOrderImporterItemImpl.getCPInstanceId(),
 						commerceOrderImporterItemImpl.getJSON(),
@@ -163,6 +160,11 @@ public class CommerceOrderImporterTypeUtil {
 
 		ServiceContext serviceContext = _getServiceContext(userLocalService);
 
+		_addPreviousCommerceOrderItems(
+			commerceContext, commerceOrder,
+			tempCommerceOrder.getCommerceOrderId(), commerceOrderItemService,
+			serviceContext);
+
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
 				new CommerceOrderImporterItemImpl();
@@ -187,7 +189,7 @@ public class CommerceOrderImporterTypeUtil {
 				// Temporary commerce order item
 
 				CommerceOrderItem tempCommerceOrderItem =
-					commerceOrderItemService.addCommerceOrderItem(
+					commerceOrderItemService.addOrUpdateCommerceOrderItem(
 						tempCommerceOrder.getCommerceOrderId(),
 						commerceOrderItem.getCPInstanceId(),
 						commerceOrderItem.getJson(),
@@ -222,6 +224,30 @@ public class CommerceOrderImporterTypeUtil {
 		return commerceOrderImporterItems;
 	}
 
+	private static void _addPreviousCommerceOrderItems(
+		CommerceContext commerceContext, CommerceOrder commerceOrder,
+		long tempCommerceOrderId,
+		CommerceOrderItemService commerceOrderItemService,
+		ServiceContext serviceContext) {
+
+		try {
+			for (CommerceOrderItem commerceOrderItem :
+					commerceOrder.getCommerceOrderItems()) {
+
+				commerceOrderItemService.addCommerceOrderItem(
+					tempCommerceOrderId, commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getJson(),
+					commerceOrderItem.getQuantity(), 0, commerceContext,
+					serviceContext);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+	}
+
 	private static ServiceContext _getServiceContext(
 			UserLocalService userLocalService)
 		throws Exception {
@@ -237,5 +263,8 @@ public class CommerceOrderImporterTypeUtil {
 
 		return serviceContext;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderImporterTypeUtil.class);
 
 }

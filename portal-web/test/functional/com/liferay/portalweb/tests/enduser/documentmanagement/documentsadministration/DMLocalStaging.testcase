@@ -85,13 +85,58 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136824. It checks that a folder with multiple files can be deleted using the normal publication process."
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishDeletedFolderWithMultipleFiles {
-		property portal.acceptance = "false";
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging");
 
-		// TODO LPS-136824 CanPublishDeletedFolderWithMultipleFiles pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpeg",
+			folderName = "DM Folder Name",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMFolder.deleteCP(dmFolderName = "DM Folder Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files in this folder.");
 	}
 
 	@description = "This is a test for LPS-136818. It checks that a folder with multiple files can be published using the SAP."

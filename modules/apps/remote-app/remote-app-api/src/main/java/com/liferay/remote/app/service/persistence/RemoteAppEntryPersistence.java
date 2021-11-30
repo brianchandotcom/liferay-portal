@@ -474,6 +474,59 @@ public interface RemoteAppEntryPersistence
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching remote app entry
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry findByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchRemoteAppEntryException;
+
+	/**
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry fetchByC_ERC(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache);
+
+	/**
+	 * Removes the remote app entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the remote app entry that was removed
+	 */
+	public RemoteAppEntry removeByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchRemoteAppEntryException;
+
+	/**
+	 * Returns the number of remote app entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching remote app entries
+	 */
+	public int countByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
 	 * Caches the remote app entry in the entity cache if it is enabled.
 	 *
 	 * @param remoteAppEntry the remote app entry

@@ -100,6 +100,21 @@ public interface RemoteAppEntryModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this remote app entry.
+	 *
+	 * @return the external reference code of this remote app entry
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this remote app entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this remote app entry
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the remote app entry ID of this remote app entry.
 	 *
 	 * @return the remote app entry ID of this remote app entry

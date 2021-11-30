@@ -277,6 +277,50 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
+	 */
+	@Override
+	public RemoteAppEntry fetchRemoteAppEntryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return remoteAppEntryPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchRemoteAppEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public RemoteAppEntry fetchRemoteAppEntryByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchRemoteAppEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	@Override
+	public RemoteAppEntry getRemoteAppEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return remoteAppEntryPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the remote app entry with the primary key.
 	 *
 	 * @param remoteAppEntryId the primary key of the remote app entry

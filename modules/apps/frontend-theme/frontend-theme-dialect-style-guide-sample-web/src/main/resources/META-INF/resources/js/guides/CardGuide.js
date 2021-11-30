@@ -41,7 +41,7 @@ const AUTOFIT_COL_SIZES = [
 	'autofit-col-lg',
 ];
 
-const CONTAINER_ASPECT_RATIOS = ['1/1', '4/3', '3/2', '8/5', '16/9'];
+const CONTAINER_ASPECT_RATIOS = ['1', '2', '3', '4', '5', '6'];
 
 const DESCRIPTION =
 	'Sagittis, eu pretium massa quisque cursus augue massa cursus. Sed quisque velit, auctor at lobortis hac tincidunt sodales id. Elit interdum vel nisi, in enim sagittis at. Netus sagittis eleifend aliquet urna quis.';
@@ -81,7 +81,7 @@ const CardGuide = () => {
 						size="small"
 					>
 						<ClayCard className={dialectType.className}>
-							<ClayCard.AspectRatio className="card-item-first" containerAspectRatio="3/2">
+							<ClayCard.AspectRatio className="card-item-first">
 								<img
 									className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-flush"
 									src="https://via.placeholder.com/160"
@@ -140,7 +140,7 @@ const CardGuide = () => {
 							className={`${dialectType.className} interactive`}
 							tabIndex="0"
 						>
-							<ClayCard.AspectRatio className="card-item-first" containerAspectRatio="3/2">
+							<ClayCard.AspectRatio className="card-item-first">
 								<img
 									className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-flush"
 									src="https://via.placeholder.com/160"
@@ -304,7 +304,7 @@ const CardGuide = () => {
 				{CONTAINER_ASPECT_RATIOS.map((containerAspectRatio, i) => (
 					<TokenItem
 						key={`${i}`}
-						label={containerAspectRatio}
+						label={`aspect-ratio-${containerAspectRatio}`}
 						size="small"
 					>
 						<ClayCard>
@@ -466,7 +466,7 @@ const CardGuide = () => {
 			<TokenGroup group="form" title={Liferay.Language.get('icon')}>
 				<TokenItem size="small">
 					<ClayCard>
-						<ClayCard.AspectRatio className="aspect-ratio-16-to-9 card-item-first">
+						<ClayCard.AspectRatio className="card-item-first">
 							<div className="aspect-ratio-item aspect-ratio-item-center-middle card-type-asset-icon">
 								<ClayIcon symbol="documents-and-media" />
 							</div>

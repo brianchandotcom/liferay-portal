@@ -2854,6 +2854,564 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "card-aspect-ratio-item-offset",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-aspect-ratio-item-offset"
+								}
+							],
+							"name": "cardAspectRatioItemOffset",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--border-radius)",
+							"label": "card-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-border-radius"
+								}
+							],
+							"name": "cardBorderRadius",
+							"type": "String"
+						}
+					],
+					"label": "general",
+					"name": "general"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "card-body-padding-top",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-body-padding-top"
+								}
+							],
+							"name": "cardBodyPaddingTop",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "card-body-padding-right",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-body-padding-right"
+								}
+							],
+							"name": "cardBodyPaddingRight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "card-body-padding-bottom",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-body-padding-bottom"
+								}
+							],
+							"name": "cardBodyPaddingBottom",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "card-body-padding-left",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-body-padding-left"
+								}
+							],
+							"name": "cardBodyPaddingLeft",
+							"type": "String"
+						}
+					],
+					"label": "card-body",
+					"name": "cardBody"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--aspect-ratio-3)",
+							"label": "card-vertical-aspect-ratio-default",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-vertical-aspect-ratio-default"
+								}
+							],
+							"name": "cardVerticalAspectRatioDefault",
+							"type": "String"
+						}
+					],
+					"label": "vertical-cards",
+					"name": "verticalCards"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--aspect-ratio-1)",
+							"label": "card-horizontal-aspect-ratio-default",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-horizontal-aspect-ratio-default"
+								}
+							],
+							"name": "cardHorizontalAspectRatioDefault",
+							"type": "String"
+						},
+						{
+							"defaultValue": "8rem",
+							"label": "autofit-col-sm-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "autofit-col-sm-width"
+								}
+							],
+							"name": "autofitColSmWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "16rem",
+							"label": "autofit-col-md-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "autofit-col-md-width"
+								}
+							],
+							"name": "autofitColMdWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "24rem",
+							"label": "autofit-col-lg-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "autofit-col-lg-width"
+								}
+							],
+							"name": "autofitColLgWidth",
+							"type": "String"
+						}
+					],
+					"label": "horizontal-cards",
+					"name": "horizontalCards"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "card-elevated-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-background-color"
+								}
+							],
+							"name": "cardElevatedBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "card-elevated-active-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-active-background-color"
+								}
+							],
+							"name": "cardElevatedActiveBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "card-elevated-hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-hover-background-color"
+								}
+							],
+							"name": "cardElevatedHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "card-elevated-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-border-color"
+								}
+							],
+							"name": "cardElevatedBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "card-elevated-active-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-active-border-color"
+								}
+							],
+							"name": "cardElevatedActiveBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "card-elevated-hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-hover-border-color"
+								}
+							],
+							"name": "cardElevatedHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0rem",
+							"label": "card-elevated-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-border-width"
+								}
+							],
+							"name": "cardElevatedBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-tight-3) rgba(89, 36, 235, 0.22)",
+							"label": "card-elevated-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-box-shadow"
+								}
+							],
+							"name": "cardElevatedBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-tight-3) rgba(89, 36, 235, 0.22)",
+							"label": "card-elevated-active-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-active-box-shadow"
+								}
+							],
+							"name": "cardElevatedActiveBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-tight-7) rgba(89, 36, 235, 0.17)",
+							"label": "card-elevated-hover-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-elevated-hover-box-shadow"
+								}
+							],
+							"name": "cardElevatedHoverBorderColor",
+							"type": "String"
+						}
+					],
+					"label": "elevated-cards",
+					"name": "elevatedCards"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "card-outlined-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-background-color"
+								}
+							],
+							"name": "cardOutlinedBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "card-outlined-active-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-active-background-color"
+								}
+							],
+							"name": "cardOutlinedActiveBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "card-outlined-hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-hover-background-color"
+								}
+							],
+							"name": "cardOutlinedHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "card-outlined-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-border-color"
+								}
+							],
+							"name": "cardOutlinedBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active)",
+							"editorType": "ColorPicker",
+							"label": "card-outlined-active-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-active-border-color"
+								}
+							],
+							"name": "cardOutlinedActiveBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-hover)",
+							"editorType": "ColorPicker",
+							"label": "card-outlined-hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-hover-border-color"
+								}
+							],
+							"name": "cardOutlinedHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "card-outlined-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-border-width"
+								}
+							],
+							"name": "cardOutlinedBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "card-outlined-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-box-shadow"
+								}
+							],
+							"name": "cardOutlinedBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "card-outlined-active-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-active-box-shadow"
+								}
+							],
+							"name": "cardOutlinedActiveBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "card-outlined-hover-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-outlined-hover-box-shadow"
+								}
+							],
+							"name": "cardOutlinedHoverBorderColor",
+							"type": "String"
+						}
+					],
+					"label": "outlined-cards",
+					"name": "outlinedCards"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "card-flat-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-background-color"
+								}
+							],
+							"name": "cardFlatBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "card-flat-active-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-active-background-color"
+								}
+							],
+							"name": "cardFlatActiveBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "card-flat-hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-hover-background-color"
+								}
+							],
+							"name": "cardFlatHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "card-flat-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-border-color"
+								}
+							],
+							"name": "cardFlatBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active)",
+							"editorType": "ColorPicker",
+							"label": "card-flat-active-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-active-border-color"
+								}
+							],
+							"name": "cardFlatActiveBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-hover)",
+							"editorType": "ColorPicker",
+							"label": "card-flat-hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-hover-border-color"
+								}
+							],
+							"name": "cardFlatHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "card-flat-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-border-width"
+								}
+							],
+							"name": "cardFlatBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "card-flat-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-box-shadow"
+								}
+							],
+							"name": "cardFlatBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "card-flat-active-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-active-box-shadow"
+								}
+							],
+							"name": "cardFlatActiveBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "card-flat-hover-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-flat-hover-box-shadow"
+								}
+							],
+							"name": "cardFlatHoverBorderColor",
+							"type": "String"
+						}
+					],
+					"label": "flat-cards",
+					"name": "flatCards"
+				}
+			],
+			"label": "cards",
+			"name": "cards"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "100%",
 							"label": "nav-link-horizontal-active-indicator-length",
 							"mappings": [

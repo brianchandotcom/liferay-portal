@@ -252,25 +252,6 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPInstanceSoap
-			getCProductInstance(long cProductId, String cpInstanceUuid)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue =
-				CPInstanceServiceUtil.getCProductInstance(
-					cProductId, cpInstanceUuid);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPInstanceSoap[]
 			getCPInstances(
 				long groupId, int status, int start, int end,
@@ -302,6 +283,25 @@ public class CPInstanceServiceSoap {
 				groupId, status);
 
 			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceSoap
+			getCProductInstance(long cProductId, String cpInstanceUuid)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPInstance returnValue =
+				CPInstanceServiceUtil.getCProductInstance(
+					cProductId, cpInstanceUuid);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -351,38 +351,6 @@ public class CPInstanceServiceSoap {
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, boolean neverExpire, String unspsc,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue =
-				CPInstanceServiceUtil.updateCPInstance(
-					cpInstanceId, sku, gtin, manufacturerPartNumber,
-					purchasable, published, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					unspsc, serviceContext);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPInstanceSoap
-			updateCPInstance(
-				long cpInstanceId, String sku, String gtin,
-				String manufacturerPartNumber, boolean purchasable,
-				boolean published, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire, String unspsc,
 				boolean discontinued, String discontinuedCPInstanceUuid,
 				long discontinuedCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
@@ -403,6 +371,38 @@ public class CPInstanceServiceSoap {
 					discontinuedDateDay, discontinuedDateYear,
 					discontinuedDateHour, discontinuedDateMinute,
 					serviceContext);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceSoap
+			updateCPInstance(
+				long cpInstanceId, String sku, String gtin,
+				String manufacturerPartNumber, boolean purchasable,
+				boolean published, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire, String unspsc,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPInstance returnValue =
+				CPInstanceServiceUtil.updateCPInstance(
+					cpInstanceId, sku, gtin, manufacturerPartNumber,
+					purchasable, published, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					unspsc, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.
 				toSoapModel(returnValue);

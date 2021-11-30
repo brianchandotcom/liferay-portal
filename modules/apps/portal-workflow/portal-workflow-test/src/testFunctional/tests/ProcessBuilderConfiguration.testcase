@@ -188,40 +188,33 @@ definition {
 	@description = "Verify that the user is able to order by Workflow"
 	@priority = "3"
 	test CanOrderByWorkflow {
-		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanOrderByWorkflow";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
-		Navigator.gotoNavItem(navItem = "Configuration");
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "ASingle Approver");
+		
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "BSingle Approver");
+
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "CSingle Approver");
+
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
+			workflowDefinition = "ASingle Approver",
+			workflowResourceValue = "Translation");
 
 		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
+			workflowDefinition = "BSingle Approver",
 			workflowResourceValue = "Comment");
 
 		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Translation");
+			workflowDefinition = "CSingle Approver",
+			workflowResourceValue = "User");
 
-		ContentDashboard.filterByAuthorAll(filterOption = "Workflow");
+		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Workflow");
 
-		AssertElementPresent(
-			key_workflowResourceValue = "Comment",
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
-
-		AssertElementPresent(
-			key_workflowResourceValue = "Blogs Entry",
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
-
-		AssertElementPresent(
-			key_workflowResourceValue = "Translation",
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Translation,Comment,User");
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"

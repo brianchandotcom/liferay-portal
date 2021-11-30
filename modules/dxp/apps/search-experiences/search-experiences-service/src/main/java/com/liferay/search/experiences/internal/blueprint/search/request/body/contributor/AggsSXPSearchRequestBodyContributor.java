@@ -142,6 +142,10 @@ public class AggsSXPSearchRequestBodyContributor
 		JSONObject jsonObject, AggregationWrapper parentAggregationWrapper,
 		SearchRequestBuilder searchRequestBuilder) {
 
+		if (jsonObject == null) {
+			return;
+		}
+
 		for (String name : jsonObject.keySet()) {
 			_processAggregation(
 				jsonObject.getJSONObject(name), name, parentAggregationWrapper,

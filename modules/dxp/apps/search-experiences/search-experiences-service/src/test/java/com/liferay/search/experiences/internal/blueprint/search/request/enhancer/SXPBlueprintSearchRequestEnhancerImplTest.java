@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.filter.ComplexQueryPart;
@@ -45,16 +47,22 @@ import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.rest.dto.v1_0.Advanced;
+import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.General;
 import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.ValueDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
 import java.io.InputStream;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -138,6 +146,38 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		Assert.assertEquals("lastName", fieldSort2.getField());
 		Assert.assertEquals(SortOrder.DESC, fieldSort2.getSortOrder());
+
+		_assert(sxpBlueprint);
+	}
+
+	@Test
+	public void testEmptyConfiguratons() throws Exception {
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		Configuration configuration = sxpBlueprint.getConfiguration();
+
+		configuration.setAdvanced(new Advanced());
+		configuration.setAggregationConfiguration(
+			new AggregationConfiguration());
+		configuration.setGeneral(new General());
+		configuration.setHighlight(new Highlight());
+		configuration.setParameters(
+			Collections.singletonMap(
+				RandomTestUtil.randomString(), new Parameter()));
+		configuration.setQueryConfiguration(new QueryConfiguration());
+		configuration.setSortConfiguration(new SortConfiguration());
+
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
+
+		Assert.assertTrue(MapUtil.isEmpty(searchRequest.getAggregationsMap()));
+		Assert.assertTrue(
+			ListUtil.isEmpty(searchRequest.getComplexQueryParts()));
+		Assert.assertTrue(ListUtil.isEmpty(searchRequest.getSorts()));
+
+		com.liferay.portal.search.highlight.Highlight highlight =
+			searchRequest.getHighlight();
+
+		Assert.assertTrue(ListUtil.isEmpty(highlight.getFieldConfigs()));
 
 		_assert(sxpBlueprint);
 	}

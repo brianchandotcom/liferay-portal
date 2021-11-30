@@ -813,6 +813,10 @@ definition {
 	macro goToEventAttributes {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "event-attributes");
 	}
+
+	macro goToSearch {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "search");
+	}
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}

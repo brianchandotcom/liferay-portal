@@ -84,6 +84,16 @@ public class ObjectEntriesTableClayDataSetDisplayView
 
 				clayTableSchemaField = clobTypeClayTableSchemaField;
 			}
+			else if (Objects.equals(objectField.getType(), "Date")) {
+				DateClayTableSchemaField dateClayTableSchemaField =
+					clayTableSchemaBuilder.addClayTableSchemaField(
+						DateClayTableSchemaField.class, fieldName,
+						objectField.getLabel(locale, true));
+
+				dateClayTableSchemaField.setFormat("short");
+
+				clayTableSchemaField = dateClayTableSchemaField;
+			}
 			else {
 				clayTableSchemaField =
 					clayTableSchemaBuilder.addClayTableSchemaField(

@@ -1063,12 +1063,44 @@ definition {
 	}
 
 	@description = "Verify that Options chosen for Fields with Options inside a Fields Group persists"
-	@ignore = "true"
 	@priority = "5"
 	test CanSelectOptionsInFieldsGroup {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection",
+			targetFieldLabel = "Text");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
 	}
 
 }

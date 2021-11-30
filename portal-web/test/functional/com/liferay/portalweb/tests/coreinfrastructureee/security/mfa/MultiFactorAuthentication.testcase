@@ -29,8 +29,8 @@ definition {
 
 	@description = "This is a use case for LPS-110309 and LPS-112805"
 	@priority = "4"
-	test AssertDescriptionsForConfigurationEntries {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertDescriptionsForConfigurationEntries";
+	test ViewDescriptionTextsForMFAConfigurationEntries {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewDescriptionTextsForMFAConfigurationEntries";
 
 		task ("Assert Disable multi-factor authentication system-wide message is present in Multi-Factor Authentication System configuration") {
 			MultiFactorAuthentication.openToConfigInSystemSettings();
@@ -51,8 +51,8 @@ definition {
 
 	@description = "This is a use case for LPS-109786"
 	@priority = "4"
-	test AssertNotificationsAfterMFADisabledOrEnabled {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertNotificationsAfterMFADisabledOrEnabled";
+	test ViewNotificationsAfterMFADisabledAndEnabled {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewNotificationsAfterMFADisabledAndEnabled";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -145,11 +145,11 @@ definition {
 
 	@description = "This is a use case for LPS-92659"
 	@priority = "5"
-	test BlockedAfterReachAllowedFailedAttempts {
+	test AssertUserIsBlockedAfterReachAllowedFailedAttempts {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#BlockedAfterReachAllowedFailedAttempts";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertUserIsBlockedAfterReachAllowedFailedAttempts";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -192,8 +192,8 @@ definition {
 
 	@description = "This is a use case for LPS-86515"
 	@priority = "5"
-	test CheckOrderOfMFAVerifier {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#CheckOrderOfMFAVerifier";
+	test AssertMFACheckersWithHigherOrderShownFirst {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertMFACheckersWithHigherOrderShownFirst";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -255,9 +255,9 @@ definition {
 
 	@description = "This is a use case for LPS-112805"
 	@priority = "5"
-	test DisabledBasicAuthenticationOnInstanceLevel {
+	test CanDisableBasicAuthenticationOnInstanceLevel {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisabledBasicAuthenticationOnInstanceLevel";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanDisableBasicAuthenticationOnInstanceLevel";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -304,8 +304,8 @@ definition {
 
 	@description = "This is a use case for LPS-102468"
 	@priority = "5"
-	test DisableOTPForInstanceOnSystemLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisableOTPForInstanceOnSystemLevel";
+	test CanDisableOTPForInstanceOnSystemLevel {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanDisableOTPForInstanceOnSystemLevel";
 
 		task ("Assert MFA is not disabled on system level") {
 			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
@@ -388,9 +388,9 @@ definition {
 	@description = "This is a use case for LPS-102467 and LPS-110444"
 	@priority = "5"
 	@uitest
-	test EditEmailTemplate {
+	test AssertEditedEmailTemplate {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#EditEmailTemplate";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertEditedEmailTemplate";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -778,8 +778,8 @@ definition {
 
 	@description = "This is a use case for LPS-101717"
 	@priority = "5"
-	test LoginWithIPBasedVerifierFailedOnInstanceLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierFailedOnInstanceLevel";
+	test AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -919,9 +919,9 @@ definition {
 
 	@description = "This is a use case for LPS-98267, LRQA-60284."
 	@priority = "5"
-	test LoginWithTOTPEnabledForEndUser {
+	test LoginWithTOTPEnabledAsEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithTOTPEnabledForEndUser";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithTOTPEnabledAsEndUser";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1024,8 +1024,8 @@ definition {
 
 	@description = "This is a use case for LPS-115566"
 	@priority = "5"
-	test RemoveAndAutoGenerateTOTP {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveAndAutoGenerateTOTP";
+	test CanRemoveTOTPVerificationOnInstanceLevel {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanRemoveTOTPVerificationOnInstanceLevel";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1085,11 +1085,11 @@ definition {
 
 	@description = "This is a use case for LPS-115566"
 	@priority = "4"
-	test RemoveCurrentTOTPWontAffectOthers {
+	test RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveCurrentTOTPWontAffectOthers";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1209,7 +1209,7 @@ definition {
 	@description = "This is a use case for LPS-118204"
 	@priority = "4"
 	@uitest
-	test VerifyUIchangesInMFA {
+	test AssertDescriptionsOnTOTPConfigurationPage {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
 

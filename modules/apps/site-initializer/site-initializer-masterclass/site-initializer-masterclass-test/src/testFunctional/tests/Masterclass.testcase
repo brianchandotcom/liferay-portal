@@ -1009,8 +1009,6 @@ definition {
 				key_assetType = "Blog Entry",
 				locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE");
 
-			PageEditor.openPreviewMode();
-
 			AssertElementPresent(
 				key_colummnsNumber = "3",
 				locator1 = "Masterclass#COLUMNS_NUMBER");

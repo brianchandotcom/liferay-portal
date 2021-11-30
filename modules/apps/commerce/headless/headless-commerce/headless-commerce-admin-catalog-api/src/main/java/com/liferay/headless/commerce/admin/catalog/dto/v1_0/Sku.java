@@ -126,6 +126,124 @@ public class Sku implements Serializable {
 	protected Double depth;
 
 	@Schema
+	public Boolean getDiscontinued() {
+		return discontinued;
+	}
+
+	public void setDiscontinued(Boolean discontinued) {
+		this.discontinued = discontinued;
+	}
+
+	@JsonIgnore
+	public void setDiscontinued(
+		UnsafeSupplier<Boolean, Exception> discontinuedUnsafeSupplier) {
+
+		try {
+			discontinued = discontinuedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean discontinued;
+
+	@Schema
+	public Date getDiscontinuedDate() {
+		return discontinuedDate;
+	}
+
+	public void setDiscontinuedDate(Date discontinuedDate) {
+		this.discontinuedDate = discontinuedDate;
+	}
+
+	@JsonIgnore
+	public void setDiscontinuedDate(
+		UnsafeSupplier<Date, Exception> discontinuedDateUnsafeSupplier) {
+
+		try {
+			discontinuedDate = discontinuedDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date discontinuedDate;
+
+	@Schema
+	public String getDiscontinuedSkuExternalReferenceCode() {
+		return discontinuedSkuExternalReferenceCode;
+	}
+
+	public void setDiscontinuedSkuExternalReferenceCode(
+		String discontinuedSkuExternalReferenceCode) {
+
+		this.discontinuedSkuExternalReferenceCode =
+			discontinuedSkuExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setDiscontinuedSkuExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			discontinuedSkuExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			discontinuedSkuExternalReferenceCode =
+				discontinuedSkuExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String discontinuedSkuExternalReferenceCode;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getDiscontinuedSkuId() {
+		return discontinuedSkuId;
+	}
+
+	public void setDiscontinuedSkuId(Long discontinuedSkuId) {
+		this.discontinuedSkuId = discontinuedSkuId;
+	}
+
+	@JsonIgnore
+	public void setDiscontinuedSkuId(
+		UnsafeSupplier<Long, Exception> discontinuedSkuIdUnsafeSupplier) {
+
+		try {
+			discontinuedSkuId = discontinuedSkuIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long discontinuedSkuId;
+
+	@Schema
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -741,6 +859,54 @@ public class Sku implements Serializable {
 			sb.append("\"depth\": ");
 
 			sb.append(depth);
+		}
+
+		if (discontinued != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinued\": ");
+
+			sb.append(discontinued);
+		}
+
+		if (discontinuedDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinuedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(discontinuedDate));
+
+			sb.append("\"");
+		}
+
+		if (discontinuedSkuExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinuedSkuExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(discontinuedSkuExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		if (discontinuedSkuId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinuedSkuId\": ");
+
+			sb.append(discontinuedSkuId);
 		}
 
 		if (displayDate != null) {

@@ -81,6 +81,55 @@ public class SkuSerDes {
 			sb.append(sku.getDepth());
 		}
 
+		if (sku.getDiscontinued() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinued\": ");
+
+			sb.append(sku.getDiscontinued());
+		}
+
+		if (sku.getDiscontinuedDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinuedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(sku.getDiscontinuedDate()));
+
+			sb.append("\"");
+		}
+
+		if (sku.getDiscontinuedSkuExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinuedSkuExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sku.getDiscontinuedSkuExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (sku.getDiscontinuedSkuId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discontinuedSkuId\": ");
+
+			sb.append(sku.getDiscontinuedSkuId());
+		}
+
 		if (sku.getDisplayDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -344,6 +393,40 @@ public class SkuSerDes {
 			map.put("depth", String.valueOf(sku.getDepth()));
 		}
 
+		if (sku.getDiscontinued() == null) {
+			map.put("discontinued", null);
+		}
+		else {
+			map.put("discontinued", String.valueOf(sku.getDiscontinued()));
+		}
+
+		if (sku.getDiscontinuedDate() == null) {
+			map.put("discontinuedDate", null);
+		}
+		else {
+			map.put(
+				"discontinuedDate",
+				liferayToJSONDateFormat.format(sku.getDiscontinuedDate()));
+		}
+
+		if (sku.getDiscontinuedSkuExternalReferenceCode() == null) {
+			map.put("discontinuedSkuExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"discontinuedSkuExternalReferenceCode",
+				String.valueOf(sku.getDiscontinuedSkuExternalReferenceCode()));
+		}
+
+		if (sku.getDiscontinuedSkuId() == null) {
+			map.put("discontinuedSkuId", null);
+		}
+		else {
+			map.put(
+				"discontinuedSkuId",
+				String.valueOf(sku.getDiscontinuedSkuId()));
+		}
+
 		if (sku.getDisplayDate() == null) {
 			map.put("displayDate", null);
 		}
@@ -519,6 +602,32 @@ public class SkuSerDes {
 			else if (Objects.equals(jsonParserFieldName, "depth")) {
 				if (jsonParserFieldValue != null) {
 					sku.setDepth(Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "discontinued")) {
+				if (jsonParserFieldValue != null) {
+					sku.setDiscontinued((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "discontinuedDate")) {
+				if (jsonParserFieldValue != null) {
+					sku.setDiscontinuedDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"discontinuedSkuExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setDiscontinuedSkuExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "discontinuedSkuId")) {
+				if (jsonParserFieldValue != null) {
+					sku.setDiscontinuedSkuId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "displayDate")) {

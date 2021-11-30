@@ -186,6 +186,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		Sku sku = randomSku();
 
+		sku.setDiscontinuedSkuExternalReferenceCode(regex);
 		sku.setExternalReferenceCode(regex);
 		sku.setGtin(regex);
 		sku.setManufacturerPartNumber(regex);
@@ -198,6 +199,8 @@ public abstract class BaseSkuResourceTestCase {
 
 		sku = SkuSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, sku.getDiscontinuedSkuExternalReferenceCode());
 		Assert.assertEquals(regex, sku.getExternalReferenceCode());
 		Assert.assertEquals(regex, sku.getGtin());
 		Assert.assertEquals(regex, sku.getManufacturerPartNumber());
@@ -1001,6 +1004,43 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("discontinued", additionalAssertFieldName)) {
+				if (sku.getDiscontinued() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("discontinuedDate", additionalAssertFieldName)) {
+				if (sku.getDiscontinuedDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discontinuedSkuExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (sku.getDiscontinuedSkuExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discontinuedSkuId", additionalAssertFieldName)) {
+
+				if (sku.getDiscontinuedSkuId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("displayDate", additionalAssertFieldName)) {
 				if (sku.getDisplayDate() == null) {
 					valid = false;
@@ -1258,6 +1298,54 @@ public abstract class BaseSkuResourceTestCase {
 
 			if (Objects.equals("depth", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(sku1.getDepth(), sku2.getDepth())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("discontinued", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sku1.getDiscontinued(), sku2.getDiscontinued())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("discontinuedDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sku1.getDiscontinuedDate(),
+						sku2.getDiscontinuedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discontinuedSkuExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sku1.getDiscontinuedSkuExternalReferenceCode(),
+						sku2.getDiscontinuedSkuExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discontinuedSkuId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sku1.getDiscontinuedSkuId(),
+						sku2.getDiscontinuedSkuId())) {
+
 					return false;
 				}
 
@@ -1560,6 +1648,56 @@ public abstract class BaseSkuResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("discontinued")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("discontinuedDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sku.getDiscontinuedDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sku.getDiscontinuedDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(sku.getDiscontinuedDate()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("discontinuedSkuExternalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(sku.getDiscontinuedSkuExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("discontinuedSkuId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("displayDate")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1772,6 +1910,11 @@ public abstract class BaseSkuResourceTestCase {
 		return new Sku() {
 			{
 				depth = RandomTestUtil.randomDouble();
+				discontinued = RandomTestUtil.randomBoolean();
+				discontinuedDate = RandomTestUtil.nextDate();
+				discontinuedSkuExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				discontinuedSkuId = RandomTestUtil.randomLong();
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(

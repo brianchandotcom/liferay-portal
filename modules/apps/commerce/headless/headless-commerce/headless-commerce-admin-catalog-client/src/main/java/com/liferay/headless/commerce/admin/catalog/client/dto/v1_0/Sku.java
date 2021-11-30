@@ -80,6 +80,95 @@ public class Sku implements Cloneable, Serializable {
 
 	protected Double depth;
 
+	public Boolean getDiscontinued() {
+		return discontinued;
+	}
+
+	public void setDiscontinued(Boolean discontinued) {
+		this.discontinued = discontinued;
+	}
+
+	public void setDiscontinued(
+		UnsafeSupplier<Boolean, Exception> discontinuedUnsafeSupplier) {
+
+		try {
+			discontinued = discontinuedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean discontinued;
+
+	public Date getDiscontinuedDate() {
+		return discontinuedDate;
+	}
+
+	public void setDiscontinuedDate(Date discontinuedDate) {
+		this.discontinuedDate = discontinuedDate;
+	}
+
+	public void setDiscontinuedDate(
+		UnsafeSupplier<Date, Exception> discontinuedDateUnsafeSupplier) {
+
+		try {
+			discontinuedDate = discontinuedDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date discontinuedDate;
+
+	public String getDiscontinuedSkuExternalReferenceCode() {
+		return discontinuedSkuExternalReferenceCode;
+	}
+
+	public void setDiscontinuedSkuExternalReferenceCode(
+		String discontinuedSkuExternalReferenceCode) {
+
+		this.discontinuedSkuExternalReferenceCode =
+			discontinuedSkuExternalReferenceCode;
+	}
+
+	public void setDiscontinuedSkuExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			discontinuedSkuExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			discontinuedSkuExternalReferenceCode =
+				discontinuedSkuExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String discontinuedSkuExternalReferenceCode;
+
+	public Long getDiscontinuedSkuId() {
+		return discontinuedSkuId;
+	}
+
+	public void setDiscontinuedSkuId(Long discontinuedSkuId) {
+		this.discontinuedSkuId = discontinuedSkuId;
+	}
+
+	public void setDiscontinuedSkuId(
+		UnsafeSupplier<Long, Exception> discontinuedSkuIdUnsafeSupplier) {
+
+		try {
+			discontinuedSkuId = discontinuedSkuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long discontinuedSkuId;
+
 	public Date getDisplayDate() {
 		return displayDate;
 	}

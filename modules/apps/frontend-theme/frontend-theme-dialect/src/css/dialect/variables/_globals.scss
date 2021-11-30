@@ -83,3 +83,13 @@ $link-color: var(--link-color);
 $link-decoration: var(--link-text-decoration);
 $link-hover-color: var(--link-hover-color);
 $link-hover-decoration: var(--link-hover-text-decoration);
+
+// Transitions
+
+$transition-base: all var(--transition-base);
+$transition-fade: opacity var(--transition-fade);
+$transition-collapse: height var(--transition-collapse);
+
+$btn-transition: color var(--transition-base),
+	background-color var(--transition-base), border-color var(--transition-base),
+	box-shadow var(--transition-base);

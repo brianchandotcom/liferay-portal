@@ -2602,7 +2602,19 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "height .35s ease",
+							"defaultValue": "0.2s ease-in-out",
+							"label": "transition-base",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "transition-base"
+								}
+							],
+							"name": "transitionBase",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.35s ease",
 							"label": "transition-collapse",
 							"mappings": [
 								{
@@ -2614,7 +2626,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "opacity .15s linear",
+							"defaultValue": "0.15s linear",
 							"label": "transition-fade",
 							"mappings": [
 								{

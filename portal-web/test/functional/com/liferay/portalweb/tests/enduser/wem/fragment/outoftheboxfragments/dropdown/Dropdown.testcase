@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-120190. Can add fragments into drop zone of Dropdown fragment."
+	@description = "This is a test for LPS-120190 and LPS-125164. Can add fragments into drop zone of Dropdown fragment."
 	@priority = "5"
 	@uitest
 	test AddFragmentIntoDropdownPanel {
@@ -75,6 +75,10 @@ definition {
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Content Page");
+		}
+
+		task ("Assert the console does not occur NPE error") {
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 		}
 
 		task ("Assert the dropdown panel is collapsed") {

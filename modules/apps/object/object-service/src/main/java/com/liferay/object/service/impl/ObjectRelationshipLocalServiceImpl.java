@@ -33,6 +33,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -61,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectRelationshipLocalServiceImpl
 	extends ObjectRelationshipLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectRelationship addObjectRelationship(
 			long userId, long objectDefinitionId1, long objectDefinitionId2,
@@ -136,6 +139,7 @@ public class ObjectRelationshipLocalServiceImpl
 		return deleteObjectRelationship(objectRelationship);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectRelationship deleteObjectRelationship(
@@ -260,6 +264,7 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinitionId1, start, end);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, String deletionType,

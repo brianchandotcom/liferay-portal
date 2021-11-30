@@ -47,6 +47,11 @@ const TABS = [
 		label: Liferay.Language.get('buttons'),
 	},
 	{
+		content: <CardGuide />,
+		hash: '#cards',
+		label: Liferay.Language.get('cards'),
+	},
+	{
 		content: <FormGuide />,
 		hash: '#forms',
 		label: Liferay.Language.get('forms'),
@@ -55,11 +60,6 @@ const TABS = [
 		content: <LabelGuide />,
 		hash: '#labels',
 		label: Liferay.Language.get('labels'),
-	},
-	{
-		content: <CardGuide />,
-		hash: '#cards',
-		label: Liferay.Language.get('cards'),
 	},
 ];
 

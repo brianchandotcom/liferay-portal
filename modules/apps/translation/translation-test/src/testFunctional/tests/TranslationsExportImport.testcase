@@ -90,8 +90,8 @@ definition {
 
 	@description = "This ensures that a translated zip file with all available language can be exported."
 	@priority = "5"
-	@refactorneeded
-	test ExportWCWithAllLanguages {
+	@refactordone
+	test CanExportWCWithAllLanguages {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",
@@ -110,8 +110,8 @@ definition {
 
 	@description = "This ensures that a translated zip file with an available language can be exported."
 	@priority = "5"
-	@refactorneeded
-	test ExportWebContent {
+	@refactordone
+	test CanExportWebContent {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -132,8 +132,8 @@ definition {
 
 	@description = "This ensures that user can import the exported xliff file with 1.2 version."
 	@priority = "5"
-	@refactorneeded
-	test ImportExportedXLIFF {
+	@refactordone
+	test CanImportExportedXLIFF {
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
 			description = "Description",
@@ -180,8 +180,8 @@ definition {
 
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
 	@priority = "5"
-	@refactorneeded
-	test ImportWebContent {
+	@refactordone
+	test CanImportWebContent {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -227,8 +227,8 @@ definition {
 
 	@description = "This ensures that a translated file(.xlf) after re-encoding it to UTF-8 can be imported."
 	@priority = "4"
-	@refactorneeded
-	test ImportWebContentWithUTF8 {
+	@refactordone
+	test CanImportWebContentWithUTF8 {
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
 			description = "Description",
@@ -274,8 +274,8 @@ definition {
 
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
 	@priority = "5"
-	@refactorneeded
-	test ImportWebContentWithXliffFile {
+	@refactordone
+	test CanImportWebContentWithXliffFile {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

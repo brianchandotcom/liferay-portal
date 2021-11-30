@@ -2525,50 +2525,74 @@
 					"frontendTokens": [
 						{
 							"defaultValue": "100%",
-							"label": "aspect-ratio",
+							"label": "aspect-ratio-1",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "aspect-ratio"
+									"value": "aspect-ratio-1"
 								}
 							],
-							"name": "aspectRatio",
+							"name": "aspectRatio1",
 							"type": "String"
 						},
 						{
-							"defaultValue": "75%",
-							"label": "aspect-ratio-4-to-3",
+							"defaultValue": "calc(3 / 4 * 100%)",
+							"label": "aspect-ratio-2",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "aspect-ratio-4-to-3"
+									"value": "aspect-ratio-2"
 								}
 							],
-							"name": "aspectRatio4To3",
+							"name": "aspectRatio2",
 							"type": "String"
 						},
 						{
-							"defaultValue": "37.5%",
-							"label": "aspect-ratio-8-to-3",
+							"defaultValue": "calc(2 / 3 * 100%)",
+							"label": "aspect-ratio-3",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "aspect-ratio-8-to-3"
+									"value": "aspect-ratio-3"
 								}
 							],
-							"name": "aspectRatio8To3",
+							"name": "aspectRatio3",
 							"type": "String"
 						},
 						{
-							"defaultValue": "56.25%",
-							"label": "aspect-ratio-16-to-9",
+							"defaultValue": "calc(5 / 8 * 100%)",
+							"label": "aspect-ratio-4",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "aspect-ratio-16-to-9"
+									"value": "aspect-ratio-4"
 								}
 							],
-							"name": "aspectRatio16To9",
+							"name": "aspectRatio4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(9 / 16 * 100%)",
+							"label": "aspect-ratio-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-5"
+								}
+							],
+							"name": "aspectRatio5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(1 / 2 * 100%)",
+							"label": "aspect-ratio-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "aspect-ratio-6"
+								}
+							],
+							"name": "aspectRatio6",
 							"type": "String"
 						}
 					],

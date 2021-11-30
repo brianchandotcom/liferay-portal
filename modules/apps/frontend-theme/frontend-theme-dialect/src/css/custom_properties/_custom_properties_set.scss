@@ -1,23 +1,31 @@
 // Aspect ratio
 
-.aspect-ratio:not([class*='aspect-ratio-']) {
-	padding-bottom: var(--aspect-ratio, 100%);
+.aspect-ratio {
+	padding-bottom: var(--aspect-ratio);
 }
 
-.aspect-ratio-4-to-3 {
-	padding-bottom: var(--aspect-ratio-4-to-3, 75%);
+.aspect-ratio-1 {
+	--aspect-ratio: var(--aspect-ratio-1);
 }
 
-.aspect-ratio-8-to-3 {
-	padding-bottom: var(--aspect-ratio-8-to-3, 37.5%);
+.aspect-ratio-2 {
+	--aspect-ratio: var(--aspect-ratio-2);
 }
 
-.aspect-ratio-16-to-9 {
-	padding-bottom: var(--aspect-ratio-16-to-9, 56.25%);
+.aspect-ratio-3 {
+	--aspect-ratio: var(--aspect-ratio-3);
 }
 
-.card-type-asset .aspect-ratio {
-	padding-bottom: var(--aspect-ratio-16-to-9, 56.25%);
+.aspect-ratio-4 {
+	--aspect-ratio: var(--aspect-ratio-4);
+}
+
+.aspect-ratio-5 {
+	--aspect-ratio: var(--aspect-ratio-5);
+}
+
+.aspect-ratio-6 {
+	--aspect-ratio: var(--aspect-ratio-6);
 }
 
 // Body

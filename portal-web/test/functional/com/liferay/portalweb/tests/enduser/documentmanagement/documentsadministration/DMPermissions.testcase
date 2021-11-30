@@ -721,9 +721,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		Click(locator1 = "Icon#INFO");
-
-		AssertElementNotPresent(locator1 = "Icon#SUBSCRIBE");
+		DMFolder.viewNoSubscribe();
 	}
 
 	@description = "This is a test for LPS-136836. It checks that a guest cannot update comments in a file without permissions."

@@ -29,76 +29,100 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("Add a child site") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addBlankCP(
-			parentSiteName = "Site Name",
-			siteName = "Child SiteName");
+			Site.addBlankCP(
+				parentSiteName = "Site Name",
+				siteName = "Child SiteName");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("View child site added") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.viewChildCP(
-			childSiteName = "Child SiteName",
-			siteName = "Site Name");
+			Site.viewChildCP(
+				childSiteName = "Child SiteName",
+				siteName = "Site Name");
+		}
 	}
 
 	@description = "Able to add multiple sites basing on different site template."
 	@priority = "4"
+	@uitest
 	test AddSitesMultiple {
-		Site.openSitesAdmin();
+		task ("Add a blank site") {
+			Site.openSitesAdmin();
 
-		Site.addBlankCP(siteName = "Site1 Name");
+			Site.addBlankCP(siteName = "Site1 Name");
+		}
 
-		Site.openSitesAdmin();
+		task ("View blank site added") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(siteName = "Site1 Name");
+			Site.viewCP(siteName = "Site1 Name");
+		}
 
-		Site.openSitesAdmin();
+		task ("Add a site tempalte and add a site basing on site template") {
+			Site.openSitesAdmin();
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		Site.openSitesAdmin();
+			Site.openSitesAdmin();
 
-		Site.addCP(
-			siteName = "Site2 Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+			Site.addCP(
+				siteName = "Site2 Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
 
-		Site.openSitesAdmin();
+		task ("View site added") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(siteName = "Site2 Name");
+			Site.viewCP(siteName = "Site2 Name");
+		}
 
-		Site.openSitesAdmin();
+		task ("Add a site basing on Minium site template") {
+			Site.openSitesAdmin();
 
-		Site.addSiteTemplateCP(
-			siteName = "Site3 Name",
-			siteTemplateName = "Minium");
+			Site.addSiteTemplateCP(
+				siteName = "Site3 Name",
+				siteTemplateName = "Minium");
+		}
 
-		Site.openSitesAdmin();
+		task ("View site added") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(siteName = "Site3 Name");
+			Site.viewCP(siteName = "Site3 Name");
+		}
 	}
 
 	@description = "Able to delete site."
 	@priority = "5"
+	@uitest
 	test DeleteSite {
 		property portal.acceptance = "true";
 
-		Site.openSitesAdmin();
+		task ("Add a blank site") {
+			Site.openSitesAdmin();
 
-		Site.addBlankCP(siteName = "Site Name");
+			Site.addBlankCP(siteName = "Site Name");
+		}
 
-		Site.openSitesAdmin();
+		task ("Assert able to delete the site") {
+			Site.openSitesAdmin();
 
-		Site.deleteCP(siteName = "Site Name");
+			Site.deleteCP(siteName = "Site Name");
+		}
 	}
 
 }

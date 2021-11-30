@@ -1442,6 +1442,8 @@ definition {
 	@description = "This test asserts that group scope permissions can be defined in the Roles Admin portlet."
 	@priority = "5"
 	test CanDefineGroupScopePermissionsInRolesAdmin {
+		property test.name.skip.portal.instance = "Accounts#CanDefineGroupScopePermissionsInRolesAdmin";
+
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
 

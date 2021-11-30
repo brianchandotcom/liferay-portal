@@ -97,6 +97,7 @@ export default function ChangeTrackingChangesView({
 	columnFromURL,
 	contextView,
 	ctCollectionId,
+	ctMappingInfos,
 	currentUserId,
 	dataURL,
 	defaultLocale,

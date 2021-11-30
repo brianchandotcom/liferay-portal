@@ -18,9 +18,11 @@ import com.liferay.change.tracking.closure.CTClosure;
 import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.mapping.CTMappingTableInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
@@ -104,6 +106,7 @@ public class ViewChangesDisplayContext {
 		long activeCTCollectionId,
 		BasePersistenceRegistry basePersistenceRegistry,
 		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
+		CTCollectionLocalService ctCollectionLocalService,
 		CTConfiguration ctConfiguration,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
@@ -117,6 +120,7 @@ public class ViewChangesDisplayContext {
 		_basePersistenceRegistry = basePersistenceRegistry;
 		_ctClosureFactory = ctClosureFactory;
 		_ctCollection = ctCollection;
+		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctConfiguration = ctConfiguration;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
@@ -289,6 +293,69 @@ public class ViewChangesDisplayContext {
 				contextViewJSONObject, typeNameCacheMap)
 		).put(
 			"ctCollectionId", _ctCollection.getCtCollectionId()
+		).put(
+			"ctMappingInfos",
+			() -> {
+				JSONArray ctMappingInfosJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				List<CTMappingTableInfo> ctMappingTableInfos =
+					_ctCollectionLocalService.getCTMappingTableInfos(
+						_ctCollection.getCtCollectionId());
+
+				for (CTMappingTableInfo ctMappingTableInfo :
+						ctMappingTableInfos) {
+
+					String description = StringPool.BLANK;
+
+					List<Map.Entry<Long, Long>> addedMappings =
+						ctMappingTableInfo.getAddedMappings();
+
+					if (!addedMappings.isEmpty()) {
+						description = StringBundler.concat(
+							addedMappings.size(), StringPool.SPACE,
+							_language.get(_themeDisplay.getLocale(), "added"));
+					}
+
+					List<Map.Entry<Long, Long>> removedMappings =
+						ctMappingTableInfo.getRemovedMappings();
+
+					if (!removedMappings.isEmpty()) {
+						if (Validator.isNotNull(description)) {
+							description = description.concat(", ");
+						}
+
+						description = StringBundler.concat(
+							description, removedMappings.size(),
+							StringPool.SPACE,
+							_language.get(
+								_themeDisplay.getLocale(), "removed"));
+					}
+
+					ctMappingInfosJSONArray.put(
+						JSONUtil.put(
+							"description", description
+						).put(
+							"name",
+							StringBundler.concat(
+								_ctDisplayRendererRegistry.getTypeName(
+									_themeDisplay.getLocale(),
+									_portal.getClassNameId(
+										ctMappingTableInfo.
+											getLeftModelClass())),
+								" & ",
+								_ctDisplayRendererRegistry.getTypeName(
+									_themeDisplay.getLocale(),
+									_portal.getClassNameId(
+										ctMappingTableInfo.
+											getRightModelClass())))
+						).put(
+							"tableName", ctMappingTableInfo.getTableName()
+						));
+				}
+
+				return ctMappingInfosJSONArray;
+			}
 		).put(
 			"currentUserId", _themeDisplay.getUserId()
 		).put(
@@ -1179,6 +1246,7 @@ public class ViewChangesDisplayContext {
 	private final BasePersistenceRegistry _basePersistenceRegistry;
 	private final CTClosureFactory _ctClosureFactory;
 	private final CTCollection _ctCollection;
+	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTConfiguration _ctConfiguration;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;

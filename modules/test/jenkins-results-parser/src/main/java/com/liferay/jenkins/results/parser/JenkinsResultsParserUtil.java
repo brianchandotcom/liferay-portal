@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -103,7 +102,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.SystemUtils;
@@ -3472,6 +3470,167 @@ public class JenkinsResultsParserUtil {
 			HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
+		return new BufferedReader(
+			new InputStreamReader(
+				toInputStream(
+					url, checkCache, maxRetries, httpRequestMethod, postContent,
+					retryPeriod, timeout, httpAuthorizationHeader)));
+	}
+
+	public static String toDateString(Date date) {
+		return toDateString(
+			date, "MMM dd, yyyy h:mm:ss a z", "America/Los_Angeles");
+	}
+
+	public static String toDateString(Date date, String timeZoneName) {
+		return toDateString(date, "MMM dd, yyyy h:mm:ss a z", timeZoneName);
+	}
+
+	public static String toDateString(
+		Date date, String format, String timeZoneName) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+
+		if (timeZoneName != null) {
+			sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName));
+		}
+
+		return sdf.format(date);
+	}
+
+	public static String toDurationString(long duration) {
+		long remainingDuration = duration;
+
+		StringBuilder sb = new StringBuilder();
+
+		remainingDuration = _appendStringForUnit(
+			remainingDuration, _MILLIS_DAY, false, sb, "day", "days");
+
+		remainingDuration = _appendStringForUnit(
+			remainingDuration, _MILLIS_HOUR, false, sb, "hour", "hours");
+
+		remainingDuration = _appendStringForUnit(
+			remainingDuration, _MILLIS_MINUTE, true, sb, "minute", "minutes");
+
+		if (duration < 60000) {
+			remainingDuration = _appendStringForUnit(
+				remainingDuration, _MILLIS_SECOND, true, sb, "second",
+				"seconds");
+		}
+
+		if (duration < 1000) {
+			_appendStringForUnit(remainingDuration, 1, true, sb, "ms", "ms");
+		}
+
+		String durationString = sb.toString();
+
+		durationString = durationString.trim();
+
+		if (durationString.equals("")) {
+			durationString = "0 ms";
+		}
+
+		return durationString;
+	}
+
+	public static void toFile(URL url, File file) {
+		try {
+			System.out.println(
+				combine(
+					"Downloading ", url.toString(), " to ",
+					getCanonicalPath(file)));
+
+			long start = System.currentTimeMillis();
+
+			try (InputStream inputStream = toInputStream(
+					url.toString(), false)) {
+
+				if (file.exists()) {
+					file.delete();
+				}
+
+				File parentFile = file.getParentFile();
+
+				if ((parentFile != null) && !parentFile.exists()) {
+					parentFile.mkdirs();
+				}
+
+				byte[] bytes = new byte[10240];
+
+				int bytesReadCount = inputStream.read(bytes);
+
+				long totalBytesWrittenCount = 0;
+
+				try (FileOutputStream fileOutputStream = new FileOutputStream(
+						file)) {
+
+					while (bytesReadCount != -1) {
+						fileOutputStream.write(bytes, 0, bytesReadCount);
+
+						totalBytesWrittenCount += bytesReadCount;
+
+						bytesReadCount = inputStream.read(bytes);
+					}
+
+					fileOutputStream.flush();
+				}
+
+				System.out.println(
+					combine(
+						"Finished downloading ",
+						toFileSizeString(totalBytesWrittenCount), " in ",
+						toDurationString(System.currentTimeMillis() - start)));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	public static String toFileSizeString(long byteCount) {
+		long remainingByteCount = byteCount;
+
+		StringBuilder sb = new StringBuilder();
+
+		remainingByteCount = _appendStringForUnit(
+			remainingByteCount, _BYTES_GIGA, false, sb, "GB", "GB");
+
+		remainingByteCount = _appendStringForUnit(
+			remainingByteCount, _BYTES_MEGA, false, sb, "MB", "MB");
+
+		remainingByteCount = _appendStringForUnit(
+			remainingByteCount, _BYTES_KILO, true, sb, "KB", "KB");
+
+		if (byteCount < _BYTES_KILO) {
+			_appendStringForUnit(remainingByteCount, 1, true, sb, "B", "B");
+		}
+
+		String fileSizeString = sb.toString();
+
+		fileSizeString = fileSizeString.trim();
+
+		if (fileSizeString.equals("")) {
+			fileSizeString = "0 B";
+		}
+
+		return fileSizeString;
+	}
+
+	public static InputStream toInputStream(String url, boolean checkCache)
+		throws IOException {
+
+		return toInputStream(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
+	public static InputStream toInputStream(
+			String url, boolean checkCache, int maxRetries,
+			HttpRequestMethod httpRequestMethod, String postContent,
+			int retryPeriod, int timeout,
+			HTTPAuthorization httpAuthorizationHeader)
+		throws IOException {
+
 		if (url.startsWith("file:") &&
 			url.contains("liferay-jenkins-results-parser-samples-ee")) {
 
@@ -3513,9 +3672,7 @@ public class JenkinsResultsParserUtil {
 			File cachedFile = _getCacheFile(_PREFIX_TO_STRING_CACHE + key);
 
 			if ((cachedFile != null) && cachedFile.exists()) {
-				FileReader fileReader = new FileReader(cachedFile);
-
-				return new BufferedReader(fileReader);
+				return new FileInputStream(cachedFile);
 			}
 		}
 
@@ -3705,14 +3862,13 @@ public class JenkinsResultsParserUtil {
 					}
 				}
 
-				return new BufferedReader(
-					new InputStreamReader(urlConnection.getInputStream()));
+				return urlConnection.getInputStream();
 			}
 			catch (IOException ioException) {
 				if ((ioException instanceof UnknownHostException) &&
 					url.matches("http://test-\\d+-\\d+/.*")) {
 
-					return toBufferedReader(
+					return toInputStream(
 						url.replaceAll(
 							"http://(test-\\d+-\\d+)(/.*)",
 							"https://$1.liferay.com$2"),
@@ -3731,112 +3887,6 @@ public class JenkinsResultsParserUtil {
 
 				sleep(1000 * retryPeriod);
 			}
-		}
-	}
-
-	public static String toByteCountString(long byteCount) {
-		long gigabyteCount = byteCount / _BYTES_GIGA;
-
-		if (gigabyteCount > 0) {
-			return gigabyteCount + " GB";
-		}
-
-		long megabyteCount = byteCount / _BYTES_MEGA;
-
-		if (megabyteCount > 0) {
-			return megabyteCount + " MB";
-		}
-
-		long kilobyteCount = byteCount / _BYTES_KILO;
-
-		if (kilobyteCount > 0) {
-			return kilobyteCount + " KB";
-		}
-
-		return byteCount + " B";
-	}
-
-	public static String toDateString(Date date) {
-		return toDateString(
-			date, "MMM dd, yyyy h:mm:ss a z", "America/Los_Angeles");
-	}
-
-	public static String toDateString(Date date, String timeZoneName) {
-		return toDateString(date, "MMM dd, yyyy h:mm:ss a z", timeZoneName);
-	}
-
-	public static String toDateString(
-		Date date, String format, String timeZoneName) {
-
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
-
-		if (timeZoneName != null) {
-			sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName));
-		}
-
-		return sdf.format(date);
-	}
-
-	public static String toDurationString(long duration) {
-		long remainingDuration = duration;
-
-		StringBuilder sb = new StringBuilder();
-
-		remainingDuration = _appendDurationStringForUnit(
-			remainingDuration, _MILLIS_DAY, false, sb, "day", "days");
-
-		remainingDuration = _appendDurationStringForUnit(
-			remainingDuration, _MILLIS_HOUR, false, sb, "hour", "hours");
-
-		remainingDuration = _appendDurationStringForUnit(
-			remainingDuration, _MILLIS_MINUTE, true, sb, "minute", "minutes");
-
-		if (duration < 60000) {
-			remainingDuration = _appendDurationStringForUnit(
-				remainingDuration, _MILLIS_SECOND, true, sb, "second",
-				"seconds");
-		}
-
-		if (duration < 1000) {
-			_appendDurationStringForUnit(
-				remainingDuration, 1, true, sb, "ms", "ms");
-		}
-
-		String durationString = sb.toString();
-
-		durationString = durationString.trim();
-
-		if (durationString.equals("")) {
-			durationString = "0 ms";
-		}
-
-		return durationString;
-	}
-
-	public static void toFile(URL url, File file) {
-		try {
-			System.out.println(
-				combine(
-					"Downloading ", url.toString(), " to ",
-					getCanonicalPath(file)));
-
-			String urlString = url.toString();
-
-			if (urlString.startsWith("https://release.liferay.com")) {
-				String replacement = combine(
-					"https://", getBuildProperty("jenkins.admin.user.name"),
-					":", getBuildProperty("jenkins.admin.user.password"),
-					"@$1");
-
-				url = new URL(
-					urlString.replaceAll(
-						"https://(release\\.liferay\\.com.*)", replacement));
-			}
-
-			FileUtils.copyURLToFile(url, file, 10000, 10000);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -4586,7 +4636,7 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	private static long _appendDurationStringForUnit(
+	private static long _appendStringForUnit(
 		long duration, long millisInUnit, boolean round, StringBuilder sb,
 		String unitDescriptionSingular, String unitDescriptionPlural) {
 

@@ -27,32 +27,110 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-110309 and LPS-112805"
+	@description = "This is a use case for LPS-118204"
 	@priority = "4"
-	test ViewDescriptionTextsForMFAConfigurationEntries {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewDescriptionTextsForMFAConfigurationEntries";
+	@uitest
+	test AssertDescriptionsOnTOTPConfigurationPage {
+		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
+		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
 
-		task ("Assert Disable multi-factor authentication system-wide message is present in Multi-Factor Authentication System configuration") {
-			MultiFactorAuthentication.openToConfigInSystemSettings();
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_settingFieldName = "Disable Multi-Factor Authentication",
-				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
-
-			SystemSettings.viewSettingsText(settingsText = "Disable multi-factor authentication system-wide.");
-		}
-
-		task ("Assert default descriptions at multifactor authentication") {
+		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
-			MultiFactorAuthentication.assertDescriptions();
+			MultiFactorAuthentication.configureOTP(enableOTP = "true");
+		}
+
+		task ("Enable TOTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "Time-Based OTP");
+
+			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
+		}
+
+		task ("Get TOTP") {
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
+
+			MultiFactorAuthentication.getTOTP();
+		}
+
+		task ("Assert warning message in TOTP description") {
+			MultiFactorAuthentication.viewWarningMessage();
+			AssertTextEquals(
+				locator1 = "MultiFactorAuthentication#TOTP_REMOVE_DESCRIPTION",
+				value1 = "You can only have one time-based one-time password configured for your account. Remove your existing time-based one-time password to generate a new time-based one-time password.");
+		}
+
+		task ("Signout and login") {
+			SignOut.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+		task ("Check User TOTP UI") {
+			MultiFactorAuthentication.checkTOTPUI();
 		}
 	}
 
-	@description = "This is a use case for LPS-109786"
-	@priority = "4"
-	test ViewNotificationsAfterMFADisabledAndEnabled {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewNotificationsAfterMFADisabledAndEnabled";
+	@description = "This is a use case for LPS-102467 and LPS-110444"
+	@priority = "5"
+	@uitest
+	test AssertEditedEmailTemplate {
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertEditedEmailTemplate";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
+
+			MultiFactorAuthentication.configureOTP(enableOTP = "true");
+		}
+
+		task ("Configure email OTP") {
+			MultiFactorAuthentication.configureOTPEmailSender(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
+
+			MultiFactorAuthentication.viewOTPEmailSenderCP(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
+
+			MultiFactorAuthentication.viewOTPSentElements(elementList = "emailOTPSentSubject,emailOTPSentBody");
+
+			MultiFactorAuthentication.emailOTPConfiguration(
+				emailOTPSentBody = "One-Time Password for test is:[$ONE_TIME_PASSWORD$]",
+				emailOTPSentSubject = "[$PORTAL_URL$]: Your One-Time Password for test");
+		}
+
+		task ("Sign Out") {
+			SignOut.signOut();
+		}
+
+		task ("Login and send OTP email") {
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			MultiFactorAuthentication.sendOTPEmailPG();
+		}
+
+		task ("View OTP mail") {
+			MockMock.viewMailForOTP(
+				asset = "${portalURL}: Your One-Time Password for test",
+				content = "One-Time Password for test is:",
+				sender = "Joe Bloggs <test@liferay.com>",
+				subject = "${portalURL}: Your One-Time Password for test");
+		}
+	}
+
+	@description = "This is a use case for LPS-101717"
+	@priority = "5"
+	test AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -68,125 +146,73 @@ definition {
 				userEmailAddress = "test@www.able.com");
 		}
 
-		task ("Configure MFA and Email OTP and enable OTP") {
+		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
-		task ("Diable MFA") {
-			Navigator.openURL();
-
-			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "true");
+		task ("Assert IP address and TOTP configurations are present for virtual instance scope") {
+			MultiFactorAuthentication.viewConfigurationPresent(
+				configurationNameList = "IP Address Configuration,Time-Based One-Time Password Configuration",
+				configurationScope = "Virtual Instance Scope");
 		}
 
-		task ("Go to able.com and Assert Instance administrator got notification in notifications list") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		task ("Enable IP address") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
+				baseURL = "http://www.able.com:8080",
+				portlet = "IP Address");
 
-			Notifications.viewBadgeCount(notificationCount = "1");
-
-			Notifications.gotoNotifications();
-
-			AssertTextEquals(
-				key_contentBody = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.",
-				locator1 = "Notifications#NOTIFICATIONS_CONTENT",
-				value1 = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.");
+			MultiFactorAuthentication.configureIPAddress(enableIP = "true");
 		}
-
-		task ("Enable MFA") {
-			Navigator.openURL();
-
-			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
-		}
-
-		task ("Go to able.com and Assert Instance administrator got notification in notifications list") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			Notifications.viewBadgeCount(notificationCount = "2");
-
-			Notifications.gotoNotifications();
-
-			AssertTextEquals(
-				key_contentBody = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.",
-				locator1 = "Notifications#NOTIFICATIONS_CONTENT",
-				value1 = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.");
-		}
-
-		task ("Go to able.com and disable OTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
-
-			MultiFactorAuthentication.configureOTP(enableOTP = "false");
-		}
-
-		task ("Disable MFA") {
-			Navigator.openURL();
-
-			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "true");
-		}
-
-		task ("Go to able.com and and Assert Instance administrator got notification in notifications list") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			Notifications.viewBadgeCount(notificationCount = "2");
-		}
-
-		task ("Enable mfa") {
-			Navigator.openURL();
-
-			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
-		}
-
-		task ("Go to able.com and and Assert Instance administrator got notification in notifications list") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			Notifications.viewBadgeCount(notificationCount = "2");
-		}
-	}
-
-	@description = "This is a use case for LPS-92659"
-	@priority = "5"
-	test AssertUserIsBlockedAfterReachAllowedFailedAttempts {
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertUserIsBlockedAfterReachAllowedFailedAttempts";
-
-		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings();
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
+				baseURL = "http://www.able.com:8080",
+				portlet = "Time-Based OTP");
 
-			MultiFactorAuthentication.configureOTP(enableOTP = "true");
+			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
 
-		task ("Configure OTP failed attempts allowed and retry time out") {
-			MultiFactorAuthentication.emailOTPConfiguration(
-				failedAttemptsAllowed = "1",
-				retryTimeout = "10");
-		}
-
-		task ("Sign out and login") {
-			SignOut.signOut();
+		task ("Signout and login at able.com") {
+			UserBar.signOut();
 
 			User.firstLoginUI(
 				password = "test",
-				userEmailAddress = "test@liferay.com");
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
 		}
 
-		task ("Send OTP email") {
+		task ("Configure IP address allowed 192.168.132.153/255.0.0.0") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
+				baseURL = "http://www.able.com:8080",
+				portlet = "IP Address");
+
+			MultiFactorAuthentication.configureIPAddress(
+				allowedIP = "192.168.132.153/255.0.0.0",
+				enableIP = "true");
+		}
+
+		task ("Signout and login at able.com") {
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080/",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Send OTP email and assert informations for test test") {
+			MultiFactorAuthentication.viewOTPSendEmailButtonPresent();
+
 			MultiFactorAuthentication.sendOTPEmailPG();
-		}
 
-		task ("Enter wrong password to reached the maximum allowed failed attempt") {
-			MultiFactorAuthentication.verifyOTP(validOTP = "false");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_2",
-				value1 = "You have reached the maximum allowed failed attempts. Please retry again in 10 seconds.");
-		}
-
-		task ("Assert user cannot login portal before retry time out") {
-			AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SUBMIT_EMAIL_BUTTON_DISABLED");
+			MultiFactorAuthentication.verifyOTP(
+				portalURL = "http://www.able.com:8080",
+				recipient = "test test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com",
+				userPassword = "test");
 		}
 	}
 
@@ -250,6 +276,53 @@ definition {
 			MultiFactorAuthentication.viewEmailOTPVerifyField();
 
 			MultiFactorAuthentication.viewNoTOTPField();
+		}
+	}
+
+	@description = "This is a use case for LPS-92659"
+	@priority = "5"
+	test AssertUserIsBlockedAfterReachAllowedFailedAttempts {
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
+		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertUserIsBlockedAfterReachAllowedFailedAttempts";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
+
+			MultiFactorAuthentication.configureOTP(enableOTP = "true");
+		}
+
+		task ("Configure OTP failed attempts allowed and retry time out") {
+			MultiFactorAuthentication.emailOTPConfiguration(
+				failedAttemptsAllowed = "1",
+				retryTimeout = "10");
+		}
+
+		task ("Sign out and login") {
+			SignOut.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Send OTP email") {
+			MultiFactorAuthentication.sendOTPEmailPG();
+		}
+
+		task ("Enter wrong password to reached the maximum allowed failed attempt") {
+			MultiFactorAuthentication.verifyOTP(validOTP = "false");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_2",
+				value1 = "You have reached the maximum allowed failed attempts. Please retry again in 10 seconds.");
+		}
+
+		task ("Assert user cannot login portal before retry time out") {
+			AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SUBMIT_EMAIL_BUTTON_DISABLED");
 		}
 	}
 
@@ -385,55 +458,64 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-102467 and LPS-110444"
+	@description = "This is a use case for LPS-115566"
 	@priority = "5"
-	@uitest
-	test AssertEditedEmailTemplate {
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertEditedEmailTemplate";
+	test CanRemoveTOTPVerificationOnInstanceLevel {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanRemoveTOTPVerificationOnInstanceLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Add CP able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Login at able.com") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Configure OTP email sender") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
+			MultiFactorAuthentication.configureOTPEmailSender(
+				emailAddress = "test@www.able.com",
+				emailSenderName = "Joe Bloggs");
+		}
 
 		task ("Enable OTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings();
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
-		task ("Configure email OTP") {
-			MultiFactorAuthentication.configureOTPEmailSender(
-				emailAddress = "test@liferay.com",
-				emailSenderName = "Joe Bloggs");
+		task ("Enable TOTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(
+				baseURL = "http://www.able.com:8080",
+				portlet = "Time-Based OTP");
 
-			MultiFactorAuthentication.viewOTPEmailSenderCP(
-				emailAddress = "test@liferay.com",
-				emailSenderName = "Joe Bloggs");
-
-			MultiFactorAuthentication.viewOTPSentElements(elementList = "emailOTPSentSubject,emailOTPSentBody");
-
-			MultiFactorAuthentication.emailOTPConfiguration(
-				emailOTPSentBody = "One-Time Password for test is:[$ONE_TIME_PASSWORD$]",
-				emailOTPSentSubject = "[$PORTAL_URL$]: Your One-Time Password for test");
+			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
 
-		task ("Sign Out") {
-			SignOut.signOut();
+		task ("Go to able.com and get TOTP") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
+
+			MultiFactorAuthentication.getTOTP();
 		}
 
-		task ("Login and send OTP email") {
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+		task ("Remove TOTP and assert field is present") {
+			AssertClick(
+				key_text = "Remove Configured Time-Based One-Time Password",
+				locator1 = "Button#ANY",
+				value1 = "Remove Configured Time-Based One-Time Password");
 
-			MultiFactorAuthentication.sendOTPEmailPG();
-		}
-
-		task ("View OTP mail") {
-			MockMock.viewMailForOTP(
-				asset = "${portalURL}: Your One-Time Password for test",
-				content = "One-Time Password for test is:",
-				sender = "Joe Bloggs <test@liferay.com>",
-				subject = "${portalURL}: Your One-Time Password for test");
+			MultiFactorAuthentication.viewTOTPFieldPresentOnMFA();
 		}
 	}
 
@@ -776,95 +858,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-101717"
-	@priority = "5"
-	test AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed";
-
-		task ("Add CP able.com") {
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
-				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com");
-		}
-
-		task ("Login at able.com") {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-		}
-
-		task ("Enable OTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
-
-			MultiFactorAuthentication.configureOTP(enableOTP = "true");
-		}
-
-		task ("Assert IP address and TOTP configurations are present for virtual instance scope") {
-			MultiFactorAuthentication.viewConfigurationPresent(
-				configurationNameList = "IP Address Configuration,Time-Based One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("Enable IP address") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(
-				baseURL = "http://www.able.com:8080",
-				portlet = "IP Address");
-
-			MultiFactorAuthentication.configureIPAddress(enableIP = "true");
-		}
-
-		task ("Enable OTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(
-				baseURL = "http://www.able.com:8080",
-				portlet = "Time-Based OTP");
-
-			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
-		}
-
-		task ("Signout and login at able.com") {
-			UserBar.signOut();
-
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-		}
-
-		task ("Configure IP address allowed 192.168.132.153/255.0.0.0") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(
-				baseURL = "http://www.able.com:8080",
-				portlet = "IP Address");
-
-			MultiFactorAuthentication.configureIPAddress(
-				allowedIP = "192.168.132.153/255.0.0.0",
-				enableIP = "true");
-		}
-
-		task ("Signout and login at able.com") {
-			UserBar.signOut();
-
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.able.com:8080/",
-				userEmailAddress = "test@www.able.com");
-		}
-
-		task ("Send OTP email and assert informations for test test") {
-			MultiFactorAuthentication.viewOTPSendEmailButtonPresent();
-
-			MultiFactorAuthentication.sendOTPEmailPG();
-
-			MultiFactorAuthentication.verifyOTP(
-				portalURL = "http://www.able.com:8080",
-				recipient = "test test",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com",
-				userPassword = "test");
-		}
-	}
-
 	@description = "This is a use case for LPS-101720"
 	@priority = "5"
 	@uitest
@@ -1023,67 +1016,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-115566"
-	@priority = "5"
-	test CanRemoveTOTPVerificationOnInstanceLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanRemoveTOTPVerificationOnInstanceLevel";
-
-		task ("Add CP able.com") {
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
-				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com");
-		}
-
-		task ("Login at able.com") {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-		}
-
-		task ("Configure OTP email sender") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
-
-			MultiFactorAuthentication.configureOTPEmailSender(
-				emailAddress = "test@www.able.com",
-				emailSenderName = "Joe Bloggs");
-		}
-
-		task ("Enable OTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
-
-			MultiFactorAuthentication.configureOTP(enableOTP = "true");
-		}
-
-		task ("Enable TOTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(
-				baseURL = "http://www.able.com:8080",
-				portlet = "Time-Based OTP");
-
-			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
-		}
-
-		task ("Go to able.com and get TOTP") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
-
-			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
-
-			MultiFactorAuthentication.getTOTP();
-		}
-
-		task ("Remove TOTP and assert field is present") {
-			AssertClick(
-				key_text = "Remove Configured Time-Based One-Time Password",
-				locator1 = "Button#ANY",
-				value1 = "Remove Configured Time-Based One-Time Password");
-
-			MultiFactorAuthentication.viewTOTPFieldPresentOnMFA();
-		}
-	}
-
-	@description = "This is a use case for LPS-115566"
 	@priority = "4"
 	test RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1206,51 +1138,119 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-118204"
+	@description = "This is a use case for LPS-110309 and LPS-112805"
 	@priority = "4"
-	@uitest
-	test AssertDescriptionsOnTOTPConfigurationPage {
-		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+	test ViewDescriptionTextsForMFAConfigurationEntries {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewDescriptionTextsForMFAConfigurationEntries";
 
-		task ("Enable OTP") {
+		task ("Assert Disable multi-factor authentication system-wide message is present in Multi-Factor Authentication System configuration") {
+			MultiFactorAuthentication.openToConfigInSystemSettings();
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Disable Multi-Factor Authentication",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewSettingsText(settingsText = "Disable multi-factor authentication system-wide.");
+		}
+
+		task ("Assert default descriptions at multifactor authentication") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
+
+			MultiFactorAuthentication.assertDescriptions();
+		}
+	}
+
+	@description = "This is a use case for LPS-109786"
+	@priority = "4"
+	test ViewNotificationsAfterMFADisabledAndEnabled {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewNotificationsAfterMFADisabledAndEnabled";
+
+		task ("Add CP able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Login at able.com") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Configure MFA and Email OTP and enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.configureOTP(enableOTP = "true");
 		}
 
-		task ("Enable TOTP") {
-			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "Time-Based OTP");
-
-			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
-		}
-
-		task ("Get TOTP") {
+		task ("Diable MFA") {
 			Navigator.openURL();
 
-			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
-
-			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
-
-			MultiFactorAuthentication.getTOTP();
+			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "true");
 		}
 
-		task ("Assert warning message in TOTP description") {
-			MultiFactorAuthentication.viewWarningMessage();
+		task ("Go to able.com and Assert Instance administrator got notification in notifications list") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			Notifications.viewBadgeCount(notificationCount = "1");
+
+			Notifications.gotoNotifications();
+
 			AssertTextEquals(
-				locator1 = "MultiFactorAuthentication#TOTP_REMOVE_DESCRIPTION",
-				value1 = "You can only have one time-based one-time password configured for your account. Remove your existing time-based one-time password to generate a new time-based one-time password.");
+				key_contentBody = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.",
+				locator1 = "Notifications#NOTIFICATIONS_CONTENT",
+				value1 = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.");
 		}
 
-		task ("Signout and login") {
-			SignOut.signOut();
+		task ("Enable MFA") {
+			Navigator.openURL();
 
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 		}
-		task ("Check User TOTP UI") {
-			MultiFactorAuthentication.checkTOTPUI();
+
+		task ("Go to able.com and Assert Instance administrator got notification in notifications list") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			Notifications.viewBadgeCount(notificationCount = "2");
+
+			Notifications.gotoNotifications();
+
+			AssertTextEquals(
+				key_contentBody = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.",
+				locator1 = "Notifications#NOTIFICATIONS_CONTENT",
+				value1 = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.");
+		}
+
+		task ("Go to able.com and disable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
+
+			MultiFactorAuthentication.configureOTP(enableOTP = "false");
+		}
+
+		task ("Disable MFA") {
+			Navigator.openURL();
+
+			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "true");
+		}
+
+		task ("Go to able.com and and Assert Instance administrator got notification in notifications list") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			Notifications.viewBadgeCount(notificationCount = "2");
+		}
+
+		task ("Enable mfa") {
+			Navigator.openURL();
+
+			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
+		}
+
+		task ("Go to able.com and and Assert Instance administrator got notification in notifications list") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			Notifications.viewBadgeCount(notificationCount = "2");
 		}
 	}
 

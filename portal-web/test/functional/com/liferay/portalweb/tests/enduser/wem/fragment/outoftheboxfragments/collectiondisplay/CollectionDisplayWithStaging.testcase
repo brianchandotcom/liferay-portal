@@ -126,7 +126,7 @@ definition {
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Content Display",
 					position = "${n}",
 					text = "Web Content Content ${i}");
@@ -162,7 +162,7 @@ definition {
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Content Display",
 					position = "${n}",
 					text = "Web Content Content ${i}");
@@ -201,7 +201,7 @@ definition {
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Content Display",
 					position = "${n}",
 					text = "Web Content Content ${i}");
@@ -439,7 +439,7 @@ definition {
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Content Display",
 					position = "${n}",
 					text = "Web Content Content ${i}");
@@ -468,7 +468,7 @@ definition {
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Content Display",
 					position = "${n}",
 					text = "Web Content Content ${i}");
@@ -492,7 +492,7 @@ definition {
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Content Display",
 					position = "${n}",
 					text = "Web Content Content ${i}");

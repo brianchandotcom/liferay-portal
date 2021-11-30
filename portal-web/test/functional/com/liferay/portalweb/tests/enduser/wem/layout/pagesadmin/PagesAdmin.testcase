@@ -1222,7 +1222,7 @@ definition {
 				SelectFrameTop();
 
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Display Page Content",
 					text = "Web Content Content ${i}");
 
@@ -1251,7 +1251,7 @@ definition {
 				SelectFrameTop();
 
 				ContentPages.viewFragmentText(
-					assetType = "web-content",
+					assetType = "journal",
 					fragmentName = "Display Page Content",
 					text = "Web Content Content ${i}");
 

@@ -142,12 +142,12 @@ definition {
 			var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "${siteID}");
 
 			AssertTextNotEquals.assertNotPartialText(
-				assetType = "web-content",
+				assetType = "journal",
 				index = "1",
 				locator1 = "Fragment#CONTENT_DISPLAY_TEXT",
 				value1 = "This content maps from web content");
@@ -448,7 +448,7 @@ definition {
 
 		task ("View the Color field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "FF0D0D");
 		}
@@ -511,7 +511,7 @@ definition {
 
 		task ("View the Date field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "10 Oct 2020 - 00:00:00");
 		}
@@ -634,7 +634,7 @@ definition {
 
 		task ("View the Grid field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = '''{"R1":"C1"}''');
 		}
@@ -698,7 +698,7 @@ definition {
 
 		task ("View the Image field is shown in Content Display") {
 			ContentPages.viewFragmentImage(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				image = "Document_3.png");
 		}
@@ -827,7 +827,7 @@ definition {
 
 		task ("View the Multiple Selection field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = '''["First"]''');
 		}
@@ -890,7 +890,7 @@ definition {
 
 		task ("View the Numeric field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "9");
 		}
@@ -953,7 +953,7 @@ definition {
 
 		task ("View the Rich Text field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "This is a Rich Text field");
 		}
@@ -1014,7 +1014,7 @@ definition {
 
 		task ("View the Select from List field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Value2");
 		}
@@ -1075,7 +1075,7 @@ definition {
 
 		task ("View the Single Selection field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Value3");
 		}
@@ -1138,7 +1138,7 @@ definition {
 
 		task ("View the Text field is shown in Content Display") {
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "This is a Text field");
 		}

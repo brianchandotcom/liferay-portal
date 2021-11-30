@@ -220,7 +220,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertElementNotPresent(
-				assetType = "web-content",
+				assetType = "journal",
 				index = "1",
 				locator1 = "Fragment#CONTENT_DISPLAY_TEXT");
 
@@ -614,7 +614,7 @@ definition {
 				siteName = "Test Site Name");
 
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Web Content Content");
 		}
@@ -656,7 +656,7 @@ definition {
 				siteName = "Test Site Name");
 
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Web Content Content");
 
@@ -665,7 +665,7 @@ definition {
 			PageEditor.viewFragment(fragmentName = "Content Display");
 
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Web Content Content");
 		}
@@ -718,7 +718,7 @@ definition {
 			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 
 			ContentPages.viewFragmentText(
-				assetType = "blog",
+				assetType = "widget-content",
 				fragmentName = "Content Display",
 				text = "This content maps from blog content");
 		}

@@ -1886,7 +1886,7 @@ definition {
 
 				if (isSet(entryContent)) {
 					ContentPages.viewFragmentText(
-						assetType = "blog",
+						assetType = "widget-content",
 						fragmentName = "Content Display",
 						text = "${entryContent}");
 				}
@@ -1942,7 +1942,7 @@ definition {
 
 				if (isSet(webContentContent)) {
 					ContentPages.viewFragmentText(
-						assetType = "web-content",
+						assetType = "journal",
 						fragmentName = "Content Display",
 						text = "${webContentContent}");
 				}

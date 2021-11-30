@@ -1535,12 +1535,12 @@ definition {
 				image = "Document_1.jpg");
 
 			ContentPages.viewFragmentText(
-				assetType = "blog",
+				assetType = "widget-content",
 				fragmentName = "Content Display",
 				text = "Blogs Entry Content");
 
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Web Content Content");
 
@@ -1557,12 +1557,12 @@ definition {
 				image = "Document_1.jpg");
 
 			ContentPages.viewFragmentText(
-				assetType = "blog",
+				assetType = "widget-content",
 				fragmentName = "Content Display",
 				text = "Blogs Entry Content");
 
 			ContentPages.viewFragmentText(
-				assetType = "web-content",
+				assetType = "journal",
 				fragmentName = "Content Display",
 				text = "Web Content Content");
 		}

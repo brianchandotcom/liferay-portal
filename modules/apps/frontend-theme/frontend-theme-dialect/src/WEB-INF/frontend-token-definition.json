@@ -3516,90 +3516,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "100%",
-							"label": "nav-link-horizontal-active-indicator-length",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "nav-link-horizontal-active-indicator-length"
-								}
-							],
-							"name": "navLinkHorizontalActiveIndicatorLength",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.125rem",
-							"label": "nav-link-horizontal-active-indicator-thickness",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "nav-link-horizontal-active-indicator-thickness"
-								}
-							],
-							"name": "navLinkHorizontalActiveIndicatorThickness",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 1rem",
-							"label": "nav-link-horizontal-margin",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "nav-link-horizontal-margin"
-								}
-							],
-							"name": "navLinkHorizontalMargin",
-							"type": "String"
-						},
-						{
-							"defaultValue": "100%",
-							"label": "nav-link-vertical-active-indicator-length",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "nav-link-vertical-active-indicator-length"
-								}
-							],
-							"name": "navLinkVerticalActiveIndicatorLength",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.25rem",
-							"label": "nav-link-vertical-active-indicator-thickness",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "nav-link-vertical-active-indicator-thickness"
-								}
-							],
-							"name": "navLinkVerticalActiveIndicatorThickness",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1rem 0",
-							"label": "nav-link-vertical-margin",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "nav-link-vertical-margin"
-								}
-							],
-							"name": "navLinkVerticalMargin",
-							"type": "String"
-						}
-					],
-					"label": "nav-link",
-					"name": "navLink"
-				}
-			],
-			"label": "navigation",
-			"name": "navigation"
-		},
-		{
-			"frontendTokenSets": [
-				{
-					"frontendTokens": [
-						{
 							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
 							"label": "form-input-label-color",
@@ -4611,6 +4527,90 @@
 			],
 			"label": "labels",
 			"name": "labels"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "100%",
+							"label": "nav-link-horizontal-active-indicator-length",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "nav-link-horizontal-active-indicator-length"
+								}
+							],
+							"name": "navLinkHorizontalActiveIndicatorLength",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.125rem",
+							"label": "nav-link-horizontal-active-indicator-thickness",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "nav-link-horizontal-active-indicator-thickness"
+								}
+							],
+							"name": "navLinkHorizontalActiveIndicatorThickness",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 1rem",
+							"label": "nav-link-horizontal-margin",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "nav-link-horizontal-margin"
+								}
+							],
+							"name": "navLinkHorizontalMargin",
+							"type": "String"
+						},
+						{
+							"defaultValue": "100%",
+							"label": "nav-link-vertical-active-indicator-length",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "nav-link-vertical-active-indicator-length"
+								}
+							],
+							"name": "navLinkVerticalActiveIndicatorLength",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.25rem",
+							"label": "nav-link-vertical-active-indicator-thickness",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "nav-link-vertical-active-indicator-thickness"
+								}
+							],
+							"name": "navLinkVerticalActiveIndicatorThickness",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem 0",
+							"label": "nav-link-vertical-margin",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "nav-link-vertical-margin"
+								}
+							],
+							"name": "navLinkVerticalMargin",
+							"type": "String"
+						}
+					],
+					"label": "nav-link",
+					"name": "navLink"
+				}
+			],
+			"label": "navigation",
+			"name": "navigation"
 		}
 	]
 }

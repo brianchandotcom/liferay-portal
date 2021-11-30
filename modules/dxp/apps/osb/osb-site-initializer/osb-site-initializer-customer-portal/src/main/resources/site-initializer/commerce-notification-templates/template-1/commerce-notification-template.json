@@ -1,0 +1,17 @@
+{
+	"action": "create",
+	"bcc": "",
+	"cc": "",
+	"description": "",
+	"enabled": true,
+	"from": "solutions@liferay.com",
+	"fromName": {
+		"en-US": "Customer Portal"
+	},
+	"name": "SetupDXP notification template",
+	"objectDefinitionName": "C_SetupDXP",
+	"subject": {
+		"en-US": "Customer Portal email"
+	},
+	"to": "provisioning@liferay.cloud"
+}

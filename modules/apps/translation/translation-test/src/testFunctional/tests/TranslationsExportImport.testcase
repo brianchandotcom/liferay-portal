@@ -22,72 +22,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the translation files can be imported from a zip."
-	@priority = "5"
-	@refactordone
-	test CanImportWCWithZipFile {
-		JSONWebcontent.addWebContent(
-			content = "WebContent",
-			description = "Description",
-			groupName = "Guest",
-			title = "WebContentTitle");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
-
-		Translations.exportTranslation(
-			defaultLanguage = "English (United States)",
-			languageList = "German (Germany),Spanish (Spain)");
-
-		Translations.translateFile(
-			contentTranslation = "Contenidoweb",
-			descriptionTranslation = "Descripcion",
-			encoding = "false",
-			operation = "unzip",
-			titleTranslation = "Titulodelcontenidoweb",
-			translationFileName = "WebContentTitle-en_US-es_ES",
-			translationZipFileName = "WebContentTitle-en_US",
-			webContentContent = "WebContent",
-			webContentDescription = "Description",
-			webContentTitle = "WebContentTitle");
-
-		Translations.translateFile(
-			contentTranslation = "Internetinhalt",
-			descriptionTranslation = "Beschreibung",
-			encoding = "false",
-			operation = "zip",
-			titleTranslation = "TiteldesWebinhalts",
-			translationFileName = "WebContentTitle-en_US-de_DE",
-			translationZipFileName = "WebContentTitle-en_US",
-			webContentContent = "WebContent",
-			webContentDescription = "Description",
-			webContentTitle = "WebContentTitle");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		Translations.importTranslation(
-			fileName = "WebContentTitle-en_US_translated.zip",
-			filePath = "",
-			webContentTitle = "WebContentTitle");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
-
-		PortletEntry.changeLocale(locale = "es-ES");
-
-		WebContent.viewCP(
-			webContentContent = "Contenidoweb",
-			webContentDescription = "Descripcion",
-			webContentTitle = "Titulodelcontenidoweb");
-
-		PortletEntry.changeLocale(locale = "de-DE");
-
-		WebContent.viewCP(
-			webContentContent = "Internetinhalt",
-			webContentDescription = "Beschreibung",
-			webContentTitle = "TiteldesWebinhalts");
-	}
-
 	@description = "This ensures that a translated zip file with all available language can be exported."
 	@priority = "5"
 	@refactordone
@@ -178,6 +112,72 @@ definition {
 			webContentTitle = "Titulodelcontenidoweb");
 	}
 
+	@description = "This ensures that the translation files can be imported from a zip."
+	@priority = "5"
+	@refactordone
+	test CanImportWCWithZipFile {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "German (Germany),Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb",
+			descriptionTranslation = "Descripcion",
+			encoding = "false",
+			operation = "unzip",
+			titleTranslation = "Titulodelcontenidoweb",
+			translationFileName = "WebContentTitle-en_US-es_ES",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.translateFile(
+			contentTranslation = "Internetinhalt",
+			descriptionTranslation = "Beschreibung",
+			encoding = "false",
+			operation = "zip",
+			titleTranslation = "TiteldesWebinhalts",
+			translationFileName = "WebContentTitle-en_US-de_DE",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US_translated.zip",
+			filePath = "",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "Contenidoweb",
+			webContentDescription = "Descripcion",
+			webContentTitle = "Titulodelcontenidoweb");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.viewCP(
+			webContentContent = "Internetinhalt",
+			webContentDescription = "Beschreibung",
+			webContentTitle = "TiteldesWebinhalts");
+	}
+	
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
 	@priority = "5"
 	@refactordone

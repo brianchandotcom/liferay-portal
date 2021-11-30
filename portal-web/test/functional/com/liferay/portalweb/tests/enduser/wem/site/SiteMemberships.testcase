@@ -28,57 +28,66 @@ definition {
 		}
 	}
 
-	@description = "Assert could assign user to new site in site membership admin."
+	@description = "Assert could assign user to new site in site memberships admin."
 	@priority = "4"
 	test AddMember {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user and add a site") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+		task ("Assign user to the site") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 	}
 
-	@description = "Assert could assign site role to default site in site membership admin."
+	@description = "Assert could assign site role to default site in site memberships admin."
 	@priority = "5"
 	test AddMemberAssignSiteRole {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user and assign him to default site") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+		task ("Assign Site Content Reviewer to the user") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+			Site.assignSiteRoleCP(
+				resourceName = "userfn userln",
+				roleTitle = "Site Content Reviewer");
+		}
 
-		Site.assignSiteRoleCP(
-			resourceName = "userfn userln",
-			roleTitle = "Site Content Reviewer");
+		task ("View the user has Site Content Reviewer role in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-		Site.viewSiteRoleViaSiteMembershipsCP(
-			resourceName = "userfn userln",
-			roleTitle = "Site Content Reviewer");
+			Site.viewSiteRoleViaSiteMembershipsCP(
+				resourceName = "userfn userln",
+				roleTitle = "Site Content Reviewer");
+		}
 	}
 
 	@description = "Assert could assign organization to default site in site membership admin."
@@ -86,318 +95,392 @@ definition {
 	test AddMemberOrganization {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		JSONOrganization.addOrganization(organizationName = "Organization Name");
+		task ("Add an organization") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign organization to site in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
+			Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("View the user has Organization Name in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.viewMemberOrganizationCP(orgName = "Organization Name");
+			Site.viewMemberOrganizationCP(orgName = "Organization Name");
+		}
 	}
 
-	@description = "Assert could assign users to new site in site membership admin."
+	@description = "Assert could assign users to new site in site memberships admin."
 	@priority = "5"
 	test AddMembersSiteUser {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		for (var userNum : list "1,2,3") {
-			JSONUser.addUser(
-				userEmailAddress = "userea${userNum}@liferay.com",
-				userFirstName = "userfn${userNum}",
-				userLastName = "userln${userNum}",
-				userScreenName = "usersn${userNum}");
+		task ("Add 3 users and a site") {
+			for (var userNum : list "1,2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+
+			JSONGroup.addGroup(groupName = "Site Name");
 		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Assign users to site in memberships admin") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		for (var userNum : list "1,2,3") {
-			Site.assignUserAsMemberCP(
-				userFirstName = "userfn${userNum}",
-				userLastName = "userln${userNum}",
-				userScreenName = "usersn${userNum}");
+			for (var userNum : list "1,2,3") {
+				Site.assignUserAsMemberCP(
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
 		}
+		task ("View the users in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		for (var userNum : list "1,2,3") {
-			Site.viewMemberCP(
-				siteName = "Site Name",
-				siteScopeName = "Site Name",
-				userFirstName = "userfn${userNum}",
-				userLastName = "userln${userNum}",
-				userScreenName = "usersn${userNum}");
+			for (var userNum : list "1,2,3") {
+				Site.viewMemberCP(
+					siteName = "Site Name",
+					siteScopeName = "Site Name",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
 		}
 	}
 
-	@description = "Assert could assign uer group to default site in site membership admin."
+	@description = "Assert could assign uer group to default site in site memberships admin."
 	@priority = "4"
 	@uitest
 	test AddMemberUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
-		UserGroup.openUserGroupsAdmin();
+		task ("Add a user group") {
+			UserGroup.openUserGroupsAdmin();
 
-		UserGroup.addCP(userGroupName = "User Group Name");
+			UserGroup.addCP(userGroupName = "User Group Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign user group to default site in memberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("View the user group in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.viewMemberUserGroupCP(userGroupName = "User Group Name");
+			Site.viewMemberUserGroupCP(userGroupName = "User Group Name");
+		}
 	}
 
-	@description = "Assert could assign site role to user group in site membership admin."
+	@description = "Assert could assign site role to user group in site memberships admin."
 	@priority = "4"
 	@uitest
 	test AddMemberUserGroupAssignSiteRole {
 		property testray.component.names = "Site Administration,User Groups";
 
-		UserGroup.openUserGroupsAdmin();
+		task ("Add a user group") {
+			UserGroup.openUserGroupsAdmin();
 
-		UserGroup.addCP(userGroupName = "User Group Name");
+			UserGroup.addCP(userGroupName = "User Group Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign user group to default site in memberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign Site Content Reviewer role to user group in default site") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		NavItem.gotoUserGroups();
+			NavItem.gotoUserGroups();
 
-		Site.assignSiteRoleToUserGroup(
-			roleName = "Site Content Reviewer",
-			userGroupName = "User Group Name");
+			Site.assignSiteRoleToUserGroup(
+				roleName = "Site Content Reviewer",
+				userGroupName = "User Group Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("View the user group and its role in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		NavItem.gotoUserGroups();
+			NavItem.gotoUserGroups();
 
-		Site.viewUserGroupSiteRoleViaSiteMembershipsCP(
-			resourceName = "User Group Name",
-			roleTitle = "Site Content Reviewer");
+			Site.viewUserGroupSiteRoleViaSiteMembershipsCP(
+				resourceName = "User Group Name",
+				roleTitle = "Site Content Reviewer");
+		}
 	}
 
-	@description = "Assert could limit memebership in site membership admin."
+	@description = "Assert could limit memebership in site memberships admin."
 	@priority = "4"
 	test LimitMembershipParentSite {
 		property testray.component.names = "Site Administration";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and add a child site in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONGroup.addChildGroup(
-			groupName = "Child SiteName",
-			parentGroupName = "Site Name");
+			JSONGroup.addChildGroup(
+				groupName = "Child SiteName",
+				parentGroupName = "Site Name");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "child-sitename");
+		task ("Limit memebershio in memeberships") {
+			Site.openSiteSettingsAdmin(siteURLKey = "child-sitename");
 
-		Site.limitMembership(siteLimitMembership = "Yes");
+			Site.limitMembership(siteLimitMembership = "Yes");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user and assign the user to parent site in memeberships") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+		task ("View the user in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.viewMemberCP(
-			siteName = "Site Name",
-			siteScopeName = "Site Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Site.viewMemberCP(
+				siteName = "Site Name",
+				siteScopeName = "Site Name",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Assign the user to child site in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
+
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("View the user in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
+
+			Site.viewMemberCP(
+				childSiteName = "Site Name",
+				siteScopeName = "Child SiteName",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Remove the user from child site and parent site in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
+
+			Site.removeMemberCP(
+				siteName = "Child SiteName",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+			Site.removeMemberCP(
+				siteName = "Site Name",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
-
-		Site.viewMemberCP(
-			childSiteName = "Site Name",
-			siteScopeName = "Child SiteName",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
-
-		Site.removeMemberCP(
-			siteName = "Child SiteName",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
-
-		Site.removeMemberCP(
-			siteName = "Site Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Site.openSiteMembershipsAdmin(siteURLKey = "child-sitename");
-
-		Site.viewLimitMembershipParentSiteCP(
-			siteName = "Site Name",
-			siteScopeName = "Child SiteName",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("View no user in memeberships") {
+			Site.viewLimitMembershipParentSiteCP(
+				siteName = "Site Name",
+				siteScopeName = "Child SiteName",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 	}
 
-	@description = "Assert could assign prganization in site membership admin."
+	@description = "Assert could assign organization in site memberships admin."
 	@priority = "5"
 	test OrganizationsView {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SiteMemberships#OrganizationsView";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		SearchAdministration.executeReindex();
+		task ("Reindex search") {
+			SearchAdministration.executeReindex();
+		}
 
-		JSONOrganization.addOrganization(
-			organizationName = "Organization Name 1",
-			organizationSite = "true");
+		task ("Add an organization and add a page in it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 1",
+				organizationSite = "true");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Organization Name 1",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Organization Name 1",
+				layoutName = "Site Page");
+		}
 
-		User.openUsersAdmin();
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 
-		User.addCP(
-			allowManualMembershipManagement = "true",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Assign created user to organization in user admin") {
+			User.openUsersAdmin();
 
-		User.openUsersAdmin();
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.assignUser(
+				orgName = "Organization Name 1",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userName = "userfn userln",
+				userScreenName = "usersn");
+		}
 
-		Organization.assignUser(
-			orgName = "Organization Name 1",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userName = "userfn userln",
-			userScreenName = "usersn");
+		task ("Assign default user to organization in user admin") {
+			User.openUsersAdmin();
 
-		User.openUsersAdmin();
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.assignUser(
+				orgName = "Organization Name 1",
+				userFirstName = "Test",
+				userLastName = "Test",
+				userName = "Test Test",
+				userScreenName = "test");
+		}
 
-		Organization.assignUser(
-			orgName = "Organization Name 1",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userName = "Test Test",
-			userScreenName = "test");
+		task ("Allow manual memebership management for Organization Name 1") {
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+		}
 
-		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+		task ("View Organization Name 1 in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
+			Site.viewMemberOrganizationCP(orgName = "Organization Name 1");
+		}
 
-		Site.viewMemberOrganizationCP(orgName = "Organization Name 1");
+		task ("Add another 2 organizations") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
-		JSONOrganization.addOrganization(organizationName = "Organization Name 2");
+			JSONOrganization.addOrganization(organizationName = "Organization Name 3");
+		}
 
-		JSONOrganization.addOrganization(organizationName = "Organization Name 3");
+		task ("Assign the user to organization site in memeberships") {
+			SitePages.openPagesAdmin(siteURLKey = "Organization Name 1");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name 1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Assign the second organization to organization site and view it in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
+			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
 
-		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
+			Site.viewMemberOrganizationCP(orgName = "Organization Name 2");
+		}
 
-		Site.viewMemberOrganizationCP(orgName = "Organization Name 2");
+		task ("Assign the third organization to organization site and view it in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
+			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 3");
 
-		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 3");
+			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
-
-		Site.viewMemberOrganizationCP(orgName = "Organization Name 3");
+			Site.viewMemberOrganizationCP(orgName = "Organization Name 3");
+		}
 	}
 
-	@description = "Assert could remove memebership in site membership admin."
+	@description = "Assert could remove memebership in site memberships admin."
 	@priority = "5"
 	test RemoveMember {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and assign the created user") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.addUserToSite(
+				groupName = "Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+		task ("Remove user from site in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.removeMemberCP(
-			siteName = "Site Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Site.removeMemberCP(
+				siteName = "Site Name",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 	}
 
-	@description = "Assert could search organization memebership in site membership admin."
+	@description = "Assert could search organization memebership in site memberships admin."
 	@priority = "3"
 	test SiteMembershipSearchOrganization {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		for (var n : list "1,2") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name ${n}");
+		task ("Add 2 organizations") {
+			for (var n : list "1,2") {
+				JSONOrganization.addOrganization(organizationName = "Organization Name ${n}");
+			}
 		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign the first organization to site in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 1");
+			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 1");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assert could not find the second orgnization in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		NavItem.gotoOrganizations();
+			NavItem.gotoOrganizations();
 
-		Site.searchMembershipCP(
-			emptyResults = "true",
-			searchValue = "&quot;Organization Name 2&quot;");
+			Site.searchMembershipCP(
+				emptyResults = "true",
+				searchValue = "&quot;Organization Name 2&quot;");
+		}
 
-		Site.searchMembershipCP(searchValue = "&quot;Organization Name 1&quot;");
+		task ("Assert could find the first orgnization in memeberships") {
+			Site.searchMembershipCP(searchValue = "&quot;Organization Name 1&quot;");
+		}
 	}
 
 	@description = "Assert could search user group memebership in site membership admin."
@@ -405,366 +488,443 @@ definition {
 	test SiteMembershipSearchUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
-		for (var n : list "1,2") {
-			UserGroup.openUserGroupsAdmin();
+		task ("Add 2 user groups") {
+			for (var n : list "1,2") {
+				UserGroup.openUserGroupsAdmin();
 
-			UserGroup.addCP(userGroupName = "User Group Name ${n}");
+				UserGroup.addCP(userGroupName = "User Group Name ${n}");
+			}
 		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign the first user group to site in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name 1");
+			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name 1");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assert could not find the second orgnization in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		NavItem.gotoUserGroups();
+			NavItem.gotoUserGroups();
 
-		Site.searchMembershipCP(
-			emptyResults = "true",
-			searchValue = "&quot;User Group Name 2&quot;");
+			Site.searchMembershipCP(
+				emptyResults = "true",
+				searchValue = "&quot;User Group Name 2&quot;");
+		}
 
-		Site.searchMembershipCP(searchValue = "&quot;User Group Name 1&quot;");
+		task ("Assert could find the first orgnization in memeberships") {
+			Site.searchMembershipCP(searchValue = "&quot;User Group Name 1&quot;");
+		}
 	}
 
-	@description = "View pagination in site membership admin."
+	@description = "View pagination in site memberships admin."
 	@priority = "3"
 	test SiteMembershipsPagination {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		for (var screenName : list "userfn1,userfn2,userfn3,userfn4,userfn5,userfn6,userfn7,userfn8,userfn9,userfn10") {
-			JSONUser.addUser(
-				userEmailAddress = "${screenName}@liferay.com",
-				userFirstName = "${screenName}",
-				userLastName = "${screenName}",
-				userScreenName = "${screenName}");
+		task ("Add 10 users") {
+			for (var screenName : list "userfn1,userfn2,userfn3,userfn4,userfn5,userfn6,userfn7,userfn8,userfn9,userfn10") {
+				JSONUser.addUser(
+					userEmailAddress = "${screenName}@liferay.com",
+					userFirstName = "${screenName}",
+					userLastName = "${screenName}",
+					userScreenName = "${screenName}");
+			}
 		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and assign 10 users to the site") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.addAllMembersCP();
+			Site.addAllMembersCP();
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+		task ("View 10 users in memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
-		Site.viewMemberListCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
+			Site.viewMemberListCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
 
-		Site.viewMemberCP(
-			userFirstName = "Test",
-			userLastName = "Test",
-			userScreenName = "test");
+			Site.viewMemberCP(
+				userFirstName = "Test",
+				userLastName = "Test",
+				userScreenName = "test");
+		}
 
-		NavItem.gotoUsers();
+		task ("Change the pagination from 20 to 4") {
+			NavItem.gotoUsers();
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "20 Entries");
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
+				value1 = "20 Entries");
 
-		MenuItem.click(menuItem = "4");
+			MenuItem.click(menuItem = "4");
+		}
 
-		AssertTextEquals(
-			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = "Showing 1 to 4 of 11 entries.");
+		task ("Check the pagination in 4 in the first page and the next page") {
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 1 to 4 of 11 entries.");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+			Click(locator1 = "Pagination#NEXT_LINK");
 
-		AssertTextEquals(
-			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = "Showing 5 to 8 of 11 entries.");
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 5 to 8 of 11 entries.");
+		}
 
-		Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
+		task ("View 4 users of the second page in memeberships") {
+			Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
 
-		Site.viewMemberListCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com");
+			Site.viewMemberListCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com");
+		}
 
-		Click(locator1 = "Pagination#FIRST_LINK");
+		task ("Change the pagination in 4 back to the first page and check the pagination") {
+			Click(locator1 = "Pagination#FIRST_LINK");
 
-		AssertTextEquals(
-			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = "Showing 1 to 4 of 11 entries.");
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 1 to 4 of 11 entries.");
+		}
 
-		Site.viewMemberListCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn10@liferay.com");
+		task ("View 4 users of the first page in memeberships") {
+			Site.viewMemberListCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn10@liferay.com");
 
-		Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com");
+			Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com");
 
-		Site.viewMemberCP(
-			userFirstName = "Test",
-			userLastName = "Test",
-			userScreenName = "test");
+			Site.viewMemberCP(
+				userFirstName = "Test",
+				userLastName = "Test",
+				userScreenName = "test");
+		}
 
-		Click(locator1 = "Pagination#LAST_LINK");
+		task ("Go to the last page and check the pagination") {
+			Click(locator1 = "Pagination#LAST_LINK");
 
-		AssertTextEquals(
-			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = "Showing 9 to 11 of 11 entries.");
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 9 to 11 of 11 entries.");
+		}
 
-		Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn10@liferay.com");
+		task ("View 4 users of the last page in memeberships") {
+			Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn10@liferay.com");
 
-		Site.viewMemberListCP(usersEmailsList = "userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com");
+			Site.viewMemberListCP(usersEmailsList = "userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com");
+		}
 
-		Click(locator1 = "Pagination#PREVIOUS_LINK");
+		task ("Click the previous page link and assert the pagination") {
+			Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-		AssertTextEquals(
-			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = "Showing 5 to 8 of 11 entries.");
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_SELECT",
+				value1 = "Showing 5 to 8 of 11 entries.");
+		}
 
-		Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
+		task ("View 4 users of the previous page in memeberships") {
+			Site.assertMemberListNotVisibleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
 
-		Site.viewMemberListCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com");
+			Site.viewMemberListCP(usersEmailsList = "userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com");
+		}
 	}
 
-	@description = "Assert could search user via user info in site membership admin."
+	@description = "Assert could search user via user info in site memberships admin."
 	@priority = "4"
 	test SiteMembershipsSearch {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		JSONUser.addUser(
-			userEmailAddress = "4568@liferay.com",
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1");
+		task ("Add 3 users") {
+			JSONUser.addUser(
+				userEmailAddress = "4568@liferay.com",
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1");
 
-		JSONUser.addUser(
-			userEmailAddress = "5670@liferay.com",
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
+			JSONUser.addUser(
+				userEmailAddress = "5670@liferay.com",
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
 
-		JSONUser.addUser(
-			userEmailAddress = "9758@liferay.com",
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
+			JSONUser.addUser(
+				userEmailAddress = "9758@liferay.com",
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign 3 users to the default site") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.addAllMembersCP();
+			Site.addAllMembersCP();
+		}
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest1",
-			userFirstNameSearchValue = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1");
+		task ("Search each one of the 3 users by user name") {
+			Site.searchMemberCP(
+				userFirstName = "userfnTest1",
+				userFirstNameSearchValue = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1");
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest2",
-			userFirstNameSearchValue = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
+			Site.searchMemberCP(
+				userFirstName = "userfnTest2",
+				userFirstNameSearchValue = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest3",
-			userFirstNameSearchValue = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
+			Site.searchMemberCP(
+				userFirstName = "userfnTest3",
+				userFirstNameSearchValue = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
+		task ("Search each one of the 3 users by part of first name") {
+			Site.searchMemberCP(
+				userFirstName = "userfnTest1",
+				userFirstNameSearchValue = "Test",
+				userLastName = "One",
+				userScreenName = "user1");
+		}
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest1",
-			userFirstNameSearchValue = "Test",
-			userLastName = "One",
-			userScreenName = "user1");
+		task ("View user 2 and user 3 are also displayed since they also have Text in their first name") {
+			Site.viewMemberCP(
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
+			Site.viewMemberCP(
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
+		task ("Search each one of the 3 users by screen name") {
+			Site.searchMemberCP(
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1",
+				userScreenNameSearchValue = "user1");
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1",
-			userScreenNameSearchValue = "user1");
+			Site.searchMemberCP(
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2",
+				userScreenNameSearchValue = "screen");
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2",
-			userScreenNameSearchValue = "screen");
+			Site.searchMemberCP(
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3",
+				userScreenNameSearchValue = "member");
+		}
 
-		Site.searchMemberCP(
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3",
-			userScreenNameSearchValue = "member");
+		task ("Search each one of the 3 users and default user by part of email address") {
+			Site.searchMemberCP(
+				userEmailAddress = "4568@liferay.com",
+				userEmailAddressSearchValue = "4",
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1");
 
-		Site.searchMemberCP(
-			userEmailAddress = "4568@liferay.com",
-			userEmailAddressSearchValue = "4",
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1");
+			Site.searchMemberCP(
+				userEmailAddress = "4568@liferay.com",
+				userEmailAddressSearchValue = "5",
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1");
+		}
 
-		Site.searchMemberCP(
-			userEmailAddress = "4568@liferay.com",
-			userEmailAddressSearchValue = "5",
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1");
+		task ("View user 2 and user 3 are also displayed since they also have 5 in their address name") {
+			Site.viewMemberCP(
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
+			Site.viewMemberCP(
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
+		task ("Search user by part of email address") {
+			Site.searchMemberCP(
+				userEmailAddress = "4568@liferay.com",
+				userEmailAddressSearchValue = "6",
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1");
+		}
 
-		Site.searchMemberCP(
-			userEmailAddress = "4568@liferay.com",
-			userEmailAddressSearchValue = "6",
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1");
+		task ("View user 2 is also displayed since it also has 6 in its address name") {
+			Site.viewMemberCP(
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
+		}
+		task ("Search user by part of email address") {
+			Site.searchMemberCP(
+				userEmailAddress = "5670@liferay.com",
+				userEmailAddressSearchValue = "7",
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
+		}
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
+		task ("View user 3 is also displayed since it also has 7 in its address name") {
+			Site.viewMemberCP(
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
 
-		Site.searchMemberCP(
-			userEmailAddress = "5670@liferay.com",
-			userEmailAddressSearchValue = "7",
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
+		task ("Search user by part of email address") {
+			Site.searchMemberCP(
+				userEmailAddress = "4568@liferay.com",
+				userEmailAddressSearchValue = "8",
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userScreenName = "user1");
+		}
+		task ("View user 3 is also displayed since it also has 8 in its address name") {
+			Site.viewMemberCP(
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
+		task ("Search user by part of email address") {
+			Site.searchMemberCP(
+				userEmailAddress = "5670@liferay.com",
+				userEmailAddressSearchValue = "0",
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userScreenName = "screen2");
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
+			Site.searchMemberCP(
+				userEmailAddress = "4568@liferay.com",
+				userEmailAddressSearchValue = "9",
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userScreenName = "member3");
+		}
 
-		Site.searchMemberCP(
-			userEmailAddress = "4568@liferay.com",
-			userEmailAddressSearchValue = "8",
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userScreenName = "user1");
+		task ("Search each one of the 3 users by last name") {
+			Site.searchMemberCP(
+				userFirstName = "userfnTest1",
+				userLastName = "One",
+				userLastNameSearchValue = "One",
+				userScreenName = "user1");
 
-		Site.viewMemberCP(
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
+			Site.searchMemberCP(
+				userFirstName = "userfnTest2",
+				userLastName = "Two",
+				userLastNameSearchValue = "Two",
+				userScreenName = "screen2");
 
-		Site.searchMemberCP(
-			userEmailAddress = "5670@liferay.com",
-			userEmailAddressSearchValue = "0",
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userScreenName = "screen2");
-
-		Site.searchMemberCP(
-			userEmailAddress = "4568@liferay.com",
-			userEmailAddressSearchValue = "9",
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userScreenName = "member3");
-
-		Site.searchMemberCP(
-			userFirstName = "userfnTest1",
-			userLastName = "One",
-			userLastNameSearchValue = "One",
-			userScreenName = "user1");
-
-		Site.searchMemberCP(
-			userFirstName = "userfnTest2",
-			userLastName = "Two",
-			userLastNameSearchValue = "Two",
-			userScreenName = "screen2");
-
-		Site.searchMemberCP(
-			userFirstName = "userfnTest3",
-			userLastName = "Three",
-			userLastNameSearchValue = "Three",
-			userScreenName = "member3");
+			Site.searchMemberCP(
+				userFirstName = "userfnTest3",
+				userLastName = "Three",
+				userLastNameSearchValue = "Three",
+				userScreenName = "member3");
+		}
 	}
 
-	@description = "View memebership request in site membership admin."
+	@description = "View memebership request in site memberships admin."
 	@priority = "3"
 	test ViewMembershipRequestWithSiteMembershipScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		for (var i : list "1,2") {
-			JSONGroup.addGroup(
-				groupName = "Site Name ${i}",
-				membershipType = "Restricted");
+		task ("Add 2 sites") {
+			for (var i : list "1,2") {
+				JSONGroup.addGroup(
+					groupName = "Site Name ${i}",
+					membershipType = "Restricted");
+			}
 		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user ad change its password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "Userfn Userln",
-			userScreenName = "usersn");
+		task ("Log out and log in as the created user and join the first created site from User Bar") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "Userfn Userln",
+				userScreenName = "usersn");
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.joinViaMySitesPG(
-			membershipType = "Restricted",
-			siteName = "Site Name 1",
-			userRole = "Guest");
+			Site.joinViaMySitesPG(
+				membershipType = "Restricted",
+				siteName = "Site Name 1",
+				userRole = "Guest");
+		}
 
-		User.logoutAndLoginPG(userLoginFullName = "Test Test");
+		task ("Log out and log in as the default user and view request from first created site") {
+			User.logoutAndLoginPG(userLoginFullName = "Test Test");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name-1");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name-1");
 
-		Site.viewSiteMembershipsRequest(
-			userFirstName = "userfn",
-			userLastName = "userln");
+			Site.viewSiteMembershipsRequest(
+				userFirstName = "userfn",
+				userLastName = "userln");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "site-name-2");
+		task ("View no request from the second created site") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name-2");
 
-		Site.viewNoSiteMembershipsRequest();
+			Site.viewNoSiteMembershipsRequest();
+		}
 	}
 
-	@description = "Assert could not add user with Allow Manual Membership Management disabled."
+	@description = "Assert could not view memeberships with Allow Manual Membership Management disabled."
 	@priority = "3"
 	@uitest
 	test ViewNoManualMembershipManagement {
 		property testray.component.names = "Site Administration";
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		task ("Allow manual memebership management from site settings") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
-		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+		}
 
-		Navigator.openURL();
+		task ("Go to view memberships from product menu") {
+			Navigator.openURL();
 
-		ProductMenuHelper.openProductMenu();
+			ProductMenuHelper.openProductMenu();
 
-		ProductMenuHelper.expandCategory(category = "People");
+			ProductMenuHelper.expandCategory(category = "People");
 
-		AssertVisible(
-			key_portlet = "Memberships",
-			locator1 = "ProductMenu#PORTLET");
+			AssertVisible(
+				key_portlet = "Memberships",
+				locator1 = "ProductMenu#PORTLET");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		task ("Disable manual memebership management from site settings") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
-		Site.manageMembershipOptions(allowManualMembershipManagement = "false");
+			Site.manageMembershipOptions(allowManualMembershipManagement = "false");
+		}
 
-		Navigator.openURL();
+		task ("Go to view memberships not displayed in product menu") {
+			Navigator.openURL();
 
-		ProductMenuHelper.openProductMenu();
+			ProductMenuHelper.openProductMenu();
 
-		ProductMenuHelper.expandCategory(category = "People");
+			ProductMenuHelper.expandCategory(category = "People");
 
-		AssertElementNotPresent(
-			key_portlet = "Memberships",
-			locator1 = "ProductMenu#PORTLET");
+			AssertElementNotPresent(
+				key_portlet = "Memberships",
+				locator1 = "ProductMenu#PORTLET");
+		}
 	}
-
 }

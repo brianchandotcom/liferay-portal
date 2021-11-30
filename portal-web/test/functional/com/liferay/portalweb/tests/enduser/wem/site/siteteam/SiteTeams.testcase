@@ -349,7 +349,6 @@ definition {
 		}
 	}
 
-
 	@description = "Able to delete site team."
 	@priority = "5"
 	@uitest
@@ -546,4 +545,5 @@ definition {
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
+
 }

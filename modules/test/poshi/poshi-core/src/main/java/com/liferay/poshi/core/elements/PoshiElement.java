@@ -15,7 +15,6 @@
 package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.PoshiContext;
-import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.script.UnbalancedCodeException;
 import com.liferay.poshi.core.util.Dom4JUtil;
@@ -957,29 +956,6 @@ public abstract class PoshiElement
 
 		if (poshiScriptStatementMatcher.find()) {
 			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isValidUtilityClassName(String classCommandName) {
-		String className = getClassName(classCommandName);
-
-		if (className.equals("selenium")) {
-			return true;
-		}
-
-		try {
-			if (!className.contains(".")) {
-				className = PoshiGetterUtil.getUtilityClassName(className);
-			}
-
-			if (PoshiGetterUtil.isValidUtilityClass(className)) {
-				return true;
-			}
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			return false;
 		}
 
 		return false;

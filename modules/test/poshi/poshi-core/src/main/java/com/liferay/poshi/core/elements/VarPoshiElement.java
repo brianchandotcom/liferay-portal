@@ -176,7 +176,23 @@ public class VarPoshiElement extends PoshiElement {
 			return;
 		}
 
-		if (isValidUtilityClassName(value) || value.startsWith("selenium.")) {
+		if ((!isValidFunctionFileName(value) && !isValidMacroFileName(value)) ||
+			value.startsWith("selenium.")) {
+
+			Matcher matcher = _varValueMathExpressionPattern.matcher(value);
+
+			if (matcher.matches()) {
+				String mathOperation = _mathOperatorsMap.get(matcher.group(2));
+
+				String mathUtilValue = StringUtil.combine(
+					"MathUtil#", mathOperation, "('", matcher.group(1), "', '",
+					matcher.group(3), "')");
+
+				addAttribute("method", mathUtilValue);
+
+				return;
+			}
+
 			value = value.replaceFirst("\\.", "#");
 
 			String content = getParentheticalContent(value);
@@ -187,20 +203,6 @@ public class VarPoshiElement extends PoshiElement {
 			}
 
 			addAttribute("method", value);
-
-			return;
-		}
-
-		Matcher matcher = _varValueMathExpressionPattern.matcher(value);
-
-		if (matcher.find()) {
-			String mathOperation = _mathOperatorsMap.get(matcher.group(2));
-
-			String mathUtilValue = StringUtil.combine(
-				"MathUtil#", mathOperation, "('", matcher.group(1), "', '",
-				matcher.group(3), "')");
-
-			addAttribute("method", mathUtilValue);
 		}
 	}
 
@@ -268,7 +270,8 @@ public class VarPoshiElement extends PoshiElement {
 				}
 			}
 			else if (valueAttributeName.equals("method")) {
-				if (isValidUtilityClassName(value) ||
+				if ((!isValidFunctionFileName(value) &&
+					 !isValidMacroFileName(value)) ||
 					value.startsWith("selenium#")) {
 
 					value = value.replaceFirst("#", ".");

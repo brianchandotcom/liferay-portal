@@ -50,7 +50,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -104,12 +103,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		catch (PortalException portalException) {
 			throw new IOException(portalException);
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
-			FragmentEntryLink.class.getName());
 	}
 
 	private FragmentEntry _getContributedFragmentEntry(
@@ -234,6 +227,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
+		PortalCache<String, String> portalCache =
+			(PortalCache<String, String>)_multiVMPool.getPortalCache(
+				FragmentEntryLink.class.getName());
+
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			fragmentRendererContext);
 
@@ -257,7 +254,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext.isUseCachedContent() &&
 			_isCacheable(fragmentEntryLink)) {
 
-			content = _portalCache.get(cacheKeySB.toString());
+			content = portalCache.get(cacheKeySB.toString());
 
 			if (Validator.isNotNull(content)) {
 				return content;
@@ -342,7 +339,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				FragmentEntryLinkConstants.VIEW) &&
 			_isCacheable(fragmentEntryLink)) {
 
-			_portalCache.put(cacheKeySB.toString(), content);
+			portalCache.put(cacheKeySB.toString(), content);
 		}
 
 		return content;
@@ -364,8 +361,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		return unsyncStringWriter.toString();
 	}
-
-	private static PortalCache<String, String> _portalCache;
 
 	@Reference
 	private FragmentCollectionContributorTracker

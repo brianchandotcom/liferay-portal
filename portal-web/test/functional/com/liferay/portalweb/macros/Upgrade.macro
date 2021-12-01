@@ -2456,16 +2456,6 @@ definition {
 	}
 
 	macro validateDepotWCAndStructure {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page",
-			widgetName = "Search Results");
-
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");

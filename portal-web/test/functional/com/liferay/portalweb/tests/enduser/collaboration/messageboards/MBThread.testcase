@@ -521,16 +521,6 @@ definition {
 		AssertAlertNotPresent();
 	}
 
-	@description = "This is a test for LPS-136915. It checks that an attachment can be restored."
-	@ignore = "true"
-	@priority = "3"
-	test CanRestoreAttachment {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136915 CanRestoreAttachment pending implementation
-
-	}
-
 	@priority = "5"
 	@refactordone
 	test CanRestoreThread {

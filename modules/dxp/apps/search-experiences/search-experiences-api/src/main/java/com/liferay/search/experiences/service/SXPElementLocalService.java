@@ -104,6 +104,8 @@ public interface SXPElementLocalService
 	@Transactional(enabled = false)
 	public SXPElement createSXPElement(long sxpElementId);
 
+	public void deleteCompanySXPElements(long companyId) throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

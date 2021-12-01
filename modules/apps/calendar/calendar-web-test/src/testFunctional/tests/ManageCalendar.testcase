@@ -314,12 +314,11 @@ definition {
 	}
 
 	@description = "LRQA-71360 - Verify  that the Manage Calendar page displays the  Name, Description, Color and Default columns"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplayNameDescriptionColorsDefaultColumns {
+		CalendarNavigator.gotoMyCalendarsManage();
 
-		// TODO LRQA-71552 DisplayNameDescriptionColorsDefaultColumns pending implementation
-
+		ManageCalendar.viewTableDisplaysColumns();
 	}
 
 	@priority = "3"

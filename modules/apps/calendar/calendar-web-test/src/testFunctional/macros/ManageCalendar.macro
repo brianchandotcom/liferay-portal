@@ -22,3 +22,12 @@ definition {
 	}
 
 }
+    macro viewTableDisplaysColumns {
+		for (var tableHeader : list "Name,Description,Color,Default") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
+	}
+
+}

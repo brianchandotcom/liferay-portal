@@ -1,7 +1,19 @@
 {
+	"boxShadowLg": {
+		"cssVariableMapping": "box-shadow-lg",
+		"value": "0px 5px 15px rgba(0, 54, 156, 0.12);"
+	},
+	"colorNeutral7": {
+		"cssVariableMapping": "color-neutral-7",
+		"value": "#64676F"
+	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
 		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"colorNeutral5": {
+		"cssVariableMapping": "color-neutral-5",
+		"value": "#91959B"
 	},
 	"fontFamilySansSerif": {
 		"cssVariableMapping": "font-family-sans-serif",

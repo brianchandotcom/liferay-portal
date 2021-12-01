@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_PRIORITY_SELECT</td>
+	<td>//select[contains(@id,'MBPortlet') and contains(@id,'priority')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_PUBLISH_BUTTON</td>
 	<td>//div[@class='card panel']//button[span[contains(.,'Publish')]]</td>
 	<td></td>

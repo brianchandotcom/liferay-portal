@@ -30,10 +30,13 @@ const KEY_CODE = {
 	RIGTH: 39,
 };
 
+const noop = () => {};
+
 const ItemSelectorPreview = ({
 	container,
 	currentIndex = 0,
 	editImageURL,
+	handleClose = noop,
 	handleSelectedItem,
 	headerTitle,
 	itemReturnType,
@@ -51,10 +54,12 @@ const ItemSelectorPreview = ({
 	const isMounted = useIsMounted();
 
 	const close = useCallback(() => {
+		handleClose();
+
 		if (container) {
 			ReactDOM.unmountComponentAtNode(container);
 		}
-	}, [container]);
+	}, [container, handleClose]);
 
 	const handleCancelEditing = () => {
 		setIsEditing(false);

@@ -458,7 +458,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115566. End user is able to remove TOTP verification step and generate new TOTP verification step."
+	@description = "This is a use case for LPS-115566. Able to remove TOTP verification and generate new TOTP verification on instance."
 	@priority = "5"
 	test CanRemoveTOTPVerificationOnInstanceLevel {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanRemoveTOTPVerificationOnInstanceLevel";
@@ -607,6 +607,7 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
 
 		var portalURL = PropsUtil.get("portal.url");
+
 		task ("Add user with password") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -943,7 +944,7 @@ definition {
 			MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
 		}
 
-		task ("Sign out and login withg userea@liferay.com") {
+		task ("Sign out and login with userea@liferay.com") {
 			SignOut.signOut();
 
 			User.firstLoginUI(
@@ -965,8 +966,6 @@ definition {
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
-
-			var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
 
 			MultiFactorAuthentication.getTOTP();
 		}

@@ -11,6 +11,10 @@
 		"cssVariableMapping": "color-action-primary-active",
 		"value": "#004AD7"
 	},
+	"colorActionPrimaryDefault": {
+		"cssVariableMapping": "color-action-primary-default",
+		"value": "#0B5FFF"
+	},
 	"colorActionPrimaryHover": {
 		"cssVariableMapping": "color-action-primary-hover",
 		"value": "#2932b3"
@@ -21,7 +25,7 @@
 	},
 	"colorNeutral9": {
 		"cssVariableMapping": "color-neutral-9",
-		"value": "#332b4a"
+		"value": "#3A3C46"
 	},
 	"colorNeutral8": {
 		"cssVariableMapping": "color-neutral-8",
@@ -34,10 +38,6 @@
 	"colorNeutral5": {
 		"cssVariableMapping": "color-neutral-5",
 		"value": "#91959B"
-	},
-	"colorActionPrimaryDefault": {
-		"cssVariableMapping": "color-action-primary-default",
-		"value": "#0B5FFF"
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",

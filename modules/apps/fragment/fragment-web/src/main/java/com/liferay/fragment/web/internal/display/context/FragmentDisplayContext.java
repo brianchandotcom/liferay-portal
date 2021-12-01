@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -515,8 +517,9 @@ public class FragmentDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
+			"fragment-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -706,8 +709,9 @@ public class FragmentDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "create-date");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
+			"fragment-order-by-col", "create-date");
 
 		return _orderByCol;
 	}

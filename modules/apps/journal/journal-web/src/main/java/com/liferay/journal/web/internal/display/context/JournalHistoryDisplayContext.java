@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -126,33 +127,25 @@ public class JournalHistoryDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "version");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"history-order-by-col", "version");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		String orderByType = ParamUtil.getString(_renderRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			_portalPreferences.setValue(
-				JournalPortletKeys.JOURNAL, "orderByType", orderByType);
-		}
-		else {
-			orderByType = _portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "orderByType", "asc");
-		}
-
-		_orderByType = orderByType;
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"history-order-by-type", "asc");
 
 		return _orderByType;
 	}

@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -207,7 +209,9 @@ public class FragmentEntryLinkDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_renderRequest, "orderByCol", "name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_renderRequest, FragmentPortletKeys.FRAGMENT,
+			"fragment-entry-link-order-by-col", "name");
 
 		return _orderByCol;
 	}
@@ -217,8 +221,9 @@ public class FragmentEntryLinkDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_renderRequest, FragmentPortletKeys.FRAGMENT,
+			"fragment-entry-link-order-by-type", "asc");
 
 		return _orderByType;
 	}

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -196,7 +197,14 @@ public class ExportImportToolbarDisplayContext {
 	}
 
 	public String getSortingOrder() {
-		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, ExportImportPortletKeys.EXPORT_IMPORT, "asc");
+
+		return _orderByType;
 	}
 
 	public String getSortingURL() {
@@ -422,6 +430,7 @@ public class ExportImportToolbarDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByType;
 	private final String _portletNamespace;
 
 }

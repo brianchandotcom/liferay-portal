@@ -22,8 +22,7 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -87,33 +86,13 @@ public class DDMFormInstanceRecordSearch
 				setSearch(true);
 			}
 
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				"view-entries-order-by-col", "id");
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
-
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
-
-				preferences.setValue(
-					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-					"view-entries-order-by-col", orderByCol);
-				preferences.setValue(
-					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-					"view-entries-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-					"view-entries-order-by-col", "id");
-				orderByType = preferences.getValue(
-					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-					"view-entries-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				"view-entries-order-by-type", "asc");
 
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator =
 				getDDMFormInstanceRecordOrderByComparator(

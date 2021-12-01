@@ -88,10 +88,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${spURL}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -131,10 +128,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${idpURL}");
 
 		SAMLNavigation.gotoServiceProviderConnection();
 
@@ -238,10 +232,7 @@ definition {
 			Navigator.openSpecificURL(url = "${idpURL}");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${idpURL}");
 
 		SAMLRole.configure(
 			samlEntityID = "${samlEntityID}",
@@ -289,10 +280,7 @@ definition {
 
 		takeScreenshot();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
 		SAMLRole.configure(
 			samlEntityID = "${samlEntityID}",
@@ -340,10 +328,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -374,10 +359,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${idpURL}");
 
 		SAMLNavigation.gotoServiceProviderConnection();
 
@@ -422,10 +404,7 @@ definition {
 			specificURL = "${spURL}/?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin&saveLastPath=false",
 			userEmailAddress = "${userEmailAddress}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -445,10 +424,7 @@ definition {
 			specificURL = "${idpURL}",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${idpURL}");
 
 		SAMLNavigation.gotoServiceProviderConnection();
 
@@ -474,10 +450,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${idpURL}");
 
 		SAMLNavigation.gotoServiceProviderConnection();
 
@@ -493,10 +466,7 @@ definition {
 
 		// Enable SAML debug logs
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin();
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryName = "com.liferay.saml.opensaml.integration",
@@ -524,10 +494,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${spURL}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
 		SAMLRole.enable(samlEntityID = "${samlEntityID}");
 
@@ -773,10 +740,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${spURL}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
 		SAMLRole.configure(
 			samlEntityID = "${samlEntityID}",

@@ -38,7 +38,7 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet");
+			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.addCategoryLogLevels(
 				categoryName = "com.liferay.saml.opensaml.integration",
@@ -52,29 +52,17 @@ definition {
 		}
 
 		task ("Add CP") {
-			Navigator.openURL();
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage/-/sites/");
+			Site.openSitesAdmin();
 
 			Site.addBlankCP(siteName = "Site Name");
 		}
 
 		task ("Add user group CP") {
-			Navigator.openURL();
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet");
-
-			UserGroup.addCP(userGroupName = "UG UserGroup Name");
+			JSONUserGroup.addUserGroup(userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign user group as member CP") {
-			Navigator.openURL();
-
-			SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Memberships");
+			Site.openSiteMembershipsAdmin(siteURLKey = "Site Name");
 
 			Site.assignUserGroupAsMemberCP(
 				siteName = "Site Name",
@@ -82,23 +70,13 @@ definition {
 		}
 
 		task ("Assign site role to user group") {
-			Navigator.openURL();
-
-			SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Memberships");
-
 			Site.assignSiteRoleToUserGroup(
 				roleName = "TestSiteRole",
 				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign member CP") {
-			Navigator.openURL();
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet");
+			UserGroup.openUserGroupsAdmin();
 
 			UserGroup.assignMemberCP(
 				userGroupName = "UG UserGroup Name",
@@ -106,14 +84,7 @@ definition {
 		}
 
 		task ("View user information roles CP") {
-			Navigator.openURL();
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.gotoEditCP(userScreenName = "test");
 
@@ -181,7 +152,7 @@ definition {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:9080",
 				userEmailAddress = "test@liferay.com",
@@ -300,7 +271,7 @@ definition {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:9080",
 				userEmailAddress = "test@liferay.com",
@@ -386,7 +357,7 @@ definition {
 		task ("Configure samlsp as SP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLRole.configure(
 				samlEntityID = "samlsp",
@@ -423,7 +394,7 @@ definition {
 		task ("Configure samlsp as service provider") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLRole.configure(
 				samlEntityID = "samlsp",
@@ -462,7 +433,7 @@ definition {
 		}
 
 		task ("Add CP able.com") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -478,9 +449,7 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			var baseURL1 = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL1}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:8080");
 
 			SAML.viewIdPIconTooltip();
 		}
@@ -501,7 +470,7 @@ definition {
 		}
 
 		task ("Add CP able.com and baker.com") {
-			Navigator.openSpecificURL(url = "http://localhost:9080/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+			PortalInstances.openVirtualInstancesAdmin(baseURL = "http://localhost:9080");
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -638,7 +607,7 @@ definition {
 		task ("Configure samlsp as SP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLRole.configure(
 				samlEntityID = "samlsp",
@@ -707,7 +676,7 @@ definition {
 		}
 
 		task ("Edit user information") {
-			Navigator.gotoAccountSettings();
+			MyAccount.openMyAccountAdmin();
 
 			User.editUserInformation(userFirstNameEdit = "Testedit");
 		}
@@ -717,10 +686,7 @@ definition {
 
 			Navigator.gotoLoginPage();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = "http://www.able.com:9080");
 
 			User.viewCP(
 				userEmailAddress = "test@liferay.com",
@@ -747,7 +713,7 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 		}
 
 		task ("Disable IdP") {
@@ -855,7 +821,7 @@ definition {
 		}
 
 		task ("Configure IdP idle timout as 60") {
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "${portalURL}");
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1031,7 +997,7 @@ definition {
 
 		task ("Setup IdP") {
 			SAML.setupIDP(
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				samlEntityID = "samlidp",
 				userEmailAddress = "test@liferay.com");
 		}
@@ -1049,7 +1015,7 @@ definition {
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -1115,7 +1081,7 @@ definition {
 		task ("Disable auth and request signature required on IdP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1159,7 +1125,7 @@ definition {
 		task ("Configure IdP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1196,7 +1162,7 @@ definition {
 		task ("Disable auth and request signature required on IdP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1204,7 +1170,7 @@ definition {
 		}
 
 		task ("Disable sign auth and requests on SP") {
-			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "www.able.com:9080");
 
 			SAMLNavigation.gotoServiceProvider();
 
@@ -1251,7 +1217,7 @@ definition {
 		task ("Configure IdP") {
 			Navigator.openURL();
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAMLNavigation.gotoIdentityProvider();
 
@@ -1310,7 +1276,7 @@ definition {
 		}
 
 		task ("Add IdP connection") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:8080");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -1320,7 +1286,7 @@ definition {
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpNameID = "samlidp",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Unspecified",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -1394,7 +1360,7 @@ definition {
 		}
 
 		task ("Add IdP connection") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:8080");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -1405,7 +1371,7 @@ definition {
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpMetadataURL = "http://localhost:8080/c/portal/saml/metadata",
 				idpNameID = "samlidp",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Unspecified",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -1439,8 +1405,6 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
-
 			PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
 			PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
@@ -1452,8 +1416,6 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 			Navigator.gotoLoginPage();
-
-			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
 			PortalSettings.addLDAPServer(
 				baseURL = "http://www.able.com:9080",
@@ -1497,7 +1459,7 @@ definition {
 		task ("View CP ldapuseremail@liferay.com information") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+			User.openUsersAdmin();
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",
@@ -1520,7 +1482,7 @@ definition {
 
 			SAML.loginIfProductMenuNotOpened();
 
-			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:9080");
 
 			SAMLNavigation.gotoServiceProvider();
 
@@ -1544,7 +1506,7 @@ definition {
 		}
 
 		task ("View CP at able.com:9080") {
-			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+			User.openUsersAdmin(baseURL = "http://www.able.com:9080");
 
 			User.viewCP(
 				userEmailAddress = "ldapuseremail@liferay.com",
@@ -1589,7 +1551,7 @@ definition {
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -1675,7 +1637,7 @@ definition {
 				idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Unspecified",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -1759,7 +1721,7 @@ definition {
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Unspecified",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -1982,7 +1944,7 @@ definition {
 				idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
 				idpEntityID = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpURL = "http://localhost:8080/",
+				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Unspecified",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
@@ -2031,7 +1993,7 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+			User.openUsersAdmin();
 
 			User.singleDeactivateCP(userFirstName = "first");
 
@@ -2047,7 +2009,7 @@ definition {
 
 			User.firstLoginUI(
 				emailPassword = "test",
-				specificURL = "http://www.able.com:8080/",
+				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "user1@liferay.com");
 
 			SAML.viewAuthenticationFailedErrorMessage();
@@ -2072,7 +2034,7 @@ definition {
 
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.saml.runtime.configuration.SamlConfiguration");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 		}
@@ -2117,7 +2079,7 @@ definition {
 		task ("Convert encryption certificate") {
 			Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-			Navigator.openSpecificURL(url = "http://www.able.com:9080/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:9080");
 
 			SAML.downloadCertificate(certificate = "ENCRYPTION");
 
@@ -2172,7 +2134,7 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			SAML.goToSAMLAdmin();
 
 			SAML.downloadCertificate(certificate = "SIGNING");
 
@@ -2690,10 +2652,7 @@ definition {
 		}
 
 		task ("Add category levels and log out") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Server Administration");
+			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.addCategoryLogLevels(
 				categoryName = "com.liferay.saml.opensaml.integration",
@@ -2743,9 +2702,9 @@ definition {
 		}
 
 		task ("Add WC CP with malicious URL") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content");
+			WebContentNavigator.openWebContentAdmin(
+				baseURL = "http://www.able.com:9080",
+				siteURLKey = "guest");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -2769,9 +2728,7 @@ definition {
 
 			User.viewLoggedInPG();
 
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -2891,10 +2848,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
 
 		task ("Add CP able.com and baker.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -3051,10 +3005,7 @@ definition {
 				specificURL = "http://localhost:9080",
 				userEmailAddress = "test@liferay.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin(baseURL = "http://localhost:9080");
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -3166,10 +3117,7 @@ definition {
 				specificURL = "http://www.able.com:9080",
 				userEmailAddress = "test@liferay.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:9080");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -3183,10 +3131,7 @@ definition {
 
 			Navigator.gotoLoginPage();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			SAML.goToSAMLAdmin(baseURL = "http://www.baker.com:9080");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -3235,10 +3180,7 @@ definition {
 		}
 
 		task ("Add category log levels") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Server Administration");
+			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.addCategoryLogLevels(
 				categoryName = "com.liferay.saml.opensaml.integration",
@@ -3326,10 +3268,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -3476,10 +3415,7 @@ definition {
 		}
 
 		task ("Delete SAML connection samlidp and samlidp2") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			SAML.goToSAMLAdmin(baseURL = "http://www.baker.com:9080");
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
@@ -3508,10 +3444,7 @@ definition {
 		}
 
 		task ("Disable allow showing the login portlet") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "SAML Admin");
+			SAML.goToSAMLAdmin(baseURL = "http://www.baker.com:9080");
 
 			SAMLNavigation.gotoServiceProvider();
 
@@ -4181,10 +4114,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithTransientNameId";
 
 		task ("Add CP able.com") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -4235,10 +4165,7 @@ uuid''',
 		}
 
 		task ("Assert duplicate user not present") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 			SAML.viewNoDuplicateUser(user = "Test Test");
 

@@ -1,3 +1,9 @@
+.entry-category {
+	color: var(--gray-400);
+	font-family: var(--font-family-monospace);
+	z-index: 1;
+}
+
 .entry-header {
 	color: var(--white);
 	padding-top: 10rem;
@@ -19,12 +25,6 @@
 	display: flex;
 	flex-direction: column;
 	text-align: center;
-}
-
-.entry-category {
-	color: var(--gray-400);
-	font-family: var(--font-family-monospace);
-	z-index: 1;
 }
 
 .entry-image {

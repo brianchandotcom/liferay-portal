@@ -2,14 +2,34 @@ body {
 	background-color: var(--gray-200);
 }
 
+a.card-content {
+	color: var(--gray-900);
+}
+
+a.card-content:hover {
+	box-shadow: var(--box-shadow-lg);
+	color: var(--gray-900);
+	text-decoration: none;
+	transform: translateY(-0.5rem);
+	transition: 0.1s ease-in-out;
+}
+
+
+a.card-content:hover + .position-social {
+	transform: translateY(-0.5rem);
+	transition: 0.1s ease-in-out;
+}
+
 .position-card {
 	display: block;
 	margin-bottom: var(--spacer-3);
 	position: relative;
 }
 
-a.card-content {
-	color: var(--gray-900);
+.position-card:after {
+	content: '';
+	display: block;
+	padding-top: calc(100%);
 }
 
 .position-card .card-content {
@@ -23,58 +43,6 @@ a.card-content {
 	width: 100%;
 }
 
-a.card-content:hover {
-	box-shadow: var(--box-shadow-lg);
-	color: var(--gray-900);
-	text-decoration: none;
-	transform: translateY(-0.5rem);
-	transition: 0.1s ease-in-out;
-}
-
-.position-card:after {
-	content: '';
-	display: block;
-	padding-top: calc(100%);
-}
-
-.position-card-date {
-	color: var(--gray-500);
-	font-family: var(--font-family-monospace);
-	margin-bottom: var(--spacer-2);
-}
-
-.position-card-title {
-	margin-bottom: calc(var(--spacer-1) * 0.5);
-}
-
-.position-card-region {
-	color: var(--brand-color-3);
-	font-weight: var(--font-weight-normal);
-}
-
-.position-short-description {
-	transform: translatey(-4rem);
-}
-
-.position-social {
-	bottom: 8px;
-	padding: var(--spacer-4);
-	position: absolute;
-	z-index: 3;
-}
-
-a.card-content:hover + .position-social {
-	transform: translateY(-0.5rem);
-	transition: 0.1s ease-in-out;
-}
-
-.position-social .social-link {
-	margin-right: var(--spacer-2);
-}
-
-.position-social svg {
-	width: 20px;
-}
 
 .position-card.featured {
 	fill: var(--white);
@@ -102,6 +70,40 @@ a.card-content:hover + .position-social {
 	top: 48px;
 	width: 96px;
 	z-index: 2;
+}
+
+.position-card-date {
+	color: var(--gray-500);
+	font-family: var(--font-family-monospace);
+	margin-bottom: var(--spacer-2);
+}
+
+.position-card-region {
+	color: var(--brand-color-3);
+	font-weight: var(--font-weight-normal);
+}
+
+.position-card-title {
+	margin-bottom: calc(var(--spacer-1) * 0.5);
+}
+
+.position-short-description {
+	transform: translatey(-4rem);
+}
+
+.position-social {
+	bottom: 8px;
+	padding: var(--spacer-4);
+	position: absolute;
+	z-index: 3;
+}
+
+.position-social .social-link {
+	margin-right: var(--spacer-2);
+}
+
+.position-social svg {
+	width: 20px;
 }
 
 @media (min-width: 768px) {

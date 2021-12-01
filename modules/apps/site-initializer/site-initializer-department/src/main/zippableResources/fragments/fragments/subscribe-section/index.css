@@ -58,6 +58,10 @@
 	color: var(--primary);
 }
 
+.subscribe-section img {
+	filter: grayscale(100%);
+}
+
 .subscribe-section .img-author {
 	color: var(--col-gray-900);
 	font-family: var(--font-family-monospace);
@@ -66,10 +70,6 @@
 	right: -96px;
 	top: 100px;
 	transform: rotate(-90deg);
-}
-
-.subscribe-section img {
-	filter: grayscale(100%);
 }
 
 .subscribe-section .image-overlay {

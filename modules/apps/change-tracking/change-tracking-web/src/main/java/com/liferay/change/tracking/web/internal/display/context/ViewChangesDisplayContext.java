@@ -527,6 +527,9 @@ public class ViewChangesDisplayContext {
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
+			"navigationFromURL",
+			ParamUtil.getString(_renderRequest, "navigation")
+		).put(
 			"orderByTypeFromURL",
 			ParamUtil.getString(_renderRequest, "orderByType")
 		).put(

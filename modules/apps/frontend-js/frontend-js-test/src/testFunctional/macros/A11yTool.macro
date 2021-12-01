@@ -1,13 +1,111 @@
 definition {
 
-	macro setFilter {
+	macro assertAllImpactViolationsPresentInSidePanel {
+		AssertElementPresent(
+			key_impact = "critical",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+		AssertElementPresent(
+			key_impact = "serious",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+		AssertElementPresent(
+			key_impact = "moderate",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+		AssertElementPresent(
+			key_impact = "minor",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+	}
+
+	macro assertAllImpactViolationsPresentOnPage {
+		A11yTool.clickOnAllViolations();
+
+		AssertElementPresent(
+			key_impact = "critical",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+
+		AssertElementPresent(
+			key_impact = "serious",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+
+		AssertElementPresent(
+			key_impact = "moderate",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+
+		AssertElementPresent(
+			key_impact = "minor",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+	}
+
+	macro checkFilter {
 		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
 
-		Click(
-			key_text = "${filterType}",
+		Check.checkNotVisible(
+			key_filter = "${filterType}",
 			locator1 = "A11yTool#FILTER_CHECKBOX");
 
 		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+	}
+
+	macro clickOnAllViolations {
+		var count = "1";
+
+		while (IsElementPresent(key_index = "${count}", locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX")) {
+			Click(
+				key_index = "${count}",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
+
+			var count = ${count} + 1;
+		}
+	}
+
+	macro uncheckFilter {
+		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+
+		Uncheck.uncheckVisible(
+			key_filter = "${filterType}",
+			locator1 = "A11yTool#FILTER_CHECKBOX");
+
+		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+	}
+
+	macro waitForAllImpactViolationsPresentInSidePanel {
+		WaitForElementPresent(
+			key_impact = "critical",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+		WaitForElementPresent(
+			key_impact = "serious",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+		WaitForElementPresent(
+			key_impact = "moderate",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+
+		WaitForElementPresent(
+			key_impact = "minor",
+			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+	}
+
+	macro waitForAllImpactViolationsPresentOnPage {
+		A11yTool.clickOnAllViolations();
+
+		WaitForElementPresent(
+			key_impact = "critical",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+
+		WaitForElementPresent(
+			key_impact = "serious",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+
+		WaitForElementPresent(
+			key_impact = "moderate",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+
+		WaitForElementPresent(
+			key_impact = "minor",
+			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
 	}
 
 }

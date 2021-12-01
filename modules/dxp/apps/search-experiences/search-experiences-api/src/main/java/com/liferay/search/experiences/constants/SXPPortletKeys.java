@@ -23,6 +23,10 @@ public class SXPPortletKeys {
 		"com_liferay_search_experiences_web_internal_blueprint_admin_portlet" +
 			"_SXPBlueprintAdminPortlet";
 
+	public static final String SXP_BLUEPRINT_OPTIONS =
+		"com_liferay_search_experiences_web_internal_blueprint_options" +
+			"_portlet_SXPBlueprintOptionsPortlet";
+
 	public static final String SXP_POWER_TOOLS =
 		"com_liferay_search_experiences_web_internal_power_tools_portlet" +
 			"_SXPPowerToolsPortlet";

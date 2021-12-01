@@ -366,13 +366,31 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "Verify that the translation icon has the Instance Language by default"
-	@ignore = "Test Stub"
+	@description = "LRQA-71601 - Verify that the translation icon has the Instance Language by default"
 	@priority = "4"
 	test TranslationIconHasInstanceLanguageByDefault {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
 
-		// TODO LRQA-71601 TranslationIconHasInstanceLanguageByDefault pending implementation
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
 
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.add(
+			calendarName = "My Calendar Name",
+			calendarType = "My Calendars",
+			user = "Test Test");
+
+		CalendarMyCalendars.gotoCalendarSettings(calendarName = "My Calendar Name");
+		
+		Calendar.viewSelectedNameLanguage(language = "pt-BR");
 	}
 
 	@description = "LRQA-71598 - Verify that the Time Zone selected by default follows the User's preferences."

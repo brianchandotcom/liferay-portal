@@ -848,4 +848,10 @@ definition {
 			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
 	}
 
+	macro viewSelectedNameLanguage {
+		AssertElementPresent(
+			key_locale = "${language}",
+			locator1 = "Calendar#VIEW_SELECTED_NAME_LANGUAGE");
+	}
+
 }

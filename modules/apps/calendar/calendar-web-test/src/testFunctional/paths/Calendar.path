@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_SELECTED_NAME_LANGUAGE</td>
+	<td>//span[contains(@class,'btn-section') and contains(.,'${key_locale}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

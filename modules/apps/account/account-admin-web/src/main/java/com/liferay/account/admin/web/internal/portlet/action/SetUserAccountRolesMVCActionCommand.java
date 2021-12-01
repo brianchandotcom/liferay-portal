@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.AccountRoleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -70,16 +71,19 @@ public class SetUserAccountRolesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		_accountRoleLocalService.associateUser(
+		_accountRoleService.associateUser(
 			accountEntryId, accountRoleIds, accountUserId);
 
 		for (AccountRole accountRole : removeAccountRoles) {
-			_accountRoleLocalService.unassociateUser(
+			_accountRoleService.unassociateUser(
 				accountEntryId, accountRole.getAccountRoleId(), accountUserId);
 		}
 	}
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private AccountRoleService _accountRoleService;
 
 }

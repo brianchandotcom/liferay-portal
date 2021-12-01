@@ -17,19 +17,18 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.AccountRoleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -57,9 +56,6 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 	protected AccountRole addAccountRole(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -70,9 +66,8 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 
 		_roleLocalService.validateName(name);
 
-		return _accountRoleLocalService.addAccountRole(
-			themeDisplay.getUserId(), accountEntryId, name, titleMap,
-			descriptionMap);
+		return _accountRoleService.addAccountRole(
+			accountEntryId, name, titleMap, descriptionMap);
 	}
 
 	@Override
@@ -140,6 +135,9 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private AccountRoleService _accountRoleService;
 
 	@Reference
 	private Http _http;

@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.AccountRoleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,11 +49,11 @@ public class DeleteAccountRolesMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "accountRoleIds");
 
 		for (long accountRoleId : accountRoleIds) {
-			_accountRoleLocalService.deleteAccountRole(accountRoleId);
+			_accountRoleService.deleteAccountRole(accountRoleId);
 		}
 	}
 
 	@Reference
-	private AccountRoleLocalService _accountRoleLocalService;
+	private AccountRoleService _accountRoleService;
 
 }

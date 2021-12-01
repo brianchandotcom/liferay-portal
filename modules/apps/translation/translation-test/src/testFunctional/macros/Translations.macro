@@ -478,7 +478,7 @@ definition {
 		}
 	}
 
-	macro translateSpecificFieldsWithGoogle {
+	macro translateSpecificFieldWithGoogle {
 		Click.clickNoMouseOver(
 			key_title = "Auto Translate ${fieldName} Field",
 			locator1 = "Button#ANY_TITLE");

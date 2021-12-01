@@ -1,6 +1,6 @@
 definition {
 
-    macro viewColorByColumn {
+	macro viewColorByColumn {
 		if (isSet(colorList)) {
 			var rowNumber = "1";
 

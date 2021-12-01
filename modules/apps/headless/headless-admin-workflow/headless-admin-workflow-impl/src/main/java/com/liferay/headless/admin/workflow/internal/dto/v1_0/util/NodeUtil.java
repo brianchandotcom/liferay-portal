@@ -15,10 +15,14 @@
 package com.liferay.headless.admin.workflow.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.Node;
+import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowDefinitionResourceImpl;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -26,14 +30,32 @@ import java.util.ResourceBundle;
 public class NodeUtil {
 
 	public static Node toNode(
-		Language language, String name, ResourceBundle resourceBundle,
-		WorkflowNode.Type type) {
+		Language language, Locale locale, WorkflowNode workflowNode) {
 
 		Node node = new Node();
 
-		node.setLabel(language.get(resourceBundle, name));
-		node.setName(name);
-		node.setType(Node.Type.create(type.name()));
+		node.setLabel(
+			() -> {
+				Map<Locale, String> labelMap = workflowNode.getLabelMap();
+
+				if (MapUtil.isNotEmpty(labelMap) &&
+					(labelMap.get(locale) != null)) {
+
+					return labelMap.get(locale);
+				}
+
+				return language.get(
+					ResourceBundleUtil.getModuleAndPortalResourceBundle(
+						locale, WorkflowDefinitionResourceImpl.class),
+					workflowNode.getName());
+			});
+		node.setName(workflowNode.getName());
+		node.setType(
+			() -> {
+				WorkflowNode.Type workflowNodeType = workflowNode.getType();
+
+				return Node.Type.create(workflowNodeType.name());
+			});
 
 		return node;
 	}

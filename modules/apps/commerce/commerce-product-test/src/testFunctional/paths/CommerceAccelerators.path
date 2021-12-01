@@ -172,22 +172,22 @@
 </tr>
 <tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD</td>
-	<td>//p[@title='${key_productName}']//../..//input[(@class='form-control quantity-selector')]</td>
+	<td>//p[@title='${key_productName}']//..//..//input[contains(@class,"quantity-selector")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD</td>
-	<td>//p[@title='${key_productName}']//../..//select[(@class='form-control quantity-selector')]</td>
+	<td>//p[@title='${key_productName}']//..//..//select[contains(@class,"quantity-selector")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_OPTION_VALUE</td>
-	<td>//p[@title='${key_productName}']//../..//input[@class='form-control quantity-selector' and @value='${key_optionValue}']</td>
+	<td>//p[@title='${key_productName}']//..//..//input[contains(@class,"quantity-selector") and @value='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE</td>
-	<td>//p[@title='${key_productName}']//../..//select[(@class='form-control quantity-selector')]//option[@value='${key_optionValue}']</td>
+	<td>//p[@title='${key_productName}']//..//..//select[contains(@class,"quantity-selector")]//option[@value='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>

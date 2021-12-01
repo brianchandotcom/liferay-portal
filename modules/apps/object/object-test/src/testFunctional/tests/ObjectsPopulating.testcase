@@ -256,7 +256,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntry(entry = "2001-01-01");
+		ObjectPortlet.viewEntry(entry = "01/01/2001");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Double type and view its entries"
@@ -503,8 +503,6 @@ definition {
 	@description = "LPS-136451 - Verify if it's possible to see the entries of a field with capitalized letters in the name"
 	@priority = "4"
 	test FieldWithCapitalizedLetters {
-		property portal.acceptance = "true";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -551,7 +549,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntry(entry = "2001-01-01");
+		ObjectPortlet.viewEntry(entry = "01/01/2001");
 	}
 
 }

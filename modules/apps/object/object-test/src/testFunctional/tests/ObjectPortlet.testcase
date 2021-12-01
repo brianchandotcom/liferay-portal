@@ -202,11 +202,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "01-01-2001");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "01/01/2001");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntry(entry = "2001-01-01");
+		ObjectPortlet.viewEntry(entry = "01/01/2001");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Double field on layout"
@@ -891,14 +891,14 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.updateEntry(
-			entry = "2001-01-01",
-			updateEntry = "02-02-2002");
+			entry = "01/01/2001",
+			updateEntry = "02/02/2002");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertEntryNotPresent(entry = "2001-01-01");
+		ObjectPortlet.assertEntryNotPresent(entry = "01/01/2001");
 
-		ObjectPortlet.viewEntry(entry = "2002-02-02");
+		ObjectPortlet.viewEntry(entry = "02/02/2002");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Double entry on layout"
@@ -1780,11 +1780,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "2001-01-01");
+		ObjectPortlet.viewEntryDetails(entry = "01/01/2001");
 
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 
-		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "2001-01-01");
+		ObjectPortlet.assertEntryDetailsValuePresent(entryValue = "01/01/2001");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a Double entry and label on layout"

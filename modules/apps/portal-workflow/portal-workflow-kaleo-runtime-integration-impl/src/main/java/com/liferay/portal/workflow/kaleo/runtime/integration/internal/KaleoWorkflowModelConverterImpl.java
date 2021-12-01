@@ -415,6 +415,7 @@ public class KaleoWorkflowModelConverterImpl
 				DefaultWorkflowNode defaultWorkflowNode =
 					new DefaultWorkflowNode();
 
+				defaultWorkflowNode.setLabelMap(kaleoNode.getLabelMap());
 				defaultWorkflowNode.setName(kaleoNode.getName());
 
 				WorkflowNode.Type workflowNodeType = WorkflowNode.Type.valueOf(

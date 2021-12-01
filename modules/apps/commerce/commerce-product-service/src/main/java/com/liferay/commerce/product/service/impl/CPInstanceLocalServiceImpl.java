@@ -852,7 +852,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			String sku = _getSKU(
 				cpDefinitionOptionValueRels, serviceContext.getLanguageId());
 
-			CPInstance cpInstance = cpInstancePersistence.fetchByC_S(
+			CPInstance cpInstance = cpInstancePersistence.fetchByCPDI_SKU(
 				cpDefinitionId, sku);
 
 			if (cpInstance != null) {
@@ -1086,7 +1086,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance getCPInstance(long cpDefinitionId, String sku)
 		throws PortalException {
 
-		return cpInstancePersistence.findByC_S(cpDefinitionId, sku);
+		return cpInstancePersistence.findByCPDI_SKU(cpDefinitionId, sku);
 	}
 
 	@Override
@@ -1115,6 +1115,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return cpInstancePersistence.findByG_ST(
 			groupId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CPInstance> getCPInstances(long companyId, String sku) {
+		return cpInstancePersistence.findByC_SKU(companyId, sku);
 	}
 
 	@Override
@@ -2229,7 +2234,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					cpDefinitionId);
 		}
 
-		CPInstance cpInstance = cpInstancePersistence.fetchByC_S(
+		CPInstance cpInstance = cpInstancePersistence.fetchByCPDI_SKU(
 			cpDefinitionId, sku);
 
 		if ((cpInstance == null) ||

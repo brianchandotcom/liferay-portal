@@ -1729,12 +1729,26 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Company"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanScopeObjectByCompany {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141645 CanScopeObjectByCompany pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects",
+			panelCategoryKey = "control_panel.account_entries_admin",
+			scope = "company");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		Navigator.openURL();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+		
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+		
+		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
 
 	}
 

@@ -11,7 +11,7 @@ import {
 	createSetupDXP,
 	getDXPCDataCenterRegions,
 	getKoroneikiAccounts,
-	getUserAccountById,
+	getUserAccount,
 } from '../../../../common/services/liferay/graphql/queries';
 import {API_BASE_URL} from '../../../../common/utils';
 import {isValidProjectId} from '../../../../common/utils/validations.form';
@@ -27,8 +27,8 @@ const SetupDXP = () => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
 	const {data} = useQuery(getDXPCDataCenterRegions);
-	const {data: userAccountData} = useQuery(getUserAccountById, {
-		variables: {userAccountId: LiferayTheme.getUserId()},
+	const {data: userAccountData} = useQuery(getUserAccount, {
+		variables: {id: LiferayTheme.getUserId()},
 	});
 
 	const accountBriefs = userAccountData?.userAccount?.accountBriefs || [];

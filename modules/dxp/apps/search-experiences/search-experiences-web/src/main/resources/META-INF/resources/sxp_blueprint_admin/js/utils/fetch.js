@@ -44,13 +44,13 @@ export function fetchData(url = '', parameters, successFcn, errorFcn) {
  * @returns {string} The modified url.
  */
 export function addParams(url, params) {
-	url += '?';
+	const fetchURL = new URL(url, Liferay.ThemeDisplay.getPortalURL());
 
-	Object.keys(params).forEach((property) => {
-		if (params[property] !== null) {
-			url += `&${property}=${params[property]}`;
+	Object.keys(params).forEach((key) => {
+		if (params[key] !== null) {
+			fetchURL.searchParams.append(key, params[key]);
 		}
 	});
 
-	return url;
+	return fetchURL;
 }

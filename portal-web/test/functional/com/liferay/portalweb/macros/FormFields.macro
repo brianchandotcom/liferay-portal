@@ -576,6 +576,15 @@ definition {
 
 		Type(
 			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "${fieldValue}");
+	}
+
+	macro editTextMultilineOnPages {
+		Pause(locator1 = "1000");
+
+		Type(
+			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#TEXT_MULTILINE_FIELD_2",
 			value1 = "${fieldValue}");
 	}

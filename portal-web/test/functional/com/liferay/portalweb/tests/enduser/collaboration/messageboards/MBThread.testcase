@@ -179,13 +179,25 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136912. It checks that an urgent thread can be added."
-	@ignore = "true"
 	@priority = "3"
 	test CanAddUrgentThread {
-		property portal.acceptance = "false";
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			priority = "Urgent",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 
-		// TODO LPS-136912 CanAddUrgentThread pending implementation
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
 
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"

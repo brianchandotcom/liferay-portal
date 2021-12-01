@@ -11,7 +11,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[Japan]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="d7Uy0VNu" name="ShortDescription" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin mauris arcu, sit amet accumsan felis maximus ac. Integer hendrerit sodales turpis id porta. Pellentesque eros lacus, cursus eget sem id, interdum gravida risus. Mauris nec mi id erat eleifend mollis nec sit amet tortor. Nullam a nulla viverra, iaculis tortor at, rutrum enim. Vivamus fringilla, velit in volutpat viverra, dolor enim dictum arcu, porttitor porta est urna quis quam mauris ac dapibus.]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet consect adipisicing elit. Est quos eveniet tempora exercitationem sit facere?]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="CDY03g8w" name="FullDescription" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin mauris arcu, sit amet accumsan felis maximus ac. Integer hendrerit sodales turpis id porta. Pellentesque eros lacus, cursus eget sem id, interdum gravida risus. Mauris nec mi id erat eleifend mollis nec sit amet tortor. Nullam a nulla viverra, iaculis tortor at, rutrum enim. Vivamus fringilla, velit in volutpat viverra, dolor enim dictum arcu, porttitor porta est urna quis quam. Mauris ac dapibus lorem.</p>

@@ -9,11 +9,73 @@
  * distribution rights of the Software.
  */
 
-const fetch = (data) => ({
-	delete: () => Promise.resolve({data}),
-	get: () => Promise.resolve({data}),
-	post: () => Promise.resolve({data}),
-	put: () => Promise.resolve({data}),
+const globalFetch = global.fetch;
+
+const fetchMockResponse = async (response, ok = true) => ({
+	json: async () => response,
+	ok,
+	text: async () => response,
 });
 
-export default fetch;
+function FetchMock(mockDatas = {}) {
+	this.mock = () => {
+		global.fetch = jest.fn(async (url, {method}) => {
+			const mockFetchData = mockDatas[method][url.pathname || url];
+
+			if (mockFetchData) {
+				if (Array.isArray(mockFetchData)) {
+					if (mockFetchData.length) {
+						if (mockFetchData.length === 1) {
+							if (mockFetchData[0]) {
+								return await mockFetchData[0];
+							}
+						}
+						else {
+							return await mockFetchData.shift();
+						}
+					}
+				}
+				else {
+					return await mockFetchData;
+				}
+			}
+
+			const mockDataDefault = mockDatas[method].default;
+
+			if (mockDataDefault) {
+				if (Array.isArray(mockDataDefault)) {
+					if (mockDataDefault.length) {
+						if (mockDataDefault.length === 1) {
+							if (mockDataDefault[0]) {
+								return await mockDataDefault[0];
+							}
+						}
+						else {
+							return await mockDataDefault.shift();
+						}
+					}
+				}
+				else {
+					return await mockDataDefault;
+				}
+			}
+
+			throw new Error(
+				`Request not mocked - method: ${method} - URL: ${
+					url.pathname || url
+				}`
+			);
+		});
+	};
+
+	this.reset = () => {
+		global.fetch = globalFetch;
+	};
+
+	this.reset();
+	this.mock();
+}
+
+export {fetchMockResponse};
+
+export default FetchMock;

@@ -141,11 +141,12 @@ definition {
 		}
 
 		if ("${item}" != "Display Page") {
-			MouseOver(
-				key_text = "Add",
-				locator1 = "Button#ANY");
-
-			Button.clickAdd();
+			if ("${item}" == "Page") {
+				Button.click(button = "Select");
+			}
+			else {
+				Button.clickAdd();
+			}
 		}
 
 		Alert.viewSuccessMessage();

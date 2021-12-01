@@ -389,11 +389,6 @@ public class DDLViewRecordsDisplayContext {
 				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}
 
-		recordSearch.setOrderByCol(getOrderByCol());
-		recordSearch.setOrderByComparator(
-			getDDLRecordOrderByComparator(getOrderByCol(), getOrderByType()));
-		recordSearch.setOrderByType(getOrderByType());
-
 		if (recordSearch.isSearch()) {
 			recordSearch.setEmptyResultsMessage(
 				LanguageUtil.format(
@@ -403,6 +398,11 @@ public class DDLViewRecordsDisplayContext {
 		else {
 			recordSearch.setEmptyResultsMessage("there-are-no-records");
 		}
+
+		recordSearch.setOrderByCol(getOrderByCol());
+		recordSearch.setOrderByComparator(
+			getDDLRecordOrderByComparator(getOrderByCol(), getOrderByType()));
+		recordSearch.setOrderByType(getOrderByType());
 
 		setDDLRecordSearchResults(recordSearch);
 		setDDLRecordSearchTotal(recordSearch);

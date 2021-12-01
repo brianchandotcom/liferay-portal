@@ -56,7 +56,6 @@ public class DispatchLogSearchContainerFactory {
 				SearchOrderByUtil.getOrderByCol(
 					liferayPortletRequest, DispatchPortletKeys.DISPATCH,
 					"modified-date")));
-
 		dispatchLogSearchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, DispatchPortletKeys.DISPATCH, "asc"));

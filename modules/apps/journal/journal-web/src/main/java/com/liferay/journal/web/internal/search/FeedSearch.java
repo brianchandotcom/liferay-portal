@@ -67,12 +67,10 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			portletRequest, JournalPortletKeys.JOURNAL,
 			"feed-search-order-by-type", "asc");
 
-		OrderByComparator<JournalFeed> orderByComparator =
-			getOrganizationOrderByComparator(orderByCol, orderByType);
-
 		setOrderByCol(orderByCol);
+		setOrderByComparator(
+			getOrganizationOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
 	}
 
 	protected OrderByComparator<JournalFeed> getOrganizationOrderByComparator(

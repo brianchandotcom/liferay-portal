@@ -89,22 +89,17 @@ public class DDMFormBrowserDisplayContext {
 		DDMFormInstanceSearch ddmFormInstanceSearch = new DDMFormInstanceSearch(
 			_renderRequest, portletURL);
 
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMFormInstance> orderByComparator =
-			_getDDMFormInstanceOrderByComparator(orderByType);
-
-		ddmFormInstanceSearch.setOrderByCol(getOrderByCol());
-
-		ddmFormInstanceSearch.setOrderByComparator(orderByComparator);
-		ddmFormInstanceSearch.setOrderByType(orderByType);
-
 		if (ddmFormInstanceSearch.isSearch()) {
 			ddmFormInstanceSearch.setEmptyResultsMessage("no-forms-were-found");
 		}
 		else {
 			ddmFormInstanceSearch.setEmptyResultsMessage("there-are-no-forms");
 		}
+
+		ddmFormInstanceSearch.setOrderByCol(getOrderByCol());
+		ddmFormInstanceSearch.setOrderByComparator(
+			_getDDMFormInstanceOrderByComparator(getOrderByType()));
+		ddmFormInstanceSearch.setOrderByType(getOrderByType());
 
 		List<DDMFormInstance> results = _ddmFormInstanceService.search(
 			_formWebRequestHelper.getCompanyId(),

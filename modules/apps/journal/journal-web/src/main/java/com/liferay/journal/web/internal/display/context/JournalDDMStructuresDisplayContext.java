@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -77,16 +76,11 @@ public class JournalDDMStructuresDisplayContext {
 				"no-structures-were-found");
 		}
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMStructure> orderByComparator =
+		ddmStructureSearch.setOrderByCol(getOrderByCol());
+		ddmStructureSearch.setOrderByComparator(
 			DDMUtil.getStructureOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		ddmStructureSearch.setOrderByCol(orderByCol);
-		ddmStructureSearch.setOrderByComparator(orderByComparator);
-		ddmStructureSearch.setOrderByType(orderByType);
+				getOrderByCol(), getOrderByType()));
+		ddmStructureSearch.setOrderByType(getOrderByType());
 		ddmStructureSearch.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 

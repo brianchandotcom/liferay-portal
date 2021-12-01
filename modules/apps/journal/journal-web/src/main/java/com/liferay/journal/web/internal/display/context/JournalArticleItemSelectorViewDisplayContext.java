@@ -305,12 +305,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				new SearchContainer<>(
 					_portletRequest, getPortletURL(), null, null);
 
-			OrderByComparator<JournalArticle> orderByComparator =
-				JournalPortletUtil.getArticleOrderByComparator(
-					_getOrderByCol(), _getOrderByType());
-
 			articleSearchContainer.setOrderByCol(_getOrderByCol());
-			articleSearchContainer.setOrderByComparator(orderByComparator);
+			articleSearchContainer.setOrderByComparator(
+				JournalPortletUtil.getArticleOrderByComparator(
+					_getOrderByCol(), _getOrderByType()));
 			articleSearchContainer.setOrderByType(_getOrderByType());
 
 			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
@@ -324,7 +322,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					_getGroupId(), getDDMStructureKey(),
 					WorkflowConstants.STATUS_APPROVED,
 					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(), orderByComparator);
+					articleSearchContainer.getEnd(),
+					articleSearchContainer.getOrderByComparator());
 
 			articleSearchContainer.setResults(results);
 

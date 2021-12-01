@@ -94,14 +94,12 @@ public class DDMFormInstanceRecordSearch
 				portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 				"view-entries-order-by-type", "asc");
 
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator =
-				getDDMFormInstanceRecordOrderByComparator(
-					orderByCol, orderByType);
-
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
+			setOrderByComparator(
+				getDDMFormInstanceRecordOrderByComparator(
+					orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

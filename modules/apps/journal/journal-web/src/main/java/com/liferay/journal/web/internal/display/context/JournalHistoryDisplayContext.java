@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,26 +67,21 @@ public class JournalHistoryDisplayContext {
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		articleSearchContainer.setOrderByCol(getOrderByCol());
-
-		OrderByComparator<JournalArticle> orderByComparator =
+		articleSearchContainer.setOrderByComparator(
 			JournalPortletUtil.getArticleOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		articleSearchContainer.setOrderByComparator(orderByComparator);
-
+				getOrderByCol(), getOrderByType()));
 		articleSearchContainer.setOrderByType(getOrderByType());
 
-		int articleVersionsCount =
+		articleSearchContainer.setTotal(
 			JournalArticleServiceUtil.getArticlesCountByArticleId(
-				_article.getGroupId(), _article.getArticleId());
-
-		articleSearchContainer.setTotal(articleVersionsCount);
+				_article.getGroupId(), _article.getArticleId()));
 
 		List<JournalArticle> articleVersions =
 			JournalArticleServiceUtil.getArticlesByArticleId(
 				_article.getGroupId(), _article.getArticleId(),
 				articleSearchContainer.getStart(),
-				articleSearchContainer.getEnd(), orderByComparator);
+				articleSearchContainer.getEnd(),
+				articleSearchContainer.getOrderByComparator());
 
 		articleSearchContainer.setResults(articleVersions);
 

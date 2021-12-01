@@ -547,6 +547,8 @@ definition {
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		AssertElementPresent(

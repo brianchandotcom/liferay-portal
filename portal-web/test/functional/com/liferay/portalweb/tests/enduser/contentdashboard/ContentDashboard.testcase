@@ -1597,6 +1597,20 @@ definition {
 		}
 	}
 
+	@description = "LPS-124236 Given the Content Dashboard
+	When there are no contents in the list
+	Then the Export XLS button is disabled"
+	@priority = "3"
+	test ExportXLSDisabled {
+		task ("Go to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Assert the Export XLS button is disabled") {
+			AssertNotEditable(locator1 = "ContentDashboard#EXPORT_XLS_BUTTON");
+		}
+	}
+
 	@description = "Validate if the user can filter by Author, using different display types"
 	@priority = "5"
 	test FilterByAuthor {

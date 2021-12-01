@@ -165,6 +165,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_XLS_BUTTON</td>
+	<td>//*[contains(@class, 'download-spreadsheet-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
 	<td>//*[contains(@class, 'dropdown-toggle') and contains(@class, 'nav-link') and contains(@class, 'btn-unstyled')]</td>
 	<td></td>

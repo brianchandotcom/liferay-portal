@@ -56,7 +56,7 @@ definition {
 		}
 
 		if (!(isSet(groupPermissions))) {
-			var guestPermissions = "true";
+			var groupPermissions = "true";
 		}
 
 		if (!(isSet(guestPermissions))) {
@@ -141,7 +141,7 @@ definition {
 		}
 
 		if (!(isSet(groupPermissions))) {
-			var guestPermissions = "true";
+			var groupPermissions = "true";
 		}
 
 		if (!(isSet(guestPermissions))) {

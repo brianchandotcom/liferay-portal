@@ -19,6 +19,7 @@ import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.PoshiVariablesUtil;
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
@@ -63,6 +64,11 @@ public final class SummaryLogger {
 		summaryHTMLContent = StringUtil.replace(
 			summaryHTMLContent, "<ul id=\"summaryTitleContainer\" />",
 			_summaryTitleContainerLoggerElement.toString());
+
+		summaryHTMLContent = StringUtil.replace(
+			summaryHTMLContent, "<script defer src=\"../js/update_images.js\"",
+			"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+				"/js/update_images.js\"");
 
 		StringBuilder sb = new StringBuilder();
 

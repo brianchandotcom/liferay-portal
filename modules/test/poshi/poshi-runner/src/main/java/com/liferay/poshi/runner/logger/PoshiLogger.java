@@ -73,6 +73,9 @@ public class PoshiLogger {
 			FileUtil.copyFileFromResource(
 				"META-INF/resources/js/main.js",
 				currentDirName + "/test-results/js/main.js");
+			FileUtil.copyFileFromResource(
+				"META-INF/resources/js/update_images.js",
+				currentDirName + "/test-results/js/update_images.js");
 		}
 		else {
 			indexHTMLContent = StringUtil.replace(
@@ -87,6 +90,11 @@ public class PoshiLogger {
 				indexHTMLContent, "<script defer src=\"../js/main.js\"",
 				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
 					"/js/main.js\"");
+			indexHTMLContent = StringUtil.replace(
+				indexHTMLContent,
+				"<script defer src=\"../js/update_images.js\"",
+				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+					"/js/update_images.js\"");
 		}
 
 		StringBuilder sb = new StringBuilder();

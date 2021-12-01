@@ -1102,9 +1102,10 @@ public class TestrayImporter {
 									"name", testrayAttachment.getName());
 								attachmentFileElement.addAttribute(
 									"url",
-									String.valueOf(testrayAttachment.getURL()));
+									testrayAttachment.getURL() + "?authuser=0");
 								attachmentFileElement.addAttribute(
-									"value", testrayAttachment.getKey());
+									"value",
+									testrayAttachment.getKey() + "?authuser=0");
 							}
 
 							String errors = testrayCaseResult.getErrors();

@@ -64,7 +64,15 @@
 					"fragmentStyle": {
 						"marginBottom": "7",
 						"textAlign": ""
-					}
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "5"
+							},
+							"id": "tablet"
+						}
+					]
 				},
 				"type": "Fragment"
 			},
@@ -72,12 +80,20 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"marginBottom": "7",
+						"marginBottom": "8",
 						"textAlign": ""
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginBottom": "5"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 8,
+						"marginBottom": 10,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
@@ -96,6 +112,14 @@
 								"marginBottom": "6",
 								"textAlign": ""
 							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginBottom": "5"
+									},
+									"id": "tablet"
+								}
+							],
 							"layout": {
 								"align": "Start",
 								"borderWidth": 0,
@@ -274,6 +298,16 @@
 															}
 														},
 														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"fieldKey": "displayPageURL",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															},
 															"value_i18n": {
 															}
 														}
@@ -317,6 +351,16 @@
 													"id": "title",
 													"value": {
 														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"fieldKey": "displayPageURL",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															},
 															"value_i18n": {
 															}
 														},
@@ -332,7 +376,7 @@
 												}
 											],
 											"fragmentStyle": {
-												"marginBottom": "6",
+												"marginBottom": "5",
 												"textAlign": ""
 											}
 										},
@@ -369,11 +413,20 @@
 									"fragmentStyle": {
 										"backgroundColor": "",
 										"borderWidth": "0",
-										"paddingBottom": "10",
-										"paddingTop": "10",
+										"paddingBottom": "9",
+										"paddingTop": "9",
 										"textAlign": "",
 										"textColor": "whiteColor"
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingBottom": "7",
+												"paddingTop": "7"
+											},
+											"id": "tablet"
+										}
+									],
 									"layout": {
 										"align": "Center",
 										"borderWidth": 0,
@@ -495,8 +548,9 @@
 												"key": "button"
 											},
 											"fragmentConfig": {
-												"buttonSize": "sm",
-												"buttonType": "secondary"
+												"buttonSize": "lg",
+												"buttonVariant": "secondary",
+												"buttonWidth": "v-auto"
 											},
 											"fragmentFields": [
 												{
@@ -505,10 +559,19 @@
 														"fragmentLink": {
 															"value_i18n": {
 															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Test Button"
+															}
 														}
 													}
 												}
-											]
+											],
+											"fragmentStyle": {
+												"marginBottom": "2",
+												"textAlign": ""
+											}
 										},
 										"type": "Fragment"
 									}
@@ -540,17 +603,26 @@
 									"fragmentStyle": {
 										"backgroundColor": "gray200Color",
 										"borderWidth": "0",
-										"paddingBottom": "9",
+										"paddingBottom": "8",
 										"paddingTop": "8",
 										"textAlign": ""
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingBottom": "6",
+												"paddingTop": "6"
+											},
+											"id": "tablet"
+										}
+									],
 									"layout": {
 										"borderWidth": 0,
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
-										"paddingBottom": 0,
+										"paddingBottom": 10,
 										"paddingLeft": 0,
 										"paddingRight": 0,
 										"paddingTop": 10,
@@ -742,6 +814,8 @@
 														{
 															"id": "tablet",
 															"rowViewportDefinition": {
+																"modulesPerRow": 1,
+																"reverseOrder": true
 															}
 														}
 													],
@@ -763,6 +837,7 @@
 																},
 																{
 																	"columnViewportDefinition": {
+																		"size": 12
 																	},
 																	"id": "tablet"
 																}
@@ -825,7 +900,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://twitter.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -839,7 +914,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://www.linkedin.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -851,6 +926,16 @@
 																							"id": "shortDescription",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"fieldKey": "displayPageURL",
+																												"itemReference": {
+																													"contextSource": "CollectionItem"
+																												}
+																											}
+																										}
+																									},
 																									"value_i18n": {
 																									}
 																								},
@@ -868,6 +953,16 @@
 																							"id": "title",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"fieldKey": "displayPageURL",
+																												"itemReference": {
+																													"contextSource": "CollectionItem"
+																												}
+																											}
+																										}
+																									},
 																									"value_i18n": {
 																									}
 																								},
@@ -885,6 +980,16 @@
 																							"id": "region",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"fieldKey": "displayPageURL",
+																												"itemReference": {
+																													"contextSource": "CollectionItem"
+																												}
+																											}
+																										}
+																									},
 																									"value_i18n": {
 																									}
 																								},
@@ -904,7 +1009,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://www.facebook.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -918,7 +1023,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://www.instagram.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -926,11 +1031,7 @@
 																								}
 																							}
 																						}
-																					],
-																					"fragmentStyle": {
-																						"marginBottom": "4",
-																						"textAlign": ""
-																					}
+																					]
 																				},
 																				"type": "Fragment"
 																			}
@@ -958,6 +1059,7 @@
 																},
 																{
 																	"columnViewportDefinition": {
+																		"size": 12
 																	},
 																	"id": "tablet"
 																}
@@ -1020,7 +1122,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://twitter.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -1034,7 +1136,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://www.linkedin.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -1046,6 +1148,16 @@
 																							"id": "shortDescription",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"fieldKey": "displayPageURL",
+																												"itemReference": {
+																													"contextSource": "CollectionItem"
+																												}
+																											}
+																										}
+																									},
 																									"value_i18n": {
 																									}
 																								},
@@ -1063,6 +1175,16 @@
 																							"id": "title",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"fieldKey": "displayPageURL",
+																												"itemReference": {
+																													"contextSource": "CollectionItem"
+																												}
+																											}
+																										}
+																									},
 																									"value_i18n": {
 																									}
 																								},
@@ -1080,6 +1202,16 @@
 																							"id": "region",
 																							"value": {
 																								"fragmentLink": {
+																									"value": {
+																										"href": {
+																											"mapping": {
+																												"fieldKey": "displayPageURL",
+																												"itemReference": {
+																													"contextSource": "CollectionItem"
+																												}
+																											}
+																										}
+																									},
 																									"value_i18n": {
 																									}
 																								},
@@ -1099,7 +1231,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://www.facebook.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -1113,7 +1245,7 @@
 																								"fragmentLink": {
 																									"value": {
 																										"href": {
-																											"value": "#"
+																											"value": "https://www.instagram.com/"
 																										}
 																									},
 																									"value_i18n": {
@@ -1185,17 +1317,26 @@
 					"fragmentStyle": {
 						"backgroundColor": "",
 						"borderWidth": "0",
-						"paddingBottom": "10",
+						"paddingBottom": "8",
 						"paddingTop": "8",
 						"textAlign": ""
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingBottom": "5",
+								"paddingTop": "5"
+							},
+							"id": "tablet"
+						}
+					],
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 0,
+						"paddingBottom": 10,
 						"paddingLeft": 0,
 						"paddingRight": 0,
 						"paddingTop": 10,
@@ -1423,6 +1564,16 @@
 																	}
 																},
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
 																	"value_i18n": {
 																	}
 																}
@@ -1492,6 +1643,16 @@
 															"id": "name",
 															"value": {
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
 																	"value_i18n": {
 																	}
 																},
@@ -1573,9 +1734,17 @@
 										}
 									],
 									"fragmentStyle": {
-										"marginTop": "6",
+										"marginTop": "7",
 										"textAlign": "center"
-									}
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginTop": "5"
+											},
+											"id": "tablet"
+										}
+									]
 								},
 								"type": "Fragment"
 							}
@@ -1607,12 +1776,20 @@
 									"fragmentStyle": {
 										"backgroundColor": "",
 										"borderWidth": "0",
-										"marginBottom": "8",
-										"paddingBottom": "10",
-										"paddingTop": "10",
+										"paddingBottom": "9",
+										"paddingTop": "9",
 										"textAlign": "",
 										"textColor": "whiteColor"
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingBottom": "7",
+												"paddingTop": "7"
+											},
+											"id": "tablet"
+										}
+									],
 									"layout": {
 										"align": "Center",
 										"borderWidth": 0,

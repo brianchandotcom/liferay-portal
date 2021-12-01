@@ -24,7 +24,7 @@
 
 .main-navbar .navbar-collapse.show {
 	background: var(--brand-color-3);
-	height: 100vh;
+	height: 80vh;
 	margin-top: var(--spacer-3);
 	padding-bottom: var(--spacer-3);
 	padding-top: var(--spacer-2);

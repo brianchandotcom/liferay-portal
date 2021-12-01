@@ -82,7 +82,9 @@ function AdminTooltipContent({
 				});
 			})
 			.catch(() => {
-				setSaving(false);
+				if (isMounted()) {
+					setSaving(false);
+				}
 			});
 	}
 
@@ -110,7 +112,9 @@ function AdminTooltipContent({
 				});
 			})
 			.catch(() => {
-				setDeleting(false);
+				if (isMounted()) {
+					setDeleting(false);
+				}
 			});
 	}
 

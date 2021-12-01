@@ -32,11 +32,11 @@ import {
 	savePin,
 	updateGlobalPinsRadius,
 } from '../utilities/data';
+import {formatMappedProduct} from '../utilities/index';
 import D3Handler from './D3Handler';
 import useTableHandlers from './useTableHandlers';
 
 import '../../css/diagram.scss';
-import {formatMappedProduct} from '../utilities';
 
 const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
 
@@ -71,7 +71,9 @@ function Diagram({
 	const isMounted = useIsMounted();
 
 	useTableHandlers(chartInstanceRef, productId, () =>
-		loadPins(productId, !isAdmin && channelId).then(setPins)
+		loadPins(productId, !isAdmin && channelId, commerceAccount.id).then(
+			setPins
+		)
 	);
 
 	useEffect(() => {
@@ -84,8 +86,10 @@ function Diagram({
 	}, [pinsRadius, diagramId, namespace]);
 
 	useEffect(() => {
-		loadPins(productId, !isAdmin && channelId).then(setPins);
-	}, [channelId, isAdmin, productId]);
+		loadPins(productId, !isAdmin && channelId, commerceAccount.id).then(
+			setPins
+		);
+	}, [channelId, isAdmin, productId, commerceAccount]);
 
 	useEffect(() => {
 		if (pins) {

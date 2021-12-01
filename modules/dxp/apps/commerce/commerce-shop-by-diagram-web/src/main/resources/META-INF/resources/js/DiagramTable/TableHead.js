@@ -26,9 +26,11 @@ export default function TableHead({
 					<ClayTable.Cell headingCell>
 						<ClayCheckbox
 							checked={
+								!!selectedSkusId.length &&
 								selectedSkusId.length ===
-								selectableSkusId.length
+									selectableSkusId.length
 							}
+							disabled={!selectableSkusId.length}
 							indeterminate={
 								selectedSkusId.length > 0 &&
 								selectedSkusId.length < selectableSkusId.length

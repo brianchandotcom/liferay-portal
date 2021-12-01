@@ -102,7 +102,8 @@ function DiagramTable({
 			!isAdmin && channelId,
 			query,
 			currentPage,
-			PAGE_SIZE
+			PAGE_SIZE,
+			commerceAccount.id
 		).then((data) => {
 			setLoaderActive(false);
 
@@ -116,7 +117,15 @@ function DiagramTable({
 
 			setLastPage(data.lastPage);
 		});
-	}, [channelId, currentPage, isAdmin, productId, query, refreshTrigger]);
+	}, [
+		channelId,
+		currentPage,
+		isAdmin,
+		productId,
+		query,
+		refreshTrigger,
+		commerceAccount,
+	]);
 
 	const selectableSkusId = (mappedProducts || []).reduce(
 		(skusId, product) =>
@@ -162,6 +171,61 @@ function DiagramTable({
 		});
 	};
 
+	let content = <div className="full-height-content" />;
+
+	if (loaderActive) {
+		content = (
+			<div className="full-height-content">
+				<ClayLoadingIndicator />
+			</div>
+		);
+	}
+
+	if (!loaderActive && mappedProducts && !!mappedProducts.length) {
+		content = (
+			<InfiniteScroller
+				onBottomTouched={() => setCurrentPage(currentPage + 1)}
+				scrollCompleted={currentPage >= lastPage}
+			>
+				<ClayTable borderless>
+					<TableHead
+						isAdmin={isAdmin}
+						selectableSkusId={selectableSkusId}
+						selectedSkusId={selectedSkusId}
+						setSelectedSkusId={setSelectedSkusId}
+					/>
+
+					<ClayTable.Body>
+						{Boolean(mappedProducts?.length) &&
+							mappedProducts.map((product) => (
+								<MappedProductRow
+									handleMouseEnter={handleMouseEnter}
+									handleMouseLeave={handleMouseLeave}
+									handleTitleClicked={handleTitleClicked}
+									isAdmin={isAdmin}
+									key={product.id}
+									onDelete={handleMappedProductDelete}
+									product={product}
+									quantity={
+										newQuantities[product.skuId] ||
+										product.initialQuantity
+									}
+									selectedSkusId={selectedSkusId}
+									setNewQuantity={(newQuantity) => {
+										setNewQuantities({
+											...newQuantities,
+											[product.skuId]: newQuantity,
+										});
+									}}
+									setSelectedSkusId={setSelectedSkusId}
+								/>
+							))}
+					</ClayTable.Body>
+				</ClayTable>
+			</InfiniteScroller>
+		);
+	}
+
 	return (
 		<div className="shop-by-diagram-table" ref={wrapperRef}>
 			<ManagementBar
@@ -180,54 +244,7 @@ function DiagramTable({
 				/>
 			)}
 
-			{loaderActive && (
-				<div className="full-height-content">
-					<ClayLoadingIndicator />
-				</div>
-			)}
-
-			{!loaderActive && mappedProducts && !!mappedProducts.length && (
-				<InfiniteScroller
-					onBottomTouched={() => setCurrentPage(currentPage + 1)}
-					scrollCompleted={currentPage >= lastPage}
-				>
-					<ClayTable borderless>
-						<TableHead
-							isAdmin={isAdmin}
-							selectableSkusId={selectableSkusId}
-							selectedSkusId={selectedSkusId}
-							setSelectedSkusId={setSelectedSkusId}
-						/>
-
-						<ClayTable.Body>
-							{Boolean(mappedProducts?.length) &&
-								mappedProducts.map((product) => (
-									<MappedProductRow
-										handleMouseEnter={handleMouseEnter}
-										handleMouseLeave={handleMouseLeave}
-										handleTitleClicked={handleTitleClicked}
-										isAdmin={isAdmin}
-										key={product.id}
-										onDelete={handleMappedProductDelete}
-										product={product}
-										quantity={
-											newQuantities[product.skuId] ||
-											product.initialQuantity
-										}
-										selectedSkusId={selectedSkusId}
-										setNewQuantity={(newQuantity) => {
-											setNewQuantities({
-												...newQuantities,
-												[product.skuId]: newQuantity,
-											});
-										}}
-										setSelectedSkusId={setSelectedSkusId}
-									/>
-								))}
-						</ClayTable.Body>
-					</ClayTable>
-				</InfiniteScroller>
-			)}
+			{content}
 
 			{!isAdmin && (
 				<AddToCartButton

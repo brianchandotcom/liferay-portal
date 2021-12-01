@@ -226,9 +226,6 @@ definition {
 		WorkflowMetrics.viewButtonUpdateDueDateIsAvailable();
 
 		WorkflowMetrics.viewKebabMenuOptionsIsAvailable(dropdownItem = "Update Due Date");
-
-
-		
 	}
 
 	@description = "LPS-105497 - Verify that users can hover over a row to see action options and select to Update Task Due Date by hovering over the calendar icon"

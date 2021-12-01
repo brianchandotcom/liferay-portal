@@ -44,7 +44,6 @@ export default function Sidebar() {
 						label: false,
 					});
 				}}
-				showBackButton={selectedNode}
 				title={
 					selectedNode
 						? selectedNode.type

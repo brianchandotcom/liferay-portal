@@ -1,0 +1,149 @@
+@component-name = "portal-calendar"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Calendar";
+
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
+				CalendarEvent.tearDown();
+			}
+
+			Calendar.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "LRQA-72024 - Verify that the calendar has Day view"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CalendarHasDayView {
+
+		// TODO LRQA-72026 CalendarHasDayView pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the calendar has Week view"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CalendarHasWeekView {
+
+		// TODO LRQA-72027 CalendarHasWeekView pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the calendar has Month view"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CalendaHasMonthView {
+
+		// TODO LRQA-72028 CalendaHasMonthView pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the calendar has Agenda view"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CalendarHasAgendaView {
+
+		// TODO LRQA-72029 CanModCalendarHasAgendaViewifyBorder pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanChangeCalendarColor {
+
+		// TODO LRQA-72030 CanChangeCalendarColor pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that a mini Calendar is displayed on sidebar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MiniCalendarIsDisplayed {
+
+		// TODO LRQA-72031 MiniCalendarIsDisplayed pending implementation
+
+	}
+
+    @description = "LRQA-72024 - Verify that the Today button brings the user back for the current day"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TodayButtonDisplaysCurrentDay {
+
+		// TODO LRQA-72032 TodayButtonDisplaysCurrentDay pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the user can go back and forward on Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanGoBackAndForwardOnCalendar {
+
+		// TODO LRQA-72033 CanGoBackAndForwardOnCalendar pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the user can hide Events from a specific Calendar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanHideEvents {
+
+		// TODO LRQA-72034 CanHideEvents pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the user can hide/show the sidebar"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanHideShowSidebar {
+
+		// TODO LRQA-72035 CanHideShowSidebar pending implementation
+
+	}
+
+}

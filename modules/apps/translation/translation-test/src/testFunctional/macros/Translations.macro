@@ -493,10 +493,6 @@ definition {
 		Click(
 			key_text = "Auto Translate",
 			locator1 = "Button#ANY");
-
-		AssertTextEquals(
-			locator1 = "Toolbar#FEEDBACK",
-			value1 = "Successfully received translations.");
 	}
 
 	macro updateTranslateFileID {

@@ -61,26 +61,33 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Content");
 
-		Translations.viewTargetFields(
-			webContentContent = "これは英語のウェブ記事の内容です",
-			webContentDescription = "This is the description of a web article in English",
-			webContentTitle = "This is the title of a web article in English");
+		if (IsTextEqual.isPartialText(key_fieldName = "Content", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentContent = "これは英語のウェブ記事の内容です",
+				webContentDescription = "This is the description of a web article in English",
+				webContentTitle = "This is the title of a web article in English");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "ja_JP",
+				webContentTitle = "This is the title of a web article in English");
 
-		Translations.viewTargetFields(
-			webContentContent = "これは英語のウェブ記事の内容です",
-			webContentDescription = "This is the description of a web article in English",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.viewTargetFields(
+				webContentContent = "これは英語のウェブ記事の内容です",
+				webContentDescription = "This is the description of a web article in English",
+				webContentTitle = "This is the title of a web article in English");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Content", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that the web content description can be translated independently"
@@ -95,26 +102,33 @@ definition {
 			targetLanguageId = "es_ES",
 			webContentTitle = "This is the title of a web article in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Description");
 
-		Translations.viewTargetFields(
-			webContentContent = "This is the content of a web article in English",
-			webContentDescription = "Esta es la descripción de un artículo web en inglés",
-			webContentTitle = "This is the title of a web article in English");
+		if (IsTextEqual.isPartialText(key_fieldName = "Description", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentContent = "This is the content of a web article in English",
+				webContentDescription = "Esta es la descripción de un artículo web en inglés",
+				webContentTitle = "This is the title of a web article in English");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "es_ES",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "es_ES",
+				webContentTitle = "This is the title of a web article in English");
 
-		Translations.viewTargetFields(
-			webContentContent = "This is the content of a web article in English",
-			webContentDescription = "Esta es la descripción de un artículo web en inglés",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.viewTargetFields(
+				webContentContent = "This is the content of a web article in English",
+				webContentDescription = "Esta es la descripción de un artículo web en inglés",
+				webContentTitle = "This is the title of a web article in English");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Description", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that the numeric and decimal fields of a customized web content can be translated independently"
@@ -163,35 +177,42 @@ definition {
 			targetLanguageId = "es_ES",
 			webContentTitle = "This is the title of the numeric field in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Decimal");
 
-		Translations.viewTargetFields(
-			webContentDecimal = "1.0",
-			webContentNumber = "10");
+		if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentDecimal = "1.0",
+				webContentNumber = "10");
 
-		Click(
-			key_fieldName = "Numeric",
-			locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
-			value1 = "10");
+			Click(
+				key_fieldName = "Numeric",
+				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+				value1 = "10");
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Numeric");
+			Translations.translateSpecificFieldWithGoogle(fieldName = "Numeric");
 
-		Translations.viewTargetFields(
-			webContentDecimal = "1.0",
-			webContentNumber = "10");
+			Translations.viewTargetFields(
+				webContentDecimal = "1.0",
+				webContentNumber = "10");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "es_ES",
-			webContentTitle = "This is the title of the numeric field in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "es_ES",
+				webContentTitle = "This is the title of the numeric field in English");
 
-		Translations.viewTargetFields(
-			webContentDecimal = "1,0",
-			webContentNumber = "10");
+			Translations.viewTargetFields(
+				webContentDecimal = "1,0",
+				webContentNumber = "10");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that the rich text field of a customized web content can be translated independently"
@@ -230,30 +251,37 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of the rich text field in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
 
-		Translations.viewTargetFields(
-			webContentSourceHTML = "This is the content of the rich text field in English",
-			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
+		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentSourceHTML = "This is the content of the rich text field in English",
+				webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Rich Text");
+			Translations.translateSpecificFieldWithGoogle(fieldName = "Rich Text");
 
-		Translations.viewTargetFields(
-			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
-			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
+			Translations.viewTargetFields(
+				webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
+				webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of the rich text field in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "ja_JP",
+				webContentTitle = "This is the title of the rich text field in English");
 
-		Translations.viewTargetFields(
-			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
-			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
+			Translations.viewTargetFields(
+				webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
+				webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that the text box field of a customized web content can be translated independently"
@@ -299,30 +327,37 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
 
-		Translations.viewTargetFields(
-			webContentTextBox = "This is the content of the text box field in English",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentTextBox = "This is the content of the text box field in English",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Text Box");
+			Translations.translateSpecificFieldWithGoogle(fieldName = "Text Box");
 
-		Translations.viewTargetFields(
-			webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			Translations.viewTargetFields(
+				webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "ja_JP",
+				webContentTitle = "This is the title of a web article in English");
 
-		Translations.viewTargetFields(
-			webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			Translations.viewTargetFields(
+				webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that the text field of a customized web content can be translated independently"
@@ -365,30 +400,37 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
 
-		Translations.viewTargetFields(
-			webContentText = "This is the content of the text field in English",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentText = "This is the content of the text field in English",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		Translations.translateSpecificFieldWithGoogle(fieldName = "Text");
+			Translations.translateSpecificFieldWithGoogle(fieldName = "Text");
 
-		Translations.viewTargetFields(
-			webContentText = "これは英語のテキストフィールドの内容です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			Translations.viewTargetFields(
+				webContentText = "これは英語のテキストフィールドの内容です",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "ja_JP",
+				webContentTitle = "This is the title of a web article in English");
 
-		Translations.viewTargetFields(
-			webContentText = "これは英語のテキストフィールドの内容です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			Translations.viewTargetFields(
+				webContentText = "これは英語のテキストフィールドの内容です",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that the web content title can be translated independently"
@@ -403,26 +445,33 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
+		// End the test if the Google refresh token limit is exceeded.
+
 		Translations.translateSpecificFieldWithGoogle(fieldName = "Title");
 
-		Translations.viewTargetFields(
-			webContentContent = "This is the content of a web article in English",
-			webContentDescription = "This is the description of a web article in English",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
+			Translations.viewTargetFields(
+				webContentContent = "This is the content of a web article in English",
+				webContentDescription = "This is the description of a web article in English",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
 
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article in English");
+			Translations.openToTranslateEntry(
+				groupName = "Site Name",
+				siteURLKey = "site-name",
+				sourceLanguageId = "en_US",
+				targetLanguageId = "ja_JP",
+				webContentTitle = "This is the title of a web article in English");
 
-		Translations.viewTargetFields(
-			webContentContent = "This is the content of a web article in English",
-			webContentDescription = "This is the description of a web article in English",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			Translations.viewTargetFields(
+				webContentContent = "This is the content of a web article in English",
+				webContentDescription = "This is the description of a web article in English",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
+		}
+		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "This ensures that Google Translation can be used to auto-translate a Web Content into Japanese"
@@ -440,21 +489,28 @@ definition {
 
 		Translations.translateWithGoogle();
 
-		Translations.viewTargetFields(
-			webContentContent = "これは英語のウェブ記事の内容です",
-			webContentDescription = "これは英語のウェブ記事の説明です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+		// End the test if the Google refresh token limit is exceeded.
 
-		PortletEntry.publish();
+		if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "Successfully received translations.")) {
+			Translations.viewTargetFields(
+				webContentContent = "これは英語のウェブ記事の内容です",
+				webContentDescription = "これは英語のウェブ記事の説明です",
+				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Translation Processes");
+			PortletEntry.publish();
 
-		Translations.viewTranslationEntry(
-			language = "ja-JP",
-			status = "Approved",
-			title = "Translation of This is the title of a web article in English to ja-JP");
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Translation Processes");
+
+			Translations.viewTranslationEntry(
+				language = "ja-JP",
+				status = "Approved",
+				title = "Translation of This is the title of a web article in English to ja-JP");
+		}
+		else if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "The Auto Translate button should not appear in the side-by-side view after Google Translations are enabled then disabled"
@@ -472,32 +528,39 @@ definition {
 
 		Translations.translateWithGoogle();
 
-		PortletEntry.publish();
+		// End the test if the Google refresh token limit is exceeded.
 
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+		if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "Successfully received translations.")) {
+			PortletEntry.publish();
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "false",
-			settingFieldName = "Enabled");
+			DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Enabled");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			SystemSettings.saveConfiguration();
 
-		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		AssertElementNotPresent(
-			key_text = "Auto Translate",
-			locator1 = "Button#ANY");
+			Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
 
-		Translations.changeTargetLocale(
-			currentTargetLocale = "ar-SA",
-			newTargetLocale = "es-ES");
+			AssertElementNotPresent(
+				key_text = "Auto Translate",
+				locator1 = "Button#ANY");
 
-		Translations.viewTargetFields(
-			webContentContent = "Este es el contenido de un artículo web en inglés.",
-			webContentDescription = "Esta es la descripción de un artículo web en inglés",
-			webContentTitle = "Este es el título de un artículo web en inglés.");
+			Translations.changeTargetLocale(
+				currentTargetLocale = "ar-SA",
+				newTargetLocale = "es-ES");
+
+			Translations.viewTargetFields(
+				webContentContent = "Este es el contenido de un artículo web en inglés.",
+				webContentDescription = "Esta es la descripción de un artículo web en inglés",
+				webContentTitle = "Este es el título de un artículo web en inglés.");
+		}
+		else if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
+			echo("There is a Google network issue. Ending test.");
+		}
 	}
 
 	@description = "The Auto Translate button should be disabled when the fields are null."

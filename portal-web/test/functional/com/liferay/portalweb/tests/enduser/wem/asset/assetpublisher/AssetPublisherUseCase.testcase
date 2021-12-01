@@ -204,7 +204,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132428. Error when configuring Asset Publisher."
+	@description = "This is a test for LPS-132428. The user could configure Asset Publisher after adding the Kaleo Forms admin portlet to blacklist."
 	@priority = "4"
 	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList";

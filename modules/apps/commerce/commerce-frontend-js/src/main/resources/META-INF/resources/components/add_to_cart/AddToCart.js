@@ -22,6 +22,7 @@ import {
 	PRODUCT_REMOVED_FROM_CART,
 } from '../../utilities/eventsDefinitions';
 import {useCommerceAccount, useCommerceCart} from '../../utilities/hooks';
+import {getProductMinQuantity} from '../../utilities/quantities';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import AddToCartButton from './AddToCartButton';
 import {ALL} from './constants';
@@ -31,7 +32,10 @@ function getMinQuantity(settings) {
 		return Math.min(...settings.quantityDetails.allowedQuantities);
 	}
 
-	return Math.max(settings?.quantityDetails?.minQuantity || 1);
+	return getProductMinQuantity(
+		settings?.quantityDetails?.minQuantity,
+		settings?.quantityDetails?.multipleQuantity
+	);
 }
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
@@ -58,20 +62,17 @@ function AddToCart({
 		quantity: getMinQuantity(settings),
 	});
 
-	const disabled = useMemo(() => {
+	const buttonDisabled = useMemo(() => {
 		if (
 			initialDisabled ||
 			!account?.id ||
-			cpInstance.purchasable === false
+			cpInstance.purchasable === false ||
+			!cpInstance.quantity
 		) {
 			return true;
 		}
 
-		if (cpInstance.backOrderAllowed) {
-			return false;
-		}
-
-		return cpInstance.stockQuantity < cpInstance.quantity;
+		return false;
 	}, [account, cpInstance, initialDisabled]);
 
 	useEffect(() => {
@@ -150,7 +151,7 @@ function AddToCart({
 		>
 			<QuantitySelector
 				{...settings.quantityDetails}
-				disabled={disabled}
+				disabled={initialDisabled || !account?.id}
 				onUpdate={(quantity) =>
 					setCpInstance({...cpInstance, quantity})
 				}
@@ -164,7 +165,7 @@ function AddToCart({
 				channel={channel}
 				className={`${spaceDirection}-${spacer}`}
 				cpInstances={[cpInstance]}
-				disabled={disabled}
+				disabled={buttonDisabled}
 				onAdd={() => {
 					setCpInstance({...cpInstance, inCart: true});
 				}}

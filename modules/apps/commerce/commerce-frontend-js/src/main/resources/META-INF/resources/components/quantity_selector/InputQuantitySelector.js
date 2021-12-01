@@ -13,7 +13,12 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React from 'react';
+import React, {useMemo} from 'react';
+
+import {
+	getProductMaxQuantity,
+	getProductMinQuantity,
+} from '../../utilities/quantities';
 
 function InputQuantitySelector({
 	className,
@@ -25,19 +30,47 @@ function InputQuantitySelector({
 	onUpdate,
 	quantity,
 }) {
+	const inputMin = useMemo(
+		() => getProductMinQuantity(minQuantity, multipleQuantity),
+		[multipleQuantity, minQuantity]
+	);
+
+	const inputMax = useMemo(
+		() => getProductMaxQuantity(maxQuantity, multipleQuantity),
+		[maxQuantity, multipleQuantity]
+	);
+
+	const getValidInputNumber = (value) => {
+		if (!value || value < inputMin) {
+			return inputMin;
+		}
+
+		if (inputMax && value > inputMax) {
+			return inputMax;
+		}
+
+		if (multipleQuantity > 1) {
+			const diff = value % multipleQuantity;
+
+			return diff ? value - diff + multipleQuantity : value;
+		}
+
+		return value;
+	};
+
 	return (
 		<ClayInput
 			className={className}
 			disabled={disabled}
-			max={maxQuantity}
-			min={minQuantity}
+			max={inputMax || ''}
+			min={inputMin}
 			name={name}
 			onChange={({target}) => {
-				onUpdate(Number(target.value));
+				onUpdate(getValidInputNumber(Number(target.value)));
 			}}
-			step={multipleQuantity}
+			step={multipleQuantity > 1 ? multipleQuantity : ''}
 			type="number"
-			value={String(quantity)}
+			value={String(quantity || '')}
 		/>
 	);
 }
@@ -45,7 +78,7 @@ function InputQuantitySelector({
 InputQuantitySelector.defaultProps = {
 	maxQuantity: '',
 	minQuantity: 1,
-	multipleQuantity: '',
+	multipleQuantity: 1,
 };
 
 export default InputQuantitySelector;

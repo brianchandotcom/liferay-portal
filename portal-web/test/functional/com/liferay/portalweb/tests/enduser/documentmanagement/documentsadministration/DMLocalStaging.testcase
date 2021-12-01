@@ -207,13 +207,36 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136826. It checks that a shortcut can be published using the normal publication process."
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishShortcut {
-		property portal.acceptance = "false";
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		// TODO LPS-136826 CanPublishShortcut pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "Test Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This is a test for LPS-136817. It checks that a shortcut can be published using the SAP."

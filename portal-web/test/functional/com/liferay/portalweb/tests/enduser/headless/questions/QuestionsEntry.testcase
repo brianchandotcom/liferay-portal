@@ -1056,6 +1056,11 @@ definition {
 			groupName = "Guest",
 			titleField = "Question");
 
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "category");
+
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1106,6 +1111,11 @@ definition {
 			categoryName = "Category",
 			groupName = "Guest",
 			titleField = "Question");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "category");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

@@ -1,0 +1,18 @@
+definition {
+
+	macro createCustomEvent {
+		if (!(isSet(webContentTitle))) {
+			webContentTitle = "Custom Event AC Title";
+		}
+
+		if (!(isSet(customEventAttributes))) {
+			customEventAttributes = "category:"wetsuit",price:"259.95",temp:"11",birthdate:"2021-11-25T14:36:30.685Z",like:"true"";
+		}
+
+		ACUtils.createWCAndAddToPage(
+			webContentContent = '''<div><button class="mybutton-shop" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { Analytics.track("${customEventName}",{${customEventAttributes}}); } </script>''',
+			webContentTitle = "${webContentTitle}");
+	}
+	}
+
+}

@@ -42,7 +42,7 @@
 	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header')]//*[*[name()='svg'][contains(@class,'lexicon-icon-filter')]]</td>
 	<td></td>
 </tr>
-<tr>you just
+<tr>
 	<td>FILTER_BY_IMPACT_HEADER</td>
 	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@class, 'dropdown-subheader') and contains(., 'Filter by Impact')]</td>
 	<td></td>

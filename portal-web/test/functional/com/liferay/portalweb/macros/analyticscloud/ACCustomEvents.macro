@@ -13,6 +13,20 @@ definition {
 			webContentContent = '''<div><button class="mybutton-shop" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { Analytics.track("${customEventName}",{${customEventAttributes}}); } </script>''',
 			webContentTitle = "${webContentTitle}");
 	}
+
+	macro generateCustomEventName {
+		var displayDateHour = DateUtil.getFormattedCurrentDate("hh:mm:ss");
+
+		var displayDateDay = DateUtil.getCurrentDate();
+
+        var displayDateMonth = DateUtil.getCurrentMonth();
+
+        var displayDateYear = DateUtil.getCurrentYear();
+
+		var customEventName = "AC-${displayDateHour}-${displayDateDay}-${displayDateMonth}-${displayDateYear}";
+
+		return "${customEventName}";
+	}
 	}
 
 }

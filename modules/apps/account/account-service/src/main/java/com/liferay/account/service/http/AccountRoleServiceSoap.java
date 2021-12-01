@@ -14,9 +14,19 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountRoleServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.account.service.AccountRoleServiceUtil</code> service
+ * <code>AccountRoleServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,136 @@ package com.liferay.account.service.http;
  */
 @Deprecated
 public class AccountRoleServiceSoap {
+
+	public static com.liferay.account.model.AccountRoleSoap addAccountRole(
+			long accountEntryId, String name, String[] titleMapLanguageIds,
+			String[] titleMapValues, String[] descriptionMapLanguageIds,
+			String[] descriptionMapValues)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.account.model.AccountRole returnValue =
+				AccountRoleServiceUtil.addAccountRole(
+					accountEntryId, name, titleMap, descriptionMap);
+
+			return com.liferay.account.model.AccountRoleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void associateUser(
+			long accountEntryId, long accountRoleId, long userId)
+		throws RemoteException {
+
+		try {
+			AccountRoleServiceUtil.associateUser(
+				accountEntryId, accountRoleId, userId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void associateUser(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws RemoteException {
+
+		try {
+			AccountRoleServiceUtil.associateUser(
+				accountEntryId, accountRoleIds, userId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.account.model.AccountRoleSoap deleteAccountRole(
+			com.liferay.account.model.AccountRoleSoap accountRole)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountRole returnValue =
+				AccountRoleServiceUtil.deleteAccountRole(
+					com.liferay.account.model.impl.AccountRoleModelImpl.toModel(
+						accountRole));
+
+			return com.liferay.account.model.AccountRoleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.account.model.AccountRoleSoap deleteAccountRole(
+			long accountRoleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountRole returnValue =
+				AccountRoleServiceUtil.deleteAccountRole(accountRoleId);
+
+			return com.liferay.account.model.AccountRoleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.account.model.AccountRoleSoap
+			getAccountRoleByRoleId(long roleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountRole returnValue =
+				AccountRoleServiceUtil.getAccountRoleByRoleId(roleId);
+
+			return com.liferay.account.model.AccountRoleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void unassociateUser(
+			long accountEntryId, long accountRoleId, long userId)
+		throws RemoteException {
+
+		try {
+			AccountRoleServiceUtil.unassociateUser(
+				accountEntryId, accountRoleId, userId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountRoleServiceSoap.class);
+
 }

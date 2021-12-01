@@ -29,10 +29,7 @@ definition {
 		}
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -65,10 +62,7 @@ definition {
 		}
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -100,10 +94,7 @@ definition {
 		}
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -135,10 +126,7 @@ definition {
 		}
 
 		task ("View OAuth2 application information") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",

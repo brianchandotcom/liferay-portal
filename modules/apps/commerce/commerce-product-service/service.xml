@@ -678,6 +678,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_Sku" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="sku" />
+		</finder>
 		<finder name="C_C" return-type="CPInstance" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPInstanceUuid" />

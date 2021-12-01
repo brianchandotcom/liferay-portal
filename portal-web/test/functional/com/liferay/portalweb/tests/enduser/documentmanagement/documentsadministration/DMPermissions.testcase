@@ -673,6 +673,35 @@ definition {
 			value1 = "You do not have the required permissions.");
 	}
 
+	@description = "This is a test for LPS-136852. It checks that a guest cannot access a folder image without permissions."
+	@priority = "3"
+	test GuestCannotAccessFolderImageThroughURLWithoutPermissions {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			guestPermissions = "false");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name",
+			siteURLKey = "guest");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${dmDocumentURL}");
+
+		User.viewLoginPG();
+	}
+
 	@description = "This is a test for LPS-136833. It checks that a guest cannot add a document in a folder without permissions."
 	@ignore = "true"
 	@priority = "3"
@@ -994,6 +1023,55 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
+	@description = "This is a test for LPS-136852. It checks that a site member cannot access a folder image without permissions."
+	@priority = "3"
+	test SiteMemberCannotAccessFolderImageThroughURLWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			groupPermissions = "false",
+			guestPermissions = "false");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name",
+			siteURLKey = "guest");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openSpecificURL(url = "${dmDocumentURL}");
+
+		AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
+	}
+
 	@description = "This is a test for LPS-136841. It checks that a site member cannot add a document in a folder without permissions."
 	@ignore = "true"
 	@priority = "3"
@@ -1229,16 +1307,6 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMPortlet.viewDefaultPG();
-	}
-
-	@description = "This is a test for LPS-136852. It checks that a site member cannot view a folder without permissions."
-	@ignore = "true"
-	@priority = "3"
-	test SiteMemberCannotViewFolder {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136852 SiteMemberCannotViewFolder pending implementation
-
 	}
 
 	@description = "This is a test for LPS-136840. It checks that a site member cannot access a folder without permissions."

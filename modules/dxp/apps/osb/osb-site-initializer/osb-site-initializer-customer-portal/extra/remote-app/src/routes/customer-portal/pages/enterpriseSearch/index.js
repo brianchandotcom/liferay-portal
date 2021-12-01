@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import {useQuery} from '@apollo/client';
 import {ClaySelect} from '@clayui/form';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import BaseButton from '~/common/components/BaseButton';
+import MenuButton from '~/common/components/MenuButton';
 import {
 	getAccountSubscriptions,
 	getAccountSubscriptionsTerms,
 } from '~/common/services/liferay/graphql/queries';
 import {getCurrentEndDate} from '../../../../common/utils';
-const crystal = 'KOR-1407632';
+const CRYSTAL = 'KOR-1407632';
 
 const EnterpriseSearch = () => {
 	const [selectedSubscriptions, setSelectedSubscriptions] = useState({
@@ -25,7 +27,7 @@ const EnterpriseSearch = () => {
 		loading: isLoadingSubscriptions,
 	} = useQuery(getAccountSubscriptions, {
 		variables: {
-			accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${crystal}_enterprise-search'`,
+			accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${CRYSTAL}_enterprise-search'`,
 		},
 	});
 
@@ -35,7 +37,7 @@ const EnterpriseSearch = () => {
 		loading: isLoadingSubscriptionsTerms,
 	} = useQuery(getAccountSubscriptionsTerms, {
 		variables: {
-			accountSubscriptionERC: `accountSubscriptionERC eq '${crystal}_enterprise-search_${selectedSubscriptions.name.toLowerCase()}'`,
+			accountSubscriptionERC: `accountSubscriptionERC eq '${CRYSTAL}_enterprise-search_${selectedSubscriptions.name.toLowerCase()}'`,
 		},
 	});
 
@@ -62,9 +64,14 @@ const EnterpriseSearch = () => {
 								const yearNumStartDate = new Date(
 									item.startDate
 								).setFullYear(currentYear);
-								const yearNumEndDate = new Date(
+								const yearNumEndDate = currentYear + 1;
+
+								const daysEndDate = new Date(
 									item.startDate
-								).setFullYear(currentYear + 1);
+								).getDate();
+								const monthsEndDate = new Date(
+									item.startDate
+								).getMonth();
 
 								if (index + 2 >= array.length) {
 									const yearNumEndDate = new Date(
@@ -84,7 +91,11 @@ const EnterpriseSearch = () => {
 								}
 
 								return {
-									endDate: new Date(yearNumEndDate),
+									endDate: new Date(
+										yearNumEndDate,
+										monthsEndDate,
+										daysEndDate - 1
+									),
 									startDate: new Date(yearNumStartDate),
 								};
 							})
@@ -109,13 +120,9 @@ const EnterpriseSearch = () => {
 		setSelectedSubscriptionsTerms(dataSubscriptionsTerms[0]);
 	}, [dataSubscriptions, dataSubscriptionsTerms]);
 
-	if (isLoadingSubscriptions || isLoadingSubscriptionsTerms) {
-		return 'Loading...';
-	}
 	if (errorSubscriptions || errorSubscriptionsTerms) {
 		return 'Error!';
 	}
-	console.log('estado 2 ', selectedSubscriptionsTerms);
 
 	return (
 		<div>
@@ -139,8 +146,11 @@ const EnterpriseSearch = () => {
 						className="subscription"
 						id="subscription"
 						onChange={(event) =>
-							setSelectedSubscriptions({name: event.target.value})
+							setSelectedSubscriptions({
+								name: event.target.value,
+							})
 						}
+						value={selectedSubscriptions.name}
 					>
 						{dataSubscriptions.map((item) => (
 							<ClaySelect.Option
@@ -157,28 +167,35 @@ const EnterpriseSearch = () => {
 						Subscription Term
 					</label>
 
-					<ClaySelect
-						aria-label="Subscription Term"
-						className="subscription-term"
-						id="subscription-term"
-						onChange={(event) =>
-							setSelectedSubscriptionsTerms(event.target.value)
-						}
-					>
-						{dataSubscriptionsTerms.map((account) => {
-							const formattedDate = `${getCurrentEndDate(
-								account.startDate
-							)} - ${getCurrentEndDate(account.endDate)}`;
+					<div className="d-flex">
+						<ClaySelect
+							aria-label="Subscription Term"
+							className="subscription-term"
+							id="subscription-term"
+							onChange={(event) =>
+								setSelectedSubscriptionsTerms(
+									event.target.value
+								)
+							}
+						>
+							{dataSubscriptionsTerms.map((account) => {
+								const formattedDate = `${getCurrentEndDate(
+									account.startDate
+								)} - ${getCurrentEndDate(account.endDate)}`;
 
-							return (
-								<ClaySelect.Option
-									key={account.startDate}
-									label={formattedDate}
-									value={`${account.startDate}-${account.endDate}`}
-								/>
-							);
-						})}
-					</ClaySelect>
+								return (
+									<ClaySelect.Option
+										className="options"
+										key={account.startDate}
+										label={formattedDate}
+										value={`${account.startDate}-${account.endDate}`}
+									/>
+								);
+							})}
+						</ClaySelect>
+					</div>
+
+					<MenuButton />
 				</div>
 			</div>
 

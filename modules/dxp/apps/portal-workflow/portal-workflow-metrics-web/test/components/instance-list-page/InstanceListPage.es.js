@@ -9,78 +9,73 @@
  * distribution rights of the Software.
  */
 
-import {act, fireEvent} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
+import React from 'react';
 
-// import React from 'react';
-
-// import InstanceListPage from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPage.es';
-// import ToasterProvider from '../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
-// import {MockRouter} from '../../mock/MockRouter.es';
+import InstanceListPage from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPage.es';
+import ToasterProvider from '../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
+import {MockRouter} from '../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-// const items = [
-// 	{
-// 		assetTitle: 'New Post 1',
-// 		assetType: 'Blog',
-// 		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
-// 		dateCreated: new Date('2019-01-01'),
-// 		id: 1,
-// 		taskNames: [],
-// 	},
-// 	{
-// 		assetTitle: 'New Post 2',
-// 		assetType: 'Blog',
-// 		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
-// 		creator: {
-// 			name: 'User 1',
-// 		},
-// 		dateCreated: new Date('2019-01-03'),
-// 		id: 2,
-// 		taskNames: ['Update'],
-// 	},
-// ];
+const items = [
+	{
+		assetTitle: 'New Post 1',
+		assetType: 'Blog',
+		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
+		dateCreated: new Date('2019-01-01'),
+		id: 1,
+		taskNames: [],
+	},
+	{
+		assetTitle: 'New Post 2',
+		assetType: 'Blog',
+		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
+		creator: {
+			name: 'User 1',
+		},
+		dateCreated: new Date('2019-01-03'),
+		id: 2,
+		taskNames: ['Update'],
+	},
+];
 
-// const routeParams = {
-// 	page: 1,
-// 	pageSize: 2,
-// 	query: '',
-// 	sort: 'overdueInstanceCount%3Adesc',
-// };
+const routeParams = {
+	page: 1,
+	pageSize: 2,
+	query: '',
+	sort: 'overdueInstanceCount%3Adesc',
+};
 
-xdescribe('The instance list card should', () => {
+fetch.mockImplementation(async () => ({
+	json: async () => ({items, totalCount: items.length + 1}),
+	ok: true,
+	text: async () => ({items, totalCount: items.length + 1}),
+}));
 
-	// const clientMock = {
-	// 	get: jest
-	// 		.fn()
-	// 		.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
-	// 	request: jest
-	// 		.fn()
-	// 		.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
-	// };
-
+describe('The instance list card should', () => {
 	let container;
 	let findByText;
 	let getByText;
 
-	// beforeAll(async () => {
-	// 	const renderResult = render(
-	// 		<MockRouter client={clientMock}>
-	// 			<InstanceListPage routeParams={routeParams} />
-	// 		</MockRouter>,
-	// 		{wrapper: ToasterProvider}
-	// 	);
+	beforeAll(async () => {
+		const renderResult = render(
+			<MockRouter>
+				<InstanceListPage routeParams={routeParams} />
+			</MockRouter>,
+			{wrapper: ToasterProvider}
+		);
 
-	// 	container = renderResult.container;
-	// 	findByText = renderResult.findByText;
-	// 	getByText = renderResult.getByText;
+		container = renderResult.container;
+		findByText = renderResult.findByText;
+		getByText = renderResult.getByText;
 
-	// 	await act(async () => {
-	// 		jest.runAllTimers();
-	// 	});
-	// });
+		await act(async () => {
+			jest.runAllTimers();
+		});
+	});
 
-	xit('Be rendered with "sla-status", "process-status", "completion-period", "process-step" and "assignee" filters', () => {
+	it('Be rendered with "sla-status", "process-status", "completion-period", "process-step" and "assignee" filters', () => {
 		const filters = container.querySelectorAll('.dropdown-toggle');
 
 		expect(filters[0]).toHaveTextContent('sla-status');
@@ -90,7 +85,7 @@ xdescribe('The instance list card should', () => {
 		expect(filters[4]).toHaveTextContent('assignee');
 	});
 
-	xit('Select all page by clicking on check all button', async () => {
+	it('Select all page by clicking on check all button', async () => {
 		const checkAllButton = container.querySelectorAll(
 			'input.custom-control-input'
 		)[0];
@@ -98,10 +93,10 @@ xdescribe('The instance list card should', () => {
 			'.table-first-element-group'
 		);
 
-		const instanceCheckbox1 = firstTableElements[0].querySelector(
+		const instanceCheckbox1 = firstTableElements[0]?.querySelector(
 			'input.custom-control-input'
 		);
-		const instanceCheckbox2 = firstTableElements[1].querySelector(
+		const instanceCheckbox2 = firstTableElements[1]?.querySelector(
 			'input.custom-control-input'
 		);
 
@@ -133,7 +128,7 @@ xdescribe('The instance list card should', () => {
 		expect(instanceCheckbox2.checked).toEqual(false);
 	});
 
-	xit('Select all instances by clicking on select all button', async () => {
+	it('Select all instances by clicking on select all button', async () => {
 		const checkAllButton = container.querySelectorAll(
 			'input.custom-control-input'
 		)[0];
@@ -141,10 +136,10 @@ xdescribe('The instance list card should', () => {
 			'.table-first-element-group'
 		);
 
-		const instanceCheckbox1 = firstTableElements[0].querySelector(
+		const instanceCheckbox1 = firstTableElements[0]?.querySelector(
 			'input.custom-control-input'
 		);
-		const instanceCheckbox2 = firstTableElements[1].querySelector(
+		const instanceCheckbox2 = firstTableElements[1]?.querySelector(
 			'input.custom-control-input'
 		);
 
@@ -196,7 +191,7 @@ xdescribe('The instance list card should', () => {
 		expect(label).toBeTruthy();
 	});
 
-	xit('Show last metrics calculated info', () => {
+	it('Show last metrics calculated info', () => {
 		const metricsCalculated = findByText('Metrics calculated');
 
 		expect(metricsCalculated).toBeTruthy();

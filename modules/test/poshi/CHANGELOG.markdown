@@ -1,5 +1,16 @@
 # Poshi Runner Change Log
 
+## 1.0.322
+
+### Other
+
+* [LPS-142690](https://issues.liferay.com/browse/LPS-142690) - Add task source-formatter-missing-override
+
+### Script
+
+* [POSHI-202](https://issues.liferay.com/browse/POSHI-202) - Change poshi script parsing to be independent of using java reflection for util classes
+* [POSHI-211](https://issues.liferay.com/browse/POSHI-211) - Fix poshi script parsing to generate Poshi files
+
 ## 1.0.321
 
 ### Script

@@ -25,11 +25,11 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			});
 		};
 
-		require('../../../src/main/resources/META-INF/resources/designer/js/legacy/xml_definition');
+		require('../../../../src/main/resources/META-INF/resources/designer/js/legacy/xml_definition');
 
 		AUI.add = add;
 
-		require('../../../src/main/resources/META-INF/resources/designer/js/legacy/xml_util');
+		require('../../../../src/main/resources/META-INF/resources/designer/js/legacy/xml_util');
 
 		AUI().use(['liferay-kaleo-designer-xml-util'], (A) => {
 

@@ -51,7 +51,9 @@ const ItemSelectorPreview = ({
 	const isMounted = useIsMounted();
 
 	const close = useCallback(() => {
-		ReactDOM.unmountComponentAtNode(container);
+		if (container) {
+			ReactDOM.unmountComponentAtNode(container);
+		}
 	}, [container]);
 
 	const handleCancelEditing = () => {
@@ -258,7 +260,7 @@ const ItemSelectorPreview = ({
 };
 
 ItemSelectorPreview.propTypes = {
-	container: PropTypes.instanceOf(Element).isRequired,
+	container: PropTypes.instanceOf(Element),
 	currentIndex: PropTypes.number,
 	editItemURL: PropTypes.string,
 	handleSelectedItem: PropTypes.func.isRequired,

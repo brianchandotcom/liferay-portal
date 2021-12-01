@@ -14,7 +14,7 @@ import {fetch} from 'frontend-js-web';
 import {DEFAULT_ERROR} from './constants';
 import {openErrorToast} from './toasts';
 
-export function fetchData(url = '', parameters, successFcn, errorFcn) {
+export function fetchData(url = '', parameters, onSuccess, onError) {
 	fetch(url, parameters)
 		.then((response) => {
 			if (!response.ok) {
@@ -24,7 +24,7 @@ export function fetchData(url = '', parameters, successFcn, errorFcn) {
 			return response.json();
 		})
 		.then((responseContent) => {
-			successFcn(responseContent);
+			onSuccess(responseContent);
 		})
 		.catch((error) => {
 			openErrorToast();
@@ -33,7 +33,7 @@ export function fetchData(url = '', parameters, successFcn, errorFcn) {
 				console.error(error);
 			}
 
-			errorFcn(error);
+			onError(error);
 		});
 }
 

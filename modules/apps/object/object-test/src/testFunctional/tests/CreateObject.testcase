@@ -65,7 +65,6 @@ definition {
 	@description = "LPS-135397 - Verify if it's possible to add Entries with Custom Layout Created"
 	@priority = "4"
 	test CanAddEntriesWithCustomLayout {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -115,7 +114,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Entry 1");
-
 	}
 
 	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"

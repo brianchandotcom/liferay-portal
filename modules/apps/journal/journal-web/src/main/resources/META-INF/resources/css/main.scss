@@ -189,18 +189,8 @@ $productMenuWidth: 320px;
 				margin-top: $toolbarDesktopHeight;
 			}
 
-			> .container-fluid {
-				max-height: calc(
-					100vh - #{$controlMenuHeight + $portletLayoutMargin} - #{$toolbarHeight}
-				);
-
-				@include media-breakpoint-up(lg) {
-					max-height: calc(
-						100vh - #{$controlMenuHeight + $portletLayoutMargin} - #{$toolbarDesktopHeight}
-					);
-				}
-
-				@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(md) {
+				> .container-fluid {
 					margin: 0 auto;
 					padding: 0;
 

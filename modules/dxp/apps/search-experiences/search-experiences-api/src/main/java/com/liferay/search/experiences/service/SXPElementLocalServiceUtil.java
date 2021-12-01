@@ -91,6 +91,12 @@ public class SXPElementLocalServiceUtil {
 		return getService().createSXPElement(sxpElementId);
 	}
 
+	public static void deleteCompanySXPElements(long companyId)
+		throws PortalException {
+
+		getService().deleteCompanySXPElements(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

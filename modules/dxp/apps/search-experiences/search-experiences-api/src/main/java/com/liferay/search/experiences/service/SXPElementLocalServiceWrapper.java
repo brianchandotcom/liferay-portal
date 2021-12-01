@@ -86,6 +86,13 @@ public class SXPElementLocalServiceWrapper
 		return _sxpElementLocalService.createSXPElement(sxpElementId);
 	}
 
+	@Override
+	public void deleteCompanySXPElements(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_sxpElementLocalService.deleteCompanySXPElements(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

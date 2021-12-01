@@ -91,6 +91,12 @@ public class SXPBlueprintLocalServiceUtil {
 		return getService().createSXPBlueprint(sxpBlueprintId);
 	}
 
+	public static void deleteCompanySXPBlueprints(long companyId)
+		throws PortalException {
+
+		getService().deleteCompanySXPBlueprints(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

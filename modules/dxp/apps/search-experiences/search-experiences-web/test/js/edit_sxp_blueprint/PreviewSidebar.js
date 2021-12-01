@@ -24,10 +24,7 @@ jest.mock(
 	)
 );
 
-Liferay.ThemeDisplay = {
-	getBCP47LanguageId: () => 'en-US',
-	getDefaultLanguageId: () => 'en_US',
-};
+Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 
 const SEARCH_RESULTS = mockSearchResults().response.hits.hits;
 

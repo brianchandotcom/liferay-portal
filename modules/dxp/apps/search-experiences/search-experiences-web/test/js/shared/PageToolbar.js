@@ -20,7 +20,7 @@ jest.useFakeTimers();
 
 const onSubmit = jest.fn();
 
-Liferay.ThemeDisplay = {getDefaultLanguageId: () => 'en_US'};
+Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 
 function renderPageToolbar(props) {
 	return render(

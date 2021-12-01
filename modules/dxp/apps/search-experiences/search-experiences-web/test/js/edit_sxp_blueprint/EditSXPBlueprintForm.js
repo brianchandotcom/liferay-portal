@@ -53,7 +53,7 @@ afterAll(() => {
 	console.error = originalError;
 });
 
-Liferay.ThemeDisplay = {getDefaultLanguageId: () => 'en_US'};
+Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 
 function renderEditSXPBlueprintForm(props) {
 	return render(

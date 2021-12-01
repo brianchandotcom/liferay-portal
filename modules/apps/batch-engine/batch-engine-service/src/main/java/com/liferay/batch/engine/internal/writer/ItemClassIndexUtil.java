@@ -47,7 +47,8 @@ public class ItemClassIndexUtil {
 						Class<?> valueClass = field.getType();
 
 						if (!valueClass.isPrimitive() &&
-							!_objectTypes.contains(valueClass)) {
+							!_objectTypes.contains(valueClass) &&
+							!Enum.class.isAssignableFrom(valueClass)) {
 
 							continue;
 						}

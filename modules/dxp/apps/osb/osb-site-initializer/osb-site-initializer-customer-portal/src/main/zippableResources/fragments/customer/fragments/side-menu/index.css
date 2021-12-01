@@ -7,7 +7,6 @@
 	width: 100%;
 }
 
-
 .customer-portal-side-menu .btn {
 	width: fit-content;
 }
@@ -16,17 +15,13 @@
 	box-shadow: none;
 }
 
-.customer-portal-side-menu .btn-sm {
-	font-size: var(--text-link-md-font-size);
-}
-
 .customer-portal-side-menu #customer-portal-arrow.down {
 	transform: rotate(90deg);
 	transition-duration: 0.3s;
 }
 
 .customer-portal-side-menu #customer-portal-arrow.left {
-  transition-duration: 0.3s;
+	transition-duration: 0.3s;
 	transform: rotate(0deg);
 }
 
@@ -35,22 +30,19 @@
 	color: var(--color-neutral-10);
 	cursor: pointer;
 	display: flex !important;
-    font-size: var(--text-link-md-font-size);
+	font-size: var(--text-link-md-font-size);
 	font-weight: var(--font-weight-semi-bold);
 	line-height: var(--text-link-md-line-height);
 	text-decoration: none;
 }
 
 .customer-portal-side-menu .btn-menu.active {
-	background-color: var(--color-action-primary-active-lighten-7, rgb(0, 74, 215, 0.1)) !important;
-	border-color: var(--btn-default-border-color);
-	border-radius: var(--border-radius) !important;
-	box-sizing: border-box;
-	color: var(--color-action-primary-active) !important;
-	display: flex !important;
-	font-weight: var(--font-weight-semi-bold) !important;
-	padding-bottom: var(--spacer-2, 0.5rem) !important;
-	padding-top: var(--spacer-2, 0.5rem) !important;
+	background-color: var(
+		--color-action-primary-active-lighten-7,
+		rgb(0, 74, 215, 0.1)
+	);
+	border-radius: var(--border-radius);
+	color: var(--color-action-primary-active);
 }
 
 .customer-portal-side-menu .btn-menu.text-brand-primary {
@@ -58,8 +50,11 @@
 }
 
 .customer-portal-side-menu .btn-menu:hover {
-	background-color: var(--color-action-primary-hover-lighten-7, rgba(0, 83, 240, 0.07)) !important;
+	background-color: var(
+		--color-action-primary-hover-lighten-7,
+		rgba(0, 83, 240, 0.07)
+	) !important;
 	border-color: var(--btn-default-border-color);
 	border-radius: var(--border-radius) !important;
-	color: var(--color-action-primary-hover, rgba(0, 83, 240)) !important
+	color: var(--color-action-primary-hover) !important;
 }

@@ -89,8 +89,7 @@ const pathSplit = pathname.split('/').filter(Boolean);
 				.map(({name}) => htmlElement(name, getSubscriptionKey(name)))
 				.join('\n');
 		}
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();
@@ -112,8 +111,7 @@ fragmentElement.addEventListener('click', (event) => {
 
 		if (heightProducts < expandedHeightProducts) {
 			currentProducts.style.height = `${expandedHeightProducts}px`;
-		}
-		else {
+		} else {
 			currentProducts.style.height = '0px';
 		}
 
@@ -122,8 +120,7 @@ fragmentElement.addEventListener('click', (event) => {
 		);
 		arrow.classList.toggle('left');
 		arrow.classList.toggle('down');
-	}
-	else if (lastButton !== currentButton && currentButton.tagName === 'A') {
+	} else if (lastButton !== currentButton && currentButton.tagName === 'A') {
 		currentButton.classList.toggle('active');
 		lastButton.classList.toggle('active');
 

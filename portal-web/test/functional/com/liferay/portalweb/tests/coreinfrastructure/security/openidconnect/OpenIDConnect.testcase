@@ -17,10 +17,7 @@ definition {
 	test AssertTokenRefreshOffsetCannotBeSetAtInstanceLevel {
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertTokenRefreshOffsetCannotBeSetAtInstanceLevel";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",

@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_PROCESS_FAILED</td>
+	<td>//table//td[contains(.,'Failed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_PROCESS_IN_PROGRESS</td>
 	<td>//table//td[contains(.,'In Progress')]</td>
 	<td></td>

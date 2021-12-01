@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	Pages,
+	PagesVisitor,
 	addObjectFields,
 	updateObjectFields,
 	useConfig,
@@ -30,6 +31,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -75,6 +77,25 @@ export function FormBuilder() {
 	const {dataDefinition} = useFormState({schema: ['dataDefinition']});
 
 	const [errorList, setErrorList] = useState([]);
+
+	const formSettingsPages = useMemo(() => {
+		if (!formSettingsContext) {
+			return [];
+		}
+
+		const pagesVisitor = new PagesVisitor(formSettingsContext.pages);
+
+		return pagesVisitor.mapFields((field) => {
+			if (field.valid) {
+				return field;
+			}
+
+			return {
+				...field,
+				displayErrors: true,
+			};
+		});
+	}, [formSettingsContext]);
 
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
 
@@ -498,6 +519,7 @@ export function FormBuilder() {
 					setVisibleFormSettings(false);
 					updateObjectFields(dispatch);
 				}}
+				pages={formSettingsPages}
 				visibleFormSettings={visibleFormSettings}
 			/>
 		</>

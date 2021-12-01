@@ -11,7 +11,6 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import classNames from 'classnames';
 import React from 'react';
 
 export default function TableHead({
@@ -52,14 +51,13 @@ export default function TableHead({
 					{Liferay.Language.get('sku-or-diagram')}
 				</ClayTable.Cell>
 
-				<ClayTable.Cell
-					className={classNames(isAdmin && 'text-right')}
-					headingCell
-				>
+				<ClayTable.Cell headingCell>
 					{Liferay.Language.get('quantity')}
 				</ClayTable.Cell>
 
-				{!isAdmin && (
+				{isAdmin ? (
+					<ClayTable.Cell />
+				) : (
 					<ClayTable.Cell className="text-right" headingCell>
 						{Liferay.Language.get('price')}
 					</ClayTable.Cell>

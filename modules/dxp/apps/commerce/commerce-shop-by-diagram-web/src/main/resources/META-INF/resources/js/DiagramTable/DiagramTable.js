@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {DIAGRAM_EVENTS, DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
-import {getMappedProducts} from '../utilities/data';
+import {deleteMappedProduct, getMappedProducts} from '../utilities/data';
 import {
 	formatInitialQuantities,
 	formatProductOptions,
@@ -120,7 +120,8 @@ function DiagramTable({
 
 	const selectableSkusId = (mappedProducts || []).reduce(
 		(skusId, product) =>
-			product.type === 'sku' && product.availability.label === 'available'
+			product.type === 'sku' &&
+			product.availability?.label === 'available'
 				? [...skusId, product.skuId]
 				: skusId,
 		[]
@@ -146,6 +147,20 @@ function DiagramTable({
 			sequence: product.sequence,
 		});
 	}
+
+	const handleMappedProductDelete = (mappedProductId) => {
+		deleteMappedProduct(mappedProductId).then(() => {
+			setMappedProducts((mappedProducts) =>
+				mappedProducts.filter(
+					(mappedProduct) => mappedProduct.id !== mappedProductId
+				)
+			);
+
+			Liferay.fire(DIAGRAM_TABLE_EVENTS.TABLE_UPDATED, {
+				diagramProductId: productId,
+			});
+		});
+	};
 
 	return (
 		<div className="shop-by-diagram-table" ref={wrapperRef}>
@@ -193,6 +208,7 @@ function DiagramTable({
 										handleTitleClicked={handleTitleClicked}
 										isAdmin={isAdmin}
 										key={product.id}
+										onDelete={handleMappedProductDelete}
 										product={product}
 										quantity={
 											newQuantities[product.skuId] ||

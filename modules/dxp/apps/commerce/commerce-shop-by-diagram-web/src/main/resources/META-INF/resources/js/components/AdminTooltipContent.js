@@ -14,7 +14,6 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {DATA_SET_EVENT} from '@liferay/frontend-data-set-web';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -23,25 +22,22 @@ import {
 	DIAGRAM_EVENTS,
 	LINKING_OPTIONS,
 } from '../utilities/constants';
-import {deletePin, savePin} from '../utilities/data';
-import {formatMappedProduct} from '../utilities/index';
 
 function AdminTooltipContent({
 	closeTooltip,
 	datasetDisplayId,
+	onDelete,
+	onSave,
 	productId,
 	readOnlySequence,
 	selectedPin,
 	sequence: sequenceProp,
-	updatePins,
-	x,
-	y,
 }) {
 	const [type, setType] = useState(
-		selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION
+		selectedPin?.mappedProduct?.type || DEFAULT_LINK_OPTION
 	);
 	const [quantity, setQuantity] = useState(
-		selectedPin?.mappedProduct.quantity || 1
+		selectedPin?.mappedProduct?.quantity || 1
 	);
 	const [mappedProduct, setMappedProduct] = useState(
 		selectedPin?.mappedProduct || null
@@ -54,71 +50,27 @@ function AdminTooltipContent({
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		setQuantity(selectedPin?.mappedProduct.quantity || 1);
-		setSequence(selectedPin?.mappedProduct.sequence || sequenceProp || '');
-		setType(selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION);
+		setQuantity(selectedPin?.mappedProduct?.quantity || 1);
+		setSequence(selectedPin?.mappedProduct?.sequence || sequenceProp || '');
+		setType(selectedPin?.mappedProduct?.type || DEFAULT_LINK_OPTION);
 		setMappedProduct(selectedPin?.mappedProduct || null);
 	}, [selectedPin, sequenceProp]);
 
 	function _handleSubmit(event) {
 		event.preventDefault();
 
-		const productDetails = formatMappedProduct(
-			type,
-			quantity,
-			sequence,
-			mappedProduct
-		);
-
-		const update = Boolean(selectedPin?.id);
-
 		setSaving(true);
 
-		savePin(
-			update ? selectedPin.id : null,
-			productDetails,
-			sequence,
-			x,
-			y,
-			productId
-		)
-			.then((newPin) => {
+		onSave(type, quantity, sequence, mappedProduct)
+			.then(() => {
 				if (!isMounted()) {
 					return;
 				}
-
-				updatePins((pins) => {
-					const updatedPins = pins.map((pin) =>
-						pin.sequence === newPin.sequence
-							? {
-									...pin,
-									mappedProduct: newPin.mappedProduct,
-									quantity: newPin.quantity,
-							  }
-							: pin
-					);
-
-					return update
-						? updatedPins.map((updatedPin) =>
-								updatedPin.id === newPin.id
-									? newPin
-									: updatedPin
-						  )
-						: [...updatedPins, newPin];
-				});
 
 				setSaving(false);
 
 				closeTooltip();
 
-				openToast({
-					message: update
-						? Liferay.Language.get('pin-updated')
-						: Liferay.Language.get('pin-created'),
-					type: 'success',
-				});
-			})
-			.then(() => {
 				if (datasetDisplayId) {
 					Liferay.fire(DATA_SET_EVENT.UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
@@ -129,12 +81,7 @@ function AdminTooltipContent({
 					diagramProductId: productId,
 				});
 			})
-			.catch((error) => {
-				openToast({
-					message: error.message || error,
-					type: 'danger',
-				});
-
+			.catch(() => {
 				setSaving(false);
 			});
 	}
@@ -142,26 +89,16 @@ function AdminTooltipContent({
 	function _handleDelete() {
 		setDeleting(true);
 
-		deletePin(selectedPin.id)
+		onDelete()
 			.then(() => {
 				if (!isMounted()) {
 					return;
 				}
 
-				updatePins((pins) =>
-					pins.filter((pin) => pin.id !== selectedPin.id)
-				);
-
 				setDeleting(false);
 
 				closeTooltip();
 
-				openToast({
-					message: Liferay.Language.get('pin-deleted'),
-					type: 'success',
-				});
-			})
-			.then(() => {
 				if (datasetDisplayId) {
 					Liferay.fire(DATA_SET_EVENT.UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
@@ -172,12 +109,7 @@ function AdminTooltipContent({
 					diagramProductId: productId,
 				});
 			})
-			.catch((error) => {
-				openToast({
-					message: error.message || error,
-					type: 'danger',
-				});
-
+			.catch(() => {
 				setDeleting(false);
 			});
 	}
@@ -302,6 +234,7 @@ function AdminTooltipContent({
 AdminTooltipContent.propTypes = {
 	closeTooltip: PropTypes.func.isRequired,
 	datasetDisplayId: PropTypes.string,
+	onDelete: PropTypes.func.isRequired,
 	productId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
 	readOnlySequence: PropTypes.bool,

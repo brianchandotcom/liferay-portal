@@ -21,9 +21,9 @@ export const DIAGRAM_EVENTS = {
 
 export const DIAGRAM_TABLE_EVENTS = {
 	HIGHLIGHT_PIN: 'diagram-highlight-pin',
-	PINS_UPDATED: 'diagram-table-updated',
 	REMOVE_PIN_HIGHLIGHT: 'diagram-remove-pin-highlight',
 	SELECT_PIN: 'diagram-select-pin',
+	TABLE_UPDATED: 'diagram-table-updated',
 };
 
 export const RADIUS_SIZES = [

@@ -32,12 +32,26 @@ export function loadPins(productId, channelId = null) {
 		headers: HEADERS,
 	})
 		.then((response) => response.json())
-		.then((jsonResponse) => jsonResponse.items);
+		.then((jsonResponse) =>
+			jsonResponse.items.filter((item) => item.mappedProduct)
+		);
 }
 
 export function deletePin(pinId) {
 	const url = new URL(
 		`${PINS_ADMIN_ENDPOINT_BASE}/pins/${pinId}`,
+		themeDisplay.getPortalURL()
+	);
+
+	return fetch(url, {
+		headers: HEADERS,
+		method: 'DELETE',
+	});
+}
+
+export function deleteMappedProduct(mappedProductId) {
+	const url = new URL(
+		`${PINS_ADMIN_ENDPOINT_BASE}/mapped-products/${mappedProductId}`,
 		themeDisplay.getPortalURL()
 	);
 
@@ -80,6 +94,31 @@ export function savePin(
 		body: JSON.stringify(body),
 		headers: HEADERS,
 		method: pinId ? 'PATCH' : 'POST',
+	}).then((response) => response.json());
+}
+
+export function saveMappedProduct(
+	mappedProductId,
+	mappedProduct,
+	sequence,
+	productId
+) {
+	const baseURL = mappedProductId
+		? `${PINS_ADMIN_ENDPOINT_BASE}/mapped-products/${mappedProductId}`
+		: `${PINS_ADMIN_ENDPOINT_BASE}/products/${productId}/mapped-products`;
+
+	const url = new URL(baseURL, themeDisplay.getPortalURL());
+
+	const body = {...mappedProduct};
+
+	if (sequence) {
+		body.sequence = sequence;
+	}
+
+	return fetch(url, {
+		body: JSON.stringify(body),
+		headers: HEADERS,
+		method: mappedProductId ? 'PATCH' : 'POST',
 	}).then((response) => response.json());
 }
 

@@ -270,8 +270,6 @@ definition {
 
 		task ("Open Page Audit panel and assert the progress bar") {
 			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-
-			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
 		}
 
 		task ("Reset Google PageSpeed API to default at System Settings") {

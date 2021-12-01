@@ -388,28 +388,14 @@ definition {
 			Refresh();
 		}
 
-		task ("Verify page has Minor, Moderate, Serious, and Critical set of violations") {
-			VerifyElementPresent(
-				key_impact = "minor",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+		task ("Verify the page has critical, serious, moderate, minor violations") {
+			A11yTool.waitForAllImpactViolationsPresentInSidePanel();
 
-			VerifyElementPresent(
-				key_impact = "moderate",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
-
-			VerifyElementPresent(
-				key_impact = "serious",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
-
-			VerifyElementPresent(
-				key_impact = "critical",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+			A11yTool.waitForAllImpactViolationsPresentOnPage();
 		}
 
 		task ("Filter impact by Critical") {
-			A11yTool.setFilter(filterType = "Critical");
-
-			FormFields.viewCheckboxChecked(fieldName = "Critical");
+			A11yTool.checkFilter(filterType = "critical");
 		}
 
 		task ("Assert only critical violations are present on the side panel") {
@@ -418,7 +404,7 @@ definition {
 				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
 
 			AssertElementNotPresent(
-				key_impact = "minor",
+				key_impact = "serious",
 				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
 
 			AssertElementNotPresent(
@@ -426,35 +412,19 @@ definition {
 				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
 
 			AssertElementNotPresent(
-				key_impact = "serious",
+				key_impact = "minor",
 				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
 		}
 
-		task ("Assert only critical elements are highlighted") {
-			AssertClick(
-				key_index = "1",
-				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX",
-				value1 = "");
-
-			AssertClick(
-				key_index = "2",
-				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX",
-				value1 = "");
-
-			AssertElementNotPresent(
-				key_index = "3",
-				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
-
+		task ("Assert only critical elements are highlighted with an icon") {
 			AssertElementPresent(
 				key_impact = "critical",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
 
 			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
-		}
 
-		task ("Assert minor, moderate, serious violations are not highlighted") {
 			AssertElementNotPresent(
-				key_impact = "minor",
+				key_impact = "serious",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
 
 			AssertElementNotPresent(
@@ -462,32 +432,28 @@ definition {
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
 
 			AssertElementNotPresent(
-				key_impact = "serious",
+				key_impact = "minor",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
+		}
+
+		task ("Close critical violations popovers") {
+			Click(
+				key_index = "1",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
+
+			Click(
+				key_index = "2",
+				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 		}
 
 		task ("Unfilter impact by Critical") {
-			A11yTool.setFilter(filterType = "Critical");
-
-			FormFields.viewCheckboxNotChecked(fieldName = "Critical");
+			A11yTool.uncheckFilter(filterType = "critical");
 		}
 
-		task ("Assert page has Minor, Moderate, Serious, and Critical set of violations") {
-			AssertElementPresent(
-				key_impact = "minor",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+		task ("Assert the page has critical, serious, moderate, minor violations") {
+			A11yTool.assertAllImpactViolationsPresentInSidePanel();
 
-			AssertElementPresent(
-				key_impact = "moderate",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
-
-			AssertElementPresent(
-				key_impact = "serious",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
-
-			AssertElementPresent(
-				key_impact = "critical",
-				locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
+			A11yTool.assertAllImpactViolationsPresentOnPage();
 		}
 
 		task ("Assert violations are highlighted with an icon") {

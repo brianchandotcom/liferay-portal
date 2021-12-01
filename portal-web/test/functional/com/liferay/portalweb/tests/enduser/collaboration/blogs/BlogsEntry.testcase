@@ -63,7 +63,7 @@ definition {
 
 		var dmDocument1URL = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "Document_1.jpg",
-			site = "Guest");
+			siteURLKey = "guest");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_2.jpg",
@@ -73,7 +73,7 @@ definition {
 
 		var dmDocument2URL = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "Document_2.jpg",
-			site = "Guest");
+			siteURLKey = "guest");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 

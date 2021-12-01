@@ -4247,11 +4247,32 @@ definition {
 	}
 
 	@description = "LPS-139418 - Verify that previous filled data is not kept when cancelling the creation of an Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PreviousFilledDataIsNotKeptAfterCancel {
 
-		// TODO LPS-141686 PreviousFilledDataIsNotKeptAfterCancel pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+        LexiconEntry.gotoAdd();
+
+        ObjectAdmin.addNewObject(
+            fieldLabelName = "Object Y",
+            pluralLabelName = "Objects Y");
+
+        Button.clickCancel();
+
+        Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
+
+        AssertTextEquals(
+            locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
+            value1 = "");
+        
+        AssertTextEquals(
+            locator1 = "ObjectAdmin#LABEL_CUSTOM_OBJECT",
+            value1 = "");
+
+        AssertTextEquals(
+            locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
+            value1 = "");
 
 	}
 

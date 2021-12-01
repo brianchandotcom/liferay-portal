@@ -80,8 +80,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		return new Sku() {
 			{
 				availability = _getAvailability(
-					cpSkuDTOConverterConvertContext.getCompanyId(),
 					commerceContext.getCommerceChannelGroupId(),
+					cpSkuDTOConverterConvertContext.getCompanyId(),
 					cpInstance.getSku(), cpInstance,
 					cpSkuDTOConverterConvertContext.getLocale());
 				depth = cpInstance.getDepth();
@@ -106,7 +106,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private Availability _getAvailability(
-			long companyId, long commerceChannelGroupId, String sku,
+			long commerceChannelGroupId, long companyId, String sku,
 			CPInstance cpInstance, Locale locale)
 		throws Exception {
 

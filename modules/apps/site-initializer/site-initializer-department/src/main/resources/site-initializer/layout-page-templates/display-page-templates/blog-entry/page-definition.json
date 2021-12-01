@@ -6,13 +6,15 @@
 					"fragment": {
 						"key": "entry-header"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+					},
 					"fragmentFields": [
 						{
 							"id": "entryCategory",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								},
 								"text": {
 									"mapping": {
@@ -28,7 +30,8 @@
 							"id": "entrySubtitle",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								},
 								"text": {
 									"mapping": {
@@ -44,7 +47,8 @@
 							"id": "imageAuthor",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								},
 								"text": {
 									"mapping": {
@@ -70,7 +74,8 @@
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -78,7 +83,8 @@
 							"id": "entryTitle",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								},
 								"text": {
 									"mapping": {
@@ -179,13 +185,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"mapping": {
@@ -309,13 +317,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -347,7 +357,8 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -380,7 +391,8 @@
 													"id": "link",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -418,7 +430,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -426,7 +439,8 @@
 													"fragment": {
 														"key": "entry-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "image",
@@ -442,7 +456,8 @@
 																	}
 																},
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -450,7 +465,8 @@
 															"id": "author",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -466,7 +482,8 @@
 															"id": "category",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -482,7 +499,8 @@
 															"id": "title",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {

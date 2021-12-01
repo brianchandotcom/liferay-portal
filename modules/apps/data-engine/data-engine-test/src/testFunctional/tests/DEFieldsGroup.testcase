@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that is possible to Collapse a Fields Group"
+	@description = "This is a test for LRQA-71711. This test verifies that is possible to Collapse a Fields Group"
 	@priority = "3"
 	test CanBeCollapsed {
 		NavItem.gotoStructures();
@@ -188,7 +188,7 @@ definition {
 			fieldsLabelList = "Copy of Text,Copy of Numeric");
 	}
 
-	@description = "Verify that the Web Content data persists upon editing the related Structure by creating a Fields Group"
+	@description = "This is a test for LRQA-71711. This test verifies that the Web Content data persists upon editing the related Structure by creating a Fields Group"
 	@priority = "4"
 	test CanDataBeEditedInNewFieldsGroup {
 		NavItem.gotoStructures();
@@ -214,7 +214,7 @@ definition {
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field");
-		
+
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "123");
@@ -238,7 +238,7 @@ definition {
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field");
-		
+
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "123");
@@ -630,7 +630,7 @@ definition {
 			fieldName = "Date");
 	}
 
-	@description = "Verify that inputted data on a Fields Group persists"
+	@description = "This is a test for LRQA-71711. This test verifies that inputted data on a Fields Group persists"
 	@priority = "5"
 	test CanInputData {
 		NavItem.gotoStructures();
@@ -662,11 +662,11 @@ definition {
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field");
-		
+
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "123");
-		
+
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
 			value = "08/06/2021");
@@ -678,7 +678,7 @@ definition {
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field");
-		
+
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "123");
@@ -688,7 +688,7 @@ definition {
 			value = "08/06/2021");
 	}
 
-	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
+	@description = "This is a test for LRQA-71711. This test verifies that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
 	@priority = "4"
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
@@ -722,33 +722,33 @@ definition {
 		DataEngine.addRepeatableField(fieldLabel = "Date");
 
 		DERenderer.inputDataInTextField(
-			index = "1",
 			fieldLabel = "Text",
+			index = "1",
 			value = "This is a Text field 1");
-		
+
 		DERenderer.inputDataInNumericField(
-			index = "1",
 			fieldLabel = "Numeric",
+			index = "1",
 			value = "123");
-		
+
 		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
 			index = "1",
-			fieldLabel = "Date",
 			value = "08/06/2021");
-		
+
 		DERenderer.inputDataInTextField(
-			index = "2",
 			fieldLabel = "Text",
+			index = "2",
 			value = "This is a Text field 2");
-		
+
 		DERenderer.inputDataInNumericField(
-			index = "2",
 			fieldLabel = "Numeric",
-			value = "456");
-		
-		DERenderer.inputDataInDateField(
 			index = "2",
+			value = "456");
+
+		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
+			index = "2",
 			value = "09/06/2021");
 
 		Button.clickPublish();
@@ -756,37 +756,37 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		DERenderer.assertDataInTextField(
-			index = "1",
 			fieldLabel = "Text",
-			value = "This is a Text field 1");
-		
-		DERenderer.assertDataInNumericField(
 			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
+			index = "1",
 			value = "123");
 
 		DERenderer.assertDataInDateField(
-			index = "1",
 			fieldLabel = "Date",
+			index = "1",
 			value = "08/06/2021");
 
 		DERenderer.assertDataInTextField(
-			index = "2",
 			fieldLabel = "Text",
-			value = "This is a Text field 2");
-		
-		DERenderer.assertDataInNumericField(
 			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
+			index = "2",
 			value = "456");
 
 		DERenderer.assertDataInDateField(
-			index = "2",
 			fieldLabel = "Date",
+			index = "2",
 			value = "09/06/2021");
 	}
 
-	@description = "Verify that is possible to edit data inputted on a Fields Group"
+	@description = "This is a test for LRQA-71711. This test verifies that is possible to edit data inputted on a Fields Group"
 	@priority = "5"
 	test CanInputtedDataBeEdited {
 		NavItem.gotoStructures();
@@ -818,11 +818,11 @@ definition {
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field");
-		
+
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "123");
-		
+
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
 			value = "08/06/2021");
@@ -834,11 +834,11 @@ definition {
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field edited");
-		
+
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "456");
-		
+
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
 			value = "09/06/2021");
@@ -850,7 +850,7 @@ definition {
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field edited");
-		
+
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "456");
@@ -860,7 +860,7 @@ definition {
 			value = "09/06/2021");
 	}
 
-	@description = "Verify that is possible to remove data from fields inside a Fields Group"
+	@description = "This is a test for LRQA-71711. This test verifies that is possible to remove data from fields inside a Fields Group"
 	@priority = "3"
 	test CanInputtedDataBeRemoved {
 		NavItem.gotoStructures();
@@ -892,11 +892,11 @@ definition {
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field");
-		
+
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "123");
-		
+
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
 			value = "08/06/2021");
@@ -908,11 +908,11 @@ definition {
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "");
-		
+
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "");
-		
+
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
 			value = "");
@@ -924,7 +924,7 @@ definition {
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
 			value = "");
-		
+
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
 			value = "");
@@ -934,7 +934,7 @@ definition {
 			value = "__/__/____");
 	}
 
-	@description = "Verify that is possible to remove duplicated repeatable Fields Group"
+	@description = "This is a test for LRQA-71711. This test verifies that is possible to remove duplicated repeatable Fields Group"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
@@ -1055,7 +1055,7 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldsGroupLabel = "Fields Group");
 	}
 
-	@description = "Verify that Options chosen for a Grid field inside a Fields Group persists"
+	@description = "This is a test for LRQA-71711. This test verifies that Options chosen for a Grid field inside a Fields Group persists"
 	@priority = "5"
 	test CanSelectGridOptionsInFieldsGroup {
 		NavItem.gotoStructures();
@@ -1106,10 +1106,9 @@ definition {
 				fieldLabel = "Grid",
 				row = "${index}");
 		}
-
 	}
 
-	@description = "Verify that Options chosen for Fields with Options inside a Fields Group persists"
+	@description = "This is a test for LRQA-71711. This test verifies that Options chosen for Fields with Options inside a Fields Group persists"
 	@priority = "5"
 	test CanSelectOptionsInFieldsGroup {
 		NavItem.gotoStructures();

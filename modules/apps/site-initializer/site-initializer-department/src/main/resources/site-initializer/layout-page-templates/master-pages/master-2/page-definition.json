@@ -3,63 +3,88 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {
-						"key": "main-navbar"
-					},
-					"fragmentConfig": {
-					},
-					"fragmentFields": [
+					"fragmentViewports": [
 						{
-							"id": "imageLogo",
-							"value": {
-								"fragmentImage": {
-									"description": {
-										"value_i18n": {
-											"en_US": ""
-										}
-									},
-									"fragmentImageClassPKReference": {
-										"classPKReferences": {
-											"en_US": {
-												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-												"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/department_logo_inv.svg$]"
-											}
-										},
-										"fragmentImageConfiguration": {
-											"landscapeMobile": "auto",
-											"portraitMobile": "auto",
-											"tablet": "auto"
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
-							}
+							"fragmentViewportStyle": {
+								"paddingLeft": "2",
+								"paddingRight": "2"
+							},
+							"id": "tablet"
 						}
 					],
-					"fragmentStyle": {
-						"textAlign": ""
-					},
-					"widgetInstances": [
-						{
-							"widgetConfig": {
-								"displayDepth": "0",
-								"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-								"displayStyleGroupId": "[$GROUP_ID$]",
-								"expandedLevels": "auto",
-								"rootMenuItemLevel": "0",
-								"rootMenuItemType": "absolute",
-								"siteNavigationMenuName": "Main Navigation",
-								"siteNavigationMenuType": "-1"
-							},
-							"widgetInstanceId": "nav",
-							"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-						}
-					]
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
 				},
-				"type": "Fragment"
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "main-navbar"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "imageLogo",
+									"value": {
+										"fragmentImage": {
+											"description": {
+												"value_i18n": {
+													"en_US": ""
+												}
+											},
+											"fragmentImageClassPKReference": {
+												"classPKReferences": {
+													"en_US": {
+														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/department_logo_inv.svg$]"
+													}
+												},
+												"fragmentImageConfiguration": {
+													"landscapeMobile": "auto",
+													"portraitMobile": "auto",
+													"tablet": "auto"
+												}
+											}
+										},
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										}
+									}
+								}
+							],
+							"widgetInstances": [
+								{
+									"widgetConfig": {
+										"displayDepth": "0",
+										"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+										"displayStyleGroupId": "[$GROUP_ID$]",
+										"expandedLevels": "auto",
+										"rootMenuItemLevel": "0",
+										"rootMenuItemType": "absolute",
+										"siteNavigationMenuName": "Main Navigation",
+										"siteNavigationMenuType": "-1"
+									},
+									"widgetInstanceId": "nav",
+									"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+								}
+							]
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
 			},
 			{
 				"definition": {
@@ -381,7 +406,6 @@
 								}
 							],
 							"fragmentStyle": {
-								"marginBottom": "8",
 								"textAlign": ""
 							},
 							"widgetInstances": [

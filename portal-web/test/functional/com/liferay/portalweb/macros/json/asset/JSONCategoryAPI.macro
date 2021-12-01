@@ -25,18 +25,20 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a vocabulary"
 	macro _addVocabulary {
-		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap},${serviceContext}");
+		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap},${serviceContext},${visibilityType}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
 				-u test@liferay.com:test \
+				-d externalReferenceCode = \
 				-d groupId=${groupId} \
 				-d title= \
 				-d titleMap=${titleMap} \
 				-d descriptionMap=${descriptionMap} \
 				-d Settings= \
+				-d visibilityType=${visibilityType} \
 				-d serviceContext=${serviceContext}
 		''';
 

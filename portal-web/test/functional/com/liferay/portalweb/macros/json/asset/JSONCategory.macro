@@ -98,11 +98,18 @@ definition {
 			description = "${description}",
 			descriptionMap = "${descriptionMap}");
 
+		if (!(isSet(visibility))) {
+			var visibility = "public";
+		}
+
+		var visibilityType = JSONCategorySetter.setVisibilityType(visibility = "${visibility}");
+
 		JSONCategoryAPI._addVocabulary(
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}");
+			titleMap = "${titleMap}",
+			visibilityType = "${visibilityType}");
 	}
 
 	@summary = "Delete a category"

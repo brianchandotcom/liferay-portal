@@ -63,6 +63,8 @@ newQuoteButton.onclick = function () {
 };
 
 emailInput.oninput = function () {
+	emailContainer.classList.remove('has-error');
+
 	if (emailInput.value) {
 		return continueQuoteButton.classList.remove('disabled');
 	}

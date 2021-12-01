@@ -28,7 +28,7 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/o/";
+		return "/l/";
 	}
 
 }

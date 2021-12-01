@@ -80,7 +80,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return "/o/";
+		return "/l/";
 	}
 
 	private final ObjectDefinition _objectDefinition;

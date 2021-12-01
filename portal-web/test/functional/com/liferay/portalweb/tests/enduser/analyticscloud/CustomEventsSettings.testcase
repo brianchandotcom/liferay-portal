@@ -46,6 +46,10 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CustomEventIsShownInAC {
+
+		// AC Deactivated: Depends on this bug (LRAC-9883)
+		// AC Enable ticket: LRAC-10026
+
 		task ("Add a Web Content Display to page and display the custom event button to send the event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -114,6 +118,10 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CheckLimitOfCustomEventName {
+
+		// AC Deactivated: Depends on this bug (LRAC-9883)
+		// AC Enable ticket: LRAC-10027
+
 		task ("Add a Web Content Display to page and display the custom event button to send the event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

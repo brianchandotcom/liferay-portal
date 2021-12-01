@@ -547,6 +547,13 @@ definition {
 			siteName = "Site Name");
 	}
 
+	@summary = "Dismiss Onboarding Modal if it appears when launching AC"
+	macro dismissOnboardingModal {
+		if (IsElementPresent(locator1 = "ACSettings#TOKEN_INPUT_FIELD")) {
+			Click(locator1 = "ACSettings#CLOSE_ONBOARDING_MODAL");
+		}
+	}
+
 	macro getEventPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
@@ -621,6 +628,8 @@ definition {
 		}
 
 		ACWorkspace.openWorkspace();
+
+		ACUtils.dismissOnboardingModal();
 	}
 
 	macro launchDXP {

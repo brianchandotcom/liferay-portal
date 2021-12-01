@@ -43,6 +43,10 @@ boolean showSearchInfo = false;
 if (Validator.isNotNull(keywords)) {
 	showSearchInfo = true;
 }
+
+String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
+
+uploadURL.setParameter("returnType", returnType);
 %>
 
 <liferay-util:html-top>
@@ -124,6 +128,38 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			</c:choose>
 		</div>
 	</c:if>
+
+	<div>
+		<div class="dropzone"></div>
+
+		<react:component
+			data='<%=
+				HashMapBuilder.<String, Object>put(
+					"closeCaption", LanguageUtil.get(request, tabName)
+				).put(
+					"editImageURL",
+					() -> {
+						if (editImageURL != null) {
+							return editImageURL.toString();
+						}
+
+						return null;
+					}
+				).put(
+					"itemSelectedEventName", itemSelectedEventName
+				).put(
+					"maxFileSize", maxFileSize
+				).put(
+					"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
+				).put(
+					"uploadItemURL", uploadURL.toString()
+				).put(
+					"validExtensions", StringUtil.merge(extensions)
+				).build()
+			%>'
+			module="item_selector_uploader/js/SingleFileUploader"
+		/>
+	</div>
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
 		<liferay-ui:search-container
@@ -611,13 +647,6 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			'<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>',
 
 		<c:if test="<%= uploadURL != null %>">
-
-			<%
-			String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
-
-			uploadURL.setParameter("returnType", returnType);
-			%>
-
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
 			uploadItemURL: '<%= uploadURL.toString() %>',
 		</c:if>

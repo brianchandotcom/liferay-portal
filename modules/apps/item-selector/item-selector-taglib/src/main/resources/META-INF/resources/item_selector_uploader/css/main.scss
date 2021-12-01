@@ -1,0 +1,36 @@
+@import 'atlas-variables';
+
+.dropzone {
+	align-items: center;
+	background-color: $light;
+	border-radius: 0.5rem;
+	display: flex;
+	font-size: 1rem;
+	justify-content: center;
+	margin-top: 1rem;
+	min-height: 6rem;
+	outline: 2px dashed $secondary-l2;
+	transition-duration: 0.2s;
+	transition-property: bakground-color, outline;
+	transition-timing-function: ease-in-out;
+
+	@include media-breakpoint-up(md) {
+		padding: 0 25%;
+	}
+
+	&:focus,
+	&.drag-active {
+		background-color: $primary-l3;
+		outline-color: $primary;
+	}
+
+	&.disabled {
+		opacity: 0.6;
+	}
+
+	&.uploading {
+		background-color: $primary-l3;
+		font-size: 0.875rem;
+		outline: 1px solid $primary;
+	}
+}

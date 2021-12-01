@@ -364,7 +364,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Site Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+			AssertTextNotEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Page Name");
 
 			AssertTextPresent(value1 = "The requested resource could not be found");
 		}

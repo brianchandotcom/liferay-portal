@@ -135,6 +135,12 @@ definition {
 				value1 = "${entryDate}");
 		}
 
+		if (isSet(highlightedSearchAssetSummary)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC_HIGHLIGHTED",
+				value1 = "${highlightedSearchAssetSummary}");
+		}
+
 		if (isSet(searchAssetSummary)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchResults#ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-const Header = ({greetings, helper, title}) => {
+const Header = ({ greetings, helper, title }) => {
 	return (
 		<header className="p-4">
 			{greetings && (
@@ -10,7 +10,7 @@ const Header = ({greetings, helper, title}) => {
 			)}
 
 			<h2
-				className={classNames('text-neutral-0', {
+				className={classNames('text-neutral-10', {
 					'mb-0': !helper,
 					'mb-1': helper,
 				})}
@@ -19,7 +19,7 @@ const Header = ({greetings, helper, title}) => {
 			</h2>
 
 			{helper && (
-				<p className="mb-0 text-neutral-3 text-paragraph-sm">
+				<p className="mb-0 text-neutral-7 text-paragraph-sm">
 					{helper}
 				</p>
 			)}

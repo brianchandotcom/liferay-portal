@@ -1,14 +1,14 @@
-import ClayForm, {ClayInput} from '@clayui/form';
-import {useFormikContext} from 'formik';
-import {useContext} from 'react';
+import ClayForm, { ClayInput } from '@clayui/form';
+import { useFormikContext } from 'formik';
+import { useContext } from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
 import Layout from '../../components/Layout';
-import {AppContext} from '../../context';
-import {getInitialDxpAdmin, getRoles} from '../../utils/constants';
+import { AppContext } from '../../context';
+import { getInitialDxpAdmin, getRoles } from '../../utils/constants';
 
-const AdminInputs = ({id}) => {
+const AdminInputs = ({ id }) => {
 	return (
 		<ClayForm.Group className="mb-0 pb-1">
 			<hr className="mb-4 mt-4 mx-3" />
@@ -55,7 +55,7 @@ const AdminInputs = ({id}) => {
 
 const SetupDXP = () => {
 	const [state] = useContext(AppContext);
-	const {setFieldValue, values} = useFormikContext();
+	const { setFieldValue, values } = useFormikContext();
 
 	return (
 		<Layout
@@ -76,7 +76,7 @@ const SetupDXP = () => {
 				<div className="flex-fill">
 					<label>Organization Name</label>
 
-					<p className="text-neutral-3 text-paragraph-lg">
+					<p className="text-neutral-7 text-paragraph-lg">
 						<strong>{state.dxp.organization}</strong>
 					</p>
 				</div>
@@ -84,7 +84,7 @@ const SetupDXP = () => {
 				<div className="flex-fill">
 					<label>Liferay DXP Version</label>
 
-					<p className="text-neutral-3 text-paragraph-lg">
+					<p className="text-neutral-7 text-paragraph-lg">
 						<strong>{state.dxp.version}</strong>
 					</p>
 				</div>
@@ -106,7 +106,7 @@ const SetupDXP = () => {
 						groupStyle="mb-0"
 						label="Primary Data Center Region"
 						name="dxp.dataCenterRegion"
-						options={getRoles().map(({id, name}) => ({
+						options={getRoles().map(({ id, name }) => ({
 							label: name,
 							value: id,
 						}))}

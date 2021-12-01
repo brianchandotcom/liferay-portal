@@ -371,6 +371,14 @@ public class FragmentEntryLinkLocalServiceWrapper
 			fragmentEntryLinkId);
 	}
 
+	@Override
+	public FragmentEntryLink getFragmentEntryLink(
+		long groupId, long originalFragmentEntryLinkId, long plid) {
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			groupId, originalFragmentEntryLinkId, plid);
+	}
+
 	/**
 	 * Returns the fragment entry link matching the UUID and group.
 	 *

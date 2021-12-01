@@ -288,6 +288,10 @@ public interface FragmentEntryLinkLocalService
 	public FragmentEntryLink getFragmentEntryLink(long fragmentEntryLinkId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntryLink getFragmentEntryLink(
+		long groupId, long originalFragmentEntryLinkId, long plid);
+
 	/**
 	 * Returns the fragment entry link matching the UUID and group.
 	 *

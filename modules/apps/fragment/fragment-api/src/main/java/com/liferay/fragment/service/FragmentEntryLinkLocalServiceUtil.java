@@ -335,6 +335,13 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().getFragmentEntryLink(fragmentEntryLinkId);
 	}
 
+	public static FragmentEntryLink getFragmentEntryLink(
+		long groupId, long originalFragmentEntryLinkId, long plid) {
+
+		return getService().getFragmentEntryLink(
+			groupId, originalFragmentEntryLinkId, plid);
+	}
+
 	/**
 	 * Returns the fragment entry link matching the UUID and group.
 	 *

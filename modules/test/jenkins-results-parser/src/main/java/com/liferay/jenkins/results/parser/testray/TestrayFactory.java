@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -62,7 +63,8 @@ public class TestrayFactory {
 	}
 
 	public static TestrayAttachmentUploader newTestrayAttachmentUploader(
-		Build build, URL testrayServerURL) {
+		Build build, URL testrayServerURL,
+		TestrayAttachmentUploader.Type type) {
 
 		String testrayServerURLString = "";
 
@@ -70,7 +72,9 @@ public class TestrayFactory {
 			testrayServerURLString = String.valueOf(testrayServerURL);
 		}
 
-		String key = build.getBuildURL() + "_" + testrayServerURLString;
+		String key = JenkinsResultsParserUtil.combine(
+			build.getBuildURL(), "_", testrayServerURLString, "_",
+			type.toString());
 
 		TestrayAttachmentUploader testrayAttachmentUploader =
 			_testrayAttachmentUploaders.get(key);
@@ -79,7 +83,7 @@ public class TestrayFactory {
 			return testrayAttachmentUploader;
 		}
 
-		if (testrayServerURLString.startsWith("https://testray.liferay.com")) {
+		if (type == TestrayAttachmentUploader.Type.RSYNC) {
 			testrayAttachmentUploader = new RsyncTestrayAttachmentUploader(
 				build, testrayServerURL);
 		}

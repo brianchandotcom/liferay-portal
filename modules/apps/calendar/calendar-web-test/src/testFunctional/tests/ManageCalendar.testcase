@@ -215,12 +215,24 @@ definition {
 	}
 
 	@description = "LRQA-71360 - Verify that when the user change the calendar color it also changes the color column on the Manage Calendar page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CheckTheColorColumnIsChanged {
+		Calendar.tearDownColor();
 
-		// TODO LRQA-71551 CheckTheColorColumnIsChanged pending implementation
+		CalendarNavigator.gotoMyCalendarsManage();
 
+		ManageCalendar.viewColorByColumn(colorList = "D96666");
+
+		Navigator.gotoBack();
+
+		Calendar.changeColor(
+			calendarType = "My Calendars",
+			myCalendarColor = "E67399",
+			user = "Test Test");
+
+		CalendarNavigator.gotoMyCalendarsManage();
+
+		ManageCalendar.viewColorByColumn(colorList = "E67399");
 	}
 
 	@priority = "4"

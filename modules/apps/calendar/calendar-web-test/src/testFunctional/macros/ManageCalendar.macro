@@ -1,0 +1,24 @@
+definition {
+
+    macro viewColorByColumn {
+		if (isSet(colorList)) {
+			var rowNumber = "1";
+
+			for (var color : list "${colorList}") {
+				AssertElementPresent(
+					key_color = "${color}",
+					key_rowNumber = "${rowNumber}",
+					locator1 = "ManageCalendar#MY_CALENDARS_CALENDAR_COLOR_BY_COLUMN");
+
+				var rowNumber = MathUtil.sum("${rowNumber}", "1");
+			}
+		}
+		else {
+			AssertElementPresent(
+				key_color = "${color}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "ManageCalendar#MY_CALENDARS_CALENDAR_COLOR_BY_COLUMN");
+		}
+	}
+
+}

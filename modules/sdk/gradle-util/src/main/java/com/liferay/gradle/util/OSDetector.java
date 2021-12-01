@@ -69,6 +69,25 @@ public class OSDetector {
 		return _apple.booleanValue();
 	}
 
+	public static boolean isAppleARM() {
+		if (_appleARM != null) {
+			return _appleARM.booleanValue();
+		}
+
+		String arch = System.getProperty("os.arch");
+
+		arch = arch.toLowerCase();
+
+		if (arch.contains("aarch")) {
+			_appleARM = Boolean.TRUE;
+		}
+		else {
+			_appleARM = Boolean.FALSE;
+		}
+
+		return _appleARM.booleanValue();
+	}
+
 	public static boolean isWindows() {
 		if (_windows != null) {
 			return _windows.booleanValue();
@@ -85,6 +104,7 @@ public class OSDetector {
 	}
 
 	private static Boolean _apple;
+	private static Boolean _appleARM;
 	private static String _bitMode;
 	private static Boolean _windows;
 

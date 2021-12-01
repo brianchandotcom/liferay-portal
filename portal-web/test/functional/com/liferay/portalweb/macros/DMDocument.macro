@@ -1667,6 +1667,10 @@ definition {
 			portlet = "Documents and Media",
 			site = "${site}");
 
+		if (isSet(dmFolderName)) {
+			DMNavigator.gotoFolder(dmFolderName = "${dmFolderName}");
+		}
+
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DMDocument.expandInfo();

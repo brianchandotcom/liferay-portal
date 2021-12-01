@@ -13,7 +13,7 @@
 	},
 	"boxShadowLg": {
 		"cssVariableMapping": "box-shadow-lg",
-		"value": "0px 5px 15px rgba(0, 54, 156, 0.12);"
+		"value": "var(--elevation-fluffy-1) rgba(0, 54, 156, 0.12);"
 	},
 	"colorNeutral8": {
 		"cssVariableMapping": "color-neutral-8",

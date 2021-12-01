@@ -19,7 +19,7 @@ const getColumnLabel = (column, field) => {
 const removeEmptyValues = (values) =>
 	Array.isArray(values) && values.filter((value) => value);
 
-const roundPercentage = (value) => `${Math.trunc(value * 1000) / 10}%`;
+const roundPercentage = (value) => `${parseFloat((value * 100).toFixed(1))}%`;
 
 const sumTotalEntries = (values) =>
 	Object.values(values).reduce((acc, value) => acc + value, 0);

@@ -61,7 +61,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getIcon() {
-		if (_icon == null) {
+		if (Validator.isNull(_icon)) {
 			if (getType() == FragmentConstants.TYPE_REACT) {
 				_icon = "react";
 			}

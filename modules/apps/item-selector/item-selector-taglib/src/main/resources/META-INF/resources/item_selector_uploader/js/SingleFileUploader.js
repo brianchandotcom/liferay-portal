@@ -1,0 +1,145 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayLayout from '@clayui/layout';
+import ClayProgressBar from '@clayui/progress-bar';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
+import React, {useEffect, useState} from 'react';
+import {useDropzone} from 'react-dropzone';
+
+import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
+import getPreviewProps from './getPreviewProps';
+import {sendFile} from './utils';
+
+import '../css/main.scss';
+
+function SingleFileUploader({
+	closeCaption,
+	editImageURL,
+	itemSelectedEventName,
+	maxFileSize,
+	uploadItemReturnType,
+	uploadItemURL,
+	validExtensions,
+}) {
+	const [abort, setAbort] = useState(null);
+	const [file, setFile] = useState();
+	const [itemServerData, setItemServerData] = useState(null);
+	const [progress, setProgess] = useState(null);
+	const [showPreview, setShowPreview] = useState(false);
+
+	const isMounted = useIsMounted();
+
+	const {getInputProps, getRootProps, isDragActive} = useDropzone({
+		accept: validExtensions,
+		maxSize: maxFileSize,
+		multiple: false,
+		onDrop: (acceptedFiles) => {
+			setFile(acceptedFiles[0]);
+		},
+	});
+
+	function clear() {
+		setFile(null);
+		setAbort(null);
+		setProgess(null);
+	}
+
+	useEffect(() => {
+		if (file) {
+			const client = sendFile({
+				file,
+				onProgress: setProgess,
+				onSuccess: (itemData) => {
+					if (isMounted()) {
+						setItemServerData(itemData);
+						setShowPreview(true);
+					}
+				},
+				url: uploadItemURL,
+			});
+
+			setAbort(() => () => {
+				clear();
+				client.abort();
+			});
+		}
+	}, [file, isMounted, uploadItemURL]);
+
+	return (
+		<>
+			<div
+				{...getRootProps({
+					className: classNames('dropzone', {
+						['drag-active']: isDragActive,
+						uploading: progress,
+					}),
+				})}
+			>
+				<input {...getInputProps()} />
+
+				{progress ? (
+					<ClayLayout.ContentRow
+						className="align-items-center"
+						padded
+					>
+						<ClayLayout.ContentCol>
+							<strong>Uploading</strong>
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol expand>
+							<ClayProgressBar value={progress} />
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol>
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								onClick={abort}
+								symbol="times"
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				) : (
+					<span>
+						<strong>NEW</strong> Drag & Drop or Click here to Upload
+					</span>
+				)}
+			</div>
+
+			{showPreview && (
+				<div className="item-selector-preview-container">
+					<ItemSelectorPreview
+						{...getPreviewProps({
+							closeCaption,
+							file,
+							itemData: itemServerData,
+							itemSelectedEventName,
+							uploadItemReturnType,
+						})}
+						editImageURL={editImageURL}
+						handleClose={() => {
+							setShowPreview(false);
+						}}
+						reloadOnHide
+					/>
+				</div>
+			)}
+		</>
+	);
+}
+
+export default SingleFileUploader;

@@ -120,9 +120,9 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMFolder.deleteCP(dmFolderName = "DM Folder Name");
+		JSONFolder.moveFolderToTrash(
+			folderName = "DM Folder Name",
+			groupName = "Site Name-staging");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",

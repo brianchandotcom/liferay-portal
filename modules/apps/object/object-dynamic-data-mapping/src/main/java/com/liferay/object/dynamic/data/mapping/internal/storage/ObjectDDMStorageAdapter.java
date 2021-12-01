@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -67,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -377,6 +379,47 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			for (Object optionValue : optionValueJSONArray) {
 				sb.append(optionsReferences.get(optionValue.toString()));
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			if (sb.index() > 0) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			return sb.toString();
+		}
+		else if (StringUtil.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.GRID)) {
+
+			DDMFormFieldOptions rows =
+				(DDMFormFieldOptions)ddmFormField.getProperty("rows");
+
+			Map<String, String> rowOptionsReferences =
+				rows.getOptionsReferences();
+
+			DDMFormFieldOptions columns =
+				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
+
+			Map<String, String> columnOptionsReferences =
+				columns.getOptionsReferences();
+
+			JSONObject optionValueJSONObject = _jsonFactory.createJSONObject(
+				value.getString(value.getDefaultLocale()));
+
+			Set<String> rowsValues = optionValueJSONObject.keySet();
+
+			StringBundler sb = new StringBundler((rowsValues.size() * 2) - 1);
+
+			for (String rowValue : rowsValues) {
+				sb.append(rowOptionsReferences.get(rowValue));
+
+				sb.append(StringPool.COLON + StringPool.SPACE);
+
+				sb.append(
+					columnOptionsReferences.get(
+						optionValueJSONObject.get(rowValue)));
+
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 

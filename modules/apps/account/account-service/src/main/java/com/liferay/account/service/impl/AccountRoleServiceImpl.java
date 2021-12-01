@@ -14,10 +14,20 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,4 +40,97 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
+
+	@Override
+	public AccountRole addAccountRole(
+			long accountEntryId, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		_accountRoleModelResourcePermission.check(
+			permissionChecker, accountEntryId,
+			AccountActionKeys.ADD_ACCOUNT_ROLE);
+
+		return accountRoleLocalService.addAccountRole(
+			permissionChecker.getUserId(), accountEntryId, name, titleMap,
+			descriptionMap);
+	}
+
+	@Override
+	public void associateUser(
+			long accountEntryId, long accountRoleId, long userId)
+		throws PortalException {
+
+		_accountRoleModelResourcePermission.check(
+			getPermissionChecker(), accountRoleId,
+			AccountActionKeys.ASSIGN_USERS);
+
+		accountRoleLocalService.associateUser(
+			accountEntryId, accountRoleId, userId);
+	}
+
+	@Override
+	public void associateUser(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException {
+
+		for (long accountRoleId : accountRoleIds) {
+			associateUser(accountEntryId, accountRoleId, userId);
+		}
+	}
+
+	@Override
+	public AccountRole deleteAccountRole(AccountRole accountRole)
+		throws PortalException {
+
+		_accountRoleModelResourcePermission.check(
+			getPermissionChecker(), accountRole, ActionKeys.DELETE);
+
+		return accountRoleLocalService.deleteAccountRole(accountRole);
+	}
+
+	@Override
+	public AccountRole deleteAccountRole(long accountRoleId)
+		throws PortalException {
+
+		_accountRoleModelResourcePermission.check(
+			getPermissionChecker(), accountRoleId, ActionKeys.DELETE);
+
+		return accountRoleLocalService.deleteAccountRole(accountRoleId);
+	}
+
+	@Override
+	public AccountRole getAccountRoleByRoleId(long roleId)
+		throws PortalException {
+
+		AccountRole accountRole =
+			accountRoleLocalService.getAccountRoleByRoleId(roleId);
+
+		_accountRoleModelResourcePermission.check(
+			getPermissionChecker(), accountRole, ActionKeys.VIEW);
+
+		return accountRole;
+	}
+
+	@Override
+	public void unassociateUser(
+			long accountEntryId, long accountRoleId, long userId)
+		throws PortalException {
+
+		_accountRoleModelResourcePermission.check(
+			getPermissionChecker(), accountRoleId,
+			AccountActionKeys.ASSIGN_USERS);
+
+		accountRoleLocalService.unassociateUser(
+			accountEntryId, accountRoleId, userId);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountRole)"
+	)
+	private ModelResourcePermission<AccountRole>
+		_accountRoleModelResourcePermission;
+
 }

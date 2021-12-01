@@ -40,118 +40,143 @@ definition {
 		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
 		property testray.component.names = "Training";
 
-		JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
+		task ("Add an organization") {
+			JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
+		}
 
-		User.openUsersAdmin();
+		task ("Add a child organization to the organization") {
+			JSONOrganization.addOrganization(
+				larFileName = "organizations.lar",
+				organizationName = "College of Agricultural Science",
+				parentOrganizationName = "Space Program Academy of Continuing Education");
+		}
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		task ("Export organizations") {
+			User.openUsersAdmin();
 
-		Suborganization.addCP(
-			orgName = "Space Program Academy of Continuing Education",
-			suborgName = "College of Agricultural Science");
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		User.openUsersAdmin();
+			LAR.exportPortlet(larFileName = "organizations.lar");
+		}
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		task ("Delete all the organizations") {
+			JSONOrganization.deleteOrganizationByName(
+				organizationName = "College of Agricultural Science",
+				parentOrganizationName = "Space Program Academy of Continuing Education");
 
-		LAR.exportPortlet(larFileName = "organizations.lar");
+			JSONOrganization.deleteOrganizationByName(organizationName = "Space Program Academy of Continuing Education");
+		}
 
-		Suborganization.removeCP(
-			orgName = "Space Program Academy of Continuing Education",
-			subOrgName = "College of Agricultural Science");
+		task ("Import organizations") {
+			User.openUsersAdmin();
 
-		User.openUsersAdmin();
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			LAR.importPortlet(
+				larFileName = "organizations.lar",
+				portletName = "Users and Organizations");
+		}
 
-		Organization.deleteCP(orgName = "Space Program Academy of Continuing Education");
+		task ("View organization imported") {
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.deleteCP(orgName = "College of Agricultural Science");
+			Organization.viewCP(
+				orgName = "Space Program Academy of Continuing Education",
+				orgType = "Organization");
+		}
 
-		User.openUsersAdmin();
+		task ("Add an organization site") {
+			User.openUsersAdmin();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.addSiteCP(orgName = "College of Agricultural Science");
+		}
 
-		LAR.importPortlet(
-			larFileName = "organizations.lar",
-			portletName = "Users and Organizations");
+		task ("Add a site template with 3 pages") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			SiteTemplates.addCP(siteTemplateName = "Digital Class Room");
 
-		Organization.viewCP(
-			orgName = "Space Program Academy of Continuing Education",
-			orgType = "Organization");
+			for (var pageName : list "Courses,Student Boards,Materials") {
+				SiteTemplates.addSitePageViaSiteTemplateCP(
+					pageName = "${pageName}",
+					siteTemplateName = "Digital Class Room");
+			}
+		}
 
-		User.openUsersAdmin();
+		task ("Export site template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		Organization.addSiteCP(orgName = "College of Agricultural Science");
+			LAR.exportPortlet(larFileName = "class-site-template.lar");
+		}
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+		task ("Delete site template") {
+			SiteTemplates.deleteCP(siteTemplateName = "Digital Class Room");
+		}
 
-		SiteTemplates.addCP(siteTemplateName = "Digital Class Room");
+		task ("Import site template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		for (var pageName : list "Courses,Student Boards,Materials") {
-			SiteTemplates.addSitePageViaSiteTemplateCP(
-				pageName = "${pageName}",
+			LAR.importPortlet(
+				larFileName = "class-site-template.lar",
+				portletName = "Site Templates",
 				siteTemplateName = "Digital Class Room");
 		}
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+		task ("Add a site with private membership type") {
+			Site.openSitesAdmin();
 
-		LAR.exportPortlet(larFileName = "class-site-template.lar");
-
-		SiteTemplates.deleteCP(siteTemplateName = "Digital Class Room");
-
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
-		LAR.importPortlet(
-			larFileName = "class-site-template.lar",
-			portletName = "Site Templates",
-			siteTemplateName = "Digital Class Room");
-
-		Site.openSitesAdmin();
-
-		Site.addBlankCP(
-			membershipType = "Private",
-			parentSiteName = "College of Agricultural Science",
-			siteName = "Moon Rocks 101",
-			siteType = "Blank");
-
-		Navigator.gotoBack();
-
-		Site.selectPageType(
-			selectPrivatePages = "true",
-			siteTemplate = "Digital Class Room");
-
-		Site.openSitesAdmin();
-
-		Site.addBlankCP(
-			membershipType = "Private",
-			parentSiteName = "College of Agricultural Science",
-			siteName = "Moon Rocks 202",
-			siteType = "Blank");
-
-		Navigator.gotoBack();
-
-		Site.selectPageType(
-			checkPrivatePagesPropagation = "true",
-			selectPrivatePages = "true",
-			siteTemplate = "Digital Class Room");
-
-		Navigator.openPrivateSiteURL(siteName = "Moon Rocks 101");
-
-		for (var pageName : list "Courses,Student Boards,Materials") {
-			Navigator.gotoPrivateSitePage(
-				pageName = "${pageName}",
-				siteName = "Moon Rocks 101");
+			Site.addBlankCP(
+				membershipType = "Private",
+				parentSiteName = "College of Agricultural Science",
+				siteName = "Moon Rocks 101",
+				siteType = "Blank");
 		}
 
-		Navigator.openPrivateSiteURL(siteName = "Moon Rocks 202");
+		task ("Select Digital Class Room site template as private page page type") {
+			Navigator.gotoBack();
 
-		for (var pageName : list "Courses,Student Boards,Materials") {
-			Navigator.gotoPrivateSitePage(
-				pageName = "${pageName}",
-				siteName = "Moon Rocks 202");
+			Site.selectPageType(
+				selectPrivatePages = "true",
+				siteTemplate = "Digital Class Room");
+		}
+
+		Site.openSitesAdmin();
+
+		task ("Add another site with private membership type") {
+			Site.addBlankCP(
+				membershipType = "Private",
+				parentSiteName = "College of Agricultural Science",
+				siteName = "Moon Rocks 202",
+				siteType = "Blank");
+		}
+
+		task ("Select Digital Class Room site template as private page page type and also enable Private Pages Propagation") {
+			Navigator.gotoBack();
+
+			Site.selectPageType(
+				checkPrivatePagesPropagation = "true",
+				selectPrivatePages = "true",
+				siteTemplate = "Digital Class Room");
+		}
+
+		task ("View the first site private pages") {
+			Navigator.openPrivateSiteURL(siteName = "Moon Rocks 101");
+
+			for (var pageName : list "Courses,Student Boards,Materials") {
+				Navigator.gotoPrivateSitePage(
+					pageName = "${pageName}",
+					siteName = "Moon Rocks 101");
+			}
+		}
+
+		task ("View the second site private pages") {
+			Navigator.openPrivateSiteURL(siteName = "Moon Rocks 202");
+
+			for (var pageName : list "Courses,Student Boards,Materials") {
+				Navigator.gotoPrivateSitePage(
+					pageName = "${pageName}",
+					siteName = "Moon Rocks 202");
+			}
 		}
 	}
 
@@ -163,121 +188,153 @@ definition {
 		property test.name.skip.portal.instance = "SitesUseCase#AddOrganizationSitesAndDeactivate";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 
-		SystemSettings.openSystemSettingsAdmin();
+		task ("Enable Show Inactive Request Message in system settings") {
+			SystemSettings.openSystemSettingsAdmin();
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Infrastructure",
-			configurationName = "Inactive Request Handler",
-			configurationScope = "System Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Inactive Request Handler",
+				configurationScope = "System Scope");
 
-		FormFields.enableCheckbox(fieldName = "Show Inactive Request Message");
+			FormFields.enableCheckbox(fieldName = "Show Inactive Request Message");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
+		}
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name 1");
+		task ("Add 2 site templates") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name 1");
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name 2");
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name 2");
+		}
 
-		JSONOrganization.addOrganization(organizationName = "Organization Name 1");
+		task ("Add an organization siste") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
-		User.openUsersAdmin();
+			User.openUsersAdmin();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			orgName = "Organization Name 1",
-			siteTemplateName = "Site Template Name 1");
+			Organization.addSiteCP(
+				orgName = "Organization Name 1",
+				siteTemplateName = "Site Template Name 1");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
+		task ("Set Allow manual memebership management for the site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
-		Site.manageMembershipOptions(
-			allowManualMembershipManagement = "true",
-			membershipType = "Open",
-			selectMembershipType = "true");
+			Site.manageMembershipOptions(
+				allowManualMembershipManagement = "true",
+				membershipType = "Open",
+				selectMembershipType = "true");
+		}
 
-		Site.openSitesAdmin();
+		task ("View the organization site") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(
-			siteMember = "Organization",
-			siteName = "Organization Name 1");
+			Site.viewCP(
+				siteMember = "Organization",
+				siteName = "Organization Name 1");
+		}
 
-		JSONOrganization.addOrganization(organizationName = "Organization Name 2");
+		task ("Add another organization siste") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
-		User.openUsersAdmin();
+			User.openUsersAdmin();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			orgName = "Organization Name 2",
-			siteTemplateName = "Site Template Name 2");
+			Organization.addSiteCP(
+				orgName = "Organization Name 2",
+				siteTemplateName = "Site Template Name 2");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
+		task ("Set Allow manual memebership management for the site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
 
-		Site.manageMembershipOptions(
-			allowManualMembershipManagement = "true",
-			membershipType = "Open",
-			selectMembershipType = "true");
+			Site.manageMembershipOptions(
+				allowManualMembershipManagement = "true",
+				membershipType = "Open",
+				selectMembershipType = "true");
+		}
 
-		Site.openSitesAdmin();
+		task ("View the organization site") {
+			Site.openSitesAdmin();
 
-		Site.viewCP(
-			siteMember = "Organization",
-			siteName = "Organization Name 2");
+			Site.viewCP(
+				siteMember = "Organization",
+				siteName = "Organization Name 2");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("Assign the first organization site to user") {
+			User.openUsersAdmin();
 
-		Site.assignUserSitesCP(
-			siteName = "Organization Name 1",
-			userScreenName = "usersn");
+			Site.assignUserSitesCP(
+				siteName = "Organization Name 1",
+				userScreenName = "usersn");
+		}
 
-		User.openUsersAdmin();
+		task ("Assign the second organization site to user") {
+			User.openUsersAdmin();
 
-		Site.assignUserSitesCP(
-			siteName = "Organization Name 2",
-			userScreenName = "usersn");
+			Site.assignUserSitesCP(
+				siteName = "Organization Name 2",
+				userScreenName = "usersn");
+		}
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
+		task ("Assign administrator role to user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.firstLoginPG(userEmailAddress = "userea@liferay.com");
+		task ("Log in as the user") {
+			User.firstLoginPG(userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.openSiteURL(siteName = "Organization Name 1");
+		task ("View the first organization site page") {
+			Navigator.openSiteURL(siteName = "Organization Name 1");
 
-		Page.viewDefaultSiteTemplatePagesPG(
-			pageName = "Home",
-			siteName = "Organization Name 1");
+			Page.viewDefaultSiteTemplatePagesPG(
+				pageName = "Home",
+				siteName = "Organization Name 1");
 
-		Navigator.openSiteURL(siteName = "Organization Name 2");
+			Navigator.openSiteURL(siteName = "Organization Name 2");
 
-		Page.viewDefaultSiteTemplatePagesPG(
-			pageName = "Home",
-			siteName = "Organization Name 2");
+			Page.viewDefaultSiteTemplatePagesPG(
+				pageName = "Home",
+				siteName = "Organization Name 2");
+		}
 
-		Navigator.openSiteURL(siteName = "Organization Name 2");
+		task ("Deactive the second organization site") {
+			Navigator.openSiteURL(siteName = "Organization Name 2");
 
-		Site.openSitesAdmin();
+			Site.openSitesAdmin();
 
-		Site.deactivateCP(
-			siteName = "Organization Name 2",
-			successMessage = "true");
+			Site.deactivateCP(
+				siteName = "Organization Name 2",
+				successMessage = "true");
+		}
 
-		var baseURL = PropsUtil.get("portal.url");
+		task ("View inactive request message in the second organization site") {
+			var baseURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${baseURL}/web/organization-name-2");
+			Navigator.openSpecificURL(url = "${baseURL}/web/organization-name-2");
 
-		Page.viewInactiveRequestMessage(resource = "site");
+			Page.viewInactiveRequestMessage(resource = "site");
+		}
 	}
 
 	@description = "Assert user can't assign user group with regular role with assign memebers."
@@ -286,81 +343,107 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,User Groups";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Get site name") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		}
 
-		JSONRole.addSiteRole(
-			roleKey = "Roles Siterole Name",
-			roleTitle = "Roles Siterole Name");
+		task ("Add a site role") {
+			JSONRole.addSiteRole(
+				roleKey = "Roles Siterole Name",
+				roleTitle = "Roles Siterole Name");
+		}
 
-		UserGroup.openUserGroupsAdmin();
+		task ("Add a user group") {
+			UserGroup.openUserGroupsAdmin();
 
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
+			UserGroup.addCP(userGroupName = "UG UserGroup Name");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Assign the user group to default site") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
+			Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
+		}
 
-		JSONRole.addRegularRole(
-			roleKey = "Roles Regrole Name",
-			roleTitle = "Roles Regrole Name");
-
-		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
-				resourceName = "com.liferay.portal.kernel.model.Group",
+		task ("Add a regular role") {
+			JSONRole.addRegularRole(
+				roleKey = "Roles Regrole Name",
 				roleTitle = "Roles Regrole Name");
 		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
-			roleTitle = "Roles Regrole Name");
+		task ("Add assign memeber permission to the regular role") {
+			for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Group",
+					roleTitle = "Roles Regrole Name");
+			}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ASSIGN_MEMBERS",
-			resourceName = "com.liferay.portal.kernel.model.Role",
-			roleTitle = "Roles Regrole Name");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Roles Regrole Name");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ASSIGN_MEMBERS",
+				resourceName = "com.liferay.portal.kernel.model.Role",
+				roleTitle = "Roles Regrole Name");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		User.openUsersAdmin();
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.editUserSiteCP(
-			siteName = "${siteName}",
-			userScreenName = "usersn");
+		task ("Assign current site to the user") {
+			User.openUsersAdmin();
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Roles Regrole Name",
-			userEmailAddress = "userea@liferay.com");
+			User.editUserSiteCP(
+				siteName = "${siteName}",
+				userScreenName = "usersn");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Assign regular role to the user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Roles Regrole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+		task ("Log in as the user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
-		Site.assignSiteRoleCP(
-			resourceName = "userfn userln",
-			roleTitle = "Roles Siterole Name");
+		task ("Assign site role to created user in default site's memeberships") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+			Site.assignSiteRoleCP(
+				resourceName = "userfn userln",
+				roleTitle = "Roles Siterole Name");
+		}
 
-		NavItem.gotoUserGroups();
+		task ("View can not assign user group") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
-		AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+			NavItem.gotoUserGroups();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
+		}
+
+		task ("Log out and log in as default user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
 	}
 
 	@description = "Private virtual hosts redirects to private page."
@@ -369,53 +452,73 @@ definition {
 		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Get site name") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		task ("Add virtual host to private page in default site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
-		Site.addVirtualHostsURLCP(
-			privatePageVirtualHostURL = "www.able.com",
-			privateVirtualHosts = "true");
+			Site.addVirtualHostsURLCP(
+				privatePageVirtualHostURL = "www.able.com",
+				privateVirtualHosts = "true");
+		}
 
-		JSONLayout.addPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Test Private Page");
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Guest",
+				layoutName = "Test Private Page");
+		}
 
-		User.logoutPG();
+		task ("Log out as guest and visist the pricate page") {
+			User.logoutPG();
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
+		}
 
-		Site.viewPrivateVirtualHostURLUserLoginRedirect(userEmailAddress = "@liferay.com");
+		task ("View private page log in field") {
+			Site.viewPrivateVirtualHostURLUserLoginRedirect(userEmailAddress = "@liferay.com");
+		}
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		task ("Log in as default user") {
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("Assign the created user to default site") {
+			User.openUsersAdmin();
 
-		User.editUserSiteCP(
-			siteName = "${siteName}",
-			userScreenName = "usersn");
+			User.editUserSiteCP(
+				siteName = "${siteName}",
+				userScreenName = "usersn");
+		}
 
-		User.firstLoginUI(
-			specificURL = "http://www.able.com:8080/test-private-page",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+		task ("Log in from private page virtual URL as the created user") {
+			User.firstLoginUI(
+				specificURL = "http://www.able.com:8080/test-private-page",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
+		task ("View private page in virtual host") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
 
-		AssertLocation(value1 = "http://www.able.com:8080/test-private-page");
+			AssertLocation(value1 = "http://www.able.com:8080/test-private-page");
+		}
 	}
 
 	@description = "Assert user can't assign user group with regular role with assign memebers."
@@ -424,131 +527,174 @@ definition {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
 		property test.smtp.server.enabled = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a site and a public page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page Name");
+		}
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Instance Configuration",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
+		task ("Edit virtual instance in instance settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Instance Configuration",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
+			PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
+		}
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
+		task ("Enable require strangers in instance settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.editConfigurationAuthenticationGeneral(enableRequireStrangers = "true");
+			PortalSettings.editConfigurationAuthenticationGeneral(enableRequireStrangers = "true");
+		}
 
-		PortalSettings.editConfigurationUsersEmailNotificationsCP(
-			configurationName = "Email Verification Notification",
-			notificationsBody = "[$EMAIL_VERIFICATION_CODE$]");
+		task ("Edit Email Verification Notification in instance settings") {
+			PortalSettings.editConfigurationUsersEmailNotificationsCP(
+				configurationName = "Email Verification Notification",
+				notificationsBody = "[$EMAIL_VERIFICATION_CODE$]");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Add a virtual instance for public page") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.baker.com",
-			publicVirtualHosts = "true");
+			Site.addVirtualHostsURLCP(
+				publicPageVirtualHostURL = "www.baker.com",
+				publicVirtualHosts = "true");
+		}
 
-		User.firstLoginUI(specificURL = "http://www.baker.com:8080");
+		task ("Log in public page in virtual host") {
+			User.firstLoginUI(specificURL = "http://www.baker.com:8080");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		task ("Add a user and set require password reset") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-		User.addCP(
-			userEmailAddress = "user1@liferay.com",
-			userFirstName = "user1",
-			userLastName = "user1",
-			userScreenName = "user1");
+			User.addCP(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
 
-		User.editPassword(requirePasswordReset = "true");
+			User.editPassword(requirePasswordReset = "true");
+		}
 
-		UserBar.signOut();
+		task ("Log out and log in as created user") {
+			UserBar.signOut();
 
-		User.firstLoginUI(
-			password = "password",
-			specificURL = "http://www.baker.com:8080",
-			userEmailAddress = "user1@liferay.com");
+			User.firstLoginUI(
+				password = "password",
+				specificURL = "http://www.baker.com:8080",
+				userEmailAddress = "user1@liferay.com");
+		}
 
-		Button.click(button = "Send New Verification Code");
+		task ("Click Send New Verification Code") {
+			Button.click(button = "Send New Verification Code");
+		}
 
-		var emailVerification = MockMock.getHTMLBodyFormattedText(
-			newTab = "true",
-			recipient = "user1@",
-			sender = "Joe Bloggs",
-			subject = "http://www.baker.com:8080: Email Address Verification");
+		task ("Get New Verification Code from email") {
+			var emailVerification = MockMock.getHTMLBodyFormattedText(
+				newTab = "true",
+				recipient = "user1@",
+				sender = "Joe Bloggs",
+				subject = "http://www.baker.com:8080: Email Address Verification");
 
-		Close.closeWindow();
+			Close.closeWindow();
+		}
 
-		Type(
-			locator1 = "SignInCreateAccount#EMAIL_VERIFICATION_CODE_FIELD",
-			value1 = "${emailVerification}");
+		task ("Fill New Verification Code and reset password") {
+			Type(
+				locator1 = "SignInCreateAccount#EMAIL_VERIFICATION_CODE_FIELD",
+				value1 = "${emailVerification}");
 
-		Button.clickVerifyButton();
+			Button.clickVerifyButton();
 
-		User.resetPassword();
+			User.resetPassword();
+		}
 
-		User.answerPasswordReminder();
+		task ("Fill password reminder and assert sign in") {
+			User.answerPasswordReminder();
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
 
-		UserBar.signOut();
+		task ("Log out") {
+			UserBar.signOut();
+		}
 
-		MockMock.deleteMail(
-			asset = "http://www.baker.com:8080: Email Address Verification",
-			newTab = "true");
+		task ("Delete New Verification Code email") {
+			MockMock.deleteMail(
+				asset = "http://www.baker.com:8080: Email Address Verification",
+				newTab = "true");
 
-		Close.closeWindow();
+			Close.closeWindow();
+		}
 
-		User.firstLoginUI(specificURL = "http://www.able.com:8080");
+		task ("Log in instance in virtual host") {
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		task ("Edit Email Verification Notification in instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Email",
-			configurationName = "Email Verification Notification",
-			configurationScope = "Virtual Instance Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Email Verification Notification",
+				configurationScope = "Virtual Instance Scope");
 
-		Type.typeCKEditor(
-			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "[$EMAIL_VERIFICATION_URL$]");
+			Type.typeCKEditor(
+				locator1 = "CKEditor#BODY_FIELD",
+				value1 = "[$EMAIL_VERIFICATION_URL$]");
 
-		PortletEntry.save();
+			PortletEntry.save();
+		}
 
-		UserBar.signOut();
+		task ("Log out and log in as created user") {
+			UserBar.signOut();
 
-		User.firstLoginUI(
-			specificURL = "http://www.baker.com:8080",
-			userEmailAddress = "user1@liferay.com");
+			User.firstLoginUI(
+				specificURL = "http://www.baker.com:8080",
+				userEmailAddress = "user1@liferay.com");
+		}
 
-		Navigator.gotoAccountSettings();
+		task ("Edit user email address for email notification") {
+			Navigator.gotoAccountSettings();
 
-		User.editUserInformation(userEmailAddressEdit = "user2@liferay.com");
+			User.editUserInformation(userEmailAddressEdit = "user2@liferay.com");
+		}
 
-		var emailAddressVerificationURL = MockMock.getHTMLBodyFormattedText(
-			newTab = "true",
-			recipient = "user2@",
-			sender = "Joe Bloggs",
-			subject = "http://www.baker.com:8080: Email Address Verification");
+		task ("Get Email Address Verification URL from email") {
+			var emailAddressVerificationURL = MockMock.getHTMLBodyFormattedText(
+				newTab = "true",
+				recipient = "user2@",
+				sender = "Joe Bloggs",
+				subject = "http://www.baker.com:8080: Email Address Verification");
 
-		Close.closeWindow();
+			Close.closeWindow();
+		}
 
-		Navigator.openSpecificURL(url = "${emailAddressVerificationURL}");
+		task ("Open Email Address Verification URL and verify it") {
+			Navigator.openSpecificURL(url = "${emailAddressVerificationURL}");
 
-		Button.clickVerifyButton();
+			Button.clickVerifyButton();
+		}
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		MockMock.deleteMail(asset = "http://www.baker.com:8080: Email Address Verification");
+		task ("Fill password reminder and assert sign in") {
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
+		task ("Delete Email Address Verification URL email") {
+			MockMock.deleteMail(asset = "http://www.baker.com:8080: Email Address Verification");
+		}
 	}
 
 	@description = "This test is based on LPS-14245 and it is designed to have the User test if the LayouImporter checks when the Page Names are different but the Friendly URL is the same. The User will assert no errors display when a User is assigned to a User Group with the same Friendly URL. The User will also assert that they can enter a Friendly URL through the Site Manager with adding a slash."
@@ -559,64 +705,86 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		UserGroup.openUserGroupsAdmin();
+		task ("Add a user group") {
+			UserGroup.openUserGroupsAdmin();
 
-		UserGroup.addCP(userGroupName = "User Group Name");
-
-		UserGroup.openUserGroupsAdmin();
-
-		UserGroup.gotoAddPageCP(userGroupName = "User Group Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "site Page Name");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			UserGroup.addCP(userGroupName = "User Group Name");
+		}
 
 		UserGroup.openUserGroupsAdmin();
 
-		UserGroup.assignMemberCP(
-			userGroupName = "User Group Name",
-			userScreenName = "usersn");
+		task ("Add a public page in user group") {
+			UserGroup.gotoAddPageCP(userGroupName = "User Group Name");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+			SitePages.addPublicPage(pageName = "site Page Name");
+		}
 
-		AssertLocation(value1 = "${portalURL}/user/usersn");
+		task ("Add a user ") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page Name");
+		task ("Assign user to user group") {
+			UserGroup.openUserGroupsAdmin();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+			UserGroup.assignMemberCP(
+				userGroupName = "User Group Name",
+				userScreenName = "usersn");
+		}
 
-		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
+		task ("Log in as created user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/liferay/site-page-name");
+		task ("View my dashboard URL") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		AssertLocation(value1 = "${portalURL}/web/liferay/site-page-name");
+			AssertLocation(value1 = "${portalURL}/user/usersn");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "liferay");
+		task ("Log in as default user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
+		task ("Add a page to default site with the same name in user group site page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Site Page Name");
+		}
+
+		task ("Edit default site friendly URL") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
+		}
+
+		task ("Go to view the page via friendly URL") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/liferay/site-page-name");
+
+			AssertLocation(value1 = "${portalURL}/web/liferay/site-page-name");
+		}
+
+		task ("Edit default site friendly URL back to original one") {
+			Site.openSiteSettingsAdmin(siteURLKey = "liferay");
+
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
+		}
 	}
 
 	@description = "In one coummuty site and one edited site with page template, can deactive Community site."
@@ -626,80 +794,102 @@ definition {
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDeactivated";
 		property testray.component.names = "Site Administration";
 
-		SystemSettings.openSystemSettingsAdmin();
+		task ("Enable Show Inactive Request Message in system settings") {
+			SystemSettings.openSystemSettingsAdmin();
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Infrastructure",
-			configurationName = "Inactive Request Handler",
-			configurationScope = "System Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Inactive Request Handler",
+				configurationScope = "System Scope");
 
-		FormFields.enableCheckbox(fieldName = "Show Inactive Request Message");
+			FormFields.enableCheckbox(fieldName = "Show Inactive Request Message");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
+		}
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Add a site template and a site basing on it") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		JSONGroup.addGroup(groupName = "Site1 Name");
+			JSONGroup.addGroup(groupName = "Site1 Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
-		Site.selectPageType(
-			selectPublicPages = "true",
-			siteTemplate = "Site Template Name");
+			Site.selectPageType(
+				selectPublicPages = "true",
+				siteTemplate = "Site Template Name");
+		}
 
-		JSONGroup.addGroup(groupName = "Site2 Name");
+		task ("Add another site and edit site name") {
+			JSONGroup.addGroup(groupName = "Site2 Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
 
-		Site.editCP(
-			siteName = "Site2 Name",
-			siteNameEdit = "Site2 Name Edit");
+			Site.editCP(
+				siteName = "Site2 Name",
+				siteNameEdit = "Site2 Name Edit");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("Assign site to the user") {
+			User.openUsersAdmin();
 
-		User.editUserSiteCP(
-			siteName = "Site1 Name",
-			userScreenName = "usersn");
+			User.editUserSiteCP(
+				siteName = "Site1 Name",
+				userScreenName = "usersn");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		task ("Log out and log in as the created user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.openSiteURL(siteName = "Site1 Name");
+		task ("View the first created site page") {
+			Navigator.openSiteURL(siteName = "Site1 Name");
 
-		Page.viewDefaultSiteTemplatePagesPG(
-			pageName = "Home",
-			siteName = "Site1 Name",
-			siteTemplate = "Community");
+			Page.viewDefaultSiteTemplatePagesPG(
+				pageName = "Home",
+				siteName = "Site1 Name",
+				siteTemplate = "Community");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		task ("Log out and log in as the default user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
+		task ("Inactive the first created site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
-		Site.inactivateCP(siteName = "Site1 Name");
+			Site.inactivateCP(siteName = "Site1 Name");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		task ("Log out and log in as the created user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		var baseURL = PropsUtil.get("portal.url");
+		task ("View the inactive request message in the first created site") {
+			var baseURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${baseURL}/web/site1-name");
+			Navigator.openSpecificURL(url = "${baseURL}/web/site1-name");
 
-		Page.viewInactiveRequestMessage(resource = "site");
+			Page.viewInactiveRequestMessage(resource = "site");
+		}
 	}
 
 	@description = "Manage demo site virtual URL, friendly URL and logo, add JS to page, export and import page with child pages."
@@ -712,173 +902,226 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Site.openSitesAdmin();
-
-		Site.addBlankCP(
-			membershipTypeOption = "Open",
-			siteDescription = "This is the site description test",
-			siteDetails = "true",
-			siteName = "World Cup - Russia 2018");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		for (var tagName : list "World Cup,Russia,2018") {
-			Tag.addViaSiteCP(tagName = "${tagName}");
+		task ("Add a new site") {
+			JSONGroup.addGroup(
+				groupDescription = "This is the site description test",
+				groupName = "World Cup - Russia 2018");
 		}
 
-		Site.addVirtualHostsURLCP(
-			privatePageVirtualHostURL = "www.baker.com",
-			privateVirtualHosts = "true",
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
+		task ("Add tags to the new site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
 
-		Navigator.gotoBack();
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
 
-		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/russia2018");
-
-		for (var publicPageName : list "Home,Arenas") {
-			JSONLayout.addPublicLayout(
-				groupName = "World Cup - Russia 2018",
-				layoutName = "${publicPageName}");
+			for (var tagName : list "World Cup,Russia,2018") {
+				Tag.addViaSiteCP(tagName = "${tagName}");
+			}
 		}
 
-		for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
-			JSONLayout.addPublicLayout(
-				groupName = "World Cup - Russia 2018",
-				layoutName = "${childPageName}",
-				parentLayoutName = "Arenas");
+		task ("Add virtual host for public page and private page") {
+			Site.addVirtualHostsURLCP(
+				privatePageVirtualHostURL = "www.baker.com",
+				privateVirtualHosts = "true",
+				publicPageVirtualHostURL = "www.able.com",
+				publicVirtualHosts = "true");
 		}
 
-		for (var privatePageName : list "Accomodations,Maps") {
-			JSONLayout.addPrivateLayout(
-				groupName = "World Cup - Russia 2018",
-				layoutName = "${privatePageName}");
+		task ("Edit friendly URL") {
+			Navigator.gotoBack();
+
+			Site.editFriendlyURLCP(siteFriendlyURLEdit = "/russia2018");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "russia2018");
-
-		Site.changeSiteLogo(
-			logoFile = "Document_3.png",
-			pageName = "Public Pages");
-
-		SitePages.openPagesAdmin(siteURLKey = "russia2018");
-
-		Page.addJavaScript(
-			javaScript = "alert(&apos;Welcome to Russia.&apos;);",
-			pageName = "Arenas");
-
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
-
-		AssertConfirm(value1 = "Welcome to Russia.");
-
-		User.logoutPG();
-
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
-
-		AssertConfirm(value1 = "Welcome to Russia.");
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018");
-
-		Page.viewCustomLogoPG();
-
-		for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
-			Page.viewChildPageDropdown(
-				childPageName = "${childPageName}",
-				javaScriptPage = "Welcome to Russia.",
-				pageName = "Arenas",
-				viewChildPageDropdown = "PAGE_2");
+		task ("Add 2 public pages to the new site") {
+			for (var publicPageName : list "Home,Arenas") {
+				JSONLayout.addPublicLayout(
+					groupName = "World Cup - Russia 2018",
+					layoutName = "${publicPageName}");
+			}
 		}
 
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+		task ("Add 4 pages to the child page Arenas") {
+			for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
+				JSONLayout.addPublicLayout(
+					groupName = "World Cup - Russia 2018",
+					layoutName = "${childPageName}",
+					parentLayoutName = "Arenas");
+			}
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Add 2 private pages to the new site") {
+			for (var privatePageName : list "Accomodations,Maps") {
+				JSONLayout.addPrivateLayout(
+					groupName = "World Cup - Russia 2018",
+					layoutName = "${privatePageName}");
+			}
+		}
 
-		Page.addJavaScript(
-			javaScript = " ",
-			pageName = "Arenas");
+		task ("Change site logo for the new site") {
+			SitePages.openPagesAdmin(siteURLKey = "russia2018");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Site.changeSiteLogo(
+				logoFile = "Document_3.png",
+				pageName = "Public Pages");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add alert js to Arenas page") {
+			SitePages.openPagesAdmin(siteURLKey = "russia2018");
 
-		User.openUsersAdmin();
+			Page.addJavaScript(
+				javaScript = "alert(&apos;Welcome to Russia.&apos;);",
+				pageName = "Arenas");
+		}
 
-		Site.assignUserSitesCP(
-			siteName = "World Cup - Russia 2018",
-			userScreenName = "usersn");
+		task ("View alert in Arenas page") {
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
 
-		User.openUsersAdmin();
+			AssertConfirm(value1 = "Welcome to Russia.");
+		}
 
-		User.assignSiteRoleCP(
-			siteRoleName = "Site Administrator",
-			userScreenName = "usersn");
+		task ("Log out as guest") {
+			User.logoutPG();
+		}
 
-		User.logoutPG();
+		task ("View alert in Arenas page") {
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
 
-		User.viewLoggedOutPG();
+			AssertConfirm(value1 = "Welcome to Russia.");
+		}
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://www.baker.com:8080/group/russia2018",
-			userEmailAddress = "userea@liferay.com");
+		task ("Log in as default user") {
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
+		task ("View logo is changed") {
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018");
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "${portalURL}/web/russia2018",
-			userEmailAddress = "userea@liferay.com");
+			Page.viewCustomLogoPG();
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Export");
+		task ("View 4 pages under the child page Arenas") {
+			for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
+				Page.viewChildPageDropdown(
+					childPageName = "${childPageName}",
+					javaScriptPage = "Welcome to Russia.",
+					pageName = "Arenas",
+					viewChildPageDropdown = "PAGE_2");
+			}
+		}
 
-		LexiconEntry.gotoAdd();
+		task ("Add blank js to Arenaspage") {
+			Open.openNoError(locator1 = "${portalURL}/web/russia2018");
 
-		LAR.exportWithAssertionOnSuccess();
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		var larFileName = LAR.getLarFileName();
+			Page.addJavaScript(
+				javaScript = " ",
+				pageName = "Arenas");
+		}
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		task ("Add a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		Click(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		DownloadTempFile();
+		task ("Assign created site to the user") {
+			User.openUsersAdmin();
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+			Site.assignUserSitesCP(
+				siteName = "World Cup - Russia 2018",
+				userScreenName = "usersn");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Assign site administrator to the user") {
+			User.openUsersAdmin();
 
-		LAR.importSiteCP(
-			larFileName = "${larFileName}",
-			siteName = "Site Name");
+			User.assignSiteRoleCP(
+				siteRoleName = "Site Administrator",
+				userScreenName = "usersn");
+		}
 
-		for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
-			Navigator.gotoSitePage(
-				pageName = "Home",
+		task ("Log out and assert log out") {
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Log in as created user via private page virtual host") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.baker.com:8080/group/russia2018",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View private pages") {
+			Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
+		}
+
+		task ("Log in as created user via site URL") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${portalURL}/web/russia2018",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Export site") {
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Export");
+
+			LexiconEntry.gotoAdd();
+
+			LAR.exportWithAssertionOnSuccess();
+		}
+
+		task ("Download the lar") {
+			var larFileName = LAR.getLarFileName();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+
+			DownloadTempFile();
+		}
+		task ("Log in as default user") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Add a site and import the site lar file") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			LAR.importSiteCP(
+				larFileName = "${larFileName}",
 				siteName = "Site Name");
+		}
 
-			Page.viewChildPageDropdown(
-				childPageName = "${childPageName}",
-				pageName = "Arenas",
-				viewChildPageDropdown = "PAGE_2");
+		task ("View all the pages are imported") {
+			for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
+				Navigator.gotoSitePage(
+					pageName = "Home",
+					siteName = "Site Name");
+
+				Page.viewChildPageDropdown(
+					childPageName = "${childPageName}",
+					pageName = "Arenas",
+					viewChildPageDropdown = "PAGE_2");
+			}
 		}
 	}
 
@@ -942,38 +1185,50 @@ definition {
 	test ViewSiteLogo {
 		property portal.upstream = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a new site and a public page in it") {
+			JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page");
+		}
 
-		JSONGroup.addChildGroup(
-			groupName = "Child SiteName",
-			parentGroupName = "Site Name");
+		task ("Add a child site to the new site and a public page in it ") {
+			JSONGroup.addChildGroup(
+				groupName = "Child SiteName",
+				parentGroupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Child SiteName",
-			layoutName = "Site Page",
-			parentGroupName = "Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Child SiteName",
+				layoutName = "Site Page",
+				parentGroupName = "Site Name");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Change new site's logo") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Site.changeSiteLogo(
-			logoFile = "Document_2.png",
-			pageName = "Public Pages");
+			Site.changeSiteLogo(
+				logoFile = "Document_2.png",
+				pageName = "Public Pages");
+		}
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
+		task ("Change new site child site's logo") {
+			Navigator.openSiteURL(siteName = "Child SiteName");
 
-		Site.changeSiteLogo(
-			logoFile = "Document_3.png",
-			pageName = "Public Pages");
+			Site.changeSiteLogo(
+				logoFile = "Document_3.png",
+				pageName = "Public Pages");
+		}
 
-		Site.viewCustomSiteLogoInDifferentViews(site = "Site Name");
+		task ("View new site's logo") {
+			Site.viewCustomSiteLogoInDifferentViews(site = "Site Name");
 
-		IFrame.closeFrame();
+			IFrame.closeFrame();
+		}
 
-		Site.viewCustomSiteLogoInDifferentViews(site = "Child SiteName");
+		task ("Change new site child site's logo") {
+			Site.viewCustomSiteLogoInDifferentViews(site = "Child SiteName");
+		}
 	}
 
 }

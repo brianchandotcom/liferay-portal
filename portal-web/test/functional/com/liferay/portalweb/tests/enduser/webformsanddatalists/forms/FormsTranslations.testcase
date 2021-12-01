@@ -1276,7 +1276,6 @@ definition {
 	@priority = "5"
 	test RichTextFieldCanBeTranslated {
 		property forms.functional = "false";
-		property portal.upstream = "quarantine";
 
 		FormsAdmin.addForm();
 
@@ -1340,7 +1339,16 @@ definition {
 			fieldLabel = "Texto Rico",
 			fieldName = "Texto Rico");
 
-		FormFields.viewRichTextPredefinedValue(fieldValue = "Valor Predefinido");
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "Texto Rico",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		AssertTextEquals(
+			key_fieldName = "Texto Rico",
+			locator1 = "CKEditor#BODY",
+			value1 = "Valor Predefinido");
+
+		SelectFrame(value1 = "relative=top");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Texto de Ayuda",

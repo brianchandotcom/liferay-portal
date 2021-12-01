@@ -96,7 +96,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.upstream = "quarantine";
 
 		FormsAdmin.addForm();
 
@@ -118,7 +117,7 @@ definition {
 
 		Type(
 			locator1 = "FormFields#PREDEFINED_VALUE_BODY",
-			value1 = "Rich Text Test");
+			value1 = "R");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -134,11 +133,11 @@ definition {
 
 		FormFields.viewRichTextValue(
 			fieldName = "Predefined Value",
-			fieldValue = "Rich Text Test");
+			fieldValue = "R");
 
 		FormFields.viewRichTextValue(
 			fieldName = "Field",
-			fieldValue = "Rich Text Test");
+			fieldValue = "R");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Help Text Test",
@@ -415,7 +414,6 @@ definition {
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
-		property portal.upstream = "quarantine";
 
 		FormsAdmin.addForm();
 
@@ -428,12 +426,12 @@ definition {
 		Form.gotoAdvancedTab();
 
 		CKEditor.addContentInWebContent(
-			content = "Rich Text Test",
+			content = "R",
 			fieldLabel = "Predefined Value");
 
 		FormFields.viewRichTextValue(
 			fieldName = "Rich Text",
-			fieldValue = "Rich Text Test");
+			fieldValue = "R");
 
 		Form.save();
 
@@ -443,7 +441,7 @@ definition {
 
 		FormFields.viewRichTextValue(
 			fieldName = "Rich Text",
-			fieldValue = "Rich Text Test");
+			fieldValue = "R");
 
 		FormPortlet.submitSuccessfully();
 

@@ -391,10 +391,10 @@ if (recurrence != null) {
 	});
 
 	window.<portlet:namespace />updateSummary = function (element) {
-		var previewNode = document.querySelector(element);
+		var previewNode = A.one(element);
 
 		if (previewNode) {
-			previewNode.innerHTML = recurrenceDialogController.get('summary');
+			previewNode.html(recurrenceDialogController.get('summary'));
 		}
 	};
 

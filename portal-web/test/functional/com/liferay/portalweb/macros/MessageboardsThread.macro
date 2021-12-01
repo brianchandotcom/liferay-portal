@@ -160,6 +160,19 @@ definition {
 			AssetCategorization.addTag(tagName = "${tagName}");
 		}
 
+		if (isSet(priority)) {
+			Panel.expandPanel(panel = "More Settings");
+
+			Select(
+				locator1 = "MessageBoardsThread#THREAD_PRIORITY_SELECT",
+				value1 = "${priority}");
+
+			AssertSelectedLabel(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "priority",
+				value1 = "${priority}");
+		}
+
 		if (isSet(mbAttachmentFileList)) {
 			Panel.expandPanel(panel = "Attachments");
 

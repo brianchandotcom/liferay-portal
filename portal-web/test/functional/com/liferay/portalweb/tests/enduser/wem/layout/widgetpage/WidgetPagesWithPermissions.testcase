@@ -249,9 +249,26 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Permissions,Roles,Training";
 
+		task ("Add a site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Add a private site based on new site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addCP(
+				membershipType = "Private",
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
+
 		task ("Add a private widget page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = "Site Name",
 				layoutName = "Test Page Name");
 		}
 
@@ -274,7 +291,7 @@ definition {
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
+				groupName = "Site Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -285,7 +302,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Site Member") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -309,7 +326,7 @@ definition {
 		task ("View private page is shown") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Site Name");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
@@ -321,7 +338,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Regular Role") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -339,11 +356,19 @@ definition {
 		task ("View private page is not shown") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Site Name");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Home");
 
 			AssertTextPresent(value1 = "The requested resource could not be found");
+		}
+
+		task ("Delete new site and site template") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			SiteTemplates.tearDownCP();
 		}
 	}
 

@@ -115,7 +115,7 @@ if (publicVirtualHostnames.isEmpty()) {
 	<p class="small text-secondary">
 		<liferay-ui:message key="enter-the-friendly-url-that-is-used-by-pages" />
 
-		<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-pages" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= new Object[] {"<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "</strong>"} %>' key="the-friendly-url-is-appended-to-x-for-pages" translateArguments="<%= false %>" />
 	</p>
 
 	<aui:input label="friendly-url" name="groupFriendlyURL" type="text" value="<%= HttpUtil.decodeURL(liveGroup.getFriendlyURL()) %>" />
@@ -127,7 +127,7 @@ if (publicVirtualHostnames.isEmpty()) {
 	<p class="small text-secondary">
 		<liferay-ui:message key="enter-the-virtual-host-that-map-to-the-friendly-url" />
 
-		<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= new Object[] {"<strong>www.helloworld.com</strong>", "<strong>/helloworld</strong>", "<strong>" + HttpUtil.getProtocol(request) + "://www.helloworld.com</strong>", "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "/helloworld</strong>"} %>' key="for-example,-if-the-virtual-host-is-x-and-the-friendly-url-is-x,-x-is-mapped-to-x" translateArguments="<%= false %>" />
 	</p>
 
 	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">

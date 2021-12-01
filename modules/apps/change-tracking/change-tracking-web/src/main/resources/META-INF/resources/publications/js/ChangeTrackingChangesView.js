@@ -19,9 +19,11 @@ import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
 import ClayManagementToolbar, {
 	ClayResultsBar,
 } from '@clayui/management-toolbar';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
@@ -148,6 +150,8 @@ export default function ChangeTrackingChangesView({
 	const MENU_TYPES = 'MENU_TYPES';
 	const MENU_USERS = 'MENU_USERS';
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
+	const NAVIGATION_DATA = 'NAVIGATION_DATA';
+	const NAVIGATION_RELATIONSHIPS = 'NAVIGATION_RELATIONSHIPS';
 	const PARAM_CHANGE_TYPES = namespace + 'changeTypes';
 	const PARAM_COLUMN = namespace + 'column';
 	const PARAM_DELTA = namespace + 'delta';
@@ -728,6 +732,7 @@ export default function ChangeTrackingChangesView({
 		children: initialNode.children,
 		delta: initialDelta,
 		id: initialNode.nodeId,
+		nav: changes.length > 0 ? NAVIGATION_DATA : NAVIGATION_RELATIONSHIPS,
 		node: initialNode,
 		page: calculatePage(
 			initialDelta,
@@ -859,7 +864,7 @@ export default function ChangeTrackingChangesView({
 		window.history.pushState({path}, document.title, path);
 	};
 
-	const handleNavigationUpdate = useCallback(
+	const navigate = useCallback(
 		(nodeId, resetPage) => {
 			const node = getNode(nodeId);
 
@@ -887,6 +892,7 @@ export default function ChangeTrackingChangesView({
 				children: node.children,
 				delta: renderState.delta,
 				id: nodeId,
+				nav: renderState.nav,
 				node,
 				page,
 				parents: node.parents,
@@ -1014,19 +1020,20 @@ export default function ChangeTrackingChangesView({
 
 			setAscendingState(ascending);
 			setColumnState(column);
+			setEntrySearchTerms(keywords);
 			setFiltersState(filters);
 			setRenderState({
 				changes: nodes,
 				children: node.children,
 				delta,
 				id: node.nodeId,
+				nav: renderState.nav,
 				node,
 				page: calculatePage(delta, page, nodes.length),
 				parents: node.parents,
 				showHideable,
 			});
 			setResultsKeywords(keywords);
-			setEntrySearchTerms(keywords);
 		},
 		[
 			PARAM_CHANGE_TYPES,
@@ -1044,6 +1051,7 @@ export default function ChangeTrackingChangesView({
 			getFilters,
 			getNode,
 			isWithinApp,
+			renderState,
 		]
 	);
 
@@ -1653,7 +1661,7 @@ export default function ChangeTrackingChangesView({
 			rows.push(
 				<ClayTable.Row
 					className="cursor-pointer"
-					onClick={() => handleNavigationUpdate(node.nodeId)}
+					onClick={() => navigate(node.nodeId)}
 				>
 					<ClayTable.Cell>
 						<ClaySticker
@@ -1730,11 +1738,47 @@ export default function ChangeTrackingChangesView({
 			children: renderState.children,
 			delta: renderState.delta,
 			id: renderState.id,
+			nav: renderState.nav,
 			node: renderState.node,
 			page,
 			parents: renderState.parents,
 			showHideable: renderState.showHideable,
 		});
+
+		window.scrollTo(0, 0);
+	};
+
+	const handleNavigationUpdate = (navigation) => {
+		const filters = {changeTypes: [], sites: [], types: [], users: []};
+		const node = getNode(0);
+
+		pushState(
+			getPath(
+				ascendingState,
+				columnState,
+				renderState.delta,
+				getEntryParam(node),
+				filters,
+				'',
+				1,
+				renderState.showHideable
+			)
+		);
+
+		setEntrySearchTerms('');
+		setFiltersState(filters);
+		setRenderState({
+			changes: filterNodes(filters, '', renderState.showHideable),
+			children: node.children,
+			delta: renderState.delta,
+			id: 0,
+			nav: navigation,
+			node,
+			page: 1,
+			parents: node.parents,
+			showHideable: renderState.showHideable,
+		});
+		setResultsKeywords('');
 
 		window.scrollTo(0, 0);
 	};
@@ -1779,6 +1823,7 @@ export default function ChangeTrackingChangesView({
 			children: renderState.children,
 			delta: renderState.delta,
 			id: renderState.id,
+			nav: renderState.nav,
 			node: renderState.node,
 			page,
 			parents: renderState.parents,
@@ -2011,6 +2056,61 @@ export default function ChangeTrackingChangesView({
 		);
 	};
 
+	const renderNavigationBar = () => {
+		return (
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell
+						className="publications-header-td"
+						colSpan={5}
+					>
+						<ClayNavigationBar spritemap={spritemap}>
+							<ClayNavigationBar.Item
+								active={renderState.nav === NAVIGATION_DATA}
+							>
+								<ClayLink
+									className={
+										changes.length === 0
+											? 'nav-link btn-link disabled'
+											: 'nav-link'
+									}
+									displayType="unstyled"
+									onClick={() =>
+										handleNavigationUpdate(NAVIGATION_DATA)
+									}
+								>
+									{Liferay.Language.get('data')}
+								</ClayLink>
+							</ClayNavigationBar.Item>
+
+							<ClayNavigationBar.Item
+								active={
+									renderState.nav === NAVIGATION_RELATIONSHIPS
+								}
+							>
+								<ClayLink
+									className={
+										ctMappingInfos.length === 0
+											? 'nav-link btn-link disabled'
+											: 'nav-link'
+									}
+									displayType="unstyled"
+									onClick={() =>
+										handleNavigationUpdate(
+											NAVIGATION_RELATIONSHIPS
+										)
+									}
+								>
+									{Liferay.Language.get('relationships')}
+								</ClayLink>
+							</ClayNavigationBar.Item>
+						</ClayNavigationBar>
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
+		);
+	};
+
 	const renderPaginationBar = () => {
 		if (!renderState.changes || renderState.changes.length <= 5) {
 			return '';
@@ -2057,6 +2157,7 @@ export default function ChangeTrackingChangesView({
 						children: renderState.children,
 						delta,
 						id: renderState.id,
+						nav: renderState.nav,
 						node: renderState.node,
 						page,
 						parents: renderState.parents,
@@ -2082,6 +2183,7 @@ export default function ChangeTrackingChangesView({
 						children: renderState.children,
 						delta: renderState.delta,
 						id: renderState.id,
+						nav: renderState.nav,
 						node: renderState.node,
 						page,
 						parents: renderState.parents,
@@ -2350,6 +2452,8 @@ export default function ChangeTrackingChangesView({
 					hover
 					noWrap
 				>
+					{renderNavigationBar()}
+
 					<ClayTable.Head>
 						<ClayTable.Row>
 							<ClayTable.Cell
@@ -2371,7 +2475,7 @@ export default function ChangeTrackingChangesView({
 	};
 
 	const renderMainContent = () => {
-		if (changes.length === 0) {
+		if (changes.length === 0 && ctMappingInfos.length === 0) {
 			return (
 				<div className="container-fluid container-fluid-max-xl">
 					{renderExpiredBanner()}
@@ -2390,7 +2494,7 @@ export default function ChangeTrackingChangesView({
 		const items = [
 			{
 				label: Liferay.Language.get('all-items'),
-				onClick: () => handleNavigationUpdate(0),
+				onClick: () => navigate(0),
 			},
 			{
 				active: true,
@@ -2428,7 +2532,7 @@ export default function ChangeTrackingChangesView({
 									]
 								}
 								handleNavigation={(nodeId) =>
-									handleNavigationUpdate(nodeId, true)
+									navigate(nodeId, true)
 								}
 								handleShowHideable={handleShowHideableToggle}
 								parentEntries={renderState.parents}

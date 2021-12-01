@@ -11,10 +11,22 @@
 
 import {INDEX_FIELDS, QUERY_SXP_ELEMENTS, mockClassNames} from './data';
 
+function trimURL(url) {
+	let trimmedURL = url.href || url; // Handling if url is a URL object or a string
+
+	// Remove baseURL
+
+	if (trimmedURL.startsWith('http://localhost:8080')) {
+		trimmedURL = trimmedURL.replace('http://localhost:8080', '');
+	}
+
+	// Remove query string parameters
+
+	return trimmedURL.split('?')[0];
+}
+
 async function mockFetch(url) {
-	switch (
-		url.split('?')[0] // Exclude query string parameters
-	) {
+	switch (trimURL(url)) {
 		case '/o/search-experiences-rest/v1.0/field-mapping-infos': {
 			return {
 				json: async () => ({

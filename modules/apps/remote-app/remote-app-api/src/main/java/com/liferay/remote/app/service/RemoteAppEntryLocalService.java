@@ -98,6 +98,8 @@ public interface RemoteAppEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
+	public int countByCompanyId(long companyId) throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

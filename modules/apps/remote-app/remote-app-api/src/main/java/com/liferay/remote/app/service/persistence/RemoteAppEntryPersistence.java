@@ -474,6 +474,213 @@ public interface RemoteAppEntryPersistence
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the remote app entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching remote app entries
+	 */
+	public java.util.List<RemoteAppEntry> findByCompanyId(long companyId);
+
+	/**
+	 * Returns a range of all the remote app entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of matching remote app entries
+	 */
+	public java.util.List<RemoteAppEntry> findByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the remote app entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching remote app entries
+	 */
+	public java.util.List<RemoteAppEntry> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the remote app entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching remote app entries
+	 */
+	public java.util.List<RemoteAppEntry> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first remote app entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching remote app entry
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry findByCompanyId_First(
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+				orderByComparator)
+		throws NoSuchRemoteAppEntryException;
+
+	/**
+	 * Returns the first remote app entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last remote app entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching remote app entry
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry findByCompanyId_Last(
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+				orderByComparator)
+		throws NoSuchRemoteAppEntryException;
+
+	/**
+	 * Returns the last remote app entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
+	 */
+	public RemoteAppEntry fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the remote app entries before and after the current remote app entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param remoteAppEntryId the primary key of the current remote app entry
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next remote app entry
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
+	 */
+	public RemoteAppEntry[] findByCompanyId_PrevAndNext(
+			long remoteAppEntryId, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+				orderByComparator)
+		throws NoSuchRemoteAppEntryException;
+
+	/**
+	 * Returns all the remote app entries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching remote app entries that the user has permission to view
+	 */
+	public java.util.List<RemoteAppEntry> filterFindByCompanyId(long companyId);
+
+	/**
+	 * Returns a range of all the remote app entries that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of matching remote app entries that the user has permission to view
+	 */
+	public java.util.List<RemoteAppEntry> filterFindByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the remote app entries that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching remote app entries that the user has permission to view
+	 */
+	public java.util.List<RemoteAppEntry> filterFindByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param remoteAppEntryId the primary key of the current remote app entry
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next remote app entry
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
+	 */
+	public RemoteAppEntry[] filterFindByCompanyId_PrevAndNext(
+			long remoteAppEntryId, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
+				orderByComparator)
+		throws NoSuchRemoteAppEntryException;
+
+	/**
+	 * Removes all the remote app entries where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	public void removeByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of remote app entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching remote app entries
+	 */
+	public int countByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of remote app entries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching remote app entries that the user has permission to view
+	 */
+	public int filterCountByCompanyId(long companyId);
+
+	/**
 	 * Caches the remote app entry in the entity cache if it is enabled.
 	 *
 	 * @param remoteAppEntry the remote app entry

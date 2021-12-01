@@ -42,7 +42,7 @@
 	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header')]//*[*[name()='svg'][contains(@class,'lexicon-icon-filter')]]</td>
 	<td></td>
 </tr>
-<tr>
+<tr>you just
 	<td>FILTER_BY_IMPACT_HEADER</td>
 	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@class, 'dropdown-subheader') and contains(., 'Filter by Impact')]</td>
 	<td></td>
@@ -59,7 +59,7 @@
 </tr>
 <tr>
 	<td>FILTER_CHECKBOX</td>
-	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@data-testid,'')]//following-sibling::span/span[normalize-space()='${key_text}']</td>
+	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@data-testid,'${key_filter}')]</td>
 	<td></td>
 </tr>
 <!--HIGHLIGHTED ELEMENTS-->
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>HIGHLIGHTED_ELEMENT_INDEX</td>
-	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]</td>
+	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]//*[contains(@class, 'a11y-indicator')]</td>
 	<td></td>
 </tr>
 <tr>

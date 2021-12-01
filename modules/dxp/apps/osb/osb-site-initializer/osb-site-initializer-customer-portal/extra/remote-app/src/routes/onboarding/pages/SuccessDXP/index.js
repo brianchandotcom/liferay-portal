@@ -1,6 +1,6 @@
-import BaseButton from '~/common/components/BaseButton';
-import {LiferayTheme} from '~/common/services/liferay';
-import {API_BASE_URL} from '~/common/utils';
+import BaseButton from '../../../../common/components/BaseButton';
+import {LiferayTheme} from '../../../../common/services/liferay';
+import {API_BASE_URL} from '../../../../common/utils';
 import Layout from '../../components/Layout';
 
 const SuccessDXP = () => {

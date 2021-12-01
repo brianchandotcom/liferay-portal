@@ -23,9 +23,11 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -90,22 +92,25 @@ public class JournalFeedsDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_renderRequest, "orderByCol", "name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_renderRequest, JournalPortletKeys.JOURNAL, "feeds-order-by-col",
+			"name");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_renderRequest, JournalPortletKeys.JOURNAL, "feeds-order-by-type",
+			"asc");
 
 		return _orderByType;
 	}

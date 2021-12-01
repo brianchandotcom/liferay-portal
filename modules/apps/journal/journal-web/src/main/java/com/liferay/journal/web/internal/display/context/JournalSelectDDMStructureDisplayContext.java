@@ -19,9 +19,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -156,23 +158,25 @@ public class JournalSelectDDMStructureDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"select-ddm-structure-order-by-col", "modified-date");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "desc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"select-ddm-structure-order-by-type", "desc");
 
 		return _orderByType;
 	}

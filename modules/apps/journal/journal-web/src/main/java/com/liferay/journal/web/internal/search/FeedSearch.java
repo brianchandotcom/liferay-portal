@@ -14,12 +14,13 @@
 
 package com.liferay.journal.web.internal.search;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.util.comparator.FeedIDComparator;
 import com.liferay.journal.util.comparator.FeedNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +59,13 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			FeedDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol", "name");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType", "asc");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			portletRequest, JournalPortletKeys.JOURNAL,
+			"feed-search-order-by-col", "name");
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			portletRequest, JournalPortletKeys.JOURNAL,
+			"feed-search-order-by-type", "asc");
 
 		OrderByComparator<JournalFeed> orderByComparator =
 			getOrganizationOrderByComparator(orderByCol, orderByType);

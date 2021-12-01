@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -209,23 +210,12 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			_portalPreferences.setValue(
-				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
-		}
-		else {
-			orderByType = _portalPreferences.getValue(
-				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "desc");
-		}
-
-		_orderByType = orderByType;
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, DLPortletKeys.DOCUMENT_LIBRARY, "desc");
 
 		return _orderByType;
 	}

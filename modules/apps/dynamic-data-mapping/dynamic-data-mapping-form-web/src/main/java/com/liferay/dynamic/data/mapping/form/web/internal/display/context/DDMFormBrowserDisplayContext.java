@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -197,8 +198,9 @@ public class DDMFormBrowserDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "modified-date");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest,
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER, "modified-date");
 
 		return _orderByCol;
 	}
@@ -208,8 +210,9 @@ public class DDMFormBrowserDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest,
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER, "asc");
 
 		return _orderByType;
 	}

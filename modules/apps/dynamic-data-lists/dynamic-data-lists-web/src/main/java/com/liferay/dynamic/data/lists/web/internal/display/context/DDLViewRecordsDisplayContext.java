@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -264,13 +265,27 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol", "modified-date");
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+			"view-records-order-by-col", "modified-date");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			_liferayPortletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+			"view-records-order-by-type", "asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -704,6 +719,8 @@ public class DDLViewRecordsDisplayContext {
 	private final long _formDDMTemplateId;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
 	private final User _user;
 
 }

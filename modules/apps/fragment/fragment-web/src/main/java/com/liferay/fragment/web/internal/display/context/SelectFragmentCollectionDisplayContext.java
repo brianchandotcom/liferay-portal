@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
@@ -22,6 +23,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -222,8 +224,9 @@ public class SelectFragmentCollectionDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "create-date");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
+			"select-fragment-collection-order-by-col", "create-date");
 
 		return _orderByCol;
 	}
@@ -233,8 +236,9 @@ public class SelectFragmentCollectionDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
+			"select-fragment-collection-order-by-type", "asc");
 
 		return _orderByType;
 	}

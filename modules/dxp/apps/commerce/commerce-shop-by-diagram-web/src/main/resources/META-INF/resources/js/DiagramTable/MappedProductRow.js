@@ -9,10 +9,9 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import classNames from 'classnames';
 import QuantitySelector from 'commerce-frontend-js/components/quantity_selector/QuantitySelector';
 import React from 'react';
 
@@ -24,6 +23,7 @@ export default function MappedProductRow({
 	handleMouseLeave,
 	handleTitleClicked,
 	isAdmin,
+	onDelete,
 	product,
 	quantity,
 	selectedSkusId,
@@ -83,8 +83,8 @@ export default function MappedProductRow({
 				</div>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell className={classNames(isAdmin && 'text-right')}>
-				{isAdmin && product.type === 'sku' && product.quantity}
+			<ClayTable.Cell>
+				{isAdmin && product.type !== 'diagram' && product.quantity}
 
 				{!isAdmin &&
 					product.productConfiguration &&
@@ -99,7 +99,16 @@ export default function MappedProductRow({
 					)}
 			</ClayTable.Cell>
 
-			{!isAdmin && (
+			{isAdmin ? (
+				<ClayTable.Cell>
+					<ClayButtonWithIcon
+						displayType="secondary"
+						onClick={() => onDelete(product.id)}
+						small
+						symbol="trash"
+					/>
+				</ClayTable.Cell>
+			) : (
 				<ClayTable.Cell className="text-right">
 					{product.price && <Price {...product.price} />}
 				</ClayTable.Cell>

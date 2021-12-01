@@ -10,12 +10,13 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {
 	useCommerceAccount,
 	useCommerceCart,
 } from 'commerce-frontend-js/utilities/hooks';
-import {debounce} from 'frontend-js-web';
+import {debounce, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
@@ -25,11 +26,17 @@ import DiagramHeader from '../components/DiagramHeader';
 import StorefrontTooltipContent from '../components/StorefrontTooltipContent';
 import TooltipProvider from '../components/TooltipProvider';
 import {PINS_RADIUS} from '../utilities/constants';
-import {loadPins, updateGlobalPinsRadius} from '../utilities/data';
+import {
+	deletePin,
+	loadPins,
+	savePin,
+	updateGlobalPinsRadius,
+} from '../utilities/data';
 import D3Handler from './D3Handler';
 import useTableHandlers from './useTableHandlers';
 
 import '../../css/diagram.scss';
+import {formatMappedProduct} from '../utilities';
 
 const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
 
@@ -61,6 +68,7 @@ function Diagram({
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [pinsRadius, setPinsRadius] = useState(initialPinsRadius);
 	const [tooltipData, setTooltipData] = useState(false);
+	const isMounted = useIsMounted();
 
 	useTableHandlers(chartInstanceRef, productId, () =>
 		loadPins(productId, !isAdmin && channelId).then(setPins)
@@ -105,6 +113,92 @@ function Diagram({
 		};
 	}, [imageURL, isAdmin]);
 
+	const handlePinDelete = () => {
+		return deletePin(tooltipData.selectedPin.id)
+			.then(() => {
+				if (!isMounted()) {
+					return;
+				}
+
+				setPins((pins) =>
+					pins.filter((pin) => pin.id !== tooltipData.selectedPin.id)
+				);
+
+				openToast({
+					message: Liferay.Language.get('pin-deleted'),
+					type: 'success',
+				});
+			})
+			.catch((error) => {
+				openToast({
+					message: error.message || error,
+					type: 'danger',
+				});
+
+				throw error;
+			});
+	};
+
+	const handlePinSave = (type, quantity, sequence, linkedProduct) => {
+		const linkedProductDetails = formatMappedProduct(
+			type,
+			quantity,
+			sequence,
+			linkedProduct
+		);
+
+		const update = Boolean(tooltipData.selectedPin?.id);
+
+		return savePin(
+			update ? tooltipData.selectedPin.id : null,
+			linkedProductDetails,
+			sequence,
+			tooltipData.x,
+			tooltipData.y,
+			productId
+		)
+			.then((newPin) => {
+				if (!isMounted()) {
+					return;
+				}
+
+				setPins((pins) => {
+					const updatedPins = pins.map((pin) =>
+						pin.sequence === newPin.sequence
+							? {
+									...pin,
+									mappedProduct: newPin.mappedProduct,
+									quantity: newPin.quantity,
+							  }
+							: pin
+					);
+
+					return update
+						? updatedPins.map((updatedPin) =>
+								updatedPin.id === newPin.id
+									? newPin
+									: updatedPin
+						  )
+						: [...updatedPins, newPin];
+				});
+
+				openToast({
+					message: update
+						? Liferay.Language.get('pin-updated')
+						: Liferay.Language.get('pin-created'),
+					type: 'success',
+				});
+			})
+			.catch((error) => {
+				openToast({
+					message: error.message || error,
+					type: 'danger',
+				});
+
+				throw error;
+			});
+	};
+
 	return (
 		<div className={classNames('shop-by-diagram', {expanded})}>
 			{isAdmin && (
@@ -135,9 +229,10 @@ function Diagram({
 						<AdminTooltipContent
 							closeTooltip={() => setTooltipData(null)}
 							datasetDisplayId={datasetDisplayId}
+							onDelete={handlePinDelete}
+							onSave={handlePinSave}
 							productId={productId}
 							readOnlySequence={false}
-							updatePins={setPins}
 							{...tooltipData}
 						/>
 					) : (

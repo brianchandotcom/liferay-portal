@@ -51,7 +51,10 @@ function useTableHandlers(chartInstance, productId, updateDiagram) {
 			DIAGRAM_TABLE_EVENTS.REMOVE_PIN_HIGHLIGHT,
 			handleRemovePinHighlightByTable
 		);
-		Liferay.on(DIAGRAM_TABLE_EVENTS.PINS_UPDATED, handlePinsUpdatedByTable);
+		Liferay.on(
+			DIAGRAM_TABLE_EVENTS.TABLE_UPDATED,
+			handlePinsUpdatedByTable
+		);
 
 		return () => {
 			Liferay.detach(
@@ -67,7 +70,7 @@ function useTableHandlers(chartInstance, productId, updateDiagram) {
 				handleRemovePinHighlightByTable
 			);
 			Liferay.detach(
-				DIAGRAM_TABLE_EVENTS.PINS_UPDATED,
+				DIAGRAM_TABLE_EVENTS.TABLE_UPDATED,
 				handlePinsUpdatedByTable
 			);
 		};

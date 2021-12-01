@@ -16,11 +16,11 @@ const eventName = 'customer-portal-project-loading';
 const contactName = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-name'
 );
-const contactRole = fragmentElement.querySelector(
-	'#customer-portal-liferay-contact-role'
-);
 const contactEmail = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-email'
+);
+const contactRole = fragmentElement.querySelector(
+	'#customer-portal-liferay-contact-role'
 );
 const contactTitle = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-title'
@@ -30,16 +30,15 @@ const contactTitle = fragmentElement.querySelector(
 	try {
 		window.addEventListener(eventName, ({detail: project}) => {
 			contactName.classList.toggle('skeleton');
-			contactTitle.classList.toggle('skeleton');
-			contactRole.classList.toggle('skeleton');
 			contactEmail.classList.toggle('skeleton');
+			contactRole.classList.toggle('skeleton');
+			contactTitle.classList.toggle('skeleton');
 
 			contactName.innerHTML = project.liferayContactName;
 			contactRole.innerHTML = project.liferayContactRole;
 			contactEmail.innerHTML = project.liferayContactEmailAddress;
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();

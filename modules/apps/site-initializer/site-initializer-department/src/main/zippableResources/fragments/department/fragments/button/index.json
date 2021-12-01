@@ -5,8 +5,8 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "type",
-					"name": "buttonType",
+					"label": "variant",
+					"name": "buttonVariant",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
@@ -47,6 +47,29 @@
 							{
 								"label": "large",
 								"value": "lg"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "v-auto",
+					"label": "width",
+					"name": "buttonWidth",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "auto",
+								"value": "v-auto"
+							},
+							{
+								"label": "full-width",
+								"value": "v-100"
 							}
 						]
 					}

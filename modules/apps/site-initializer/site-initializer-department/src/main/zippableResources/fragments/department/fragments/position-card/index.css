@@ -14,7 +14,6 @@ a.card-content:hover {
 	transition: 0.1s ease-in-out;
 }
 
-
 a.card-content:hover + .position-social {
 	transform: translateY(-0.5rem);
 	transition: 0.1s ease-in-out;
@@ -26,27 +25,25 @@ a.card-content:hover + .position-social {
 	position: relative;
 }
 
-.position-card:after {
-	content: '';
-	display: block;
-	padding-top: calc(100%);
+.card-content a {
+	color: inherit;
+	text-decoration: none;
 }
 
 .position-card .card-content {
 	background-color: var(--white);
-	display: flex;
-	flex-direction: column;
 	height: 100%;
-	justify-content: space-between;
 	padding: var(--spacer-4);
 	position: absolute;
 	width: 100%;
 }
 
-
-.position-card.featured {
-	fill: var(--white);
-	height: calc(100% - 32px);
+.card-content:hover {
+	box-shadow: var(--box-shadow-lg);
+	color: var(--gray-900);
+	text-decoration: none;
+	transform: translateY(-0.5rem);
+	transition: 0.1s ease-in-out;
 }
 
 .position-card.featured .card-content {
@@ -83,19 +80,16 @@ a.card-content:hover + .position-social {
 	font-weight: var(--font-weight-normal);
 }
 
-.position-card-title {
-	margin-bottom: calc(var(--spacer-1) * 0.5);
-}
-
-.position-short-description {
-	transform: translatey(-4rem);
-}
-
 .position-social {
 	bottom: 8px;
 	padding: var(--spacer-4);
 	position: absolute;
 	z-index: 3;
+}
+
+.card-content:hover + .position-social {
+	transform: translateY(-0.5rem);
+	transition: 0.1s ease-in-out;
 }
 
 .position-social .social-link {
@@ -104,6 +98,37 @@ a.card-content:hover + .position-social {
 
 .position-social svg {
 	width: 20px;
+}
+
+.position-card.featured {
+	height: calc(100% - 32px);
+}
+
+.position-card.featured a {
+	fill: var(--white);
+}
+
+.position-card.featured .card-content {
+	background-color: var(--brand-color-1);
+	color: var(--white);
+}
+
+.position-card.featured .card-content::before {
+	align-items: center;
+	background-color: var(--brand-color-4);
+	box-shadow: var(--box-shadow);
+	color: var(--gray-900);
+	content: 'Hot!';
+	display: flex;
+	font-size: 22px;
+	font-weight: var(--font-weight-bolder);
+	height: 96px;
+	justify-content: center;
+	position: absolute;
+	right: -48px;
+	top: 48px;
+	width: 96px;
+	z-index: 2;
 }
 
 @media (min-width: 768px) {

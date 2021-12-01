@@ -2,12 +2,11 @@
 	background-color: var(--brand-color-1);
 	background-color: transparent;
 	left: 0;
-	padding: 24px 0;
+	padding: var(--spacer-3) 0;
 	position: absolute;
 	right: 0;
 	top: 0;
 	z-index: 99;
-	z-index: 2;
 }
 
 .main-navbar .container-fluid {
@@ -23,6 +22,14 @@
 	justify-content: flex-end;
 }
 
+.main-navbar .navbar-collapse.show {
+	background: var(--brand-color-3);
+	height: 100vh;
+	margin-top: var(--spacer-3);
+	padding-bottom: var(--spacer-3);
+	padding-top: var(--spacer-2);
+}
+
 .main-navbar .nav-item {
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-bold);
@@ -34,13 +41,39 @@
 }
 
 .main-navbar .navbar-logo {
-	width: 180px;
+	height: 24px;
 }
 
 .main-navbar .navbar-nav {
 	margin-right: var(--spacer-4);
 }
 
+.main-navbar .navbar-toggler img {
+	width: 32px;
+}
+
 .main-navbar .portlet {
 	margin-bottom: 0;
+}
+
+.main-navbar .btn-close,
+.main-navbar.open .btn-menu {
+	display: none;
+}
+
+.main-navbar .btn-menu,
+.main-navbar.open .btn-close {
+	display: block;
+	transform: translatex(var(--spacer-2));
+}
+
+@media (max-width: 992px) {
+	.main-navbar {
+		padding: var(--spacer-2) 0;
+	}
+
+	.main-navbar .container-fluid,
+	.main-navbar .container-fluid-max-xl {
+		padding: var(--spacer-2);
+	}
 }

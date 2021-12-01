@@ -1,19 +1,19 @@
-a.entry-card {
-	color: var(--gray-900);
-	margin-bottom: 2rem;
-}
-
-a.entry-card:hover {
-	color: var(--gray-900);
-	text-decoration: none;
-	transform: translateY(-0.5rem);
-	transition: 0.1s ease-in-out;
-}
-
 .entry-card {
 	display: block;
 	font-family: var(--font-family-base);
 	position: relative;
+}
+
+.entry-card a {
+	color: var(--gray-900);
+	margin-bottom: 2rem;
+}
+
+.entry-card:hover {
+	color: var(--gray-900);
+	text-decoration: none;
+	transform: translateY(-0.5rem);
+	transition: 0.1s ease-in-out;
 }
 
 .entry-card .image-group {

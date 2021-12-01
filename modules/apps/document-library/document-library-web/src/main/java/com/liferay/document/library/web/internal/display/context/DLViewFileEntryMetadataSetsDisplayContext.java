@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -131,23 +130,18 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		StructureSearch structureSearch = new StructureSearch(
 			_liferayPortletRequest, getPortletURL());
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMStructure> orderByComparator =
-			DDMUtil.getStructureOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		structureSearch.setOrderByCol(orderByCol);
-		structureSearch.setOrderByComparator(orderByComparator);
-		structureSearch.setOrderByType(orderByType);
-
 		if (structureSearch.isSearch()) {
 			structureSearch.setEmptyResultsMessage("no-results-were-found");
 		}
 		else {
 			structureSearch.setEmptyResultsMessage("there-are-no-results");
 		}
+
+		structureSearch.setOrderByCol(getOrderByCol());
+		structureSearch.setOrderByComparator(
+			DDMUtil.getStructureOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		structureSearch.setOrderByType(getOrderByType());
 
 		setDDMStructureSearchResults(structureSearch);
 		setDDMStructureSearchTotal(structureSearch);

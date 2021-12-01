@@ -1060,16 +1060,6 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstanceSearch ddmFormInstanceSearch = new DDMFormInstanceSearch(
 			renderRequest, portletURL);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMFormInstance> orderByComparator =
-			getDDMFormInstanceOrderByComparator(orderByCol, orderByType);
-
-		ddmFormInstanceSearch.setOrderByCol(orderByCol);
-		ddmFormInstanceSearch.setOrderByComparator(orderByComparator);
-		ddmFormInstanceSearch.setOrderByType(orderByType);
-
 		if (ddmFormInstanceSearch.isSearch()) {
 			ddmFormInstanceSearch.setEmptyResultsMessage("no-forms-were-found");
 		}
@@ -1077,6 +1067,11 @@ public class DDMFormAdminDisplayContext {
 			ddmFormInstanceSearch.setEmptyResultsMessage("there-are-no-forms");
 		}
 
+		ddmFormInstanceSearch.setOrderByCol(getOrderByCol());
+		ddmFormInstanceSearch.setOrderByComparator(
+			getDDMFormInstanceOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		ddmFormInstanceSearch.setOrderByType(getOrderByType());
 		ddmFormInstanceSearch.setRowChecker(
 			new DDMFormInstanceRowChecker(renderResponse));
 

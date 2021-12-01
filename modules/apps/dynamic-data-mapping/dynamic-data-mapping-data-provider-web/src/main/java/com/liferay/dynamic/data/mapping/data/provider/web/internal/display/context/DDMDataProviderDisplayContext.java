@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -455,17 +454,6 @@ public class DDMDataProviderDisplayContext {
 		DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(
 			_renderRequest, portletURL);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMDataProviderInstance> orderByComparator =
-			DDMDataProviderPortletUtil.getDDMDataProviderOrderByComparator(
-				orderByCol, orderByType);
-
-		ddmDataProviderSearch.setOrderByCol(orderByCol);
-		ddmDataProviderSearch.setOrderByComparator(orderByComparator);
-		ddmDataProviderSearch.setOrderByType(orderByType);
-
 		if (ddmDataProviderSearch.isSearch()) {
 			ddmDataProviderSearch.setEmptyResultsMessage(
 				"no-data-providers-were-found");
@@ -474,6 +462,12 @@ public class DDMDataProviderDisplayContext {
 			ddmDataProviderSearch.setEmptyResultsMessage(
 				"there-are-no-data-providers");
 		}
+
+		ddmDataProviderSearch.setOrderByCol(getOrderByCol());
+		ddmDataProviderSearch.setOrderByComparator(
+			DDMDataProviderPortletUtil.getDDMDataProviderOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		ddmDataProviderSearch.setOrderByType(getOrderByType());
 
 		setDDMDataProviderInstanceSearchResults(ddmDataProviderSearch);
 		setDDMDataProviderInstanceSearchTotal(ddmDataProviderSearch);

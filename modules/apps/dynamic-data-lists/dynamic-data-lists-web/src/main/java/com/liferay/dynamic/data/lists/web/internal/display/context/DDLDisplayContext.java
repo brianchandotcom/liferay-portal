@@ -466,22 +466,18 @@ public class DDLDisplayContext {
 		RecordSetSearch recordSetSearch = new RecordSetSearch(
 			_renderRequest, portletURL);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDLRecordSet> orderByComparator =
-			getDDLRecordSetOrderByComparator(orderByCol, orderByType);
-
-		recordSetSearch.setOrderByCol(orderByCol);
-		recordSetSearch.setOrderByComparator(orderByComparator);
-		recordSetSearch.setOrderByType(orderByType);
-
 		if (recordSetSearch.isSearch()) {
 			recordSetSearch.setEmptyResultsMessage("no-lists-were-found");
 		}
 		else {
 			recordSetSearch.setEmptyResultsMessage("there-are-no-lists");
 		}
+
+		recordSetSearch.setOrderByCol(getOrderByCol());
+		recordSetSearch.setOrderByComparator(
+			getDDLRecordSetOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		recordSetSearch.setOrderByType(getOrderByType());
 
 		setDDLRecordSetSearchResults(recordSetSearch);
 		setDDLRecordSetSearchTotal(recordSetSearch);

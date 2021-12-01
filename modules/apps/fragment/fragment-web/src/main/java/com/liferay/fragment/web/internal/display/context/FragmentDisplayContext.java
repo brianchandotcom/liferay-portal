@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -393,16 +392,10 @@ public class FragmentDisplayContext {
 
 		fragmentEntriesSearchContainer.setId(
 			"fragmentEntries" + getFragmentCollectionId());
-
-		fragmentEntriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		OrderByComparator<Object> orderByComparator =
-			FragmentPortletUtil.getFragmentCompositionAndEntryOrderByComparator(
-				_getOrderByCol(), getOrderByType());
-
 		fragmentEntriesSearchContainer.setOrderByCol(_getOrderByCol());
-		fragmentEntriesSearchContainer.setOrderByComparator(orderByComparator);
+		fragmentEntriesSearchContainer.setOrderByComparator(
+			FragmentPortletUtil.getFragmentCompositionAndEntryOrderByComparator(
+				_getOrderByCol(), getOrderByType()));
 		fragmentEntriesSearchContainer.setOrderByType(getOrderByType());
 
 		List<Object> fragmentCompositionsAndEntries = null;
@@ -427,7 +420,7 @@ public class FragmentDisplayContext {
 						_getKeywords(), status,
 						fragmentEntriesSearchContainer.getStart(),
 						fragmentEntriesSearchContainer.getEnd(),
-						orderByComparator);
+						fragmentEntriesSearchContainer.getOrderByComparator());
 
 			fragmentCompositionsAndEntriesCount =
 				FragmentEntryServiceUtil.
@@ -444,7 +437,7 @@ public class FragmentDisplayContext {
 						fragmentCollection.getFragmentCollectionId(), status,
 						fragmentEntriesSearchContainer.getStart(),
 						fragmentEntriesSearchContainer.getEnd(),
-						orderByComparator);
+						fragmentEntriesSearchContainer.getOrderByComparator());
 
 			fragmentCompositionsAndEntriesCount =
 				FragmentEntryServiceUtil.
@@ -455,6 +448,8 @@ public class FragmentDisplayContext {
 
 		fragmentEntriesSearchContainer.setResults(
 			fragmentCompositionsAndEntries);
+		fragmentEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		fragmentEntriesSearchContainer.setTotal(
 			fragmentCompositionsAndEntriesCount);
 

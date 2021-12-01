@@ -131,13 +131,11 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		List<DDMStructure> ddmStructures = getDDMStructures();
 
+		searchContainer.setResults(
+			ListUtil.subList(
+				ddmStructures, searchContainer.getStart(),
+				searchContainer.getEnd()));
 		searchContainer.setTotal(ddmStructures.size());
-
-		List<DDMStructure> results = ListUtil.subList(
-			ddmStructures, searchContainer.getStart(),
-			searchContainer.getEnd());
-
-		searchContainer.setResults(results);
 
 		_ddmStructuresSearchContainer = searchContainer;
 

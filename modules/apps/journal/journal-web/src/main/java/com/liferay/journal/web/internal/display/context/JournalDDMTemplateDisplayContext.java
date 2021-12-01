@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -118,18 +117,11 @@ public class JournalDDMTemplateDisplayContext {
 			ddmTemplateSearch.setEmptyResultsMessage("no-templates-were-found");
 		}
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMTemplate> orderByComparator =
+		ddmTemplateSearch.setOrderByCol(getOrderByCol());
+		ddmTemplateSearch.setOrderByComparator(
 			DDMUtil.getTemplateOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		ddmTemplateSearch.setOrderByCol(orderByCol);
-		ddmTemplateSearch.setOrderByComparator(orderByComparator);
-		ddmTemplateSearch.setOrderByType(orderByType);
-		ddmTemplateSearch.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+				getOrderByCol(), getOrderByType()));
+		ddmTemplateSearch.setOrderByType(getOrderByType());
 
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
@@ -178,7 +170,8 @@ public class JournalDDMTemplateDisplayContext {
 		}
 
 		ddmTemplateSearch.setResults(results);
-
+		ddmTemplateSearch.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		ddmTemplateSearch.setTotal(total);
 
 		_ddmTemplateSearch = ddmTemplateSearch;

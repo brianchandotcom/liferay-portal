@@ -305,28 +305,22 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				new SearchContainer<>(
 					_portletRequest, getPortletURL(), null, null);
 
-			OrderByComparator<JournalArticle> orderByComparator =
-				JournalPortletUtil.getArticleOrderByComparator(
-					_getOrderByCol(), _getOrderByType());
-
 			articleSearchContainer.setOrderByCol(_getOrderByCol());
-			articleSearchContainer.setOrderByComparator(orderByComparator);
+			articleSearchContainer.setOrderByComparator(
+				JournalPortletUtil.getArticleOrderByComparator(
+					_getOrderByCol(), _getOrderByType()));
 			articleSearchContainer.setOrderByType(_getOrderByType());
-
-			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
-				_getGroupId(), getDDMStructureKey(),
-				WorkflowConstants.STATUS_APPROVED);
-
-			articleSearchContainer.setTotal(total);
-
-			List<JournalArticle> results =
+			articleSearchContainer.setResults(
 				JournalArticleServiceUtil.getArticlesByStructureId(
 					_getGroupId(), getDDMStructureKey(),
 					WorkflowConstants.STATUS_APPROVED,
 					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(), orderByComparator);
-
-			articleSearchContainer.setResults(results);
+					articleSearchContainer.getEnd(),
+					articleSearchContainer.getOrderByComparator()));
+			articleSearchContainer.setTotal(
+				JournalArticleServiceUtil.getArticlesCountByStructureId(
+					_getGroupId(), getDDMStructureKey(),
+					WorkflowConstants.STATUS_APPROVED));
 
 			_articleSearchContainer = articleSearchContainer;
 

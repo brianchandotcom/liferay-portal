@@ -83,16 +83,9 @@ public class SelectFragmentCollectionDisplayContext {
 				"there-are-no-collections");
 
 		fragmentCollectionsSearchContainer.setOrderByCol(_getOrderByCol());
-
-		OrderByComparator<FragmentCollection> orderByComparator =
-			_getFragmentCollectionOrderByComparator();
-
 		fragmentCollectionsSearchContainer.setOrderByComparator(
-			orderByComparator);
-
+			_getFragmentCollectionOrderByComparator());
 		fragmentCollectionsSearchContainer.setOrderByType(_getOrderByType());
-		fragmentCollectionsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
@@ -115,7 +108,7 @@ public class SelectFragmentCollectionDisplayContext {
 					includeSystem,
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
-					orderByComparator);
+					fragmentCollectionsSearchContainer.getOrderByComparator());
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
@@ -128,7 +121,7 @@ public class SelectFragmentCollectionDisplayContext {
 					themeDisplay.getScopeGroupId(), includeSystem,
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
-					orderByComparator);
+					fragmentCollectionsSearchContainer.getOrderByComparator());
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
@@ -136,6 +129,8 @@ public class SelectFragmentCollectionDisplayContext {
 		}
 
 		fragmentCollectionsSearchContainer.setResults(fragmentCollections);
+		fragmentCollectionsSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
 
 		_fragmentCollectionsSearchContainer =

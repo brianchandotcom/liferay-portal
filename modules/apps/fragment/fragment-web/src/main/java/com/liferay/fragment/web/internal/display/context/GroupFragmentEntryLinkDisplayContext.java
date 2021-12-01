@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -154,25 +153,21 @@ public class GroupFragmentEntryLinkDisplayContext {
 
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (getOrderByType().equals("asc")) {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<Group> orderByComparator = new GroupNameComparator(
-			orderByAsc);
-
 		groupsSearchContainer.setOrderByCol(getOrderByCol());
-		groupsSearchContainer.setOrderByComparator(orderByComparator);
-		groupsSearchContainer.setOrderByType(orderByType);
+		groupsSearchContainer.setOrderByComparator(
+			new GroupNameComparator(orderByAsc));
+		groupsSearchContainer.setOrderByType(getOrderByType());
 
 		Map<Group, Long> groupFragmentEntryUsages =
 			_getGroupFragmentEntryUsages();
 
 		List<Group> groups = new ArrayList<>(groupFragmentEntryUsages.keySet());
 
-		Collections.sort(groups, orderByComparator);
+		Collections.sort(groups, groupsSearchContainer.getOrderByComparator());
 
 		groupsSearchContainer.setResults(groups);
 

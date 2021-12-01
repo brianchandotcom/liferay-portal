@@ -89,16 +89,6 @@ public class DDMFormBrowserDisplayContext {
 		DDMFormInstanceSearch ddmFormInstanceSearch = new DDMFormInstanceSearch(
 			_renderRequest, portletURL);
 
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMFormInstance> orderByComparator =
-			_getDDMFormInstanceOrderByComparator(orderByType);
-
-		ddmFormInstanceSearch.setOrderByCol(getOrderByCol());
-
-		ddmFormInstanceSearch.setOrderByComparator(orderByComparator);
-		ddmFormInstanceSearch.setOrderByType(orderByType);
-
 		if (ddmFormInstanceSearch.isSearch()) {
 			ddmFormInstanceSearch.setEmptyResultsMessage("no-forms-were-found");
 		}
@@ -106,14 +96,17 @@ public class DDMFormBrowserDisplayContext {
 			ddmFormInstanceSearch.setEmptyResultsMessage("there-are-no-forms");
 		}
 
-		List<DDMFormInstance> results = _ddmFormInstanceService.search(
-			_formWebRequestHelper.getCompanyId(),
-			_formWebRequestHelper.getScopeGroupId(), getKeywords(),
-			ddmFormInstanceSearch.getStart(), ddmFormInstanceSearch.getEnd(),
-			ddmFormInstanceSearch.getOrderByComparator());
-
-		ddmFormInstanceSearch.setResults(results);
-
+		ddmFormInstanceSearch.setOrderByCol(getOrderByCol());
+		ddmFormInstanceSearch.setOrderByComparator(
+			_getDDMFormInstanceOrderByComparator(getOrderByType()));
+		ddmFormInstanceSearch.setOrderByType(getOrderByType());
+		ddmFormInstanceSearch.setResults(
+			_ddmFormInstanceService.search(
+				_formWebRequestHelper.getCompanyId(),
+				_formWebRequestHelper.getScopeGroupId(), getKeywords(),
+				ddmFormInstanceSearch.getStart(),
+				ddmFormInstanceSearch.getEnd(),
+				ddmFormInstanceSearch.getOrderByComparator()));
 		ddmFormInstanceSearch.setTotal(getTotalItems());
 
 		_ddmFormInstanceSearch = ddmFormInstanceSearch;

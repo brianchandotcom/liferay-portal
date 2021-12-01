@@ -25,7 +25,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,44 +83,19 @@ public class JournalSelectDDMStructureDisplayContext {
 				"no-structures-were-found");
 		}
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMStructure> orderByComparator =
+		ddmStructureSearch.setOrderByCol(getOrderByCol());
+		ddmStructureSearch.setOrderByComparator(
 			DDMUtil.getStructureOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		ddmStructureSearch.setOrderByCol(orderByCol);
-		ddmStructureSearch.setOrderByComparator(orderByComparator);
-		ddmStructureSearch.setOrderByType(orderByType);
+				getOrderByCol(), getOrderByType()));
+		ddmStructureSearch.setOrderByType(getOrderByType());
 
 		long[] groupIds =
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					themeDisplay.getScopeGroupId(), true);
 
-		int total = 0;
-
-		if (_isSearchRestriction()) {
-			total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(
-				_getSearchRestrictionClassNameId(),
-				_getSearchRestrictionClassPK());
-		}
-		else if (Validator.isNotNull(_getKeywords())) {
-			total = DDMStructureServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				_getKeywords(), WorkflowConstants.STATUS_ANY);
-		}
-		else {
-			total = DDMStructureServiceUtil.getStructuresCount(
-				themeDisplay.getCompanyId(), groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()));
-		}
-
-		ddmStructureSearch.setTotal(total);
-
 		List<DDMStructure> results = null;
+		int total = 0;
 
 		if (_isSearchRestriction()) {
 			results =
@@ -129,6 +103,10 @@ public class JournalSelectDDMStructureDisplayContext {
 					_getSearchRestrictionClassNameId(),
 					_getSearchRestrictionClassPK(),
 					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd());
+
+			total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(
+				_getSearchRestrictionClassNameId(),
+				_getSearchRestrictionClassPK());
 		}
 		else if (Validator.isNotNull(_getKeywords())) {
 			results = DDMStructureServiceUtil.search(
@@ -137,6 +115,11 @@ public class JournalSelectDDMStructureDisplayContext {
 				_getKeywords(), WorkflowConstants.STATUS_ANY,
 				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
 				ddmStructureSearch.getOrderByComparator());
+
+			total = DDMStructureServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getKeywords(), WorkflowConstants.STATUS_ANY);
 		}
 		else {
 			results = DDMStructureServiceUtil.getStructures(
@@ -144,9 +127,14 @@ public class JournalSelectDDMStructureDisplayContext {
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
 				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
 				ddmStructureSearch.getOrderByComparator());
+
+			total = DDMStructureServiceUtil.getStructuresCount(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()));
 		}
 
 		ddmStructureSearch.setResults(results);
+		ddmStructureSearch.setTotal(total);
 
 		_ddmStructureSearch = ddmStructureSearch;
 

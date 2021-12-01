@@ -50,19 +50,14 @@ public class DispatchLogSearchContainerFactory {
 				null, "no-dispatch-logs-were-found");
 
 		dispatchLogSearchContainer.setId("dispatchLogs");
-
 		dispatchLogSearchContainer.setOrderByCol(
 			_getColumnName(
 				SearchOrderByUtil.getOrderByCol(
 					liferayPortletRequest, DispatchPortletKeys.DISPATCH,
 					"modified-date")));
-
 		dispatchLogSearchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, DispatchPortletKeys.DISPATCH, "asc"));
-
-		dispatchLogSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		long dispatchTriggerId = ParamUtil.getLong(
 			liferayPortletRequest, "dispatchTriggerId");
@@ -75,6 +70,9 @@ public class DispatchLogSearchContainerFactory {
 					dispatchLogSearchContainer.getOrderByCol(),
 					_isAscending(
 						dispatchLogSearchContainer.getOrderByType()))));
+
+		dispatchLogSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		dispatchLogSearchContainer.setTotal(
 			DispatchLogServiceUtil.getDispatchLogsCount(dispatchTriggerId));
 

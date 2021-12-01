@@ -1,0 +1,7 @@
+.social-links .social-link {
+	margin-right: calc(var(--spacer-1) * 2);
+}
+
+.social-links svg {
+	width: 20px;
+}

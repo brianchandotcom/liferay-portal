@@ -121,6 +121,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC_HIGHLIGHTED</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(@class,'highlight') and contains(.,'${highlightedSearchAssetSummary}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

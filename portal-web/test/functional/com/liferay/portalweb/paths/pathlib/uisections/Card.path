@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CARD_LINK</td>
-	<td>//div[contains(@data-analytics-asset-title,'${key_card}')]//a[contains(@class,'card-link')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CARD_PAGE_ITEM</td>
 	<td>xpath=(//li[contains(@class,'card-page-item')])[${key_index}]//*[contains(@class,'card-title')][contains(.,'${key_card}')]</td>
 	<td></td>
@@ -68,11 +63,6 @@
 <tr>
 	<td>CARD_STICKER</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'sticker-overlay')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_icon}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_STYLE</td>
-	<td>//div[contains(@data-analytics-asset-title,'${key_card}')]/parent::div[contains(@class,'${key_cardStyle}') or contains(@style,'${key_cardStyle}')]</td>
 	<td></td>
 </tr>
 <tr>

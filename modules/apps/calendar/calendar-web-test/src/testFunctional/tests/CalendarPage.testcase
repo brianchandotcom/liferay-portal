@@ -56,24 +56,6 @@ definition {
 		}
 	}
 
-	@description = "LRQA-72024 - Verify that the calendar has Day view"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CalendarHasDayView {
-
-		// TODO LRQA-72026 CalendarHasDayView pending implementation
-
-	}
-
-	@description = "LRQA-72024 - Verify that the calendar has Week view"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CalendarHasWeekView {
-
-		// TODO LRQA-72027 CalendarHasWeekView pending implementation
-
-	}
-
 	@description = "LRQA-72024 - Verify that the calendar has Month view"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -92,30 +74,30 @@ definition {
 
 	}
 
+	@description = "LRQA-72024 - Verify that the calendar has Day view"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CalendarHasDayView {
+
+		// TODO LRQA-72026 CalendarHasDayView pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the calendar has Week view"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CalendarHasWeekView {
+
+		// TODO LRQA-72027 CalendarHasWeekView pending implementation
+
+	}
+
 	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanChangeCalendarColor {
 
 		// TODO LRQA-72030 CanChangeCalendarColor pending implementation
-
-	}
-
-	@description = "LRQA-72024 - Verify that a mini Calendar is displayed on sidebar"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test MiniCalendarIsDisplayed {
-
-		// TODO LRQA-72031 MiniCalendarIsDisplayed pending implementation
-
-	}
-
-    @description = "LRQA-72024 - Verify that the Today button brings the user back for the current day"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TodayButtonDisplaysCurrentDay {
-
-		// TODO LRQA-72032 TodayButtonDisplaysCurrentDay pending implementation
 
 	}
 
@@ -143,6 +125,24 @@ definition {
 	test CanHideShowSidebar {
 
 		// TODO LRQA-72035 CanHideShowSidebar pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that a mini Calendar is displayed on sidebar"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MiniCalendarIsDisplayed {
+
+		// TODO LRQA-72031 MiniCalendarIsDisplayed pending implementation
+
+	}
+
+	@description = "LRQA-72024 - Verify that the Today button brings the user back for the current day"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TodayButtonDisplaysCurrentDay {
+
+		// TODO LRQA-72032 TodayButtonDisplaysCurrentDay pending implementation
 
 	}
 

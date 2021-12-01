@@ -15,6 +15,9 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -24,14 +27,19 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -76,6 +84,26 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 			).setQuickAction(
 				true
 			).build());
+	}
+
+	public List<String> getAvailableActions(
+			AccountRoleDisplay accountRoleDisplay)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (AccountRolePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				accountRoleDisplay.getAccountRoleId(), ActionKeys.DELETE)) {
+
+			availableActions.add("deleteAccountRoles");
+		}
+
+		return availableActions;
 	}
 
 	@Override
@@ -124,6 +152,27 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
+		return false;
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return AccountEntryPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				ParamUtil.getLong(httpServletRequest, "accountEntryId"),
+				AccountActionKeys.ADD_ACCOUNT_ROLE);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
 		return false;
 	}
 

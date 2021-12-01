@@ -44,34 +44,48 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 			<liferay-ui:search-container-row
 				className="com.liferay.account.admin.web.internal.display.AccountRoleDisplay"
 				keyProperty="accountRoleId"
-				modelVar="accountRole"
+				modelVar="accountRoleDisplay"
 			>
+
+				<%
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(viewAccountRolesManagementToolbarDisplayContext.getAvailableActions(accountRoleDisplay))
+					).build());
+				%>
+
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-					<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRole.getAccountRoleId()) %>" />
+					<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />
 				</portlet:renderURL>
+
+				<%
+				if (!AccountRolePermission.contains(permissionChecker, accountRoleDisplay.getAccountRoleId(), ActionKeys.UPDATE)) {
+					rowURL = null;
+				}
+				%>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="name"
-					value="<%= accountRole.getName(locale) %>"
+					value="<%= accountRoleDisplay.getName(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="description"
-					value="<%= accountRole.getDescription(locale) %>"
+					value="<%= accountRoleDisplay.getDescription(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="type"
-					value="<%= accountRole.getTypeLabel(locale) %>"
+					value="<%= accountRoleDisplay.getTypeLabel(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

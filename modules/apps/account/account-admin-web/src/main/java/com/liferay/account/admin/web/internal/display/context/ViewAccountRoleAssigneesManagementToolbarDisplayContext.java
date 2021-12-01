@@ -15,6 +15,8 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -24,13 +26,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -57,6 +62,10 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		if (!_hasAssignUsersPermission()) {
+			return null;
+		}
+
 		return DropdownItemList.of(
 			DropdownItemBuilder.putData(
 				"action", "removeUsers"
@@ -128,6 +137,11 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isShowCreationMenu() {
+		return _hasAssignUsersPermission();
+	}
+
+	@Override
 	protected String getNavigation() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getNavigationParam(), "all");
@@ -147,6 +161,26 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "last-name", "email-address"};
+	}
+
+	private boolean _hasAssignUsersPermission() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return AccountRolePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				ParamUtil.getLong(httpServletRequest, "accountRoleId"),
+				AccountActionKeys.ASSIGN_USERS);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

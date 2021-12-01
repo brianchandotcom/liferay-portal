@@ -415,16 +415,11 @@ public class DDMDisplayContext {
 		StructureSearch structureSearch = new StructureSearch(
 			_renderRequest, getPortletURL());
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMStructure> orderByComparator =
+		structureSearch.setOrderByCol(getOrderByCol());
+		structureSearch.setOrderByComparator(
 			DDMUtil.getStructureOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		structureSearch.setOrderByCol(orderByCol);
-		structureSearch.setOrderByComparator(orderByComparator);
-		structureSearch.setOrderByType(orderByType);
+				getOrderByCol(), getOrderByType()));
+		structureSearch.setOrderByType(getOrderByType());
 
 		if (structureSearch.isSearch()) {
 			structureSearch.setEmptyResultsMessage(

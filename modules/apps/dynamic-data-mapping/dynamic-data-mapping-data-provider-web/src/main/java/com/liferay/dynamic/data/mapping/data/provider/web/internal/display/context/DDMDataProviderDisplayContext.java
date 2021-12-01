@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -455,16 +454,11 @@ public class DDMDataProviderDisplayContext {
 		DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(
 			_renderRequest, portletURL);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMDataProviderInstance> orderByComparator =
+		ddmDataProviderSearch.setOrderByCol(getOrderByCol());
+		ddmDataProviderSearch.setOrderByComparator(
 			DDMDataProviderPortletUtil.getDDMDataProviderOrderByComparator(
-				orderByCol, orderByType);
-
-		ddmDataProviderSearch.setOrderByCol(orderByCol);
-		ddmDataProviderSearch.setOrderByComparator(orderByComparator);
-		ddmDataProviderSearch.setOrderByType(orderByType);
+				getOrderByCol(), getOrderByType()));
+		ddmDataProviderSearch.setOrderByType(getOrderByType());
 
 		if (ddmDataProviderSearch.isSearch()) {
 			ddmDataProviderSearch.setEmptyResultsMessage(

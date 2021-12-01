@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -95,12 +94,10 @@ public class FragmentCollectionsDisplayContext {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		OrderByComparator<FragmentCollection> orderByComparator =
-			FragmentPortletUtil.getFragmentCollectionOrderByComparator(
-				_getOrderByCol(), getOrderByType());
-
 		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			FragmentPortletUtil.getFragmentCollectionOrderByComparator(
+				_getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -129,7 +126,8 @@ public class FragmentCollectionsDisplayContext {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
 					groupIds, _getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
@@ -139,7 +137,8 @@ public class FragmentCollectionsDisplayContext {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
 					groupIds, searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(

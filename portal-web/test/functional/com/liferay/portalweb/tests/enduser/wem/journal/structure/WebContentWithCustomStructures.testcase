@@ -572,11 +572,17 @@ definition {
 			IFrame.closeFrame();
 
 			AssertTextEquals(
-				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dt",
+				locator1 = "WCD#WEB_CONTENT_TITLE",
+				value1 = "WC WebContent Title");
+
+			AssertTextEquals(
+				key_content = "//dt",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY",
 				value1 = "Text");
 
 			AssertTextEquals(
-				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dd",
+				key_content = "//dd",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY",
 				value1 = "WC WebContent Text");
 		}
 	}

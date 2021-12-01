@@ -35,6 +35,7 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -87,6 +88,18 @@ public class SXPBlueprintLocalServiceImpl
 		_startWorkflowInstance(userId, sxpBlueprint, serviceContext);
 
 		return sxpBlueprint;
+	}
+
+	@Override
+	public void deleteCompanySXPBlueprints(long companyId)
+		throws PortalException {
+
+		List<SXPBlueprint> sxpBlueprints =
+			sxpBlueprintPersistence.findByCompanyId(companyId);
+
+		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
+			sxpBlueprintLocalService.deleteSXPBlueprint(sxpBlueprint);
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)

@@ -86,6 +86,18 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCompanySXPElements(long companyId)
+		throws PortalException {
+
+		List<SXPElement> sxpElements = sxpElementPersistence.findByCompanyId(
+			companyId);
+
+		for (SXPElement sxpElement : sxpElements) {
+			sxpElementLocalService.deleteSXPElement(sxpElement);
+		}
+	}
+
+	@Override
 	public SXPElement deleteSXPElement(long sxpElementId)
 		throws PortalException {
 

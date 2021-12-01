@@ -160,12 +160,11 @@ definition {
 	}
 
 	@description = "LRQA-71360 - Verify that the user can cancel Adding a new calendar"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCancelAddingCalendar {
+		Calendar.cancelCreateCalendar(calendarName = "My Calendar");
 
-		// TODO LRQA-71604 CanCancelAddingCalendar pending implementation
-
+		Calendar.assertCalendarNotPresent(calendarName = "My Calendar");
 	}
 
 	@description = "LRQA-71596 - Verify that user can choose the color of calendar in the -Add Calendar- Page"

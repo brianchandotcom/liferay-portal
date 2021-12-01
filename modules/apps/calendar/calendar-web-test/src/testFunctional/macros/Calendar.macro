@@ -136,6 +136,20 @@ definition {
 		}
 	}
 
+	macro assertCalendarNotPresent {
+		AssertElementNotPresent(
+			key_userCalendarName = "${calendarName}",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR");
+	}
+
+	macro cancelCreateCalendar {
+		CalendarNavigator.gotoAddMyCalendars();
+
+		Calendar._editName(calendarName = "${calendarName}");
+
+		Button.clickCancel();
+	}
+
 	macro changeColor {
 		CalendarNavigator.gotoView(viewType = "Week");
 

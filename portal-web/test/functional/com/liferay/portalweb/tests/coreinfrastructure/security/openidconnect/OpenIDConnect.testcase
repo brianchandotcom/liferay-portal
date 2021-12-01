@@ -30,6 +30,8 @@ definition {
 	@description = "This is a use case for LPS-124900 TC-4: Users should be logged out when they don't have a valid access token because a misconfigured refresh token lifetime at Portal. "
 	@priority = "4"
 	test AssertUserIsLoggedOutWithHigherRefreshToken {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertUserIsLoggedOutWithHigherRefreshToken";
 
 		task ("Startup Keycloak for test") {
@@ -42,12 +44,6 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				OSGiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				OSGiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config");
-		}
-
-		task ("Enable OpenID Connect login and set Portal's refresh token life time higher than OIDC provider's") {
-			OpenIDConnect.enableOpenIdConnect();
-
-			OpenIDConnect.setTokenRefreshOffset(expirationTime = "120");
 		}
 
 		User.logoutPG();
@@ -99,6 +95,8 @@ definition {
 	@description = "This is a use case for LPS-124900 TC-2: User is still logged in after the first access token's lifetime is over and they receive a new access token in the background."
 	@priority = "5"
 	test VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property test.name.skip.portal.instance = "OpenIDConnect#VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew";
 
 		task ("Startup Keycloak for test") {
@@ -111,10 +109,6 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				OSGiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
 				OSGiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config");
-		}
-
-		task ("Enable OpenID connect") {
-			OpenIDConnect.enableOpenIdConnect();
 		}
 
 		User.logoutPG();

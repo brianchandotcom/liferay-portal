@@ -27,6 +27,10 @@ definition {
 			var groupPermissions = "true";
 		}
 
+		if (!(isSet(dmFolderDescription))) {
+			var dmFolderDescription = "";
+		}
+
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			addGroupPermissions = "${groupPermissions}",
 			addGuestPermissions = "${guestPermissions}");

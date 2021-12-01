@@ -232,9 +232,11 @@ definition {
 		PortletEntry.save();
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632 and LPS-76981. Can select different type pages in Link to Page field."
 	@priority = "4"
 	test SelectDifferentTypePagesInLinkToPageField {
+		property custom.properties = "redirect.url.ips.allowed=";
+
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -313,6 +315,22 @@ definition {
 				pageName = "Test Link To URL",
 				pageTypeURL = "https://www.liferay.com",
 				sitePageType = "Link to URL");
+		}
+
+		task ("Assert cancel edit a Link to URL type page will not redirect to the URL") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Link To URL");
+
+			PortletEntry.inputName(name = "Edit Link to URL Page");
+
+			AssertClick(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+
+			AssertLocation.assertPartialLocation(value1 = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 		}
 
 		task ("Add a structure with 9 Link to Page fields") {

@@ -14,14 +14,17 @@
 
 package com.liferay.commerce.order.content.web.internal.portlet.action;
 
+import com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceOrderImporterTypeException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.content.web.internal.importer.type.util.CommerceOrderImporterTypeUtil;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -41,6 +44,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,13 +53,17 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Luca Pellizzon
  */
 @Component(
+	configurationPid = "com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration",
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
@@ -64,6 +72,14 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_commerceOrderImporterTypeConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CommerceOrderImporterTypeConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -82,7 +98,7 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			for (CSVRecord csvRecord : csvParser.getRecords()) {
-				if (csvRecord.size() < 3) {
+				if (csvRecord.size() < 2) {
 					throw new CommerceOrderImporterTypeException();
 				}
 			}
@@ -123,11 +139,8 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private CSVParser _getCSVParser(long fileEntryId) throws Exception {
-		CSVFormat csvFormat = CSVFormat.DEFAULT;
-
-		csvFormat = csvFormat.withFirstRecordAsHeader();
-		csvFormat = csvFormat.withIgnoreSurroundingSpaces();
-		csvFormat = csvFormat.withNullString(StringPool.BLANK);
+		CSVFormat csvFormat = CommerceOrderImporterTypeUtil.getCSVFormat(
+			_commerceOrderImporterTypeConfiguration);
 
 		try {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -170,12 +183,13 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 		).buildString();
 	}
 
-	private static final String[] _HEADER_NAMES = {
-		"quantity", "skuExternalReferenceCode", "skuId"
-	};
+	private static final String[] _HEADER_NAMES = {"quantity", "sku"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportCSVMVCActionCommand.class);
+
+	private volatile CommerceOrderImporterTypeConfiguration
+		_commerceOrderImporterTypeConfiguration;
 
 	@Reference
 	private CommerceOrderImporterTypeRegistry

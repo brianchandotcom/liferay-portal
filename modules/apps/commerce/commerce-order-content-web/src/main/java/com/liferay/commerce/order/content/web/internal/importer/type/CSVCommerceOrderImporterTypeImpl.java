@@ -34,7 +34,6 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -211,11 +210,8 @@ public class CSVCommerceOrderImporterTypeImpl
 	}
 
 	private CSVParser _getCSVParser(FileEntry fileEntry) throws Exception {
-		CSVFormat csvFormat = CSVFormat.DEFAULT;
-
-		csvFormat = csvFormat.withFirstRecordAsHeader();
-		csvFormat = csvFormat.withIgnoreSurroundingSpaces();
-		csvFormat = csvFormat.withNullString(StringPool.BLANK);
+		CSVFormat csvFormat = CommerceOrderImporterTypeUtil.getCSVFormat(
+			_commerceOrderImporterTypeConfiguration);
 
 		try {
 			return CSVParser.parse(
@@ -235,23 +231,24 @@ public class CSVCommerceOrderImporterTypeImpl
 			long companyId, CSVRecord csvRecord)
 		throws Exception {
 
-		String skuExternalReferenceCode = csvRecord.get(
-			"skuExternalReferenceCode");
-		long skuId = GetterUtil.getLong(csvRecord.get("skuId"));
+		String sku = GetterUtil.getString(csvRecord.get("sku"));
 		int quantity = GetterUtil.getInteger(csvRecord.get("quantity"));
 
 		CPInstance cpInstance = null;
 
-		if (skuId > 0) {
-			cpInstance = _cpInstanceLocalService.fetchCPInstance(skuId);
+		if (Validator.isNotNull(sku)) {
+			List<CPInstance> cpInstances =
+				_cpInstanceLocalService.getCPInstances(companyId, sku);
+
+			if (!cpInstances.isEmpty()) {
+				cpInstance = cpInstances.get(0);
+			}
 		}
 
-		if ((cpInstance == null) &&
-			Validator.isNotNull(skuExternalReferenceCode)) {
-
+		if (cpInstance == null) {
 			cpInstance =
 				_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
-					companyId, skuExternalReferenceCode);
+					companyId, sku);
 		}
 
 		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
@@ -260,15 +257,14 @@ public class CSVCommerceOrderImporterTypeImpl
 		if (cpInstance == null) {
 			Company company = _companyLocalService.getCompany(companyId);
 
-			if (Validator.isNotNull(skuExternalReferenceCode)) {
+			if (Validator.isNotNull(sku)) {
 				commerceOrderImporterItemImpl.setNameMap(
-					Collections.singletonMap(
-						company.getLocale(), skuExternalReferenceCode));
+					Collections.singletonMap(company.getLocale(), sku));
 			}
 			else {
 				commerceOrderImporterItemImpl.setNameMap(
 					Collections.singletonMap(
-						company.getLocale(), String.valueOf(skuId)));
+						company.getLocale(), String.valueOf(sku)));
 			}
 
 			commerceOrderImporterItemImpl.setErrorMessages(

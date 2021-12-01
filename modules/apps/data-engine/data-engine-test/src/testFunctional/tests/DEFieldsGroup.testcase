@@ -189,12 +189,59 @@ definition {
 	}
 
 	@description = "Verify that the Web Content data persists upon editing the related Structure by creating a Fields Group"
-	@ignore = "true"
 	@priority = "4"
 	test CanDataBeEditedInNewFieldsGroup {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-71711 Refactor of Renderer Fields Group Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+		
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		Button.clickPublish();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.nestCreatedFields(
+			fieldLabel = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+		
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to delete a field inside a Fields Group."

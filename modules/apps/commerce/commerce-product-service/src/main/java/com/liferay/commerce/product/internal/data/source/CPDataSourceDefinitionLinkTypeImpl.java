@@ -14,6 +14,10 @@
 
 package com.liferay.commerce.product.internal.data.source;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration;
@@ -93,6 +97,21 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 			).build());
 		searchContext.setCompanyId(_portal.getCompanyId(httpServletRequest));
 
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		if (commerceAccount != null) {
+			long[] commerceAccountGroupIds =
+				_commerceAccountHelper.getCommerceAccountGroupIds(
+					commerceAccount.getCommerceAccountId());
+
+			searchContext.setAttribute(
+				"commerceAccountGroupIds", commerceAccountGroupIds);
+		}
+
 		return _cpDefinitionHelper.search(
 			_portal.getScopeGroupId(httpServletRequest), searchContext,
 			new CPQuery(), start, end);
@@ -105,6 +124,9 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 			ConfigurableUtil.createConfigurable(
 				CPDefinitionLinkTypeConfiguration.class, properties);
 	}
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

@@ -60,8 +60,32 @@
 @media (min-width: 1280px) {
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+	.entry-header {
+		padding-top: var(--spacer-8);
+	}
+	.entry-header::before {
+		height: calc(100% - 240px);
+	}
+
+	.entry-title {
+		font-size: var(--display4-size);
+		width: 100%;
+	}
 }
 
 @media (max-width: 576px) {
+	.entry-header {
+		padding-top: var(--spacer-7);
+	}
+	.entry-header::before {
+		height: calc(100% - 150px);
+	}
+	.entry-subtitle {
+		font-size: var(--font-size-base);
+	}
+	.entry-title {
+		font-size: 32px;
+		width: 100%;
+	}
 }

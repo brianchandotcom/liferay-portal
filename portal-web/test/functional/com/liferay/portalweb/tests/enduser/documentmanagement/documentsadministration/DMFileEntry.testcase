@@ -919,13 +919,29 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
-	@ignore = "true"
 	@priority = "3"
 	test CanImportWithTags {
-		property portal.acceptance = "false";
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "Tag Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-136825 CanImportWithTags pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LAR.importPortlet(larFileName = "DocumentsandMedia_portlet.lar");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTag(tagName = "tag name");
 	}
 
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."

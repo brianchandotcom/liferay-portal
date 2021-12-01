@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -84,6 +85,10 @@ public abstract class Node implements ActionAware, NotificationAware {
 		return _incomingTransitions.size();
 	}
 
+	public Map<Locale, String> getLabelMap() {
+		return _labelMap;
+	}
+
 	public String getMetadata() {
 		return _metadata;
 	}
@@ -135,6 +140,10 @@ public abstract class Node implements ActionAware, NotificationAware {
 		_actions = actions;
 	}
 
+	public void setLabelMap(Map<Locale, String> labelMap) {
+		_labelMap = labelMap;
+	}
+
 	public void setMetadata(String metadata) {
 		_metadata = metadata;
 	}
@@ -151,6 +160,7 @@ public abstract class Node implements ActionAware, NotificationAware {
 	private Set<Action> _actions;
 	private final String _description;
 	private final Set<Transition> _incomingTransitions = new LinkedHashSet<>();
+	private Map<Locale, String> _labelMap;
 	private String _metadata;
 	private final String _name;
 	private final NodeType _nodeType;

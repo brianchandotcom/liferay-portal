@@ -41,11 +41,12 @@ const ItemSelectorPreview = ({
 	headerTitle,
 	itemReturnType,
 	items,
+	reloadOnHide: initialReloadOnHide = false,
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [isEditing, setIsEditing] = useState();
 	const [itemList, setItemList] = useState(items);
-	const [reloadOnHide, setReloadOnHide] = useState(false);
+	const [reloadOnHide, setReloadOnHide] = useState(initialReloadOnHide);
 
 	const currentItem = itemList[currentItemIndex];
 

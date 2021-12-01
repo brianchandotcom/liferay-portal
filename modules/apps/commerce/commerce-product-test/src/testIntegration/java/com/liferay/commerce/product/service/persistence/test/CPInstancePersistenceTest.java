@@ -402,6 +402,15 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_SKU() throws Exception {
+		_persistence.countByC_SKU(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_SKU(0L, "null");
+
+		_persistence.countByC_SKU(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
 
@@ -411,12 +420,12 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
+	public void testCountByCPDI_SKU() throws Exception {
+		_persistence.countByCPDI_SKU(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_S(0L, "null");
+		_persistence.countByCPDI_SKU(0L, "null");
 
-		_persistence.countByC_S(0L, (String)null);
+		_persistence.countByCPDI_SKU(0L, (String)null);
 	}
 
 	@Test

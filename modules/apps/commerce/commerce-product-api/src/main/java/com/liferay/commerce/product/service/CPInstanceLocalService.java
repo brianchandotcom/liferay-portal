@@ -798,6 +798,9 @@ public interface CPInstanceLocalService
 			OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPInstances(long companyId, String sku);
+
 	/**
 	 * Returns all the cp instances matching the UUID and company.
 	 *

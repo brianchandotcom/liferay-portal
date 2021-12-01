@@ -1015,6 +1015,10 @@ public class CPInstanceLocalServiceUtil {
 			groupId, status, start, end, orderByComparator);
 	}
 
+	public static List<CPInstance> getCPInstances(long companyId, String sku) {
+		return getService().getCPInstances(companyId, sku);
+	}
+
 	/**
 	 * Returns all the cp instances matching the UUID and company.
 	 *

@@ -22,6 +22,8 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
 renderResponse.setTitle(LanguageUtil.get(request, "export"));
+
+EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <div class="container pt-4">
@@ -35,10 +37,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>
-
-					<%
-					EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-					%>
+					<clay:row>
+						<clay:col>
+							<clay:select
+								id='<%= liferayPortletResponse.getNamespace() + "template" %>'
+								label="template"
+								name="template"
+								options="<%= editBatchPlannerPlanDisplayContext.getTemplateSelectOptions() %>"
+							/>
+						</clay:col>
+					</clay:row>
 
 					<clay:row>
 						<clay:col

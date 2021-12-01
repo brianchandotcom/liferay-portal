@@ -6,7 +6,9 @@ definition {
 	property testray.main.component.name = "Login";
 
 	setUp {
-		User.firstLoginUI();
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
 	}
 
 	@description = "This is a use case for LPS-124898 TC-6: Verify Refresh Token Offset is not existing in the Instance Settings."

@@ -19,10 +19,19 @@ const useDelete = ({admin = false, callback = () => {}, url}) => {
 		? `${adminBaseURL}${url}`
 		: `${metricsBaseURL}${url}`;
 
-	return useCallback(
-		() => fetch(fetchURL, {headers, method: 'DELETE'}).then(callback),
-		[callback, fetchURL]
-	);
+	return useCallback(async () => {
+		const response = await fetch(fetchURL, {headers, method: 'DELETE'});
+
+		if (response.ok) {
+			return callback();
+		}
+
+		const requestFailedMessage = Liferay.Language.get(
+			'your-request-has-failed'
+		);
+
+		throw new Error(requestFailedMessage);
+	}, [callback, fetchURL]);
 };
 
 export {useDelete};

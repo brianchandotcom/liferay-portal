@@ -3295,6 +3295,7 @@
 	<tag>
 		<name>toggle-value</name>
 		<tag-class>com.liferay.taglib.ui.ToggleValueTag</tag-class>
+		<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>defaultValue</name>

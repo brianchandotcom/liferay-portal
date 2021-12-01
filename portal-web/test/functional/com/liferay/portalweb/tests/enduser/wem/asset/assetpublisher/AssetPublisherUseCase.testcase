@@ -210,7 +210,7 @@ definition {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList";
 		property test.run.environment = "EE";
 
-		task ("Add component to blacklist") {
+		task ("Add the Kaleo Forms admin portlet to blacklist") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -234,7 +234,7 @@ definition {
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Print");
 		}
 
-		task ("Assert there is not NullPointerException thrown") {
+		task ("View no NullPointerException thrown") {
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 		}
 	}

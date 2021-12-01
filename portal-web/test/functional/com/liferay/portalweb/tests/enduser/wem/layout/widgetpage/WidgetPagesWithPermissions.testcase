@@ -320,7 +320,9 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutPG();
+
+			User.signInPG(userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("View private page is shown") {
@@ -334,7 +336,9 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+			UserBar.signOut();
+
+			User.loginPG(userEmailAddress = "test@liferay.com");
 		}
 
 		task ("Remove View permission of private widget page on Regular Role") {
@@ -350,7 +354,9 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutPG();
+
+			User.signInPG(userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("View private page is not shown") {

@@ -4013,6 +4013,583 @@ public class CPInstancePersistenceImpl
 	private static final String _FINDER_COLUMN_G_ST_STATUS_2 =
 		"cpInstance.status = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_Sku;
+	private FinderPath _finderPathWithoutPaginationFindByC_Sku;
+	private FinderPath _finderPathCountByC_Sku;
+
+	/**
+	 * Returns all the cp instances where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @return the matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByC_Sku(long companyId, String sku) {
+		return findByC_Sku(
+			companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp instances where companyId = &#63; and sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPInstanceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @return the range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByC_Sku(
+		long companyId, String sku, int start, int end) {
+
+		return findByC_Sku(companyId, sku, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp instances where companyId = &#63; and sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPInstanceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByC_Sku(
+		long companyId, String sku, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator) {
+
+		return findByC_Sku(companyId, sku, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp instances where companyId = &#63; and sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPInstanceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByC_Sku(
+		long companyId, String sku, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator,
+		boolean useFinderCache) {
+
+		sku = Objects.toString(sku, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_Sku;
+				finderArgs = new Object[] {companyId, sku};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_Sku;
+			finderArgs = new Object[] {
+				companyId, sku, start, end, orderByComparator
+			};
+		}
+
+		List<CPInstance> list = null;
+
+		if (useFinderCache) {
+			list = (List<CPInstance>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPInstance cpInstance : list) {
+					if ((companyId != cpInstance.getCompanyId()) ||
+						!sku.equals(cpInstance.getSku())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_CPINSTANCE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+
+			boolean bindSku = false;
+
+			if (sku.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+			}
+			else {
+				bindSku = true;
+
+				sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CPInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindSku) {
+					queryPos.add(sku);
+				}
+
+				list = (List<CPInstance>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cp instance in the ordered set where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance findByC_Sku_First(
+			long companyId, String sku,
+			OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+
+		CPInstance cpInstance = fetchByC_Sku_First(
+			companyId, sku, orderByComparator);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", sku=");
+		sb.append(sku);
+
+		sb.append("}");
+
+		throw new NoSuchCPInstanceException(sb.toString());
+	}
+
+	/**
+	 * Returns the first cp instance in the ordered set where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance fetchByC_Sku_First(
+		long companyId, String sku,
+		OrderByComparator<CPInstance> orderByComparator) {
+
+		List<CPInstance> list = findByC_Sku(
+			companyId, sku, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp instance in the ordered set where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance findByC_Sku_Last(
+			long companyId, String sku,
+			OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+
+		CPInstance cpInstance = fetchByC_Sku_Last(
+			companyId, sku, orderByComparator);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", sku=");
+		sb.append(sku);
+
+		sb.append("}");
+
+		throw new NoSuchCPInstanceException(sb.toString());
+	}
+
+	/**
+	 * Returns the last cp instance in the ordered set where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance fetchByC_Sku_Last(
+		long companyId, String sku,
+		OrderByComparator<CPInstance> orderByComparator) {
+
+		int count = countByC_Sku(companyId, sku);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPInstance> list = findByC_Sku(
+			companyId, sku, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp instances before and after the current cp instance in the ordered set where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param CPInstanceId the primary key of the current cp instance
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp instance
+	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	 */
+	@Override
+	public CPInstance[] findByC_Sku_PrevAndNext(
+			long CPInstanceId, long companyId, String sku,
+			OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+
+		sku = Objects.toString(sku, "");
+
+		CPInstance cpInstance = findByPrimaryKey(CPInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPInstance[] array = new CPInstanceImpl[3];
+
+			array[0] = getByC_Sku_PrevAndNext(
+				session, cpInstance, companyId, sku, orderByComparator, true);
+
+			array[1] = cpInstance;
+
+			array[2] = getByC_Sku_PrevAndNext(
+				session, cpInstance, companyId, sku, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPInstance getByC_Sku_PrevAndNext(
+		Session session, CPInstance cpInstance, long companyId, String sku,
+		OrderByComparator<CPInstance> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_CPINSTANCE_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+
+		boolean bindSku = false;
+
+		if (sku.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+		}
+		else {
+			bindSku = true;
+
+			sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CPInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (bindSku) {
+			queryPos.add(sku);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(cpInstance)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CPInstance> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp instances where companyId = &#63; and sku = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 */
+	@Override
+	public void removeByC_Sku(long companyId, String sku) {
+		for (CPInstance cpInstance :
+				findByC_Sku(
+					companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(cpInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of cp instances where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @return the number of matching cp instances
+	 */
+	@Override
+	public int countByC_Sku(long companyId, String sku) {
+		sku = Objects.toString(sku, "");
+
+		FinderPath finderPath = _finderPathCountByC_Sku;
+
+		Object[] finderArgs = new Object[] {companyId, sku};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+
+			boolean bindSku = false;
+
+			if (sku.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+			}
+			else {
+				bindSku = true;
+
+				sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindSku) {
+					queryPos.add(sku);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_SKU_COMPANYID_2 =
+		"cpInstance.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_SKU_SKU_2 =
+		"cpInstance.sku = ?";
+
+	private static final String _FINDER_COLUMN_C_SKU_SKU_3 =
+		"(cpInstance.sku IS NULL OR cpInstance.sku = '')";
+
 	private FinderPath _finderPathFetchByC_C;
 	private FinderPath _finderPathCountByC_C;
 
@@ -7246,6 +7823,25 @@ public class CPInstancePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ST",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, false);
+
+		_finderPathWithPaginationFindByC_Sku = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_Sku",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "sku"}, true);
+
+		_finderPathWithoutPaginationFindByC_Sku = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_Sku",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "sku"}, true);
+
+		_finderPathCountByC_Sku = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Sku",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "sku"}, false);
 
 		_finderPathFetchByC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",

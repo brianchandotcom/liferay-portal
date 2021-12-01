@@ -402,6 +402,15 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_Sku() throws Exception {
+		_persistence.countByC_Sku(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_Sku(0L, "null");
+
+		_persistence.countByC_Sku(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
 

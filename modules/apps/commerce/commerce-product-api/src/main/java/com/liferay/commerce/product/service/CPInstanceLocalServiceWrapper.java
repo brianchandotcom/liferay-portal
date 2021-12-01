@@ -1087,6 +1087,13 @@ public class CPInstanceLocalServiceWrapper
 			groupId, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance>
+		getCPInstances(long companyId, String sku) {
+
+		return _cpInstanceLocalService.getCPInstances(companyId, sku);
+	}
+
 	/**
 	 * Returns all the cp instances matching the UUID and company.
 	 *

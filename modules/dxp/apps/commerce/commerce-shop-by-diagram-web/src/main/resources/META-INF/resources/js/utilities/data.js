@@ -18,13 +18,17 @@ export const PINS_ADMIN_ENDPOINT_BASE =
 export const PINS_FRONTSTORE_ENDPOINT_BASE =
 	'/o/headless-commerce-delivery-catalog/v1.0';
 
-export function loadPins(productId, channelId = null) {
+export function loadPins(productId, channelId = null, accountId) {
 	const url = new URL(
 		channelId
 			? `${PINS_FRONTSTORE_ENDPOINT_BASE}/channels/${channelId}/products/${productId}/pins`
 			: `${PINS_ADMIN_ENDPOINT_BASE}/products/${productId}/pins`,
 		themeDisplay.getPortalURL()
 	);
+
+	if (accountId) {
+		url.searchParams.set('accountId', accountId);
+	}
 
 	url.searchParams.set('pageSize', 200);
 
@@ -143,7 +147,14 @@ export function updateGlobalPinsRadius(diagramId, radius, namespace) {
 	});
 }
 
-export function getMappedProducts(productId, channelId, query, page, pageSize) {
+export function getMappedProducts(
+	productId,
+	channelId,
+	query,
+	page,
+	pageSize,
+	accountId
+) {
 	const url = new URL(
 		channelId
 			? `${PINS_FRONTSTORE_ENDPOINT_BASE}/channels/${channelId}/products/${productId}/mapped-products`
@@ -151,6 +162,10 @@ export function getMappedProducts(productId, channelId, query, page, pageSize) {
 
 		themeDisplay.getPortalURL()
 	);
+
+	if (accountId) {
+		url.searchParams.set('accountId', accountId);
+	}
 
 	if (query) {
 		url.searchParams.set('search', query);
@@ -164,5 +179,11 @@ export function getMappedProducts(productId, channelId, query, page, pageSize) {
 
 	return fetch(url, {
 		headers: HEADERS,
-	}).then((response) => response.json());
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error(Liferay.Language.get('unexpected-error'));
+		}
+
+		return response.json();
+	});
 }

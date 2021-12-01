@@ -37,10 +37,10 @@ import {
 	getMappedProducts,
 	saveMappedProduct,
 } from '../utilities/data';
+import {formatMappedProduct} from '../utilities/index';
 import D3Handler from './D3Handler';
 
 import '../../css/diagram.scss';
-import {formatMappedProduct} from '../utilities';
 
 function Diagram({
 	cartId: initialCartId,
@@ -77,9 +77,10 @@ function Diagram({
 			!isAdmin && channelId,
 			'',
 			1,
-			200
+			200,
+			commerceAccount.id
 		).then(({items}) => setMappedProducts(items));
-	}, [channelId, isAdmin, productId]);
+	}, [channelId, isAdmin, productId, commerceAccount]);
 
 	useEffect(() => {
 		chartInstanceRef.current?.updatePins(mappedProducts);
@@ -188,7 +189,8 @@ function Diagram({
 				!isAdmin && channelId,
 				'',
 				1,
-				200
+				200,
+				commerceAccount.id
 			).then(({items}) => setMappedProducts(items));
 		}
 
@@ -231,6 +233,7 @@ function Diagram({
 		labels,
 		mappedProducts,
 		productId,
+		commerceAccount,
 	]);
 
 	useLayoutEffect(() => {

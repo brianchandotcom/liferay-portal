@@ -88,7 +88,7 @@ describe('Tooltip', () => {
 		const tooltipBodies = container.querySelectorAll('#tooltip-label');
 
 		expect(tooltipBodies[0].innerHTML).toBe(
-			'Col 1: 1 entry <b>(16.6%)</b>'
+			'Col 1: 1 entry <b>(16.7%)</b>'
 		);
 		expect(tooltipBodies[1].innerHTML).toBe(
 			'Col 2: 2 entries <b>(33.3%)</b>'

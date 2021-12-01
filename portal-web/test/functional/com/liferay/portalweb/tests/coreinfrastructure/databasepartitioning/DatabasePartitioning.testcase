@@ -362,9 +362,12 @@ definition {
 		task ("View WebContent Article Publish on default Company") {
 			Pause(locator1 = "180000");
 
+			// Disable Check on Default company until LPS-116111 is resolved
+
+			/*
 			Refresh();
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");*/
 		}
 
 		task ("New Company publish it's WebContent Article") {
@@ -386,6 +389,9 @@ definition {
 			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content New Company");
 		}
 
+		// Disable Check on Default company until LPS-116111 is resolved
+
+		/*
 		task ("WebContent Article not repulish on default Company") {
 			SignOut.signOut();
 
@@ -394,7 +400,7 @@ definition {
 			Navigator.gotoPage(pageName = "Web Content Display Page");
 
 			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");
-		}
+		}*/
 	}
 
 }

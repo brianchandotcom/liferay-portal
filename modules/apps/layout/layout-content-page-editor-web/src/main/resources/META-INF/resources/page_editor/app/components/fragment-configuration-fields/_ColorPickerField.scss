@@ -14,17 +14,15 @@ html#{$cadmin-selector} {
 				border-radius: 4px 0 0 4px;
 			}
 
-			&__color-picker:not(:hover) {
+			&:not(:hover):not(:focus-within) {
+				.page-editor__color-picker-field__action-button {
+					opacity: 0;
+				}
+
 				.clay-color > .input-group-item > .input-group-text,
 				.page-editor__color-picker-field__autocomplete__input {
 					border-color: transparent;
 				}
-			}
-
-			&:not(:hover)
-				.page-editor__color-picker-field__action-button
-				button:not(:focus) {
-				opacity: 0;
 			}
 		}
 	}

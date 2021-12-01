@@ -87,6 +87,9 @@ definition {
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set WITHOUT pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
 	@priority = "5"
 	test CombineContentForMultisegmentDynamicCollectionWithoutPagination {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentDynamicCollectionWithoutPagination";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -216,6 +219,9 @@ definition {
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set WITH pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
 	@priority = "5"
 	test CombineContentForMultisegmentDynamicCollectionWithPagination {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentDynamicCollectionWithPagination";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -359,6 +365,9 @@ definition {
 	@description = "LPS-108368: Asset Publisher configured with manual content set WITHOUT pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
 	@priority = "5"
 	test CombineContentForMultisegmentManualCollectionWithoutPagination {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentManualCollectionWithoutPagination";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -454,6 +463,9 @@ definition {
 	@description = "LPS-108368: Asset Publisher configured with manual content set WITH pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
 	@priority = "5"
 	test CombineContentForMultisegmentManualCollectionWithPagination {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentManualCollectionWithPagination";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

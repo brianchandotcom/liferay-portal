@@ -933,6 +933,12 @@ definition {
 		Click(locator1 = "WorkflowMetrics#PERFORMANCE_COMPLETED_ITEMS_BY_STATUS");
 	}
 
+	macro gotoWorkflowMetricsCards {
+		Click(
+			key_assigneeName = "${cardName}",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+	}
+
 	macro goToWorkflowProcessMetrics {
 		var key_workflowProcessName = "${workflowProcessName}";
 
@@ -1568,6 +1574,14 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
 	}
 
+	macro viewButtonUpdateDueDateIsAvailable {
+		AssertElementPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
+	}
+
+	macro viewButtonUpdateDueDateIsNotAvailable {
+		AssertElementNotPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
+	}
+
 	macro viewCreatedBySort {
 		AssertElementPresent(
 			key_value = "${position}",
@@ -1612,6 +1626,24 @@ definition {
 				allItemsFilterName = "${key_allItemsFilterName}",
 				assigneeName = "${key_assigneeName}");
 		}
+	}
+
+	macro viewKebabMenuOptionsIsAvailable {
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		var dropdownItem = "${dropdownItem}";
+
+		if ("${dropdownItem}" == "Reassign Task") {
+			AssertElementPresent(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+		}
+
+		if ("${dropdownItem}" == "Update Due Date") {
+			AssertElementPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
+		}
+	}
+
+	macro viewKebabMenuOptionsIsNotAvailable {
+		AssertElementNotPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
 	}
 
 	macro viewPerformanceByAssignee {

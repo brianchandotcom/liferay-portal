@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPDATE_DUE_DATE_DROPDOWN</td>
+	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Update Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRANSITION_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Transition')]</td>
 	<td></td>

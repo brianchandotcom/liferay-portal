@@ -172,12 +172,63 @@ definition {
 	}
 
 	@description = "LPS-105498 - Verify that the user cannot update the due date of unassigned tasks that are also not assigned to its current role"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotUpdateDueDateOfUnassignedTasks {
+		JSONUser.addUser(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
-		// TODO LRQA-67826 CanNotUpdateDueDateOfUnassignedTasks pending implementation
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "user@liferay.com");
 
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "user@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "single-approver-assignments-workflow-definition.xml",
+			workflowDefinitionTitle = "Single Approver Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Process");
+
+		WorkflowMetrics.gotoWorkflowMetricsCards(cardName = "Total Pending");
+
+		WorkflowMetrics.viewButtonUpdateDueDateIsNotAvailable();
+
+		WorkflowMetrics.viewKebabMenuOptionsIsNotAvailable();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Process");
+
+		WorkflowMetrics.gotoWorkflowMetricsCards(cardName = "Total Pending");
+
+		WorkflowMetrics.viewButtonUpdateDueDateIsAvailable();
+
+		WorkflowMetrics.viewKebabMenuOptionsIsAvailable(dropdownItem = "Update Due Date");
+
+
+		
 	}
 
 	@description = "LPS-105497 - Verify that users can hover over a row to see action options and select to Update Task Due Date by hovering over the calendar icon"

@@ -44,8 +44,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -206,62 +204,6 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public Document addTask(
-		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
-		List<Assignment> assignments, String className, long classPK,
-		long companyId, boolean completed, Date completionDate,
-		Long completionUserId, Date createDate, boolean instanceCompleted,
-		Date instanceCompletionDate, long instanceId, Date modifiedDate,
-		String name, long nodeId, long processId, String processVersion,
-		long taskId, long userId) {
-
-		AddTaskRequest.Builder builder = new AddTaskRequest.Builder();
-
-		return addTask(
-			builder.setAssetTitleMap(
-				assetTitleMap
-			).setAssetTypeMap(
-				assetTypeMap
-			).setAssignments(
-				assignments
-			).setClassName(
-				className
-			).setClassPK(
-				classPK
-			).setCompanyId(
-				companyId
-			).setCompleted(
-				completed
-			).setCompletionDate(
-				completionDate
-			).setCompletionUserId(
-				completionUserId
-			).setCreateDate(
-				createDate
-			).setInstanceCompleted(
-				instanceCompleted
-			).setInstanceCompletionDate(
-				instanceCompletionDate
-			).setInstanceId(
-				instanceId
-			).setModifiedDate(
-				modifiedDate
-			).setName(
-				name
-			).setNodeId(
-				nodeId
-			).setProcessId(
-				processId
-			).setProcessVersion(
-				processVersion
-			).setTaskId(
-				taskId
-			).setUserId(
-				userId
-			).build());
-	}
-
-	@Override
 	public Document completeTask(CompleteTaskRequest completeTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
@@ -319,60 +261,6 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public Document completeTask(
-		long companyId, Date completionDate, long completionUserId,
-		long duration, Date modifiedDate, long taskId, long userId) {
-
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setValue(
-			"completed", true
-		).setDate(
-			"completionDate", getDate(completionDate)
-		).setLong(
-			"completionUserId", completionUserId
-		).setLong(
-			"duration", duration
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setLong(
-			"taskId", taskId
-		).setString(
-			"uid", digest(companyId, taskId)
-		).setLong(
-			"userId", userId
-		);
-
-		Document document = documentBuilder.build();
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				updateDocument(document);
-
-				_deleteTask(companyId, taskId);
-
-				BooleanQuery booleanQuery = queries.booleanQuery();
-
-				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", companyId),
-					queries.term("taskId", taskId));
-
-				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-					companyId,
-					HashMapBuilder.<String, Object>put(
-						"completionDate", document.getDate("completionDate")
-					).put(
-						"completionUserId", document.getLong("completionUserId")
-					).build(),
-					booleanQuery);
-			});
-
-		return document;
-	}
-
-	@Override
 	public void deleteTask(DeleteTaskRequest deleteTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
@@ -397,26 +285,6 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void deleteTask(long companyId, long taskId) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setLong(
-			"taskId", taskId
-		).setString(
-			"uid", digest(companyId, taskId)
-		);
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				deleteDocument(documentBuilder);
-
-				_deleteTask(companyId, taskId);
-			});
-	}
-
-	@Override
 	public String getIndexName(long companyId) {
 		return _taskWorkflowMetricsIndex.getIndexName(companyId);
 	}
@@ -424,109 +292,6 @@ public class TaskWorkflowMetricsIndexerImpl
 	@Override
 	public String getIndexType() {
 		return _taskWorkflowMetricsIndex.getIndexType();
-	}
-
-	@Override
-	public Document updateTask(
-		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
-		List<Assignment> assignments, long companyId, Date modifiedDate,
-		long taskId, long userId) {
-
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		List<Long> assignmentGroupIds = new ArrayList<>();
-		List<Long> assignmentIds = new ArrayList<>();
-
-		_populateTaskAssignments(
-			assignmentGroupIds, assignmentIds, assignments);
-
-		String assignmentType = _getAssignmentType(assignments);
-
-		if (!assignmentIds.isEmpty()) {
-			documentBuilder.setLongs(
-				"assigneeIds", assignmentIds.toArray(new Long[0]));
-			documentBuilder.setString("assigneeType", assignmentType);
-		}
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setLong(
-			"taskId", taskId
-		).setString(
-			"uid", digest(companyId, taskId)
-		).setLong(
-			"userId", userId
-		);
-
-		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
-		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
-
-		Document document = documentBuilder.build();
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				updateDocument(document);
-
-				if (Objects.isNull(document.getLongs("assigneeIds"))) {
-					return;
-				}
-
-				BooleanQuery booleanQuery = queries.booleanQuery();
-
-				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", document.getLong("companyId")),
-					queries.term("taskId", document.getLong("taskId")));
-
-				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-					companyId,
-					HashMapBuilder.<String, Object>put(
-						"assigneeIds", assignmentIds
-					).put(
-						"assigneeType", assignmentType
-					).build(),
-					booleanQuery);
-
-				ScriptBuilder scriptBuilder = scripts.builder();
-
-				scriptBuilder.idOrCode(
-					StringUtil.read(
-						getClass(),
-						"dependencies/workflow-metrics-update-task-" +
-							"script.painless")
-				).language(
-					"painless"
-				).putParameter(
-					"task",
-					HashMapBuilder.<String, Object>put(
-						"assigneeGroupIds", assignmentGroupIds
-					).put(
-						"assigneeIds", assignmentIds
-					).put(
-						"assigneeName", _getAssigneeName(assignments)
-					).put(
-						"assigneeType", assignmentType
-					).put(
-						"taskId", taskId
-					).build()
-				).scriptType(
-					ScriptType.INLINE
-				);
-
-				UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
-					new UpdateByQueryDocumentRequest(
-						queries.nested(
-							"tasks", queries.term("tasks.taskId", taskId)),
-						scriptBuilder.build(),
-						_instanceWorkflowMetricsIndex.getIndexName(companyId));
-
-				updateByQueryDocumentRequest.setRefresh(true);
-
-				searchEngineAdapter.execute(updateByQueryDocumentRequest);
-			});
-
-		return document;
 	}
 
 	@Override

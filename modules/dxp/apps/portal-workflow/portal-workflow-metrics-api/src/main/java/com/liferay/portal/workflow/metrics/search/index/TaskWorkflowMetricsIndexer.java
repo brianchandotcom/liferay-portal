@@ -16,15 +16,9 @@ package com.liferay.portal.workflow.metrics.search.index;
 
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
-import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Rafael Praxedes
@@ -33,29 +27,9 @@ public interface TaskWorkflowMetricsIndexer {
 
 	public Document addTask(AddTaskRequest addTaskRequest);
 
-	public Document addTask(
-		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
-		List<Assignment> assignments, String className, long classPK,
-		long companyId, boolean completed, Date completionDate,
-		Long completionUserId, Date createDate, boolean instanceCompleted,
-		Date instanceCompletionDate, long instanceId, Date modifiedDate,
-		String name, long nodeId, long processId, String processVersion,
-		long taskId, long userId);
-
 	public Document completeTask(CompleteTaskRequest completeTaskRequest);
 
-	public Document completeTask(
-		long companyId, Date completionDate, long completionUserId,
-		long duration, Date modifiedDate, long taskId, long userId);
-
 	public void deleteTask(DeleteTaskRequest deleteTaskRequest);
-
-	public void deleteTask(long companyId, long taskId);
-
-	public Document updateTask(
-		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
-		List<Assignment> assignments, long companyId, Date modifiedDate,
-		long taskId, long userId);
 
 	public Document updateTask(UpdateTaskRequest updateTaskRequest);
 

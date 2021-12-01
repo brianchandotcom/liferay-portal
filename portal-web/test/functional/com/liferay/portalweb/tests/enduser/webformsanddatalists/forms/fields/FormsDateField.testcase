@@ -799,12 +799,9 @@ definition {
 	@description = "Verify if the Date field using the Validation with custom date can be translated"
 	@priority = "4"
 	test ValidationCanBeTranslated {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
-		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
-		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
+		var pastYear = ${displayDateYear} - 1;
 
 		FormsAdmin.addForm();
 
@@ -856,13 +853,13 @@ definition {
 
 		FormFields.editDate(
 			fieldName = "Date",
-			fieldValue = "${displayDate}");
+			fieldValue = "01/01/${pastYear}");
 
 		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is invalid.");
 
 		FormFields.editDate(
 			fieldName = "Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = "01/01/${futureYear}");
 
 		FormPortlet.submitSuccessfully();
 
@@ -872,13 +869,13 @@ definition {
 
 		FormFields.editDate(
 			fieldName = "Date",
-			fieldValue = "${displayDateDay}/${displayDateMonth}/${displayDateYear}");
+			fieldValue = "01/01/${pastYear}");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Esse campo e invalido.");
 
 		FormFields.editDate(
 			fieldName = "Date",
-			fieldValue = "${displayDateDay}/${displayDateMonth}/${futureYear}");
+			fieldValue = "01/01/${futureYear}");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
 	}

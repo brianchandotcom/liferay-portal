@@ -8,7 +8,7 @@ import Select from '../../../../common/components/Select';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {
 	getAccountSubscriptionGroupsByFilter,
-	getUserAccountById,
+	getUserAccount,
 } from '../../../../common/services/liferay/graphql/queries';
 import {API_BASE_URL} from '../../../../common/utils';
 import Layout from '../../components/Layout';
@@ -48,8 +48,8 @@ const Invites = () => {
 	const [, dispatch] = useContext(AppContext);
 	const {setFieldValue, values} = useFormikContext();
 
-	const {data: userAccountData} = useQuery(getUserAccountById, {
-		variables: {userAccountId: LiferayTheme.getUserId()},
+	const {data: userAccountData} = useQuery(getUserAccount, {
+		variables: {id: LiferayTheme.getUserId()},
 	});
 
 	const accountBriefs = useMemo(() => {

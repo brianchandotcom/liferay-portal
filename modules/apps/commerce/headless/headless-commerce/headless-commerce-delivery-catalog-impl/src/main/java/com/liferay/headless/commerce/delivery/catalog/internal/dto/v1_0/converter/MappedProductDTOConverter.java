@@ -120,8 +120,8 @@ public class MappedProductDTOConverter
 						}
 
 						return _getAvailability(
-							mappedProductDTOConverterContext.getCompanyId(),
 							commerceContext.getCommerceChannelGroupId(),
+							mappedProductDTOConverterContext.getCompanyId(),
 							cpInstance,
 							mappedProductDTOConverterContext.getLocale(),
 							cpInstance.getSku());

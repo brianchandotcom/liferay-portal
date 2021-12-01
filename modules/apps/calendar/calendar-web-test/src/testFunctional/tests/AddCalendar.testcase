@@ -144,12 +144,19 @@ definition {
 	}
 
 	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddCalendarWithNoAsciiCharactersOnNameField {
+		Calendar.add(
+			calendarName = "旧历",
+			calendarType = "My Calendars",
+			user = "Test Test");
 
-		// TODO LRQA-71606 CanAddCalendarWithNoAsciiCharactersOnNameField pending implementation
+		Navigator.gotoPage(pageName = "Calendar Page");
 
+		Calendar.view(
+			calendarName = "旧历",
+			calendarType = "My Calendars",
+			user = "Test Test");
 	}
 
 	@description = "LRQA-71360 - Verify that the user can cancel Adding a new calendar"

@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Ethan Bustad
  */
-public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
+public abstract class BaseAssetEntryCPDataSourceImpl implements CPDataSource {
 
 	@Override
 	public CPDataSourceResult getResult(

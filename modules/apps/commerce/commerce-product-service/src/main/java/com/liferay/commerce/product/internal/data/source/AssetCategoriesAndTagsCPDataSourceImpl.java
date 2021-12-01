@@ -36,17 +36,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "commerce.product.data.source.name=" + CPDataSourceAssetTagsImpl.NAME,
+	property = "commerce.product.data.source.name=" + AssetCategoriesAndTagsCPDataSourceImpl.NAME,
 	service = CPDataSource.class
 )
-public class CPDataSourceAssetTagsImpl extends BaseCPDataSourceAssetEntryImpl {
+public class AssetCategoriesAndTagsCPDataSourceImpl
+	extends BaseAssetEntryCPDataSourceImpl {
 
-	public static final String NAME = "assetTagsDataSource";
+	public static final String NAME = "assetCategoriesAndTagsDataSource";
 
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			getResourceBundle(locale), "products-of-the-same-tags");
+			getResourceBundle(locale),
+			"products-of-the-same-categories-and-tags");
 	}
 
 	@Override
@@ -58,15 +60,16 @@ public class CPDataSourceAssetTagsImpl extends BaseCPDataSourceAssetEntryImpl {
 	protected CPQuery getCPQuery(long cpDefinitionId) throws PortalException {
 		CPQuery cpQuery = new CPQuery();
 
-		cpQuery.setAnyTagIds(_getTagIds(cpDefinitionId));
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			CPDefinition.class.getName(), cpDefinitionId);
+
+		cpQuery.setAnyCategoryIds(assetEntry.getCategoryIds());
+		cpQuery.setAnyTagIds(_getTagIds(assetEntry));
 
 		return cpQuery;
 	}
 
-	private long[] _getTagIds(long cpDefinitionId) throws PortalException {
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			CPDefinition.class.getName(), cpDefinitionId);
-
+	private long[] _getTagIds(AssetEntry assetEntry) throws PortalException {
 		List<AssetTag> assetTags = assetEntry.getTags();
 
 		long[] tagIds = new long[assetTags.size()];

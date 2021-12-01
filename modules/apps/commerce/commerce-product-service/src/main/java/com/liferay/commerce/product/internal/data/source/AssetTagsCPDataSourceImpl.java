@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.internal.data.source;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.data.source.CPDataSource;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,18 +36,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "commerce.product.data.source.name=" + CPDataSourceAssetCategoriesImpl.NAME,
+	property = "commerce.product.data.source.name=" + AssetTagsCPDataSourceImpl.NAME,
 	service = CPDataSource.class
 )
-public class CPDataSourceAssetCategoriesImpl
-	extends BaseCPDataSourceAssetEntryImpl {
+public class AssetTagsCPDataSourceImpl extends BaseAssetEntryCPDataSourceImpl {
 
-	public static final String NAME = "assetCategoriesDataSource";
+	public static final String NAME = "assetTagsDataSource";
 
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			getResourceBundle(locale), "products-of-the-same-categories");
+			getResourceBundle(locale), "products-of-the-same-tags");
 	}
 
 	@Override
@@ -57,12 +58,26 @@ public class CPDataSourceAssetCategoriesImpl
 	protected CPQuery getCPQuery(long cpDefinitionId) throws PortalException {
 		CPQuery cpQuery = new CPQuery();
 
+		cpQuery.setAnyTagIds(_getTagIds(cpDefinitionId));
+
+		return cpQuery;
+	}
+
+	private long[] _getTagIds(long cpDefinitionId) throws PortalException {
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			CPDefinition.class.getName(), cpDefinitionId);
 
-		cpQuery.setAnyCategoryIds(assetEntry.getCategoryIds());
+		List<AssetTag> assetTags = assetEntry.getTags();
 
-		return cpQuery;
+		long[] tagIds = new long[assetTags.size()];
+
+		for (int i = 0; i < assetTags.size(); i++) {
+			AssetTag assetTag = assetTags.get(i);
+
+			tagIds[i] = assetTag.getTagId();
+		}
+
+		return tagIds;
 	}
 
 	@Reference(unbind = "-")

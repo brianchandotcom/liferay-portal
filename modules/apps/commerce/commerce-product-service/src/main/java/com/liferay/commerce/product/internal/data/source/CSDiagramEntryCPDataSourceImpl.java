@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "commerce.product.data.source.name=" + CPDataSourceCSDiagramEntryImpl.NAME,
+	property = "commerce.product.data.source.name=" + CSDiagramEntryCPDataSourceImpl.NAME,
 	service = CPDataSource.class
 )
-public class CPDataSourceCSDiagramEntryImpl implements CPDataSource {
+public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 
 	public static final String NAME = "csDiagramEntryDataSource";
 

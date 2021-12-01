@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "commerce.product.data.source.name=definitionLinkDataSource",
 	service = CPDataSource.class
 )
-public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
+public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 
 	@Override
 	public String getLabel(Locale locale) {

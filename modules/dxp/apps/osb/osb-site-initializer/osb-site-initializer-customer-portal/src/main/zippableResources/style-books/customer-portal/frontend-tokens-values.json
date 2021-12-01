@@ -1,7 +1,15 @@
 {
+	"boxShadowLg": {
+		"cssVariableMapping": "box-shadow-lg",
+		"value": "var(--elevation-fluffy-1) rgba(0, 54, 156, 0.12);"
+	},
 	"colorBrandPrimary": {
 		"cssVariableMapping": "color-brand-primary",
 		"value": "#0B5FFF"
+	},
+	"colorActionPrimaryActive": {
+		"cssVariableMapping": "color-action-primary-active",
+		"value": "#004AD7"
 	},
 	"colorActionPrimaryHover": {
 		"cssVariableMapping": "color-action-primary-hover",
@@ -11,9 +19,9 @@
 		"cssVariableMapping": "color-neutral-10",
 		"value": "#272833"
 	},
-	"boxShadowLg": {
-		"cssVariableMapping": "box-shadow-lg",
-		"value": "var(--elevation-fluffy-1) rgba(0, 54, 156, 0.12);"
+	"colorNeutral9": {
+		"cssVariableMapping": "color-neutral-9",
+		"value": "#332b4a"
 	},
 	"colorNeutral8": {
 		"cssVariableMapping": "color-neutral-8",
@@ -23,10 +31,6 @@
 		"cssVariableMapping": "color-neutral-7",
 		"value": "#5A5469"
 	},
-	"fontFamilyBase": {
-		"cssVariableMapping": "font-family-base",
-		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-	},
 	"colorNeutral5": {
 		"cssVariableMapping": "color-neutral-5",
 		"value": "#91959B"
@@ -34,6 +38,10 @@
 	"colorActionPrimaryDefault": {
 		"cssVariableMapping": "color-action-primary-default",
 		"value": "#0B5FFF"
+	},
+	"fontFamilyBase": {
+		"cssVariableMapping": "font-family-base",
+		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
 	},
 	"fontFamilySansSerif": {
 		"cssVariableMapping": "font-family-sans-serif",

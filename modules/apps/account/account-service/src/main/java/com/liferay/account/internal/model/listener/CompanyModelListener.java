@@ -37,10 +37,10 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
 	public void onAfterRemove(Company company) throws ModelListenerException {
-		_accountRoleLocalService.deleteAccountRolesByCompanyId(
-			company.getCompanyId());
-
 		try {
+			_accountRoleLocalService.deleteAccountRolesByCompanyId(
+				company.getCompanyId());
+
 			_deleteAccountGroups(company);
 		}
 		catch (PortalException portalException) {

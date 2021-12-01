@@ -27,6 +27,13 @@ definition {
 
 		return "${customEventName}";
 	}
+
+	macro changeCustomEventName {
+		Type(
+			locator1 = "TextInput#TEXT",
+			value1 = "${newCustomEventName}");
+
+		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
 	}
 
 }

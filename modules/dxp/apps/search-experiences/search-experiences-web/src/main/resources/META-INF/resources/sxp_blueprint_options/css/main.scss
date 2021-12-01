@@ -1,0 +1,34 @@
+.portlet-sxp-blueprint-options {
+	.searchbar {
+		padding-bottom: 12px;
+	}
+
+	.search-results {
+		.meta-data {
+			padding-bottom: 24px;
+			text-align: center;
+		}
+
+		.result-pagination {
+			justify-content: center;
+		}
+
+		.result-subtext span {
+			padding-right: 4px;
+		}
+
+		.search-facets {
+			display: flex;
+			flex-wrap: wrap;
+
+			.form-group {
+				padding: 0 10px;
+				width: 33%;
+
+				.component-action {
+					margin: auto;
+				}
+			}
+		}
+	}
+}

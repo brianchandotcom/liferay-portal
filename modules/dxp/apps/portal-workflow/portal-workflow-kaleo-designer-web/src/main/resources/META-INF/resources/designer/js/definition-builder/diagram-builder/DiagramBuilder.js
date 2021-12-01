@@ -113,7 +113,7 @@ export default function DiagramBuilder({version}) {
 					type,
 				};
 
-				setElements((es) => es.concat(newNode));
+				setElements((elements) => elements.concat(newNode));
 			}
 		},
 		[elements, reactFlowInstance]
@@ -179,6 +179,7 @@ export default function DiagramBuilder({version}) {
 		availableArea,
 		selectedNode,
 		selectedNodeNewId,
+		setElements,
 		setSelectedNode,
 		setSelectedNodeNewId,
 	};

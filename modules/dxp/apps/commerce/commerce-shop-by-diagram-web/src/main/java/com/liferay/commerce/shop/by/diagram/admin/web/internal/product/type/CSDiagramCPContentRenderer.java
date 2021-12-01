@@ -14,16 +14,20 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.product.type;
 
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CSDiagramCPTypeDisplayContext;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalService;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -73,8 +77,10 @@ public class CSDiagramCPContentRenderer implements CPContentRenderer {
 		httpServletRequest.setAttribute(
 			CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT,
 			new CSDiagramCPTypeDisplayContext(
-				_csDiagramSettingService, _csDiagramTypeRegistry,
-				_dlURLHelper));
+				_commerceAccountHelper, _commerceChannelLocalService,
+				_commerceProductViewPermission, _csDiagramSettingLocalService,
+				_csDiagramTypeRegistry, _dlURLHelper, httpServletRequest,
+				_portal));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
@@ -82,7 +88,16 @@ public class CSDiagramCPContentRenderer implements CPContentRenderer {
 	}
 
 	@Reference
-	private CSDiagramSettingService _csDiagramSettingService;
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceProductViewPermission _commerceProductViewPermission;
+
+	@Reference
+	private CSDiagramSettingLocalService _csDiagramSettingLocalService;
 
 	@Reference
 	private CSDiagramTypeRegistry _csDiagramTypeRegistry;
@@ -92,6 +107,9 @@ public class CSDiagramCPContentRenderer implements CPContentRenderer {
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shop.by.diagram.web)"

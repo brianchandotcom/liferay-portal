@@ -26,9 +26,9 @@ import java.net.URLEncoder;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultTestrayServer extends BaseTestrayServer {
+public class S3TestrayServer extends BaseTestrayServer {
 
-	public DefaultTestrayServer(String urlString) {
+	public S3TestrayServer(String urlString) {
 		super(urlString);
 	}
 

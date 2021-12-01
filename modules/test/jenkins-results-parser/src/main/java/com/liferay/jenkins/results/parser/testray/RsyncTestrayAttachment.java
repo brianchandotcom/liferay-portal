@@ -22,9 +22,9 @@ import java.net.URL;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultTestrayAttachment extends BaseTestrayAttachment {
+public class RsyncTestrayAttachment extends BaseTestrayAttachment {
 
-	public DefaultTestrayAttachment(
+	public RsyncTestrayAttachment(
 		TestrayCaseResult testrayCaseResult, String name, String key) {
 
 		super(testrayCaseResult, name, key);

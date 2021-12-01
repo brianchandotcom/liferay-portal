@@ -39,7 +39,7 @@ public class TestrayFactory {
 		TestrayServer testrayServer = testrayCaseResult.getTestrayServer();
 
 		if (testrayServer instanceof RsyncTestrayServer) {
-			return new DefaultTestrayAttachment(testrayCaseResult, name, key);
+			return new RsyncTestrayAttachment(testrayCaseResult, name, key);
 		}
 
 		return new S3TestrayAttachment(testrayCaseResult, name, key);
@@ -146,7 +146,7 @@ public class TestrayFactory {
 			testrayServer = new RsyncTestrayServer(testrayServerURLString);
 		}
 		else {
-			testrayServer = new DefaultTestrayServer(testrayServerURLString);
+			testrayServer = new S3TestrayServer(testrayServerURLString);
 		}
 
 		_testrayServers.put(testrayServerURLString, testrayServer);

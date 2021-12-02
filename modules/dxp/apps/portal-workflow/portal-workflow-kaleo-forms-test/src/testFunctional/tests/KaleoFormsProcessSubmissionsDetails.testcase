@@ -228,8 +228,6 @@ definition {
 		KaleoFormsAdmin.saveProcessRecord();
 
 		KaleoFormsNewSubmissions.viewVersionOnDetails(workflowVersion = "1.0");
-
-
 	}
 
 }

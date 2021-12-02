@@ -1736,8 +1736,8 @@ definition {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects",
 			panelCategoryKey = "control_panel.account_entries_admin",
+			pluralLabelName = "Custom Objects",
 			scope = "company");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
@@ -1745,11 +1745,10 @@ definition {
 		Navigator.openURL();
 
 		ApplicationsMenuHelper.openApplicationsMenu();
-		
-		ApplicationsMenu.gotoPanel(panel = "Control Panel");
-		
-		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
 
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Site"
@@ -1760,8 +1759,8 @@ definition {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects",
 			panelCategoryKey = "site_administration.content",
+			pluralLabelName = "Custom Objects",
 			scope = "site");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
@@ -1776,7 +1775,6 @@ definition {
 			key_portlet = "Custom Objects",
 			locator1 = "ProductMenu#PORTLET",
 			value1 = "Custom Objects");
-
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a Custom Object"

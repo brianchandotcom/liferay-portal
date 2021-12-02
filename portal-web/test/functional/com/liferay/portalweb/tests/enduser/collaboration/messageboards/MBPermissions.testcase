@@ -519,13 +519,50 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136938. It checks that a site member cannot subscribe to a thread without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test SiteMemberCannotSubscribeToThread {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-136938 SiteMemberCannotSubscribeToThread pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONMBMessage.addMessage(
+			addGroupPermissions = "false",
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Subscribe",
+			rowEntry = "Message Boards Thread");
 	}
 
 	@description = "This is a test for LPS-136936. It checks that a site member cannot update a thread without permissions."

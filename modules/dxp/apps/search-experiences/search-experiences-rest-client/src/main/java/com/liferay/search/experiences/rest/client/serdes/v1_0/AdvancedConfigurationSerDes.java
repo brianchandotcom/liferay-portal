@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Advanced;
+import com.liferay.search.experiences.rest.client.dto.v1_0.AdvancedConfiguration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AdvancedSerDes {
+public class AdvancedConfigurationSerDes {
 
-	public static Advanced toDTO(String json) {
-		AdvancedJSONParser advancedJSONParser = new AdvancedJSONParser();
+	public static AdvancedConfiguration toDTO(String json) {
+		AdvancedConfigurationJSONParser advancedConfigurationJSONParser =
+			new AdvancedConfigurationJSONParser();
 
-		return advancedJSONParser.parseToDTO(json);
+		return advancedConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static Advanced[] toDTOs(String json) {
-		AdvancedJSONParser advancedJSONParser = new AdvancedJSONParser();
+	public static AdvancedConfiguration[] toDTOs(String json) {
+		AdvancedConfigurationJSONParser advancedConfigurationJSONParser =
+			new AdvancedConfigurationJSONParser();
 
-		return advancedJSONParser.parseToDTOs(json);
+		return advancedConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Advanced advanced) {
-		if (advanced == null) {
+	public static String toJSON(AdvancedConfiguration advancedConfiguration) {
+		if (advancedConfiguration == null) {
 			return "null";
 		}
 
@@ -53,7 +55,7 @@ public class AdvancedSerDes {
 
 		sb.append("{");
 
-		if (advanced.getExcludes() != null) {
+		if (advancedConfiguration.getExcludes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -62,14 +64,16 @@ public class AdvancedSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < advanced.getExcludes().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(advanced.getExcludes()[i]));
+			for (int i = 0; i < advancedConfiguration.getExcludes().length;
+				 i++) {
 
 				sb.append("\"");
 
-				if ((i + 1) < advanced.getExcludes().length) {
+				sb.append(_escape(advancedConfiguration.getExcludes()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < advancedConfiguration.getExcludes().length) {
 					sb.append(", ");
 				}
 			}
@@ -77,17 +81,17 @@ public class AdvancedSerDes {
 			sb.append("]");
 		}
 
-		if (advanced.getFetchSource() != null) {
+		if (advancedConfiguration.getFetchSource() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"fetchSource\": ");
 
-			sb.append(advanced.getFetchSource());
+			sb.append(advancedConfiguration.getFetchSource());
 		}
 
-		if (advanced.getIncludes() != null) {
+		if (advancedConfiguration.getIncludes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -96,14 +100,16 @@ public class AdvancedSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < advanced.getIncludes().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(advanced.getIncludes()[i]));
+			for (int i = 0; i < advancedConfiguration.getIncludes().length;
+				 i++) {
 
 				sb.append("\"");
 
-				if ((i + 1) < advanced.getIncludes().length) {
+				sb.append(_escape(advancedConfiguration.getIncludes()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < advancedConfiguration.getIncludes().length) {
 					sb.append(", ");
 				}
 			}
@@ -117,73 +123,84 @@ public class AdvancedSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AdvancedJSONParser advancedJSONParser = new AdvancedJSONParser();
+		AdvancedConfigurationJSONParser advancedConfigurationJSONParser =
+			new AdvancedConfigurationJSONParser();
 
-		return advancedJSONParser.parseToMap(json);
+		return advancedConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Advanced advanced) {
-		if (advanced == null) {
+	public static Map<String, String> toMap(
+		AdvancedConfiguration advancedConfiguration) {
+
+		if (advancedConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (advanced.getExcludes() == null) {
+		if (advancedConfiguration.getExcludes() == null) {
 			map.put("excludes", null);
 		}
 		else {
-			map.put("excludes", String.valueOf(advanced.getExcludes()));
+			map.put(
+				"excludes",
+				String.valueOf(advancedConfiguration.getExcludes()));
 		}
 
-		if (advanced.getFetchSource() == null) {
+		if (advancedConfiguration.getFetchSource() == null) {
 			map.put("fetchSource", null);
 		}
 		else {
-			map.put("fetchSource", String.valueOf(advanced.getFetchSource()));
+			map.put(
+				"fetchSource",
+				String.valueOf(advancedConfiguration.getFetchSource()));
 		}
 
-		if (advanced.getIncludes() == null) {
+		if (advancedConfiguration.getIncludes() == null) {
 			map.put("includes", null);
 		}
 		else {
-			map.put("includes", String.valueOf(advanced.getIncludes()));
+			map.put(
+				"includes",
+				String.valueOf(advancedConfiguration.getIncludes()));
 		}
 
 		return map;
 	}
 
-	public static class AdvancedJSONParser extends BaseJSONParser<Advanced> {
+	public static class AdvancedConfigurationJSONParser
+		extends BaseJSONParser<AdvancedConfiguration> {
 
 		@Override
-		protected Advanced createDTO() {
-			return new Advanced();
+		protected AdvancedConfiguration createDTO() {
+			return new AdvancedConfiguration();
 		}
 
 		@Override
-		protected Advanced[] createDTOArray(int size) {
-			return new Advanced[size];
+		protected AdvancedConfiguration[] createDTOArray(int size) {
+			return new AdvancedConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			Advanced advanced, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			AdvancedConfiguration advancedConfiguration,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "excludes")) {
 				if (jsonParserFieldValue != null) {
-					advanced.setExcludes(
+					advancedConfiguration.setExcludes(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fetchSource")) {
 				if (jsonParserFieldValue != null) {
-					advanced.setFetchSource((Boolean)jsonParserFieldValue);
+					advancedConfiguration.setFetchSource(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "includes")) {
 				if (jsonParserFieldValue != null) {
-					advanced.setIncludes(
+					advancedConfiguration.setIncludes(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}

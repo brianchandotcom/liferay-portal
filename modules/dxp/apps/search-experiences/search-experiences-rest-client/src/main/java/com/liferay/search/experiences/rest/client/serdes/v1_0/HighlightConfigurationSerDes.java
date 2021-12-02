@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Highlight;
+import com.liferay.search.experiences.rest.client.dto.v1_0.HighlightConfiguration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class HighlightSerDes {
+public class HighlightConfigurationSerDes {
 
-	public static Highlight toDTO(String json) {
-		HighlightJSONParser highlightJSONParser = new HighlightJSONParser();
+	public static HighlightConfiguration toDTO(String json) {
+		HighlightConfigurationJSONParser highlightConfigurationJSONParser =
+			new HighlightConfigurationJSONParser();
 
-		return highlightJSONParser.parseToDTO(json);
+		return highlightConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static Highlight[] toDTOs(String json) {
-		HighlightJSONParser highlightJSONParser = new HighlightJSONParser();
+	public static HighlightConfiguration[] toDTOs(String json) {
+		HighlightConfigurationJSONParser highlightConfigurationJSONParser =
+			new HighlightConfigurationJSONParser();
 
-		return highlightJSONParser.parseToDTOs(json);
+		return highlightConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Highlight highlight) {
-		if (highlight == null) {
+	public static String toJSON(HighlightConfiguration highlightConfiguration) {
+		if (highlightConfiguration == null) {
 			return "null";
 		}
 
@@ -53,37 +55,37 @@ public class HighlightSerDes {
 
 		sb.append("{");
 
-		if (highlight.getFields() != null) {
+		if (highlightConfiguration.getFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"fields\": ");
 
-			sb.append(_toJSON(highlight.getFields()));
+			sb.append(_toJSON(highlightConfiguration.getFields()));
 		}
 
-		if (highlight.getFragment_size() != null) {
+		if (highlightConfiguration.getFragment_size() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"fragment_size\": ");
 
-			sb.append(highlight.getFragment_size());
+			sb.append(highlightConfiguration.getFragment_size());
 		}
 
-		if (highlight.getNumber_of_fragments() != null) {
+		if (highlightConfiguration.getNumber_of_fragments() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"number_of_fragments\": ");
 
-			sb.append(highlight.getNumber_of_fragments());
+			sb.append(highlightConfiguration.getNumber_of_fragments());
 		}
 
-		if (highlight.getPost_tags() != null) {
+		if (highlightConfiguration.getPost_tags() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -92,14 +94,16 @@ public class HighlightSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < highlight.getPost_tags().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(highlight.getPost_tags()[i]));
+			for (int i = 0; i < highlightConfiguration.getPost_tags().length;
+				 i++) {
 
 				sb.append("\"");
 
-				if ((i + 1) < highlight.getPost_tags().length) {
+				sb.append(_escape(highlightConfiguration.getPost_tags()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < highlightConfiguration.getPost_tags().length) {
 					sb.append(", ");
 				}
 			}
@@ -107,7 +111,7 @@ public class HighlightSerDes {
 			sb.append("]");
 		}
 
-		if (highlight.getPre_tags() != null) {
+		if (highlightConfiguration.getPre_tags() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -116,14 +120,16 @@ public class HighlightSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < highlight.getPre_tags().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(highlight.getPre_tags()[i]));
+			for (int i = 0; i < highlightConfiguration.getPre_tags().length;
+				 i++) {
 
 				sb.append("\"");
 
-				if ((i + 1) < highlight.getPre_tags().length) {
+				sb.append(_escape(highlightConfiguration.getPre_tags()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < highlightConfiguration.getPre_tags().length) {
 					sb.append(", ");
 				}
 			}
@@ -131,17 +137,17 @@ public class HighlightSerDes {
 			sb.append("]");
 		}
 
-		if (highlight.getRequire_field_match() != null) {
+		if (highlightConfiguration.getRequire_field_match() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"require_field_match\": ");
 
-			sb.append(highlight.getRequire_field_match());
+			sb.append(highlightConfiguration.getRequire_field_match());
 		}
 
-		if (highlight.getType() != null) {
+		if (highlightConfiguration.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -150,7 +156,7 @@ public class HighlightSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(highlight.getType()));
+			sb.append(_escape(highlightConfiguration.getType()));
 
 			sb.append("\"");
 		}
@@ -161,102 +167,114 @@ public class HighlightSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		HighlightJSONParser highlightJSONParser = new HighlightJSONParser();
+		HighlightConfigurationJSONParser highlightConfigurationJSONParser =
+			new HighlightConfigurationJSONParser();
 
-		return highlightJSONParser.parseToMap(json);
+		return highlightConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Highlight highlight) {
-		if (highlight == null) {
+	public static Map<String, String> toMap(
+		HighlightConfiguration highlightConfiguration) {
+
+		if (highlightConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (highlight.getFields() == null) {
+		if (highlightConfiguration.getFields() == null) {
 			map.put("fields", null);
 		}
 		else {
-			map.put("fields", String.valueOf(highlight.getFields()));
+			map.put(
+				"fields", String.valueOf(highlightConfiguration.getFields()));
 		}
 
-		if (highlight.getFragment_size() == null) {
+		if (highlightConfiguration.getFragment_size() == null) {
 			map.put("fragment_size", null);
 		}
 		else {
 			map.put(
-				"fragment_size", String.valueOf(highlight.getFragment_size()));
+				"fragment_size",
+				String.valueOf(highlightConfiguration.getFragment_size()));
 		}
 
-		if (highlight.getNumber_of_fragments() == null) {
+		if (highlightConfiguration.getNumber_of_fragments() == null) {
 			map.put("number_of_fragments", null);
 		}
 		else {
 			map.put(
 				"number_of_fragments",
-				String.valueOf(highlight.getNumber_of_fragments()));
+				String.valueOf(
+					highlightConfiguration.getNumber_of_fragments()));
 		}
 
-		if (highlight.getPost_tags() == null) {
+		if (highlightConfiguration.getPost_tags() == null) {
 			map.put("post_tags", null);
 		}
 		else {
-			map.put("post_tags", String.valueOf(highlight.getPost_tags()));
+			map.put(
+				"post_tags",
+				String.valueOf(highlightConfiguration.getPost_tags()));
 		}
 
-		if (highlight.getPre_tags() == null) {
+		if (highlightConfiguration.getPre_tags() == null) {
 			map.put("pre_tags", null);
 		}
 		else {
-			map.put("pre_tags", String.valueOf(highlight.getPre_tags()));
+			map.put(
+				"pre_tags",
+				String.valueOf(highlightConfiguration.getPre_tags()));
 		}
 
-		if (highlight.getRequire_field_match() == null) {
+		if (highlightConfiguration.getRequire_field_match() == null) {
 			map.put("require_field_match", null);
 		}
 		else {
 			map.put(
 				"require_field_match",
-				String.valueOf(highlight.getRequire_field_match()));
+				String.valueOf(
+					highlightConfiguration.getRequire_field_match()));
 		}
 
-		if (highlight.getType() == null) {
+		if (highlightConfiguration.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(highlight.getType()));
+			map.put("type", String.valueOf(highlightConfiguration.getType()));
 		}
 
 		return map;
 	}
 
-	public static class HighlightJSONParser extends BaseJSONParser<Highlight> {
+	public static class HighlightConfigurationJSONParser
+		extends BaseJSONParser<HighlightConfiguration> {
 
 		@Override
-		protected Highlight createDTO() {
-			return new Highlight();
+		protected HighlightConfiguration createDTO() {
+			return new HighlightConfiguration();
 		}
 
 		@Override
-		protected Highlight[] createDTOArray(int size) {
-			return new Highlight[size];
+		protected HighlightConfiguration[] createDTOArray(int size) {
+			return new HighlightConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			Highlight highlight, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			HighlightConfiguration highlightConfiguration,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "fields")) {
 				if (jsonParserFieldValue != null) {
-					highlight.setFields(
-						(Map)HighlightSerDes.toMap(
+					highlightConfiguration.setFields(
+						(Map)HighlightConfigurationSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragment_size")) {
 				if (jsonParserFieldValue != null) {
-					highlight.setFragment_size(
+					highlightConfiguration.setFragment_size(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -264,19 +282,19 @@ public class HighlightSerDes {
 						jsonParserFieldName, "number_of_fragments")) {
 
 				if (jsonParserFieldValue != null) {
-					highlight.setNumber_of_fragments(
+					highlightConfiguration.setNumber_of_fragments(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "post_tags")) {
 				if (jsonParserFieldValue != null) {
-					highlight.setPost_tags(
+					highlightConfiguration.setPost_tags(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pre_tags")) {
 				if (jsonParserFieldValue != null) {
-					highlight.setPre_tags(
+					highlightConfiguration.setPre_tags(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
@@ -284,13 +302,14 @@ public class HighlightSerDes {
 						jsonParserFieldName, "require_field_match")) {
 
 				if (jsonParserFieldValue != null) {
-					highlight.setRequire_field_match(
+					highlightConfiguration.setRequire_field_match(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					highlight.setType((String)jsonParserFieldValue);
+					highlightConfiguration.setType(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

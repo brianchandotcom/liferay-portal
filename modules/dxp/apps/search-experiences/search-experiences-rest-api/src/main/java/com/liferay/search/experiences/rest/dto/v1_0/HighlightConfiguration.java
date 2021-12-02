@@ -44,17 +44,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Highlight")
+@GraphQLName("HighlightConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Highlight")
-public class Highlight implements Serializable {
+@XmlRootElement(name = "HighlightConfiguration")
+public class HighlightConfiguration implements Serializable {
 
-	public static Highlight toDTO(String json) {
-		return ObjectMapperUtil.readValue(Highlight.class, json);
+	public static HighlightConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(HighlightConfiguration.class, json);
 	}
 
-	public static Highlight unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Highlight.class, json);
+	public static HighlightConfiguration unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			HighlightConfiguration.class, json);
 	}
 
 	@Schema
@@ -259,13 +260,14 @@ public class Highlight implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Highlight)) {
+		if (!(object instanceof HighlightConfiguration)) {
 			return false;
 		}
 
-		Highlight highlight = (Highlight)object;
+		HighlightConfiguration highlightConfiguration =
+			(HighlightConfiguration)object;
 
-		return Objects.equals(toString(), highlight.toString());
+		return Objects.equals(toString(), highlightConfiguration.toString());
 	}
 
 	@Override
@@ -389,7 +391,7 @@ public class Highlight implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Highlight",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.HighlightConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

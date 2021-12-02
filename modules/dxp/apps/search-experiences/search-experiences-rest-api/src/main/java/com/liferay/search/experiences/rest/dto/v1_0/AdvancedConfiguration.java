@@ -42,17 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Advanced")
+@GraphQLName("AdvancedConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Advanced")
-public class Advanced implements Serializable {
+@XmlRootElement(name = "AdvancedConfiguration")
+public class AdvancedConfiguration implements Serializable {
 
-	public static Advanced toDTO(String json) {
-		return ObjectMapperUtil.readValue(Advanced.class, json);
+	public static AdvancedConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(AdvancedConfiguration.class, json);
 	}
 
-	public static Advanced unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Advanced.class, json);
+	public static AdvancedConfiguration unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			AdvancedConfiguration.class, json);
 	}
 
 	@Schema
@@ -145,13 +146,14 @@ public class Advanced implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Advanced)) {
+		if (!(object instanceof AdvancedConfiguration)) {
 			return false;
 		}
 
-		Advanced advanced = (Advanced)object;
+		AdvancedConfiguration advancedConfiguration =
+			(AdvancedConfiguration)object;
 
-		return Objects.equals(toString(), advanced.toString());
+		return Objects.equals(toString(), advancedConfiguration.toString());
 	}
 
 	@Override
@@ -231,7 +233,7 @@ public class Advanced implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Advanced",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

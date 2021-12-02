@@ -14,12 +14,15 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -59,21 +62,20 @@ public class Parameter implements Serializable {
 
 	@Schema
 	@Valid
-	public ValueDefinition getValueDefinition() {
-		return valueDefinition;
+	public Object getDefaultValue() {
+		return defaultValue;
 	}
 
-	public void setValueDefinition(ValueDefinition valueDefinition) {
-		this.valueDefinition = valueDefinition;
+	public void setDefaultValue(Object defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
 	@JsonIgnore
-	public void setValueDefinition(
-		UnsafeSupplier<ValueDefinition, Exception>
-			valueDefinitionUnsafeSupplier) {
+	public void setDefaultValue(
+		UnsafeSupplier<Object, Exception> defaultValueUnsafeSupplier) {
 
 		try {
-			valueDefinition = valueDefinitionUnsafeSupplier.get();
+			defaultValue = defaultValueUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -85,7 +87,125 @@ public class Parameter implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ValueDefinition valueDefinition;
+	protected Object defaultValue;
+
+	@Schema
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	@JsonIgnore
+	public void setFormat(
+		UnsafeSupplier<String, Exception> formatUnsafeSupplier) {
+
+		try {
+			format = formatUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String format;
+
+	@Schema
+	@Valid
+	public Object getMax() {
+		return max;
+	}
+
+	public void setMax(Object max) {
+		this.max = max;
+	}
+
+	@JsonIgnore
+	public void setMax(UnsafeSupplier<Object, Exception> maxUnsafeSupplier) {
+		try {
+			max = maxUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object max;
+
+	@Schema
+	@Valid
+	public Object getMin() {
+		return min;
+	}
+
+	public void setMin(Object min) {
+		this.min = min;
+	}
+
+	@JsonIgnore
+	public void setMin(UnsafeSupplier<Object, Exception> minUnsafeSupplier) {
+		try {
+			min = minUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object min;
+
+	@Schema
+	@Valid
+	public Type getType() {
+		return type;
+	}
+
+	@JsonIgnore
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Type type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,14 +234,93 @@ public class Parameter implements Serializable {
 
 		sb.append("{");
 
-		if (valueDefinition != null) {
+		if (defaultValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"valueDefinition\": ");
+			sb.append("\"defaultValue\": ");
 
-			sb.append(String.valueOf(valueDefinition));
+			if (defaultValue instanceof Map) {
+				sb.append(
+					JSONFactoryUtil.createJSONObject((Map<?, ?>)defaultValue));
+			}
+			else if (defaultValue instanceof String) {
+				sb.append("\"");
+				sb.append((String)defaultValue);
+				sb.append("\"");
+			}
+			else {
+				sb.append(defaultValue);
+			}
+		}
+
+		if (format != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"format\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(format));
+
+			sb.append("\"");
+		}
+
+		if (max != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"max\": ");
+
+			if (max instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)max));
+			}
+			else if (max instanceof String) {
+				sb.append("\"");
+				sb.append((String)max);
+				sb.append("\"");
+			}
+			else {
+				sb.append(max);
+			}
+		}
+
+		if (min != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"min\": ");
+
+			if (min instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)min));
+			}
+			else if (min instanceof String) {
+				sb.append("\"");
+				sb.append((String)min);
+				sb.append("\"");
+			}
+			else {
+				sb.append(min);
+			}
+		}
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -135,6 +334,46 @@ public class Parameter implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		DATE("Date"), DOUBLE("Double"), FLOAT("Float"), INTEGER("Integer"),
+		INTEGER_ARRAY("IntegerArray"), LONG("Long"), LONG_ARRAY("LongArray"),
+		STRING("String"), STRING_ARRAY("StringArray"), TIME_RANGE("TimeRange");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

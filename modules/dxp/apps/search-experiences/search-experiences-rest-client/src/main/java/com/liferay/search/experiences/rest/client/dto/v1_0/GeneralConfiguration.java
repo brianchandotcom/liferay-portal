@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.GeneralSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.GeneralConfigurationSerDes;
 
 import java.io.Serializable;
 
@@ -28,10 +28,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class General implements Cloneable, Serializable {
+public class GeneralConfiguration implements Cloneable, Serializable {
 
-	public static General toDTO(String json) {
-		return GeneralSerDes.toDTO(json);
+	public static GeneralConfiguration toDTO(String json) {
+		return GeneralConfigurationSerDes.toDTO(json);
 	}
 
 	public String[] getClauseContributorsExcludes() {
@@ -171,8 +171,8 @@ public class General implements Cloneable, Serializable {
 	protected String[] searchableAssetTypes;
 
 	@Override
-	public General clone() throws CloneNotSupportedException {
-		return (General)super.clone();
+	public GeneralConfiguration clone() throws CloneNotSupportedException {
+		return (GeneralConfiguration)super.clone();
 	}
 
 	@Override
@@ -181,13 +181,14 @@ public class General implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof General)) {
+		if (!(object instanceof GeneralConfiguration)) {
 			return false;
 		}
 
-		General general = (General)object;
+		GeneralConfiguration generalConfiguration =
+			(GeneralConfiguration)object;
 
-		return Objects.equals(toString(), general.toString());
+		return Objects.equals(toString(), generalConfiguration.toString());
 	}
 
 	@Override
@@ -198,7 +199,7 @@ public class General implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return GeneralSerDes.toJSON(this);
+		return GeneralConfigurationSerDes.toJSON(this);
 	}
 
 }

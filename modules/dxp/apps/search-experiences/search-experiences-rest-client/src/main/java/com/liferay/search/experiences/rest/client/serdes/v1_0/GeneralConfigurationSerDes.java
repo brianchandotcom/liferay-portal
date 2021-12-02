@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.General;
+import com.liferay.search.experiences.rest.client.dto.v1_0.GeneralConfiguration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class GeneralSerDes {
+public class GeneralConfigurationSerDes {
 
-	public static General toDTO(String json) {
-		GeneralJSONParser generalJSONParser = new GeneralJSONParser();
+	public static GeneralConfiguration toDTO(String json) {
+		GeneralConfigurationJSONParser generalConfigurationJSONParser =
+			new GeneralConfigurationJSONParser();
 
-		return generalJSONParser.parseToDTO(json);
+		return generalConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static General[] toDTOs(String json) {
-		GeneralJSONParser generalJSONParser = new GeneralJSONParser();
+	public static GeneralConfiguration[] toDTOs(String json) {
+		GeneralConfigurationJSONParser generalConfigurationJSONParser =
+			new GeneralConfigurationJSONParser();
 
-		return generalJSONParser.parseToDTOs(json);
+		return generalConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(General general) {
-		if (general == null) {
+	public static String toJSON(GeneralConfiguration generalConfiguration) {
+		if (generalConfiguration == null) {
 			return "null";
 		}
 
@@ -53,7 +55,7 @@ public class GeneralSerDes {
 
 		sb.append("{");
 
-		if (general.getClauseContributorsExcludes() != null) {
+		if (generalConfiguration.getClauseContributorsExcludes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -62,16 +64,24 @@ public class GeneralSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < general.getClauseContributorsExcludes().length;
+			for (int i = 0;
+				 i <
+					 generalConfiguration.
+						 getClauseContributorsExcludes().length;
 				 i++) {
 
 				sb.append("\"");
 
-				sb.append(_escape(general.getClauseContributorsExcludes()[i]));
+				sb.append(
+					_escape(
+						generalConfiguration.getClauseContributorsExcludes()
+							[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < general.getClauseContributorsExcludes().length) {
+				if ((i + 1) < generalConfiguration.
+						getClauseContributorsExcludes().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -79,7 +89,7 @@ public class GeneralSerDes {
 			sb.append("]");
 		}
 
-		if (general.getClauseContributorsIncludes() != null) {
+		if (generalConfiguration.getClauseContributorsIncludes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -88,16 +98,24 @@ public class GeneralSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < general.getClauseContributorsIncludes().length;
+			for (int i = 0;
+				 i <
+					 generalConfiguration.
+						 getClauseContributorsIncludes().length;
 				 i++) {
 
 				sb.append("\"");
 
-				sb.append(_escape(general.getClauseContributorsIncludes()[i]));
+				sb.append(
+					_escape(
+						generalConfiguration.getClauseContributorsIncludes()
+							[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < general.getClauseContributorsIncludes().length) {
+				if ((i + 1) < generalConfiguration.
+						getClauseContributorsIncludes().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -105,37 +123,37 @@ public class GeneralSerDes {
 			sb.append("]");
 		}
 
-		if (general.getEmptySearchEnabled() != null) {
+		if (generalConfiguration.getEmptySearchEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"emptySearchEnabled\": ");
 
-			sb.append(general.getEmptySearchEnabled());
+			sb.append(generalConfiguration.getEmptySearchEnabled());
 		}
 
-		if (general.getExplain() != null) {
+		if (generalConfiguration.getExplain() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"explain\": ");
 
-			sb.append(general.getExplain());
+			sb.append(generalConfiguration.getExplain());
 		}
 
-		if (general.getIncludeResponseString() != null) {
+		if (generalConfiguration.getIncludeResponseString() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"includeResponseString\": ");
 
-			sb.append(general.getIncludeResponseString());
+			sb.append(generalConfiguration.getIncludeResponseString());
 		}
 
-		if (general.getSearchableAssetTypes() != null) {
+		if (generalConfiguration.getSearchableAssetTypes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -144,14 +162,20 @@ public class GeneralSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < general.getSearchableAssetTypes().length; i++) {
+			for (int i = 0;
+				 i < generalConfiguration.getSearchableAssetTypes().length;
+				 i++) {
+
 				sb.append("\"");
 
-				sb.append(_escape(general.getSearchableAssetTypes()[i]));
+				sb.append(
+					_escape(generalConfiguration.getSearchableAssetTypes()[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < general.getSearchableAssetTypes().length) {
+				if ((i + 1) <
+						generalConfiguration.getSearchableAssetTypes().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -165,95 +189,103 @@ public class GeneralSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		GeneralJSONParser generalJSONParser = new GeneralJSONParser();
+		GeneralConfigurationJSONParser generalConfigurationJSONParser =
+			new GeneralConfigurationJSONParser();
 
-		return generalJSONParser.parseToMap(json);
+		return generalConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(General general) {
-		if (general == null) {
+	public static Map<String, String> toMap(
+		GeneralConfiguration generalConfiguration) {
+
+		if (generalConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (general.getClauseContributorsExcludes() == null) {
+		if (generalConfiguration.getClauseContributorsExcludes() == null) {
 			map.put("clauseContributorsExcludes", null);
 		}
 		else {
 			map.put(
 				"clauseContributorsExcludes",
-				String.valueOf(general.getClauseContributorsExcludes()));
+				String.valueOf(
+					generalConfiguration.getClauseContributorsExcludes()));
 		}
 
-		if (general.getClauseContributorsIncludes() == null) {
+		if (generalConfiguration.getClauseContributorsIncludes() == null) {
 			map.put("clauseContributorsIncludes", null);
 		}
 		else {
 			map.put(
 				"clauseContributorsIncludes",
-				String.valueOf(general.getClauseContributorsIncludes()));
+				String.valueOf(
+					generalConfiguration.getClauseContributorsIncludes()));
 		}
 
-		if (general.getEmptySearchEnabled() == null) {
+		if (generalConfiguration.getEmptySearchEnabled() == null) {
 			map.put("emptySearchEnabled", null);
 		}
 		else {
 			map.put(
 				"emptySearchEnabled",
-				String.valueOf(general.getEmptySearchEnabled()));
+				String.valueOf(generalConfiguration.getEmptySearchEnabled()));
 		}
 
-		if (general.getExplain() == null) {
+		if (generalConfiguration.getExplain() == null) {
 			map.put("explain", null);
 		}
 		else {
-			map.put("explain", String.valueOf(general.getExplain()));
+			map.put(
+				"explain", String.valueOf(generalConfiguration.getExplain()));
 		}
 
-		if (general.getIncludeResponseString() == null) {
+		if (generalConfiguration.getIncludeResponseString() == null) {
 			map.put("includeResponseString", null);
 		}
 		else {
 			map.put(
 				"includeResponseString",
-				String.valueOf(general.getIncludeResponseString()));
+				String.valueOf(
+					generalConfiguration.getIncludeResponseString()));
 		}
 
-		if (general.getSearchableAssetTypes() == null) {
+		if (generalConfiguration.getSearchableAssetTypes() == null) {
 			map.put("searchableAssetTypes", null);
 		}
 		else {
 			map.put(
 				"searchableAssetTypes",
-				String.valueOf(general.getSearchableAssetTypes()));
+				String.valueOf(generalConfiguration.getSearchableAssetTypes()));
 		}
 
 		return map;
 	}
 
-	public static class GeneralJSONParser extends BaseJSONParser<General> {
+	public static class GeneralConfigurationJSONParser
+		extends BaseJSONParser<GeneralConfiguration> {
 
 		@Override
-		protected General createDTO() {
-			return new General();
+		protected GeneralConfiguration createDTO() {
+			return new GeneralConfiguration();
 		}
 
 		@Override
-		protected General[] createDTOArray(int size) {
-			return new General[size];
+		protected GeneralConfiguration[] createDTOArray(int size) {
+			return new GeneralConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			General general, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			GeneralConfiguration generalConfiguration,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
 					jsonParserFieldName, "clauseContributorsExcludes")) {
 
 				if (jsonParserFieldValue != null) {
-					general.setClauseContributorsExcludes(
+					generalConfiguration.setClauseContributorsExcludes(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
@@ -261,7 +293,7 @@ public class GeneralSerDes {
 						jsonParserFieldName, "clauseContributorsIncludes")) {
 
 				if (jsonParserFieldValue != null) {
-					general.setClauseContributorsIncludes(
+					generalConfiguration.setClauseContributorsIncludes(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
@@ -269,20 +301,21 @@ public class GeneralSerDes {
 						jsonParserFieldName, "emptySearchEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					general.setEmptySearchEnabled(
+					generalConfiguration.setEmptySearchEnabled(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "explain")) {
 				if (jsonParserFieldValue != null) {
-					general.setExplain((Boolean)jsonParserFieldValue);
+					generalConfiguration.setExplain(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "includeResponseString")) {
 
 				if (jsonParserFieldValue != null) {
-					general.setIncludeResponseString(
+					generalConfiguration.setIncludeResponseString(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
@@ -290,7 +323,7 @@ public class GeneralSerDes {
 						jsonParserFieldName, "searchableAssetTypes")) {
 
 				if (jsonParserFieldValue != null) {
-					general.setSearchableAssetTypes(
+					generalConfiguration.setSearchableAssetTypes(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}

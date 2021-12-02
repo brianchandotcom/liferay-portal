@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.HighlightSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.HighlightConfigurationSerDes;
 
 import java.io.Serializable;
 
@@ -29,10 +29,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Highlight implements Cloneable, Serializable {
+public class HighlightConfiguration implements Cloneable, Serializable {
 
-	public static Highlight toDTO(String json) {
-		return HighlightSerDes.toDTO(json);
+	public static HighlightConfiguration toDTO(String json) {
+		return HighlightConfigurationSerDes.toDTO(json);
 	}
 
 	public Map<String, HighlightField> getFields() {
@@ -182,8 +182,8 @@ public class Highlight implements Cloneable, Serializable {
 	protected String type;
 
 	@Override
-	public Highlight clone() throws CloneNotSupportedException {
-		return (Highlight)super.clone();
+	public HighlightConfiguration clone() throws CloneNotSupportedException {
+		return (HighlightConfiguration)super.clone();
 	}
 
 	@Override
@@ -192,13 +192,14 @@ public class Highlight implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Highlight)) {
+		if (!(object instanceof HighlightConfiguration)) {
 			return false;
 		}
 
-		Highlight highlight = (Highlight)object;
+		HighlightConfiguration highlightConfiguration =
+			(HighlightConfiguration)object;
 
-		return Objects.equals(toString(), highlight.toString());
+		return Objects.equals(toString(), highlightConfiguration.toString());
 	}
 
 	@Override
@@ -209,7 +210,7 @@ public class Highlight implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return HighlightSerDes.toJSON(this);
+		return HighlightConfigurationSerDes.toJSON(this);
 	}
 
 }

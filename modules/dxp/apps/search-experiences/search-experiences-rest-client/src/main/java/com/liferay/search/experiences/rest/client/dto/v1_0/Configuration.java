@@ -19,7 +19,6 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.ConfigurationSerDe
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -35,26 +34,29 @@ public class Configuration implements Cloneable, Serializable {
 		return ConfigurationSerDes.toDTO(json);
 	}
 
-	public Advanced getAdvanced() {
-		return advanced;
+	public AdvancedConfiguration getAdvancedConfiguration() {
+		return advancedConfiguration;
 	}
 
-	public void setAdvanced(Advanced advanced) {
-		this.advanced = advanced;
+	public void setAdvancedConfiguration(
+		AdvancedConfiguration advancedConfiguration) {
+
+		this.advancedConfiguration = advancedConfiguration;
 	}
 
-	public void setAdvanced(
-		UnsafeSupplier<Advanced, Exception> advancedUnsafeSupplier) {
+	public void setAdvancedConfiguration(
+		UnsafeSupplier<AdvancedConfiguration, Exception>
+			advancedConfigurationUnsafeSupplier) {
 
 		try {
-			advanced = advancedUnsafeSupplier.get();
+			advancedConfiguration = advancedConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Advanced advanced;
+	protected AdvancedConfiguration advancedConfiguration;
 
 	public AggregationConfiguration getAggregationConfiguration() {
 		return aggregationConfiguration;
@@ -81,69 +83,77 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected AggregationConfiguration aggregationConfiguration;
 
-	public General getGeneral() {
-		return general;
+	public GeneralConfiguration getGeneralConfiguration() {
+		return generalConfiguration;
 	}
 
-	public void setGeneral(General general) {
-		this.general = general;
+	public void setGeneralConfiguration(
+		GeneralConfiguration generalConfiguration) {
+
+		this.generalConfiguration = generalConfiguration;
 	}
 
-	public void setGeneral(
-		UnsafeSupplier<General, Exception> generalUnsafeSupplier) {
+	public void setGeneralConfiguration(
+		UnsafeSupplier<GeneralConfiguration, Exception>
+			generalConfigurationUnsafeSupplier) {
 
 		try {
-			general = generalUnsafeSupplier.get();
+			generalConfiguration = generalConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected General general;
+	protected GeneralConfiguration generalConfiguration;
 
-	public Highlight getHighlight() {
-		return highlight;
+	public HighlightConfiguration getHighlightConfiguration() {
+		return highlightConfiguration;
 	}
 
-	public void setHighlight(Highlight highlight) {
-		this.highlight = highlight;
+	public void setHighlightConfiguration(
+		HighlightConfiguration highlightConfiguration) {
+
+		this.highlightConfiguration = highlightConfiguration;
 	}
 
-	public void setHighlight(
-		UnsafeSupplier<Highlight, Exception> highlightUnsafeSupplier) {
+	public void setHighlightConfiguration(
+		UnsafeSupplier<HighlightConfiguration, Exception>
+			highlightConfigurationUnsafeSupplier) {
 
 		try {
-			highlight = highlightUnsafeSupplier.get();
+			highlightConfiguration = highlightConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Highlight highlight;
+	protected HighlightConfiguration highlightConfiguration;
 
-	public Map<String, Parameter> getParameters() {
-		return parameters;
+	public ParameterConfiguration getParameterConfiguration() {
+		return parameterConfiguration;
 	}
 
-	public void setParameters(Map<String, Parameter> parameters) {
-		this.parameters = parameters;
+	public void setParameterConfiguration(
+		ParameterConfiguration parameterConfiguration) {
+
+		this.parameterConfiguration = parameterConfiguration;
 	}
 
-	public void setParameters(
-		UnsafeSupplier<Map<String, Parameter>, Exception>
-			parametersUnsafeSupplier) {
+	public void setParameterConfiguration(
+		UnsafeSupplier<ParameterConfiguration, Exception>
+			parameterConfigurationUnsafeSupplier) {
 
 		try {
-			parameters = parametersUnsafeSupplier.get();
+			parameterConfiguration = parameterConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, Parameter> parameters;
+	protected ParameterConfiguration parameterConfiguration;
 
 	public QueryConfiguration getQueryConfiguration() {
 		return queryConfiguration;

@@ -42,17 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("General")
+@GraphQLName("GeneralConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "General")
-public class General implements Serializable {
+@XmlRootElement(name = "GeneralConfiguration")
+public class GeneralConfiguration implements Serializable {
 
-	public static General toDTO(String json) {
-		return ObjectMapperUtil.readValue(General.class, json);
+	public static GeneralConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(GeneralConfiguration.class, json);
 	}
 
-	public static General unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(General.class, json);
+	public static GeneralConfiguration unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			GeneralConfiguration.class, json);
 	}
 
 	@Schema
@@ -239,13 +240,14 @@ public class General implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof General)) {
+		if (!(object instanceof GeneralConfiguration)) {
 			return false;
 		}
 
-		General general = (General)object;
+		GeneralConfiguration generalConfiguration =
+			(GeneralConfiguration)object;
 
-		return Objects.equals(toString(), general.toString());
+		return Objects.equals(toString(), generalConfiguration.toString());
 	}
 
 	@Override
@@ -369,7 +371,7 @@ public class General implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.General",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -53,14 +53,83 @@ public class ParameterSerDes {
 
 		sb.append("{");
 
-		if (parameter.getValueDefinition() != null) {
+		if (parameter.getDefaultValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"valueDefinition\": ");
+			sb.append("\"defaultValue\": ");
 
-			sb.append(String.valueOf(parameter.getValueDefinition()));
+			if (parameter.getDefaultValue() instanceof String) {
+				sb.append("\"");
+				sb.append((String)parameter.getDefaultValue());
+				sb.append("\"");
+			}
+			else {
+				sb.append(parameter.getDefaultValue());
+			}
+		}
+
+		if (parameter.getFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"format\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parameter.getFormat()));
+
+			sb.append("\"");
+		}
+
+		if (parameter.getMax() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"max\": ");
+
+			if (parameter.getMax() instanceof String) {
+				sb.append("\"");
+				sb.append((String)parameter.getMax());
+				sb.append("\"");
+			}
+			else {
+				sb.append(parameter.getMax());
+			}
+		}
+
+		if (parameter.getMin() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"min\": ");
+
+			if (parameter.getMin() instanceof String) {
+				sb.append("\"");
+				sb.append((String)parameter.getMin());
+				sb.append("\"");
+			}
+			else {
+				sb.append(parameter.getMin());
+			}
+		}
+
+		if (parameter.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(parameter.getType());
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -81,13 +150,40 @@ public class ParameterSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (parameter.getValueDefinition() == null) {
-			map.put("valueDefinition", null);
+		if (parameter.getDefaultValue() == null) {
+			map.put("defaultValue", null);
 		}
 		else {
 			map.put(
-				"valueDefinition",
-				String.valueOf(parameter.getValueDefinition()));
+				"defaultValue", String.valueOf(parameter.getDefaultValue()));
+		}
+
+		if (parameter.getFormat() == null) {
+			map.put("format", null);
+		}
+		else {
+			map.put("format", String.valueOf(parameter.getFormat()));
+		}
+
+		if (parameter.getMax() == null) {
+			map.put("max", null);
+		}
+		else {
+			map.put("max", String.valueOf(parameter.getMax()));
+		}
+
+		if (parameter.getMin() == null) {
+			map.put("min", null);
+		}
+		else {
+			map.put("min", String.valueOf(parameter.getMin()));
+		}
+
+		if (parameter.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(parameter.getType()));
 		}
 
 		return map;
@@ -110,11 +206,30 @@ public class ParameterSerDes {
 			Parameter parameter, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "valueDefinition")) {
+			if (Objects.equals(jsonParserFieldName, "defaultValue")) {
 				if (jsonParserFieldValue != null) {
-					parameter.setValueDefinition(
-						ValueDefinitionSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					parameter.setDefaultValue((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "format")) {
+				if (jsonParserFieldValue != null) {
+					parameter.setFormat((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "max")) {
+				if (jsonParserFieldValue != null) {
+					parameter.setMax((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "min")) {
+				if (jsonParserFieldValue != null) {
+					parameter.setMin((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					parameter.setType(
+						Parameter.Type.create((String)jsonParserFieldValue));
 				}
 			}
 		}

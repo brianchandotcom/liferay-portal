@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.AdvancedSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.AdvancedConfigurationSerDes;
 
 import java.io.Serializable;
 
@@ -28,10 +28,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Advanced implements Cloneable, Serializable {
+public class AdvancedConfiguration implements Cloneable, Serializable {
 
-	public static Advanced toDTO(String json) {
-		return AdvancedSerDes.toDTO(json);
+	public static AdvancedConfiguration toDTO(String json) {
+		return AdvancedConfigurationSerDes.toDTO(json);
 	}
 
 	public String[] getExcludes() {
@@ -98,8 +98,8 @@ public class Advanced implements Cloneable, Serializable {
 	protected String[] includes;
 
 	@Override
-	public Advanced clone() throws CloneNotSupportedException {
-		return (Advanced)super.clone();
+	public AdvancedConfiguration clone() throws CloneNotSupportedException {
+		return (AdvancedConfiguration)super.clone();
 	}
 
 	@Override
@@ -108,13 +108,14 @@ public class Advanced implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Advanced)) {
+		if (!(object instanceof AdvancedConfiguration)) {
 			return false;
 		}
 
-		Advanced advanced = (Advanced)object;
+		AdvancedConfiguration advancedConfiguration =
+			(AdvancedConfiguration)object;
 
-		return Objects.equals(toString(), advanced.toString());
+		return Objects.equals(toString(), advancedConfiguration.toString());
 	}
 
 	@Override
@@ -125,7 +126,7 @@ public class Advanced implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return AdvancedSerDes.toJSON(this);
+		return AdvancedConfigurationSerDes.toJSON(this);
 	}
 
 }

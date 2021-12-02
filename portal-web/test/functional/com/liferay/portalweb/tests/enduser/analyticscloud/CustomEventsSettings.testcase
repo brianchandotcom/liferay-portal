@@ -134,10 +134,12 @@ definition {
 		// AC Deactivated: Depends on this bug (LRAC-9883)
 		// AC Enable ticket: LRAC-10026
 
-		task ("Add a Web Content Display to page and display the custom event button to send the event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
+		var attributesNameList = "category,price,temp,birthdate,like";
 
-			ACCustomEvents.createCustomEvent(customEventName = "${customEventName}");
+		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
+
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
 
 		task ("Add a new user") {
@@ -169,8 +171,14 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Click to send the custom events") {
-			ACUtils.clickAnyButton(button = "Buy");
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1",
+				attributesName ="${attributesNameList}",
+				attributesValue ="${attributesValueList}");
 		}
 
 		task ("Close sessions") {

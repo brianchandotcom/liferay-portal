@@ -15,6 +15,8 @@
 import React from 'react';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
+	observer: any;
+	onClose: () => void;
 }
 declare const ModalWithProvider: React.FC<IProps>;
 export default ModalWithProvider;

@@ -78,6 +78,8 @@ definition {
 			var userId = JSONCurlUtil.get("${curl}");
 
 			AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
+
+			AssertConsoleTextPresent(value1 = "xRequestId");
 		}
 	}
 

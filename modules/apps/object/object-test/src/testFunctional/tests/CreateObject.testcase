@@ -88,10 +88,7 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.addSingleFieldEntryViaUI(entry = "String Entry");
 

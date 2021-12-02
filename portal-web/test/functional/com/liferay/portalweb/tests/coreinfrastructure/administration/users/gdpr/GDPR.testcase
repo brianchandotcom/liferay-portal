@@ -252,8 +252,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.anonymizeAllEntriesinApplicationCP(
-			applications = "Documents and Media",
 			applicationItemsCount = "3",
+			applications = "Documents and Media",
 			totalItemsCount = "3");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "Documents and Media");
@@ -433,8 +433,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Documents and Media",
 			applicationItemsCount = "5",
+			applications = "Documents and Media",
 			totalItemsCount = "5");
 
 		GDPR.anonymizeMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
@@ -488,8 +488,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Blogs",
 			applicationItemsCount = "2",
+			applications = "Blogs",
 			totalItemsCount = "2");
 
 		GDPR.anonymizeSingleEntryViaInfoPanel(rowEntry = "Blogs Entry 1");
@@ -611,7 +611,7 @@ definition {
 				wikiPageTitle = "Wiki Page Title");
 		}
 
-		task("Log back in as super user to begin data export process on new user") {
+		task ("Log back in as super user to begin data export process on new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
@@ -621,18 +621,18 @@ definition {
 			User.exportPersonalDataCP(
 				userFirstName = "userfn",
 				userLastName = "userln");
-		
+
 			GDPR.addExportProcessCP(
 				userFirstName = "userfn",
 				userLastName = "userln");
 		}
 
-		task("Delete all export processes and assert no processes can be found or listed") {
+		task ("Delete all export processes and assert no processes can be found or listed") {
 			GDPR.deleteExportedPersonalData(applications = "Web Content,Wiki,Message Boards,Blogs,Documents and Media");
 
 			AssertTextEquals(
-				value1 = "No personal data export processes were found. Please create a data export process.",
-				locator1 = "Message#EMPTY_INFO");
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No personal data export processes were found. Please create a data export process.");
 		}
 	}
 
@@ -766,8 +766,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Documents and Media",
 			applicationItemsCount = "5",
+			applications = "Documents and Media",
 			totalItemsCount = "5");
 
 		AssertTextPresent(value1 = "DLFOLDER");
@@ -777,8 +777,8 @@ definition {
 		GDPR.deleteMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
 
 		GDPR.filterByApplications(
-			applications = "Documents and Media",
 			applicationItemsCount = "3",
+			applications = "Documents and Media",
 			totalItemsCount = "3");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -963,8 +963,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Documents and Media",
 			applicationItemsCount = "3",
+			applications = "Documents and Media",
 			totalItemsCount = "3");
 
 		for (var orderBy : list "Name,Description") {
@@ -1054,8 +1054,8 @@ definition {
 		GDPR.filterByScope(scope = "Instance");
 
 		GDPR.filterByApplications(
-			applications = "All Applications",
 			applicationItemsCount = "1",
+			applications = "All Applications",
 			totalItemsCount = "1");
 
 		GDPR.deleteAllEntriesCP();
@@ -1118,8 +1118,8 @@ definition {
 		GDPR.filterByScope(scope = "Personal Site");
 
 		GDPR.filterByApplications(
-			applications = "All Applications",
 			applicationItemsCount = "4",
+			applications = "All Applications",
 			totalItemsCount = "4");
 
 		GDPR.deleteAllEntriesCP();
@@ -1165,8 +1165,8 @@ definition {
 		GDPR.filterByScope(scope = "Regular Sites");
 
 		GDPR.filterByApplications(
-			applications = "All Applications",
 			applicationItemsCount = "1",
+			applications = "All Applications",
 			totalItemsCount = "1");
 
 		GDPR.deleteAllEntriesCP();
@@ -1201,8 +1201,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Blogs",
 			applicationItemsCount = "1",
+			applications = "Blogs",
 			totalItemsCount = "1");
 
 		GDPR.deleteSingleEntryCP(rowEntry = "Blogs Entry Title");
@@ -1242,8 +1242,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Documents and Media",
 			applicationItemsCount = "1",
+			applications = "Documents and Media",
 			totalItemsCount = "1");
 
 		GDPR.editEntryCP(
@@ -1295,8 +1295,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "Documents and Media",
 			applicationItemsCount = "2",
+			applications = "Documents and Media",
 			totalItemsCount = "2");
 
 		AssertTextPresent(value1 = "DLFOLDER");
@@ -1515,8 +1515,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.filterByApplications(
-			applications = "All Applications",
 			applicationItemsCount = "6",
+			applications = "All Applications",
 			totalItemsCount = "6");
 
 		for (var applicationsCount : list "Blogs (2),Documents and Media (4)") {

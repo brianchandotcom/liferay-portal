@@ -57,8 +57,8 @@ definition {
 
 	macro anonymizeAllEntriesinApplicationCP {
 		GDPR.filterByApplications(
-			applications = "${applications}",
 			applicationItemsCount = "${applicationItemsCount}",
+			applications = "${applications}",
 			totalItemsCount = "${totalItemsCount}");
 
 		PortletEntry.selectAll();
@@ -160,8 +160,8 @@ definition {
 
 	macro deleteAndAnonymizeAllEntriesCP {
 		GDPR.filterByApplications(
-			applications = "All Applications",
 			applicationItemsCount = "${applicationItemsCount}",
+			applications = "All Applications",
 			totalItemsCount = "${totalItemsCount}");
 
 		GDPR.deleteAllEntriesCP();

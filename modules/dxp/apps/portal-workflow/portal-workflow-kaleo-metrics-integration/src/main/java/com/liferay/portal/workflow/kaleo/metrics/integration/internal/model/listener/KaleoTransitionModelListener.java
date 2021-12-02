@@ -17,13 +17,9 @@ package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.lis
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
-import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 
 import java.util.Objects;
@@ -50,17 +46,8 @@ public class KaleoTransitionModelListener
 
 		try {
 			_transitionWorkflowMetricsIndexer.addTransition(
-				kaleoTransition.getCompanyId(), kaleoTransition.getCreateDate(),
-				kaleoTransition.getModifiedDate(), kaleoTransition.getName(),
-				_getNodeId(kaleoTransition.getKaleoNodeId()),
-				kaleoTransition.getKaleoDefinitionId(),
-				kaleoDefinitionVersion.getVersion(),
-				_getNodeId(kaleoTransition.getSourceKaleoNodeId()),
-				kaleoTransition.getSourceKaleoNodeName(),
-				_getNodeId(kaleoTransition.getTargetKaleoNodeId()),
-				kaleoTransition.getTargetKaleoNodeName(),
-				kaleoTransition.getKaleoTransitionId(),
-				kaleoTransition.getUserId());
+				_indexerHelper.createAddTransitionRequest(
+					kaleoTransition, kaleoDefinitionVersion.getVersion()));
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -74,27 +61,8 @@ public class KaleoTransitionModelListener
 			kaleoTransition.getKaleoTransitionId());
 	}
 
-	private long _getNodeId(long kaleoNodeId) throws PortalException {
-		KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(
-			kaleoNodeId);
-
-		if ((kaleoNode == null) ||
-			!Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-
-			return kaleoNodeId;
-		}
-
-		KaleoTask kaleoTask = _kaleoTaskLocalService.getKaleoNodeKaleoTask(
-			kaleoNode.getKaleoNodeId());
-
-		return kaleoTask.getKaleoTaskId();
-	}
-
 	@Reference
-	private KaleoNodeLocalService _kaleoNodeLocalService;
-
-	@Reference
-	private KaleoTaskLocalService _kaleoTaskLocalService;
+	private IndexerHelper _indexerHelper;
 
 	@Reference
 	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;

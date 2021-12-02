@@ -108,6 +108,10 @@ public interface CPContentHelper {
 	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
 		throws Exception;
 
+	public String getDefaultImageFileURL(
+			long commerceAccountId, long cpDefinitionId)
+		throws PortalException;
+
 	public String getDownloadFileEntryURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws PortalException;

@@ -85,7 +85,16 @@ definition {
 	}
 
 	macro openVirtualInstancesAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+		if (isSet(baseURL)) {
+			var baseURL = "${baseURL}";
+
+			Navigator.openWithAppendToBaseURL(
+				baseURL = "${baseURL}",
+				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+		}
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+		}
 	}
 
 	@summary = "Clean up Portal Instances as part of standard teardown"

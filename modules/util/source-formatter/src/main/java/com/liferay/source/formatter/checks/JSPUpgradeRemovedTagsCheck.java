@@ -15,11 +15,13 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.ArrayList;
@@ -45,6 +47,10 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 		String upgradeToVersion = getAttributeValue(
 			"upgrade.to.version", absolutePath);
 
+		if ((upgradeFromVersion == null) || (upgradeToVersion == null)) {
+			return content;
+		}
+
 		JSONObject upgradeFromTaglibsJSONObject = _getTaglibsJSONObject(
 			upgradeFromVersion);
 		JSONObject upgradeToTaglibsJSONObject = _getTaglibsJSONObject(
@@ -52,10 +58,10 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 
 		_checkMultiLineTagAttributes(
 			fileName, content, upgradeFromTaglibsJSONObject,
-			upgradeToTaglibsJSONObject);
+			upgradeToTaglibsJSONObject, upgradeToVersion);
 		_checkSingleLineTagAttributes(
 			fileName, content, upgradeFromTaglibsJSONObject,
-			upgradeToTaglibsJSONObject);
+			upgradeToTaglibsJSONObject, upgradeToVersion);
 
 		return content;
 	}
@@ -63,7 +69,7 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 	private void _checkMultiLineTagAttributes(
 			String fileName, String content,
 			JSONObject upgradeFromTaglibsJSONObject,
-			JSONObject upgradeToTaglibsJSONObject)
+			JSONObject upgradeToTaglibsJSONObject, String upgradeToVersion)
 		throws Exception {
 
 		Matcher matcher = _multilineTagPattern.matcher(content);
@@ -79,77 +85,103 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 
 			_checkTag(
 				fileName, parseTag(matcher.group(1), false),
-				upgradeFromTaglibsJSONObject, upgradeToTaglibsJSONObject);
+				upgradeFromTaglibsJSONObject, upgradeToTaglibsJSONObject,
+				upgradeToVersion, getLineNumber(content, matcher.start()));
 		}
 	}
 
 	private void _checkSingleLineTagAttributes(
 			String fileName, String content,
 			JSONObject upgradeFromTaglibsJSONObject,
-			JSONObject upgradeToTaglibsJSONObject)
+			JSONObject upgradeToTaglibsJSONObject, String upgradeToVersion)
 		throws Exception {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
+			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineNumber++;
+
 				for (String jspTag : getJSPTags(line)) {
 					_checkTag(
 						fileName, parseTag(jspTag, false),
 						upgradeFromTaglibsJSONObject,
-						upgradeToTaglibsJSONObject);
+						upgradeToTaglibsJSONObject, upgradeToVersion,
+						lineNumber);
 				}
 			}
 		}
 	}
 
 	private void _checkTag(
-		String fileName, BaseTagAttributesCheck.Tag tag,
-		JSONObject upgradeFromTaglibsJSONObject,
-		JSONObject upgradeToTaglibsJSONObject) {
+		String fileName, Tag tag, JSONObject upgradeFromTaglibsJSONObject,
+		JSONObject upgradeToTaglibsJSONObject, String upgradeToVersion,
+		int lineNumber) {
 
 		if (tag == null) {
 			return;
 		}
 
-		String tagName = tag.getName();
+		String taglibName = tag.getTaglibName();
 
-		if (!tagName.contains(":")) {
+		if (taglibName == null) {
 			return;
 		}
 
-		TagStatus upgradeFromTagStatus = _getTagStatus(
+		Tuple upgradeFromTagStatusTuple = _getTagStatusTuple(
 			upgradeFromTaglibsJSONObject, tag);
-		TagStatus upgradeToTagStatus = _getTagStatus(
+
+		TagStatus upgradeFromTagStatus =
+			(TagStatus)upgradeFromTagStatusTuple.getObject(0);
+
+		Tuple upgradeToTagStatusTuple = _getTagStatusTuple(
 			upgradeToTaglibsJSONObject, tag);
+
+		TagStatus upgradeToTagStatus =
+			(TagStatus)upgradeToTagStatusTuple.getObject(0);
 
 		if (!upgradeFromTagStatus.equals(TagStatus.NO_TAGLIB_FOUND) &&
 			upgradeToTagStatus.equals(TagStatus.NO_TAGLIB_FOUND)) {
 
-			addMessage(fileName, "REMOVED TAGLIB: " + tagName);
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Taglib '", taglibName, "' no longer exists in version '",
+					upgradeToVersion, "'"),
+				lineNumber);
 		}
 
 		if (upgradeFromTagStatus.equals(TagStatus.ATTRIBUTES_FOUND) &&
 			upgradeToTagStatus.equals(TagStatus.NO_TAG_FOUND)) {
 
-			addMessage(fileName, "REMOVED TAG: " + tagName);
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Tag '", tag.getFullName(),
+					"' no longer exists in version '", upgradeToVersion, "'"),
+				lineNumber);
 		}
 
 		if (upgradeFromTagStatus.equals(TagStatus.ATTRIBUTES_FOUND) &&
 			upgradeToTagStatus.equals(TagStatus.ATTRIBUTES_FOUND)) {
 
 			List<String> upgradeFromTagAttributes =
-				upgradeFromTagStatus.getAttributes();
+				(List<String>)upgradeFromTagStatusTuple.getObject(1);
 			List<String> upgradeToTagAttributes =
-				upgradeToTagStatus.getAttributes();
+				(List<String>)upgradeToTagStatusTuple.getObject(1);
 
 			for (String upgradeFromTagAttribute : upgradeFromTagAttributes) {
 				if (!upgradeToTagAttributes.contains(upgradeFromTagAttribute)) {
 					addMessage(
 						fileName,
-						"REMOVED ATTRIBUTE: " + upgradeFromTagAttribute);
+						StringBundler.concat(
+							"Attribute '", upgradeFromTagAttribute,
+							"' no longer exists for tag '", tag.getFullName(),
+							"' in version '", upgradeToVersion, "'"),
+						lineNumber);
 				}
 			}
 		}
@@ -176,51 +208,49 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 		return attributeNames;
 	}
 
-	private JSONObject _getTaglibsJSONObject(String version) throws Exception {
+	private synchronized JSONObject _getTaglibsJSONObject(String version)
+		throws Exception {
+
 		JSONObject taglibsJSONObject = _taglibsJSONObjectMap.get(version);
 
 		if (taglibsJSONObject != null) {
-			return taglibsJSONObject.getJSONObject(version);
+			return taglibsJSONObject;
 		}
 
 		JSONObject portalJSONObject =
 			SourceFormatterUtil.getPortalJSONObjectByVersion(version);
 
-		taglibsJSONObject = portalJSONObject.getJSONObject("taglibs");
+		if (portalJSONObject.has("taglibs")) {
+			taglibsJSONObject = portalJSONObject.getJSONObject("taglibs");
+		}
+		else {
+			taglibsJSONObject = new JSONObjectImpl();
+		}
 
 		_taglibsJSONObjectMap.put(version, taglibsJSONObject);
 
 		return taglibsJSONObject;
 	}
 
-	private TagStatus _getTagStatus(
-		JSONObject taglibsJSONObject, BaseTagAttributesCheck.Tag tag) {
-
-		String[] parts = StringUtil.split(tag.getName(), ":");
-
-		String taglib = parts[0];
-
-		JSONObject taglibJSONObject = taglibsJSONObject.getJSONObject(taglib);
+	private Tuple _getTagStatusTuple(JSONObject taglibsJSONObject, Tag tag) {
+		JSONObject taglibJSONObject = taglibsJSONObject.getJSONObject(
+			tag.getTaglibName());
 
 		if (taglibJSONObject == null) {
-			return TagStatus.NO_TAGLIB_FOUND;
+			return new Tuple(TagStatus.NO_TAGLIB_FOUND);
 		}
 
-		String tagName = parts[1];
+		String tagName = tag.getName();
 
 		JSONObject tagJSONObject = taglibJSONObject.getJSONObject(tagName);
 
 		if (tagJSONObject == null) {
-			return TagStatus.NO_TAG_FOUND;
+			return new Tuple(TagStatus.NO_TAG_FOUND);
 		}
 
-		TagStatus tagStatus = TagStatus.ATTRIBUTES_FOUND;
+		List<String> matchingAttributeNames = new ArrayList<>();
 
 		Map<String, String> attributesMap = tag.getAttributesMap();
-
-		if (attributesMap.isEmpty()) {
-			return tagStatus;
-		}
 
 		List<String> attributeNames = _getAttributeNames(tagJSONObject);
 
@@ -228,11 +258,11 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 			String attributeName = entry.getKey();
 
 			if (attributeNames.contains(attributeName)) {
-				tagStatus.addAttribute(attributeName);
+				matchingAttributeNames.add(attributeName);
 			}
 		}
 
-		return tagStatus;
+		return new Tuple(TagStatus.ATTRIBUTES_FOUND, matchingAttributeNames);
 	}
 
 	private static final Pattern _multilineTagPattern = Pattern.compile(
@@ -243,17 +273,7 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 
 	private enum TagStatus {
 
-		ATTRIBUTES_FOUND, NO_TAG_FOUND, NO_TAGLIB_FOUND;
-
-		public void addAttribute(String attribute) {
-			_attributes.add(attribute);
-		}
-
-		public List<String> getAttributes() {
-			return _attributes;
-		}
-
-		private final List<String> _attributes = new ArrayList<>();
+		ATTRIBUTES_FOUND, NO_TAG_FOUND, NO_TAGLIB_FOUND
 
 	}
 

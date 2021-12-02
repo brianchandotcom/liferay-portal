@@ -41,344 +41,360 @@ definition {
 		}
 	}
 
+	@description = "The user with site member permissions can add and remove a portlet from customizable view."
 	@priority = "4"
-	test AddPortletAsUserWithCustomizePermission {
+	test AddAndRemoveWidgetAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Enable customizable to page then select the first column") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name");
+			PageCustomizations.enableSectionCustomizableCP(
+				columnId = "1",
+				pageName = "Test Page Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("View Page without my customizations") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		PageCustomizations.enableSectionCustomizableCP(
-			columnId = "1",
-			pageName = "Site Page Name");
+			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add an Asset Publisher and Language Selector widget to page") {
+			for (var widgetName : list "Asset Publisher,Language Selector") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONRole.addRegularRole(
-			roleKey = "Roles Regrole Name",
-			roleTitle = "Roles Regrole Name");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "CUSTOMIZE",
-			resourceName = "com.liferay.portal.kernel.model.Layout",
-			roleTitle = "Roles Regrole Name");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Roles Regrole Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutAndLoginPG(
-			password = "test",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Add a Web Content Display widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name",
-			widgetName = "Navigation Menu");
+			Portlet.addPG(portletName = "Web Content Display");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("View portlets are shown") {
+			for (var portletName : list "Web Content Display,Asset Publisher,Language Selector") {
+				Portlet.viewSpecificPG(portletName = "${portletName}");
+			}
+		}
 
-		Portlet.viewSpecificPG(portletName = "Navigation Menu");
+		task ("Delete Language Selector widget") {
+			Portlet.deletePG(portletName = "Language Selector");
+		}
+
+		task ("View Language Selector widget is not shown") {
+			Portlet.viewNoSpecificPG(portletName = "Language Selector");
+		}
 	}
 
+	@description = "A new user can add a widget portlet with customize permission."
+	@priority = "4"
+	test AddWidgetAsUserWithCustomizePermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Enable customizable to page then select the first column") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PageCustomizations.enableSectionCustomizableCP(
+				columnId = "1",
+				pageName = "Test Page Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+		}
+
+		task ("Define the permissions of new role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "CUSTOMIZE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Regular Role Name");
+		}
+
+		task ("Assign the regular role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a Navigation Menu widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Navigation Menu");
+		}
+
+		task ("View Navigation Menu widget is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewSpecificPG(portletName = "Navigation Menu");
+		}
+	}
+
+	@description = "The configurations applied to a customizable page should not affect all users."
 	@priority = "4"
 	test PortletConfigurationChangesWithinCustomizableColumnShouldNotAffectAllUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Enable customizable to page then select the first column") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name");
+			PageCustomizations.enableSectionCustomizableCP(
+				columnId = "1",
+				pageName = "Test Page Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("Add a Wiki widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Wiki");
+		}
 
-		PageCustomizations.enableSectionCustomizableCP(
-			columnId = "1",
-			pageName = "Site Page Name");
+		task ("View customize is enabled to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name",
-			widgetName = "Wiki");
+			PageCustomizations.viewCustomizablePagePG();
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("View Page without my customizations") {
+			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
 
-		PageCustomizations.viewCustomizablePagePG();
+			Portlet.viewSpecificPG(portletName = "Wiki");
+		}
 
-		AssertClick(
-			locator1 = "Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE",
-			value1 = "View Page without my customizations");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		Portlet.viewSpecificPG(portletName = "Wiki");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("Enable allow users to add wiki to any website") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+			Portlet.configureSharingPG(
+				checkAnyWebSiteToggle = "true",
+				portletName = "Wiki");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
 
-		Portlet.gotoPortletOptions(
-			portletName = "Wiki",
-			portletOption = "Configuration");
+		task ("View allow user to add wiki to any website is disabled to Test Test") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		WikiPortlet.configureSharingAllowUsersToAddWikiToAnyWebsite(enabled = "true");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Wiki",
-			portletOption = "Configuration");
-
-		WikiPortlet.viewConfigureSharingAllowUsersToAddWikiToAnyWebsite(enabled = "false");
+			Portlet.viewConfigureSharingPG(
+				checkedAnyWebSiteToggle = "false",
+				portletName = "Wiki");
+		}
 	}
 
+	@description = "User with site member and customize permission will only see portlets in customizable view."
 	@priority = "4"
-	test SiteMembershouldAddAndRemovePortletFromHisCustomizableView {
+	test SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "PageCustomizations#SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Clean up permissions in server administration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Server Administration");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name");
+			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clean up permissions");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		task ("Enable customizable to page then select the first column") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		PageCustomizations.enableSectionCustomizableCP(
-			columnId = "1",
-			pageName = "Site Page Name");
+			PageCustomizations.enableSectionCustomizableCP(
+				columnId = "1",
+				pageName = "Test Page Name");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("View Page without my customizations") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+		}
 
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("Add a Message Boards and Language Selector widgets to page") {
+			for (var widgetName : list "Message Boards,Language Selector") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		PageCustomizations.gotoCustomizedPageInfo(viewDefaultPage = "true");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name",
-			widgetName = "Asset Publisher");
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name",
-			widgetName = "Language Selector");
+		task ("Define the permissions of regular role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "CUSTOMIZE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Regular Role Name");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		task ("Assign the regular role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Portlet.addPG(portletName = "Web Content Display");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		Portlet.viewSpecificPG(portletName = "Web Content Display");
+		task ("View portlets are shown in page without customization") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.deletePG(portletName = "Language Selector");
+			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
 
-		Portlet.viewNoSpecificPG(portletName = "Language Selector");
+			for (var portletName : list "Message Boards,Language Selector") {
+				Portlet.viewSpecificPG(portletName = "${portletName}");
+			}
+		}
 
-		Portlet.addPG(portletName = "Language Selector");
+		task ("Reset customization then view portlets are not shown") {
+			PageCustomizations.changeCustomization(menuItem = "View My Customized Page");
 
-		Portlet.viewSpecificPG(portletName = "Language Selector");
+			PageCustomizations.changeCustomization(resetCustomization = "true");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-	}
+			for (var portletName : list "Message Boards,Language Selector") {
+				Portlet.viewNoSpecificPG(portletName = "${portletName}");
+			}
+		}
 
-	@priority = "4"
-	test SiteMemberWithCustomizablePagePermissionsWillOnlySeePortletsInCustomizableView {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "PageCustomizations#SiteMemberWithCustomizablePagePermissionsWillOnlySeePortletsInCustomizableView";
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Define new permissions of regular role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_TO_PAGE",
+				resourceName = "com_liferay_message_boards_web_portlet_MBPortlet",
+				roleTitle = "Regular Role Name");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_TO_PAGE",
+				resourceName = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet",
+				roleTitle = "Regular Role Name");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		task ("View portlets are shown in page without my customizations") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clean up permissions");
+			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
 
-		JSONRole.addRegularRole(
-			roleKey = "Roles Regrole Name",
-			roleTitle = "Roles Regrole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX",
-			permissionDefinitionValue = "Customize",
-			roleTitle = "Roles Regrole Name");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Roles Regrole Name",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUserToSite(
-			groupName = "Guest",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		PageCustomizations.enableSectionCustomizableCP(
-			columnId = "1",
-			pageName = "Site Page Name");
-
-		Navigator.gotoPage(pageName = "Site Page Name");
-
-		PageCustomizations.gotoCustomizedPageInfo(viewDefaultPage = "true");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page Name",
-			widgetName = "Message Boards");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page Name",
-			widgetName = "Language Selector");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Site Page Name");
-
-		PageCustomizations.gotoCustomizedPageInfo(viewDefaultPage = "true");
-
-		Portlet.viewSpecificPG(portletName = "Language Selector");
-
-		Portlet.viewSpecificPG(portletName = "Message Boards");
-
-		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
-
-		MenuItem.click(menuItem = "View My Customized Page");
-
-		PageCustomizations.gotoCustomizedPageInfo();
-
-		Portlet.viewNoSpecificPG(portletName = "Language Selector");
-
-		Portlet.viewNoSpecificPG(portletName = "Message Boards");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX",
-			permissionDefinitionValue = "Add to Page",
-			roleTitle = "Roles Regrole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX",
-			permissionDefinitionValue = "Add to Page",
-			roleTitle = "Roles Regrole Name");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Site Page Name");
-
-		PageCustomizations.gotoCustomizedPageInfo(viewDefaultPage = "true");
-
-		Portlet.viewSpecificPG(portletName = "Language Selector");
-
-		Portlet.viewSpecificPG(portletName = "Message Boards");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+			for (var portletName : list "Message Boards,Language Selector") {
+				Portlet.viewSpecificPG(portletName = "${portletName}");
+			}
+		}
 	}
 
 }

@@ -42,7 +42,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	const id = useId();
 	const {tokenValues} = useStyleBook();
 
-	const [activeDropdown, setActiveDropdown] = useState(false);
+	const [activeAutocomplete, setActiveAutocomplete] = useState(false);
+	const [activeColorPicker, setActiveColorPicker] = useState(false);
+
 	const [color, setColor] = useControlledState(
 		config.tokenReuseEnabled
 			? tokenValues[value]?.value || value
@@ -96,20 +98,26 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	}
 
 	return (
-		<ClayForm.Group className="page-editor__color-picker-field" small>
+		<ClayForm.Group small>
 			<label>{field.label}</label>
 
-			<ClayInput.Group>
+			<ClayInput.Group
+				className={classNames('page-editor__color-picker-field', {
+					hovered: !config.tokenReuseEnabled || activeColorPicker,
+				})}
+			>
 				{config.tokenReuseEnabled ? (
 					isToken ? (
 						<ClayInput.GroupItem>
 							<ColorPicker
+								active={activeColorPicker}
 								colors={colors}
 								label={
 									value
 										? tokenValues[value]?.label || ''
 										: Liferay.Language.get('default')
 								}
+								onSetActive={setActiveColorPicker}
 								onValueChange={({name, value}) => {
 									onValueSelect(field.name, name);
 									setColor(value);
@@ -122,10 +130,12 @@ export function ColorPickerField({field, onValueSelect, value}) {
 							<ClayInput.Group className="page-editor__color-picker-field__color-picker">
 								<ClayInput.GroupItem prepend shrink>
 									<ClayColorPicker
+										active={activeColorPicker}
 										colors={customColors}
 										dropDownContainerProps={{
 											className: 'cadmin',
 										}}
+										onChangeActive={setActiveColorPicker}
 										onColorsChange={setCustomColors}
 										onValueChange={(color) => {
 											debouncedOnValueSelect(
@@ -153,7 +163,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 												);
 											}}
 											onChange={(event) => {
-												setActiveDropdown(true);
+												setActiveAutocomplete(true);
 												setColor(event.target.value);
 											}}
 											value={color}
@@ -161,11 +171,11 @@ export function ColorPickerField({field, onValueSelect, value}) {
 
 										<ClayAutocomplete.DropDown
 											active={
-												activeDropdown &&
+												activeAutocomplete &&
 												filteredTokenColorValues.length
 											}
 											closeOnClickOutside={true}
-											onSetActive={setActiveDropdown}
+											onSetActive={setActiveAutocomplete}
 										>
 											<ClayDropDown.ItemList>
 												{filteredTokenColorValues.map(
@@ -200,7 +210,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 					<>
 						<ClayInput.GroupItem prepend shrink>
 							<ColorPicker
+								active={activeColorPicker}
 								colors={colors}
+								onSetActive={setActiveColorPicker}
 								onValueChange={({name, value}) => {
 									setColor(value);
 									onValueSelect(field.name, name);
@@ -253,7 +265,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 									/>
 								) : (
 									<ColorPicker
+										active={activeColorPicker}
 										colors={colors}
+										onSetActive={setActiveColorPicker}
 										onValueChange={({name, value}) => {
 											setColor(value);
 											setIsToken(true);

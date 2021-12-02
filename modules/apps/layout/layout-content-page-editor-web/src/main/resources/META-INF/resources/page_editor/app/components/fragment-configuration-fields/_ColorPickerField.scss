@@ -14,7 +14,7 @@ html#{$cadmin-selector} {
 				border-radius: 4px 0 0 4px;
 			}
 
-			&:not(:hover):not(:focus-within) {
+			&:not(:hover):not(:focus-within):not(.hovered) {
 				.page-editor__color-picker-field__action-button {
 					opacity: 0;
 				}

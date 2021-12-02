@@ -31,6 +31,8 @@ import {config} from '../../app/config/index';
 import SearchForm from '../../common/components/SearchForm';
 
 const ColorPicker = ({
+	active,
+	onSetActive,
 	colors,
 	disabled,
 	label = null,
@@ -42,7 +44,6 @@ const ColorPicker = ({
 	const dropdownContainerRef = useRef(null);
 	const triggerElementRef = useRef(null);
 
-	const [active, setActive] = useState(false);
 	const [searchValue, setSearchValue] = useState(false);
 
 	useEffect(() => {
@@ -119,7 +120,7 @@ const ColorPicker = ({
 					aria-label={label}
 					className="align-items-center border-0 d-flex page-editor__color-picker__selector w-100"
 					displayType="secondary"
-					onClick={() => setActive((active) => !active)}
+					onClick={() => onSetActive((active) => !active)}
 					ref={triggerElementRef}
 				>
 					<span className="c-inner" tabIndex="-1">
@@ -139,7 +140,7 @@ const ColorPicker = ({
 						'border-0': config.tokenReuseEnabled,
 					})}
 					displayType="secondary"
-					onClick={() => setActive(!active)}
+					onClick={() => onSetActive(!active)}
 					ref={triggerElementRef}
 					small
 					symbol="theme"
@@ -154,7 +155,7 @@ const ColorPicker = ({
 				containerProps={{
 					className: 'cadmin',
 				}}
-				onSetActive={setActive}
+				onSetActive={onSetActive}
 				ref={dropdownContainerRef}
 			>
 				{active ? (
@@ -162,7 +163,7 @@ const ColorPicker = ({
 						colors={filteredColors}
 						dropdownContainerRef={dropdownContainerRef}
 						onKeyDown={handleKeyDownWrapper}
-						onSetActive={setActive}
+						onSetActive={onSetActive}
 						onSetSearchValue={setSearchValue}
 						onValueChange={onValueChange}
 						triggerElementRef={triggerElementRef}
@@ -179,7 +180,7 @@ const ColorPicker = ({
 							<Splotch
 								className="dropdown-toggle"
 								disabled={disabled}
-								onClick={() => setActive((active) => !active)}
+								onClick={() => onSetActive((active) => !active)}
 								onKeyPress={() =>
 									triggerElementRef.current.focus()
 								}
@@ -196,7 +197,7 @@ const ColorPicker = ({
 						containerProps={{
 							className: 'cadmin',
 						}}
-						onSetActive={setActive}
+						onSetActive={onSetActive}
 						ref={dropdownContainerRef}
 					>
 						{active ? (
@@ -204,7 +205,7 @@ const ColorPicker = ({
 								colors={filteredColors}
 								dropdownContainerRef={dropdownContainerRef}
 								onKeyDown={handleKeyDownWrapper}
-								onSetActive={setActive}
+								onSetActive={onSetActive}
 								onSetSearchValue={setSearchValue}
 								onValueChange={onValueChange}
 								triggerElementRef={triggerElementRef}

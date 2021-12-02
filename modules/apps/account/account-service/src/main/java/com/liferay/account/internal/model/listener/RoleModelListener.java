@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -68,6 +69,16 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		accountRole.setAccountEntryId(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 		accountRole.setRoleId(role.getRoleId());
+
+		try {
+			_resourceLocalService.addResources(
+				role.getCompanyId(), 0, role.getUserId(),
+				AccountRole.class.getName(), accountRole.getAccountRoleId(),
+				false, false, false);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 
 		_accountRoleLocalService.addAccountRole(accountRole);
 
@@ -139,6 +150,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

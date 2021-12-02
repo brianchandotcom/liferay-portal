@@ -1,6 +1,6 @@
 {
 	"configuration": {
-		"advanced": {
+		"advancedConfiguration": {
 			"excludes": [
 			],
 			"fetchSource": true,
@@ -23,7 +23,7 @@
 		},
 		"aggregationConfiguration": {
 		},
-		"general": {
+		"generalConfiguration": {
 			"clauseContributorsExcludes": [
 			],
 			"clauseContributorsIncludes": [
@@ -53,7 +53,7 @@
 				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserModelPreFilterContributor"
 			]
 		},
-		"highlight": {
+		"highlightConfiguration": {
 			"fields": {
 				"content${context.language_id}": {
 					"fragment_offset": 10
@@ -76,7 +76,7 @@
 			"require_field_match": true,
 			"type": "unified"
 		},
-		"parameters": {
+		"parameterConfiguration": {
 		},
 		"queryConfiguration": {
 			"applyIndexerClauses": false,

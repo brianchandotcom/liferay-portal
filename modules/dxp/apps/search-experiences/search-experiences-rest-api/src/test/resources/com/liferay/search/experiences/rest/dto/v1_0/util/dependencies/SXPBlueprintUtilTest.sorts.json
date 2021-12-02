@@ -1,10 +1,10 @@
 {
 	"configuration": {
-		"advanced": {
+		"advancedConfiguration": {
 		},
 		"aggregationConfiguration": {
 		},
-		"general": {
+		"generalConfiguration": {
 			"clauseContributorsExcludes": [
 			],
 			"clauseContributorsIncludes": [
@@ -107,9 +107,9 @@
 				"com.liferay.wiki.model.WikiPage"
 			]
 		},
-		"highlight": {
+		"highlightConfiguration": {
 		},
-		"parameters": {
+		"parameterConfiguration": {
 		},
 		"queryConfiguration": {
 			"applyIndexerClauses": true

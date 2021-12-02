@@ -1,10 +1,10 @@
 {
 	"configuration": {
-		"advanced": {
+		"advancedConfiguration": {
 		},
 		"aggregationConfiguration": {
 		},
-		"general": {
+		"generalConfiguration": {
 			"clauseContributorsExcludes": [
 			],
 			"clauseContributorsIncludes": [
@@ -89,9 +89,9 @@
 				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserKeywordQueryContributor"
 			]
 		},
-		"highlight": {
+		"highlightConfiguration": {
 		},
-		"parameters": {
+		"parameterConfiguration": {
 		},
 		"queryConfiguration": {
 			"applyIndexerClauses": true,

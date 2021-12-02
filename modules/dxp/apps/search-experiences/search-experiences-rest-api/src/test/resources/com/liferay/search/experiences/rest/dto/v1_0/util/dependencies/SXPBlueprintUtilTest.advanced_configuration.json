@@ -1,6 +1,6 @@
 {
 	"configuration": {
-		"advanced": {
+		"advancedConfiguration": {
 			"excludes": [
 			],
 			"includes": [
@@ -22,7 +22,7 @@
 		},
 		"aggregationConfiguration": {
 		},
-		"general": {
+		"generalConfiguration": {
 			"clauseContributorsExcludes": [
 			],
 			"clauseContributorsIncludes": [
@@ -125,9 +125,9 @@
 				"com.liferay.wiki.model.WikiPage"
 			]
 		},
-		"highlight": {
+		"highlightConfiguration": {
 		},
-		"parameters": {
+		"parameterConfiguration": {
 		},
 		"queryConfiguration": {
 			"applyIndexerClauses": true

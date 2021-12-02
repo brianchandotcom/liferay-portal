@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer Team Extranet
+Bundle-SymbolicName: com.liferay.site.initializer.team.extranet
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Team Extranet
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-team-extranet

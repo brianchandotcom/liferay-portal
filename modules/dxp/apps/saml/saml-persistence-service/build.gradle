@@ -4,7 +4,6 @@ buildService {
 }
 
 dependencies {
-	compileInclude group: "ca.juliusdavies", name: "not-yet-commons-ssl", version: "0.3.9"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -18,6 +18,8 @@ import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
@@ -67,6 +69,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -91,12 +94,18 @@ public class ProductResourceImpl
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
+		Long commerceAccountId = _getCommerceAccountId(
+			accountId, commerceChannel);
+
 		_commerceProductViewPermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			_getAccountId(accountId, commerceChannel),
+			PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
 			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
 
-		return _toProduct(cpDefinition);
+		return _toProduct(
+			_commerceContextFactory.create(
+				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+				contextUser.getUserId(), 0, commerceAccountId),
+			cpDefinition);
 	}
 
 	@Override
@@ -110,13 +119,16 @@ public class ProductResourceImpl
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
+		Long commerceAccountId = _getCommerceAccountId(
+			accountId, commerceChannel);
+
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
 				"commerceAccountGroupIds",
 				_commerceAccountHelper.getCommerceAccountGroupIds(
-					_getAccountId(accountId, commerceChannel))
+					commerceAccountId)
 			).put(
 				"commerceChannelGroupId", commerceChannel.getGroupId()
 			).build());
@@ -137,6 +149,9 @@ public class ProductResourceImpl
 
 		return Page.of(
 			_toProducts(
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+					contextUser.getUserId(), 0, commerceAccountId),
 				_cpDefinitionHelper.search(
 					commerceChannel.getGroupId(), searchContext, cpQuery,
 					pagination.getStartPosition(),
@@ -151,7 +166,33 @@ public class ProductResourceImpl
 		return _entityModel;
 	}
 
-	private Long _getAccountId(Long accountId, CommerceChannel commerceChannel)
+	private BooleanClause<Query> _getBooleanClause(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter)
+		throws Exception {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+			{
+				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+				BooleanFilter booleanFilter = new BooleanFilter();
+
+				if (filter != null) {
+					booleanFilter.add(filter, BooleanClauseOccur.MUST);
+				}
+
+				setPreBooleanFilter(booleanFilter);
+			}
+		};
+
+		booleanQueryUnsafeConsumer.accept(booleanQuery);
+
+		return BooleanClauseFactoryUtil.create(
+			booleanQuery, BooleanClauseOccur.MUST.getName());
+	}
+
+	private Long _getCommerceAccountId(
+			Long accountId, CommerceChannel commerceChannel)
 		throws Exception {
 
 		int countUserCommerceAccounts =
@@ -184,39 +225,19 @@ public class ProductResourceImpl
 		return accountId;
 	}
 
-	private BooleanClause<Query> _getBooleanClause(
-			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter)
+	private Product _toProduct(
+			CommerceContext commerceContext, CPDefinition cpDefinition)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl() {
-			{
-				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-				BooleanFilter booleanFilter = new BooleanFilter();
-
-				if (filter != null) {
-					booleanFilter.add(filter, BooleanClauseOccur.MUST);
-				}
-
-				setPreBooleanFilter(booleanFilter);
-			}
-		};
-
-		booleanQueryUnsafeConsumer.accept(booleanQuery);
-
-		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST.getName());
-	}
-
-	private Product _toProduct(CPDefinition cpDefinition) throws Exception {
 		return _productDTOConverter.toDTO(
 			new ProductDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinition.getCPDefinitionId(), cpDefinition));
+				commerceContext, cpDefinition, cpDefinition.getCPDefinitionId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	private List<Product> _toProducts(CPDataSourceResult cpDataSourceResult)
+	private List<Product> _toProducts(
+			CommerceContext commerceContext,
+			CPDataSourceResult cpDataSourceResult)
 		throws Exception {
 
 		List<Product> products = new ArrayList<>();
@@ -227,8 +248,9 @@ public class ProductResourceImpl
 			products.add(
 				_productDTOConverter.toDTO(
 					new ProductDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						cpCatalogEntry.getCPDefinitionId(), cpCatalogEntry)));
+						commerceContext, cpCatalogEntry,
+						cpCatalogEntry.getCPDefinitionId(),
+						contextAcceptLanguage.getPreferredLocale())));
 		}
 
 		return products;
@@ -244,6 +266,9 @@ public class ProductResourceImpl
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;

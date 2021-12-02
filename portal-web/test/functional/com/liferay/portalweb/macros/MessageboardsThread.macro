@@ -349,12 +349,20 @@ definition {
 	}
 
 	macro assertDownloadedFileNameFromTempFolder {
-		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${attachmentFileName}.jpg");
+		if (isSet(exportedFileName)) {
+			var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${exportedFileName}.lar");
+		}
+		else {
+			var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${attachmentFileName}.jpg");
+		}
 
 		echo("## downloadedFileName: ${downloadedFileName}");
 
 		if (contains("${downloadedFileName}", "${attachmentFileName}")) {
 			echo("This is a correct file.");
+		}
+		else if (contains("${downloadedFileName}", "${exportedFileName}")) {
+			echo("This is a downloaded lar file.");
 		}
 		else {
 			fail("FAIL!");

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -185,14 +184,12 @@ public class DDLRecordServiceTest {
 	public void testAddRecordWithDifferentGroupIdFromRecordSet()
 		throws Exception {
 
-		long groupId = RandomTestUtil.nextLong();
-
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Field");
 
 		DDLRecordSet ddlRecordSet = addRecordSet(ddmForm);
 
 		DDLRecordTestHelper ddlRecordTestHelper = new DDLRecordTestHelper(
-			GroupTestUtil.addGroup(groupId), ddlRecordSet);
+			GroupTestUtil.addGroup(), ddlRecordSet);
 
 		ddlRecordTestHelper.addRecord();
 	}

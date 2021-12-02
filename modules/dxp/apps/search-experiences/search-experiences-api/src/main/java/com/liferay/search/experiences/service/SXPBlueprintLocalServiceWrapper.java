@@ -88,6 +88,13 @@ public class SXPBlueprintLocalServiceWrapper
 		return _sxpBlueprintLocalService.createSXPBlueprint(sxpBlueprintId);
 	}
 
+	@Override
+	public void deleteCompanySXPBlueprints(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_sxpBlueprintLocalService.deleteCompanySXPBlueprints(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

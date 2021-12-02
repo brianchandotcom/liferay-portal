@@ -157,8 +157,8 @@ public class CommerceOrderImporterTypeTest {
 		String fileName = "test_failed_csv_import.csv";
 
 		String fileContent = StringBundler.concat(
-			"skuId,skuExternalReferenceCode,quantity", StringPool.NEW_LINE,
-			",erc-test-fail,1", StringPool.NEW_LINE, ",erc-test,0");
+			"sku,quantity", StringPool.NEW_LINE, "erc-test-fail,1",
+			StringPool.NEW_LINE, "erc-test,0");
 
 		File file = FileUtil.createTempFile(fileContent.getBytes());
 
@@ -229,8 +229,7 @@ public class CommerceOrderImporterTypeTest {
 		String fileName = "test_successful_csv_import.csv";
 
 		String fileContent = StringBundler.concat(
-			"skuId,skuExternalReferenceCode,quantity", StringPool.NEW_LINE,
-			",erc-test,1");
+			"sku,quantity", StringPool.NEW_LINE, "erc-test,1");
 
 		File file = FileUtil.createTempFile(fileContent.getBytes());
 

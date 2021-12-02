@@ -17,31 +17,16 @@ package com.liferay.source.formatter.checks.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONArrayImpl;
-import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.portal.xml.SAXReaderFactory;
-import com.liferay.source.formatter.SourceFormatterExcludes;
-import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaClassParser;
-import com.liferay.source.formatter.parser.JavaMethod;
-import com.liferay.source.formatter.parser.JavaParameter;
-import com.liferay.source.formatter.parser.JavaSignature;
-import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,11 +34,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -169,59 +149,6 @@ public class SourceUtil {
 		}
 
 		return ArrayUtil.toIntArray(multiLinePositions);
-	}
-
-	public static JSONObject getPortalJSONObject(
-			String dirName, SourceFormatterExcludes sourceFormatterExcludes,
-			int maxLineLength)
-		throws IOException {
-
-		JSONObject portalJSONObject = new JSONObjectImpl();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(1);
-
-		List<Future<Tuple>> futures = new ArrayList<>();
-
-		List<String> fileNames = SourceFormatterUtil.scanForFiles(
-			dirName, new String[0], new String[] {"**/*.java"},
-			sourceFormatterExcludes, true);
-
-		for (String fileName : fileNames) {
-			if (!fileName.contains("/com/liferay/")) {
-				continue;
-			}
-
-			Future<Tuple> future = executorService.submit(
-				new Callable<Tuple>() {
-
-					@Override
-					public Tuple call() throws Exception {
-						return _getClassTuple(fileName, maxLineLength);
-					}
-
-				});
-
-			futures.add(future);
-		}
-
-		for (Future<Tuple> future : futures) {
-			try {
-				Tuple tuple = future.get(1, TimeUnit.MINUTES);
-
-				if (tuple != null) {
-					portalJSONObject.put(
-						(String)tuple.getObject(0),
-						(JSONObject)tuple.getObject(1));
-				}
-			}
-			catch (Exception exception) {
-				future.cancel(true);
-			}
-		}
-
-		executorService.shutdown();
-
-		return portalJSONObject;
 	}
 
 	public static String getRootDirName(String absolutePath) {
@@ -394,139 +321,6 @@ public class SourceUtil {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
 		return saxReader.read(new UnsyncStringReader(content));
-	}
-
-	private static Tuple _getClassTuple(String fileName, int maxLineLength)
-		throws Exception {
-
-		String content = JavaParser.parse(
-			new File(fileName), maxLineLength, false);
-
-		JavaClass javaClass = null;
-
-		try {
-			javaClass = JavaClassParser.parseJavaClass(fileName, content);
-		}
-		catch (Exception exception) {
-			return null;
-		}
-
-		String className = javaClass.getName(true);
-
-		if (!className.startsWith("com.liferay.")) {
-			return null;
-		}
-
-		JSONObject classJSONObject = new JSONObjectImpl();
-
-		if (javaClass.hasAnnotation("Deprecated")) {
-			classJSONObject.put("deprecated", true);
-		}
-
-		JSONArray extendedClassesJSONArray = _getExtendedClassesJSONArray(
-			javaClass);
-
-		if (extendedClassesJSONArray.length() > 0) {
-			classJSONObject.put("extendedClassNames", extendedClassesJSONArray);
-		}
-
-		classJSONObject.put("fileName", fileName);
-
-		JSONArray implementedClassesJSONArray = _getImplementedClassesJSONArray(
-			javaClass);
-
-		if (implementedClassesJSONArray.length() > 0) {
-			classJSONObject.put(
-				"implementedClassNames", implementedClassesJSONArray);
-		}
-
-		JSONArray methodsJSONArray = _getMethodsJSONArray(javaClass);
-
-		if (methodsJSONArray.length() > 0) {
-			classJSONObject.put("methods", methodsJSONArray);
-		}
-
-		return new Tuple(javaClass.getName(true), classJSONObject);
-	}
-
-	private static JSONArray _getExtendedClassesJSONArray(JavaClass javaClass) {
-		JSONArray extendedClassesJSONArray = new JSONArrayImpl();
-
-		for (String extendedClassName : javaClass.getExtendedClassNames(true)) {
-			extendedClassesJSONArray.put(extendedClassName);
-		}
-
-		return extendedClassesJSONArray;
-	}
-
-	private static JSONArray _getImplementedClassesJSONArray(
-		JavaClass javaClass) {
-
-		JSONArray implementedClassesJSONArray = new JSONArrayImpl();
-
-		for (String implementedClassName :
-				javaClass.getImplementedClassNames(true)) {
-
-			implementedClassesJSONArray.put(implementedClassName);
-		}
-
-		return implementedClassesJSONArray;
-	}
-
-	private static JSONArray _getMethodsJSONArray(JavaClass javaClass) {
-		JSONArray methodsJSONArray = new JSONArrayImpl();
-
-		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-			if (!childJavaTerm.isJavaMethod() || childJavaTerm.isPrivate()) {
-				continue;
-			}
-
-			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
-
-			JSONObject methodJSONObject = new JSONObjectImpl();
-
-			methodJSONObject.put(
-				"accessModifier", javaMethod.getAccessModifier());
-
-			if (javaMethod.hasAnnotation("Deprecated")) {
-				methodJSONObject.put("deprecated", true);
-			}
-
-			methodJSONObject.put("name", javaMethod.getName());
-
-			if (javaMethod.hasAnnotation("Override")) {
-				methodJSONObject.put("override", true);
-			}
-
-			JavaSignature javaSignature = null;
-
-			try {
-				javaSignature = javaMethod.getSignature();
-			}
-			catch (Exception exception) {
-				continue;
-			}
-
-			List<JavaParameter> parameters = javaSignature.getParameters();
-
-			if (!parameters.isEmpty()) {
-				JSONArray parametersJSONArray = new JSONArrayImpl();
-
-				for (JavaParameter javaParameter : parameters) {
-					parametersJSONArray.put(
-						javaParameter.getParameterType(true));
-				}
-
-				methodJSONObject.put("parameters", parametersJSONArray);
-			}
-
-			methodJSONObject.put(
-				"returnType", javaSignature.getReturnType(true));
-
-			methodsJSONArray.put(methodJSONObject);
-		}
-
-		return methodsJSONArray;
 	}
 
 	private static final String[] _ARTICLES = {"a", "an", "the"};

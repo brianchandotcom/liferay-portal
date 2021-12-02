@@ -17,12 +17,12 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.IOException;
 
@@ -171,7 +171,7 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 			return _portalJSONObject;
 		}
 
-		_portalJSONObject = SourceUtil.getPortalJSONObject(
+		_portalJSONObject = SourceFormatterUtil.getPortalJSONObject(
 			getBaseDirName(), getSourceFormatterExcludes(), getMaxLineLength());
 
 		return _portalJSONObject;

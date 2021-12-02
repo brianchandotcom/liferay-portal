@@ -28,6 +28,7 @@ import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
@@ -86,9 +87,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 						_assetCategoryLocalService, _assetTagLocalService,
 						_cpContentListEntryRendererRegistry,
 						_cpContentListRendererRegistry, _cpDataSourceRegistry,
-						_cpInstanceHelper, _cpPublisherWebHelper,
-						_cpTypeServicesTracker, httpServletRequest,
-						_itemSelector);
+						_cpDefinitionHelper, _cpInstanceHelper,
+						_cpPublisherWebHelper, _cpTypeServicesTracker,
+						httpServletRequest, _itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -489,6 +490,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	private CPDataSourceRegistry _cpDataSourceRegistry;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

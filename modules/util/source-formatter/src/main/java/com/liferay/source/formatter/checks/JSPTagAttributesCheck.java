@@ -72,11 +72,11 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 			return tag;
 		}
 
-		String tagName = tag.getName();
+		String taglibName = tag.getTaglibName();
 
-		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||
-			tagName.startsWith("c:") || tagName.startsWith("portlet:") ||
-			ArrayUtil.contains(_SINGLE_LINE_TAG_WHITELIST, tagName)) {
+		if ((taglibName == null) || taglibName.equals("aui") ||
+			taglibName.equals("c") || taglibName.equals("portlet") ||
+			ArrayUtil.contains(_SINGLE_LINE_TAG_WHITELIST, tag.getFullName())) {
 
 			tag.setMultiLine(false);
 		}
@@ -109,7 +109,8 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 			return tag;
 		}
 
-		Map<String, String> setMethodsMap = _getSetMethodsMap(tag.getName());
+		Map<String, String> setMethodsMap = _getSetMethodsMap(
+			tag.getFullName());
 
 		Map<String, String> attributesMap = tag.getAttributesMap();
 
@@ -123,15 +124,16 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 			String attributeName = entry.getKey();
 			String attributeValue = entry.getValue();
 
-			String tagName = tag.getName();
+			String tagFullName = tag.getFullName();
 
-			if (tagName.matches("\\w+")) {
+			if (tagFullName.matches("\\w+")) {
 				tag.putAttribute(
 					attributeName,
 					_formatPortletNamespaceValue(attributeValue));
 			}
 
-			if (tagName.equals("aui:button") && attributeName.equals("type") &&
+			if (tagFullName.equals("aui:button") &&
+				attributeName.equals("type") &&
 				attributeValue.equals("button")) {
 
 				iterator.remove();
@@ -139,8 +141,8 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 				continue;
 			}
 
-			if ((tagName.equals("aui:form") ||
-				 tagName.equals("liferay-frontend:edit-form")) &&
+			if ((tagFullName.equals("aui:form") ||
+				 tagFullName.equals("liferay-frontend:edit-form")) &&
 				attributeName.equals("action") &&
 				StringUtil.endsWith(attributeValue, "url.toString() %>")) {
 
@@ -149,7 +151,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 					StringUtil.replaceLast(attributeValue, ".toString()", ""));
 			}
 
-			if (tagName.equals("liferay-ui:message") &&
+			if (tagFullName.equals("liferay-ui:message") &&
 				attributeName.equals("arguments")) {
 
 				tag.putAttribute(
@@ -158,8 +160,8 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 			}
 
 			if (attributeName.equals("style") &&
-				(!tagName.contains(StringPool.COLON) ||
-				 tagName.startsWith("aui:"))) {
+				(!tagFullName.contains(StringPool.COLON) ||
+				 tagFullName.startsWith("aui:"))) {
 
 				tag.putAttribute(
 					attributeName, _formatStyleAttributeValue(attributeValue));

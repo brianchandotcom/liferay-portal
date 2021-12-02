@@ -39,10 +39,10 @@ public class XMLTagAttributesCheck extends BaseTagAttributesCheck {
 			return tag;
 		}
 
-		if (ArrayUtil.contains(_SINGLE_LINE_TAG_NAMES, tag.getName())) {
+		if (ArrayUtil.contains(_SINGLE_LINE_TAG_NAMES, tag.getFullName())) {
 			tag.setMultiLine(false);
 		}
-		else if (ArrayUtil.contains(_MULTI_LINE_TAG_NAMES, tag.getName())) {
+		else if (ArrayUtil.contains(_MULTI_LINE_TAG_NAMES, tag.getFullName())) {
 			tag.setMultiLine(true);
 		}
 

@@ -324,9 +324,9 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 	}
 
 	protected Tag sortHTMLTagAttributes(Tag tag) {
-		String tagName = tag.getName();
+		String tagFullName = tag.getFullName();
 
-		if (tagName.equals("liferay-ui:tabs")) {
+		if (tagFullName.equals("liferay-ui:tabs")) {
 			return tag;
 		}
 
@@ -335,7 +335,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
 			String attributeName = entry.getKey();
 
-			if (tagName.equals("svg") && attributeName.equals("viewBox")) {
+			if (tagFullName.equals("svg") && attributeName.equals("viewBox")) {
 				continue;
 			}
 
@@ -352,7 +352,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 					StringUtil.merge(htmlAttributes, StringPool.SPACE));
 			}
 			else if (attributeValue.matches("([-a-z0-9]+,)+[-a-z0-9]+")) {
-				if (!tagName.equals("aui:script") ||
+				if (!tagFullName.equals("aui:script") ||
 					!attributeName.equals("use")) {
 
 					continue;
@@ -375,21 +375,40 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 	protected class Tag {
 
 		public Tag(
-			String name, String indent, boolean multiLine,
+			String fullName, String indent, boolean multiLine,
 			boolean escapeQuotes) {
 
-			_name = name;
+			_fullName = fullName;
 			_indent = indent;
 			_multiLine = multiLine;
 			_escapeQuotes = escapeQuotes;
+
+			int x = _fullName.indexOf(":");
+
+			if (x != -1) {
+				_name = _fullName.substring(x + 1);
+				_taglibName = _fullName.substring(0, x);
+			}
+			else {
+				_name = _fullName;
+				_taglibName = null;
+			}
 		}
 
 		public Map<String, String> getAttributesMap() {
 			return _attributesMap;
 		}
 
+		public String getFullName() {
+			return _fullName;
+		}
+
 		public String getName() {
 			return _name;
+		}
+
+		public String getTaglibName() {
+			return _taglibName;
 		}
 
 		public void putAttribute(String attributeName, String attributeValue) {
@@ -410,7 +429,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 			sb.append(_indent);
 			sb.append(StringPool.LESS_THAN);
-			sb.append(_name);
+			sb.append(_fullName);
 
 			for (Map.Entry<String, String> entry : _attributesMap.entrySet()) {
 				if (_multiLine) {
@@ -432,7 +451,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 				if (_escapeQuotes ||
 					!attributeValue.contains(StringPool.QUOTE) ||
-					!_name.contains(StringPool.COLON)) {
+					!_fullName.contains(StringPool.COLON)) {
 
 					delimeter = StringPool.QUOTE;
 				}
@@ -471,9 +490,11 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			new NaturalOrderStringComparator());
 		private String _closingTag;
 		private final boolean _escapeQuotes;
+		private final String _fullName;
 		private final String _indent;
 		private boolean _multiLine;
 		private final String _name;
+		private final String _taglibName;
 
 	}
 

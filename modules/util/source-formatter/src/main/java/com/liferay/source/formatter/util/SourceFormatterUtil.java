@@ -21,6 +21,7 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -61,6 +62,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -68,6 +70,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 /**
  * @author Igor Spasic
@@ -310,17 +315,21 @@ public class SourceFormatterUtil {
 			int maxLineLength)
 		throws IOException {
 
-		JSONObject portalJSONObject = new JSONObjectImpl();
-
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 
 		List<Future<Tuple>> futures = new ArrayList<>();
 
+		JSONObject taglibsJSONObject = new JSONObjectImpl();
+
 		List<String> fileNames = scanForFiles(
-			dirName, new String[0], new String[] {"**/*.java"},
+			dirName, new String[0], new String[] {"**/*.java", "**/*.tld"},
 			sourceFormatterExcludes, true);
 
 		for (String fileName : fileNames) {
+			if (fileName.endsWith(".tld")) {
+				taglibsJSONObject = _addTaglib(taglibsJSONObject, fileName);
+			}
+
 			if (!fileName.contains("/com/liferay/")) {
 				continue;
 			}
@@ -338,12 +347,14 @@ public class SourceFormatterUtil {
 			futures.add(future);
 		}
 
+		JSONObject javaClassesJSONObject = new JSONObjectImpl();
+
 		for (Future<Tuple> future : futures) {
 			try {
 				Tuple tuple = future.get(1, TimeUnit.MINUTES);
 
 				if (tuple != null) {
-					portalJSONObject.put(
+					javaClassesJSONObject.put(
 						(String)tuple.getObject(0),
 						(JSONObject)tuple.getObject(1));
 				}
@@ -355,7 +366,11 @@ public class SourceFormatterUtil {
 
 		executorService.shutdown();
 
-		return portalJSONObject;
+		return JSONUtil.put(
+			"javaClasses", javaClassesJSONObject
+		).put(
+			"taglibs", taglibsJSONObject
+		);
 	}
 
 	public static String getSimpleName(String name) {
@@ -429,6 +444,100 @@ public class SourceFormatterUtil {
 			excludes, includes, sourceFormatterExcludes);
 
 		return _scanForFiles(baseDirName, pathMatchers, includeSubrepositories);
+	}
+
+	private static JSONObject _addTaglib(
+		JSONObject taglibsJSONObject, String fileName) {
+
+		File tldFile = new File(fileName);
+
+		Document document = null;
+
+		try {
+			document = SourceUtil.readXML(FileUtil.read(tldFile));
+		}
+		catch (Exception exception) {
+			return taglibsJSONObject;
+		}
+
+		Element rootElement = document.getRootElement();
+
+		if (!Objects.equals(rootElement.getName(), "taglib")) {
+			return taglibsJSONObject;
+		}
+
+		Element shortNameElement = rootElement.element("short-name");
+
+		if (shortNameElement == null) {
+			return taglibsJSONObject;
+		}
+
+		JSONObject taglibJSONObject = new JSONObjectImpl();
+
+		List<Element> tagElements = rootElement.elements("tag");
+
+		for (Element tagElement : tagElements) {
+			Element tagClassElement = tagElement.element("tag-class");
+
+			String tagClassName = tagClassElement.getStringValue();
+
+			if (!tagClassName.startsWith("com.liferay")) {
+				continue;
+			}
+
+			JSONObject tagJSONObject = new JSONObjectImpl();
+
+			JSONArray tagAttributeNamesJSONArray = new JSONArrayImpl();
+
+			List<Element> attributeElements = tagElement.elements("attribute");
+
+			for (Element attributeElement : attributeElements) {
+				JSONObject attributeJSONObject = new JSONObjectImpl();
+
+				Element attributeDescriptionElement = attributeElement.element(
+					"description");
+
+				if (attributeDescriptionElement != null) {
+					String description =
+						attributeDescriptionElement.getStringValue();
+
+					if (description.startsWith("Deprecated")) {
+						attributeJSONObject.put("deprecated", true);
+					}
+				}
+
+				Element attributeNameElement = attributeElement.element("name");
+
+				attributeJSONObject.put(
+					"name", attributeNameElement.getStringValue());
+
+				tagAttributeNamesJSONArray.put(attributeJSONObject);
+			}
+
+			if (tagAttributeNamesJSONArray.length() > 0) {
+				tagJSONObject.put("attributes", tagAttributeNamesJSONArray);
+			}
+
+			Element tagDescriptionElement = tagElement.element("description");
+
+			if (tagDescriptionElement != null) {
+				String description = tagDescriptionElement.getStringValue();
+
+				if (description.startsWith("Deprecated")) {
+					tagJSONObject.put("deprecated", true);
+				}
+			}
+
+			Element tagNameElement = tagElement.element("name");
+
+			taglibJSONObject.put(
+				tagNameElement.getStringValue(), tagJSONObject);
+		}
+
+		taglibsJSONObject.put(
+			shortNameElement.getStringValue(), taglibJSONObject);
+
+		return taglibsJSONObject;
 	}
 
 	private static String _createRegex(String s) {

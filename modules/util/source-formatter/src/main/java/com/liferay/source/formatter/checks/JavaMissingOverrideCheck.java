@@ -166,15 +166,19 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 		return content;
 	}
 
-	private synchronized JSONObject _getPortalJSONObject() throws IOException {
-		if (_portalJSONObject != null) {
-			return _portalJSONObject;
+	private synchronized JSONObject _getJavaClassesJSONObject()
+		throws IOException {
+
+		if (_javaClassesJSONObject != null) {
+			return _javaClassesJSONObject;
 		}
 
-		_portalJSONObject = SourceFormatterUtil.getPortalJSONObject(
+		JSONObject portalJSONObject = SourceFormatterUtil.getPortalJSONObject(
 			getBaseDirName(), getSourceFormatterExcludes(), getMaxLineLength());
 
-		return _portalJSONObject;
+		_javaClassesJSONObject = portalJSONObject.getJSONObject("javaClasses");
+
+		return _javaClassesJSONObject;
 	}
 
 	private boolean _hasMethod(
@@ -220,9 +224,10 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 			JavaMethod javaMethod, String className, boolean superClass)
 		throws IOException {
 
-		JSONObject portalJSONObject = _getPortalJSONObject();
+		JSONObject javaClassesJSONObject = _getJavaClassesJSONObject();
 
-		JSONObject classJSONObject = portalJSONObject.getJSONObject(className);
+		JSONObject classJSONObject = javaClassesJSONObject.getJSONObject(
+			className);
 
 		if (classJSONObject == null) {
 			return false;
@@ -242,6 +247,6 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 		return false;
 	}
 
-	private JSONObject _portalJSONObject;
+	private JSONObject _javaClassesJSONObject;
 
 }

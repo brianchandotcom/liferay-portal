@@ -3,9 +3,7 @@
 definition {
 
 	function assertCKEditorText {
-		selenium.waitForVisible(
-			"//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]"
-		);
+		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
 
 		selenium.selectFrame();
 
@@ -51,9 +49,7 @@ definition {
 	}
 
 	function assertTextWaitForCKEditor {
-		selenium.waitForVisible(
-			"//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]"
-		);
+		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
 
 		AssertTextEquals.assertText();
 	}

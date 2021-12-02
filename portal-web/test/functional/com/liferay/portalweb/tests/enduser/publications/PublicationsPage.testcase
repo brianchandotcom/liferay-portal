@@ -231,6 +231,7 @@ definition {
 			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
 		// Workaround LPS-124618
+
 		//AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 	}

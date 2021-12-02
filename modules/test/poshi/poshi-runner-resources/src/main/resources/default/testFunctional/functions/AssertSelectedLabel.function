@@ -4,10 +4,7 @@ definition {
 	function assertPartialSelectedLabel {
 		selenium.waitForVisible();
 
-		selenium.assertPartialText(
-			"xpath=(${locator1})/option[@selected='']",
-			"${value1}"
-		);
+		selenium.assertPartialText("xpath=(${locator1})/option[@selected='']", "${value1}");
 	}
 
 	function assertSelectedLabel {

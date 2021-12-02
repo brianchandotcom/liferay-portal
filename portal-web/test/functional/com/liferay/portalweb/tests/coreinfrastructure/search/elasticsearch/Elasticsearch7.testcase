@@ -592,6 +592,7 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
 		// LRCI-2401
+
 		//Navigator.openSpecificURL(url = "http://localhost:9201");
 		//AssertTextNotPresent(value1 = "cluster_name");
 

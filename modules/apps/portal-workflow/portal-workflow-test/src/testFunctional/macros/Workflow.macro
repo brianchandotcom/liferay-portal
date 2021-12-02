@@ -416,7 +416,7 @@ definition {
 	macro configureWorkflow {
 		var key_workflowResourceValue = "${workflowResourceValue}";
 
-		Pagination.changePagination(itemsPerPage = "40");
+		Search.searchCP(searchTerm = "${workflowResourceValue}");
 
 		AssertClick.pauseAssertTextClickAt(
 			key_rowEntry = "${workflowResourceValue}",

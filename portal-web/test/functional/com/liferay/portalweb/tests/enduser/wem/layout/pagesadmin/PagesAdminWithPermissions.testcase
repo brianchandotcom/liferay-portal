@@ -1,0 +1,56 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "Can remove inline view permission for Guest."
+	@priority = "5"
+	test RemoveViewPermissionForGuest {
+		property portal.acceptance = "true";
+		property testray.component.names = "Roles";
+
+		task ("Add widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Uncheck view permission for guest then verify checkbox in unchecked") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Page Name");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
+		}
+	}
+
+}

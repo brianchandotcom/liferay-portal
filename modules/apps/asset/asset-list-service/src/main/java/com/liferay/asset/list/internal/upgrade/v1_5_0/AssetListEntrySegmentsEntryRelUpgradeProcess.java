@@ -28,6 +28,10 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 		alter(
 			AssetListEntrySegmentsEntryRelTable.class,
 			new AlterTableAddColumn("priority", "INTEGER default 0 not null"));
+
+		runSQL(
+			"update AssetListEntrySegmentsEntryRel set priority = 1 where " +
+				"segmentsEntryId = 0");
 	}
 
 }

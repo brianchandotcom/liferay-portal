@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -32,6 +34,7 @@ import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
@@ -352,6 +355,9 @@ public class PendingCommerceOrderItemDataSetDataProvider
 					_formatPromoPrice(commerceOrderItemPrice, locale), 0,
 					commerceOrderItem.getSku(),
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
+						CommerceUtil.getCommerceAccountId(
+							(CommerceContext)httpServletRequest.getAttribute(
+								CommerceWebKeys.COMMERCE_CONTEXT)),
 						commerceOrderItem.getCPInstanceId()),
 					_formatFinalPrice(commerceOrderItemPrice, locale)));
 		}

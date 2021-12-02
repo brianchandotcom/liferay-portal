@@ -56,6 +56,7 @@ import com.liferay.commerce.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -412,18 +413,9 @@ public class CommerceOrderLocalServiceImpl
 			_commerceDiscountValidatorHelper.checkValid(
 				commerceContext, commerceDiscount);
 
-			long commerceAccountId = 0;
-
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
-
-			if (commerceAccount != null) {
-				commerceAccountId = commerceAccount.getCommerceAccountId();
-			}
-
 			if (!_commerceDiscountUsageEntryLocalService.
 					validateDiscountLimitationUsage(
-						commerceAccountId,
+						CommerceUtil.getCommerceAccountId(commerceContext),
 						commerceDiscount.getCommerceDiscountId())) {
 
 				throw new CommerceDiscountLimitationTimesException();

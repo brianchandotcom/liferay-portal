@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
@@ -22,6 +21,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.util.CPCompareHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,22 +47,17 @@ public class CompareCheckboxTag extends IncludeTag {
 				CPDefinitionLocalServiceUtil.getCPDefinition(
 					_cpCatalogEntry.getCPDefinitionId());
 
-			_pictureUrl = cpDefinition.getDefaultImageThumbnailSrc();
-
-			long commerceAccountId = 0;
-
 			HttpServletRequest httpServletRequest = getRequest();
 
 			CommerceContext commerceContext =
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
+			long commerceAccountId = CommerceUtil.getCommerceAccountId(
+				commerceContext);
 
-			if (commerceAccount != null) {
-				commerceAccountId = commerceAccount.getCommerceAccountId();
-			}
+			_pictureUrl = cpDefinition.getDefaultImageThumbnailSrc(
+				commerceAccountId);
 
 			List<Long> cpDefinitionIds = _getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(), commerceAccountId,

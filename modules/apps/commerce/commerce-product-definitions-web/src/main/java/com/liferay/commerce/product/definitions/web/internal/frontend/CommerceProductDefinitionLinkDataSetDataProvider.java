@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.product.definitions.web.internal.frontend.constants.CommerceProductDataSetConstants;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductLink;
@@ -93,7 +94,8 @@ public class CommerceProductDefinitionLinkDataSetDataProvider
 						cpDefinitionLink.getCPDefinitionLinkId(),
 						new ImageField(
 							name, "rounded", "lg",
-							cpDefinition.getDefaultImageThumbnailSrc()),
+							cpDefinition.getDefaultImageThumbnailSrc(
+								CommerceAccountConstants.ACCOUNT_ID_GUEST)),
 						HtmlUtil.escape(name),
 						LanguageUtil.get(
 							httpServletRequest, cpDefinitionLink.getType()),

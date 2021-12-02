@@ -26,6 +26,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceSubscriptionEntryService;
 import com.liferay.commerce.subscription.web.internal.display.context.helper.CommerceSubscriptionDisplayContextHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.util.comparator.CommerceSubscriptionEntryCreateDateComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -92,7 +93,12 @@ public class CommerceSubscriptionContentDisplayContext {
 			CommerceSubscriptionEntry commerceSubscriptionEntry)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest = _cpRequestHelper.getRequest();
+
 		return _cpInstanceHelper.getCPInstanceThumbnailSrc(
+			CommerceUtil.getCommerceAccountId(
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT)),
 			commerceSubscriptionEntry.getCPInstanceId());
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.model.CommerceOrder;
@@ -164,7 +165,8 @@ public class CommerceOrderItemDataSetDataProvider
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		return cpDefinition.getDefaultImageThumbnailSrc();
+		return cpDefinition.getDefaultImageThumbnailSrc(
+			CommerceAccountConstants.ACCOUNT_ID_GUEST);
 	}
 
 	private List<OrderItem> _getOrderItems(
@@ -176,15 +178,15 @@ public class CommerceOrderItemDataSetDataProvider
 			return Collections.emptyList();
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
 		List<OrderItem> orderItems = new ArrayList<>();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Locale locale = themeDisplay.getLocale();
-
 			Format dateTimeFormat = FastDateFormatFactoryUtil.getDate(
 				locale, themeDisplay.getTimeZone());
 

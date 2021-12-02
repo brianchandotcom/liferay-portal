@@ -26,8 +26,6 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
-import com.liferay.commerce.price.CommerceProductPrice;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -36,6 +34,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,7 +75,6 @@ public class CommerceCartContentDisplayContext {
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			PortletResourcePermission commerceProductPortletResourcePermission,
-			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest, Portal portal)
@@ -90,7 +88,6 @@ public class CommerceCartContentDisplayContext {
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commerceProductPortletResourcePermission =
 			commerceProductPortletResourcePermission;
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
@@ -156,15 +153,6 @@ public class CommerceCartContentDisplayContext {
 		return commerceChannel.getPriceDisplayType();
 	}
 
-	public CommerceProductPrice getCommerceProductPrice(
-			CommerceOrderItem commerceOrderItem)
-		throws PortalException {
-
-		return _commerceProductPriceCalculation.getCommerceProductPrice(
-			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity(), commerceContext);
-	}
-
 	public String getCPDefinitionURL(
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -177,6 +165,7 @@ public class CommerceCartContentDisplayContext {
 		throws Exception {
 
 		return cpInstanceHelper.getCPInstanceImageFileVersion(
+			CommerceUtil.getCommerceAccountId(commerceContext),
 			_portal.getCompanyId(_httpServletRequest),
 			commerceOrderItem.getCPInstanceId());
 	}
@@ -251,7 +240,7 @@ public class CommerceCartContentDisplayContext {
 		return cpInstanceHelper.getKeyValuePairs(cpDefinitionId, json, locale);
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			commerceCartContentRequestHelper.getLiferayPortletResponse();
 
@@ -404,18 +393,6 @@ public class CommerceCartContentDisplayContext {
 			commerceCartContentRequestHelper.getLocale(), commerceOrder);
 	}
 
-	public List<CommerceOrderValidatorResult> validateCommerceOrderItem(
-			long commerceOrderItemId)
-		throws PortalException {
-
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.fetchCommerceOrderItem(
-				commerceOrderItemId);
-
-		return _commerceOrderValidatorRegistry.validate(
-			commerceCartContentRequestHelper.getLocale(), commerceOrderItem);
-	}
-
 	protected final CommerceCartContentRequestHelper
 		commerceCartContentRequestHelper;
 	protected final CommerceContext commerceContext;
@@ -434,8 +411,6 @@ public class CommerceCartContentDisplayContext {
 		_commerceOrderValidatorRegistry;
 	private final PortletResourcePermission
 		_commerceProductPortletResourcePermission;
-	private final CommerceProductPriceCalculation
-		_commerceProductPriceCalculation;
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;

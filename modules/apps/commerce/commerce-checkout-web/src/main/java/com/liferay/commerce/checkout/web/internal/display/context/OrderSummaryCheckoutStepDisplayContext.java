@@ -40,6 +40,7 @@ import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -104,14 +105,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			_httpServletRequest);
 	}
 
-	public String getCommerceOrderItemThumbnailSrc(
-			CommerceOrderItem commerceOrderItem)
-		throws Exception {
-
-		return _cpInstanceHelper.getCPInstanceThumbnailSrc(
-			commerceOrderItem.getCPInstanceId());
-	}
-
 	public CommerceOrderPrice getCommerceOrderPrice() throws PortalException {
 		CommerceOrderPrice commerceOrderPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
@@ -164,6 +157,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		throws Exception {
 
 		return _cpInstanceHelper.getCPInstanceImageFileVersion(
+			CommerceUtil.getCommerceAccountId(_commerceContext),
 			_portal.getCompanyId(_httpServletRequest),
 			commerceOrderItem.getCPInstanceId());
 	}

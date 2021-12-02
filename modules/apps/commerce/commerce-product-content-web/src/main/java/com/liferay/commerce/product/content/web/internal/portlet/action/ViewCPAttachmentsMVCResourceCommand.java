@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceMediaResolver;
@@ -22,6 +21,7 @@ import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -78,14 +78,8 @@ public class ViewCPAttachmentsMVCResourceCommand
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
-
-			long commerceAccountId = 0;
-
-			if (commerceAccount != null) {
-				commerceAccountId = commerceAccount.getCommerceAccountId();
-			}
+			long commerceAccountId = CommerceUtil.getCommerceAccountId(
+				commerceContext);
 
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 				_cpInstanceHelper.getCPAttachmentFileEntries(

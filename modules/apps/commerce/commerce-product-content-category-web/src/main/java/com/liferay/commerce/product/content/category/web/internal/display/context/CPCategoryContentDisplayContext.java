@@ -16,7 +16,6 @@ package com.liferay.commerce.product.content.category.web.internal.display.conte
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceMediaResolver;
@@ -24,6 +23,7 @@ import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.content.category.web.internal.configuration.CPCategoryContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -106,20 +106,10 @@ public class CPCategoryContentDisplayContext {
 			return null;
 		}
 
-		long commerceAccountId = 0;
-
-		CommerceContext commerceContext =
-			(CommerceContext)_httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		return _commerceMediaResolver.getURL(
-			commerceAccountId,
+			CommerceUtil.getCommerceAccountId(
+				(CommerceContext)_httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT)),
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 	}
 

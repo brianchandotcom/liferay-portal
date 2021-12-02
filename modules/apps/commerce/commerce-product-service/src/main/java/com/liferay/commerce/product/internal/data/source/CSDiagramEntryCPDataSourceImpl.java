@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.internal.data.source;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -25,6 +24,7 @@ import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,13 +80,8 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
+		long commerceAccountId = CommerceUtil.getCommerceAccountId(
+			commerceContext);
 
 		List<CSDiagramEntry> csDiagramEntries =
 			_csDiagramEntryLocalService.getCPDefinitionRelatedCSDiagramEntries(

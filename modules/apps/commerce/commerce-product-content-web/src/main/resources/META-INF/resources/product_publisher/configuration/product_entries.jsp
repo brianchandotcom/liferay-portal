@@ -58,14 +58,14 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 	>
 
 		<%
-		String thumbnailSrc = cpCatalogEntry.getDefaultImageFileUrl();
+		String defaultImageFileURL = cpPublisherConfigurationDisplayContext.getDefaultImageFileURL(cpCatalogEntry);
 		%>
 
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
+			<c:when test="<%= Validator.isNotNull(defaultImageFileURL) %>">
 				<liferay-ui:search-container-column-image
 					name="image"
-					src="<%= thumbnailSrc %>"
+					src="<%= defaultImageFileURL %>"
 				/>
 			</c:when>
 			<c:otherwise>

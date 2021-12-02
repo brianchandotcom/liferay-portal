@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -29,6 +28,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,12 +57,8 @@ public class AddToCartTag extends IncludeTag {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
-
-			if (commerceAccount != null) {
-				_commerceAccountId = commerceAccount.getCommerceAccountId();
-			}
+			_commerceAccountId = CommerceUtil.getCommerceAccountId(
+				commerceContext);
 
 			_commerceChannelGroupId =
 				commerceContext.getCommerceChannelGroupId();
@@ -94,7 +90,7 @@ public class AddToCartTag extends IncludeTag {
 				_cpInstanceId = cpSku.getCPInstanceId();
 				_disabled =
 					!cpSku.isPurchasable() ||
-					((_commerceAccountId == 0) &&
+					((_commerceAccountId <= 0) &&
 					 !_commerceOrderHttpHelper.isGuestCheckoutEnabled(
 						 httpServletRequest));
 				sku = cpSku.getSku();

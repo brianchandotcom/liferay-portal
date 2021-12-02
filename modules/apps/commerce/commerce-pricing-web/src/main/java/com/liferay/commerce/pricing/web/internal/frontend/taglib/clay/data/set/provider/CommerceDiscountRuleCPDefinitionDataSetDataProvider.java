@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.frontend.model.ImageField;
@@ -139,7 +140,8 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 					_getSku(cpDefinition, locale),
 					new ImageField(
 						cpDefinitionName, "rounded", "lg",
-						cpDefinition.getDefaultImageThumbnailSrc())));
+						cpDefinition.getDefaultImageThumbnailSrc(
+							CommerceAccountConstants.ACCOUNT_ID_GUEST))));
 		}
 
 		return discountRuleCPDefinitions;

@@ -14,8 +14,9 @@
 
 package com.liferay.commerce.product.ddm.internal;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.ddm.DDMHelper;
@@ -31,6 +32,7 @@ import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.product.util.JsonHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -178,24 +180,14 @@ public class DDMHelperImpl implements DDMHelper {
 
 		Locale locale = _portal.getLocale(renderRequest);
 
-		long commerceAccountId = 0;
-
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
-				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(
-						_portal.getScopeGroupId(renderRequest)),
-				_portal.getHttpServletRequest(renderRequest));
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		DDMForm ddmForm = getPublicStoreDDMForm(
-			_portal.getScopeGroupId(renderRequest), commerceAccountId,
+			_portal.getScopeGroupId(renderRequest),
+			CommerceUtil.getCommerceAccountId(
+				(CommerceContext)renderRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT)),
 			cpDefinitionId, locale, ignoreSKUCombinations,
 			cpDefinitionOptionRelCPDefinitionOptionValueRels,
 			themeDisplay.getCompanyId(), themeDisplay.getUserId());

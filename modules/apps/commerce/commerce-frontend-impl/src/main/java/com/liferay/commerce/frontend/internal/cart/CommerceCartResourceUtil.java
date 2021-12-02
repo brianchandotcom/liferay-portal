@@ -38,6 +38,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -132,6 +133,7 @@ public class CommerceCartResourceUtil {
 				commerceOrderItem.getName(locale), commerceOrderItem.getSku(),
 				commerceOrderItem.getQuantity(),
 				_cpInstanceHelper.getCPInstanceThumbnailSrc(
+					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceOrderItem.getCPInstanceId()),
 				prices, settings, getErrorMessages(locale, commerceOrderItem),
 				commerceOrderItem.getCPInstanceId());

@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
@@ -49,7 +50,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 				<dl>
 
 					<%
-					String defaultImageThumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc();
+					String defaultImageThumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(CommerceUtil.getCommerceAccountId(commerceContext));
 					%>
 
 					<c:if test="<%= Validator.isNotNull(defaultImageThumbnailSrc) %>">

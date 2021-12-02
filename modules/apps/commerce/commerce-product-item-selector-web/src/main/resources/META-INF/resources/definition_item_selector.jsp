@@ -84,7 +84,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 
 			CPType cpType = cpDefinitionItemSelectorViewDisplayContext.getCPType(cpDefinition.getProductTypeName());
 
-			String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc();
+			String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(CommerceAccountConstants.ACCOUNT_ID_GUEST);
 			%>
 
 			<c:choose>

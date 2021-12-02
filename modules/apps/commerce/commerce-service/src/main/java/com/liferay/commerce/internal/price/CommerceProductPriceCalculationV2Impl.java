@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.price;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -47,6 +46,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -808,14 +808,6 @@ public class CommerceProductPriceCalculationV2Impl
 			long cpInstanceId, CommerceContext commerceContext, String type)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		CommercePriceListDiscovery commercePriceListDiscovery =
 			_getCommercePriceListDiscovery(type);
 
@@ -835,7 +827,8 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		return commercePriceListDiscovery.getCommercePriceList(
-			cpInstance.getGroupId(), commerceAccountId,
+			cpInstance.getGroupId(),
+			CommerceUtil.getCommerceAccountId(commerceContext),
 			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
 			cpInstance.getCPInstanceUuid(), type);
 	}

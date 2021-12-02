@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.type.virtual.order.content.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -31,6 +29,7 @@ import com.liferay.commerce.product.type.virtual.order.util.comparator.CommerceV
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -64,7 +63,6 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 			CommerceVirtualOrderItemLocalService
 				commerceVirtualOrderItemLocalService,
 			CPDefinitionHelper cpDefinitionHelper,
-			CommerceAccountHelper commerceAccountHelper,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest)
@@ -74,7 +72,6 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		_commerceVirtualOrderItemLocalService =
 			commerceVirtualOrderItemLocalService;
 		_cpDefinitionHelper = cpDefinitionHelper;
-		_commerceAccountHelper = commerceAccountHelper;
 		_cpDefinitionVirtualSettingService = cpDefinitionVirtualSettingService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
@@ -133,6 +130,9 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		throws Exception {
 
 		return _cpInstanceHelper.getCPInstanceThumbnailSrc(
+			CommerceUtil.getCommerceAccountId(
+				(CommerceContext)_httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT)),
 			commerceOrderItem.getCPInstanceId());
 	}
 
@@ -310,16 +310,17 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 				_commerceVirtualOrderItemContentRequestHelper.
 					getScopeGroupId());
 
-		CommerceAccount commerceAccount = _getCommerceAccount();
+		long commerceAccountId = CommerceUtil.getCommerceAccountId(
+			(CommerceContext)_httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT));
 
 		int total =
 			_commerceVirtualOrderItemLocalService.
 				getCommerceVirtualOrderItemsCount(
-					commerceChannelGroupId,
-					commerceAccount.getCommerceAccountId());
+					commerceChannelGroupId, commerceAccountId);
 		List<CommerceVirtualOrderItem> results =
 			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
-				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+				commerceChannelGroupId, commerceAccountId,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new CommerceVirtualOrderItemCreateDateComparator());
 
@@ -346,15 +347,7 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		return false;
 	}
 
-	private CommerceAccount _getCommerceAccount() throws PortalException {
-		return _commerceAccountHelper.getCurrentCommerceAccount(
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				_commerceVirtualOrderItemContentRequestHelper.getSiteGroupId()),
-			_httpServletRequest);
-	}
-
 	private JournalArticleDisplay _articleDisplay;
-	private final CommerceAccountHelper _commerceAccountHelper;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceVirtualOrderItemContentPortletInstanceConfiguration
 		_commerceVirtualOrderItemContentPortletInstanceConfiguration;

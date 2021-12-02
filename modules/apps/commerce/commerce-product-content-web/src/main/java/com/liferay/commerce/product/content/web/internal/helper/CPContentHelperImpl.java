@@ -15,8 +15,6 @@
 package com.liferay.commerce.product.content.web.internal.helper;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
@@ -60,6 +58,7 @@ import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
@@ -180,9 +179,13 @@ public class CPContentHelperImpl implements CPContentHelper {
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
+			HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
 			cpMedias.add(
 				new CPMediaImpl(
-					_getCommerceAccountId(themeDisplay.getRequest()),
+					CommerceUtil.getCommerceAccountId(
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT)),
 					cpAttachmentFileEntry, themeDisplay));
 		}
 
@@ -214,7 +217,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 						CommerceWebKeys.COMMERCE_CONTEXT);
 
 				cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
-					_getCommerceAccountId(httpServletRequest),
+					CommerceUtil.getCommerceAccountId(
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT)),
 					commerceContext.getCommerceChannelGroupId(),
 					cProduct.getPublishedCPDefinitionId(),
 					_portal.getLocale(httpServletRequest));
@@ -296,7 +301,10 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		if (!_commerceProductViewPermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
-				_getCommerceAccountId(httpServletRequest), cpDefinitionId)) {
+				CommerceUtil.getCommerceAccountId(
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT)),
+				cpDefinitionId)) {
 
 			return null;
 		}
@@ -407,8 +415,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		long commerceAccountId = _getCommerceAccountId(
-			themeDisplay.getRequest());
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		long commerceAccountId = CommerceUtil.getCommerceAccountId(
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT));
 
 		List<CPMedia> cpMedias = new ArrayList<>();
 
@@ -710,22 +721,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 		}
 
 		return cpDefinitionOptionRelsMap;
-	}
-
-	private long _getCommerceAccountId(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount == null) {
-			return CommerceAccountConstants.ACCOUNT_ID_GUEST;
-		}
-
-		return commerceAccount.getCommerceAccountId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

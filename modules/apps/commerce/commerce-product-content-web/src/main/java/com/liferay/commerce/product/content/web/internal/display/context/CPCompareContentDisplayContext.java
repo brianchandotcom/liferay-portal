@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -30,6 +29,7 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -78,21 +78,14 @@ public class CPCompareContentDisplayContext {
 			portletDisplay.getPortletInstanceConfiguration(
 				CPCompareContentPortletInstanceConfiguration.class);
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		if (hasCommerceChannel()) {
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
 			_cpDefinitionIds = cpCompareHelper.getCPDefinitionIds(
-				commerceContext.getCommerceChannelGroupId(), commerceAccountId,
+				commerceContext.getCommerceChannelGroupId(),
+				CommerceUtil.getCommerceAccountId(commerceContext),
 				CookieKeys.getCookie(
 					httpServletRequest,
 					cpCompareHelper.getCPDefinitionIdsCookieKey(
@@ -167,18 +160,10 @@ public class CPCompareContentDisplayContext {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		for (Long cpDefinitionId : _cpDefinitionIds) {
 			cpCatalogEntries.add(
 				_cpDefinitionHelper.getCPCatalogEntry(
-					commerceAccountId,
+					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceContext.getCommerceChannelGroupId(), cpDefinitionId,
 					_cpRequestHelper.getLocale()));
 		}

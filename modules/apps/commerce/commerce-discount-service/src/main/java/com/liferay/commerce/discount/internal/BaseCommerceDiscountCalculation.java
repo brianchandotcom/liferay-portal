@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.discount.internal;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -32,36 +33,25 @@ public abstract class BaseCommerceDiscountCalculation
 	implements CommerceDiscountCalculation {
 
 	protected List<CommerceDiscount> getOrderCommerceDiscountByHierarchy(
-			long companyId, CommerceAccount commerceAccount,
-			long commerceChannelId, long commerceOrderTypeId, String target)
+			long companyId, CommerceContext commerceContext,
+			long commerceOrderTypeId, String target)
 		throws PortalException {
 
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		return _getOrderCommerceDiscountByHierarchy(
-			companyId, commerceAccountId, commerceChannelId,
-			commerceOrderTypeId, target);
+			companyId, CommerceUtil.getCommerceAccountId(commerceContext),
+			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
+			target);
 	}
 
 	protected List<CommerceDiscount> getProductCommerceDiscountByHierarchy(
-			long companyId, CommerceAccount commerceAccount,
-			long commerceChannelId, long commerceOrderTypeId,
-			long cpDefinitionId, long cpInstanceId)
+			long companyId, CommerceContext commerceContext,
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId)
 		throws PortalException {
 
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		return _getProductCommerceDiscountByHierarchy(
-			companyId, commerceAccountId, commerceChannelId,
-			commerceOrderTypeId, cpDefinitionId, cpInstanceId);
+			companyId, CommerceUtil.getCommerceAccountId(commerceContext),
+			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
+			cpDefinitionId, cpInstanceId);
 	}
 
 	@Reference

@@ -68,7 +68,7 @@ long commerceWishListId = commerceWishListDisplayContext.getCommerceWishListId()
 
 						<liferay-ui:search-container-column-image
 							name="product"
-							src="<%= cpDefinition.getDefaultImageThumbnailSrc() %>"
+							src="<%= cpDefinition.getDefaultImageThumbnailSrc(commerceWishListDisplayContext.getCommerceAccountId()) %>"
 						/>
 
 						<liferay-ui:search-container-column-text

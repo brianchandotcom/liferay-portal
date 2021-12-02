@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.wish.list.web.internal.portlet.action;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
@@ -84,18 +84,6 @@ public class AddCommerceWishListItemMVCActionCommand
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		long commerceAccountId = 0;
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		try {
 			CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 				cpInstanceId);
@@ -121,9 +109,11 @@ public class AddCommerceWishListItemMVCActionCommand
 
 			CommerceWishListItem commerceWishListItem =
 				_commerceWishListItemService.addCommerceWishListItem(
-					commerceAccountId, commerceWishList.getCommerceWishListId(),
-					cpDefinitionId, cpInstanceUuid, ddmFormValues,
-					serviceContext);
+					CommerceUtil.getCommerceAccountId(
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT)),
+					commerceWishList.getCommerceWishListId(), cpDefinitionId,
+					cpInstanceUuid, ddmFormValues, serviceContext);
 
 			int commerceWishListItemsCount =
 				_commerceWishListItemService.getCommerceWishListItemsCount(

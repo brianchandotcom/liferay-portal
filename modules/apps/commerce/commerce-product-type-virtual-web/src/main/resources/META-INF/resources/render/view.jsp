@@ -36,6 +36,8 @@ if (cpSku != null) {
 }
 
 String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId, themeDisplay);
+
+long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT));
 %>
 
 <div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
@@ -63,8 +65,13 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 					</div>
 
 					<div class="col-10 col-lg-10 col-md-9 full-image">
-						<c:if test="<%= Validator.isNotNull(cpCatalogEntry.getDefaultImageFileUrl()) %>">
-							<img class="center-block img-fluid" id="<portlet:namespace />full-image" src="<%= HtmlUtil.escapeAttribute(cpCatalogEntry.getDefaultImageFileUrl()) %>" />
+
+						<%
+						String defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(commerceAccountId, cpCatalogEntry.getCPDefinitionId());
+						%>
+
+						<c:if test="<%= Validator.isNotNull(defaultImageFileURL) %>">
+							<img class="center-block img-fluid" id="<portlet:namespace />full-image" src="<%= HtmlUtil.escapeAttribute(defaultImageFileURL) %>" />
 						</c:if>
 					</div>
 				</div>
@@ -145,7 +152,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 	</div>
 
 	<%
-	List<CPMedia> attachmentCPMedias = cpContentHelper.getCPAttachmentFileEntries(cpDefinitionId, themeDisplay);
+	List<CPMedia> cpAttachmentFileEntries = cpContentHelper.getCPAttachmentFileEntries(cpDefinitionId, themeDisplay);
 	List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId);
 	List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategories(company.getCompanyId());
 	%>
@@ -168,7 +175,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 						</li>
 					</c:if>
 
-					<c:if test="<%= !attachmentCPMedias.isEmpty() %>">
+					<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
 						<li class="nav-item" role="presentation">
 							<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
 								<%= LanguageUtil.get(resourceBundle, "attachments") %>
@@ -242,13 +249,13 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 						</div>
 					</c:if>
 
-					<c:if test="<%= !attachmentCPMedias.isEmpty() %>">
+					<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
 						<div class="tab-pane" id="<portlet:namespace />attachments">
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped">
 
 									<%
-									for (CPMedia attachmentCPMedia : attachmentCPMedias) {
+									for (CPMedia attachmentCPMedia : cpAttachmentFileEntries) {
 									%>
 
 										<tr>

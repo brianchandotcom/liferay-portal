@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
@@ -291,7 +292,8 @@ public class CPDefinitionsDisplayContext
 			return StringPool.BLANK;
 		}
 
-		return cpDefinition.getDefaultImageThumbnailSrc();
+		return cpDefinition.getDefaultImageThumbnailSrc(
+			CommerceAccountConstants.ACCOUNT_ID_GUEST);
 	}
 
 	public CProduct getCProduct() throws PortalException {

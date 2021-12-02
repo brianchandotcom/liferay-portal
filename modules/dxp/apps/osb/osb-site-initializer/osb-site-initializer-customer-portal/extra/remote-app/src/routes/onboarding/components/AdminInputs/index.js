@@ -4,21 +4,22 @@ import { useEffect, useState} from 'react';
 import Input from '../../../../common/components/Input';
 import useDebounce from '../../../../common/hooks/useDebounce';
 import {
-	bannedEmailDomains,
+	getBannedEmailDomains,
 } from '../../../../common/services/liferay/graphql/queries';
-import {email} from '../../../../common/utils/validations.form';
+import {isValidEmail} from '../../../../common/utils/validations.form';
 
-const AdminInputs = ({id, value}) => {
-	const debouncedEmail = useDebounce(value?.email, 500);
+const AdminInputs = ({admin, id}) => {
+	const debouncedEmail = useDebounce(admin?.email, 500);
 	const [bannedDomain, setBannedDomain] = useState(debouncedEmail);
-	const [getBannedDomain, {data}] = useLazyQuery(bannedEmailDomains);
+
+	const [fetchBannedDomain, {data}] = useLazyQuery(getBannedEmailDomains);
 	const bannedDomainsItems = data?.c?.bannedEmailDomains?.items;
 
 	useEffect(() => {
 		const emailDomain = debouncedEmail.split('@')[1];
 
 		if (emailDomain) {
-			getBannedDomain({
+			fetchBannedDomain({
 				variables: {
 					filter: `domain eq '${emailDomain}'`,
 				},
@@ -28,7 +29,8 @@ const AdminInputs = ({id, value}) => {
 				setBannedDomain(bannedDomainsItems[0].domain);
 			}
 		}
-	}, [bannedDomainsItems, debouncedEmail, getBannedDomain, value]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [bannedDomainsItems, debouncedEmail]);
 
 	return (
 		<ClayForm.Group className="mb-0 pb-1">
@@ -41,7 +43,7 @@ const AdminInputs = ({id, value}) => {
 				placeholder="username@superbank.com"
 				required
 				type="email"
-				validations={[(value) => email(value, bannedDomain)]}
+				validations={[(value) => isValidEmail(value, bannedDomain)]}
 			/>
 
 			<ClayInput.Group className="mb-0">

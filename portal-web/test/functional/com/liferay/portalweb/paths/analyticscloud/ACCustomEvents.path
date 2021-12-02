@@ -10,6 +10,7 @@
 </thead>
 
 <tbody>
+<!-- EDIT_CUSTOM_EVENT -->
 <tr>
 	<td>EDIT_MODAL_TITLE</td>
 	<td>//*[@class='modal-title']</td>

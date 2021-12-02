@@ -15,7 +15,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
 		page,
-		project: undefined,
+		project: {},
 		userAccount: undefined,
 	});
 

@@ -63,22 +63,6 @@ definition {
 			entryType = "${customElementType}");
 	}
 
-	@description = "Verify an iframe remote app can be created"
-	@priority = "5"
-	test IFrameCanBeCreated {
-		property portal.acceptance = "true";
-
-		var remoteAppName = "Test Remote App";
-
-		RemoteApps.goToRemoteAppsPortlet();
-
-		RemoteApps.addApp(
-			entryName = "${remoteAppName}",
-			entryURL = "http://www.liferay.com");
-
-		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
-	}
-
 	@description = "Verify that remote app of type Custom Element can be displayed by portlet"
 	@priority = "5"
 	test CustomElementCanBeDisplayedByPortlet {
@@ -112,7 +96,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Vanilla Counter");
 
-            PageEditor.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Assert Vanilla Counter is displayed") {
@@ -120,7 +104,22 @@ definition {
 
 			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
 		}
+	}
 
+	@description = "Verify an iframe remote app can be created"
+	@priority = "5"
+	test IFrameCanBeCreated {
+		property portal.acceptance = "true";
+
+		var remoteAppName = "Test Remote App";
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		RemoteApps.addApp(
+			entryName = "${remoteAppName}",
+			entryURL = "http://www.liferay.com");
+
+		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
 	}
 
 	@description = "Verify that remote app type IFrame can display property fields"
@@ -159,4 +158,5 @@ definition {
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY");
 	}
+
 }

@@ -40,7 +40,7 @@ export default function DropdownMenu({
 				className={classNames({
 					'dropdown-action': actionsDropdown,
 				})}
-				items={normalizeDropdownItems(items)}
+				items={normalizeDropdownItems(items) || []}
 				trigger={
 					<ClayButton
 						className={classNames(cssClass, {

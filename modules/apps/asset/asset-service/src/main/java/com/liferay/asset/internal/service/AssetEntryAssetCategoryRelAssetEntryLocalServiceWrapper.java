@@ -105,12 +105,12 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 		if ((categoryIds != null) &&
 			(!entry.isNew() || (categoryIds.length > 0))) {
 
+			categoryIds = _assetCategoryLocalService.getViewableCategoryIds(
+				className, classPK, categoryIds);
+
 			_assetEntryAssetCategoryRelLocalService.
 				deleteAssetEntryAssetCategoryRelByAssetEntryId(
 					entry.getEntryId());
-
-			categoryIds = _assetCategoryLocalService.getViewableCategoryIds(
-				className, classPK, categoryIds);
 
 			for (long categoryId : categoryIds) {
 				_assetEntryAssetCategoryRelLocalService.

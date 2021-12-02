@@ -1058,6 +1058,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewEntryInfo {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONRedirect.addRedirect(
@@ -1071,7 +1073,25 @@ definition {
 			Redirect.viewEntryFloatingURL(redirectURL = "${redirectURL}");
 		}
 
-		Redirect.viewEntryInfo();
+		var currentDate = DateUtil.getFormattedCurrentDate("MMMM d, yyyy");
+
+		Redirect.viewEntryInfo(
+			createDate = "${currentDate}",
+			createdBy = "Test Test",
+			expirationDate = "January 1, 2100",
+			latestOccurrence = "Never",
+			type = "Temporary");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntryInfo(
+			createDate = "${currentDate}",
+			createdBy = "Test Test",
+			expirationDate = "January 1, 2100",
+			latestOccurrence = "${currentDate}",
+			type = "Temporary");
 	}
 
 	@description = "This ensures that an expired temporary redirect can be reactivated."

@@ -21,6 +21,32 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
+	macro addOrRemoveAnyPermissionsFromSpecificRole {
+		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if ("${addOrRemoveViewPermission}" == "Add") {
+			for (var permissionDefinitionKey : list "${permissionsKeyList}") {
+				Check(locator1 = "Permissions#${permissionDefinitionKey}");
+			}
+		}
+		else if ("${addOrRemoveViewPermission}" == "Remove") {
+			for (var permissionDefinitionKey : list "${permissionsKeyList}") {
+				Uncheck(locator1 = "Permissions#${permissionDefinitionKey}");
+			}
+		}
+
+		Button.clickSave();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
 	macro addOrRemoveEntryPermissionsFromAllRoles {
 		if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
 			AssertClick.assertPartialTextClickAt(

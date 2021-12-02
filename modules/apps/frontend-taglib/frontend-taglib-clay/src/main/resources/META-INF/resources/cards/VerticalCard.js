@@ -54,6 +54,10 @@ export default function VerticalCard({
 	title,
 	...otherProps
 }) {
+	const normalizedActions = useMemo(() => normalizeDropdownItems(actions), [
+		actions,
+	]);
+
 	const [selected, setSelected] = useState(initialSelected);
 
 	const stickerProps = useMemo(() => {
@@ -110,7 +114,7 @@ export default function VerticalCard({
 
 	return (
 		<ClayCardWithInfo
-			actions={normalizeDropdownItems(actions)}
+			actions={normalizedActions}
 			checkboxProps={{
 				name: inputName ?? '',
 				value: inputValue ?? '',

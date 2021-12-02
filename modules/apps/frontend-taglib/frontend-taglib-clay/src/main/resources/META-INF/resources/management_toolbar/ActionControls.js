@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import normalizeDropdownItems from '../normalize_dropdown_items';
 import LinkOrButton from './LinkOrButton';
@@ -47,6 +47,16 @@ const ActionControls = ({
 	disabled,
 	onActionButtonClick,
 }) => {
+	const items = useMemo(
+		() =>
+			normalizeDropdownItems(
+				actionDropdownItems?.map((item) =>
+					addAction(item, onActionButtonClick)
+				)
+			) || [],
+		[actionDropdownItems, onActionButtonClick]
+	);
+
 	return (
 		<>
 			{actionDropdownItems && (
@@ -79,11 +89,7 @@ const ActionControls = ({
 
 					<ClayManagementToolbar.Item>
 						<ClayDropDownWithItems
-							items={normalizeDropdownItems(
-								actionDropdownItems?.map((item) =>
-									addAction(item, onActionButtonClick)
-								)
-							)}
+							items={items}
 							trigger={
 								<ClayButtonWithIcon
 									className="nav-link nav-link-monospaced"

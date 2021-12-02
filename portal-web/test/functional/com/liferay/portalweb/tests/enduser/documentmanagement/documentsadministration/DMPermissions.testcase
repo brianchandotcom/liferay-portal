@@ -734,13 +734,42 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136834. It checks that a guest cannot delete a file without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test GuestCannotDeleteFile {
-		property portal.acceptance = "false";
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		// TODO LPS-136834 GuestCannotDeleteFile pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Click(
+			key_dmFolderName = "DM Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "DM Document Title");
+
+		LexiconCard.checkCardCheckbox(card = "DM Document Title");
+
+		AssertElementNotPresent(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 	}
 
 	@description = "This is a test for LPS-136835. It checks that a guest cannot subscribe to a folder without permissions."

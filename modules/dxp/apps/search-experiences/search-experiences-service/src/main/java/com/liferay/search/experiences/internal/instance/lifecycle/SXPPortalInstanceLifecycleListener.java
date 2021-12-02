@@ -31,7 +31,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -53,7 +52,7 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_addSXPElements(Arrays.asList(company));
+		_addSXPElements(company);
 	}
 
 	@Override
@@ -68,7 +67,8 @@ public class SXPPortalInstanceLifecycleListener
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		try {
-			_addSXPElements(_companyLocalService.getCompanies());
+			_companyLocalService.forEachCompany(
+				company -> _addSXPElements(company));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -131,22 +131,19 @@ public class SXPPortalInstanceLifecycleListener
 			});
 	}
 
-	private synchronized void _addSXPElements(List<Company> companies)
+	private synchronized void _addSXPElements(Company company)
 		throws Exception {
 
-		for (Company company : companies) {
-			List<SXPElement> missingSXPElements = ListUtil.filter(
-				_sxpElements,
-				sxpElement -> !ListUtil.exists(
-					_sxpElementLocalService.getSXPElements(
-						company.getCompanyId()),
-					serviceBuilderSXPElement -> Objects.equals(
-						MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
-						serviceBuilderSXPElement.getTitle(LocaleUtil.US))));
+		List<SXPElement> missingSXPElements = ListUtil.filter(
+			_sxpElements,
+			sxpElement -> !ListUtil.exists(
+				_sxpElementLocalService.getSXPElements(company.getCompanyId()),
+				serviceBuilderSXPElement -> Objects.equals(
+					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
+					serviceBuilderSXPElement.getTitle(LocaleUtil.US))));
 
-			for (SXPElement sxpElement : missingSXPElements) {
-				_addSXPElement(company, sxpElement);
-			}
+		for (SXPElement sxpElement : missingSXPElements) {
+			_addSXPElement(company, sxpElement);
 		}
 	}
 

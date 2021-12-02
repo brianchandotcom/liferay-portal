@@ -1,27 +1,35 @@
-import {useMutation} from '@apollo/client';
-import {useContext, useEffect} from 'react';
+/* eslint-disable no-unused-vars */
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { useContext, useEffect } from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import {
 	onboardingPageGuard,
 	overviewPageGuard,
 	usePageGuard,
 } from '../../../../common/hooks/usePageGuard';
-import {addAccountFlag} from '../../../../common/services/liferay/graphql/queries';
+import { addAccountFlag, getAccountSubscriptionGroups } from '../../../../common/services/liferay/graphql/queries';
 import Layout from '../../components/Layout';
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {steps} from '../../utils/constants';
 import WelcomeSkeleton from './Skeleton';
 
-const Welcome = ({userAccount}) => {
-	const [{assetsPath, project}, dispatch] = useContext(AppContext);
-	const {isLoading: isLoadingPageGuard} = usePageGuard(
+const ACCOUNT_SUBSCRIPTION_GROUP_NAME = 'DXP Cloud';
+
+const Welcome = ({ userAccount }) => {
+	const [{ assetsPath, project }, dispatch] = useContext(AppContext);
+	const accountBriefs = userAccount.accountBriefs;
+
+	const { isLoading: isLoadingPageGuard } = usePageGuard(
 		userAccount,
 		onboardingPageGuard,
 		overviewPageGuard,
 		project.accountKey
 	);
-	const [createAccountFlag, {called, loading}] = useMutation(addAccountFlag);
+
+	const [createAccountFlag, { called, loading: addAccountFlagLoading }] = useMutation(addAccountFlag);
+	const [fetchAccountSubscriptionGroups, { data: accountSubscriptionGroupsData, loading: getAccountSubscriptionGroupsLoading }] =
+		useLazyQuery(getAccountSubscriptionGroups);
 
 	useEffect(() => {
 		if (!isLoadingPageGuard && !called) {
@@ -39,7 +47,41 @@ const Welcome = ({userAccount}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [called, isLoadingPageGuard, project]);
 
-	if (isLoadingPageGuard || loading) {
+	useEffect(() => {
+		if (!isLoadingPageGuard && !addAccountFlagLoading) {
+			fetchAccountSubscriptionGroups({
+				variables: {
+					filter: '(' + accountBriefs
+						.map(
+							(
+								{ externalReferenceCode },
+								index,
+								{ length: totalAccountBriefs }
+							) =>
+								`accountKey eq '${externalReferenceCode}' ${index + 1 < totalAccountBriefs ? ' or ' : ' '
+								}`
+						)
+						.join('') + `) and name eq '${ACCOUNT_SUBSCRIPTION_GROUP_NAME}'`,
+				},
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [accountBriefs, isLoadingPageGuard, addAccountFlagLoading]);
+
+	useEffect(() => {
+		if (accountSubscriptionGroupsData) {
+			const accountSubscriptionsGroups =
+				accountSubscriptionGroupsData?.c?.accountSubscriptionGroups?.items || [];
+
+			dispatch({
+				payload: !!accountSubscriptionsGroups.length,
+				type: actionTypes.UPDATE_HAS_SUBSCRIPTION_DXP
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [accountSubscriptionGroupsData])
+
+	if (isLoadingPageGuard || addAccountFlagLoading || getAccountSubscriptionGroupsLoading) {
 		return <WelcomeSkeleton />;
 	}
 

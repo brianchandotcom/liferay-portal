@@ -192,7 +192,7 @@ public class DynamicObjectDefinitionTable
 	).put(
 		"Boolean", "BOOLEAN"
 	).put(
-		"Clob", "LONGTEXT"
+		"Clob", "TEXT"
 	).put(
 		"Date", "DATE"
 	).put(

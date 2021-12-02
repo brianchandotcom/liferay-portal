@@ -25,6 +25,16 @@
 	<td>//div[contains(text(), '${key_errorMessage}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUBMISSION_STATUS_LABEL</td>
+	<td>//span[contains(@class, 'label')]//*[contains (text(), '${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_USERNAME</td>
+	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][5]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

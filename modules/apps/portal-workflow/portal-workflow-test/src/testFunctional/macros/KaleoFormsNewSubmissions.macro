@@ -22,11 +22,17 @@ definition {
 				value1 = "${ddlFirstName}");
 		}
 
-		if (isSet(ddlInstantMesseger)) {
+		if (isSet(ddlRecordFieldData)) {
+			Select(
+				locator1 = "DDMField#SELECT",
+				value1 = "${ddlRecordFieldData}");
+		}
+
+		if (isSet(ddlUserName)) {
 			Type(
 				key_field = "imUserName",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlInstantMesseger}");
+				value1 = "${ddlUserName}");
 		}
 
 		if (isSet(ddlJobTitle)) {
@@ -41,6 +47,13 @@ definition {
 				key_field = "lastName",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
 				value1 = "${ddlLastName}");
+		}
+
+		if (isSet(ddlnotes)) {
+			Type(
+				key_fieldName = "notes",
+				locator1 = "DDLEditRecord#TEXT_BOX_FIELD",
+				value1 = "${ddlnotes}");
 		}
 
 		if (isSet(ddlPhoneMobile)) {
@@ -61,21 +74,113 @@ definition {
 	macro editDLLRecordContacts {
 		DDLRecord.editPG(ddlListName = "${ddlListName}");
 
-		Type(
-			key_field = "company",
-			locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-			value1 = "${ddlCompanyEdit}");
+		if (isSet(ddlCompanyEdit)) {
+			Type(
+				key_field = "company",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlCompanyEdit}");
+		}
 
-		Type(
-			key_field = "firstName",
-			locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-			value1 = "${ddlFirstNameEdit}");
+		if (isSet(ddlFirstNameEdit)) {
+			Type(
+				key_field = "firstName",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
+				value1 = "${ddlFirstNameEdit}");
+		}
+	}
+
+	macro viewColumnsOnDetails {
+		if (isSet(ddlCompany)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Company",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlCompany}");
+		}
+
+		if (isSet(ddlEmail)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Email",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlEmail}");
+		}
+
+		if (isSet(ddlFirstName)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "First Name",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlFirstName}");
+		}
+
+		if (isSet(ddlimService)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Instant Messenger Service",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlimService}");
+		}
+
+		if (isSet(ddlUserName)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Instant Messenger",
+				locator1 = "KaleoFormsNewSubmissions#FIELD_USERNAME",
+				value1 = "${ddlUserName}");
+		}
+
+		if (isSet(ddlJobTitle)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Job Title",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlJobTitle}");
+		}
+
+		if (isSet(ddlLastName)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Last Name",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlLastName}");
+		}
+
+		if (isSet(ddlnotes)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Notes",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlnotes}");
+		}
+
+		if (isSet(ddlPhoneMobile)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Phone (Mobile)",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlPhoneMobile}");
+		}
+
+		if (isSet(ddlPhoneOffice)) {
+			AssertTextEquals.assertPartialText(
+				key_ddlRecordFieldData = "Phone (Office)",
+				locator1 = "DDLRecord#FIELD",
+				value1 = "${ddlPhoneOffice}");
+		}
+	}
+
+	macro viewEllipsisMenu {
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "${menuItem}");
 	}
 
 	macro viewStatusDDL {
 		AssertElementPresent(
 			key_status = "${status}",
 			locator1 = "KaleoFormsNewSubmissions#LIST_TABLE_NAME_STATUS");
+	}
+
+	macro viewStatusLabel {
+		AssertElementPresent(
+			key_status = "${lbstatus}",
+			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
+	}
+
+	macro viewVersionOnDetails {
+		AssertElementPresent(
+			locator1 = "KaleoFormsAdmin#WORKFLOW_VERSION",
+			value1 = "${workflowVersion}");
 	}
 
 	macro viewWorkflowInProcessMessage {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.exception.SXPElementReadOnlyException;
+import com.liferay.search.experiences.internal.storage.SystemSXPElementStorage;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 import com.liferay.search.experiences.service.base.SXPElementServiceBaseImpl;
@@ -81,11 +82,19 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 	@Override
 	public SXPElement getSXPElement(long sxpElementId) throws PortalException {
-		SXPElement sxpElement = _sxpElementLocalService.getSXPElement(
+		SXPElement sxpElement = SystemSXPElementStorage.getSXPElement(
 			sxpElementId);
 
-		_sxpElementModelResourcePermission.check(
-			getPermissionChecker(), sxpElement, ActionKeys.VIEW);
+		if (sxpElement != null) {
+			return sxpElement;
+		}
+
+		sxpElement = _sxpElementLocalService.getSXPElement(sxpElementId);
+
+		if (!sxpElement.isReadOnly()) {
+			_sxpElementModelResourcePermission.check(
+				getPermissionChecker(), sxpElement, ActionKeys.VIEW);
+		}
 
 		return sxpElement;
 	}

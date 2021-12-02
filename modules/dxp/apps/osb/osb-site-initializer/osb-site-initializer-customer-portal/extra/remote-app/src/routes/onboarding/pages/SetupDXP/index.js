@@ -1,90 +1,84 @@
-import {useMutation, useQuery} from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import ClayForm from '@clayui/form';
-import {useFormikContext} from 'formik';
-import {useContext, useEffect, useState} from 'react';
+import { useFormikContext } from 'formik';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
-import {LiferayTheme} from '../../../../common/services/liferay';
+import { LiferayTheme } from '../../../../common/services/liferay';
 import {
-	accountSubscription,
-	createSetupDXP,
-	getDXPCDataCenterRegions,
-	getKoroneikiAccounts,
-	getUserAccount,
+	addSetupDXP,
+	getSetupDXPInfo
 } from '../../../../common/services/liferay/graphql/queries';
-import {API_BASE_URL} from '../../../../common/utils';
-import {isValidProjectId} from '../../../../common/utils/validations.form';
-import {AppContext} from '../../../../routes/onboarding/context';
+import { PARAMS_KEYS } from '../../../../common/services/liferay/search-params';
+import { API_BASE_URL } from '../../../../common/utils';
+import { isLowercaseAndNumbers } from '../../../../common/utils/validations.form';
+import { AppContext } from '../../../../routes/onboarding/context';
 import AdminInputs from '../../components/AdminInputs';
 import Layout from '../../components/Layout';
-import {actionTypes} from '../../context/reducer';
-import {getInitialDxpAdmin, steps} from '../../utils/constants';
+import { actionTypes } from '../../context/reducer';
+import { getInitialDxpAdmin, steps } from '../../utils/constants';
 
 const SetupDXP = () => {
-	const [, dispatch] = useContext(AppContext);
-	const {errors, setFieldValue, touched, values} = useFormikContext();
+	const [{ project, userAccount }, dispatch] = useContext(AppContext);
+	const { errors, setFieldValue, touched, values } = useFormikContext();
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const {data} = useQuery(getDXPCDataCenterRegions);
-	const {data: userAccountData} = useQuery(getUserAccount, {
-		variables: {id: LiferayTheme.getUserId()},
-	});
+	const [fetchSetupDXPInfo, { data }] = useLazyQuery(getSetupDXPInfo);
 
-	const accountBriefs = userAccountData?.userAccount?.accountBriefs || [];
-	const dXPCDataCenterRegions = data?.c?.dXPCDataCenterRegions?.items;
-
-	const {data: getAccountSubscriptions} =
-		useQuery(accountSubscription, {
+	useEffect(() => {
+		fetchSetupDXPInfo({
 			variables: {
-				filter: accountBriefs
+				accountSubscriptionsFilter: `(${userAccount.accountBriefs
 					.map(
 						(
-							{externalReferenceCode},
+							{ externalReferenceCode },
 							index,
-							{length: totalAccountBriefs}
+							{ length: totalAccountBriefs }
 						) =>
-							`accountKey eq '${externalReferenceCode}' ${
-								index + 1 < totalAccountBriefs ? ' or ' : ' '
+							`accountKey eq '${externalReferenceCode}' ${index + 1 < totalAccountBriefs ? ' or ' : ' '
 							}`
 					)
-					.join(' '),
-			},
-		}) || [];
+					.join('')}) and (contains(name, 'HA DR') or contains(name, 'Std DR'))`,
+				koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`
+			}
+		})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [project, userAccount]);
 
-	const hasDisasterRecovery = getAccountSubscriptions?.c?.accountSubscriptions?.items.filter(
-		(accountSubscription) =>
-			!accountSubscription?.name.includes('HA DR') ||
-			!accountSubscription?.name.includes('Std DR')
-	);
-
-	const {data: koroneikiAccount} =
-		useQuery(getKoroneikiAccounts, {
-			variables: {
-				filter: accountBriefs
-					.map(
-						(
-							{externalReferenceCode},
-							index,
-							{length: totalAccountBriefs}
-						) =>
-							`accountKey eq '${externalReferenceCode}' ${
-								index + 1 < totalAccountBriefs ? ' or ' : ' '
-							}`
-					)
-					.join(' '),
-			},
-		}) || [];
-
-	const projectInfo = koroneikiAccount?.c?.koroneikiAccounts?.items.map(
-		({code, dxpVersion}) => ({
+	const dXPCDataCenterRegions = useMemo(() => (data?.c?.dXPCDataCenterRegions?.items.map(
+		({ dxpcDataCenterRegionId, name }) => ({
+			label: name,
+			value: dxpcDataCenterRegionId,
+		})
+	) || []), [data])
+	const hasDisasterRecovery = data?.c?.accountSubscriptions?.items?.length;
+	const projectBrief = data?.c?.koroneikiAccounts?.items?.map(
+		({ code, dxpVersion }) => ({
 			code,
 			dxpVersion,
 		})
-	);
+	)[0];
+
+	useEffect(() => {
+		if (dXPCDataCenterRegions.length) {
+			setFieldValue('dxp.dataCenterRegion', dXPCDataCenterRegions[0]);
+	
+			if (hasDisasterRecovery) {
+				setFieldValue('dxp.disasterDataCenterRegion', dXPCDataCenterRegions[0]);
+			}
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
 	function handleSkip() {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
+		if (userAccount.accountBriefs.length === 1) {
+			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
+				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+			}=${userAccount.accountBriefs[0].externalReferenceCode}`;
+		} else {
+			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
+		}
 	}
 
 	useEffect(() => {
@@ -94,12 +88,12 @@ const SetupDXP = () => {
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	const [sendEmailData, {called}] = useMutation(createSetupDXP) || [];
+	const [sendEmailData, { called, error }] = useMutation(addSetupDXP);
 
 	function sendEmail() {
-		const dxp = values?.dxp || {};
+		const dxp = values?.dxp;
 
-		if (!called) {
+		if (!called && dxp) {
 			sendEmailData({
 				variables: {
 					SetupDXP: {
@@ -113,12 +107,14 @@ const SetupDXP = () => {
 					scopeKey: LiferayTheme.getScopeGroupId(),
 				},
 			});
-		}
 
-		dispatch({
-			payload: steps.success,
-			type: actionTypes.CHANGE_STEP,
-		});
+			if (!error) {
+				dispatch({
+					payload: steps.success,
+					type: actionTypes.CHANGE_STEP,
+				});
+			}
+		}
 	}
 
 	return (
@@ -134,9 +130,7 @@ const SetupDXP = () => {
 					<BaseButton
 						disabled={baseButtonDisabled}
 						displayType="primary"
-						onClick={() => {
-							sendEmail();
-						}}
+						onClick={() => sendEmail()}
 					>
 						Submit
 					</BaseButton>
@@ -154,7 +148,7 @@ const SetupDXP = () => {
 
 					<p className="text-neutral-3 text-paragraph-lg">
 						<strong>
-							{projectInfo?.length ? projectInfo[0].code : ''}
+							{projectBrief ? projectBrief.code : ''}
 						</strong>
 					</p>
 				</div>
@@ -164,9 +158,7 @@ const SetupDXP = () => {
 
 					<p className="text-neutral-3 text-paragraph-lg">
 						<strong>
-							{projectInfo?.length
-								? projectInfo[0].dxpVersion
-								: ''}
+							{projectBrief ? projectBrief.dxpVersion : ''}
 						</strong>
 					</p>
 				</div>
@@ -185,48 +177,36 @@ const SetupDXP = () => {
 						placeholder="superbank1"
 						required
 						type="text"
-						validations={[(value) => isValidProjectId(value)]}
+						validations={[(value) => isLowercaseAndNumbers(value)]}
 					/>
 
 					<Select
 						groupStyle="mb-0"
 						label="Primary Data Center Region"
 						name="dxp.dataCenterRegion"
-						options={dXPCDataCenterRegions?.map(
-							({dxpcDataCenterRegionId, name}) => ({
-								label: name,
-								value: dxpcDataCenterRegionId,
-							})
-						)}
+						options={dXPCDataCenterRegions}
 						required
 					/>
 
-					{hasDisasterRecovery?.length && (
+					{!!hasDisasterRecovery && (
 						<Select
 							groupStyle="mb-0 pt-2"
 							label="Disaster Recovery Data Center Region"
 							name="dxp.disasterDataCenterRegion"
-							options={dXPCDataCenterRegions?.map(
-								({dxpcDataCenterRegionId, name}) => ({
-									label: name,
-									value: dxpcDataCenterRegionId,
-								})
-							)}
+							options={dXPCDataCenterRegions}
 							required
 						/>
 					)}
 				</ClayForm.Group>
 
 				{values.dxp.admins.map((admin, index) => (
-					<AdminInputs id={index} key={index} value={admin} />
+					<AdminInputs admin={admin} id={index} key={index} />
 				))}
 			</ClayForm.Group>
 
 			<BaseButton
 				borderless
 				className="ml-3 my-2 text-brand-primary"
-				eslint-disable-next-line
-				lines-around-comment
 				onClick={() => {
 					setFieldValue('dxp.admins', [
 						...values.dxp.admins,

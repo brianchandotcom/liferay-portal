@@ -2,23 +2,6 @@ body {
 	background-color: var(--gray-200);
 }
 
-a.card-content {
-	color: var(--gray-900);
-}
-
-a.card-content:hover {
-	box-shadow: var(--box-shadow-lg);
-	color: var(--gray-900);
-	text-decoration: none;
-	transform: translateY(-0.5rem);
-	transition: 0.1s ease-in-out;
-}
-
-a.card-content:hover + .position-social {
-	transform: translateY(-0.5rem);
-	transition: 0.1s ease-in-out;
-}
-
 .position-card {
 	display: block;
 	margin-bottom: var(--spacer-3);
@@ -46,33 +29,20 @@ a.card-content:hover + .position-social {
 	transition: 0.1s ease-in-out;
 }
 
-.position-card.featured .card-content {
-	background-color: var(--brand-color-1);
-	color: var(--white);
-}
-
-.position-card.featured .card-content::before {
-	align-items: center;
-	background-color: var(--brand-color-4);
-	box-shadow: var(--box-shadow);
-	color: var(--gray-900);
-	content: 'Hot!';
-	display: flex;
-	font-size: 22px;
-	font-weight: var(--font-weight-bolder);
-	height: 96px;
-	justify-content: center;
-	position: absolute;
-	right: -48px;
-	top: 48px;
-	width: 96px;
-	z-index: 2;
+.position-card:after {
+	content: '';
+	display: block;
+	padding-top: calc(100%);
 }
 
 .position-card-date {
 	color: var(--gray-500);
 	font-family: var(--font-family-monospace);
 	margin-bottom: var(--spacer-2);
+}
+
+.position-card-title {
+	margin-bottom: calc(var(--spacer-1) * 0.5);
 }
 
 .position-card-region {

@@ -151,7 +151,6 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		JSONMBMessage.addMessage(
-			addGuestPermissions = "true",
 			categoryName = "MB Category Name",
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",

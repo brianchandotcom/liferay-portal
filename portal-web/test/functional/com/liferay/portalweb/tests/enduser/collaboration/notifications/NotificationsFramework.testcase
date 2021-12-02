@@ -119,7 +119,6 @@ definition {
 
 		for (var threadCount : list "1,2") {
 			JSONMBMessage.addMessage(
-				addGuestPermissions = "true",
 				groupName = "Guest",
 				threadBody = "MB Thread Message Body${threadCount}",
 				threadSubject = "MB Thread Message Subject${threadCount}",

@@ -14,9 +14,13 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
@@ -61,7 +65,7 @@ public class SXPBlueprintDTOConverter
 
 		return new SXPBlueprint() {
 			{
-				configuration = ConfigurationUtil.toConfiguration(
+				configuration = _toConfiguration(
 					sxpBlueprint.getConfigurationJSON());
 				createDate = sxpBlueprint.getCreateDate();
 				description = sxpBlueprint.getDescription(
@@ -69,7 +73,7 @@ public class SXPBlueprintDTOConverter
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getDescriptionMap());
-				elementInstances = ElementInstanceUtil.toElementInstances(
+				elementInstances = _toElementInstances(
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
 				modifiedDate = sxpBlueprint.getModifiedDate();
@@ -88,13 +92,13 @@ public class SXPBlueprintDTOConverter
 
 		return new SXPBlueprint() {
 			{
-				configuration = ConfigurationUtil.toConfiguration(
+				configuration = _toConfiguration(
 					sxpBlueprint.getConfigurationJSON());
 				createDate = sxpBlueprint.getCreateDate();
 				description = sxpBlueprint.getDescription();
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpBlueprint.getDescriptionMap());
-				elementInstances = ElementInstanceUtil.toElementInstances(
+				elementInstances = _toElementInstances(
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
 				modifiedDate = sxpBlueprint.getModifiedDate();
@@ -105,6 +109,35 @@ public class SXPBlueprintDTOConverter
 			}
 		};
 	}
+
+	private Configuration _toConfiguration(String json) {
+		try {
+			return ConfigurationUtil.toConfiguration(json);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	private ElementInstance[] _toElementInstances(String json) {
+		try {
+			return ElementInstanceUtil.toElementInstances(json);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SXPBlueprintDTOConverter.class);
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

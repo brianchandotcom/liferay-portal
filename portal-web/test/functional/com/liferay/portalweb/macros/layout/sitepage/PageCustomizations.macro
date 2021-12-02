@@ -1,5 +1,29 @@
 definition {
 
+	macro changeCustomization {
+		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+
+		if (isSet(resetCustomization)) {
+			MenuItem.clickNoError(menuItem = "Reset My Customizations");
+
+			AssertConfirm(value1 = "Are you sure you want to reset your customizations to default?");
+		}
+		else {
+			MenuItem.click(menuItem = "${menuItem}");
+
+			if ("${menuItem}" == "View Page without my customizations") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO",
+					value1 = "This is the default page without your customizations.");
+			}
+			else {
+				AssertTextEquals.assertPartialText(
+					locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO",
+					value1 = "You can customize this page.");
+			}
+		}
+	}
+
 	macro enableSectionCustomizableCP {
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -9,55 +33,39 @@ definition {
 
 		Panel.expandPanel(panel = "Customization Settings");
 
-		Check.checkToggleSwitch(locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS");
+		Check.checkToggleSwitch(
+			key_fieldLabel = "customizable",
+			key_fieldsetLabel = "Customization Settings",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
 
 		if (isSet(columnIdList)) {
 			for (var columnId : list "${columnIdList}") {
 				Check.toggleSwitch(
-					key_columnId = "${columnId}",
-					locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX");
+					key_toggleSwitchLabel = "column-${columnId}-customizable",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
 		else {
 			Check.toggleSwitch(
-				key_columnId = "${columnId}",
-				locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX");
+				key_toggleSwitchLabel = "column-${columnId}-customizable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		Button.clickSave();
-	}
-
-	macro gotoCustomizedPageInfo {
-		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
-
-		if (isSet(viewDefaultPage)) {
-			var key_menuItem = "View Page without my customizations";
-
-			MenuItem.click(menuItem = "View Page without my customizations");
-		}
-		else {
-			var key_menuItem = "Reset My Customizations";
-
-			MenuItem.clickNoError(menuItem = "Reset My Customizations");
-
-			AssertConfirm(value1 = "Are you sure you want to reset your customizations to default?");
-		}
+		PortletEntry.save();
 	}
 
 	macro viewCustomizablePagePG {
-		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO",
 			value1 = "You can customize this page.");
 
-		AssertTextEquals(
-			locator1 = "Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE",
-			value1 = "View Page without my customizations");
+		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
-		AssertTextEquals(
-			locator1 = "Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS",
-			value1 = "Reset My Customizations");
+		for (var menuItem : list "View Page without my customizations,Reset My Customizations") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
+
+		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 	}
 
 }

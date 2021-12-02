@@ -8,28 +8,26 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Select(
-			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_NODE_ID",
+			key_selectFieldLabel = "Node",
+			locator1 = "Select#ANY",
 			value1 = "${wikiNodeName}");
 
-		PortletEntry.save();
-
 		AssertSelectedLabel(
-			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_NODE_ID",
+			key_selectFieldLabel = "Node",
+			locator1 = "Select#ANY",
 			value1 = "${wikiNodeName}");
 
 		Select(
-			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_TITLE",
+			key_selectFieldLabel = "Page",
+			locator1 = "Select#ANY",
 			value1 = "${wikiPageName}");
-
-		Button.clickSave();
 
 		AssertSelectedLabel(
-			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_TITLE",
+			key_selectFieldLabel = "Page",
+			locator1 = "Select#ANY",
 			value1 = "${wikiPageName}");
 
-		Alert.viewSuccessMessage();
-
-		SelectFrame(value1 = "relative=top");
+		PortletEntry.save();
 	}
 
 }

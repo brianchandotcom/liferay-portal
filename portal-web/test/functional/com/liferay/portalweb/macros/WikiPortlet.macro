@@ -38,23 +38,6 @@ definition {
 		}
 	}
 
-	macro configureSharingAllowUsersToAddWikiToAnyWebsite {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Navigator.gotoNavItem(navItem = "Sharing");
-
-		if ("${enabled}" == "true") {
-			Check.checkToggleSwitch(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
-		}
-		else {
-			Uncheck.uncheckToggleSwitch(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
-		}
-
-		Button.clickSave();
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro subscribeToNodeCP {
 		var key_wikiNodeName = "${wikiNodeName}";
 
@@ -94,21 +77,6 @@ definition {
 
 		for (var isNotPresent : list "${isNotPresent}") {
 			AssertElementNotPresent(locator1 = "Configuration#${isNotPresent}");
-		}
-
-		SelectFrame(value1 = "relative=top");
-	}
-
-	macro viewConfigureSharingAllowUsersToAddWikiToAnyWebsite {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Navigator.gotoNavItem(navItem = "Sharing");
-
-		if ("${enabled}" == "true") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
-		}
-		else {
-			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX");
 		}
 
 		SelectFrame(value1 = "relative=top");

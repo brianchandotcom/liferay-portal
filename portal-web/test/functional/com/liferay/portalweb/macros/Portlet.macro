@@ -276,6 +276,33 @@ definition {
 			value1 = "${portletName} Custom");
 	}
 
+	macro configureSharingPG {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Navigator.gotoNavItem(navItem = "Sharing");
+
+		if (isSet(checkAnyWebSiteToggle)) {
+			Panel.expandPanel(panel = "Any Website");
+
+			if ("${checkAnyWebSiteToggle}" == "true") {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "widgetShowAddAppLink",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "widgetShowAddAppLink",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro deletePG {
 		var key_portletName = "${portletName}";
 
@@ -517,6 +544,31 @@ definition {
 
 	macro viewCannotSaveAsDraft {
 		AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");
+	}
+
+	macro viewConfigureSharingPG {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Navigator.gotoNavItem(navItem = "Sharing");
+
+		if (isSet(checkedAnyWebSiteToggle)) {
+			Panel.expandPanel(panel = "Any Website");
+
+			if ("${checkedAnyWebSiteToggle}" == "true") {
+				AssertChecked.assertCheckedNotVisible(
+					key_toggleSwitchLabel = "widgetShowAddAppLink",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_toggleSwitchLabel = "widgetShowAddAppLink",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
 	}
 
 	macro viewCustomStylesViaLookandfeelPG {

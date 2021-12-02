@@ -525,6 +525,10 @@ definition {
 	}
 
 	macro viewPageStatus {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		AssertTextEquals(
 			key_itemName = "${pageName}",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS",

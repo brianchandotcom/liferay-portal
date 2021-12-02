@@ -1041,6 +1041,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro clickSubmitForPublication {
+		Button.click(button = "Submit for Publication");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro closeSidebar {
 		var key_tabName = "${tabName}";
 

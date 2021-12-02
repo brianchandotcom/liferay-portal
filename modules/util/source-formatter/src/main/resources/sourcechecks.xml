@@ -1520,6 +1520,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of elements in `.toggle` file." />
 		</check>
+		<check name="XMLUpgradeRemovedDefinitionsCheck">
+			<category name="Upgrade" />
+			<description name="Finds removed XML definitions when upgrading." />
+		</check>
 		<check name="XMLWhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace in `.xml` files." />

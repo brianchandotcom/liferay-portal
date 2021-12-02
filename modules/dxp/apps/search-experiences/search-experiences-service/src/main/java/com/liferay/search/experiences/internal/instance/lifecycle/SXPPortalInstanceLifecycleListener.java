@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,6 @@ import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -135,15 +134,9 @@ public class SXPPortalInstanceLifecycleListener
 	private synchronized void _addSXPElements(List<Company> companies)
 		throws Exception {
 
-		List<SXPElement> defaultSXPElements = new ArrayList<>();
-
-		for (String fileName : FILE_NAMES) {
-			defaultSXPElements.add(readSXPElement(fileName));
-		}
-
 		for (Company company : companies) {
 			List<SXPElement> missingSXPElements = ListUtil.filter(
-				defaultSXPElements,
+				_sxpElements,
 				sxpElement -> !ListUtil.exists(
 					_sxpElementLocalService.getSXPElements(
 						company.getCompanyId()),
@@ -165,5 +158,8 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
+
+	private final List<SXPElement> _sxpElements = TransformUtil.transformToList(
+		FILE_NAMES, fileName -> readSXPElement(fileName));
 
 }

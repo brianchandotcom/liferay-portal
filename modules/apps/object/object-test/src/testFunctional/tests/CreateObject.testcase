@@ -1753,12 +1753,29 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Site"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanScopeObjectBySite {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141646 CanScopeObjectBySite pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects",
+			panelCategoryKey = "site_administration.content",
+			scope = "site");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		Navigator.openURL();
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.expandCategory(category = "Content & Data");
+
+		AssertElementPresent(
+			key_portlet = "Custom Objects",
+			locator1 = "ProductMenu#PORTLET",
+			value1 = "Custom Objects");
 
 	}
 

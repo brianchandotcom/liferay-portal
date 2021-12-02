@@ -62,6 +62,11 @@
 	<td>//*[contains(@class,'a11y-dropdown show')]//*[contains(@data-testid,'${key_filter}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_DROPDOWN</td>
+	<td>//*[contains(@class,'a11y-dropdown show')]</td>
+	<td></td>
+</tr>
 <!--HIGHLIGHTED ELEMENTS-->
 <tr>
 	<td>HIGHLIGHTED_ELEMENT</td>

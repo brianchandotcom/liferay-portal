@@ -65,12 +65,32 @@ definition {
 
 	}
 
-	@description = "LRQA-71362 - Verify that the user can Enable / Disable Caledar's View"
-	@ignore = "Test Stub"
+	@description = "LRQA-71362 - Verify that the user can modify the default View from the Calendar"
 	@priority = "3"
 	test CanModifyViews {
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		// TODO LRQA-71622 CanModifyViews pending implementation
+		Calendar.viewDefaultViewCalendar(defaultView = "Week");
+
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.viewDefaultViewConfiguration(defaultView = "Week");
+
+		CalendarConfiguration.selectDefaultView(defaultView = "Month");
+
+		CalendarConfiguration.save();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Calendar.viewDefaultViewCalendar(defaultView = "Month");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.viewDefaultViewConfiguration(defaultView = "Month");
 
 	}
 

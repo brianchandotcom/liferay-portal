@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>ANY_TOGGLE_SWITCH</td>
-	<td>//label[contains(.,'${key_toggleSwitchLabel}')]//input</td>
+	<td>//label[(contains(.,'${key_toggleSwitchLabel}')) or (contains(@for,'${key_toggleSwitchLabel}'))]//input</td>
 	<td></td>
 </tr>
 <tr>

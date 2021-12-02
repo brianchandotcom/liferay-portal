@@ -67,13 +67,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_GROUP_ITEM_PAGE_INFO</td>
-	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'list-group-subtitle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LIST_GROUP_ITEM_PAGE_STATUS</td>
-	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'label-secondary')]</td>
+	<td>xpath=(//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'label-item')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -117,6 +117,12 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro openCustomFieldAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet");
+	}
+
 	macro openToAddResourceCustomField {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

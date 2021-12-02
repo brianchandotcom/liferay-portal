@@ -96,7 +96,7 @@ components:
             type: object
         Configuration:
             properties:
-                advanced:
+                advancedConfiguration:
                     properties:
                         excludes:
                             items:
@@ -114,7 +114,7 @@ components:
                         aggs:
                             type: object
                     type: object
-                general:
+                generalConfiguration:
                     properties:
                         clauseContributorsExcludes:
                             items:
@@ -135,7 +135,7 @@ components:
                                 type: string
                             type: array
                     type: object
-                highlight:
+                highlightConfiguration:
                     properties:
                         fields:
                             additionalProperties:
@@ -158,9 +158,12 @@ components:
                         type:
                             type: string
                     type: object
-                parameters:
-                    additionalProperties:
-                        $ref: "#/components/schemas/Parameter"
+                parameterConfiguration:
+                    properties:
+                        parameters:
+                            additionalProperties:
+                                $ref: "#/components/schemas/Parameter"
+                            type: object
                     type: object
                 queryConfiguration:
                     properties:
@@ -329,8 +332,18 @@ components:
                     type: string
         Parameter:
             properties:
-                valueDefinition:
-                    $ref: "#/components/schemas/ValueDefinition"
+                defaultValue:
+                    type: object
+                format:
+                    type: string
+                max:
+                    type: object
+                min:
+                    type: object
+                type:
+                    enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
+                    type: string
+            type: object
         QueryPrefilterContributor:
             properties:
                 className:
@@ -461,73 +474,6 @@ components:
                 className:
                     type: string
                 displayName:
-                    type: string
-            type: object
-        ValueDefinition:
-            properties:
-                defaultValueDouble:
-                    format: double
-                    type: number
-                defaultValueFloat:
-                    format: float
-                    type: number
-                defaultValueInteger:
-                    type: integer
-                defaultValueLong:
-                    format: int64
-                    type: integer
-                defaultValueString:
-                    type: string
-                defaultValuesIntegerArray:
-                    items:
-                        type: integer
-                    type: array
-                defaultValuesLongArray:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                defaultValuesStringArray:
-                    items:
-                        type: string
-                    type: array
-                format:
-                    type: string
-                maxValueDouble:
-                    format: double
-                    type: number
-                maxValueFloat:
-                    format: float
-                    type: number
-                maxValueInteger:
-                    type: integer
-                maxValueLong:
-                    format: int64
-                    type: integer
-                minValueDouble:
-                    format: double
-                    type: number
-                minValueFloat:
-                    format: float
-                    type: number
-                minValueInteger:
-                    type: integer
-                minValueLong:
-                    format: int64
-                    type: integer
-                stepValueDouble:
-                    format: double
-                    type: number
-                stepValueFloat:
-                    format: float
-                    type: number
-                stepValueInteger:
-                    type: integer
-                stepValueLong:
-                    format: int64
-                    type: integer
-                type:
-                    enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
                     type: string
             type: object
 info:

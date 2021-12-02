@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -36,14 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceWrapper.class)
 public class LayoutServiceWrapper
 	extends com.liferay.portal.kernel.service.LayoutServiceWrapper {
-
-	public LayoutServiceWrapper() {
-		super(null);
-	}
-
-	public LayoutServiceWrapper(LayoutService layoutService) {
-		super(layoutService);
-	}
 
 	@Override
 	public Layout publishLayout(long plid) throws Exception {

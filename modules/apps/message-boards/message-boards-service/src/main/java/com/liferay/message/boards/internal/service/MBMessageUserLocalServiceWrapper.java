@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceWrapper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -37,14 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ServiceWrapper.class)
 public class MBMessageUserLocalServiceWrapper extends UserLocalServiceWrapper {
-
-	public MBMessageUserLocalServiceWrapper() {
-		super(null);
-	}
-
-	public MBMessageUserLocalServiceWrapper(UserLocalService userLocalService) {
-		super(userLocalService);
-	}
 
 	@Override
 	public User updateUser(

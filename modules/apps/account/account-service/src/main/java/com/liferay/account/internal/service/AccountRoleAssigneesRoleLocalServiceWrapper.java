@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -34,16 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceWrapper.class)
 public class AccountRoleAssigneesRoleLocalServiceWrapper
 	extends RoleLocalServiceWrapper {
-
-	public AccountRoleAssigneesRoleLocalServiceWrapper() {
-		super(null);
-	}
-
-	public AccountRoleAssigneesRoleLocalServiceWrapper(
-		RoleLocalService roleLocalService) {
-
-		super(roleLocalService);
-	}
 
 	@Override
 	public int getAssigneesTotal(long roleId) throws PortalException {

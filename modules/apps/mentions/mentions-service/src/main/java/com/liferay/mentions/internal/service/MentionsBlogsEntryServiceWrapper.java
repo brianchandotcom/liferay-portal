@@ -42,16 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MentionsBlogsEntryServiceWrapper
 	extends BlogsEntryLocalServiceWrapper {
 
-	public MentionsBlogsEntryServiceWrapper() {
-		super(null);
-	}
-
-	public MentionsBlogsEntryServiceWrapper(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		super(blogsEntryLocalService);
-	}
-
 	@Override
 	public BlogsEntry updateStatus(
 			long userId, long entryId, int status,

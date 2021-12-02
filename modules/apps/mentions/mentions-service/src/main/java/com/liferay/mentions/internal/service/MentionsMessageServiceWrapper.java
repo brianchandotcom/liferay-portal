@@ -47,16 +47,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MentionsMessageServiceWrapper
 	extends MBMessageLocalServiceWrapper {
 
-	public MentionsMessageServiceWrapper() {
-		super(null);
-	}
-
-	public MentionsMessageServiceWrapper(
-		MBMessageLocalService mbMessageLocalService) {
-
-		super(mbMessageLocalService);
-	}
-
 	@Override
 	public MBMessage updateStatus(
 			long userId, long messageId, int status,

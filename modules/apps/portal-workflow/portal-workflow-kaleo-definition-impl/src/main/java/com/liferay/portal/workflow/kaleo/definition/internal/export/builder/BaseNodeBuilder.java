@@ -77,6 +77,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 
 		node.setActions(actions);
 
+		node.setLabelMap(kaleoNode.getLabelMap());
 		node.setMetadata(kaleoNode.getMetadata());
 
 		Set<Notification> notifications = buildNotifications(

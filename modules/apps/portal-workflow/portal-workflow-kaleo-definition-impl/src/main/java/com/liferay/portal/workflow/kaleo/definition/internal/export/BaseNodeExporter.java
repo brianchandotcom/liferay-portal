@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.workflow.kaleo.definition.Action;
@@ -43,6 +45,7 @@ import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,6 +57,8 @@ public abstract class BaseNodeExporter implements NodeExporter {
 	@Override
 	public void exportNode(Node node, Element element, String namespace) {
 		Element nodeElement = createNodeElement(element, namespace);
+
+		exportLabelsElement(nodeElement, node);
 
 		addTextElement(nodeElement, "name", node.getName());
 
@@ -234,6 +239,24 @@ public abstract class BaseNodeExporter implements NodeExporter {
 					userAssignment.getEmailAddress(),
 					userAssignment.getScreenName());
 			}
+		}
+	}
+
+	protected void exportLabelsElement(Element element, Node node) {
+		if (MapUtil.isEmpty(node.getLabelMap())) {
+			return;
+		}
+
+		Map<Locale, String> labelMap = node.getLabelMap();
+
+		Element labelsElement = element.addElement("labels");
+
+		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
+			Element label = labelsElement.addElement("label");
+
+			label.addAttribute(
+				"language-id", LocaleUtil.toLanguageId(entry.getKey()));
+			label.addText(entry.getValue());
 		}
 	}
 

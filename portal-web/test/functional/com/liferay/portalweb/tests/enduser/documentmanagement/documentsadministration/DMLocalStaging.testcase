@@ -368,13 +368,59 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136830. It checks that a shortcut can be updated and published."
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishUpdatedShortcut {
-		property portal.acceptance = "false";
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		// TODO LPS-136830 CanPublishUpdatedShortcut pending implementation
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document ${entryCount} Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "DM Document 1 Title",
+			siteName = "Test Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document 1 Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document 1 Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editDMShortcutCP(
+			dmDocumentTitle = "DM Document 1 Title",
+			dmNewDocumentTitle = "DM Document 2 Title",
+			siteName = "Test Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document 2 Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document 2 Title");
 	}
 
 	@description = "This is a test for LPS-136831. It checks that a file can be replaced and republished."

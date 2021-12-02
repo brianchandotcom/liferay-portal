@@ -227,7 +227,6 @@ definition {
 			eventType = "Regular");
 
 		CalendarEvent.viewCalendarCommentsMessagePresent();
-		
 	}
 
 	@description = "Verify that the user can Enable Ratings on Calendar"

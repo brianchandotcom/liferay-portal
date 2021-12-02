@@ -1406,6 +1406,18 @@ definition {
 		}
 	}
 
+	macro viewCalendarCommentsMessagePresent {
+		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#CALENDAR_COMMENT_DEFAULT_MESSAGE");
+	}
+
+	macro viewCalendarCommentsNotPresent {
+		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementNotPresent(locator1 = "CalendarViewEventDetails#CALENDAR_COMMENT_DEFAULT_MESSAGE");
+	}
+
 	macro viewComment {
 		CalendarEvent.viewDetails(
 			calendarName = "${calendarName}",
@@ -1893,18 +1905,6 @@ definition {
 			numberOfOccurrences = "${numberOfOccurrences}");
 
 		CalendarNavigator.gotoView(viewType = "Week");
-	}
-
-	macro viewCalendarCommentsMessagePresent {
-		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-		
-		AssertElementPresent(locator1 = "CalendarViewEventDetails#CALENDAR_COMMENT_DEFAULT_MESSAGE");
-	}
-
-	macro viewCalendarCommentsNotPresent {
-		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-		
-		AssertElementNotPresent(locator1 = "CalendarViewEventDetails#CALENDAR_COMMENT_DEFAULT_MESSAGE");
 	}
 
 	macro viewUnavailableCalendarsNotPresent {

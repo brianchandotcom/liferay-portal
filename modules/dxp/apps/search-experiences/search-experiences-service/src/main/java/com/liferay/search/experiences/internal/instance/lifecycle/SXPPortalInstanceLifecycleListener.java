@@ -131,9 +131,7 @@ public class SXPPortalInstanceLifecycleListener
 			});
 	}
 
-	private synchronized void _addSXPElements(Company company)
-		throws Exception {
-
+	private void _addSXPElements(Company company) throws Exception {
 		List<SXPElement> missingSXPElements = ListUtil.filter(
 			_sxpElements,
 			sxpElement -> !ListUtil.exists(

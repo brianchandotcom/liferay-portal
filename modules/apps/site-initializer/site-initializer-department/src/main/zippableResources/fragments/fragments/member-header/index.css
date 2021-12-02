@@ -1,0 +1,38 @@
+.member-header {
+	color: var(--white);
+	padding-top: 12rem;
+	position: relative;
+}
+
+.member-header::before {
+	background-color: var(--brand-color-1);
+	content: '';
+	height: calc(100% - 150px);
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+}
+
+.member-image {
+	box-shadow: var(--box-shadow-lg);
+	width: 480px;
+}
+
+@media (min-width: 1280px) {
+}
+
+@media (max-width: 768px) {
+	.member-header {
+		padding-top: var(--spacer-8);
+	}
+}
+
+@media (max-width: 576px) {
+	.member-header {
+		padding-top: var(--spacer-7);
+	}
+	.member-header::before {
+		height: calc(100% - 150px);
+	}
+}

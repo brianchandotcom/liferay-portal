@@ -483,11 +483,8 @@ definition {
 	@description = "Verify that its possible to have more than one Date field using the Validation with custom date in a form"
 	@priority = "5"
 	test CanHaveMoreThanOneDateFieldUsingDateValidation {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
-		var displayFutureDate = "${displayDateMonth}/${displayDateDay}/${futureYear}";
 
 		FormsAdmin.addForm();
 
@@ -533,11 +530,11 @@ definition {
 
 		FormViewBuilder.editDate(
 			fieldName = "Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = "01/01/${futureYear}");
 
 		FormViewBuilder.editDate(
 			fieldName = "Copy of Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = "01/01/${futureYear}");
 
 		FormPortlet.submitSuccessfully();
 
@@ -547,11 +544,11 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = "01/01/${futureYear}");
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Copy of Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = "01/01/${futureYear}");
 	}
 
 	@description = "Verify that changes to the Field can be canceled"

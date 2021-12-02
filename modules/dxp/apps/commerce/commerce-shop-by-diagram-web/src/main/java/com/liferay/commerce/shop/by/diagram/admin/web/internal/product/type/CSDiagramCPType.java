@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.commerce.shop.by.diagram.configuration.CSDiagramCPTypeConfiguration",
 	enabled = false, immediate = true,
 	property = {
-		"commerce.product.type.display.order:Integer=5",
+		"commerce.product.type.display.order:Integer=20",
 		"commerce.product.type.name=" + CSDiagramCPTypeConstants.NAME
 	},
 	service = CPType.class

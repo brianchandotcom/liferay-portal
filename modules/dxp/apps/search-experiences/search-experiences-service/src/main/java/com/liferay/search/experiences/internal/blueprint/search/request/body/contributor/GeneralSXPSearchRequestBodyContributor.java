@@ -17,7 +17,7 @@ package com.liferay.search.experiences.internal.blueprint.search.request.body.co
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.General;
+import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 
 /**
  * @author André de Oliveira
@@ -30,35 +30,36 @@ public class GeneralSXPSearchRequestBodyContributor
 		Configuration configuration, SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
-		General general = configuration.getGeneral();
+		GeneralConfiguration generalConfiguration =
+			configuration.getGeneralConfiguration();
 
-		if (general == null) {
+		if (generalConfiguration == null) {
 			return;
 		}
 
-		if (general.getEmptySearchEnabled() != null) {
+		if (generalConfiguration.getEmptySearchEnabled() != null) {
 			searchRequestBuilder.emptySearchEnabled(
-				general.getEmptySearchEnabled());
+				generalConfiguration.getEmptySearchEnabled());
 		}
 
-		if (general.getExplain() != null) {
-			searchRequestBuilder.explain(general.getExplain());
+		if (generalConfiguration.getExplain() != null) {
+			searchRequestBuilder.explain(generalConfiguration.getExplain());
 		}
 
-		if (general.getIncludeResponseString() != null) {
+		if (generalConfiguration.getIncludeResponseString() != null) {
 			searchRequestBuilder.includeResponseString(
-				general.getIncludeResponseString());
+				generalConfiguration.getIncludeResponseString());
 		}
 
-		if (general.getSearchableAssetTypes() != null) {
+		if (generalConfiguration.getSearchableAssetTypes() != null) {
 			searchRequestBuilder.modelIndexerClassNames(
-				general.getSearchableAssetTypes());
+				generalConfiguration.getSearchableAssetTypes());
 		}
 	}
 
 	@Override
 	public String getName() {
-		return "general";
+		return "generalConfiguration";
 	}
 
 }

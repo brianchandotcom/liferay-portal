@@ -4,7 +4,6 @@ html#{$cadmin-selector} {
 			.input-group
 				> .input-group-item
 				> .form-control.page-editor__color-picker-field__autocomplete__input {
-				background-color: transparent;
 				border-radius: 0 4px 4px 0;
 				font-weight: 600;
 				transition: none;
@@ -12,6 +11,21 @@ html#{$cadmin-selector} {
 
 			.clay-color > .input-group-item > .input-group-text {
 				border-radius: 4px 0 0 4px;
+			}
+
+			&.has-warning {
+				.clay-color > .input-group-item > .input-group-text {
+					border-color: $cadmin-warning-l1;
+				}
+			}
+
+			&:not(.has-warning),
+			&.has-warning:not(:hover):not(:focus-within):not(.hovered) {
+				.input-group
+					> .input-group-item
+					> .form-control.page-editor__color-picker-field__autocomplete__input {
+					background-color: transparent;
+				}
 			}
 
 			&:not(:hover):not(:focus-within):not(.hovered) {

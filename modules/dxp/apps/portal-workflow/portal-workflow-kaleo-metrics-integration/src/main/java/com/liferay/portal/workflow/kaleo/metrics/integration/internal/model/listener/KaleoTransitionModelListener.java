@@ -57,8 +57,7 @@ public class KaleoTransitionModelListener
 	@Override
 	public void onAfterRemove(KaleoTransition kaleoTransition) {
 		_transitionWorkflowMetricsIndexer.deleteTransition(
-			kaleoTransition.getCompanyId(),
-			kaleoTransition.getKaleoTransitionId());
+			_indexerHelper.createDeleteTransitionRequest(kaleoTransition));
 	}
 
 	@Reference

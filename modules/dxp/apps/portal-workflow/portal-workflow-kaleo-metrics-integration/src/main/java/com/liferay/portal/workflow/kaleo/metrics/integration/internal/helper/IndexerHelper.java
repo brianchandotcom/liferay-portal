@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.DeleteTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 
@@ -216,6 +217,19 @@ public class IndexerHelper {
 		}
 
 		return localizationMap;
+	}
+
+	public DeleteTransitionRequest createDeleteTransitionRequest(
+		KaleoTransition kaleoTransition) {
+
+		DeleteTransitionRequest.Builder deleteTransitionRequestBuilder =
+			new DeleteTransitionRequest.Builder();
+
+		return deleteTransitionRequestBuilder.companyId(
+			kaleoTransition.getCompanyId()
+		).transitionId(
+			kaleoTransition.getKaleoTransitionId()
+		).build();
 	}
 
 	public List<Assignment> toAssignments(

@@ -39,11 +39,18 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 				<liferay-frontend:edit-form-body>
 					<clay:row>
 						<clay:col>
-							<clay:select
-								id='<%= liferayPortletResponse.getNamespace() + "template" %>'
-								label="template"
-								name="template"
-								options="<%= editBatchPlannerPlanDisplayContext.getTemplateSelectOptions() %>"
+
+							<react:component
+								module="js/TemplateSelect"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
+									).put(
+										"selectedTemplateMapping", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
+									).put(
+										"selectedTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
+									).build()
+								%>'
 							/>
 						</clay:col>
 					</clay:row>

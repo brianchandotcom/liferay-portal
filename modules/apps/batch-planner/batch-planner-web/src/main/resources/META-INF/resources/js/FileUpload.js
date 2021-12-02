@@ -17,6 +17,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useState} from 'react';
 
 import {parseCSV} from './FileParsers';
+import {FILE_SCHEMA_EVENT} from './constants';
 
 function FileUpload({portletNamespace}) {
 	const isMounted = useIsMounted();
@@ -30,7 +31,7 @@ function FileUpload({portletNamespace}) {
 			}
 
 			const onComplete = (schema) => {
-				Liferay.fire('file-schema', {
+				Liferay.fire(FILE_SCHEMA_EVENT, {
 					schema,
 				});
 			};

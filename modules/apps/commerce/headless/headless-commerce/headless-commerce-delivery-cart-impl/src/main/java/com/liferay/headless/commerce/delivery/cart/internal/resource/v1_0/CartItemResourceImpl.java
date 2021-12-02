@@ -24,11 +24,10 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
+import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -50,6 +49,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -82,8 +82,13 @@ public class CartItemResourceImpl
 
 	@Override
 	public CartItem getCartItem(Long cartItemId) throws Exception {
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(cartItemId);
+
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		return _toCartItem(
-			_commerceOrderItemService.getCommerceOrderItem(cartItemId));
+			commerceOrder.getCommerceAccountId(), commerceOrderItem);
 	}
 
 	@NestedField(parentClass = Cart.class, value = "cartItems")
@@ -105,7 +110,12 @@ public class CartItemResourceImpl
 							return null;
 						}
 
-						return _toCartItem(commerceOrderItem);
+						CommerceOrder commerceOrder =
+							commerceOrderItem.getCommerceOrder();
+
+						return _toCartItem(
+							commerceOrder.getCommerceAccountId(),
+							commerceOrderItem);
 					})));
 	}
 
@@ -123,19 +133,17 @@ public class CartItemResourceImpl
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commerceOrder.getGroupId());
-
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-			contextUser.getUserId(), cartId,
-			commerceOrder.getCommerceAccountId());
-
 		return _toCartItem(
+			commerceOrder.getCommerceAccountId(),
 			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
 				cartItem.getOptions(), cartItem.getQuantity(), 0,
-				commerceContext, serviceContext));
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), cartId,
+					commerceOrder.getCommerceAccountId()),
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getGroupId())));
 	}
 
 	@Override
@@ -145,20 +153,19 @@ public class CartItemResourceImpl
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(cartItemId);
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commerceOrderItem.getGroupId());
-
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId());
-
 		return _toCartItem(
+			commerceOrder.getCommerceAccountId(),
 			_commerceOrderItemService.updateCommerceOrderItem(
 				commerceOrderItem.getCommerceOrderItemId(),
-				cartItem.getQuantity(), commerceContext, serviceContext));
+				cartItem.getQuantity(),
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceAccountId()),
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getGroupId())));
 	}
 
 	private List<CartItem> _filterCartItems(List<CartItem> cartItems) {
@@ -194,12 +201,13 @@ public class CartItemResourceImpl
 		return new ArrayList(cartItemsMap.values());
 	}
 
-	private CartItem _toCartItem(CommerceOrderItem commerceOrderItem)
+	private CartItem _toCartItem(
+			long commerceAccountId, CommerceOrderItem commerceOrderItem)
 		throws Exception {
 
 		return _orderItemDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				commerceOrderItem.getCommerceOrderItemId(),
+			new CartItemDTOConverterContext(
+				commerceAccountId, commerceOrderItem.getCommerceOrderItemId(),
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 

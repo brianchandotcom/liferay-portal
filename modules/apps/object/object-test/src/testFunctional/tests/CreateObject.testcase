@@ -658,7 +658,32 @@ definition {
 	test CanCreateManyToManyRelationship {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141658 CanCreateManyToManyRelationship pending implementation
+        ObjectAdmin.addObjectViaAPI(
+            labelName = "Object A",
+            objectName = "ObjectA",
+            pluralLabelName = "Objects A");
+
+        ObjectAdmin.addObjectViaAPI(
+            labelName = "Object B",
+            objectName = "ObjectB",
+            pluralLabelName = "Objects B");
+
+        ObjectAdmin.openObjectAdmin();
+
+        ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+        ObjectAdmin.gotoRelationshipsTab();
+
+        ObjectAdmin.addObjectRelationshipViaUI(
+            label = "Relationship",
+            object = "ObjectB",
+            type = "Many to Many");
+
+        AssertElementPresent(
+            key_label = "Relationship",
+            locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
+
+    }
 
 	}
 

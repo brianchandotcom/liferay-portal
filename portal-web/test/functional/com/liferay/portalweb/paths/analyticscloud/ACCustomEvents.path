@@ -31,6 +31,11 @@
 	<td>//textarea[@id='${key_textareaID}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INPUT_BUTTON</td>
+	<td>//input[@type='submit']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

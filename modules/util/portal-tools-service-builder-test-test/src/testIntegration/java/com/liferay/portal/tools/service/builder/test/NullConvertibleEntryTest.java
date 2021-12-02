@@ -42,11 +42,19 @@ public class NullConvertibleEntryTest {
 	public void testCountNullConvertibleString() {
 		int initialCount = _nullConvertibleEntryLocalService.countByName(null);
 
-		_nullConvertibleEntryLocalService.addNullConvertibleEntry((String)null);
+		NullConvertibleEntry nullConvertibleEntry =
+			_nullConvertibleEntryLocalService.addNullConvertibleEntry(
+				(String)null);
 
-		int actualCount = _nullConvertibleEntryLocalService.countByName(null);
+		Assert.assertEquals(
+			initialCount + 1,
+			_nullConvertibleEntryLocalService.countByName(null));
 
-		Assert.assertEquals(initialCount + 1, actualCount);
+		_nullConvertibleEntryLocalService.deleteNullConvertibleEntry(
+			nullConvertibleEntry);
+
+		Assert.assertEquals(
+			initialCount, _nullConvertibleEntryLocalService.countByName(null));
 	}
 
 	@Test

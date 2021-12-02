@@ -1,0 +1,265 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.staging-top {
+			background-color: $cadmin-white;
+			border-bottom: 1px solid $cadmin-secondary-l3;
+		}
+
+		.staging-bar {
+			padding-bottom: 8px;
+
+			.row {
+				align-items: center;
+				.col {
+					margin-top: 8px;
+				}
+			}
+
+			@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+				display: none;
+
+				.staging-show & {
+					display: block;
+				}
+			}
+		}
+
+		.staging-alert-container .alert {
+			background-color: transparent;
+			border: none;
+			margin-bottom: 0;
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+
+		.staging-bar-workflow-text {
+			.alert-indicator .lexicon-icon {
+				margin-top: 0;
+			}
+
+			.taglib-workflow-status .label {
+				margin: 0;
+			}
+		}
+
+		.staging-button-container {
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+				margin-bottom: 16px;
+				margin-top: 16px;
+			}
+
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				justify-content: flex-end;
+			}
+		}
+
+		.staging-toggle {
+			color: inherit;
+
+			&:hover,
+			&:focus,
+			&.focus {
+				color: inherit;
+			}
+
+			> span:nth-child(2) {
+				display: none;
+			}
+
+			.staging-show & {
+				> span {
+					&:nth-child(1) {
+						display: none;
+					}
+					&:nth-child(2) {
+						display: block;
+					}
+				}
+			}
+
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				display: none;
+			}
+		}
+
+		.staging-message {
+			margin: 0 auto;
+			width: 100%;
+		}
+
+		.publish-btn-group {
+			vertical-align: middle;
+
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				border-radius: 3px;
+				overflow: hidden;
+			}
+
+			.btn {
+				@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+					font-size: 1em;
+					padding: 13px 15px;
+
+					&:first-child {
+						display: block;
+						padding-right: 50px;
+						width: 100%;
+					}
+				}
+			}
+
+			.dropdown-toggle {
+				@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+					border-bottom-left-radius: 0;
+					border-top-left-radius: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+
+					&:after {
+						background-color: #fff;
+						bottom: 7px;
+						content: '';
+						display: block;
+						left: -3px;
+						position: absolute;
+						top: 7px;
+						width: 2px;
+						z-index: 10;
+					}
+				}
+			}
+		}
+
+		.site-pages-variation {
+			padding-top: 10px;
+		}
+
+		.staging-bar-control-toggle {
+			div {
+				margin-bottom: 0;
+
+				label {
+					margin-bottom: 0;
+					min-width: 210px;
+
+					@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+						float: left;
+					}
+
+					span {
+						span.toggle-switch-handle {
+							color: #272833;
+							font-size: 14px;
+							font-weight: 500;
+							text-transform: none;
+						}
+					}
+				}
+			}
+		}
+
+		.staging-bar-workflow-text .status {
+			border-color: map-get($cadmin-label-info, border-color);
+			color: map-get($cadmin-label-info, color);
+		}
+
+		.staging-layout-revision-details-list {
+			justify-content: space-between;
+
+			> li.control-menu-nav-item {
+				padding: 0 8px;
+			}
+
+			.btn-group {
+				@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+					margin-top: 8px;
+				}
+
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					.btn:first-child {
+						border-bottom-right-radius: $cadmin-btn-border-radius;
+						border-top-right-radius: $cadmin-btn-border-radius;
+					}
+				}
+			}
+
+			@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+				flex-direction: column;
+			}
+		}
+
+		.staging-variation-label {
+			display: block;
+			font-weight: 500;
+			margin-bottom: 4px;
+
+			&:hover {
+				text-decoration: none;
+			}
+
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				font-size: 14px;
+			}
+		}
+
+		.staging-bar-flex-column {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+			padding-right: 16px;
+		}
+
+		.staging-variation-selector {
+			max-width: 16ch;
+			overflow: hidden;
+			padding-right: 24px;
+			position: relative;
+			text-overflow: ellipsis;
+
+			&:hover {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			> .c-inner {
+				margin: -4px -24px -4px -12px;
+				width: auto;
+			}
+		}
+
+		.staging-bar-level-2-nav {
+			display: flex;
+
+			.control-menu-nav-item {
+				margin-left: 16px;
+				margin-right: 16px;
+			}
+
+			.staging-bar-level-2-nav-item {
+				display: flex;
+				flex: 1;
+				font-size: 14px;
+				justify-content: center;
+				padding: 0 8px;
+
+				&.nav-item-flex-end {
+					justify-content: flex-end !important;
+				}
+			}
+		}
+
+		.staging-bar-level-3-message {
+			margin-top: 8px;
+		}
+
+		.header-title-with-overflow {
+			overflow: visible !important;
+		}
+	}
+}

@@ -26,10 +26,10 @@
 }
 
 .customer-portal-side-menu .btn-menu {
-	border-radius: var(--border-radius-xs);
+	border-radius: var(--border-radius);
 	color: var(--color-neutral-10);
 	cursor: pointer;
-	display: flex !important;
+	display: flex;
 	font-size: var(--text-link-md-font-size);
 	font-weight: var(--font-weight-semi-bold);
 	line-height: var(--text-link-md-line-height);
@@ -38,10 +38,9 @@
 
 .customer-portal-side-menu .btn-menu.active {
 	background-color: var(
-		--color-action-primary-active-lighten-7,
+		--color-action-primary-active-lighten-1,
 		rgb(0, 74, 215, 0.1)
 	);
-	border-radius: var(--border-radius);
 	color: var(--color-action-primary-active);
 }
 
@@ -53,8 +52,7 @@
 	background-color: var(
 		--color-action-primary-hover-lighten-7,
 		rgba(0, 83, 240, 0.07)
-	) !important;
+	);
 	border-color: var(--btn-default-border-color);
-	border-radius: var(--border-radius) !important;
 	color: var(--color-action-primary-hover) !important;
 }

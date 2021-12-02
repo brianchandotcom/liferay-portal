@@ -29,12 +29,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
 import com.liferay.portal.osgi.web.portlet.container.test.TestPortlet;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.taglib.portletext.RuntimeTag;
 
 import java.io.IOException;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -109,19 +114,33 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 			).build(),
 			TEST_PORTLET_ID);
 
-		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						PortletContainerTestUtil.getHttpServletRequest(
-							group, layout),
-						TEST_PORTLET_ID, layout.getPlid(),
-						PortletRequest.RENDER_PHASE)
-				).buildString());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				RuntimeTag.class.getName(), LoggerTestUtil.WARN)) {
 
-		Assert.assertEquals(200, response.getCode());
+			PortletContainerTestUtil.Response response =
+				PortletContainerTestUtil.request(
+					PortletURLBuilder.create(
+						PortletURLFactoryUtil.create(
+							PortletContainerTestUtil.getHttpServletRequest(
+								group, layout),
+							TEST_PORTLET_ID, layout.getPlid(),
+							PortletRequest.RENDER_PHASE)
+					).buildString());
 
-		Assert.assertTrue(testPortlet.isCalledRender());
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"The application can not include itself: " + TEST_PORTLET_ID,
+				logEntry.getMessage());
+
+			Assert.assertEquals(200, response.getCode());
+
+			Assert.assertTrue(testPortlet.isCalledRender());
+		}
 	}
 
 	@Test

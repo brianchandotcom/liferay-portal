@@ -1,7 +1,47 @@
 import {gql} from '@apollo/client';
 
-export const accountSubscription = gql`
-	query accountSubscriptions(
+export const getSetupDXPInfo = gql`
+	query getSetupDXPInfo(
+		$accountSubscriptionsFilter: String
+		$koroneikiAccountsFilter: String
+	) {
+		c {
+			dXPCDataCenterRegions {
+				items {
+					dxpcDataCenterRegionId
+					name
+					value
+				}
+			}
+			accountSubscriptions(
+				filter: $accountSubscriptionsFilter
+			) {
+				items {
+					accountKey
+					name
+				}
+			}
+			koroneikiAccounts(filter: $koroneikiAccountsFilter) {
+				items {
+					accountKey
+					code
+					dxpVersion
+					slaCurrent
+					slaExpired
+					slaFuture
+					slaCurrentEndDate
+					region
+					liferayContactName
+					liferayContactRole
+					liferayContactEmailAddress
+				}
+			}
+		}
+	}
+`;
+
+export const getAccountSubscriptions = gql`
+	query getAccountSubscriptions(
 		$aggregation: [String]
 		$filter: String
 		$page: Int = 1
@@ -43,8 +83,8 @@ export const addAccountFlag = gql`
 	}
 `;
 
-export const bannedEmailDomains = gql`
-	query bannedEmailDomains(
+export const getBannedEmailDomains = gql`
+	query getBannedEmailDomains(
 		$aggregation: [String]
 		$filter: String
 		$page: Int = 1
@@ -70,8 +110,8 @@ export const bannedEmailDomains = gql`
 	}
 `;
 
-export const createSetupDXP = gql`
-	mutation createSetupDXP($SetupDXP: InputC_SetupDXP!, $scopeKey: String) {
+export const addSetupDXP = gql`
+	mutation addSetupDXP($SetupDXP: InputC_SetupDXP!, $scopeKey: String) {
 		c {
 			createSetupDXP(SetupDXP: $SetupDXP, scopeKey: $scopeKey) {
 				admins
@@ -108,7 +148,7 @@ export const getAccountRolesAndAccountFlags = gql`
 `;
 
 
-export const getAccountSubscriptionGroupsByFilter = gql`
+export const getAccountSubscriptionGroups = gql`
 	query accountSubscriptionGroups(
 		$aggregation: [String]
 		$filter: String

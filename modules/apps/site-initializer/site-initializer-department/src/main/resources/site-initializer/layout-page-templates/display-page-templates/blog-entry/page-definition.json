@@ -220,7 +220,6 @@
 					"fragmentStyle": {
 						"backgroundColor": "gray200Color",
 						"borderWidth": "0",
-						"marginBottom": "8",
 						"paddingBottom": "7",
 						"paddingTop": "7",
 						"textAlign": ""
@@ -236,7 +235,7 @@
 					],
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 10,
+						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
@@ -456,6 +455,16 @@
 																	}
 																},
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
 																	"value_i18n": {
 																	}
 																}
@@ -499,6 +508,16 @@
 															"id": "title",
 															"value": {
 																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
 																	"value_i18n": {
 																	}
 																},
@@ -524,6 +543,210 @@
 							}
 						],
 						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "parallax"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"backgroundColor": "brandColor1",
+								"marginBottom": "8",
+								"textAlign": ""
+							}
+						},
+						"pageElements": [
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "",
+												"borderWidth": "0",
+												"paddingBottom": "8",
+												"paddingTop": "8",
+												"textAlign": "",
+												"textColor": "whiteColor"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingBottom": "7",
+														"paddingTop": "7"
+													},
+													"id": "tablet"
+												}
+											],
+											"layout": {
+												"align": "Center",
+												"borderWidth": 0,
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 10,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 10,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Get in touch"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontFamily": "fontFamilyMonospace",
+														"marginBottom": "2",
+														"textAlign": "center",
+														"textColor": "gray500Color"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "heading"
+													},
+													"fragmentConfig": {
+														"displayLevel": "4",
+														"headingLevel": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Sign up for our newsletter!"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBolder",
+														"marginBottom": "4",
+														"maxWidth": "100%",
+														"textAlign": "center",
+														"width": "500px"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "subscribe-form"
+													},
+													"fragmentConfig": {
+														"buttonType": "secondary"
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"marginBottom": "4",
+														"maxWidth": "100%",
+														"textAlign": "",
+														"width": "720px"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at magna eros. Proin et libero pretium, fringilla lectus vel, lobortis erat. Donec placerat sollicitudin sem a dapibus.<br />\n "
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "fontSizeSm",
+														"marginBottom": "3",
+														"maxWidth": "100%",
+														"textAlign": "center",
+														"textColor": "",
+														"width": "500px"
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
 					}
 				],
 				"type": "Section"

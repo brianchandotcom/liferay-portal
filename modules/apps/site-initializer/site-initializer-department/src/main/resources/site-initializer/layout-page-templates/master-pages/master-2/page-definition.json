@@ -47,7 +47,7 @@
 												"classPKReferences": {
 													"en_US": {
 														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/department_logo_inv.svg$]"
+														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/site_logo_i.svg$]"
 													}
 												},
 												"fragmentImageConfiguration": {
@@ -69,7 +69,7 @@
 									"widgetConfig": {
 										"displayDepth": "0",
 										"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-										"displayStyleGroupId": "[$GROUP_ID$]",
+										"displayStyleGroupId": "229134",
 										"expandedLevels": "auto",
 										"rootMenuItemLevel": "0",
 										"rootMenuItemType": "absolute",

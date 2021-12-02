@@ -422,6 +422,59 @@ definition {
 			title = "Translation of WC WebContent Title to ja-JP");
 	}
 
+	@description = "This test covers LPS-142169. It ensures that translate side by side shows the duplicate fields."
+	@priority = "4"
+	test CanViewDuplicateFields {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			description = "WC WebContent Description",
+			duplicateField = "true",
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.viewBaseFields(
+			webContentDescription = "WC WebContent Description",
+			webContentText = "Text",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.viewBaseFields(
+			webContentDescription = "WC WebContent Description",
+			webContentText = "Text Duplicate Field",
+			webContentTitle = "WC WebContent Title");
+	}
+
 	@description = "This ensures that translate side by side shows the latest values after editing the web content article."
 	@priority = "5"
 	@refactordone

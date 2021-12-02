@@ -37,9 +37,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
+import com.liferay.search.experiences.internal.storage.SystemSXPElementStorage;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -199,6 +201,23 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 					}
 				}
 			});
+
+		List<SXPElement> systemSXPElements =
+			SystemSXPElementStorage.getSXPElements();
+
+		systemSXPElements.forEach(
+			sxpElement -> {
+				try {
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(sxpElement));
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException, portalException);
+					}
+				}
+			});
+
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();

@@ -336,12 +336,12 @@ definition {
 
 			IFrame.closeFrame();
 		}
-		
+
 		task ("Change the Asset Pubisher pagination") {
 			AssetPublisherPortlet.configurePaginationPG(
 				paginationNumber = "2",
 				paginationType = "Regular");
-			
+
 			Portlet.saveAndCloseConfig();
 		}
 
@@ -426,7 +426,7 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
-				assetListTitle = "Manual Collection Test", 
+				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_1,WC_Title_2");
 		}
@@ -524,7 +524,7 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
-				assetListTitle = "Manual Collection Test", 
+				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_1,WC_Title_2");
 		}
@@ -546,12 +546,12 @@ definition {
 
 			IFrame.closeFrame();
 		}
-		
+
 		task ("Change the Asset Pubisher pagination") {
 			AssetPublisherPortlet.configurePaginationPG(
 				paginationNumber = "2",
 				paginationType = "Regular");
-			
+
 			Portlet.saveAndCloseConfig();
 		}
 
@@ -1066,7 +1066,7 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
-				assetListTitle = "Manual Collection Test", 
+				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
 				entryList = "WC_Title_1,WC_Title_2");
 		}

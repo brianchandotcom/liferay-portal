@@ -325,12 +325,12 @@ definition {
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
-		
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Assets",
 			configurationName = "Collections",
 			configurationScope = "System Scope");
-		
+
 		Click.javaScriptClick(
 			checkboxName = "${collectionType}",
 			locator1 = "Checkbox#ANY_CHECKBOX");
@@ -405,12 +405,12 @@ definition {
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
-		
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Assets",
 			configurationName = "Collections",
 			configurationScope = "System Scope");
-		
+
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 

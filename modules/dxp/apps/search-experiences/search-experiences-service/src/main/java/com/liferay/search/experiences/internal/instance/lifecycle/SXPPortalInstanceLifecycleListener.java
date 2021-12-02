@@ -67,7 +67,6 @@ public class SXPPortalInstanceLifecycleListener
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		try {
 			_addSXPElements(_companyLocalService.getCompanies());

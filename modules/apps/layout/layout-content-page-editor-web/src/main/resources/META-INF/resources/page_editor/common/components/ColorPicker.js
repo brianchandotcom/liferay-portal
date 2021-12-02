@@ -33,7 +33,6 @@ const ColorPicker = ({
 	value = '#FFFFFF',
 }) => {
 	const dropdownContainerRef = useRef(null);
-	const splotchRef = useRef(null);
 	const triggerElementRef = useRef(null);
 
 	const [active, setActive] = useState(false);
@@ -98,13 +97,7 @@ const ColorPicker = ({
 				<ClayButton
 					className="align-items-center border-0 d-flex page-editor__color-picker__selector w-100"
 					displayType="secondary"
-					onClick={() => {
-						setActive((active) => !active);
-
-						if (splotchRef.current) {
-							splotchRef.current.focus();
-						}
-					}}
+					onClick={() => setActive((active) => !active)}
 				>
 					<span className="c-inner" tabIndex="-1">
 						<span
@@ -137,7 +130,6 @@ const ColorPicker = ({
 				containerProps={{
 					className: 'cadmin',
 				}}
-				focusRefOnEsc={splotchRef}
 				onSetActive={setActive}
 				ref={dropdownContainerRef}
 			>
@@ -152,7 +144,6 @@ const ColorPicker = ({
 								colors={filteredColors}
 								onSetActive={setActive}
 								onValueChange={onValueChange}
-								splotchRef={splotchRef}
 							/>
 						) : (
 							<ClayEmptyState
@@ -181,14 +172,7 @@ const ColorPicker = ({
 							<Splotch
 								className="dropdown-toggle"
 								disabled={disabled}
-								onClick={() => {
-									setActive((active) => !active);
-
-									if (splotchRef.current) {
-										splotchRef.current.focus();
-									}
-								}}
-								ref={splotchRef}
+								onClick={() => setActive((active) => !active)}
 								value={value}
 							/>
 						</ClayInput.GroupText>
@@ -201,7 +185,6 @@ const ColorPicker = ({
 						containerProps={{
 							className: 'cadmin',
 						}}
-						focusRefOnEsc={splotchRef}
 						onSetActive={setActive}
 						ref={dropdownContainerRef}
 					>
@@ -216,7 +199,6 @@ const ColorPicker = ({
 										colors={filteredColors}
 										onSetActive={setActive}
 										onValueChange={onValueChange}
-										splotchRef={splotchRef}
 									/>
 								) : (
 									<ClayEmptyState
@@ -240,34 +222,32 @@ const ColorPicker = ({
 };
 
 const Splotch = React.forwardRef(
-	({active, className, onClick, size, title, value}, ref) => {
-		return (
-			<button
-				className={classNames(
-					`btn clay-color-btn clay-color-btn-bordered lfr-portal-tooltip rounded${
-						config.tokenReuseEnabled ? '-circle' : ''
-					}`,
-					{
-						active,
-						[className]: !!className,
-					}
-				)}
-				data-tooltip-delay="0"
-				onClick={onClick}
-				ref={ref}
-				style={{
-					background: `${value}`,
-					height: size,
-					width: size,
-				}}
-				title={title}
-				type="button"
-			/>
-		);
-	}
+	({active, className, onClick, size, title, value}, ref) => (
+		<button
+			className={classNames(
+				`btn clay-color-btn clay-color-btn-bordered lfr-portal-tooltip rounded${
+					config.tokenReuseEnabled ? '-circle' : ''
+				}`,
+				{
+					active,
+					[className]: !!className,
+				}
+			)}
+			data-tooltip-delay="0"
+			onClick={onClick}
+			ref={ref}
+			style={{
+				background: `${value}`,
+				height: size,
+				width: size,
+			}}
+			title={title}
+			type="button"
+		/>
+	)
 );
 
-const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
+const ColorPalette = ({colors, onSetActive, onValueChange}) =>
 	Object.keys(colors).map((category) => (
 		<div
 			className="page-editor__color-picker__color-palette"
@@ -294,10 +274,6 @@ const ColorPalette = ({colors, onSetActive, onValueChange, splotchRef}) =>
 												value,
 											});
 											onSetActive((active) => !active);
-
-											if (splotchRef.current) {
-												splotchRef.current.focus();
-											}
 										}}
 										title={label}
 										value={value}

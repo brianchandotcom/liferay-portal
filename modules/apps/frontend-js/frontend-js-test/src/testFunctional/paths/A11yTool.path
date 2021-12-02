@@ -36,6 +36,11 @@
 	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'list-group-subtext') and contains(.,'${key_impact}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIOLATION_PANEL_RULE_LIST_OCCURRENCE</td>
+	<td>//*[contains(@class,'a11y-panel')]//ul//*[contains(@class,'rule-list-item') and contains(.,'${key_text}')]//following::span[contains(@class,'badge-info') and contains(.,'${key_occurrence}')]</td>
+	<td></td>
+</tr>
 <!--FILTER-->
 <tr>
 	<td>FILTER_ELEMENT_ICON</td>

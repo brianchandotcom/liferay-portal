@@ -16,75 +16,77 @@ import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/constants';
 
 const VALID_EXTENSIONS = '.json';
 
-const ImportSXPBlueprintModal = () => {
+const ImportSXPBlueprintModal = ({redirectURL}) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
-
-	const formRef = useRef();
+	const [importFile, setImportFile] = useState();
 
 	const _handleClose = (data) => {
 		Liferay.Util.getOpener().Liferay.fire('closeModal', data);
 	};
 
-	const _handleFormError = (responseContent) => {
-		setErrorMessage(responseContent.error.join(', ') || DEFAULT_ERROR);
+	const _handleFormError = (error) => {
+		setErrorMessage(error || DEFAULT_ERROR);
 
 		setLoadingResponse(false);
 	};
 
-	const _handleSubmit = (event) => {
-		event.preventDefault();
+	const _handleInputChange = (event) => {
+		setImportFile(event.target.files[0]);
+	};
 
+	const _handleSubmit = async () => {
 		setLoadingResponse(true);
 
-		const formData = new FormData(formRef.current);
+		const importText = await new Response(importFile).text();
 
-		fetch('/o/search-experiences-rest/v1.0/sxp-blueprints', {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => {
-				if (!response.ok) {
-					_handleFormError({error: DEFAULT_ERROR});
-				}
+		try {
+			const fetchURL = JSON.parse(importText).elementDefinition
+				? '/o/search-experiences-rest/v1.0/sxp-elements'
+				: '/o/search-experiences-rest/v1.0/sxp-blueprints';
 
-				return response.json();
+			fetch(fetchURL, {
+				body: importText,
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
+				method: 'POST',
 			})
-			.then((responseContent) => {
-				const redirectURL = new URL(
-					responseContent.redirectURL,
-					window.location.origin
-				);
-
-				redirectURL.searchParams.set('p_p_state', 'normal');
-
-				if (isMounted()) {
-					if (responseContent.error) {
-						_handleFormError(responseContent);
+				.then((response) => {
+					return response.json().then((data) => ({
+						ok: response.ok,
+						responseContent: data,
+					}));
+				})
+				.then(({ok, responseContent}) => {
+					if (!ok) {
+						_handleFormError(responseContent.title);
 					}
-					else {
+
+					setLoadingResponse(false);
+
+					if (ok && isMounted()) {
 						_handleClose({redirect: redirectURL});
 					}
-				}
-			})
-			.catch((response) => {
-				_handleFormError(response);
-			});
+				})
+				.catch((error) => {
+					_handleFormError(error);
+				});
+		}
+		catch (error) {
+			_handleFormError(error.toString());
+		}
 	};
 
 	return (
-		<form
-			className="import-sxp-blueprint-form"
-			onSubmit={_handleSubmit}
-			ref={formRef}
-		>
+		<div className="import-sxp-blueprint-form">
 			<ClayModal.Body>
 				{errorMessage && (
 					<ClayAlert
@@ -114,6 +116,7 @@ const ImportSXPBlueprintModal = () => {
 					<ClayInput
 						accept={VALID_EXTENSIONS}
 						name="file"
+						onChange={_handleInputChange}
 						required
 						type="file"
 					/>
@@ -132,9 +135,9 @@ const ImportSXPBlueprintModal = () => {
 						</ClayButton>
 
 						<ClayButton
-							disabled={loadingResponse}
+							disabled={loadingResponse || !importFile}
 							displayType="primary"
-							type="submit"
+							onClick={_handleSubmit}
 						>
 							{loadingResponse && (
 								<span className="inline-item inline-item-before">
@@ -150,7 +153,7 @@ const ImportSXPBlueprintModal = () => {
 					</ClayButton.Group>
 				}
 			/>
-		</form>
+		</div>
 	);
 };
 

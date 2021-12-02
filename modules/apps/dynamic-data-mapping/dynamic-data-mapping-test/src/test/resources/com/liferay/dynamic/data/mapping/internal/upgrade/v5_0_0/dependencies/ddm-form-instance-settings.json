@@ -26,9 +26,19 @@
 			"value": ""
 		},
 		{
+			"fieldReference": "expirationDate",
+			"name": "expirationDate",
+			"value": ""
+		},
+		{
 			"fieldReference": "limitToOneSubmissionPerUser",
 			"name": "limitToOneSubmissionPerUser",
 			"value": "false"
+		},
+		{
+			"fieldReference": "neverExpire",
+			"name": "neverExpire",
+			"value": "true"
 		},
 		{
 			"fieldReference": "objectDefinitionId",

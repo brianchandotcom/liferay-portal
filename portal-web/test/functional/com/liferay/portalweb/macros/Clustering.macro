@@ -47,14 +47,13 @@ definition {
 	macro getClusterNodeControlAddress {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
 		var bundleIndex = ${leadingPortNumber} - 8;
-
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
-
 		var controlAddress = StringUtil.extractLast("${fileContent}", "liferay-channel-control, localAddress:");
 		var controlAddress = StringUtil.extractFirst("${controlAddress}", "properties");
 		var controlAddress = StringUtil.replace("${controlAddress}", ",", "");
 		var controlAddress = StringUtil.trim("${controlAddress}");
+
 		return "${controlAddress}";
 
 		echo("control Address of ${nodePort} is ${controlAddress}");
@@ -71,10 +70,10 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
-
 		var ipAddress = StringUtil.extractLast("${fileContent}", "Setting JGroups outgoing IP address to");
 		var ipAddress = StringUtil.extractFirst("${ipAddress}", "and interface to");
 		var ipAddress = StringUtil.trim("${ipAddress}");
+
 		return "${ipAddress}";
 
 		echo("outgoing IP Address of ${nodePort} is ${ipAddress}");
@@ -84,14 +83,13 @@ definition {
 	macro getClusterNodeTransportAddress {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
 		var bundleIndex = ${leadingPortNumber} - 8;
-
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
-
 		var transportAddress = StringUtil.extractLast("${fileContent}", "liferay-channel-transport-0, localAddress:");
 		var transportAddress = StringUtil.extractFirst("${transportAddress}", "properties");
 		var transportAddress = StringUtil.replace("${transportAddress}", ",", "");
 		var transportAddress = StringUtil.trim("${transportAddress}");
+
 		return "${transportAddress}";
 
 		echo("transport Address of ${nodePort} is ${transportAddress}");

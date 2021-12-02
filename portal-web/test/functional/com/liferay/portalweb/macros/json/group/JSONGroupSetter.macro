@@ -4,7 +4,6 @@ definition {
 		if ("${allowManualMembershipManagement}" == "false") {
 			var manualMembership = "false";
 		}
-
 		else {
 			var manualMembership = "true";
 		}
@@ -18,7 +17,9 @@ definition {
 				var site = "true";
 			}
 
-			var grandParentGroupId = JSONGroupAPI._getGrandParentGroupIdByName(groupName = "${grandParentGroupName}", site = "${site}");
+			var grandParentGroupId = JSONGroupAPI._getGrandParentGroupIdByName(
+				groupName = "${grandParentGroupName}",
+				site = "${site}");
 		}
 		else {
 			var grandParentGroupId = "0";
@@ -47,7 +48,11 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", parentGroupName = "${parentGroupName}", portalURL = "${portalURL}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		return "${groupId}";
 	}
@@ -66,11 +71,9 @@ definition {
 		if ("${membershipType}" == "Private") {
 			var type = "3";
 		}
-
 		else if ("${membershipType}" == "Restricted") {
 			var type = "2";
 		}
-
 		else {
 			var type = "1";
 		}
@@ -80,7 +83,9 @@ definition {
 
 	macro setParentGroupId {
 		if (isSet(parentGroupName)) {
-			var parentGroupId = JSONGroupAPI._getParentGroupIdByName(groupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+			var parentGroupId = JSONGroupAPI._getParentGroupIdByName(
+				grandParentGroupName = "${grandParentGroupName}",
+				groupName = "${parentGroupName}");
 		}
 		else {
 			var parentGroupId = "0";

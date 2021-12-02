@@ -7,7 +7,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		return "${groupId}";
 	}
@@ -19,9 +21,13 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
-		var nodeId = JSONWikiAPI._getNodeIdByName(groupId = "${groupId}", name = "${name}");
+		var nodeId = JSONWikiAPI._getNodeIdByName(
+			groupId = "${groupId}",
+			name = "${name}");
 
 		return "${nodeId}";
 	}
@@ -33,11 +39,17 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
-		var nodeId = JSONWikiAPI._getNodeIdByName(groupId = "${groupId}", name = "${name}");
+		var nodeId = JSONWikiAPI._getNodeIdByName(
+			groupId = "${groupId}",
+			name = "${name}");
 
-		var pageId = JSONWikiAPI._getPageIdByName(nodeId = "${nodeId}", title = "${title}");
+		var pageId = JSONWikiAPI._getPageIdByName(
+			nodeId = "${nodeId}",
+			title = "${title}");
 
 		return "${pageId}";
 	}
@@ -49,11 +61,17 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
-		var nodeId = JSONWikiAPI._getNodeIdByName(groupId = "${groupId}", name = "${name}");
+		var nodeId = JSONWikiAPI._getNodeIdByName(
+			groupId = "${groupId}",
+			name = "${name}");
 
-		var resourcePrimKey = JSONWikiAPI._getPageResourcePrimKey(nodeId = "${nodeId}", title = "${title}");
+		var resourcePrimKey = JSONWikiAPI._getPageResourcePrimKey(
+			nodeId = "${nodeId}",
+			title = "${title}");
 
 		return "${resourcePrimKey}";
 	}

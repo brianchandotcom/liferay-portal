@@ -24,7 +24,6 @@ definition {
 
 			Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 		}
-
 		else {
 			Type(
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
@@ -74,7 +73,6 @@ definition {
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
-
 		else {
 			var switchTo = "list";
 		}
@@ -94,7 +92,7 @@ definition {
 		if (("${navTab}" == "Fragments") && ("${displayStyle}" == "card")) {
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-			if ((isSet(targetFragmentName)) && ("${height}" == "Short")) {
+			if (isSet(targetFragmentName) && ("${height}" == "Short")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -104,7 +102,7 @@ definition {
 					value1 = "");
 			}
 
-			if ((isSet(targetFragmentName)) && ("${height}" == "Tall")) {
+			if (isSet(targetFragmentName) && ("${height}" == "Tall")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -113,7 +111,6 @@ definition {
 					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
-
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
@@ -129,7 +126,7 @@ definition {
 		if (("${navTab}" == "Fragments") && ("${displayStyle}" == "list")) {
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-			if ((isSet(targetFragmentName)) && ("${height}" == "Short")) {
+			if (isSet(targetFragmentName) && ("${height}" == "Short")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -139,7 +136,7 @@ definition {
 					value1 = "");
 			}
 
-			if ((isSet(targetFragmentName)) && ("${height}" == "Tall")) {
+			if (isSet(targetFragmentName) && ("${height}" == "Tall")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -148,7 +145,6 @@ definition {
 					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
-
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
@@ -166,7 +162,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
 				value1 = "${portletName}");
 
-			if ((isSet(targetFragmentName)) && ("${height}" == "Short")) {
+			if (isSet(targetFragmentName) && ("${height}" == "Short")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 					key_portletName = "${portletName}",
 					key_targetFragmentName = "${targetFragmentName}",
@@ -175,7 +171,7 @@ definition {
 					value1 = "${portletName}");
 			}
 
-			if ((isSet(targetFragmentName)) && ("${height}" == "Tall")) {
+			if (isSet(targetFragmentName) && ("${height}" == "Tall")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 					key_portletName = "${portletName}",
 					key_targetFragmentName = "${targetFragmentName}",
@@ -183,7 +179,6 @@ definition {
 					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
 					value1 = "${portletName}");
 			}
-
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_columnNumber = "${columnNumber}",
@@ -231,7 +226,6 @@ definition {
 			if ("${displayStyle}" == "list") {
 				var switchTo = "card";
 			}
-
 			else {
 				var switchTo = "list";
 			}
@@ -308,7 +302,6 @@ definition {
 				Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 			}
 		}
-
 		else {
 			if ("${navTab}" == "Fragments") {
 				PageEditor.addFragment(
@@ -325,7 +318,6 @@ definition {
 					layoutElementName = "${layoutElementName}",
 					targetElementName = "${targetElementName}");
 			}
-
 			else {
 				PageEditor.addWidget(
 					portletName = "${portletName}",
@@ -350,7 +342,6 @@ definition {
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
-
 		else {
 			var switchTo = "list";
 		}
@@ -438,7 +429,6 @@ definition {
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
-
 		else {
 			var switchTo = "list";
 		}
@@ -579,7 +569,6 @@ definition {
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
-
 		else {
 			var switchTo = "list";
 		}
@@ -618,7 +607,7 @@ definition {
 					value1 = "");
 			}
 
-			if ((isSet(targetFragmentName)) && ("${dropTarget}" == "Header")) {
+			if (isSet(targetFragmentName) && ("${dropTarget}" == "Header")) {
 				DragAndDrop.javaScriptDragAndDropToUp(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -627,7 +616,7 @@ definition {
 					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 
-			if ((isSet(targetFragmentName)) && (!(isSet(dropTarget)))) {
+			if (isSet(targetFragmentName) && !(isSet(dropTarget))) {
 				DragAndDrop.javaScriptDragAndDropToBottom(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -636,7 +625,6 @@ definition {
 					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
-
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
@@ -667,7 +655,7 @@ definition {
 					value1 = "");
 			}
 
-			if ((isSet(targetFragmentName)) && ("${dropTarget}" == "Header")) {
+			if (isSet(targetFragmentName) && ("${dropTarget}" == "Header")) {
 				DragAndDrop.javaScriptDragAndDropToUp(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -676,7 +664,7 @@ definition {
 					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
 			}
 
-			if ((isSet(targetFragmentName)) && (!(isSet(dropTarget)))) {
+			if (isSet(targetFragmentName) && !(isSet(dropTarget))) {
 				DragAndDrop.javaScriptDragAndDropToBottom(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -685,7 +673,6 @@ definition {
 					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
-
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
@@ -715,7 +702,6 @@ definition {
 		if (isSet(composition)) {
 			echo("## Adding a composition of fragments");
 		}
-
 		else {
 			PageEditor.viewFragment(
 				fragmentName = "${fragmentName}",
@@ -735,7 +721,6 @@ definition {
 		if ("${displayStyle}" == "list") {
 			var switchTo = "card";
 		}
-
 		else {
 			var switchTo = "list";
 		}
@@ -754,7 +739,7 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		if ((isSet(targetFragmentName)) && ("${displayStyle}" == "card")) {
+		if (isSet(targetFragmentName) && ("${displayStyle}" == "card")) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
@@ -764,7 +749,7 @@ definition {
 				value1 = "");
 		}
 
-		if ((isSet(targetFragmentName)) && ("${displayStyle}" == "list")) {
+		if (isSet(targetFragmentName) && ("${displayStyle}" == "list")) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
@@ -774,7 +759,7 @@ definition {
 				value1 = "");
 		}
 
-		if ((!(isSet(targetFragmentName))) && ("${displayStyle}" == "card")) {
+		if (!(isSet(targetFragmentName)) && ("${displayStyle}" == "card")) {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "${collectionName}",
 				key_entryTitle = "${entryTitle}",
@@ -784,7 +769,7 @@ definition {
 				value1 = "");
 		}
 
-		if ((!(isSet(targetFragmentName))) && ("${displayStyle}" == "list")) {
+		if (!(isSet(targetFragmentName)) && ("${displayStyle}" == "list")) {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "${collectionName}",
 				key_entryTitle = "${entryTitle}",
@@ -822,14 +807,14 @@ definition {
 
 		var key_portletName = "${portletName}";
 
-		if ((isSet(scope)) && ("${dropTarget}" == "Header")) {
+		if (isSet(scope) && ("${dropTarget}" == "Header")) {
 			DragAndDrop.javaScriptDragAndDropToUp(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#HEADER_DROP_TARGET",
 				value1 = "");
 		}
 
-		if ((isSet(scope)) && ("${dropTarget}" == "Footer")) {
+		if (isSet(scope) && ("${dropTarget}" == "Footer")) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_targetFragmentName = "Drop Zone",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
@@ -837,7 +822,7 @@ definition {
 				value1 = "");
 		}
 
-		if ((isSet(targetFragmentName)) && (isSet(collectionName))) {
+		if (isSet(targetFragmentName) && isSet(collectionName)) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${portletName}",
@@ -847,14 +832,13 @@ definition {
 				value1 = "");
 		}
 
-		if ((isSet(targetFragmentName)) && (!(isSet(collectionName)))) {
+		if (isSet(targetFragmentName) && !(isSet(collectionName))) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_targetFragmentName = "${targetFragmentName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
 				value1 = "${portletName}");
 		}
-
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
@@ -1016,7 +1000,6 @@ definition {
 		if ("${contributed}" == "false") {
 			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 		}
-
 		else {
 			PageEditor.clickConfigurableField(
 				fragmentName = "${fragmentName}",
@@ -1026,7 +1009,6 @@ definition {
 		if (isSet(className)) {
 			var fragmentName = "${className}";
 		}
-
 		else {
 			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
@@ -1035,7 +1017,6 @@ definition {
 		if ("${contributed}" == "false") {
 			Click(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
-
 		else {
 			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
@@ -1043,12 +1024,11 @@ definition {
 
 	macro clickManagementBar {
 		var elementHeight = selenium.getElementHeight("PageEditor#FRAGMENT_SIDEBAR_BODY");
-		var offSetY = MathUtil.product("25","${elementHeight}");
-		var offSetY = MathUtil.quotient("${offSetY}","100");
-
+		var offSetY = 25 * ${elementHeight};
+		var offSetY = ${offSetY} / 100;
 		var elementWidth = selenium.getElementWidth("PageEditor#FRAGMENT_SIDEBAR_BODY");
-		var offSetX = MathUtil.product("0","${elementWidth}");
-		var offSetX = MathUtil.quotient("${offSetX}","100");
+		var offSetX = 0 * ${elementWidth};
+		var offSetX = ${offSetX} / 100;
 
 		Click.clickAt(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY",
@@ -1380,7 +1360,6 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
-
 		else {
 			PageEditor.clickConfigurableField(fragmentName = "Applied Filters");
 		}
@@ -1498,7 +1477,6 @@ definition {
 				Button.clickApply();
 			}
 		}
-
 		else {
 			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
@@ -1506,7 +1484,6 @@ definition {
 					key_text = "plus",
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}
-
 			else {
 				Click(
 					key_fieldLabel = "Collection",
@@ -1525,7 +1502,6 @@ definition {
 					fieldLabel = "Collection",
 					text = "${assetListName}");
 			}
-
 			else if (isSet(infoListProviderName)) {
 				NavItem.click(navItem = "Collection Providers");
 
@@ -1535,7 +1511,6 @@ definition {
 					fieldLabel = "Collection",
 					text = "${infoListProviderName}");
 			}
-
 			else if (isSet(infoItemRelatedListProviderName)) {
 				NavItem.click(navItem = "Related Items Collection Providers");
 
@@ -1656,7 +1631,6 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
-
 		else {
 			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 		}
@@ -1699,7 +1673,6 @@ definition {
 				fieldLabel = "Source",
 				text = "${selectedName}");
 		}
-
 		else if (isSet(vocabularyName)) {
 			if (IsTextEqual(key_fieldLabel = "Source", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
@@ -1747,7 +1720,6 @@ definition {
 					fieldLabel = "Source",
 					text = "${categoryName}");
 			}
-
 			else {
 				Button.click(button = "Select This Level");
 
@@ -1851,7 +1823,7 @@ definition {
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}
 
-			if (IsElementPresent(key_menuItem = "Select Item...",locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			if (IsElementPresent(key_menuItem = "Select Item...", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 				MenuItem.click(menuItem = "Select Item...");
 			}
 
@@ -2204,7 +2176,6 @@ definition {
 		if (isSet(position)) {
 			var key_index = "${position}";
 		}
-
 		else {
 			var key_index = "1";
 		}
@@ -2246,7 +2217,6 @@ definition {
 								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
 								value1 = "${fieldName}");
 						}
-
 						else {
 							Select(
 								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
@@ -2255,7 +2225,6 @@ definition {
 
 						PageEditor.waitForAutoSave();
 					}
-
 					else {
 						if (isSet(source)) {
 							Select(
@@ -2295,7 +2264,6 @@ definition {
 							imageFileName = "${imageFileName}",
 							navTab = "Documents and Media");
 					}
-
 					else {
 						if (isSet(uploadFileName)) {
 							ItemSelector.uploadFile(
@@ -2474,7 +2442,6 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${field}");
 			}
-
 			else {
 				Type(
 					key_text = "URL",
@@ -2495,7 +2462,6 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
-
 			else if ("${target}" == "Self") {
 				Uncheck.uncheckToggleSwitch(
 					checkboxName = "Open in a new tab.",
@@ -2512,7 +2478,6 @@ definition {
 		if (isSet(position)) {
 			var key_index = "${position}";
 		}
-
 		else {
 			var key_index = "1";
 		}
@@ -2553,7 +2518,6 @@ definition {
 				PageEditor.waitForAutoSave();
 			}
 		}
-
 		else if ("${panel}" == "Styles") {
 			Navigator.gotoNavTab(navTab = "Styles");
 
@@ -2686,7 +2650,7 @@ definition {
 			key_collectionName = "${collectionName}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
 
-		if (IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED", key_collectionName = "${collectionName}")) {
+		if (IsElementPresent(key_collectionName = "${collectionName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED")) {
 			AssertClick(
 				key_collectionName = "${collectionName}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED",
@@ -2797,7 +2761,6 @@ definition {
 		if (isSet(className)) {
 			var fragmentName = "${className}";
 		}
-
 		else {
 			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
@@ -2806,7 +2769,6 @@ definition {
 		if ("${contributed}" == "false") {
 			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
-
 		else {
 			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
@@ -2832,7 +2794,7 @@ definition {
 	}
 
 	macro gotoSaveAsFragment {
-		key_fragmentName = "${fragmentName}";
+		var key_fragmentName = "${fragmentName}";
 
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
@@ -2867,13 +2829,13 @@ definition {
 	}
 
 	macro gotoStyle {
-		if ((isSet(deviceType)) && ("${deviceType}" != "Desktop")) {
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 		}
 
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		if ((isSet(deviceType)) && ("${deviceType}" != "Desktop")) {
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
 			SelectFrame(value1 = "relative=top");
 		}
 
@@ -2890,13 +2852,11 @@ definition {
 				key_tabName = "${tabName}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 		}
-
 		else if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			Click(
 				key_tabName = "${tabName}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 		}
-
 		else {
 			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
@@ -2987,7 +2947,6 @@ definition {
 				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
 				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
 		}
-
 		else {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				index = "${index}",
@@ -3222,7 +3181,6 @@ definition {
 				key_deviceType = "${deviceType}",
 				locator1 = "Modal#DEVICE_TYPE");
 		}
-
 		else {
 			Click(
 				key_deviceType = "${deviceType}",
@@ -3232,15 +3190,12 @@ definition {
 		if ("${deviceType}" == "Desktop") {
 			var viewport = "desktop";
 		}
-
 		else if ("${deviceType}" == "Tablet") {
 			var viewport = "tablet";
 		}
-
 		else if ("${deviceType}" == "Landscape Phone") {
 			var viewport = "landscapeMobile";
 		}
-
 		else if ("${deviceType}" == "Portrait Phone") {
 			var viewport = "portraitMobile";
 		}
@@ -3333,7 +3288,6 @@ definition {
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_HIGHLIGHTED",
 					value1 = "${fragmentComment}");
 			}
-
 			else if (isSet(mentionsUserScreenName)) {
 				AssertTextEquals(
 					key_fragmentComment = "${fragmentComment}",
@@ -3344,7 +3298,6 @@ definition {
 					mentionsUserFullName = "${mentionsUserFullName}",
 					mentionsUserScreenName = "${mentionsUserScreenName}");
 			}
-
 			else {
 				AssertTextEquals(
 					key_fragmentComment = "${fragmentComment}",
@@ -3352,7 +3305,6 @@ definition {
 					value1 = "${fragmentComment}");
 			}
 		}
-
 		else {
 			AssertVisible(
 				key_sidebarButton = "Comments",
@@ -3399,7 +3351,6 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY_HIGHLIGHTED",
 				value1 = "${commentReply}");
 		}
-
 		else {
 			AssertTextEquals(
 				key_commentReply = "${commentReply}",
@@ -3625,7 +3576,6 @@ definition {
 		if (isSet(className)) {
 			var fragmentName = "${className}";
 		}
-
 		else {
 			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
@@ -3647,7 +3597,6 @@ definition {
 					locator1 = "Fragment#INLINE_RICH_TEXT_STYLE");
 			}
 		}
-
 		else {
 			ContentPages.viewFragmentText(
 				fragmentName = "${fragmentName}",
@@ -3699,7 +3648,6 @@ definition {
 				key_messageInfo = "${messageInfo}",
 				locator1 = "Fragment#NO_COLLECTION_SELECTED_MESSAGE");
 		}
-
 		else if ("${fragmentName}" == "Content Display") {
 			if (!(isSet(messageInfo))) {
 				var messageInfo = "The selected content will be shown here.";
@@ -3710,7 +3658,6 @@ definition {
 				key_messageInfo = "${messageInfo}",
 				locator1 = "Fragment#MESSAGE_INFO");
 		}
-
 		else if ("${fragmentName}" == "Display Page Content") {
 			if (!(isSet(messageInfo))) {
 				var messageInfo = "The display page content will be shown here.";
@@ -3721,7 +3668,6 @@ definition {
 				key_messageInfo = "${messageInfo}",
 				locator1 = "Fragment#MESSAGE_INFO");
 		}
-
 		else {
 			AssertVisible(
 				key_fragmentName = "${fragmentName}",

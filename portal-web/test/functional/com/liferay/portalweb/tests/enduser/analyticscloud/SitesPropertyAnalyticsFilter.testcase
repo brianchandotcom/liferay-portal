@@ -344,6 +344,7 @@ definition {
 
 			ACSettings.goToProperties();
 		}
+
 		task ("Create property 1, check if it was created and add an admin user") {
 			ACProperties.addNewProperty(propertyName = "Property Name 1");
 
@@ -351,6 +352,7 @@ definition {
 
 			ACProperties.addUserProperty(emailAddress = "bryan.cheung@faro.io");
 		}
+
 		task ("Go back to the properties menu, create property 2, check if it was created and add an admin user") {
 			ACSettings.goToProperties();
 
@@ -360,6 +362,7 @@ definition {
 
 			ACProperties.addUserProperty(emailAddress = "corbin.murakami@faro.io");
 		}
+
 		task ("Go back to the properties menu, create property 3, check if it was created and select all users as admin") {
 			ACSettings.goToProperties();
 
@@ -369,6 +372,7 @@ definition {
 
 			ACSettings.goToProperties();
 		}
+
 		task ("Log in as the user corbin.murakami@faro.io and go to the properties menu") {
 			ACWorkspace.signOut();
 
@@ -382,6 +386,7 @@ definition {
 
 			ACSettings.goToProperties();
 		}
+
 		task ("Checks if only property 2 and property 3 are present") {
 			ACProperties.assertPropertyNotPresent(propertyName = "Property Name 1");
 

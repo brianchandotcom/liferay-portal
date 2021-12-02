@@ -1177,7 +1177,7 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		var dataSource = StringUtil.extractFirst("${propertyName}"," ");
+		var dataSource = StringUtil.extractFirst("${propertyName}", " ");
 
 		JSONUser.addUser(
 			userEmailAddress = "${username}@liferay.com",

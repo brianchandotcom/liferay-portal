@@ -17,7 +17,7 @@ definition {
 				value1 = "${contributionIncrement}");
 		}
 
-		if ((isSet(contributionLimitValue)) || (isSet(contributionLimitPeriod)) || (isSet(participationLimitValue)) || (isSet(participationLimitPeriod))) {
+		if (isSet(contributionLimitValue) || isSet(contributionLimitPeriod) || isSet(participationLimitValue) || isSet(participationLimitPeriod)) {
 			AssertClick(
 				locator1 = "SocialActivity#LIMIT_LINK",
 				value1 = "Limit");

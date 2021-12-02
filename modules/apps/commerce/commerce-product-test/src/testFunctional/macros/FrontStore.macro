@@ -5,7 +5,7 @@ definition {
 
 		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME", key_cartItemName = "${productName}")) {
+		if (IsElementPresent(key_cartItemName = "${productName}", locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME")) {
 			var newItemCount = "${currentItemCount}";
 		}
 		else {
@@ -123,7 +123,6 @@ definition {
 				cartItemSKU = "${cartItemSKU}");
 
 			var count = ${count} - 1;
-
 			var cartItemNames = StringUtil.replaceFirst("${cartItemNames}", "${cartItemName},", "");
 			var cartItemPriceValues = StringUtil.replaceFirst("${cartItemPriceValues}", "${cartItemPriceValue},", "");
 			var cartItemQuantities = StringUtil.replaceFirst("${cartItemQuantities}", "${cartItemQuantity},", "");

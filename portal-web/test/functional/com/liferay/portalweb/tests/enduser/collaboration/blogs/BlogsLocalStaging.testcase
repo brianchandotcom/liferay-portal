@@ -171,7 +171,7 @@ definition {
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."
 	@priority = "4"
 	test CanPublishDeletedCoverImageViaSAP {
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
 			site = "false",
 			sourceFileName = "Document_1.jpg");
@@ -865,7 +865,7 @@ definition {
 	@description = "This is a test for LPS-136791. It checks that the cover image can be updated and republished using the SAP."
 	@priority = "4"
 	test CanRepublishCoverImageViaSAP {
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
 			site = "false",
 			sourceFileName = "Document_1.jpg");
@@ -885,7 +885,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entryTitle = "Blogs Entry Title");
 
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
 			site = "false",
 			sourceFileName = "Document_2.jpg");

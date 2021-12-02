@@ -41,9 +41,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var users = "user1,user2";
-
 		var emailList = "user1@liferay.com,user2@liferay.com";
-
 		var nameList = "user1 user1,user2 user2";
 
 		task ("Add a new user") {
@@ -124,9 +122,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var users = "ac1,ac2";
-
 		var emailList = "ac1@liferay.com,ac2@liferay.com";
-
 		var nameList = "ac1 ac1,ac2 ac2";
 
 		task ("Create two new users") {
@@ -210,9 +206,7 @@ definition {
 		// AC Refactor ticket: LRAC-9336
 
 		var users = "user1,user2";
-
 		var emailList = "user1@liferay.com,user2@liferay.com";
-
 		var nameList = "user1 user1,user2 user2";
 
 		task ("Add a new site with a public widget page") {
@@ -305,9 +299,7 @@ definition {
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByText {
 		var users = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
-
 		var nameList = "ac ac,liferay liferay";
 
 		task ("Connect Analytics Cloud to DXP") {

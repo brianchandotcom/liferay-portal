@@ -76,7 +76,6 @@ definition {
 		// AC Refactor ticket: LRAC-9171
 
 		var usernameList = "ac";
-
 		var pageNameList = "vehicles,science,agriculture,delivery,information,technology";
 
 		task ("Connect the DXP to AC") {
@@ -161,7 +160,6 @@ definition {
 		// AC Refactor ticket: LRAC-9172
 
 		var usernameList = "ac";
-
 		var pageNameList = "vehicles,science,agriculture,delivery,information,technology";
 
 		task ("Connect the DXP to AC") {
@@ -242,7 +240,6 @@ definition {
 		// AC Refactor ticket: LRAC-9170
 
 		var usernameList = "ac";
-
 		var pageNameList = "vehicles,science,agriculture,delivery,information,technology";
 
 		task ("Connect the DXP to AC") {

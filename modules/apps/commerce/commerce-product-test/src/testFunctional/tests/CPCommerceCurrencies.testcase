@@ -51,8 +51,8 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Test Currency");
 
 		for (var current : list "Name/Test Currency Edited,Code/TCYE,Exchange Rate with US Dollar/1") {
-			var fieldLabel = StringUtil.extractFirst("${current}","/");
-			var value = StringUtil.extractLast("${current}","/");
+			var fieldLabel = StringUtil.extractFirst("${current}", "/");
+			var value = StringUtil.extractLast("${current}", "/");
 
 			Type(
 				key_fieldLabel = "${fieldLabel}",

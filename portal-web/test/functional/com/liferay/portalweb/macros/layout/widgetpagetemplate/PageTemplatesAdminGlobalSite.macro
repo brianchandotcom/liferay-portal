@@ -88,7 +88,7 @@ definition {
 		LexiconCard.clickCardTitleLink(card = "${pageTemplateName}");
 	}
 
-	macro openGlobalPageTemplatesAdmin() {
+	macro openGlobalPageTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/global/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
 	}
 
@@ -97,7 +97,7 @@ definition {
 
 		var pageTemplateName = "Page Template Name";
 
-		while (IsElementPresent(locator1 = "Card#CARD_ELLIPSIS", key_card = "${pageTemplateName}")) {
+		while (IsElementPresent(key_card = "${pageTemplateName}", locator1 = "Card#CARD_ELLIPSIS")) {
 			PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "${pageTemplateName}");
 		}
 	}

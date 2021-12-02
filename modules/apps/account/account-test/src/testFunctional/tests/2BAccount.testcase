@@ -750,14 +750,17 @@ definition {
 
 				if ("${userNum}" == "2") {
 					LexiconEntry.viewNoEntry(rowEntry = "userfn3 userln3");
+
 					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
 				}
 				else if ("${userNum}" == "3") {
 					LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+
 					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
 				}
 				else {
 					LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln3");
+
 					LexiconEntry.viewNoEntry(rowEntry = "userfn3 userln3");
 				}
 			}

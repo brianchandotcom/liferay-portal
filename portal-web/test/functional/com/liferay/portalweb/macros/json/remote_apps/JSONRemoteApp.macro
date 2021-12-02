@@ -6,6 +6,7 @@ definition {
 		var response = JSONRemoteAppAPI._addIFrameRemoteAppEntry(
 			iFrameURL = "${iFrameURL}",
 			name = "${name}");
+
 		return "${response}";
 	}
 

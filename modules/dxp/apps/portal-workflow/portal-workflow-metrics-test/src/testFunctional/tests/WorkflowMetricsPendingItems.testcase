@@ -162,8 +162,8 @@ definition {
 		var overdueItems = selenium.getText(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE");
 		var onTimeItems = selenium.getText(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE");
 		var untrackedItems = selenium.getText(locator = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_VALUE");
-		var expectedResult = MathUtil.sum("${overdueItems}", "${onTimeItems}");
-		var expectedResultTotal = MathUtil.sum("${expectedResult}", "${untrackedItems}");
+		var expectedResult = ${overdueItems} + ${onTimeItems};
+		var expectedResultTotal = ${expectedResult} + ${untrackedItems};
 
 		AssertTextEquals(
 			key_statusName = "Total Pending",

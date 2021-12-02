@@ -544,6 +544,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "user1@liferay.com");
 		}
+
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
 		}
@@ -1295,7 +1296,6 @@ definition {
 		// AC Refactor ticket: LRAC-9163
 
 		var usernameList = "user1,user2,user3,user4,user5";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 
 		task ("Add 5 more new users") {
@@ -1494,7 +1494,6 @@ definition {
 		// AC Refactor ticket: LRAC-9155
 
 		var usernameList = "user1,user2,user3,user4,user5";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 
 		task ("Add 5 more new users") {

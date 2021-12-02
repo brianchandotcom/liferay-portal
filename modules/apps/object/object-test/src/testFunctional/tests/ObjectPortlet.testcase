@@ -697,9 +697,11 @@ definition {
 			value = "Test text");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 		ObjectPortlet.viewEntry(entry = "Test text");
 
 		ObjectPortlet.deleteEntry(entry = "Test text");
+
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text");
 	}
 
@@ -827,6 +829,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "123.654321");
+
 		ObjectPortlet.viewEntry(entry = "1.12345678");
 	}
 
@@ -859,6 +862,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "No");
+
 		ObjectPortlet.viewEntry(entry = "Yes");
 	}
 
@@ -893,6 +897,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "2001-01-01");
+
 		ObjectPortlet.viewEntry(entry = "2002-02-02");
 	}
 
@@ -927,6 +932,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "1.23");
+
 		ObjectPortlet.viewEntry(entry = "4.56");
 	}
 
@@ -961,6 +967,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "321");
+
 		ObjectPortlet.viewEntry(entry = "123456");
 	}
 
@@ -995,6 +1002,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "987654321");
+
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
 
@@ -1040,6 +1048,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Text test");
+
 		ObjectPortlet.viewEntry(entry = "Update test");
 	}
 
@@ -1681,6 +1690,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Text test");
+
 		ObjectPortlet.viewEntry(entry = "Test 2");
 	}
 
@@ -2375,12 +2385,19 @@ definition {
 		ObjectPortlet.changePagination(itemsPerPage = "4 items");
 
 		ObjectPortlet.viewEntry(entry = "Test text 1");
+
 		ObjectPortlet.viewEntry(entry = "Test text 2");
+
 		ObjectPortlet.viewEntry(entry = "Test text 3");
+
 		ObjectPortlet.viewEntry(entry = "Test text 4");
+
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text 5");
+
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text 6");
+
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text 7");
+
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text 8");
 	}
 

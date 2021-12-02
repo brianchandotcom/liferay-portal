@@ -72,11 +72,9 @@ definition {
 			WaitForSPARefresh();
 
 			var url = selenium.getLocation();
-
 			var value = StringUtil.extractLast("${url}", "assetEntryId=");
 
 			var script = '''</script> <script> alert (1) </script>''';
-
 			var url = StringUtil.replace("${url}", "${value}", "${script}");
 
 			Navigator.openSpecificURL(url = "${url}");

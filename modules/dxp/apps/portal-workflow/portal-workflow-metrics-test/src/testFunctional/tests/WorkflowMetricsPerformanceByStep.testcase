@@ -197,7 +197,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -464,7 +464,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -550,7 +550,7 @@ definition {
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				panel = "Site Administration",
 				portlet = "Blogs");
 
@@ -650,7 +650,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		key_dateRange = "Last 7 Days";
+		var key_dateRange = "Last 7 Days";
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
@@ -664,7 +664,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		key_dateRange = "Last 90 Days";
+		var key_dateRange = "Last 90 Days";
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
@@ -678,7 +678,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		key_dateRange = "Last 180 Days";
+		var key_dateRange = "Last 180 Days";
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
@@ -692,7 +692,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		key_dateRange = "Last Year";
+		var key_dateRange = "Last Year";
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
@@ -706,7 +706,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		key_dateRange = "Today";
+		var key_dateRange = "Today";
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
@@ -1063,7 +1063,7 @@ definition {
 
 		task ("Create blog entry and approve it") {
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				panel = "Site Administration",
 				portlet = "Blogs");
 

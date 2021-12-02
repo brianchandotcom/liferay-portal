@@ -35,7 +35,7 @@ definition {
 		property testray.component.names = "WYSIWYG";
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();

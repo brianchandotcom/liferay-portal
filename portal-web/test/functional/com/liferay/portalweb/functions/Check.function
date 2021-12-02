@@ -12,9 +12,7 @@ definition {
 			selenium.clickAt();
 		}
 
-		selenium.assertChecked(
-			"xpath=( //div[@class='checkbox']//input[@title='Select All'])[2]"
-		);
+		selenium.assertChecked("xpath=( //div[@class='checkbox']//input[@title='Select All'])[2]");
 
 		selenium.assertJavaScriptErrors();
 

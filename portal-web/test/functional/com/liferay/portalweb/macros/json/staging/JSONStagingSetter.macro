@@ -4,23 +4,36 @@ definition {
 		var list = ListUtil.newList();
 
 		ListUtil.add("${list}", "com_liferay_blogs_web_portlet_BlogsAdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_calendar_web_portlet_CalendarAdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_document_library_web_portlet_DLAdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_dynamic_data_lists_web_portlet_DDLPortlet");
+
 		ListUtil.add("${list}", "com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet");
+
 		ListUtil.add("${list}", "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_template_web_internal_portlet_TemplatePortlet");
+
 		ListUtil.add("${list}", "com_liferay_journal_web_portlet_JournalPortlet");
+
 		ListUtil.add("${list}", "com_liferay_knowledge_base_web_portlet_AdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_message_boards_web_portlet_MBAdminPortlet");
+
 		ListUtil.add("${list}", "com_liferay_mobile_device_rules_web_portlet_MDRPortlet");
+
 		ListUtil.add("${list}", "com_liferay_polls_web_portlet_PollsPortlet");
+
 		ListUtil.add("${list}", "com_liferay_segments_web_internal_portlet_SegmentsPortlet");
+
 		ListUtil.add("${list}", "com_liferay_wiki_web_portlet_WikiAdminPortlet");
 
 		var portletIds = ListUtil.toString("${list}");
-
 		var list = ListUtil.newList();
 
 		for (var portletId : list "${portletIds}") {
@@ -29,17 +42,17 @@ definition {
 			if ("${portletId}" == "${unCheckedContent}") {
 				var attribute = '''"staged--staged-portlet_${portletId}--" : "false"''';
 			}
-
 			else {
 				var attribute = '''"staged--staged-portlet_${portletId}--" : "true"''';
 			}
 
 			if ("${result}" == "true") {
-				ListUtil.add("${list}","${attribute}");
+				ListUtil.add("${list}", "${attribute}");
 			}
 		}
 
 		var attributes = ListUtil.toString("${list}");
+
 		var attributes = '''{${attributes}}''';
 
 		return "${attributes}";
@@ -52,7 +65,9 @@ definition {
 			var site = "false";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByGroupKey(
+			groupKey = "${groupKey}",
+			site = "${site}");
 
 		return "${groupId}";
 	}

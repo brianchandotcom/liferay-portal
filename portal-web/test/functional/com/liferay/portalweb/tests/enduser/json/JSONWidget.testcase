@@ -90,17 +90,18 @@ definition {
 				layoutName = "Test Page Name",
 				layoutTemplate = "${layoutTemplate}");
 
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Test Site Name",
+				site = "true");
 
 			var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
 				groupId = "${groupId}",
 				layoutName = "Test Page Name",
 				privateLayout = "false");
 
-			var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(
-				layoutTemplate = "${layoutTemplate}");
+			var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
 
-			if (!(contains("${typeSettings}","${layoutTemplateId}"))) {
+			if (!(contains("${typeSettings}", "${layoutTemplateId}"))) {
 				fail("${layoutTemplateId} is not in 'typeSettings'");
 			}
 

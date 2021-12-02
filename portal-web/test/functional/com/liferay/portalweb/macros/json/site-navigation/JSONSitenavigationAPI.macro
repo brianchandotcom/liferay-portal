@@ -63,7 +63,6 @@ definition {
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
-
 		var siteNavigationMenuId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${siteNavigationMenuName}')]['siteNavigationMenuId']");
 
 		return "${siteNavigationMenuId}";
@@ -80,7 +79,6 @@ definition {
 				-u test@liferay.com:test \
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
-
 		var siteNavigationMenuItemId = JSONCurlUtil.post("${curl}", "$.[?(@['typeSettings'] contains '${siteNavigationMenuItemName}')]['siteNavigationMenuItemId']");
 
 		return "${siteNavigationMenuItemId}";

@@ -144,8 +144,8 @@ definition {
 		Refresh();
 
 		for (var column : list "2-${orderId},3-Italy,4-0,5-1") {
-			key_columnNumber = StringUtil.extractFirst("${column}","-");
-			var currentValue = StringUtil.extractLast("${column}","-");
+			var key_columnNumber = StringUtil.extractFirst("${column}", "-");
+			var currentValue = StringUtil.extractLast("${column}", "-");
 
 			AssertTextEquals(
 				key_entryName = "MIN55861",
@@ -1174,7 +1174,7 @@ definition {
 		for (var search : list "${ship1Id},${ship2Id},account1,account2") {
 			CommerceNavigator.searchEntry(entryName = "${search}");
 
-			if ("${search}" == "account1" || "${search}" == "${ship1Id}") {
+			if (("${search}" == "account1") || ("${search}" == "${ship1Id}")) {
 				AssertElementPresent(
 					key_entryName = "${ship1Id}",
 					locator1 = "CommerceNavigation#ENTRY_NAME");
@@ -1502,8 +1502,8 @@ definition {
 		Refresh();
 
 		for (var column : list "3;United States - Southwest,5;1") {
-			key_columnNumber = StringUtil.extractFirst("${column}",";");
-			var currentValue = StringUtil.extractLast("${column}",";");
+			var key_columnNumber = StringUtil.extractFirst("${column}", ";");
+			var currentValue = StringUtil.extractLast("${column}", ";");
 
 			AssertTextEquals(
 				key_entryName = "MIN55861",

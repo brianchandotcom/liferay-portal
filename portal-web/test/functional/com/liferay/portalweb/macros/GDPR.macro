@@ -270,7 +270,7 @@ definition {
 	}
 
 	macro viewNoEntryInApplicationCP {
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Review Data")) {
+		if (IsElementNotPresent(key_tab = "Review Data", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Review Data");
 		}
 

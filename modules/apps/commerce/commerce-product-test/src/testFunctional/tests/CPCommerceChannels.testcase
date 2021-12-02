@@ -32,7 +32,6 @@ definition {
 		property portal.release = "false";
 
 		// TODO Review
-
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586; COMMERCE-6588
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1657,7 +1656,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO Review
-
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1881,6 +1879,7 @@ definition {
 		Click(
 			key_text = "Standard",
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
@@ -1927,10 +1926,10 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var current : list "Tax Category-Normal Product,Amount-20,Country-Italy,Region-Roma,Zip-0100") {
-			var fieldLabel = StringUtil.extractFirst("${current}","-");
-			var value = StringUtil.extractLast("${current}","-");
+			var fieldLabel = StringUtil.extractFirst("${current}", "-");
+			var value = StringUtil.extractLast("${current}", "-");
 
-			if ("${fieldLabel}" == "Tax Category" || "${fieldLabel}" == "Country" || "${fieldLabel}" == "Region") {
+			if (("${fieldLabel}" == "Tax Category") || ("${fieldLabel}" == "Country") || ("${fieldLabel}" == "Region")) {
 				Select(
 					key_fieldLabel = "${fieldLabel}",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

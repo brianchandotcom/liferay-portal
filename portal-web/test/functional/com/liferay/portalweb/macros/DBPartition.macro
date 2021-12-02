@@ -9,7 +9,7 @@ definition {
 
 		var result = FileUtil.read("${liferayHome}/validateoutput.txt");
 
-		if ((contains("${result}", "invalid company ID")) || (!(contains("${result}", "Validation passed")))) {
+		if (contains("${result}", "invalid company ID") || !(contains("${result}", "Validation passed"))) {
 			fail("Failed to validate DB Partition schemas.");
 		}
 	}

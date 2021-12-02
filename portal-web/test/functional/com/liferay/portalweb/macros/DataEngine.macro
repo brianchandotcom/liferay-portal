@@ -87,7 +87,8 @@ definition {
 
 		for (var fieldName : list "${fieldNameList}") {
 			if ("${index}" == "1") {
-				firstFieldLabel = "${fieldName}";
+				var firstFieldLabel = "${fieldName}";
+
 				DataEngine.addField(
 					fieldFieldLabel = "${fieldName}",
 					fieldName = "${fieldName}");
@@ -105,7 +106,7 @@ definition {
 					targetFieldGroupLabel = "Fields Group");
 			}
 
-			if ("${fieldName}" == "Select from List" || "${fieldName}" == "Single Selection" || "${fieldName}" == "Multiple Selection") {
+			if (("${fieldName}" == "Select from List") || ("${fieldName}" == "Single Selection") || ("${fieldName}" == "Multiple Selection")) {
 				for (var i : list "1,2,3") {
 					DataEngine.addFieldOption(
 						fieldFieldLabel = "${fieldName}",
@@ -1599,6 +1600,7 @@ definition {
 		AssertVisible(
 			key_fieldsetLabel = "${fieldsetName}",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
 		for (var fieldName : list "${fieldNameList}") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldName}",

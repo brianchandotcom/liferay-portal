@@ -109,8 +109,8 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		for (var style : list "style-dashed,width-10px") {
-			var styleName = StringUtil.extractFirst("${style}","-");
-			var styleValue = StringUtil.extractLast("${style}","-");
+			var styleName = StringUtil.extractFirst("${style}", "-");
+			var styleValue = StringUtil.extractLast("${style}", "-");
 
 			AssertCssValue(
 				key_styleValue = "border-top: 10px dashed #9D60EB",

@@ -81,7 +81,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -242,7 +242,7 @@ definition {
 			userLoginFullName = "user1 user1");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -570,6 +570,7 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry",
 				entryTitle = "Blogs Entry ${count}");
+
 			var count = ${count} + 1;
 		}
 
@@ -1329,11 +1330,15 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while (IsElementPresent(key_slaStatusTitle= "OPEN", locator1= "WorkflowAllItems#DETAIL_PAGE_SLA_STATUS_TITLE") && (maxIterations = "24")) {
+		while (IsElementPresent(key_slaStatusTitle = "OPEN", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_STATUS_TITLE") && (maxIterations = "24")) {
 			echo("Waiting 5 seconds to recheck");
+
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
+
 			Pause(locator1 = "5000");
+
 			Refresh();
+
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 		}
 
@@ -1745,7 +1750,7 @@ definition {
 			workflowResourceValue = "Blogs Entry");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs");
 
 		Blogs.addWithWorkflow(
@@ -2110,8 +2115,8 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		for (var orderNumber : list "1,2,3") {
-			key_order = "${orderNumber}";
-			key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
+			var key_order = "${orderNumber}";
+			var key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
 
 			JSONUser.addUser(
 				userEmailAddress = "user${orderNumber}@liferay.com",
@@ -2128,6 +2133,7 @@ definition {
 				roleTitle = "Administrator",
 				userEmailAddress = "user${orderNumber}@liferay.com");
 		}
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2136,7 +2142,8 @@ definition {
 			portlet = "Memberships");
 
 		for (var orderNumber : list "1,2,3") {
-			key_order = "${orderNumber}";
+			var key_order = "${orderNumber}";
+
 			Site.assignUserAsMemberCP(
 				userFirstName = "user${orderNumber}",
 				userLastName = "user${orderNumber}",
@@ -2560,10 +2567,9 @@ definition {
 			nameOfAssignee = "Test Test",
 			taskList = "task3");
 
-		while (IsElementNotPresent(key_workflowInstanceName = "Blogs Entry",
-				key_workflowInstanceAssignee = "Test Test, Unassigned, User User",
-				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE") && (maxIterations = "20")) {
+		while (IsElementNotPresent(key_workflowInstanceAssignee = "Test Test, Unassigned, User User", key_workflowInstanceName = "Blogs Entry", locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE") && (maxIterations = "20")) {
 			Pause(locator1 = "3000");
+
 			Refresh();
 		}
 
@@ -2650,7 +2656,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 

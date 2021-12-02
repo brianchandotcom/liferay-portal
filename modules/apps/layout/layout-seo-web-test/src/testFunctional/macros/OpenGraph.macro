@@ -109,7 +109,7 @@ definition {
 	macro disableOpenGraphAtSiteLevel {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=site-configuration-open-graph");
 
-		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable Open Graph")) {
+		if (IsChecked(checkboxName = "Enable Open Graph", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click(
 				checkboxName = "Enable Open Graph",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -157,7 +157,7 @@ definition {
 			key_text = "bolt",
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 
-		for (var field : list "${field}" ) {
+		for (var field : list "${field}") {
 			if ("${textType}" == "TextInput") {
 				Type.sendKeys(
 					key_text = "${mappedField}",
@@ -300,7 +300,6 @@ definition {
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
 				value1 = "${mappedFieldValue}");
 		}
-
 		else {
 			AssertAttributeValue(
 				attribute1 = "value",
@@ -311,7 +310,7 @@ definition {
 	}
 
 	macro viewNoOpenGraphProperties {
-		for (var ogProperty : list "${ogPropertyList}" ) {
+		for (var ogProperty : list "${ogPropertyList}") {
 			AssertHTMLSourceTextNotPresent(value1 = "${ogProperty}");
 		}
 	}
@@ -335,7 +334,7 @@ definition {
 	}
 
 	macro viewOpenGraphProperties {
-		for (var ogProperty : list "${ogPropertyList}" ) {
+		for (var ogProperty : list "${ogPropertyList}") {
 			AssertHTMLSourceTextPresent(value1 = "${ogProperty}");
 		}
 	}

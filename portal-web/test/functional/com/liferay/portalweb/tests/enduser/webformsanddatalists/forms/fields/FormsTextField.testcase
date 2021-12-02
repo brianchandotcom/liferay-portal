@@ -22,7 +22,7 @@ definition {
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Forms");
 
 			FormsAdmin.teardownForms();
@@ -44,7 +44,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
@@ -92,7 +92,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -126,7 +126,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
@@ -138,7 +138,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -253,6 +253,7 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Numeric",
 			formPageNumber = "0");
+
 		Click(
 			key_name = "Text",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
@@ -362,7 +363,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
@@ -419,7 +420,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
@@ -481,7 +482,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
@@ -572,7 +573,7 @@ definition {
 
 		FormFields.editValidation(
 			validationArgument = "Contains",
-			validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;",
+			validationErrorMessage = "Text must contain ''Test''",
 			validationInput = "Test");
 
 		Form.save();
@@ -585,20 +586,20 @@ definition {
 			fieldName = "${fieldTextField}",
 			fieldValue = "text");
 
-		FormPortlet.submitWithValidationError(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Text must contain ''Test''");
 
 		FormFields.editText(
 			fieldName = "${fieldTextField}",
 			fieldValue = "test");
 
-		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Text must contain ''Test''");
 
 		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdmin.viewForm();
@@ -614,6 +615,7 @@ definition {
 	@priority = "4"
 	test CanBeValidatedUsingTheDoesNotMatchOption {
 		FormsAdmin.addForm();
+
 		Form.editName(formName = "Form 1");
 
 		Form.addTextField(fieldPositionNumber = "0");
@@ -815,7 +817,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
@@ -992,6 +994,7 @@ definition {
 	@priority = "5"
 	test ConfirmationLabelCanBeEdited {
 		FormsAdmin.addForm();
+
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(fieldType = "Text");

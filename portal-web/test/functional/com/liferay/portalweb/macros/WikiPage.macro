@@ -5,7 +5,7 @@ definition {
 	macro _checkForRSSTitleCP {
 		if (IsElementNotPresent(locator1 = "RSS#FEED_TITLE")) {
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Wiki",
 				site = "${site}");
 
@@ -68,7 +68,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		if (IsElementPresent(locator1 = "Header#H4_TITLE", key_title = "Uploading")) {
+		if (IsElementPresent(key_title = "Uploading", locator1 = "Header#H4_TITLE")) {
 			Refresh();
 
 			Click(locator1 = "Checkbox#SELECT_ALL");
@@ -338,7 +338,6 @@ definition {
 
 			CKEditor.addSourceContent(content = "${wikiPageContent}");
 		}
-
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1206,7 +1205,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");

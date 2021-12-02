@@ -1391,6 +1391,7 @@ definition {
 				content = "WC Content",
 				groupName = "Test Site Name",
 				title = "WC 1");
+
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Test Site Name",

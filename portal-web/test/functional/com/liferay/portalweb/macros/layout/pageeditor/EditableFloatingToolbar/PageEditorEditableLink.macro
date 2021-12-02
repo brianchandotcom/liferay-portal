@@ -14,7 +14,7 @@ definition {
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 		}
 
-		if (IsElementPresent(key_menuItem = "Select Item...",locator1 = "MenuItem#ANY_MENU_ITEM")) {
+		if (IsElementPresent(key_menuItem = "Select Item...", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			MenuItem.click(menuItem = "Select Item...");
 		}
 

@@ -55,13 +55,9 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");
 
 		//Click(locator1 = "AnalyticsCloudConnection#SYNCED_CONTACT_DATA_LINK");
-
 		//Click(locator1 = "AnalyticsCloudConnection#SYNCED_CONTACTS_BUTTON");
-
 		//Check.checkToggleSwitch(locator1 = "AnalyticsCloudConnection#SYNC_ALL_CONTACTS_TOGGLE");
-
 		//Click(locator1 = "AnalyticsCloudConnection#SAVE_AND_NEXT_BUTTON");
-
 		//Click(locator1 = "Button#SAVE");
 
 	}

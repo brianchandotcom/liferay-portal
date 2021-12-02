@@ -35,8 +35,8 @@ definition {
 			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
-			customContent = "&amp; content",
-			customProperty = "&amp; property");
+			customContent = "& content",
+			customProperty = "& property");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

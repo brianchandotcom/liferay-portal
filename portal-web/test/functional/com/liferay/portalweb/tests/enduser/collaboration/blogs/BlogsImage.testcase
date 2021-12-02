@@ -101,7 +101,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanChangeCoverImage {
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Guest",
 			sourceFileName = "Document_1.jpg");
 
@@ -142,7 +142,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanRemoveCoverImage {
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Guest",
 			sourceFileName = "Document_1.jpg");
 
@@ -338,7 +338,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanUseBlogImageForDifferentEntries {
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Guest",
 			sourceFileName = "Document_1.jpg");
 
@@ -409,7 +409,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanViewCoverImageDetails {
-		var imageId	= JSONBlog.uploadBlogImage(
+		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Guest",
 			sourceFileName = "Document_1.jpg");
 

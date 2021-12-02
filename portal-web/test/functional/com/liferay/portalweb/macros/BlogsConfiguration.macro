@@ -46,7 +46,7 @@ definition {
 			configurationName = "Blogs",
 			configurationScope = "Widget Scope");
 
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableReadingTime")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_fieldName = "enableReadingTime", locator1 = "FormFields#CHECKBOX")) {
 			Check.checkNotVisible(
 				key_fieldName = "enableReadingTime",
 				locator1 = "FormFields#CHECKBOX");
@@ -219,7 +219,7 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Permissions");
 
-			if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "Configuration")) {
+			if (IsElementPresent(key_menuItem = "Configuration", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 				MenuItem.click(menuItem = "Configuration");
 
 				SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -249,7 +249,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs");
 
 		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE");

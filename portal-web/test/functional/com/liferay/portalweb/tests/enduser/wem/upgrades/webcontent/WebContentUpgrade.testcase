@@ -106,6 +106,7 @@ definition {
 					key_fieldName = "${fieldName}",
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
+
 			Click(locator1 = "xpath=(//div[contains(@data-field-name,'CompanhiaOperadora')]/..//button[@*='Remove'])[3]");
 
 			for (var fieldName : list "Destino,DescricaoOpPar") {
@@ -150,7 +151,7 @@ definition {
 
 			var i = "1";
 
-			while (!("${i}" == "31")) {
+			while ("${i}" != "31") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
 					value1 = "text${i}");
@@ -182,7 +183,7 @@ definition {
 
 			var i = "1";
 
-			while (!("${i}" == "31")) {
+			while ("${i}" != "31") {
 				WebContent.viewPGViaWCD(webContentContent = "text${i}");
 
 				var i = ${i} + 1;
@@ -552,7 +553,7 @@ definition {
 
 			var i = "1";
 
-			while (!("${i}" == "121")) {
+			while ("${i}" != "121") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
 					value1 = "text${i}");
@@ -576,7 +577,7 @@ definition {
 
 			var i = "1";
 
-			while (!("${i}" == "121")) {
+			while ("${i}" != "121") {
 				WebContent.viewPGViaWCD(webContentContent = "text${i}");
 
 				var i = ${i} + 1;
@@ -1165,7 +1166,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		WebContentUpgrade.viewWithStructureCP(
@@ -1184,7 +1185,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		WebContentUpgrade.viewWithStructureCP(

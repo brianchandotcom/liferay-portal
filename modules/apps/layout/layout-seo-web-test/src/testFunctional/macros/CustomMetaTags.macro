@@ -103,13 +103,13 @@ definition {
 	}
 
 	macro viewNoTags {
-		for (var customMetaTag : list "${customMetaTagsList}" ) {
+		for (var customMetaTag : list "${customMetaTagsList}") {
 			AssertHTMLSourceTextNotPresent(value1 = "${customMetaTag}");
 		}
 	}
 
 	macro viewTags {
-		for (var customMetaTag : list "${customMetaTagsList}" ) {
+		for (var customMetaTag : list "${customMetaTagsList}") {
 			AssertHTMLSourceTextPresent(value1 = "${customMetaTag}");
 		}
 	}

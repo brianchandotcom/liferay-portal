@@ -704,7 +704,10 @@ definition {
 	@refactordone
 	test CanDownloadThroughURLWithFileName {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -727,7 +730,10 @@ definition {
 	@refactordone
 	test CanDownloadThroughURLWithTitle {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -750,7 +756,10 @@ definition {
 	@refactordone
 	test CanDownloadThroughURLWithUpdatedFileName {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_3.doc",
@@ -779,7 +788,10 @@ definition {
 	@refactordone
 	test CanDownloadThroughURLWithUpdatedTitle {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_3.doc",
@@ -1335,7 +1347,10 @@ definition {
 	@refactordone
 	test CanPreviewImageThroughURL {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1",

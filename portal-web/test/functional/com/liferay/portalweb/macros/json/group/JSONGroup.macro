@@ -4,13 +4,13 @@ definition {
 	macro addChildGroup {
 		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
 
-		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(
-			groupDescription = "${groupDescription}");
+		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(groupDescription = "${groupDescription}");
 
-		var groupNameMap = JSONGroupSetter.setGroupNameMap(
-			groupName = "${groupName}");
+		var groupNameMap = JSONGroupSetter.setGroupNameMap(groupName = "${groupName}");
 
-		var parentGroupId = JSONGroupSetter.setParentGroupId(parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var parentGroupId = JSONGroupSetter.setParentGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			parentGroupName = "${parentGroupName}");
 
 		var type = JSONGroupSetter.setMembershipType(membershipType = "${membershipType}");
 
@@ -28,11 +28,9 @@ definition {
 	macro addGroup {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(
-			groupDescription = "${groupDescription}");
+		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(groupDescription = "${groupDescription}");
 
-		var groupNameMap = JSONGroupSetter.setGroupNameMap(
-			groupName = "${groupName}");
+		var groupNameMap = JSONGroupSetter.setGroupNameMap(groupName = "${groupName}");
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(groupName = "${parentGroupName}");
 
@@ -52,7 +50,9 @@ definition {
 	macro assignGroupRoleToUser {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}");
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}");
 
 		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
 
@@ -79,7 +79,9 @@ definition {
 	macro assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}");
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}");
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 

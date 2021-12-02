@@ -45,7 +45,6 @@ definition {
 		// AC Refactor ticket: LRAC-9010
 
 		var pageCreation = "AC Page 1,AC Page 2";
-
 		var pageInteraction = "AC Page,AC Page 1,AC Page 1,AC Page 2,AC Page 2,AC Page 2";
 
 		task ("Add Site and Page") {
@@ -167,9 +166,7 @@ definition {
 		// AC Refactor ticket: LRAC-8961
 
 		var num = "1,2";
-
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Add two new users") {
@@ -270,6 +267,7 @@ definition {
 
 			ACUtils.closeAllSessionsAndWait();
 		}
+
 		task ("AC launch") {
 			ACUtils.launchAC();
 
@@ -324,11 +322,13 @@ definition {
 
 			ACUtils.closeAllSessionsAndWait();
 		}
+
 		task ("AC launch") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
+
 		task ("Asset top 5 entrances pages") {
 
 			// Unable to perform the declaration because the data does not appear at the time
@@ -415,8 +415,8 @@ definition {
 			var pagesList = "AC Page-2,AC Page 2-3,AC Page 3-4,AC Page 4-5,AC Page 5-1";
 
 			for (var current : list "${pagesList}") {
-				var name = StringUtil.extractFirst("${current}","-");
-				var n = StringUtil.extractLast("${current}","-");
+				var name = StringUtil.extractFirst("${current}", "-");
+				var n = StringUtil.extractLast("${current}", "-");
 
 				ACCards.viewTopSitesByIndexes(
 					key_entry = "${name}",
@@ -472,14 +472,17 @@ definition {
 					siteName = "Site Name");
 			}
 		}
+
 		task ("Close all sessions") {
 			ACUtils.closeAllSessionsAndWait();
 		}
+
 		task ("AC launch") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
+
 		task ("Assert top 5 visited pages") {
 
 			// Unable to perform the declaration because the data does not appear at the time
@@ -497,6 +500,7 @@ definition {
 					key_entry = "Test Blog ${x}",
 					key_result = "");
 			}
+
 			ACCards.noViewTopVisitedPages(
 				kay_result = "",
 				key_entry = "Test Blog 5");

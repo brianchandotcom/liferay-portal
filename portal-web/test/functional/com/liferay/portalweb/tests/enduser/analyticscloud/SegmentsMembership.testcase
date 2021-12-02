@@ -75,7 +75,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -132,7 +131,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -197,7 +195,6 @@ definition {
 		// AC Refactor ticket: LRAC-9260
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -264,7 +261,6 @@ definition {
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -351,7 +347,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -416,7 +411,6 @@ definition {
 		// AC Refactor ticket: LRAC-9258
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -489,7 +483,6 @@ definition {
 		// AC Refactor ticket: LRAC-9257
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -567,7 +560,6 @@ definition {
 		// AC Refactor ticket: LRAC-9261
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -645,7 +637,6 @@ definition {
 		// AC Refactor ticket: LRAC-9252
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {
@@ -725,7 +716,6 @@ definition {
 		// AC Refactor ticket: LRAC-9251
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("Get site assigned property name") {

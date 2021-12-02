@@ -133,7 +133,7 @@ definition {
 
 	@description = "This checks that a comment can be edited in a blog entry."
 	@priority = "5"
-	@@refactorneeded
+	@refactorneeded
 	test CanEditComment {
 		property portal.acceptance = "true";
 
@@ -553,7 +553,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoScopedPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs",
 			scope = "Blogs Page2");
 

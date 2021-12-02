@@ -241,7 +241,7 @@ definition {
 		if (isSet(captionField)) {
 			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 
-			if (!("${captionField}" == "true")) {
+			if ("${captionField}" != "true") {
 				Type(
 					key_editor = "coverImageCaption",
 					locator1 = "AlloyEditor#EDITOR",
@@ -518,7 +518,6 @@ definition {
 				groupName = "${groupName}",
 				siteURLKey = "${siteURLKey}");
 		}
-
 		else {
 			BlogsNavigator.gotoEditPG(entryTitle = "${entryTitle}");
 		}
@@ -598,7 +597,7 @@ definition {
 	}
 
 	macro publishViaSAP {
-		if (IsElementPresent(locator1 = "Portlet#SPECIFIC_TITLE", key_portletTitleName = "Blogs")) {
+		if (IsElementPresent(key_portletTitleName = "Blogs", locator1 = "Portlet#SPECIFIC_TITLE")) {
 			Blogs.clickEllipsisItemPG(
 				entryTitle = "${entryTitle}",
 				item = "Publish to Live");
@@ -654,7 +653,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs");
 
 		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {

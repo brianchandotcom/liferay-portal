@@ -2,16 +2,14 @@ definition {
 
 	macro accountGroupsTearDown {
 		var accountGroupsList = "";
-
 		var count = "1";
 
 		while (IsElementPresent(key_rowNumber = "${count}", locator1 = "CommerceNavigation#ENTRY_NAME_N")) {
 			var key_rowNumber = "${count}";
-
 			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
 
 			if ("${entryName}" != "Guest") {
-				accountGroupsList = StringUtil.add("${accountGroupsList}", "${entryName}");
+				var accountGroupsList = StringUtil.add("${accountGroupsList}", "${entryName}");
 			}
 
 			var count = ${count} + 1;
@@ -236,7 +234,7 @@ definition {
 			portlet = "Health Check");
 
 		for (var buttonRowNumber : list "1,2,3,4,5") {
-			if (!(IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N", key_buttonStatus = "disabled"))) {
+			if (!(IsElementPresent(key_buttonStatus = "disabled", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N"))) {
 				Click(
 					key_buttonRowNumber = "${buttonRowNumber}",
 					key_buttonStatus = "",
@@ -269,7 +267,7 @@ definition {
 			locator1 = "CommerceEntry#MENU_TAB");
 
 		for (var fixIssueButtonName : list "Product Detail,Product Compare,Commerce Cart,Checkout") {
-			if (IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON", key_fixIssueButtonName = "${fixIssueButtonName}")) {
+			if (IsElementPresent(key_fixIssueButtonName = "${fixIssueButtonName}", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON")) {
 				Click(
 					key_fixIssueButtonName = "${fixIssueButtonName}",
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
@@ -303,7 +301,7 @@ definition {
 
 	@summary = "Deletes if present, catalogs, price lists or promotions, excluding Master occurrencies"
 	macro commerceTearDownExcludingMaster {
-		var elementsList= "";
+		var elementsList = "";
 		var count = "1";
 
 		while (IsElementPresent(key_rowNumber = "${count}", locator1 = "CommerceNavigation#ENTRY_NAME_N")) {
@@ -311,8 +309,9 @@ definition {
 			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
 
 			if (("${entryName}" != "Master") && ("${entryName}" != "Master Base Price List") && ("${entryName}" != "Master Base Promotion")) {
-				elementsList = StringUtil.add("${elementsList}", "${entryName}");
+				var elementsList = StringUtil.add("${elementsList}", "${entryName}");
 			}
+
 			var count = ${count} + 1;
 		}
 
@@ -321,8 +320,11 @@ definition {
 				ClickNoError(
 					key_entryName = "${catalogName}",
 					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+
 				CommerceEntry.clickNoError(menuItem = "Delete");
+
 				AssertElementPresent(locator1 = "Message#SUCCESS");
+
 				AssertElementNotPresent(locator1 = "Message#ERROR");
 			}
 		}

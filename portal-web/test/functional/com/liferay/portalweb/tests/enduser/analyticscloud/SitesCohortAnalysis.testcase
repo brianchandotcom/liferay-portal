@@ -34,6 +34,7 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
@@ -76,6 +77,7 @@ definition {
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
+
 		task ("Assert that the cohort analysis card shows anonymous visitors after their first views") {
 			Select(
 				locator1 = "ACSites#COHORT_ANALYSIS_SELECT_VISITOR_TYPE",
@@ -127,6 +129,7 @@ definition {
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
+
 		task ("Assert that the cohort analysis card shows which individuals are returning after their first views") {
 			AssertTextEquals(
 				locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE",

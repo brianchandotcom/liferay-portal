@@ -108,19 +108,19 @@ definition {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
 				addGuestPermissions = "true",
-				groupName = "${groupName}",
-				site = "${site}",
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
+				groupName = "${groupName}",
+				site = "${site}",
 				workflowAction = "${workflowAction}");
 		}
 		else {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
 				addGuestPermissions = "true",
-				groupName = "Guest",
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
+				groupName = "Guest",
 				workflowAction = "${workflowAction}");
 		}
 

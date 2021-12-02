@@ -197,6 +197,7 @@ definition {
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");
+
 		MenuItem.clickNoError(menuItem = "Transition");
 
 		Click(
@@ -556,6 +557,7 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry",
 				entryTitle = "Blogs Entry Title ${count}");
+
 			var count = ${count} + 1;
 		}
 
@@ -568,6 +570,7 @@ definition {
 				workflowAssetTitle = "Blogs Entry Title ${count}",
 				workflowAssetType = "Blogs Entry",
 				workflowTask = "Review");
+
 			var count = ${count} + 1;
 		}
 
@@ -591,6 +594,7 @@ definition {
 			AssertVisible(
 				key_taskName = "Blogs Entry Title ${count}",
 				locator1 = "WorkflowTransitionModal#TRANSITION_TASK_NAME");
+
 			var count = ${count} + 1;
 		}
 
@@ -602,6 +606,7 @@ definition {
 			AssertVisible(
 				key_taskName = "Blogs Entry Title ${count}",
 				locator1 = "WorkflowTransitionModal#TRANSITION_TASK_NAME");
+
 			var count = ${count} + 1;
 		}
 
@@ -613,6 +618,7 @@ definition {
 			AssertVisible(
 				key_taskName = "Blogs Entry Title ${count}",
 				locator1 = "WorkflowTransitionModal#TRANSITION_TASK_NAME");
+
 			var count = ${count} + 1;
 		}
 	}

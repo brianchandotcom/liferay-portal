@@ -47,7 +47,7 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
+		if (IsElementPresent(key_accordionTitle = "geolocation", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "geolocation",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -281,13 +281,12 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
 		for (var option : list "0,1,2") {
-			key_value1 = "${option}";
+			var key_value1 = "${option}";
 
 			WaitForElementPresent(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
 
 			var aux = selenium.getElementValue("CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
-
-			previousTotal = MathUtil.sum("${previousTotal}","${aux}");
+			var previousTotal = ${previousTotal} + ${aux};
 		}
 
 		echo("${previousTotal}");
@@ -408,18 +407,17 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
 		for (var option : list "0,1,2") {
-			key_value1 = "${option}";
+			var key_value1 = "${option}";
 
 			WaitForElementPresent(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
 
 			var aux = selenium.getElementValue("CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
-
-			newTotal = MathUtil.sum("${newTotal}","${aux}");
+			var newTotal = ${newTotal} + ${aux};
 		}
 
 		echo("${newTotal}");
 
-		newTotalExpected = MathUtil.difference("${previousTotal}","1");
+		var newTotalExpected = ${previousTotal} - 1;
 
 		echo("${newTotalExpected}");
 
@@ -570,7 +568,7 @@ definition {
 
 		// TODO Review
 
-		var fieldDescription= "Test Warehouse Description";
+		var fieldDescription = "Test Warehouse Description";
 		var fieldLatitudeNumber = "12345";
 		var fieldLongitudeNumber = "12345";
 		var fieldName = "Test Warehouse";
@@ -604,7 +602,7 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
+		if (IsElementPresent(key_accordionTitle = "geolocation", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "geolocation",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -624,7 +622,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
+		if (IsElementPresent(key_accordionTitle = "address", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "address",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -683,7 +681,7 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
+		if (IsElementPresent(key_accordionTitle = "address", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "address",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -784,10 +782,8 @@ definition {
 
 		for (var warehouse : list "Italy,United States - Northeast,United States - Southwest") {
 			var key_inventoryName = "${warehouse}";
-
 			var inventoryValue = selenium.getElementValue("CommerceEntry#INVENTORY_INPUT");
-
-			var quantity = MathUtil.sum("${quantity}", "${inventoryValue}");
+			var quantity = ${quantity} + ${inventoryValue};
 		}
 
 		Refresh();
@@ -849,7 +845,8 @@ definition {
 				key_value1 = "${key_value1}",
 				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
 				value1 = "${value1}");
-			var key_value1 = MathUtil.sum("${key_value1}", "1");
+
+			var key_value1 = ${key_value1} + 1;
 		}
 
 		Refresh();
@@ -862,7 +859,7 @@ definition {
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
+		if (IsElementPresent(key_accordionTitle = "channels", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "channels",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -878,7 +875,7 @@ definition {
 			key_metadataSetName = "United States - Northeast",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
+		if (IsElementPresent(key_accordionTitle = "channels", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "channels",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -949,8 +946,8 @@ definition {
 
 		while (IsElementPresent(key_value1 = "${count1}", locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY")) {
 			var temp1 = selenium.getAttribute("//input[contains(@id,'_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_commerceInventoryWarehouseItemQuantity${count1}')]@value");
-			var amount = MathUtil.sum("${temp1}", "${amount}");
-			var count1 = MathUtil.sum("${count1}", "1");
+			var amount = ${temp1} + ${amount};
+			var count1 = ${count1} + 1;
 		}
 
 		Refresh();
@@ -1051,7 +1048,7 @@ definition {
 			key_itemName = "Italy",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
+		if (IsElementPresent(key_accordionTitle = "channels", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "channels",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
@@ -1140,7 +1137,7 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
+		if (IsElementPresent(key_accordionTitle = "geolocation", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "geolocation",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");

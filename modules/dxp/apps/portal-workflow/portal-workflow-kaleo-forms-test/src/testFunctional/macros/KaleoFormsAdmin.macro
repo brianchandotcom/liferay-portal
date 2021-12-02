@@ -39,7 +39,7 @@ definition {
 
 	macro addProcess {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
 		AssertTextEquals(
@@ -505,7 +505,7 @@ definition {
 			value1 = "Next");
 	}
 
-	macro noProcessesWereFound. {
+	macro noProcessesWereFound {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No processes were found.");
@@ -624,7 +624,7 @@ definition {
 			kfProgressName = "Forms",
 			kfProgressStep = "4");
 
-		if (IsElementNotPresent(key_text = "Save",locator1 = "Button#ANY")) {
+		if (IsElementNotPresent(key_text = "Save", locator1 = "Button#ANY")) {
 			Refresh();
 		}
 
@@ -645,7 +645,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
@@ -700,7 +700,6 @@ definition {
 
 			AssertElementPresent(locator1 = "Button#NEXT");
 		}
-
 		else if ("${progressTitle}" == "Fields") {
 			KaleoFormsAdmin.viewNewProcessProgressBar(
 				kfProgressName = "${progressTitle}",
@@ -714,7 +713,6 @@ definition {
 
 			AssertElementPresent(locator1 = "Button#NEXT");
 		}
-
 		else if ("${progressTitle}" == "Workflow") {
 			KaleoFormsAdmin.viewNewProcessProgressBar(
 				kfProgressName = "${progressTitle}",
@@ -728,7 +726,6 @@ definition {
 
 			AssertElementPresent(locator1 = "Button#NEXT");
 		}
-
 		else {
 			KaleoFormsAdmin.viewNewProcessProgressBar(
 				kfProgressName = "${progressTitle}",

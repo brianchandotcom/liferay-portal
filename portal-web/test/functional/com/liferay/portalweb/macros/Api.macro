@@ -103,6 +103,7 @@ definition {
 
 	macro gotoPAuthURL {
 		var pAuth = Api.getPAuth();
+
 		Navigator.openSpecificURL(url = "${url}${pAuth}");
 	}
 

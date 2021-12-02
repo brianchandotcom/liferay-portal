@@ -313,7 +313,6 @@ definition {
 		if ("${browserType}" == "safari") {
 			Button.clickSave();
 		}
-
 		else {
 			AssertClick(
 				locator1 = "Button#SUBMIT",
@@ -1020,7 +1019,7 @@ definition {
 		else {
 			PortletEntry.selectAll();
 
-			if (IsChecked(key_rowEntry = "Test Test",locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX")) {
+			if (IsChecked(key_rowEntry = "Test Test", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX")) {
 				Click(
 					key_rowEntry = "Test Test",
 					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
@@ -1047,7 +1046,7 @@ definition {
 		else {
 			PortletEntry.selectAll();
 
-			if (IsChecked(key_rowEntry = "Test Test",locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX")) {
+			if (IsChecked(key_rowEntry = "Test Test", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX")) {
 				Click(
 					key_rowEntry = "Test Test",
 					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
@@ -2014,7 +2013,7 @@ definition {
 			locator1 = "TextInput#PASSWORD",
 			value1 = "${password}");
 
-		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
+		if (isSet(rememberMeChecked) && ("${rememberMeChecked}" == "true")) {
 			Check(locator1 = "Checkbox#REMEMBER_ME");
 		}
 
@@ -2023,7 +2022,6 @@ definition {
 		if (isSet(localizedAgree)) {
 			User.acceptEndUserLicenseAgreementLocalized(localizedAgree = "${localizedAgree}");
 		}
-
 		else if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			SignIn.agreeToTermsOfUse();
 		}
@@ -2033,7 +2031,6 @@ definition {
 				localizedAnswer = "${localizedAnswer}",
 				localizedSaveButton = "${localizedSaveButton}");
 		}
-
 		else if (IsElementPresent(locator1 = "Select#QUESTION")) {
 			SignIn.setPasswordReminder();
 		}
@@ -2274,16 +2271,14 @@ definition {
 
 			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=Terms of Use");
 
-			if (IsElementPresent.pauseIsElementPresent(
-					locator1 = "Button#I_AGREE",
-					value1 = "I Agree")) {
+			if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
 				AssertClick(
 					locator1 = "Button#I_AGREE",
 					value1 = "I Agree");
 			}
 
 			if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-				if ((isSet(syntaxCheckingEnabled)) && ("${syntaxCheckingEnabled}" == "true")) {
+				if (isSet(syntaxCheckingEnabled) && ("${syntaxCheckingEnabled}" == "true")) {
 					Type(
 						locator1 = "TextInput#PASSWORD",
 						value1 = "${resetPassword}");
@@ -2356,9 +2351,7 @@ definition {
 
 		Click(locator1 = "Button#SIGN_IN");
 
-		if (IsElementPresent.pauseIsElementPresent(
-				locator1 = "Button#I_AGREE",
-				value1 = "I Agree")) {
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
 			AssertClick(
 				locator1 = "Button#I_AGREE",
 				value1 = "I Agree");
@@ -2586,7 +2579,7 @@ definition {
 			locator1 = "TextInput#PASSWORD",
 			value1 = "${password}");
 
-		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
+		if (isSet(rememberMeChecked) && ("${rememberMeChecked}" == "true")) {
 			Check(locator1 = "Checkbox#REMEMBER_ME");
 		}
 
@@ -2595,7 +2588,6 @@ definition {
 		if (isSet(localizedAgree)) {
 			User.acceptEndUserLicenseAgreementLocalized(localizedAgree = "${localizedAgree}");
 		}
-
 		else if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			SignIn.agreeToTermsOfUse();
 		}
@@ -2615,7 +2607,7 @@ definition {
 		}
 
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-			if ((isSet(syntaxCheckingEnabled)) && ("${syntaxCheckingEnabled}" == "true")) {
+			if (isSet(syntaxCheckingEnabled) && ("${syntaxCheckingEnabled}" == "true")) {
 				Type(
 					locator1 = "TextInput#PASSWORD",
 					value1 = "${resetPassword}");
@@ -2642,7 +2634,6 @@ definition {
 				localizedAnswer = "${localizedAnswer}",
 				localizedSaveButton = "${localizedSaveButton}");
 		}
-
 		else if (IsElementPresent(locator1 = "Select#QUESTION")) {
 			SignIn.setPasswordReminder();
 		}
@@ -2682,7 +2673,7 @@ definition {
 
 		MenuItem.click(menuItem = "Active");
 
-		while (IsElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER", key_rowNumber = "2")) {
+		while (IsElementPresent(key_rowNumber = "2", locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER")) {
 			Click.waitForMenuToggleJSClick(
 				key_rowNumber = "2",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS");

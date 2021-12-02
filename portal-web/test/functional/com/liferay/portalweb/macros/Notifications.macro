@@ -140,13 +140,11 @@ definition {
 				locator1 = "Notifications#NOTIFICATIONS_TITLE",
 				value1 = "in the &quot;Content Page Name&quot; page.");
 		}
-
 		else if (isSet(mentioned)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Notifications#NOTIFICATIONS_TITLE",
 				value1 = "${user} mentioned you in a comment in a ${assetType}.");
 		}
-
 		else {
 			AssertTextEquals(
 				locator1 = "Notifications#NOTIFICATIONS_TITLE",
@@ -185,7 +183,6 @@ definition {
 				locator1 = "Sharing#NOTIFICATIONS_TITLE_SPECIAL",
 				value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
 		}
-
 		else {
 			AssertTextEquals(
 				locator1 = "Sharing#NOTIFICATIONS_TITLE",

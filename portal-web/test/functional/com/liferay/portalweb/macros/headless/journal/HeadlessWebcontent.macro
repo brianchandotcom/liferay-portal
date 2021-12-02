@@ -4,7 +4,9 @@ definition {
 	macro addBasicWebContent {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONWebcontentSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontentSetter.setFolderId(
@@ -12,7 +14,9 @@ definition {
 				groupId = "${groupId}");
 		}
 
-		var globalGroupId = JSONWebcontentSetter.setGroupId(groupName = "Global", site = "true");
+		var globalGroupId = JSONWebcontentSetter.setGroupId(
+			groupName = "Global",
+			site = "true");
 
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 

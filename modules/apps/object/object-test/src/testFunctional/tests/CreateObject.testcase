@@ -451,9 +451,9 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			isCollapsible = "Yes",
 			columnsNumber = "2",
 			fieldLabelName = "Custom Field",
+			isCollapsible = "Yes",
 			tabName = "Field Tab");
 
 		Button.clickSave();

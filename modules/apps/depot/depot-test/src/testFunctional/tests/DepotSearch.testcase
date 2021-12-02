@@ -52,7 +52,7 @@ definition {
 
 	@description = "This ensures that a depot document cannot be searched from the disconnected site."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test CanNotSearchForDocumentFromDisconnectedSite {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -70,7 +70,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test CanReenableSearchability {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -115,7 +115,7 @@ definition {
 
 	@description = "This ensures that users can search for depot document from connected site."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test CanSearchForDocument {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -143,7 +143,7 @@ definition {
 
 	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test CanSearchForTag {
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "depot",
@@ -174,7 +174,7 @@ definition {
 
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test CanSearchForUser {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -208,7 +208,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be searched from the connected site."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test CanSearchForWC {
 		property portal.acceptance = "true";
 
@@ -239,7 +239,7 @@ definition {
 
 	@description = "This ensures that a depot document cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test DocumentCanNotBeSearchedWhenDisabled {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -269,7 +269,7 @@ definition {
 
 	@description = "This ensures that a depot document associated with a tag cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test TagCanNotBeSearchedWhenDisabled {
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "depot",
@@ -302,7 +302,7 @@ definition {
 
 	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test UserCanNotBeSearchedWhenDisabled {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -346,7 +346,7 @@ definition {
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
-	@@refactordone
+	@refactordone
 	test WCCanNotBeSearchedWhenDisabled {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

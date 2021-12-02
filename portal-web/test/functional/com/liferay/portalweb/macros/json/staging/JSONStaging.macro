@@ -4,7 +4,9 @@ definition {
 	macro assignUserToStagingGroup {
 		Variables.assertDefined(parameterList = "${groupKey},${userEmailAddress}");
 
-		var groupId = JSONStagingSetter.setGroupId(groupKey = "${groupKey}", site = "${site}");
+		var groupId = JSONStagingSetter.setGroupId(
+			groupKey = "${groupKey}",
+			site = "${site}");
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
@@ -21,7 +23,11 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		if (!(isSet(branchingPrivate))) {
 			var branchingPrivate = "false";
@@ -48,7 +54,11 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		if (!(isSet(branchingPrivate))) {
 			var branchingPrivate = "false";

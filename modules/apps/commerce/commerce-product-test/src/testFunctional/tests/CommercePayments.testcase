@@ -147,7 +147,7 @@ definition {
 	@priority = "3"
 	test MoneyOrderCheckout {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance ="CommercePayments#MoneyOrderCheckout";
+		property test.name.skip.portal.instance = "CommercePayments#MoneyOrderCheckout";
 
 		// TODO Review
 

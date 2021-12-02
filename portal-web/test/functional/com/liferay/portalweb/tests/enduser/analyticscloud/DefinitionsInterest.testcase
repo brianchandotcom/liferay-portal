@@ -236,6 +236,7 @@ definition {
 		task ("Add two new keywords") {
 			for (var word : list "${words}") {
 				ACSettings.addKeywords(keyword = "${word}");
+
 				ACSettings.assertKeywords(keyword = "${word}");
 			}
 		}
@@ -318,7 +319,6 @@ definition {
 
 		task ("Assert the keywords in the page") {
 			var words = "ac keyword 1,ac keyword 2,ac keyword 3,ac keyword 4,ac keyword 5";
-
 			var word = "ac keyword 6";
 
 			ACSettings.assertKeywords(keyword = "${words}");

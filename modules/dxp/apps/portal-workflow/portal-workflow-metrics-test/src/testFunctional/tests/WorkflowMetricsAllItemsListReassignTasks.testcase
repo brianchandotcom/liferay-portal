@@ -129,7 +129,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -183,6 +183,7 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry",
 				entryTitle = "Blogs Entry ${blogTitle}");
+
 			var count = ${count} + 1;
 			var blogTitle = ${blogTitle} + 1;
 		}
@@ -294,6 +295,7 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry",
 				entryTitle = "Blogs Entry ${blogTitle}");
+
 			var count = ${count} + 1;
 			var blogTitle = ${blogTitle} + 1;
 		}
@@ -522,9 +524,8 @@ definition {
 			workflowProcess = "Single Approver");
 
 		for (var orderNumber : list "1,2") {
-			key_order = "${orderNumber}";
-
-			key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
+			var key_order = "${orderNumber}";
+			var key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
 
 			AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_ALL_ITEMS_LIST_ORDER");
 		}
@@ -532,9 +533,8 @@ definition {
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
 		for (var orderNumber : list "1,2") {
-			key_order = "${orderNumber}";
-
-			key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
+			var key_order = "${orderNumber}";
+			var key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
 
 			AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_LIST_ORDER");
 		}

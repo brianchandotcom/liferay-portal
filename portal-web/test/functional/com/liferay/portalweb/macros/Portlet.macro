@@ -119,7 +119,7 @@ definition {
 	macro assertServerStartup {
 		var startupPauseCount = "0";
 
-		while ((!(IsElementPresent(locator1 = "UserBar#USER_SIGN_IN"))) && ("${startupPauseCount}" != "12")) {
+		while (!(IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) && ("${startupPauseCount}" != "12")) {
 			Refresh();
 
 			Pause(locator1 = "10000");
@@ -131,7 +131,7 @@ definition {
 	}
 
 	macro changeDisplayStyle {
-		if (IsElementNotPresent(locator1 = "Icon#DISPLAY_STYLE_ACTIVE", key_displayStyle = StringUtil.toLowerCase("${displayStyle}"))) {
+		if (IsElementNotPresent(key_displayStyle = StringUtil.toLowerCase("${displayStyle}"), locator1 = "Icon#DISPLAY_STYLE_ACTIVE")) {
 			Click(
 				key_displayStyle = StringUtil.toLowerCase("${displayStyle}"),
 				locator1 = "Icon#DISPLAY_STYLE");
@@ -151,7 +151,6 @@ definition {
 
 			AssertVisible(locator1 = "Portlet#ICON_PLUS_SIGN");
 		}
-
 		else {
 			MouseOver.mouseOverNotVisible(
 				key_portletName = "${portletName}",
@@ -186,7 +185,6 @@ definition {
 		if (isSet(borderWidthAttributeList)) {
 			for (var borderWidthAttribute : list "${borderWidthAttributeList}") {
 				var fieldLabel = StringUtil.extractFirst("${borderWidthAttribute}", "-");
-
 				var value = StringUtil.extractLast("${borderWidthAttribute}", "-");
 
 				Type(
@@ -199,7 +197,6 @@ definition {
 		if (isSet(borderWidthUnitList)) {
 			for (var borderWidthUnit : list "${borderWidthUnitList}") {
 				var fieldLabel = StringUtil.extractFirst("${borderWidthUnit}", "-");
-
 				var value = StringUtil.extractLast("${borderWidthUnit}", "-");
 
 				Select(
@@ -212,7 +209,6 @@ definition {
 		if (isSet(borderStyleAttributeList)) {
 			for (var borderStyleAttribute : list "${borderStyleAttributeList}") {
 				var fieldLabel = StringUtil.extractFirst("${borderStyleAttribute}", "-");
-
 				var value = StringUtil.extractLast("${borderStyleAttribute}", "-");
 
 				Select(
@@ -225,7 +221,6 @@ definition {
 		if (isSet(borderColorAttributeList)) {
 			for (var borderColorAttribute : list "${borderColorAttributeList}") {
 				var fieldLabel = StringUtil.extractFirst("${borderColorAttribute}", "-");
-
 				var value = StringUtil.extractLast("${borderColorAttribute}", "-");
 
 				PageEditor.selectColorSwatchItem(
@@ -331,26 +326,22 @@ definition {
 
 				AssertVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 			}
-
 			else if ("${siteTemplate}" == "true") {
 				MouseOver.mouseOverNotVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 				Click(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 			}
-
 			else {
 				MouseOver.mouseOverInvisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 				if (IsNotVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON")) {
 					Click.javaScriptClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 				}
-
 				else {
 					Click.waitForMenuToggleJSClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 				}
 			}
 		}
-
 		else {
 			MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
 
@@ -409,7 +400,7 @@ definition {
 	}
 
 	macro selectTreeNode {
-		if (IsElementPresent(locator1 = "Treeview#NODE_UNSELECTED", key_nodeName = "${nodeName}")) {
+		if (IsElementPresent(key_nodeName = "${nodeName}", locator1 = "Treeview#NODE_UNSELECTED")) {
 			AssertClick.assertPartialTextClickAt(
 				key_nodeName = "${nodeName}",
 				locator1 = "Treeview#NODE_UNSELECTED",
@@ -475,7 +466,7 @@ definition {
 
 	macro viewApplicationDecorator {
 		if (isSet(portletName)) {
-			key_decorator = StringUtil.lowerCase("${decorator}");
+			var key_decorator = StringUtil.lowerCase("${decorator}");
 			var key_portletTitleName = "${portletName}";
 
 			AssertElementPresent(locator1 = "Portlet#SPECIFIC_PORTLET_BORDER_DECORATOR");

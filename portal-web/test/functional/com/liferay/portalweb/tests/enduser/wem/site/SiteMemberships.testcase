@@ -73,6 +73,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 		}
+
 		task ("Assign Site Content Reviewer to the user") {
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
@@ -140,6 +141,7 @@ definition {
 					userScreenName = "usersn${userNum}");
 			}
 		}
+
 		task ("View the users in memeberships") {
 			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
@@ -677,6 +679,7 @@ definition {
 				userLastName = "Three",
 				userScreenName = "member3");
 		}
+
 		task ("Search each one of the 3 users by part of first name") {
 			Site.searchMemberCP(
 				userFirstName = "userfnTest1",
@@ -760,6 +763,7 @@ definition {
 				userLastName = "Two",
 				userScreenName = "screen2");
 		}
+
 		task ("Search user by part of email address") {
 			Site.searchMemberCP(
 				userEmailAddress = "5670@liferay.com",
@@ -784,12 +788,14 @@ definition {
 				userLastName = "One",
 				userScreenName = "user1");
 		}
+
 		task ("View user 3 is also displayed since it also has 8 in its address name") {
 			Site.viewMemberCP(
 				userFirstName = "userfnTest3",
 				userLastName = "Three",
 				userScreenName = "member3");
 		}
+
 		task ("Search user by part of email address") {
 			Site.searchMemberCP(
 				userEmailAddress = "5670@liferay.com",

@@ -31,7 +31,6 @@ definition {
 			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
-
 		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
 
 		return "${companyId}";
@@ -51,7 +50,7 @@ definition {
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
+		if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
 			var portalURL = JSONCompany.getPortalURL();
 
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");

@@ -29,14 +29,18 @@ definition {
 				var site = "true";
 			}
 
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "${groupName}",
+				site = "${site}");
 		}
 		else if (isSet(groupKey)) {
 			if (!(isSet(site))) {
 				var site = "false";
 			}
 
-			var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", site = "${site}");
+			var groupId = JSONGroupAPI._getGroupIdByGroupKey(
+				groupKey = "${groupKey}",
+				site = "${site}");
 		}
 
 		return "${groupId}";

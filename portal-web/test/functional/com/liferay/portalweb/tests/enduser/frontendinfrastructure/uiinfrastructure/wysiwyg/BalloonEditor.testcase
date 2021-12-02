@@ -341,8 +341,7 @@ definition {
 				paragraph_number = "1");
 
 			AssertTextEquals(
-				locator1 =
-				"CKEditorBalloonEditorSample#PARAGRAPH_CONTENT_NUMBERED_LIST",
+				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_CONTENT_NUMBERED_LIST",
 				value1 = "${paragraphText}");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(

@@ -10,14 +10,14 @@ definition {
 
 		Variables.assertDefined(parameterList = "${typeSettings}");
 
-		var widget = JSONLayoutUtil._generateWidget(
-			widgetName = "${widgetName}");
+		var widget = JSONLayoutUtil._generateWidget(widgetName = "${widgetName}");
 
-		if (contains("${typeSettings}","column-${column}=")) {
-			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^%]*)","$1,${widget}");
+		if (contains("${typeSettings}", "column-${column}=")) {
+			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}", "(column-${column}=[^%]*)", "$1,${widget}");
 		}
 		else {
 			var typeSettings = '''${typeSettings}column-${column}''';
+
 			var typeSettings = '''${typeSettings}=${widget}''';
 		}
 
@@ -195,7 +195,6 @@ definition {
 		}
 
 		var instanceId = StringUtil.randomString("12");
-
 		var nonRepeatableWidgets = "Blogs,Bookmarks,Knowledge Base Display,Language Selector,Message Boards,My Sites,Sign In,Web Content Search,Wiki";
 
 		if (contains("${nonRepeatableWidgets}", "${widgetName}")) {
@@ -214,46 +213,46 @@ definition {
 		}
 
 		if ("${layoutTemplate}" == "1 Column") {
-			layoutTemplateId = "1_column";
+			var layoutTemplateId = "1_column";
 		}
 		else if ("${layoutTemplate}" == "2 Columns (50/50)") {
-			layoutTemplateId = "2_columns_i";
+			var layoutTemplateId = "2_columns_i";
 		}
 		else if ("${layoutTemplate}" == "2 Columns (30/70)") {
-			layoutTemplateId = "2_columns_ii";
+			var layoutTemplateId = "2_columns_ii";
 		}
 		else if ("${layoutTemplate}" == "2 Columns (70/30)") {
-			layoutTemplateId = "2_columns_iii";
+			var layoutTemplateId = "2_columns_iii";
 		}
 		else if ("${layoutTemplate}" == "3 Columns") {
-			layoutTemplateId = "3_columns";
+			var layoutTemplateId = "3_columns";
 		}
 		else if ("${layoutTemplate}" == "1-2 Columns (30/70)") {
-			layoutTemplateId = "1_2_columns_i";
+			var layoutTemplateId = "1_2_columns_i";
 		}
 		else if ("${layoutTemplate}" == "1-2 Columns (70/30)") {
-			layoutTemplateId = "1_2_columns_ii";
+			var layoutTemplateId = "1_2_columns_ii";
 		}
 		else if ("${layoutTemplate}" == "1-2-1 Columns (50/50)") {
-			layoutTemplateId = "1_2_1_columns_i";
+			var layoutTemplateId = "1_2_1_columns_i";
 		}
 		else if ("${layoutTemplate}" == "1-2-1 Columns (70/30)") {
-			layoutTemplateId = "1_2_1_columns_ii";
+			var layoutTemplateId = "1_2_1_columns_ii";
 		}
 		else if ("${layoutTemplate}" == "1-3-1 Columns") {
-			layoutTemplateId = "1_3_1_columns";
+			var layoutTemplateId = "1_3_1_columns";
 		}
 		else if ("${layoutTemplate}" == "1-3-2 Columns") {
-			layoutTemplateId = "1_3_2_columns";
+			var layoutTemplateId = "1_3_2_columns";
 		}
 		else if ("${layoutTemplate}" == "2-1-2 Columns") {
-			layoutTemplateId = "2_1_2_columns";
+			var layoutTemplateId = "2_1_2_columns";
 		}
 		else if ("${layoutTemplate}" == "2-2 Columns") {
-			layoutTemplateId = "2_2_columns";
+			var layoutTemplateId = "2_2_columns";
 		}
 		else if ("${layoutTemplate}" == "3-2-3 Columns") {
-			layoutTemplateId = "3_2_3_columns";
+			var layoutTemplateId = "3_2_3_columns";
 		}
 		else {
 			fail("'layoutTemplate' could not find a valid layoutTemplateId");
@@ -273,7 +272,7 @@ definition {
 
 		var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
 
-		var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(layout-template-id=).*","$1${layoutTemplateId}");
+		var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}", "(layout-template-id=).*", "$1${layoutTemplateId}");
 
 		return "${typeSettings}";
 	}

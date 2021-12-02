@@ -3,8 +3,7 @@ definition {
 	macro setCTCollectionId {
 		Variables.assertDefined(parameterList = "${publicationName}");
 
-		var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(
-			publicationName = "${publicationName}");
+		var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = "${publicationName}");
 
 		return "${ctCollectionId}";
 	}

@@ -4,7 +4,6 @@ definition {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
 		var iFrameURLModified = StringUtil.replace("${iFrameURL}", ":", "%3A");
-
 		var nameModified = StringUtil.replace("${name}", " ", "%20");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -21,8 +20,8 @@ definition {
 				  -d properties= \
 				  -d sourceCodeURL=
 		''';
+		var remoteAppEntryID = JSONCurlUtil.post("${curl}", "$.['remoteAppEntryId']");
 
-		var remoteAppEntryID = JSONCurlUtil.post("${curl}","$.['remoteAppEntryId']");
 		return "${remoteAppEntryID}";
 	}
 

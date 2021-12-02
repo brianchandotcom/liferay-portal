@@ -79,8 +79,7 @@ definition {
 			PermissionsInline.gotoWCArticle(webContentTitle = "Webcontent Title");
 
 			Role.removePermissionPG(
-				permissionDefinitionKey =
-				"CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
 				roleTitle = "Guest");
 		}
 	}
@@ -129,6 +128,7 @@ definition {
 
 		task ("Assert we are redirected to login page") {
 			AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+
 			AssertElementPresent(locator1 = "TextInput#PASSWORD");
 		}
 

@@ -194,7 +194,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
-		var getFirstId= selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+		var getFirstId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
@@ -204,7 +204,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
 
-		var getSecondId= selenium.getText("CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
+		var getSecondId = selenium.getText("CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
 

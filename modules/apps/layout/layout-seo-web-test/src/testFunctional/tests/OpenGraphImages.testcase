@@ -34,6 +34,7 @@ definition {
 	@refactordone
 	test CanChangeImageTag {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Navigator.openToGroupPagesPortlet(
@@ -66,6 +67,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		for (var imageNumber : list "1,2") {
@@ -100,6 +102,7 @@ definition {
 	@refactordone
 	test CanClearImageAtPageLevel {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
@@ -142,6 +145,7 @@ definition {
 	@refactordone
 	test CanClearImageAtSiteLevel {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
@@ -231,6 +235,7 @@ definition {
 	@refactordone
 	test CanConfigurePageSpecificImage {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(

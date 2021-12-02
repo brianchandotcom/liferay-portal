@@ -54,7 +54,7 @@ definition {
 		var futureDay = ${displayDateDay} + 1;
 		var futureMonth = ${displayDateMonth} + 1;
 		var futureYear = ${currentYear} + 1;
-		timePeriod = "${key_timePeriod}";
+		var timePeriod = "${key_timePeriod}";
 
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",

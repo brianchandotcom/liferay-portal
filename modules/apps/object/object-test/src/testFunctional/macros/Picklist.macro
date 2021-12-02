@@ -72,7 +72,6 @@ definition {
 
 	macro assertPicklistItem {
 		var key_picklistItemName = "${picklistItemName}";
-
 		var key_picklistItemKey = "${picklistItemKey}";
 
 		if (IsElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM")) {
@@ -92,7 +91,6 @@ definition {
 
 	macro assertPicklistItemNotPresent {
 		var key_picklistItemName = "${picklistItemName}";
-
 		var key_picklistItemKey = "${picklistItemKey}";
 
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
@@ -173,7 +171,6 @@ definition {
 
 	macro optionsPicklistItem {
 		var key_itemKey = "${itemKey}";
-
 		var key_picklistItemOption = "${picklistItemOption}";
 
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");

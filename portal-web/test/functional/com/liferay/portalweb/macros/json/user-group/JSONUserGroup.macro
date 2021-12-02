@@ -18,7 +18,6 @@ definition {
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
 				-u test@liferay.com:test
 		''';
-
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");
 
 		var serviceContext = JSONLayoutSetter.setServiceContext(

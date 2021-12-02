@@ -6,8 +6,7 @@ definition {
 
 		var mysqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
 
-		var sqlResults = SQL.executeMySQLStatement(
-			mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
 
 		var matches = StringUtil.count("${sqlResults}", "${databaseSubstring}");
 

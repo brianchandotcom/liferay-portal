@@ -46,6 +46,7 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
+
 		AssertElementNotPresent(locator1 = "ItemSelector#URL_IMAGE_PREVIEW");
 
 		AssertVisible(
@@ -158,6 +159,7 @@ definition {
 			value1 = "URL");
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
+
 		AssertElementNotPresent(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 		Type(

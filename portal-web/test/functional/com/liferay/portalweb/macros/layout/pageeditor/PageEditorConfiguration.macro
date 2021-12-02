@@ -16,7 +16,6 @@ definition {
 				colorSwatchItem = "${colorPicker}",
 				fieldLabel = "${fieldLabel}");
 		}
-
 		else {
 			Click(
 				colorPalette = "${colorPalette}",

@@ -84,7 +84,6 @@ definition {
 		// AC Refactor ticket: LRAC-9168
 
 		var usernameList = "ac";
-
 		var pageNameList = "sports,technology,science";
 
 		task ("Get site assigned property name") {
@@ -152,7 +151,6 @@ definition {
 		// AC Refactor ticket: LRAC-9169
 
 		var nameList = "ac ac,ac2 ac2,ac3 ac3";
-
 		var newUser = "ac2,ac3";
 
 		task ("Add 2 more new users") {
@@ -254,7 +252,6 @@ definition {
 		// AC Refactor ticket: LRAC-9167
 
 		var nameList = "ac ac,ac2 ac2";
-
 		var emailList = "ac@liferay.com,ac2@liferay.com";
 
 		task ("Add a new users") {

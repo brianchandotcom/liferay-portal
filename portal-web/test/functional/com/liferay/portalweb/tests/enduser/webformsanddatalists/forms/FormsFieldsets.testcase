@@ -22,7 +22,7 @@ definition {
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Forms");
 
 			FormsAdmin.teardownForms();
@@ -35,7 +35,7 @@ definition {
 	@priority = "5"
 	test AddedToAFormCanBePublished {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -81,7 +81,7 @@ definition {
 	@priority = "5"
 	test AddedToAFormCanBeSaved {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -125,7 +125,7 @@ definition {
 	@priority = "5"
 	test AddedToAFormCanBeSubmitted {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -181,7 +181,7 @@ definition {
 	@priority = "5"
 	test CanAddAColorFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -231,7 +231,7 @@ definition {
 	@priority = "5"
 	test CanAddADateFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -281,7 +281,7 @@ definition {
 	@priority = "5"
 	test CanAddAGridFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -361,7 +361,7 @@ definition {
 	@priority = "5"
 	test CanAddAImageFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -411,7 +411,7 @@ definition {
 	@priority = "5"
 	test CanAddAMultipleSelectionFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -491,7 +491,7 @@ definition {
 	@priority = "5"
 	test CanAddANumericFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -541,7 +541,7 @@ definition {
 	@priority = "5"
 	test CanAddAParagraphFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -595,7 +595,7 @@ definition {
 	@priority = "5"
 	test CanAddARichTextFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -639,7 +639,7 @@ definition {
 	@priority = "5"
 	test CanAddASelectFromListFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -703,7 +703,7 @@ definition {
 	@priority = "5"
 	test CanAddASeparatorFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -753,7 +753,7 @@ definition {
 	@priority = "5"
 	test CanAddASingleSelectionFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -820,7 +820,7 @@ definition {
 	@priority = "5"
 	test CanAddATextFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -866,7 +866,7 @@ definition {
 	@priority = "5"
 	test CanAddAUploadFieldToAForm {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -910,7 +910,7 @@ definition {
 	@priority = "4"
 	test CanBeAddedToAFieldset {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Form.gotoElementSetsTab();
@@ -966,7 +966,7 @@ definition {
 	@priority = "3"
 	test CanBeAddedToAFormMultipleTimes {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Form.gotoElementSetsTab();
@@ -1020,7 +1020,7 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1056,7 +1056,7 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1092,7 +1092,7 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1140,7 +1140,7 @@ definition {
 	@priority = "5"
 	test PreserveOptions {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Form.gotoElementSetsTab();
@@ -1207,7 +1207,7 @@ definition {
 	@priority = "5"
 	test PreserveTheAutoCompleteProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1289,7 +1289,7 @@ definition {
 	@priority = "5"
 	test PreserveTheHelpText {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1341,7 +1341,7 @@ definition {
 	@priority = "5"
 	test PreserveTheHideLabelProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1400,7 +1400,7 @@ definition {
 	@priority = "4"
 	test PreserveTheInlineProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1474,7 +1474,7 @@ definition {
 	@priority = "4"
 	test PreserveTheMultipleSelectionsProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1546,7 +1546,7 @@ definition {
 	@priority = "5"
 	test PreserveThePlaceholderText {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1602,7 +1602,7 @@ definition {
 	@priority = "5"
 	test PreserveThePredefinedValue {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1658,7 +1658,7 @@ definition {
 	@priority = "5"
 	test PreserveTheRepeatableProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1729,7 +1729,7 @@ definition {
 	@priority = "5"
 	test PreserveTheRequiredFieldProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1783,7 +1783,7 @@ definition {
 	@priority = "4"
 	test PreserveTheShowAsSwitchProperty {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
@@ -1859,7 +1859,7 @@ definition {
 	@priority = "5"
 	test WillWarnUsersWhenExitingWithoutSaving {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Navigator.gotoNavItem(navItem = "Element Sets");

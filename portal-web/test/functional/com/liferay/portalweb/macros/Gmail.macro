@@ -15,7 +15,7 @@ definition {
 	}
 
 	macro gotoHtmlMode {
-		Navigator.openSpecificURL(url = "https://mail.google.com/mail/?ui=html&amp;zy=h");
+		Navigator.openSpecificURL(url = "https://mail.google.com/mail/?ui=html&zy=h");
 
 		if (IsElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_CONFIRMATION")) {
 			Click(locator1 = "Gmail#GMAIL_HTML_MODE_CONFIRMATION");

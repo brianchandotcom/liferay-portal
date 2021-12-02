@@ -249,8 +249,11 @@ definition {
 		}
 
 		var publishDateDay = Time.getUTCDay();
+
 		var publishDateMonth = Time.getUTCMonth();
+
 		var publishDateYear = Time.getUTCYear();
+
 		var publishDate = "${publishDateYear}-${publishDateMonth}-${publishDateDay}";
 
 		Type(
@@ -258,20 +261,19 @@ definition {
 			value1 = "${publishDate}");
 
 		var publishTimeHours = Time.getUTCHours();
+
 		var publishTimeMinutes = Time.getUTCMinutes();
 
 		if ("${utcMinutes}" == "58") {
-			publishTimeHours = MathUtil.sum("${publishTimeHours}", "1");
-
-			publishTimeMinutes = "00";
+			var publishTimeHours = ${publishTimeHours} + 1;
+			var publishTimeMinutes = "00";
 		}
 		else if ("${utcMinutes}" == "59") {
-			publishTimeHours = MathUtil.sum("${publishTimeHours}", "1");
-
-			publishTimeMinutes = "01";
+			var publishTimeHours = ${publishTimeHours} + 1;
+			var publishTimeMinutes = "01";
 		}
 		else {
-			publishTimeMinutes = MathUtil.sum("${publishTimeMinutes}", "2");
+			var publishTimeMinutes = ${publishTimeMinutes} + 2;
 		}
 
 		Click(locator1 = "Publications#PUBLISH_TIME_HOURS");

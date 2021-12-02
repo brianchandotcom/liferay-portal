@@ -13,6 +13,7 @@ definition {
 		// Fragment
 
 		var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+
 		var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
 
 		JSONFragment.addSection(

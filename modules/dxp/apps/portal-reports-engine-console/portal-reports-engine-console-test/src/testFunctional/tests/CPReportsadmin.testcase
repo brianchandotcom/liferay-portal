@@ -195,7 +195,9 @@ definition {
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
 		MenuItem.click(menuItem = "All");
+
 		ReportsAdmin.assertReportEntryPresent(reportsDefinitionName = "Reports Definition Name");
 	}
 

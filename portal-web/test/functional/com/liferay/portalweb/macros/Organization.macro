@@ -159,7 +159,7 @@ definition {
 		if ("${orgType}" == "Location") {
 			MenuItem.click(menuItem = "Location");
 		}
-		else if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "Organization")) {
+		else if (IsElementPresent(key_menuItem = "Organization", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			MenuItem.click(menuItem = "Organization");
 		}
 
@@ -284,7 +284,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "${localizedOption}")) {
+		if (IsElementPresent(key_menuItem = "${localizedOption}", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			MenuItem.click(menuItem = "${localizedOption}");
 		}
 

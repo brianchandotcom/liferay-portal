@@ -312,9 +312,9 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article&apos;s Content",
+			kbArticleContent = "Knowledge Base Article's Content",
 			kbArticleFriendlyURL = "knowledge-base-article-s-title",
-			kbArticleTitle = "Knowledge Base Article&apos;s Title");
+			kbArticleTitle = "Knowledge Base Article's Title");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

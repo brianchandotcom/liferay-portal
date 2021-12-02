@@ -298,7 +298,7 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		if ((isSet(importValidationMissingItem)) || (isSet(importCampaignValidationError)) || (isSet(importCampaignValidationError))) {
+		if (isSet(importValidationMissingItem) || isSet(importCampaignValidationError) || isSet(importCampaignValidationError)) {
 			while ((IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE")) && (IsElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1"))) {
 				Pause(locator1 = "1000");
 			}
@@ -498,6 +498,7 @@ definition {
 		else {
 			LAR.openExportAdmin(siteScopeName = "${siteScopeName}");
 		}
+
 		Click(locator1 = "SitePagesExport#CUSTOM_EXPORT_BUTTON");
 
 		if ("${privateLayout}" == "true") {
@@ -602,7 +603,7 @@ definition {
 			larFileName = "${larFileName}",
 			uploadFrom = "${uploadFrom}");
 
-		if (!((isSet(importValidationMissingItem)) || (isSet(importFail)))) {
+		if (!(isSet(importValidationMissingItem) || isSet(importFail))) {
 			LAR._importSite(
 				checkContentNameList = "${checkContentNameList}",
 				contentDeletion = "${contentDeletion}",
@@ -635,9 +636,10 @@ definition {
 
 	macro isExistedFolder {
 		var tempDir = PropsUtil.get("output.dir.name");
-
 		var folderName = "${folderName}";
+
 		var companyId = JSONCompany.getCompanyId();
+
 		var folderExists = FileUtil.exists("${tempDir}/company/${companyId}/${folderName}");
 
 		if ("${folderExists}" == "true") {
@@ -656,6 +658,7 @@ definition {
 
 	macro openDepotExportAdmin {
 		var baseURL = "${baseURL}";
+
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
 		if (contains("${baseURL}", "{baseURL}")) {
@@ -667,6 +670,7 @@ definition {
 
 	macro openDepotImportAdmin {
 		var baseURL = "${baseURL}";
+
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
 		if (contains("${baseURL}", "{baseURL}")) {

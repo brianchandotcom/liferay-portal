@@ -32,7 +32,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		return "${groupId}";
 	}
@@ -85,7 +87,6 @@ definition {
 		if ("${visibility}" == "internal") {
 			var visibilityType = "1";
 		}
-
 		else {
 			var visibilityType = "0";
 		}

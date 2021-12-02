@@ -26,6 +26,7 @@ definition {
 		property test.name.skip.portal.instance = "ClusteringLink#AutodetectClusteringAddress";
 
 		AssertConsoleTextPresent(value1 = "bind_addr=127.0.0.1");
+
 		AssertConsoleTextNotPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
 	}
 
@@ -45,6 +46,7 @@ definition {
 		property test.name.skip.portal.instance = "ClusteringLink#CustomControlChannelPropertiesFile";
 
 		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
+
 		AssertConsoleTextPresent(value1 = "properties: TCP");
 	}
 
@@ -54,6 +56,7 @@ definition {
 		property test.name.skip.portal.instance = "ClusteringLink#CustomizeChannelNames";
 
 		AssertConsoleTextPresent(value1 = "channelName: test-control-channel");
+
 		AssertConsoleTextPresent(value1 = "channelName: test-transport-channel");
 	}
 
@@ -64,7 +67,9 @@ definition {
 		property test.name.skip.portal.instance = "ClusteringLink#CustomTransportChannelPropertiesFile";
 
 		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
+
 		AssertConsoleTextPresent(value1 = "properties: TCP");
+
 		AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
 	}
 

@@ -53,8 +53,7 @@ definition {
 			-d <CURL_DATA[end=-1]CURL_DATA> \
 			-d -orderByComparator=
 		''';
-
-		var ctCollectionId = JSONCurlUtil.post("${curl}","$.[?(@['name'] == '${publicationName}')]['ctCollectionId']");
+		var ctCollectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${publicationName}')]['ctCollectionId']");
 
 		if ("${ctCollectionId}" == "") {
 			fail("FAIL. Cannot find ctCollectionId.");

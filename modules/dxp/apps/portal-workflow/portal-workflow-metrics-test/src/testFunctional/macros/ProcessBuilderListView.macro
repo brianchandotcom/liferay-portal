@@ -2,6 +2,7 @@ definition {
 
 	macro filterAndOrder {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
 		Click(
 			key_filterOption = "${filterOption}",
 			locator1 = "ProcessBuilderListView#FILTER_AND_ORDER");
@@ -9,17 +10,23 @@ definition {
 
 	macro gotoPermissions {
 		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
 		MenuItem.clickNoError(menuItem = "Permissions");
+
 		AssertElementPresent(locator1 = "ProcessBuilderListView#PERMISSIONS_MODAL");
 	}
 
 	macro searchForWorkflow {
 		var key_workflowName = "${workflowName}";
+
 		Click(locator1 = "ProcessBuilderListView#SEARCH_FIELD");
+
 		Type(
 			locator1 = "ProcessBuilderListView#SEARCH_FIELD",
 			value1 = "${workflowName}");
+
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
 			value1 = "\RETURN");

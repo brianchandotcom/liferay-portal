@@ -6,7 +6,6 @@ definition {
 
 		return utcDate;
 		''';
-
 		var utcDate = selenium.getEval("${javaScript}");
 
 		return "${utcDate}";
@@ -18,7 +17,6 @@ definition {
 
 		return utcHours;
 		''';
-
 		var utcHours = selenium.getEval("${javaScript}");
 
 		return "${utcHours}";
@@ -30,7 +28,6 @@ definition {
 
 		return utcMinutes;
 		''';
-
 		var utcMinutes = selenium.getEval("${javaScript}");
 
 		return "${utcMinutes}";
@@ -42,9 +39,7 @@ definition {
 
 		return utcMonth;
 		''';
-
 		var utcMonth = selenium.getEval("${javaScript}");
-
 		var utcMonth = ${utcMonth} + 1;
 
 		return "${utcMonth}";
@@ -56,7 +51,6 @@ definition {
 
 		return utcYear;
 		''';
-
 		var utcYear = selenium.getEval("${javaScript}");
 
 		return "${utcYear}";

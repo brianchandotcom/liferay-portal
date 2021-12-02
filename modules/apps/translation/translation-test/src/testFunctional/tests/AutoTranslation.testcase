@@ -448,7 +448,7 @@ definition {
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Translation Processes");
 
 		Translations.viewTranslationEntry(

@@ -44,7 +44,6 @@ definition {
 
 			Button.click(button = "Cancel");
 		}
-
 		else {
 			WaitForElementNotPresent(
 				key_text = "Save",

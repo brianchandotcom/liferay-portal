@@ -25,24 +25,41 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel"
-	@priority = "5"
-	test NoXSSVulnerabilityInControlPanel {
-		task ("Go to Account Settings and save p_p_auth param from the URL") {
-			var portalURL = PropsUtil.get("portal.url");
+	@description = "This is a use case for LPS-45254. View URL validate"
+	@priority = "4"
+	test MaliciousURLScriptsAreNotValidated {
+		property test.name.skip.portal.instance = "XSSUsecase#ViewURLValidate";
+
+		task ("Access malicious url and assert script was not validated") {
+			var maliciousURL1 = '''
+					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E
+				''';
+
+			var maliciousURL2 = '''
+					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=%22%3E%3Cscript%3Ealert%28%27xss%27%29;%3C/script%3E
+				''';
+
+			var maliciousURL3 = '''
+					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=alert%28%27xss%27%29
+				''';
+
+			var maliciousURL4 = '''
+					http://localhost:8080/html/portal/progress_poller.jsp?ProgressId=a%3D1%3Balert(document.cookie)%3B%2F%2F
+				''';
+
+			Navigator.openSpecificURL(url = "${maliciousURL1}");
+
+			AssertAlertNotPresent();
+
+			Navigator.openURL();
 
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-			AssertElementPresent.assertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			for (var maliciousURL : list "${maliciousURL2},${maliciousURL3},${maliciousURL4}") {
+				Navigator.openSpecificURL(url = "${maliciousURL}");
 
-			var currentURL = Navigator.getCurrentURL();
-			var p_p_authParam = StringUtil.extractLast("${currentURL}", "=");
-		}
-
-		task ("Go to url with p_p_authParam and assert no dialog box appears") {
-			Navigator.openSpecificURL(url = "${portalURL}/en/group/control_panel/manage;'*prompt()*'?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_auth=${p_p_authParam}");
-
-			AssertAlertNotPresent();
+				AssertAlertNotPresent();
+			}
 		}
 	}
 
@@ -71,7 +88,6 @@ definition {
 			var maliciousURL5 = '''
 					${portalURL}/web/guest/search?p_p_id=113&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_113_tabs1=background-styles
 				''';
-
 			var malicioursURLsList = "${maliciousURL1},${maliciousURL2},${maliciousURL3},${maliciousURL4}";
 
 			for (var maliciousURL : list "${malicioursURLsList}") {
@@ -179,10 +195,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel"
+	@priority = "5"
+	test NoXSSVulnerabilityInControlPanel {
+		task ("Go to Account Settings and save p_p_auth param from the URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			AssertElementPresent.assertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			var currentURL = Navigator.getCurrentURL();
+
+			var p_p_authParam = StringUtil.extractLast("${currentURL}", "=");
+		}
+
+		task ("Go to url with p_p_authParam and assert no dialog box appears") {
+			Navigator.openSpecificURL(url = "${portalURL}/en/group/control_panel/manage;'*prompt()*'?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_auth=${p_p_authParam}");
+
+			AssertAlertNotPresent();
+		}
+	}
+
 	@description = "This is a use case for LPS-83273. View forms entry with XSS"
 	@priority = "5"
 	test NoXSSVulnerabilityInForms {
 		var formDescription = '''<script>alert(222)</script>''';
+
 		var formName = '''<script>alert(111)</script>''';
 
 		task ("Add a form") {
@@ -259,18 +298,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-10563. View JSONWS"
-	@priority = "3"
-	test NoXSSVulnerabitlityInJSONWS {
-		task ("Access jsonws successfully") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E");
-
-			AssertAlertNotPresent();
-		}
-	}
-
 	@description = "This is a use case for LPS-59198. View LDAP"
 	@priority = "3"
 	test NoXSSVulnerabilityInLDAP {
@@ -315,7 +342,7 @@ definition {
 		}
 
 		task ("Send alert inside url") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx");
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&p_p_state=pop_up&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx");
 		}
 
 		task ("Assert alert not present on page") {
@@ -548,44 +575,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-45254. View URL validate"
-	@priority = "4"
-	test MaliciousURLScriptsAreNotValidated {
-		property test.name.skip.portal.instance = "XSSUsecase#ViewURLValidate";
-
-		task ("Access malicious url and assert script was not validated") {
-			var maliciousURL1 = '''
-					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E
-				''';
-
-			var maliciousURL2 = '''
-					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=%22%3E%3Cscript%3Ealert%28%27xss%27%29;%3C/script%3E
-				''';
-
-			var maliciousURL3 = '''
-					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=alert%28%27xss%27%29
-				''';
-
-			var maliciousURL4 = '''
-					http://localhost:8080/html/portal/progress_poller.jsp?ProgressId=a%3D1%3Balert(document.cookie)%3B%2F%2F
-				''';
-
-			Navigator.openSpecificURL(url = "${maliciousURL1}");
-
-			AssertAlertNotPresent();
-
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
-
-			for (var maliciousURL : list "${maliciousURL2},${maliciousURL3},${maliciousURL4}") {
-				Navigator.openSpecificURL(url = "${maliciousURL}");
-
-				AssertAlertNotPresent();
-			}
-		}
-	}
-
 	@description = "This is a use case for LPS-71236 and LPS-71307. View web content"
 	@priority = "5"
 	test NoXSSVulnerabilityInWebContent {
@@ -691,6 +680,18 @@ definition {
 			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		}
+	}
+
+	@description = "This is a use case for LRQA-10563. View JSONWS"
+	@priority = "3"
+	test NoXSSVulnerabitlityInJSONWS {
+		task ("Access jsonws successfully") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E");
+
+			AssertAlertNotPresent();
 		}
 	}
 

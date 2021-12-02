@@ -13,7 +13,6 @@ definition {
 			-d title=${title} \
 			-d type=${type}
 		''';
-
 		var assetListEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['assetListEntryId']");
 
 		return "${assetListEntryId}";

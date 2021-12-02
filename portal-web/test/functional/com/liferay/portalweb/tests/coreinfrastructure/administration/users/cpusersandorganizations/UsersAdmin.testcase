@@ -380,7 +380,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.addCP(
-			userEmailAddress = "userea&gt;@liferay.com",
+			userEmailAddress = "userea>@liferay.com",
 			userEmailAddressVariation = "Invalid",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -633,7 +633,7 @@ definition {
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
-			userFirstName = "&lt;userfn&gt;",
+			userFirstName = "<userfn>",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
@@ -644,7 +644,7 @@ definition {
 
 		User.viewCP(
 			userEmailAddress = "userea@liferay.com",
-			userFirstName = "&lt;userfn&gt;",
+			userFirstName = "<userfn>",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
@@ -2197,6 +2197,7 @@ definition {
 			script = "${script}");
 
 		var companyId = JSONCompany.getCompanyId();
+
 		var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
 
 		AssertTextEquals.assertPartialText(

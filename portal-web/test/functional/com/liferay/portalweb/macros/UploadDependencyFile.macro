@@ -3,8 +3,7 @@ definition {
 	macro uploadArchiveFile {
 		var tempDir = PropsUtil.get("output.dir.name");
 
-		var dependencyFilePath = TestCase.getDependenciesDirPath(
-			fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
 
 		if (!(isSet(compressedFile))) {
 			ArchiveUtil.archive("${dependencyFilePath}", "${tempDir}/${fileName}");
@@ -18,8 +17,7 @@ definition {
 	}
 
 	macro uploadFile {
-		var dependencyFilePath = TestCase.getDependenciesDirPath(
-			fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
 
 		UploadFile(
 			locator1 = "TextInput#FILE",

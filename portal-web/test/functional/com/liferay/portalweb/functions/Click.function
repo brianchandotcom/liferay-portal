@@ -49,23 +49,17 @@ definition {
 
 		selenium.pause("1000");
 
-		selenium.waitForElementPresent(
-			"//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']"
-		);
+		selenium.waitForElementPresent("//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']");
 
 		selenium.mouseOver();
 
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]"
-		);
+		selenium.waitForElementPresent("//script[contains(@src,'/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]");
 
 		selenium.pause("1000");
 
 		Click.clickAt();
 
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains( @src,'/js/product_navigation_control_menu_add_content.js')] | //script[contains(@src,'js/product_navigation_control_menu_add_application.js')]"
-		);
+		selenium.waitForElementPresent("//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains( @src,'/js/product_navigation_control_menu_add_content.js')] | //script[contains(@src,'js/product_navigation_control_menu_add_application.js')]");
 	}
 
 	function clickNoMouseOver {
@@ -118,9 +112,7 @@ definition {
 		WaitForSPARefresh();
 
 		if (selenium.isElementPresent("//div[contains(@class,'cke_editable_inline')]")) {
-			selenium.waitForElementPresent(
-				"//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]"
-			);
+			selenium.waitForElementPresent("//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]");
 		}
 
 		selenium.waitForVisible();
@@ -189,9 +181,7 @@ definition {
 
 		selenium.selectFrame("relative=top");
 
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]"
-		);
+		selenium.waitForElementPresent("//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
 
 		if (selenium.isElementPresent("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]")) {
 			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
@@ -209,9 +199,7 @@ definition {
 	function waitForPersonalMenuJSClick {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'personal_menu/js/PersonalMenu.es.js')]"
-		);
+		selenium.waitForElementPresent("//script[contains(@src,'personal_menu/js/PersonalMenu.es.js')]");
 
 		selenium.pause("3000");
 

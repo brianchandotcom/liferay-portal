@@ -69,7 +69,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		if (IsElementNotPresent(locator1 = "Button#ANY", key_text = "Save and Return to ${siteName}")) {
+		if (IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) {
 			Refresh();
 
 			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");

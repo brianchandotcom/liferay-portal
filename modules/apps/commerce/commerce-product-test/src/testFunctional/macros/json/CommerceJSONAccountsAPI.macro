@@ -55,7 +55,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var accountEmail = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${accountName}' && @['type']==${accountTypeValue})].['emailAddresses'][:1]");
 
 		return "${accountEmail}";
@@ -80,7 +79,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var accountIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${accountIds}";
@@ -98,7 +96,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var accountsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce accounts count is: ${accountsCount}");

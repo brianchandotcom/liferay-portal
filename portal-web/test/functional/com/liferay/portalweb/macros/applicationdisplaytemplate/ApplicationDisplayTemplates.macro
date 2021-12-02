@@ -49,7 +49,6 @@ definition {
 				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 				value1 = "${templateScript}");
 		}
-
 		else if (isSet(fieldNameList)) {
 			for (var fieldName : list "${fieldNameList}") {
 				AssertClick(
@@ -59,7 +58,6 @@ definition {
 					value1 = "${fieldName}");
 			}
 		}
-
 		else {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

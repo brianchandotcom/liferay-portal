@@ -52,7 +52,6 @@ definition {
 		if ("${categoryWithoutName}" == "true") {
 			Alert.viewRequiredField();
 		}
-
 		else {
 			Alert.viewSuccessMessage();
 		}
@@ -161,8 +160,8 @@ definition {
 
 	macro openToCategory {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			groupName = "${groupName}",
-			categoryName = "${categoryName}");
+			categoryName = "${categoryName}",
+			groupName = "${groupName}");
 
 		var baseURL = "${baseURL}";
 
@@ -180,8 +179,8 @@ definition {
 
 	macro openToEditCategory {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			groupName = "${groupName}",
-			categoryName = "${categoryName}");
+			categoryName = "${categoryName}",
+			groupName = "${groupName}");
 
 		var baseURL = "${baseURL}";
 
@@ -215,7 +214,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Message Boards");
 
 		IsElementPresent(locator1 = "Checkbox#SELECT_ALL");
@@ -276,7 +275,6 @@ definition {
 
 			AssertElementNotPresent(locator1 = "Link#SUBSCRIBE");
 		}
-
 		else {
 			Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
 

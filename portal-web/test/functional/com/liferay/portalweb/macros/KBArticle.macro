@@ -916,8 +916,8 @@ definition {
 		}
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			site = "${site}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
@@ -1062,7 +1062,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Knowledge Base");
 
 		if (IsElementPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_TITLE_GENERIC")) {
@@ -1237,17 +1237,14 @@ definition {
 					key_service = "${service}",
 					locator1 = "BlogsEntry#CONTENT_VIDEO");
 			}
-
 			else if ("${service}" == "facebook") {
 				AssertVisible(
 					key_service = "${service}",
 					locator1 = "BlogsEntry#CONTENT_VIDEO");
 			}
-
 			else if ("${internalVideo}" == "true") {
 				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 			}
-
 			else {
 				AssertElementPresent(
 					key_service = "youtube",

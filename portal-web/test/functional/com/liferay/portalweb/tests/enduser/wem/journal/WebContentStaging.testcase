@@ -102,8 +102,7 @@ definition {
 
 		task ("Publish first web content via SAP") {
 			Staging.publishViaSAP(
-				confirmMessage =
-				"Are you sure you want to publish the selected web content?",
+				confirmMessage = "Are you sure you want to publish the selected web content?",
 				entry = "WC WebContent Title 1");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -112,6 +111,7 @@ definition {
 				onLive = "true",
 				webContentTitle = "WC WebContent Title 1");
 		}
+
 		task ("Delete first web content via SAP") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -153,8 +153,7 @@ definition {
 
 		task ("Publish first web content via SAP") {
 			Staging.publishViaSAP(
-				confirmMessage =
-				"Are you sure you want to publish the selected web content?",
+				confirmMessage = "Are you sure you want to publish the selected web content?",
 				entry = "WC WebContent Title 2");
 		}
 
@@ -487,7 +486,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create three web contents") {
-			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" ) {
+			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 				WebContentNavigator.gotoAddCP();

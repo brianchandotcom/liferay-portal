@@ -90,6 +90,7 @@ definition {
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
 			userEmailAddress = "usersn@liferay.com");
+
 		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(

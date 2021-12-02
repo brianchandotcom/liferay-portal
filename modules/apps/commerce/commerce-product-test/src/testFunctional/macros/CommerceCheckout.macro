@@ -38,7 +38,7 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		subtotal = MathUtil.product("${productUnitPrice}", "${productQuantity}");
+		var subtotal = ${productUnitPrice} * ${productQuantity};
 
 		if (isSet(shippingMethod)) {
 			if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
@@ -50,18 +50,18 @@ definition {
 			}
 
 			if ("${shippingMethod}" == "Standard") {
-				deliveryValue = "15";
+				var deliveryValue = "15";
 			}
 			else {
 				if ("${shippingMethod}" == "Expedited") {
-					deliveryValue = "25";
+					var deliveryValue = "25";
 				}
 			}
 
-			total = MathUtil.sum("${subtotal}", "${deliveryValue}");
+			var total = ${subtotal} + ${deliveryValue};
 		}
 		else {
-			total = "${subtotal}";
+			var total = "${subtotal}";
 		}
 
 		CommerceCheckout.viewCheckoutOrderSummary(

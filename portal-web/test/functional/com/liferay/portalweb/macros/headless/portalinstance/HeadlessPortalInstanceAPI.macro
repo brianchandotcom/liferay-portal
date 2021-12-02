@@ -16,7 +16,6 @@ definition {
 			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';
-
 		var JSON = JSONCurlUtil.get("${curl}");
 
 		return "${JSON}";
@@ -31,17 +30,17 @@ definition {
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "{}",
 			key = "domain",
-			value = ""${domain}"");
+			value = "&quot;${domain}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "${parameters}",
 			key = "virtualHost",
-			value = ""${virtualHost}"");
+			value = "&quot;${virtualHost}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "${parameters}",
 			key = "portalInstanceId",
-			value = ""${portalInstanceId}"");
+			value = "&quot;${portalInstanceId}&quot;");
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -69,22 +68,22 @@ definition {
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "{}",
 			key = "domain",
-			value = ""${domain}"");
+			value = "&quot;${domain}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "${parameters}",
 			key = "virtualHost",
-			value = ""${virtualHost}"");
+			value = "&quot;${virtualHost}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "${parameters}",
 			key = "portalInstanceId",
-			value = ""${portalInstanceId}"");
+			value = "&quot;${portalInstanceId}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "${parameters}",
 			key = "siteInitializerKey",
-			value = ""${siteInitializerKey}"");
+			value = "&quot;${siteInitializerKey}&quot;");
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -107,7 +106,7 @@ definition {
 	macro cleanAllPortalInstances {
 		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");
 
-		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJSON}","$.items..portalInstanceId");
+		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJSON}", "$.items..portalInstanceId");
 
 		for (var portalInstanceId : list "${portalInstanceIds}") {
 			if ("${portalInstanceId}" != "liferay.com") {

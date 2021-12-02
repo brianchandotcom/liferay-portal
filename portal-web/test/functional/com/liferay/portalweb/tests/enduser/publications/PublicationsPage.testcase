@@ -98,6 +98,7 @@ definition {
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 		var fragmentHTML = '''<lfr-widget-asset-list>''';
+
 		var htmlSnippet = '''<lfr-''';
 
 		FragmentsEditor.autocompleteFragmentHTML(
@@ -230,7 +231,6 @@ definition {
 			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
 		// Workaround LPS-124618
-
 		//AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 	}

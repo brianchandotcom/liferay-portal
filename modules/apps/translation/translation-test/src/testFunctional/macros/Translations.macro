@@ -34,7 +34,6 @@ definition {
 
 	macro assertUnzippedFileNameFromTempFolder {
 		var tempDir = PropsUtil.get("output.dir.name");
-
 		var unzippedTranslationFileName = FileUtil.getFileName("${tempDir}/${translationFileName}.xlf");
 
 		echo("## translationFileName: ${translationFileName}");
@@ -217,15 +216,12 @@ definition {
 		if ("${workflow}" == "true") {
 			PortletEntry.submitForPublication();
 		}
-
 		else if ("${workflowResubmit}" == "true") {
 			PortletEntry.saveAsDraft();
 		}
-
 		else if ("${validateInvalidFile}" == "true") {
 			Button.clickPublish();
 		}
-
 		else {
 			Button.clickPublish();
 
@@ -280,7 +276,6 @@ definition {
 
 	macro setGoogleCloudTranslationServiceKey {
 		var lineSeparater = "\n";
-
 		var value1 = PropsUtil.get("google.cloud.translation.service.key.type");
 		var value2 = PropsUtil.get("google.cloud.translation.service.key.project.id");
 		var value3 = PropsUtil.get("google.cloud.translation.service.key.private.key.id");
@@ -290,9 +285,7 @@ definition {
 		var value8 = PropsUtil.get("google.cloud.translation.service.key.token.uri");
 		var value9 = PropsUtil.get("google.cloud.translation.service.key.auth.provider.x509.cert.url");
 		var value10 = PropsUtil.get("google.cloud.translation.service.key.client.x509.cert.url");
-
 		var keys = PropsUtil.get("google.cloud.translation.service.key.private.key");
-
 		var list = ListUtil.newList();
 
 		for (var key : list "${keys}") {
@@ -301,47 +294,66 @@ definition {
 			ListUtil.add("${list}", "${value}");
 		}
 
-		var value4 = ListUtil.toString("${list}","");
+		var value4 = ListUtil.toString("${list}", "");
+
 		var value4 = '''-----BEGIN PRIVATE KEY-----${value4}=${lineSeparater}-----END PRIVATE KEY-----${lineSeparater}''';
 
 		var attribute1 = '''"type" : "${value1}"''';
-		var attribute2 = '''"project_id" : "${value2}"''';
-		var attribute3 = '''"private_key_id" : "${value3}"''';
-		var attribute4 = '''"private_key" : "${value4}"''';
-		var attribute5 = '''"client_email" : "${value5}"''';
-		var attribute6 = '''"client_id" : "${value6}"''';
-		var attribute7 = '''"auth_uri" : "${value7}"''';
-		var attribute8 = '''"token_uri" : "${value8}"''';
-		var attribute9 = '''"auth_provider_x509_cert_url" : "${value9}"''';
-		var attribute10 = '''"client_x509_cert_url" : "${value10}"''';
 
+		var attribute2 = '''"project_id" : "${value2}"''';
+
+		var attribute3 = '''"private_key_id" : "${value3}"''';
+
+		var attribute4 = '''"private_key" : "${value4}"''';
+
+		var attribute5 = '''"client_email" : "${value5}"''';
+
+		var attribute6 = '''"client_id" : "${value6}"''';
+
+		var attribute7 = '''"auth_uri" : "${value7}"''';
+
+		var attribute8 = '''"token_uri" : "${value8}"''';
+
+		var attribute9 = '''"auth_provider_x509_cert_url" : "${value9}"''';
+
+		var attribute10 = '''"client_x509_cert_url" : "${value10}"''';
 		var list = ListUtil.newList();
 
 		ListUtil.add("${list}", "${attribute1}");
+
 		ListUtil.add("${list}", "${attribute2}");
+
 		ListUtil.add("${list}", "${attribute3}");
+
 		ListUtil.add("${list}", "${attribute4}");
+
 		ListUtil.add("${list}", "${attribute5}");
+
 		ListUtil.add("${list}", "${attribute6}");
+
 		ListUtil.add("${list}", "${attribute7}");
+
 		ListUtil.add("${list}", "${attribute8}");
+
 		ListUtil.add("${list}", "${attribute9}");
+
 		ListUtil.add("${list}", "${attribute10}");
 
 		var attributes = ListUtil.toString("${list}");
+
 		var attributes = '''{${attributes}}''';
 
 		return "${attributes}";
 	}
 
 	macro translateContentPageFile {
-		if ((contains("${translationFileName}", " ")) && (contains("${translationFileName}", "(")) && (contains("${translationFileName}", ")"))) {
+		if (contains("${translationFileName}", " ") && contains("${translationFileName}", "(") && contains("${translationFileName}", ")")) {
 			var translationFileName = StringUtil.extractLast("${translationFileName}", " ");
 			var translationFileName = StringUtil.replace("${translationFileName}", "(", "?");
 			var translationFileName = StringUtil.replace("${translationFileName}", ")", "?");
 		}
 
-		if ((!(isSet(pageName))) || (!(isSet(pageNameTranslation)))) {
+		if (!(isSet(pageName)) || !(isSet(pageNameTranslation))) {
 			var pageName = "false";
 			var pageNameTranslation = "false";
 		}
@@ -454,7 +466,6 @@ definition {
 
 			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 		}
-
 		else {
 			Type(
 				key_fieldName = "${fieldName}",
@@ -598,6 +609,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS",
 			value1 = "${errorMessage}");
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE",
 			value1 = "${errorMessageItem}");
@@ -734,14 +746,14 @@ definition {
 			key_currentLocale = StringUtil.lowerCase("${currentTargetLocale}"),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 
-		for (var targetLocale : list "${targetLocale}" ) {
+		for (var targetLocale : list "${targetLocale}") {
 			AssertElementPresent(
 				key_locale = "${targetLocale}",
 				locator1 = "Translation#DROPDOWN_MENU_ITEM");
 		}
 
 		if (isSet(noTargetLocale)) {
-			for (var noTargetLocale : list "${noTargetLocale}" ) {
+			for (var noTargetLocale : list "${noTargetLocale}") {
 				AssertElementNotPresent(
 					key_locale = "${noTargetLocale}",
 					locator1 = "Translation#DROPDOWN_MENU_ITEM");

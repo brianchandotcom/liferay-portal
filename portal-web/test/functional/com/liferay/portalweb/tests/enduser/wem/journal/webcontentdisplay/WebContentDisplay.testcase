@@ -568,7 +568,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().create("file:///C:/boot.ini").toURL())}
 ''';
 		}
-
 		else {
 			var templateScript = '''
 ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().create("file:///etc/hosts").toURL())}
@@ -1067,6 +1066,7 @@ ${company.setKey("rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cH////c=")
 
 ${company.getKeyObj()}
 ''';
+
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
@@ -1122,6 +1122,7 @@ ${staticUtil["java.lang.Runtime"].getRuntime()}
 <#assign runtimeInstance=velocityBeanHandler.invoke(null, getRuntime, null)>
 ${runtimeInstance}
 ''';
+
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",

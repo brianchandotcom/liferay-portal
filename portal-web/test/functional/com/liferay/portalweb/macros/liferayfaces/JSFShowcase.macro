@@ -194,7 +194,6 @@ definition {
 					locator1 = "JSFShowcase#MODEL_VALUE");
 			}
 		}
-
 		else {
 			AssertElementPresent(
 				key_attribute = "${textValue}",
@@ -520,7 +519,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${fileName}");
 
-		if (!("${instantAjax}" == "true")) {
+		if ("${instantAjax}" != "true") {
 			Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 		}
 
@@ -555,7 +554,7 @@ definition {
 
 		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 
-		if ("${selectManyMenu}" == "true" || "${selectManyList}" == "true" || "${selectManyListbox}" == "true") {
+		if (("${selectManyMenu}" == "true") || ("${selectManyList}" == "true") || ("${selectManyListbox}" == "true")) {
 			AssertElementPresent(locator1 = "JSFShowcase#VALID_ERROR_MESSAGE");
 		}
 		else {
@@ -624,7 +623,7 @@ definition {
 
 		AssertLocation.assertPartialLocation(value1 = "${linkURL}");
 
-		if (!("${newTab}" == "false")) {
+		if ("${newTab}" != "false") {
 			Navigator.closeWindow();
 		}
 	}

@@ -4,7 +4,7 @@ definition {
 		WaitForPageLoad();
 
 		if (!(isSet(password))) {
-			password = "test";
+			var password = "test";
 		}
 
 		Click(locator1 = "ACLogin#EMAIL_LOGIN_FIELD");

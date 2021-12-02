@@ -56,7 +56,6 @@ definition {
 		if (isSet(cardName)) {
 			ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
 		}
-
 		else {
 			ACTimeFilter.clickTimeFilterButton();
 		}

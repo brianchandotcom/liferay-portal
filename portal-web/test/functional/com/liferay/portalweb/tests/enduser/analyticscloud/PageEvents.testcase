@@ -36,7 +36,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
@@ -830,7 +829,7 @@ definition {
 		task ("Get site assigned property name and get data source name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 
-			var dataSource = StringUtil.extractFirst("${propertyName}"," ");
+			var dataSource = StringUtil.extractFirst("${propertyName}", " ");
 		}
 
 		task ("Get the Property ID in AC") {
@@ -895,7 +894,7 @@ definition {
 		task ("Get site assigned property name and get data source name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 
-			var dataSource = StringUtil.extractFirst("${propertyName}"," ");
+			var dataSource = StringUtil.extractFirst("${propertyName}", " ");
 		}
 
 		task ("Get the Property ID in AC") {

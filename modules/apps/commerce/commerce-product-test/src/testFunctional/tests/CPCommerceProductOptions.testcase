@@ -45,6 +45,7 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
 		var colorName = "Color_";
 		var count = "0";
 

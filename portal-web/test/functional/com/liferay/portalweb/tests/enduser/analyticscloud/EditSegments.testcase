@@ -215,9 +215,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
-
 		var nameList = "ac ac,liferay liferay";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -350,9 +348,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
-
 		var nameList = "ac ac,liferay liferay";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -451,7 +447,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
-
 		var nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7";
 
 		task ("Conect DXP to AC") {
@@ -630,7 +625,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var users = "ac,liferay,dxp";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
 
 		task ("Add a new user in DXP") {
@@ -709,7 +703,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Get site assigned property name") {
@@ -862,9 +855,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var users = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
-
 		var nameList = "ac ac,liferay liferay";
 
 		task ("Create two new users") {
@@ -949,9 +940,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var users = "ac,ac2,ac3";
-
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
-
 		var nameList = "ac ac,ac2 ac2,ac3 ac3";
 
 		task ("Create user and sincronize it") {

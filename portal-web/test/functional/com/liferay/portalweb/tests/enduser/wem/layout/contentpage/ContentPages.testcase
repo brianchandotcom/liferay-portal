@@ -525,6 +525,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Blogs");
 		}
+
 		task ("Add fragments to page") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -545,9 +546,11 @@ definition {
 		task ("Hide Blogs from topper options") {
 			PageEditor.hideFragmentViaHeader(fragmentName = "Blogs");
 		}
+
 		task ("Hide Button fragment from fragment options") {
 			PageEditor.hideFragmentViaPageStyles(fragmentName = "Button");
 		}
+
 		task ("Hide Heading fragment from the sidebar fragment tree") {
 			PageEditor.hideFragmentViaPageStructure(fragmentName = "Heading");
 		}
@@ -706,6 +709,7 @@ definition {
 
 		task ("Hide Blogs and HTML") {
 			PageEditor.hideFragmentViaPageStructure(fragmentName = "Blogs");
+
 			PageEditor.hideFragmentViaPageStructure(fragmentName = "HTML");
 		}
 
@@ -876,6 +880,7 @@ definition {
 				fragmentName = "Heading",
 				index = "1");
 		}
+
 		task ("Publish page template") {
 			PageEditor.clickPublish();
 		}

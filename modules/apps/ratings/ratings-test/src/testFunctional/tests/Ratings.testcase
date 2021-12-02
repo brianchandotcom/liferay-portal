@@ -51,8 +51,8 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-74621."
-	@refactordone
 	@priority = "3"
+	@refactordone
 	test CanCommentAndRateBlogsEntryOnLiveSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -135,8 +135,8 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-74621."
-	@refactordone
 	@priority = "3"
+	@refactordone
 	test CanCommentAndRateWikiFrontPageOnLiveSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -493,8 +493,8 @@ definition {
 	}
 
 	@description = "This test covers LPS-117741. It ensures that the rated stacked stars can be removed from the blog entry."
-	@refactordone
 	@priority = "4"
+	@refactordone
 	test CanRemoveRatedStackedStarsFromBlogsEntry {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -530,8 +530,8 @@ definition {
 	}
 
 	@description = "This ensures that the stars rating can be revoked."
-	@refactordone
 	@priority = "5"
+	@refactordone
 	test CanRevokeBlogsStarsRating {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

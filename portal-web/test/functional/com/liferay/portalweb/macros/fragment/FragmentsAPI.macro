@@ -4,18 +4,15 @@ definition {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
 
 		var fileContent = FileUtil.read("${dependencyFilePath}");
-
 		var os = OSDetector.isWindows();
 
 		if ("${os}" == "true") {
 			var newline = '''
 ''';
-
 			var fileContent = StringUtil.replace("${fileContent}", "${newline}", "%0A");
 
 			return "${fileContent}";
 		}
-
 		else {
 			return "${fileContent}";
 		}

@@ -23,7 +23,6 @@ definition {
 
 		if (isSet(databaseName)) {
 			var originalDatabaseName = PropsUtil.get("database.mysql.schema");
-
 			var jdbcURL = StringUtil.replace("${jdbcURL}", "${originalDatabaseName}", "${databaseName}");
 		}
 
@@ -190,7 +189,7 @@ definition {
 	}
 
 	macro viewConfigurationSavedPG {
-		if ((isSet(localization)) && ("${localization}" == "ES")) {
+		if (isSet(localization) && ("${localization}" == "ES")) {
 			Alert.viewSuccessMessageText(successMessage = "La configuración fue guardada con éxito.");
 
 			AssertTextEquals.assertPartialText(

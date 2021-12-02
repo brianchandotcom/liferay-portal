@@ -364,7 +364,7 @@ definition {
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
 				value1 = "${quantity}");
 
-			if ("${quantity}" == "1" || "${quantity}" == "4") {
+			if (("${quantity}" == "1") || ("${quantity}" == "4")) {
 				AssertTextEquals(
 					key_productName = "${product}",
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",

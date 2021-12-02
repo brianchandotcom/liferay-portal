@@ -691,7 +691,10 @@ definition {
 		var dmFileEntryID = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Test Site Name");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
 
 		User.logoutPG();
 
@@ -776,9 +779,9 @@ definition {
 			structureName = "WC Structure Name");
 
 		var textNumber = DataEngine.addField(
-			textNumber = "true",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldName = "Text",
+			textNumber = "true");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -849,17 +852,15 @@ definition {
 
 		Button.clickSave();
 
-		var mappedFieldValue = StringUtil.add("Title is Text: ${", "${textNumber}:Text","");
-
-		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
+		var mappedFieldValue = StringUtil.add("Title is Text: ${", "${textNumber}:Text", "");
+		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
 			mappedFieldValue = "${mappedFieldValue}");
 
-		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text","");
-
-		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
+		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text", "");
+		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
@@ -869,9 +870,8 @@ definition {
 			mappedField = "Image",
 			mappedFieldValue = "WC Structure Name: Small Image");
 
-		var mappedFieldValue = StringUtil.add("Image Alt is Text: ${", "${textNumber}:Text","");
-
-		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
+		var mappedFieldValue = StringUtil.add("Image Alt is Text: ${", "${textNumber}:Text", "");
+		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
@@ -921,9 +921,9 @@ definition {
 			structureName = "WC Structure Name");
 
 		var textNumber = DataEngine.addField(
-			textNumber = "true",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldName = "Text",
+			textNumber = "true");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -975,17 +975,15 @@ definition {
 
 		Button.clickSave();
 
-		var mappedFieldValue = StringUtil.add("HTML Title is Text: ${", "${textNumber}:Text","");
-
-		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
+		var mappedFieldValue = StringUtil.add("HTML Title is Text: ${", "${textNumber}:Text", "");
+		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "title",
 			mappedFieldValue = "${mappedFieldValue}");
 
-		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text","");
-
-		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}","");
+		var mappedFieldValue = StringUtil.add("Description is Text: ${", "${textNumber}:Text", "");
+		var mappedFieldValue = StringUtil.add("${mappedFieldValue}", "}", "");
 
 		OpenGraph.viewMappedField(
 			mappedField = "description",

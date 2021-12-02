@@ -117,7 +117,7 @@ definition {
 				fieldValue = "${filterParameterName}");
 		}
 
-		if (isSet(cacheable) && "${cacheable}" == "true") {
+		if (isSet(cacheable) && ("${cacheable}" == "true")) {
 			FormFields.enableCheckbox(fieldName = "$cacheable");
 		}
 

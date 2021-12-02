@@ -888,11 +888,11 @@ definition {
 
 			Category.viewPath(
 				categoryName = "Category Name",
-				path = "Vocabulary Name &gt; Category Name");
+				path = "Vocabulary Name > Category Name");
 
 			Category.viewPath(
 				categoryName = "Subcategory Name",
-				path = "Vocabulary Name &gt; Category Name &gt; Subcategory Name");
+				path = "Vocabulary Name > Category Name > Subcategory Name");
 		}
 	}
 

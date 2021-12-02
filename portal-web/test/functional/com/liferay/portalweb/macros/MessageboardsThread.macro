@@ -801,8 +801,8 @@ definition {
 		if (isSet(layoutName)) {
 			if (isSet(categoryName)) {
 				var categoryId = JSONMBMessage.getCategoryIdByName(
-					groupName = "${groupName}",
-					categoryName = "${categoryName}");
+					categoryName = "${categoryName}",
+					groupName = "${groupName}");
 
 				Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_message_boards_web_portlet_MBPortlet&_com_liferay_message_boards_web_portlet_MBPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_message&_com_liferay_message_boards_web_portlet_MBPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fweb%2F${siteURLKey}%2F${layoutName}%2F-%2Fmessage_boards%2Fcategory%2F${categoryId}&_com_liferay_message_boards_web_portlet_MBPortlet_mbCategoryId=${categoryId}");
 			}
@@ -1098,7 +1098,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Message Boards");
 
 		if (IsElementPresent.isVisible(locator1 = "MessageBoards#THREAD_TABLE_ALL_CHECKBOX")) {
@@ -1506,7 +1506,6 @@ definition {
 				locator1 = "MessageBoardsThread#THREAD_BODY_BOLD",
 				value1 = "${threadBody}");
 		}
-
 		else {
 			AssertTextEquals(
 				locator1 = "MessageBoardsThread#THREAD_BODY",
@@ -1922,7 +1921,6 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Unsubscribe");
 		}
-
 		else {
 			Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
 

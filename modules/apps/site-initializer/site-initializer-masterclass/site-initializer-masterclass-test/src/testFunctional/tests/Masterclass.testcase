@@ -1434,8 +1434,10 @@ definition {
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Roles");
+
 			RoleNavigator.gotoRoleType(roleType = "Site");
 		}
+
 		task ("Assert the Student and Teacher are present") {
 			for (var roleTitle : list "Student,Teacher") {
 				AssertElementPresent(
@@ -1454,8 +1456,10 @@ definition {
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Roles");
+
 			RoleNavigator.gotoRoleType(roleType = "Site");
 		}
+
 		task ("Set all permissons for Student") {
 			PermissionsInline.gotoRolePermissions(roleName = "Student");
 

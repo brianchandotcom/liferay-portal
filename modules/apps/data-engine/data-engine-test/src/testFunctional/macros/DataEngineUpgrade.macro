@@ -189,7 +189,7 @@ definition {
 	}
 
 	macro editAnUpgradedStructureWithFieldGroup {
-		fieldList = "Text,Date,Number";
+		var fieldList = "Text,Date,Number";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -650,7 +650,7 @@ definition {
 
 		var wcList = "My Web Content based on My Structure with Fieldsets level 2,My Web Content based on My Structure with all fields,My Web Content based on My Structure with nested fields,My Web Content based on My Structure with repeated fields";
 
-		for (var wcTitle : list "${wcList}" ) {
+		for (var wcTitle : list "${wcList}") {
 			AssertTextEquals(
 				key_webContentTitle = "${wcTitle}",
 				locator1 = "WC#ENTRY_LIST_TITLE",

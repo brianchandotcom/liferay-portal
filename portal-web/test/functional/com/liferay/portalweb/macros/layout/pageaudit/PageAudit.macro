@@ -47,7 +47,7 @@ definition {
 				configurationScope = "${settingsScope}");
 		}
 
-		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
+		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -87,7 +87,7 @@ definition {
 				configurationScope = "${scope}");
 		}
 
-		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
+		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -118,7 +118,7 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
-		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
+		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -158,7 +158,7 @@ definition {
 				configurationScope = "${settingsScope}");
 		}
 
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
+		if (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -195,7 +195,7 @@ definition {
 	}
 
 	macro openPanelAfterConfiguration {
-		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON") && IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON")) {
+		if ((IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON"))) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 
@@ -323,11 +323,11 @@ definition {
 
 	macro setSEOcanonicalURL {
 		if (!(isSet(urlAppend))) {
-			urlAppend = "web/test-site-name/content-page";
+			var urlAppend = "web/test-site-name/content-page";
 		}
 
 		if (!(isSet(pageName))) {
-			pageName = "Content Page";
+			var pageName = "Content Page";
 		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "${urlAppend}");

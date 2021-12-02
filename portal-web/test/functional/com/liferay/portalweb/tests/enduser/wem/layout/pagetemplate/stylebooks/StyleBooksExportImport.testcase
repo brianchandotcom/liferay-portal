@@ -23,7 +23,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			for (var groupName : list "Test Site Name,New Site Name") {
 				JSONGroup.deleteGroupByName(groupName = "${groupName}");

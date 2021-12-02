@@ -340,7 +340,6 @@ definition {
 			var workspaceURL = Navigator.getCurrentURL();
 
 			var workspaceURL = StringUtil.extractFirst("${workspaceURL}", "workspace");
-
 			var workspaceURL = StringUtil.add("${workspaceURL}", "workspace/0000", "");
 		}
 

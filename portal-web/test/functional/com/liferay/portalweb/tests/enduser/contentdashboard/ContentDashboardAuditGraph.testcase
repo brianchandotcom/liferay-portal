@@ -597,7 +597,6 @@ definition {
 	@description = "LPS-128990 Given the graphs configuration panel
 	When the user selects a global vocabulary and a site vocabulary
 	Then the vocabularies appear as selected and they will be shown in the Audit graph"
-
 	@priority = "5"
 	test AuditVocabulariesFromGlobalAndSite {
 		property portal.acceptance = "true";

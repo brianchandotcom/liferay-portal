@@ -45,7 +45,7 @@ definition {
 	}
 
 	macro selectDateRangeFilter {
-		key_dateRange = "${dateRange}";
+		var key_dateRange = "${dateRange}";
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 

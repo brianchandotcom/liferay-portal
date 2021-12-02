@@ -157,7 +157,7 @@ definition {
 				value1 = "${formatPattern}");
 		}
 
-		if (!(isSet(isPrimary)) || "${isPrimary}" == "true") {
+		if (!(isSet(isPrimary)) || ("${isPrimary}" == "true")) {
 			Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
 		}
 		else {
@@ -657,10 +657,8 @@ definition {
 
 	macro deleteCommerceEntry {
 		var paginationResults = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
-
 		var numberOfEntries = StringUtil.extractLast("${paginationResults}", " ");
-
-		var numberOfEntriesAfterDeletion = MathUtil.difference("${numberOfEntries}", "1");
+		var numberOfEntriesAfterDeletion = ${numberOfEntries} - 1;
 
 		ClickNoError(
 			key_value = "",
@@ -669,7 +667,7 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "Delete");
 
 		if ("${numberOfEntriesAfterDeletion}" != "0") {
-			paginationResults = StringUtil.replace("${paginationResults}", "${numberOfEntries}", "${numberOfEntriesAfterDeletion}");
+			var paginationResults = StringUtil.replace("${paginationResults}", "${numberOfEntries}", "${numberOfEntriesAfterDeletion}");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#PAGINATION_RESULTS",
@@ -831,7 +829,7 @@ definition {
 	}
 
 	macro selectAssociatedOptionsValue {
-		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_VALUE", key_optionType = "radio", key_optionValue = "${optionValue}")) {
+		if (IsElementPresent(key_optionType = "radio", key_optionValue = "${optionValue}", locator1 = "CommerceEntry#OPTION_VALUE")) {
 			Click(
 				key_optionType = "radio",
 				key_optionValue = "${optionValue}",
@@ -956,7 +954,6 @@ definition {
 	macro verifyCostumRadiusWithDefaultValue {
 		for (var value : list "Small:10,Medium:20,Large:30") {
 			var dimension = StringUtil.extractFirst("${value}", ":");
-
 			var number = StringUtil.extractLast("${value}", ":");
 
 			Click(
@@ -976,7 +973,9 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "${accountName}");
 
-		var accountActualEmail = CommerceJSONAccountsAPI._getCommerceAccountEmail(accountName = "${accountName}", accountType = "${accountType}");
+		var accountActualEmail = CommerceJSONAccountsAPI._getCommerceAccountEmail(
+			accountName = "${accountName}",
+			accountType = "${accountType}");
 
 		TestUtils.assertEquals(
 			actual = "${accountActualEmail}",

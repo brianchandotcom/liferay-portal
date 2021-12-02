@@ -24,24 +24,24 @@ definition {
 		var key_fieldLabel = "${fieldType}";
 
 		if (isSet(formPageNumber)) {
-			key_formPageNumber = "${formPageNumber}";
+			var key_formPageNumber = "${formPageNumber}";
 		}
 		else {
-			key_formPageNumber = "0";
+			var key_formPageNumber = "0";
 		}
 
 		if (isSet(fieldColumnNumber)) {
-			key_fieldColumnNumber = "${fieldColumnNumber}";
+			var key_fieldColumnNumber = "${fieldColumnNumber}";
 		}
 		else {
-			key_fieldColumnNumber = "0";
+			var key_fieldColumnNumber = "0";
 		}
 
 		if (isSet(fieldRowNumber)) {
-			key_fieldRowNumber = "${fieldRowNumber}";
+			var key_fieldRowNumber = "${fieldRowNumber}";
 		}
 		else {
-			key_fieldRowNumber = "0";
+			var key_fieldRowNumber = "0";
 		}
 
 		DragAndDrop.javaScriptDragAndDropToObject(
@@ -406,7 +406,7 @@ definition {
 		AssertVisible(locator1 = "Form#DESCRIPTION_FIELD");
 
 		if (isSet(formTitle)) {
-			formName = "${formTitle}";
+			var formName = "${formTitle}";
 		}
 
 		Type(
@@ -597,7 +597,6 @@ definition {
 				locator1 = "Form#SIDEBAR_ELEMENTS_TAB_LOCALE",
 				value1 = "${key_localeElements}");
 		}
-
 		else {
 			AssertClick(
 				locator1 = "Form#SIDEBAR_ELEMENTS_TAB",
@@ -640,22 +639,23 @@ definition {
 				locator1 = "Form#SIDEBAR_PROPERTIES_TAB",
 				value1 = "Properties");
 		}
+
 		Pause(locator1 = "1000");
 	}
 
 	macro moveFieldToRow {
 		if (isSet(formPageNumber)) {
-			key_formPageNumber = "${formPageNumber}";
+			var key_formPageNumber = "${formPageNumber}";
 		}
 		else {
-			key_formPageNumber = "0";
+			var key_formPageNumber = "0";
 		}
 
 		if (isSet(fieldPositionNumber)) {
-			key_fieldPositionNumber = "${fieldPositionNumber}";
+			var key_fieldPositionNumber = "${fieldPositionNumber}";
 		}
 		else {
-			key_fieldPositionNumber = "0";
+			var key_fieldPositionNumber = "0";
 		}
 
 		DragAndDrop.javaScriptDragAndDropToUp(
@@ -900,8 +900,8 @@ definition {
 	}
 
 	macro viewFieldReference {
-		key_fieldName = "${fieldName}";
-		key_fieldReference = "${fieldReference}";
+		var key_fieldName = "${fieldName}";
+		var key_fieldReference = "${fieldReference}";
 
 		Click(
 			key_fieldName = "${fieldName}",

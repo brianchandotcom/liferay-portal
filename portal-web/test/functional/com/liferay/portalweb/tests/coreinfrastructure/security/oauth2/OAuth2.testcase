@@ -69,6 +69,7 @@ definition {
 
 			OAuth2.launchRequest();
 		}
+
 		task ("Authorize application2 and launch request to check if the device is remembered") {
 			OAuth2.authorizeMyApplication(
 				clientId = "default2",
@@ -448,7 +449,9 @@ definition {
 		}
 
 		task ("Verify permission is required to delete article") {
-			var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+			var liferaySiteId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				site = "true");
 
 			var deleteCurl = '''
 				${portalURL}/api/jsonws/journal.journalarticle/delete-article -H 'Authorization: Bearer ${accessToken}' \
@@ -456,7 +459,6 @@ definition {
 					-d articleId=${articleId} \
 					-d articleURL='wc-title'
 			''';
-
 			var deleteOutput1 = JSONCurlUtil.post("${deleteCurl}");
 
 			OAuth2.assertPermissionsDenied(
@@ -481,7 +483,7 @@ definition {
 
 		task ("Verify WC deleted") {
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Web Content",
 				site = "${siteName}");
 
@@ -603,6 +605,7 @@ definition {
 
 			OAuth2.viewResourcePanelCollapsed(scopeList = "Analytics,Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Frontend.View.State.REST,Liferay.Headless.Admin.Content");
 		}
+
 		task ("Edit OAuth application scopes and check the permission to read the userprofile") {
 			Navigator.gotoBack();
 
@@ -836,8 +839,7 @@ definition {
 		task ("Edit application new secret") {
 			var newGeneratedClientSecret = OAuth2.editApplication(
 				applicationName = "OAuth Application Edited",
-				generateNewSecret = "true"
-			);
+				generateNewSecret = "true");
 		}
 
 		task ("Verify the newly generated secret") {
@@ -895,12 +897,14 @@ definition {
 				clientProfile = "Web Application",
 				clientSecret = "abc123");
 		}
+
 		task ("Authorize the new external application") {
 			OAuth2.authorizeMyApplication(
 				clientId = "abc123",
 				clientSecret = "abc123",
 				noAuthorize = "true");
 		}
+
 		task ("Launch request") {
 			OAuth2.launchRequest();
 		}
@@ -1268,6 +1272,7 @@ definition {
 
 			OAuth2.launchRequest();
 		}
+
 		task ("Authorize application2 and launch request") {
 			OAuth2.authorizeMyApplication(
 				clientId = "default2",

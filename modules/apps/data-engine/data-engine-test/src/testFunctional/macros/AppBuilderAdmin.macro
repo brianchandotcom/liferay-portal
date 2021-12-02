@@ -4,12 +4,16 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_ADD");
 	}
 
-	macro addAllPermissionsFromRoles() {
+	macro addAllPermissionsFromRoles {
 		for (var roleTitle : list "${roleList}") {
 			var key_roleTitle = "${roleTitle}";
+
 			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+
 			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+
 			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+
 			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
 		}
 
@@ -39,6 +43,7 @@ definition {
 
 	macro addEntry {
 		AppBuilderAdmin.add();
+
 		AppBuilderAdmin.waitForSaveButtonVisible();
 	}
 
@@ -225,6 +230,7 @@ definition {
 
 	macro editItem {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
@@ -285,6 +291,7 @@ definition {
 
 	macro openStandAloneApp {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+
 		MenuItem.clickNoError(menuItem = "Open Standalone App");
 	}
 
@@ -309,22 +316,31 @@ definition {
 			tableViewName = "Table View");
 
 		AppBuilderAdmin.gotoBack();
+
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Form Views");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View");
+
 		AppBuilderAdmin.editItem(itemName = "Form View");
+
 		FormViewBuilder.setName(formViewName = "Edited Form");
+
 		FormViewBuilder.save();
+
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Form");
 
 		AppBuilderAdmin.switchTab(tabName = "Table Views");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View");
+
 		AppBuilderAdmin.editItem(itemName = "Table View");
+
 		TableViewBuilder.setName(tableViewName = "Edited Table");
+
 		TableViewBuilder.save();
+
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Table");
 
 		AppBuilderAdmin.switchTab(tabName = "Apps");
@@ -334,16 +350,22 @@ definition {
 		AppBuilderAdmin.gotoBack();
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
 	}
 
-	macro removeAllPermissionsFromRoles() {
+	macro removeAllPermissionsFromRoles {
 		for (var roleTitle : list "${roleList}") {
 			var key_roleTitle = "${roleTitle}";
+
 			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+
 			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+
 			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+
 			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
 		}
 
@@ -526,24 +548,30 @@ definition {
 			value1 = "${buttonValue}");
 	}
 
-	macro validatePermissionsFromRolesAreChecked() {
+	macro validatePermissionsFromRolesAreChecked {
 		for (var roleTitle : list "${roleList}") {
 			var key_roleTitle = "${roleTitle}";
 
 			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+
 			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+
 			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+
 			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
 		}
 	}
 
-	macro validatePermissionsFromRolesAreNotChecked() {
+	macro validatePermissionsFromRolesAreNotChecked {
 		for (var roleTitle : list "${roleList}") {
 			var key_roleTitle = "${roleTitle}";
 
 			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+
 			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+
 			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+
 			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
 		}
 	}
@@ -572,7 +600,9 @@ definition {
 
 	macro validateStandAloneOptionNotPresent {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+
 		MenuItem.viewNotPresent(menuItem = "Open Standalone App");
+
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
 	}
 
@@ -608,6 +638,7 @@ definition {
 
 	macro viewItem {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+
 		MenuItem.clickNoError(menuItem = "View");
 	}
 
@@ -615,6 +646,7 @@ definition {
 		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
 			Pause(locator1 = "1000");
 		}
+
 		Pause(locator1 = "1000");
 	}
 
@@ -622,6 +654,7 @@ definition {
 		while (IsElementPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
 		}
+
 		Pause(locator1 = "1000");
 	}
 

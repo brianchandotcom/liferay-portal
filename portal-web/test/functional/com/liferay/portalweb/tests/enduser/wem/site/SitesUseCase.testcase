@@ -692,6 +692,7 @@ definition {
 		task ("Fill password reminder and assert sign in") {
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
+
 		task ("Delete Email Address Verification URL email") {
 			MockMock.deleteMail(asset = "http://www.baker.com:8080: Email Address Verification");
 		}
@@ -971,7 +972,7 @@ definition {
 			SitePages.openPagesAdmin(siteURLKey = "russia2018");
 
 			Page.addJavaScript(
-				javaScript = "alert(&apos;Welcome to Russia.&apos;);",
+				javaScript = "alert('Welcome to Russia.');",
 				pageName = "Arenas");
 		}
 
@@ -1097,6 +1098,7 @@ definition {
 
 			DownloadTempFile();
 		}
+
 		task ("Log in as default user") {
 			User.firstLoginPG(
 				password = "test",

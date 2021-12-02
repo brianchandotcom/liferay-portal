@@ -247,7 +247,6 @@ definition {
 				locator1 = "Comments#ENTRY_COUNT_PANEL",
 				value1 = "${commentCount} COMMENT");
 		}
-
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Comments#ENTRY_COUNT_PANEL",
@@ -262,7 +261,6 @@ definition {
 
 			AssertElementPresent(locator1 = "Comments#COMMENT_BODY");
 		}
-
 		else {
 			var key_userFullName = "${userFullName}";
 

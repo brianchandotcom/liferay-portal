@@ -79,14 +79,11 @@ definition {
 
 		if ("${locale}" == "zh") {
 			var zhAlternate = '''" hreflang="zh-CN" rel="alternate">''';
-
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh/web/guest${zhAlternate}","");
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh/web/guest${zhAlternate}", "");
 		}
-
 		else if ("${locale}" == "es") {
 			var esAlternate = '''" hreflang="es-ES" rel="alternate">''';
-
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/es/web/guest${esAlternate}","");
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/es/web/guest${esAlternate}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
@@ -94,12 +91,12 @@ definition {
 
 	macro assertCanonicalURL {
 		var HTML = '''<link data-senna-track="temporary" href="''';
+
 		var HTML2 = '''" rel="canonical">''';
 
 		if (isSet(customCanonicalURL)) {
 			var portalURL = "${customCanonicalURL}";
 		}
-
 		else if (isSet(locale)) {
 			var portalURL = "${portalURL}/${locale}/web/guest";
 		}
@@ -110,12 +107,10 @@ definition {
 		if (isSet(pageName)) {
 			var pageName = StringUtil.lowerCase("${pageName}");
 			var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
-
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}${HTML2}","");
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}${HTML2}", "");
 		}
-
 		else {
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}","");
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
@@ -123,9 +118,9 @@ definition {
 
 	macro assertDefaultAlternateURL {
 		var HTML = '''<link data-senna-track="temporary" href="''';
-		var HTML2 = '''" hreflang="x-default" rel="alternate">''';
 
-		var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}","");
+		var HTML2 = '''" hreflang="x-default" rel="alternate">''';
+		var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
@@ -319,7 +314,6 @@ definition {
 
 		return authToken;
 		''';
-
 		var authToken = selenium.getEval("${javaScript}");
 
 		echo("## * Auth Token: ${authToken}");
@@ -333,7 +327,6 @@ definition {
 
 		return plid;
 		''';
-
 		var plid = selenium.getEval("${javaScript}");
 
 		echo("## * p_l_id: ${plid}");
@@ -591,7 +584,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		while (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS", key_index = "4")) {
+		while (IsElementPresent(key_index = "4", locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(
 				key_index = "4",
 				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
@@ -605,7 +598,7 @@ definition {
 			key_index = "4",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
-		while (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM_CHILD_INDICATOR", key_pageName = "Home")) {
+		while (IsElementPresent(key_pageName = "Home", locator1 = "SitePages#LIST_GROUP_ITEM_CHILD_INDICATOR")) {
 			SitePages.expandPageTree(depth = "2");
 
 			Click.waitForMenuToggleJSClick(
@@ -1068,9 +1061,8 @@ definition {
 
 		for (var portletName : list "${portletNameList}") {
 			if ("${portletName}" == "Portal Directory") {
-				var key_componentOrPortletName ="Directory";
+				var key_componentOrPortletName = "Directory";
 			}
-
 			else {
 				var key_componentOrPortletName = StringUtil.extractChars("${portletName}");
 			}
@@ -1115,9 +1107,7 @@ definition {
 			value1 = "${htmlTitle}");
 
 		var pageNameURL = StringUtil.lowerCase("${pageName}");
-
 		var pageNameURL = StringUtil.replace("${pageNameURL}", " ", "-");
-
 		var url = "${portalURL}/web/guest/${pageNameURL}";
 
 		if (isSet(siteNameURL)) {
@@ -1141,7 +1131,7 @@ definition {
 				var portalURL = StringUtil.upperCase("${portalURL}");
 			}
 
-			var url = StringUtil.replace("${url}","${portalURL}","${portalURL}/${languageName}");
+			var url = StringUtil.replace("${url}", "${portalURL}", "${portalURL}/${languageName}");
 		}
 
 		AssertTextEquals(

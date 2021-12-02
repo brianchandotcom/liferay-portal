@@ -7,7 +7,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		return "${groupId}";
 	}
@@ -34,29 +36,41 @@ definition {
 		var list = ListUtil.newList();
 
 		ListUtil.add("${list}", "com.liferay.blogs.model.BlogsEntry");
+
 		ListUtil.add("${list}", "com.liferay.bookmarks.model.BookmarksEntry");
+
 		ListUtil.add("${list}", "com.liferay.bookmarks.model.BookmarksFolder");
+
 		ListUtil.add("${list}", "com.liferay.calendar.model.CalendarBooking");
+
 		ListUtil.add("${list}", "com.liferay.commerce.model.CommerceOrder");
+
 		ListUtil.add("${list}", "com.liferay.document.library.kernel.model.DLFileEntry");
+
 		ListUtil.add("${list}", "com.liferay.document.library.kernel.model.DLFolder");
+
 		ListUtil.add("${list}", "com.liferay.dynamic.data.lists.model.DDLRecord");
+
 		ListUtil.add("${list}", "com.liferay.knowledge.base.model.KBArticle");
+
 		ListUtil.add("${list}", "com.liferay.message.boards.model.MBMessage");
+
 		ListUtil.add("${list}", "com.liferay.translation.model.TranslationEntry");
+
 		ListUtil.add("${list}", "com.liferay.journal.model.JournalArticle");
+
 		ListUtil.add("${list}", "com.liferay.journal.model.JournalFolder");
+
 		ListUtil.add("${list}", "com.liferay.wiki.model.WikiPage");
 
 		var values = ListUtil.toString("${list}");
-
 		var list = ListUtil.newList();
 
 		for (var value : list "${values}") {
 			var classNameId = JSONClassname._getClassNameId(value = "${value}");
 
 			if ("${value}" != "") {
-				ListUtil.add("${list}","${classNameId}");
+				ListUtil.add("${list}", "${classNameId}");
 			}
 		}
 
@@ -207,7 +221,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 				}
 			}
 		}
-		else if ("${itemType}" == "Blogs Entry" || "${itemType}" == "Documents Folder" || "${itemType}" == "Web Content Folder") {
+		else if (("${itemType}" == "Blogs Entry") || ("${itemType}" == "Documents Folder") || ("${itemType}" == "Web Content Folder")) {
 			if ("${itemType}" == "Blogs Entry") {
 				var itemType = JSONClassname._getClassNameId(value = "com.liferay.blogs.model.BlogsEntry");
 			}
@@ -329,7 +343,6 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 
 		var newLine = '''
 ''';
-
 		var typeSettings = StringUtil.regexReplaceAll("${typeSettings}", "${newLine}", "%0A");
 
 		return "${typeSettings}";

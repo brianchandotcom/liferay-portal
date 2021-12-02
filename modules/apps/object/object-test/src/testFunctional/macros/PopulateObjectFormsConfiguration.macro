@@ -4,17 +4,17 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#CLOSE_UNMAPPED_ERROR");
 	}
 
-	macro gotoBuilderFormFields () {
+	macro gotoBuilderFormFields {
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUILDER_FORM_FIELDS");
 	}
 
-	macro gotoFormField () {
+	macro gotoFormField {
 		Click(
 			key_formFieldName = "${formFieldName}",
 			locator1 = "PopulateObjectFormsConfiguration#GO_TO_FORM_FIELD");
 	}
 
-	macro mapFormField () {
+	macro mapFormField {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
@@ -50,6 +50,7 @@ definition {
 		Click(
 			key_label = "${label}",
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 	}
 
@@ -73,7 +74,7 @@ definition {
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#REQUIRED_FIELD_OPTION_DISABLED");
 	}
 
-	macro viewUnmappedFormField () {
+	macro viewUnmappedFormField {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
@@ -85,10 +86,13 @@ definition {
 
 	macro viewUnmappedFormFieldsError {
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_TITLE");
+
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_BODY");
+
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_TITLE");
 
 		var fieldType = StringUtil.toLowerCase("${fieldType}");
+
 		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
 			key_fieldType = "${fieldType}",
@@ -97,8 +101,11 @@ definition {
 
 	macro viewUnmappedObjectRequiredFieldsError {
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_TITLE");
+
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_BODY");
+
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_TITLE");
+
 		AssertElementPresent(
 			key_fieldLabelName = "${fieldLabelName}",
 			key_fieldType = "${fieldType}",

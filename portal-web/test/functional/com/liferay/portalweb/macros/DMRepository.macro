@@ -54,7 +54,7 @@ definition {
 		if (isSet(permissionDefinitionKey)) {
 			Panel.expandPanel(panel = "Permissions");
 
-			if (IsNotVisible(key_text = "Hide Options",locator1 = "Button#ANY")) {
+			if (IsNotVisible(key_text = "Hide Options", locator1 = "Button#ANY")) {
 				AssertClick(
 					key_text = "More Options",
 					locator1 = "Button#ANY",
@@ -115,7 +115,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Documents and Media");
 
 		while (IsElementPresent(locator1 = "DocumentsAndMedia#FILTER_REPOSITORY_GENERIC")) {

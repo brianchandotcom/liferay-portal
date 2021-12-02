@@ -29,7 +29,7 @@ definition {
 		}
 		else {
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Message Boards");
 
 			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
@@ -118,13 +118,14 @@ definition {
 	}
 
 	@description = "Validate if the user can view the topic selector and category label."
-	@refactordone
 	@priority = "4"
+	@refactordone
 	test CanAddSubcategoryConfigureParentCategoryDisplay {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
+
 		JSONQuestions.addQuestion(
 			bodyField = "Question Body 1",
 			categoryName = "Questions Test Category",

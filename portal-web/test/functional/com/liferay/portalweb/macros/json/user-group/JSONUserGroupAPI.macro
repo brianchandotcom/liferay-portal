@@ -43,7 +43,6 @@ definition {
 				-u test@liferay.com:test \
 				-d name=${userGroupName}
 		''';
-
 		var userGroupId = JSONCurlUtil.post("${curl}", "$.userGroupId");
 
 		if ("${groupId}" == "") {

@@ -59,7 +59,7 @@ definition {
 			User._clickSignInLink(localization = "${localization}");
 		}
 
-		if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
+		if (isSet(authenticationMethod) && ("${authenticationMethod}" == "By Screen Name")) {
 			Type(
 				locator1 = "TextInput#SCREEN_NAME",
 				value1 = "${userScreenName}");
@@ -74,7 +74,7 @@ definition {
 			locator1 = "TextInput#PASSWORD",
 			value1 = "${password}");
 
-		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
+		if (isSet(rememberMeChecked) && ("${rememberMeChecked}" == "true")) {
 			Check(locator1 = "Checkbox#REMEMBER_ME");
 		}
 
@@ -83,7 +83,7 @@ definition {
 		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED")) {
 			echo("Sign in failed due to empty required field. Retrying...");
 
-			if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
+			if (isSet(authenticationMethod) && ("${authenticationMethod}" == "By Screen Name")) {
 				Type(
 					locator1 = "TextInput#SCREEN_NAME",
 					value1 = "${userScreenName}");

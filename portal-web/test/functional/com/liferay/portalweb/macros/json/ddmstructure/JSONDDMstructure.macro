@@ -18,7 +18,6 @@ definition {
 			  -d "end=-1" \
 			  -d -orderByComparator=
 		''';
-
 		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");
 
 		if ("${structureId}" == "") {
@@ -46,7 +45,6 @@ definition {
 			  -d "end=-1" \
 			  -d -orderByComparator=
 		''';
-
 		var structureIds = JSONCurlUtil.post("${curl}", "$..structureId");
 
 		return "${structureIds}";

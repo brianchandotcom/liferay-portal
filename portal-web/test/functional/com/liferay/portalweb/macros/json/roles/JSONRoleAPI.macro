@@ -93,7 +93,6 @@ definition {
 				-d companyId=${companyId} \
 				-d name=${name}
 		''';
-
 		var roleId = JSONCurlUtil.post("${curl}", "$['roleId']");
 
 		return "${roleId}";

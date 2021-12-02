@@ -99,6 +99,7 @@ definition {
 			Navigator.openURL();
 
 			Pause(locator1 = "120000");
+
 			User.viewSessionNotExpired(sigin = "False");
 
 			//AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");

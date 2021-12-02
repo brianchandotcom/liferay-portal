@@ -48,7 +48,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var accountGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${accountGroupIds}";
@@ -66,7 +65,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var accountGroupsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce account group count is: ${accountGroupsCount}");

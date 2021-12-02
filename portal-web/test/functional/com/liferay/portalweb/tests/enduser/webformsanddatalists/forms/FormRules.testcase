@@ -22,7 +22,7 @@ definition {
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Forms");
 
 			FormsAdmin.teardownForms();
@@ -135,7 +135,7 @@ definition {
 		Form.save();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		Form.duplicate(formName = "Test Form");
@@ -476,7 +476,7 @@ definition {
 		Form.save();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -1112,7 +1112,6 @@ definition {
 		FormsAdminNavigator.gotoRules();
 
 		var key_conditionRowNumber = "1";
-
 		var key_fieldColumnNumber = "1";
 
 		Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
@@ -1126,7 +1125,6 @@ definition {
 		}
 
 		var key_actionRowNumber = "1";
-
 		var key_fieldColumnNumber = "2";
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD");

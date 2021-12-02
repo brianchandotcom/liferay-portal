@@ -40,7 +40,7 @@ definition {
 		Button.clickNext();
 
 		if (isSet(selectAnalyticsCloudField)) {
-			if (IsElementNotPresent(locator1 = "ACSettings#DATA_SOURCE_FIELD_NAME", key_FieldName = "${fieldName}", key_index = "${index}")) {
+			if (IsElementNotPresent(key_FieldName = "${fieldName}", key_index = "${index}", locator1 = "ACSettings#DATA_SOURCE_FIELD_NAME")) {
 				Button.click(button = "Select Analytics Cloud Field");
 
 				if (isSet(newField)) {
@@ -68,8 +68,7 @@ definition {
 
 							MenuItem.click(menuItem = "${item}");
 
-							if (IsElementPresent(key_text = "Select Analytics Cloud Field",
-									locator1 = "Button#ANY")) {
+							if (IsElementPresent(key_text = "Select Analytics Cloud Field", locator1 = "Button#ANY")) {
 								Button.click(button = "Select Analytics Cloud Field");
 							}
 						}
@@ -241,7 +240,7 @@ definition {
 
 	@summary = "Asserts the individuals usage value \
 	@param individualUsageValue"
-	macro assertIndividualsUsage() {
+	macro assertIndividualsUsage {
 		AssertTextEquals(
 			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
 			value1 = "${individualUsageValue}");
@@ -296,7 +295,7 @@ definition {
 
 	@summary = "Asserts the page views usage value \
 	@param pageViewsUsageValue"
-	macro assertPageViewsUsage() {
+	macro assertPageViewsUsage {
 		AssertTextEquals(
 			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
 			value1 = "${pageViewsUsageValue}");
@@ -360,7 +359,7 @@ definition {
 	}
 
 	@summary = "Asserts the users shown in list"
-	macro assertUserList() {
+	macro assertUserList {
 		AssertTextEquals(
 			locator1 = "ACSettings#USER_LIST",
 			value1 = "${userName}");
@@ -527,8 +526,8 @@ definition {
 	macro deleteAllPendingUsers {
 		ACSettings.goToUserManagement();
 
-		while (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {
-			if (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {
+		while (IsElementPresent(locator1 = "ACSettings#VIEW_STATUS_PENDING")) {
+			if (IsElementPresent(locator1 = "ACSettings#VIEW_STATUS_PENDING")) {
 				Click(locator1 = "ACSettings#DELETE_USER");
 
 				Click(locator1 = "ACSettings#CONTINUE_BUTTON");
@@ -574,7 +573,6 @@ definition {
 
 			ACNavigation.openItem(itemName = "${dataSourceName}");
 		}
-
 		else {
 			Click(locator1 = "ACSettings#ITEM_TABLE");
 		}
@@ -608,7 +606,6 @@ definition {
 
 			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 		}
-
 		else {
 			var dataSourceName = selenium.getText("//h3");
 

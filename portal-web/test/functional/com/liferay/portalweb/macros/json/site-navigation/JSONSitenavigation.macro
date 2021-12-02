@@ -3,7 +3,9 @@ definition {
 	macro addSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
-		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONSitenavigationSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		if (!(isSet(auto))) {
 			var auto = "true";
@@ -18,7 +20,9 @@ definition {
 	macro addSiteNavigationMenuItem {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName},${type}");
 
-		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONSitenavigationSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var siteNavigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
 			groupName = "${groupName}",

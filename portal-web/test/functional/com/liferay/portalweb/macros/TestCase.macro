@@ -21,12 +21,11 @@ definition {
 		var projectDir = PropsUtil.get("project.dir");
 		var testBaseDir = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
-
 		var testName = selenium.getTestName();
 		var testName = StringUtil.extractLast("${testName}", ".");
 		var testName = StringUtil.extractFirst("${testName}", "#");
-		var testFileName = StringUtil.split("**/${testName}.testcase");
 
+		var testFileName = StringUtil.split("**/${testName}.testcase");
 		var testFilePaths = FileUtil.getIncludedResourceURLs("${testFileName}", "${projectDir}/portal-web");
 		var testFilePaths = StringUtil.valueOf("${testFilePaths}");
 
@@ -39,13 +38,11 @@ definition {
 		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:");
 		var testFileParentDir = StringUtil.extractFirst("${testFilePath}", "${testName}.testcase");
 		var dependenciesDir = "${testFileParentDir}${testDependenciesDir}";
-
 		var dependencyFilePath = "${dependenciesDir}/${fileName}";
 		var fileExists = FileUtil.exists("${dependencyFilePath}");
 
 		if ("${fileExists}" == "false") {
-			dependencyFilePath = "${testBaseDir}${testDependenciesDir}/${fileName}";
-
+			var dependencyFilePath = "${testBaseDir}${testDependenciesDir}/${fileName}";
 			var globalFileExists = FileUtil.exists("${dependencyFilePath}");
 
 			if ("${globalFileExists}" == "false") {
@@ -81,8 +78,8 @@ definition {
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (("${siteName}" == "Liferay") || (!(isSet(siteName)))) {
-			if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
+		if (("${siteName}" == "Liferay") || !(isSet(siteName))) {
+			if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
 				var portalURL = PropsUtil.get("portal.url");
 				var portalURL = StringUtil.replace("${portalURL}", "http://", "");
 				var portalURL = StringUtil.replace("${portalURL}", ":8080", "");

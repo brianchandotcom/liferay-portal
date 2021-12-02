@@ -92,6 +92,7 @@ definition {
 				groupName = "Site Name");
 
 			var portalURL = PropsUtil.get("portal.url");
+
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACAssets.viewAssetAppearsOnMetric(
@@ -149,7 +150,6 @@ definition {
 		// AC Quarantine ticket: LRAC-9805
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Add 2 more new users") {
@@ -229,7 +229,6 @@ definition {
 		// AC Quarantine ticket: LRAC-9806
 
 		var userNames = "ac,ac2,ac3";
-
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
 
 		task ("Create new users and connect the DXP to AC") {
@@ -634,9 +633,7 @@ definition {
 		// AC Quarantine ticket: LRAC-9807
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
-
 		var nameList = "ac ac,liferay liferay";
 
 		for (var name : list "${usernameList}") {

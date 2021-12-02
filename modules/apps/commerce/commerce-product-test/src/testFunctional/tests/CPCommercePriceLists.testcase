@@ -455,17 +455,17 @@ definition {
 		var aux_iterator = "1";
 
 		for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49") {
-			isLessThan41 = MathUtil.isLessThan("${iterator}", "41");
+			var isLessThan41 = MathUtil.isLessThan("${iterator}", "41");
 
 			if ("${aux_iterator}" == "21") {
-				aux_iterator = "1";
+				var aux_iterator = "1";
 			}
 
 			if ("${isLessThan41}" == "false") {
-				isLessThan21 = "true";
+				var isLessThan21 = "true";
 			}
 			else {
-				isLessThan21 = MathUtil.isLessThan("${iterator}", "21");
+				var isLessThan21 = MathUtil.isLessThan("${iterator}", "21");
 			}
 
 			if ("${isLessThan21}" == "false") {
@@ -493,47 +493,47 @@ definition {
 
 			WaitForElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
 
-			curr_productName = selenium.getText("CommerceFrontStore#FS_PRODUCT_NAME");
+			var curr_productName = selenium.getText("CommerceFrontStore#FS_PRODUCT_NAME");
 
 			if (IsElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE")) {
-				curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE");
+				var curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE");
 			}
 			else {
-				curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
+				var curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
 			}
 
-			curr_price = StringUtil.replace("${curr_price}","$ ","");
-			curr_price = StringUtil.replace("${curr_price}",".00","");
-
+			var curr_price = StringUtil.replace("${curr_price}", "$ ", "");
+			var curr_price = StringUtil.replace("${curr_price}", ".00", "");
 			var length = StringUtil.length("${curr_price}");
 			var index = ${length} - 1;
 			var intPart = StringUtil.substring("${curr_price}", "0", "${index}");
 
 			if ("${intPart}" == "") {
-				intPart = "0";
+				var intPart = "0";
 			}
 
 			var decPart = StringUtil.substring("${curr_price}", "${index}", "${length}");
 
 			if ("${decPart}" != "0") {
-				intPart = MathUtil.sum("${intPart}","1");
+				var intPart = ${intPart} + 1;
 				var aux = 10 - ${decPart};
 			}
 			else {
 				var aux = "0";
 			}
 
-			decreasedPrice = MathUtil.difference("${curr_price}", "${intPart}");
-			decreasedPrice = "$ ${decreasedPrice}.${aux}0";
+			var decreasedPrice = ${curr_price} - ${intPart};
+			var decreasedPrice = "$ ${decreasedPrice}.${aux}0";
 
 			if ("${iterator}" == "1") {
-				productAndPriceArray = "${curr_productName};${decreasedPrice}";
+				var productAndPriceArray = "${curr_productName};${decreasedPrice}";
 			}
 			else {
-				productAndPriceArray = "${productAndPriceArray},${curr_productName};${decreasedPrice}";
+				var productAndPriceArray = "${productAndPriceArray},${curr_productName};${decreasedPrice}";
 			}
 
-			aux_iterator = MathUtil.sum("${aux_iterator}", "1");
+			var aux_iterator = ${aux_iterator} + 1;
+
 			ApplicationsMenu.gotoSite(site = "Minium");
 		}
 
@@ -576,10 +576,10 @@ definition {
 		var aux = "37";
 
 		for (var curr_productAndPrice : list "${productAndPriceArray}") {
-			curr_productName = StringUtil.extractFirst("${curr_productAndPrice}", ";");
-			curr_price = StringUtil.extractLast("${curr_productAndPrice}", ";");
+			var curr_productName = StringUtil.extractFirst("${curr_productAndPrice}", ";");
+			var curr_price = StringUtil.extractLast("${curr_productAndPrice}", ";");
 
-			if ("${curr_productName}" == "Hoses" || "${curr_productName}" == "Brake Fluid") {
+			if (("${curr_productName}" == "Hoses") || ("${curr_productName}" == "Brake Fluid")) {
 				AssertTextEquals(
 					key_productName = "${curr_productName}",
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
@@ -591,7 +591,7 @@ definition {
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_BY_INDEX",
 					value1 = "${curr_price}");
 
-				aux = MathUtil.sum("${aux}", "1");
+				var aux = ${aux} + 1;
 			}
 			else {
 				AssertTextEquals(
@@ -777,7 +777,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Products");
 
-		for ( var product : list "U-Joint,Mount,Shock Absorber") {
+		for (var product : list "U-Joint,Mount,Shock Absorber") {
 			CommerceRelations.assignSingleRelationToProductsEntry(
 				entryName = "${product}",
 				title = "Add Products");
@@ -824,7 +824,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO Review
-
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(
@@ -1480,7 +1479,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Products");
 
-		for ( var product : list "U-Joint,Mount") {
+		for (var product : list "U-Joint,Mount") {
 			CommerceRelations.assignSingleRelationToProductsEntry(
 				entryName = "${product}",
 				title = "Add Products");
@@ -1739,7 +1738,6 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 
 		var timeString = selenium.getElementValue("TextInput#DATE_TIME_PRICE_LISTS");
-
 		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
 		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
 		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
@@ -1751,27 +1749,27 @@ definition {
 				var hours = "01";
 
 				if ("${ampm}" == "PM") {
-					var ampm = "AM"
+					var ampm = "AM";
 				}
 				else {
-					var ampm = "PM"
+					var ampm = "PM";
 				}
 			}
 			else {
 				var hours = ${hours} + 1;
 			}
 		}
-		else if ( "${minutes}" == "59") {
+		else if ("${minutes}" == "59") {
 			var minutes = "01";
 
 			if ("${hours}" == "12") {
 				var hours = "01";
 
 				if ("${ampm}" == "PM") {
-					var ampm = "AM"
+					var ampm = "AM";
 				}
 				else {
-					var ampm = "PM"
+					var ampm = "PM";
 				}
 			}
 			else {
@@ -1881,7 +1879,6 @@ definition {
 			value1 = "30");
 
 		var timeString = selenium.getElementValue("TextInput#DATE_TIME_PRICE_LISTS");
-
 		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
 		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
 		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
@@ -1903,7 +1900,7 @@ definition {
 				var hours = ${hours} + 1;
 			}
 		}
-		else if ( "${minutes}" == "59") {
+		else if ("${minutes}" == "59") {
 			var minutes = "01";
 
 			if ("${hours}" == "12") {
@@ -2066,7 +2063,7 @@ definition {
 				var hours = ${hours} + 1;
 			}
 		}
-		else if ( "${minutes}" == "59") {
+		else if ("${minutes}" == "59") {
 			var minutes = "01";
 
 			if ("${hours}" == "12") {
@@ -2233,7 +2230,6 @@ definition {
 				value1 = "30");
 
 			var timeString = selenium.getElementValue("TextInput#DATE_TIME_PRICE_LISTS");
-
 			var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
 			var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
 			var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
@@ -2255,7 +2251,7 @@ definition {
 					var hours = ${hours} + 1;
 				}
 			}
-			else if ( "${minutes}" == "59") {
+			else if ("${minutes}" == "59") {
 				var minutes = "01";
 
 				if ("${hours}" == "12") {
@@ -2312,8 +2308,8 @@ definition {
 		Refresh();
 
 		for (var productNamePrice : list "U-Joint;24,ABS Sensor;50") {
-			var productName = StringUtil.extractFirst("${productNamePrice}",";");
-			var price = StringUtil.extractLast("${productNamePrice}",";");
+			var productName = StringUtil.extractFirst("${productNamePrice}", ";");
+			var price = StringUtil.extractLast("${productNamePrice}", ";");
 
 			if ("${productName}" == "ABS Sensor") {
 				CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");

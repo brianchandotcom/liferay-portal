@@ -2,14 +2,23 @@ definition {
 
 	macro commerceApisTearDowm {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
 		CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
+
 		CommerceJSONProductsAPI._deleteAllCommerceProducts();
+
 		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+
 		CommerceJSONCatalogsAPI._deleteAllNoSystemCommerceCatalogs();
+
 		CommerceJSONPriceListsAndPromotionsAPI._deleteAllNoMasterPriceListsAndPromotions();
+
 		CommerceJSONAvailableEstimatesAPI._deleteCommerceAvailableEstimates();
+
 		CommerceJSONMeasurementUnitsAPI._deleteCommerceMeasurementUnits();
+
 		CommerceJSONTaxCategoriesAPI._deleteCommerceTaxCategories();
+
 		CommerceJSONWarehousesAndInventoriesAPI._deleteAllWarehouseItems();
 	}
 

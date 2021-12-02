@@ -309,7 +309,6 @@ definition {
 		if (isSet(defaultSite)) {
 			Open(locator1 = "${baseURL}/web/guest-staging");
 		}
-
 		else {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}-staging");
 		}

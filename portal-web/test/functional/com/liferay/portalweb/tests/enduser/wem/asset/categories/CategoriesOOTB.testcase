@@ -27,7 +27,6 @@ definition {
 	@description = "LPS-131793 Given select modal window in the the categorization section in Documents and Media
 	When the user has NOT permissions to add new categories to Global vocabularies
 	Then the user is NOT able to add new categories from the select modal window"
-
 	@priority = "4"
 	test AddCategoryFromDMWithoutPermission {
 		task ("Create new user") {

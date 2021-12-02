@@ -469,6 +469,7 @@ definition {
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
 
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		SiteTemplates.addCP(siteTemplateName = "Template Site");
@@ -489,10 +490,11 @@ definition {
 			siteTemplateName = "Template Site");
 
 		var page2URL = Navigator.getCurrentURL();
+
 		var entryExternalURL = StringUtil.replace("${page2URL}", "http://", "");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();

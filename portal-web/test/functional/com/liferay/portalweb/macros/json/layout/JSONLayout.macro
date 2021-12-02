@@ -6,7 +6,11 @@ definition {
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",
@@ -39,7 +43,11 @@ definition {
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",
@@ -70,7 +78,11 @@ definition {
 	macro addWidgetToPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
@@ -98,7 +110,11 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
@@ -162,10 +178,13 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", portalURL = "${portalURL}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(
+			groupName = "${groupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		if (!(isSet(privateLayout))) {
-			privateLayout = "false";
+			var privateLayout = "false";
 		}
 
 		JSONLayoutAPI._getPlidByName(
@@ -195,7 +214,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",

@@ -27,6 +27,7 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		ACUtils.tearDownAC();
 	}
 

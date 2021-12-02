@@ -50,7 +50,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
@@ -313,8 +312,8 @@ definition {
 
 		task ("Hover on the Individual Events graph and assert the elements that are shown on the tooltip") {
 			for (var current : list "Events-1,Sessions-1") {
-				var item = StringUtil.extractFirst("${current}","-");
-				var value = StringUtil.extractLast("${current}","-");
+				var item = StringUtil.extractFirst("${current}", "-");
+				var value = StringUtil.extractLast("${current}", "-");
 
 				AssertElementPresent(
 					key_value = "${value}",
@@ -384,7 +383,6 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
 			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
-
 			var n = "0";
 
 			while ("${n}" != "5") {

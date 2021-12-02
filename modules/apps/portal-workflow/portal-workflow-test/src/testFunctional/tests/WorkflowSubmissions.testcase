@@ -19,7 +19,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			Workflow.tearDownPortalWorkflow();
 
@@ -46,7 +45,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -516,6 +515,7 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry B",
 				entryTitle = "Second Blogs Entry Title");
+
 			var count = ${count} + 1;
 		}
 

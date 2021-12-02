@@ -23,7 +23,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 

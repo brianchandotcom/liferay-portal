@@ -44,6 +44,7 @@ definition {
 	@summary = "This calls the JSON WS API to add a field in an object"
 	macro addObjectField {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var objectID = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
@@ -98,6 +99,7 @@ definition {
 	@summary = "This calls the JSON WS API to add a layout in an object"
 	macro addObjectLayout {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var objectID = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
@@ -186,6 +188,7 @@ definition {
 		}
 
 		var objectName = StringUtil.toLowerCase("${objectName}");
+
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
 			-H 'Content-Type: application/json' \
@@ -228,6 +231,7 @@ definition {
 	@summary = "This calls the JSON WS API to add a picklist item"
 	macro addPicklistItem {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = "${picklistName}",
 			userEmailAddress = "${userEmailAddress}",
@@ -273,7 +277,6 @@ definition {
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 			-u ${userEmailAddress}:${userPassword}
 		''';
-
 		var objectIdList = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)]['id']");
 
 		if ("${objectIdList}" != "") {
@@ -304,7 +307,6 @@ definition {
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
 			-u ${userEmailAddress}:${userPassword}
 		''';
-
 		var picklistIdList = JSONCurlUtil.get("${curl}", "$.items..id");
 
 		if ("${picklistIdList}" != "") {
@@ -322,6 +324,7 @@ definition {
 	@summary = "This calls the JSON WS API to delete an object"
 	macro deleteObject {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var objectID = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
@@ -346,10 +349,11 @@ definition {
 	@summary = "This calls the JSON WS API to delete an entry in an object"
 	macro deleteObjectEntry {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var entryId = JSONObject.getObjectEntryId(
-			objectName = "${objectName}",
-			fieldName = "${fieldName}",
 			entryValue = "${value}",
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 
@@ -362,6 +366,7 @@ definition {
 		}
 
 		var objectName = StringUtil.toLowerCase("${objectName}");
+
 		var curl = '''
 			${portalURL}/o/c/${objectName}s/${entryId} \
 			-u ${userEmailAddress}:${userPassword}
@@ -373,6 +378,7 @@ definition {
 	@summary = "This calls the JSON WS API to delete a picklist"
 	macro deletePicklist {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = "${picklistName}",
 			userEmailAddress = "${userEmailAddress}",
@@ -406,7 +412,6 @@ definition {
 				-d <CURL_DATA[start=-1]CURL_DATA> \
 				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
-
 		var objectDefinitionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['objectDefinitionId']");
 
 		if ("${objectDefinitionId}" == "") {
@@ -428,11 +433,11 @@ definition {
 		}
 
 		var objectName = StringUtil.toLowerCase("${objectName}");
+
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
 			-u ${userEmailAddress}:${userPassword}
 		''';
-
 		var entryId = JSONCurlUtil.get("${curl}", "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
 
 		return "${entryId}";
@@ -453,7 +458,6 @@ definition {
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 			-u ${userEmailAddress}:${userPassword}
 		''';
-
 		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${objectName}')]['id']");
 
 		return "${objectId}";
@@ -474,7 +478,6 @@ definition {
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
 			-u ${userEmailAddress}:${userPassword}
 		''';
-
 		var picklistId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${picklistName}')]['id']");
 
 		return "${picklistId}";
@@ -483,6 +486,7 @@ definition {
 	@summary = "This calls the JSON WS API to publish an object"
 	macro publishObject {
 		var portalURL = JSONCompany.getPortalURL();
+
 		var objectID = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",

@@ -10,16 +10,18 @@ definition {
 		}
 
 		if (isSet(structureKey)) {
-			if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Properties")) {
+			if (IsElementNotPresent(key_tabName = "Properties", locator1 = "Sidebar#ACTIVE_TAB")) {
 				Navigator.gotoSidebarTab(tabName = "Properties");
 			}
+
 			PortletEntry.inputStructureKeyTextInput(structureKey = "${structureKey}");
 		}
 
 		if (isSet(structureDescription)) {
-			if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Properties")) {
+			if (IsElementNotPresent(key_tabName = "Properties", locator1 = "Sidebar#ACTIVE_TAB")) {
 				Navigator.gotoSidebarTab(tabName = "Properties");
 			}
+
 			PortletEntry.inputDescriptionTextInput(description = "${structureDescription}");
 		}
 	}
@@ -45,7 +47,6 @@ definition {
 				localizedDone = "${localizedDone}",
 				localizedManageTranslations = "${localizedManageTranslations}");
 		}
-
 		else {
 			Click(locator1 = "Button#LOCALIZATION_GENERIC");
 		}
@@ -63,7 +64,6 @@ definition {
 					localizedDone = "${localizedDone}",
 					localizedManageTranslations = "${localizedManageTranslations}");
 			}
-
 			else {
 				Click(locator1 = "Button#LOCALIZATION_GENERIC");
 			}
@@ -96,7 +96,6 @@ definition {
 		if (isSet(localizedManageTranslations)) {
 			var manageTranslations = "${localizedManageTranslations}";
 		}
-
 		else {
 			var manageTranslations = "Manage Translations";
 		}
@@ -126,7 +125,6 @@ definition {
 				key_text = "${localizedDone}",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
-
 		else {
 			Click(
 				key_text = "Done",
@@ -238,8 +236,11 @@ definition {
 				var key_assetTitle = "${assetTitle}";
 
 				AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TYPE");
+
 				AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE");
+
 				AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_SCOPE");
+
 				AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
 			}
 		}
@@ -267,7 +268,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Structures");

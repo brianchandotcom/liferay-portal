@@ -9,43 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 	}
 
-	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
-	@priority = "5"
-	@uitest
-	test RedirectToDefaultPortalLandingPageOnLogin {
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
-
-		task ("Login and configure landing page CP") {
-			User.firstLoginPG();
-
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
-				configurationCategory = "Instance Configuration",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.editDefaultLandingPageCP(defaultLandingPage = "/web/guest/landing");
-		}
-
-		task ("Add public page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "landing");
-		}
-
-		task ("Logout and login") {
-			User.logoutPG();
-
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Assert url value") {
-			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
-		}
-	}
-
 	@description = "This is a use case for LPS-39744. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = "5"
 	test DefaultPortalLandingPageSetByProperty {
@@ -192,66 +155,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-72398. Users could login to Portal when the default langauge is not English."
-	@priority = "5"
-	@uitest
-	test LoginWithSpanishOnlyEnabledLocale {
-		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
-
-		task ("Login and configure spanish as default and current portal language") {
-			User.firstLoginPG();
-
-			var portalURL = PropsUtil.get("portal.url");
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Localization",
-				configurationName = "Language",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.configureCurrentLanguagesCP(
-				currentPortalLanguages = "Spanish (Spain)",
-				defaultPortalLanguage = "Spanish (Spain)");
-		}
-
-		task ("Logout, restart server and login") {
-			User.logoutPG();
-
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
-
-			Portlet.assertServerStartup();
-
-			User.firstLoginUI(
-				localization = "ES",
-				password = "test",
-				specificURL = "${portalURL}/es",
-				userEmailAddress = "test@liferay.com");
-		}
-	}
-
-	@description = "Users could login through the UI."
-	@priority = "5"
-	@uitest
-	test LoginWithUI {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
-
-		task ("Login and go to control panel - roles") {
-			User.firstLoginUI();
-
-			// Standard and safe UI action to assert Portal is accessible after login
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-		}
-	}
-
 	@description = "This is a use case for LPS-105151. Users could login and logout using multiple OpenID Connect providers."
 	@priority = "4"
 	test LoginWithMultipleOpenIDConnectProviders {
@@ -361,6 +264,66 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
 
 			OpenIDConnect.viewProvider();
+		}
+	}
+
+	@description = "This is a use case for LPS-72398. Users could login to Portal when the default langauge is not English."
+	@priority = "5"
+	@uitest
+	test LoginWithSpanishOnlyEnabledLocale {
+		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
+
+		task ("Login and configure spanish as default and current portal language") {
+			User.firstLoginPG();
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.configureCurrentLanguagesCP(
+				currentPortalLanguages = "Spanish (Spain)",
+				defaultPortalLanguage = "Spanish (Spain)");
+		}
+
+		task ("Logout, restart server and login") {
+			User.logoutPG();
+
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			Portlet.assertServerStartup();
+
+			User.firstLoginUI(
+				localization = "ES",
+				password = "test",
+				specificURL = "${portalURL}/es",
+				userEmailAddress = "test@liferay.com");
+		}
+	}
+
+	@description = "Users could login through the UI."
+	@priority = "5"
+	@uitest
+	test LoginWithUI {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
+
+		task ("Login and go to control panel - roles") {
+			User.firstLoginUI();
+
+			// Standard and safe UI action to assert Portal is accessible after login
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
 		}
 	}
 
@@ -561,6 +524,43 @@ definition {
 				hostsURL = "http://www.able.com:8080",
 				password = "password",
 				userScreenName = "test");
+		}
+	}
+
+	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
+	@priority = "5"
+	@uitest
+	test RedirectToDefaultPortalLandingPageOnLogin {
+		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
+
+		task ("Login and configure landing page CP") {
+			User.firstLoginPG();
+
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://localhost:8080",
+				configurationCategory = "Instance Configuration",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editDefaultLandingPageCP(defaultLandingPage = "/web/guest/landing");
+		}
+
+		task ("Add public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "landing");
+		}
+
+		task ("Logout and login") {
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Assert url value") {
+			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
 		}
 	}
 

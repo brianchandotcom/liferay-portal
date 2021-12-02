@@ -7,7 +7,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		return "${groupId}";
 	}
@@ -15,7 +17,9 @@ definition {
 	macro setSiteNavigationMenuId {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
-		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONSitenavigationSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
 			groupId = "${groupId}",
@@ -27,7 +31,9 @@ definition {
 	macro setSiteNavigationMenuItemId {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName}");
 
-		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONSitenavigationSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
 			groupId = "${groupId}",

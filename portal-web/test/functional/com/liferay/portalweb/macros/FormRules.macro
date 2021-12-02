@@ -102,9 +102,11 @@ definition {
 
 	macro deleteActions {
 		var key_actionRowNumber = "${rowNumber}";
+
 		MouseOver(
 			key_actionRowNumber = "${rowNumber}",
 			locator1 = "FormRules#RULE_ACTION_FIELD");
+
 		Click(
 			key_actionRowNumber = "${rowNumber}",
 			locator1 = "FormRules#RULE_DELETE_ACTION_FIELD");
@@ -281,6 +283,7 @@ definition {
 			key_actionRowNumber = "${actionRowNumber}",
 			key_selectActionValue = "${action}",
 			locator1 = "FormRules#RULE_ACTION_FIELD_VALUE");
+
 		AssertElementNotPresent(
 			key_actionRowNumber = "${actionRowNumber}",
 			key_selectActionTargetValue = "${actionTarget}",

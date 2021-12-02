@@ -179,7 +179,6 @@ definition {
 
 	macro clickMemberButton {
 		var key_TableMember = "${memberName}";
-
 		var key_ButtonName = "${buttonName}";
 
 		Click(locator1 = "ACSegments#MEMBER_GENERIC_BUTTON");
@@ -227,7 +226,7 @@ definition {
 			index = "${index}",
 			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
-		while (IsElementPresent(criteriaName = "${criteriaName}", index = "${index}",locator1 = "ACSegments#CRITERIA_ELLIPSIS")) {
+		while (IsElementPresent(criteriaName = "${criteriaName}", index = "${index}", locator1 = "ACSegments#CRITERIA_ELLIPSIS")) {
 			DropdownMenuItem.click(menuItem = "Delete");
 		}
 	}
@@ -383,7 +382,7 @@ definition {
 		}
 
 		if (isSet(timePeriod)) {
-			if ("${timeOption}" == "since" || !(isSet(timeOption))) {
+			if (("${timeOption}" == "since") || !(isSet(timeOption))) {
 				Select(
 					key_indexField = "${indexField}",
 					locator1 = "ACSegments#TIME_INPUT_CRITERION",
@@ -391,7 +390,7 @@ definition {
 			}
 		}
 
-		if ("${timeOption}" == "after" || "${timeOption}" == "before" || "${timeOption}" == "on") {
+		if (("${timeOption}" == "after") || ("${timeOption}" == "before") || ("${timeOption}" == "on")) {
 			ACSegments.editDateCriterion(
 				day = "${day}",
 				month = "${month}",
@@ -445,13 +444,14 @@ definition {
 		var day = DateUtil.getDate("${dateDifferenceFromCurrentDate}");
 		var month = DateUtil.getMonthName("${dateDifferenceFromCurrentDate}");
 		var year = DateUtil.getYear("${dateDifferenceFromCurrentDate}");
-
 		static var staticDay = "${day}";
 		static var staticMonth = "${month}";
 		static var staticYear = "${year}";
 
 		return "${staticDay}";
+
 		return "${staticMonth}";
+
 		return "${staticYear}";
 	}
 
@@ -463,13 +463,14 @@ definition {
 		var day2 = DateUtil.getDate("${dateDifferenceFromCurrentDate}");
 		var month2 = DateUtil.getMonthName("${dateDifferenceFromCurrentDate}");
 		var year2 = DateUtil.getYear("${dateDifferenceFromCurrentDate}");
-
 		static var staticDay2 = "${day2}";
 		static var staticMonth2 = "${month2}";
 		static var staticYear2 = "${year2}";
 
 		return "${staticDay2}";
+
 		return "${staticMonth2}";
+
 		return "${staticYear2}";
 	}
 
@@ -569,7 +570,6 @@ definition {
 
 	macro selectDocument {
 		var key_indexField = "${indexField}";
-
 		var key_TableMember = "${documentTitle}";
 
 		Click(locator1 = "ACSegments#SELECT_BUTTON");

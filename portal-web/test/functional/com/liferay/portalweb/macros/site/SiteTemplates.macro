@@ -331,12 +331,13 @@ definition {
 	macro getPageModificationDate {
 		Variables.assertDefined(parameterList = "${groupName},${pageNameFilter}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "true");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "true");
 
 		var mysqlStatement = "SELECT modifiedDate FROM Layout WHERE name LIKE '${pageNameFilter}' AND groupId = '${groupId}' AND hidden_ = 0;";
 
-		var sqlResults = SQL.executeMySQLStatement(
-			mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
 
 		echo("## * SQL Query Result is: ${sqlResults}");
 
@@ -356,6 +357,7 @@ definition {
 		Pause(locator1 = "1000");
 
 		var currentURL = Navigator.getCurrentURL();
+
 		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
 		var siteTemplateID = StringUtil.extractLast("${siteTemplateURL}", "/");
 

@@ -20,6 +20,7 @@ definition {
 		property test.name.skip.portal.instance = "Audit#AssertAuditConsoleInformationIsPresentAfterEnabledLog";
 
 		var companyId = JSONCompany.getCompanyId();
+
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		task ("Enable log context and Incoming X-Request-ID") {
@@ -40,9 +41,7 @@ definition {
 		task ("Assert that audit information is present in the logs") {
 			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-			var curl =
-			'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
-
+			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
 			var userId = JSONCurlUtil.get("${curl}");
 
 			AssertConsoleTextPresent(
@@ -65,6 +64,7 @@ definition {
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
 
 		var companyId = JSONCompany.getCompanyId();
+
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		task ("Assert that console outputs a different X-Request-ID than invalid inputted X-Request-ID") {
@@ -74,9 +74,7 @@ definition {
 
 			var invalidXRequestId = "invalidXRID";
 
-			var curl =
-			'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
-
+			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
 			var userId = JSONCurlUtil.get("${curl}");
 
 			AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
@@ -91,6 +89,7 @@ definition {
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
 
 		var companyId = JSONCompany.getCompanyId();
+
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		task ("Assert that console outputs the same X-Request-ID as inputted X-Request-ID") {
@@ -98,9 +97,7 @@ definition {
 
 			var validXRequestId = StringUtil.randomString("40");
 
-			var curl =
-			'''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
-
+			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
 			var userId = JSONCurlUtil.get("${curl}");
 
 			AssertConsoleTextPresent(value1 = "${validXRequestId}");

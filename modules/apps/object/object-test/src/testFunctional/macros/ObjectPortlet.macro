@@ -80,7 +80,7 @@ definition {
 	macro assertFilterResultsSpecificOrder {
 		var resultOrder = "0";
 
-		for (var entry	: list "${entry}") {
+		for (var entry : list "${entry}") {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertVisible(
@@ -250,10 +250,11 @@ definition {
 	}
 
 	macro viewEntryDetails {
-		key_entry = "${entry}";
+		var key_entry = "${entry}";
 
 		if (IsElementPresent(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
 			Click(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
 			Click(locator1 = "ObjectPortlet#VIEW_ENTRY_BUTTON");
 		}
 		else {

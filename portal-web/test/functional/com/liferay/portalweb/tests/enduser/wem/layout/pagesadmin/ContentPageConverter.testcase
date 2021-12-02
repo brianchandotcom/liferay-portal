@@ -151,10 +151,10 @@ definition {
 				var plidBeforeConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
-					ListUtil.add("${list}","${plidBeforeConversion}");
+					ListUtil.add("${list}", "${plidBeforeConversion}");
 				}
 				else {
-					ListUtil.add("${list}"," ${plidBeforeConversion}");
+					ListUtil.add("${list}", " ${plidBeforeConversion}");
 				}
 			}
 
@@ -206,10 +206,10 @@ definition {
 				var plidAfterConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
-					ListUtil.add("${list}","${plidAfterConversion}");
+					ListUtil.add("${list}", "${plidAfterConversion}");
 				}
 				else {
-					ListUtil.add("${list}"," ${plidAfterConversion}");
+					ListUtil.add("${list}", " ${plidAfterConversion}");
 				}
 			}
 

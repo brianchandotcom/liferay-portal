@@ -1256,21 +1256,18 @@ definition {
 				var matchingList = "1 2 3 4,2 3 4";
 				var notMatchingList = "1,1 2,1 2 3,1 3 4,3 4,4";
 			}
-
 			else if ("${rule}" == "Contains Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Contains";
 				var matchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
 				var notMatchingList = "1 2,1,4";
 			}
-
 			else if ("${rule}" == "Does Not Contain All") {
 				var queryAndOperator = "All";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,1 2,1 2 3,3 4,4";
 				var notMatchingList = "1 2 3 4,1 3 4";
 			}
-
 			else if ("${rule}" == "Does Not Contain Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Does Not Contain";
@@ -1368,27 +1365,25 @@ definition {
 				var matchingList = "1 2 3,1 2 3 4,2 3 4";
 				var notMatchingList = "1,1 2,1 3 4,3 4,4";
 			}
-
 			else if ("${rule}" == "Contains Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Contains";
 				var matchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
 				var notMatchingList = "1,4";
 			}
-
 			else if ("${rule}" == "Does Not Contain All") {
 				var queryAndOperator = "All";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,1 2,3 4,4";
 				var notMatchingList = "1 2 3,1 2 3 4,1 3 4";
 			}
-
 			else if ("${rule}" == "Does Not Contain Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,4";
 				var notMatchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
 			}
+
 			task ("Create a dynamic asset list") {
 				JSONAssetlist.addDynamicAssetListEntryWithItemType(
 					groupName = "Test Site Name",

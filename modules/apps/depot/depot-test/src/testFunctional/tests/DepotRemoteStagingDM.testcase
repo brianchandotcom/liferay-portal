@@ -1814,7 +1814,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		while (IsElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL", key_thumbnailName = "Document_1.mp4")) {
+		while (IsElementNotPresent(key_thumbnailName = "Document_1.mp4", locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL")) {
 			Pause(locator1 = "2000");
 
 			Refresh();
@@ -1838,7 +1838,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		while (IsElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL", key_thumbnailName = "Document_1.mp4")) {
+		while (IsElementNotPresent(key_thumbnailName = "Document_1.mp4", locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL")) {
 			Pause(locator1 = "3000");
 
 			Refresh();
@@ -1867,7 +1867,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		while (IsElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL", key_thumbnailName = "Document_2.mp4")) {
+		while (IsElementNotPresent(key_thumbnailName = "Document_2.mp4", locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL")) {
 			Pause(locator1 = "2000");
 
 			Refresh();
@@ -1891,7 +1891,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		while (IsElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL", key_thumbnailName = "Document_2.mp4")) {
+		while (IsElementNotPresent(key_thumbnailName = "Document_2.mp4", locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL")) {
 			Pause(locator1 = "3000");
 
 			Refresh();

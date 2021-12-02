@@ -12,7 +12,8 @@ definition {
 				Type(
 					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
 					value1 = "${x}");
-				flag = "1"
+
+				var flag = "1";
 			}
 			else {
 				Click(
@@ -24,9 +25,10 @@ definition {
 					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT_INDEX",
 					value1 = "${x}");
 
-				flag = MathUtil.sum("${flag}", "1");
+				var flag = ${flag} + 1;
 			}
-			aux = "${x}";
+
+			var aux = "${x}";
 		}
 
 		Button.clickSave();
@@ -63,6 +65,7 @@ definition {
 				value1 = "${dataSourceName}");
 
 			ACUtils.closeModal();
+
 			ACUtils.clearSearchBar();
 		}
 	}
@@ -107,6 +110,7 @@ definition {
 
 	macro goToDefinitionType {
 		var key_definitionType = "${definitionType}";
+
 		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
 
@@ -124,6 +128,7 @@ definition {
 
 	macro openIndividualAttributeDetails {
 		var key_attributeName = "${attributeName}";
+
 		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
 	}
 

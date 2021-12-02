@@ -9,7 +9,7 @@ definition {
 			echo("PASSED");
 		}
 		else {
-			TestUtils.fail(message = "FAILED: expected &apos;${expected}&apos;, actual was &apos;${actual}&apos;");
+			TestUtils.fail(message = "FAILED: expected '${expected}', actual was '${actual}'");
 		}
 	}
 
@@ -22,7 +22,7 @@ definition {
 			echo("PASSED");
 		}
 		else {
-			TestUtils.fail(message = "FAILED: &apos;${expected}&apos; equals &apos;${actual}&apos;");
+			TestUtils.fail(message = "FAILED: '${expected}' equals '${actual}'");
 		}
 	}
 
@@ -44,7 +44,6 @@ var element = document.evaluate("${element}", document, null, XPathResult.FIRST_
 
 return element.textContent;
 		''';
-
 		var textContent = selenium.getEval("${javascript}");
 
 		return "${textContent}";
@@ -56,7 +55,6 @@ return element.textContent;
 		if ("${mac}" == "true") {
 			RobotType.robotTypeShortcut(locator1 = "Shift + Command + r");
 		}
-
 		else {
 			RobotType.robotTypeShortcut(locator1 = "Ctrl + Shift + r");
 		}
@@ -75,7 +73,7 @@ return element.textContent;
 			echo("PASSED");
 		}
 		else {
-			TestUtils.fail(message = "FAILED: actual &apos;${actual}&apos; is less than or equals to expected &apos;${expected}&apos;");
+			TestUtils.fail(message = "FAILED: actual '${actual}' is less than or equals to expected '${expected}'");
 		}
 	}
 
@@ -90,7 +88,7 @@ return element.textContent;
 			echo("PASSED");
 		}
 		else {
-			TestUtils.fail(message = "FAILED: actual &apos;${actual}&apos; is greater than or equals to expected &apos;${expected}&apos;");
+			TestUtils.fail(message = "FAILED: actual '${actual}' is greater than or equals to expected '${expected}'");
 		}
 	}
 

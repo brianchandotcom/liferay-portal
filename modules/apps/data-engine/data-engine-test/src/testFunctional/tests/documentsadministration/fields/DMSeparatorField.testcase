@@ -122,7 +122,6 @@ definition {
 		property portal.acceptance = "false";
 
 		var assertFieldReference = "Myreference";
-
 		var fieldReferenceWithInvalidChars = "Myreference@#$%¨&*";
 
 		DMNavigator.gotoDocumentType();

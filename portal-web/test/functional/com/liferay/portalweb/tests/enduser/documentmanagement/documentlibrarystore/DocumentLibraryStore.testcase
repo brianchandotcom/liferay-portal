@@ -72,8 +72,12 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		var bucketID = PropsUtil.get("aws.bucket.id");
+
 		var companyId = JSONCompany.getCompanyId();
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",

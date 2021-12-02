@@ -48,7 +48,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var specificationIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${specificationIds}";
@@ -66,7 +65,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var specificationsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce specifications count is: ${specificationsCount}");

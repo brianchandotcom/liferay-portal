@@ -3,8 +3,8 @@ definition {
 	@summary = "This calls the JSON WS API to add a Blog entry comment"
 	macro addComment {
 		var entryId = JSONBlog.getBlogEntryId(
-			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -92,7 +92,6 @@ definition {
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayDateYear = DateUtil.getCurrentYear();
 			var displayDateMonth = DateUtil.getCurrentMonth();
-
 			var displayDateMonth = ${displayDateMonth} - 1;
 
 			if (isSet(increaseMinutes)) {
@@ -148,7 +147,11 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -223,7 +226,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -260,14 +265,15 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
-
 		var imageId = JSONCurlUtil.get("${curl}", "$..[?(@['title'] == '${imageTitle}')]['id']");
 
 		return "${imageId}";
@@ -277,8 +283,8 @@ definition {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
 		var entryId = JSONBlog.getBlogEntryId(
-			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -296,7 +302,6 @@ definition {
 			-u ${userEmailAddress}:${userPassword} \
 			-d entryId=${entryId} \
 		''';
-
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
@@ -344,8 +349,8 @@ definition {
 		var contentXML = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
 		var entryId = JSONBlog.getBlogEntryId(
-			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}",
 			site = "${site}");
 
@@ -363,7 +368,6 @@ definition {
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayDateYear = DateUtil.getCurrentYear();
 			var displayDateMonth = DateUtil.getCurrentMonth();
-
 			var displayDateMonth = ${displayDateMonth} - 1;
 
 			if (isSet(increaseMinutes)) {
@@ -424,12 +428,16 @@ definition {
 		}
 
 		var entryId = JSONBlog.getBlogEntryId(
-			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -467,12 +475,14 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var baseDir = PropsUtil.get("test.base.dir.name");
-
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
-
 		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
 
 		var curl = '''
@@ -482,7 +492,6 @@ definition {
 			-u test@liferay.com:test \
 			-F file=@${filePath}
 		''';
-
 		var imageId = JSONCurlUtil.post("${curl}", "$..id");
 
 		return "${imageId}";

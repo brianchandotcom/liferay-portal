@@ -59,15 +59,14 @@ definition {
 		var displayDateMonth = DateUtil.getCurrentMonth();
 
 		if (("${displayDateMonth}" != "10") && ("${displayDateMonth}" != "11") && ("${displayDateMonth}" != "12")) {
-			var displayDateMonth= "0${displayDateMonth}";
+			var displayDateMonth = "0${displayDateMonth}";
 		}
 
 		var displayDateYear = DateUtil.getCurrentYear();
-
-		var i = MathUtil.quotient("${displayDateDay}", "10");
+		var i = ${displayDateDay} / 10;
 
 		if ("${i}" == "0") {
-			var displayDateDay= "0${displayDateDay}";
+			var displayDateDay = "0${displayDateDay}";
 		}
 
 		var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
@@ -183,14 +182,12 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${criterionValue}");
 		}
-
 		else if (isSet(resolutionValue)) {
 			Type(
 				key_criterion = "decimal-number",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${resolutionValue}");
 		}
-
 		else if (isSet(selectCheckbox)) {
 			Click(locator1 = "Button#SELECT");
 
@@ -204,7 +201,6 @@ definition {
 
 			Click(locator1 = "Modal#SELECT_BUTTON");
 		}
-
 		else if (isSet(chooseItem)) {
 			Click(locator1 = "Button#SELECT");
 
@@ -217,7 +213,6 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 		}
-
 		else if (isSet(selectLink)) {
 			if (isSet(indexNumber)) {
 				Click(
@@ -238,21 +233,18 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 		}
-
 		else if (isSet(dateValue)) {
 			Type.sendKeys(
 				key_criterion = "date",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${dateValue}");
 		}
-
 		else if (isSet(optionsValue)) {
 			Select(
 				key_criterion = "options",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${optionsValue}");
 		}
-
 		else {
 			Type(
 				locator1 = "Segmentation#PROPERTY_FIELD",
@@ -270,7 +262,9 @@ definition {
 
 	macro getPortalInstanceDefaultLanguageId {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-company-countries \
 			-u test@liferay.com:test \
@@ -280,6 +274,7 @@ definition {
 			-d -orderByComparator=
 		''';
 		var languageId = JSONCurlUtil.post("${curl}", "$..defaultLanguageId");
+
 		return "${languageId}";
 	}
 
@@ -365,7 +360,6 @@ definition {
 				AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
 			}
 		}
-
 		else {
 			AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
 		}
@@ -389,20 +383,17 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${criterionValue}");
 		}
-
 		else if (isSet(criterionInputOption)) {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT",
 				value1 = "${criterionInputOption}");
 		}
-
 		else if (isSet(criterion)) {
 			AssertValue(
 				key_criterion = "${criterion}",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${value}");
 		}
-
 		else {
 			AssertValue(
 				locator1 = "Segmentation#PROPERTY_FIELD",

@@ -254,11 +254,13 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
 
 		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:8080']");
+
 		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:8080']");
+
 		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
 	}
 

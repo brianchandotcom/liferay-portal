@@ -600,7 +600,6 @@ definition {
 
 	macro editFieldSettings {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
-
 		var browserType = PropsUtil.get("browser.type");
 
 		if ("${browserType}" == "safari") {

@@ -232,8 +232,8 @@ definition {
 
 	macro openToEditEntryInSite {
 		var entryId = JSONBlog.getBlogEntryId(
-			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
+			friendlyURL = "${friendlyURL}",
 			groupName = "${groupName}",
 			site = "${site}");
 
@@ -255,7 +255,9 @@ definition {
 			var site = "true";
 		}
 
-		var stagingId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var stagingId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var baseURL = "${baseURL}";
 

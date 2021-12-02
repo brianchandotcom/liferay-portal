@@ -628,7 +628,9 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Address Name");
 
-		var guestAccountEmail = CommerceJSONAccountsAPI._getCommerceAccountEmail(accountName = "Address Name", accountType = "Guest");
+		var guestAccountEmail = CommerceJSONAccountsAPI._getCommerceAccountEmail(
+			accountName = "Address Name",
+			accountType = "Guest");
 
 		TestUtils.assertEquals(
 			actual = "${guestAccountEmail}",

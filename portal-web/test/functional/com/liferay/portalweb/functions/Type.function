@@ -63,9 +63,7 @@ definition {
 	function sendKeysApplicationSearch {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]"
-		);
+		selenium.waitForElementPresent("//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]");
 
 		selenium.waitForEditable();
 
@@ -153,9 +151,7 @@ definition {
 	function typeCKEditorWaitForCKEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(
-			"//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]"
-		);
+		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
 
 		selenium.pause("1000");
 
@@ -261,9 +257,7 @@ definition {
 	function typeWaitForCKEditorScript {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'ckeditor/config.js') or contains(@id,'ckEditorScript')]"
-		);
+		selenium.waitForElementPresent("//script[contains(@src,'ckeditor/config.js') or contains(@id,'ckEditorScript')]");
 
 		selenium.waitForEditable();
 

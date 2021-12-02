@@ -280,9 +280,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var userList = "ac,dxp";
-
 		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";
-
 		var nameList = "ac ac,dxp dxp,userfn userln";
 
 		task ("Get site assigned property name") {
@@ -366,9 +364,7 @@ definition {
 	@priority = "3"
 	test OrderSegmentProfileDistribution {
 		var userList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
-
 		var nameList = "ac ac,liferay liferay";
 
 		task ("Connect Analytics Cloud to DXP") {

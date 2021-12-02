@@ -46,7 +46,7 @@ definition {
 
 			WaitForElementPresent(locator1 = "ACDXPSettings#SITE_NAME");
 
-			siteName = selenium.getText("ACDXPSettings#SITE_NAME");
+			var siteName = selenium.getText("ACDXPSettings#SITE_NAME");
 
 			Navigator.gotoBack();
 		}

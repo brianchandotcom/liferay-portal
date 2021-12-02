@@ -9,7 +9,9 @@ definition {
 			B = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONCategorySetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var parentCategoryId = JSONCategorySetter.setParentCategoryId();
 
@@ -54,8 +56,8 @@ definition {
 			vocabularyName = "${vocabularyName}");
 
 		var parentCategoryId = JSONCategorySetter.setParentCategoryId(
-			parentCategoryName = "${parentCategoryName}",
 			groupId = "${groupId}",
+			parentCategoryName = "${parentCategoryName}",
 			vocabularyId = "${vocabularyId}");
 
 		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
@@ -86,7 +88,9 @@ definition {
 			B = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONCategorySetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
 
@@ -128,7 +132,9 @@ definition {
 	macro getCategoryId {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONCategorySetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = "${groupId}",
@@ -137,8 +143,7 @@ definition {
 		var categoryId = JSONCategoryAPI._getCategoryIdByName(
 			categoryName = "${categoryName}",
 			groupId = "${groupId}",
-			vocabularyId = "${vocabularyId}"
-		);
+			vocabularyId = "${vocabularyId}");
 
 		return "${categoryId}";
 	}

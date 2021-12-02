@@ -44,7 +44,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
@@ -65,7 +65,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
@@ -108,7 +108,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
@@ -175,7 +175,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Web Content");
 
@@ -199,7 +199,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Web Content");
 
@@ -232,7 +232,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
@@ -252,7 +252,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
@@ -281,7 +281,7 @@ definition {
 
 		task ("Add a WebContent article on new Company") {
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Web Content");
 
 			WebContentNavigator.gotoAddCP();
@@ -321,10 +321,10 @@ definition {
 		task ("Add a WebContent article on default Company") {
 			SignOut.signOut();
 
-			User.firstLoginPG();		
+			User.firstLoginPG();
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Web Content");
 
 			WebContentNavigator.gotoAddCP();
@@ -385,7 +385,7 @@ definition {
 			Pause(locator1 = "240000");
 
 			Refresh();
-			
+
 			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content New Company");
 		}
 

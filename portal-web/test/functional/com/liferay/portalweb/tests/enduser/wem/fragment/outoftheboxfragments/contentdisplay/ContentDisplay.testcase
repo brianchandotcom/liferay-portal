@@ -678,7 +678,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a blog entry with a cover image") {
-			var imageId	= JSONBlog.uploadBlogImage(
+			var imageId = JSONBlog.uploadBlogImage(
 				groupName = "Test Site Name",
 				sourceFileName = "Document_1.jpg");
 

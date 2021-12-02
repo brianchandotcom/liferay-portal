@@ -26,7 +26,6 @@ definition {
 
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
-
 		else if ("${disableAutoTaggingFor}" == "Instance Settings") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Assets",
@@ -35,7 +34,6 @@ definition {
 
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
-
 		else if ("${disableAutoTaggingFor}" == "Site Settings") {
 			AutoTagging.openToAutoTaggingSiteSettings(
 				portlet = "Asset Auto Tagging",
@@ -47,7 +45,6 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
 		}
-
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
@@ -65,7 +62,6 @@ definition {
 					settingValue = "${maximumNumberOfTags}");
 			}
 		}
-
 		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
 			AutoTagging.openToAssetAutoTagging(
 				configurationScope = "Instance Settings",
@@ -79,7 +75,6 @@ definition {
 					settingValue = "${maximumNumberOfTags}");
 			}
 		}
-
 		else if ("${enableAutoTaggingFor}" == "Site Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
@@ -99,7 +94,6 @@ definition {
 			if (IsElementPresent(locator1 = "Button#UPDATE")) {
 				Button.clickUpdate();
 			}
-
 			else if (IsElementPresent(locator1 = "Button#SAVE")) {
 				Button.clickSave();
 			}
@@ -114,7 +108,6 @@ definition {
 			if (IsElementPresent(locator1 = "Button#UPDATE")) {
 				PortletEntry.update();
 			}
-
 			else if (IsElementPresent(locator1 = "Button#SAVE")) {
 				PortletEntry.save();
 			}
@@ -137,7 +130,6 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
 		}
-
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
@@ -153,7 +145,6 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
 		}
-
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
@@ -180,7 +171,6 @@ definition {
 
 		if ("${configurationScope}" == "System Settings") {
 			var pid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration";
-
 			var portlet = "SystemSettingsPortlet";
 		}
 

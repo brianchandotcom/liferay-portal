@@ -26,10 +26,9 @@ definition {
 		var port = Elasticsearch.getServerPort();
 
 		var portalHostname = PropsUtil.get("portal.hostname");
-
 		var curl = "http://${portalHostname}:${port}/_tasks";
 
-		while (!(isSet(reindexStartTime)) || "${retryReindex}" == "true" && (maxIterations = "2")) {
+		while (!(isSet(reindexStartTime)) || ("${retryReindex}" == "true") && (maxIterations = "2")) {
 			if (isSet(action)) {
 				Click(
 					key_action = "${action}",
@@ -43,7 +42,7 @@ definition {
 
 			var reindexStartTime = "0";
 
-			while ((!(contains("${elasticsearchTasks}", "indices:data/write/bulk"))) && ("${reindexStartTime}" != "60")) {
+			while (!(contains("${elasticsearchTasks}", "indices:data/write/bulk")) && ("${reindexStartTime}" != "60")) {
 				Pause.pauseNoSPARefresh(locator1 = "1000");
 
 				var reindexStartTime = ${reindexStartTime} + 1;
@@ -62,7 +61,7 @@ definition {
 
 			var reindexElapsedTime = "0";
 
-			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP") || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]")) && ("${reindexElapsedTime}" != "240") && (maxIterations = "24")) {
+			while ((contains("${elasticsearchTasks}", "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && ("${reindexElapsedTime}" != "240") && (maxIterations = "24")) {
 				Pause.pauseNoSPARefresh(locator1 = "10000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;

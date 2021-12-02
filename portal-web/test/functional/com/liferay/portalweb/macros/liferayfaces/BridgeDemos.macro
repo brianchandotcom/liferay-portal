@@ -29,7 +29,6 @@ definition {
 		if ("${applicantName}" == "Prime Faces") {
 			AssertElementPresent(locator1 = "//div[label[contains(.,'State/Province')]]//select/option[@selected='selected' and contains(.,'${state}')]");
 		}
-
 		else {
 			AssertTextEquals(
 				key_text = "State/Province",
@@ -48,22 +47,27 @@ definition {
 			key_field = "firstName",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
 			value1 = "${firstName}");
+
 		Type(
 			key_field = "lastName",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
 			value1 = "${lastName}");
+
 		Type(
 			key_field = "emailAddress",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
 			value1 = "${emailAddress}");
+
 		Type(
 			key_field = "phoneNumber",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
 			value1 = "${phoneNumber}");
+
 		Type(
 			key_field = "addressLine1",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
 			value1 = "${addressLine1}");
+
 		Type(
 			key_field = "city",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
@@ -83,6 +87,7 @@ definition {
 			key_field = "accountNumber",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
 			value1 = "${accountNumber}");
+
 		Type(
 			key_field = "expirationMonth",
 			locator1 = "BridgeDemos#BOOKING_FIELD",
@@ -214,20 +219,23 @@ definition {
 			key_text = "First Name",
 			locator1 = "TextInput#ANY",
 			value1 = "${firstName}");
+
 		Type(
 			key_text = "Last Name",
 			locator1 = "TextInput#ANY",
 			value1 = "${lastName}");
+
 		Type(
 			key_text = "Email Address",
 			locator1 = "TextInput#ANY",
 			value1 = "${emailAddress}");
+
 		Type(
 			key_text = "Phone Number",
 			locator1 = "TextInput#ANY",
 			value1 = "${phoneNumber}");
 
-		if (!("${applicantName}" == "JSF JSP")) {
+		if ("${applicantName}" != "JSF JSP") {
 			BridgeDemos.autoPopulateCityState(
 				applicantName = "${applicantName}",
 				city = "${city}",
@@ -240,7 +248,6 @@ definition {
 				locator1 = "BridgeDemos#CONFIRMATION_FORM",
 				value1 = "${confirmation}");
 		}
-
 		else {
 			Type(
 				key_text = "City",
@@ -250,6 +257,7 @@ definition {
 			Select(
 				locator1 = "BridgeDemos#STATE_PROVINCE",
 				value1 = "${state}");
+
 			Type(
 				key_text = "Zip/Postal",
 				locator1 = "TextInput#ANY",
@@ -294,10 +302,9 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${fileName}");
 
-		if ("${applicantName}" == "Prime Faces" || "${applicantName}" == "Rich JSP") {
+		if (("${applicantName}" == "Prime Faces") || ("${applicantName}" == "Rich JSP")) {
 			Click(locator1 = "BridgeDemos#UPLOAD_BUTTON");
 		}
-
 		else {
 			Click(locator1 = "BridgeDemos#SUBMIT_FILE_BUTTON");
 		}
@@ -337,7 +344,6 @@ definition {
 				key_fieldName = "${fieldName}",
 				locator1 = "BridgeDemos#FIELD_ERROR_BUTTER_FACES_TOAST");
 		}
-
 		else if ("${applicantName}" == "JSF JSP") {
 			Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 
@@ -346,7 +352,6 @@ definition {
 				locator1 = "BridgeDemos#FIELD_ERROR_JSF_JSP",
 				value1 = "${errorMessage}");
 		}
-
 		else if ("${applicantName}" == "Prime Faces") {
 			Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 
@@ -355,7 +360,6 @@ definition {
 				errorMessage = "${errorMessage}",
 				fieldName = "${fieldNameText}");
 		}
-
 		else {
 			BridgeDemos.viewFieldErrorMessage(
 				applicantName = "${applicantName}",
@@ -375,7 +379,7 @@ definition {
 			key_text = "State/Province",
 			locator1 = "BridgeDemos#STATE_PROVINCE");
 
-		if (!("${applicantName}" == "JSF JSP")) {
+		if ("${applicantName}" != "JSF JSP") {
 			AssertElementPresent(locator1 = "BridgeDemos#SHOW_HIDE_COMMENTS_LINK");
 		}
 
@@ -387,7 +391,7 @@ definition {
 	}
 
 	macro viewComment {
-		if (IsElementNotPresent(locator1 = "TextArea#ANY", key_tab = "comments")) {
+		if (IsElementNotPresent(key_tab = "comments", locator1 = "TextArea#ANY")) {
 			Click(locator1 = "BridgeDemos#SHOW_HIDE_COMMENTS_LINK");
 		}
 
@@ -401,7 +405,6 @@ definition {
 		var displayDate = DateUtil.getFormattedCurrentDate("${dateFormat}");
 
 		// Ignored assetion because of the time zone issue: LRQA-61393
-
 		//AssertTextEquals(
 		//	key_text = "Birthday",
 		//	locator1 = "TextInput#ANY",
@@ -416,7 +419,6 @@ definition {
 				locator1 = "BridgeDemos#FIELD_ERROR_BUTTER_FACES",
 				value1 = "${errorMessage}");
 		}
-
 		else if ("${applicantName}" == "JSF JSP") {
 			AssertTextEquals.assertPartialText(
 				key_fieldName = "${fieldName}",
@@ -448,6 +450,7 @@ definition {
 			key_customerId = "${customerId}",
 			locator1 = "BridgeDemos#CUSTOMER_FIRST_NAME",
 			value1 = "${firstName}");
+
 		AssertTextEquals(
 			key_customerId = "${customerId}",
 			locator1 = "BridgeDemos#CUSTOMER_LAST_NAME",
@@ -457,6 +460,7 @@ definition {
 			key_item = "First Name",
 			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
 			value1 = "${firstName}");
+
 		AssertTextEquals(
 			key_item = "Last Name",
 			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
@@ -511,7 +515,6 @@ definition {
 			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
 
 		// Ignored assetion because of the time zone issue: LRQA-61393
-
 		//AssertTextEquals(
 		//	key_item = "Start Date",
 		//	locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",

@@ -303,7 +303,6 @@ definition {
 
 			Button.clickDone();
 		}
-
 		else {
 			for (var tagName : list "${tagNameList}") {
 				var tagName = StringUtil.lowerCase("${tagName}");

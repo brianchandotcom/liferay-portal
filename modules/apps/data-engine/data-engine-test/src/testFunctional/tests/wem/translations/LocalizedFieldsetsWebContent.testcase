@@ -335,6 +335,7 @@ definition {
 				fieldName = "Date");
 
 			FormViewBuilder.saveButtonFieldset();
+
 			Click(
 				key_text = "Propagate",
 				locator1 = "Button#ANY");
@@ -753,6 +754,7 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
+
 		WebContentStructures.saveCP();
 
 		DataEngine.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset Test");

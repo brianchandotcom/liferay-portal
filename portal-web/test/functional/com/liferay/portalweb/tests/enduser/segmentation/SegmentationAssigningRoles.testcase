@@ -118,6 +118,7 @@ definition {
 		task ("Go to segments portlet") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 		}
+
 		task ("Open segment's options and assert the option Assign site roles is disabled") {
 			Segmentation.openSegmentOptions(segmentName = "site");
 

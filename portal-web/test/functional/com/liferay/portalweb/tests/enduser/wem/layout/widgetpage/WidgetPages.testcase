@@ -23,7 +23,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			SiteTemplates.tearDownCP();
 
@@ -88,7 +87,7 @@ definition {
 		task ("Add a page with escape characters name") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicPage(pageName = "Test&apos;s Page Name");
+			SitePages.addPublicPage(pageName = "Test's Page Name");
 		}
 
 		task ("View the alert not shown") {
@@ -96,7 +95,6 @@ definition {
 		}
 	}
 
-	@description "The user can add a widget page with multiple child pages."
 	@priority = "3"
 	test AddPageWithMultipleChildPages {
 		task ("Add a widget page") {

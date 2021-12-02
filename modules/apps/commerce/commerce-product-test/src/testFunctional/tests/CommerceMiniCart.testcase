@@ -139,7 +139,7 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "${quantity}");
 
-			if ("${quantity}" == "1" || "${quantity}" == "2" || "${quantity}" == "4") {
+			if (("${quantity}" == "1") || ("${quantity}" == "2") || ("${quantity}" == "4")) {
 				AssertTextEquals(
 					key_cartItemSKU = "${sku}",
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
@@ -1137,8 +1137,8 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		for (var current : list "L1-10,L2-20,L3-0,L4-0") {
-			key_text = StringUtil.extractFirst("${current}","-");
-			var currentValue = StringUtil.extractLast("${current}","-");
+			var key_text = StringUtil.extractFirst("${current}", "-");
+			var currentValue = StringUtil.extractLast("${current}", "-");
 
 			Type(
 				locator1 = "TextInput#ANY",
@@ -1179,7 +1179,7 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_DISCOUNT_LEVELS",
 				value1 = "${discount}");
 
-			i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 		}
 
 		AssertTextEquals.assertPartialText(

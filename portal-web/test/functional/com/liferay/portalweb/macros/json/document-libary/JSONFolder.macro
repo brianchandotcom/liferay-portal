@@ -12,8 +12,8 @@ definition {
 
 		if (isSet(parentFolderName)) {
 			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${parentFolderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				name = "${parentFolderName}");
 		}
 		else {
 			var parentFolderId = "0";
@@ -59,10 +59,10 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-			name = "${folderName}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			name = "${folderName}");
 
-		var curl ='''
+		var curl = '''
 			${portalURL}/api/jsonws/dlfolder/delete-folder \
 			-u test@liferay.com:test \
 			-d folderId=${folderId}
@@ -74,10 +74,10 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-			name = "${folderName}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			name = "${folderName}");
 
-		var curl ='''
+		var curl = '''
 			${portalURL}/api/jsonws/dltrash/move-folder-to-trash \
 			-u test@liferay.com:test \
 			-d folderId=${folderId}

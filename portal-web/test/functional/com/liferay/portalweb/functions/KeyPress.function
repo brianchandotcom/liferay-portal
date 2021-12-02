@@ -28,9 +28,7 @@ definition {
 	function keyPressCKEditorWaitForCKEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(
-			"//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]"
-		);
+		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
 
 		selenium.pause("1000");
 

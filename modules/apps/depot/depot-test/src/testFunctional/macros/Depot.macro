@@ -44,7 +44,6 @@ definition {
 				locator1 = "Staging#STAGING_INDICATOR_TITLE_DEPOT",
 				value1 = "Staging");
 		}
-
 		else {
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${depotName}?");
 
@@ -145,7 +144,6 @@ definition {
 		if (isSet(depotName)) {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_ASSET_LIBRARY");
 		}
-
 		else {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
@@ -239,7 +237,7 @@ definition {
 	macro configureCurrentLanguages {
 		for (var language : list "English (United States),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden)") {
 			if ("${language}" != "${defaultDepotLanguage}") {
-				if (IsElementPresent(locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX_CHECKED", key_language = "${language}")) {
+				if (IsElementPresent(key_language = "${language}", locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX_CHECKED")) {
 					Click.clickNoMouseOverNoWaitForVisible(
 						key_language = "${language}",
 						locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX");
@@ -247,7 +245,7 @@ definition {
 			}
 		}
 
-		for (var currentLanguage : list "${currentLanguages}" ) {
+		for (var currentLanguage : list "${currentLanguages}") {
 			if ("${currentLanguage}" != "${defaultDepotLanguage}") {
 				Click.clickNoMouseOverNoWaitForVisible(
 					key_language = "${currentLanguage}",
@@ -478,7 +476,6 @@ definition {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 		}
-
 		else {
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "Delete",
@@ -518,7 +515,6 @@ definition {
 
 			MenuItem.click(menuItem = "Edit");
 		}
-
 		else if (isSet(tableView)) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -528,11 +524,9 @@ definition {
 
 			MenuItem.click(menuItem = "Edit");
 		}
-
 		else if (isSet(settings)) {
 			AssertElementNotPresent(locator1 = "Button#BACK");
 		}
-
 		else {
 			DepotNavigator.gotoEdit(depotName = "${depotName}");
 		}
@@ -609,7 +603,6 @@ definition {
 		if ("${moveDown}" == "true") {
 			MenuItem.click(menuItem = "Move Down");
 		}
-
 		else {
 			MenuItem.click(menuItem = "Move Up");
 		}
@@ -843,7 +836,6 @@ definition {
 				tableEntry = "${depotName}",
 				tableEntryText = "${connectedSiteNumber}");
 		}
-
 		else if (isSet(cardView)) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -858,7 +850,6 @@ definition {
 					cardSubtitle = "${connectedSiteNumber} Connected Sites");
 			}
 		}
-
 		else {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -1012,13 +1003,11 @@ definition {
 
 			MenuItem.viewVisible(menuItem = "Move Down");
 		}
-
 		else if ("${lastLanguageItem}" == "true") {
 			MenuItem.viewNotPresent(menuItem = "Move Down");
 
 			MenuItem.viewVisible(menuItem = "Move Up");
 		}
-
 		else {
 			MenuItem.viewVisible(menuItem = "Move Down");
 
@@ -1158,7 +1147,6 @@ definition {
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
 				value1 = "${resultCount} Results for ${searchTerm}");
 		}
-
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",

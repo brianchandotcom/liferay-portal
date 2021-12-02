@@ -36,12 +36,11 @@ definition {
 			for (var assetTagName : list "${assetTagNames}") {
 				var assetTagName = '''"${assetTagName}"''';
 
-				ListUtil.add("${list}","${assetTagName}");
+				ListUtil.add("${list}", "${assetTagName}");
 			}
 
 			var assetTagNames = ListUtil.toString("${list}");
 		}
-
 		else {
 			var assetTagNames = "";
 		}
@@ -55,7 +54,6 @@ definition {
 		}
 
 		var content = '''<p>${content}</p>''';
-
 		var os = OSDetector.isWindows();
 
 		if ("${os}" == "true") {
@@ -82,7 +80,6 @@ definition {
 					"viewableBy": "${viewableBy}"
 				}
 		''';
-
 		var entryId = JSONCurlUtil.post("${curl}", "$.id");
 
 		return "${entryId}";

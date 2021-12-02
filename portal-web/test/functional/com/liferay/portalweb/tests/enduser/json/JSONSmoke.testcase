@@ -27,12 +27,19 @@ definition {
 		property portal.acceptance = "true";
 
 		JSONAssetlistTest.runSmoke(groupName = "Test Site Name");
+
 		JSONCategoryTest.runSmoke(groupName = "Test Site Name");
+
 		JSONFragmentTest.runSmoke(groupName = "Test Site Name");
+
 		JSONGroupTest.runSmoke();
+
 		JSONWebcontentTest.runSmoke(groupName = "Test Site Name");
+
 		JSONLayoutTest.runSmoke(groupName = "Test Site Name");
+
 		JSONOrganizationTest.runSmoke();
+
 		JSONRoleTest.runSmoke();
 	}
 

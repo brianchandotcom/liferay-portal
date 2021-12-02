@@ -13,7 +13,7 @@ definition {
 	}
 
 	macro addRootTopic {
-		if (IsElementPresent(locator1 = "Button#ANY", key_text = "New Topic")) {
+		if (IsElementPresent(key_text = "New Topic", locator1 = "Button#ANY")) {
 			Click(
 				key_text = "New Topic",
 				locator1 = "Button#ANY");
@@ -164,15 +164,12 @@ definition {
 
 	macro assertCanonicalURL {
 		var HTML = '''<link href="''';
+
 		var HTML2 = '''" rel="canonical" data-react-helmet="true">''';
-
 		var portalURL = "${portalURL}/web/guest";
-
 		var pageName = StringUtil.lowerCase("${pageName}");
-
 		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
-
-		var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}/questions/${category}/${title}${HTML2}","");
+		var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}/questions/${category}/${title}${HTML2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
@@ -486,7 +483,7 @@ definition {
 	macro enableAnonymousRead {
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableAnonymousRead")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_fieldName = "enableAnonymousRead", locator1 = "FormFields#CHECKBOX")) {
 			Check.checkNotVisible(
 				key_fieldName = "enableAnonymousRead",
 				locator1 = "FormFields#CHECKBOX");
@@ -507,7 +504,7 @@ definition {
 	macro enableRedirectToLogin {
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableRedirectToLogin")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_fieldName = "enableRedirectToLogin", locator1 = "FormFields#CHECKBOX")) {
 			Check.checkNotVisible(
 				key_fieldName = "enableRedirectToLogin",
 				locator1 = "FormFields#CHECKBOX");
@@ -1051,7 +1048,7 @@ definition {
 	}
 
 	macro viewTopicOnHomePage {
-		if (IsElementNotPresent(locator1 = "Card#CARD", key_card = "New Topic")) {
+		if (IsElementNotPresent(key_card = "New Topic", locator1 = "Card#CARD")) {
 			Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
 		}
 
@@ -1098,7 +1095,6 @@ definition {
 				locator1 = "Questions#VOTED_RESULT_ANSWER",
 				value1 = "${votedCount}");
 		}
-
 		else if (isSet(questionTitle)) {
 			AssertTextEquals(
 				key_questionTitle = "${questionTitle}",

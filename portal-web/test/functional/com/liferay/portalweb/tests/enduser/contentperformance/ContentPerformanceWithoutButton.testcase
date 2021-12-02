@@ -30,6 +30,7 @@ definition {
 			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
 				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 			}
+
 			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
 

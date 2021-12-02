@@ -2,7 +2,6 @@ definition {
 
 	macro addFieldByDoubleClick {
 		var key_fieldLabel = "${fieldType}";
-
 		var iterator = "0";
 		var maxRetryNumber = "3";
 
@@ -15,7 +14,7 @@ definition {
 				echo("Couldn't add the field by double-click action, maximum retries number reached: ${iterator}");
 			}
 
-			var iterator = MathUtil.sum("${iterator}", "1");
+			var iterator = ${iterator} + 1;
 		}
 
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
@@ -64,12 +63,13 @@ definition {
 	}
 
 	macro addFormView {
-		while ( IsElementNotPresent(locator1 = "AppBuilder#NAVBAR") || IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB") ) {
+		while ((IsElementNotPresent(locator1 = "AppBuilder#NAVBAR")) || (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB"))) {
 			Pause(locator1 = "1000");
 		}
 
 		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {
 			FormViewBuilder.switchToFormViewTab();
+
 			AppBuilderAdmin.add();
 		}
 
@@ -97,6 +97,7 @@ definition {
 	macro addFormViewSameFields {
 		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {
 			FormViewBuilder.switchToFormViewTab();
+
 			AppBuilderAdmin.add();
 		}
 
@@ -268,7 +269,7 @@ definition {
 		Click(locator1 = "FormViewBuilder#SINGLE_SELECTION_FIELD_WITHOUT_LABEL");
 	}
 
-	macro closeSidebar() {
+	macro closeSidebar {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
 
@@ -468,12 +469,15 @@ definition {
 
 	macro editRules {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
+
 		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_EXPANDED");
+
 		Click(locator1 = "FormViewBuilder#EDIT_RULE");
 	}
 
 	macro editRulesDefault {
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_DEFAULT_EDIT");
+
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_EDIT");
 	}
 
@@ -585,7 +589,7 @@ definition {
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
-	macro openSidebar() {
+	macro openSidebar {
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
 	}
 
@@ -673,6 +677,7 @@ definition {
 
 	macro setFieldHelpText {
 		var key_fieldType = "tip";
+
 		Type(
 			locator1 = "FormViewBuilder#FIELD_LABEL_AT_SIDEBAR",
 			value1 = "${fieldLabel}");
@@ -684,6 +689,7 @@ definition {
 
 	macro setFieldLabel {
 		var key_fieldType = "label";
+
 		Type(
 			locator1 = "FormViewBuilder#FIELD_LABEL_AT_SIDEBAR",
 			value1 = "${fieldLabel}");
@@ -695,6 +701,7 @@ definition {
 
 	macro setFieldLabelWithNoAssertion {
 		var key_fieldType = "label";
+
 		Type(
 			locator1 = "FormViewBuilder#FIELD_LABEL_AT_SIDEBAR",
 			value1 = "${fieldLabel}");
@@ -1015,15 +1022,19 @@ definition {
 		var key_secondField = "${secondField}";
 		var key_condition = "${condition}";
 		var key_action = "${action}";
+
 		AssertElementPresent(
 			firstField = "${firstField}",
 			locator1 = "FormViewBuilder#RULE_BUILDER_FIRST_FIELD");
+
 		AssertElementPresent(
 			locator1 = "FormViewBuilder#RULE_BUILDER_SECOND_FIELD",
 			secondField = "${secondField}");
+
 		AssertElementPresent(
 			condition = "${condition}",
 			locator1 = "FormViewBuilder#RULE_BUILDER_CONDITION");
+
 		AssertElementPresent(
 			action = "${action}",
 			locator1 = "FormViewBuilder#RULE_BUILDER_ACTION");

@@ -21,7 +21,12 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}",portalURL = "${portalURL}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		return "${groupId}";
 	}
@@ -109,11 +114,11 @@ definition {
 		if (isSet(widgetName)) {
 			var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
 				column = "${column}",
-				widgetName = "${widgetName}",
-				typeSettings = "${typeSettings}");
+				typeSettings = "${typeSettings}",
+				widgetName = "${widgetName}");
 		}
 
-		if ((!(isSet(layoutTemplate))) && (!(isSet(widgetName)))) {
+		if (!(isSet(layoutTemplate)) && !(isSet(widgetName))) {
 			fail("typeSettings will not be updated.");
 		}
 

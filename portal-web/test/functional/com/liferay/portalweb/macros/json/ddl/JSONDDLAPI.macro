@@ -8,8 +8,7 @@ definition {
 			-u test@liferay.com:test \
 			-d recordSetId=${recordSetId}
 		''';
-
-		var recordId = JSONCurlUtil.post("${curl}","$.[?(@['recordSetId'] == '${recordSetId}')]['recordId']");
+		var recordId = JSONCurlUtil.post("${curl}", "$.[?(@['recordSetId'] == '${recordSetId}')]['recordId']");
 
 		if ("${recordId}" == "") {
 			fail("FAIL. Cannot find recordId.");
@@ -30,8 +29,7 @@ definition {
 			-u test@liferay.com:test \
 			-d groupIds=${groupId}
 		''';
-
-		var recordSetId = JSONCurlUtil.post("${curl}","$.[?(@['nameCurrentValue'] == '${ddlListName}')]['recordSetId']");
+		var recordSetId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${ddlListName}')]['recordSetId']");
 
 		if ("${recordSetId}" == "") {
 			fail("FAIL. Cannot find recordSetId.");

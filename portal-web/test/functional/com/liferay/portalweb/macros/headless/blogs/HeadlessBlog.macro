@@ -8,7 +8,11 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(grandParentGroupName = "${grandParentGroupName}", groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var entryId = HeadlessBlogAPI._addBlogEntry(
 			assetCategoryIds = "${assetCategoryIds}",

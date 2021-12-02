@@ -222,7 +222,7 @@ definition {
 
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
-				feedTitle = "Latimes &gt; Technology News",
+				feedTitle = "Latimes > Technology News",
 				feedType = "file",
 				feedUrlLink = "rss2.0.xml");
 		}
@@ -593,7 +593,7 @@ definition {
 
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
-				feedTitle = "Latimes &gt; Technology News",
+				feedTitle = "Latimes > Technology News",
 				feedType = "file",
 				feedUrlLink = "rss2.0.xml");
 		}

@@ -1265,7 +1265,7 @@ definition {
 			entryTitle = "Test Blog");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Test Blog");
@@ -1421,7 +1421,7 @@ definition {
 			entryTitle = "Test Blog");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Test Blog");
@@ -1542,7 +1542,7 @@ definition {
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Site and Asset Library Administration Menu",
-			permissionNavigationValue = "Settings &gt; Site");
+			permissionNavigationValue = "Settings > Site");
 	}
 
 	@description = "This is a use case for LPS-97321. All subdirectories in Define Permissions should display."
@@ -1764,7 +1764,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		AssertVisible(locator1 = "Button#PLUS");

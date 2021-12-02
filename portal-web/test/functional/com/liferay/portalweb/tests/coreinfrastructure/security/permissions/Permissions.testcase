@@ -51,6 +51,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "Blogs Page");
 		}
+
 		task ("Assert no permission in configuration") {
 			BlogsConfiguration.viewNoPermissionPG();
 		}
@@ -64,8 +65,8 @@ definition {
 		property test.assert.javascript.errors = "false";
 		property test.assert.warning.exceptions = "true";
 
-		var url1 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_users_admin_web_portlet_UsersAdminPortlet";
-		var url2 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&amp;p_p_state=maximized";
+		var url1 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_users_admin_web_portlet_UsersAdminPortlet";
+		var url2 = "http://localhost:8080/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&p_p_state=maximized";
 
 		task ("Add public page") {
 			JSONLayout.addPublicLayout(

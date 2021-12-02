@@ -379,7 +379,9 @@ definition {
 			locator1 = "TextInput#ANY");
 
 		AssertElementNotPresent(locator1 = "Checkbox#REMEMBER_ME");
+
 		AssertElementNotPresent(locator1 = "Link#FORGOT_PASSWORD");
+
 		AssertElementNotPresent(locator1 = "Link#CREATE_ACCOUNT");
 	}
 
@@ -550,6 +552,7 @@ definition {
 		var articleId = JSONWebcontentSetter.setArticleId(
 			groupName = "Terms of Use Site",
 			title = "Terms of Use WC Title");
+
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Terms of Use Site");
 
 		FormFields.viewCheckboxChecked(fieldName = "terms-of-use-required");
@@ -889,7 +892,7 @@ definition {
 			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
-		while (IsElementNotPresent(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME", key_rowEntry = "Google")) {
+		while (IsElementNotPresent(key_rowEntry = "Google", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
 			Pause(locator1 = "1000");
 
 			Refresh();
@@ -1068,6 +1071,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#UPDATE");
 
 		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration.scoped-*.config");
+
 		var tempFileDirectory = selenium.getOutputDirName();
 		var exportedConfigFile = FileUtil.exists("${tempFileDirectory}/${tempFileName}");
 
@@ -1103,6 +1107,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 
 		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration-*.config");
+
 		var tempFileDirectory = selenium.getOutputDirName();
 		var exportedConfigFile = FileUtil.exists("${tempFileDirectory}/${tempFileName}");
 
@@ -1122,7 +1127,9 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD");
+
 		AssertElementNotPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT");
+
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD");
 
 		PortalSettings.gotoConfiguration(
@@ -1143,7 +1150,9 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD");
+
 		AssertNotVisible(locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD");
+
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT");
 
 		User.openUsersAdmin();
@@ -1171,7 +1180,9 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "FirstName LastName");
 
 		AssertNotEditable(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD");
+
 		AssertNotVisible(locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD");
+
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT");
 	}
 

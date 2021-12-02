@@ -134,7 +134,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${key_fieldName}");
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+		if (IsElementNotPresent(key_tab = "Advanced", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Advanced");
 		}
 

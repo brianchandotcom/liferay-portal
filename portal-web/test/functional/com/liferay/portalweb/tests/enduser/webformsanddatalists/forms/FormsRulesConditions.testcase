@@ -22,7 +22,7 @@ definition {
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Forms");
 
 			FormsAdmin.teardownForms();
@@ -268,8 +268,8 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		for (var fieldAndPosition : list "Text-0,Numeric-1") {
-			var field = StringUtil.extractFirst("${fieldAndPosition}","-");
-			var position = StringUtil.extractLast("${fieldAndPosition}","-");
+			var field = StringUtil.extractFirst("${fieldAndPosition}", "-");
+			var position = StringUtil.extractLast("${fieldAndPosition}", "-");
 
 			Form.gotoAddField(
 				fieldPositionNumber = "${position}",
@@ -800,7 +800,7 @@ definition {
 		Form.save();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -1044,7 +1044,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoViewEntries();
@@ -1169,8 +1169,8 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		for (var fieldAndNumber : list "Text-0,Numeric-1,Paragraph-2") {
-			var field = StringUtil.extractFirst("${fieldAndNumber}","-");
-			var rowNumber = StringUtil.extractLast("${fieldAndNumber}","-");
+			var field = StringUtil.extractFirst("${fieldAndNumber}", "-");
+			var rowNumber = StringUtil.extractLast("${fieldAndNumber}", "-");
 
 			Form.gotoAddField(
 				fieldPositionNumber = "${rowNumber}",
@@ -1189,8 +1189,8 @@ definition {
 		FormRules.addRule();
 
 		for (var fieldAndNumber : list "Text-1,Numeric-2") {
-			var field = StringUtil.extractFirst("${fieldAndNumber}","-");
-			var rowNumber = StringUtil.extractLast("${fieldAndNumber}","-");
+			var field = StringUtil.extractFirst("${fieldAndNumber}", "-");
+			var rowNumber = StringUtil.extractLast("${fieldAndNumber}", "-");
 
 			FormRules.configureConditionOptions(
 				conditionField = "${field}",
@@ -1239,7 +1239,7 @@ definition {
 		var count = "0";
 
 		while ("${count}" != "3") {
-			if ("${count}" == "0" || "${count}" == "2") {
+			if (("${count}" == "0") || ("${count}" == "2")) {
 				FormFields.editText(
 					fieldName = "Text",
 					fieldValue = "Test");

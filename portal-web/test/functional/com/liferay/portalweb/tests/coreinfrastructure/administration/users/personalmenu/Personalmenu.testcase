@@ -163,7 +163,7 @@ definition {
 		Navigator.gotoPage(pageName = "Home");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Web Content");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");

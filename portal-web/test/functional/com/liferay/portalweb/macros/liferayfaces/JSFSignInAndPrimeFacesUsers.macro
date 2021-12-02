@@ -243,6 +243,7 @@ definition {
 		AssertElementPresent(
 			key_buttonLabel = "Next Page",
 			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
+
 		AssertElementPresent(
 			key_buttonLabel = "Last Page",
 			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
@@ -259,6 +260,7 @@ definition {
 		AssertElementPresent(
 			key_buttonLabel = "First Page",
 			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
+
 		AssertElementPresent(
 			key_buttonLabel = "Previous Page",
 			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");

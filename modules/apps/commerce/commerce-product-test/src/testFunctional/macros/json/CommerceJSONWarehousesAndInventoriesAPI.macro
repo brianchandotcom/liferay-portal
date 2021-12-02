@@ -18,7 +18,6 @@ definition {
 						-u test@liferay.com:test \
 						-H 'accept: application/json' \
 					''';
-
 				var warehouseItemsIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 				if ("${warehouseItemsIds}" != "") {
@@ -72,7 +71,6 @@ definition {
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
 			''';
-
 		var warehouseIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${warehouseIds}";
@@ -90,7 +88,6 @@ definition {
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
 			''';
-
 		var warehousesCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce warehouses count is: ${warehousesCount}");

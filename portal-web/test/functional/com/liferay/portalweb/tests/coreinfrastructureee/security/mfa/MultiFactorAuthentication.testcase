@@ -58,6 +58,7 @@ definition {
 
 		task ("Assert warning message in TOTP description") {
 			MultiFactorAuthentication.viewWarningMessage();
+
 			AssertTextEquals(
 				locator1 = "MultiFactorAuthentication#TOTP_REMOVE_DESCRIPTION",
 				value1 = "You can only have one time-based one-time password configured for your account. Remove your existing time-based one-time password to generate a new time-based one-time password.");
@@ -70,6 +71,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 		}
+
 		task ("Check User TOTP UI") {
 			MultiFactorAuthentication.checkTOTPUI();
 		}

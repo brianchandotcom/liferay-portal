@@ -85,8 +85,8 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 
 		var groupId = JSONCategorySetter.setGroupId(
-			site = "${site}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -96,7 +96,6 @@ definition {
 				-d groupId=${groupId} \
 				-d "urlTitle=${urlTitle}"
 		''';
-
 		var articleId = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
 
 		return "${articleId}";
@@ -113,7 +112,6 @@ definition {
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
-
 		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
 
 		if ("${folderId}" == "") {
@@ -137,7 +135,6 @@ definition {
 				-d groupId=${groupId} \
 				-d urlTitle=${urlTitle}
 		''';
-
 		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['resourcePrimKey']");
 
 		return "${resourcePrimKey}";

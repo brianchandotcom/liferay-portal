@@ -128,7 +128,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoMetadataSets();
@@ -166,6 +166,7 @@ definition {
 		AssertElementNotPresent(
 			key_metadataSetName = "Google Docs Metadata",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+
 		AssertElementNotPresent(
 			key_metadataSetName = "Google Docs Metadata",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");

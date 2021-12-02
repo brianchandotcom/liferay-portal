@@ -45,6 +45,7 @@ definition {
 				key_productName = "${i}",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 		}
+
 		AssertElementNotPresent(
 			key_value = "U-Joint",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");

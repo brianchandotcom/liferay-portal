@@ -25,8 +25,11 @@ definition {
 
 	macro changePagination {
 		Click(locator1 = "WorkflowMetricsProcessListView#ITEMS_PER_PAGE_SELECT");
+
 		var key_itemsPerPage = "${itemsPerPage}";
+
 		MenuItem.click(menuItem = "${itemsPerPage}");
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "WorkflowMetricsProcessListView#ITEMS_PER_PAGE_SELECT",
 			value1 = "${itemsPerPage}");

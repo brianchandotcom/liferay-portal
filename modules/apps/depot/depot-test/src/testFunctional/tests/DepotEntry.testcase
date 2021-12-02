@@ -436,18 +436,18 @@ definition {
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
-			depotName = "&amp;");
+			depotName = "&");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
-			depotName = "&amp;",
+			depotName = "&",
 			duplicate = "true");
 
 		DepotNavigator.openDepotAdmin();
 
 		AssertElementNotPresent(
-			key_card = "&amp;",
+			key_card = "&",
 			key_index = "2",
 			locator1 = "Card#CARD_PAGE_ITEM");
 	}

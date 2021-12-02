@@ -106,6 +106,7 @@ definition {
 				folderName = "WC Folder Name",
 				groupName = "Guest");
 		}
+
 		task ("Assert assets are shown in Page 1") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page 1",
@@ -119,17 +120,16 @@ definition {
 				assetContent = "Web Content Content",
 				assetTitle = "Web Content Title");
 		}
+
 		task ("Assert folders are not shown in Page1") {
-			RelatedAssets.viewNoPG(
-				assetTitleList =
-				"Blogs Entry Title,Web Content Title,DM Folder Name,WC Folder Name,Bookmarks Folder Name");
+			RelatedAssets.viewNoPG(assetTitleList = "Blogs Entry Title,Web Content Title,DM Folder Name,WC Folder Name,Bookmarks Folder Name");
 		}
 
 		task ("Edit Web Content") {
 			Navigator.openSiteURL(siteName = "Site Name");
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Web Content");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -163,12 +163,14 @@ definition {
 				groupName = "Site Name",
 				layoutName = "Test Page");
 		}
+
 		task ("Enable staging from JSON") {
 			JSONStaging.enableLocalStaging(
 				branchingPrivate = "false",
 				branchingPublic = "false",
 				groupName = "Site Name");
 		}
+
 		task ("Add two web content with JSON") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 1",
@@ -181,6 +183,7 @@ definition {
 				site = "false",
 				title = "Web Content Title 2");
 		}
+
 		task ("Add existing related assets to Web Content 2") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -193,6 +196,7 @@ definition {
 				siteName = "Global",
 				webContentTitle = "Web Content Title 2");
 		}
+
 		task ("Add related assets to Test Page") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page",
@@ -207,6 +211,7 @@ definition {
 				assetTitle = "Web Content Title 2",
 				relatedAssetTitles = "Web Content Title 1");
 		}
+
 		task ("Publish to live") {
 			Staging.gotoPublishToLive();
 
@@ -216,6 +221,7 @@ definition {
 
 			Staging.publishToLive();
 		}
+
 		task ("Assert assets are whone in live after been published") {
 			ProductMenu.gotoLiveSite(site = "Site Name");
 

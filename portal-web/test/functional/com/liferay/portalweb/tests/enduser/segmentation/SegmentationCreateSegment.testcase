@@ -260,6 +260,7 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationName Test");
 

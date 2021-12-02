@@ -9,9 +9,10 @@ definition {
 		var currentDropLocation = "";
 
 		for (var current : list "${nodeTitleAndPositionList}") {
-			currentNodeTitle = StringUtil.extractFirst("${current}",";");
-			currentDropLocation = StringUtil.extractLast("${current}",";");
+			var currentNodeTitle = StringUtil.extractFirst("${current}", ";");
+			var currentDropLocation = StringUtil.extractLast("${current}", ";");
 			var value1 = StringUtil.replace("${currentDropLocation}", ".", ",");
+
 			DragAndDrop.dragAndDrop(
 				key_nodeNodeTitle = "${currentNodeTitle}",
 				locator1 = "KaleoDesignerEditWorkflow#NODE_BY_TITLE",

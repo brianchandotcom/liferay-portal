@@ -29,7 +29,7 @@ definition {
 		}
 
 		if ("${addOrRemoveViewPermission}" == "Remove") {
-			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}" ) {
+			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}") {
 				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
 				var key_roleTitle = "${roleTitle}";
 
@@ -37,7 +37,7 @@ definition {
 			}
 		}
 		else {
-			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}" ) {
+			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}") {
 				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
 				var key_roleTitle = "${roleTitle}";
 
@@ -70,9 +70,7 @@ definition {
 	macro addOrRemoveSubscribePermissionFromAllRoles {
 		for (var roleTitle : list "${roleList}") {
 			var roleTitle = "${roleTitle}";
-
 			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
-
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
 			if ("${addOrRemoveViewPermission}" == "Add") {

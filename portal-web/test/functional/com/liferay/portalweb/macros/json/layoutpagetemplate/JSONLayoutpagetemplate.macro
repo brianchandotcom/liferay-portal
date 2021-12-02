@@ -4,11 +4,15 @@ definition {
 	macro addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupKey = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = "${contentType}");
 
-		if ("${subType}" == "Basic Document" || "${contentType}" == "Blogs Entry" || "${contentType}" == "Category") {
+		if (("${subType}" == "Basic Document") || ("${contentType}" == "Blogs Entry") || ("${contentType}" == "Category")) {
 			var classTypeId = "0";
 		}
 		else {
@@ -33,7 +37,9 @@ definition {
 			}
 			else {
 				if (isSet(depotName)) {
-					var depotId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${depotName}",site = "false");
+					var depotId = JSONLayoutpagetemplateSetter.setGroupId(
+						groupKey = "${depotName}",
+						site = "false");
 
 					if (isSet(depotStructure)) {
 						var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
@@ -126,7 +132,11 @@ definition {
 	macro addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupKey = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -153,7 +163,11 @@ definition {
 	macro addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType},${layoutPageTemplateStatus}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupKey = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		if (isSet(layoutPageTemplateCollectionName)) {
 			var layoutPageTemplateCollectionId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateCollectionId(
@@ -198,7 +212,11 @@ definition {
 	macro addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${masterPageTemplateEntryName}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupKey = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
 
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
@@ -217,7 +235,9 @@ definition {
 	macro deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}",site = "${site}");
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			groupKey = "${groupName}",
+			site = "${site}");
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(
 			groupId = "${groupId}",

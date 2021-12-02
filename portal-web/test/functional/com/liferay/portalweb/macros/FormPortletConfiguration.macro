@@ -6,6 +6,7 @@ definition {
 		Click(
 			key_language = "${currentLanguage}",
 			locator1 = "FormPortletConfiguration#SELECT_LANGUAGE");
+
 		Click(
 			key_language = "${newLanguage}",
 			locator1 = "FormPortletConfiguration#SELECT_LANGUAGE");
@@ -29,7 +30,7 @@ definition {
 
 	macro selectForm {
 		if (isSet(formTitle)) {
-			formName = "${formTitle}";
+			var formName = "${formTitle}";
 		}
 
 		Navigator.gotoNavItem(navItem = "Setup");

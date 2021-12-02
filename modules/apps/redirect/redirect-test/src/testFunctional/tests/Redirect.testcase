@@ -37,6 +37,7 @@ definition {
 	@refactordone
 	test CanAccessPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRedirect.addRedirect(
@@ -55,7 +56,6 @@ definition {
 			${portalURL}/web/test-site-name/test-source-page \
 				-w %{http_code}
 		''';
-
 		var output = JSONCurlUtil.post("${curl}");
 
 		if (contains("${output}", "301")) {
@@ -71,6 +71,7 @@ definition {
 	@refactordone
 	test CanAccessTemporaryEntry {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRedirect.addRedirect(
@@ -86,7 +87,6 @@ definition {
 			${portalURL}/web/test-site-name/test-source-page \
 				-w %{http_code}
 		''';
-
 		var output = JSONCurlUtil.post("${curl}");
 
 		if (contains("${output}", "302")) {
@@ -102,6 +102,7 @@ definition {
 	@refactordone
 	test CanAccessUpdatedPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONLayout.addPublicLayout(
@@ -135,6 +136,7 @@ definition {
 	@refactordone
 	test CanAccessUpdatedTemporaryEntry {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONLayout.addPublicLayout(
@@ -519,6 +521,7 @@ definition {
 	@refactordone
 	test CanCheckDestinationURL {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONLayout.addPublicLayout(
@@ -682,6 +685,7 @@ definition {
 	@refactordone
 	test CanEditEntry {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRedirect.addRedirect(
@@ -1075,6 +1079,7 @@ definition {
 	@refactordone
 	test CanViewExpiredAndActiveEntries {
 		var portalURL = PropsUtil.get("portal.url");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRedirect.addRedirect(

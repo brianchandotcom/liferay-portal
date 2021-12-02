@@ -2,7 +2,7 @@ definition {
 
 	macro gotoManageFieldSets {
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Manage Field Sets");

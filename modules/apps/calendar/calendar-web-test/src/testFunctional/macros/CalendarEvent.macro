@@ -382,6 +382,7 @@ definition {
 				optionSetValue = "${optionSetValue}",
 				specificOptionSetValue = "${specificOptionSetValue}");
 		}
+
 		CalendarEvent.publish();
 
 		Navigator.gotoSitePage(
@@ -1606,7 +1607,6 @@ definition {
 
 		var key_siteCalendarName = "${siteCalendarName}";
 		var key_siteName = "${siteName}";
-
 		var key_eventTitle = "${eventTitle}";
 
 		AssertClick(

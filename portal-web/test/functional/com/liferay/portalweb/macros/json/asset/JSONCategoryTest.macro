@@ -48,8 +48,8 @@ definition {
 		// Getter
 
 		var categoryId = JSONCategory.getCategoryId(
-			groupName = "${groupName}",
 			categoryName = "category 1",
+			groupName = "${groupName}",
 			vocabularyName = "vocabulary 1");
 
 		if ("${categoryId}" == "0") {

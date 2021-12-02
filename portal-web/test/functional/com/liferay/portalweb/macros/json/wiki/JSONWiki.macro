@@ -4,7 +4,10 @@ definition {
 	macro addAttachmentToWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName},${fileName},${mimeType}");
 
-		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}", site = "${site}");
+		var nodeId = JSONWikiSetter.setNodeId(
+			groupName = "${groupName}",
+			name = "${wikiNodeName}",
+			site = "${site}");
 
 		JSONWikiAPI._addAttachmentToWikiPage(
 			fileName = "${fileName}",
@@ -17,7 +20,11 @@ definition {
 	macro addWikiChildPage {
 		Variables.assertDefined(parameterList = "${wikiParentPageName},${wikiChildPageName},${wikiNodeName}");
 
-		var parentResourcePrimKey = JSONWikiSetter.setResourcePrimKey(groupName = "${groupName}", title = "${wikiParentPageName}", name = "${wikiNodeName}", site = "${site}");
+		var parentResourcePrimKey = JSONWikiSetter.setResourcePrimKey(
+			groupName = "${groupName}",
+			name = "${wikiNodeName}",
+			site = "${site}",
+			title = "${wikiParentPageName}");
 
 		JSONWikiAPI._addWikiChildPage(
 			assetCategoryIds = "${assetCategoryIds}",
@@ -45,7 +52,10 @@ definition {
 	macro addWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
-		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}", site = "${site}");
+		var nodeId = JSONWikiSetter.setNodeId(
+			groupName = "${groupName}",
+			name = "${wikiNodeName}",
+			site = "${site}");
 
 		JSONWikiAPI._addWikiPage(
 			assetCategoryIds = "${assetCategoryIds}",
@@ -61,7 +71,10 @@ definition {
 	macro movePageToTrash {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
-		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}", site = "${site}");
+		var nodeId = JSONWikiSetter.setNodeId(
+			groupName = "${groupName}",
+			name = "${wikiNodeName}",
+			site = "${site}");
 
 		JSONWikiAPI._movePageToTrash(
 			nodeId = "${nodeId}",
@@ -72,7 +85,11 @@ definition {
 	macro updateWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
-		var resourcePrimKey = JSONWikiSetter.setResourcePrimKey(groupName = "${groupName}", title = "${wikiPageName}", name = "${wikiNodeName}", site = "${site}");
+		var resourcePrimKey = JSONWikiSetter.setResourcePrimKey(
+			groupName = "${groupName}",
+			name = "${wikiNodeName}",
+			site = "${site}",
+			title = "${wikiPageName}");
 
 		JSONWikiAPI._updateWikiPage(
 			assetCategoryIds = "${assetCategoryIds}",

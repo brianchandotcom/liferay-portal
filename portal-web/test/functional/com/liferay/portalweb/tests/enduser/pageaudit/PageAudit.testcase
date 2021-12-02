@@ -34,7 +34,6 @@ definition {
 
 	@description = "LPS-132234: Given the detail view of the page audit panel
 	Then the checks related to Low contrast ratio, Missing image-alt and Missing input-image-alt will appear under the Accessibility section"
-
 	@priority = "3"
 	test AccessibilityFailures {
 		property portal.acceptance = "true";

@@ -4,7 +4,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		if (isSet(baseURL)) {
-			portalURL = "${baseURL}";
+			var portalURL = "${baseURL}";
 		}
 
 		OAuth2.openOAuth2Admin(baseURL = "${baseURL}");
@@ -137,7 +137,6 @@ definition {
 			http://localhost:9080/o/oauth2/token \
 				--data client_id=abc123&client_secret=abc123&grant_type=authorization_code&code=${authorizationCode}
 		''';
-
 		var reponse = JSONCurlUtil.post("${curl}");
 
 		if (contains("${reponse}", "access_token")) {
@@ -255,8 +254,7 @@ definition {
 			description = "${description}",
 			generateNewSecret = "${generateNewSecret}",
 			privacyPolicyURL = "${privacyPolicyURL}",
-			websiteURL = "${websiteURL}"
-		);
+			websiteURL = "${websiteURL}");
 
 		if (isSet(newApplicationName)) {
 			AssertTextEquals(
@@ -281,7 +279,7 @@ definition {
 			key_navItem = "Scopes",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
-		if ((isSet(checkGlobalScope)) || (isSet(uncheckGlobalScope))) {
+		if (isSet(checkGlobalScope) || isSet(uncheckGlobalScope)) {
 			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
 
 			if (isSet(checkGlobalScope)) {
@@ -297,8 +295,8 @@ definition {
 			}
 		}
 
-		if ((isSet(checkGlobalScopesViaModal)) || (isSet(resourceCheckList)) || (isSet(resourceUncheckList)) || (isSet(uncheckAllResourceScopes))) {
-			if (IsElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK", key_navUnderline = "Global scopes")) {
+		if (isSet(checkGlobalScopesViaModal) || isSet(resourceCheckList) || isSet(resourceUncheckList) || isSet(uncheckAllResourceScopes)) {
+			if (IsElementPresent(key_navUnderline = "Global scopes", locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 
@@ -340,7 +338,7 @@ definition {
 			if ("${uncheckAllResourceScopes}" == "true") {
 				var count = "1";
 
-				while (IsElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED", key_matchCount = "${count}")) {
+				while (IsElementPresent(key_matchCount = "${count}", locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED")) {
 					Uncheck(
 						key_matchCount = "${count}",
 						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED");
@@ -358,7 +356,7 @@ definition {
 	macro expandGlobalPanel {
 		var key_panel = "${globalPanel}";
 
-		if (IsElementPresent(locator1 = "OAuth2#ADMIN_GLOBAL_PANEL_COLLAPSED") && (IsVisible(locator1 = "OAuth2#ADMIN_GLOBAL_PANEL_COLLAPSED"))) {
+		if ((IsElementPresent(locator1 = "OAuth2#ADMIN_GLOBAL_PANEL_COLLAPSED")) && (IsVisible(locator1 = "OAuth2#ADMIN_GLOBAL_PANEL_COLLAPSED"))) {
 			Click(locator1 = "OAuth2#ADMIN_GLOBAL_PANEL_COLLAPSED");
 		}
 
@@ -386,9 +384,9 @@ definition {
 		}
 
 		var response = JSONCurlUtil.post("${tokenCurl}");
-
 		var partialResponse = StringUtil.extractFirst("${response}", "&quot;,&quot;token_type");
 		var accessToken = StringUtil.extractLast("${partialResponse}", "access_token&quot;:&quot;");
+
 		echo("## * Access Token: ${accessToken}");
 
 		return "${accessToken}";
@@ -430,7 +428,7 @@ definition {
 			Button.clickApply();
 		}
 
-		if ((isSet(clientSecret)) || (isSet(generateNewSecret))) {
+		if (isSet(clientSecret) || isSet(generateNewSecret)) {
 			Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_BUTTON");
 
 			if ("${generateNewSecret}" == "true") {
@@ -874,12 +872,11 @@ definition {
 		if (isSet(globalScopeLinkValue)) {
 			if (contains("${scopeTranslation}", "+")) {
 				var partialScopeTranslation = StringUtil.extractFirst("${scopeTranslation}", "+");
-				partialScopeTranslation = StringUtil.trim("${partialScopeTranslation}");
-
-				key_scopeText = "${partialScopeTranslation}";
+				var partialScopeTranslation = StringUtil.trim("${partialScopeTranslation}");
+				var key_scopeText = "${partialScopeTranslation}";
 			}
 			else {
-				key_scopeText = "${scopeTranslation}";
+				var key_scopeText = "${scopeTranslation}";
 			}
 
 			AssertTextEquals(
@@ -903,7 +900,7 @@ definition {
 			key_navItem = "Scopes",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
-		if ((isSet(checkedGlobalScope)) || (isSet(uncheckedGlobalScope))) {
+		if (isSet(checkedGlobalScope) || isSet(uncheckedGlobalScope)) {
 			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
 
 			if (isSet(checkedGlobalScope)) {
@@ -919,8 +916,8 @@ definition {
 			}
 		}
 
-		if ((isSet(allResourceScopesUnchecked)) || (isSet(checkedGlobalScopesViaModal)) || (isSet(removedScope)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
-			if (IsElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK", key_navUnderline = "Global scopes")) {
+		if (isSet(allResourceScopesUnchecked) || isSet(checkedGlobalScopesViaModal) || isSet(removedScope) || isSet(resourceCheckedList) || isSet(resourceUncheckedList)) {
+			if (IsElementPresent(key_navUnderline = "Global scopes", locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 

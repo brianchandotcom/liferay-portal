@@ -23,7 +23,7 @@ definition {
 	macro deployFileOnServer {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		if (("${bundleIndex}" == "0") || (!(isSet(bundleIndex)))) {
+		if (("${bundleIndex}" == "0") || !(isSet(bundleIndex))) {
 			var deployDir = "${liferayHome}/deploy";
 		}
 		else {

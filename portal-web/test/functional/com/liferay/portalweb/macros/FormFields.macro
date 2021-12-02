@@ -144,7 +144,7 @@ definition {
 	}
 
 	macro disableCheckbox {
-		if (IsChecked(locator1 = "FormFields#CHECKBOX", key_fieldName = "${fieldName}")) {
+		if (IsChecked(key_fieldName = "${fieldName}", locator1 = "FormFields#CHECKBOX")) {
 			Click(
 				key_fieldName = "${fieldName}",
 				locator1 = "FormFields#CHECKBOX_LABEL");
@@ -649,7 +649,7 @@ definition {
 	}
 
 	macro enableCheckbox {
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "${fieldName}")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_fieldName = "${fieldName}", locator1 = "FormFields#CHECKBOX")) {
 			Click(
 				key_fieldName = "${fieldName}",
 				locator1 = "FormFields#CHECKBOX_LABEL");
@@ -686,7 +686,7 @@ definition {
 		return "${fieldName}";
 	}
 
-	macro gotoFormField () {
+	macro gotoFormField {
 		Click(
 			key_formFieldName = "${formFieldName}",
 			locator1 = "FormFields#GO_TO_FORM_FIELD");
@@ -694,24 +694,24 @@ definition {
 
 	macro moveFieldToPosition {
 		if (isSet(formPageNumber)) {
-			key_formPageNumber = "${formPageNumber}";
+			var key_formPageNumber = "${formPageNumber}";
 		}
 		else {
-			key_formPageNumber = "0";
+			var key_formPageNumber = "0";
 		}
 
 		if (isSet(fieldColumnNumber)) {
-			key_fieldColumnNumber = "${fieldColumnNumber}";
+			var key_fieldColumnNumber = "${fieldColumnNumber}";
 		}
 		else {
-			key_fieldColumnNumber = "0";
+			var key_fieldColumnNumber = "0";
 		}
 
 		if (isSet(fieldRowNumber)) {
-			key_fieldRowNumber = "${fieldRowNumber}";
+			var key_fieldRowNumber = "${fieldRowNumber}";
 		}
 		else {
-			key_fieldRowNumber = "0";
+			var key_fieldRowNumber = "0";
 		}
 
 		DragAndDrop.javaScriptDragAndDropToObject(
@@ -767,6 +767,7 @@ definition {
 				key_fieldName = "${fieldName}",
 				locator1 = "FormFields#SELECT_FIELD");
 		}
+
 		AssertElementNotPresent(
 			key_fieldName = "${fieldName}",
 			key_selectOption = "${selectOption}",
@@ -1253,10 +1254,10 @@ definition {
 
 	macro viewConfirmationFieldDirection {
 		if ("${direction}" == "vertical") {
-			direction = "col-md-12";
+			var direction = "col-md-12";
 		}
 		else if ("${direction}" == "horizontal") {
-			direction = "col-md-6";
+			var direction = "col-md-6";
 		}
 
 		AssertElementPresent(
@@ -1319,7 +1320,7 @@ definition {
 	}
 
 	macro viewDeletedFieldLabel {
-		key_fieldName = "${fieldName}";
+		var key_fieldName = "${fieldName}";
 
 		AssertElementNotPresent(
 			key_name = "${fieldName}",
@@ -1462,20 +1463,20 @@ definition {
 
 	macro viewFieldPosition {
 		if (isSet(formPageNumber)) {
-			key_formPageNumber = "${formPageNumber}";
+			var key_formPageNumber = "${formPageNumber}";
 		}
 		else {
-			key_formPageNumber = "0";
+			var key_formPageNumber = "0";
 		}
 
 		if (isSet(fieldPositionNumber)) {
-			key_fieldPositionNumber = "${fieldPositionNumber}";
+			var key_fieldPositionNumber = "${fieldPositionNumber}";
 		}
 		else {
-			key_fieldPositionNumber = "0";
+			var key_fieldPositionNumber = "0";
 		}
 
-		key_fieldName = "${fieldLabel}";
+		var key_fieldName = "${fieldLabel}";
 
 		AssertElementPresent(locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
 	}
@@ -1512,7 +1513,7 @@ definition {
 	}
 
 	macro viewFieldRepeatableButton {
-		key_fieldName = "${fieldName}";
+		var key_fieldName = "${fieldName}";
 
 		for (var number : list "${key_repeatableFieldsNumber}") {
 			AssertElementPresent(
@@ -1666,6 +1667,7 @@ definition {
 		AssertElementPresent(
 			key_text = "${key_text1}",
 			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+
 		AssertElementPresent(
 			key_text = "${key_text2}",
 			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
@@ -1675,6 +1677,7 @@ definition {
 		AssertElementNotPresent(
 			key_text = "${key_text1}",
 			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+
 		AssertElementNotPresent(
 			key_text = "${key_text2}",
 			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
@@ -1709,6 +1712,7 @@ definition {
 			AssertTextEquals(
 				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
 				value1 = "${fieldValue}");
+
 			if (isSet(fieldReference)) {
 				AssertTextEquals(
 					locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_REFERENCE",
@@ -1775,7 +1779,7 @@ definition {
 	}
 
 	macro viewParagraphFieldNotPresent {
-		key_fieldName = "${fieldTitle}";
+		var key_fieldName = "${fieldTitle}";
 
 		AssertElementNotPresent(locator1 = "FormFields#PARAGRAPH_TITLE");
 	}
@@ -2054,8 +2058,8 @@ definition {
 	}
 
 	macro viewSourceElement {
-		key_value = "${value}";
-		key_elementName = "${elementName}";
+		var key_value = "${value}";
+		var key_elementName = "${elementName}";
 
 		AssertElementPresent(locator1 = "FormFields#ANY_SOURCE_ELEMENT");
 	}

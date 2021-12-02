@@ -206,7 +206,9 @@ definition {
 		}
 
 		task ("View the the end of firend URL changes to site ID") {
-			var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Site Name", site = "true");
+			var siteID = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site Name",
+				site = "true");
 
 			AssertTextEquals(
 				locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
@@ -651,6 +653,7 @@ definition {
 		task ("Configure Sites Directory to display in Parent Level") {
 			SitesDirectory.configureSetupPG(directorySites = "Parent Level");
 		}
+
 		task ("Go to first child child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
@@ -672,6 +675,7 @@ definition {
 				pageName = "Site Page",
 				siteName = "Child ChildSite1Name");
 		}
+
 		task ("View Siblings sites displayed") {
 			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
 

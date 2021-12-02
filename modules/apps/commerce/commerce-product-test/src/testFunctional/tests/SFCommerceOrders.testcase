@@ -600,8 +600,8 @@ definition {
 			locator1 = "Header#H2_TITLE");
 
 		for (var currentRow : list "status;Delivered,carrier;Test Carrier,tracking-number;Test Tracking Number") {
-			var currentColumn = StringUtil.extractFirst("${currentRow}",";");
-			var currentValue = StringUtil.extractLast("${currentRow}",";");
+			var currentColumn = StringUtil.extractFirst("${currentRow}", ";");
+			var currentValue = StringUtil.extractLast("${currentRow}", ";");
 
 			AssertTextEquals(
 				key_columnName = "${currentColumn}",

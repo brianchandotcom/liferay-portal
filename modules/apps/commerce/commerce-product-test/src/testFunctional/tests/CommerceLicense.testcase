@@ -69,9 +69,13 @@ definition {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		FileUtil.delete("${liferayHome}/osgi/static/com.liferay.portal.license.enterprise.app.jar");
+
 		FileUtil.delete("${liferayHome}/osgi/marketplace/Liferay Foundation - Liferay License Manager - Impl.lpkg");
+
 		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.api.jar");
+
 		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.impl.jar");
+
 		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.resolver.hook.jar");
 
 		AntCommand(

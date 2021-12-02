@@ -158,7 +158,6 @@ definition {
 				locator1 = "Message#ERROR_INVALID_YOUTUBE_VIDEO",
 				value1 = "An error occurred. Please try again later.");
 		}
-
 		else if (isSet(facebook)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
@@ -166,7 +165,6 @@ definition {
 				locator1 = "Message#ERROR_INVALID_FACEBOOK_VIDEO",
 				value1 = "Video Unavailable");
 		}
-
 		else if (isSet(vimeo)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
@@ -174,7 +172,6 @@ definition {
 				locator1 = "Message#ERROR_INVALID_VIMEO_VIDEO",
 				value1 = "The embed code for this video is not valid.");
 		}
-
 		else {
 			AssertTextEquals(
 				locator1 = "Message#INFO_EXTERNAL_VIDEO_PREVIEW",

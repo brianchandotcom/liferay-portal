@@ -23,12 +23,14 @@ definition {
 			else {
 				Site.openSiteSettingsAdmin(siteURLKey = "guest");
 			}
+
 			Click(
 				key_itemName = "Community Tools",
 				locator1 = "ListGroupItem#ITEM_TEXT");
 
 			Navigator.gotoNavTab(navTab = "Ratings");
 		}
+
 		Select(
 			key_applications = "${applications}",
 			locator1 = "Select#APPLICATIONS_RATING",
@@ -149,26 +151,22 @@ definition {
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
-
 		else if (isSet(blogRating)) {
 			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#THUMB");
 		}
-
 		else if (isSet(commentRating)) {
 			Click.clickNoMouseOver(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
-
 		else if (isSet(replyRating)) {
 			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
 				key_threadSubject = "${threadSubject}",
 				locator1 = "Ratings#REPLY_RATING_THUMB");
 		}
-
 		else {
 			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
@@ -263,6 +261,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
+
 		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 	}
 

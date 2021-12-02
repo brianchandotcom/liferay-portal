@@ -30,7 +30,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -75,7 +77,9 @@ definition {
 			var site = "true";
 		}
 
-		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(groupName = "${groupName}", site = "${site}");
+		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -132,7 +136,9 @@ definition {
 			var ddmStructuresAvailable = "false";
 		}
 
-		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(groupName = "${groupName}", site = "${site}");
+		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

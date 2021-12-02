@@ -32,7 +32,6 @@ definition {
 	and I have connected my DXP instance with AC
 	when I create an Individual Segment in AC and it shows in the DXP Segments administration
 	then I don't see the edit action"
-
 	@ignore = "true"
 	@priority = "3"
 	test CheckNotEditableSegmentFromACAtDXP {

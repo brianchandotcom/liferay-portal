@@ -39,7 +39,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		ACUtils.createDMAndAddToPage();

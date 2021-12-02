@@ -270,6 +270,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyPaginationOnBulkReassign";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
@@ -337,18 +338,23 @@ definition {
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 1",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 2",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 3",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 4",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 5",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 6",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
@@ -471,6 +477,7 @@ definition {
 		WorkflowMetrics.assertNewAssigneeModalTable();
 
 		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+
 		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
 
 		WorkflowMetrics.selectNewAssignee(
@@ -489,18 +496,22 @@ definition {
 			key_workflowInstanceAssignee = "Test Test",
 			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
 			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 2",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
 			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 3",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
 			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 4",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
 			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 5",
@@ -511,15 +522,19 @@ definition {
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 1",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 2",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 3",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 4",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 5",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
@@ -652,6 +667,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;
 		var futureYearShort = StringUtil.substring("${futureYear}", "2", "4");
@@ -849,6 +865,7 @@ definition {
 			key_rowName = "Update",
 			key_rowNumber = "1",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		AssertElementPresent(
 			key_rowName = "Review",
 			key_rowNumber = "2",
@@ -860,6 +877,7 @@ definition {
 			key_rowName = "Review",
 			key_rowNumber = "1",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		AssertElementPresent(
 			key_rowName = "Update",
 			key_rowNumber = "2",
@@ -871,6 +889,7 @@ definition {
 			key_rowName = "Review",
 			key_rowNumber = "1",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		AssertElementPresent(
 			key_rowName = "Update",
 			key_rowNumber = "2",
@@ -1139,14 +1158,14 @@ definition {
 			site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs",
 			site = "${siteName}");
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Blogs",
 			site = "${siteName}");
 
@@ -1691,6 +1710,7 @@ definition {
 		AssertElementPresent(
 			key_workflowInstanceName = "Blogs Entry Title 1",
 			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
 		AssertElementPresent(
 			key_workflowInstanceName = "Blogs Entry Title 2",
 			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
@@ -1914,6 +1934,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;
 		var futureYearShort = StringUtil.substring("${futureYear}", "2", "4");
@@ -1939,6 +1960,7 @@ definition {
 			workflowTask = "Review");
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.goToUpdateDueDateTasks();
 
 		Type(
@@ -1967,6 +1989,7 @@ definition {
 	@priority = "4"
 	test UpdateDueDateInvalidDateTime {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;
 
@@ -2937,6 +2960,7 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry2 Content",
 			entryTitle = "Blogs Entry2 Title");
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry Title");

@@ -4,7 +4,9 @@ definition {
 	macro addTag {
 		Variables.assertDefined(parameterList = "${groupName},${tagName}");
 
-		var groupId = JSONAssettagSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONAssettagSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		JSONAssettagAPI._addTag(
 			groupId = "${groupId}",

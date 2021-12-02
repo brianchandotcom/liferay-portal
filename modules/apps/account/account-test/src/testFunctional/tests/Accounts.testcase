@@ -72,6 +72,7 @@ definition {
 	test AccountNameCannotExceed100Characters {
 		task ("Try to add account where name character count is over 100") {
 			var accountName = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet";
+
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoAdd();
@@ -80,6 +81,7 @@ definition {
 
 			Button.clickSave();
 		}
+
 		task ("Assert error is displayed and that account is not saved in Accounts") {
 			AssertTextEquals(
 				key_alertMessage = "Please enter no more than 100 characters.",
@@ -1421,7 +1423,6 @@ definition {
 
 		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
 			var key_navItem = "Site and Asset Library Administration";
-
 			var key_subItem = "Account Management";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
@@ -1456,7 +1457,6 @@ definition {
 
 		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
 			var key_navItem = "Site and Asset Library Administration";
-
 			var key_subItem = "Account Management";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
@@ -1499,7 +1499,6 @@ definition {
 
 		task ("Select All permissions for Applications and Resource Permissions for Account Entries") {
 			var key_navItem = "Accounts";
-
 			var key_subItem = "Accounts";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
@@ -1515,7 +1514,6 @@ definition {
 
 		task ("Select All permissions for Resource Permissions for Account Users") {
 			var key_navItem = "Accounts";
-
 			var key_subItem = "Account Users";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
@@ -1529,7 +1527,6 @@ definition {
 
 		task ("Select All permissions for Resource Permissions for Account Groups") {
 			var key_navItem = "Accounts";
-
 			var key_subItem = "Account Groups";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");

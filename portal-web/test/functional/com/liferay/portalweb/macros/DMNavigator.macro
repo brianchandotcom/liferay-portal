@@ -297,10 +297,12 @@ definition {
 	}
 
 	macro openToAddEntry {
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "true");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "true");
 
 		if (isSet(documentTypeName)) {
-			if ("${documentTypeName}" == "External Video Shortcut" || "${documentTypeName}" == "Google Drive Shortcut") {
+			if (("${documentTypeName}" == "External Video Shortcut") || ("${documentTypeName}" == "Google Drive Shortcut")) {
 				var typeId = JSONDocumentAPI._getTypeIdByTypeName(
 					documentTypeName = "${documentTypeName}",
 					groupName = "Global");
@@ -317,8 +319,8 @@ definition {
 
 		if (isSet(folderName)) {
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${folderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				name = "${folderName}");
 		}
 		else {
 			var folderId = "0";
@@ -369,8 +371,8 @@ definition {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${folderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				name = "${folderName}");
 		}
 
 		var fileEntryId = JSONDocument.getFileEntryId(
@@ -383,11 +385,11 @@ definition {
 
 	macro openToEntryInAdmin {
 		var fileEntryId = JSONDocument.getFileEntryId(
-			site = "${site}",
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",
-			portalURL = "${baseURL}");
+			portalURL = "${baseURL}",
+			site = "${site}");
 
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",
@@ -396,8 +398,8 @@ definition {
 
 	macro openToFolderInAdmin {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-			name = "${dmFolderName}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			name = "${dmFolderName}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_folder&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}");
 	}

@@ -32,7 +32,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
@@ -362,6 +361,7 @@ definition {
 				locator1 = "ACSettings#DATA_SOURCE_LIST_STATUS",
 				value1 = "Active");
 		}
+
 		task ("Connect AC to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
@@ -402,12 +402,13 @@ definition {
 
 		task ("Assert that the properties ID aren't incremental") {
 			var propertyID1 = ACSettings.getPropertyId(propertyName = "Name of property 1");
+
 			var propertyID2 = ACSettings.getPropertyId(propertyName = "Name of property 2");
+
 			var propertyID3 = ACSettings.getPropertyId(propertyName = "Name of property 3");
 
-			var differenceID2 = MathUtil.difference("${propertyID2}","${propertyID1}");
-
-			var differenceID3 = MathUtil.difference("${propertyID3}","${propertyID2}");
+			var differenceID2 = ${propertyID2} - ${propertyID1};
+			var differenceID3 = ${propertyID3} - ${propertyID2};
 
 			TestUtils.assertNotEquals(
 				actual = "${differenceID2}",

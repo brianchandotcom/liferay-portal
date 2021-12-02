@@ -6,7 +6,6 @@ definition {
 		var buildNumberCurl = '''
 				${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
 			''';
-
 		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
 
 		if (!(contains("${buildNumberOutput}", "${portalBuild}"))) {
@@ -20,7 +19,6 @@ definition {
 		var portalVersionCurl = '''
 			${portalURL}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
 		''';
-
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
 
 		if (!(contains("${portalVersionOutput}", "${portalVersion}"))) {
@@ -192,7 +190,7 @@ definition {
 	macro getUserEmailSuccessfully {
 		var output = JSONCurlUtil.post("${curl}");
 
-		if ((contains("${output}", ""agreedToTermsOfUse":true")) && (contains("${output}", ""companyId":"${companyId}""))) {
+		if (contains("${output}", ""agreedToTermsOfUse":true") && contains("${output}", ""companyId":"${companyId}"")) {
 			echo("Get current user successful.");
 		}
 		else {

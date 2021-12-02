@@ -127,6 +127,7 @@ definition {
 				ACProperties.addNewProperty(propertyName = "${n}");
 			}
 		}
+
 		task ("switch between properties and assert the workspace settings is the same for those properties") {
 			for (var n : list "${propertyList}") {
 				ACNavigation.exitSettings();

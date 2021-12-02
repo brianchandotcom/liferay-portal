@@ -69,17 +69,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audience Categories") {
-			var audienceId1	 = JSONCategory.addCategory(
+			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_1",
 				vocabularyName = "Audience");
 
-			var audienceId2	 = JSONCategory.addCategory(
+			var audienceId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_2",
 				vocabularyName = "Audience");
 
-			var audienceId3	 = JSONCategory.addCategory(
+			var audienceId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_3",
 				vocabularyName = "Audience");
@@ -179,17 +179,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audiences") {
-			var categoryId1	 = JSONCategory.addCategory(
+			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "C_Subaudience_1",
 				vocabularyName = "Audience");
 
-			var categoryId2	 = JSONCategory.addCategory(
+			var categoryId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "B_Subaudience_2",
 				vocabularyName = "Audience");
 
-			var categoryId3	 = JSONCategory.addCategory(
+			var categoryId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "A_Subaudience_3",
 				vocabularyName = "Audience");
@@ -240,7 +240,6 @@ definition {
 
 	@description = "LPS-131793: Given the categorization section in Documents and Media
 	Then the OOTB Internal (Topic) and Public (Audience & Stage) vocabularies are shown"
-
 	@ignore = "true"
 	@priority = "3"
 	test CategorizationInOotbTable {
@@ -373,17 +372,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audiences") {
-			var categoryId1	 = JSONCategory.addCategory(
+			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_1",
 				vocabularyName = "Audience");
 
-			var categoryId2	 = JSONCategory.addCategory(
+			var categoryId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_2",
 				vocabularyName = "Audience");
 
-			var categoryId3	 = JSONCategory.addCategory(
+			var categoryId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_3",
 				vocabularyName = "Audience");
@@ -421,17 +420,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audience Categories") {
-			var audienceId1	 = JSONCategory.addCategory(
+			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_1",
 				vocabularyName = "Audience");
 
-			var audienceId2	 = JSONCategory.addCategory(
+			var audienceId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_2",
 				vocabularyName = "Audience");
 
-			var audienceId3	 = JSONCategory.addCategory(
+			var audienceId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_3",
 				vocabularyName = "Audience");
@@ -578,17 +577,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audience Categories") {
-			var audienceId1	 = JSONCategory.addCategory(
+			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_1",
 				vocabularyName = "Audience");
 
-			var audienceId2	 = JSONCategory.addCategory(
+			var audienceId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_2",
 				vocabularyName = "Audience");
 
-			var audienceId3	 = JSONCategory.addCategory(
+			var audienceId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_3",
 				vocabularyName = "Audience");
@@ -2106,17 +2105,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audience Categories") {
-			var audienceId1	 = JSONCategory.addCategory(
+			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_1",
 				vocabularyName = "Audience");
 
-			var audienceId2	 = JSONCategory.addCategory(
+			var audienceId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_2",
 				vocabularyName = "Audience");
 
-			var audienceId3	 = JSONCategory.addCategory(
+			var audienceId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_3",
 				vocabularyName = "Audience");
@@ -2225,6 +2224,7 @@ definition {
 
 			Button.clickPublish();
 		}
+
 		task ("Navigate to the content Dashboard and go to the page view in the corresponding language") {
 			ContentDashboard.goToContentDashboard();
 
@@ -2543,17 +2543,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audiences") {
-			var categoryId1	 = JSONCategory.addCategory(
+			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "C_Subaudience_1",
 				vocabularyName = "Audience");
 
-			var categoryId2	 = JSONCategory.addCategory(
+			var categoryId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "B_Subaudience_2",
 				vocabularyName = "Audience");
 
-			var categoryId3	 = JSONCategory.addCategory(
+			var categoryId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "A_Subaudience_3",
 				vocabularyName = "Audience");
@@ -3280,17 +3280,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a list of Audience Categories") {
-			var audienceId1	 = JSONCategory.addCategory(
+			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_1",
 				vocabularyName = "Audience");
 
-			var audienceId2	 = JSONCategory.addCategory(
+			var audienceId2 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_2",
 				vocabularyName = "Audience");
 
-			var audienceId3	 = JSONCategory.addCategory(
+			var audienceId3 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Subaudience_3",
 				vocabularyName = "Audience");

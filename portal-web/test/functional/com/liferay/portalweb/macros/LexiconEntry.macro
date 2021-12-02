@@ -86,7 +86,7 @@ definition {
 	}
 
 	macro gotoEntry {
-		if (IsElementPresent(locator1 = "Icon#DISPLAY_STYLE_ACTIVE", key_displayStyle = "cards")) {
+		if (IsElementPresent(key_displayStyle = "cards", locator1 = "Icon#DISPLAY_STYLE_ACTIVE")) {
 			AssertClick(
 				key_card = "${rowEntry}",
 				locator1 = "Card#CARD_TITLE_LINK",
@@ -154,7 +154,6 @@ definition {
 				key_rowEntry = "${rowEntry}",
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_SAFARI");
 		}
-
 		else {
 			Click.waitForMenuToggleJSClick(
 				key_rowEntry = "${rowEntry}",
@@ -189,7 +188,6 @@ definition {
 				key_rowEntry = "${rowEntry}",
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_SAFARI");
 		}
-
 		else {
 			AssertElementPresent(
 				key_rowEntry = "${rowEntry}",

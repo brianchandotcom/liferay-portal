@@ -472,6 +472,7 @@ definition {
 			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title1");
+
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Web Content Title2");
 	}
 

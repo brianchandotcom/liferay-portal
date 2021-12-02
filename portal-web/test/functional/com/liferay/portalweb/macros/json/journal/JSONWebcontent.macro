@@ -10,8 +10,7 @@ definition {
 			content = "${content}",
 			contentMap = "${contentMap}");
 
-		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(
-			description = "${description}");
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = "${description}");
 
 		var folderId = JSONWebcontentSetter.setFolderId(
 			folderName = "${folderName}",
@@ -42,7 +41,9 @@ definition {
 	macro addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONWebcontentSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var parentFolderId = JSONWebcontentSetter.setFolderId(
 			folderName = "${parentFolderName}",
@@ -61,7 +62,9 @@ definition {
 	macro addWebContent {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONWebcontentSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var contentXML = JSONWebcontentSetter.setContentXML(
 			content = "${content}",
@@ -96,7 +99,9 @@ definition {
 	macro deleteWebContent {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONWebcontentSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var articleId = JSONWebcontentSetter.setArticleId(
 			groupName = "${groupName}",

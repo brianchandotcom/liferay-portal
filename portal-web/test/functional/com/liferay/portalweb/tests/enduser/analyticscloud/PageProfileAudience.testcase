@@ -43,7 +43,6 @@ definition {
 		// AC Refactor ticket: LRAC-9409
 
 		var usernameList = "ac,liferay";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Add page and Blog for interaction with the AC") {

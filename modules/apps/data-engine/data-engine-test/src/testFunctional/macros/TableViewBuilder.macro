@@ -51,13 +51,17 @@ definition {
 
 	macro clickOnClearFilters {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+
 		Click(locator1 = "TableViewBuilder#FILTER_CLEAR");
+
 		TableViewBuilder.selectTab(tabName = "Filters");
 	}
 
 	macro clickOnSelectAllFilters {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+
 		Click(locator1 = "TableViewBuilder#FILTER_SELECT_ALL");
+
 		TableViewBuilder.selectTab(tabName = "Filters");
 	}
 
@@ -96,6 +100,7 @@ definition {
 
 		for (var dropdownItem : list "${dropdownItemList}") {
 			var key_dropdownItem = "${dropdownItem}";
+
 			Click(locator1 = "TableViewBuilder#FILTER_DROPDOWN_ITEM");
 		}
 

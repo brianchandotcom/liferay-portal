@@ -33,7 +33,6 @@ definition {
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayDateMonth = DateUtil.getCurrentMonth();
 			var displayDateYear = DateUtil.getCurrentYear();
-
 			var displayDate = "${displayDateYear}%2D${displayDateMonth}%2D${displayDateDay}";
 		}
 
@@ -44,7 +43,6 @@ definition {
 
 			if ("${expirationMonth}" == "13") {
 				var expirationMonth = ${expirationMonth} - 12;
-
 				var displayDateYear = ${displayDateYear} + 1;
 			}
 
@@ -66,8 +64,8 @@ definition {
 	@summary = "Delete a basic announcement"
 	macro deleteAnnouncement {
 		var entryId = JSONAnnouncementAPI._getEntryId(
-			siteURLKey = "${siteURLKey}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			siteURLKey = "${siteURLKey}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

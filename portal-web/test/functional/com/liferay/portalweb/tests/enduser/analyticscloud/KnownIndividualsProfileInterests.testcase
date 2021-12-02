@@ -86,6 +86,7 @@ definition {
 			ACInterests.clickInterest(interestTopic = "ac page 1");
 
 			var portalURL = PropsUtil.get("portal.url");
+
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACInterests.viewInterestPage(

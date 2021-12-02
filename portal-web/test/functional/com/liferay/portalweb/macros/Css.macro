@@ -25,7 +25,6 @@ var computedStyle = getComputedStyle(getWebElement("${element}"));
 return computedStyle.getPropertyValue("${attribute}");
 
 		''';
-
 		var cssValue = selenium.getEval("${javascript}");
 
 		return "${cssValue}";
@@ -44,7 +43,6 @@ var computedStyle = getComputedStyle(getWebElement("${element}"),'${pseudo}');
 return computedStyle.getPropertyValue("${attribute}");
 
 		''';
-
 		var cssValue = selenium.getEval("${javascript}");
 
 		return "${cssValue}";

@@ -36,7 +36,6 @@ definition {
 		var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-current-user
 			''';
-
 		var reponse = JSONCurlUtil.get("${curl}");
 
 		if (contains("${reponse}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
@@ -186,7 +185,6 @@ definition {
 			VerifyElementPresent(locator1 = "MultiFactorAuthentication#TOTP_FIELD");
 
 			var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
-
 			var totp = AuthenticationUtil.generateTimeBasedOTP("${secretKey}");
 
 			Type(

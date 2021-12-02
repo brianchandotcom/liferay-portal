@@ -37,8 +37,7 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
-
-			dataSourceList = StringUtil.add("${dataSourceList}", "${dataSource}");
+			var dataSourceList = StringUtil.add("${dataSourceList}", "${dataSource}");
 
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 

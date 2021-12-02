@@ -61,7 +61,7 @@ definition {
 
 		Click(locator1 = "//a[contains(text(),'${usecase}')]");
 
-		if (IsElementPresent(locator1 = "PortalShowcase#CHECKED_RENDERED_CHECKBOX") || IsElementNotPresent(locator1 = "PortalShowcase#RENDERED_CHECKBOX")) {
+		if ((IsElementPresent(locator1 = "PortalShowcase#CHECKED_RENDERED_CHECKBOX")) || (IsElementNotPresent(locator1 = "PortalShowcase#RENDERED_CHECKBOX"))) {
 			AssertElementPresent(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 		}
 
@@ -69,6 +69,7 @@ definition {
 			if (IsElementNotPresent(locator1 = "PortalShowcase#CHECKED_RENDERED_CHECKBOX")) {
 				Click(locator1 = "PortalShowcase#RENDERED_CHECKBOX");
 			}
+
 			Click(locator1 = "PortalShowcase#RENDERED_CHECKBOX");
 
 			AssertElementNotPresent(locator1 = "PortalShowcase#WRITEABLE_FIELD");

@@ -48,7 +48,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var channelIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${channelIds}";
@@ -66,7 +65,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var channelsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce channels count is: ${channelsCount}");

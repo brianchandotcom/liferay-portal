@@ -60,6 +60,23 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			DMDocumentType.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document file name."
 	@priority = "4"
 	test AddGoogleEntryWithDuplicateFileName {
@@ -1003,23 +1020,6 @@ definition {
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "これは日本語のファイルです.docx",
 			dmDocumentTitle = "これは日本語のファイルです");
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			DMDocument.tearDownCP();
-
-			DMFolder.tearDownCP();
-
-			DMDocumentType.tearDownCP();
-
-			Page.tearDownCP();
-		}
 	}
 
 }

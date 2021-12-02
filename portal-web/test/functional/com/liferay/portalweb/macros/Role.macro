@@ -9,7 +9,7 @@ definition {
 	}
 
 	macro add {
-		if ((!(isSet(roleKey))) && (!(isSet(roleTitle)))) {
+		if (!(isSet(roleKey)) && !(isSet(roleTitle))) {
 			fail("Please declear the roleKey or roleTitle when refering this macro.");
 		}
 
@@ -489,7 +489,7 @@ definition {
 			Navigator.gotoNavItem(navItem = "Regular Roles");
 		}
 
-		if ((isSet(roleKey)) && (!(isSet(roleTitle)))) {
+		if (isSet(roleKey) && !(isSet(roleTitle))) {
 			var rowEntry = "${roleKey}";
 			var roleTitle = "";
 		}

@@ -48,25 +48,21 @@ definition {
 		if ("${redirectURLVariation}" == "Null") {
 			Alert.viewRequiredField();
 		}
-
 		else if ("${sourceURLVariation}" == "Duplicate") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Error:There is already a redirect set for the same source URL.");
 		}
-
 		else if ("${sourceURLVariation}" == "Invalid") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Please enter a source URL with valid characters.");
 		}
-
 		else if (("${destinationURLVariation}" == "Space") || ("${destinationURLVariation}" == "RelativeURL")) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#ALERT",
 				value1 = "This URL is not supported");
 		}
-
 		else if ("${redirectChain}" == "true") {
 			Redirect.configureRedirectChain(
 				noUpdateRedirect = "${noUpdateRedirect}",
@@ -75,7 +71,6 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-
 		else {
 			Alert.viewSuccessMessage();
 		}
@@ -176,7 +171,6 @@ definition {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 		}
-
 		else {
 			Redirect.gotoEntryMenuItem(
 				item = "Delete",
@@ -316,8 +310,8 @@ definition {
 
 	macro openToEditEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
-			groupName = "${groupName}",
-			destinationURL = "${destinationURL}");
+			destinationURL = "${destinationURL}",
+			groupName = "${groupName}");
 
 		var baseURL = "${baseURL}";
 

@@ -17,8 +17,7 @@ definition {
 			  -d "start=-1" \
 			  -d "end=-1"
 		''';
-
-		var formInstanceId = JSONCurlUtil.post("${curl}","$.[?(@['nameCurrentValue'] == '${formName}')]['formInstanceId']");
+		var formInstanceId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${formName}')]['formInstanceId']");
 
 		if ("${formInstanceId}" == "") {
 			fail("FAIL. Cannot find formInstanceId.");
@@ -35,8 +34,7 @@ definition {
 			  -u test@liferay.com:test \
 			  -d ddmFormInstanceId=${formInstanceId}
 		''';
-
-		var formInstanceRecordId = JSONCurlUtil.post("${curl}","$.[?(@['formInstanceId'] == '${formInstanceId}')]['formInstanceRecordId']");
+		var formInstanceRecordId = JSONCurlUtil.post("${curl}", "$.[?(@['formInstanceId'] == '${formInstanceId}')]['formInstanceRecordId']");
 
 		if ("${formInstanceRecordId}" == "") {
 			fail("FAIL. Cannot find formInstanceRecordId.");

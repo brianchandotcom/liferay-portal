@@ -25,7 +25,6 @@ definition {
 				-d language=ftl \
 				-d script=${script}
 		''';
-
 		var templateKey = JSONCurlUtil.post("${curl}", "$..templateKey");
 
 		return "${templateKey}";

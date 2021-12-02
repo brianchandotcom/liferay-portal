@@ -44,7 +44,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "user1,user2,user3";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		task ("Add 3 new users in DXP") {
@@ -387,9 +386,7 @@ definition {
 		// AC Refactor ticket: LRAC-8887
 
 		var userList = "user1,user2";
-
 		var emailList = "user1@liferay.com,user2@liferay.com";
-
 		var nameList = "user1 user1,user2 user2";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

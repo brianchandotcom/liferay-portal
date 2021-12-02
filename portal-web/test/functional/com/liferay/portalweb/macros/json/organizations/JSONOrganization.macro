@@ -4,9 +4,7 @@ definition {
 		Variables.assertDefined(parameterList = "${organizationName}");
 
 		if (isSet(parentOrganizationName)) {
-			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(
-				organizationName = "${parentOrganizationName}"
-			);
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${parentOrganizationName}");
 		}
 
 		JSONOrganizationAPI._addOrganization(
@@ -19,9 +17,7 @@ definition {
 	macro addOrganizationToDepot {
 		Variables.assertDefined(parameterList = "${organizationName},${depotName}");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "${organizationName}"
-		);
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
 
 		var depotId = JSONUserSetter.setGroupId(
 			groupName = "${depotName}",
@@ -35,9 +31,7 @@ definition {
 	macro addOrganizationToSite {
 		Variables.assertDefined(parameterList = "${organizationName},${siteName}");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "${organizationName}"
-		);
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
 
 		var groupId = JSONUserSetter.setGroupId(groupName = "${siteName}");
 
@@ -62,15 +56,12 @@ definition {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 
 		if (isSet(parentOrganizationName)) {
-			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(
-				organizationName = "${parentOrganizationName}"
-			);
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${parentOrganizationName}");
 		}
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(
 			organizationName = "${organizationName}",
-			parentOrganizationId = "${parentOrganizationId}"
-		);
+			parentOrganizationId = "${parentOrganizationId}");
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
@@ -83,20 +74,14 @@ definition {
 		Variables.assertDefined(parameterList = "${organizationName}");
 
 		if (isSet(parentOrganizationName)) {
-			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(
-				organizationName = "${parentOrganizationName}"
-			);
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${parentOrganizationName}");
 
 			var organizationId = JSONOrganization.getOrganizationIdByName(
 				organizationName = "${organizationName}",
-				parentOrganizationId = "${parentOrganizationId}"
-			);
+				parentOrganizationId = "${parentOrganizationId}");
 		}
-
 		else {
-			var organizationId = JSONOrganization.getOrganizationIdByName(
-				organizationName = "${organizationName}"
-			);
+			var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
 		}
 
 		JSONOrganizationAPI._deleteOrganization(organizationId = "${organizationId}");
@@ -117,7 +102,6 @@ definition {
 			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
 				-u test@liferay.com:test
 		''';
-
 		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
 
 		return "${organizationId}";
@@ -132,7 +116,6 @@ definition {
 			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
 				-u test@liferay.com:test
 		''';
-
 		var organizationName = JSONCurlUtil.get("${curl}", "$['name']");
 
 		return "${organizationName}";

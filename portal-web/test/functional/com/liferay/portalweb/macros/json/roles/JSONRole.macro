@@ -9,7 +9,7 @@ definition {
 
 		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
 
-		var type = JSONRoleSetter.setType(roleType ="organization");
+		var type = JSONRoleSetter.setType(roleType = "organization");
 
 		JSONRoleAPI._addRole(
 			descriptionMap = "${descriptionMap}",
@@ -27,7 +27,7 @@ definition {
 
 		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
 
-		var type = JSONRoleSetter.setType(roleType ="regular");
+		var type = JSONRoleSetter.setType(roleType = "regular");
 
 		JSONRoleAPI._addRole(
 			descriptionMap = "${descriptionMap}",
@@ -45,7 +45,7 @@ definition {
 
 		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
 
-		var type = JSONRoleSetter.setType(roleType ="site");
+		var type = JSONRoleSetter.setType(roleType = "site");
 
 		JSONRoleAPI._addRole(
 			descriptionMap = "${descriptionMap}",

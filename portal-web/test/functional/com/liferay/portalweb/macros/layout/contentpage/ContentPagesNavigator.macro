@@ -27,7 +27,6 @@ definition {
 		if ("${privateLayout}" == "true") {
 			var type = "group";
 		}
-
 		else {
 			var type = "web";
 		}
@@ -49,7 +48,6 @@ definition {
 		if ("${privateLayout}" == "true") {
 			var type = "group";
 		}
-
 		else {
 			var type = "web";
 		}
@@ -57,7 +55,6 @@ definition {
 		if (isSet(locale)) {
 			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/${type}/${siteURLKey}/${pageFriendlyUrl}");
 		}
-
 		else {
 			Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteURLKey}/${pageFriendlyUrl}");
 		}

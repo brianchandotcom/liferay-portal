@@ -14,9 +14,8 @@ definition {
 				-d companyId=${companyId} \
 				-d portletId=${portletId}
 		''';
-
 		var result = JSONCurlUtil.post("${curl}");
-		var result = StringUtil.extractFirst("${result}","Finished");
+		var result = StringUtil.extractFirst("${result}", "Finished");
 
 		return "${result}";
 	}

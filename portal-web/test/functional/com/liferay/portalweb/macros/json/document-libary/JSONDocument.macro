@@ -44,8 +44,8 @@ definition {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${folderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				name = "${folderName}");
 		}
 		else {
 			var folderId = "0";
@@ -107,16 +107,16 @@ definition {
 
 			if (isSet(parentFolderName)) {
 				var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
-					name = "${parentFolderName}",
-					groupName = "${groupName}");
+					groupName = "${groupName}",
+					name = "${parentFolderName}");
 			}
 			else {
 				var parentFolderId = "0";
 			}
 
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${folderName}",
 				groupName = "${groupName}",
+				name = "${folderName}",
 				parentFolderId = "${parentFolderId}");
 		}
 		else {
@@ -226,16 +226,17 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		if (!(isSet(folderId))) {
 			var folderId = "0";
 		}
-
 		else {
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${folderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				name = "${folderName}");
 		}
 
 		var curl = '''
@@ -258,7 +259,10 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(portalURL = "${portalURL}", groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		if (!(isSet(folderId))) {
 			var folderId = "0";
@@ -271,7 +275,6 @@ definition {
 			  -d folderId=${folderId} \
 			  -d title=${dmDocumentTitle}
 		''';
-
 		var fileEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['fileEntryId']");
 
 		return "${fileEntryId}";
@@ -288,7 +291,10 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(portalURL = "${portalURL}", groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		if (!(isSet(folderId))) {
 			var folderId = "0";
@@ -301,7 +307,6 @@ definition {
 			  -d folderId=${folderId} \
 			  -d title=${dmDocumentTitle}
 		''';
-
 		var fileEntryUUID = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['uuid']");
 
 		return "${fileEntryUUID}";
@@ -318,8 +323,8 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var newFolderId = JSONDocumentAPI._getFolderIdByFolderName(
-			name = "${folderName}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			name = "${folderName}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/move-file-entry \
@@ -337,8 +342,8 @@ definition {
 
 		if (isSet(folderName)) {
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				name = "${folderName}",
-				groupName = "${groupName}");
+				groupName = "${groupName}",
+				name = "${folderName}");
 		}
 		else {
 			var folderId = "0";
@@ -364,8 +369,8 @@ definition {
 	@summary = "This calls the JSON WS API to subscribe to a folder"
 	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-			name = "${dmFolderName}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			name = "${dmFolderName}");
 
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
@@ -375,7 +380,10 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(portalURL = "${portalURL}", groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/subscribe-folder \

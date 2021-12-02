@@ -263,8 +263,8 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_ROLE");
 
 		for (var filterOption : list "Administrator-1,Power User-2,User-3") {
-			currentText = StringUtil.extractFirst("${filterOption}","-");
-			currentPosition = StringUtil.extractLast("${filterOption}","-");
+			var currentText = StringUtil.extractFirst("${filterOption}", "-");
+			var currentPosition = StringUtil.extractLast("${filterOption}", "-");
 
 			AssertTextEquals(
 				key_rowNumber = "${currentPosition}",
@@ -275,8 +275,8 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
 
 		for (var filterOption : list "Review-1,Update-2") {
-			currentText = StringUtil.extractFirst("${filterOption}","-");
-			currentPosition = StringUtil.extractLast("${filterOption}","-");
+			var currentText = StringUtil.extractFirst("${filterOption}", "-");
+			var currentPosition = StringUtil.extractLast("${filterOption}", "-");
 
 			AssertTextEquals(
 				key_rowNumber = "${currentPosition}",
@@ -562,7 +562,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 
@@ -615,7 +615,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			panel = "Site Administration",
 			portlet = "Blogs");
 

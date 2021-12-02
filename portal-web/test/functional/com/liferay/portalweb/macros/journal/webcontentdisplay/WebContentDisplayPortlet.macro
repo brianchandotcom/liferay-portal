@@ -378,7 +378,6 @@ definition {
 				locator1 = "Card#CARD_TITLE",
 				value1 = "${webContentTitle} (${depotName})");
 		}
-
 		else {
 			var key_listEntry = "${webContentTitle}";
 			var key_webContentTitle = "${webContentTitle}";

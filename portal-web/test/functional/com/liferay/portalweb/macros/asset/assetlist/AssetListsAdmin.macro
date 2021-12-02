@@ -377,6 +377,7 @@ definition {
 			Click(
 				key_title = "${assetListName}",
 				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
 			WaitForPageLoad();
 		}
 

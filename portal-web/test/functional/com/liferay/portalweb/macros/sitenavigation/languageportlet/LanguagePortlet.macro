@@ -61,14 +61,14 @@ definition {
 			var portletName = "LanguagePortlet";
 		}
 
-		if (IsTextNotEqual(locator1 = "Language#DROPDOWN_LANGUAGE", value1 = "${locale}", key_portletName = "${portletName}")) {
+		if (IsTextNotEqual(key_portletName = "${portletName}", locator1 = "Language#DROPDOWN_LANGUAGE", value1 = "${locale}")) {
 			Click(
 				key_portletName = "${portletName}",
 				locator1 = "Language#DROPDOWN");
 
 			// Workaround for LPS-87409
 
-			if (("${locale}" == "ar_SA") && (IsElementNotPresent(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "${textIcon}"))) {
+			if (("${locale}" == "ar_SA") && (IsElementNotPresent(key_menuItem = "${textIcon}", locator1 = "MenuItem#ANY_MENU_ITEM"))) {
 				MenuItem.click(menuItem = "العربية-المملكة العربية السعودية");
 			}
 			else {

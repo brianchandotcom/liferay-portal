@@ -134,7 +134,6 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
-
 		else if ("${contentSharingPermission}" == "Comment") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -146,7 +145,6 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
-
 		else if ("${contentSharingPermission}" == "Update") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

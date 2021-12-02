@@ -19,7 +19,6 @@ definition {
 				-d parentFolderId=${parentFolderId} \
 				-d name=${name}
 		''';
-
 		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['folderId']");
 
 		if ("${folderId}" == "") {
@@ -40,14 +39,15 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
 				-u test@liferay.com:test \
 				-d groupIds=${groupId}
 		''';
-
 		var typeId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${documentTypeName}')]['fileEntryTypeId']");
 
 		if ("${typeId}" == "") {

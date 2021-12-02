@@ -5,7 +5,7 @@ definition {
 			fail("Please set 'fileName'");
 		}
 
-		var extension = StringUtil.extractLast("${fileName}",".");
+		var extension = StringUtil.extractLast("${fileName}", ".");
 
 		return "${extension}";
 	}

@@ -4,15 +4,15 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			site = "${site}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var urlTitle = StringUtil.replace("${title}", " ", "-");
 		var urlTitle = StringUtil.lowerCase("${urlTitle}");
 
 		var articleId = JSONWebcontentAPI._getArticleIdByURLTitle(
-			site = "${site}",
 			groupName = "${groupName}",
+			site = "${site}",
 			urlTitle = "${urlTitle}");
 
 		return "${articleId}";
@@ -22,7 +22,7 @@ definition {
 		JSONUtil2._exclusiveOrCheck(
 			A = "${content}",
 			B = "${contentMap}",
-			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none.");
+			failMessage = "Please only set 'content' or only 'contentMap' but not both or none.");
 
 		if (isSet(contentMap)) {
 			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
@@ -69,7 +69,9 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		return "${groupId}";
 	}

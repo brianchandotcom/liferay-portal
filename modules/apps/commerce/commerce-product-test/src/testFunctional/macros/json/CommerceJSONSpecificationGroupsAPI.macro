@@ -48,7 +48,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var specificationGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${specificationGroupIds}";
@@ -66,7 +65,6 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
-
 		var specificationGroupsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce specification groups count is: ${specificationGroupsCount}");

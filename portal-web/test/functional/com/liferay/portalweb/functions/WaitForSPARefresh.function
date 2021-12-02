@@ -8,9 +8,7 @@ definition {
 			selenium.click("//button[contains(@class,'close')]");
 		}
 
-		selenium.waitForElementNotPresent(
-			"//div[contains(@class,'lfr-notification-wrapper') and contains(@style,'height: 82px;')]"
-		);
+		selenium.waitForElementNotPresent("//div[contains(@class,'lfr-notification-wrapper') and contains(@style,'height: 82px;')]");
 
 		selenium.assertJavaScriptErrors();
 

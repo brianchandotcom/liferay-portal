@@ -26,6 +26,7 @@ definition {
 					locator1 = "Card#CARD",
 					value1 = "${collectionName}");
 			}
+
 			AssertElementPresent(
 				key_card = "${collectionName}",
 				locator1 = "Card#CARD_SELECTED");

@@ -100,6 +100,7 @@ definition {
 				type = "link");
 
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-content--master')][contains(@class,'text-center')][//div[contains(@class,'component-button')]]");
+
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-content--master')][contains(@style,'color: var(--gray-300)')][//div[contains(@class,'component-button')]]");
 		}
 	}

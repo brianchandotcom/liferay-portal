@@ -52,6 +52,7 @@ definition {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 			var fragmentHTML = '''<lfr-widget-web-content>''';
+
 			var htmlSnippet = '''<lfr-''';
 
 			FragmentsEditor.autocompleteFragmentHTML(

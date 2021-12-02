@@ -738,6 +738,7 @@ definition {
 				}
 			}
 		}
+
 		Pause(locator1 = "1000");
 
 		AssertClick(

@@ -712,6 +712,7 @@ definition {
 				fieldFieldLabel = "Multiple Selection",
 				index = "${index}",
 				optionValue = "${optionValue}");
+
 			var index = ${index} + 1;
 		}
 

@@ -81,6 +81,7 @@ definition {
 			// This data takes too long to appear
 
 			var portalURL = PropsUtil.get("portal.url");
+
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACAssets.viewAssetAppearsOnMetric(
@@ -96,7 +97,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "ac,ac2";
-
 		var emailList = "ac@liferay.com,ac2@liferay.com";
 
 		task ("Create users and connect to AC") {
@@ -165,7 +165,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var usernameList = "ac,ac2";
-
 		var emailList = "ac@liferay.com,ac2@liferay.com";
 
 		task ("Create users and connect to AC") {
@@ -427,8 +426,8 @@ definition {
 			var curr_metricValue = "";
 
 			for (var current : list "Abandonment-${expectedValue1},Submissions-${expectedValue2},Views-${expectedValue3},Completion Time-${expectedValue4}") {
-				curr_metricName = StringUtil.extractFirst("${current}","-");
-				curr_metricValue = StringUtil.extractLast("${current}","-");
+				var curr_metricName = StringUtil.extractFirst("${current}", "-");
+				var curr_metricValue = StringUtil.extractLast("${current}", "-");
 
 				ACCards.viewMetricValue(
 					cardTitle = "Visitors Behavior",
@@ -640,9 +639,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";
-
 		var usernameList = "ac,liferay,dxp";
-
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

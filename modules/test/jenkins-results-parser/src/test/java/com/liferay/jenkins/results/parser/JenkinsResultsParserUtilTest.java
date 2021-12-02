@@ -127,7 +127,7 @@ public class JenkinsResultsParserUtilTest
 			JenkinsResultsParserUtil.getLocalURL(
 				"http://test-4-1/ABC?123=456&xyz=abc"));
 		testEquals(
-			"http://release-1/1/ABC?123=456&xyz=abc",
+			"https://release.liferay.com/1/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"https://release.liferay.com/1/ABC?123=456&xyz=abc"));
 		testEquals(

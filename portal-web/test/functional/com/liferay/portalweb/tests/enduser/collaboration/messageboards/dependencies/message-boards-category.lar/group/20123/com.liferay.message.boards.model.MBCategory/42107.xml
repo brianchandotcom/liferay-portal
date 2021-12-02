@@ -1,0 +1,23 @@
+<MBCategory>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>36e93841-cca3-7c75-120f-07357bdeb57b</__uuid>
+  <__categoryId>42107</__categoryId>
+  <__groupId>20123</__groupId>
+  <__companyId>20099</__companyId>
+  <__userId>20127</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2021-12-02 02:32:17.989</__createDate>
+  <__modifiedDate class="sql-timestamp">2021-12-02 02:32:17.989</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__parentCategoryId>0</__parentCategoryId>
+  <__name>MB Category Name</__name>
+  <__description></__description>
+  <__displayStyle>default</__displayStyle>
+  <__status>0</__status>
+  <__statusByUserId>0</__statusByUserId>
+  <__statusByUserName></__statusByUserName>
+  <__columnBitmask>0</__columnBitmask>
+</MBCategory>

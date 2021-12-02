@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7413" export-date="Thu, 02 Dec 2021 02:33:47 +0000" type="portlet" company-id="20099" company-group-id="20125" group-id="20123" user-personal-site-group-id="20124" private-layout="true" root-portlet-id="com_liferay_message_boards_web_portlet_MBAdminPortlet" schema-version="4.0.0"/>
+	<missing-references/>
+	<portlet portlet-id="com_liferay_message_boards_web_portlet_MBAdminPortlet" layout-id="1" path="/group/20123/portlet/com_liferay_message_boards_web_portlet_MBAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
+	<manifest-summary>
+		<staged-model manifest-summary-key="com.liferay.message.boards.model.MBCategory" addition-count="1"/>
+		<staged-model manifest-summary-key="com.liferay.message.boards.model.MBBan"/>
+		<staged-model manifest-summary-key="com.liferay.message.boards.model.MBMessage#referrer-class-name-all"/>
+		<staged-model manifest-summary-key="com.liferay.message.boards.model.MBThreadFlag"/>
+	</manifest-summary>
+</root>

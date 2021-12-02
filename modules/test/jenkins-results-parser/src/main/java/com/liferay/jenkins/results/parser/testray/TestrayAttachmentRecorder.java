@@ -110,16 +110,6 @@ public class TestrayAttachmentRecorder {
 		return new File(workspace, "testray/logs");
 	}
 
-	private File _convertToGzipFile(File file) {
-		File gzipFile = new File(file.getParent(), file.getName() + ".gz");
-
-		JenkinsResultsParserUtil.gzip(file, gzipFile);
-
-		JenkinsResultsParserUtil.delete(file);
-
-		return gzipFile;
-	}
-
 	private List<File> _getLiferayBundlesDirs() {
 		List<File> liferayBundlesDirs = new ArrayList<>();
 
@@ -270,8 +260,6 @@ public class TestrayAttachmentRecorder {
 		try {
 			JenkinsResultsParserUtil.write(
 				buildResultsJSONObjectFile, jsonObject.toString());
-
-			_convertToGzipFile(buildResultsJSONObjectFile);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -288,8 +276,6 @@ public class TestrayAttachmentRecorder {
 		try {
 			JenkinsResultsParserUtil.write(
 				jenkinsConsoleFile, jenkinsConsoleTextLoader.getConsoleText());
-
-			_convertToGzipFile(jenkinsConsoleFile);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -313,8 +299,6 @@ public class TestrayAttachmentRecorder {
 				jenkinsReportFile,
 				StringEscapeUtils.unescapeXml(
 					Dom4JUtil.format(jenkinsReportElement, true)));
-
-			_convertToGzipFile(jenkinsReportFile);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -367,10 +351,7 @@ public class TestrayAttachmentRecorder {
 				JenkinsResultsParserUtil.write(liferayLogFile, sb.toString());
 			}
 			catch (IOException ioException) {
-				continue;
 			}
-
-			_convertToGzipFile(liferayLogFile);
 		}
 	}
 
@@ -432,10 +413,7 @@ public class TestrayAttachmentRecorder {
 					liferayOSGiLogFile, liferayOSGiLogFileContent);
 			}
 			catch (IOException ioException) {
-				continue;
 			}
-
-			_convertToGzipFile(liferayOSGiLogFile);
 		}
 	}
 
@@ -508,8 +486,6 @@ public class TestrayAttachmentRecorder {
 							poshiReportJPGFile.getName();
 
 						if (content.contains("/" + poshiReportJPGFileName)) {
-							_convertToGzipFile(poshiReportJPGFile);
-
 							continue;
 						}
 
@@ -522,8 +498,6 @@ public class TestrayAttachmentRecorder {
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
 				}
-
-				_convertToGzipFile(poshiReportIndexFile);
 			}
 		}
 	}
@@ -566,8 +540,6 @@ public class TestrayAttachmentRecorder {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-
-		_convertToGzipFile(poshiWarningsFile);
 	}
 
 	private static final Pattern _bundlesDirNamePattern = Pattern.compile(

@@ -115,15 +115,15 @@ export const QUERY_SXP_ELEMENTS = [
 ];
 
 export const INITIAL_CONFIGURATION = {
-	advanced: DEFAULT_ADVANCED_CONFIGURATION,
+	advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 	aggregationConfiguration: {},
-	general: {},
-	highlight: DEFAULT_HIGHLIGHT_CONFIGURATION,
-	parameters: DEFAULT_PARAMETER_CONFIGURATION,
+	generalConfiguration: {},
+	highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
+	parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
 	queryConfiguration: {
 		applyIndexerClauses: false,
 	},
-	sort_configuration: DEFAULT_SORT_CONFIGURATION,
+	sortConfiguration: DEFAULT_SORT_CONFIGURATION,
 };
 
 /**

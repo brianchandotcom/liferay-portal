@@ -103,13 +103,17 @@ function EditSXPBlueprintForm({
 		parameterConfig,
 		sortConfig,
 	}) => ({
-		advanced: advancedConfig ? JSON.parse(advancedConfig) : {},
+		advancedConfiguration: advancedConfig ? JSON.parse(advancedConfig) : {},
 		aggregationConfiguration: aggregationConfig
 			? JSON.parse(aggregationConfig)
 			: {},
-		general: frameworkConfig,
-		highlight: highlightConfig ? JSON.parse(highlightConfig) : {},
-		parameters: parameterConfig ? JSON.parse(parameterConfig) : {},
+		generalConfiguration: frameworkConfig,
+		highlightConfiguration: highlightConfig
+			? JSON.parse(highlightConfig)
+			: {},
+		parameterConfiguration: parameterConfig
+			? JSON.parse(parameterConfig)
+			: {},
 		queryConfiguration: {
 			applyIndexerClauses,
 		},

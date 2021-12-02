@@ -127,9 +127,9 @@ const AddModal = ({
 	};
 
 	const _getConfiguration = () => ({
-		advanced: DEFAULT_ADVANCED_CONFIGURATION,
+		advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 		aggregationConfiguration: {},
-		general: {
+		generalConfiguration: {
 			clauseContributorsExcludes:
 				framework === FRAMEWORK_TYPES.ALL
 					? []
@@ -144,8 +144,8 @@ const AddModal = ({
 					: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION.includes,
 			searchableAssetTypes: searchableTypes,
 		},
-		highlight: DEFAULT_HIGHLIGHT_CONFIGURATION,
-		parameters: DEFAULT_PARAMETER_CONFIGURATION,
+		highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
+		parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
 		queryConfiguration: {
 			applyIndexerClauses: framework === FRAMEWORK_TYPES.ALL,
 		},

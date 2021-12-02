@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,28 +37,33 @@ public class JournalArticleDataFileEntryIdUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					"select id_, content from JournalArticle");
-			PreparedStatement updatePreparedStatement =
-				connection.prepareStatement(
-					"update JournalArticle set content = ? where id_ = ?");
-			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+		processConcurrently(
+			"select id_, content from JournalArticle",
+			resultSet -> new Object[] {
+				resultSet.getLong("id_"), resultSet.getString("content")
+			},
+			columns -> {
+				long id = (long)columns[0];
 
-			while (resultSet.next()) {
-				String content = resultSet.getString("content");
+				String content = (String)columns[1];
 
-				String upgradedContent = _upgradeContent(content);
+				String updateSQL =
+					"update JournalArticle set content = ? where id_ = ?";
 
-				if (!Objects.equals(content, upgradedContent)) {
-					updatePreparedStatement.setString(1, upgradedContent);
-					updatePreparedStatement.setLong(
-						2, resultSet.getLong("id_"));
+				try (PreparedStatement updatePreparedStatement =
+						connection.prepareStatement(updateSQL)) {
 
-					updatePreparedStatement.executeUpdate();
+					String upgradedContent = _upgradeContent(content);
+
+					if (!Objects.equals(content, upgradedContent)) {
+						updatePreparedStatement.setString(1, upgradedContent);
+						updatePreparedStatement.setLong(2, id);
+
+						updatePreparedStatement.executeUpdate();
+					}
 				}
-			}
-		}
+			},
+			"Unable to update fileEntryId for journal article data");
 	}
 
 	private String _upgradeContent(String content) throws DocumentException {

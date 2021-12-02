@@ -373,6 +373,13 @@ public class SourceFormatterUtil {
 		);
 	}
 
+	public static JSONObject getPortalJSONObjectByVersion(String version) {
+
+		// TODO: Grab from URL (need to figure out what that URL is first)
+
+		return new JSONObjectImpl();
+	}
+
 	public static String getSimpleName(String name) {
 		int pos = name.lastIndexOf(CharPool.PERIOD);
 

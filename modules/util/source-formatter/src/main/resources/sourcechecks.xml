@@ -1024,6 +1024,10 @@
 			<category name="Performance" />
 			<description name="Finds taglibs, variables and imports that are unused." />
 		</check>
+		<check name="JSPUpgradeRemovedTagsCheck">
+			<category name="Upgrade" />
+			<description name="Finds removed tags when upgrading." />
+		</check>
 		<check name="JSPVariableOrderCheck">
 			<category name="Styling" />
 			<description name="Checks if variable names are in alphabetical order." />

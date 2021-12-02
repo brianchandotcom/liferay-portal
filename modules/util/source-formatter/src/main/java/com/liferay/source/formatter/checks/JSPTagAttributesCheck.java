@@ -64,6 +64,14 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
 	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {
+		Map<String, String> attributesMap = tag.getAttributesMap();
+
+		if (attributesMap.isEmpty()) {
+			tag.setMultiLine(false);
+
+			return tag;
+		}
+
 		String tagName = tag.getName();
 
 		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||
@@ -262,7 +270,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
-					String htmlTag = _getTag(trimmedLine, 0);
+					String htmlTag = getTag(trimmedLine, 0);
 
 					if (htmlTag != null) {
 						String newHTMLTag = formatTagAttributes(
@@ -272,7 +280,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 					}
 				}
 
-				for (String jspTag : _getJSPTag(line)) {
+				for (String jspTag : getJSPTags(line)) {
 					boolean forceSingleLine = false;
 
 					if (!line.equals(jspTag)) {
@@ -377,24 +385,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 		}
 
 		return newAttributeValue;
-	}
-
-	private List<String> _getJSPTag(String line) {
-		List<String> jspTags = new ArrayList<>();
-
-		Matcher matcher = _jspTaglibPattern.matcher(line);
-
-		while (matcher.find()) {
-			String tag = _getTag(line, matcher.start());
-
-			if (tag == null) {
-				return jspTags;
-			}
-
-			jspTags.add(tag);
-		}
-
-		return jspTags;
 	}
 
 	private synchronized Set<String> _getPrimitiveTagAttributeDataTypes() {
@@ -580,24 +570,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 		return setMethodsMap;
 	}
 
-	private String _getTag(String s, int fromIndex) {
-		int x = fromIndex;
-
-		while (true) {
-			x = s.indexOf(">", x + 1);
-
-			if (x == -1) {
-				return null;
-			}
-
-			String part = s.substring(fromIndex, x + 1);
-
-			if (getLevel(part, "<", ">") == 0) {
-				return part;
-			}
-		}
-	}
-
 	private boolean _isValidTagAttributeValue(String value, String dataType) {
 		if (dataType.endsWith("Boolean") || dataType.equals("boolean")) {
 			return Validator.isBoolean(value);
@@ -644,8 +616,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 	private static final Pattern _javaSourceInsideTagPattern = Pattern.compile(
 		"<%.*?%>");
-	private static final Pattern _jspTaglibPattern = Pattern.compile(
-		"\t*<[-\\w]+:[-\\w]+ .");
 	private static final Pattern _messageArgumentArrayPattern = Pattern.compile(
 		"^(<%= )new \\w+\\[\\] \\{([^<>]+)\\}( %>)$");
 	private static final Pattern _styleAttributePattern = Pattern.compile(

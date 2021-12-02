@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,9 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
-	protected abstract Tag doFormatLineBreaks(Tag tag, String absolutePath);
+	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {
+		return tag;
+	}
 
 	protected String formatIncorrectLineBreak(String fileName, String content) {
 		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
@@ -106,6 +109,9 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 			String tag = matcher.group(1);
 
+			//System.out.println("---");
+			//System.out.println(tag);
+
 			String lastLine = StringUtil.trim(
 				getLine(content, getLineNumber(content, matcher.end(1))));
 
@@ -152,7 +158,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			boolean forceSingleLine)
 		throws Exception {
 
-		Tag tag = _parseTag(s, escapeQuotes);
+		Tag tag = parseTag(s, escapeQuotes);
 
 		if (tag == null) {
 			return s;
@@ -173,6 +179,148 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 		throws Exception {
 
 		return tag;
+	}
+
+	protected List<String> getJSPTags(String line) {
+		List<String> jspTags = new ArrayList<>();
+
+		Matcher matcher = _jspTaglibPattern.matcher(line);
+
+		while (matcher.find()) {
+			String tag = getTag(line, matcher.start());
+
+			if (tag == null) {
+				return jspTags;
+			}
+
+			jspTags.add(tag);
+		}
+
+		return jspTags;
+	}
+
+	protected String getTag(String s, int fromIndex) {
+		int x = fromIndex;
+
+		while (true) {
+			x = s.indexOf(">", x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String part = s.substring(fromIndex, x + 1);
+
+			if (getLevel(part, "<", ">") == 0) {
+				return part;
+			}
+		}
+	}
+
+	protected Tag parseTag(String s, boolean escapeQuotes) {
+		String indent = SourceUtil.getIndent(s);
+
+		s = StringUtil.trim(s);
+
+		boolean multiLine = false;
+
+		int x = -1;
+
+		if (s.contains(StringPool.NEW_LINE)) {
+			multiLine = true;
+
+			x = s.indexOf(CharPool.NEW_LINE);
+		}
+		else {
+			x = s.indexOf(CharPool.SPACE);
+		}
+
+		if (x == -1) {
+			return null;
+		}
+
+		String tagName = s.substring(1, x);
+
+		Tag tag = new Tag(tagName, indent, multiLine, escapeQuotes);
+
+		s = s.substring(x + 1);
+
+		if (s.equals(">") || s.equals("/>") ||
+			(tagName.matches("[-\\w:]+") &&
+			 s.matches(">\\s*</" + tagName + "\\s*>"))) {
+
+			tag.setClosingTag(
+				StringUtil.removeChars(
+					s, CharPool.NEW_LINE, CharPool.SPACE, CharPool.TAB));
+
+			return tag;
+		}
+
+		while (true) {
+			x = s.indexOf(CharPool.EQUAL);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String attributeName = StringUtil.trim(s.substring(0, x));
+
+			if (!_isValidAttributName(attributeName)) {
+				return null;
+			}
+
+			s = StringUtil.trimLeading(s.substring(x + 1));
+
+			char delimeter = s.charAt(0);
+
+			if ((delimeter != CharPool.APOSTROPHE) &&
+				(delimeter != CharPool.QUOTE)) {
+
+				return null;
+			}
+
+			s = s.substring(1);
+
+			x = -1;
+
+			while (true) {
+				x = s.indexOf(delimeter, x + 1);
+
+				if (x == -1) {
+					return null;
+				}
+
+				String attributeValue = s.substring(0, x);
+
+				if (attributeName.equals("class")) {
+					attributeValue = StringUtil.trim(attributeValue);
+				}
+
+				if ((attributeValue.startsWith("<%") &&
+					 (getLevel(attributeValue, "<%", "%>") == 0)) ||
+					(!attributeValue.startsWith("<%") &&
+					 (getLevel(attributeValue, "<", ">") == 0))) {
+
+					tag.putAttribute(attributeName, attributeValue);
+
+					s = StringUtil.trim(s.substring(x + 1));
+
+					if (s.equals(">") || s.equals("/>") ||
+						(tagName.matches("[-\\w:]+") &&
+						 s.matches(">\\s*</" + tagName + "\\s*>"))) {
+
+						tag.setClosingTag(
+							StringUtil.removeChars(
+								s, CharPool.NEW_LINE, CharPool.SPACE,
+								CharPool.TAB));
+
+						return tag;
+					}
+
+					break;
+				}
+			}
+		}
 	}
 
 	protected Tag sortHTMLTagAttributes(Tag tag) {
@@ -361,105 +509,12 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 		return matcher.matches();
 	}
 
-	private Tag _parseTag(String s, boolean escapeQuotes) {
-		String indent = SourceUtil.getIndent(s);
-
-		s = StringUtil.trim(s);
-
-		boolean multiLine = false;
-
-		int x = -1;
-
-		if (s.contains(StringPool.NEW_LINE)) {
-			multiLine = true;
-
-			x = s.indexOf(CharPool.NEW_LINE);
-		}
-		else {
-			x = s.indexOf(CharPool.SPACE);
-		}
-
-		if (x == -1) {
-			return null;
-		}
-
-		String tagName = s.substring(1, x);
-
-		Tag tag = new Tag(tagName, indent, multiLine, escapeQuotes);
-
-		s = s.substring(x + 1);
-
-		while (true) {
-			x = s.indexOf(CharPool.EQUAL);
-
-			if (x == -1) {
-				return null;
-			}
-
-			String attributeName = StringUtil.trim(s.substring(0, x));
-
-			if (!_isValidAttributName(attributeName)) {
-				return null;
-			}
-
-			s = StringUtil.trimLeading(s.substring(x + 1));
-
-			char delimeter = s.charAt(0);
-
-			if ((delimeter != CharPool.APOSTROPHE) &&
-				(delimeter != CharPool.QUOTE)) {
-
-				return null;
-			}
-
-			s = s.substring(1);
-
-			x = -1;
-
-			while (true) {
-				x = s.indexOf(delimeter, x + 1);
-
-				if (x == -1) {
-					return null;
-				}
-
-				String attributeValue = s.substring(0, x);
-
-				if (attributeName.equals("class")) {
-					attributeValue = StringUtil.trim(attributeValue);
-				}
-
-				if ((attributeValue.startsWith("<%") &&
-					 (getLevel(attributeValue, "<%", "%>") == 0)) ||
-					(!attributeValue.startsWith("<%") &&
-					 (getLevel(attributeValue, "<", ">") == 0))) {
-
-					tag.putAttribute(attributeName, attributeValue);
-
-					s = StringUtil.trim(s.substring(x + 1));
-
-					if (s.equals(">") || s.equals("/>") ||
-						(tagName.matches("[-\\w:]+") &&
-						 s.matches(">\\s*</" + tagName + "\\s*>"))) {
-
-						tag.setClosingTag(
-							StringUtil.removeChars(
-								s, CharPool.NEW_LINE, CharPool.SPACE,
-								CharPool.TAB));
-
-						return tag;
-					}
-
-					break;
-				}
-			}
-		}
-	}
-
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-zA-Z]+[-_:a-zA-Z0-9]*");
 	private static final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\n(\t*)(<\\w[-_:\\w]*) (.*)([\"']|%=)\n[\\s\\S]*?>\n");
+	private static final Pattern _jspTaglibPattern = Pattern.compile(
+		"\t*<[-\\w]+:[-\\w]+ .");
 	private static final Pattern _multilineTagPattern = Pattern.compile(
 		"(([ \t]*)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
 

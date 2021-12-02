@@ -113,10 +113,10 @@ public class SXPPortalInstanceLifecycleListener
 	private void _addSXPElement(Company company, SXPElement sxpElement)
 		throws Exception {
 
-		User defaultUser = company.getDefaultUser();
+		User user = company.getDefaultUser();
 
 		_sxpElementLocalService.addSXPElement(
-			defaultUser.getUserId(),
+			user.getUserId(),
 			LocalizedMapUtil.getLocalizedMap(sxpElement.getDescription_i18n()),
 			String.valueOf(sxpElement.getElementDefinition()), true,
 			LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
@@ -126,7 +126,7 @@ public class SXPPortalInstanceLifecycleListener
 					setAddGuestPermissions(true);
 					setCompanyId(company.getCompanyId());
 					setScopeGroupId(company.getGroupId());
-					setUserId(defaultUser.getUserId());
+					setUserId(user.getUserId());
 				}
 			});
 	}

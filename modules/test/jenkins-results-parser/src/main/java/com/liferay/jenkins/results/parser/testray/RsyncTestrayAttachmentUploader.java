@@ -22,6 +22,7 @@ import com.liferay.jenkins.results.parser.RemoteExecutor;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -34,10 +35,28 @@ import java.util.concurrent.TimeoutException;
 public class RsyncTestrayAttachmentUploader
 	extends BaseTestrayAttachmentUploader {
 
-	public RsyncTestrayAttachmentUploader(Build build, URL testrayServerURL) {
-		super(build);
+	@Override
+	public File getPreparedFilesBaseDir() {
+		String workspace = System.getenv("WORKSPACE");
 
-		_testrayServerURL = testrayServerURL;
+		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
+			throw new RuntimeException("Please set WORKSPACE");
+		}
+
+		return new File(workspace, "testray/prepared_rsync_logs");
+	}
+
+	@Override
+	public URL getTestrayServerLogsURL() {
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(getTestrayServerURL()),
+					"/reports/production/logs"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	@Override
@@ -46,102 +65,19 @@ public class RsyncTestrayAttachmentUploader
 			return;
 		}
 
-		TestrayAttachmentRecorder testrayAttachmentRecorder =
-			getTestrayAttachmentRecorder();
+		prepareFiles();
 
-		testrayAttachmentRecorder.record();
+		_rsyncDirs();
 
-		makeRemoteDestDirs();
-
-		rsync();
+		_rsyncFiles();
 
 		_uploaded = true;
 	}
 
-	protected void makeRemoteDestDirs() {
-		RemoteExecutor remoteExecutor = new RemoteExecutor();
+	protected RsyncTestrayAttachmentUploader(
+		Build build, URL testrayServerURL) {
 
-		List<String> commands = new ArrayList<>();
-
-		List<File> sourceTestrayLogsParentDirs = new ArrayList<>();
-
-		for (File sourceTestrayLogsFile : _getSourceTestrayLogsFiles()) {
-			File sourceTestrayLogsParentDir =
-				sourceTestrayLogsFile.getParentFile();
-
-			if ((sourceTestrayLogsParentDir == null) ||
-				!sourceTestrayLogsParentDir.isDirectory() ||
-				sourceTestrayLogsParentDirs.contains(
-					sourceTestrayLogsParentDir)) {
-
-				continue;
-			}
-
-			sourceTestrayLogsParentDirs.add(sourceTestrayLogsParentDir);
-
-			commands.add(
-				JenkinsResultsParserUtil.combine(
-					"mkdir -p \"", _getTestrayMountDirPath(),
-					"/jenkins/testray-results/production/logs/",
-					JenkinsResultsParserUtil.getPathRelativeTo(
-						sourceTestrayLogsParentDir, _getSourceTestrayLogsDir()),
-					"\""));
-		}
-
-		if (JenkinsResultsParserUtil.isWindows()) {
-			remoteExecutor.execute(
-				1, new String[] {"root@" + _getMasterHostname()},
-				commands.toArray(new String[0]));
-		}
-		else {
-			remoteExecutor.execute(
-				1, new String[] {_getMasterHostname()},
-				commands.toArray(new String[0]));
-		}
-	}
-
-	protected void rsync() {
-		String[] commands = null;
-
-		if (JenkinsResultsParserUtil.isWindows()) {
-			commands = new String[2];
-
-			commands[0] = JenkinsResultsParserUtil.combine(
-				"cd ",
-				JenkinsResultsParserUtil.getCanonicalPath(
-					_getSourceTestrayLogsDir()));
-			commands[1] = JenkinsResultsParserUtil.combine(
-				"rsync -aqz --chmod=go=rx ./* \"root@", _getMasterHostname(),
-				"::testray-results/production/logs/\"");
-		}
-		else {
-			commands = new String[1];
-
-			commands[0] = JenkinsResultsParserUtil.combine(
-				"rsync -aqz --chmod=go=rx \"",
-				JenkinsResultsParserUtil.getCanonicalPath(
-					_getSourceTestrayLogsDir()),
-				"\"/* \"", _getMasterHostname(),
-				"::testray-results/production/logs/\"");
-		}
-
-		try {
-			JenkinsResultsParserUtil.executeBashCommands(commands);
-		}
-		catch (IOException | TimeoutException exception) {
-			throw new RuntimeException(exception);
-		}
-
-		for (File sourceTestrayLogsFile : _getSourceTestrayLogsFiles()) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Uploaded ", String.valueOf(_testrayServerURL),
-					"/reports/production/logs/",
-					JenkinsResultsParserUtil.fixURL(
-						JenkinsResultsParserUtil.getPathRelativeTo(
-							sourceTestrayLogsFile,
-							_getSourceTestrayLogsDir()))));
-		}
+		super(build, testrayServerURL);
 	}
 
 	private String _getMasterHostname() {
@@ -150,24 +86,6 @@ public class RsyncTestrayAttachmentUploader
 		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
 
 		return jenkinsMaster.getName();
-	}
-
-	private File _getSourceTestrayLogsDir() {
-		TestrayAttachmentRecorder testrayAttachmentRecorder =
-			getTestrayAttachmentRecorder();
-
-		return testrayAttachmentRecorder.getTestrayLogsDir();
-	}
-
-	private List<File> _getSourceTestrayLogsFiles() {
-		if (_sourceTestrayLogsFiles != null) {
-			return _sourceTestrayLogsFiles;
-		}
-
-		_sourceTestrayLogsFiles = JenkinsResultsParserUtil.findFiles(
-			_getSourceTestrayLogsDir(), ".*");
-
-		return _sourceTestrayLogsFiles;
 	}
 
 	private String _getTestrayMountDirPath() {
@@ -180,8 +98,83 @@ public class RsyncTestrayAttachmentUploader
 		}
 	}
 
-	private List<File> _sourceTestrayLogsFiles;
-	private final URL _testrayServerURL;
+	private void _rsyncDirs() {
+		RemoteExecutor remoteExecutor = new RemoteExecutor();
+
+		List<String> commands = new ArrayList<>();
+
+		List<File> preparedParentDirs = new ArrayList<>();
+
+		for (File preparedFile : getPreparedFiles()) {
+			File preparedParentDir = preparedFile.getParentFile();
+
+			if ((preparedParentDir == null) ||
+				!preparedParentDir.isDirectory() ||
+				preparedParentDirs.contains(preparedParentDir)) {
+
+				continue;
+			}
+
+			preparedParentDirs.add(preparedParentDir);
+
+			commands.add(
+				JenkinsResultsParserUtil.combine(
+					"mkdir -p \"", _getTestrayMountDirPath(),
+					"/jenkins/testray-results/production/logs/",
+					JenkinsResultsParserUtil.getPathRelativeTo(
+						preparedParentDir, getPreparedFilesBaseDir()),
+					"\""));
+		}
+
+		remoteExecutor.execute(
+			1, new String[] {"root@" + _getMasterHostname()},
+			commands.toArray(new String[0]));
+	}
+
+	private void _rsyncFiles() {
+		_rsyncDirs();
+
+		String[] commands = null;
+
+		if (JenkinsResultsParserUtil.isWindows()) {
+			commands = new String[2];
+
+			commands[0] = JenkinsResultsParserUtil.combine(
+				"cd ",
+				JenkinsResultsParserUtil.getCanonicalPath(
+					getPreparedFilesBaseDir()));
+			commands[1] = JenkinsResultsParserUtil.combine(
+				"rsync -aqz --chmod=go=rx ./* \"root@", _getMasterHostname(),
+				"::testray-results/production/logs/\"");
+		}
+		else {
+			commands = new String[1];
+
+			commands[0] = JenkinsResultsParserUtil.combine(
+				"rsync -aqz --chmod=go=rx \"",
+				JenkinsResultsParserUtil.getCanonicalPath(
+					getPreparedFilesBaseDir()),
+				"\"/* \"", _getMasterHostname(),
+				"::testray-results/production/logs/\"");
+		}
+
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(commands);
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
+		}
+
+		for (File preparedFile : getPreparedFiles()) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Uploaded ", String.valueOf(getTestrayServerLogsURL()), "/",
+					JenkinsResultsParserUtil.fixURL(
+						JenkinsResultsParserUtil.getPathRelativeTo(
+							preparedFile, getPreparedFilesBaseDir()))));
+		}
+	}
+
 	private boolean _uploaded;
 
 }

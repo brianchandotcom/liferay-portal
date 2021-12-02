@@ -88,7 +88,8 @@ public class TestrayFactory {
 				build, testrayServerURL);
 		}
 		else {
-			testrayAttachmentUploader = new S3TestrayAttachmentUploader(build);
+			testrayAttachmentUploader = new S3TestrayAttachmentUploader(
+				build, testrayServerURL);
 		}
 
 		_testrayAttachmentUploaders.put(key, testrayAttachmentUploader);

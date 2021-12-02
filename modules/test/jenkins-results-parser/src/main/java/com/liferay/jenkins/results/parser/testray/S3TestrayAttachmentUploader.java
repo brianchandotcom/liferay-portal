@@ -15,14 +15,40 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.io.File;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @author Michael Hashimoto
  */
 public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 
-	public S3TestrayAttachmentUploader(Build build) {
-		super(build);
+	@Override
+	public File getPreparedFilesBaseDir() {
+		String workspace = System.getenv("WORKSPACE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
+			throw new RuntimeException("Please set WORKSPACE");
+		}
+
+		return new File(workspace, "testray/prepared_s3_logs");
+	}
+
+	@Override
+	public URL getTestrayServerLogsURL() {
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(getTestrayServerURL()),
+					"/reports_test/production/logs"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	@Override
@@ -31,17 +57,17 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 			return;
 		}
 
-		TestrayAttachmentRecorder testrayAttachmentRecorder =
-			getTestrayAttachmentRecorder();
-
-		testrayAttachmentRecorder.record();
+		prepareFiles();
 
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
-		testrayS3Bucket.createTestrayS3Objects(
-			testrayAttachmentRecorder.getTestrayLogsDir());
+		testrayS3Bucket.createTestrayS3Objects(getPreparedFilesBaseDir());
 
 		_uploaded = true;
+	}
+
+	protected S3TestrayAttachmentUploader(Build build, URL testrayServerURL) {
+		super(build, testrayServerURL);
 	}
 
 	private boolean _uploaded;

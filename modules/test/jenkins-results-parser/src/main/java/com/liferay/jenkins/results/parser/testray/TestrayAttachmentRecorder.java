@@ -51,7 +51,7 @@ public class TestrayAttachmentRecorder {
 			return;
 		}
 
-		JenkinsResultsParserUtil.delete(getTestrayLogsDir());
+		JenkinsResultsParserUtil.delete(getRecordedFilesBaseDir());
 
 		try {
 			_recordJenkinsConsole();
@@ -100,14 +100,44 @@ public class TestrayAttachmentRecorder {
 			jobVariant + "start.properties");
 	}
 
-	protected File getTestrayLogsDir() {
+	protected File getRecordedFilesBaseDir() {
 		String workspace = System.getenv("WORKSPACE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
 			throw new RuntimeException("Please set WORKSPACE");
 		}
 
-		return new File(workspace, "testray/logs");
+		return new File(workspace, "testray/recorded_logs");
+	}
+
+	protected String getRelativeBuildDirPath() {
+		StringBuilder sb = new StringBuilder();
+
+		Date topLevelStartDate = new Date(
+			Long.parseLong(
+				_startProperties.getProperty("TOP_LEVEL_START_TIME")));
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				topLevelStartDate, "yyyy-MM", "America/Los_Angeles"));
+
+		sb.append("/");
+		sb.append(_startProperties.getProperty("TOP_LEVEL_MASTER_HOSTNAME"));
+		sb.append("/");
+		sb.append(_startProperties.getProperty("TOP_LEVEL_JOB_NAME"));
+		sb.append("/");
+		sb.append(_startProperties.getProperty("TOP_LEVEL_BUILD_NUMBER"));
+		sb.append("/");
+
+		if (!(_build instanceof TopLevelBuild)) {
+			sb.append(_build.getJobVariant());
+			sb.append("/");
+
+			sb.append(
+				JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
+		}
+
+		return sb.toString();
 	}
 
 	private List<File> _getLiferayBundlesDirs() {
@@ -210,34 +240,8 @@ public class TestrayAttachmentRecorder {
 		return _qaWebsitesGitWorkingDirectory;
 	}
 
-	private File _getTestrayLogsBuildDir() {
-		StringBuilder sb = new StringBuilder();
-
-		Date topLevelStartDate = new Date(
-			Long.parseLong(
-				_startProperties.getProperty("TOP_LEVEL_START_TIME")));
-
-		sb.append(
-			JenkinsResultsParserUtil.toDateString(
-				topLevelStartDate, "yyyy-MM", "America/Los_Angeles"));
-
-		sb.append("/");
-		sb.append(_startProperties.getProperty("TOP_LEVEL_MASTER_HOSTNAME"));
-		sb.append("/");
-		sb.append(_startProperties.getProperty("TOP_LEVEL_JOB_NAME"));
-		sb.append("/");
-		sb.append(_startProperties.getProperty("TOP_LEVEL_BUILD_NUMBER"));
-		sb.append("/");
-
-		if (!(_build instanceof TopLevelBuild)) {
-			sb.append(_build.getJobVariant());
-			sb.append("/");
-
-			sb.append(
-				JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
-		}
-
-		return new File(getTestrayLogsDir(), sb.toString());
+	private File _getRecordedFilesBuildDir() {
+		return new File(getRecordedFilesBaseDir(), getRelativeBuildDirPath());
 	}
 
 	private void _recordBuildResult() {
@@ -255,7 +259,7 @@ public class TestrayAttachmentRecorder {
 			});
 
 		File buildResultsJSONObjectFile = new File(
-			_getTestrayLogsBuildDir(), "build-result.json");
+			_getRecordedFilesBuildDir(), "build-result.json");
 
 		try {
 			JenkinsResultsParserUtil.write(
@@ -271,7 +275,7 @@ public class TestrayAttachmentRecorder {
 			new JenkinsConsoleTextLoader(_build.getBuildURL());
 
 		File jenkinsConsoleFile = new File(
-			_getTestrayLogsBuildDir(), "jenkins-console.txt");
+			_getRecordedFilesBuildDir(), "jenkins-console.txt");
 
 		try {
 			JenkinsResultsParserUtil.write(
@@ -292,7 +296,7 @@ public class TestrayAttachmentRecorder {
 		Element jenkinsReportElement = topLevelBuild.getJenkinsReportElement();
 
 		File jenkinsReportFile = new File(
-			_getTestrayLogsBuildDir(), "jenkins-report.html");
+			_getRecordedFilesBuildDir(), "jenkins-report.html");
 
 		try {
 			JenkinsResultsParserUtil.write(
@@ -343,7 +347,7 @@ public class TestrayAttachmentRecorder {
 			}
 
 			File liferayLogFile = new File(
-				_getTestrayLogsBuildDir(),
+				_getRecordedFilesBuildDir(),
 				JenkinsResultsParserUtil.combine(
 					"liferay-log", matcher.group("bundlesSuffix"), ".txt"));
 
@@ -403,7 +407,7 @@ public class TestrayAttachmentRecorder {
 			}
 
 			File liferayOSGiLogFile = new File(
-				_getTestrayLogsBuildDir(),
+				_getRecordedFilesBuildDir(),
 				JenkinsResultsParserUtil.combine(
 					"liferay-osgi-log", matcher.group("bundlesSuffix"),
 					".txt"));
@@ -459,7 +463,8 @@ public class TestrayAttachmentRecorder {
 					poshiReportIndexFile.getParentFile();
 
 				File poshiReportDir = new File(
-					_getTestrayLogsBuildDir(), sourcePoshiReportDir.getName());
+					_getRecordedFilesBuildDir(),
+					sourcePoshiReportDir.getName());
 
 				try {
 					JenkinsResultsParserUtil.copy(
@@ -519,7 +524,7 @@ public class TestrayAttachmentRecorder {
 		}
 
 		File poshiWarningsFile = new File(
-			_getTestrayLogsBuildDir(), "poshi-warnings.xml");
+			_getRecordedFilesBuildDir(), "poshi-warnings.xml");
 
 		try {
 			JenkinsResultsParserUtil.copy(

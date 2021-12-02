@@ -88,34 +88,6 @@ public class FragmentEntryLocalServiceImpl
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
-			String fragmentEntryKey, String name, long previewFileEntryId,
-			int type, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, previewFileEntryId, type, status, serviceContext);
-	}
-
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long userId, long groupId, long fragmentCollectionId,
-			String fragmentEntryKey, String name, String css, String html,
-			String js, boolean cacheable, String configuration,
-			long previewFileEntryId, int type, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, cacheable, configuration, StringPool.BLANK,
-			previewFileEntryId, type, status, serviceContext);
-	}
-
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
 			String js, boolean cacheable, String configuration, String icon,
 			long previewFileEntryId, int type, int status,
@@ -184,20 +156,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return updatedDraftFragmentEntry;
-	}
-
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long userId, long groupId, long fragmentCollectionId,
-			String fragmentEntryKey, String name, String css, String html,
-			String js, String configuration, long previewFileEntryId, int type,
-			int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, false, configuration, previewFileEntryId, type, status,
-			serviceContext);
 	}
 
 	@Override

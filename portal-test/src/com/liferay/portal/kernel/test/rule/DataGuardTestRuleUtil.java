@@ -574,7 +574,21 @@ public class DataGuardTestRuleUtil {
 							Session session =
 								basePersistence.getCurrentSession();
 
-							session.delete(persistedModel);
+							if (session.contains(persistedModel)) {
+								session.delete(persistedModel);
+							}
+							else {
+								BaseModel<?> baseModel =
+									(BaseModel<?>)persistedModel;
+
+								Object refetchedBaseModel = session.get(
+									persistedModel.getClass(),
+									baseModel.getPrimaryKeyObj());
+
+								if (refetchedBaseModel != null) {
+									session.delete(refetchedBaseModel);
+								}
+							}
 
 							return null;
 						}

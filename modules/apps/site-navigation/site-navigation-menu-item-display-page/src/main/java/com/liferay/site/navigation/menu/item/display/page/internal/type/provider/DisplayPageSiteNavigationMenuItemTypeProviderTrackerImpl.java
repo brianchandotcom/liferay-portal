@@ -16,10 +16,11 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type.provide
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.capability.InfoItemCapability;
+import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -36,6 +37,7 @@ import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayP
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeSiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -233,16 +235,19 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 		}
 
 		private boolean _hasDisplayPageInfoItemCapability(String className) {
-			try {
-				_displayPageInfoItemCapability.verify(className);
+			InfoItemCapabilitiesProvider infoItemCapabilitiesProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemCapabilitiesProvider.class, className);
 
-				return true;
-			}
-			catch (CapabilityVerificationException
-						capabilityVerificationException) {
-
+			if (infoItemCapabilitiesProvider == null) {
 				return false;
 			}
+
+			List<InfoItemCapability> infoItemCapabilities =
+				infoItemCapabilitiesProvider.getInfoItemCapabilities();
+
+			return infoItemCapabilities.contains(
+				_displayPageInfoItemCapability);
 		}
 
 		private final BundleContext _bundleContext;

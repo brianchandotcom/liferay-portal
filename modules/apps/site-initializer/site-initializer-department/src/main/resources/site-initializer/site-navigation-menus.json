@@ -37,9 +37,10 @@
 				"type": "layout"
 			},
 			{
-				"friendlyURL": "/github",
-				"privateLayout": false,
-				"type": "layout"
+				"name": "Github",
+				"type": "url",
+				"url": false,
+				"useNewTab": "https://github.com"
 			}
 		],
 		"name": "Privacy Navigation"

@@ -72,7 +72,7 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public String getCPInstanceAdaptiveMediaImageHTMLTag(
-			long companyId, long cpInstanceId)
+			long commerceAccountId, long companyId, long cpInstanceId)
 		throws Exception;
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
@@ -88,10 +88,12 @@ public interface CPInstanceHelper {
 		getCPInstanceCPInstanceOptionValueRels(long cpInstanceId);
 
 	public FileVersion getCPInstanceImageFileVersion(
-			long companyId, long cpInstanceId)
+			long commerceAccountId, long companyId, long cpInstanceId)
 		throws Exception;
 
-	public String getCPInstanceThumbnailSrc(long cpInstanceId) throws Exception;
+	public String getCPInstanceThumbnailSrc(
+			long commerceAccountId, long cpInstanceId)
+		throws Exception;
 
 	public CPInstance getDefaultCPInstance(long cpDefinitionId)
 		throws PortalException;

@@ -805,7 +805,9 @@ public abstract class PoshiElement
 
 				Character topCodeBoundary = poshiScript.charAt(topIndex);
 
-				if (c == _codeBoundariesMap.get(topCodeBoundary)) {
+				if ((c == _codeBoundariesMap.get(topCodeBoundary)) && (i > 0) &&
+					(poshiScript.charAt(i - 1) != '\\')) {
+
 					stack.pop();
 
 					continue;

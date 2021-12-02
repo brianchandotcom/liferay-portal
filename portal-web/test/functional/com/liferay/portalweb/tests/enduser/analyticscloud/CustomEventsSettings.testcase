@@ -51,7 +51,6 @@ definition {
 		// AC Enable ticket: LRAC-10027
 
 		var attributesNameList = "category,price,temp,birthdate,like";
-
 		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
 
 		task ("Add a Web Content Display to page and display the custom event") {
@@ -91,10 +90,10 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributesNameList}",
+				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1",
-				attributesName ="${attributesNameList}",
-				attributesValue ="${attributesValueList}");
+				timeToSendCustomEvent = "1");
 		}
 
 		task ("Close sessions") {
@@ -143,7 +142,6 @@ definition {
 		// AC Enable ticket: LRAC-10026
 
 		var attributesNameList = "category,price,temp,birthdate,like";
-
 		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
 
 		task ("Add a Web Content Display to page and display the custom event") {
@@ -183,10 +181,10 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributesNameList}",
+				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1",
-				attributesName ="${attributesNameList}",
-				attributesValue ="${attributesValueList}");
+				timeToSendCustomEvent = "1");
 		}
 
 		task ("Close sessions") {

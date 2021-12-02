@@ -8,6 +8,30 @@ definition {
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
 	}
 
+	macro createCustomEvent {
+		Type(
+			key_inputID = "name-custom",
+			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
+			value1 = "${customEventName}");
+
+		Type(
+			key_inputID = "times-custom",
+			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
+			value1 = "${timeToSendCustomEvent}");
+
+		Type(
+			key_textareaID = "placements",
+			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
+			value1 = "${attributesName}");
+
+		Type(
+			key_textareaID = "expected",
+			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
+			value1 = "${attributesValue}");
+
+		Click(locator1 = "ACCustomEvents#INPUT_BUTTON");
+	}
+
 	macro createWCWithCustomEventAndAddToPage {
 		if (!(isSet(webContentTitle))) {
 			var webContentTitle = "Custom Event AC Title";
@@ -34,30 +58,6 @@ definition {
 		var customEventName = "AC-${displayDateHour}-${displayDateDay}-${displayDateMonth}-${displayDateYear}";
 
 		return "${customEventName}";
-	}
-
-	macro createCustomEvent {
-		Type(
-			key_inputID = "name-custom",
-			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
-			value1 = "${customEventName}");
-
-		Type(
-			key_inputID = "times-custom",
-			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
-			value1 = "${timeToSendCustomEvent}");
-
-		Type(
-			key_textareaID = "placements",
-			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
-			value1 = "${attributesName}");
-
-		Type(
-			key_textareaID = "expected",
-			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
-			value1 = "${attributesValue}");
-
-		Click(locator1 = "ACCustomEvents#INPUT_BUTTON");
 	}
 
 }

@@ -39,13 +39,9 @@ definition {
 	}
 
 	macro checkFilter {
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
-
 		Check.checkNotVisible(
 			key_filter = "${filterType}",
 			locator1 = "A11yTool#FILTER_CHECKBOX");
-
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
 	}
 
 	macro clickOnAllViolations {
@@ -60,14 +56,22 @@ definition {
 		}
 	}
 
-	macro uncheckFilter {
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+	macro closeFilterPanel {
+		if (IsElementPresent(locator1 = "A11yTool#FILTER_DROPDOWN")) {
+			Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+		}
+	}
 
-		Uncheck.uncheckVisible(
+	macro openFilterPanel {
+		if (IsElementNotPresent(locator1 = "A11yTool#FILTER_DROPDOWN")) {
+			Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+		}
+	}
+
+	macro uncheckFilter {
+		Uncheck.uncheckNotVisible(
 			key_filter = "${filterType}",
 			locator1 = "A11yTool#FILTER_CHECKBOX");
-
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
 	}
 
 	macro waitForAllImpactViolationsPresentInSidePanel {

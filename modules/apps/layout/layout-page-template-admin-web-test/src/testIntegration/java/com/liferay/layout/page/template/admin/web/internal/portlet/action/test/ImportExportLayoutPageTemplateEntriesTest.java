@@ -562,9 +562,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		return _fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), groupId,
 			fragmentCollection.getFragmentCollectionId(), key, name,
-			StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK, 0,
-			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
+			null, 0, FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(long groupId) throws Exception {

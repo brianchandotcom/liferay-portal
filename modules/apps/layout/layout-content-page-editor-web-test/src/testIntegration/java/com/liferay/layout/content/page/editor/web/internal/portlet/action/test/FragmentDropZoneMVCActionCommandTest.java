@@ -383,10 +383,10 @@ public class FragmentDropZoneMVCActionCommandTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			RandomTestUtil.randomString(),
 			_readFileToString("drop_zone_fragment_entry.html"),
-			RandomTestUtil.randomString(),
-			_readFileToString("drop_zone_fragment_entry_configuration.json"), 0,
-			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			RandomTestUtil.randomString(), false,
+			_readFileToString("drop_zone_fragment_entry_configuration.json"),
+			null, 0, FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private Layout _addLayout() throws Exception {

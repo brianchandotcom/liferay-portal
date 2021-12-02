@@ -574,7 +574,7 @@ public class FragmentEntryProcessorEditableTest {
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
-			_readFileToString(htmlFile), null, null, 0,
+			_readFileToString(htmlFile), null, false, null, null, 0,
 			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}

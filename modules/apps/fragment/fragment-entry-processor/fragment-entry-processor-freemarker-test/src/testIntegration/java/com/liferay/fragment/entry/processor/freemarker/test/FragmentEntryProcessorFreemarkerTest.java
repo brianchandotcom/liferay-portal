@@ -147,8 +147,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 					"fragment-entry", "Fragment Entry", null,
 					_readFileToString(
 						"fragment_entry_with_invalid_freemarker_variable.html"),
-					null, null, 0, 0, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					null, false, null, null, 0, 0,
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -566,7 +566,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
-			_readFileToString(htmlFile), null, configuration, 0, 0,
+			_readFileToString(htmlFile), null, false, configuration, null, 0, 0,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

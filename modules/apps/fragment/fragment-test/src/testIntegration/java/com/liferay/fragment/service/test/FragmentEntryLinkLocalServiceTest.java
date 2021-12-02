@@ -112,7 +112,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), null,
 			"Fragment Name", StringPool.BLANK, "<div>test</div>",
-			StringPool.BLANK, _read("configuration-light.json"), 0,
+			StringPool.BLANK, false, _read("configuration-light.json"), null, 0,
 			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
 			_serviceContext);
 
@@ -121,8 +121,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
-				_read("fragment-freemarker.html"), StringPool.BLANK,
-				_read("configuration-light.json"), 0,
+				_read("fragment-freemarker.html"), StringPool.BLANK, false,
+				_read("configuration-light.json"), null, 0,
 				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
@@ -523,8 +523,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", RandomTestUtil.randomString(),
-				"<div>test</div>", RandomTestUtil.randomString(), configuration,
-				0, FragmentConstants.TYPE_SECTION,
+				"<div>test</div>", RandomTestUtil.randomString(), false,
+				configuration, null, 0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -576,8 +576,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK, StringUtil.randomString(),
-				StringPool.BLANK, _read("configuration-light.json"), 0, 0,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				StringPool.BLANK, false, _read("configuration-light.json"),
+				null, 0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -627,8 +627,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
-				_read("fragment-configuration.html"), StringPool.BLANK,
-				_read("configuration-new-field.json"), 0,
+				_read("fragment-configuration.html"), StringPool.BLANK, false,
+				_read("configuration-new-field.json"), null, 0,
 				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
@@ -669,8 +669,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
-				_read("fragment-editable.html"), StringPool.BLANK,
-				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+				_read("fragment-editable.html"), StringPool.BLANK, false,
+				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -710,8 +710,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
-				_read("fragment-editable.html"), StringPool.BLANK,
-				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+				_read("fragment-editable.html"), StringPool.BLANK, false,
+				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =

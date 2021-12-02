@@ -672,8 +672,8 @@ public class PageDefinitionDTOConverterTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				fragmentName, StringPool.BLANK, html, StringPool.BLANK,
-				configuration, 0, FragmentConstants.TYPE_COMPONENT,
+				fragmentName, StringPool.BLANK, html, StringPool.BLANK, false,
+				configuration, null, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =

@@ -339,8 +339,8 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
-				FragmentConstants.TYPE_SECTION,
+				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
+				0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
@@ -349,8 +349,8 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
-				FragmentConstants.TYPE_SECTION,
+				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
+				0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
@@ -417,8 +417,8 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
-				FragmentConstants.TYPE_SECTION,
+				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
+				0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
@@ -427,8 +427,8 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
-				FragmentConstants.TYPE_SECTION,
+				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
+				0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(

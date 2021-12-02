@@ -57,9 +57,9 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div>TEST</div>", StringPool.BLANK, StringPool.BLANK, 0,
-			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			"<div>TEST</div>", StringPool.BLANK, false, StringPool.BLANK, null,
+			0, FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntry(
@@ -80,7 +80,7 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), fragmentCollection.getGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, StringPool.BLANK, 0,
+			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
@@ -108,7 +108,7 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, StringPool.BLANK, 0,
+			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 	}
 
@@ -130,7 +130,7 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, StringPool.BLANK, 0,
+			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 	}
 
@@ -158,8 +158,8 @@ public class FragmentEntryTestUtil {
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomString(), name, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			"{fieldSets: []}", 0, type, WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			"{fieldSets: []}", null, 0, type, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 
@@ -179,8 +179,8 @@ public class FragmentEntryTestUtil {
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomString(), name, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			"{fieldSets: []}", 0, type, WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			"{fieldSets: []}", null, 0, type, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 

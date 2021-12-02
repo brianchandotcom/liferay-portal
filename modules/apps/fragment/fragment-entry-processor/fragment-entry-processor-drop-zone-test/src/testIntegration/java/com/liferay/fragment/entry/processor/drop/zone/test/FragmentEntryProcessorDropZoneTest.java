@@ -141,8 +141,8 @@ public class FragmentEntryProcessorDropZoneTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 				"Fragment Entry", null,
-				_readFileToString("drop_zone_fragment_entry.html"), null, null,
-				0, FragmentConstants.TYPE_SECTION,
+				_readFileToString("drop_zone_fragment_entry.html"), null, false,
+				null, null, 0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(

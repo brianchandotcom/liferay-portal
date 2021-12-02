@@ -105,8 +105,8 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, configuration, previewFileEntryId, type,
-				status, serviceContext);
+				name, css, html, js, false, configuration, null,
+				previewFileEntryId, type, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -147,8 +147,9 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, StringPool.BLANK, previewFileEntryId,
-				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
+				name, css, html, js, false, StringPool.BLANK, null,
+				previewFileEntryId, FragmentConstants.TYPE_COMPONENT, status,
+				serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -187,8 +188,8 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, StringPool.BLANK, previewFileEntryId, type,
-				status, serviceContext);
+				name, css, html, js, false, StringPool.BLANK, null,
+				previewFileEntryId, type, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -227,8 +228,8 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, css, html, js, StringPool.BLANK, 0, type, status,
-				serviceContext);
+				name, css, html, js, false, StringPool.BLANK, null, 0, type,
+				status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -263,7 +264,9 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				name, previewFileEntryId, type, status, serviceContext);
+				name, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				false, StringPool.BLANK, null, previewFileEntryId, type, status,
+				serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -292,9 +295,9 @@ public class FragmentEntryLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), html,
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomLong(), FragmentConstants.TYPE_COMPONENT,
+				StringPool.BLANK, html, StringPool.BLANK, false,
+				StringPool.BLANK, null, RandomTestUtil.randomLong(),
+				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
@@ -321,8 +324,9 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
-				name, css, html, js, StringPool.BLANK, 0,
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), name, css, html, js, false,
+				StringPool.BLANK, null, RandomTestUtil.randomLong(),
 				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
@@ -354,8 +358,9 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
-				name, css, html, js, StringPool.BLANK, previewFileEntryId,
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), name, css, html, js, false,
+				StringPool.BLANK, null, previewFileEntryId,
 				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
@@ -390,9 +395,10 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
-				name, css, html, js, StringPool.BLANK, previewFileEntryId, type,
-				status, serviceContext);
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), name, css, html, js, false,
+				StringPool.BLANK, null, previewFileEntryId,
+				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -426,9 +432,10 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
-				name, css, html, js, StringPool.BLANK, 0, type, status,
-				serviceContext);
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), name, css, html, js, false,
+				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
+				status, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -451,10 +458,11 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
+				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry copyFragmentEntry =
@@ -482,10 +490,11 @@ public class FragmentEntryLocalServiceTest {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
+				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry copyFragmentEntry =
@@ -554,9 +563,10 @@ public class FragmentEntryLocalServiceTest {
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
-				StringUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				"{fieldSets: []}", 0, FragmentConstants.TYPE_COMPONENT,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, "{fieldSets: []}", null, 0,
+				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry persistedFragmentEntry =
@@ -575,9 +585,9 @@ public class FragmentEntryLocalServiceTest {
 		_fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), "test-key",
-			StringUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			"{fieldSets: []}", 0, FragmentConstants.TYPE_COMPONENT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			"{fieldSets: []}", null, 0, FragmentConstants.TYPE_COMPONENT,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		String fragmentEntryKey =
@@ -892,8 +902,8 @@ public class FragmentEntryLocalServiceTest {
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), "<H1>A</H1>",
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomLong(), FragmentConstants.TYPE_COMPONENT,
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
+				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_fragmentEntryLocalService.updateFragmentEntry(
@@ -1028,7 +1038,7 @@ public class FragmentEntryLocalServiceTest {
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), "<H1>A</H1>",
-				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null,
 				RandomTestUtil.randomLong(), FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 

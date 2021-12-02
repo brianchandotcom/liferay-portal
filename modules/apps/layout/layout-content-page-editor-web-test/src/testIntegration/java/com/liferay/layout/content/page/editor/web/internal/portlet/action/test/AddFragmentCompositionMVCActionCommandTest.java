@@ -243,8 +243,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
 				"example-fragment-entry-key", RandomTestUtil.randomString(),
-				StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK, 0,
-				FragmentConstants.TYPE_COMPONENT,
+				StringPool.BLANK, html, StringPool.BLANK, false,
+				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		JournalArticle journalArticle1 = _addJournalArticle(

@@ -648,9 +648,9 @@ public class LayoutPageTemplatesImporterTest {
 		_fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), key, name,
-			StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK, 0,
-			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
+			null, 0, FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private File _generateZipFile(String type, Map<String, String> valuesMap)

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,7 +46,8 @@ public class CheckboxDDMFormFieldTypeReportProcessor
 		if (Validator.isNotNull(valueString)) {
 			updateData(
 				ddmFormInstanceReportEvent,
-				fieldJSONObject.getJSONObject("values"), valueString);
+				fieldJSONObject.getJSONObject("values"),
+				String.valueOf(GetterUtil.getBoolean(valueString)));
 		}
 
 		return fieldJSONObject;

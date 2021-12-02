@@ -24,8 +24,6 @@ import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
-import java.io.IOException;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +45,7 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws IOException {
+		throws Exception {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
@@ -167,7 +165,7 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 	}
 
 	private synchronized JSONObject _getJavaClassesJSONObject()
-		throws IOException {
+		throws Exception {
 
 		if (_javaClassesJSONObject != null) {
 			return _javaClassesJSONObject;
@@ -203,7 +201,7 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 
 	private boolean _hasSuperMethod(
 			JavaMethod javaMethod, JSONArray classNamesJSONArray)
-		throws IOException {
+		throws Exception {
 
 		if (classNamesJSONArray == null) {
 			return false;
@@ -222,7 +220,7 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 
 	private boolean _hasSuperMethod(
 			JavaMethod javaMethod, String className, boolean superClass)
-		throws IOException {
+		throws Exception {
 
 		JSONObject javaClassesJSONObject = _getJavaClassesJSONObject();
 

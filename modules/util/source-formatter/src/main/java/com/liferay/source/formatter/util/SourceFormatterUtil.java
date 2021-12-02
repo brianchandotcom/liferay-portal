@@ -68,6 +68,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
@@ -302,7 +303,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static JSONObject getPortalJSONObject(String dirName)
-		throws IOException {
+		throws Exception {
 
 		return getPortalJSONObject(
 			dirName, new SourceFormatterExcludes(),
@@ -312,19 +313,26 @@ public class SourceFormatterUtil {
 	public static JSONObject getPortalJSONObject(
 			String dirName, SourceFormatterExcludes sourceFormatterExcludes,
 			int maxLineLength)
-		throws IOException {
+		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 
 		List<Future<Tuple>> futures = new ArrayList<>();
 
 		JSONObject taglibsJSONObject = new JSONObjectImpl();
+		JSONObject xmlDefinitionsJSONObject = new JSONObjectImpl();
 
 		List<String> fileNames = scanForFiles(
-			dirName, new String[0], new String[] {"**/*.java", "**/*.tld"},
+			dirName, new String[0],
+			new String[] {"**/*.dtd", "**/*.java", "**/*.tld"},
 			sourceFormatterExcludes, true);
 
 		for (String fileName : fileNames) {
+			if (fileName.endsWith(".dtd")) {
+				xmlDefinitionsJSONObject = _addXMLdefinition(
+					xmlDefinitionsJSONObject, fileName);
+			}
+
 			if (fileName.endsWith(".tld")) {
 				taglibsJSONObject = _addTaglib(taglibsJSONObject, fileName);
 			}
@@ -371,6 +379,8 @@ public class SourceFormatterUtil {
 			"javaClasses", javaClassesJSONObject
 		).put(
 			"taglibs", taglibsJSONObject
+		).put(
+			"xmlDefinitions", xmlDefinitionsJSONObject
 		);
 	}
 
@@ -452,6 +462,42 @@ public class SourceFormatterUtil {
 			excludes, includes, sourceFormatterExcludes);
 
 		return _scanForFiles(baseDirName, pathMatchers, includeSubrepositories);
+	}
+
+	private static JSONArray _addElementValues(
+		JSONArray elementJSONArray, String s) {
+
+		s = s.replaceAll("^\\s*\\(?(.+?)[?*+]?\\)?[?*+]?\\s*$", "$1");
+
+		if (s.equals("#PCDATA")) {
+			return elementJSONArray;
+		}
+
+		if (s.contains(StringPool.COMMA)) {
+			String[] parts = StringUtil.split(s, CharPool.COMMA);
+
+			for (String part : parts) {
+				elementJSONArray = _addElementValues(elementJSONArray, part);
+			}
+
+			return elementJSONArray;
+		}
+
+		if (s.contains(StringPool.PIPE)) {
+			String[] parts = StringUtil.split(s, CharPool.PIPE);
+
+			for (String part : parts) {
+				elementJSONArray = _addElementValues(elementJSONArray, part);
+			}
+
+			return elementJSONArray;
+		}
+
+		if (s.matches("[\\w-]+")) {
+			elementJSONArray.put(s);
+		}
+
+		return elementJSONArray;
 	}
 
 	private static JSONObject _addTaglib(
@@ -546,6 +592,47 @@ public class SourceFormatterUtil {
 			shortNameElement.getStringValue(), taglibJSONObject);
 
 		return taglibsJSONObject;
+	}
+
+	private static JSONObject _addXMLdefinition(
+			JSONObject xmlDefinitionsJSONObject, String fileName)
+		throws Exception {
+
+		if (!fileName.matches(".*_[0-9]_[0-9]_[0-9]\\.dtd")) {
+			return xmlDefinitionsJSONObject;
+		}
+
+		JSONObject xmlDefinitionJSONObject = new JSONObjectImpl();
+
+		File dtdFile = new File(fileName);
+
+		String content = FileUtil.read(dtdFile);
+
+		Matcher matcher = _elementPattern.matcher(content);
+
+		while (matcher.find()) {
+			int x = content.indexOf(">", matcher.end());
+
+			if (x == -1) {
+				return xmlDefinitionJSONObject;
+			}
+
+			JSONArray elementJSONArray = _addElementValues(
+				new JSONArrayImpl(), content.substring(matcher.end() - 1, x));
+
+			if (elementJSONArray.length() > 0) {
+				xmlDefinitionJSONObject.put(matcher.group(1), elementJSONArray);
+			}
+		}
+
+		if (xmlDefinitionJSONObject.length() > 0) {
+			int x = fileName.lastIndexOf(StringPool.SLASH);
+
+			xmlDefinitionsJSONObject.put(
+				fileName.substring(x + 1), xmlDefinitionJSONObject);
+		}
+
+		return xmlDefinitionsJSONObject;
 	}
 
 	private static String _createRegex(String s) {
@@ -1028,6 +1115,9 @@ public class SourceFormatterUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SourceFormatterUtil.class);
+
+	private static final Pattern _elementPattern = Pattern.compile(
+		"<!ELEMENT ([\\w-]+) \\(");
 
 	private static class PathMatchers {
 

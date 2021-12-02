@@ -781,6 +781,22 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
+	@description = "This ensures that a user cannot create create a redirect if the sourceURL is too long."
+	@priority = "4"
+	@refactordone
+	test CannotAddEntryWithTooLongSourceURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long-test-source-page-too-long",
+			sourceURLVariation = "LengthLimit");
+	}
+
 	@description = "This ensures that a user cannot create a redirect if the sourceURL has invalid characters."
 	@priority = "5"
 	@refactordone

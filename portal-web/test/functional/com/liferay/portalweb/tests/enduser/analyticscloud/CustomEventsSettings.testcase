@@ -42,7 +42,7 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (50 char)"
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (255 chars)"
 	@ignore = "true"
 	@priority = "4"
 	test CheckLimitOfCustomEventName {
@@ -50,10 +50,12 @@ definition {
 		// AC Deactivated: Depends on this bug (LRAC-9883)
 		// AC Enable ticket: LRAC-10027
 
-		task ("Add a Web Content Display to page and display the custom event button to send the event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
+		var attributesNameList = "category,price,temp,birthdate,like";
 
-			ACCustomEvents.createCustomEvent(customEventName = "${customEventName}");
+		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
+
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
 
 		task ("Add a new user") {
@@ -85,8 +87,14 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Click to send the custom events") {
-			ACUtils.clickAnyButton(button = "Buy");
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1",
+				attributesName ="${attributesNameList}",
+				attributesValue ="${attributesValueList}");
 		}
 
 		task ("Close sessions") {
@@ -115,11 +123,11 @@ definition {
 			ACUtils.clickAnyButton(button = "Edit");
 		}
 
-		task ("Change the name of the custom event using 50+ characters") {
-			ACCustomEvents.changeCustomEventName(newCustomEventName = "testttttttttttttttttttttttttttttttttttttttttttttttt");
+		task ("Change the name of the custom event using 255+ characters") {
+			ACCustomEvents.changeCustomEventName(newCustomEventName = "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 		}
 
-		task ("Check that the custom event name cannot be more than 50 characters") {
+		task ("Check that the custom event name cannot be more than 255 characters") {
 			AssertTextEquals(
 				locator1 = "ACCustomEvents#INVALID_MESSAGE",
 				value1 = "Exceeds maximum length.");

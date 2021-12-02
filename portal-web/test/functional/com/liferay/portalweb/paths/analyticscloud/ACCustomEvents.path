@@ -26,6 +26,11 @@
 	<td>//input[@id='${key_inputID}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEXTAREA_CUSTOM_EVENT</td>
+	<td>//textarea[@id='${key_textareaID}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

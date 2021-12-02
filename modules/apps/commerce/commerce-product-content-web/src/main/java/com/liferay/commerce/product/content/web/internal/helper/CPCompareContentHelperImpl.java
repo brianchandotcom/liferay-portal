@@ -33,6 +33,7 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.util.CPCompareHelper;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -231,6 +232,15 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 	}
 
 	@Override
+	public String getDefaultImageFileURL(
+			long commerceAccountId, long cpDefinitionId)
+		throws PortalException {
+
+		return _cpDefinitionHelper.getDefaultImageFileURL(
+			commerceAccountId, cpDefinitionId);
+	}
+
+	@Override
 	public String getDeleteCompareProductURL(
 		long cpDefinitionId, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
@@ -391,6 +401,9 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 	@Reference
 	private CPCompareHelper _cpCompareHelper;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

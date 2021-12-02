@@ -92,11 +92,15 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(addGuestPermissions))) {
-			var addGuestPermissions = "false";
+			var addGuestPermissions = "true";
+		}
+
+		if (!(isSet(addGroupPermissions))) {
+			var addGroupPermissions = "true";
 		}
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
-			addGroupPermissions = "true",
+			addGroupPermissions = "${addGroupPermissions}",
 			addGuestPermissions = "${addGuestPermissions}",
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",

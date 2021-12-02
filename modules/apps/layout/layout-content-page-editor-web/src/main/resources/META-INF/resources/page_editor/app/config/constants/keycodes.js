@@ -26,4 +26,6 @@ export const D_KEYCODE = 68;
 
 export const S_KEYCODE = 83;
 
+export const TAB_KEYCODE = 9;
+
 export const Z_KEYCODE = 90;

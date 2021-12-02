@@ -58,6 +58,11 @@ definition {
 				locator1 = "Message#ERROR",
 				value1 = "Please enter a source URL with valid characters.");
 		}
+		else if ("${sourceURLVariation}" == "LengthLimit") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Error: The source URL is too long.");
+		}
 		else if (("${destinationURLVariation}" == "Space") || ("${destinationURLVariation}" == "RelativeURL")) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#ALERT",

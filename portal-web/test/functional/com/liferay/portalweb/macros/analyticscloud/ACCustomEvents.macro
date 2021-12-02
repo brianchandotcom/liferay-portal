@@ -8,17 +8,21 @@ definition {
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
 	}
 
-	macro createCustomEvent {
+	macro createWCWithCustomEventAndAddToPage {
 		if (!(isSet(webContentTitle))) {
 			var webContentTitle = "Custom Event AC Title";
 		}
 
-		if (!(isSet(customEventAttributes))) {
-			var customEventAttributes = "category:&quot;wetsuit&quot;,price:&quot;259.95&quot;,temp:&quot;11&quot;,birthdate:&quot;2021-11-25T14:36:30.685Z&quot;,like:&quot;true&quot;";
-		}
-
 		ACUtils.createWCAndAddToPage(
-			webContentContent = '''<div><button class="mybutton-shop" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { Analytics.track("${customEventName}",{${customEventAttributes}}); } </script>''',
+			webContentContent = '''<style type="text/css">.inline-block-child { display: inline-block; margin: 3px; } </style> <h1>Create a Custom Event</h1> <p><label for="name-custom">Event Name:</label><br /> \
+			<input id="name-custom" name="name-custom" placeholder="Event Name" type="text" /><br /> <label for="times-custom">Send this event</label><br /> <input id="times-custom" name="times-custom" placeholder="Times" type="number" value="1" /> time(s).</p> \
+			<h2>Attributes</h2> <p>Directions:</p> <br\> <p>Boolean - true or false, case insensitive</p> <p>Duration - In milliseconds, non-negative</p> <p>Number - Without thousands separator, decimal separator is okay</p> <p>String - If no other format matches, Analytics Cloud will assume string</p> \
+			<div class="parent"> <div class="inline-block-child"><label for="placements">Placements:</label><br /> <textarea cols="25" id="placements" name="placements" placeholder="Enter the names for your attributes here, separated by a line break (enter)." rows="10"></textarea></div> \
+			<div class="inline-block-child"><label for="expected">Values:</label> <br /> <textarea cols="25" id="expected" name="expected" placeholder="Enter the values for each attribute here, separated by a line break (enter)." rows="10"></textarea></div> <br /> \
+			<input onclick="generateAndFireCustomEvent()" type="submit" value="Generate Event" /> <script> const generateAndFireCustomEvent = () => { let eventName = document.getElementById("name-custom").value; console.log(eventName); let timesCustom = parseInt(document.getElementById("times-custom").value); \
+			let placements = document.getElementById("placements").value; let values = document.getElementById("expected").value; placements = placements.split(","); values = values.split(","); if (eventName == "" || eventName.startsWith(" ")) { return alert("Event name is empty or starts with a space character. Please review the name and try again."); } \
+			if (placements.length !== values.length){ return alert("You are missing a placement or value in the input fields.\ Please make sure both fields have the same number of entries."); } const attributesList = {}; placements.forEach((placement, value) => attributesList[placement] = values[value]); timesCustom =  Array.from({length: timesCustom}); \
+			timesCustom.forEach((_) => { Analytics.track(eventName, attributesList); console.log("fired!"); }); console.log(attributesList); } </script></div> </br\>''',
 			webContentTitle = "${webContentTitle}");
 	}
 

@@ -33,6 +33,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -733,6 +735,31 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isPublishDisplayedContent(
+		PortletDataContext portletDataContext, Portlet portlet) {
+
+		try {
+			if (!ExportImportThreadLocal.isLayoutStagingInProcess()) {
+				return true;
+			}
+
+			ExportImportPortletPreferencesProcessor
+				exportImportPortletPreferencesProcessor =
+					ExportImportPortletPreferencesProcessorRegistryUtil.
+						getExportImportPortletPreferencesProcessor(
+							portlet.getRootPortletId());
+
+			return exportImportPortletPreferencesProcessor.
+				isPublishDisplayedContent();
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
+
+			return true;
+		}
 	}
 
 	@Override

@@ -152,6 +152,9 @@ public interface ExportImportHelper {
 
 	public boolean isLayoutRevisionInReview(Layout layout);
 
+	public boolean isPublishDisplayedContent(
+		PortletDataContext portletDataContext, Portlet portlet);
+
 	public boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel);
 

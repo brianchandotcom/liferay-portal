@@ -28,66 +28,82 @@ definition {
 		}
 	}
 
+	@description = "Can add a translation to parent and child page."
 	@priority = "3"
-	test AddPageAndChildPageTranslations {
-		property test.name.skip.portal.instance = "LocalizationWithSitePages#AddPageAndChildPageTranslations";
-		property testray.component.names = "Localization,Site Administration,Site Localization,Site Pages Administration";
+	test AddTranslationToPageName {
+		property testray.component.names = "Localization,Site Administration,Site Localization";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Get portal URL") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Home");
+		task ("Add widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Home");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a translation of page to es-ES") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Home");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Home");
 
-		Page.addPageTranslations(
-			page = "Home",
-			pageTranslation = "es-ES",
-			pageTranslationName = "Casa");
+			Page.addPageTranslations(
+				page = "Home",
+				pageTranslation = "es-ES",
+				pageTranslationName = "Casa");
+		}
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		task ("View page name is translated when change locale to es-ES") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
-		Page.viewTranslationsPG(
-			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
-			pageName = "Casa",
-			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageURL = "${portalURL}/es/web/test-site-name/home",
-			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
+			Page.viewTranslationsPG(
+				defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+				pageName = "Casa",
+				preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+				sitePageURL = "${portalURL}/es/web/test-site-name/home",
+				translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
+		}
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		task ("Locale the page to English") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
-		Page.localizedPG(pageLocale = "Display the page in English (United States)");
+			Page.localizedPG(pageLocale = "Display the page in English (United States)");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blog Page",
-			parentLayoutName = "Home");
+		task ("Add child widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Blog Page",
+				parentLayoutName = "Home");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a translation of child page to es-ES") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Blog Page",
-			parentPagesHierarchy = "Home");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Blog Page",
+				parentPagesHierarchy = "Home");
 
-		Page.addPageTranslations(
-			page = "Blog Page",
-			pageTranslation = "es-ES",
-			pageTranslationName = "Blog Página");
+			Page.addPageTranslations(
+				page = "Blog Page",
+				pageTranslation = "es-ES",
+				pageTranslationName = "Blog Página");
+		}
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
+		task ("View child page name is transled when changing site language to es-ES") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
-		Page.viewTranslationsPG(
-			childPageName = "Blog Página",
-			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
-			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageURL = "${portalURL}/es/web/test-site-name/blog-page",
-			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
+			Page.viewTranslationsPG(
+				childPageName = "Blog Página",
+				defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+				preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+				sitePageURL = "${portalURL}/es/web/test-site-name/blog-page",
+				translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
+		}
 	}
 
 }

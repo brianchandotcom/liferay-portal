@@ -36,9 +36,11 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add the Page Author as a new Site Role and define permissions") {
+		task ("Add a new site role") {
 			JSONRole.addSiteRole(roleTitle = "Page Author");
+		}
 
+		task ("Define the permissions of new site role") {
 			for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceAction}",
@@ -68,7 +70,7 @@ definition {
 				roleType = "site");
 		}
 
-		task ("Assign the Page Author to new user") {
+		task ("Assign site role to new user") {
 			JSONGroup.assignGroupRoleToUser(
 				groupName = "Test Site Name",
 				roleTitle = "Page Author",
@@ -92,7 +94,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Assert enable Single Approver for Content Page") {
+		task ("Enable Single Approver for Content Page") {
 			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
 
 			Workflow.configureWorkflow(
@@ -100,13 +102,11 @@ definition {
 				workflowResourceValue = "Content Page");
 		}
 
-		task ("Sign in as Page Author") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Edit the Heading fragment's editable text.") {
+		task ("Edit inline text of Heading fragment then submit for aplication") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -118,20 +118,16 @@ definition {
 				id = "text",
 				text = "New editable fragment text");
 
-			AssertClick(
-				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-				value1 = "Submit for Publication");
-
-			Alert.viewSuccessMessage();
+			PageEditor.clickSubmitForPublication();
 		}
 
-		task ("Assert content page is in pending status") {
+		task ("View pending status is shown") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
 		}
 	}
 
@@ -142,9 +138,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
 			JSONUser.tearDownNonAdminUsers();
 

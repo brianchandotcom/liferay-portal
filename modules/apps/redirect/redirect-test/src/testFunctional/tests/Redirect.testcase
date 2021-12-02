@@ -1215,6 +1215,10 @@ definition {
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
+
+		Search.clearSearchResult();
+
+		Redirect.view404URLsDefault();
 	}
 
 	@description = "This ensures that a permanent redirect can be added."

@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -73,6 +75,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Luca Pellizzon
  */
 @RunWith(Arquillian.class)
+@Sync
 public class CommerceOrderStatusNotificationTest {
 
 	@ClassRule
@@ -80,7 +83,8 @@ public class CommerceOrderStatusNotificationTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -165,7 +169,7 @@ public class CommerceOrderStatusNotificationTest {
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			_commerceOrder, _user.getUserId(), false);
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
@@ -181,7 +185,7 @@ public class CommerceOrderStatusNotificationTest {
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED);
 
-		_commerceOrderEngine.transitionCommerceOrder(
+		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			_user.getUserId());
 
@@ -222,21 +226,20 @@ public class CommerceOrderStatusNotificationTest {
 			commerceShipment.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
-		_commerceOrderEngine.transitionCommerceOrder(
-			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED,
-			_user.getUserId());
-
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntriesCount(
 					_commerceChannel.getGroupId());
 
-		Assert.assertEquals(4, commerceNotificationQueueEntriesCount);
+		Assert.assertEquals(3, commerceNotificationQueueEntriesCount);
 
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_SHIPPED);
 
-		_commerceOrderEngine.transitionCommerceOrder(
+		_commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
+
+		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 			_user.getUserId());
 
@@ -245,7 +248,7 @@ public class CommerceOrderStatusNotificationTest {
 				getCommerceNotificationQueueEntriesCount(
 					_commerceChannel.getGroupId());
 
-		Assert.assertEquals(5, commerceNotificationQueueEntriesCount);
+		Assert.assertEquals(4, commerceNotificationQueueEntriesCount);
 
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED);

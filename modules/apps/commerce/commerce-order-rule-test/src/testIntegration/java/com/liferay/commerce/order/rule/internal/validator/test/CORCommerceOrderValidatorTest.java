@@ -139,7 +139,7 @@ public class CORCommerceOrderValidatorTest {
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -169,7 +169,7 @@ public class CORCommerceOrderValidatorTest {
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -212,7 +212,7 @@ public class CORCommerceOrderValidatorTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -249,7 +249,7 @@ public class CORCommerceOrderValidatorTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -276,7 +276,7 @@ public class CORCommerceOrderValidatorTest {
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -307,7 +307,7 @@ public class CORCommerceOrderValidatorTest {
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -351,7 +351,7 @@ public class CORCommerceOrderValidatorTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -389,7 +389,7 @@ public class CORCommerceOrderValidatorTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -415,7 +415,7 @@ public class CORCommerceOrderValidatorTest {
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -452,7 +452,7 @@ public class CORCommerceOrderValidatorTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {
@@ -485,7 +485,7 @@ public class CORCommerceOrderValidatorTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
 
 		try {

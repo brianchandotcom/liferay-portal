@@ -160,6 +160,8 @@ definition {
 	test LoginWithMultipleOpenIDConnectProviders {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#MultipleOpenIDConnectProvider";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -188,19 +190,6 @@ definition {
 				webId = "www.baker.com");
 
 			PortalInstances.viewCP(virtualHost = "www.baker.com");
-		}
-
-		task ("Enable OpenID connection CP") {
-			Navigator.openURL();
-
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "OpenID Connect",
-				configurationScope = "System Scope");
-
-			PortalSettings.enableOpenIDConnectCP(systemLevel = "true");
 		}
 
 		task ("Add SSO openID connect provider") {

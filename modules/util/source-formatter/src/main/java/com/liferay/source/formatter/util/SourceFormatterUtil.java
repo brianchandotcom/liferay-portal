@@ -21,7 +21,6 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -366,7 +365,9 @@ public class SourceFormatterUtil {
 
 		executorService.shutdown();
 
-		return JSONUtil.put(
+		JSONObject portalJSONObject = new JSONObjectImpl();
+
+		return portalJSONObject.put(
 			"javaClasses", javaClassesJSONObject
 		).put(
 			"taglibs", taglibsJSONObject

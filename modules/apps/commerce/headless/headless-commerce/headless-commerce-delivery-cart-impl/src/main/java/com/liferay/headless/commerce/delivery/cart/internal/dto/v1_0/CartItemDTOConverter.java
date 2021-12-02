@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -68,26 +69,29 @@ public class CartItemDTOConverter
 	public CartItem toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		CartItemDTOConverterContext cartItemDTOConverterContext =
+			(CartItemDTOConverterContext)dtoConverterContext;
+
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(
-				(Long)dtoConverterContext.getId());
+				(Long)cartItemDTOConverterContext.getId());
 
-		Locale locale = dtoConverterContext.getLocale();
+		Locale locale = cartItemDTOConverterContext.getLocale();
 
 		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
-
-		String languageId = LanguageUtil.getLanguageId(locale);
 
 		return new CartItem() {
 			{
 				adaptiveMediaImageHTMLTag =
 					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
+						cartItemDTOConverterContext.getAccountId(),
 						commerceOrderItem.getCompanyId(),
 						commerceOrderItem.getCPInstanceId());
 				customFields = expandoBridge.getAttributes();
 				errorMessages = _getErrorMessages(commerceOrderItem, locale);
 				id = commerceOrderItem.getCommerceOrderItemId();
-				name = commerceOrderItem.getName(languageId);
+				name = commerceOrderItem.getName(
+					LanguageUtil.getLanguageId(locale));
 				options = commerceOrderItem.getJson();
 				parentCartItemId =
 					commerceOrderItem.getParentCommerceOrderItemId();
@@ -102,6 +106,7 @@ public class CartItemDTOConverter
 				skuId = commerceOrderItem.getCPInstanceId();
 				subscription = commerceOrderItem.isSubscription();
 				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
+					cartItemDTOConverterContext.getAccountId(),
 					commerceOrderItem.getCPInstanceId());
 			}
 		};

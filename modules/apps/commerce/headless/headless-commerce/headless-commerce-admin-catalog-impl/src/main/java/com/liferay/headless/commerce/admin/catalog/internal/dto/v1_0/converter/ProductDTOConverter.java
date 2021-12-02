@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
@@ -136,7 +137,8 @@ public class ProductDTOConverter
 				skuFormatted = _getSku(
 					cpDefinition, dtoConverterContext.getLocale());
 				tags = _getTags(cpDefinition);
-				thumbnail = cpDefinition.getDefaultImageThumbnailSrc();
+				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
+					CommerceAccountConstants.ACCOUNT_ID_GUEST);
 				urls = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));

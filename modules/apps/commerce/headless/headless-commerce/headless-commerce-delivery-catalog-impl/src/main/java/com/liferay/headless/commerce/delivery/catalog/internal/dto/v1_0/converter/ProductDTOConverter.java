@@ -19,7 +19,9 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
@@ -56,18 +58,16 @@ public class ProductDTOConverter
 	public Product toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		ProductDTOConverterContext productDTOConverterContext =
+			(ProductDTOConverterContext)dtoConverterContext;
+
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			(Long)dtoConverterContext.getId());
+			(Long)productDTOConverterContext.getId());
 
 		String languageId = LanguageUtil.getLanguageId(
-			dtoConverterContext.getLocale());
+			productDTOConverterContext.getLocale());
 
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
-		Company company = _companyLocalService.getCompany(
-			cpDefinition.getCompanyId());
-
-		String portalURL = company.getPortalURL(0);
 
 		Product product = new Product() {
 			{
@@ -85,17 +85,31 @@ public class ProductDTOConverter
 				shortDescription = cpDefinition.getShortDescription();
 				slug = cpDefinition.getURL(languageId);
 				tags = _getTags(cpDefinition);
-				urlImage = portalURL + cpDefinition.getDefaultImageFileURL();
 				urls = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionLocalService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));
+
+				setUrlImage(
+					() -> {
+						Company company = _companyLocalService.getCompany(
+							cpDefinition.getCompanyId());
+
+						String defaultImageFileURL =
+							_cpDefinitionHelper.getDefaultImageFileURL(
+								CommerceUtil.getCommerceAccountId(
+									productDTOConverterContext.
+										getCommerceContext()),
+								cpDefinition.getCPDefinitionId());
+
+						return company.getPortalURL(0) + defaultImageFileURL;
+					});
 			}
 		};
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
-					(Long)dtoConverterContext.getId());
+					(Long)productDTOConverterContext.getId());
 
 		if (cpDefinitionInventory != null) {
 			ProductConfiguration productConfiguration =
@@ -141,6 +155,9 @@ public class ProductDTOConverter
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

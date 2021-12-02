@@ -542,7 +542,8 @@ definition {
 			userLastName = "userln");
 
 		GDPR.deleteAndAnonymizeAllEntriesCP(
-			itemsCount = "2",
+			applicationItemsCount = "2",
+			totalItemsCount = "2",
 			userName = "userfn userln");
 	}
 
@@ -629,9 +630,9 @@ definition {
 		task("Delete all export processes and assert no processes can be found or listed") {
 			GDPR.deleteExportedPersonalData(applications = "Web Content,Wiki,Message Boards,Blogs,Documents and Media");
 
-			AssertElementPresent(
-				key_messaage = "No personal data export processes were found. Please create a data export process.",
-				locator1 = "ExportPersonalData#EXPORT_PROCESS_MESSAGE");
+			AssertTextEquals(
+				value1 = "No personal data export processes were found. Please create a data export process.",
+				locator1 = "Message#EMPTY_INFO");
 		}
 	}
 

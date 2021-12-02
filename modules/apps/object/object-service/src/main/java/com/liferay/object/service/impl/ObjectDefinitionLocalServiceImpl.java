@@ -48,6 +48,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -876,26 +879,42 @@ public class ObjectDefinitionLocalServiceImpl
 	private void _updateWorkflowInstances(ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		List<ObjectEntry> objectEntries =
-			_objectEntryPersistence.findByODI_NotS(
-				objectDefinition.getObjectDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED);
+		ActionableDynamicQuery actionableDynamicQuery =
+			_objectEntryLocalService.getActionableDynamicQuery();
 
-		for (ObjectEntry objectEntry : objectEntries) {
-			WorkflowInstanceLink workflowInstanceLink =
-				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-					objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
-					objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId());
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property objectDefinitionIdProperty =
+					PropertyFactoryUtil.forName("objectDefinitionId");
 
-			if (workflowInstanceLink != null) {
-				_workflowInstanceManager.updateActive(
-					objectDefinition.getUserId(),
-					objectDefinition.getCompanyId(),
-					workflowInstanceLink.getWorkflowInstanceId(),
-					objectDefinition.isActive());
-			}
-		}
+				dynamicQuery.add(
+					objectDefinitionIdProperty.eq(
+						objectDefinition.getObjectDefinitionId()));
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.ne(WorkflowConstants.STATUS_APPROVED));
+			});
+		actionableDynamicQuery.setParallel(true);
+		actionableDynamicQuery.setPerformActionMethod(
+			(ObjectEntry objectEntry) -> {
+				WorkflowInstanceLink workflowInstanceLink =
+					_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+						objectEntry.getCompanyId(),
+						objectEntry.getNonzeroGroupId(),
+						objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId());
+
+				if (workflowInstanceLink != null) {
+					_workflowInstanceManager.updateActive(
+						objectDefinition.getUserId(),
+						objectDefinition.getCompanyId(),
+						workflowInstanceLink.getWorkflowInstanceId(),
+						objectDefinition.isActive());
+				}
+			});
+		actionableDynamicQuery.performActions();
 	}
 
 	private void _validateActive(

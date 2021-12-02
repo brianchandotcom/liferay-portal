@@ -1,12 +1,20 @@
 definition {
 
+	macro changeCustomEventName {
+		Type(
+			locator1 = "TextInput#TEXT",
+			value1 = "${newCustomEventName}");
+
+		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
+	}
+
 	macro createCustomEvent {
 		if (!(isSet(webContentTitle))) {
-			webContentTitle = "Custom Event AC Title";
+			var webContentTitle = "Custom Event AC Title";
 		}
 
 		if (!(isSet(customEventAttributes))) {
-			customEventAttributes = "category:"wetsuit",price:"259.95",temp:"11",birthdate:"2021-11-25T14:36:30.685Z",like:"true"";
+			var customEventAttributes = "category:&quot;wetsuit&quot;,price:&quot;259.95&quot;,temp:&quot;11&quot;,birthdate:&quot;2021-11-25T14:36:30.685Z&quot;,like:&quot;true&quot;";
 		}
 
 		ACUtils.createWCAndAddToPage(
@@ -16,24 +24,12 @@ definition {
 
 	macro generateCustomEventName {
 		var displayDateHour = DateUtil.getFormattedCurrentDate("hh:mm:ss");
-
 		var displayDateDay = DateUtil.getCurrentDate();
-
-        var displayDateMonth = DateUtil.getCurrentMonth();
-
-        var displayDateYear = DateUtil.getCurrentYear();
-
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
 		var customEventName = "AC-${displayDateHour}-${displayDateDay}-${displayDateMonth}-${displayDateYear}";
 
 		return "${customEventName}";
-	}
-
-	macro changeCustomEventName {
-		Type(
-			locator1 = "TextInput#TEXT",
-			value1 = "${newCustomEventName}");
-
-		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
 	}
 
 }

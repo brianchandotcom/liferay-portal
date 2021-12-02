@@ -42,78 +42,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-9865 | Test Summary: Custom Event shown in AC"
-	@ignore = "true"
-	@priority = "5"
-	test CustomEventIsShownInAC {
-
-		// AC Deactivated: Depends on this bug (LRAC-9883)
-		// AC Enable ticket: LRAC-10026
-
-		task ("Add a Web Content Display to page and display the custom event button to send the event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-            ACCustomEvents.createCustomEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-        task ("Click to send the custom events") {
-			ACUtils.clickAnyButton(button = "Buy");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("View the new custom events") {
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (50 char)"
 	@ignore = "true"
 	@priority = "4"
@@ -125,7 +53,7 @@ definition {
 		task ("Add a Web Content Display to page and display the custom event button to send the event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
-            ACCustomEvents.createCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.createCustomEvent(customEventName = "${customEventName}");
 		}
 
 		task ("Add a new user") {
@@ -157,7 +85,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-        task ("Click to send the custom events") {
+		task ("Click to send the custom events") {
 			ACUtils.clickAnyButton(button = "Buy");
 		}
 
@@ -195,6 +123,78 @@ definition {
 			AssertTextEquals(
 				locator1 = "ACCustomEvents#INVALID_MESSAGE",
 				value1 = "Exceeds maximum length.");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-9865 | Test Summary: Custom Event shown in AC"
+	@ignore = "true"
+	@priority = "5"
+	test CustomEventIsShownInAC {
+
+		// AC Deactivated: Depends on this bug (LRAC-9883)
+		// AC Enable ticket: LRAC-10026
+
+		task ("Add a Web Content Display to page and display the custom event button to send the event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Click to send the custom events") {
+			ACUtils.clickAnyButton(button = "Buy");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("View the new custom events") {
+			ACUtils.viewNameList(nameList = "${customEventName}");
 		}
 	}
 

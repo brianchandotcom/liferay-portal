@@ -778,8 +778,16 @@ definition {
 		return "${percentage}";
 	}
 
+	macro goToAccounts {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "accounts");
+	}
+
 	macro goToApis {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "apis");
+	}
+
+	macro goToBehaviors {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "behaviors");
 	}
 
 	macro goToDataControlAndPrivacy {
@@ -794,28 +802,22 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
 	}
 
-	macro goToEvents {
-		ACSettings.goToDefinitionsOptions(definitionsOptions = "events");
-	}
+	macro goToDefinitionsOptions {
+		var key_DefinitionsOptions = "${definitionsOptions}";
 
-	macro goToIndividuals {
-		ACSettings.goToDefinitionsOptions(definitionsOptions = "individual");
-	}
-
-	macro goToAccounts {
-		ACSettings.goToDefinitionsOptions(definitionsOptions = "accounts");
-	}
-
-	macro goToBehaviors {
-		ACSettings.goToDefinitionsOptions(definitionsOptions = "behaviors");
+		Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
 	}
 
 	macro goToEventAttributes {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "event-attributes");
 	}
 
-	macro goToSearch {
-		ACSettings.goToDefinitionsOptions(definitionsOptions = "search");
+	macro goToEvents {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "events");
+	}
+
+	macro goToIndividuals {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "individual");
 	}
 
 	macro goToInterests {
@@ -826,16 +828,14 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}
 
+	macro goToSearch {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "search");
+	}
+
 	macro goToSettingsNavigation {
 		var key_SettingsNavigation = "${settingsNavigation}";
 
 		Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
-	}
-
-	macro goToDefinitionsOptions {
-		var key_DefinitionsOptions = "${definitionsOptions}";
-
-		Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
 	}
 
 	macro goToUsage {

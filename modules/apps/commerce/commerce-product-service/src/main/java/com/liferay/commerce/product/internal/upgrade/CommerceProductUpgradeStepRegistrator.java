@@ -210,15 +210,15 @@ public class CommerceProductUpgradeStepRegistrator
 				@Override
 				protected String[] getModuleTableNames() {
 					return new String[] {
-						"CommerceCatalog", "CommerceChannel",
-						"CommerceChannelRel", "CPAttachmentFileEntry",
+						"CPAttachmentFileEntry", "CPDSpecificationOptionValue",
 						"CPDefinition", "CPDefinitionLink",
-						"CPDefinitionOptionRel", "CPDefinitionOptionValueRel",
-						"CPDefinitionSpecificationOptionValue",
-						"CPDisplayLayout", "CPInstance",
-						"CPInstanceOptionValueRel", "CPMeasurementUnit",
-						"CPOption", "CPOptionCategory", "CPOptionValue",
-						"CProduct", "CPSpecificationOption", "CPTaxCategory"
+						"CPDefinitionLocalization", "CPDefinitionOptionRel",
+						"CPDefinitionOptionValueRel", "CPDisplayLayout",
+						"CPInstance", "CPInstanceOptionValueRel",
+						"CPMeasurementUnit", "CPOption", "CPOptionCategory",
+						"CPOptionValue", "CPSpecificationOption",
+						"CPTaxCategory", "CProduct", "CommerceCatalog",
+						"CommerceChannel", "CommerceChannelRel"
 					};
 				}
 

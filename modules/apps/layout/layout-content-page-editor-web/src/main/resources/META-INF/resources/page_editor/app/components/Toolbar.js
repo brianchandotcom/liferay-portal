@@ -294,12 +294,11 @@ function ToolbarBody({className}) {
 							</ClayButtonWithIcon>
 						</li>
 
-						{config.createLayoutPageTemplateEntryEnabled &&
-							config.layoutType === LAYOUT_TYPES.content && (
-								<li className="nav-item">
-									<CreateLayoutPageTemplateEntryButton />
-								</li>
-							)}
+						{config.layoutType === LAYOUT_TYPES.content && (
+							<li className="nav-item">
+								<CreateLayoutPageTemplateEntryButton />
+							</li>
+						)}
 					</ul>
 				</li>
 

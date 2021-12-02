@@ -1,5 +1,39 @@
 definition {
 
+	macro assertAdminPermissions {
+		PublicationsNavigator._gotoPublicationEllipsisItem(
+			menuItem = "Edit",
+			publicationName = "${publicationName}");
+
+		Type(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "New ${publicationName}");
+
+		Button.click(button = "Save");
+
+		AssertElementPresent(
+			key_publicationName = "New ${publicationName}",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+
+		Publications.inviteUsers(
+			publicationName = "New ${publicationName}",
+			userInvite = "userea2@liferay.com");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "New ${publicationName}");
+
+		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "New ${publicationName}");
+
+		Publications.publishPublication(publicationName = "New ${publicationName}");
+
+		Publications.viewPublicationPublished(publicationName = "New ${publicationName}");
+	}
+
 	macro assertEditorPermissions {
 		Click(
 			key_publicationName = "${publicationName}",
@@ -32,40 +66,6 @@ definition {
 			publicationName = "New ${publicationName}");
 
 		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
-	}
-
-	macro assertInviterPermissions {
-		PublicationsNavigator._gotoPublicationEllipsisItem(
-			menuItem = "Edit",
-			publicationName = "${publicationName}");
-
-		Type(
-			locator1 = "Publications#PUBLICATION_NAME",
-			value1 = "New ${publicationName}");
-
-		Button.click(button = "Save");
-
-		AssertElementPresent(
-			key_publicationName = "New ${publicationName}",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
-
-		Publications.inviteUsers(
-			publicationName = "New ${publicationName}",
-			userInvite = "userea2@liferay.com");
-
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "New ${publicationName}");
-
-		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
-
-		PublicationsNavigator.gotoPublish(
-			gotoPublicationsAdmin = "true",
-			publicationName = "New ${publicationName}");
-
-		Publications.publishPublication(publicationName = "New ${publicationName}");
-
-		Publications.viewPublicationPublished(publicationName = "New ${publicationName}");
 	}
 
 	macro assertNoPermissionToCreatePublication {

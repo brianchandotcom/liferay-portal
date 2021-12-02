@@ -121,6 +121,80 @@ definition {
 	}
 
 	@priority = "5"
+	test InviteUserAsAdmin {
+		for (var userNumber : list "1,2") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Publications User",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PUBLISH",
+			resourceName = "com.liferay.change.tracking.model.CTCollection",
+			roleTitle = "Publications User");
+
+		JSONPublications.enablePublications();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			publicationRole = "Admin",
+			userInvite = "userea1@liferay.com");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		Notifications.gotoNotifications();
+
+		AssertElementPresent(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Test Test has invited you to work on Publication Name as a Admin.");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		PublicationsPermissions.assertAdminPermissions(publicationName = "Publication Name");
+	}
+
+	@priority = "5"
 	test InviteUserAsEditor {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -185,80 +259,6 @@ definition {
 		PublicationsNavigator.openPublicationsAdmin();
 
 		PublicationsPermissions.assertEditorPermissions(publicationName = "Publication Name");
-	}
-
-	@priority = "5"
-	test InviteUserAsInviter {
-		for (var userNumber : list "1,2") {
-			JSONUser.addUser(
-				userEmailAddress = "userea${userNumber}@liferay.com",
-				userFirstName = "userfn${userNumber}",
-				userLastName = "userln${userNumber}",
-				userScreenName = "usersn${userNumber}");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea${userNumber}@liferay.com");
-
-			JSONUser.addUserToSite(
-				groupName = "Guest",
-				userEmailAddress = "userea${userNumber}@liferay.com");
-
-			JSONRole.assignSiteRoleToUser(
-				groupName = "Guest",
-				roleTitle = "Site Administrator",
-				userEmailAddress = "userea${userNumber}@liferay.com");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Publications User",
-				userEmailAddress = "userea${userNumber}@liferay.com");
-		}
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "PUBLISH",
-			resourceName = "com.liferay.change.tracking.model.CTCollection",
-			roleTitle = "Publications User");
-
-		JSONPublications.enablePublications();
-
-		JSONPublications.addPublication(publicationName = "Publication Name");
-
-		PublicationsNavigator.openPublicationsAdmin();
-
-		Publications.inviteUsers(
-			publicationName = "Publication Name",
-			publicationRole = "Inviter",
-			userInvite = "userea1@liferay.com");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		SignOut.signOut();
-
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
-
-		Notifications.gotoNotifications();
-
-		AssertElementPresent(
-			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-			value1 = "Test Test has invited you to work on Publication Name as a Inviter.");
-
-		PublicationsNavigator.openPublicationsAdmin();
-
-		PublicationsPermissions.assertInviterPermissions(publicationName = "Publication Name");
 	}
 
 	@priority = "5"

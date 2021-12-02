@@ -136,20 +136,6 @@ definition {
 		}
 	}
 
-	macro assertCalendarNotPresent {
-		AssertElementNotPresent(
-			key_userCalendarName = "${calendarName}",
-			locator1 = "Calendar#MY_CALENDARS_CALENDAR");
-	}
-
-	macro cancelCreateCalendar {
-		CalendarNavigator.gotoAddMyCalendars();
-
-		Calendar._editName(calendarName = "${calendarName}");
-
-		Button.clickCancel();
-	}
-
 	macro changeColor {
 		CalendarNavigator.gotoView(viewType = "Week");
 
@@ -175,6 +161,12 @@ definition {
 
 			Click(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER");
 		}
+	}
+
+	macro chooseCalendarColor {
+		Click(
+			key_myCalendarColor = "${myCalendarColor}",
+			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
 	}
 
 	macro chooseOtherCalendarMenulistOption {
@@ -766,6 +758,12 @@ definition {
 		AssertElementPresent(locator1 = "CalendarRSS#FEED_EVENT_DATES");
 	}
 
+	macro viewSelectedNameLanguage {
+		AssertElementPresent(
+			key_locale = "${language}",
+			locator1 = "Calendar#VIEW_SELECTED_NAME_LANGUAGE");
+	}
+
 	macro viewSelectedTimeZone {
 		if ("${timeZone}" == "(UTC -08:00) Pacific Standard Time") {
 			if (IsTextNotEqual(locator1 = "Select#LOS_ANGELES_TIME_ZONE", value1 = "(UTC -07:00) Pacific Daylight Time")) {
@@ -840,18 +838,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Calendar#SMALL_CALENDAR_WEEK_START_DAY",
 			value1 = "${weekStartDay}");
-	}
-	
-	macro chooseCalendarColor {
-		Click(
-			key_myCalendarColor = "${myCalendarColor}",
-			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
-	}
-
-	macro viewSelectedNameLanguage {
-		AssertElementPresent(
-			key_locale = "${language}",
-			locator1 = "Calendar#VIEW_SELECTED_NAME_LANGUAGE");
 	}
 
 }

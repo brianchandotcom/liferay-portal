@@ -242,4 +242,5 @@ definition {
 			AssertElementPresent(locator1 = "CalendarAgendaView#SCHEDULER_VIEW_AGENDA");
 		}
 	}
+
 }

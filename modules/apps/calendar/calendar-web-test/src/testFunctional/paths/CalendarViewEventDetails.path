@@ -41,7 +41,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TYPE_YOUR_COMMENT_HERE</td>
+	<td>CALENDAR_COMMENT_DEFAULT_MESSAGE</td>
 	<td>//label[contains(text(),'Type your comment here.')]</td>
 	<td></td>
 </tr>

@@ -118,7 +118,7 @@ definition {
 			color = "668CD9",
 			pageName = "Calendar Page");
 	}
-	
+
 	@description = "LRQA-71605 - Verify that the user can add multiple calendars with the same name"
 	@priority = "4"
 	test CanAddCalendarsWithSameName {
@@ -135,15 +135,15 @@ definition {
 		Navigator.gotoBack();
 
 		CalendarMyCalendars.viewManageCalendarsByPosition(
-			rowNumber = "1",
-			calendarName = "Same Name Calendar");
+			calendarName = "Same Name Calendar",
+			rowNumber = "1");
 
 		CalendarMyCalendars.viewManageCalendarsByPosition(
-			rowNumber = "2",
-			calendarName = "Same Name Calendar");
+			calendarName = "Same Name Calendar",
+			rowNumber = "2");
 	}
 
-	@description = "LRQA-71360 - Verify that the user can add calendars with Non-Ascii characters on the name field"
+	@description = "LRQA-71606 - Verify that the user can add calendars with Non-Ascii characters on the name field"
 	@priority = "4"
 	test CanAddCalendarWithNoAsciiCharactersOnNameField {
 		Calendar.add(
@@ -159,12 +159,16 @@ definition {
 			user = "Test Test");
 	}
 
-	@description = "LRQA-71360 - Verify that the user can cancel Adding a new calendar"
+	@description = "LRQA-71604 - Verify that the user can cancel Adding a new calendar"
 	@priority = "5"
 	test CanCancelAddingCalendar {
-		Calendar.cancelCreateCalendar(calendarName = "My Calendar");
+		CalendarNavigator.gotoAddMyCalendars();
 
-		Calendar.assertCalendarNotPresent(calendarName = "My Calendar");
+		Calendar._editName(calendarName = "My Calendar");
+
+		Button.clickCancel();
+
+		Calendar.viewDefault();
 	}
 
 	@description = "LRQA-71596 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
@@ -190,8 +194,6 @@ definition {
 
 		CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
 
-		Uncheck(locator1 = "Checkbox#ENABLE_COMMENTS");
-
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -209,14 +211,14 @@ definition {
 			eventTitle = "Calendar Event Title",
 			eventType = "Regular");
 
-		CalendarEvent.viewTypeYourCommentHere();
+		CalendarEvent.viewCalendarCommentsNotPresent();
 
 		CalendarMyCalendars.gotoCalendarSettings(calendarName = "Calendar Name");
 
 		CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
 
 		PortletEntry.save();
-		
+
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
@@ -224,7 +226,8 @@ definition {
 			eventTitle = "Calendar Event Title",
 			eventType = "Regular");
 
-		CalendarEvent.viewTypeYourCommentHere();
+		CalendarEvent.viewCalendarCommentsMessagePresent();
+		
 	}
 
 	@description = "Verify that the user can Enable Ratings on Calendar"
@@ -240,10 +243,10 @@ definition {
 	@priority = "3"
 	test CanMakeNewCalendarAsDefault {
 		CalendarNavigator.gotoMyCalendarsManage();
-		
+
 		CalendarMyCalendars.viewManageCalendarDefault(
-			calendarName = "Test Test",
-			calendarDefault = "Yes");
+			calendarDefault = "Yes",
+			calendarName = "Test Test");
 
 		CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
 
@@ -254,12 +257,12 @@ definition {
 		Navigator.gotoBack();
 
 		CalendarMyCalendars.viewManageCalendarDefault(
-			calendarName = "Test Test",
-			calendarDefault = "No");
+			calendarDefault = "No",
+			calendarName = "Test Test");
 
 		CalendarMyCalendars.viewManageCalendarDefault(
-			calendarName = "Calendar Name",
-			calendarDefault = "Yes");		
+			calendarDefault = "Yes",
+			calendarName = "Calendar Name");
 	}
 
 	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Anyone"
@@ -289,6 +292,24 @@ definition {
 
 	}
 
+	@description = "LRQA-71598 - Verify that the Time Zone selected by default follows the User's preferences."
+	@priority = "3"
+	test DefaultTimeZoneFollowsUserPreferences {
+		Navigator.gotoAccountSettings();
+
+		UserNavigator.gotoPreferences();
+
+		Navigator.gotoNavNested(navNested = "Display Settings");
+
+		PortalSettings.configureTimeZone(timeZone = "(UTC -02:00) Brasilia Summer Time");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddMyCalendars();
+
+		Calendar.viewSelectedTimeZone(timeZone = "(UTC -02:00) Brasilia Summer Time");
+	}
+
 	@description = "LRQA-71360 - Verify that the name field is required"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -314,8 +335,6 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarMyCalendars.viewNameMyCalendars(userCalendarName = "Test Test");
-
-		
 	}
 
 	@description = "This is a use case for LPS-45062."
@@ -389,28 +408,10 @@ definition {
 			user = "Test Test");
 
 		CalendarMyCalendars.gotoCalendarSettings(calendarName = "My Calendar Name");
-		
+
 		Calendar.viewSelectedNameLanguage(language = "pt-BR");
 	}
 
-	@description = "LRQA-71598 - Verify that the Time Zone selected by default follows the User's preferences."
-	@priority = "3"
-	test DefaultTimeZoneFollowsUserPreferences {
-		Navigator.gotoAccountSettings();
-
-		UserNavigator.gotoPreferences();
-
-		Navigator.gotoNavNested(navNested = "Display Settings");
-
-		PortalSettings.configureTimeZone(timeZone = "(UTC) Coordinated Universal Time");
-		
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		CalendarNavigator.gotoAddMyCalendars();
-
-		Calendar.viewSelectedTimeZone(timeZone = "(UTC) Coordinated Universal Time");	
-	}
-	
 	@description = "LPS-60800, Verify that can save individual calendar permissions."
 	@priority = "3"
 	test ViewEntryPermissionsNotDefinedByRolePermissions {

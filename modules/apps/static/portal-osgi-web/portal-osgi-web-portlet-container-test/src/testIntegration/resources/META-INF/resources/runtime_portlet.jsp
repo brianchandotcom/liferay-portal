@@ -16,8 +16,13 @@
 
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%
+String portletName = ParamUtil.getString(request, "testRuntimePortletId");
+%>
 
 <liferay-portlet:runtime
-	portletName='<%= ParamUtil.getString(request, "testRuntimePortletId") %>'
+	portletName='<%= Validator.isBlank(portletName) ? (String)request.getAttribute("testRuntimePortletId") : portletName %>'
 />

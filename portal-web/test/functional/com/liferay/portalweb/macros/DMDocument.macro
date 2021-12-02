@@ -1661,10 +1661,7 @@ definition {
 	}
 
 	macro getDMLatestVersionURL {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media",
-			site = "${site}");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${siteURLKey}");
 
 		if (isSet(dmFolderName)) {
 			DMNavigator.gotoFolder(dmFolderName = "${dmFolderName}");

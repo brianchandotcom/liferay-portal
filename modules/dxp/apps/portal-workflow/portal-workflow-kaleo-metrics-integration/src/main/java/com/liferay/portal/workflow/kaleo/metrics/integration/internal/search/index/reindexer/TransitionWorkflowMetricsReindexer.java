@@ -65,14 +65,14 @@ public class TransitionWorkflowMetricsReindexer
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTransition kaleoTransition) -> {
+				if (Objects.isNull(kaleoTransition)) {
+					return;
+				}
+
 				KaleoDefinitionVersion kaleoDefinitionVersion =
 					_kaleoDefinitionVersionLocalService.
 						fetchKaleoDefinitionVersion(
 							kaleoTransition.getKaleoDefinitionVersionId());
-
-				if (Objects.isNull(kaleoTransition)) {
-					return;
-				}
 
 				_transitionWorkflowMetricsIndexer.addTransition(
 					_indexerHelper.createAddTransitionRequest(

@@ -624,6 +624,24 @@ definition {
 		AssertElementNotPresent(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_GENERIC");
 	}
 
+	macro viewDefaultViewCalendar {
+		if ("${defaultView}" == "Day") {
+			AssertElementPresent(locator1 = "Calendar#VIEW_DAY_BUTTON_ACTIVE");
+		}
+
+		if ("${defaultView}" == "Week") {
+			AssertElementPresent(locator1 = "Calendar#VIEW_WEEK_BUTTON_ACTIVE");
+		}
+
+		if ("${defaultView}" == "Month") {
+			AssertElementPresent(locator1 = "Calendar#VIEW_MONTH_BUTTON_ACTIVE");
+		}
+
+		if ("${defaultView}" == "Agenda") {
+			AssertElementPresent(locator1 = "Calendar#VIEW_AGENDA_BUTTON_ACTIVE");
+		}
+	}
+
 	macro viewMonth {
 		CalendarNavigator.gotoView(viewType = "Month");
 
@@ -826,25 +844,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Calendar#SMALL_CALENDAR_WEEK_START_DAY",
 			value1 = "${weekStartDay}");
-	}
-
-	macro viewDefaultViewCalendar {
-		if("${defaultView}" == "Day") {
-			AssertElementPresent(
-			locator1 = "Calendar#VIEW_DAY_BUTTON_ACTIVE");
-		}
-		if("${defaultView}" == "Week") {
-			AssertElementPresent(
-			locator1 = "Calendar#VIEW_WEEK_BUTTON_ACTIVE");
-		}
-		if("${defaultView}" == "Month") {
-			AssertElementPresent(
-			locator1 = "Calendar#VIEW_MONTH_BUTTON_ACTIVE");
-		}
-		if("${defaultView}" == "Agenda") {
-			AssertElementPresent(
-			locator1 = "Calendar#VIEW_AGENDA_BUTTON_ACTIVE");
-		}
 	}
 
 }

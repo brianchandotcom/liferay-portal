@@ -91,7 +91,6 @@ definition {
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.viewDefaultViewConfiguration(defaultView = "Month");
-
 	}
 
 	@priority = "3"

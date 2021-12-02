@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -294,6 +295,14 @@ public class SourceFormatterUtil {
 
 			return null;
 		}
+	}
+
+	public static JSONObject getPortalJSONObject(String dirName)
+		throws IOException {
+
+		return getPortalJSONObject(
+			dirName, new SourceFormatterExcludes(),
+			SourceFormatterArgs.MAX_LINE_LENGTH);
 	}
 
 	public static JSONObject getPortalJSONObject(

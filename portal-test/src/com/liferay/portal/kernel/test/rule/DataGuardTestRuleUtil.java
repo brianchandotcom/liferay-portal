@@ -603,6 +603,8 @@ public class DataGuardTestRuleUtil {
 				}
 			}
 			catch (Throwable throwable2) {
+				throwable2.addSuppressed(throwable1);
+
 				ReflectionUtil.throwException(throwable2);
 			}
 		}

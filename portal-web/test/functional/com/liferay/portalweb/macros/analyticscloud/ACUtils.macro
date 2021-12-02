@@ -549,7 +549,7 @@ definition {
 
 	@summary = "Dismiss Onboarding Modal if it appears when launching AC"
 	macro dismissOnboardingModal {
-		if (IsElementPresent(locator1 = "ACSettings#TOKEN_INPUT_FIELD")) {
+		if (IsElementPresent(locator1 = "ACSettings#MODAL_SCREEN")) {
 			Click(locator1 = "ACSettings#CLOSE_ONBOARDING_MODAL");
 		}
 	}

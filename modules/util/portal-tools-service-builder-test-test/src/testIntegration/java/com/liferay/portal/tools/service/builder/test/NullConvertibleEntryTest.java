@@ -59,12 +59,13 @@ public class NullConvertibleEntryTest {
 
 	@Test
 	public void testFetchNullConvertibleString() {
-		_nullConvertibleEntryLocalService.addNullConvertibleEntry((String)null);
-
 		NullConvertibleEntry nullConvertibleEntry =
-			_nullConvertibleEntryLocalService.fetchByName(null);
+			_nullConvertibleEntryLocalService.addNullConvertibleEntry(
+				(String)null);
 
-		Assert.assertNotNull(nullConvertibleEntry);
+		Assert.assertEquals(
+			nullConvertibleEntry,
+			_nullConvertibleEntryLocalService.fetchByName(null));
 	}
 
 	@Inject

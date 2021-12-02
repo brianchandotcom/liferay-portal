@@ -2207,18 +2207,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				fileName);
 
 		if (!snapFile.exists()) {
-			snapFile.mkdirs();
+			File snapParentFile = snapFile.getParentFile();
+
+			snapParentFile.mkdirs();
 		}
 
 		File resultFile = new File(
 			PropsValues.TEST_BASE_DIR_NAME + getOcularResultImageDirName() +
 				"/" + fileName);
 
-		resultFile.mkdirs();
+		File resultParentFile = resultFile.getParentFile();
+
+		resultParentFile.mkdirs();
 
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
-		ocularConfiguration.resultPath(Paths.get(resultFile.getParent()));
+		ocularConfiguration.resultPath(Paths.get(resultParentFile.getPath()));
 
 		WebElement webElement = getWebElement(locator);
 
@@ -4587,6 +4591,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		ocularConfiguration = ocularConfiguration.snapshotPath(
 			Paths.get(testBaseDirName, getOcularSnapImageDirName()));
+
+		FileUtil.delete(
+			new File(testBaseDirName, getOcularResultImageDirName()));
 
 		ocularConfiguration.resultPath(
 			Paths.get(testBaseDirName, getOcularResultImageDirName()));

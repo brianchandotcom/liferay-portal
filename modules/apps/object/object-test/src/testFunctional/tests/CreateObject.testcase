@@ -89,7 +89,7 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-		SelectFrame(locator1 = "IFrame#IFRAME");
+		ObjectAdmin.markLayoutAsDefault();
 
 		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
 
@@ -98,10 +98,6 @@ definition {
 			columnsNumber = "2",
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
-
-		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
-
-		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
 		Button.clickSave();
 

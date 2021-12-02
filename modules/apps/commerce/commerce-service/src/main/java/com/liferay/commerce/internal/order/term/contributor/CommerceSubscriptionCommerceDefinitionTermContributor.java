@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -88,7 +87,7 @@ public class CommerceSubscriptionCommerceDefinitionTermContributor
 					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
 
 				User user = _userLocalService.getUser(
-					GetterUtil.getLong(commerceAccount.getName()));
+					commerceAccount.getUserId());
 
 				return user.getFullName(true, true);
 			}

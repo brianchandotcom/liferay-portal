@@ -16,6 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
+import {SCHEMA_SELECTED_EVENT} from './constants';
 import getFieldsFromSchema from './getFieldsFromSchema';
 
 function FieldsTable({portletNamespace}) {
@@ -36,9 +37,9 @@ function FieldsTable({portletNamespace}) {
 			}
 		};
 
-		Liferay.on('schema-selected', handleSchemaUpdated);
+		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 
-		return () => Liferay.detach('schema-selected', handleSchemaUpdated);
+		return () => Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 	}, []);
 
 	if (!fields.length) {

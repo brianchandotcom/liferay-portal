@@ -14,6 +14,8 @@
 
 import {fetch, openToast} from 'frontend-js-web';
 
+import {SCHEMA_SELECTED_EVENT} from './constants';
+
 const HEADERS = new Headers({
 	'content-type': 'application/json',
 	'x-csrf-token': window.Liferay.authToken,
@@ -92,7 +94,7 @@ export default function ({namespace}) {
 				internalClassNameSelect.appendChild(optionElement);
 			});
 
-			Liferay.fire('schema-selected', {
+			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				schema: null,
 			});
 
@@ -133,7 +135,7 @@ export default function ({namespace}) {
 		);
 
 		if (!headlessEnpointValue || !internalClassNameValue) {
-			Liferay.fire('schema-selected', {
+			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				schema: null,
 			});
 
@@ -154,7 +156,7 @@ export default function ({namespace}) {
 
 			const schemaEntry = components.schemas[internalClassNameValue];
 
-			Liferay.fire('schema-selected', {
+			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				schema: schemaEntry.properties,
 			});
 		}

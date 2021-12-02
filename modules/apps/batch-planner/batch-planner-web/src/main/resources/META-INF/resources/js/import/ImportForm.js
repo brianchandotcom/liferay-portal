@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
+import {FILE_SCHEMA_EVENT, SCHEMA_SELECTED_EVENT} from '../constants';
 import getFieldsFromSchema from '../getFieldsFromSchema';
 import ImportMappingItem from './ImportMappingItem';
 import ImportSubmit from './ImportSubmit';
@@ -59,12 +60,12 @@ function ImportForm({
 			setFieldsSelections(newFieldsSelection);
 		}
 
-		Liferay.on('schema-selected', handleSchemaUpdated);
-		Liferay.on('file-schema', handleFileSchemaUpdate);
+		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
+		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 
 		return () => {
-			Liferay.detach('schema-selected', handleSchemaUpdated);
-			Liferay.detach('file-schema', handleFileSchemaUpdate);
+			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
+			Liferay.detach(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 		};
 	}, []);
 

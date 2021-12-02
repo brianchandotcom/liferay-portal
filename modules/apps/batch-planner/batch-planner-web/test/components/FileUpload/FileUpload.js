@@ -18,6 +18,7 @@ import React from 'react';
 
 import {parseCSV} from '../../../src/main/resources/META-INF/resources/js/FileParsers';
 import FileUpload from '../../../src/main/resources/META-INF/resources/js/FileUpload';
+import {FILE_SCHEMA_EVENT} from '../../../src/main/resources/META-INF/resources/js/constants';
 
 jest.mock('../../../src/main/resources/META-INF/resources/js/FileParsers');
 
@@ -40,7 +41,7 @@ describe('FileUpload', () => {
 
 	it('must read the file on input change', async () => {
 		const mockFileSchemaListener = jest.fn();
-		Liferay.on('file-schema', mockFileSchemaListener);
+		Liferay.on(FILE_SCHEMA_EVENT, mockFileSchemaListener);
 		parseCSV.mockImplementationOnce(({onComplete}) =>
 			onComplete(fileSchema)
 		);

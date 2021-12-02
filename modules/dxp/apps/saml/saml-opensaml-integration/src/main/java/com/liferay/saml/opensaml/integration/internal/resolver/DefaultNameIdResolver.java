@@ -55,10 +55,8 @@ public class DefaultNameIdResolver implements NameIdResolver {
 	protected String getNameIdValue(User user, String entityId) {
 		String nameIdAttributeName = getNameIdAttributeName(entityId);
 
-		String nameIdValue = user.getEmailAddress();
-
 		if (Validator.isNull(nameIdAttributeName)) {
-			return nameIdValue;
+			return user.getEmailAddress();
 		}
 
 		if (nameIdAttributeName.startsWith("expando:")) {
@@ -66,18 +64,16 @@ public class DefaultNameIdResolver implements NameIdResolver {
 
 			ExpandoBridge expandoBridge = user.getExpandoBridge();
 
-			nameIdValue = _getNullableObjectAsString(
+			return _getNullableObjectAsString(
 				expandoBridge.getAttribute(attributeName));
 		}
 		else if (nameIdAttributeName.startsWith("static:")) {
-			nameIdValue = nameIdAttributeName.substring(7);
+			return nameIdAttributeName.substring(7);
 		}
 		else {
-			nameIdValue = _getNullableObjectAsString(
+			return _getNullableObjectAsString(
 				BeanPropertiesUtil.getObject(user, nameIdAttributeName));
 		}
-
-		return nameIdValue;
 	}
 
 	private String _getNullableObjectAsString(Object object) {

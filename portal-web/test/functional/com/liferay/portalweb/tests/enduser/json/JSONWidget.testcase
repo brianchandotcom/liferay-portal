@@ -27,91 +27,117 @@ definition {
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 	}
 
+	@description = "Add widgets to differents columns in a widget page via JSON."
 	@priority = "5"
 	test AddWidgetsToDifferentColumns {
-		for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "${widgetName}");
+		task ("Add seven widgets to first column") {
+			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media") {
+				JSONLayout.addWidgetToPublicLayout(
+					column = "1",
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
 		}
 
-		for (var widgetName : list "Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = "2",
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "${widgetName}");
+		task ("Add six widgets to second column") {
+			for (var widgetName : list "Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets") {
+				JSONLayout.addWidgetToPublicLayout(
+					column = "2",
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
 		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View widgets are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.viewTitle(portletName = "Language Selector");
+			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets") {
+				Portlet.viewTitle(portletName = "${widgetName}");
+			}
+		}
 	}
 
+	@description = "Add different types of widget to private page via JSON."
 	@priority = "5"
 	test AddWidgetsToPrivateLayout {
-		JSONLayout.addPrivateLayout(
-			groupName = "Test Site Name",
-			layoutName = "Private Page Name");
-
-		for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets,Search Results,Site Map,Sites Directory,Tags Navigation,Type Facet,Web Content Display,Wiki") {
-			JSONLayout.addWidgetToPrivateLayout(
+		task ("Add a private page") {
+			JSONLayout.addPrivateLayout(
 				groupName = "Test Site Name",
-				layoutName = "Private Page Name",
-				widgetName = "${widgetName}");
+				layoutName = "Private Page Name");
 		}
 
-		Navigator.gotoPrivateSitePage(
-			pageName = "Private Page Name",
-			siteName = "Test Site Name");
+		task ("Add different types of widget to private page") {
+			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets,Search Results,Site Map,Sites Directory,Tags Navigation,Type Facet,Web Content Display,Wiki") {
+				JSONLayout.addWidgetToPrivateLayout(
+					groupName = "Test Site Name",
+					layoutName = "Private Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		Portlet.viewTitle(portletName = "Asset Publisher");
+		task ("View widgets are shown") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Private Page Name",
+				siteName = "Test Site Name");
+
+			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets,Search Results,Site Map,Sites Directory,Tags Navigation,Type Facet,Web Content Display,Wiki") {
+				Portlet.viewTitle(portletName = "${widgetName}");
+			}
+		}
 	}
 
+	@description = "Add different types of widget to public page via JSON."
 	@priority = "5"
 	test AddWidgetsToPublicLayout {
-		for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets,Search Results,Site Map,Sites Directory,Tags Navigation,Type Facet,Web Content Display,Wiki") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "${widgetName}");
+		task ("Add different types of widget to public page") {
+			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets,Search Results,Site Map,Sites Directory,Tags Navigation,Type Facet,Web Content Display,Wiki") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
 		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View widgets are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.viewTitle(portletName = "Asset Publisher");
+			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Categories Navigation,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Navigation Menu,Related Assets,Search Results,Site Map,Sites Directory,Tags Navigation,Type Facet,Web Content Display,Wiki") {
+				Portlet.viewTitle(portletName = "${widgetName}");
+			}
+		}
 	}
 
+	@description = "Update the layout template of a widget page via JSON."
 	@priority = "5"
 	test UpdateLayoutTemplate {
-		for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				layoutTemplate = "${layoutTemplate}");
+		task ("Change layout of a widget page then view the layout was applied") {
+			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
+				JSONLayout.updateLayoutTemplateOfPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					layoutTemplate = "${layoutTemplate}");
 
-			var groupId = JSONGroupAPI._getGroupIdByName(
-				groupName = "Test Site Name",
-				site = "true");
+				var groupId = JSONGroupAPI._getGroupIdByName(
+					groupName = "Test Site Name",
+					site = "true");
 
-			var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
-				groupId = "${groupId}",
-				layoutName = "Test Page Name",
-				privateLayout = "false");
+				var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
+					groupId = "${groupId}",
+					layoutName = "Test Page Name",
+					privateLayout = "false");
 
-			var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
+				var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
 
-			if (!(contains("${typeSettings}", "${layoutTemplateId}"))) {
-				fail("${layoutTemplateId} is not in 'typeSettings'");
+				if (!(contains("${typeSettings}", "${layoutTemplateId}"))) {
+					fail("${layoutTemplateId} is not in 'typeSettings'");
+				}
 			}
-
-			Pause(locator1 = "3000");
 		}
 	}
 

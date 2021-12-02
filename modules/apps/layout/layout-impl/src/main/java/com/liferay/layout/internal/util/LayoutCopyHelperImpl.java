@@ -231,27 +231,34 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					targetLayoutLayoutClassedModelUsages,
 					sourceLayoutLayoutClassedModelUsage)) {
 
-				long fragmentEntryLinkId = GetterUtil.getLong(
-					sourceLayoutLayoutClassedModelUsage.getContainerKey());
+				String containerKey =
+					sourceLayoutLayoutClassedModelUsage.getContainerKey();
 
-				long containerKey = GetterUtil.getLong(
-					sourceLayoutLayoutClassedModelUsage.getContainerKey());
+				long containerType =
+					sourceLayoutLayoutClassedModelUsage.getContainerType();
 
-				FragmentEntryLink fragmentEntryLink =
-					_fragmentEntryLinkLocalService.getFragmentEntryLink(
-						sourceLayout.getGroupId(), containerKey,
-						targetLayout.getPlid());
+				if (containerType == _portal.getClassNameId(
+						FragmentEntryLink.class.getName())) {
 
-				if (fragmentEntryLink != null) {
-					fragmentEntryLinkId =
-						fragmentEntryLink.getFragmentEntryLinkId();
+					long fragmentEntryLinkId = GetterUtil.getLong(
+						sourceLayoutLayoutClassedModelUsage.getContainerKey());
+
+					FragmentEntryLink fragmentEntryLink =
+						_fragmentEntryLinkLocalService.getFragmentEntryLink(
+							sourceLayout.getGroupId(), fragmentEntryLinkId,
+							targetLayout.getPlid());
+
+					if (fragmentEntryLink != null) {
+						containerKey = String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId());
+					}
 				}
 
 				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 					sourceLayoutLayoutClassedModelUsage.getGroupId(),
 					sourceLayoutLayoutClassedModelUsage.getClassNameId(),
 					sourceLayoutLayoutClassedModelUsage.getClassPK(),
-					String.valueOf(fragmentEntryLinkId),
+					containerKey,
 					sourceLayoutLayoutClassedModelUsage.getContainerType(),
 					targetLayout.getPlid(), serviceContext);
 			}

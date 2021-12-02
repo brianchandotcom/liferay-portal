@@ -16,15 +16,19 @@ package com.liferay.mentions.web.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mentions.constants.MentionsPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -81,6 +86,8 @@ public class MentionsPortletTest {
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), adminUser.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_layout = _addLayout(_group.getGroupId(), adminUser.getUserId());
 	}
 
 	@Test
@@ -245,6 +252,19 @@ public class MentionsPortletTest {
 		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
 	}
 
+	private Layout _addLayout(long groupId, long userId) throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+
+		return _layoutLocalService.addLayout(
+			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			name, null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private User _addUser(String screenName, long... groupIds)
 		throws Exception {
 
@@ -285,6 +305,9 @@ public class MentionsPortletTest {
 			mockLiferayResourceRequest.setParameter("query", query);
 		}
 
+		mockLiferayResourceRequest.setParameter(
+			"discussionPortletId", themeDisplay.getPpid());
+
 		return mockLiferayResourceRequest;
 	}
 
@@ -293,6 +316,8 @@ public class MentionsPortletTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setPpid(MentionsPortletKeys.MENTIONS);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(
 			UserTestUtil.getAdminUser(_company.getCompanyId()));
@@ -309,13 +334,17 @@ public class MentionsPortletTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 	@Inject(filter = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS)
 	private Portlet _portlet;
 
 	@Inject
 	private UserLocalService _userLocalService;
 
-	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();
 
 }

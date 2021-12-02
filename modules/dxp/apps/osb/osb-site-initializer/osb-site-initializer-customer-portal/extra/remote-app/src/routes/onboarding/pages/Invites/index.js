@@ -1,22 +1,18 @@
-import {useLazyQuery, useQuery} from '@apollo/client';
-import ClayForm, {ClayInput} from '@clayui/form';
-import {useFormikContext} from 'formik';
-import {useContext, useEffect, useMemo} from 'react';
+import ClayForm, { ClayInput } from '@clayui/form';
+import { useFormikContext } from 'formik';
+import { useContext } from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
-import {LiferayTheme} from '../../../../common/services/liferay';
-import {
-	getAccountSubscriptionGroupsByFilter,
-	getUserAccount,
-} from '../../../../common/services/liferay/graphql/queries';
-import {API_BASE_URL} from '../../../../common/utils';
+import { LiferayTheme } from '../../../../common/services/liferay';
+import { PARAMS_KEYS } from '../../../../common/services/liferay/search-params';
+import { API_BASE_URL } from '../../../../common/utils';
 import Layout from '../../components/Layout';
-import {AppContext} from '../../context';
-import {actionTypes} from '../../context/reducer';
-import {getInitialInvite, getRoles, steps} from '../../utils/constants';
+import { AppContext } from '../../context';
+import { actionTypes } from '../../context/reducer';
+import { getInitialInvite, getRoles, steps } from '../../utils/constants';
 
-const HorizontalInputs = ({id}) => {
+const HorizontalInputs = ({ id }) => {
 	return (
 		<ClayInput.Group>
 			<ClayInput.GroupItem className="m-0">
@@ -34,7 +30,7 @@ const HorizontalInputs = ({id}) => {
 					groupStyle="m-0"
 					label="Role"
 					name={`invites[${id}].roleId`}
-					options={getRoles().map(({id, name}) => ({
+					options={getRoles().map(({ id, name }) => ({
 						label: name,
 						value: id,
 					}))}
@@ -45,53 +41,21 @@ const HorizontalInputs = ({id}) => {
 };
 
 const Invites = () => {
-	const [, dispatch] = useContext(AppContext);
-	const {setFieldValue, values} = useFormikContext();
-
-	const {data: userAccountData} = useQuery(getUserAccount, {
-		variables: {id: LiferayTheme.getUserId()},
-	});
-
-	const accountBriefs = useMemo(() => {
-		return userAccountData?.userAccount?.accountBriefs || [];
-	}, [userAccountData]);
-
-	const [getAccountSubscriptions, {data: accountSubscription}] =
-		useLazyQuery(getAccountSubscriptionGroupsByFilter) || [];
-
-	const accountSubscriptionsGroups =
-		accountSubscription?.c?.accountSubscriptionGroups?.items || [];
-
-	useEffect(() => {
-		getAccountSubscriptions({
-			variables: {
-				filter: accountBriefs
-					.map(
-						(
-							{externalReferenceCode},
-							index,
-							{length: totalAccountBriefs}
-						) =>
-							`accountKey eq '${externalReferenceCode}' ${
-								index + 1 < totalAccountBriefs ? ' or ' : ' '
-							}`
-					)
-					.join(' '),
-			},
-		});
-	}, [accountBriefs, getAccountSubscriptions]);
-
-	const hasDXPCloudSubscription = accountSubscriptionsGroups.filter((accountSubscriptionGroup) => 
-		accountSubscriptionGroup.name === 'DXP Cloud'
-	);
+	const [{ hasSubscriptionsDXPCloud, userAccount }, dispatch] = useContext(AppContext);
+	const { setFieldValue, values } = useFormikContext();
 
 	const nextStep =
-		accountBriefs?.length && hasDXPCloudSubscription?.length
+		hasSubscriptionsDXPCloud
 			? steps.dxp
 			: steps.success;
 
 	function handleSkip() {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
+		if (userAccount.accountBriefs.length === 1) {
+			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+				}=${userAccount.accountBriefs[0].externalReferenceCode}`;
+		} else {
+			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
+		}
 	}
 
 	return (

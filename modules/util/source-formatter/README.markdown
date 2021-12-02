@@ -94,6 +94,7 @@ Checks are configured in the following files:
    - [Performance](src/main/resources/documentation/performance_checks.markdown#performance-checks)
    - [Security](src/main/resources/documentation/security_checks.markdown#security-checks)
    - [Styling](src/main/resources/documentation/styling_checks.markdown#styling-checks)
+   - [Upgrade](src/main/resources/documentation/upgrade_checks.markdown#upgrade-checks)
 
 - ### By File Extensions:
    - [.action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown#checks-for-action-function-jrxml-macro-pom-project-properties-testcase-toggle-tpl-wsdl-xml-or-xsd)

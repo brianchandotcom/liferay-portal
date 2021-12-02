@@ -46,6 +46,12 @@ CSDiagramCPTypeDisplayContext csDiagramCPTypeDisplayContext = (CSDiagramCPTypeDi
 						</span>
 					</a>
 				</p>
+
+				<p class="card-text" title="<%= cpCatalogEntry.getShortDescription() %>">
+					<span class="text-truncate-inline">
+						<span class="text-truncate"><%= cpCatalogEntry.getShortDescription() %></span>
+					</span>
+				</p>
 			</div>
 
 			<div>

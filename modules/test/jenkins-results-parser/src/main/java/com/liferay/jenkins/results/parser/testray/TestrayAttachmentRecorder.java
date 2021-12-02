@@ -491,63 +491,39 @@ public class TestrayAttachmentRecorder {
 					throw new RuntimeException(ioException);
 				}
 
-				File poshiIndexFile = new File(poshiReportDir, "index.html");
+				File indexFile = new File(poshiReportDir, "index.html");
 
-				if (poshiIndexFile.exists()) {
-					try {
-						String content = JenkinsResultsParserUtil.read(
-							poshiIndexFile);
+				if (!indexFile.exists()) {
+					continue;
+				}
 
-						for (File poshiReportJPGFile :
-								JenkinsResultsParserUtil.findFiles(
-									poshiReportDir, ".*\\.jpg")) {
+				try {
+					String content = JenkinsResultsParserUtil.read(indexFile);
 
-							String poshiReportJPGFileName =
-								poshiReportJPGFile.getName();
+					for (File poshiReportJPGFile :
+							JenkinsResultsParserUtil.findFiles(
+								poshiReportDir, ".*\\.jpg")) {
 
-							if (!content.contains(
-									"/" + poshiReportJPGFileName)) {
+						String poshiReportJPGFileName =
+							poshiReportJPGFile.getName();
 
-								System.out.println(
-									"Removing unreferenced file " +
-										poshiReportJPGFile);
-
-								JenkinsResultsParserUtil.delete(
-									poshiReportJPGFile);
-
-								continue;
-							}
-
+						if (content.contains("/" + poshiReportJPGFileName)) {
 							_convertToGzipFile(poshiReportJPGFile);
+
+							continue;
 						}
-					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
+
+						System.out.println(
+							"Removing unreferenced file " + poshiReportJPGFile);
+
+						JenkinsResultsParserUtil.delete(poshiReportJPGFile);
 					}
 				}
-
-				for (File poshiReportHTMLFile :
-						JenkinsResultsParserUtil.findFiles(
-							poshiReportDir, ".*\\.html")) {
-
-					try {
-						String content = JenkinsResultsParserUtil.read(
-							poshiReportHTMLFile);
-
-						String regex =
-							"(screenshots/(?:after|before|screenshot)\\d+)" +
-								"\\.jpg";
-
-						JenkinsResultsParserUtil.write(
-							poshiReportHTMLFile,
-							content.replaceAll(regex, "$1.jpg.gz"));
-					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
-					}
-
-					_convertToGzipFile(poshiReportHTMLFile);
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
+
+				_convertToGzipFile(poshiReportIndexFile);
 			}
 		}
 	}

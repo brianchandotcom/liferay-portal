@@ -29,6 +29,7 @@ import java.util.Locale;
 /**
  * @author Marco Leo
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface CPDefinitionHelper {
@@ -38,6 +39,10 @@ public interface CPDefinitionHelper {
 	public CPCatalogEntry getCPCatalogEntry(
 			long commerceAccountId, long groupId, long cpDefinitionId,
 			Locale locale)
+		throws PortalException;
+
+	public String getDefaultImageFileURL(
+			long commerceAccountId, long cpDefinitionId)
 		throws PortalException;
 
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)

@@ -395,7 +395,11 @@ definition {
 		}
 
 		task ("Filter impact by Critical") {
+			A11yTool.openFilterPanel();
+
 			A11yTool.checkFilter(filterType = "critical");
+
+			A11yTool.closeFilterPanel();
 		}
 
 		task ("Assert only critical violations are present on the side panel") {
@@ -447,7 +451,11 @@ definition {
 		}
 
 		task ("Unfilter impact by Critical") {
+			A11yTool.openFilterPanel();
+
 			A11yTool.uncheckFilter(filterType = "critical");
+
+			A11yTool.closeFilterPanel();
 		}
 
 		task ("Assert the page has critical, serious, moderate, minor violations") {

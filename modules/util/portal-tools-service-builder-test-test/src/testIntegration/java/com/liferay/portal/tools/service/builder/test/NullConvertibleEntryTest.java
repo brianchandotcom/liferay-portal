@@ -16,10 +16,8 @@ package com.liferay.portal.tools.service.builder.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry;
 import com.liferay.portal.tools.service.builder.test.service.NullConvertibleEntryLocalService;
 
@@ -38,11 +36,7 @@ public class NullConvertibleEntryTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
-				"com.liferay.portal.tools.service.builder.test.service"));
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testCountNullConvertibleString() {

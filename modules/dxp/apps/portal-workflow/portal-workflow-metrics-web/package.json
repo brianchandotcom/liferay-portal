@@ -1,14 +1,14 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.40.0",
-		"@clayui/autocomplete": "3.40.0",
+		"@clayui/autocomplete": "3.41.0",
 		"@clayui/button": "3.40.0",
 		"@clayui/charts": "3.40.0",
-		"@clayui/drop-down": "3.40.0",
+		"@clayui/drop-down": "3.41.0",
 		"@clayui/form": "3.40.0",
 		"@clayui/icon": "3.40.0",
 		"@clayui/layout": "3.40.0",
-		"@clayui/list": "3.40.0",
+		"@clayui/list": "3.41.0",
 		"@clayui/management-toolbar": "3.40.0",
 		"@clayui/modal": "3.40.0",
 		"@clayui/navigation-bar": "3.40.0",

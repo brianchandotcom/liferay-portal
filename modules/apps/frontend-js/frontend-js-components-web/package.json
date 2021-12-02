@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/card": "3.40.0",
+		"@clayui/card": "3.41.0",
 		"@clayui/icon": "3.40.0",
 		"@clayui/sticker": "3.40.0",
 		"@liferay/frontend-js-react-web": "*",

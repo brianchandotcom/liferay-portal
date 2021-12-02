@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/drop-down": "3.40.0",
+		"@clayui/drop-down": "3.41.0",
 		"@clayui/icon": "3.40.0",
 		"@clayui/tooltip": "3.40.0",
 		"classnames": "2.3.1",

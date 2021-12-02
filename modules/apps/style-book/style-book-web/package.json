@@ -2,8 +2,8 @@
 	"dependencies": {
 		"@clayui/alert": "3.40.0",
 		"@clayui/button": "3.40.0",
-		"@clayui/color-picker": "3.40.0",
-		"@clayui/drop-down": "3.40.0",
+		"@clayui/color-picker": "3.41.0",
+		"@clayui/drop-down": "3.41.0",
 		"@clayui/form": "3.40.0",
 		"@clayui/icon": "3.40.0",
 		"@clayui/loading-indicator": "3.40.0",

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/localized-input": "3.40.0",
+		"@clayui/localized-input": "3.41.0",
 		"classnames": "2.3.1",
 		"react": "16.12.0"
 	},

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/css": "3.40.1"
+		"@clayui/css": "3.41.0"
 	},
 	"main": "index.js",
 	"name": "@liferay/document-library-preview-css",

@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/icon": "3.40.0",
-		"@clayui/list": "3.40.0",
+		"@clayui/list": "3.41.0",
 		"@clayui/popover": "3.40.0",
 		"@liferay/frontend-js-react-web": "*",
 		"axe-core": "4.2.0",

@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {LiferayTheme} from '../services/liferay';
 import {getAccountRolesAndAccountFlags} from '../services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../services/liferay/search-params';
+import { API_BASE_URL } from '../utils';
 
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
 
@@ -25,7 +26,7 @@ const onboardingPageGuard = (
 	accountAccountRoles
 ) => {
 	return {
-		location: `${window.location.origin}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
+		location: `${API_BASE_URL}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
 		validate:
 			!accountFlags.length &&
 			accountAccountRoles.find(
@@ -52,7 +53,7 @@ const overviewPageGuard = (accountBriefs, externalReferenceCode) => {
 	};
 
 	return {
-		location: `${window.location.origin}${liferaySiteName}/overview?${
+		location: `${API_BASE_URL}${liferaySiteName}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${getExternalReferenceCode()}`,
 		validate: validation,
@@ -101,7 +102,7 @@ const usePageGuard = (
 				if (alternativeValidate) {
 					window.location.href = location;
 				} else {
-					window.location.href = `${window.location.origin}${liferaySiteName}`;
+					window.location.href = `${API_BASE_URL}${liferaySiteName}`;
 				}
 			} else {
 				setLoading(false);

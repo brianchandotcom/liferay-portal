@@ -303,6 +303,10 @@ public class ViewCountEntryLocalServiceUtil {
 		return getService().getViewCountEntry(viewCountEntryPK);
 	}
 
+	public static com.liferay.petra.sql.dsl.Table<?> getViewCountEntryTable() {
+		return getService().getViewCountEntryTable();
+	}
+
 	public static void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 

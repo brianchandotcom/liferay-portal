@@ -331,6 +331,11 @@ public class ViewCountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.petra.sql.dsl.Table<?> getViewCountEntryTable() {
+		return _viewCountEntryLocalService.getViewCountEntryTable();
+	}
+
+	@Override
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 

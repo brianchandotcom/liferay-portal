@@ -41,8 +41,17 @@ public class ListUtil {
 		return new ArrayList<>(master);
 	}
 
-	public static String get(List<String> list, int index) {
+	public static String get(List<String> list, Integer index) {
 		return list.get(index);
+	}
+
+	public static String get(List<String> list, String index) {
+		try {
+			return list.get(Integer.parseInt(index));
+		}
+		catch (IndexOutOfBoundsException | NumberFormatException exception) {
+			return null;
+		}
 	}
 
 	public static boolean isEmpty(List<?> list) {
@@ -93,6 +102,12 @@ public class ListUtil {
 
 	public static void remove(List<String> list, String item) {
 		list.remove(item);
+	}
+
+	public static String size(List<String> list) {
+		int size = list.size();
+
+		return String.valueOf(size);
 	}
 
 	public static <E> List<E> sort(List<E> list) {

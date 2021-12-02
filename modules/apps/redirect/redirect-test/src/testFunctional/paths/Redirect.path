@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>SIDEBAR_INFO_ITEM</td>
-	<td>//div[contains(@class,'sidebar-body')]//dt[contains(@class,'sidebar-dt') and contains(.,'${key_itemName}')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//dt[contains(@class,'sidebar-dt') and contains(.,'${key_itemName}')]/following-sibling::dd[1]</td>
 	<td></td>
 </tr>
 <tr>

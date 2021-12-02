@@ -376,7 +376,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Date");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "2021-01-01");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
 
 		PageEditor.clickPublish();
 
@@ -384,7 +384,7 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "2021-01-01");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Double type for a specific Object"

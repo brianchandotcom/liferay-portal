@@ -54,7 +54,7 @@ public class InviteUsersMVCResourceCommandTest {
 	@Test
 	public void testInviterRoleModelResourceActions() {
 		String[] modelResourceActions = _getModelResourceActions(
-			PublicationRoleConstants.ROLE_INVITER);
+			PublicationRoleConstants.ROLE_ADMIN);
 
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));

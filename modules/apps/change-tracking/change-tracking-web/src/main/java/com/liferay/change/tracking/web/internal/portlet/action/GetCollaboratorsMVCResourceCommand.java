@@ -220,11 +220,11 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private String _getNameLabel(String name) {
-		if (name.equals(PublicationRoleConstants.NAME_EDITOR)) {
-			return PublicationRoleConstants.LABEL_EDITOR;
+		if (name.equals(PublicationRoleConstants.NAME_ADMIN)) {
+			return PublicationRoleConstants.LABEL_ADMIN;
 		}
-		else if (name.equals(PublicationRoleConstants.NAME_INVITER)) {
-			return PublicationRoleConstants.LABEL_INVITER;
+		else if (name.equals(PublicationRoleConstants.NAME_EDITOR)) {
+			return PublicationRoleConstants.LABEL_EDITOR;
 		}
 		else if (name.equals(PublicationRoleConstants.NAME_PUBLISHER)) {
 			return PublicationRoleConstants.LABEL_PUBLISHER;
@@ -234,11 +234,11 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private int _getNameRole(String name) {
-		if (name.equals(PublicationRoleConstants.NAME_EDITOR)) {
-			return PublicationRoleConstants.ROLE_EDITOR;
+		if (name.equals(PublicationRoleConstants.NAME_ADMIN)) {
+			return PublicationRoleConstants.ROLE_ADMIN;
 		}
-		else if (name.equals(PublicationRoleConstants.NAME_INVITER)) {
-			return PublicationRoleConstants.ROLE_INVITER;
+		else if (name.equals(PublicationRoleConstants.NAME_EDITOR)) {
+			return PublicationRoleConstants.ROLE_EDITOR;
 		}
 		else if (name.equals(PublicationRoleConstants.NAME_PUBLISHER)) {
 			return PublicationRoleConstants.ROLE_PUBLISHER;

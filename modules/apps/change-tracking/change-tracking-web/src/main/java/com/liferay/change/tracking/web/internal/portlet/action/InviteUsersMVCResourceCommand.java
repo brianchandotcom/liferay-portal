@@ -219,14 +219,14 @@ public class InviteUsersMVCResourceCommand
 	}
 
 	private String[] _getModelResourceActions(int role) {
-		if (role == PublicationRoleConstants.ROLE_EDITOR) {
-			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
-		}
-		else if (role == PublicationRoleConstants.ROLE_INVITER) {
+		if (role == PublicationRoleConstants.ROLE_ADMIN) {
 			return new String[] {
 				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
 				CTActionKeys.PUBLISH
 			};
+		}
+		else if (role == PublicationRoleConstants.ROLE_EDITOR) {
+			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
 		}
 		else if (role == PublicationRoleConstants.ROLE_PUBLISHER) {
 			return new String[] {

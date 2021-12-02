@@ -50,8 +50,7 @@ public class PublicationsRolePermissionsUpgradeProcess extends UpgradeProcess {
 			).from(
 				RoleTable.INSTANCE
 			).where(
-				RoleTable.INSTANCE.name.eq(
-					PublicationRoleConstants.NAME_INVITER)
+				RoleTable.INSTANCE.name.eq(_NAME_INVITER)
 			));
 
 		for (Role inviterRole : inviterRoles) {
@@ -80,6 +79,9 @@ public class PublicationsRolePermissionsUpgradeProcess extends UpgradeProcess {
 				publisherRole.getRoleId(), ActionKeys.PERMISSIONS);
 		}
 	}
+
+	private static final String _NAME_INVITER =
+		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.inviter";
 
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;

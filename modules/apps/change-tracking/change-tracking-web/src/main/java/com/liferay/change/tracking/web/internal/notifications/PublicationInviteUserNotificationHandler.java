@@ -145,11 +145,11 @@ public class PublicationInviteUserNotificationHandler
 	}
 
 	private String _getRoleLabel(int role) {
-		if (role == PublicationRoleConstants.ROLE_EDITOR) {
-			return PublicationRoleConstants.LABEL_EDITOR;
+		if (role == PublicationRoleConstants.ROLE_ADMIN) {
+			return PublicationRoleConstants.LABEL_ADMIN;
 		}
-		else if (role == PublicationRoleConstants.ROLE_INVITER) {
-			return PublicationRoleConstants.LABEL_INVITER;
+		else if (role == PublicationRoleConstants.ROLE_EDITOR) {
+			return PublicationRoleConstants.LABEL_EDITOR;
 		}
 		else if (role == PublicationRoleConstants.ROLE_PUBLISHER) {
 			return PublicationRoleConstants.LABEL_PUBLISHER;

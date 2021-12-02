@@ -228,21 +228,21 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					"label",
 					_language.get(
 						_httpServletRequest,
-						PublicationRoleConstants.LABEL_INVITER)
+						PublicationRoleConstants.LABEL_ADMIN)
 				).put(
 					"longDescription",
 					_language.get(
 						_httpServletRequest,
-						"inviters-can-view,-edit,-publish,-and-invite-other-" +
+						"admins-can-view,-edit,-publish,-and-invite-other-" +
 							"users")
 				).put(
 					"shortDescription",
 					_language.get(
 						_httpServletRequest,
-						"inviters-can-view,-edit,-publish,-and-invite-other-" +
+						"admins-can-view,-edit,-publish,-and-invite-other-" +
 							"users")
 				).put(
-					"value", PublicationRoleConstants.ROLE_INVITER
+					"value", PublicationRoleConstants.ROLE_ADMIN
 				))
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"

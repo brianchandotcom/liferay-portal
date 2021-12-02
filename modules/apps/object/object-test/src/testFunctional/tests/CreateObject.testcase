@@ -653,38 +653,34 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateManyToManyRelationship {
 		property portal.acceptance = "true";
 
-        ObjectAdmin.addObjectViaAPI(
-            labelName = "Object A",
-            objectName = "ObjectA",
-            pluralLabelName = "Objects A");
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Object A",
+			objectName = "ObjectA",
+			pluralLabelName = "Objects A");
 
-        ObjectAdmin.addObjectViaAPI(
-            labelName = "Object B",
-            objectName = "ObjectB",
-            pluralLabelName = "Objects B");
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Object B",
+			objectName = "ObjectB",
+			pluralLabelName = "Objects B");
 
-        ObjectAdmin.openObjectAdmin();
+		ObjectAdmin.openObjectAdmin();
 
-        ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-        ObjectAdmin.gotoRelationshipsTab();
+		ObjectAdmin.gotoRelationshipsTab();
 
-        ObjectAdmin.addObjectRelationshipViaUI(
-            label = "Relationship",
-            object = "ObjectB",
-            type = "Many to Many");
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "ObjectB",
+			type = "Many to Many");
 
-        AssertElementPresent(
-            key_label = "Relationship",
-            locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
-
-    }
-
+		AssertElementPresent(
+			key_label = "Relationship",
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to create a One to Many Relationship"

@@ -88,21 +88,13 @@ definition {
 	test PublishCustomFieldDeletionviaRemoteStaging {
 		property test.name.skip.portal.instance = "RemoteStaging#PublishCustomFieldDeletionviaRemoteStaging";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
-
 		CustomFields.addCP(
 			customFieldName = "Text Field",
 			customFieldType = "Input Field",
 			customInputDataType = "Text",
-			resourceName = "Document");
+			modelResource = "com.liferay.document.library.kernel.model.DLFileEntry");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		LAR.exportPortlet(
 			larFileName = "custom_fields.portlet.lar",
@@ -115,10 +107,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin(baseURL = "http://localhost:9080");
 
 		LAR.importPortlet(larFileName = "custom_fields.portlet.lar");
 
@@ -130,9 +119,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			customFieldText = "DM Document Custom Field",
@@ -160,9 +147,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -177,19 +164,13 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.deleteCP(
 			customFieldName = "Text Field",
 			resourceName = "Document");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		LAR.exportPortlet(
 			exportIndividualDeletions = "true",
@@ -203,10 +184,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin(baseURL = "http://localhost:9080");
 
 		LAR.importPortlet(
 			importDeletions = "true",
@@ -220,9 +198,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -251,9 +227,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 

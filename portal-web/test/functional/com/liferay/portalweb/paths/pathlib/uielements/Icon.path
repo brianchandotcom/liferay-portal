@@ -377,11 +377,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_CUSTOMIZATION_ELLIPSIS</td>
-	<td>//div[contains(@class,'control-menu-level-2')]//div[contains(@class,'icon-menu')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REMOVE_CATEGORY</td>
 	<td>//div[@class='input-group-item']//span[contains(.,'${key_categoryName}')]//button[contains(@class,'close')]</td>
 	<td></td>

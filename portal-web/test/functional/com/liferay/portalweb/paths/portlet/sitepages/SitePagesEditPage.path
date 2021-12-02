@@ -143,17 +143,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CUSTOMIZATION_SETTINGS-->
-<tr>
-	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>
-	<td>//input[contains(@id,'CUSTOMIZABLE_LAYOUT')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
-	<td>//input[contains(@name,'column-${key_columnId}-customizable')]/../span[contains(@class,'toggle-switch')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

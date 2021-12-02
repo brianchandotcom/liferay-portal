@@ -61,7 +61,7 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Content");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Content");
 
 		Translations.viewTargetFields(
 			webContentContent = "これは英語のウェブ記事の内容です",
@@ -95,7 +95,7 @@ definition {
 			targetLanguageId = "es_ES",
 			webContentTitle = "This is the title of a web article in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Description");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Description");
 
 		Translations.viewTargetFields(
 			webContentContent = "This is the content of a web article in English",
@@ -163,7 +163,7 @@ definition {
 			targetLanguageId = "es_ES",
 			webContentTitle = "This is the title of the numeric field in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Decimal");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Decimal");
 
 		Translations.viewTargetFields(
 			webContentDecimal = "1.0",
@@ -174,7 +174,7 @@ definition {
 			locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
 			value1 = "10");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Numeric");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Numeric");
 
 		Translations.viewTargetFields(
 			webContentDecimal = "1.0",
@@ -230,13 +230,13 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of the rich text field in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Title");
 
 		Translations.viewTargetFields(
 			webContentSourceHTML = "This is the content of the rich text field in English",
 			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Rich Text");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Rich Text");
 
 		Translations.viewTargetFields(
 			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
@@ -299,13 +299,13 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Title");
 
 		Translations.viewTargetFields(
 			webContentTextBox = "This is the content of the text box field in English",
 			webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Text Box");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Text Box");
 
 		Translations.viewTargetFields(
 			webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
@@ -365,13 +365,13 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Title");
 
 		Translations.viewTargetFields(
 			webContentText = "This is the content of the text field in English",
 			webContentTitle = "これは英語のウェブ記事のタイトルです");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Text");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Text");
 
 		Translations.viewTargetFields(
 			webContentText = "これは英語のテキストフィールドの内容です",
@@ -403,7 +403,7 @@ definition {
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
 
-		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+		Translations.translateSpecificFieldsWithGoogle(fieldName = "Title");
 
 		Translations.viewTargetFields(
 			webContentContent = "This is the content of a web article in English",

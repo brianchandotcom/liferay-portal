@@ -15,12 +15,18 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountRole;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.io.IOException;
 
@@ -72,7 +78,18 @@ public class AccountRoleAssigneesScreenNavigationCategory
 			return false;
 		}
 
-		return true;
+		try {
+			return AccountRolePermission.contains(
+				PermissionCheckerFactoryUtil.create(user),
+				accountRole.getAccountRoleId(), AccountActionKeys.ASSIGN_USERS);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -88,5 +105,8 @@ public class AccountRoleAssigneesScreenNavigationCategory
 
 	@Reference
 	protected JSPRenderer jspRenderer;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountRoleAssigneesScreenNavigationCategory.class);
 
 }

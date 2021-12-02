@@ -16,12 +16,18 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.admin.web.internal.util.AllowEditAccountRoleThreadLocal;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -69,16 +75,28 @@ public class AccountEntryRolesScreenNavigationCategory
 		if (!AllowEditAccountRoleThreadLocal.isAllowEditAccountRole() ||
 			Objects.equals(
 				accountEntryDisplay.getType(),
-				AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST) ||
+			(accountEntryDisplay.getAccountEntryId() <= 0)) {
 
 			return false;
 		}
 
-		if (accountEntryDisplay.getAccountEntryId() > 0) {
-			return true;
+		try {
+			return AccountEntryPermission.contains(
+				PermissionCheckerFactoryUtil.create(user),
+				accountEntryDisplay.getAccountEntryId(),
+				AccountActionKeys.VIEW_ACCOUNT_ROLES);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
 		}
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountEntryRolesScreenNavigationCategory.class);
 
 }

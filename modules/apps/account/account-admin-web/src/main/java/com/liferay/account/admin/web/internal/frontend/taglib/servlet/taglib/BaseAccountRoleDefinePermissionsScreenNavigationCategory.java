@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.helper.AccountRoleRequestHelper;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
@@ -24,9 +25,14 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -77,7 +83,18 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 			return false;
 		}
 
-		return true;
+		try {
+			return AccountRolePermission.contains(
+				PermissionCheckerFactoryUtil.create(user),
+				accountRole.getAccountRoleId(), ActionKeys.UPDATE);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -175,5 +192,8 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 			"screenNavigationCategoryKey", getCategoryKey()
 		).buildString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseAccountRoleDefinePermissionsScreenNavigationCategory.class);
 
 }

@@ -413,27 +413,27 @@ definition {
 		AssertTextEquals(
 			key_itemName = "Created By",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
-			value1 = "Created By");
+			value1 = "${createdBy}");
 
 		AssertTextEquals(
 			key_itemName = "Type",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
-			value1 = "Type");
+			value1 = "${type}");
 
 		AssertTextEquals(
 			key_itemName = "Create Date",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
-			value1 = "Create Date");
+			value1 = "${createDate}");
 
 		AssertTextEquals(
 			key_itemName = "Latest Occurrence",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
-			value1 = "Latest Occurrence");
+			value1 = "${latestOccurrence}");
 
 		AssertTextEquals(
 			key_itemName = "Expiration Date",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
-			value1 = "Expiration Date");
+			value1 = "${expirationDate}");
 	}
 
 	macro viewOrderedURLs {

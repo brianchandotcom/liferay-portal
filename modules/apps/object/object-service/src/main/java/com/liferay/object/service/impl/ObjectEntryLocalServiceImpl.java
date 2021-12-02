@@ -1256,18 +1256,24 @@ public class ObjectEntryLocalServiceImpl
 			values.put(name, (Boolean)object);
 		}
 		else if (clazz == Clob.class) {
-			Clob clob = (Clob)object;
-
-			try {
-				InputStream inputStream = clob.getAsciiStream();
-
-				values.put(
-					name,
-					GetterUtil.getString(
-						IOUtils.toString(inputStream, StandardCharsets.UTF_8)));
+			if (object == null) {
+				values.put(name, StringPool.BLANK);
 			}
-			catch (IOException | SQLException exception) {
-				throw new SystemException(exception);
+			else {
+				Clob clob = (Clob)object;
+
+				try {
+					InputStream inputStream = clob.getAsciiStream();
+
+					values.put(
+						name,
+						GetterUtil.getString(
+							IOUtils.toString(
+								inputStream, StandardCharsets.UTF_8)));
+				}
+				catch (IOException | SQLException exception) {
+					throw new SystemException(exception);
+				}
 			}
 		}
 		else if (clazz == Date.class) {

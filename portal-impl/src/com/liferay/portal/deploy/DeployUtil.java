@@ -90,21 +90,11 @@ public class DeployUtil {
 			});
 	}
 
-	public static String getResourcePath(Set<Path> tempPaths, String resource)
+	public static String getResourcePath(
+			Set<Path> tempDirPaths, String resource)
 		throws Exception {
 
-		return _deployUtil._getResourcePath(tempPaths, resource);
-	}
-
-	private DeployUtil() {
-	}
-
-	private String _getResourcePath(Set<Path> tempDirPaths, String resource)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
+		InputStream inputStream = DeployUtil.class.getResourceAsStream(
 			"dependencies/" + resource);
 
 		if (inputStream == null) {
@@ -130,7 +120,5 @@ public class DeployUtil {
 
 		return FileUtil.getAbsolutePath(file);
 	}
-
-	private static final DeployUtil _deployUtil = new DeployUtil();
 
 }

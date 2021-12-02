@@ -148,10 +148,10 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-98384. Assert the modification won't be shown in content page for guests until approve."
+	@description = "This is a test for LPS-98384. Assert the modification won't be shown in content page for guests until approve."
 	@priority = "3"
 	test CannotViewModificationUntilApproveAsGuest {
-		task ("Assert guests can not view modification before approve") {
+		task ("View guests can not view modification before approve") {
 			User.logoutPG();
 
 			Navigator.gotoSitePage(
@@ -164,10 +164,8 @@ definition {
 				text = "Heading Example");
 		}
 
-		task ("Assert guests can view modification after approve") {
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+		task ("Approve latest modification") {
+			User.loginPG(userEmailAddress = "test@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -180,14 +178,18 @@ definition {
 				workflowAssetTitle = "Test Page Name",
 				workflowAssetType = "Content Page",
 				workflowTask = "Review");
+		}
 
+		task ("View pending status is not shown") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextNotPresent(
+			AssertElementNotPresent(
+				index = "2",
 				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS");
+		}
 
+		task ("View modification is shown to guest after approve") {
 			User.logoutPG();
 
 			Navigator.gotoSitePage(
@@ -201,13 +203,11 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-98384. The page author can edit content page after reject or approve."
+	@description = "This is a test for LPS-98384. The page author can edit content page after reject or approve."
 	@priority = "3"
 	test EditContentPageAfterRejectOrApproveAsPageAuthor {
 		task ("Reviewer rejects the request of modification") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -222,10 +222,8 @@ definition {
 				workflowTask = "Review");
 		}
 
-		task ("Assert page author can edit after reject") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("View page author can edit page at view mode after rejected") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -237,18 +235,24 @@ definition {
 				text = "Heading Example");
 
 			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		}
 
+		task ("View pending status is shown") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
+		}
 
+		task ("View edit action is shown in Pages admin") {
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Edit");
+		}
 
+		task ("Edit Heading fragment") {
 			MenuItem.click(menuItem = "Edit");
 
 			PageEditor.editFragmentText(
@@ -257,13 +261,13 @@ definition {
 				text = "Modified text");
 		}
 
-		task ("Assert page author can preview the modification") {
+		task ("View page author can preview the modification") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
 
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
@@ -286,17 +290,15 @@ definition {
 				workflowTask = "Update");
 		}
 
-		task ("Assert reviewer can preview the modification") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("View reviewer can preview the modification") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
 
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
@@ -324,25 +326,27 @@ definition {
 				workflowTask = "Review");
 		}
 
-		task ("Assert page author can edit after approve") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("View peding status is not shown as page author") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextNotPresent(
+			AssertElementNotPresent(
+				index = "2",
 				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS");
+		}
 
+		task ("View preview action is not shown and edit is shown in Pages Admin") {
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Preview");
 
 			MenuItem.viewVisible(menuItem = "Edit");
+		}
 
-			Navigator.gotoSitePage(
+		task ("View page author can edit after approve") {
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
@@ -360,30 +364,24 @@ definition {
 				id = "text",
 				text = "New modified text");
 
-			AssertClick(
-				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-				value1 = "Submit for Publication");
-
-			Alert.viewSuccessMessage();
+			PageEditor.clickSubmitForPublication();
 		}
 	}
 
-	@description = "This is for LPS-98384. The reviewer can edit the content page and preview the modification after submit."
+	@description = "This is a test for LPS-98384. The reviewer can edit the content page and preview the modification after submit."
 	@priority = "5"
 	test PreviewModificationAndEditAfterSubmitAsReviewer {
 		property portal.acceptance = "true";
 
-		task ("Assert reviewer can preview modification of content page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("View reviewer can preview modification of content page") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
 
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
@@ -397,7 +395,7 @@ definition {
 				text = "New editable fragment text");
 		}
 
-		task ("Assert reviewer can edit after submit") {
+		task ("View reviewer can edit after submit") {
 			AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
@@ -415,10 +413,10 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
 
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
@@ -431,12 +429,12 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-98384. The page author can not edit again after submit but can preview the modification."
+	@description = "This is a test for LPS-98384. The page author can not edit again after submit but can preview the modification."
 	@priority = "5"
 	test PreviewModificationButCannotEditAfterSubmitAsPageAuthor {
 		property portal.acceptance = "true";
 
-		task ("Assert the Heading fragment still displays original text for public") {
+		task ("View the Heading fragment still displays original text for public") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -447,22 +445,22 @@ definition {
 				text = "Heading Example");
 		}
 
-		task ("Assert page author can not edit again after submit") {
+		task ("View page author can not edit again after submit") {
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals.assertPartialText(
-				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
-				value1 = "Pending");
+			SitePages.viewPageStatus(
+				index = "2",
+				pageName = "Test Page Name",
+				status = "Pending");
 
 			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
 
-		task ("Assert page author can preview modification of content page") {
+		task ("View page author can preview modification of content page") {
 			MenuItem.viewVisible(menuItem = "Preview");
 
 			MenuItem.click(menuItem = "Preview");

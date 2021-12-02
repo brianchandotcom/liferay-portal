@@ -19,6 +19,7 @@ const initialForm = {
 	dxp: {
 		admins: [getInitialDxpAdmin()],
 		dataCenterRegion: '',
+		disasterDataCenterRegion: '',
 		projectId: '',
 	},
 	invites: [
@@ -33,10 +34,7 @@ const AppContext = createContext();
 const AppContextProvider = ({assetsPath, children}) => {
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
-		dxp: {
-			organization: 'SuperBank',
-			version: '7.3',
-		},
+		hasSubscriptionsDXPCloud: false,
 		project: {},
 		step: steps.welcome,
 		userAccount: undefined,

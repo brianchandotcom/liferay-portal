@@ -14,23 +14,12 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
-import com.liferay.commerce.product.permission.CommerceProductViewPermission;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.util.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalService;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
-import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
-import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
-
-import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,21 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 public class CSDiagramCPTypeDisplayContext {
 
 	public CSDiagramCPTypeDisplayContext(
-		CommerceAccountHelper commerceAccountHelper,
-		CommerceChannelLocalService commerceChannelLocalService,
-		CommerceProductViewPermission commerceProductViewPermission,
-		CSDiagramSettingLocalService csDiagramSettingLocalService,
-		CSDiagramTypeRegistry csDiagramTypeRegistry, DLURLHelper dlURLHelper,
-		HttpServletRequest httpServletRequest, Portal portal) {
+		CSDiagramCPTypeHelper csDiagramCPTypeHelper,
+		HttpServletRequest httpServletRequest) {
 
-		_commerceAccountHelper = commerceAccountHelper;
-		_commerceChannelLocalService = commerceChannelLocalService;
-		_commerceProductViewPermission = commerceProductViewPermission;
-		_csDiagramSettingLocalService = csDiagramSettingLocalService;
-		_csDiagramTypeRegistry = csDiagramTypeRegistry;
-		_dlURLHelper = dlURLHelper;
-		_httpServletRequest = httpServletRequest;
-		_portal = portal;
+		_csDiagramCPTypeHelper = csDiagramCPTypeHelper;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
@@ -69,49 +47,21 @@ public class CSDiagramCPTypeDisplayContext {
 	public CSDiagramSetting getCSDiagramSetting(long cpDefinitionId)
 		throws PortalException {
 
-		long commerceAccountId = 0;
-
-		RenderRequest renderRequest =
-			(RenderRequest)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
-				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(
-						_portal.getScopeGroupId(renderRequest)),
-				_portal.getHttpServletRequest(renderRequest));
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
-		_commerceProductViewPermission.check(
-			cpRequestHelper.getPermissionChecker(), commerceAccountId,
-			cpDefinitionId);
-
-		return _csDiagramSettingLocalService.
-			fetchCSDiagramSettingByCPDefinitionId(cpDefinitionId);
+		return _csDiagramCPTypeHelper.getCSDiagramSetting(
+			cpDefinitionId, cpRequestHelper);
 	}
 
 	public CSDiagramType getCSDiagramType(String type) {
-		return _csDiagramTypeRegistry.getCSDiagramType(type);
+		return _csDiagramCPTypeHelper.getCSDiagramType(type);
 	}
 
 	public String getImageURL(long cpDefinitionId) throws Exception {
-		return CSDiagramSettingUtil.getImageURL(
-			getCSDiagramSetting(cpDefinitionId), _dlURLHelper);
+		return _csDiagramCPTypeHelper.getImageURL(
+			cpDefinitionId, cpRequestHelper);
 	}
 
 	protected final CPRequestHelper cpRequestHelper;
 
-	private final CommerceAccountHelper _commerceAccountHelper;
-	private final CommerceChannelLocalService _commerceChannelLocalService;
-	private final CommerceProductViewPermission _commerceProductViewPermission;
-	private final CSDiagramSettingLocalService _csDiagramSettingLocalService;
-	private final CSDiagramTypeRegistry _csDiagramTypeRegistry;
-	private final DLURLHelper _dlURLHelper;
-	private final HttpServletRequest _httpServletRequest;
-	private final Portal _portal;
+	private final CSDiagramCPTypeHelper _csDiagramCPTypeHelper;
 
 }

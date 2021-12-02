@@ -559,15 +559,10 @@ public class CPDefinitionWrapper
 	}
 
 	@Override
-	public String getDefaultImageFileURL()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public String getDefaultImageThumbnailSrc(long commerceAccountId)
+		throws Exception {
 
-		return model.getDefaultImageFileURL();
-	}
-
-	@Override
-	public String getDefaultImageThumbnailSrc() throws Exception {
-		return model.getDefaultImageThumbnailSrc();
+		return model.getDefaultImageThumbnailSrc(commerceAccountId);
 	}
 
 	/**

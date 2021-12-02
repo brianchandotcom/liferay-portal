@@ -82,10 +82,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	public CPTaxCategory getCPTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public String getDefaultImageFileURL()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public String getDefaultImageThumbnailSrc() throws Exception;
+	public String getDefaultImageThumbnailSrc(long commerceAccountId)
+		throws Exception;
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getDeliverySubscriptionTypeSettingsProperties();

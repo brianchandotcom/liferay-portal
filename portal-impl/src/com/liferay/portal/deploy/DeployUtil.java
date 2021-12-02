@@ -14,18 +14,9 @@
 
 package com.liferay.portal.deploy;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ant.CopyTask;
 
 import java.io.File;
@@ -43,8 +34,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,65 +90,10 @@ public class DeployUtil {
 			});
 	}
 
-	public static String getAutoDeployDestDir() throws Exception {
-		String destDir = PropsValues.AUTO_DEPLOY_DEST_DIR;
-
-		if (Validator.isNull(destDir)) {
-			destDir = getAutoDeployServerDestDir();
-		}
-
-		FileUtil.mkdirs(destDir);
-
-		return destDir;
-	}
-
-	public static String getAutoDeployServerDestDir() throws Exception {
-		String destDir = null;
-
-		String serverId = GetterUtil.getString(ServerDetector.getServerId());
-
-		if (serverId.equals(ServerDetector.TOMCAT_ID)) {
-			destDir = PropsValues.AUTO_DEPLOY_TOMCAT_DEST_DIR;
-		}
-		else {
-			destDir = PrefsPropsUtil.getString(
-				"auto.deploy." + serverId + ".dest.dir");
-		}
-
-		if (Validator.isNull(destDir)) {
-			destDir = PropsValues.AUTO_DEPLOY_DEFAULT_DEST_DIR;
-		}
-
-		return StringUtil.replace(destDir, CharPool.BACK_SLASH, CharPool.SLASH);
-	}
-
 	public static String getResourcePath(Set<Path> tempPaths, String resource)
 		throws Exception {
 
 		return _deployUtil._getResourcePath(tempPaths, resource);
-	}
-
-	public static void redeployTomcat(String context) throws Exception {
-		if (_isPortalContext(context)) {
-			throw new UnsupportedOperationException(
-				"This method is meant for redeploying plugins, not the portal");
-		}
-
-		File webXml = new File(
-			getAutoDeployDestDir(), context + "/WEB-INF/web.xml");
-
-		FileUtils.touch(webXml);
-	}
-
-	private static boolean _isPortalContext(String context) {
-		if (Validator.isNull(context) || context.equals(StringPool.SLASH) ||
-			context.equals(
-				PortalContextLoaderListener.getPortalServletContextPath())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private DeployUtil() {

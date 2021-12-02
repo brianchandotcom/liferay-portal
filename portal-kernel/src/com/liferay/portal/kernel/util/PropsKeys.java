@@ -259,13 +259,8 @@ public interface PropsKeys {
 	public static final String AUTO_DEPLOY_CUSTOM_PORTLET_XML =
 		"auto.deploy.custom.portlet.xml";
 
-	public static final String AUTO_DEPLOY_DEFAULT_DEST_DIR =
-		"auto.deploy.default.dest.dir";
-
 	public static final String AUTO_DEPLOY_DEPLOY_DIR =
 		"auto.deploy.deploy.dir";
-
-	public static final String AUTO_DEPLOY_DEST_DIR = "auto.deploy.dest.dir";
 
 	public static final String AUTO_DEPLOY_ENABLED = "auto.deploy.enabled";
 
@@ -278,9 +273,6 @@ public interface PropsKeys {
 
 	public static final String AUTO_DEPLOY_TOMCAT_CONF_DIR =
 		"auto.deploy.tomcat.conf.dir";
-
-	public static final String AUTO_DEPLOY_TOMCAT_DEST_DIR =
-		"auto.deploy.tomcat.dest.dir";
 
 	public static final String AUTO_DEPLOY_TOMCAT_LIB_DIR =
 		"auto.deploy.tomcat.lib.dir";

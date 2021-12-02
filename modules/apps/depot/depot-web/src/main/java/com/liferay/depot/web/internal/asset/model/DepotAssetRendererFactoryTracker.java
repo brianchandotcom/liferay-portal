@@ -18,8 +18,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -60,19 +58,11 @@ public class DepotAssetRendererFactoryTracker {
 		for (ServiceRegistration<AssetRendererFactory<?>> serviceRegistration :
 				_serviceRegistrations.values()) {
 
-			try {
-				serviceRegistration.unregister();
-			}
-			catch (IllegalStateException illegalStateException) {
-				_log.error(illegalStateException, illegalStateException);
-			}
+			serviceRegistration.unregister();
 		}
 
 		_serviceRegistrations.clear();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DepotAssetRendererFactoryTracker.class);
 
 	@Reference
 	private DepotApplicationController _depotApplicationController;

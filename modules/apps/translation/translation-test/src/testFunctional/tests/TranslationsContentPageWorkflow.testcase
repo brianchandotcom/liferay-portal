@@ -706,7 +706,7 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Pending",
-			title = "Translation of Test Content Page Name to es-ES");
+			title = "Translation of Test Content Page Name (Segment Email Experience) to es-ES");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

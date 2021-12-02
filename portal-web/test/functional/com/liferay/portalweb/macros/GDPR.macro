@@ -161,8 +161,8 @@ definition {
 	macro deleteAndAnonymizeAllEntriesCP {
 		GDPR.filterByApplications(
 			applications = "All Applications",
-			applicationItemsCount = "${itemsCount}",
-			totalItemsCount = "${itemsCount}");
+			applicationItemsCount = "${applicationItemsCount}",
+			totalItemsCount = "${totalItemsCount}");
 
 		GDPR.deleteAllEntriesCP();
 

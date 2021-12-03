@@ -92,7 +92,7 @@ public class AccountEntryModelResourcePermission
 
 		if (permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(), AccountEntry.class.getName(),
-				accountEntryId, permissionChecker.getUserId(), actionId)) {
+				accountEntryId, accountEntry.getUserId(), actionId)) {
 
 			return true;
 		}

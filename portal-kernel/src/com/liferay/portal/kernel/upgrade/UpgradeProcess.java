@@ -434,6 +434,24 @@ public abstract class UpgradeProcess
 		}
 	}
 
+	protected void assertTableExists(
+			DatabaseMetaData databaseMetaData, DBInspector dbInspector,
+			String tableName)
+		throws SQLException {
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
+				null)) {
+
+			if (!resultSet.next()) {
+				throw new SQLException(
+					StringBundler.concat(
+						"Table with name '", tableName, "' does not exist in ",
+						dbInspector.getSchema()));
+			}
+		}
+	}
+
 	protected abstract void doUpgrade() throws Exception;
 
 	protected Connection getConnection() throws Exception {

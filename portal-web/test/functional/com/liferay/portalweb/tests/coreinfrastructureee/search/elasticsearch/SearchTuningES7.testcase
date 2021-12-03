@@ -785,6 +785,48 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
 	}
 
+	@priority = "5"
+	test ReindexingRestoresSynonymsIndex {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Synonyms");
+
+		SearchTuning.addSynonymSet(synonyms = "liferay,company");
+
+		SearchTuning.addSynonymSet(synonyms = "dxp,platform");
+
+		SearchAdministration.executeReindex();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Synonyms");
+
+		AssertElementPresent(
+			key_synonyms = "liferay, company",
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
+
+		AssertElementPresent(
+			key_synonyms = "dxp, platform",
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
+
+		SearchAdministration.openSearchAdmin();
+
+		Navigator.gotoNavItem(navItem = "Field Mappings");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		Click(
+			key_navNested = "liferay-${companyId}-search-tuning-synonyms",
+			locator1 = "NavNested#NAV_NESTED_LINK");
+
+		AssertTextEquals.assertPartialText(
+			indexName = "liferay-${companyId}-search-tuning-synonyms",
+			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
+			value1 = "liferay-${companyId}-search-tuning-synonyms");
+	}
+
 	test ReorderAddedResultsFromOtherSites {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -863,47 +905,6 @@ definition {
 			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
-	}
-
-	test RestoreSynonymsByReindex {
-		var companyId = JSONCompany.getCompanyId();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
-
-		SearchTuning.addSynonymSet(synonyms = "liferay,company");
-
-		SearchTuning.addSynonymSet(synonyms = "dxp,platform");
-
-		SearchAdministration.executeReindex();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
-
-		AssertElementPresent(
-			key_synonyms = "liferay, company",
-			locator1 = "SearchTuning#SYNONYMS_ENTRY");
-
-		AssertElementPresent(
-			key_synonyms = "dxp, platform",
-			locator1 = "SearchTuning#SYNONYMS_ENTRY");
-
-		SearchAdministration.openSearchAdmin();
-
-		Navigator.gotoNavItem(navItem = "Field Mappings");
-
-		Click(
-			key_navNested = "liferay-${companyId}-search-tuning-synonyms",
-			locator1 = "NavNested#NAV_NESTED_LINK");
-
-		AssertTextEquals.assertPartialText(
-			indexName = "liferay-${companyId}-search-tuning-synonyms",
-			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
-			value1 = "liferay-${companyId}-search-tuning-synonyms");
 	}
 
 	test SearchWithSynonyms {

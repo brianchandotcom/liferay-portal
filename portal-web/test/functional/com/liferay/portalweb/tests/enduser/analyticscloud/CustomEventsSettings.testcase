@@ -123,13 +123,13 @@ definition {
 		}
 
 		task ("Change the name of the custom event using 255+ characters") {
-			ACCustomEvents.changeCustomEventName(newCustomEventName = "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+			ACCustomEvents.changeCustomEventDisplayName(newDisplayName = "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 		}
 
 		task ("Check that the custom event name cannot be more than 255 characters") {
-			AssertTextEquals(
-				locator1 = "ACCustomEvents#INVALID_MESSAGE",
-				value1 = "Exceeds maximum length.");
+			ACCustomEvents.viewExceedsMaximumLength(invalidMessage = "Exceeds maximum length.");
+		}
+	}
 		}
 	}
 

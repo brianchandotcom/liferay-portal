@@ -370,4 +370,63 @@ definition {
 			text = "este es un campo html");
 	}
 
+	@description = "This ensures that the translated page field can be inherited by new experience."
+	@priority = "5"
+	test TranslatedPageFieldCanBeInherited {
+		JSONSegmentsentry.addSegment(
+			fieldName = "Email Address",
+			groupName = "Test Site Name",
+			operator = "contains",
+			segmentName = "Segment Email Address",
+			text = "test@liferay.com");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addExperience(
+			experienceName = "Segment Email Experience",
+			segmentName = "Segment Email Address");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateFragmentField(
+			fieldName = "Name",
+			fragmentText = "テストページ");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		Page.viewCurrentPage(pageName = "テストページ");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.changeExperience(experienceName = "Segment Email Experience");
+
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		Page.viewCurrentPage(pageName = "テストページ");
+	}
+
 }

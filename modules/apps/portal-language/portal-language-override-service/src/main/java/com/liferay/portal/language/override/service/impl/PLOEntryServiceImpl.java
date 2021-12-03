@@ -15,7 +15,13 @@
 package com.liferay.portal.language.override.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,4 +36,32 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
+
+	@Override
+	public void deletePLOEntries(String key) throws PortalException {
+		User user = getUser();
+
+		ploEntryLocalService.deletePLOEntries(user.getCompanyId(), key);
+	}
+
+	@Override
+	public PLOEntry deletePLOEntry(String key, String languageId)
+		throws PortalException {
+
+		User user = getUser();
+
+		return ploEntryLocalService.deletePLOEntry(
+			user.getCompanyId(), key, languageId);
+	}
+
+	@Override
+	public void setPLOEntries(String key, Map<Locale, String> localizationMap)
+		throws PortalException {
+
+		User user = getUser();
+
+		ploEntryLocalService.setPLOEntries(
+			user.getCompanyId(), user.getUserId(), key, localizationMap);
+	}
+
 }

@@ -17,6 +17,7 @@ definition {
 
 	@description = "LRQA-62443 Assert MFA OTP configuration at instance level"
 	@priority = "5"
+	@uitest
 	test ViewMFAConfigurationInInstanceLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-instance-level";
 		property portal.version = "7.3.10";
@@ -54,6 +55,7 @@ definition {
 
 	@description = "LRQA-62443 Assert MFA OTP configuration at system level"
 	@priority = "5"
+	@uitest
 	test ViewMFAConfigurationInSystemLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-system-level";
 		property portal.version = "7.3.10";

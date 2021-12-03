@@ -429,9 +429,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),
@@ -448,21 +445,25 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 					targetLayout.getLayoutId());
 			}
+
+			return;
 		}
-		else {
-			_layoutSEOEntryLocalService.copyLayoutSEOEntry(
-				targetLayout.getUserId(), targetLayout.getGroupId(),
-				targetLayout.isPrivateLayout(), targetLayout.getLayoutId(),
-				layoutSEOEntry.isCanonicalURLEnabled(),
-				layoutSEOEntry.getCanonicalURLMap(),
-				layoutSEOEntry.getDDMStorageId(),
-				layoutSEOEntry.isOpenGraphDescriptionEnabled(),
-				layoutSEOEntry.getOpenGraphDescriptionMap(),
-				layoutSEOEntry.getOpenGraphImageAltMap(),
-				layoutSEOEntry.getOpenGraphImageFileEntryId(),
-				layoutSEOEntry.isOpenGraphTitleEnabled(),
-				layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
-		}
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		_layoutSEOEntryLocalService.copyLayoutSEOEntry(
+			targetLayout.getUserId(), targetLayout.getGroupId(),
+			targetLayout.isPrivateLayout(), targetLayout.getLayoutId(),
+			layoutSEOEntry.isCanonicalURLEnabled(),
+			layoutSEOEntry.getCanonicalURLMap(),
+			layoutSEOEntry.getDDMStorageId(),
+			layoutSEOEntry.isOpenGraphDescriptionEnabled(),
+			layoutSEOEntry.getOpenGraphDescriptionMap(),
+			layoutSEOEntry.getOpenGraphImageAltMap(),
+			layoutSEOEntry.getOpenGraphImageFileEntryId(),
+			layoutSEOEntry.isOpenGraphTitleEnabled(),
+			layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 	}
 
 	private void _copyPortletPermissions(

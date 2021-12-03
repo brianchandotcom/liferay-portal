@@ -2858,6 +2858,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId, classNameIds, parentGroupId, keywordsArray,
 			keywordsArray, params, andOperator);
 
+		String actionId = (String)params.remove("actionId");
+
+		if (Validator.isNotNull(actionId)) {
+			return sort(
+				_filterGroups(actionId, groups), start, end, orderByComparator);
+		}
+
 		return sort(groups, start, end, orderByComparator);
 	}
 

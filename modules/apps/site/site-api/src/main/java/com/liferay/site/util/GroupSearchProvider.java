@@ -154,9 +154,16 @@ public class GroupSearchProvider {
 			long parentGroupId)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				"site", Boolean.TRUE
+			).put(
+				"actionId", ActionKeys.VIEW
+			).put(
+				"userId", themeDisplay.getUserId()
 			).build();
 
 		if (searchTerms.hasSearchTerms()) {
@@ -172,10 +179,6 @@ public class GroupSearchProvider {
 
 				groupParams.put("groupsTree", groupsTree);
 			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();

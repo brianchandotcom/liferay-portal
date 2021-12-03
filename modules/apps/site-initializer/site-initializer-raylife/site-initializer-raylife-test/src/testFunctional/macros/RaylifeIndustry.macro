@@ -1,0 +1,15 @@
+definition {
+
+	macro typeIndustry {
+		if (!(isSet(primaryIndustry))) {
+			var primaryIndustry = "pet";
+		}
+
+		Type(
+			locator1 = "Raylife#SEARCH_FIELD",
+			value1 = "${primaryIndustry}");
+
+		Click(locator1 = "RaylifeNavigation#SELECTED_INDUSTRY");
+	}
+
+} 

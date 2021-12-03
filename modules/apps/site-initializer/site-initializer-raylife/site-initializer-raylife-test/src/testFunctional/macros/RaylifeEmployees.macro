@@ -1,0 +1,43 @@
+definition {
+
+	macro typeAllEmployeesInfoFields {
+		Click(
+			field = "employees.hasFein",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
+
+		Click(
+			field = "employees.businessOperatesYearRound",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForOwner",
+			value = "$111.00");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForEmployees",
+			value = "$111.00");
+	}
+
+	macro typeEmployeesInfoFields {
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "${value}");
+	}
+
+}

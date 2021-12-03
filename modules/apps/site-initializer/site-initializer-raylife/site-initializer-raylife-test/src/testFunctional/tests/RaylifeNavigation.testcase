@@ -5,40 +5,119 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
 	@description = "LPS-142193 - Verify if Navigation is clickable for sections that are partially or fully complete."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNavigateByClickingInSections {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142193 CanNavigateByClickingInSections pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
+
+		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+		AssertElementPresent(locator1 = "RaylifeNavigation#SECTION_COMPLETED_SELECTED");
+
+		Click(locator1 = "RaylifeNavigation#SECTION_INCOMPLETED");
+
+		AssertElementPresent(locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED");
+
+		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142189 - Verify if when users complete a section, that completed section will be indicated with a check mark."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SectionIsCompleted {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		// TODO LPS-142189 SectionIsCompleted pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142186 - Verify if when users are viewing a current section, that section will be highlighted in blue."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SectionIsHighlighted {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		// TODO LPS-142186 SectionIsHighlighted pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142191 - Verify if when a section has not yet been started and the user is not currently viewing this section, that section will be grayed out."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SectionIsIncomplete {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		// TODO LPS-142191 SectionIsIncomplete pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeNavigation#SECTION_UNSTARTED");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 }

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>css=liferay-remote-app-raylife>>>[name='basics.businessSearch']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_TITLE</td>
 	<td>//div[contains(@title, '${siteTitle}')]</td>
 	<td></td>

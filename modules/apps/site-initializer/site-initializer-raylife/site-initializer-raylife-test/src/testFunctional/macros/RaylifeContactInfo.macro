@@ -1,0 +1,71 @@
+definition {
+
+	macro typeAllBasicsInfoFields {
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.firstName",
+			value = "FirstName");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.lastName",
+			value = "LastName");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.email",
+			value = "test@liferay.com");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.phone",
+			value = "(000) 000-0000");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.location.address",
+			value = "Address");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.location.city",
+			value = "City");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.location.zip",
+			value = "12345");
+	}
+
+	macro typeBasicsInfoFields {
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "${value}");
+	}
+
+	macro viewBasicsInfo {
+		AssertElementPresent(
+			label = "basics.businessInformation.firstName",
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "FirstName");
+
+		AssertElementPresent(
+			label = "basics.businessInformation.lastName",
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "LastName");
+
+		AssertElementPresent(
+			label = "basics.businessInformation.business.email",
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "test@liferay.com");
+
+		AssertElementPresent(
+			label = "basics.businessInformation.business.location.address",
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "Address");
+
+		AssertElementPresent(
+			label = "basics.businessInformation.business.location.city",
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "City");
+
+		AssertElementPresent(
+			label = "basics.businessInformation.business.location.zip",
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "12345");
+	}
+
+}

@@ -186,7 +186,7 @@ public class RemoteAppEntryLocalServiceImpl
 	}
 
 	@Override
-	public int countByCompanyId(long companyId) throws PortalException {
+	public int getRemoteAppEntriesCount(long companyId) throws PortalException {
 		return remoteAppEntryPersistence.countByCompanyId(companyId);
 	}
 

@@ -1,6 +1,6 @@
 definition {
 
-	macro changeCustomization {
+	macro configureCustomization {
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		if (isSet(resetCustomization)) {

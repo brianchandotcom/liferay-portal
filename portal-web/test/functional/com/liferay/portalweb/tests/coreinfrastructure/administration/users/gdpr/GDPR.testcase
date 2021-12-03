@@ -1710,7 +1710,7 @@ definition {
 			ManagementBar.toggleViewOrder(order = "list-down");
 		}
 
-		task ("Assert Pagination can be changed and correct number of entries are listed") {
+		task ("Assert pagination can be changed and correct number of entries are listed") {
 			for (var listEntries : list "4,8,20,40,60") {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
@@ -1745,12 +1745,94 @@ definition {
 	}
 
 	@description = "This test changes pagination and assert entries display properly."
-	@ignore = "Test Stub"
 	@priority = "2"
 	test PaginationWorksInNewDataExport {
+		task ("Bring up the New Data Export page") {
+			User.openUsersAdmin();
 
-		// TODO LRQA-50752 Test Case 6h - For the New Data Export page, assert pagination
+			User.exportPersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
 
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(
+				key_firstName = "userfn",
+				key_lastName = "userln",
+				locator1 = "ExportPersonalData#ADD_PROCESS_HEADER");
+		}
+
+		task ("Assert pagination can be changed and correct number of entries are listed") {
+			for (var listEntries : list "4,8,20,40,60") {
+				Pagination.changePagination(itemsPerPage = "${listEntries}");
+
+				if ("${listEntries}" == "4") {
+					Pagination.viewResults(results = "Showing 1 to 4 of 9 entries.");
+
+					for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center") {
+						LexiconEntry.viewEntryName(rowEntry = "${listedEntries}");
+					}
+
+					for (var unlistedEntries : list "Documents and Media,Forms,Web Content,Message Boards,Wiki") {
+						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
+					}
+
+					Click(locator1 = "Pagination#NEXT_LINK");
+
+					Pagination.viewResults(results = "Showing 5 to 8 of 9 entries.");
+
+					for (var listedEntries : list "Documents and Media,Forms,Web Content,Message Boards") {
+						LexiconEntry.viewEntryName(rowEntry = "${listedEntries}");
+					}
+
+					for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Wiki") {
+						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
+					}
+
+					Click(locator1 = "Pagination#NEXT_LINK");
+
+					Pagination.viewResults(results = "Showing 9 to 9 of 9 entries.");
+
+					LexiconEntry.viewEntryName(rowEntry = "Wiki");
+
+					for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
+						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
+					}
+				}
+				else if ("${listEntries}" == "8") {
+					if (!(
+
+					var results = "Showing 1 to 8 of 9 entries.";)) {
+						Click(locator1 = "Pagination#PREVIOUS_LINK");
+					}
+
+					Pagination.viewResults(results = "Showing 1 to 8 of 9 entries.");
+
+					for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
+						LexiconEntry.viewEntryName(rowEntry = "${listedEntries}");
+					}
+
+					LexiconEntry.viewNoEntry(rowEntry = "Wiki");
+
+					Click(locator1 = "Pagination#NEXT_LINK");
+
+					Pagination.viewResults(results = "Showing 9 to 9 of 9 entries.");
+
+					LexiconEntry.viewEntryName(rowEntry = "Wiki");
+
+					for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
+						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
+					}
+				}
+				else {
+					Pagination.viewResults(results = "Showing 1 to 9 of 9 entries.");
+
+					for (var allEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,Wiki") {
+						LexiconEntry.viewEntryName(rowEntry = "${allEntries}");
+					}
+				}
+			}
+		}
 	}
 
 	@description = "LPS-91766. This test asserts that the Remaining Items count under Status Summary is accurate"

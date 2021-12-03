@@ -77,6 +77,8 @@ public interface CartResource {
 	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 		throws Exception;
 
+	public String getCartPaymentURL(Long cartId) throws Exception;
+
 	public Page<Cart> getChannelCartsPage(
 			Long accountId, Long channelId, Pagination pagination)
 		throws Exception;

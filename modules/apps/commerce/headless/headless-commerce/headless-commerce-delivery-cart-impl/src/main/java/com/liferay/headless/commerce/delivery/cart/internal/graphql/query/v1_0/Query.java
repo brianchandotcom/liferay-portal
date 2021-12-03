@@ -152,6 +152,21 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentURL(cartId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String cartPaymentURL(@GraphQLName("cartId") Long cartId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartResource -> cartResource.getCartPaymentURL(cartId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelCarts(accountId: ___, channelId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -368,6 +383,25 @@ public class Query {
 				shippingMethodResource -> new ShippingMethodPage(
 					shippingMethodResource.getCartShippingMethodsPage(
 						_cart.getId())));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartPaymentURLTypeExtension {
+
+		public GetCartPaymentURLTypeExtension(Cart cart) {
+			_cart = cart;
+		}
+
+		@GraphQLField
+		public String paymentURL() throws Exception {
+			return _applyComponentServiceObjects(
+				_cartResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				cartResource -> cartResource.getCartPaymentURL(_cart.getId()));
 		}
 
 		private Cart _cart;

@@ -401,6 +401,11 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
+	public void testGetCartPaymentURL() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetChannelCartsPage() throws Exception {
 		Long accountId = testGetChannelCartsPage_getAccountId();
 		Long irrelevantAccountId =

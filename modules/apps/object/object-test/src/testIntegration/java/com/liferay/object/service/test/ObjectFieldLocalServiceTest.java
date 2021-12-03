@@ -273,8 +273,8 @@ public class ObjectFieldLocalServiceTest {
 		// Types
 
 		String[] types = {
-			"BigDecimal", "Blob", "Boolean", "Date", "Double", "Integer",
-			"Long", "String"
+			"BigDecimal", "Blob", "Clob", "Boolean", "Date", "Double",
+			"Integer", "Long", "String"
 		};
 
 		for (String type : types) {
@@ -478,6 +478,20 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals("able", objectField.getName());
 		Assert.assertFalse(objectField.isRequired());
 		Assert.assertEquals("Long", objectField.getType());
+
+		objectField = _objectFieldLocalService.updateCustomObjectField(
+			objectField.getObjectFieldId(), 0, false, true, "",
+			LocalizedMapUtil.getLocalizedMap("alice"), "alice", false, "Clob");
+
+		Assert.assertFalse(objectField.isIndexed());
+		Assert.assertTrue(objectField.isIndexedAsKeyword());
+		Assert.assertEquals("", objectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("alice"),
+			objectField.getLabelMap());
+		Assert.assertEquals("alice", objectField.getName());
+		Assert.assertFalse(objectField.isRequired());
+		Assert.assertEquals("Clob", objectField.getType());
 
 		String indexedLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getDefault());

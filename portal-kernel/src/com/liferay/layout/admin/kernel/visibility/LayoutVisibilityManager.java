@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.layout.admin.kernel.util;
+package com.liferay.layout.admin.kernel.visibility;
 
 /**
  * @author Jürgen Kappler
  */
-public interface LayoutVisibilityHelper {
+public interface LayoutVisibilityManager {
 
 	public boolean isPrivateLayoutsEnabled(long groupId);
 

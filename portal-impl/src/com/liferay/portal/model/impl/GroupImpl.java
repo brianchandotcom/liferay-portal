@@ -17,7 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
-import com.liferay.layout.admin.kernel.util.LayoutVisibilityHelper;
+import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -968,7 +968,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isPrivateLayoutsEnabled() {
-		return _layoutVisibilityHelper.isPrivateLayoutsEnabled(getGroupId());
+		return _layoutVisibilityManager.isPrivateLayoutsEnabled(getGroupId());
 	}
 
 	@Override
@@ -1233,10 +1233,10 @@ public class GroupImpl extends GroupBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(GroupImpl.class);
 
-	private static volatile LayoutVisibilityHelper _layoutVisibilityHelper =
+	private static volatile LayoutVisibilityManager _layoutVisibilityManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
-			LayoutVisibilityHelper.class, GroupImpl.class,
-			"_layoutVisibilityHelper", false, true);
+			LayoutVisibilityManager.class, GroupImpl.class,
+			"_layoutVisibilityManager", false, true);
 
 	private Group _liveGroup;
 	private Group _stagingGroup;

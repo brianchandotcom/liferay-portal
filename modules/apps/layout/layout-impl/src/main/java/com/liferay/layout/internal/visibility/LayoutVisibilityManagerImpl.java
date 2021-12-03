@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.internal.util;
+package com.liferay.layout.internal.visibility;
 
-import com.liferay.layout.admin.kernel.util.LayoutVisibilityHelper;
+import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
 import com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration",
-	immediate = true, service = LayoutVisibilityHelper.class
+	immediate = true, service = LayoutVisibilityManager.class
 )
-public class LayoutVisibilityHelperImpl implements LayoutVisibilityHelper {
+public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 
 	@Override
 	public boolean isPrivateLayoutsEnabled(long groupId) {

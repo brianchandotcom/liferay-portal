@@ -1,17 +1,5 @@
 definition {
 
-	macro changeCustomEventDisplayName {
-		Type(
-			locator1 = "TextInput#TEXT",
-			value1 = "${newDisplayName}");
-
-		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
-
-		if (IsElementPresent(locator1 = "Button#ANY_ENABLED",key_text = "Save")){
-			Button.clickSave();
-		}
-	}
-
 	macro changeCustomEventDescription {
 		Type(
 			locator1 = "TextArea#DESCRIPTION",
@@ -19,7 +7,19 @@ definition {
 
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
 
-		if (IsElementPresent(locator1 = "Button#ANY_ENABLED",key_text = "Save")){
+		if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY_ENABLED")) {
+			Button.clickSave();
+		}
+	}
+
+	macro changeCustomEventDisplayName {
+		Type(
+			locator1 = "TextInput#TEXT",
+			value1 = "${newDisplayName}");
+
+		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
+
+		if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY_ENABLED")) {
 			Button.clickSave();
 		}
 	}
@@ -76,6 +76,12 @@ definition {
 		return "${customEventName}";
 	}
 
+	macro viewDisplayNameOrDescription {
+		var key_nameValue = "${nameValue}";
+
+		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION");
+	}
+
 	macro viewExceedsMaximumLength {
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#INVALID_MESSAGE",
@@ -84,12 +90,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro viewDisplayNameOrDescription {
-		var key_nameValue = "${nameValue}";
-
-		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION");
 	}
 
 }

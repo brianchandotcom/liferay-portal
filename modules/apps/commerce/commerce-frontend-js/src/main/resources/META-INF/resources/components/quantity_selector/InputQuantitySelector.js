@@ -41,7 +41,11 @@ function InputQuantitySelector({
 	);
 
 	const getValidInputNumber = (value) => {
-		if (!value || value < inputMin) {
+		if (!value) {
+			return null;
+		}
+
+		if (value < inputMin) {
 			return inputMin;
 		}
 
@@ -65,6 +69,13 @@ function InputQuantitySelector({
 			max={inputMax || ''}
 			min={inputMin}
 			name={name}
+			onBlur={({target}) => {
+				if (!target.value) {
+					setTimeout(() => {
+						onUpdate(inputMin);
+					}, 400);
+				}
+			}}
 			onChange={({target}) => {
 				onUpdate(getValidInputNumber(Number(target.value)));
 			}}

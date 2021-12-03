@@ -293,6 +293,22 @@ public class CommerceOrderServiceUtil {
 			groupId, commerceAccountId, keywords);
 	}
 
+	public static List<CommerceOrder> getUserCommerceOrders(
+			long companyId, long groupId, String keywords, int start, int end)
+		throws PortalException {
+
+		return getService().getUserCommerceOrders(
+			companyId, groupId, keywords, start, end);
+	}
+
+	public static long getUserCommerceOrdersCount(
+			long companyId, long groupId, String keywords)
+		throws PortalException {
+
+		return getService().getUserCommerceOrdersCount(
+			companyId, groupId, keywords);
+	}
+
 	public static List<CommerceOrder> getUserPendingCommerceOrders(
 			long companyId, long groupId, String keywords, int start, int end)
 		throws PortalException {

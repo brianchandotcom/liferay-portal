@@ -794,6 +794,11 @@
 			<property name="description" value="Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization." />
 			<message key="variable.info.unwrapped" value="Wrap the variable ''{0}'' into an inner class ''Concealer'' in order to defer array elements initialization, see LPS-72768" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.UpgradeRemovedAPICheck">
+			<property name="category" value="Upgrade" />
+			<property name="description" value="Finds cases where calls are made to removed API after an upgrade." />
+			<message key="class.not.found" value="Class ''{0}'' no longer exists, or has been moved, in version ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`." />

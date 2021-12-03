@@ -61,7 +61,10 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
 			sxpElement);
 
+		sxpElement.setCreateDate(postSXPElement.getCreateDate());
 		sxpElement.setId(postSXPElement.getId());
+		sxpElement.setModifiedDate(postSXPElement.getModifiedDate());
+		sxpElement.setUserName(postSXPElement.getUserName());
 
 		sxpElement.setReadOnly(false);
 		sxpElement.setType(0);

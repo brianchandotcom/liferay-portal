@@ -502,6 +502,32 @@ public abstract class BaseCheck extends AbstractCheck {
 		return methodNameDetailAST.getText();
 	}
 
+	protected String getPackageName(DetailAST detailAST) {
+		DetailAST rootDetailAST = detailAST;
+
+		while (true) {
+			if (rootDetailAST.getParent() != null) {
+				rootDetailAST = rootDetailAST.getParent();
+			}
+			else if (rootDetailAST.getPreviousSibling() != null) {
+				rootDetailAST = rootDetailAST.getPreviousSibling();
+			}
+			else {
+				break;
+			}
+		}
+
+		if (rootDetailAST.getType() != TokenTypes.PACKAGE_DEF) {
+			return StringPool.BLANK;
+		}
+
+		DetailAST dotDetailAST = rootDetailAST.findFirstToken(TokenTypes.DOT);
+
+		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
+
+		return fullIdent.getText();
+	}
+
 	protected List<DetailAST> getParameterDefs(DetailAST detailAST) {
 		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
 			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
@@ -615,6 +641,13 @@ public abstract class BaseCheck extends AbstractCheck {
 	protected String getTypeName(
 		DetailAST detailAST, boolean includeTypeArguments) {
 
+		return getTypeName(detailAST, includeTypeArguments, false);
+	}
+
+	protected String getTypeName(
+		DetailAST detailAST, boolean includeTypeArguments,
+		boolean fullyQualifiedName) {
+
 		if (detailAST == null) {
 			return StringPool.BLANK;
 		}
@@ -644,6 +677,17 @@ public abstract class BaseCheck extends AbstractCheck {
 		StringBundler sb = new StringBundler(1 + arrayDimension);
 
 		FullIdent typeIdent = FullIdent.createFullIdent(childDetailAST);
+
+		if (fullyQualifiedName) {
+			String packageName = JavaSourceUtil.getPackageName(
+				typeIdent.getText(), getPackageName(detailAST),
+				getImportNames(detailAST));
+
+			if (Validator.isNotNull(packageName)) {
+				sb.append(packageName);
+				sb.append(".");
+			}
+		}
 
 		sb.append(typeIdent.getText());
 
@@ -675,7 +719,10 @@ public abstract class BaseCheck extends AbstractCheck {
 			typeArgumentsDetailAST, false, TokenTypes.TYPE_ARGUMENT);
 
 		for (DetailAST typeArgumentDetailAST : typeArgumentDetailASTList) {
-			sb.append(getTypeName(typeArgumentDetailAST, true));
+			sb.append(
+				getTypeName(
+					typeArgumentDetailAST, includeTypeArguments,
+					fullyQualifiedName));
 			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
@@ -976,9 +1023,38 @@ public abstract class BaseCheck extends AbstractCheck {
 		DetailAST detailAST, String variableName,
 		boolean includeTypeArguments) {
 
-		return getTypeName(
-			getVariableTypeDetailAST(detailAST, variableName),
-			includeTypeArguments);
+		return getVariableTypeName(
+			detailAST, variableName, includeTypeArguments, false);
+	}
+
+	protected String getVariableTypeName(
+		DetailAST detailAST, String variableName, boolean includeTypeArguments,
+		boolean fullyQualifiedName) {
+
+		DetailAST variableTypeDetailAST = getVariableTypeDetailAST(
+			detailAST, variableName);
+
+		if (variableTypeDetailAST != null) {
+			return getTypeName(
+				getVariableTypeDetailAST(detailAST, variableName),
+				includeTypeArguments, fullyQualifiedName);
+		}
+
+		if (!variableName.matches("[A-Z]\\w+")) {
+			return StringPool.BLANK;
+		}
+
+		if (fullyQualifiedName) {
+			String packageName = JavaSourceUtil.getPackageName(
+				variableName, getPackageName(detailAST),
+				getImportNames(detailAST));
+
+			if (Validator.isNotNull(packageName)) {
+				return StringBundler.concat(packageName, ".", variableName);
+			}
+		}
+
+		return variableName;
 	}
 
 	protected boolean hasParentWithTokenType(

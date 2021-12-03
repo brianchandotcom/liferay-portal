@@ -437,12 +437,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		if (!(sourceLayout.isTypeAssetDisplay() ||
-			  sourceLayout.isTypeContent())) {
-
-			return;
-		}
-
 		_deletePortletPermissions(targetLayout);
 
 		List<FragmentEntryLink> fragmentEntryLinks =

@@ -1,3 +1,17 @@
+.link-arrow {
+	fill: var(--primary);
+	margin-left: var(--spacer-2);
+	width: 0.4em;
+}
+
+.link-sm {
+	font-size: 16px;
+}
+
+.link-lg {
+	font-size: 18px;
+}
+
 .team-extranet-link a {
 	font-weight: var(--font-weight-bold);
 }
@@ -12,16 +26,3 @@
 	transition: all 0.1s ease-in-out;
 }
 
-.link-arrow {
-	fill: var(--primary);
-	margin-left: var(--spacer-2);
-	width: 0.4em;
-}
-
-.link-sm {
-	font-size: 16px;
-}
-
-.link-lg {
-	font-size: 18px;
-}

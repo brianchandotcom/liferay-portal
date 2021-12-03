@@ -1659,6 +1659,23 @@ paths:
                     description:
                         Unexpected error
             tags: ["PaymentMethod"]
+    /carts/{cartId}/payment-url:
+        get:
+            operationId: getCartPaymentURL
+            parameters:
+                - in: path
+                  name: cartId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+            tags: ["Cart"]
     /carts/{cartId}/shipping-address:
         get:
             description:

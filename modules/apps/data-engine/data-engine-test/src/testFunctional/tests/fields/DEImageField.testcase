@@ -469,12 +469,6 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title 2",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DEBuilder.addField(
@@ -501,10 +495,10 @@ definition {
 
 		DERenderer.inputDataInImageField(
 			fieldLabel = "Image",
-			imageFileName = "Document Title 2",
+			imageFileName = "Document Title 1",
 			index = "2",
 			navTab = "Documents and Media",
-			webContentImage = "Document Title 2");
+			webContentImage = "Document Title 1");
 
 		Button.clickPublish();
 
@@ -518,8 +512,8 @@ definition {
 
 		DERenderer.assertDataInImageField(
 			fieldLabel = "Image",
-			imageFile = "Document_2.jpg",
-			imageTitle = "Document Title 2",
+			imageFile = "Document_1.jpg",
+			imageTitle = "Document Title 1",
 			index = "2");
 	}
 

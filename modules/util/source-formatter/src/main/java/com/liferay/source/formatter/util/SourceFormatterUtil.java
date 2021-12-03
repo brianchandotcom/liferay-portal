@@ -40,6 +40,7 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.io.File;
 import java.io.IOException;
@@ -844,6 +845,12 @@ public class SourceFormatterUtil {
 			classJSONObject.put("methods", methodsJSONArray);
 		}
 
+		JSONArray variablesJSONArray = _getVariablesJSONArray(javaClass);
+
+		if (variablesJSONArray.length() > 0) {
+			classJSONObject.put("variables", variablesJSONArray);
+		}
+
 		return new Tuple(javaClass.getName(true), classJSONObject);
 	}
 
@@ -974,6 +981,41 @@ public class SourceFormatterUtil {
 		}
 
 		return pathMatchers;
+	}
+
+	private static JSONArray _getVariablesJSONArray(JavaClass javaClass) {
+		JSONArray variablesJSONArray = new JSONArrayImpl();
+
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.isJavaVariable() || childJavaTerm.isPrivate()) {
+				continue;
+			}
+
+			JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+
+			JSONObject variableJSONObject = new JSONObjectImpl();
+
+			variableJSONObject.put(
+				"accessModifier", javaVariable.getAccessModifier()
+			).put(
+				"deprecated",
+				() -> {
+					if (javaVariable.hasAnnotation("Deprecated")) {
+						return true;
+					}
+
+					return null;
+				}
+			).put(
+				"lineNumber", javaVariable.getLineNumber()
+			).put(
+				"name", javaVariable.getName()
+			);
+
+			variablesJSONArray.put(variableJSONObject);
+		}
+
+		return variablesJSONArray;
 	}
 
 	private static List<String> _scanForFiles(

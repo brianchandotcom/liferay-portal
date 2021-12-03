@@ -781,9 +781,8 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
-	@description = "This ensures that a user cannot create create a redirect if the sourceURL is too long."
+	@description = "This ensures that a user cannot create a redirect if the sourceURL is too long."
 	@priority = "4"
-	@refactordone
 	test CannotAddEntryWithTooLongSourceURL {
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -429,6 +429,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
+			return;
+		}
+
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),

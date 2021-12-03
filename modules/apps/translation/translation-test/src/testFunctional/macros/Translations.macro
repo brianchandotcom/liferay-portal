@@ -446,6 +446,8 @@ definition {
 			selectFieldId = "experience-selector",
 			value1 = "Default");
 
+		AssertElementPresent(locator1 = "Translation#BASIC_INFORMATION");
+
 		if (isSet(experienceName)) {
 			Select(
 				locator1 = "Translation#EXPERIENCE_SELECTOR",
@@ -455,6 +457,8 @@ definition {
 				locator1 = "Select#SELECT_ID",
 				selectFieldId = "experience-selector",
 				value1 = "${experienceName}");
+
+			AssertElementNotPresent(locator1 = "Translation#BASIC_INFORMATION");
 		}
 
 		if ("${fieldName}" == "HTML") {

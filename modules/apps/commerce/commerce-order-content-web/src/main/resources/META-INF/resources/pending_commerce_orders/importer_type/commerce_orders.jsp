@@ -22,8 +22,8 @@
 			"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
 		).build()
 	%>'
-	dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_PLACED_ORDERS %>"
-	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_PLACED_ORDERS %>"
+	dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_ORDERS %>"
+	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_ORDERS %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

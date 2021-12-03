@@ -283,3 +283,64 @@ $multi-step-progress-bar-fixed-width: 100px !default;
 		}
 	}
 }
+
+.modal-full-screen {
+	display: flex !important;
+	justify-content: center !important;
+
+	.modal-body {
+		overflow: hidden !important;
+		padding: 0 !important;
+	}
+}
+
+@media screen and (min-width: 1700px) {
+	.modal-full-screen {
+		.modal-content,
+		.modal-body {
+			width: 1500px !important;
+		}
+
+		.modal-body {
+			height: 676px !important;
+		}
+
+		.modal-content {
+			height: 740px !important;
+		}
+	}
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1699px) {
+	.modal-full-screen {
+		.modal-content,
+		.modal-body {
+			width: 1050px !important;
+		}
+
+		.modal-body {
+			height: 590px !important;
+		}
+
+		.modal-content {
+			height: 654px !important;
+		}
+	}
+}
+
+@media screen and (max-width: 1279px) {
+	.modal-full-screen {
+		.modal-content,
+		.modal-body {
+			width: 700px !important;
+		}
+
+		.modal-body {
+			height: 573px !important;
+		}
+
+		.modal-content {
+			height: 637px !important;
+		}
+	}
+}

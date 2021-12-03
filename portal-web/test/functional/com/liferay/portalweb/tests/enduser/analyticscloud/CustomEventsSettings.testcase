@@ -43,13 +43,8 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (255 chars)"
-	@ignore = "true"
 	@priority = "4"
 	test CheckLimitOfCustomEventName {
-
-		// AC Deactivated: Depends on this bug (LRAC-9883)
-		// AC Enable ticket: LRAC-10027
-
 		var attributesNameList = "category,price,temp,birthdate,like";
 		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
 
@@ -442,13 +437,8 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-9865 | Test Summary: Custom Event shown in AC"
-	@ignore = "true"
 	@priority = "5"
 	test CustomEventIsShownInAC {
-
-		// AC Deactivated: Depends on this bug (LRAC-9883)
-		// AC Enable ticket: LRAC-10026
-
 		var attributesNameList = "category,price,temp,birthdate,like";
 		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
 

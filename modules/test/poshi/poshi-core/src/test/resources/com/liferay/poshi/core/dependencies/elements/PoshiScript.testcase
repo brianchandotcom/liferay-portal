@@ -56,6 +56,8 @@ definition {
 				entryContent = "Blogs Entry2 Content",
 				entryTitle = "Blogs Entry2 Title");
 		}
+
+		var portalInstanceIds = StringUtil.regexReplaceAll("${portalInstanceIds}", "[\[\]\"]", "");
 	}
 
 	@priority = "5"

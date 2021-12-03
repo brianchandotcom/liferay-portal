@@ -58,6 +58,8 @@
 				<var name="entryTitle" value="Blogs Entry2 Title" />
 			</execute>
 		</task>
+
+		<var name="portalInstanceIds" method="StringUtil#regexReplaceAll('${portalInstanceIds}', '[\[\]&quot;]', '')"/>
 	</command>
 
 	<command name="AddUser" priority="5">

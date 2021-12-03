@@ -2923,9 +2923,10 @@ definition {
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
-
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry 1");
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry 1");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 

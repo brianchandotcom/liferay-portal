@@ -59,13 +59,13 @@ public class SXPBlueprintsTableClayDataSetDisplayView
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"createDate", "created");
 
-		createDateClayTableSchemaField.setContentRenderer("date");
+		createDateClayTableSchemaField.setContentRenderer("datetime");
 
 		ClayTableSchemaField modifiedDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"modifiedDate", "modified");
 
-		modifiedDateClayTableSchemaField.setContentRenderer("date");
+		modifiedDateClayTableSchemaField.setContentRenderer("datetime");
 
 		return clayTableSchemaBuilder.build();
 	}

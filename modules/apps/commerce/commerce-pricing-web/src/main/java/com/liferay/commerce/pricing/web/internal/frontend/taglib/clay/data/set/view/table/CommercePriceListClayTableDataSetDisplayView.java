@@ -58,7 +58,7 @@ public class CommercePriceListClayTableDataSetDisplayView
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"createDate", "create-date");
 
-		dateclayTableSchemaField.setContentRenderer("date");
+		dateclayTableSchemaField.setContentRenderer("datetime");
 		dateclayTableSchemaField.setSortable(true);
 
 		ClayTableSchemaField clayTableSchemaField =

@@ -42,7 +42,7 @@ definition {
 		}
 
 		for (var value : list "${values}") {
-			var temp = RegexUtil.replace("${JSON}", "\&quot;${key}\&quot;\s*:\s*(\[.*?\])", "1");
+			var temp = RegexUtil.replace("${JSON}", "\"${key}\"\s*:\s*(\[.*?\])", "1");
 
 			if (contains(""${temp}"", ""${value}"")) {
 				fail("'${value}' already exists inside 'JSON'");
@@ -117,7 +117,7 @@ definition {
 
 	@summary = "Checks if a JSON Array exists inside JSON"
 	macro _isJSONArrayPresent {
-		var temp = RegexUtil.replace("${JSON}", "\&quot;(${key})\&quot;\s*:\s*\[.*?\]", "1");
+		var temp = RegexUtil.replace("${JSON}", "\"(${key})\"\s*:\s*\[.*?\]", "1");
 
 		if ("${temp}" == "${key}") {
 			return "TRUE";
@@ -129,7 +129,7 @@ definition {
 
 	@summary = "Checks if a JSON Object exists inside JSON"
 	macro _isJSONObjectPresent {
-		var temp = RegexUtil.replace("${JSON}", "\&quot;(${key})\&quot;\s*:\s*", "1");
+		var temp = RegexUtil.replace("${JSON}", "\"(${key})\"\s*:\s*", "1");
 
 		if ("${temp}" == "${key}") {
 			return "TRUE";

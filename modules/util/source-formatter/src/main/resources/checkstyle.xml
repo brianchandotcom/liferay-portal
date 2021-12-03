@@ -798,6 +798,7 @@
 			<property name="category" value="Upgrade" />
 			<property name="description" value="Finds cases where calls are made to removed API after an upgrade." />
 			<message key="class.not.found" value="Class ''{0}'' no longer exists, or has been moved, in version ''{1}''" />
+			<message key="method.not.found" value="Method ''{0}'' no longer exists, or the signature has changed, in class ''{1}'' for version ''{2}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
 			<property name="category" value="Bug Prevention" />

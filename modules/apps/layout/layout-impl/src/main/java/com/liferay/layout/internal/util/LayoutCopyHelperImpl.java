@@ -178,7 +178,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		if (sourceLayout.isDraftLayout()) {
+		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
 			return;
 		}
 
@@ -188,14 +188,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		String[] assetTagNames = _assetTagLocalService.getTagNames(
 			Layout.class.getName(), sourceLayout.getPlid());
 
-		Layout layout = targetLayout;
-
-		if (targetLayout.isDraftLayout()) {
-			layout = _layoutLocalService.getLayout(targetLayout.getClassPK());
-		}
-
 		_layoutLocalService.updateAsset(
-			layout.getUserId(), layout, assetCategoryIds, assetTagNames);
+			targetLayout.getUserId(), targetLayout, assetCategoryIds,
+			assetTagNames);
 	}
 
 	private void _copyLayoutClassedModelUsages(

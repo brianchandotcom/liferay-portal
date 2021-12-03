@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -105,6 +106,41 @@ public class JavaSourceUtil extends SourceUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public static String getPackageName(
+		String className, String classPackageName, List<String> importNames) {
+
+		if (className.matches("[a-z].*") || (className.length() == 1)) {
+			return StringPool.BLANK;
+		}
+
+		for (String importName : importNames) {
+			if (importName.endsWith("." + className)) {
+				return StringUtil.removeLast(importName, "." + className);
+			}
+
+			int x = className.length();
+
+			while (true) {
+				x = className.lastIndexOf(".", x - 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (importName.endsWith("." + className.substring(0, x))) {
+					return StringUtil.removeLast(
+						importName, "." + className.substring(0, x));
+				}
+			}
+		}
+
+		if (ArrayUtil.contains(_JAVA_LANG_CLASS_NAMES, className)) {
+			return "java.lang";
+		}
+
+		return classPackageName;
 	}
 
 	public static List<String> getParameterList(String methodCall) {
@@ -256,6 +292,40 @@ public class JavaSourceUtil extends SourceUtil {
 
 		return null;
 	}
+
+	private static final String[] _JAVA_LANG_CLASS_NAMES = {
+		"AbstractMethodError", "Appendable", "ArithmeticException",
+		"ArrayIndexOutOfBoundsException", "ArrayStoreException",
+		"AssertionError", "AutoCloseable", "Boolean", "BootstrapMethodError",
+		"Byte", "Character", "CharSequence", "Class", "ClassCastException",
+		"ClassCircularityError", "ClassFormatError", "ClassLoader",
+		"ClassNotFoundException", "ClassValue", "Cloneable",
+		"CloneNotSupportedException", "Comparable", "Compiler", "Deprecated",
+		"Double", "Enum", "EnumConstantNotPresentException", "Error",
+		"Exception", "ExceptionInInitializerError", "Float",
+		"IllegalAccessError", "IllegalAccessException",
+		"IllegalArgumentException", "IllegalMonitorStateException",
+		"IllegalStateException", "IllegalThreadStateException",
+		"IncompatibleClassChangeError", "IndexOutOfBoundsException",
+		"InheritableThreadLocal", "InstantiationError",
+		"InstantiationException", "Integer", "InternalError",
+		"InterruptedException", "Iterable", "LinkageError", "Long", "Math",
+		"NegativeArraySizeException", "NoClassDefFoundError",
+		"NoSuchFieldError", "NoSuchFieldException", "NoSuchMethodError",
+		"NoSuchMethodException", "NullPointerException", "Number",
+		"NumberFormatException", "Object", "OutOfMemoryError", "Override",
+		"Package", "Process", "ProcessBuilder", "Readable",
+		"ReflectiveOperationException", "Runnable", "Runtime",
+		"RuntimeException", "RuntimePermission", "SafeVarargs",
+		"SecurityException", "SecurityManager", "Short", "StackOverflowError",
+		"StackTraceElement", "StrictMath", "String", "StringBuffer",
+		"StringBuilder", "StringIndexOutOfBoundsException", "SuppressWarnings",
+		"System", "Thread", "Thread", "ThreadDeath", "ThreadGroup",
+		"ThreadLocal", "Throwable", "TypeNotPresentException", "UnknownError",
+		"UnsatisfiedLinkError", "UnsupportedClassVersionError",
+		"UnsupportedOperationException", "VerifyError", "VirtualMachineError",
+		"Void"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(JavaSourceUtil.class);
 

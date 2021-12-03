@@ -15,7 +15,7 @@ definition {
 			locator1 = "BlogsRecentBloggers#NUMBER_OF_RATINGS",
 			value1 = "Number of Ratings: ${numberOfRatings}");
 
-		var postDate = DateUtil.getFormattedCurrentDate("MM/dd/yy");
+		var postDate = DateUtil.getFormattedCurrentDate("MM/d/yy");
 
 		echo("## * postDate: ${postDate}");
 

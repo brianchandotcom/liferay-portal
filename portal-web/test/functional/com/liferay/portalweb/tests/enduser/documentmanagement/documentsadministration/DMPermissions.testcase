@@ -1150,20 +1150,18 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		PermissionsInline.gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = "DM Folder Name");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX",
@@ -1177,7 +1175,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		Click(locator1 = "Button#PLUS");
+		LexiconEntry.gotoAdd();
 
 		MenuItem.viewNotPresent(menuItem = "File Upload");
 	}

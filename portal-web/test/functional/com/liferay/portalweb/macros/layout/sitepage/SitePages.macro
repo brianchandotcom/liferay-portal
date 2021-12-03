@@ -530,6 +530,7 @@ definition {
 		}
 
 		AssertTextEquals(
+			index = "${index}",
 			key_itemName = "${pageName}",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS",
 			value1 = "${status}");

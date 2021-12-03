@@ -15,7 +15,7 @@ definition {
 		Navigator.openURL();
 	}
 
-	@description = "LRQA-62443 Assert MFA OTP configuration at instance level"
+	@description = "LRQA-62443 Assert MFA OTP configuration at instance level. Verify MFA works at the instance level after upgrade from 7.3.10."
 	@priority = "5"
 	@uitest
 	test ViewMFAConfigurationInInstanceLevelAfterUpgrade7310 {
@@ -53,7 +53,7 @@ definition {
 		}
 	}
 
-	@description = "LRQA-62443 Assert MFA OTP configuration at system level"
+	@description = "LRQA-62443 Assert MFA OTP configuration at system level. Verify MFA works at the system level after upgrade from 7.3.10."
 	@priority = "5"
 	@uitest
 	test ViewMFAConfigurationInSystemLevelAfterUpgrade7310 {

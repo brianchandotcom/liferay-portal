@@ -1,18 +1,18 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import {useQuery} from '@apollo/client';
 import {ClaySelect} from '@clayui/form';
-import {useEffect, useMemo, useRef, useState} from 'react';
-import BaseButton from '~/common/components/BaseButton';
-import MenuButton from '~/common/components/MenuButton';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import BaseButton from '../../../../common/components/BaseButton';
 import {
 	getAccountSubscriptions,
 	getAccountSubscriptionsTerms,
-} from '~/common/services/liferay/graphql/queries';
+} from '../../../../common/services/liferay/graphql/queries';
 import {getCurrentEndDate} from '../../../../common/utils';
-const CRYSTAL = 'KOR-1407632';
+const CRYSTAL = 'KOR-1776780';
 
 const EnterpriseSearch = () => {
+	const [hasErrorDownload, setErrorDownload] = useState(false);
 	const [selectedSubscriptions, setSelectedSubscriptions] = useState({
 		name: '',
 	});
@@ -103,8 +103,9 @@ const EnterpriseSearch = () => {
 
 						return yearDateSplitted;
 					}
+					acc.push(item);
 
-					return item;
+					return acc;
 				},
 				[]
 			) || []
@@ -120,6 +121,23 @@ const EnterpriseSearch = () => {
 		setSelectedSubscriptionsTerms(dataSubscriptionsTerms[0]);
 	}, [dataSubscriptions, dataSubscriptionsTerms]);
 
+	const handleOnClick = useCallback(() => {
+		setErrorDownload(false);
+		fetch(
+			'https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0/accounts/KOR-70938671/product-groups/Enterprise%20Search/product-environment/production/common-license-key?dateEnd=2022-01-01T00:00:00Z&dateStart=2022-01-01T00:00:00Z',
+			{
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Content-Type': 'application/json',
+					'Okta-Session-ID': '102zsC2MczqSwqZUZNsWbZjRA',
+				},
+				mode: 'cors',
+			}
+		)
+			.then((response) => response.json())
+			.catch(() => setErrorDownload(true));
+	}, []);
+
 	if (errorSubscriptions || errorSubscriptionsTerms) {
 		return 'Error!';
 	}
@@ -127,9 +145,9 @@ const EnterpriseSearch = () => {
 	return (
 		<div>
 			<div className="mb-3">
-				<h1 className="header mb-5">Activation Keys</h1>
+				<h1 className="h1 mb-5">Activation Keys</h1>
 
-				<p className="paragraph">
+				<p className="text-paragraph">
 					Select an active Liferay Enterprise Search subscription to
 					download the activation key.
 				</p>
@@ -137,14 +155,13 @@ const EnterpriseSearch = () => {
 
 			<div className="d-flex mb-3">
 				<div className="mr-3">
-					<label className="ml-3" htmlFor="subscription">
+					<label className="ml-3" htmlFor="subscription1">
 						Subscription
 					</label>
 
 					<ClaySelect
 						aria-label="Subscription"
-						className="subscription"
-						id="subscription"
+						id="subscription1"
 						onChange={(event) =>
 							setSelectedSubscriptions({
 								name: event.target.value,
@@ -170,13 +187,13 @@ const EnterpriseSearch = () => {
 					<div className="d-flex">
 						<ClaySelect
 							aria-label="Subscription Term"
-							className="subscription-term"
 							id="subscription-term"
 							onChange={(event) =>
 								setSelectedSubscriptionsTerms(
 									event.target.value
 								)
 							}
+							placeholder="Choose the period"
 						>
 							{dataSubscriptionsTerms.map((account) => {
 								const formattedDate = `${getCurrentEndDate(
@@ -194,14 +211,31 @@ const EnterpriseSearch = () => {
 							})}
 						</ClaySelect>
 					</div>
-
-					<MenuButton />
 				</div>
 			</div>
 
-			<BaseButton displayType="secondary" prependIcon="download">
+			<BaseButton
+				className="btn btn-outline-primary mb-3"
+				onClick={handleOnClick}
+				prependIcon="download"
+				type="button"
+			>
 				Download Key
 			</BaseButton>
+
+			{hasErrorDownload && (
+				<div className="w-75">
+					<p className="text-paragraph">
+						The requested activation key is not yet available. For
+						more information about the availability of your
+						Enterprise Search activation keys, please
+						<span className="text-link-md text-paragraph">
+							{' '}
+							contact the Support team.
+						</span>
+					</p>
+				</div>
+			)}
 		</div>
 	);
 };

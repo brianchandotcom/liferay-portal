@@ -28,31 +28,94 @@ definition {
 		}
 	}
 
-	@description = "I can create a Virtual Instance with Default Initializer"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-135077. I can create a Virtual Instance with Default Initializer"
 	@priority = "4"
 	test AddVirtualInstanceWithDefaultInitializer {
+		task ("Add virtual instance able.com with a blank Initializer") {
+			PortalInstances.openVirtualInstancesAdmin();
 
-		// TODO Create the automation about the LPS-135077.
+			LiferayOnline.addVirtualInstanceWithInitializer(
+				mailDomain = "www.baker.com",
+				virtualHost = "www.baker.com",
+				webId = "www.baker.com");
+		}
 
+		task ("Go to the new Virtual Instance") {
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+		}
+
+		task ("Assert the default Welcome Page is present") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+		}
 	}
 
-	@description = "I can create a New Virtual Instance with the initializer"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-135077. I can create a New Virtual Instance with the initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithInitializer {
+		task ("Add virtual instance raylife.com with the Raylife Initializer") {
+			PortalInstances.openVirtualInstancesAdmin();
 
-		// TODO Create the automation about the LPS-135077.
+			LiferayOnline.addVirtualInstanceWithInitializer(
+				mailDomain = "raylife.com",
+				virtualHost = "raylife",
+				webId = "raylife",
+				initializerName = "Raylife");
+		}
+
+		task ("Go to the new Virtual Instance") {
+			Navigator.openSpecificURL(url = "http://raylife:8080");
+		}
+
+		task ("Assert the Raylife logo is present") {
+			AssertElementPresent(locator1 = "Raylife#RAYLIFE_LOGO");
+		}
 
 	}
 
-	@description = "Raylife initializer is not deployed and is not shown on inicializer list"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-135077. Raylife initializer is not deployed and is not shown on inicializer list"
 	@priority = "4"
 	test CannotSelectInitializerWithoutDeploy {
+		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
+			GogoShell.openGogoShellAdmin();
 
-		// TODO Create the automation about the LPS-135077.
+			var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.site.initializer.raylife");
 
+			GogoShell.stopModule(moduleID = "${moduleID}");
+
+			GogoShell.viewModuleStatus(
+				moduleName = "com.liferay.site.initializer.raylife",
+				moduleStatus = "Resolved");
+		}
+
+		task ("Go to Add a New Virtual Instance and Assert the Raylife Module is Not Present") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#WEB_ID",
+				value1 = "Test");
+
+			Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
+
+			AssertElementNotPresent(
+				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_OPTION",
+				key_providerNname = "Raylife");
+		}
+		
+		task ("Go to Gogo Shell Admin and Start Raylife Module") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.startModule(moduleID = "${moduleID}");
+
+			GogoShell.viewModuleStatus(
+				moduleName = "com.liferay.site.initializer.raylife",
+				moduleStatus = "Active");
+		}
 	}
 
 	@priority = "5"

@@ -349,7 +349,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Fill fields and create 2 custom events") {
+		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(

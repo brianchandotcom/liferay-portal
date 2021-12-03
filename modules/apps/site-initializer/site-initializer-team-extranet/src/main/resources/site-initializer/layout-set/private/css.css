@@ -74,7 +74,7 @@ a:hover,
 
 /*Form Controls*/
 
-.form-control {
+.team-extranet-form-control.form-control {
 	background-color: var(--white);
 	border: var(--white);
 	border-radius: 0;
@@ -84,11 +84,11 @@ a:hover,
 	padding: calc(var(--spacer-1) * 2) var(--spacer-4);
 }
 
-.form-control-sm {
+.team-extranet-form-control.form-control-sm {
 	font-size: var(--font-size-sm);
 }
 
-.form-control-lg {
+.team-extranet-form-control.form-control-lg {
 	font-size: var(--font-size-base);
 }
 

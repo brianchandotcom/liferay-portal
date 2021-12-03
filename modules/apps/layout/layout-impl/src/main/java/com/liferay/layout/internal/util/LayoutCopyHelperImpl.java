@@ -209,42 +209,43 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		for (LayoutClassedModelUsage sourceLayoutLayoutClassedModelUsage :
 				sourceLayoutLayoutClassedModelUsages) {
 
-			if (!_hasLayoutClassedModelUsage(
+			if (_hasLayoutClassedModelUsage(
 					targetLayoutLayoutClassedModelUsages,
 					sourceLayoutLayoutClassedModelUsage)) {
 
-				String containerKey =
-					sourceLayoutLayoutClassedModelUsage.getContainerKey();
-
-				long containerType =
-					sourceLayoutLayoutClassedModelUsage.getContainerType();
-
-				if (containerType == _portal.getClassNameId(
-						FragmentEntryLink.class.getName())) {
-
-					long fragmentEntryLinkId = GetterUtil.getLong(
-						sourceLayoutLayoutClassedModelUsage.getContainerKey());
-
-					FragmentEntryLink fragmentEntryLink =
-						_fragmentEntryLinkLocalService.getFragmentEntryLink(
-							sourceLayout.getGroupId(), fragmentEntryLinkId,
-							targetLayout.getPlid());
-
-					if (fragmentEntryLink != null) {
-						containerKey = String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId());
-					}
-				}
-
-				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-					sourceLayoutLayoutClassedModelUsage.getGroupId(),
-					sourceLayoutLayoutClassedModelUsage.getClassNameId(),
-					sourceLayoutLayoutClassedModelUsage.getClassPK(),
-					containerKey,
-					sourceLayoutLayoutClassedModelUsage.getContainerType(),
-					targetLayout.getPlid(),
-					ServiceContextThreadLocal.getServiceContext());
+				continue;
 			}
+
+			String containerKey =
+				sourceLayoutLayoutClassedModelUsage.getContainerKey();
+
+			long containerType =
+				sourceLayoutLayoutClassedModelUsage.getContainerType();
+
+			if (containerType == _portal.getClassNameId(
+					FragmentEntryLink.class.getName())) {
+
+				long fragmentEntryLinkId = GetterUtil.getLong(
+					sourceLayoutLayoutClassedModelUsage.getContainerKey());
+
+				FragmentEntryLink fragmentEntryLink =
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						sourceLayout.getGroupId(), fragmentEntryLinkId,
+						targetLayout.getPlid());
+
+				if (fragmentEntryLink != null) {
+					containerKey = String.valueOf(
+						fragmentEntryLink.getFragmentEntryLinkId());
+				}
+			}
+
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				sourceLayoutLayoutClassedModelUsage.getGroupId(),
+				sourceLayoutLayoutClassedModelUsage.getClassNameId(),
+				sourceLayoutLayoutClassedModelUsage.getClassPK(), containerKey,
+				sourceLayoutLayoutClassedModelUsage.getContainerType(),
+				targetLayout.getPlid(),
+				ServiceContextThreadLocal.getServiceContext());
 		}
 	}
 

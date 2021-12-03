@@ -67,14 +67,6 @@ public class EditCustomMetaTagsMVCActionCommand extends BaseMVCActionCommand {
 		_layoutSEOEntryService.updateCustomMetaTags(
 			groupId, privateLayout, layoutId, serviceContext);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
-			_layoutSEOEntryService.updateCustomMetaTags(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				serviceContext);
-		}
-
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {

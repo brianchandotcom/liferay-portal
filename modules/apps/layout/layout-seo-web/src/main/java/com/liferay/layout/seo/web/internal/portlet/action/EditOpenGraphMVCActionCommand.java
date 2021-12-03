@@ -115,23 +115,9 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
 			serviceContext);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		UnicodeProperties formTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
-
-		if (draftLayout != null) {
-			draftLayout = LayoutTypeSettingsUtil.updateTypeSettings(
-				draftLayout, _layoutService, formTypeSettingsUnicodeProperties);
-
-			_layoutSEOEntryService.updateLayoutSEOEntry(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				canonicalURLEnabled, canonicalURLMap,
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
-		}
 
 		layout = LayoutTypeSettingsUtil.updateTypeSettings(
 			layout, _layoutService, formTypeSettingsUnicodeProperties);

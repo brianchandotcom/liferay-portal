@@ -108,26 +108,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
-			draftLayout = _layoutService.updateLayout(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				draftLayout.getParentLayoutId(), draftLayout.getNameMap(),
-				titleMap, descriptionMap, keywordsMap, robotsMap,
-				draftLayout.getType(), draftLayout.isHidden(),
-				draftLayout.getFriendlyURLMap(), draftLayout.isIconImage(),
-				null, draftLayout.getMasterLayoutPlid(),
-				draftLayout.getStyleBookEntryId(), serviceContext);
-
-			draftLayout = LayoutTypeSettingsUtil.updateTypeSettings(
-				draftLayout, _layoutService, formTypeSettingsUnicodeProperties);
-
-			_layoutSEOEntryService.updateLayoutSEOEntry(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				canonicalURLEnabled, canonicalURLMap, serviceContext);
-		}
-
 		themeDisplay.clearLayoutFriendlyURL(layout);
 
 		layout = LayoutTypeSettingsUtil.updateTypeSettings(

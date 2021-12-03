@@ -398,6 +398,7 @@ UnusedMethodCheck | [Performance](performance_checks.markdown#performance-checks
 UnusedParameterCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds parameters in private methods that are not used. |
 UnusedVariableCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds variables that are declared, but not used. |
 UnwrappedVariableInfoCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization. |
+UpgradeRemovedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Finds cases where calls are made to removed API after an upgrade. |
 [ValidatorEqualsCheck](checks/validator_equals_check.markdown#validatorequalscheck) | [Performance](performance_checks.markdown#performance-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there are no calls to `Validator.equals(Object, Object)`. |
 ValidatorIsNullCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`. |
 VariableDeclarationAsUsedCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds cases where a variable declaration can be inlined or moved closer to where it is used. |

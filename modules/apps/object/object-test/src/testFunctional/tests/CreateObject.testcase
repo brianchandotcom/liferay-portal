@@ -290,12 +290,31 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it is possible to add a Object Entry Title Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddObjectEntryTitleField {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141609 CanAddObjectEntryTitleField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+        ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+			
+        ObjectAdmin.openObjectAdmin();
+
+        ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field");
 
 	}
 

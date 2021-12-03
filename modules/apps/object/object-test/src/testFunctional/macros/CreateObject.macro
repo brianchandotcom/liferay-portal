@@ -182,4 +182,10 @@ definition {
 			locator1 = "CreateObject#VIEW_OBJECT");
 	}
 
+	macro assertTitleFieldIsSelected {
+		AssertElementPresent(
+			locator1 = "CreateObject#TITLE_FIELD",
+			value1 = "${fieldLabel}");
+	}
+
 }

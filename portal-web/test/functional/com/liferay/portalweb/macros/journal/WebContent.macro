@@ -2511,8 +2511,8 @@ definition {
 
 		if (isSet(displayPageTemplateName)) {
 			AssertTextEquals(
-				inputFieldId = "defaultDisplayPageNameInput",
-				locator1 = "TextInput#INPUT_ID",
+				key_titleName = "${displayPageTemplateType} Display Page Template",
+				locator1 = "TextInput#INPUT_CONTAINS_TITLE",
 				value1 = "${displayPageTemplateName}");
 		}
 	}

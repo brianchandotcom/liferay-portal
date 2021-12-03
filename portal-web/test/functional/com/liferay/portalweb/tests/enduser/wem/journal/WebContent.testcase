@@ -1199,6 +1199,77 @@ definition {
 			value1 = "WC WebContent Content");
 	}
 
+	@description = "This is a use case for LPS-138504. Assert display page is still selected after adding a web content without adding required category."
+	@priority = "4"
+	test ViewDisplayPageAfterAddingWebContentWithoutAddingRequiredCategory {
+		property portal.release = "false";
+		property testray.component.names = "Asset Publisher,Bookmarks";
+
+		task ("Add a widget page and add Asset Publisher in it") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Set Asset Publisher in created page as the Default Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+		}
+
+		task ("Add a vocabulary for Web Content Article") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetSubtype = "Basic Web Content",
+				assetType = "Web Content Article",
+				required = "true",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content and select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Test Page Name",
+				pageType = "Public Pages");
+
+			Button.clickPublish();
+		}
+
+		task ("View publishing fails and no error in console") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Your request failed to complete.");
+		}
+
+		task ("View the selected display page is not saved") {
+			WebContent.viewSelectedDisplayPageTemplateCP(
+				displayPageTemplateName = "Public Pages > Test Page Name",
+				displayPageTemplateType = "Specific");
+		}
+	}
+
 	@priority = "3"
 	test ViewDisplayStyleCP {
 		property testray.component.names = "Web Content Administration";

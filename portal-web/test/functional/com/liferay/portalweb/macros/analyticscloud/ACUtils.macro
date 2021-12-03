@@ -627,8 +627,6 @@ definition {
 		}
 
 		ACWorkspace.openWorkspace();
-
-		ACUtils.dismissOnboardingModal();
 	}
 
 	macro launchDXP {

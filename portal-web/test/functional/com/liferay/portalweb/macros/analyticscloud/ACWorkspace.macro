@@ -63,6 +63,8 @@ definition {
 		if (!(isSet(workspaceName))) {
 			Click(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE");
 		}
+
+		ACUtils.dismissOnboardingModal();
 	}
 
 	macro signOut {

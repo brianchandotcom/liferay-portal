@@ -1,11 +1,17 @@
 definition {
 
-	macro changeCustomEventName {
+	macro changeCustomEventDisplayName {
 		Type(
 			locator1 = "TextInput#TEXT",
-			value1 = "${newCustomEventName}");
+			value1 = "${newDisplayName}");
 
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
+
+		if (IsElementPresent(locator1 = "Button#ANY_ENABLED",key_text = "Save")){
+			Button.clickSave();
+		}
+	}
+
 	macro changeCustomEventDescription {
 		Type(
 			locator1 = "TextArea#DESCRIPTION",

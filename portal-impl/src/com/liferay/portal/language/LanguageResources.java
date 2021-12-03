@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -107,6 +110,12 @@ public class LanguageResources {
 	public static String getMessage(Locale locale, String key) {
 		if (locale == null) {
 			return null;
+		}
+
+		String overrideValue = _getOverrideValue(key, locale);
+
+		if (Validator.isNotNull(overrideValue)) {
+			return overrideValue;
 		}
 
 		Map<String, String> languageMap = _languageMaps.get(locale);
@@ -187,6 +196,40 @@ public class LanguageResources {
 
 			languageMap.put(key, value);
 		}
+	}
+
+	private static String _getOverrideValue(String key, Locale locale) {
+		if (_languageOverrideProvider == null) {
+			return null;
+		}
+
+		String value = _languageOverrideProvider.get(key, locale);
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return value;
+	}
+
+	private static Set<String> _getSetWithOverrideKeys(
+		Set<String> keySet, Locale locale) {
+
+		if (_languageOverrideProvider == null) {
+			return keySet;
+		}
+
+		Set<String> overrideKeySet = _languageOverrideProvider.keySet(locale);
+
+		if (SetUtil.isEmpty(overrideKeySet)) {
+			return keySet;
+		}
+
+		Set<String> resultSet = new HashSet<>(keySet);
+
+		resultSet.addAll(overrideKeySet);
+
+		return resultSet;
 	}
 
 	private static Locale _getSuperLocale(Locale locale) {
@@ -350,6 +393,10 @@ public class LanguageResources {
 	private static String[] _configNames = new String[0];
 	private static final Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<>(64);
+	private static volatile LanguageOverrideProvider _languageOverrideProvider =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			LanguageOverrideProvider.class, LanguageResources.class,
+			"_languageOverrideProvider", false);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<>();
@@ -364,7 +411,8 @@ public class LanguageResources {
 		public Enumeration<String> getKeys() {
 			Map<String, String> languageMap = _getLanguageMap();
 
-			Set<String> keySet = languageMap.keySet();
+			Set<String> keySet = _getSetWithOverrideKeys(
+				languageMap.keySet(), _locale);
 
 			if (parent == null) {
 				return Collections.enumeration(keySet);
@@ -380,6 +428,12 @@ public class LanguageResources {
 
 		@Override
 		protected Object handleGetObject(String key) {
+			String overrideValue = _getOverrideValue(key, _locale);
+
+			if (Validator.isNotNull(overrideValue)) {
+				return overrideValue;
+			}
+
 			Map<String, String> languageMap = _getLanguageMap();
 
 			return languageMap.get(key);
@@ -389,7 +443,7 @@ public class LanguageResources {
 		protected Set<String> handleKeySet() {
 			Map<String, String> languageMap = _getLanguageMap();
 
-			return languageMap.keySet();
+			return _getSetWithOverrideKeys(languageMap.keySet(), _locale);
 		}
 
 		private LanguageResourcesBundle(Locale locale) {

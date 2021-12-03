@@ -1,3 +1,4 @@
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 import {useFormContext} from 'react-hook-form';
@@ -29,8 +30,7 @@ export function CardFormActionsWithSave({
 		try {
 			await onSave();
 			setShowProgressModal(true);
-		}
-		catch (error) {
+		} catch (error) {
 			alert('Unable to save your information. Please try again');
 		}
 
@@ -44,37 +44,38 @@ export function CardFormActionsWithSave({
 			)}
 			<div className="card-actions">
 				{onPrevious && (
-					<button
-						className="btn btn-flat"
+					<ClayButton
+						className="btn btn-borderless font-weight-bolder previous text-paragraph text-small-caps"
+						displayType="null"
 						onClick={onPrevious}
-						type="button"
 					>
 						Previous
-					</button>
+					</ClayButton>
 				)}
 
 				<div>
 					{onSave && (
-						<button
-							className="btn btn-outline"
+						<ClayButton
+							className="font-weight-bolder save-exit text-paragraph text-small-caps"
 							disabled={!email || emailHasError || loading}
+							displayType="secondary"
 							onClick={onClickSaveAndExit}
-							type="button"
 						>
 							Save & Exit
-						</button>
+						</ClayButton>
 					)}
 
 					{onNext && (
-						<button
-							className="btn btn-secondary continue"
+						<ClayButton
+							className="btn btn-solid btn-variant-secondary continue font-weight-bolder text-paragraph text-small-caps"
 							disabled={!isValid}
 							onClick={onNext}
-							type="submit"
 						>
 							Continue
-							<ClayIcon symbol="angle-right" />
-						</button>
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol="angle-right" />
+							</span>
+						</ClayButton>
 					)}
 				</div>
 

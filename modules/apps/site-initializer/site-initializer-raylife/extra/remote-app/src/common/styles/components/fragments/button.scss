@@ -1,69 +1,21 @@
 .btn {
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	align-items: center;
-	border: none;
-	border-radius: 0.25rem;
-	cursor: pointer;
-	display: flex;
-	font-size: 1rem;
-	font-weight: bold;
-	gap: $spacer-2;
-	height: 3.5rem;
-	justify-content: center;
-	outline: none;
-	padding: $spacer-0 $spacer-5;
-	text-transform: uppercase;
-	transition: 200ms all ease-out;
-	user-select: none;
-
-	&:disabled {
-		cursor: not-allowed;
-		opacity: 0.5;
+	&.continue {
+		padding: $spacer-3 3.35rem;
 	}
-}
 
-.btn.btn-primary {
-	background: $color-action-primary-hover;
-	color: $background;
-	fill: $background;
-
-	&:hover {
-		background: $color-action-primary-hover;
+	&.previous {
+		color: $color-action-neutral-default;
+		padding: $spacer-0 !important;
+		text-decoration: none !important;
 	}
-}
 
-.btn.btn-secondary {
-	background: $color-action-secondary-default;
-	color: $background;
-	fill: $background;
-
-	&:hover {
-		background: $color-brand-secondary;
+	&.save-exit {
+		padding: $spacer-3 1.125rem !important;
 	}
-}
 
-.btn.continue {
-	padding: $spacer-3 $spacer-6;
-}
-
-.btn.btn-flat {
-	background: $background;
-	color: $color-action-neutral-default;
-	fill: $color-action-neutral-default;
-	padding: 0;
-}
-
-.btn.btn-outline {
-	background: $background;
-	border: 1px solid $color-action-neutral-default;
-	color: $color-action-neutral-default;
-	fill: $color-action-neutral-default;
-	padding: $spacer-3 1.125rem;
+	&.search {
+		padding: 1.1rem 1.13rem !important;
+	}
 }
 
 .btn.badge {
@@ -98,10 +50,6 @@
 		height: 10px !important;
 		width: 10px !important;
 	}
-}
-
-.btn.search {
-	padding: $spacer-3 1.125rem;
 }
 
 .btn.badge.bottom-list {

@@ -29,7 +29,7 @@ export const InputWithMask = React.forwardRef(
 				<ReactInputMask
 					{...props}
 					allowNegative={allowNegative}
-					className="input"
+					className="form-control input"
 					name={name}
 					ref={ref}
 					required={required}

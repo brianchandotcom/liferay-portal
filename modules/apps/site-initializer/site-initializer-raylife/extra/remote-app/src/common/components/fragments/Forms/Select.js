@@ -1,4 +1,3 @@
-import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import {InputAreaWithError} from './InputArea/WithError';
@@ -25,11 +24,9 @@ export const Select = React.forwardRef(
 					</Label>
 				)}
 
-				<ClayIcon className="select-icon" symbol="caret-bottom" />
-
 				<select
 					{...props}
-					className="input"
+					className="form-control"
 					name={name}
 					ref={ref}
 					required={required}

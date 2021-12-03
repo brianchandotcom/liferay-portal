@@ -154,7 +154,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 		<>
 			<div>
 				<SearchInput
-					className="search"
+					className="bg-neutral-1 form-control search"
 					defaultValue=""
 					error={errors?.basics?.businessSearch}
 					label="Search for your primary industry and then select it from the list."

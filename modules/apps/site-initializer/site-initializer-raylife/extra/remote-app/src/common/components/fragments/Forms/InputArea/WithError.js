@@ -7,7 +7,7 @@ export function InputAreaWithError({children, className, error}) {
 		<div
 			className={classNames('input-area', {
 				[className]: className,
-				invalid: error,
+				'has-error': error,
 			})}
 		>
 			{children}

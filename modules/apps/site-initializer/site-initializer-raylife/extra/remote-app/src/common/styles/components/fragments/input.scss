@@ -62,35 +62,26 @@ input,
 		cursor: not-allowed;
 		opacity: 0.5;
 	}
+}
+
+input.form-control.input {
+	&::placeholder {
+		color: $color-neutral-black;
+		font-weight: 500;
+		opacity: 0.4;
+	}
+}
+
+input.form-control.search {
+	min-height: 3.5rem;
+	padding: 0 $spacer-4;
 
 	&::placeholder {
-		opacity: 0.4;
+		font-size: 1.313rem;
+		font-weight: 700;
 	}
 }
 
 input.hidden {
 	display: none;
-}
-
-input.search {
-	font-size: 1.313rem;
-	font-weight: 700;
-	min-height: 3.5rem;
-	padding: 0 $spacer-4;
-}
-
-select {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-}
-
-.select-icon {
-	bottom: 10px;
-	fill: $color-action-neutral-default;
-	height: 24px !important;
-	pointer-events: none;
-	position: absolute;
-	right: 12px;
-	width: 24px !important;
 }

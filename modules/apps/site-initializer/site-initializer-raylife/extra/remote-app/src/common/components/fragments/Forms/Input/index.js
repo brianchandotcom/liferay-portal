@@ -13,7 +13,13 @@ export const Input = React.forwardRef(
 					</Label>
 				)}
 
-				<input {...props} name={name} ref={ref} required={required} />
+				<input
+					{...props}
+					className="form-control input"
+					name={name}
+					ref={ref}
+					required={required}
+				/>
 			</InputAreaWithError>
 		);
 	}

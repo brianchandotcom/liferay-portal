@@ -93,6 +93,10 @@ public class SourceFormatterUtil {
 	public static final String SOURCE_FORMATTER_TEST_PATH =
 		"/source/formatter/dependencies/";
 
+	public static final String UPGRADE_FROM_VERSION = "upgrade.from.version";
+
+	public static final String UPGRADE_TO_VERSION = "upgrade.to.version";
+
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes,

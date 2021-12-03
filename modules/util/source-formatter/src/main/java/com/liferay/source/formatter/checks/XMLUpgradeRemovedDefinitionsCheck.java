@@ -76,7 +76,7 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 		String dtdFileName = systemID.substring(x + 1);
 
 		String upgradeFromVersion = getAttributeValue(
-			"upgrade.from.version", absolutePath);
+			SourceFormatterUtil.UPGRADE_FROM_VERSION, absolutePath);
 
 		JSONObject upgradeFromXMLDefinitionsJSONObject =
 			_getXMLDefinitionsJSONObject(upgradeFromVersion);
@@ -89,7 +89,7 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 		}
 
 		String upgradeToVersion = getAttributeValue(
-			"upgrade.to.version", absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
 
 		String upgradeToVersionDTDFileName = _getUpgradeToVersionDTDFileName(
 			dtdFileName, upgradeFromVersion, upgradeToVersion);

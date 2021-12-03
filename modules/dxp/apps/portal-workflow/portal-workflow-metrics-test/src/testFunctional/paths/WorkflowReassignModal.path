@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>ITEM_CHECKBOX_CHECKED</td>
-	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]//parent::tr//input[@type='checkbox' and @checked]</td>
+	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]//parent::tr[contains(@class, 'table-active')]</td>
 	<td></td>
 </tr>
 <tr>

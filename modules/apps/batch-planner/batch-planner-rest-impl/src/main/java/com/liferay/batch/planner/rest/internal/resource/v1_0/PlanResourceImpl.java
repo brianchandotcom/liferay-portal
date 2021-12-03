@@ -171,7 +171,7 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				id = batchPlannerPolicy.getBatchPlannerPolicyId();
 				name = batchPlannerPolicy.getName();
 				planId = batchPlannerPolicy.getBatchPlannerPlanId();
-				value = batchPlannerPolicy.getName();
+				value = batchPlannerPolicy.getValue();
 			}
 		};
 	}

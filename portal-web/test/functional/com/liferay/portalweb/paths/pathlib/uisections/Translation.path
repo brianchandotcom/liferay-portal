@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_INFORMATION</td>
+	<td>//div[contains(@class,'col-md-6')]//div[text()='Basic Information']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TARGET_LANGUAGE_FIELD</td>
 	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[contains(@value,'${key_fieldValue}') and not(@readonly)]</td>
 	<td></td>

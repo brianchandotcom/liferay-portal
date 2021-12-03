@@ -1220,10 +1220,6 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -1231,23 +1227,23 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Click(
-			key_dmFolderName = "DM Document Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "DM Document Title");
+		LexiconCard.viewMenuItemNotPresent(
+			card = "DM Document Title",
+			item = "Move to Recycle Bin");
 
 		LexiconCard.checkCardCheckbox(card = "DM Document Title");
 
-		AssertElementPresent(
-			key_text = "trash",
-			locator1 = "Icon#ANY_DISABLED");
+		ManagementBar.viewItemsDisabled(textList = "trash");
 	}
 
 	@description = "This is a test for LPS-136846. It checks that a site member cannot delete a shortcut without permissions."

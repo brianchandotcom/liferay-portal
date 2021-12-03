@@ -40,7 +40,7 @@ definition {
 
 		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
 
-		AssertElementNotPresent(locator1 = "Raylife#BUTTON_DISABLED_CONTINUE");
+		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -217,7 +217,7 @@ definition {
 			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "pet");
 
-		AssertElementPresent(locator1 = "Raylife#BUTTON_DISABLED_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}

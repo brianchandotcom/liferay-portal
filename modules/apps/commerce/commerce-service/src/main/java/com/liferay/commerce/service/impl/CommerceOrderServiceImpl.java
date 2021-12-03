@@ -464,6 +464,31 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public List<CommerceOrder> getUserCommerceOrders(
+			long companyId, long groupId, String keywords, int start, int end)
+		throws PortalException {
+
+		long[] commerceAccountIds = _getCommerceAccountIds(groupId);
+
+		return commerceOrderLocalService.getCommerceOrders(
+			companyId, groupId, commerceAccountIds, keywords,
+			new int[] {CommerceOrderConstants.ORDER_STATUS_ANY}, true, start,
+			end);
+	}
+
+	@Override
+	public long getUserCommerceOrdersCount(
+			long companyId, long groupId, String keywords)
+		throws PortalException {
+
+		long[] commerceAccountIds = _getCommerceAccountIds(groupId);
+
+		return commerceOrderLocalService.getCommerceOrdersCount(
+			companyId, groupId, commerceAccountIds, keywords,
+			new int[] {CommerceOrderConstants.ORDER_STATUS_ANY}, true);
+	}
+
+	@Override
 	public List<CommerceOrder> getUserPendingCommerceOrders(
 			long companyId, long groupId, String keywords, int start, int end)
 		throws PortalException {

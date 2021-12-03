@@ -20,8 +20,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
-import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -84,8 +84,7 @@ public class PaymentProcessCommerceCheckoutStep
 		PaymentProcessCheckoutStepDisplayContext
 			paymentProcessCheckoutStepDisplayContext =
 				new PaymentProcessCheckoutStepDisplayContext(
-					_commerceCheckoutStepServicesTracker, commerceOrder,
-					httpServletRequest, _portal);
+					_cartResourceFactory, commerceOrder, httpServletRequest);
 
 		// Redirection only works with the original servlet response
 
@@ -102,7 +101,7 @@ public class PaymentProcessCommerceCheckoutStep
 		}
 
 		String redirect = _portal.escapeRedirect(
-			paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl());
+			paymentProcessCheckoutStepDisplayContext.getPaymentURL());
 
 		if (Validator.isNotNull(redirect) &&
 			!originalHttpServletResponse.isCommitted()) {
@@ -134,8 +133,7 @@ public class PaymentProcessCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceCheckoutStepServicesTracker
-		_commerceCheckoutStepServicesTracker;
+	private CartResource.Factory _cartResourceFactory;
 
 	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;

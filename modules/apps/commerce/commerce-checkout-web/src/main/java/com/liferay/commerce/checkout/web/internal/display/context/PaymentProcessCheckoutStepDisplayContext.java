@@ -15,111 +15,46 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.internal.display.context.helper.CommerceCheckoutRequestHelper;
-import com.liferay.commerce.checkout.web.internal.util.OrderConfirmationCommerceCheckoutStep;
-import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.util.CommerceCheckoutStep;
-import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
-import com.liferay.petra.encryptor.Encryptor;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.URLCodec;
-
-import java.security.Key;
+import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class PaymentProcessCheckoutStepDisplayContext {
 
 	public PaymentProcessCheckoutStepDisplayContext(
-		CommerceCheckoutStepServicesTracker commerceCheckoutStepServicesTracker,
-		CommerceOrder commerceOrder, HttpServletRequest httpServletRequest,
-		Portal portal) {
+		CartResource.Factory cartResourceFactory, CommerceOrder commerceOrder,
+		HttpServletRequest httpServletRequest) {
 
-		_commerceCheckoutStepServicesTracker =
-			commerceCheckoutStepServicesTracker;
+		_cartResourceFactory = cartResourceFactory;
 		_commerceOrder = commerceOrder;
-		_portal = portal;
 
 		_commerceCheckoutRequestHelper = new CommerceCheckoutRequestHelper(
 			httpServletRequest);
 	}
 
-	public String getPaymentServletUrl() throws Exception {
-		StringBundler sb = new StringBundler(14);
+	public String getPaymentURL() throws Exception {
+		CartResource.Builder cartResourceBuilder =
+			_cartResourceFactory.create();
 
-		sb.append(_getPortalUrl());
-		sb.append(_getPathModule());
-		sb.append(CharPool.SLASH);
-		sb.append(_getPaymentServletPath());
-		sb.append("?groupId=");
-		sb.append(_commerceOrder.getGroupId());
-		sb.append("&uuid=");
-		sb.append(_commerceOrder.getUuid());
-		sb.append(StringPool.AMPERSAND);
+		CartResource cartResource = cartResourceBuilder.httpServletRequest(
+			_commerceCheckoutRequestHelper.getRequest()
+		).preferredLocale(
+			_commerceCheckoutRequestHelper.getLocale()
+		).user(
+			_commerceCheckoutRequestHelper.getUser()
+		).build();
 
-		if (_commerceOrder.isGuestOrder()) {
-			sb.append("guestToken=");
-			sb.append(_getGuestToken(_commerceOrder.getCommerceOrderId()));
-			sb.append(StringPool.AMPERSAND);
-		}
-
-		sb.append("nextStep=");
-		sb.append(URLCodec.encodeURL(_getOrderConfirmationCheckoutStepUrl()));
-
-		return sb.toString();
+		return cartResource.getCartPaymentURL(
+			_commerceOrder.getCommerceOrderId());
 	}
 
-	private String _getGuestToken(long commerceOrderId) throws Exception {
-		Company company = _commerceCheckoutRequestHelper.getCompany();
-
-		Key key = company.getKeyObj();
-
-		return Encryptor.encrypt(key, String.valueOf(commerceOrderId));
-	}
-
-	private String _getOrderConfirmationCheckoutStepUrl() {
-		return PortletURLBuilder.createRenderURL(
-			_commerceCheckoutRequestHelper.getLiferayPortletResponse()
-		).setParameter(
-			"checkoutStepName",
-			() -> {
-				CommerceCheckoutStep commerceCheckoutStep =
-					_commerceCheckoutStepServicesTracker.
-						getCommerceCheckoutStep(
-							OrderConfirmationCommerceCheckoutStep.NAME);
-
-				return commerceCheckoutStep.getName();
-			}
-		).setParameter(
-			"commerceOrderUuid", _commerceOrder.getUuid()
-		).buildString();
-	}
-
-	private String _getPathModule() {
-		return _portal.getPathModule();
-	}
-
-	private String _getPaymentServletPath() {
-		return CommercePaymentConstants.SERVLET_PATH;
-	}
-
-	private String _getPortalUrl() {
-		return _portal.getPortalURL(
-			_commerceCheckoutRequestHelper.getRequest());
-	}
-
+	private final CartResource.Factory _cartResourceFactory;
 	private final CommerceCheckoutRequestHelper _commerceCheckoutRequestHelper;
-	private final CommerceCheckoutStepServicesTracker
-		_commerceCheckoutStepServicesTracker;
 	private final CommerceOrder _commerceOrder;
-	private final Portal _portal;
 
 }

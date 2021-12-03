@@ -51,19 +51,17 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
-
 import org.apache.commons.lang.time.DateUtils;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author Javier Gamarra
@@ -1024,12 +1022,12 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	protected WorkflowTask testGetWorkflowTask_addWorkflowTask()
 		throws Exception {
 
-		WorkflowTask workflowTask1 = _workflowTasks.pop();
+		WorkflowTask workflowTask = _workflowTasks.pop();
 
 		workflowTaskResource.postWorkflowTaskAssignToMe(
-			workflowTask1.getId(), new WorkflowTaskAssignToMe());
+			workflowTask.getId(), new WorkflowTaskAssignToMe());
 
-		return workflowTask1;
+		return workflowTask;
 	}
 
 	@Override

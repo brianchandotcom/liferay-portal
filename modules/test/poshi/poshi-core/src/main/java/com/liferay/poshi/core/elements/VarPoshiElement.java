@@ -309,11 +309,6 @@ public class VarPoshiElement extends PoshiElement {
 							value = StringUtil.replace(
 								value, content,
 								swapParameterQuotations(content));
-
-							if (value.startsWith("StringUtil.regex")) {
-								value = value.replace("&quot;", "\\\"");
-								value = value.replaceAll("(\\\\)+\"", "\\\\\"");
-							}
 						}
 					}
 				}
@@ -430,7 +425,9 @@ public class VarPoshiElement extends PoshiElement {
 				parameter = getSingleQuotedContent(parameter);
 
 				parameter = StringUtil.replace(parameter, "\\\'", "'");
-				parameter = StringUtil.replace(parameter, "\"", "&quot;");
+				parameter = StringUtil.replace(parameter, "&quot;", "\"");
+
+				parameter = StringUtil.replace(parameter, "\"", "\\\"");
 
 				parameter = doubleQuoteContent(parameter);
 			}
@@ -438,7 +435,7 @@ public class VarPoshiElement extends PoshiElement {
 				parameter = getDoubleQuotedContent(parameter);
 
 				parameter = StringUtil.replace(parameter, "'", "\\\'");
-				parameter = StringUtil.replace(parameter, "&quot;", "\"");
+				parameter = StringUtil.replace(parameter, "\\\"", "\"");
 
 				parameter = singleQuoteContent(parameter);
 			}

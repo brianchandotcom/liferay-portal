@@ -249,6 +249,10 @@ definition {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS";
 				var permissionNavigationValue = "Message Boards";
 			}
+			else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_OBJECTS_PERMISSIONS")) {
+				var permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS";
+				var permissionNavigationValue = "Objects";
+			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY")) {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";
 				var permissionNavigationValue = "Web Content Display";
@@ -589,6 +593,10 @@ definition {
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS";
 			var permissionNavigationValue = "Message Boards";
+		}
+		else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_OBJECTS_PERMISSIONS")) {
+			var permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS";
+			var permissionNavigationValue = "Objects";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";

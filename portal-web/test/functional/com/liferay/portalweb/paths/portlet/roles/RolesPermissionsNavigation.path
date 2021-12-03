@@ -62,6 +62,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTROL_PANEL_OBJECTS-->
+<tr>
+	<td>CONTROL_PANEL_OBJECTS_PERMISSIONS</td>
+	<td>//a[contains(.,'Control Panel') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Objects')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTROL_PANEL_USERS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS</td>

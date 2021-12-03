@@ -59,7 +59,7 @@ definition {
 			LexiconCard.clickCard(card = "${depotName}");
 		}
 		else {
-			Navigator.gotoNavItem(navItem = "My Sites");
+			Navigator.gotoNavItem(navItem = "All Sites");
 
 			SiteSelector.selectSite(site = "${site}");
 

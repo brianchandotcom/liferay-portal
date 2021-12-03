@@ -460,7 +460,7 @@ definition {
 
 		ProductMenu.gotoLocalizedSite(
 			displayStyle = "tabla",
-			navItem = "Mis Sitios",
+			navItem = "Todos los sitios",
 			site = "Nombre del Sitio");
 
 		ProductMenu.gotoPortlet(

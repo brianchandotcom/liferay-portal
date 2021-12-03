@@ -49,7 +49,7 @@ definition {
 
 			Pause(locator1 = "3000");
 
-			Navigator.gotoNavItem(navItem = "My Sites");
+			Navigator.gotoNavItem(navItem = "All Sites");
 
 			SiteSelector.selectSite(site = "${siteName}");
 
@@ -107,7 +107,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Navigator.gotoNavItem(navItem = "My Sites");
+			Navigator.gotoNavItem(navItem = "All Sites");
 
 			SiteSelector.selectSite(site = "Test Site Name 3");
 

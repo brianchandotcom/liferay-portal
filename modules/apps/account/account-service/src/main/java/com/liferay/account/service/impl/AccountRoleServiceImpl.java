@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -49,9 +51,14 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		_accountRoleModelResourcePermission.check(
-			permissionChecker, accountEntryId,
-			AccountActionKeys.ADD_ACCOUNT_ROLE);
+		if (accountEntryId > 0) {
+			_accountEntryModelResourcePermission.check(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.ADD_ACCOUNT_ROLE);
+		}
+		else {
+			PortalPermissionUtil.check(permissionChecker, ActionKeys.ADD_ROLE);
+		}
 
 		return accountRoleLocalService.addAccountRole(
 			permissionChecker.getUserId(), accountEntryId, name, titleMap,
@@ -126,6 +133,12 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 		accountRoleLocalService.unassociateUser(
 			accountEntryId, accountRoleId, userId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.account.model.AccountRole)"

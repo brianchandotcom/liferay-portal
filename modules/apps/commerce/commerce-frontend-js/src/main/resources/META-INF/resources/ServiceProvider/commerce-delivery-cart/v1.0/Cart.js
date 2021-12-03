@@ -49,7 +49,10 @@ export default function Cart(basePath) {
 
 		createCartByChannelId: (channelId, json) =>
 			AJAX.POST(
-				`${resolveChannelsPath(basePath, channelId)}${CARTS_PATH}`,
+				`${resolveChannelsPath(
+					basePath,
+					channelId
+				)}${CARTS_PATH}?nestedFields=cartItems`,
 				json
 			),
 
@@ -82,6 +85,6 @@ export default function Cart(basePath) {
 			AJAX.PUT(resolveCartsPath(basePath, cartId), json),
 
 		updateCartById: (cartId, jsonProps) =>
-			AJAX.PATCH(resolveCartsPath(basePath, cartId), jsonProps),
+			AJAX.PATCH(resolveCartsPath(basePath, cartId) + '?nestedFields=cartItems', jsonProps),
 	};
 }

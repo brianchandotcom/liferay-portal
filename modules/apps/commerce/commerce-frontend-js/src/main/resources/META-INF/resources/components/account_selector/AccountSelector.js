@@ -67,7 +67,7 @@ function AccountSelector({
 	};
 
 	const updateOrderModel = useCallback(
-		(order) => {
+		({order}) => {
 			if (!currentOrder || currentOrder.id !== order.id) {
 				setCurrentOrder((current) => ({...current, ...order}));
 			}

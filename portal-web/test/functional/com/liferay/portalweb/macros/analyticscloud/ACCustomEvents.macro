@@ -76,4 +76,13 @@ definition {
 		return "${customEventName}";
 	}
 
+	macro viewExceedsMaximumLength {
+		AssertTextEquals(
+			locator1 = "ACCustomEvents#INVALID_MESSAGE",
+			value1 = "${invalidMessage}");
+
+		AssertElementPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY_DISABLED");
+	}
 }

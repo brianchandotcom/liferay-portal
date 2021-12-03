@@ -97,7 +97,7 @@ public class BatchPlannerPlanLocalServiceImpl
 			batchPlannerPlanId);
 
 		resourceLocalService.deleteResource(
-			batchPlannerPlan, ResourceConstants.SCOPE_COMPANY);
+			batchPlannerPlan, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		BatchPlannerLog batchPlannerLog =
 			batchPlannerLogPersistence.fetchByBatchPlannerPlanId(

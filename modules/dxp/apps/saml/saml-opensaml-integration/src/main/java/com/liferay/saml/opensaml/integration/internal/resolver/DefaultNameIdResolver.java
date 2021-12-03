@@ -81,7 +81,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 			return StringPool.BLANK;
 		}
 
-		return String.valueOf(object);
+		return object.toString();
 	}
 
 	private MetadataManager _metadataManager;

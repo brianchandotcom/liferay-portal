@@ -118,7 +118,7 @@ definition {
 				id = "text",
 				text = "New editable fragment text");
 
-			PageEditor.clickSubmitForPublication();
+			PageEditor.submitForPublication();
 		}
 
 		task ("View pending status is shown") {
@@ -364,7 +364,7 @@ definition {
 				id = "text",
 				text = "New modified text");
 
-			PageEditor.clickSubmitForPublication();
+			PageEditor.submitForPublication();
 		}
 	}
 

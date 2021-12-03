@@ -761,15 +761,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Click(
-			key_dmFolderName = "DM Document Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "DM Document Title");
+		LexiconCard.viewMenuItemNotPresent(
+			card = "DM Document Title",
+			item = "Move to Recycle Bin");
 
 		LexiconCard.checkCardCheckbox(card = "DM Document Title");
 
-		AssertElementNotPresent(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+		ManagementBar.viewNoItems(textList = "trash");
 	}
 
 	@description = "This is a test for LPS-136835. It checks that a guest cannot subscribe to a folder without permissions."

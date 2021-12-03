@@ -71,7 +71,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -127,7 +126,6 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
@@ -364,10 +362,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
-			_invoke(() -> _addListTypeDefinitions(serviceContext));
+				_invoke(() -> _addListTypeDefinitions(serviceContext));
 
 			Map<String, String> objectDefinitionsIdsStringUtilReplaceValues =
-				_invoke(() -> _addObjectDefinitions(listTypeDefinitionsStringUtilReplaceValues,serviceContext));
+				_invoke(
+					() -> _addObjectDefinitions(
+						listTypeDefinitionsStringUtilReplaceValues,
+						serviceContext));
 
 			_invoke(
 				() -> _addObjectRelationships(
@@ -1631,7 +1632,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private Map<String, String> _addObjectDefinitions( Map<String, String> listTypeDefinitionsStringUtilReplaceValues,
+	private Map<String, String> _addObjectDefinitions(
+			Map<String, String> listTypeDefinitionsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1766,13 +1768,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Page<ObjectRelationship> objectRelationshipsPage =
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
-						objectRelationship1.getObjectDefinitionId1(),null, objectRelationshipResource.toFilter(
+						objectRelationship1.getObjectDefinitionId1(), null,
+						objectRelationshipResource.toFilter(
 							StringBundler.concat(
-								"name eq '", objectRelationship1.getName(), "'")) ,null);
+								"name eq '", objectRelationship1.getName(),
+								"'")),
+						null);
 
 			ObjectRelationship existingRelationships =
 				objectRelationshipsPage.fetchFirstItem();
-
 
 			if (existingRelationships == null) {
 				objectRelationshipResource.
@@ -1782,8 +1786,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				objectRelationshipResource.putObjectRelationship(
-					existingRelationships.getId(),
-					objectRelationship1);
+					existingRelationships.getId(), objectRelationship1);
 			}
 		}
 	}

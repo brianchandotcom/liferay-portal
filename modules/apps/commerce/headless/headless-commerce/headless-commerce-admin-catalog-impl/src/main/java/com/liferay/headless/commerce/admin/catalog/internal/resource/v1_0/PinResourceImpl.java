@@ -63,6 +63,17 @@ public class PinResourceImpl
 
 	@Override
 	public void deletePin(Long pinId) throws Exception {
+		CSDiagramPin csDiagramPin = _csDiagramPinService.getCSDiagramPin(pinId);
+
+		CSDiagramEntry csDiagramEntry =
+			_csDiagramEntryService.fetchCSDiagramEntry(
+				csDiagramPin.getCPDefinitionId(), csDiagramPin.getSequence());
+
+		if (csDiagramEntry != null) {
+			_csDiagramEntryService.deleteCSDiagramEntry(
+				csDiagramEntry.getCSDiagramEntryId());
+		}
+
 		_csDiagramPinService.deleteCSDiagramPin(pinId);
 	}
 

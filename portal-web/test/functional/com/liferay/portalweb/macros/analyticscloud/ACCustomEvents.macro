@@ -6,6 +6,16 @@ definition {
 			value1 = "${newCustomEventName}");
 
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
+	macro changeCustomEventDescription {
+		Type(
+			locator1 = "TextArea#DESCRIPTION",
+			value1 = "${newDescription}");
+
+		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
+
+		if (IsElementPresent(locator1 = "Button#ANY_ENABLED",key_text = "Save")){
+			Button.clickSave();
+		}
 	}
 
 	macro createCustomEvent {

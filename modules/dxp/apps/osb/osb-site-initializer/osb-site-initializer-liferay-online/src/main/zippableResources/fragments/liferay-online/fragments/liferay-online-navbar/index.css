@@ -1,0 +1,151 @@
+.liferay-online-navbar {
+	--liferay-online-navbar-height-sm: 56px;
+
+	--management-bar-height-sm: 56px;
+	--management-bar-height-xs: 48px;
+
+	font-family: var(--font-family-sans-serif);
+	font-size: var(--font-size-sm);
+	padding: 0;
+	z-index: 2;
+}
+
+.liferay-online-navbar .nav-item .nav-link {
+	border-bottom: 2px solid transparent;
+	color: inherit;
+	padding: var(--spacer-2) 0;
+}
+
+.liferay-online-navbar .nav-item a:hover,
+.liferay-online-navbar .nav-item a:focus {
+	color: inherit;
+}
+
+.liferay-online-navbar .portlet {
+	margin-left: auto;
+}
+
+.liferay-online-navbar .portlet,
+.liferay-online-navbar .navbar-zone {
+	margin-bottom: 0;
+	margin-left: auto;
+	margin-right: var(--spacer-2);
+}
+
+.liferay-online-navbar .portlet .nav-item,
+.liferay-online-navbar .navbar-nav .nav-item {
+	font-weight: var(--font-weight-bold);
+	padding-left: var(--spacer-3);
+	padding-right: var(--spacer-3);
+}
+
+.liferay-online-navbar .small {
+	font-size: 0.8rem;
+	font-weight: var(--font-weight-bold);
+	letter-spacing: 1px;
+}
+
+.navbar-light .navbar-nav .show > .nav-link,
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .nav-link.active {
+	color: inherit;
+}
+
+.position-absolute {
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+@media (min-width: 992px) {
+	.liferay-online-navbar .nav-item.active a {
+		border-bottom-color: inherit;
+	}
+
+	.liferay-online-navbar-user {
+		padding: 24px 0;
+	}
+
+	.logged-in > .container {
+		padding-right: 0;
+	}
+
+	.logged-in .liferay-online-navbar-user {
+		background-color: var(--brand-color-3);
+	}
+}
+
+@media (max-width: 992px) {
+	.has-control-menu .navbar-collapse.show {
+		height: calc(
+			100vh - var(--management-bar-height-sm) - var(--liferay-online-navbar-height-sm)
+		);
+	}
+
+	.liferay-online-navbar {
+		height: var(--liferay-online-navbar-height-sm);
+	}
+
+	.liferay-online-navbar .container {
+		padding: 0;
+	}
+
+	.liferay-online-navbar .btn-close,
+	.liferay-online-navbar.open .btn-menu {
+		display: none;
+	}
+
+	.liferay-online-navbar .btn-menu,
+	.liferay-online-navbar.open .btn-close {
+		display: block;
+	}
+
+	.liferay-online-navbar .navbar-logo {
+		margin-left: 16px;
+	}
+
+	.liferay-online-navbar .portlet,
+	.liferay-online-navbar .liferay-online-navbar-user {
+		width: 100%;
+	}
+
+	.liferay-online-navbar.open .container,
+	.liferay-online-navbar.open .flex-fill {
+		background-color: var(--brand-color-3);
+	}
+
+	.liferay-online-navbar.open .dropdown-menu {
+		display: block;
+	}
+
+	.liferay-online-navbar.open .dropdown-item {
+		color: initial;
+		font-size: initial;
+		padding: var(--spacer-2) 0;
+	}
+
+	.navbar-collapse.show {
+		align-items: flex-end;
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		height: calc(100vh - var(--liferay-online-navbar-height-sm));
+		overflow: auto;
+		z-index: 990;
+	}
+}
+
+@media (max-width: 575px) {
+	.liferay-online-navbar .container-fluid {
+		padding: 0;
+	}
+
+	.has-control-menu .navbar-collapse.show {
+		height: calc(
+			100vh - var(--management-bar-height-xs) - var(--liferay-online-navbar-height-sm)
+		);
+	}
+}

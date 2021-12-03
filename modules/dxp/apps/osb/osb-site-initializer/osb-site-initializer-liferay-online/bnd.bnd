@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB Site Initializer Liferay Online
+Bundle-SymbolicName: com.liferay.osb.site.initializer.liferay.online
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Liferay Online
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /osb-site-initializer-liferay-online

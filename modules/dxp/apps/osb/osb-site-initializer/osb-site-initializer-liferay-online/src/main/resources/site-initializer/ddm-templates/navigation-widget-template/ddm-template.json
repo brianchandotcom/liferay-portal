@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "liferay-online-navigation",
+	"name": "Liferay Online navigation",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

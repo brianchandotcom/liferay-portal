@@ -1,0 +1,239 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "liferay-online-navbar"
+					},
+					"fragmentConfig": {
+						"position": "static"
+					},
+					"fragmentFields": [
+						{
+							"id": "imageLogo",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								},
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								}
+							}
+						}
+					]
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "gray100Color",
+						"paddingBottom": "7",
+						"paddingTop": "7"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 8,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 8,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentSettings": {
+										"unallowedFragments": [
+										]
+									}
+								},
+								"type": "DropZone"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "liferay-online-footer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "socialLinkin",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								},
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialFacebook",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								},
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "footerText",
+							"value": {
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialInstagram",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								},
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialLinkinLink",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value": "#"
+										}
+									},
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialYoutubeLink",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value": "#"
+										}
+									},
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialFacebookLink",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value": "#"
+										}
+									},
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialYoutube",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								},
+								"fragmentLink": {
+									"value_i18n": {
+									}
+								}
+							}
+						},
+						{
+							"id": "socialInstagramLink",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value": "#"
+										}
+									},
+									"value_i18n": {
+									}
+								}
+							}
+						}
+					],
+					"widgetInstances": [
+						{
+							"widgetConfig": {
+								"displayDepth": "0",
+								"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+								"displayStyleGroupId": "[$GROUP_ID$]",
+								"expandedLevels": "auto",
+								"rootMenuItemLevel": "0",
+								"rootMenuItemType": "absolute",
+								"siteNavigationMenuName": "Footer Navigation",
+								"siteNavigationMenuType": "-1"
+							},
+							"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+						}
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	}
+}

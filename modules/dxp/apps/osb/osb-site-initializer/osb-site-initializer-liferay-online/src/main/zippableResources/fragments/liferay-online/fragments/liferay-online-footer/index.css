@@ -1,0 +1,39 @@
+.liferay-online-footer {
+	font-family: var(--font-family-sans-serif);
+	font-size: var(--font-size-sm);
+}
+
+.liferay-online-footer .navbar-nav {
+    flex-direction: column;
+}
+
+.liferay-online-footer .navbar-nav .nav-link {
+	color: var(--gray-900);
+}
+
+.liferay-online-footer .navbar-nav .nav-link:hover {
+	color: var(--gray-700);
+}
+
+.liferay-online-footer .portlet {
+	margin-bottom: 0;
+}
+
+.liferay-online-footer small {
+	font-size: 75%;
+}
+
+.liferay-online-footer-social a:not(:first-child) {
+	margin-left: var(--spacer-2);
+}
+
+@media (max-width: 992px) {
+	.liferay-online-footer .navbar-nav {
+		flex-direction: column;
+	}
+
+	.liferay-online-footer .navbar-nav .nav-link {
+		padding: 0;
+		width: 100%;
+	}
+}

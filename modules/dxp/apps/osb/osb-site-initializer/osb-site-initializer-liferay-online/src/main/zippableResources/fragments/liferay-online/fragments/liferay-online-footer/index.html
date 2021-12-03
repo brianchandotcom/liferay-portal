@@ -1,0 +1,54 @@
+[#assign
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+/]
+
+<nav class="bg-white liferay-online-footer pb-lg-8 py-4">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg mb-2 mb-lg-0">
+				<div class="row">
+					<div class="col-12 col-lg-auto mb-4 py-3 py-lg-0">
+						<lfr-widget-nav></lfr-widget-nav>
+					</div>
+				</div>
+
+				<small class="ml-2" data-lfr-editable-id="footerText" data-lfr-editable-type="text">
+					Powered by Liferay Online
+				</small>
+			</div>
+
+			<div class="col-12 col-lg-auto liferay-online-footer-social">
+				<div class="row text-right">
+					<div class="col-12">
+						<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialInstagramLink" data-lfr-editable-type="link" href="#">
+							<img alt="Instagram link" data-lfr-editable-id="socialInstagram" data-lfr-editable-type="image" src="[resources:social_icon_instagram.svg]" />
+						</a>
+
+						<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialFacebookLink" data-lfr-editable-type="link" href="#">
+							<img alt="Facebook link" data-lfr-editable-id="socialFacebook" data-lfr-editable-type="image" src="[resources:social_icon_facebook.svg]" />
+						</a>
+
+						<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialLinkinLink" data-lfr-editable-type="link" href="#">
+							<img alt="Linkin link" data-lfr-editable-id="socialLinkin" data-lfr-editable-type="image" src="[resources:social_icon_linkin.svg]" />
+						</a>
+
+						<a class="btn btn-monospaced btn-sm" data-lfr-editable-id="socialYoutubeLink" data-lfr-editable-type="link" href="#">
+							<img alt="Youtube link" data-lfr-editable-id="socialYoutube" data-lfr-editable-type="image" src="[resources:social_icon_youtube.svg]" />
+						</a>
+					</div>
+
+					<div class="col-12 pt-3">
+						<a class="text-dark" href="/contact">Contact Us</a>
+
+						<div class="mt-4">
+							<small class="d-block my-1">1400 Montefino Avenue</small>
+							<small class="d-block my-1">Diamond Bar, CA 91765</small>
+							<small class="d-block my-1">USA</small>
+							<small class="d-block my-1">+1-877-LIFERAY</small>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>

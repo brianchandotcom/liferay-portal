@@ -42,7 +42,6 @@ definition {
 
 		task ("Go to the new Virtual Instance") {
 			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
-
 		}
 
 		task ("Assert the default Welcome Page is present") {
@@ -60,10 +59,10 @@ definition {
 			PortalInstances.openVirtualInstancesAdmin();
 
 			LiferayOnline.addVirtualInstanceWithInitializer(
+				initializerName = "Raylife",
 				mailDomain = "raylife.com",
 				virtualHost = "raylife",
-				webId = "raylife",
-				initializerName = "Raylife");
+				webId = "raylife");
 		}
 
 		task ("Go to the new Virtual Instance") {
@@ -73,7 +72,6 @@ definition {
 		task ("Assert the Raylife logo is present") {
 			AssertElementPresent(locator1 = "Raylife#RAYLIFE_LOGO");
 		}
-
 	}
 
 	@description = "This is a test for LPS-135077. Raylife initializer is not deployed and is not shown on inicializer list"
@@ -103,10 +101,10 @@ definition {
 			Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
 
 			AssertElementNotPresent(
-				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_OPTION",
-				key_providerNname = "Raylife");
+				key_providerNname = "Raylife",
+				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_OPTION");
 		}
-		
+
 		task ("Go to Gogo Shell Admin and Start Raylife Module") {
 			GogoShell.openGogoShellAdmin();
 

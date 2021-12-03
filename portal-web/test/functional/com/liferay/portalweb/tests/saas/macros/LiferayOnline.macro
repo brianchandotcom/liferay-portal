@@ -1,7 +1,7 @@
 definition {
 
-    macro addVirtualInstanceWithInitializer {
-        LexiconEntry.gotoAdd();
+	macro addVirtualInstanceWithInitializer {
+		LexiconEntry.gotoAdd();
 
 		Type(
 			locator1 = "TextInput#WEB_ID",
@@ -36,5 +36,6 @@ definition {
 		while (IsElementNotPresent(locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER", value1 = "Virtual Instances")) {
 			WaitForPageLoad();
 		}
-    }
+	}
+
 }

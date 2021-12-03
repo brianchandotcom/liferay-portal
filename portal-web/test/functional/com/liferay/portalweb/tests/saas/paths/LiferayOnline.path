@@ -12,8 +12,8 @@
 <tbody>
 <tr>
 <td>SAVE</td>
-    <td>//*[not(self::div)][contains(@class,'btn')][normalize-space()='Save'][not(contains(@class,'navbar'))]</td>
-    <td></td>
+	<td>//*[not(self::div)][contains(@class,'btn')][normalize-space()='Save'][not(contains(@class,'navbar'))]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

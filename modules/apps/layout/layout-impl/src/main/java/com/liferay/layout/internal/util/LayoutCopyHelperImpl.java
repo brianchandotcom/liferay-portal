@@ -196,12 +196,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private void _copyLayoutClassedModelUsages(
 		Layout sourceLayout, Layout targetLayout) {
 
-		if (Objects.equals(
-				sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
-
-			return;
-		}
-
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
 		).orElse(
@@ -263,12 +257,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private void _copyLayoutPageTemplateStructure(
 			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
-
-		if (Objects.equals(
-				sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
-
-			return;
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -367,12 +355,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		if (Objects.equals(
-				sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
-
-			return;
-		}
-
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -468,14 +450,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private void _copyPortletPermissions(
 			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
-
-		if (Objects.equals(
-				sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
-
-			_sites.copyPortletPermissions(targetLayout, sourceLayout);
-
-			return;
-		}
 
 		if (!(sourceLayout.isTypeAssetDisplay() ||
 			  sourceLayout.isTypeContent())) {
@@ -958,19 +932,27 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_sites.copyLookAndFeel(_targetLayout, _sourceLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
 
+			if (Objects.equals(
+					_sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
+
+				_sites.copyPortletPermissions(_targetLayout, _sourceLayout);
+			}
+			else {
+
+				// LPS-108378 Copy structure before permissions and preferences
+
+				_consumer.accept(_targetLayout);
+
+				// Copy classedModelUsages after copying the structure
+
+				_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
+
+				_copyPortletPermissions(_sourceLayout, _targetLayout);
+			}
+
 			_copyAssetCategoryIdsAndAssetTagNames(_sourceLayout, _targetLayout);
 
-			// LPS-108378 Copy structure before permissions and preferences
-
-			_consumer.accept(_targetLayout);
-
-			// Copy classedModelUsages after copying the structure
-
-			_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
-
 			_copyLayoutSEOEntry(_sourceLayout, _targetLayout, serviceContext);
-
-			_copyPortletPermissions(_sourceLayout, _targetLayout);
 
 			_copyPortletPreferences(_sourceLayout, _targetLayout);
 

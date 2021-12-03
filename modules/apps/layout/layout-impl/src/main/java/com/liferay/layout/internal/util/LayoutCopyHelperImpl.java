@@ -1000,8 +1000,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), unicodeProperties.toString());
 
-			_targetLayout.setType(_sourceLayout.getType());
-
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
 

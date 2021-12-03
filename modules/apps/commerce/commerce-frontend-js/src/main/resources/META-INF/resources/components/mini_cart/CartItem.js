@@ -137,7 +137,7 @@ function CartItem({
 									return;
 								}
 
-								updateCartModel({id: cartState.id});
+								updateCartModel({order: {id: cartState.id}});
 
 								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
 									skuId,
@@ -202,7 +202,9 @@ function CartItem({
 							.then(() => {
 								if (isMounted()) {
 									setIsUpdating(false);
-									updateCartModel({id: cartState.id});
+									updateCartModel({
+										order: {id: cartState.id},
+									});
 								}
 							})
 							.catch((...errors) => {

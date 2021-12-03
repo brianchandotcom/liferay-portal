@@ -33,7 +33,7 @@ export async function addToCart(cpInstances, cartId, channel, accountId) {
 			currencyCode: channel.currencyCode,
 		});
 
-		Liferay.fire(CURRENT_ORDER_UPDATED, {id: newCart.id});
+		Liferay.fire(CURRENT_ORDER_UPDATED, {order: newCart});
 
 		return newCart;
 	}
@@ -44,9 +44,11 @@ export async function addToCart(cpInstances, cartId, channel, accountId) {
 			formatCartItem(cpInstances[0])
 		);
 
-		Liferay.fire(CURRENT_ORDER_UPDATED, {id: cartId});
+		const fetchedCart = await CartResource.getCartByIdWithItems(cartId);
 
-		return;
+		Liferay.fire(CURRENT_ORDER_UPDATED, {order: fetchedCart});
+
+		return fetchedCart;
 	}
 
 	const fetchedCart = await CartResource.getCartByIdWithItems(cartId);
@@ -72,7 +74,7 @@ export async function addToCart(cpInstances, cartId, channel, accountId) {
 		cartItems: updatedCartItems,
 	});
 
-	Liferay.fire(CURRENT_ORDER_UPDATED, updatedCart);
+	Liferay.fire(CURRENT_ORDER_UPDATED, {order: fetchedCart});
 
 	return updatedCart;
 }

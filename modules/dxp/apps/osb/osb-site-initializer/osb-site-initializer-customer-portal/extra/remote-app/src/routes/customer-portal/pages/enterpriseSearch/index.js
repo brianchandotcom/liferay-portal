@@ -1,5 +1,4 @@
 /* eslint-disable @liferay/portal/no-global-fetch */
-/* eslint-disable no-unused-vars */
 import {useQuery} from '@apollo/client';
 import {ClaySelect} from '@clayui/form';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -16,25 +15,20 @@ const EnterpriseSearch = () => {
 	const [selectedSubscriptions, setSelectedSubscriptions] = useState({
 		name: '',
 	});
-	const [
-		selectedSubscriptionsTerms,
-		setSelectedSubscriptionsTerms,
-	] = useState();
+	const [, setSelectedSubscriptionsTerms] = useState();
 	const selectedSubscriptionRef = useRef();
-	const {
-		data: dataSubscriptionsBase,
-		error: errorSubscriptions,
-		loading: isLoadingSubscriptions,
-	} = useQuery(getAccountSubscriptions, {
-		variables: {
-			accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${CRYSTAL}_enterprise-search'`,
-		},
-	});
+	const {data: dataSubscriptionsBase, error: errorSubscriptions} = useQuery(
+		getAccountSubscriptions,
+		{
+			variables: {
+				accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${CRYSTAL}_enterprise-search'`,
+			},
+		}
+	);
 
 	const {
 		data: dataSubscriptionsTermsBase,
 		error: errorSubscriptionsTerms,
-		loading: isLoadingSubscriptionsTerms,
 	} = useQuery(getAccountSubscriptionsTerms, {
 		variables: {
 			accountSubscriptionERC: `accountSubscriptionERC eq '${CRYSTAL}_enterprise-search_${selectedSubscriptions.name.toLowerCase()}'`,

@@ -6,12 +6,15 @@
 		<field name="ploEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
-		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="key" type="String" />
+		<field name="key" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="languageId" type="String" />
-		<field name="value" type="String" />
-		<field name="originalValue" type="String" />
+		<field name="value" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
 	</model>
 </model-hints>

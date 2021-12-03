@@ -49,34 +49,22 @@ public class MVCCVersionUpgradeProcess extends UpgradeProcess {
 
 		tableName = dbInspector.normalizeName(tableName, databaseMetaData);
 
-		try (ResultSet tableResultSet = databaseMetaData.getTables(
+		assertTableExists(databaseMetaData, dbInspector, tableName);
+
+		try (ResultSet columnResultSet = databaseMetaData.getColumns(
 				dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
-				null)) {
+				dbInspector.normalizeName("mvccVersion", databaseMetaData))) {
 
-			if (!tableResultSet.next()) {
-				_log.error("Table " + tableName + " does not exist");
-
+			if (columnResultSet.next()) {
 				return;
 			}
 
-			try (ResultSet columnResultSet = databaseMetaData.getColumns(
-					dbInspector.getCatalog(), dbInspector.getSchema(),
-					tableName,
-					dbInspector.normalizeName(
-						"mvccVersion", databaseMetaData))) {
+			runSQL(
+				"alter table " + tableName +
+					" add mvccVersion LONG default 0 not null");
 
-				if (columnResultSet.next()) {
-					return;
-				}
-
-				runSQL(
-					"alter table " + tableName +
-						" add mvccVersion LONG default 0 not null");
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Added column mvccVersion to table " + tableName);
-				}
+			if (_log.isDebugEnabled()) {
+				_log.debug("Added column mvccVersion to table " + tableName);
 			}
 		}
 	}

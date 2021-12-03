@@ -198,6 +198,59 @@ definition {
 		AssertConsoleTextPresent(value1 = "${consoleText}");
 	}
 
+	@priority = "3"
+	test CanRemoveBlacklistedModuleWarViaUI {
+		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleWarViaUI";
+
+		OSGiConfig.deployOSGiConfigFile(
+			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			OSGiConfigs = "blacklistBundleSymbolicNames=[&quot;classic-theme&quot; ]");
+
+		Pause(locator1 = "10000");
+
+		AssertConsoleTextPresent(value1 = "STOPPED classic-theme");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Search");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		AssertTextNotPresent(
+			locator1 = "SitePagesEditPage#VIEW_THEME",
+			value1 = "Classic Theme");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Bundle Blacklist",
+			configurationScope = "System Scope");
+
+		BundleBlacklist.blacklistModuleAndComponentConfiguration(
+			label = "Blacklist Bundle Symbolic Names",
+			symbolicName = " ");
+
+		AssertConsoleTextPresent(value1 = "STARTED classic-theme");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Search");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		AssertTextPresent(
+			locator1 = "SitePagesEditPage#VIEW_THEME",
+			value1 = "Classic Theme");
+	}
+
 	@priority = "5"
 	test ExportBundleBlacklistConfig {
 		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";

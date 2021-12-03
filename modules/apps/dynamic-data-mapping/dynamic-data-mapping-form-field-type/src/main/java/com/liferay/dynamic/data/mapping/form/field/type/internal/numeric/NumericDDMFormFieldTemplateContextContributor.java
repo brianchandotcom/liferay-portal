@@ -17,33 +17,23 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.NumericDDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -64,26 +54,10 @@ public class NumericDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = new HashMap<>();
-
 		String dataType = GetterUtil.getString(
 			DDMFormFieldTypeUtil.getChangedPropertyValue(
 				ddmFormField, ddmFormFieldRenderingContext, "dataType"));
-		boolean inputMask = GetterUtil.getBoolean(
-			DDMFormFieldTypeUtil.getChangedPropertyValue(
-				ddmFormField, ddmFormFieldRenderingContext, "inputMask"));
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
-
-		if (inputMask && StringUtil.equals(dataType, "double")) {
-			parameters.putAll(
-				_getNumericInputMaskParameters(
-					_getPropertyValue(
-						ddmFormField, ddmFormFieldRenderingContext, locale,
-						"numericInputMask")));
-		}
-		else {
-			parameters.put("symbols", getSymbolsMap(locale));
-		}
 
 		return HashMapBuilder.<String, Object>put(
 			"confirmationErrorMessage",
@@ -100,18 +74,6 @@ public class NumericDDMFormFieldTemplateContextContributor
 		).put(
 			"hideField",
 			GetterUtil.getBoolean(ddmFormField.getProperty("hideField"))
-		).put(
-			"inputMask", inputMask
-		).put(
-			"inputMaskFormat",
-			_getPropertyValue(
-				ddmFormField, ddmFormFieldRenderingContext, locale,
-				"inputMaskFormat")
-		).put(
-			"numericInputMask",
-			_getPropertyValue(
-				ddmFormField, ddmFormFieldRenderingContext, locale,
-				"numericInputMask")
 		).put(
 			"placeholder",
 			DDMFormFieldTypeUtil.getPropertyValue(
@@ -145,7 +107,8 @@ public class NumericDDMFormFieldTemplateContextContributor
 					ddmFormFieldRenderingContext, locale, value);
 			}
 		).putAll(
-			parameters
+			NumericDDMFormFieldTypeUtil.getParameters(
+				dataType, ddmFormField, ddmFormFieldRenderingContext)
 		).build();
 	}
 
@@ -168,82 +131,5 @@ public class NumericDDMFormFieldTemplateContextContributor
 
 		return value;
 	}
-
-	protected Map<String, String> getSymbolsMap(Locale locale) {
-		DecimalFormat decimalFormat = NumericDDMFormFieldUtil.getDecimalFormat(
-			locale);
-
-		DecimalFormatSymbols decimalFormatSymbols =
-			decimalFormat.getDecimalFormatSymbols();
-
-		return HashMapBuilder.put(
-			"decimalSymbol",
-			String.valueOf(decimalFormatSymbols.getDecimalSeparator())
-		).put(
-			"thousandsSeparator",
-			String.valueOf(decimalFormatSymbols.getGroupingSeparator())
-		).build();
-	}
-
-	private Map<String, Object> _getNumericInputMaskParameters(
-		String numericInputMask) {
-
-		try {
-			JSONObject numericInputMaskJSONObject =
-				_jsonFactory.createJSONObject(numericInputMask);
-
-			return HashMapBuilder.<String, Object>put(
-				"append", numericInputMaskJSONObject.getString("append")
-			).put(
-				"appendType", numericInputMaskJSONObject.getString("appendType")
-			).put(
-				"decimalPlaces",
-				numericInputMaskJSONObject.getInt("decimalPlaces")
-			).put(
-				"symbols", numericInputMaskJSONObject.getJSONObject("symbols")
-			).build();
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
-			}
-
-			return new HashMap<>();
-		}
-	}
-
-	private String _getPropertyValue(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
-		Locale locale, String propertyName) {
-
-		Map<String, Object> changedProperties =
-			(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
-				"changedProperties");
-
-		if (MapUtil.isNotEmpty(changedProperties)) {
-			Object changedPropertyValue = changedProperties.get(propertyName);
-
-			if (changedPropertyValue instanceof LocalizedValue) {
-				LocalizedValue localizedValue =
-					(LocalizedValue)changedPropertyValue;
-
-				String propertyValue = localizedValue.getString(locale);
-
-				if (propertyValue != null) {
-					return propertyValue;
-				}
-			}
-		}
-
-		return DDMFormFieldTypeUtil.getPropertyValue(
-			ddmFormField, locale, propertyName);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NumericDDMFormFieldTemplateContextContributor.class);
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

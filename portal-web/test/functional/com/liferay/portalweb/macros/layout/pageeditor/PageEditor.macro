@@ -1041,12 +1041,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro clickSubmitForPublication {
-		Button.click(button = "Submit for Publication");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro closeSidebar {
 		var key_tabName = "${tabName}";
 
@@ -3179,6 +3173,12 @@ definition {
 			locator1 = "PageEditor#PREVIEW_WITH_CUSTOM_OBJECT_ITEM");
 
 		IFrame.selectTopFrame();
+	}
+
+	macro submitForPublication {
+		Button.click(button = "Submit for Publication");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro switchViewport {

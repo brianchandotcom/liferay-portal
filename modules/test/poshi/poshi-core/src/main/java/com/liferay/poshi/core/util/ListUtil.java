@@ -50,7 +50,7 @@ public class ListUtil {
 			return list.get(Integer.parseInt(index));
 		}
 		catch (IndexOutOfBoundsException | NumberFormatException exception) {
-			return null;
+			throw exception;
 		}
 	}
 

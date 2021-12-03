@@ -14,15 +14,24 @@
 
 package com.liferay.friendly.url.taglib.servlet.taglib;
 
+import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.friendly.url.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Objects;
@@ -162,6 +171,38 @@ public class InputTag extends IncludeTag {
 		return getClassName() + StringPool.DASH + layout.isPrivateLayout();
 	}
 
+	private String _getFallbackValue() {
+		try {
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(getClassName());
+
+			String urlTitle = BeanPropertiesUtil.getString(
+				persistedModelLocalService.getPersistedModel(getClassPK()),
+				"urlTitle");
+
+			if (Validator.isNull(urlTitle)) {
+				return StringPool.BLANK;
+			}
+
+			if (!isLocalizable()) {
+				return urlTitle;
+			}
+
+			String languageId = LanguageUtil.getLanguageId(
+				LocaleUtil.getDefault());
+
+			return LocalizationUtil.getXml(
+				HashMapBuilder.put(
+					languageId, urlTitle
+				).build(),
+				languageId, "UrlTitle");
+		}
+		catch (Exception exception) {
+			return StringPool.BLANK;
+		}
+	}
+
 	private String _getValue() {
 		try {
 			if (getClassPK() == 0) {
@@ -178,6 +219,11 @@ public class InputTag extends IncludeTag {
 			}
 
 			return mainFriendlyURLEntry.getUrlTitle();
+		}
+		catch (NoSuchFriendlyURLEntryMappingException
+					noSuchFriendlyURLEntryMappingException) {
+
+			return _getFallbackValue();
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

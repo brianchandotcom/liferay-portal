@@ -27,8 +27,10 @@
 .workflow-instance-tracker {
 	background: #f1f2f5;
 	flex-grow: 1;
+	height: inherit;
 	padding: 15px;
 	position: relative;
+	width: 100%;
 
 	.react-flow__handle {
 		background: transparent;
@@ -51,26 +53,5 @@
 		&.react-flow__handle-top {
 			top: 0;
 		}
-	}
-}
-
-@media screen and (min-width: 1700px) {
-	.workflow-instance-tracker {
-		height: 676px;
-		width: 1500px;
-	}
-}
-
-@media screen and (min-width: 1280px) and (max-width: 1699px) {
-	.workflow-instance-tracker {
-		height: 589px;
-		width: 1050px;
-	}
-}
-
-@media screen and (min-width: 992px) and (max-width: 1279px) {
-	.workflow-instance-tracker {
-		height: 573px;
-		width: 700px;
 	}
 }

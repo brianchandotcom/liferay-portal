@@ -15,19 +15,6 @@
 				(LENGTH(DLFileVersion.extraSettings) > 0)
 		]]>
 	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_F">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
-			FROM
-				DLFileEntry
-			[$JOIN$]
-			WHERE
-				(DLFileEntry.groupId = ?) AND
-				([$STATUS$])
-				[$FOLDER_ID$]
-		]]>
-	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_M_R">
 		<![CDATA[
 			SELECT
@@ -45,25 +32,6 @@
 				(DLFileEntry.modifiedDate <= ?) AND
 				(DLFileEntry.repositoryId = ?) AND
 				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_U_F">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
-			FROM
-				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
-			WHERE
-				(DLFileVersion.groupId = ?) AND
-				(
-					(DLFileEntry.userId = ?) OR
-					(DLFileVersion.userId = ?)
-				) AND
-				([$STATUS$])
-				[$FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_F_S">
@@ -164,27 +132,6 @@
 				Group_.groupId IS NULL
 		]]>
 	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByG_F">
-		<![CDATA[
-			SELECT
-				{DLFileEntry.*}
-			FROM
-				(
-					SELECT
-						DISTINCT DLFileEntry.fileEntryId
-					FROM
-						DLFileEntry
-					[$JOIN$]
-					WHERE
-						(DLFileEntry.groupId = ?) AND
-						([$STATUS$])
-						[$FOLDER_ID$]
-				) TEMP_TABLE
-				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
-		]]>
-	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByC_T">
 		<![CDATA[
 			SELECT
@@ -197,33 +144,6 @@
 			WHERE
 				(DLFileEntry.treePath LIKE ?) AND
 				(AssetEntry.classNameId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByG_U_F">
-		<![CDATA[
-			SELECT
-				{DLFileEntry.*}
-			FROM
-				(
-					SELECT
-						DISTINCT DLFileEntry.fileEntryId
-					FROM
-						DLFileEntry
-					INNER JOIN
-						DLFileVersion ON
-							DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
-					WHERE
-						(DLFileVersion.groupId = ?) AND
-						(
-							(DLFileEntry.userId = ?) OR
-							(DLFileVersion.userId = ?)
-						) AND
-						([$STATUS$])
-						[$FOLDER_ID$]
-				) TEMP_TABLE
-				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">

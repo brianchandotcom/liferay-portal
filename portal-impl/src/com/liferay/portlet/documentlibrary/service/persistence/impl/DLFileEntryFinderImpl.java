@@ -68,14 +68,8 @@ public class DLFileEntryFinderImpl
 	public static final String COUNT_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".countByExtraSettings";
 
-	public static final String COUNT_BY_G_F =
-		DLFileEntryFinder.class.getName() + ".countByG_F";
-
 	public static final String COUNT_BY_G_M_R =
 		DLFileEntryFinder.class.getName() + ".countByG_M_R";
-
-	public static final String COUNT_BY_G_U_F =
-		DLFileEntryFinder.class.getName() + ".countByG_U_F";
 
 	public static final String COUNT_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_F_S";
@@ -95,14 +89,8 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_ORPHANED_FILE_ENTRIES =
 		DLFileEntryFinder.class.getName() + ".findByOrphanedFileEntries";
 
-	public static final String FIND_BY_G_F =
-		DLFileEntryFinder.class.getName() + ".findByG_F";
-
 	public static final String FIND_BY_C_T =
 		DLFileEntryFinder.class.getName() + ".findByC_T";
-
-	public static final String FIND_BY_G_U_F =
-		DLFileEntryFinder.class.getName() + ".findByG_U_F";
 
 	@Override
 	public int countByExtraSettings() {
@@ -441,17 +429,6 @@ public class DLFileEntryFinderImpl
 	}
 
 	@Override
-	public List<DLFileEntry> findByG_F(
-		long groupId, List<Long> folderIds,
-		QueryDefinition<DLFileEntry> queryDefinition) {
-
-		List<Long> repositoryIds = Collections.emptyList();
-
-		return doFindByG_U_R_F_M(
-			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
-	}
-
-	@Override
 	public List<DLFileEntry> findByC_T(long classNameId, String treePath) {
 		Session session = null;
 
@@ -479,6 +456,17 @@ public class DLFileEntryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public List<DLFileEntry> findByG_F(
+		long groupId, List<Long> folderIds,
+		QueryDefinition<DLFileEntry> queryDefinition) {
+
+		List<Long> repositoryIds = Collections.emptyList();
+
+		return doFindByG_U_R_F_M(
+			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
 	}
 
 	@Override

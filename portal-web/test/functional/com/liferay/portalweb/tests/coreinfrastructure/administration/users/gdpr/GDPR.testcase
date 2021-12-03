@@ -1625,12 +1625,123 @@ definition {
 	}
 
 	@description = "This test changes pagination and assert export processes display properly."
-	@ignore = "Test Stub"
 	@priority = "2"
 	test PaginationWorksInExportPersonalData {
+		task ("Log in as new user and create data across several different applications") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50749 GDPR - Test Case 6e - Assert Pagination
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
 
+			JSONWebcontent.addFolder(
+				folderName = "WC GDPR Export Folder",
+				groupName = "Guest",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+
+			JSONWebcontent.addWebContent(
+				content = "This is a WC Content for GDPR Export testing.",
+				folderName = "WC GDPR Export Folder",
+				groupName = "Guest",
+				title = "GDPR Export Article in Folder",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+
+			JSONWebcontent.addWebContent(
+				content = "This is a WC Content for GDPR Export testing.",
+				groupName = "Guest",
+				title = "GDPR Export Article",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+
+			Navigator.openURL();
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Wiki");
+
+			WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+			WikiNavigator.gotoAllPagesCP();
+
+			WikiPage.addCP(
+				wikiPageContent = "Wiki Page Content",
+				wikiPageTitle = "Wiki Page Title");
+		}
+
+		task ("Log back in as super user to begin data export process on new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			User.openUsersAdmin();
+
+			User.exportPersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.addExportProcessCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+		}
+
+		task ("Order by Name in descending order") {
+			ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+			ManagementBar.toggleViewOrder(order = "list-down");
+		}
+
+		task ("Assert Pagination can be changed and correct number of entries are listed") {
+			for (var listEntries : list "4,8,20,40,60") {
+				Pagination.changePagination(itemsPerPage = "${listEntries}");
+
+				if ("${listEntries}" == "4") {
+					Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
+
+					for (var exportEntries : list "Blogs,Documents and Media,Message Boards,Web Content") {
+						LexiconEntry.viewEntryName(rowEntry = "${exportEntries}");
+					}
+
+					LexiconEntry.viewNoEntry(rowEntry = "Wiki");
+
+					Click(locator1 = "Pagination#NEXT_LINK");
+
+					Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
+
+					LexiconEntry.viewEntryName(rowEntry = "Wiki");
+
+					for (var exportEntries : list "Blogs,Documents and Media,Message Boards,Web Content") {
+						LexiconEntry.viewNoEntry(rowEntry = "${exportEntries}");
+					}
+				}
+				else {
+					Pagination.viewResults(results = "Showing 1 to 5 of 5 entries.");
+
+					for (var allEntries : list "Blogs,Documents and Media,Message Boards,Web Content,Wiki") {
+						LexiconEntry.viewEntryName(rowEntry = "${allEntries}");
+					}
+				}
+			}
+		}
 	}
 
 	@description = "This test changes pagination and assert entries display properly."

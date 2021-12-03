@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.util;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.util.comparator.CommerceInventoryWarehouseCityComparator;
@@ -31,6 +34,7 @@ import com.liferay.commerce.util.comparator.CommerceShipmentExpectedDateComparat
 import com.liferay.commerce.util.comparator.CommerceShipmentIdComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentItemCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentShippingDateComparator;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.Field;
@@ -46,6 +50,22 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Luca Pellizzon
  */
 public class CommerceUtil {
+
+	public static long getCommerceAccountId(CommerceContext commerceContext)
+		throws PortalException {
+
+		if (commerceContext == null) {
+			return CommerceAccountConstants.ACCOUNT_ID_GUEST;
+		}
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		if (commerceAccount == null) {
+			return CommerceAccountConstants.ACCOUNT_ID_GUEST;
+		}
+
+		return commerceAccount.getCommerceAccountId();
+	}
 
 	public static OrderByComparator<CommerceAddress>
 		getCommerceAddressOrderByComparator(

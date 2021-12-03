@@ -90,6 +90,14 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM_SELECTED");
 	}
 
+	macro viewItemsDisabled {
+		for (var text : list "${textList}") {
+			AssertElementPresent(
+				key_text = "${text}",
+				locator1 = "Icon#ANY_DISABLED");
+		}
+	}
+
 	macro viewNoItems {
 		for (var text : list "${textList}") {
 			AssertElementNotPresent(

@@ -59,7 +59,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 		}
 
 		task ("Add an Asset Publisher and Language Selector widget to page") {
@@ -209,7 +209,7 @@ definition {
 		}
 
 		task ("View Page without my customizations") {
-			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 
 			Portlet.viewSpecificPG(portletName = "Wiki");
 		}
@@ -290,7 +290,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 		}
 
 		task ("Add a Message Boards and Language Selector widgets to page") {
@@ -347,7 +347,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 
 			for (var portletName : list "Message Boards,Language Selector") {
 				Portlet.viewSpecificPG(portletName = "${portletName}");
@@ -355,9 +355,9 @@ definition {
 		}
 
 		task ("Reset customization then view portlets are not shown") {
-			PageCustomizations.changeCustomization(menuItem = "View My Customized Page");
+			PageCustomizations.configureCustomization(menuItem = "View My Customized Page");
 
-			PageCustomizations.changeCustomization(resetCustomization = "true");
+			PageCustomizations.configureCustomization(menuItem = "Reset My Customizations");
 
 			for (var portletName : list "Message Boards,Language Selector") {
 				Portlet.viewNoSpecificPG(portletName = "${portletName}");
@@ -389,7 +389,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageCustomizations.changeCustomization(menuItem = "View Page without my customizations");
+			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 
 			for (var portletName : list "Message Boards,Language Selector") {
 				Portlet.viewSpecificPG(portletName = "${portletName}");

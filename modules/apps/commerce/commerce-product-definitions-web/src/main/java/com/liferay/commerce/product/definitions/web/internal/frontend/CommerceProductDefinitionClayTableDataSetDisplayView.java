@@ -67,7 +67,7 @@ public class CommerceProductDefinitionClayTableDataSetDisplayView
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"modifiedDate", "modified-date");
 
-		dateclayTableSchemaField.setContentRenderer("date");
+		dateclayTableSchemaField.setContentRenderer("datetime");
 		dateclayTableSchemaField.setSortable(true);
 
 		return clayTableSchemaBuilder.build();

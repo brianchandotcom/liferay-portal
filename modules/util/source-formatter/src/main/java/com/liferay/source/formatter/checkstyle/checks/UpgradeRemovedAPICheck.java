@@ -70,6 +70,9 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 			_checkRemovedMethods(
 				detailAST, removedImportNames, upgradeFromJavaClassesJSONObject,
 				upgradeToJavaClassesJSONObject, upgradeToVersion);
+			_checkRemovedVariables(
+				detailAST, removedImportNames, upgradeFromJavaClassesJSONObject,
+				upgradeToJavaClassesJSONObject, upgradeToVersion);
 		}
 		catch (Exception exception) {
 		}
@@ -136,6 +139,64 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 
 				log(
 					methodCallDetailAST, _MSG_METHOD_NOT_FOUND, methodName,
+					variableTypeName, upgradeToVersion);
+			}
+		}
+	}
+
+	private void _checkRemovedVariables(
+		DetailAST detailAST, List<String> removedImportNames,
+		JSONObject upgradeFromJavaClassesJSONObject,
+		JSONObject upgradeToJavaClassesJSONObject, String upgradeToVersion) {
+
+		List<DetailAST> dotDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.DOT);
+
+		for (DetailAST dotDetailAST : dotDetailASTList) {
+			DetailAST firstChildDetailAST = dotDetailAST.getFirstChild();
+			DetailAST lastChildDetailAST = dotDetailAST.getLastChild();
+
+			if ((firstChildDetailAST.getType() != TokenTypes.IDENT) ||
+				(lastChildDetailAST.getType() != TokenTypes.IDENT)) {
+
+				continue;
+			}
+
+			String variableTypeName = getVariableTypeName(
+				firstChildDetailAST, firstChildDetailAST.getText(), false,
+				true);
+
+			if (!variableTypeName.startsWith("com.liferay.") ||
+				removedImportNames.contains(variableTypeName)) {
+
+				continue;
+			}
+
+			String variableName = lastChildDetailAST.getText();
+
+			VariableStatus upgradeFromVariableStatus = _getVariableStatus(
+				upgradeFromJavaClassesJSONObject, variableTypeName,
+				variableName);
+
+			if (!upgradeFromVariableStatus.equals(
+					VariableStatus.VARIABLE_FOUND)) {
+
+				continue;
+			}
+
+			VariableStatus upgradeToVariableStatus = _getVariableStatus(
+				upgradeToJavaClassesJSONObject, variableTypeName, variableName);
+
+			if (upgradeToVariableStatus.equals(VariableStatus.NO_CLASS_FOUND)) {
+				log(
+					lastChildDetailAST, _MSG_CLASS_NOT_FOUND, variableTypeName,
+					upgradeToVersion);
+			}
+			else if (upgradeToVariableStatus.equals(
+						VariableStatus.NO_VARIABLE_FOUND)) {
+
+				log(
+					lastChildDetailAST, _MSG_VARIABLE_NOT_FOUND, variableName,
 					variableTypeName, upgradeToVersion);
 			}
 		}
@@ -426,9 +487,42 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 		return removedImportNames;
 	}
 
+	private VariableStatus _getVariableStatus(
+		JSONObject jsonObject, String fullyQualifiedClassName,
+		String variableName) {
+
+		JSONObject classJSONObject = jsonObject.getJSONObject(
+			fullyQualifiedClassName);
+
+		if (classJSONObject == null) {
+			return VariableStatus.NO_CLASS_FOUND;
+		}
+
+		JSONArray variablesJSONArray = classJSONObject.getJSONArray(
+			"variables");
+
+		if (variablesJSONArray == null) {
+			return VariableStatus.NO_VARIABLE_FOUND;
+		}
+
+		Iterator<JSONObject> iterator = variablesJSONArray.iterator();
+
+		while (iterator.hasNext()) {
+			JSONObject variableJSONObject = iterator.next();
+
+			if (variableName.equals(variableJSONObject.getString("name"))) {
+				return VariableStatus.VARIABLE_FOUND;
+			}
+		}
+
+		return VariableStatus.NO_VARIABLE_FOUND;
+	}
+
 	private static final String _MSG_CLASS_NOT_FOUND = "class.not.found";
 
 	private static final String _MSG_METHOD_NOT_FOUND = "method.not.found";
+
+	private static final String _MSG_VARIABLE_NOT_FOUND = "variable.not.found";
 
 	private final Map<String, JSONObject> _javaClassesJSONObjectMap =
 		new HashMap<>();
@@ -436,6 +530,12 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 	private enum MethodStatus {
 
 		METHOD_FOUND, NO_CLASS_FOUND, NO_METHOD_FOUND
+
+	}
+
+	private enum VariableStatus {
+
+		NO_CLASS_FOUND, NO_VARIABLE_FOUND, VARIABLE_FOUND
 
 	}
 

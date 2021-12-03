@@ -10897,7 +10897,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<lstopwatch action="start" name="prepare.bundles.${app.server.name}" />
 
 		<if>
-			<matches pattern="(file|https?)://" string="${test.build.bundle.zip.url}" />
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<matches pattern="(file|https?)://" string="${test.build.bundle.zip.url}" />
+			</and>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 

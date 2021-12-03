@@ -3244,30 +3244,185 @@ definition {
 	}
 
 	@description = "LPS-90585: Validate in the list of Experiences if the decrease priority button working properly"
-	@ignore = "true"
 	@priority = "4"
 	test DecreaseExperiencePriority {
+		property portal.acceptance = "true";
 
-		// TODO LPS-90585 DecreaseExperiencePriority pending implementation
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+		}
+
+		task ("Add an element to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Priorize experience") {
+			if (IsElementPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
+				Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			}
+
+			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
+		}
+
+		task ("Assert the experience is 'Active'") {
+			PageEditor.viewExperienceActive(experienceName = "Segment Name Experience");
+		}
+
+		task ("Depriorize experience") {
+			PageEditor.deprioritizeExperience(experienceName = "Segment Name Experience");
+		}
+
+		task ("Assert the experience is not 'Active'") {
+			if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
+				Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			}
+
+			AssertElementNotPresent(
+				key_experienceName = "Segment Name Experience",
+				locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL");
+		}
+
+		task ("Publish and go to experience content page") {
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+		}
 	}
 
 	@description = "LPS-90585: Validate if the Default segment doesn't offer any option to be prioritized"
-	@ignore = "true"
 	@priority = "3"
 	test DefaultExperienceCantBePrioritized {
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
-		// TODO LPS-90585 DefaultExperienceCantBePrioritized pending implementation
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
 
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+		}
+
+		task ("Add an element to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Priorize experience") {
+			if (IsElementPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
+				Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			}
+
+			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
+		}
+
+		task ("Assert Default segment buttons is not present") {
+			AssertElementNotPresent(
+					key_index = "2",
+					locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
+		}
+
+		task ("Publish and go to experience content page") {
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+		}
 	}
 
 	@description = "LPS-90585: Validate in the list of Experiences if the default option is always the last option"
-	@ignore = "true"
 	@priority = "3"
 	test DefaultExperienceLastOption {
+		task ("Create Name Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Name Segment",
+				text = "Test");
+		}
 
-		// TODO LPS-90585 DefaultExperienceLastOption pending implementation
+		task ("Create Email Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment Email Address",
+				text = "test@liferay.com");
+		}
 
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "Segment Name Experience",
+				segmentName = "Name Segment");
+			
+			Refresh();
+		}
+
+		task ("Create an experience with Segment Email") {
+			PageEditor.addExperience(
+				experienceName = "Segment Email Experience",
+				segmentName = "Segment Email Address");
+		}
+
+		task ("Priorize experiences") {
+			for (var index: list "1,2"){
+				if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
+					Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+				}
+
+				Click(
+					key_index = "${index}",
+					locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
+			}
+		}
+
+		task ("Assert that Default Segment is active and at the bottom") {
+			PageEditor.viewExperienceActive(experienceName = "Default");
+
+			PageEditor.viewExperiencesNameOrder(experienceName = "Segment Name Experience,Segment Email Experience,Default");
+		}
+
+		task ("Publish and go to experience content page") {
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can discard the section when he is editing the experiences (not published)	"

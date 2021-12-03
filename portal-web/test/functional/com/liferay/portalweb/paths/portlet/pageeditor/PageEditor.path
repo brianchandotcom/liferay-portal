@@ -286,6 +286,11 @@
 </tr>
 <!--EXPERIENCE-->
 <tr>
+	<td>EXPERIENCE_ACTIVE_LABEL</td>
+	<td>//*[contains(@class, 'text-truncate-inline')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_BUTTON_NAME</td>
 	<td>//div[contains(@class,'page-editor__toolbar-experience')]/button[contains(.,'${key_experienceName}')]</td>
 	<td></td>
@@ -306,6 +311,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_DEPRIORITIZE_BUTTON</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Deprioritize Experience')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_DUPLICATE_BUTTON</td>
 	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Duplicate Experience')]]</td>
 	<td></td>
@@ -316,8 +326,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_DROPDOWN</td>
+	<td>//div[contains(@class,'page-editor__toolbar-experience__dropdown-menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_ORDER_NAMES</td>
+	<td>xpath=(//span[contains(@class,'text-truncate-inline')])[${key_index}]//span[text()='${key_experienceName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_PRIORITIZE_BUTTON</td>
-	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Prioritize Experience')]]</td>
+	<td>xpath=(//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Prioritize Experience')]])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

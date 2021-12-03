@@ -12,4 +12,4 @@ definition {
 		Click(locator1 = "RaylifeNavigation#SELECTED_INDUSTRY");
 	}
 
-} 
+}

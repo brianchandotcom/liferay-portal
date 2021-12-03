@@ -19,7 +19,6 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,8 +29,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -118,16 +118,21 @@ public class SXPPortalInstanceLifecycleListener
 	}
 
 	private void _addSXPElements(Company company) throws Exception {
-		List<SXPElement> missingSXPElements = ListUtil.filter(
-			_sxpElements,
-			sxpElement -> !ListUtil.exists(
-				_sxpElementLocalService.getSXPElements(company.getCompanyId()),
-				serviceBuilderSXPElement -> Objects.equals(
-					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
-					serviceBuilderSXPElement.getTitle(LocaleUtil.US))));
+		Set<String> titles = new HashSet<>();
 
-		for (SXPElement sxpElement : missingSXPElements) {
-			_addSXPElement(company, sxpElement);
+		for (com.liferay.search.experiences.model.SXPElement dbSXPElement :
+				_sxpElementLocalService.getSXPElements(
+					company.getCompanyId())) {
+
+			titles.add(dbSXPElement.getTitle(LocaleUtil.US));
+		}
+
+		for (SXPElement sxpElement : _sxpElements) {
+			if (!titles.contains(
+					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
+
+				_addSXPElement(company, sxpElement);
+			}
 		}
 	}
 

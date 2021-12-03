@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>LiferayOnline</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LiferayOnline</td></tr>
+</thead>
+
+<tbody>
+<tr>
+<td>SAVE</td>
+    <td>//*[not(self::div)][contains(@class,'btn')][normalize-space()='Save'][not(contains(@class,'navbar'))]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

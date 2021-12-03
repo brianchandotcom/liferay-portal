@@ -36,6 +36,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.Document;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
+import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
 import java.io.ByteArrayOutputStream;
@@ -90,7 +91,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 							if (sxpBlueprint != null) {
 								_sxpBlueprintSearchRequestEnhancer.enhance(
 									searchRequestBuilder,
-									sxpBlueprint.toString());
+									String.valueOf(
+										SXPBlueprintUtil.unpack(sxpBlueprint)));
 							}
 						}
 					).build()));

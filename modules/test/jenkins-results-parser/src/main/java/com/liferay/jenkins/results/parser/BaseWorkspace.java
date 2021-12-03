@@ -129,6 +129,8 @@ public abstract class BaseWorkspace implements Workspace {
 			callables, threadPoolExecutor);
 
 		parallelExecutor.execute();
+
+		writePropertiesFiles();
 	}
 
 	@Override
@@ -209,6 +211,15 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 
 		_parallelExecutor.waitFor();
+	}
+
+	@Override
+	public void writePropertiesFiles() {
+		for (WorkspaceGitRepository workspaceGitRepository :
+				getWorkspaceGitRepositories()) {
+
+			workspaceGitRepository.writePropertiesFiles();
+		}
 	}
 
 	protected BaseWorkspace(JSONObject jsonObject) {

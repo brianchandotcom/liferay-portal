@@ -285,8 +285,6 @@ public abstract class BaseWorkspaceGitRepository
 
 		gitWorkingDirectory.displayLog();
 
-		writePropertiesFiles();
-
 		_setUp = true;
 	}
 

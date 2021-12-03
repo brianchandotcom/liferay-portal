@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -219,7 +220,8 @@ public class ObjectEntryDTOConverter
 				if (serializable != null) {
 					objectEntryId = (long)serializable;
 
-					String relationshipName = objectFieldNameParts[1];
+					String relationshipName = StringUtil.replaceLast(
+						relationshipIdName, "Id", "");
 
 					Optional<UriInfo> uriInfoOptional =
 						dtoConverterContext.getUriInfoOptional();

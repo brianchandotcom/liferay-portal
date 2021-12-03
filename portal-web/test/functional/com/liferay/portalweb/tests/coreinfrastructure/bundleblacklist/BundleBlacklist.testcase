@@ -144,6 +144,60 @@ definition {
 			value1 = "Classic Theme");
 	}
 
+	@priority = "3"
+	test CanRemoveBlacklistedModuleLPKGViaUI {
+		property osgi.app.includes = "gogo-shell";
+		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleLPKGViaUI";
+
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if ("${testRunEnvironment}" == "EE") {
+			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
+			var consoleText = "STOPPED Liferay Foundation - Liferay Gogo Shell - Impl";
+		}
+		else {
+			var symbolicName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
+			var consoleText = "STOPPED Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
+		}
+
+		OSGiConfig.deployOSGiConfigFile(
+			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			OSGiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
+
+		Pause(locator1 = "10000");
+
+		BundleBlacklist.viewProductMenuBlacklistedModule(
+			category = "System",
+			consoleText = "${consoleText}",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Bundle Blacklist",
+			configurationScope = "System Scope");
+
+		BundleBlacklist.blacklistModuleAndComponentConfiguration(
+			label = "Blacklist Bundle Symbolic Names",
+			symbolicName = " ");
+
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if ("${testRunEnvironment}" == "EE") {
+			var consoleText = "STARTED Liferay Foundation - Liferay Gogo Shell - Impl";
+		}
+		else {
+			var consoleText = "STARTED Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
+		}
+
+		AssertConsoleTextPresent(value1 = "${consoleText}");
+	}
+
 	@priority = "5"
 	test ExportBundleBlacklistConfig {
 		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";

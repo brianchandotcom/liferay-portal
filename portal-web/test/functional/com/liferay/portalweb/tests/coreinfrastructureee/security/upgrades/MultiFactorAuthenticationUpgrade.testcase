@@ -41,11 +41,7 @@ definition {
 		}
 
 		task ("View OTP email sender") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings(baseURL = "http://www.able.com:8080");
 
 			MultiFactorAuthentication.viewOTPEmailSenderCP(
 				emailAddress = "test@www.able.com",
@@ -79,10 +75,7 @@ definition {
 		}
 
 		task ("View OTP email sender") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Multi-Factor Authentication",
-				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-				configurationScope = "Virtual Instance Scope");
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
 			MultiFactorAuthentication.viewOTPEmailSenderCP(
 				emailAddress = "test@liferay.com",

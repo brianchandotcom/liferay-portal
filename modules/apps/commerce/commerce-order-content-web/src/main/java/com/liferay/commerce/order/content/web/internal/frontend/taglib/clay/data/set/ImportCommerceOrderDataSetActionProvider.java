@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_PLACED_ORDERS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_IMPORT_ORDERS,
 	service = ClayDataSetActionProvider.class
 )
-public class ImportPlacedCommerceOrderDataSetActionProvider
+public class ImportCommerceOrderDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override

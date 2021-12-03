@@ -119,12 +119,32 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			return;
 		}
 
-		try {
-			AntUtil.callTarget(
-				getDirectory(), "build.xml", "setup-profile-dxp");
-		}
-		catch (AntException antException) {
-			throw new RuntimeException(antException);
+		int i = 0;
+
+		while (true) {
+			try {
+				AntUtil.callTarget(
+					getDirectory(), "build.xml", "setup-profile-dxp");
+
+				return;
+			}
+			catch (AntException antException) {
+				if (i == _SETUP_PROFILE_DXP_RETRY_COUNT) {
+					throw new RuntimeException(antException);
+				}
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Will retry 'setup-profile-dxp' in ",
+						String.valueOf(_SETUP_PROFILE_DXP_RETRY_DELAY),
+						" seconds (attempt ", String.valueOf(i + 1), " of ",
+						String.valueOf(_SETUP_PROFILE_DXP_RETRY_COUNT), ")"));
+
+				JenkinsResultsParserUtil.sleep(
+					_SETUP_PROFILE_DXP_RETRY_DELAY * 1000);
+
+				i++;
+			}
 		}
 	}
 
@@ -252,5 +272,9 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 					"test.", System.getenv("HOSTNAME"), ".properties")),
 			_getPortalTestProperties(), true);
 	}
+
+	private static final int _SETUP_PROFILE_DXP_RETRY_COUNT = 2;
+
+	private static final int _SETUP_PROFILE_DXP_RETRY_DELAY = 5;
 
 }

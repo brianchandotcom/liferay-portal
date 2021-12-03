@@ -1,0 +1,11 @@
+@default = "ocularAssertElementImage"
+@summary = "Check the screenshot of element matches baseline image"
+definition {
+
+	function ocularAssertElementImage {
+		WaitForSPARefresh();
+
+		selenium.ocularAssertElementImage();
+	}
+
+}

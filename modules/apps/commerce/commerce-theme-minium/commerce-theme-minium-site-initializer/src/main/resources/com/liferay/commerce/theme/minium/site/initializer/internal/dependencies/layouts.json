@@ -89,11 +89,12 @@
 						"portletPreferences": {
 							"cpContentListRendererKey": "list-default",
 							"dataSource": "csDiagramEntryDataSource",
-							"diagram--cpTypeListEntryRendererKey": "list-entry-default",
 							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 							"paginationDelta": 5,
 							"renderSelection": "custom",
-							"selectionStyle": "dataSource"
+							"selectionStyle": "dataSource",
+							"simple--cpTypeListEntryRendererKey": "list-entry-default",
+							"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 						}
 					},
 					{

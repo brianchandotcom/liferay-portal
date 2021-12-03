@@ -115,6 +115,11 @@
 	<td>css=liferay-remote-app-raylife>>>.badge-error</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RAYLIFE_LOGO</td>
+	<td>//img[contains(@src,'raylife_logo.svg')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

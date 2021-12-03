@@ -1800,7 +1800,9 @@ definition {
 					}
 				}
 				else if ("${listEntries}" == "8") {
-					if (!(Pagination.viewResults(results = "Showing 1 to 8 of 9 entries.");)) {
+					if (!(
+
+					Pagination.viewResults(results = "Showing 1 to 8 of 9 entries.");)) {
 						Click(locator1 = "Pagination#PREVIOUS_LINK");
 					}
 

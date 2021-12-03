@@ -68,16 +68,6 @@ definition {
 		}
 	}
 
-	macro setFilter {
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
-
-		Check.checkNotVisible(
-			key_filter = "${filterType}",
-			locator1 = "A11yTool#FILTER_CHECKBOX");
-
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
-	}
-
 	macro uncheckFilter {
 		Uncheck.uncheckNotVisible(
 			key_filter = "${filterType}",
@@ -122,13 +112,4 @@ definition {
 			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
 	}
 
-	macro setFilter {
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
-
-		Check.checkNotVisible(
-			key_filter = "${filterType}",
-			locator1 = "A11yTool#FILTER_CHECKBOX");
-
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
-	}
 }

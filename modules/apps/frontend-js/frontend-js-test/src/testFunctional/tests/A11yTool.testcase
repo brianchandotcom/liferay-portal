@@ -50,41 +50,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-142333. To assert that filters reset to default after page refresh."
-	@priority = "2"
-	test FiltersAreResetToDefaultAfterPageRefresh {
-		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
-		property osgi.module.configurations = "enable=B&quot;true&quot;";
-
-		// Workaround for side panel sometimes not displaying LPS-141442
-
-		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
-			Refresh();
-		}
-
-		task ("Set filters, open filter panel, and check the filter.") {
-			A11yTool.setFilter(filterType = "critical");
-
-			A11yTool.setFilter(filterType = "serious");
-
-			A11yTool.openFilterPanel();
-
-			A11yTool.checkFilter(filterType = "critical");
-
-			A11yTool.checkFilter(filterType = "serious");
-		}
-
-		task ("Refresh page and assert filters are default") {
-			Refresh();
-
-			FormFields.viewCheckboxNotChecked(
-				fieldName = "Critical");
-
-			FormFields.viewCheckboxNotChecked(
-				fieldName = "Serious");
-		}
-	}
-
 	@description = "LPS-142107. Verifies a11y tool can be disabled."
 	@priority = "5"
 	test CanBeDisabledWithDevelopment {

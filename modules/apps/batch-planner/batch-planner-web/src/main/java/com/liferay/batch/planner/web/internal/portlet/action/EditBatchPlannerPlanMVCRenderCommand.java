@@ -19,12 +19,14 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.web.internal.display.context.EditBatchPlannerPlanDisplayContext;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -124,10 +126,6 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _render(RenderRequest renderRequest) throws PortalException {
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new EditBatchPlannerPlanDisplayContext(_getHeadlessEndpoints()));
-
 		long batchPlannerPlanId = ParamUtil.getLong(
 			renderRequest, "batchPlannerPlanId");
 
@@ -139,8 +137,24 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			if (_isExport(ParamUtil.getString(renderRequest, "navigation"))) {
+				renderRequest.setAttribute(
+					WebKeys.PORTLET_DISPLAY_CONTEXT,
+					new EditBatchPlannerPlanDisplayContext(
+						_batchPlannerPlanService.getBatchPlannerPlans(
+							_portal.getCompanyId(renderRequest), true, true,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+						_getHeadlessEndpoints(), null));
+
 				return "/export/edit_batch_planner_plan.jsp";
 			}
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new EditBatchPlannerPlanDisplayContext(
+					_batchPlannerPlanService.getBatchPlannerPlans(
+						_portal.getCompanyId(renderRequest), false, true,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+					_getHeadlessEndpoints(), null));
 
 			return "/import/edit_batch_planner_plan.jsp";
 		}
@@ -149,8 +163,24 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			_batchPlannerPlanService.getBatchPlannerPlan(batchPlannerPlanId);
 
 		if (batchPlannerPlan.isExport()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new EditBatchPlannerPlanDisplayContext(
+					_batchPlannerPlanService.getBatchPlannerPlans(
+						_portal.getCompanyId(renderRequest), true, true,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+					_getHeadlessEndpoints(), batchPlannerPlan));
+
 			return "/export/edit_batch_planner_plan.jsp";
 		}
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new EditBatchPlannerPlanDisplayContext(
+				_batchPlannerPlanService.getBatchPlannerPlans(
+					_portal.getCompanyId(renderRequest), false, true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				_getHeadlessEndpoints(), batchPlannerPlan));
 
 		return "/import/edit_batch_planner_plan.jsp";
 	}
@@ -163,5 +193,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -93,6 +93,10 @@ public class EditExportBatchPlannerPlanMVCResourceCommand
 			_getCheckboxValue(portletRequest, "containsHeaders"));
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
+			batchPlannerPlan.getBatchPlannerPlanId(), "headlessEndpoint",
+			ParamUtil.getString(portletRequest, "headlessEndpoint"));
+
+		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "saveExport",
 			_getCheckboxValue(portletRequest, "saveExport"));
 

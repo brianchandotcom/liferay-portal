@@ -63,7 +63,7 @@ const ObjectField = ({
 
 	const options = useMemo(() => {
 		const filteredObjectFields = objectFields.filter(
-			({listTypeDefinitionId, type}) => {
+			({listTypeDefinitionId, relationshipType, type}) => {
 				if (
 					!listTypeDefinitionId &&
 					(focusedFieldType === 'radio' ||
@@ -85,6 +85,9 @@ const ObjectField = ({
 				}
 				else if (focusedFieldType === 'text' && type === 'Clob') {
 					return true;
+				}
+				else if (relationshipType) {
+					return false;
 				}
 
 				return normalizedDataType.includes(type.toLowerCase());

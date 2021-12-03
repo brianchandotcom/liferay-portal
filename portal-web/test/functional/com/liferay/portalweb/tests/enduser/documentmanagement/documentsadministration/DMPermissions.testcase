@@ -1177,7 +1177,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.viewNotPresent(menuItem = "File Upload");
+		for (var menuItem : list "File Upload,Multiple Files Upload") {
+			MenuItem.viewNotPresent(menuItem = "${menuItem}");
+		}
 	}
 
 	@description = "This is a test for LPS-136842. It checks that a site member cannot add a shortcut without permissions."

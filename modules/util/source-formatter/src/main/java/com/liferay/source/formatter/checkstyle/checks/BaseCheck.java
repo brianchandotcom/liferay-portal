@@ -641,12 +641,12 @@ public abstract class BaseCheck extends AbstractCheck {
 	protected String getTypeName(
 		DetailAST detailAST, boolean includeTypeArguments) {
 
-		return getTypeName(detailAST, includeTypeArguments, false);
+		return getTypeName(detailAST, includeTypeArguments, true, false);
 	}
 
 	protected String getTypeName(
 		DetailAST detailAST, boolean includeTypeArguments,
-		boolean fullyQualifiedName) {
+		boolean includeArrayDimension, boolean fullyQualifiedName) {
 
 		if (detailAST == null) {
 			return StringPool.BLANK;
@@ -674,7 +674,7 @@ public abstract class BaseCheck extends AbstractCheck {
 			childDetailAST = childDetailAST.getFirstChild();
 		}
 
-		StringBundler sb = new StringBundler(1 + arrayDimension);
+		StringBundler sb = new StringBundler();
 
 		FullIdent typeIdent = FullIdent.createFullIdent(childDetailAST);
 
@@ -691,8 +691,10 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		sb.append(typeIdent.getText());
 
-		for (int i = 0; i < arrayDimension; i++) {
-			sb.append("[]");
+		if (includeArrayDimension) {
+			for (int i = 0; i < arrayDimension; i++) {
+				sb.append("[]");
+			}
 		}
 
 		if (!includeTypeArguments) {
@@ -722,7 +724,7 @@ public abstract class BaseCheck extends AbstractCheck {
 			sb.append(
 				getTypeName(
 					typeArgumentDetailAST, includeTypeArguments,
-					fullyQualifiedName));
+					includeArrayDimension, fullyQualifiedName));
 			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
@@ -1024,12 +1026,12 @@ public abstract class BaseCheck extends AbstractCheck {
 		boolean includeTypeArguments) {
 
 		return getVariableTypeName(
-			detailAST, variableName, includeTypeArguments, false);
+			detailAST, variableName, includeTypeArguments, true, false);
 	}
 
 	protected String getVariableTypeName(
 		DetailAST detailAST, String variableName, boolean includeTypeArguments,
-		boolean fullyQualifiedName) {
+		boolean includeArrayDimension, boolean fullyQualifiedName) {
 
 		DetailAST variableTypeDetailAST = getVariableTypeDetailAST(
 			detailAST, variableName);
@@ -1037,7 +1039,8 @@ public abstract class BaseCheck extends AbstractCheck {
 		if (variableTypeDetailAST != null) {
 			return getTypeName(
 				getVariableTypeDetailAST(detailAST, variableName),
-				includeTypeArguments, fullyQualifiedName);
+				includeTypeArguments, includeArrayDimension,
+				fullyQualifiedName);
 		}
 
 		if (!variableName.matches("[A-Z]\\w+")) {

@@ -104,7 +104,7 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 
 			String variableTypeName = getVariableTypeName(
 				firstChildDetailAST, firstChildDetailAST.getText(), false,
-				true);
+				false, true);
 
 			if (!variableTypeName.startsWith("com.liferay.") ||
 				removedImportNames.contains(variableTypeName)) {
@@ -164,7 +164,7 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 
 			String variableTypeName = getVariableTypeName(
 				firstChildDetailAST, firstChildDetailAST.getText(), false,
-				true);
+				false, true);
 
 			if (!variableTypeName.startsWith("com.liferay.") ||
 				removedImportNames.contains(variableTypeName)) {
@@ -309,7 +309,7 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 	private String _getParameterType(DetailAST detailAST) {
 		if (detailAST.getType() == TokenTypes.IDENT) {
 			return getVariableTypeName(
-				detailAST, detailAST.getText(), true, true);
+				detailAST, detailAST.getText(), true, true, true);
 		}
 
 		if (detailAST.getType() == TokenTypes.STRING_LITERAL) {
@@ -378,7 +378,7 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 		}
 
 		if (detailAST.getType() == TokenTypes.TYPECAST) {
-			return getTypeName(detailAST, true, true);
+			return getTypeName(detailAST, true, true, true);
 		}
 
 		if (ArrayUtil.contains(

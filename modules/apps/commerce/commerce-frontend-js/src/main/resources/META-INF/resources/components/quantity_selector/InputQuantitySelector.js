@@ -13,7 +13,8 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React, {useMemo} from 'react';
+import {debounce} from 'frontend-js-web';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {
 	getProductMaxQuantity,
@@ -40,27 +41,40 @@ function InputQuantitySelector({
 		[maxQuantity, multipleQuantity]
 	);
 
-	const getValidInputNumber = (value) => {
-		if (!value) {
-			return null;
-		}
+	const [typedQuantity, setTypedQuantity] = useState(quantity);
 
-		if (value < inputMin) {
-			return inputMin;
-		}
+	useEffect(() => {
+		setTypedQuantity(quantity);
+	}, [quantity]);
 
-		if (inputMax && value > inputMax) {
-			return inputMax;
-		}
+	const getValidInputNumber = useCallback(
+		(value) => {
+			if (!value || value < inputMin) {
+				return inputMin;
+			}
 
-		if (multipleQuantity > 1) {
-			const diff = value % multipleQuantity;
+			if (inputMax && value > inputMax) {
+				return inputMax;
+			}
 
-			return diff ? value - diff + multipleQuantity : value;
-		}
+			if (multipleQuantity > 1) {
+				return value - (value % multipleQuantity);
+			}
 
-		return value;
-	};
+			return value;
+		},
+		[inputMax, inputMin, multipleQuantity]
+	);
+
+	const debouncedSetFixedValue = useMemo(() => {
+		return debounce((value) => {
+			const validInput = getValidInputNumber(Number(value));
+
+			setTypedQuantity(validInput);
+
+			onUpdate(validInput);
+		}, 500);
+	}, [getValidInputNumber, onUpdate]);
 
 	return (
 		<ClayInput
@@ -69,19 +83,14 @@ function InputQuantitySelector({
 			max={inputMax || ''}
 			min={inputMin}
 			name={name}
-			onBlur={({target}) => {
-				if (!target.value) {
-					setTimeout(() => {
-						onUpdate(inputMin);
-					}, 400);
-				}
-			}}
 			onChange={({target}) => {
-				onUpdate(getValidInputNumber(Number(target.value)));
+				setTypedQuantity(target.value);
+
+				debouncedSetFixedValue(target.value);
 			}}
 			step={multipleQuantity > 1 ? multipleQuantity : ''}
 			type="number"
-			value={String(quantity || '')}
+			value={String(typedQuantity || '')}
 		/>
 	);
 }

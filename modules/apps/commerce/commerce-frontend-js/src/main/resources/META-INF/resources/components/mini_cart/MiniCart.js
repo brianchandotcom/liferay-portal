@@ -69,7 +69,6 @@ function MiniCart({
 	});
 
 	const closeCart = () => setIsOpen(false);
-
 	const openCart = () => setIsOpen(true);
 
 	const resetCartState = useCallback(
@@ -83,44 +82,42 @@ function MiniCart({
 	);
 
 	const updateCartModel = useCallback(
-		({id: cartId}) => {
-			CartResource.getCartByIdWithItems(cartId)
-				.then((model) => {
-					let latestActionURLs;
-					let latestCartState;
+		async ({order}) => {
+			try {
+				const updatedCart = order.orderUUID
+					? order
+					: await CartResource.getCartByIdWithItems(order.id);
 
-					setActionURLs((currentURLs) => {
-						const orderDetailURL = currentURLs.orderDetailURL;
-						const {orderUUID} = model;
+				let latestActionURLs;
+				let latestCartState;
 
-						latestActionURLs = {
-							...currentURLs,
-							orderDetailURL: !orderDetailURL
-								? regenerateOrderDetailURL(
-										orderUUID,
-										currentURLs.siteDefaultURL
-								  )
-								: new URL(orderDetailURL),
-						};
+				setActionURLs((currentURLs) => {
+					const orderDetailURL = currentURLs.orderDetailURL;
 
-						return latestActionURLs;
-					});
-
-					setCartState((currentState) => {
-						latestCartState = {...currentState, ...model};
-
-						return latestCartState;
-					});
-
-					return {
-						actionURLs: latestActionURLs,
-						cartState: latestCartState,
+					latestActionURLs = {
+						...currentURLs,
+						orderDetailURL: !orderDetailURL
+							? regenerateOrderDetailURL(
+									updatedCart.orderUUID,
+									currentURLs.siteDefaultURL
+							  )
+							: new URL(orderDetailURL),
 					};
-				})
-				.then(({actionURLs, cartState}) => {
-					onAddToCart(actionURLs, cartState);
-				})
-				.catch(showErrorNotification);
+
+					return latestActionURLs;
+				});
+
+				setCartState((currentState) => {
+					latestCartState = {...currentState, ...updatedCart};
+
+					return latestCartState;
+				});
+
+				onAddToCart(latestActionURLs, latestCartState);
+			}
+			catch (error) {
+				showErrorNotification(error);
+			}
 		},
 		[onAddToCart]
 	);
@@ -139,7 +136,7 @@ function MiniCart({
 
 	useEffect(() => {
 		if (orderId) {
-			updateCartModel({id: orderId});
+			updateCartModel({order: {id: orderId}});
 		}
 	}, [orderId, updateCartModel]);
 

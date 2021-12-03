@@ -45,7 +45,7 @@ function CartItemsListActions() {
 		setIsUpdating(true);
 
 		CartResource.updateCartById(orderId, {cartItems: []})
-			.then(() => updateCartModel({id: orderId}))
+			.then(() => updateCartModel({order: {id: orderId}}))
 			.then(() => {
 				setIsAsking(false);
 				setIsUpdating(false);

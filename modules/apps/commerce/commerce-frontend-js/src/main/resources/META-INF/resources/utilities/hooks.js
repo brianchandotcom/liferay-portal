@@ -94,11 +94,11 @@ export function useCommerceCart(initialCart, channelGroupId) {
 	const [commerceCart, setCommerceCart] = useState(initialCart);
 
 	useEffect(() => {
-		function handleOrderUpdate(order) {
+		function handleOrderUpdate({order}) {
 			if (commerceCart.id !== order.id) {
 				setCommerceCart(order);
 
-				if (channelGroupId) {
+				if (channelGroupId && order.orderUUID) {
 					orderCookie.setValue(channelGroupId, order.orderUUID);
 				}
 			}

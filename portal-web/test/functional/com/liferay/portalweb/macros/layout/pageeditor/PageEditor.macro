@@ -2994,7 +2994,7 @@ definition {
 		if (!(isSet(key_index))) {
 			var key_index = "1";
 		}
-		
+
 		var key_experienceName = "${experienceName}";
 
 		AssertTextEquals(
@@ -3573,7 +3573,7 @@ definition {
 		var index = "0";
 
 		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
-				Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
 		}
 
 		for (var experienceName : list "${experienceName}") {

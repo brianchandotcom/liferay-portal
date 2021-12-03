@@ -3348,8 +3348,8 @@ definition {
 
 		task ("Assert Default segment buttons is not present") {
 			AssertElementNotPresent(
-					key_index = "2",
-					locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
+				key_index = "2",
+				locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
 		}
 
 		task ("Publish and go to experience content page") {
@@ -3390,7 +3390,7 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Segment Name Experience",
 				segmentName = "Name Segment");
-			
+
 			Refresh();
 		}
 
@@ -3401,7 +3401,7 @@ definition {
 		}
 
 		task ("Priorize experiences") {
-			for (var index: list "1,2"){
+			for (var index : list "1,2") {
 				if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
 					Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
 				}

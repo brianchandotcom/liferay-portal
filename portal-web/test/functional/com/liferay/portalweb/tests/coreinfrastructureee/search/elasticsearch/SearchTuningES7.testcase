@@ -21,6 +21,7 @@ definition {
 		}
 	}
 
+	@priority = "3"
 	test AssertCannotAddDuplicateQueriesAndAliases {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -81,6 +82,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Journal.");
 	}
 
+	@priority = "4"
 	test AssertDeletedResultRanking {
 		var content = "Article Article Article";
 
@@ -134,6 +136,7 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
 	}
 
+	@priority = "3"
 	test AssertResultRankingsMiscUI {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -211,6 +214,7 @@ definition {
 			value1 = "No Custom Results Yet");
 	}
 
+	@priority = "4"
 	test AssertResultRankingsPagination {
 		property custom.properties = "search.container.page.default.delta=5";
 
@@ -238,6 +242,7 @@ definition {
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 	}
 
+	@priority = "4"
 	test AssertResultRankingsWithSynonyms {
 		property portal.suite.search.engine = "disable";
 		property portal.upstream = "quarantine";
@@ -425,6 +430,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = "3"
 	test AssertSynonymBulkActions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -496,6 +502,7 @@ definition {
 			value1 = "There are no entries.");
 	}
 
+	@priority = "4"
 	test AssertSynonymsPagination {
 		property custom.properties = "search.container.page.default.delta=5";
 
@@ -519,6 +526,7 @@ definition {
 		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
 	}
 
+	@priority = "5"
 	test EnableAndDisableResultRankings {
 		var content = "Article Article Article Article";
 
@@ -665,6 +673,7 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "orange");
 	}
 
+	@priority = "4"
 	test PinAndHideResultsWithAliases {
 		property portal.acceptance = "true";
 
@@ -827,6 +836,7 @@ definition {
 			value1 = "liferay-${companyId}-search-tuning-synonyms");
 	}
 
+	@priority = "4"
 	test ReorderAddedResultsFromOtherSites {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -907,6 +917,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
 	}
 
+	@priority = "5"
 	test SearchWithSynonyms {
 		property portal.acceptance = "true";
 
@@ -1021,6 +1032,7 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "fruit");
 	}
 
+	@priority = "3"
 	test ViewResultRankingsAssetDetails {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

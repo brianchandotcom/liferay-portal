@@ -39,6 +39,7 @@ definition {
 		}
 	}
 
+	@priority = "4"
 	test AssertBasicFacetSelection {
 		var webContentserviceContext1 = '''{"assetTagNames": ["fruit"]}''';
 
@@ -165,6 +166,7 @@ definition {
 		}
 	}
 
+	@priority = "4"
 	test AssertNonAdminsCannotAddCertainWidgets {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -655,6 +657,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112599."
+	@priority = "3"
 	test NavigateToAssetEditPageViaSearchResults {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -732,6 +735,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95798."
+	@priority = "3"
 	test SearchAfterViewingResultDetails {
 		JSONWebcontent.addWebContent(
 			content = "Web Content",
@@ -1172,6 +1176,7 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;name1&quot;");
 	}
 
+	@priority = "4"
 	test SearchBlogsScopedToPage {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1201,6 +1206,7 @@ definition {
 			searchTerm = "Entry Title");
 	}
 
+	@priority = "4"
 	test SearchCompanyScopedObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2107,6 +2113,7 @@ definition {
 			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
 	}
 
+	@priority = "4"
 	test SearchWithModifiedFacet {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -2923,6 +2930,7 @@ definition {
 			userName = "Test Test");
 	}
 
+	@priority = "4"
 	test ViewSortedSearchResults {
 		JSONWebcontent.addWebContent(
 			content = "Fruit",

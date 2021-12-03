@@ -21,6 +21,7 @@ definition {
 		}
 	}
 
+	@priority = "4"
 	test AssertSimilarResultsDisplayTemplate {
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -68,6 +69,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_CARD_TITLE");
 	}
 
+	@priority = "4"
 	test AssertSimilarResultsMatchesAssetType {
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
@@ -247,6 +249,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsDocumentFrequency {
 		property test.name.skip.portal.instance = "SimilarResults#ConfigureSimilarResultsDocumentFrequency";
 
@@ -313,6 +316,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsFields {
 		JSONBlog.addEntry(
 			entryContent = "Content",
@@ -361,6 +365,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsMaximumItemDisplay {
 		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
 			JSONWebcontent.addWebContent(
@@ -401,6 +406,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsMaximumQueryTerms {
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
@@ -434,6 +440,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsMinimumShouldMatch {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -493,6 +500,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsStopWords {
 		JSONWebcontent.addWebContent(
 			content = "No Match",
@@ -552,6 +560,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsTermFrequency {
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
@@ -610,6 +619,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ConfigureSimilarResultsWordLength {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -668,6 +678,7 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	@priority = "4"
 	test ViewSimilarResultsOnContentPages {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

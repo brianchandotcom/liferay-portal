@@ -127,6 +127,7 @@ definition {
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
 	}
 
+	@priority = "5"
 	test AssertSearchAdmin {
 		property test.name.skip.portal.instance = "Elasticsearch7#AssertSearchAdmin";
 
@@ -231,6 +232,7 @@ definition {
 			value1 = "_explanation");
 	}
 
+	@priority = "5"
 	test AssertSidecarAutoInstall {
 		property delete.sidecar.bundle = "true";
 		property embedded.elasticsearch.only = "true";
@@ -252,6 +254,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = "4"
 	test AssertSidecarDoesNotCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -408,6 +411,7 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
+	@priority = "5"
 	test MultipleConnectionsSmokeTest {
 		property elasticsearch.multiple.connections = "true";
 		property portal.upstream = "quarantine";
@@ -522,6 +526,7 @@ definition {
 		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
 	}
 
+	@priority = "5"
 	test SearchWithNonLiferayIndex {
 		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
@@ -576,6 +581,7 @@ definition {
 			value1 = "1 results for bicycle");
 	}
 
+	@priority = "4"
 	test SwitchSidecarToRemote {
 		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#SwitchSidecarToRemote";

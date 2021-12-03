@@ -15,9 +15,9 @@
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
@@ -64,7 +64,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 
 			ExpandoBridge expandoBridge = user.getExpandoBridge();
 
-			return GetterUtil.getString(
+			return _getNullableObjectAsString(
 				expandoBridge.getAttribute(attributeName));
 		}
 
@@ -72,8 +72,16 @@ public class DefaultNameIdResolver implements NameIdResolver {
 			return nameIdAttributeName.substring(7);
 		}
 
-		return GetterUtil.getString(
+		return _getNullableObjectAsString(
 			BeanPropertiesUtil.getObject(user, nameIdAttributeName));
+	}
+
+	private String _getNullableObjectAsString(Object object) {
+		if (object == null) {
+			return StringPool.BLANK;
+		}
+
+		return String.valueOf(object);
 	}
 
 	private MetadataManager _metadataManager;

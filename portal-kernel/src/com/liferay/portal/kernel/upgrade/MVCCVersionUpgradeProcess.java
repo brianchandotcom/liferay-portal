@@ -49,7 +49,7 @@ public class MVCCVersionUpgradeProcess extends UpgradeProcess {
 
 		tableName = dbInspector.normalizeName(tableName, databaseMetaData);
 
-		assertTableExists(databaseMetaData, dbInspector, tableName);
+		ensureTableExists(databaseMetaData, dbInspector, tableName);
 
 		try (ResultSet columnResultSet = databaseMetaData.getColumns(
 				dbInspector.getCatalog(), dbInspector.getSchema(), tableName,

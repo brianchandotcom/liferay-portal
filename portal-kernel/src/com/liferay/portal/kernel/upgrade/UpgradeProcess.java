@@ -434,7 +434,9 @@ public abstract class UpgradeProcess
 		}
 	}
 
-	protected void assertTableExists(
+	protected abstract void doUpgrade() throws Exception;
+
+	protected void ensureTableExists(
 			DatabaseMetaData databaseMetaData, DBInspector dbInspector,
 			String tableName)
 		throws SQLException {
@@ -451,8 +453,6 @@ public abstract class UpgradeProcess
 			}
 		}
 	}
-
-	protected abstract void doUpgrade() throws Exception;
 
 	protected Connection getConnection() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());

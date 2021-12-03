@@ -19,22 +19,26 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
+ * @author Petteri Karttunen
  */
 @Component(
 	enabled = true, immediate = true,
@@ -45,9 +49,16 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		for (String fileName : FILE_NAMES) {
-			_addSXPElement(company, fileName);
-		}
+		_addSXPElements(company);
+	}
+
+	@Override
+	public void portalInstanceUnregistered(Company company) throws Exception {
+		_sxpBlueprintLocalService.deleteCompanySXPBlueprints(
+			company.getCompanyId());
+
+		_sxpElementLocalService.deleteCompanySXPElements(
+			company.getCompanyId());
 	}
 
 	protected SXPElement readSXPElement(String fileName) {
@@ -71,8 +82,8 @@ public class SXPPortalInstanceLifecycleListener
 		"boost_items_for_my_commerce_account_groups", "boost_longer_contents",
 		"boost_proximity", "boost_tagged_contents", "boost_tags_match",
 		"boost_web_contents_by_keyword_match", "filter_by_exact_terms_match",
-		"filter_by_exact_terms_match", "hide_by_an_exact_term_match",
-		"hide_comments", "hide_contents_in_a_category_for_guest_users",
+		"hide_by_an_exact_term_match", "hide_comments",
+		"hide_contents_in_a_category_for_guest_users",
 		"hide_contents_in_a_category", "hide_default_user",
 		"hide_hidden_contents",
 		"limit_search_to_contents_created_within_a_period_of_time",
@@ -85,26 +96,13 @@ public class SXPPortalInstanceLifecycleListener
 		"text_match_over_multiple_fields"
 	};
 
-	private void _addSXPElement(Company company, String fileName)
+	private void _addSXPElement(Company company, SXPElement sxpElement)
 		throws Exception {
 
-		SXPElement sxpElement = readSXPElement(fileName);
-
-		if (ListUtil.exists(
-				_sxpElementLocalService.getSXPElements(company.getCompanyId()),
-				serviceBuilderSXPElement -> Objects.equals(
-					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
-					serviceBuilderSXPElement.getTitle(LocaleUtil.US)))) {
-
-			// TODO Fix performance issue with getting every SXP element
-
-			return;
-		}
-
-		User defaultUser = company.getDefaultUser();
+		User user = company.getDefaultUser();
 
 		_sxpElementLocalService.addSXPElement(
-			defaultUser.getUserId(),
+			user.getUserId(),
 			LocalizedMapUtil.getLocalizedMap(sxpElement.getDescription_i18n()),
 			String.valueOf(sxpElement.getElementDefinition()), true,
 			LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
@@ -114,12 +112,37 @@ public class SXPPortalInstanceLifecycleListener
 					setAddGuestPermissions(true);
 					setCompanyId(company.getCompanyId());
 					setScopeGroupId(company.getGroupId());
-					setUserId(defaultUser.getUserId());
+					setUserId(user.getUserId());
 				}
 			});
 	}
 
+	private void _addSXPElements(Company company) throws Exception {
+		Set<String> titles = new HashSet<>();
+
+		for (com.liferay.search.experiences.model.SXPElement dbSXPElement :
+				_sxpElementLocalService.getSXPElements(
+					company.getCompanyId())) {
+
+			titles.add(dbSXPElement.getTitle(LocaleUtil.US));
+		}
+
+		for (SXPElement sxpElement : _sxpElements) {
+			if (!titles.contains(
+					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
+
+				_addSXPElement(company, sxpElement);
+			}
+		}
+	}
+
+	@Reference
+	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
+
+	private final List<SXPElement> _sxpElements = TransformUtil.transformToList(
+		FILE_NAMES, fileName -> readSXPElement(fileName));
 
 }

@@ -103,6 +103,9 @@ public interface SXPBlueprintLocalService
 	@Transactional(enabled = false)
 	public SXPBlueprint createSXPBlueprint(long sxpBlueprintId);
 
+	public void deleteCompanySXPBlueprints(long companyId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

@@ -18,7 +18,6 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,10 +31,8 @@ import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,17 +59,6 @@ public class SXPPortalInstanceLifecycleListener
 
 		_sxpElementLocalService.deleteCompanySXPElements(
 			company.getCompanyId());
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		try {
-			_companyLocalService.forEachCompany(
-				company -> _addSXPElements(company));
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	protected SXPElement readSXPElement(String fileName) {
@@ -144,9 +130,6 @@ public class SXPPortalInstanceLifecycleListener
 			_addSXPElement(company, sxpElement);
 		}
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

@@ -280,4 +280,45 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 	}
 
+	@priority = "3"
+	test RestartCanNotEnableBlacklistedModuleJarViaUI {
+		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleJarViaUI";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Bundle Blacklist",
+			configurationScope = "System Scope");
+
+		BundleBlacklist.blacklistModuleAndComponentConfiguration(
+			label = "Blacklist Bundle Symbolic Names",
+			symbolicName = "com.liferay.gogo.shell.web");
+
+		BundleBlacklist.viewProductMenuBlacklistedModule(
+			category = "System",
+			consoleText = "STOPPED com.liferay.gogo.shell.web",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(
+			deleteLiferayHome = "false",
+			keepOSGiState = "true");
+
+		Navigator.openURL();
+
+		BundleBlacklist.viewProductMenuBlacklistedModule(
+			category = "System",
+			consoleText = "STOPPED com.liferay.gogo.shell.web",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
+	}
+
 }

@@ -424,6 +424,47 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			targetLayout.getPlid(), dataJSONObject.toString(), serviceContext);
 	}
 
+	private void _copyLayoutSEOEntry(
+			Layout sourceLayout, Layout targetLayout,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),
+				sourceLayout.getLayoutId());
+
+		if (layoutSEOEntry == null) {
+			LayoutSEOEntry targetLayoutSEOEntry =
+				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+					targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+					targetLayout.getLayoutId());
+
+			if (targetLayoutSEOEntry != null) {
+				_layoutSEOEntryLocalService.deleteLayoutSEOEntry(
+					targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+					targetLayout.getLayoutId());
+			}
+		}
+		else {
+			_layoutSEOEntryLocalService.copyLayoutSEOEntry(
+				targetLayout.getUserId(), targetLayout.getGroupId(),
+				targetLayout.isPrivateLayout(), targetLayout.getLayoutId(),
+				layoutSEOEntry.isCanonicalURLEnabled(),
+				layoutSEOEntry.getCanonicalURLMap(),
+				layoutSEOEntry.getDDMStorageId(),
+				layoutSEOEntry.isOpenGraphDescriptionEnabled(),
+				layoutSEOEntry.getOpenGraphDescriptionMap(),
+				layoutSEOEntry.getOpenGraphImageAltMap(),
+				layoutSEOEntry.getOpenGraphImageFileEntryId(),
+				layoutSEOEntry.isOpenGraphTitleEnabled(),
+				layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
+		}
+	}
+
 	private void _copyPortletPermissions(
 			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
@@ -927,6 +968,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
 
+			_copyLayoutSEOEntry(_sourceLayout, _targetLayout, serviceContext);
+
 			_copyPortletPermissions(_sourceLayout, _targetLayout);
 
 			_copyPortletPreferences(_sourceLayout, _targetLayout);
@@ -966,44 +1009,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			if (image != null) {
 				imageBytes = image.getTextObj();
-			}
-
-			serviceContext.setAttribute(
-				"layout.instanceable.allowed", Boolean.TRUE);
-
-			LayoutSEOEntry layoutSEOEntry =
-				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-					_sourceLayout.getGroupId(), _sourceLayout.isPrivateLayout(),
-					_sourceLayout.getLayoutId());
-
-			if (layoutSEOEntry == null) {
-				LayoutSEOEntry targetLayoutSEOEntry =
-					_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-						_targetLayout.getGroupId(),
-						_targetLayout.isPrivateLayout(),
-						_targetLayout.getLayoutId());
-
-				if (targetLayoutSEOEntry != null) {
-					_layoutSEOEntryLocalService.deleteLayoutSEOEntry(
-						_targetLayout.getGroupId(),
-						_targetLayout.isPrivateLayout(),
-						_targetLayout.getLayoutId());
-				}
-			}
-			else {
-				_layoutSEOEntryLocalService.copyLayoutSEOEntry(
-					_targetLayout.getUserId(), _targetLayout.getGroupId(),
-					_targetLayout.isPrivateLayout(),
-					_targetLayout.getLayoutId(),
-					layoutSEOEntry.isCanonicalURLEnabled(),
-					layoutSEOEntry.getCanonicalURLMap(),
-					layoutSEOEntry.getDDMStorageId(),
-					layoutSEOEntry.isOpenGraphDescriptionEnabled(),
-					layoutSEOEntry.getOpenGraphDescriptionMap(),
-					layoutSEOEntry.getOpenGraphImageAltMap(),
-					layoutSEOEntry.getOpenGraphImageFileEntryId(),
-					layoutSEOEntry.isOpenGraphTitleEnabled(),
-					layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 			}
 
 			return _layoutLocalService.updateIconImage(

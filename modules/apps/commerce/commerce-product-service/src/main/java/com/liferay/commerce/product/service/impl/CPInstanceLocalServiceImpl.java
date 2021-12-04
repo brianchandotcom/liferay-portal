@@ -208,17 +208,17 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setDiscontinuedCProductId(discontinuedCProductId);
 
 		Date discontinuedDate = PortalUtil.getDate(
-			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, user.getTimeZone(),
-			CPInstanceDiscontinuedDateException.class);
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear);
 
 		cpInstance.setDiscontinuedDate(discontinuedDate);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
-		cpInstanceOptionValueRelLocalService.updateCPInstanceOptionValueRels(
-			groupId, user.getCompanyId(), user.getUserId(), cpInstanceId,
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
+		if ( (cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds != null) && !cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.isEmpty() ) {
+			cpInstanceOptionValueRelLocalService.updateCPInstanceOptionValueRels(
+				groupId, user.getCompanyId(), user.getUserId(), cpInstanceId,
+				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
+		}
 
 		reindexCPDefinition(cpDefinitionId);
 
@@ -1071,9 +1071,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setDiscontinuedCProductId(discontinuedCProductId);
 
 		Date discontinuedDate = PortalUtil.getDate(
-			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, user.getTimeZone(),
-			CPInstanceDiscontinuedDateException.class);
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear);
 
 		cpInstance.setDiscontinuedDate(discontinuedDate);
 

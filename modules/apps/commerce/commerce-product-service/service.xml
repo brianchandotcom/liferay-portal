@@ -649,9 +649,9 @@
 		<column name="deliveryMaxSubscriptionCycles" type="long" />
 		<column name="unspsc" type="String" />
 		<column name="discontinued" type="boolean" />
-		<column name="discontinuedCPInstanceUuid" type="String" />
-		<column name="discontinuedCProductId" type="long" />
 		<column name="discontinuedDate" type="Date" />
+		<column name="replacementCPInstanceUuid" type="String" />
+		<column name="replacementCProductId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

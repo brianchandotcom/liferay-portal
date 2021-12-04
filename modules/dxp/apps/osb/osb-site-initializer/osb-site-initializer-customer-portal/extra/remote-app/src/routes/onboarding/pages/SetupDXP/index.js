@@ -1,4 +1,4 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import ClayForm from '@clayui/form';
 import { useFormikContext } from 'formik';
 import { useContext, useEffect, useMemo, useState } from 'react';
@@ -20,39 +20,25 @@ import { actionTypes } from '../../context/reducer';
 import { getInitialDxpAdmin, steps } from '../../utils/constants';
 
 const SetupDXP = () => {
-	const [{ project, userAccount }, dispatch] = useContext(AppContext);
+	const [{ project }, dispatch] = useContext(AppContext);
 	const { errors, setFieldValue, touched, values } = useFormikContext();
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const [fetchSetupDXPInfo, { data }] = useLazyQuery(getSetupDXPInfo);
-
-	useEffect(() => {
-		fetchSetupDXPInfo({
-			variables: {
-				accountSubscriptionsFilter: `(${userAccount.accountBriefs
-					.map(
-						(
-							{ externalReferenceCode },
-							index,
-							{ length: totalAccountBriefs }
-						) =>
-							`accountKey eq '${externalReferenceCode}' ${index + 1 < totalAccountBriefs ? ' or ' : ' '
-							}`
-					)
-					.join('')}) and (contains(name, 'HA DR') or contains(name, 'Std DR'))`,
-				koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`
-			}
-		})
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [project, userAccount]);
+	const { data } = useQuery(getSetupDXPInfo, {
+		variables: {
+			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (contains(name, 'HA DR') or contains(name, 'Std DR'))`,
+			koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`
+		}
+	});
 
 	const dXPCDataCenterRegions = useMemo(() => (data?.c?.dXPCDataCenterRegions?.items.map(
 		({ dxpcDataCenterRegionId, name }) => ({
 			label: name,
 			value: dxpcDataCenterRegionId,
 		})
-	) || []), [data])
-	const hasDisasterRecovery = data?.c?.accountSubscriptions?.items?.length;
+	) || []), [data]);
+
+	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
 	const projectBrief = data?.c?.koroneikiAccounts?.items?.map(
 		({ code, dxpVersion }) => ({
 			code,
@@ -71,14 +57,9 @@ const SetupDXP = () => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
-	function handleSkip() {
-		if (userAccount.accountBriefs.length === 1) {
-			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
-				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
-			}=${userAccount.accountBriefs[0].externalReferenceCode}`;
-		} else {
-			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
-		}
+	const handleSkip = () => {
+		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+		}=${project.accountKey}`;
 	}
 
 	useEffect(() => {
@@ -90,7 +71,7 @@ const SetupDXP = () => {
 
 	const [sendEmailData, { called, error }] = useMutation(addSetupDXP);
 
-	function sendEmail() {
+	const sendEmail = () => {
 		const dxp = values?.dxp;
 
 		if (!called && dxp) {

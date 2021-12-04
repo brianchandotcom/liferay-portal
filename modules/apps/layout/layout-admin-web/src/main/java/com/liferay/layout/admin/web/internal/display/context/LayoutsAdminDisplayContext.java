@@ -611,11 +611,9 @@ public class LayoutsAdminDisplayContext {
 
 		layoutsSearchContainer.setOrderByCol(_getOrderByCol());
 
-		String orderByType = _getOrderByType();
-
 		boolean orderByAsc = false;
 
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(_getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -629,13 +627,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		layoutsSearchContainer.setOrderByComparator(orderByComparator);
-
 		layoutsSearchContainer.setOrderByType(_getOrderByType());
-
-		EmptyOnClickRowChecker emptyOnClickRowChecker =
-			new EmptyOnClickRowChecker(_liferayPortletResponse);
-
-		layoutsSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		String keywords = getKeywords();
 
@@ -645,34 +637,34 @@ public class LayoutsAdminDisplayContext {
 			statuses = new int[] {WorkflowConstants.STATUS_ANY};
 		}
 
-		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), isPrivateLayout(), keywords,
-			new String[] {
-				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-				LayoutConstants.TYPE_EMBEDDED,
-				LayoutConstants.TYPE_LINK_TO_LAYOUT,
-				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.TYPE_URL
-			},
-			statuses);
-
-		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			getSelGroupId(), isPrivateLayout(), keywords,
-			new String[] {
-				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-				LayoutConstants.TYPE_EMBEDDED,
-				LayoutConstants.TYPE_LINK_TO_LAYOUT,
-				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.TYPE_URL
-			},
-			statuses, layoutsSearchContainer.getStart(),
-			layoutsSearchContainer.getEnd(),
-			layoutsSearchContainer.getOrderByComparator());
-
-		layoutsSearchContainer.setTotal(layoutsCount);
-		layoutsSearchContainer.setResults(layouts);
+		layoutsSearchContainer.setResults(
+			LayoutServiceUtil.getLayouts(
+				getSelGroupId(), isPrivateLayout(), keywords,
+				new String[] {
+					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
+					LayoutConstants.TYPE_LINK_TO_LAYOUT,
+					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
+					LayoutConstants.TYPE_URL
+				},
+				statuses, layoutsSearchContainer.getStart(),
+				layoutsSearchContainer.getEnd(),
+				layoutsSearchContainer.getOrderByComparator()));
+		layoutsSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
+		layoutsSearchContainer.setTotal(
+			LayoutServiceUtil.getLayoutsCount(
+				getSelGroupId(), isPrivateLayout(), keywords,
+				new String[] {
+					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
+					LayoutConstants.TYPE_LINK_TO_LAYOUT,
+					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
+					LayoutConstants.TYPE_URL
+				},
+				statuses));
 
 		_layoutsSearchContainer = layoutsSearchContainer;
 

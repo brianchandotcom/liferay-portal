@@ -1002,9 +1002,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private boolean _isAssignedToMyRolesTabSelected() {
-		String tabs1 = _getTabs1();
-
-		if (tabs1.equals("assigned-to-my-roles")) {
+		if (Objects.equals(_getTabs1(), "assigned-to-my-roles")) {
 			return true;
 		}
 

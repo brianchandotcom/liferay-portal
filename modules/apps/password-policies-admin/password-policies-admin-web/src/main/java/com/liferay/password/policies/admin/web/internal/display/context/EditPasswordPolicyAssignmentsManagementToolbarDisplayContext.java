@@ -196,21 +196,20 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 		OrganizationSearchTerms searchTerms =
 			(OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
-		List<Organization> results = OrganizationLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), parentOrganizationId, getKeywords(),
-			searchTerms.getType(), searchTerms.getRegionIdObj(),
-			searchTerms.getCountryIdObj(), organizationParams,
-			organizationSearch.getStart(), organizationSearch.getEnd(),
-			organizationSearch.getOrderByComparator());
-
-		int total = OrganizationLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), parentOrganizationId,
-			searchTerms.getKeywords(), searchTerms.getType(),
-			searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-			organizationParams);
-
-		organizationSearch.setResults(results);
-		organizationSearch.setTotal(total);
+		organizationSearch.setResults(
+			OrganizationLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), parentOrganizationId,
+				getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams, organizationSearch.getStart(),
+				organizationSearch.getEnd(),
+				organizationSearch.getOrderByComparator()));
+		organizationSearch.setTotal(
+			OrganizationLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), parentOrganizationId,
+				searchTerms.getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams));
 
 		return organizationSearch;
 	}
@@ -316,17 +315,15 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
-		List<User> results = UserLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams, userSearch.getStart(),
-			userSearch.getEnd(), userSearch.getOrderByComparator());
-
-		int total = UserLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams);
-
-		userSearch.setResults(results);
-		userSearch.setTotal(total);
+		userSearch.setResults(
+			UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams, userSearch.getStart(),
+				userSearch.getEnd(), userSearch.getOrderByComparator()));
+		userSearch.setTotal(
+			UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams));
 
 		return userSearch;
 	}

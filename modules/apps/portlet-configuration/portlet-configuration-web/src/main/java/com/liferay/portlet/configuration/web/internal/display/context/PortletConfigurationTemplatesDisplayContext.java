@@ -91,17 +91,7 @@ public class PortletConfigurationTemplatesDisplayContext {
 				SearchContainer.DEFAULT_DELTA, getPortletURL(), null,
 				"there-are-no-configuration-templates");
 
-		archivedSettingsSearch.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		archivedSettingsSearch.setOrderByCol(getOrderByCol());
-
-		Portlet selPortlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), getPortletResource());
-
-		List<ArchivedSettings> archivedSettingsList =
-			SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(
-				themeDisplay.getScopeGroupId(), selPortlet.getRootPortletId());
 
 		boolean orderByAsc = false;
 
@@ -120,21 +110,24 @@ public class PortletConfigurationTemplatesDisplayContext {
 		}
 
 		archivedSettingsSearch.setOrderByComparator(orderByComparator);
-
-		archivedSettingsList = ListUtil.sort(
-			archivedSettingsList, orderByComparator);
-
 		archivedSettingsSearch.setOrderByType(getOrderByType());
 
-		int archivedSettingsCount = archivedSettingsList.size();
+		Portlet selPortlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), getPortletResource());
 
-		archivedSettingsSearch.setTotal(archivedSettingsCount);
+		List<ArchivedSettings> archivedSettingsList =
+			SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(
+				themeDisplay.getScopeGroupId(), selPortlet.getRootPortletId());
 
-		archivedSettingsList = ListUtil.subList(
-			archivedSettingsList, archivedSettingsSearch.getStart(),
-			archivedSettingsSearch.getEnd());
+		archivedSettingsSearch.setResults(
+			ListUtil.subList(
+				ListUtil.sort(archivedSettingsList, orderByComparator),
+				archivedSettingsSearch.getStart(),
+				archivedSettingsSearch.getEnd()));
 
-		archivedSettingsSearch.setResults(archivedSettingsList);
+		archivedSettingsSearch.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+		archivedSettingsSearch.setTotal(archivedSettingsList.size());
 
 		_archivedSettingsSearch = archivedSettingsSearch;
 

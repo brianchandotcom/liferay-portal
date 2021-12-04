@@ -177,19 +177,18 @@ public class OrphanPortletsDisplayContext {
 		orphanPortletsSearchContainer.setOrderByCol("name");
 		orphanPortletsSearchContainer.setOrderByType(getOrderByType());
 
-		Layout selLayout = getSelLayout();
-
-		if (!selLayout.isLayoutPrototypeLinkActive()) {
-			orphanPortletsSearchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(_liferayPortletResponse));
-		}
-
 		List<Portlet> portlets = getOrphanPortlets();
 
 		orphanPortletsSearchContainer.setResults(
 			ListUtil.subList(
 				portlets, orphanPortletsSearchContainer.getStart(),
 				orphanPortletsSearchContainer.getEnd()));
+
+		if (!getSelLayout().isLayoutPrototypeLinkActive()) {
+			orphanPortletsSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
+		}
+
 		orphanPortletsSearchContainer.setTotal(portlets.size());
 
 		_orphanPortletsSearchContainer = orphanPortletsSearchContainer;

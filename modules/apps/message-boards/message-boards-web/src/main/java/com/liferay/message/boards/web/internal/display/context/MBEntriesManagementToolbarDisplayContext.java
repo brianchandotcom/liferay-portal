@@ -403,11 +403,11 @@ public class MBEntriesManagementToolbarDisplayContext {
 
 		String orderByCol = getOrderByCol();
 
+		searchContainer.setOrderByCol(orderByCol);
+
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -435,9 +435,8 @@ public class MBEntriesManagementToolbarDisplayContext {
 			}
 		}
 
-		searchContainer.setOrderByCol(orderByCol);
 		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(getOrderByType());
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {

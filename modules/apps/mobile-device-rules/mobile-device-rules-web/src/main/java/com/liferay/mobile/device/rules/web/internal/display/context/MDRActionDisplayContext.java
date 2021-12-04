@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -62,27 +62,24 @@ public class MDRActionDisplayContext {
 
 		ruleActionSearchContainer.setOrderByCol(getOrderByCol());
 
-		String orderByType = getOrderByType();
+		boolean orderByAsc = false;
 
-		boolean orderByAsc = orderByType.equals("asc");
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
 
-		OrderByComparator<MDRAction> orderByComparator =
-			new ActionCreateDateComparator(orderByAsc);
-
-		ruleActionSearchContainer.setOrderByComparator(orderByComparator);
-
-		ruleActionSearchContainer.setOrderByType(orderByType);
-
-		ruleActionSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		ruleActionSearchContainer.setTotal(
-			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));
-
+		ruleActionSearchContainer.setOrderByComparator(
+			new ActionCreateDateComparator(orderByAsc));
+		ruleActionSearchContainer.setOrderByType(getOrderByType());
 		ruleActionSearchContainer.setResults(
 			MDRActionLocalServiceUtil.getActions(
 				ruleGroupInstanceId, ruleActionSearchContainer.getStart(),
-				ruleActionSearchContainer.getEnd(), orderByComparator));
+				ruleActionSearchContainer.getEnd(),
+				ruleActionSearchContainer.getOrderByComparator()));
+		ruleActionSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+		ruleActionSearchContainer.setTotal(
+			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));
 
 		_ruleActionSearchContainer = ruleActionSearchContainer;
 

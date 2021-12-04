@@ -1445,29 +1445,9 @@ definition {
 	}
 
 	macro viewSelectedAccount {
-		Search.searchPG(
-			portletName = "Account Management",
-			searchTerm = "${selectedAccountSearchTerm}");
-
-		LexiconEntry.viewEntryName(rowEntry = "${selectedAccount}");
-
-		LexiconEntry.viewNoEntry(rowEntry = "${previousAccount}");
-
 		AssertElementPresent(
-			key_text = "check",
-			locator1 = "Icon#ANY");
-
-		Search.searchPG(
-			portletName = "Account Management",
-			searchTerm = "${previousAccountSearchTerm}");
-
-		LexiconEntry.viewEntryName(rowEntry = "${previousAccount}");
-
-		LexiconEntry.viewNoEntry(rowEntry = "${selectedAccount}");
-
-		AssertElementNotPresent(
-			key_text = "check",
-			locator1 = "Icon#ANY");
+			key_entryName = "${entryName}",
+			locator1 = "Account#SELECT_ACCOUNT_ENTRY_CHECKMARK");
 	}
 
 }

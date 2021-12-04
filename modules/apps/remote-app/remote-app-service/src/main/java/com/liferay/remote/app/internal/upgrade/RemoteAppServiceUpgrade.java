@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.internal.upgrade;
 
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,6 +51,8 @@ public class RemoteAppServiceUpgrade implements UpgradeStepRegistrator {
 			"2.2.0", "2.3.0",
 			new com.liferay.remote.app.internal.upgrade.v2_3_0.
 				RemoteAppEntryUpgradeProcess());
+
+		registry.register("2.3.0", "2.4.0", new DummyUpgradeStep());
 	}
 
 }

@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.remote.app.internal.instance.lifecycle;
+package com.liferay.remote.app.internal.model.listener;
 
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.remote.app.internal.data.RemoteAppDataUtil;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
@@ -25,27 +29,30 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Iván Zaera Avellón
+ * @author Shuyang Zhou
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
-public class RemoteAppPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+@Component(immediate = true, service = ModelListener.class)
+public class CompanyModelListener extends BaseModelListener<Company> {
 
-	public void portalInstanceRegistered(Company company) throws Exception {
+	@Override
+	public void onAfterCreate(Company company) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				try {
+					RemoteAppDataUtil.addRemoteApp(
+						_remoteAppEntryLocalService, _userLocalService,
+						company);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
 
-		// TODO Move to an upgrade process for existing companies. For new
-		// companies, use a model listener.
-
-		long count = _remoteAppEntryLocalService.getRemoteAppEntriesCount(
-			company.getCompanyId());
-
-		if (count != 0) {
-			return;
-		}
-
-		RemoteAppDataUtil.addRemoteApp(
-			_remoteAppEntryLocalService, _userLocalService, company);
+				return null;
+			});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyModelListener.class);
 
 	@Reference
 	private RemoteAppEntryLocalService _remoteAppEntryLocalService;

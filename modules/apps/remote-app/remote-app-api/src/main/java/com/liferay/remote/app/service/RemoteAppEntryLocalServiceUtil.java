@@ -117,6 +117,12 @@ public class RemoteAppEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteRemoteAppEntries(long companyId)
+		throws PortalException {
+
+		getService().deleteRemoteAppEntries(companyId);
+	}
+
 	/**
 	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

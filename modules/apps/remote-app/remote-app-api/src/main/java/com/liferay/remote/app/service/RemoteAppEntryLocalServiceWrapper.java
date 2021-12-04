@@ -117,6 +117,13 @@ public class RemoteAppEntryLocalServiceWrapper
 		return _remoteAppEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public void deleteRemoteAppEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_remoteAppEntryLocalService.deleteRemoteAppEntries(companyId);
+	}
+
 	/**
 	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

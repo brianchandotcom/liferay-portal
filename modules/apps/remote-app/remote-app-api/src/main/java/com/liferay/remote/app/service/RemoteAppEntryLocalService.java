@@ -120,6 +120,8 @@ public interface RemoteAppEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRemoteAppEntries(long companyId) throws PortalException;
+
 	/**
 	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

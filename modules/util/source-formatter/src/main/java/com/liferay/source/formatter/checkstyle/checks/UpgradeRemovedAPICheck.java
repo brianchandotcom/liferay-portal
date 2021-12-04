@@ -142,24 +142,24 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 			List<String> parameterTypes = _getParameterTypes(
 				methodCallDetailAST);
 
-			MethodStatus fromUpgradeMethodStatus = _getMethodStatus(
+			MethodStatus upgradeFromMethodStatus = _getMethodStatus(
 				upgradeFromJavaClassesJSONObject, variableTypeName, methodName,
 				parameterTypes);
 
-			if (!fromUpgradeMethodStatus.equals(MethodStatus.METHOD_FOUND)) {
+			if (!upgradeFromMethodStatus.equals(MethodStatus.METHOD_FOUND)) {
 				continue;
 			}
 
-			MethodStatus toUpgradeMethodStatus = _getMethodStatus(
+			MethodStatus upgradeToMethodStatus = _getMethodStatus(
 				upgradeToJavaClassesJSONObject, variableTypeName, methodName,
 				parameterTypes);
 
-			if (toUpgradeMethodStatus.equals(MethodStatus.NO_CLASS_FOUND)) {
+			if (upgradeToMethodStatus.equals(MethodStatus.NO_CLASS_FOUND)) {
 				log(
 					methodCallDetailAST, _MSG_CLASS_NOT_FOUND, variableTypeName,
 					upgradeToVersion);
 			}
-			else if (toUpgradeMethodStatus.equals(
+			else if (upgradeToMethodStatus.equals(
 						MethodStatus.NO_METHOD_FOUND)) {
 
 				log(
@@ -520,21 +520,21 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 	}
 
 	private List<String> _getRemovedImportNames(
-		DetailAST detailAST, JSONObject fromUpgradeJavaClassesJSONObject,
-		JSONObject toUpgradeJavaClassesJSONObject, String upgradeToVersion) {
+		DetailAST detailAST, JSONObject upgradeFromJavaClassesJSONObject,
+		JSONObject upgradeToJavaClassesJSONObject, String upgradeToVersion) {
 
 		List<String> removedImportNames = new ArrayList<>();
 
 		List<String> importNames = getImportNames(detailAST);
 
 		for (String importName : importNames) {
-			JSONObject fromUpgradeClassJSONObject =
-				fromUpgradeJavaClassesJSONObject.getJSONObject(importName);
-			JSONObject toUpgradeClassJSONObject =
-				toUpgradeJavaClassesJSONObject.getJSONObject(importName);
+			JSONObject upgradeFromClassJSONObject =
+				upgradeFromJavaClassesJSONObject.getJSONObject(importName);
+			JSONObject upgradeToClassJSONObject =
+				upgradeToJavaClassesJSONObject.getJSONObject(importName);
 
-			if ((fromUpgradeClassJSONObject != null) &&
-				(toUpgradeClassJSONObject == null)) {
+			if ((upgradeFromClassJSONObject != null) &&
+				(upgradeToClassJSONObject == null)) {
 
 				log(
 					detailAST, _MSG_CLASS_NOT_FOUND, importName,

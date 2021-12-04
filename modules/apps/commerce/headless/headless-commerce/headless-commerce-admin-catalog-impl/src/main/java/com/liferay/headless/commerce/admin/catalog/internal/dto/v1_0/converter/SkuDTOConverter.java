@@ -63,8 +63,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				if (discontinued) {
 					CPInstance discontinuedCPInstance =
 						_cpInstanceService.getCProductInstance(
-							cpInstance.getDiscontinuedCProductId(),
-							cpInstance.getDiscontinuedCPInstanceUuid());
+							cpInstance.getReplacementCProductId(),
+							cpInstance.getReplacementCPInstanceUuid());
 
 					discontinuedDate = cpInstance.getDiscontinuedDate();
 					discontinuedSkuId =

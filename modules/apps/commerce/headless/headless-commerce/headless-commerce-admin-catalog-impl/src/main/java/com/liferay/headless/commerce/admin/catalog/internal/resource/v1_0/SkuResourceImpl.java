@@ -260,8 +260,8 @@ public class SkuResourceImpl
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpInstance.getGroupId());
 
-		long discontinuedCProductId = 0;
-		String discontinuedCPInstanceUuid = null;
+		long replacementCProductId = 0;
+		String replacementCPInstanceUuid = null;
 
 		if (sku.getDiscontinued()) {
 			CPInstance discontinuedCPInstance = null;
@@ -286,9 +286,9 @@ public class SkuResourceImpl
 				CPDefinition cpDefinition =
 					discontinuedCPInstance.getCPDefinition();
 
-				discontinuedCProductId = cpDefinition.getCProductId();
+				replacementCProductId = cpDefinition.getCProductId();
 
-				discontinuedCPInstanceUuid =
+				replacementCPInstanceUuid =
 					discontinuedCPInstance.getCPInstanceUuid();
 			}
 		}
@@ -339,8 +339,8 @@ public class SkuResourceImpl
 			GetterUtil.get(
 				sku.getNeverExpire(),
 				(cpInstance.getExpirationDate() == null) ? true : false),
-			sku.getUnspsc(), sku.getDiscontinued(), discontinuedCPInstanceUuid,
-			discontinuedCProductId, discontinuedDateConfig.getMonth(),
+			sku.getUnspsc(), sku.getDiscontinued(), replacementCPInstanceUuid,
+			replacementCProductId, discontinuedDateConfig.getMonth(),
 			discontinuedDateConfig.getDay(), discontinuedDateConfig.getYear(),
 			discontinuedDateConfig.getHour(),
 			discontinuedDateConfig.getMinute(), serviceContext);

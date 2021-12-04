@@ -45,8 +45,8 @@ public class SkuUtil {
 			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws PortalException {
 
-		long discontinuedCProductId = 0;
-		String discontinuedCPInstanceUuid = null;
+		long replacementCProductId = 0;
+		String replacementCPInstanceUuid = null;
 
 		if (sku.getDiscontinued()) {
 			CPInstance discontinuedCPInstance = null;
@@ -71,10 +71,10 @@ public class SkuUtil {
 				CPDefinition discontinuedCPDefinition =
 					discontinuedCPInstance.getCPDefinition();
 
-				discontinuedCProductId =
+				replacementCProductId =
 					discontinuedCPDefinition.getCProductId();
 
-				discontinuedCPInstanceUuid =
+				replacementCPInstanceUuid =
 					discontinuedCPInstance.getCPInstanceUuid();
 			}
 		}
@@ -132,7 +132,7 @@ public class SkuUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(sku.getNeverExpire(), false), sku.getUnspsc(),
 			GetterUtil.get(sku.getDiscontinued(), false),
-			discontinuedCPInstanceUuid, discontinuedCProductId,
+			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateConfig.getMonth(), discontinuedDateConfig.getDay(),
 			discontinuedDateConfig.getYear(), discontinuedDateConfig.getHour(),
 			discontinuedDateConfig.getMinute(), serviceContext);

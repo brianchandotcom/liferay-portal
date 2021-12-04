@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 
 export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
@@ -74,11 +74,9 @@ export const getAccountRolesAndAccountFlags = gql`
 `;
 
 export const addAccountFlag = gql`
-	mutation addAccountFlag($accountFlag: InputC_AccountFlag!){
-  		c {
-			createAccountFlag(
-				AccountFlag: $accountFlag
-			){
+	mutation addAccountFlag($accountFlag: InputC_AccountFlag!) {
+		c {
+			createAccountFlag(AccountFlag: $accountFlag) {
 				accountFlagId
 				accountKey
 				name

@@ -38,7 +38,8 @@ const contactTitle = fragmentElement.querySelector(
 			contactRole.innerHTML = project.liferayContactRole;
 			contactEmail.innerHTML = project.liferayContactEmailAddress;
 		});
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error.message);
 	}
 })();

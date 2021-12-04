@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-const Header = ({ greetings, helper, title }) => {
+const Header = ({greetings, helper, title}) => {
 	return (
 		<header className="p-4">
 			{greetings && (

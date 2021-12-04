@@ -3,10 +3,6 @@
 		"cssVariableMapping": "box-shadow-lg",
 		"value": "var(--elevation-fluffy-1) rgba(0, 54, 156, 0.12);"
 	},
-	"colorBrandPrimary": {
-		"cssVariableMapping": "color-brand-primary",
-		"value": "#0B5FFF"
-	},
 	"colorActionPrimaryActive": {
 		"cssVariableMapping": "color-action-primary-active",
 		"value": "#004AD7"
@@ -19,25 +15,29 @@
 		"cssVariableMapping": "color-action-primary-hover",
 		"value": "#2932b3"
 	},
+	"colorBrandPrimary": {
+		"cssVariableMapping": "color-brand-primary",
+		"value": "#0B5FFF"
+	},
 	"colorNeutral10": {
 		"cssVariableMapping": "color-neutral-10",
 		"value": "#272833"
 	},
-	"colorNeutral9": {
-		"cssVariableMapping": "color-neutral-9",
-		"value": "#3A3C46"
-	},
-	"colorNeutral8": {
-		"cssVariableMapping": "color-neutral-8",
-		"value": "#3F3851"
+	"colorNeutral5": {
+		"cssVariableMapping": "color-neutral-5",
+		"value": "#91959B"
 	},
 	"colorNeutral7": {
 		"cssVariableMapping": "color-neutral-7",
 		"value": "#5A5469"
 	},
-	"colorNeutral5": {
-		"cssVariableMapping": "color-neutral-5",
-		"value": "#91959B"
+	"colorNeutral8": {
+		"cssVariableMapping": "color-neutral-8",
+		"value": "#3F3851"
+	},
+	"colorNeutral9": {
+		"cssVariableMapping": "color-neutral-9",
+		"value": "#3A3C46"
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",

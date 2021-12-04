@@ -186,6 +186,11 @@ public class RemoteAppEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteRemoteAppEntries(long companyId) throws PortalException {
+		remoteAppEntryPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
 	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 

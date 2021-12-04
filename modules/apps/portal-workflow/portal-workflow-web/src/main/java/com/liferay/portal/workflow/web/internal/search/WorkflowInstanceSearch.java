@@ -16,11 +16,8 @@ package com.liferay.portal.workflow.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.util.WorkflowInstancePortletUtil;
@@ -54,30 +51,13 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 			portletRequest, new DisplayTerms(portletRequest), null,
 			DEFAULT_CUR_PARAM, DEFAULT_DELTA, iteratorURL, headerNames, null);
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			portletRequest, WorkflowPortletKeys.USER_WORKFLOW,
+			"instance-order-by-col", "last-activity-date");
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
-
-		if (Validator.isNotNull(orderByCol) &&
-			Validator.isNotNull(orderByType)) {
-
-			preferences.setValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
-				orderByCol);
-			preferences.setValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
-				orderByType);
-		}
-		else {
-			orderByCol = preferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
-				"last-activity-date");
-			orderByType = preferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
-				"asc");
-		}
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			portletRequest, WorkflowPortletKeys.USER_WORKFLOW,
+			"instance-order-by-type", "asc");
 
 		OrderByComparator<WorkflowInstance> orderByComparator =
 			WorkflowInstancePortletUtil.getWorkflowInstanceOrderByComparator(

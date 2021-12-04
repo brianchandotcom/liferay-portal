@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -220,53 +221,25 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(httpServletRequest, "orderByCol");
-
-		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = portalPreferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
-				"last-activity-date");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				portalPreferences.setValue(
-					WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-col",
-					_orderByCol);
-			}
-		}
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, WorkflowPortletKeys.USER_WORKFLOW,
+			"instance-order-by-col", "last-activity-date");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(httpServletRequest, "orderByType");
-
-		if (Validator.isNull(_orderByType)) {
-			_orderByType = portalPreferences.getValue(
-				WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
-				"asc");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				portalPreferences.setValue(
-					WorkflowPortletKeys.USER_WORKFLOW, "instance-order-by-type",
-					_orderByType);
-			}
-		}
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, WorkflowPortletKeys.USER_WORKFLOW,
+			"instance-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -352,8 +325,7 @@ public class WorkflowInstanceViewDisplayContext
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = ParamUtil.getString(
-					httpServletRequest, "orderByType", "asc");
+				String orderByType = getOrderByType();
 
 				if (Objects.equals(orderByType, "asc")) {
 					return "desc";

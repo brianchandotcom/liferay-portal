@@ -14,11 +14,12 @@
 
 package com.liferay.layout.portlets.web.internal.search;
 
+import com.liferay.layout.portlets.web.internal.constants.LayoutsPortletsPortletKeys;
 import com.liferay.layout.portlets.web.internal.util.comparator.PortletDisplayNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +57,11 @@ public class PortletSearch extends SearchContainer<Portlet> {
 		iteratorURL.setParameter(
 			PortletDisplayTerms.NAME, displayTerms.getName());
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol", "name");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType", "asc");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			portletRequest, LayoutsPortletsPortletKeys.LAYOUT_PORTLETS, "name");
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			portletRequest, LayoutsPortletsPortletKeys.LAYOUT_PORTLETS, "asc");
 
 		OrderByComparator<Portlet> orderByComparator = getOrderByComparator(
 			orderByCol, orderByType);

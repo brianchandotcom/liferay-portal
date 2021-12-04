@@ -38,7 +38,7 @@ const AdminInputs = ({admin, id}) => {
 				groupStyle="pt-1"
 				label="DXP Cloud System Admin's Email Address"
 				name={`dxp.admins[${id}].email`}
-				placeholder="username@superbank.com"
+				placeholder="email@example.com"
 				required
 				type="email"
 				validations={[(value) => isValidEmail(value, bannedDomain)]}

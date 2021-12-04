@@ -24,7 +24,7 @@ const HorizontalInputs = ({id}) => {
 					groupStyle="m-0"
 					label="Email"
 					name={`invites[${id}].email`}
-					placeholder="username@superbank.com"
+					placeholder="email@exemple.com"
 					type="email"
 				/>
 			</ClayInput.GroupItem>

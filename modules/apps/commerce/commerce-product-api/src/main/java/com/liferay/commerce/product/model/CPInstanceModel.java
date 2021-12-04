@@ -715,36 +715,6 @@ public interface CPInstanceModel
 	public void setDiscontinued(boolean discontinued);
 
 	/**
-	 * Returns the discontinued cp instance uuid of this cp instance.
-	 *
-	 * @return the discontinued cp instance uuid of this cp instance
-	 */
-	@AutoEscape
-	public String getDiscontinuedCPInstanceUuid();
-
-	/**
-	 * Sets the discontinued cp instance uuid of this cp instance.
-	 *
-	 * @param discontinuedCPInstanceUuid the discontinued cp instance uuid of this cp instance
-	 */
-	public void setDiscontinuedCPInstanceUuid(
-		String discontinuedCPInstanceUuid);
-
-	/**
-	 * Returns the discontinued c product ID of this cp instance.
-	 *
-	 * @return the discontinued c product ID of this cp instance
-	 */
-	public long getDiscontinuedCProductId();
-
-	/**
-	 * Sets the discontinued c product ID of this cp instance.
-	 *
-	 * @param discontinuedCProductId the discontinued c product ID of this cp instance
-	 */
-	public void setDiscontinuedCProductId(long discontinuedCProductId);
-
-	/**
 	 * Returns the discontinued date of this cp instance.
 	 *
 	 * @return the discontinued date of this cp instance
@@ -757,6 +727,35 @@ public interface CPInstanceModel
 	 * @param discontinuedDate the discontinued date of this cp instance
 	 */
 	public void setDiscontinuedDate(Date discontinuedDate);
+
+	/**
+	 * Returns the replacement cp instance uuid of this cp instance.
+	 *
+	 * @return the replacement cp instance uuid of this cp instance
+	 */
+	@AutoEscape
+	public String getReplacementCPInstanceUuid();
+
+	/**
+	 * Sets the replacement cp instance uuid of this cp instance.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid of this cp instance
+	 */
+	public void setReplacementCPInstanceUuid(String replacementCPInstanceUuid);
+
+	/**
+	 * Returns the replacement c product ID of this cp instance.
+	 *
+	 * @return the replacement c product ID of this cp instance
+	 */
+	public long getReplacementCProductId();
+
+	/**
+	 * Sets the replacement c product ID of this cp instance.
+	 *
+	 * @param replacementCProductId the replacement c product ID of this cp instance
+	 */
+	public void setReplacementCProductId(long replacementCProductId);
 
 	/**
 	 * Returns the status of this cp instance.

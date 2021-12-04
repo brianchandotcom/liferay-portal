@@ -109,8 +109,8 @@ public interface CPInstanceLocalService
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String unspsc,
-			boolean discontinued, String discontinuedCPInstanceUuid,
-			long discontinuedCProductId, int discontinuedDateMonth,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
 			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)
@@ -202,7 +202,7 @@ public interface CPInstanceLocalService
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String unspsc, boolean discontinued,
-			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
 			int discontinuedDateYear, int discontinuedDateHour,
 			int discontinuedDateMinute, ServiceContext serviceContext)
@@ -663,7 +663,7 @@ public interface CPInstanceLocalService
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String unspsc, boolean discontinued,
-			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
 			int discontinuedDateYear, int discontinuedDateHour,
 			int discontinuedDateMinute, ServiceContext serviceContext)

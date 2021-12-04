@@ -75,8 +75,8 @@ public class CPInstanceServiceSoap {
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, boolean neverExpire, String unspsc,
-				boolean discontinued, String discontinuedCPInstanceUuid,
-				long discontinuedCProductId, int discontinuedDateMonth,
+				boolean discontinued, String replacementCPInstanceUuid,
+				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
 				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -92,7 +92,7 @@ public class CPInstanceServiceSoap {
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, unspsc, discontinued,
-					discontinuedCPInstanceUuid, discontinuedCProductId,
+					replacementCPInstanceUuid, replacementCProductId,
 					discontinuedDateMonth, discontinuedDateDay,
 					discontinuedDateYear, discontinuedDateHour,
 					discontinuedDateMinute, serviceContext);
@@ -351,8 +351,8 @@ public class CPInstanceServiceSoap {
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, boolean neverExpire, String unspsc,
-				boolean discontinued, String discontinuedCPInstanceUuid,
-				long discontinuedCProductId, int discontinuedDateMonth,
+				boolean discontinued, String replacementCPInstanceUuid,
+				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
 				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -366,8 +366,8 @@ public class CPInstanceServiceSoap {
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
-					unspsc, discontinued, discontinuedCPInstanceUuid,
-					discontinuedCProductId, discontinuedDateMonth,
+					unspsc, discontinued, replacementCPInstanceUuid,
+					replacementCProductId, discontinuedDateMonth,
 					discontinuedDateDay, discontinuedDateYear,
 					discontinuedDateHour, discontinuedDateMinute,
 					serviceContext);

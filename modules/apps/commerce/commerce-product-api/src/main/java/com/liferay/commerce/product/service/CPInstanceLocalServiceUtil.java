@@ -83,8 +83,8 @@ public class CPInstanceLocalServiceUtil {
 			com.liferay.portal.kernel.util.UnicodeProperties
 				deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String unspsc,
-			boolean discontinued, String discontinuedCPInstanceUuid,
-			long discontinuedCProductId, int discontinuedDateMonth,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
 			int discontinuedDateHour, int discontinuedDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -104,7 +104,7 @@ public class CPInstanceLocalServiceUtil {
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles, unspsc, discontinued,
-			discontinuedCPInstanceUuid, discontinuedCProductId,
+			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
 			discontinuedDateHour, discontinuedDateMinute, serviceContext);
 	}
@@ -256,8 +256,8 @@ public class CPInstanceLocalServiceUtil {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, String unspsc,
-			boolean discontinued, String discontinuedCPInstanceUuid,
-			long discontinuedCProductId, int discontinuedDateMonth,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
 			int discontinuedDateHour, int discontinuedDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -270,7 +270,7 @@ public class CPInstanceLocalServiceUtil {
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			discontinued, discontinuedCPInstanceUuid, discontinuedCProductId,
+			discontinued, replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
 			discontinuedDateHour, discontinuedDateMinute, serviceContext);
 	}
@@ -909,7 +909,7 @@ public class CPInstanceLocalServiceUtil {
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String unspsc, boolean discontinued,
-			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
 			int discontinuedDateYear, int discontinuedDateHour,
 			int discontinuedDateMinute,
@@ -922,8 +922,8 @@ public class CPInstanceLocalServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, unspsc, discontinued, discontinuedCPInstanceUuid,
-			discontinuedCProductId, discontinuedDateMonth, discontinuedDateDay,
+			neverExpire, unspsc, discontinued, replacementCPInstanceUuid,
+			replacementCProductId, discontinuedDateMonth, discontinuedDateDay,
 			discontinuedDateYear, discontinuedDateHour, discontinuedDateMinute,
 			serviceContext);
 	}

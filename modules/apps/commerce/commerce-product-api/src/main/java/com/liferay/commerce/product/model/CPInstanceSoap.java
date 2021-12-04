@@ -82,10 +82,10 @@ public class CPInstanceSoap implements Serializable {
 			model.getDeliveryMaxSubscriptionCycles());
 		soapModel.setUnspsc(model.getUnspsc());
 		soapModel.setDiscontinued(model.isDiscontinued());
-		soapModel.setDiscontinuedCPInstanceUuid(
-			model.getDiscontinuedCPInstanceUuid());
-		soapModel.setDiscontinuedCProductId(model.getDiscontinuedCProductId());
 		soapModel.setDiscontinuedDate(model.getDiscontinuedDate());
+		soapModel.setReplacementCPInstanceUuid(
+			model.getReplacementCPInstanceUuid());
+		soapModel.setReplacementCProductId(model.getReplacementCProductId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -493,30 +493,28 @@ public class CPInstanceSoap implements Serializable {
 		_discontinued = discontinued;
 	}
 
-	public String getDiscontinuedCPInstanceUuid() {
-		return _discontinuedCPInstanceUuid;
-	}
-
-	public void setDiscontinuedCPInstanceUuid(
-		String discontinuedCPInstanceUuid) {
-
-		_discontinuedCPInstanceUuid = discontinuedCPInstanceUuid;
-	}
-
-	public long getDiscontinuedCProductId() {
-		return _discontinuedCProductId;
-	}
-
-	public void setDiscontinuedCProductId(long discontinuedCProductId) {
-		_discontinuedCProductId = discontinuedCProductId;
-	}
-
 	public Date getDiscontinuedDate() {
 		return _discontinuedDate;
 	}
 
 	public void setDiscontinuedDate(Date discontinuedDate) {
 		_discontinuedDate = discontinuedDate;
+	}
+
+	public String getReplacementCPInstanceUuid() {
+		return _replacementCPInstanceUuid;
+	}
+
+	public void setReplacementCPInstanceUuid(String replacementCPInstanceUuid) {
+		_replacementCPInstanceUuid = replacementCPInstanceUuid;
+	}
+
+	public long getReplacementCProductId() {
+		return _replacementCProductId;
+	}
+
+	public void setReplacementCProductId(long replacementCProductId) {
+		_replacementCProductId = replacementCProductId;
 	}
 
 	public int getStatus() {
@@ -591,9 +589,9 @@ public class CPInstanceSoap implements Serializable {
 	private long _deliveryMaxSubscriptionCycles;
 	private String _unspsc;
 	private boolean _discontinued;
-	private String _discontinuedCPInstanceUuid;
-	private long _discontinuedCProductId;
 	private Date _discontinuedDate;
+	private String _replacementCPInstanceUuid;
+	private long _replacementCProductId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

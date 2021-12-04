@@ -161,12 +161,12 @@ public class CPInstanceCacheModel
 		sb.append(unspsc);
 		sb.append(", discontinued=");
 		sb.append(discontinued);
-		sb.append(", discontinuedCPInstanceUuid=");
-		sb.append(discontinuedCPInstanceUuid);
-		sb.append(", discontinuedCProductId=");
-		sb.append(discontinuedCProductId);
 		sb.append(", discontinuedDate=");
 		sb.append(discontinuedDate);
+		sb.append(", replacementCPInstanceUuid=");
+		sb.append(replacementCPInstanceUuid);
+		sb.append(", replacementCProductId=");
+		sb.append(replacementCProductId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -340,16 +340,6 @@ public class CPInstanceCacheModel
 
 		cpInstanceImpl.setDiscontinued(discontinued);
 
-		if (discontinuedCPInstanceUuid == null) {
-			cpInstanceImpl.setDiscontinuedCPInstanceUuid("");
-		}
-		else {
-			cpInstanceImpl.setDiscontinuedCPInstanceUuid(
-				discontinuedCPInstanceUuid);
-		}
-
-		cpInstanceImpl.setDiscontinuedCProductId(discontinuedCProductId);
-
 		if (discontinuedDate == Long.MIN_VALUE) {
 			cpInstanceImpl.setDiscontinuedDate(null);
 		}
@@ -357,6 +347,15 @@ public class CPInstanceCacheModel
 			cpInstanceImpl.setDiscontinuedDate(new Date(discontinuedDate));
 		}
 
+		if (replacementCPInstanceUuid == null) {
+			cpInstanceImpl.setReplacementCPInstanceUuid("");
+		}
+		else {
+			cpInstanceImpl.setReplacementCPInstanceUuid(
+				replacementCPInstanceUuid);
+		}
+
+		cpInstanceImpl.setReplacementCProductId(replacementCProductId);
 		cpInstanceImpl.setStatus(status);
 		cpInstanceImpl.setStatusByUserId(statusByUserId);
 
@@ -442,10 +441,10 @@ public class CPInstanceCacheModel
 		unspsc = objectInput.readUTF();
 
 		discontinued = objectInput.readBoolean();
-		discontinuedCPInstanceUuid = objectInput.readUTF();
-
-		discontinuedCProductId = objectInput.readLong();
 		discontinuedDate = objectInput.readLong();
+		replacementCPInstanceUuid = objectInput.readUTF();
+
+		replacementCProductId = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -588,16 +587,16 @@ public class CPInstanceCacheModel
 		}
 
 		objectOutput.writeBoolean(discontinued);
+		objectOutput.writeLong(discontinuedDate);
 
-		if (discontinuedCPInstanceUuid == null) {
+		if (replacementCPInstanceUuid == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(discontinuedCPInstanceUuid);
+			objectOutput.writeUTF(replacementCPInstanceUuid);
 		}
 
-		objectOutput.writeLong(discontinuedCProductId);
-		objectOutput.writeLong(discontinuedDate);
+		objectOutput.writeLong(replacementCProductId);
 
 		objectOutput.writeInt(status);
 
@@ -653,9 +652,9 @@ public class CPInstanceCacheModel
 	public long deliveryMaxSubscriptionCycles;
 	public String unspsc;
 	public boolean discontinued;
-	public String discontinuedCPInstanceUuid;
-	public long discontinuedCProductId;
 	public long discontinuedDate;
+	public String replacementCPInstanceUuid;
+	public long replacementCProductId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

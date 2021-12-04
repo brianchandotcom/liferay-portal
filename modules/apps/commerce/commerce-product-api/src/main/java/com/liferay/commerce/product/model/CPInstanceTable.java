@@ -141,16 +141,16 @@ public class CPInstanceTable extends BaseTable<CPInstanceTable> {
 		"unspsc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPInstanceTable, Boolean> discontinued = createColumn(
 		"discontinued", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CPInstanceTable, String> discontinuedCPInstanceUuid =
-		createColumn(
-			"discontinuedCPInstanceUuid", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<CPInstanceTable, Long> discontinuedCProductId =
-		createColumn(
-			"discontinuedCProductId", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
 	public final Column<CPInstanceTable, Date> discontinuedDate = createColumn(
 		"discontinuedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CPInstanceTable, String> replacementCPInstanceUuid =
+		createColumn(
+			"replacementCPInstanceUuid", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CPInstanceTable, Long> replacementCProductId =
+		createColumn(
+			"replacementCProductId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<CPInstanceTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CPInstanceTable, Long> statusByUserId = createColumn(

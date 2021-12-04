@@ -212,12 +212,12 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setDiscontinued(RandomTestUtil.randomBoolean());
 
-		newCPInstance.setDiscontinuedCPInstanceUuid(
+		newCPInstance.setDiscontinuedDate(RandomTestUtil.nextDate());
+
+		newCPInstance.setReplacementCPInstanceUuid(
 			RandomTestUtil.randomString());
 
-		newCPInstance.setDiscontinuedCProductId(RandomTestUtil.nextLong());
-
-		newCPInstance.setDiscontinuedDate(RandomTestUtil.nextDate());
+		newCPInstance.setReplacementCProductId(RandomTestUtil.nextLong());
 
 		newCPInstance.setStatus(RandomTestUtil.nextInt());
 
@@ -336,14 +336,14 @@ public class CPInstancePersistenceTest {
 			existingCPInstance.isDiscontinued(),
 			newCPInstance.isDiscontinued());
 		Assert.assertEquals(
-			existingCPInstance.getDiscontinuedCPInstanceUuid(),
-			newCPInstance.getDiscontinuedCPInstanceUuid());
-		Assert.assertEquals(
-			existingCPInstance.getDiscontinuedCProductId(),
-			newCPInstance.getDiscontinuedCProductId());
-		Assert.assertEquals(
 			Time.getShortTimestamp(existingCPInstance.getDiscontinuedDate()),
 			Time.getShortTimestamp(newCPInstance.getDiscontinuedDate()));
+		Assert.assertEquals(
+			existingCPInstance.getReplacementCPInstanceUuid(),
+			newCPInstance.getReplacementCPInstanceUuid());
+		Assert.assertEquals(
+			existingCPInstance.getReplacementCProductId(),
+			newCPInstance.getReplacementCProductId());
 		Assert.assertEquals(
 			existingCPInstance.getStatus(), newCPInstance.getStatus());
 		Assert.assertEquals(
@@ -523,9 +523,9 @@ public class CPInstancePersistenceTest {
 			"deliverySubscriptionLength", true, "deliverySubscriptionType",
 			true, "deliverySubscriptionTypeSettings", true,
 			"deliveryMaxSubscriptionCycles", true, "unspsc", true,
-			"discontinued", true, "discontinuedCPInstanceUuid", true,
-			"discontinuedCProductId", true, "discontinuedDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
+			"discontinued", true, "discontinuedDate", true,
+			"replacementCPInstanceUuid", true, "replacementCProductId", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
 	}
 
@@ -919,11 +919,11 @@ public class CPInstancePersistenceTest {
 
 		cpInstance.setDiscontinued(RandomTestUtil.randomBoolean());
 
-		cpInstance.setDiscontinuedCPInstanceUuid(RandomTestUtil.randomString());
-
-		cpInstance.setDiscontinuedCProductId(RandomTestUtil.nextLong());
-
 		cpInstance.setDiscontinuedDate(RandomTestUtil.nextDate());
+
+		cpInstance.setReplacementCPInstanceUuid(RandomTestUtil.randomString());
+
+		cpInstance.setReplacementCProductId(RandomTestUtil.nextLong());
 
 		cpInstance.setStatus(RandomTestUtil.nextInt());
 

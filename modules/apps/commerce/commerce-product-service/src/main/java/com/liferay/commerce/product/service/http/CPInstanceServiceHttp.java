@@ -176,8 +176,8 @@ public class CPInstanceServiceHttp {
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, boolean neverExpire, String unspsc,
-				boolean discontinued, String discontinuedCPInstanceUuid,
-				long discontinuedCProductId, int discontinuedDateMonth,
+				boolean discontinued, String replacementCPInstanceUuid,
+				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
 				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -196,7 +196,7 @@ public class CPInstanceServiceHttp {
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, unspsc, discontinued,
-				discontinuedCPInstanceUuid, discontinuedCProductId,
+				replacementCPInstanceUuid, replacementCProductId,
 				discontinuedDateMonth, discontinuedDateDay,
 				discontinuedDateYear, discontinuedDateHour,
 				discontinuedDateMinute, serviceContext);
@@ -923,8 +923,8 @@ public class CPInstanceServiceHttp {
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, boolean neverExpire, String unspsc,
-				boolean discontinued, String discontinuedCPInstanceUuid,
-				long discontinuedCProductId, int discontinuedDateMonth,
+				boolean discontinued, String replacementCPInstanceUuid,
+				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
 				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -941,9 +941,9 @@ public class CPInstanceServiceHttp {
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-				discontinued, discontinuedCPInstanceUuid,
-				discontinuedCProductId, discontinuedDateMonth,
-				discontinuedDateDay, discontinuedDateYear, discontinuedDateHour,
+				discontinued, replacementCPInstanceUuid, replacementCProductId,
+				discontinuedDateMonth, discontinuedDateDay,
+				discontinuedDateYear, discontinuedDateHour,
 				discontinuedDateMinute, serviceContext);
 
 			Object returnObj = null;

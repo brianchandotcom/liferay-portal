@@ -94,10 +94,10 @@ public class CPInstanceWrapper
 			getDeliveryMaxSubscriptionCycles());
 		attributes.put("unspsc", getUnspsc());
 		attributes.put("discontinued", isDiscontinued());
-		attributes.put(
-			"discontinuedCPInstanceUuid", getDiscontinuedCPInstanceUuid());
-		attributes.put("discontinuedCProductId", getDiscontinuedCProductId());
 		attributes.put("discontinuedDate", getDiscontinuedDate());
+		attributes.put(
+			"replacementCPInstanceUuid", getReplacementCPInstanceUuid());
+		attributes.put("replacementCProductId", getReplacementCProductId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -361,24 +361,24 @@ public class CPInstanceWrapper
 			setDiscontinued(discontinued);
 		}
 
-		String discontinuedCPInstanceUuid = (String)attributes.get(
-			"discontinuedCPInstanceUuid");
-
-		if (discontinuedCPInstanceUuid != null) {
-			setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
-		}
-
-		Long discontinuedCProductId = (Long)attributes.get(
-			"discontinuedCProductId");
-
-		if (discontinuedCProductId != null) {
-			setDiscontinuedCProductId(discontinuedCProductId);
-		}
-
 		Date discontinuedDate = (Date)attributes.get("discontinuedDate");
 
 		if (discontinuedDate != null) {
 			setDiscontinuedDate(discontinuedDate);
+		}
+
+		String replacementCPInstanceUuid = (String)attributes.get(
+			"replacementCPInstanceUuid");
+
+		if (replacementCPInstanceUuid != null) {
+			setReplacementCPInstanceUuid(replacementCPInstanceUuid);
+		}
+
+		Long replacementCProductId = (Long)attributes.get(
+			"replacementCProductId");
+
+		if (replacementCProductId != null) {
+			setReplacementCProductId(replacementCProductId);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -570,26 +570,6 @@ public class CPInstanceWrapper
 	}
 
 	/**
-	 * Returns the discontinued cp instance uuid of this cp instance.
-	 *
-	 * @return the discontinued cp instance uuid of this cp instance
-	 */
-	@Override
-	public String getDiscontinuedCPInstanceUuid() {
-		return model.getDiscontinuedCPInstanceUuid();
-	}
-
-	/**
-	 * Returns the discontinued c product ID of this cp instance.
-	 *
-	 * @return the discontinued c product ID of this cp instance
-	 */
-	@Override
-	public long getDiscontinuedCProductId() {
-		return model.getDiscontinuedCProductId();
-	}
-
-	/**
 	 * Returns the discontinued date of this cp instance.
 	 *
 	 * @return the discontinued date of this cp instance
@@ -767,6 +747,26 @@ public class CPInstanceWrapper
 	@Override
 	public boolean getPurchasable() {
 		return model.getPurchasable();
+	}
+
+	/**
+	 * Returns the replacement cp instance uuid of this cp instance.
+	 *
+	 * @return the replacement cp instance uuid of this cp instance
+	 */
+	@Override
+	public String getReplacementCPInstanceUuid() {
+		return model.getReplacementCPInstanceUuid();
+	}
+
+	/**
+	 * Returns the replacement c product ID of this cp instance.
+	 *
+	 * @return the replacement c product ID of this cp instance
+	 */
+	@Override
+	public long getReplacementCProductId() {
+		return model.getReplacementCProductId();
 	}
 
 	/**
@@ -1238,28 +1238,6 @@ public class CPInstanceWrapper
 	}
 
 	/**
-	 * Sets the discontinued cp instance uuid of this cp instance.
-	 *
-	 * @param discontinuedCPInstanceUuid the discontinued cp instance uuid of this cp instance
-	 */
-	@Override
-	public void setDiscontinuedCPInstanceUuid(
-		String discontinuedCPInstanceUuid) {
-
-		model.setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
-	}
-
-	/**
-	 * Sets the discontinued c product ID of this cp instance.
-	 *
-	 * @param discontinuedCProductId the discontinued c product ID of this cp instance
-	 */
-	@Override
-	public void setDiscontinuedCProductId(long discontinuedCProductId) {
-		model.setDiscontinuedCProductId(discontinuedCProductId);
-	}
-
-	/**
 	 * Sets the discontinued date of this cp instance.
 	 *
 	 * @param discontinuedDate the discontinued date of this cp instance
@@ -1437,6 +1415,26 @@ public class CPInstanceWrapper
 	@Override
 	public void setPurchasable(boolean purchasable) {
 		model.setPurchasable(purchasable);
+	}
+
+	/**
+	 * Sets the replacement cp instance uuid of this cp instance.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid of this cp instance
+	 */
+	@Override
+	public void setReplacementCPInstanceUuid(String replacementCPInstanceUuid) {
+		model.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
+	}
+
+	/**
+	 * Sets the replacement c product ID of this cp instance.
+	 *
+	 * @param replacementCProductId the replacement c product ID of this cp instance
+	 */
+	@Override
+	public void setReplacementCProductId(long replacementCProductId) {
+		model.setReplacementCProductId(replacementCProductId);
 	}
 
 	/**

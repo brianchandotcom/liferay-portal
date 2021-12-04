@@ -37,16 +37,16 @@ const Input = ({groupStyle, helper, label, validations, ...props}) => {
 				<ClayInput {...field} {...props} />
 			</label>
 
-			{meta.touched && meta.error && props.required && (
+			{meta.error && meta.touched ? (
 				<WarningBadge>
 					<span className="pl-1">{meta.error}</span>
 				</WarningBadge>
-			)}
-
-			{helper && (
-				<div className="ml-3 pl-3 text-neutral-7 text-paragraph-sm">
-					{helper}
-				</div>
+			) : (
+				helper && (
+					<div className="ml-3 pl-3 text-neutral-3 text-paragraph-sm">
+						{helper}
+					</div>
+				)
 			)}
 		</ClayForm.Group>
 	);

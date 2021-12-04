@@ -211,6 +211,13 @@ public class DLFileEntryFinderUtil {
 	}
 
 	public static java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntry> findByC_T(
+			long classNameId, String treePath) {
+
+		return getFinder().findByC_T(classNameId, treePath);
+	}
+
+	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntry> findByG_F(
 			long groupId, java.util.List<Long> folderIds,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
@@ -218,13 +225,6 @@ public class DLFileEntryFinderUtil {
 					queryDefinition) {
 
 		return getFinder().findByG_F(groupId, folderIds, queryDefinition);
-	}
-
-	public static java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntry> findByC_T(
-			long classNameId, String treePath) {
-
-		return getFinder().findByC_T(classNameId, treePath);
 	}
 
 	public static java.util.List

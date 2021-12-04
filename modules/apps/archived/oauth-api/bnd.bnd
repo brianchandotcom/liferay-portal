@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OAuth API
 Bundle-SymbolicName: com.liferay.oauth.api
-Bundle-Version: 6.0.6
+Bundle-Version: 6.1.0
 Export-Package:\
 	com.liferay.oauth.configuration,\
 	com.liferay.oauth.constants,\

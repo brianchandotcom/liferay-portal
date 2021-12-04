@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Account API
 Bundle-SymbolicName: com.liferay.commerce.account.api
-Bundle-Version: 16.0.3
+Bundle-Version: 16.1.0
 Export-Package:\
 	com.liferay.commerce.account.configuration,\
 	com.liferay.commerce.account.constants,\

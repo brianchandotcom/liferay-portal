@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Chat API
 Bundle-SymbolicName: com.liferay.chat.api
-Bundle-Version: 5.2.4
+Bundle-Version: 5.3.0
 Export-Package:\
 	com.liferay.chat.constants,\
 	com.liferay.chat.exception,\

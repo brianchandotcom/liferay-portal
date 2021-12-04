@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Trash API
 Bundle-SymbolicName: com.liferay.trash.api
-Bundle-Version: 4.2.4
+Bundle-Version: 4.3.0
 Export-Package:\
 	com.liferay.trash,\
 	com.liferay.trash.constants,\

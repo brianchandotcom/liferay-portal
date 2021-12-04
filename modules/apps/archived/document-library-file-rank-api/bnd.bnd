@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library File Rank API
 Bundle-SymbolicName: com.liferay.document.library.file.rank.api
-Bundle-Version: 4.2.4
+Bundle-Version: 4.3.0
 Export-Package:\
 	com.liferay.document.library.file.rank.exception,\
 	com.liferay.document.library.file.rank.model,\

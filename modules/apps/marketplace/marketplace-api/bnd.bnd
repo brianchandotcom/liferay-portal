@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Marketplace API
 Bundle-SymbolicName: com.liferay.marketplace.api
-Bundle-Version: 8.2.5
+Bundle-Version: 8.3.0
 Export-Package:\
 	com.liferay.marketplace.bundle,\
 	com.liferay.marketplace.constants,\

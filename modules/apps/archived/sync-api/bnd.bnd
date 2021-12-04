@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sync API
 Bundle-SymbolicName: com.liferay.sync.api
-Bundle-Version: 8.0.5
+Bundle-Version: 8.1.0
 Export-Package:\
 	com.liferay.sync,\
 	com.liferay.sync.constants,\

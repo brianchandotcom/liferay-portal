@@ -1,8 +1,8 @@
-import {useQuery} from '@apollo/client';
-import {useEffect, useState} from 'react';
-import {LiferayTheme} from '../services/liferay';
-import {getAccountRolesAndAccountFlags} from '../services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../services/liferay/search-params';
+import { useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { LiferayTheme } from '../services/liferay';
+import { getAccountRolesAndAccountFlags } from '../services/liferay/graphql/queries';
+import { PARAMS_KEYS } from '../services/liferay/search-params';
 import { API_BASE_URL } from '../utils';
 
 const liferaySiteName = LiferayTheme.getLiferaySiteName();
@@ -11,64 +11,34 @@ const validateExternalReferenceCode = (
 	accountBriefs,
 	externalReferenceCode
 ) => {
-	const accountBrief = accountBriefs.find(
+	const hasAccountBrief = !!accountBriefs.find(
 		(accountBrief) =>
 			accountBrief.externalReferenceCode === externalReferenceCode
 	);
 
-	return accountBrief;
+	return hasAccountBrief;
 };
 
-const onboardingPageGuard = (
-	accountBriefs,
-	externalReferenceCode,
-	accountFlags,
-	accountAccountRoles
-) => {
-	return {
-		location: `${API_BASE_URL}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`,
-		validate:
-			!accountFlags.length &&
-			accountAccountRoles.find(
-				({name}) => name === 'Account Administrator'
-			) &&
-			validateExternalReferenceCode(accountBriefs, externalReferenceCode),
-	};
-};
+const getHomeLocation = () => {
+	return `${API_BASE_URL}${liferaySiteName}`;
+}
 
-const overviewPageGuard = (accountBriefs, externalReferenceCode) => {
-	const isValidExternalReferenceCode = validateExternalReferenceCode(
-		accountBriefs,
-		externalReferenceCode
-	);
-	const validation =
-		isValidExternalReferenceCode || accountBriefs.length === 1;
+const getOnboardingLocation = (externalReferenceCode) => {
+	return `${API_BASE_URL}${liferaySiteName}/onboarding?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`;
+}
 
-	const getExternalReferenceCode = () => {
-		if (isValidExternalReferenceCode) {
-			return externalReferenceCode;
-		} else if (accountBriefs.length === 1) {
-			return accountBriefs[0].externalReferenceCode;
-		}
-	};
-
-	return {
-		location: `${API_BASE_URL}${liferaySiteName}/overview?${
-			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
-		}=${getExternalReferenceCode()}`,
-		validate: validation,
-	};
-};
+const getOverviewLocation = (externalReferenceCode) => {
+	return `${API_BASE_URL}${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${externalReferenceCode}`;
+}
 
 const usePageGuard = (
 	userAccount,
-	guard,
-	alternativeGuard,
-	externalReferenceCode
+	externalReferenceCode,
+	pageKey
 ) => {
-	const [isLoading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
 
-	const {data} = useQuery(getAccountRolesAndAccountFlags, {
+	const { data } = useQuery(getAccountRolesAndAccountFlags, {
 		variables: {
 			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq 'onboarding' and userUuid eq '${userAccount.externalReferenceCode}' and value eq 1`,
 			accountId: userAccount.id,
@@ -77,44 +47,42 @@ const usePageGuard = (
 
 	useEffect(() => {
 		if (data) {
-			if (
-				!validateExternalReferenceCode(
-					userAccount.accountBriefs,
-					externalReferenceCode
-				) ||
-				!guard(
-					userAccount.accountBriefs,
-					externalReferenceCode,
-					data.c?.accountFlags?.items,
-					data.accountAccountRoles?.items
-				).validate
-			) {
-				const {
-					location,
-					validate: alternativeValidate,
-				} = alternativeGuard(
-					userAccount.accountBriefs,
-					externalReferenceCode,
-					data.c?.accountFlags?.items,
-					data.accountAccountRoles?.items
+			const isValidExternalReferenceCode = validateExternalReferenceCode(
+				userAccount.accountBriefs, externalReferenceCode
+			);
+			const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
+
+			if (pageKey === 'onboarding') {
+				const isAccountAdministrator = !!data.accountAccountRoles?.items?.find(
+					({ name }) => name === 'Account Administrator'
 				);
 
-				if (alternativeValidate) {
-					window.location.href = location;
+				if (!(isValidExternalReferenceCode && isAccountAdministrator && !hasAccountFlags)) {
+					if (userAccount.accountBriefs.length === 1) {
+						window.location.href = getOverviewLocation(isValidExternalReferenceCode ? externalReferenceCode : userAccount.accountBriefs[0]);
+					} else {
+						window.location.href = getHomeLocation();
+					}
 				} else {
-					window.location.href = `${API_BASE_URL}${liferaySiteName}`;
+					setLoading(false);
 				}
-			} else {
-				setLoading(false);
+			}
+
+			if (pageKey === 'overview') {
+				if (!isValidExternalReferenceCode) {
+					window.location.href = getHomeLocation();
+				} else if (!hasAccountFlags) {
+					window.location.href = getOnboardingLocation(externalReferenceCode);
+				} else {
+					setLoading(false);
+				}
 			}
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data]);
+	}, [data, externalReferenceCode, pageKey, userAccount]);
 
 	return {
-		isLoading,
+		loading
 	};
 };
 
-export {usePageGuard, onboardingPageGuard, overviewPageGuard};
+export { usePageGuard };

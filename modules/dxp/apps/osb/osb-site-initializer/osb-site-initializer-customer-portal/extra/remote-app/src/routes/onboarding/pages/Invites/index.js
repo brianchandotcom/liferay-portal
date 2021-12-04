@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import ClayForm, { ClayInput } from '@clayui/form';
 import { useFormikContext } from 'formik';
 import { useContext } from 'react';
@@ -5,12 +6,15 @@ import BaseButton from '../../../../common/components/BaseButton';
 import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
 import { LiferayTheme } from '../../../../common/services/liferay';
+import { getAccountSubscriptionGroups } from '../../../../common/services/liferay/graphql/queries';
 import { PARAMS_KEYS } from '../../../../common/services/liferay/search-params';
 import { API_BASE_URL } from '../../../../common/utils';
 import Layout from '../../components/Layout';
 import { AppContext } from '../../context';
 import { actionTypes } from '../../context/reducer';
 import { getInitialInvite, getRoles, steps } from '../../utils/constants';
+
+const ACCOUNT_SUBSCRIPTION_GROUP_NAME = 'DXP Cloud';
 
 const HorizontalInputs = ({ id }) => {
 	return (
@@ -41,21 +45,22 @@ const HorizontalInputs = ({ id }) => {
 };
 
 const Invites = () => {
-	const [{ hasSubscriptionsDXPCloud, userAccount }, dispatch] = useContext(AppContext);
+	const [{ project }, dispatch] = useContext(AppContext);
 	const { setFieldValue, values } = useFormikContext();
 
-	const nextStep =
-		hasSubscriptionsDXPCloud
-			? steps.dxp
-			: steps.success;
+	const {data} = useQuery(getAccountSubscriptionGroups, {
+		variables: {
+			filter: `(accountKey eq '${project.accountKey}') and (name eq '${ACCOUNT_SUBSCRIPTION_GROUP_NAME}')`,
+		},
+	});
 
-	function handleSkip() {
-		if (userAccount.accountBriefs.length === 1) {
-			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
-				}=${userAccount.accountBriefs[0].externalReferenceCode}`;
-		} else {
-			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
-		}
+	const hasSubscriptionsDXPCloud = !!data?.c?.accountSubscriptionGroups?.items?.length
+
+	const nextStep = hasSubscriptionsDXPCloud ? steps.dxp : steps.success;
+
+	const handleSkip = () => {
+		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+		}=${project.accountKey}`;
 	}
 
 	return (

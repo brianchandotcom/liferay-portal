@@ -28,6 +28,10 @@ public class DDMFormInstanceVersionServiceWrapper
 	implements DDMFormInstanceVersionService,
 			   ServiceWrapper<DDMFormInstanceVersionService> {
 
+	public DDMFormInstanceVersionServiceWrapper() {
+		this(null);
+	}
+
 	public DDMFormInstanceVersionServiceWrapper(
 		DDMFormInstanceVersionService ddmFormInstanceVersionService) {
 

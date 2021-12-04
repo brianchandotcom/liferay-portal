@@ -27,6 +27,10 @@ public class FVSActiveEntryLocalServiceWrapper
 	implements FVSActiveEntryLocalService,
 			   ServiceWrapper<FVSActiveEntryLocalService> {
 
+	public FVSActiveEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FVSActiveEntryLocalServiceWrapper(
 		FVSActiveEntryLocalService fvsActiveEntryLocalService) {
 

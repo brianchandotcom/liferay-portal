@@ -30,6 +30,10 @@ public class DDMFormInstanceReportLocalServiceWrapper
 	implements DDMFormInstanceReportLocalService,
 			   ServiceWrapper<DDMFormInstanceReportLocalService> {
 
+	public DDMFormInstanceReportLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMFormInstanceReportLocalServiceWrapper(
 		DDMFormInstanceReportLocalService ddmFormInstanceReportLocalService) {
 

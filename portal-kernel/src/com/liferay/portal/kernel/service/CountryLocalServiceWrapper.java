@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class CountryLocalServiceWrapper
 	implements CountryLocalService, ServiceWrapper<CountryLocalService> {
 
+	public CountryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CountryLocalServiceWrapper(CountryLocalService countryLocalService) {
 		_countryLocalService = countryLocalService;
 	}

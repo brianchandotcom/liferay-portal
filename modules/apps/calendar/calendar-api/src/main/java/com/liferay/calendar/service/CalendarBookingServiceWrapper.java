@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CalendarBookingServiceWrapper
 	implements CalendarBookingService, ServiceWrapper<CalendarBookingService> {
 
+	public CalendarBookingServiceWrapper() {
+		this(null);
+	}
+
 	public CalendarBookingServiceWrapper(
 		CalendarBookingService calendarBookingService) {
 

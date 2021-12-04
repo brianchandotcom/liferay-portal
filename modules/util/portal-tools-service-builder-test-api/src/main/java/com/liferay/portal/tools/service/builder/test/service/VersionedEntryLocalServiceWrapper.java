@@ -27,6 +27,10 @@ public class VersionedEntryLocalServiceWrapper
 	implements ServiceWrapper<VersionedEntryLocalService>,
 			   VersionedEntryLocalService {
 
+	public VersionedEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public VersionedEntryLocalServiceWrapper(
 		VersionedEntryLocalService versionedEntryLocalService) {
 

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KBFolderLocalServiceWrapper
 	implements KBFolderLocalService, ServiceWrapper<KBFolderLocalService> {
 
+	public KBFolderLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KBFolderLocalServiceWrapper(
 		KBFolderLocalService kbFolderLocalService) {
 

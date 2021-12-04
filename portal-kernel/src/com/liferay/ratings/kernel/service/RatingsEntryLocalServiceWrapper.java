@@ -30,6 +30,10 @@ public class RatingsEntryLocalServiceWrapper
 	implements RatingsEntryLocalService,
 			   ServiceWrapper<RatingsEntryLocalService> {
 
+	public RatingsEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public RatingsEntryLocalServiceWrapper(
 		RatingsEntryLocalService ratingsEntryLocalService) {
 

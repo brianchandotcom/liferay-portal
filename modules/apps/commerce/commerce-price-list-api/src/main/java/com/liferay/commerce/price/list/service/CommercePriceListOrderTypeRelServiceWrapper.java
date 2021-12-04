@@ -27,6 +27,10 @@ public class CommercePriceListOrderTypeRelServiceWrapper
 	implements CommercePriceListOrderTypeRelService,
 			   ServiceWrapper<CommercePriceListOrderTypeRelService> {
 
+	public CommercePriceListOrderTypeRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePriceListOrderTypeRelServiceWrapper(
 		CommercePriceListOrderTypeRelService
 			commercePriceListOrderTypeRelService) {

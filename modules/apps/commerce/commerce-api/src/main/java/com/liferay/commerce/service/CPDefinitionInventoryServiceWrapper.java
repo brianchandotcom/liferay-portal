@@ -27,6 +27,10 @@ public class CPDefinitionInventoryServiceWrapper
 	implements CPDefinitionInventoryService,
 			   ServiceWrapper<CPDefinitionInventoryService> {
 
+	public CPDefinitionInventoryServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionInventoryServiceWrapper(
 		CPDefinitionInventoryService cpDefinitionInventoryService) {
 

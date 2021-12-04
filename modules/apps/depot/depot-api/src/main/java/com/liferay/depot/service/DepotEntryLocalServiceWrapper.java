@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DepotEntryLocalServiceWrapper
 	implements DepotEntryLocalService, ServiceWrapper<DepotEntryLocalService> {
 
+	public DepotEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DepotEntryLocalServiceWrapper(
 		DepotEntryLocalService depotEntryLocalService) {
 

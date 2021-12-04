@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLTrashLocalServiceWrapper
 	implements DLTrashLocalService, ServiceWrapper<DLTrashLocalService> {
 
+	public DLTrashLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLTrashLocalServiceWrapper(DLTrashLocalService dlTrashLocalService) {
 		_dlTrashLocalService = dlTrashLocalService;
 	}

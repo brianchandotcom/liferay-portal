@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KBArticleLocalServiceWrapper
 	implements KBArticleLocalService, ServiceWrapper<KBArticleLocalService> {
 
+	public KBArticleLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KBArticleLocalServiceWrapper(
 		KBArticleLocalService kbArticleLocalService) {
 

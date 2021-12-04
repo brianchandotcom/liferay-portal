@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class LayoutPrototypeServiceWrapper
 	implements LayoutPrototypeService, ServiceWrapper<LayoutPrototypeService> {
 
+	public LayoutPrototypeServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPrototypeServiceWrapper(
 		LayoutPrototypeService layoutPrototypeService) {
 

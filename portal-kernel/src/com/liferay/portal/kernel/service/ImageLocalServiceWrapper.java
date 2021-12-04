@@ -28,6 +28,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class ImageLocalServiceWrapper
 	implements ImageLocalService, ServiceWrapper<ImageLocalService> {
 
+	public ImageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ImageLocalServiceWrapper(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}

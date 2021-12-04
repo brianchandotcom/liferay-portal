@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class JournalArticleServiceWrapper
 	implements JournalArticleService, ServiceWrapper<JournalArticleService> {
 
+	public JournalArticleServiceWrapper() {
+		this(null);
+	}
+
 	public JournalArticleServiceWrapper(
 		JournalArticleService journalArticleService) {
 

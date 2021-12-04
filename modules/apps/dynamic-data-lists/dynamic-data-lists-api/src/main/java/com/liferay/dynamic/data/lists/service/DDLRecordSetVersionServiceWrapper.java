@@ -28,6 +28,10 @@ public class DDLRecordSetVersionServiceWrapper
 	implements DDLRecordSetVersionService,
 			   ServiceWrapper<DDLRecordSetVersionService> {
 
+	public DDLRecordSetVersionServiceWrapper() {
+		this(null);
+	}
+
 	public DDLRecordSetVersionServiceWrapper(
 		DDLRecordSetVersionService ddlRecordSetVersionService) {
 

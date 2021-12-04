@@ -30,6 +30,10 @@ public class DDMStructureLayoutLocalServiceWrapper
 	implements DDMStructureLayoutLocalService,
 			   ServiceWrapper<DDMStructureLayoutLocalService> {
 
+	public DDMStructureLayoutLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMStructureLayoutLocalServiceWrapper(
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 

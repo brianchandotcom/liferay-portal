@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class StatusLocalServiceWrapper
 	implements ServiceWrapper<StatusLocalService>, StatusLocalService {
 
+	public StatusLocalServiceWrapper() {
+		this(null);
+	}
+
 	public StatusLocalServiceWrapper(StatusLocalService statusLocalService) {
 		_statusLocalService = statusLocalService;
 	}

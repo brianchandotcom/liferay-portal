@@ -27,6 +27,10 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	implements CPAttachmentFileEntryLocalService,
 			   ServiceWrapper<CPAttachmentFileEntryLocalService> {
 
+	public CPAttachmentFileEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPAttachmentFileEntryLocalServiceWrapper(
 		CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService) {
 

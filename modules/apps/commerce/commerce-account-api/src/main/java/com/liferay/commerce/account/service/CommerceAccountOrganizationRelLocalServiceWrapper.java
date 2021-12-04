@@ -27,6 +27,10 @@ public class CommerceAccountOrganizationRelLocalServiceWrapper
 	implements CommerceAccountOrganizationRelLocalService,
 			   ServiceWrapper<CommerceAccountOrganizationRelLocalService> {
 
+	public CommerceAccountOrganizationRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceAccountOrganizationRelLocalServiceWrapper(
 		CommerceAccountOrganizationRelLocalService
 			commerceAccountOrganizationRelLocalService) {

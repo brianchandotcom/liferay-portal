@@ -28,6 +28,10 @@ public class SiteNavigationMenuItemServiceWrapper
 	implements ServiceWrapper<SiteNavigationMenuItemService>,
 			   SiteNavigationMenuItemService {
 
+	public SiteNavigationMenuItemServiceWrapper() {
+		this(null);
+	}
+
 	public SiteNavigationMenuItemServiceWrapper(
 		SiteNavigationMenuItemService siteNavigationMenuItemService) {
 

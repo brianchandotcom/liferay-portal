@@ -27,6 +27,10 @@ public class CommercePriceListChannelRelLocalServiceWrapper
 	implements CommercePriceListChannelRelLocalService,
 			   ServiceWrapper<CommercePriceListChannelRelLocalService> {
 
+	public CommercePriceListChannelRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePriceListChannelRelLocalServiceWrapper(
 		CommercePriceListChannelRelLocalService
 			commercePriceListChannelRelLocalService) {

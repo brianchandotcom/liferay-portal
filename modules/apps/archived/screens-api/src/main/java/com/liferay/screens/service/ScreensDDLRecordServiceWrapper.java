@@ -27,6 +27,10 @@ public class ScreensDDLRecordServiceWrapper
 	implements ScreensDDLRecordService,
 			   ServiceWrapper<ScreensDDLRecordService> {
 
+	public ScreensDDLRecordServiceWrapper() {
+		this(null);
+	}
+
 	public ScreensDDLRecordServiceWrapper(
 		ScreensDDLRecordService screensDDLRecordService) {
 

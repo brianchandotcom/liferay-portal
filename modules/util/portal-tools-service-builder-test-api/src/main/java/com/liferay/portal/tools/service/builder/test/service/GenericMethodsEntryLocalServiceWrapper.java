@@ -27,6 +27,10 @@ public class GenericMethodsEntryLocalServiceWrapper
 	implements GenericMethodsEntryLocalService,
 			   ServiceWrapper<GenericMethodsEntryLocalService> {
 
+	public GenericMethodsEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public GenericMethodsEntryLocalServiceWrapper(
 		GenericMethodsEntryLocalService genericMethodsEntryLocalService) {
 

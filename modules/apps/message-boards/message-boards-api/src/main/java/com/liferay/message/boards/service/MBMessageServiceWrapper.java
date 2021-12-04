@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class MBMessageServiceWrapper
 	implements MBMessageService, ServiceWrapper<MBMessageService> {
 
+	public MBMessageServiceWrapper() {
+		this(null);
+	}
+
 	public MBMessageServiceWrapper(MBMessageService mbMessageService) {
 		_mbMessageService = mbMessageService;
 	}

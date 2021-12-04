@@ -30,6 +30,10 @@ public class DLFileVersionLocalServiceWrapper
 	implements DLFileVersionLocalService,
 			   ServiceWrapper<DLFileVersionLocalService> {
 
+	public DLFileVersionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLFileVersionLocalServiceWrapper(
 		DLFileVersionLocalService dlFileVersionLocalService) {
 

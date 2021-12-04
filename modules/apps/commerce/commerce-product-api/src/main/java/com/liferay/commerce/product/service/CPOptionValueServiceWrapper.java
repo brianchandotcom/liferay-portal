@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPOptionValueServiceWrapper
 	implements CPOptionValueService, ServiceWrapper<CPOptionValueService> {
 
+	public CPOptionValueServiceWrapper() {
+		this(null);
+	}
+
 	public CPOptionValueServiceWrapper(
 		CPOptionValueService cpOptionValueService) {
 

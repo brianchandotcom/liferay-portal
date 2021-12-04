@@ -27,6 +27,10 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 	implements CommercePaymentMethodGroupRelLocalService,
 			   ServiceWrapper<CommercePaymentMethodGroupRelLocalService> {
 
+	public CommercePaymentMethodGroupRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePaymentMethodGroupRelLocalServiceWrapper(
 		CommercePaymentMethodGroupRelLocalService
 			commercePaymentMethodGroupRelLocalService) {

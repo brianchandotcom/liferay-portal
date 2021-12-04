@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ListTypeEntryServiceWrapper
 	implements ListTypeEntryService, ServiceWrapper<ListTypeEntryService> {
 
+	public ListTypeEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ListTypeEntryServiceWrapper(
 		ListTypeEntryService listTypeEntryService) {
 

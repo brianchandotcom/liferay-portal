@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CProductLocalServiceWrapper
 	implements CProductLocalService, ServiceWrapper<CProductLocalService> {
 
+	public CProductLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CProductLocalServiceWrapper(
 		CProductLocalService cProductLocalService) {
 

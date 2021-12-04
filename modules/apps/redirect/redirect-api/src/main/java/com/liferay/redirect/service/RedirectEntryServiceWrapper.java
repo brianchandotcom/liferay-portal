@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class RedirectEntryServiceWrapper
 	implements RedirectEntryService, ServiceWrapper<RedirectEntryService> {
 
+	public RedirectEntryServiceWrapper() {
+		this(null);
+	}
+
 	public RedirectEntryServiceWrapper(
 		RedirectEntryService redirectEntryService) {
 

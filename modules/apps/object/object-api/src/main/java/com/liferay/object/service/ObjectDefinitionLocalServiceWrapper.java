@@ -27,6 +27,10 @@ public class ObjectDefinitionLocalServiceWrapper
 	implements ObjectDefinitionLocalService,
 			   ServiceWrapper<ObjectDefinitionLocalService> {
 
+	public ObjectDefinitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectDefinitionLocalServiceWrapper(
 		ObjectDefinitionLocalService objectDefinitionLocalService) {
 

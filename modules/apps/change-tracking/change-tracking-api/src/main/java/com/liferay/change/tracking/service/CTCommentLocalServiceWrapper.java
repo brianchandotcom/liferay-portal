@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CTCommentLocalServiceWrapper
 	implements CTCommentLocalService, ServiceWrapper<CTCommentLocalService> {
 
+	public CTCommentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTCommentLocalServiceWrapper(
 		CTCommentLocalService ctCommentLocalService) {
 

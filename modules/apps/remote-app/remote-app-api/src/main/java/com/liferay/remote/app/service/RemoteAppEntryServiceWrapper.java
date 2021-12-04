@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class RemoteAppEntryServiceWrapper
 	implements RemoteAppEntryService, ServiceWrapper<RemoteAppEntryService> {
 
+	public RemoteAppEntryServiceWrapper() {
+		this(null);
+	}
+
 	public RemoteAppEntryServiceWrapper(
 		RemoteAppEntryService remoteAppEntryService) {
 

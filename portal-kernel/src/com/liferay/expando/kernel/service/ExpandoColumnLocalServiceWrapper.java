@@ -30,6 +30,10 @@ public class ExpandoColumnLocalServiceWrapper
 	implements ExpandoColumnLocalService,
 			   ServiceWrapper<ExpandoColumnLocalService> {
 
+	public ExpandoColumnLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ExpandoColumnLocalServiceWrapper(
 		ExpandoColumnLocalService expandoColumnLocalService) {
 

@@ -30,6 +30,10 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	implements DDMDataProviderInstanceLocalService,
 			   ServiceWrapper<DDMDataProviderInstanceLocalService> {
 
+	public DDMDataProviderInstanceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMDataProviderInstanceLocalServiceWrapper(
 		DDMDataProviderInstanceLocalService
 			ddmDataProviderInstanceLocalService) {

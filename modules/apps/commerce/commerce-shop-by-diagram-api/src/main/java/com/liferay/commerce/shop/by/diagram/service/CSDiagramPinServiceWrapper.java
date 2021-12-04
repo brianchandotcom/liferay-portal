@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CSDiagramPinServiceWrapper
 	implements CSDiagramPinService, ServiceWrapper<CSDiagramPinService> {
 
+	public CSDiagramPinServiceWrapper() {
+		this(null);
+	}
+
 	public CSDiagramPinServiceWrapper(CSDiagramPinService csDiagramPinService) {
 		_csDiagramPinService = csDiagramPinService;
 	}

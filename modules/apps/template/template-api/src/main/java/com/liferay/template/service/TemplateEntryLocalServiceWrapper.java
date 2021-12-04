@@ -30,6 +30,10 @@ public class TemplateEntryLocalServiceWrapper
 	implements ServiceWrapper<TemplateEntryLocalService>,
 			   TemplateEntryLocalService {
 
+	public TemplateEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public TemplateEntryLocalServiceWrapper(
 		TemplateEntryLocalService templateEntryLocalService) {
 

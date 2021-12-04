@@ -27,6 +27,10 @@ public class ListTypeEntryLocalServiceWrapper
 	implements ListTypeEntryLocalService,
 			   ServiceWrapper<ListTypeEntryLocalService> {
 
+	public ListTypeEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ListTypeEntryLocalServiceWrapper(
 		ListTypeEntryLocalService listTypeEntryLocalService) {
 

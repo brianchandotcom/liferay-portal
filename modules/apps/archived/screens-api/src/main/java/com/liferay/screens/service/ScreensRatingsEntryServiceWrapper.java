@@ -27,6 +27,10 @@ public class ScreensRatingsEntryServiceWrapper
 	implements ScreensRatingsEntryService,
 			   ServiceWrapper<ScreensRatingsEntryService> {
 
+	public ScreensRatingsEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ScreensRatingsEntryServiceWrapper(
 		ScreensRatingsEntryService screensRatingsEntryService) {
 

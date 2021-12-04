@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KaleoNodeLocalServiceWrapper
 	implements KaleoNodeLocalService, ServiceWrapper<KaleoNodeLocalService> {
 
+	public KaleoNodeLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoNodeLocalServiceWrapper(
 		KaleoNodeLocalService kaleoNodeLocalService) {
 

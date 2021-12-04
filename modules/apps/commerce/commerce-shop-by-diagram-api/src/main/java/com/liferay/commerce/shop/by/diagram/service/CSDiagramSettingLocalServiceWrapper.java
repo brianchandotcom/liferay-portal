@@ -27,6 +27,10 @@ public class CSDiagramSettingLocalServiceWrapper
 	implements CSDiagramSettingLocalService,
 			   ServiceWrapper<CSDiagramSettingLocalService> {
 
+	public CSDiagramSettingLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CSDiagramSettingLocalServiceWrapper(
 		CSDiagramSettingLocalService csDiagramSettingLocalService) {
 

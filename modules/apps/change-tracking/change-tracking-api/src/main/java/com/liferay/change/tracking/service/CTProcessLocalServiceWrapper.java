@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CTProcessLocalServiceWrapper
 	implements CTProcessLocalService, ServiceWrapper<CTProcessLocalService> {
 
+	public CTProcessLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTProcessLocalServiceWrapper(
 		CTProcessLocalService ctProcessLocalService) {
 

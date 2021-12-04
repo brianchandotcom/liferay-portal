@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class MBThreadServiceWrapper
 	implements MBThreadService, ServiceWrapper<MBThreadService> {
 
+	public MBThreadServiceWrapper() {
+		this(null);
+	}
+
 	public MBThreadServiceWrapper(MBThreadService mbThreadService) {
 		_mbThreadService = mbThreadService;
 	}

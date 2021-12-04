@@ -27,6 +27,10 @@ public class CommerceOrderLocalServiceWrapper
 	implements CommerceOrderLocalService,
 			   ServiceWrapper<CommerceOrderLocalService> {
 
+	public CommerceOrderLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceOrderLocalServiceWrapper(
 		CommerceOrderLocalService commerceOrderLocalService) {
 

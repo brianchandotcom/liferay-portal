@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class SAPEntryServiceWrapper
 	implements SAPEntryService, ServiceWrapper<SAPEntryService> {
 
+	public SAPEntryServiceWrapper() {
+		this(null);
+	}
+
 	public SAPEntryServiceWrapper(SAPEntryService sapEntryService) {
 		_sapEntryService = sapEntryService;
 	}

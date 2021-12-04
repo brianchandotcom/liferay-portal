@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class SXPBlueprintServiceWrapper
 	implements ServiceWrapper<SXPBlueprintService>, SXPBlueprintService {
 
+	public SXPBlueprintServiceWrapper() {
+		this(null);
+	}
+
 	public SXPBlueprintServiceWrapper(SXPBlueprintService sxpBlueprintService) {
 		_sxpBlueprintService = sxpBlueprintService;
 	}

@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AssetTagServiceWrapper
 	implements AssetTagService, ServiceWrapper<AssetTagService> {
 
+	public AssetTagServiceWrapper() {
+		this(null);
+	}
+
 	public AssetTagServiceWrapper(AssetTagService assetTagService) {
 		_assetTagService = assetTagService;
 	}

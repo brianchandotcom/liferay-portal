@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class UserGroupRoleServiceWrapper
 	implements ServiceWrapper<UserGroupRoleService>, UserGroupRoleService {
 
+	public UserGroupRoleServiceWrapper() {
+		this(null);
+	}
+
 	public UserGroupRoleServiceWrapper(
 		UserGroupRoleService userGroupRoleService) {
 

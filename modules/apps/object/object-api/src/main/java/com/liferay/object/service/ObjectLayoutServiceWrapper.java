@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ObjectLayoutServiceWrapper
 	implements ObjectLayoutService, ServiceWrapper<ObjectLayoutService> {
 
+	public ObjectLayoutServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectLayoutServiceWrapper(ObjectLayoutService objectLayoutService) {
 		_objectLayoutService = objectLayoutService;
 	}

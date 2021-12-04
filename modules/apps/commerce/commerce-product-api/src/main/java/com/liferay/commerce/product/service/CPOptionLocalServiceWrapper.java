@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPOptionLocalServiceWrapper
 	implements CPOptionLocalService, ServiceWrapper<CPOptionLocalService> {
 
+	public CPOptionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPOptionLocalServiceWrapper(
 		CPOptionLocalService cpOptionLocalService) {
 

@@ -27,6 +27,10 @@ public class CommerceDiscountUsageEntryLocalServiceWrapper
 	implements CommerceDiscountUsageEntryLocalService,
 			   ServiceWrapper<CommerceDiscountUsageEntryLocalService> {
 
+	public CommerceDiscountUsageEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceDiscountUsageEntryLocalServiceWrapper(
 		CommerceDiscountUsageEntryLocalService
 			commerceDiscountUsageEntryLocalService) {

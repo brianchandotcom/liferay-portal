@@ -30,6 +30,10 @@ public class FriendlyURLEntryLocalServiceWrapper
 	implements FriendlyURLEntryLocalService,
 			   ServiceWrapper<FriendlyURLEntryLocalService> {
 
+	public FriendlyURLEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FriendlyURLEntryLocalServiceWrapper(
 		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
 

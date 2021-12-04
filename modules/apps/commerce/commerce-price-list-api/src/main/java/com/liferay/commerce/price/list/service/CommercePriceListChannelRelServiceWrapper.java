@@ -27,6 +27,10 @@ public class CommercePriceListChannelRelServiceWrapper
 	implements CommercePriceListChannelRelService,
 			   ServiceWrapper<CommercePriceListChannelRelService> {
 
+	public CommercePriceListChannelRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePriceListChannelRelServiceWrapper(
 		CommercePriceListChannelRelService commercePriceListChannelRelService) {
 

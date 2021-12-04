@@ -30,6 +30,10 @@ public class DDMStructureLocalServiceWrapper
 	implements DDMStructureLocalService,
 			   ServiceWrapper<DDMStructureLocalService> {
 
+	public DDMStructureLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMStructureLocalServiceWrapper(
 		DDMStructureLocalService ddmStructureLocalService) {
 

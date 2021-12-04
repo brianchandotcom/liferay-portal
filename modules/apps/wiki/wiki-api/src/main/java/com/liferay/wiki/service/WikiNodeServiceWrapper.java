@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class WikiNodeServiceWrapper
 	implements ServiceWrapper<WikiNodeService>, WikiNodeService {
 
+	public WikiNodeServiceWrapper() {
+		this(null);
+	}
+
 	public WikiNodeServiceWrapper(WikiNodeService wikiNodeService) {
 		_wikiNodeService = wikiNodeService;
 	}

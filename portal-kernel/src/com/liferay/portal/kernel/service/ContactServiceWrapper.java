@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class ContactServiceWrapper
 	implements ContactService, ServiceWrapper<ContactService> {
 
+	public ContactServiceWrapper() {
+		this(null);
+	}
+
 	public ContactServiceWrapper(ContactService contactService) {
 		_contactService = contactService;
 	}

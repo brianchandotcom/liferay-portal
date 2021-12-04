@@ -27,6 +27,10 @@ public class ObjectDefinitionServiceWrapper
 	implements ObjectDefinitionService,
 			   ServiceWrapper<ObjectDefinitionService> {
 
+	public ObjectDefinitionServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectDefinitionServiceWrapper(
 		ObjectDefinitionService objectDefinitionService) {
 

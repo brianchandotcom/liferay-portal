@@ -28,6 +28,10 @@ public class SubscriptionLocalServiceWrapper
 	implements ServiceWrapper<SubscriptionLocalService>,
 			   SubscriptionLocalService {
 
+	public SubscriptionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SubscriptionLocalServiceWrapper(
 		SubscriptionLocalService subscriptionLocalService) {
 

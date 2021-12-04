@@ -27,6 +27,10 @@ public class CPDAvailabilityEstimateServiceWrapper
 	implements CPDAvailabilityEstimateService,
 			   ServiceWrapper<CPDAvailabilityEstimateService> {
 
+	public CPDAvailabilityEstimateServiceWrapper() {
+		this(null);
+	}
+
 	public CPDAvailabilityEstimateServiceWrapper(
 		CPDAvailabilityEstimateService cpdAvailabilityEstimateService) {
 

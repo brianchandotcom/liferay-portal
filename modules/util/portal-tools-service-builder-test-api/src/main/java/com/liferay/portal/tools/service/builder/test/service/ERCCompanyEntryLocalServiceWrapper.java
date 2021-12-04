@@ -27,6 +27,10 @@ public class ERCCompanyEntryLocalServiceWrapper
 	implements ERCCompanyEntryLocalService,
 			   ServiceWrapper<ERCCompanyEntryLocalService> {
 
+	public ERCCompanyEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ERCCompanyEntryLocalServiceWrapper(
 		ERCCompanyEntryLocalService ercCompanyEntryLocalService) {
 

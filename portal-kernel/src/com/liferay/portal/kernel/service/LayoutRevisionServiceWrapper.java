@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class LayoutRevisionServiceWrapper
 	implements LayoutRevisionService, ServiceWrapper<LayoutRevisionService> {
 
+	public LayoutRevisionServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutRevisionServiceWrapper(
 		LayoutRevisionService layoutRevisionService) {
 

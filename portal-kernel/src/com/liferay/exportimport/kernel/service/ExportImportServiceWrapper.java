@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ExportImportServiceWrapper
 	implements ExportImportService, ServiceWrapper<ExportImportService> {
 
+	public ExportImportServiceWrapper() {
+		this(null);
+	}
+
 	public ExportImportServiceWrapper(ExportImportService exportImportService) {
 		_exportImportService = exportImportService;
 	}

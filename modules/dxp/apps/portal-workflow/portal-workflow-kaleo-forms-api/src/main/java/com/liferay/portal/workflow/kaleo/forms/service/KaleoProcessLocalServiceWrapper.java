@@ -27,6 +27,10 @@ public class KaleoProcessLocalServiceWrapper
 	implements KaleoProcessLocalService,
 			   ServiceWrapper<KaleoProcessLocalService> {
 
+	public KaleoProcessLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoProcessLocalServiceWrapper(
 		KaleoProcessLocalService kaleoProcessLocalService) {
 

@@ -28,6 +28,10 @@ public class CalendarNotificationTemplateServiceWrapper
 	implements CalendarNotificationTemplateService,
 			   ServiceWrapper<CalendarNotificationTemplateService> {
 
+	public CalendarNotificationTemplateServiceWrapper() {
+		this(null);
+	}
+
 	public CalendarNotificationTemplateServiceWrapper(
 		CalendarNotificationTemplateService
 			calendarNotificationTemplateService) {

@@ -30,6 +30,10 @@ public class LayoutSEOSiteLocalServiceWrapper
 	implements LayoutSEOSiteLocalService,
 			   ServiceWrapper<LayoutSEOSiteLocalService> {
 
+	public LayoutSEOSiteLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutSEOSiteLocalServiceWrapper(
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService) {
 

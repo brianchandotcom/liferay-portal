@@ -27,6 +27,10 @@ public class CommerceShippingFixedOptionRelServiceWrapper
 	implements CommerceShippingFixedOptionRelService,
 			   ServiceWrapper<CommerceShippingFixedOptionRelService> {
 
+	public CommerceShippingFixedOptionRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceShippingFixedOptionRelServiceWrapper(
 		CommerceShippingFixedOptionRelService
 			commerceShippingFixedOptionRelService) {

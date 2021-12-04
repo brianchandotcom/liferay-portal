@@ -27,6 +27,10 @@ public class DepotEntryGroupRelServiceWrapper
 	implements DepotEntryGroupRelService,
 			   ServiceWrapper<DepotEntryGroupRelService> {
 
+	public DepotEntryGroupRelServiceWrapper() {
+		this(null);
+	}
+
 	public DepotEntryGroupRelServiceWrapper(
 		DepotEntryGroupRelService depotEntryGroupRelService) {
 

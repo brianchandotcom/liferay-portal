@@ -27,6 +27,10 @@ public class AccountEntryUserRelLocalServiceWrapper
 	implements AccountEntryUserRelLocalService,
 			   ServiceWrapper<AccountEntryUserRelLocalService> {
 
+	public AccountEntryUserRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountEntryUserRelLocalServiceWrapper(
 		AccountEntryUserRelLocalService accountEntryUserRelLocalService) {
 

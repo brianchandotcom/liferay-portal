@@ -28,6 +28,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class RoleLocalServiceWrapper
 	implements RoleLocalService, ServiceWrapper<RoleLocalService> {
 
+	public RoleLocalServiceWrapper() {
+		this(null);
+	}
+
 	public RoleLocalServiceWrapper(RoleLocalService roleLocalService) {
 		_roleLocalService = roleLocalService;
 	}

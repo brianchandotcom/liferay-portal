@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLAppServiceWrapper
 	implements DLAppService, ServiceWrapper<DLAppService> {
 
+	public DLAppServiceWrapper() {
+		this(null);
+	}
+
 	public DLAppServiceWrapper(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}

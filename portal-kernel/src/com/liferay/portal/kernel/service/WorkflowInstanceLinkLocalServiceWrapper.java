@@ -29,6 +29,10 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	implements ServiceWrapper<WorkflowInstanceLinkLocalService>,
 			   WorkflowInstanceLinkLocalService {
 
+	public WorkflowInstanceLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public WorkflowInstanceLinkLocalServiceWrapper(
 		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
 

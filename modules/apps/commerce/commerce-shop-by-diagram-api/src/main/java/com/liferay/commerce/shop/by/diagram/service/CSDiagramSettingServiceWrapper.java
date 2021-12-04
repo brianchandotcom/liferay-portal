@@ -27,6 +27,10 @@ public class CSDiagramSettingServiceWrapper
 	implements CSDiagramSettingService,
 			   ServiceWrapper<CSDiagramSettingService> {
 
+	public CSDiagramSettingServiceWrapper() {
+		this(null);
+	}
+
 	public CSDiagramSettingServiceWrapper(
 		CSDiagramSettingService csDiagramSettingService) {
 

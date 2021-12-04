@@ -25,6 +25,10 @@ public class WebDAVPropsLocalServiceWrapper
 	implements ServiceWrapper<WebDAVPropsLocalService>,
 			   WebDAVPropsLocalService {
 
+	public WebDAVPropsLocalServiceWrapper() {
+		this(null);
+	}
+
 	public WebDAVPropsLocalServiceWrapper(
 		WebDAVPropsLocalService webDAVPropsLocalService) {
 

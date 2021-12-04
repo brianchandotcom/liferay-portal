@@ -27,6 +27,10 @@ public class CSDiagramEntryLocalServiceWrapper
 	implements CSDiagramEntryLocalService,
 			   ServiceWrapper<CSDiagramEntryLocalService> {
 
+	public CSDiagramEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CSDiagramEntryLocalServiceWrapper(
 		CSDiagramEntryLocalService csDiagramEntryLocalService) {
 

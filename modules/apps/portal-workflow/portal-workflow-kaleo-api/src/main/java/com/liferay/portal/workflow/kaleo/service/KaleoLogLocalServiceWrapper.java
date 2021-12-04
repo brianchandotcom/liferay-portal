@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KaleoLogLocalServiceWrapper
 	implements KaleoLogLocalService, ServiceWrapper<KaleoLogLocalService> {
 
+	public KaleoLogLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoLogLocalServiceWrapper(
 		KaleoLogLocalService kaleoLogLocalService) {
 

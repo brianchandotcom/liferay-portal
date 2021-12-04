@@ -27,6 +27,10 @@ public class ObjectEntryLocalServiceWrapper
 	implements ObjectEntryLocalService,
 			   ServiceWrapper<ObjectEntryLocalService> {
 
+	public ObjectEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectEntryLocalServiceWrapper(
 		ObjectEntryLocalService objectEntryLocalService) {
 

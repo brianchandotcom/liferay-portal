@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class PluginSettingServiceWrapper
 	implements PluginSettingService, ServiceWrapper<PluginSettingService> {
 
+	public PluginSettingServiceWrapper() {
+		this(null);
+	}
+
 	public PluginSettingServiceWrapper(
 		PluginSettingService pluginSettingService) {
 

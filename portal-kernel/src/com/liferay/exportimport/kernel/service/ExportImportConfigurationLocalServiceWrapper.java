@@ -27,6 +27,10 @@ public class ExportImportConfigurationLocalServiceWrapper
 	implements ExportImportConfigurationLocalService,
 			   ServiceWrapper<ExportImportConfigurationLocalService> {
 
+	public ExportImportConfigurationLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ExportImportConfigurationLocalServiceWrapper(
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {

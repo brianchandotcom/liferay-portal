@@ -30,6 +30,10 @@ public class JSONStorageEntryLocalServiceWrapper
 	implements JSONStorageEntryLocalService,
 			   ServiceWrapper<JSONStorageEntryLocalService> {
 
+	public JSONStorageEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public JSONStorageEntryLocalServiceWrapper(
 		JSONStorageEntryLocalService jsonStorageEntryLocalService) {
 

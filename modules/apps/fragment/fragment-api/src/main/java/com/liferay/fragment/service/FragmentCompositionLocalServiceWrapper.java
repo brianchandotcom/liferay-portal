@@ -30,6 +30,10 @@ public class FragmentCompositionLocalServiceWrapper
 	implements FragmentCompositionLocalService,
 			   ServiceWrapper<FragmentCompositionLocalService> {
 
+	public FragmentCompositionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FragmentCompositionLocalServiceWrapper(
 		FragmentCompositionLocalService fragmentCompositionLocalService) {
 

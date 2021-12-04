@@ -27,6 +27,10 @@ public class ObjectRelationshipServiceWrapper
 	implements ObjectRelationshipService,
 			   ServiceWrapper<ObjectRelationshipService> {
 
+	public ObjectRelationshipServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectRelationshipServiceWrapper(
 		ObjectRelationshipService objectRelationshipService) {
 

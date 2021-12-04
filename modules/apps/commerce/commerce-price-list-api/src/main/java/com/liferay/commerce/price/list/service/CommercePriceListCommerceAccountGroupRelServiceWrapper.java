@@ -27,6 +27,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	implements CommercePriceListCommerceAccountGroupRelService,
 			   ServiceWrapper<CommercePriceListCommerceAccountGroupRelService> {
 
+	public CommercePriceListCommerceAccountGroupRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePriceListCommerceAccountGroupRelServiceWrapper(
 		CommercePriceListCommerceAccountGroupRelService
 			commercePriceListCommerceAccountGroupRelService) {

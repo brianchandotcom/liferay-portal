@@ -27,6 +27,10 @@ public class ObjectRelationshipLocalServiceWrapper
 	implements ObjectRelationshipLocalService,
 			   ServiceWrapper<ObjectRelationshipLocalService> {
 
+	public ObjectRelationshipLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectRelationshipLocalServiceWrapper(
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 

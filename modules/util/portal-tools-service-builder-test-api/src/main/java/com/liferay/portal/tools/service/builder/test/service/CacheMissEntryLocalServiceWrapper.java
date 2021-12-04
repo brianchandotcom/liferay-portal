@@ -30,6 +30,10 @@ public class CacheMissEntryLocalServiceWrapper
 	implements CacheMissEntryLocalService,
 			   ServiceWrapper<CacheMissEntryLocalService> {
 
+	public CacheMissEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CacheMissEntryLocalServiceWrapper(
 		CacheMissEntryLocalService cacheMissEntryLocalService) {
 

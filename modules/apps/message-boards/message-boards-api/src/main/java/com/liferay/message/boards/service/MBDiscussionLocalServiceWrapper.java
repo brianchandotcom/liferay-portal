@@ -30,6 +30,10 @@ public class MBDiscussionLocalServiceWrapper
 	implements MBDiscussionLocalService,
 			   ServiceWrapper<MBDiscussionLocalService> {
 
+	public MBDiscussionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBDiscussionLocalServiceWrapper(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 

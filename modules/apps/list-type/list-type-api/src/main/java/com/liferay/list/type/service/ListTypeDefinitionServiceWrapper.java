@@ -27,6 +27,10 @@ public class ListTypeDefinitionServiceWrapper
 	implements ListTypeDefinitionService,
 			   ServiceWrapper<ListTypeDefinitionService> {
 
+	public ListTypeDefinitionServiceWrapper() {
+		this(null);
+	}
+
 	public ListTypeDefinitionServiceWrapper(
 		ListTypeDefinitionService listTypeDefinitionService) {
 

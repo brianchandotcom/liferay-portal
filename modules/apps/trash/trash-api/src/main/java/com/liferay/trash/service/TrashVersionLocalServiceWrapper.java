@@ -30,6 +30,10 @@ public class TrashVersionLocalServiceWrapper
 	implements ServiceWrapper<TrashVersionLocalService>,
 			   TrashVersionLocalService {
 
+	public TrashVersionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public TrashVersionLocalServiceWrapper(
 		TrashVersionLocalService trashVersionLocalService) {
 

@@ -27,6 +27,10 @@ public class SiteFriendlyURLLocalServiceWrapper
 	implements ServiceWrapper<SiteFriendlyURLLocalService>,
 			   SiteFriendlyURLLocalService {
 
+	public SiteFriendlyURLLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SiteFriendlyURLLocalServiceWrapper(
 		SiteFriendlyURLLocalService siteFriendlyURLLocalService) {
 

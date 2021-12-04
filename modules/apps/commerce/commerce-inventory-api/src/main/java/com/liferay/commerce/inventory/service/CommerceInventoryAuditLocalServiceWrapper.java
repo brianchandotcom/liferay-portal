@@ -27,6 +27,10 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	implements CommerceInventoryAuditLocalService,
 			   ServiceWrapper<CommerceInventoryAuditLocalService> {
 
+	public CommerceInventoryAuditLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceInventoryAuditLocalServiceWrapper(
 		CommerceInventoryAuditLocalService commerceInventoryAuditLocalService) {
 

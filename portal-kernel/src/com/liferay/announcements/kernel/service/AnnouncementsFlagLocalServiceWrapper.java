@@ -27,6 +27,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	implements AnnouncementsFlagLocalService,
 			   ServiceWrapper<AnnouncementsFlagLocalService> {
 
+	public AnnouncementsFlagLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AnnouncementsFlagLocalServiceWrapper(
 		AnnouncementsFlagLocalService announcementsFlagLocalService) {
 

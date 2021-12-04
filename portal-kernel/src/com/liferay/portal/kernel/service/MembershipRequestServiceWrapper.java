@@ -25,6 +25,10 @@ public class MembershipRequestServiceWrapper
 	implements MembershipRequestService,
 			   ServiceWrapper<MembershipRequestService> {
 
+	public MembershipRequestServiceWrapper() {
+		this(null);
+	}
+
 	public MembershipRequestServiceWrapper(
 		MembershipRequestService membershipRequestService) {
 

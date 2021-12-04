@@ -27,6 +27,10 @@ public class ObjectLayoutLocalServiceWrapper
 	implements ObjectLayoutLocalService,
 			   ServiceWrapper<ObjectLayoutLocalService> {
 
+	public ObjectLayoutLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectLayoutLocalServiceWrapper(
 		ObjectLayoutLocalService objectLayoutLocalService) {
 

@@ -27,6 +27,10 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 	implements CPDefinitionGroupedEntryLocalService,
 			   ServiceWrapper<CPDefinitionGroupedEntryLocalService> {
 
+	public CPDefinitionGroupedEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionGroupedEntryLocalServiceWrapper(
 		CPDefinitionGroupedEntryLocalService
 			cpDefinitionGroupedEntryLocalService) {

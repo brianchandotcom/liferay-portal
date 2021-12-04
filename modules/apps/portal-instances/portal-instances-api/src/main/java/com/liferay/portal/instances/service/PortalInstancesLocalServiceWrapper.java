@@ -27,6 +27,10 @@ public class PortalInstancesLocalServiceWrapper
 	implements PortalInstancesLocalService,
 			   ServiceWrapper<PortalInstancesLocalService> {
 
+	public PortalInstancesLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PortalInstancesLocalServiceWrapper(
 		PortalInstancesLocalService portalInstancesLocalService) {
 

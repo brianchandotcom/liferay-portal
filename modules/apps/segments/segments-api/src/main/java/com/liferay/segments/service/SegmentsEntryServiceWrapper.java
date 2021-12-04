@@ -27,6 +27,10 @@ import com.liferay.segments.model.SegmentsEntry;
 public class SegmentsEntryServiceWrapper
 	implements SegmentsEntryService, ServiceWrapper<SegmentsEntryService> {
 
+	public SegmentsEntryServiceWrapper() {
+		this(null);
+	}
+
 	public SegmentsEntryServiceWrapper(
 		SegmentsEntryService segmentsEntryService) {
 

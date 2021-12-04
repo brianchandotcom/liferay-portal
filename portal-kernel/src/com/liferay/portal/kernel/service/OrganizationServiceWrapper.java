@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.model.Organization;
 public class OrganizationServiceWrapper
 	implements OrganizationService, ServiceWrapper<OrganizationService> {
 
+	public OrganizationServiceWrapper() {
+		this(null);
+	}
+
 	public OrganizationServiceWrapper(OrganizationService organizationService) {
 		_organizationService = organizationService;
 	}

@@ -28,6 +28,10 @@ public class SegmentsExperienceServiceWrapper
 	implements SegmentsExperienceService,
 			   ServiceWrapper<SegmentsExperienceService> {
 
+	public SegmentsExperienceServiceWrapper() {
+		this(null);
+	}
+
 	public SegmentsExperienceServiceWrapper(
 		SegmentsExperienceService segmentsExperienceService) {
 

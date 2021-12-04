@@ -27,6 +27,10 @@ public class CommerceShipmentItemLocalServiceWrapper
 	implements CommerceShipmentItemLocalService,
 			   ServiceWrapper<CommerceShipmentItemLocalService> {
 
+	public CommerceShipmentItemLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceShipmentItemLocalServiceWrapper(
 		CommerceShipmentItemLocalService commerceShipmentItemLocalService) {
 

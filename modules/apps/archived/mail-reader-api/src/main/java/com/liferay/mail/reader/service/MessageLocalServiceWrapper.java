@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class MessageLocalServiceWrapper
 	implements MessageLocalService, ServiceWrapper<MessageLocalService> {
 
+	public MessageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MessageLocalServiceWrapper(MessageLocalService messageLocalService) {
 		_messageLocalService = messageLocalService;
 	}

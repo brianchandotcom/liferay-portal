@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.model.Role;
 public class RoleServiceWrapper
 	implements RoleService, ServiceWrapper<RoleService> {
 
+	public RoleServiceWrapper() {
+		this(null);
+	}
+
 	public RoleServiceWrapper(RoleService roleService) {
 		_roleService = roleService;
 	}

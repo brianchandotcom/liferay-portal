@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class BlogsEntryLocalServiceWrapper
 	implements BlogsEntryLocalService, ServiceWrapper<BlogsEntryLocalService> {
 
+	public BlogsEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BlogsEntryLocalServiceWrapper(
 		BlogsEntryLocalService blogsEntryLocalService) {
 

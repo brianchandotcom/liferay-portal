@@ -30,6 +30,10 @@ public class SiteNavigationMenuLocalServiceWrapper
 	implements ServiceWrapper<SiteNavigationMenuLocalService>,
 			   SiteNavigationMenuLocalService {
 
+	public SiteNavigationMenuLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SiteNavigationMenuLocalServiceWrapper(
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 

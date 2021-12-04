@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DDMTemplateServiceWrapper
 	implements DDMTemplateService, ServiceWrapper<DDMTemplateService> {
 
+	public DDMTemplateServiceWrapper() {
+		this(null);
+	}
+
 	public DDMTemplateServiceWrapper(DDMTemplateService ddmTemplateService) {
 		_ddmTemplateService = ddmTemplateService;
 	}

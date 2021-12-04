@@ -27,6 +27,10 @@ public class CommerceCatalogLocalServiceWrapper
 	implements CommerceCatalogLocalService,
 			   ServiceWrapper<CommerceCatalogLocalService> {
 
+	public CommerceCatalogLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceCatalogLocalServiceWrapper(
 		CommerceCatalogLocalService commerceCatalogLocalService) {
 

@@ -28,6 +28,10 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	implements LayoutPageTemplateCollectionService,
 			   ServiceWrapper<LayoutPageTemplateCollectionService> {
 
+	public LayoutPageTemplateCollectionServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPageTemplateCollectionServiceWrapper(
 		LayoutPageTemplateCollectionService
 			layoutPageTemplateCollectionService) {

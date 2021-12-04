@@ -27,6 +27,10 @@ public class CSDiagramPinLocalServiceWrapper
 	implements CSDiagramPinLocalService,
 			   ServiceWrapper<CSDiagramPinLocalService> {
 
+	public CSDiagramPinLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CSDiagramPinLocalServiceWrapper(
 		CSDiagramPinLocalService csDiagramPinLocalService) {
 

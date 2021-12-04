@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPDisplayLayoutServiceWrapper
 	implements CPDisplayLayoutService, ServiceWrapper<CPDisplayLayoutService> {
 
+	public CPDisplayLayoutServiceWrapper() {
+		this(null);
+	}
+
 	public CPDisplayLayoutServiceWrapper(
 		CPDisplayLayoutService cpDisplayLayoutService) {
 

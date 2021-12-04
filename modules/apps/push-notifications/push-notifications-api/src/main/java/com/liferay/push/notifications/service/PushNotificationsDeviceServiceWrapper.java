@@ -27,6 +27,10 @@ public class PushNotificationsDeviceServiceWrapper
 	implements PushNotificationsDeviceService,
 			   ServiceWrapper<PushNotificationsDeviceService> {
 
+	public PushNotificationsDeviceServiceWrapper() {
+		this(null);
+	}
+
 	public PushNotificationsDeviceServiceWrapper(
 		PushNotificationsDeviceService pushNotificationsDeviceService) {
 

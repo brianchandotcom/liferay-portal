@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class PhoneLocalServiceWrapper
 	implements PhoneLocalService, ServiceWrapper<PhoneLocalService> {
 
+	public PhoneLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PhoneLocalServiceWrapper(PhoneLocalService phoneLocalService) {
 		_phoneLocalService = phoneLocalService;
 	}

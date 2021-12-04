@@ -30,6 +30,10 @@ public class DLFileShortcutLocalServiceWrapper
 	implements DLFileShortcutLocalService,
 			   ServiceWrapper<DLFileShortcutLocalService> {
 
+	public DLFileShortcutLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLFileShortcutLocalServiceWrapper(
 		DLFileShortcutLocalService dlFileShortcutLocalService) {
 

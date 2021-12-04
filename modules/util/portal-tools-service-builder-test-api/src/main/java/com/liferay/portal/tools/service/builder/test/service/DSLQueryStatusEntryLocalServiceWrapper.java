@@ -27,6 +27,10 @@ public class DSLQueryStatusEntryLocalServiceWrapper
 	implements DSLQueryStatusEntryLocalService,
 			   ServiceWrapper<DSLQueryStatusEntryLocalService> {
 
+	public DSLQueryStatusEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DSLQueryStatusEntryLocalServiceWrapper(
 		DSLQueryStatusEntryLocalService dslQueryStatusEntryLocalService) {
 

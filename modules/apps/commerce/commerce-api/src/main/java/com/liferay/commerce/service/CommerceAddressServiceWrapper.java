@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CommerceAddressServiceWrapper
 	implements CommerceAddressService, ServiceWrapper<CommerceAddressService> {
 
+	public CommerceAddressServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceAddressServiceWrapper(
 		CommerceAddressService commerceAddressService) {
 

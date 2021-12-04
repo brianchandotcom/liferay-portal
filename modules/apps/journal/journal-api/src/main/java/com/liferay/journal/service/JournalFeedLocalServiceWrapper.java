@@ -30,6 +30,10 @@ public class JournalFeedLocalServiceWrapper
 	implements JournalFeedLocalService,
 			   ServiceWrapper<JournalFeedLocalService> {
 
+	public JournalFeedLocalServiceWrapper() {
+		this(null);
+	}
+
 	public JournalFeedLocalServiceWrapper(
 		JournalFeedLocalService journalFeedLocalService) {
 

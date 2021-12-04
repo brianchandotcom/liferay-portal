@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPInstanceLocalServiceWrapper
 	implements CPInstanceLocalService, ServiceWrapper<CPInstanceLocalService> {
 
+	public CPInstanceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPInstanceLocalServiceWrapper(
 		CPInstanceLocalService cpInstanceLocalService) {
 

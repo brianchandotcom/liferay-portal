@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class MBCategoryLocalServiceWrapper
 	implements MBCategoryLocalService, ServiceWrapper<MBCategoryLocalService> {
 
+	public MBCategoryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBCategoryLocalServiceWrapper(
 		MBCategoryLocalService mbCategoryLocalService) {
 

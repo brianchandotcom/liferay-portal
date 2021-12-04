@@ -25,6 +25,10 @@ public class LayoutRevisionLocalServiceWrapper
 	implements LayoutRevisionLocalService,
 			   ServiceWrapper<LayoutRevisionLocalService> {
 
+	public LayoutRevisionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutRevisionLocalServiceWrapper(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 

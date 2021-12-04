@@ -27,6 +27,10 @@ public class SamlPeerBindingLocalServiceWrapper
 	implements SamlPeerBindingLocalService,
 			   ServiceWrapper<SamlPeerBindingLocalService> {
 
+	public SamlPeerBindingLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SamlPeerBindingLocalServiceWrapper(
 		SamlPeerBindingLocalService samlPeerBindingLocalService) {
 

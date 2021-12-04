@@ -30,6 +30,10 @@ public class AssetVocabularyLocalServiceWrapper
 	implements AssetVocabularyLocalService,
 			   ServiceWrapper<AssetVocabularyLocalService> {
 
+	public AssetVocabularyLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AssetVocabularyLocalServiceWrapper(
 		AssetVocabularyLocalService assetVocabularyLocalService) {
 

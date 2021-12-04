@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class BlogsEntryServiceWrapper
 	implements BlogsEntryService, ServiceWrapper<BlogsEntryService> {
 
+	public BlogsEntryServiceWrapper() {
+		this(null);
+	}
+
 	public BlogsEntryServiceWrapper(BlogsEntryService blogsEntryService) {
 		_blogsEntryService = blogsEntryService;
 	}

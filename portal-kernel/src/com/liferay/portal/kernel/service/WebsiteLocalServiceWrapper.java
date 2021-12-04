@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class WebsiteLocalServiceWrapper
 	implements ServiceWrapper<WebsiteLocalService>, WebsiteLocalService {
 
+	public WebsiteLocalServiceWrapper() {
+		this(null);
+	}
+
 	public WebsiteLocalServiceWrapper(WebsiteLocalService websiteLocalService) {
 		_websiteLocalService = websiteLocalService;
 	}

@@ -27,6 +27,10 @@ public class CPDefinitionLinkLocalServiceWrapper
 	implements CPDefinitionLinkLocalService,
 			   ServiceWrapper<CPDefinitionLinkLocalService> {
 
+	public CPDefinitionLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionLinkLocalServiceWrapper(
 		CPDefinitionLinkLocalService cpDefinitionLinkLocalService) {
 

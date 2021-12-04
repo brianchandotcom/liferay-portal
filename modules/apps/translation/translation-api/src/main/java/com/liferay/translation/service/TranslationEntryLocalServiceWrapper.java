@@ -30,6 +30,10 @@ public class TranslationEntryLocalServiceWrapper
 	implements ServiceWrapper<TranslationEntryLocalService>,
 			   TranslationEntryLocalService {
 
+	public TranslationEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public TranslationEntryLocalServiceWrapper(
 		TranslationEntryLocalService translationEntryLocalService) {
 

@@ -27,6 +27,10 @@ public class CommerceDiscountAccountRelLocalServiceWrapper
 	implements CommerceDiscountAccountRelLocalService,
 			   ServiceWrapper<CommerceDiscountAccountRelLocalService> {
 
+	public CommerceDiscountAccountRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceDiscountAccountRelLocalServiceWrapper(
 		CommerceDiscountAccountRelLocalService
 			commerceDiscountAccountRelLocalService) {

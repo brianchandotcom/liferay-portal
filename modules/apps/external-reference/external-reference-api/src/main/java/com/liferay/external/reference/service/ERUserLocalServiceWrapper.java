@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ERUserLocalServiceWrapper
 	implements ERUserLocalService, ServiceWrapper<ERUserLocalService> {
 
+	public ERUserLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ERUserLocalServiceWrapper(ERUserLocalService erUserLocalService) {
 		_erUserLocalService = erUserLocalService;
 	}

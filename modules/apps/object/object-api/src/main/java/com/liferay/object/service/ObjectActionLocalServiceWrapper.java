@@ -27,6 +27,10 @@ public class ObjectActionLocalServiceWrapper
 	implements ObjectActionLocalService,
 			   ServiceWrapper<ObjectActionLocalService> {
 
+	public ObjectActionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectActionLocalServiceWrapper(
 		ObjectActionLocalService objectActionLocalService) {
 

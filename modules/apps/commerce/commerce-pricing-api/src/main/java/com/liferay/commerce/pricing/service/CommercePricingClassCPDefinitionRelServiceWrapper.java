@@ -27,6 +27,10 @@ public class CommercePricingClassCPDefinitionRelServiceWrapper
 	implements CommercePricingClassCPDefinitionRelService,
 			   ServiceWrapper<CommercePricingClassCPDefinitionRelService> {
 
+	public CommercePricingClassCPDefinitionRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePricingClassCPDefinitionRelServiceWrapper(
 		CommercePricingClassCPDefinitionRelService
 			commercePricingClassCPDefinitionRelService) {

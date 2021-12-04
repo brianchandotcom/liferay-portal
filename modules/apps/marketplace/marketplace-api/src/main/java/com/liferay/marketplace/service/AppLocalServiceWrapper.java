@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AppLocalServiceWrapper
 	implements AppLocalService, ServiceWrapper<AppLocalService> {
 
+	public AppLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AppLocalServiceWrapper(AppLocalService appLocalService) {
 		_appLocalService = appLocalService;
 	}

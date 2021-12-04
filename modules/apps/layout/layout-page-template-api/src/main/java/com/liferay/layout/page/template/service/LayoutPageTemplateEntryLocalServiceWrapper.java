@@ -30,6 +30,10 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 	implements LayoutPageTemplateEntryLocalService,
 			   ServiceWrapper<LayoutPageTemplateEntryLocalService> {
 
+	public LayoutPageTemplateEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPageTemplateEntryLocalServiceWrapper(
 		LayoutPageTemplateEntryLocalService
 			layoutPageTemplateEntryLocalService) {

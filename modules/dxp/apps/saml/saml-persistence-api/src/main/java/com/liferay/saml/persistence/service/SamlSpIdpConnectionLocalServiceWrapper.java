@@ -27,6 +27,10 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 	implements SamlSpIdpConnectionLocalService,
 			   ServiceWrapper<SamlSpIdpConnectionLocalService> {
 
+	public SamlSpIdpConnectionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SamlSpIdpConnectionLocalServiceWrapper(
 		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService) {
 

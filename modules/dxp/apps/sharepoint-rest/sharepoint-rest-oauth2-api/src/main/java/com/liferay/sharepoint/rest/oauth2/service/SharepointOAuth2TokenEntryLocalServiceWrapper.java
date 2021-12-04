@@ -27,6 +27,10 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	implements ServiceWrapper<SharepointOAuth2TokenEntryLocalService>,
 			   SharepointOAuth2TokenEntryLocalService {
 
+	public SharepointOAuth2TokenEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SharepointOAuth2TokenEntryLocalServiceWrapper(
 		SharepointOAuth2TokenEntryLocalService
 			sharepointOAuth2TokenEntryLocalService) {

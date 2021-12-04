@@ -27,6 +27,10 @@ public class SyncDLFileVersionDiffLocalServiceWrapper
 	implements ServiceWrapper<SyncDLFileVersionDiffLocalService>,
 			   SyncDLFileVersionDiffLocalService {
 
+	public SyncDLFileVersionDiffLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SyncDLFileVersionDiffLocalServiceWrapper(
 		SyncDLFileVersionDiffLocalService syncDLFileVersionDiffLocalService) {
 

@@ -28,6 +28,10 @@ public class AssetDisplayPageEntryServiceWrapper
 	implements AssetDisplayPageEntryService,
 			   ServiceWrapper<AssetDisplayPageEntryService> {
 
+	public AssetDisplayPageEntryServiceWrapper() {
+		this(null);
+	}
+
 	public AssetDisplayPageEntryServiceWrapper(
 		AssetDisplayPageEntryService assetDisplayPageEntryService) {
 

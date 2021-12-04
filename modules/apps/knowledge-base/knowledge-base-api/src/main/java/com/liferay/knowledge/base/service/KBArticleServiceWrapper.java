@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KBArticleServiceWrapper
 	implements KBArticleService, ServiceWrapper<KBArticleService> {
 
+	public KBArticleServiceWrapper() {
+		this(null);
+	}
+
 	public KBArticleServiceWrapper(KBArticleService kbArticleService) {
 		_kbArticleService = kbArticleService;
 	}

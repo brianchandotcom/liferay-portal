@@ -28,6 +28,10 @@ public class DDMDataProviderInstanceServiceWrapper
 	implements DDMDataProviderInstanceService,
 			   ServiceWrapper<DDMDataProviderInstanceService> {
 
+	public DDMDataProviderInstanceServiceWrapper() {
+		this(null);
+	}
+
 	public DDMDataProviderInstanceServiceWrapper(
 		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
 

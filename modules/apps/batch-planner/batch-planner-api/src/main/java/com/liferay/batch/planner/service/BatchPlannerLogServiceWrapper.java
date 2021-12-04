@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class BatchPlannerLogServiceWrapper
 	implements BatchPlannerLogService, ServiceWrapper<BatchPlannerLogService> {
 
+	public BatchPlannerLogServiceWrapper() {
+		this(null);
+	}
+
 	public BatchPlannerLogServiceWrapper(
 		BatchPlannerLogService batchPlannerLogService) {
 

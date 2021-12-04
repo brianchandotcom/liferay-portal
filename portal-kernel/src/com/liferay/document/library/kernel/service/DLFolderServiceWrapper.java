@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLFolderServiceWrapper
 	implements DLFolderService, ServiceWrapper<DLFolderService> {
 
+	public DLFolderServiceWrapper() {
+		this(null);
+	}
+
 	public DLFolderServiceWrapper(DLFolderService dlFolderService) {
 		_dlFolderService = dlFolderService;
 	}

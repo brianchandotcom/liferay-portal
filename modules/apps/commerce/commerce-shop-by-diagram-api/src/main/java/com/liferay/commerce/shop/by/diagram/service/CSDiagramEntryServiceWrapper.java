@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CSDiagramEntryServiceWrapper
 	implements CSDiagramEntryService, ServiceWrapper<CSDiagramEntryService> {
 
+	public CSDiagramEntryServiceWrapper() {
+		this(null);
+	}
+
 	public CSDiagramEntryServiceWrapper(
 		CSDiagramEntryService csDiagramEntryService) {
 

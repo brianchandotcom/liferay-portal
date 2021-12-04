@@ -28,6 +28,10 @@ public class FragmentEntryLinkServiceWrapper
 	implements FragmentEntryLinkService,
 			   ServiceWrapper<FragmentEntryLinkService> {
 
+	public FragmentEntryLinkServiceWrapper() {
+		this(null);
+	}
+
 	public FragmentEntryLinkServiceWrapper(
 		FragmentEntryLinkService fragmentEntryLinkService) {
 

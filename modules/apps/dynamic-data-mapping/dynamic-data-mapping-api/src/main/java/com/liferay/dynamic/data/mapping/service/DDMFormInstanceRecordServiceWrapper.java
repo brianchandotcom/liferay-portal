@@ -28,6 +28,10 @@ public class DDMFormInstanceRecordServiceWrapper
 	implements DDMFormInstanceRecordService,
 			   ServiceWrapper<DDMFormInstanceRecordService> {
 
+	public DDMFormInstanceRecordServiceWrapper() {
+		this(null);
+	}
+
 	public DDMFormInstanceRecordServiceWrapper(
 		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
 

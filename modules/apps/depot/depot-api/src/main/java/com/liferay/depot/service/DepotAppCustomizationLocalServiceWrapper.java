@@ -27,6 +27,10 @@ public class DepotAppCustomizationLocalServiceWrapper
 	implements DepotAppCustomizationLocalService,
 			   ServiceWrapper<DepotAppCustomizationLocalService> {
 
+	public DepotAppCustomizationLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DepotAppCustomizationLocalServiceWrapper(
 		DepotAppCustomizationLocalService depotAppCustomizationLocalService) {
 

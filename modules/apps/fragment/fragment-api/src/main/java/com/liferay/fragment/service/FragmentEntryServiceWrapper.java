@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class FragmentEntryServiceWrapper
 	implements FragmentEntryService, ServiceWrapper<FragmentEntryService> {
 
+	public FragmentEntryServiceWrapper() {
+		this(null);
+	}
+
 	public FragmentEntryServiceWrapper(
 		FragmentEntryService fragmentEntryService) {
 

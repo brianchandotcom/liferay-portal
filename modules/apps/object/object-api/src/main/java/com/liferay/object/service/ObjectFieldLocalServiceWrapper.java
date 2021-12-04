@@ -27,6 +27,10 @@ public class ObjectFieldLocalServiceWrapper
 	implements ObjectFieldLocalService,
 			   ServiceWrapper<ObjectFieldLocalService> {
 
+	public ObjectFieldLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectFieldLocalServiceWrapper(
 		ObjectFieldLocalService objectFieldLocalService) {
 

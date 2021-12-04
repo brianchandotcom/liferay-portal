@@ -27,6 +27,10 @@ public class SamlIdpSpSessionLocalServiceWrapper
 	implements SamlIdpSpSessionLocalService,
 			   ServiceWrapper<SamlIdpSpSessionLocalService> {
 
+	public SamlIdpSpSessionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SamlIdpSpSessionLocalServiceWrapper(
 		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService) {
 

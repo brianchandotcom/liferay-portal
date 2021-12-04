@@ -27,6 +27,10 @@ public class EagerBlobEntryLocalServiceWrapper
 	implements EagerBlobEntryLocalService,
 			   ServiceWrapper<EagerBlobEntryLocalService> {
 
+	public EagerBlobEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public EagerBlobEntryLocalServiceWrapper(
 		EagerBlobEntryLocalService eagerBlobEntryLocalService) {
 

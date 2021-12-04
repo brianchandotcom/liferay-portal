@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ObjectEntryServiceWrapper
 	implements ObjectEntryService, ServiceWrapper<ObjectEntryService> {
 
+	public ObjectEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectEntryServiceWrapper(ObjectEntryService objectEntryService) {
 		_objectEntryService = objectEntryService;
 	}

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CommerceChannelServiceWrapper
 	implements CommerceChannelService, ServiceWrapper<CommerceChannelService> {
 
+	public CommerceChannelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceChannelServiceWrapper(
 		CommerceChannelService commerceChannelService) {
 

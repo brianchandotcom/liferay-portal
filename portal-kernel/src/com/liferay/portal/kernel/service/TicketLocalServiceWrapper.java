@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class TicketLocalServiceWrapper
 	implements ServiceWrapper<TicketLocalService>, TicketLocalService {
 
+	public TicketLocalServiceWrapper() {
+		this(null);
+	}
+
 	public TicketLocalServiceWrapper(TicketLocalService ticketLocalService) {
 		_ticketLocalService = ticketLocalService;
 	}

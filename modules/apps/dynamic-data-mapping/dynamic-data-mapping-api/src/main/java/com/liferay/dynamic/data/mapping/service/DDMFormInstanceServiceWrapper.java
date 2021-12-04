@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DDMFormInstanceServiceWrapper
 	implements DDMFormInstanceService, ServiceWrapper<DDMFormInstanceService> {
 
+	public DDMFormInstanceServiceWrapper() {
+		this(null);
+	}
+
 	public DDMFormInstanceServiceWrapper(
 		DDMFormInstanceService ddmFormInstanceService) {
 

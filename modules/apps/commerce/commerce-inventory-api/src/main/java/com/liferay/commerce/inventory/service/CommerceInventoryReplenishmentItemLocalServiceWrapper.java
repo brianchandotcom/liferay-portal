@@ -27,6 +27,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 	implements CommerceInventoryReplenishmentItemLocalService,
 			   ServiceWrapper<CommerceInventoryReplenishmentItemLocalService> {
 
+	public CommerceInventoryReplenishmentItemLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceInventoryReplenishmentItemLocalServiceWrapper(
 		CommerceInventoryReplenishmentItemLocalService
 			commerceInventoryReplenishmentItemLocalService) {

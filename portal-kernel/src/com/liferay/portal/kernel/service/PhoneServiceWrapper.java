@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class PhoneServiceWrapper
 	implements PhoneService, ServiceWrapper<PhoneService> {
 
+	public PhoneServiceWrapper() {
+		this(null);
+	}
+
 	public PhoneServiceWrapper(PhoneService phoneService) {
 		_phoneService = phoneService;
 	}

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.model.Layout;
 public class LayoutServiceWrapper
 	implements LayoutService, ServiceWrapper<LayoutService> {
 
+	public LayoutServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutServiceWrapper(LayoutService layoutService) {
 		_layoutService = layoutService;
 	}

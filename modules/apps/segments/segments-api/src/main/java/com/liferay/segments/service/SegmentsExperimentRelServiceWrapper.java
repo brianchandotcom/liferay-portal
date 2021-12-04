@@ -28,6 +28,10 @@ public class SegmentsExperimentRelServiceWrapper
 	implements SegmentsExperimentRelService,
 			   ServiceWrapper<SegmentsExperimentRelService> {
 
+	public SegmentsExperimentRelServiceWrapper() {
+		this(null);
+	}
+
 	public SegmentsExperimentRelServiceWrapper(
 		SegmentsExperimentRelService segmentsExperimentRelService) {
 

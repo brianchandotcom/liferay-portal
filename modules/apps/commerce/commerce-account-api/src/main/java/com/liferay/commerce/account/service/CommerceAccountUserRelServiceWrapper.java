@@ -27,6 +27,10 @@ public class CommerceAccountUserRelServiceWrapper
 	implements CommerceAccountUserRelService,
 			   ServiceWrapper<CommerceAccountUserRelService> {
 
+	public CommerceAccountUserRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceAccountUserRelServiceWrapper(
 		CommerceAccountUserRelService commerceAccountUserRelService) {
 

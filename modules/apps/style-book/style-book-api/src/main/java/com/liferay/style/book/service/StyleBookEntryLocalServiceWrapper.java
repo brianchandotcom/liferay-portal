@@ -30,6 +30,10 @@ public class StyleBookEntryLocalServiceWrapper
 	implements ServiceWrapper<StyleBookEntryLocalService>,
 			   StyleBookEntryLocalService {
 
+	public StyleBookEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public StyleBookEntryLocalServiceWrapper(
 		StyleBookEntryLocalService styleBookEntryLocalService) {
 

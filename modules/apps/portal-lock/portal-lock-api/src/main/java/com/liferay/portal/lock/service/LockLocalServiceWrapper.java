@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class LockLocalServiceWrapper
 	implements LockLocalService, ServiceWrapper<LockLocalService> {
 
+	public LockLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LockLocalServiceWrapper(LockLocalService lockLocalService) {
 		_lockLocalService = lockLocalService;
 	}

@@ -27,6 +27,10 @@ public class CPOptionCategoryServiceWrapper
 	implements CPOptionCategoryService,
 			   ServiceWrapper<CPOptionCategoryService> {
 
+	public CPOptionCategoryServiceWrapper() {
+		this(null);
+	}
+
 	public CPOptionCategoryServiceWrapper(
 		CPOptionCategoryService cpOptionCategoryService) {
 

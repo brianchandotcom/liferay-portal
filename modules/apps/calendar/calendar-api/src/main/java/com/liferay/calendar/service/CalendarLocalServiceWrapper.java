@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class CalendarLocalServiceWrapper
 	implements CalendarLocalService, ServiceWrapper<CalendarLocalService> {
 
+	public CalendarLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CalendarLocalServiceWrapper(
 		CalendarLocalService calendarLocalService) {
 

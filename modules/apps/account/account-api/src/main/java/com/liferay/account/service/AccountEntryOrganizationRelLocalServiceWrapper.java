@@ -27,6 +27,10 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 	implements AccountEntryOrganizationRelLocalService,
 			   ServiceWrapper<AccountEntryOrganizationRelLocalService> {
 
+	public AccountEntryOrganizationRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountEntryOrganizationRelLocalServiceWrapper(
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService) {

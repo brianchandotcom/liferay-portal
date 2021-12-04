@@ -27,6 +27,10 @@ public class CommerceVirtualOrderItemServiceWrapper
 	implements CommerceVirtualOrderItemService,
 			   ServiceWrapper<CommerceVirtualOrderItemService> {
 
+	public CommerceVirtualOrderItemServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceVirtualOrderItemServiceWrapper(
 		CommerceVirtualOrderItemService commerceVirtualOrderItemService) {
 

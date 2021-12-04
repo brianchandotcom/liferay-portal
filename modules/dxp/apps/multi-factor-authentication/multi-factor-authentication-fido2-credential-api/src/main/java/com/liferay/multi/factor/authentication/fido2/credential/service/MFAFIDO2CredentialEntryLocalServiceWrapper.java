@@ -27,6 +27,10 @@ public class MFAFIDO2CredentialEntryLocalServiceWrapper
 	implements MFAFIDO2CredentialEntryLocalService,
 			   ServiceWrapper<MFAFIDO2CredentialEntryLocalService> {
 
+	public MFAFIDO2CredentialEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MFAFIDO2CredentialEntryLocalServiceWrapper(
 		MFAFIDO2CredentialEntryLocalService
 			mfaFIDO2CredentialEntryLocalService) {

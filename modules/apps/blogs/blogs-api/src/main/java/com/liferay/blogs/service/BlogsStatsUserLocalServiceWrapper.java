@@ -27,6 +27,10 @@ public class BlogsStatsUserLocalServiceWrapper
 	implements BlogsStatsUserLocalService,
 			   ServiceWrapper<BlogsStatsUserLocalService> {
 
+	public BlogsStatsUserLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BlogsStatsUserLocalServiceWrapper(
 		BlogsStatsUserLocalService blogsStatsUserLocalService) {
 

@@ -27,6 +27,10 @@ public class OpenIdConnectSessionLocalServiceWrapper
 	implements OpenIdConnectSessionLocalService,
 			   ServiceWrapper<OpenIdConnectSessionLocalService> {
 
+	public OpenIdConnectSessionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OpenIdConnectSessionLocalServiceWrapper(
 		OpenIdConnectSessionLocalService openIdConnectSessionLocalService) {
 

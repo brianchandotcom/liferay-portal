@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class COREntryLocalServiceWrapper
 	implements COREntryLocalService, ServiceWrapper<COREntryLocalService> {
 
+	public COREntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public COREntryLocalServiceWrapper(
 		COREntryLocalService corEntryLocalService) {
 

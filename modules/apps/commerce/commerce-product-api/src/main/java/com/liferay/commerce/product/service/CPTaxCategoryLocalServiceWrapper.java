@@ -27,6 +27,10 @@ public class CPTaxCategoryLocalServiceWrapper
 	implements CPTaxCategoryLocalService,
 			   ServiceWrapper<CPTaxCategoryLocalService> {
 
+	public CPTaxCategoryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPTaxCategoryLocalServiceWrapper(
 		CPTaxCategoryLocalService cpTaxCategoryLocalService) {
 

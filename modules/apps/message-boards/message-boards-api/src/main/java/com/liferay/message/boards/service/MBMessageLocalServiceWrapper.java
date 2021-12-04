@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class MBMessageLocalServiceWrapper
 	implements MBMessageLocalService, ServiceWrapper<MBMessageLocalService> {
 
+	public MBMessageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBMessageLocalServiceWrapper(
 		MBMessageLocalService mbMessageLocalService) {
 

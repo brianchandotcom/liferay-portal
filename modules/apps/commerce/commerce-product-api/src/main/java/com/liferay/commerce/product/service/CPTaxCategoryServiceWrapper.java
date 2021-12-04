@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPTaxCategoryServiceWrapper
 	implements CPTaxCategoryService, ServiceWrapper<CPTaxCategoryService> {
 
+	public CPTaxCategoryServiceWrapper() {
+		this(null);
+	}
+
 	public CPTaxCategoryServiceWrapper(
 		CPTaxCategoryService cpTaxCategoryService) {
 

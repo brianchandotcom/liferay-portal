@@ -27,6 +27,10 @@ public class MicroblogsEntryLocalServiceWrapper
 	implements MicroblogsEntryLocalService,
 			   ServiceWrapper<MicroblogsEntryLocalService> {
 
+	public MicroblogsEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MicroblogsEntryLocalServiceWrapper(
 		MicroblogsEntryLocalService microblogsEntryLocalService) {
 

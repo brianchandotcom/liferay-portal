@@ -27,6 +27,10 @@ public class CommerceTaxFixedRateServiceWrapper
 	implements CommerceTaxFixedRateService,
 			   ServiceWrapper<CommerceTaxFixedRateService> {
 
+	public CommerceTaxFixedRateServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceTaxFixedRateServiceWrapper(
 		CommerceTaxFixedRateService commerceTaxFixedRateService) {
 

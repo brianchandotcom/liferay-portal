@@ -27,6 +27,10 @@ public class CPInstanceOptionValueRelLocalServiceWrapper
 	implements CPInstanceOptionValueRelLocalService,
 			   ServiceWrapper<CPInstanceOptionValueRelLocalService> {
 
+	public CPInstanceOptionValueRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPInstanceOptionValueRelLocalServiceWrapper(
 		CPInstanceOptionValueRelLocalService
 			cpInstanceOptionValueRelLocalService) {

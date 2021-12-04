@@ -27,6 +27,10 @@ public class MDRRuleGroupLocalServiceWrapper
 	implements MDRRuleGroupLocalService,
 			   ServiceWrapper<MDRRuleGroupLocalService> {
 
+	public MDRRuleGroupLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MDRRuleGroupLocalServiceWrapper(
 		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
 

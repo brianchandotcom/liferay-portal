@@ -27,6 +27,10 @@ public class WikiPageResourceLocalServiceWrapper
 	implements ServiceWrapper<WikiPageResourceLocalService>,
 			   WikiPageResourceLocalService {
 
+	public WikiPageResourceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public WikiPageResourceLocalServiceWrapper(
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 

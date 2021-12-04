@@ -27,6 +27,10 @@ public class BatchPlannerPlanLocalServiceWrapper
 	implements BatchPlannerPlanLocalService,
 			   ServiceWrapper<BatchPlannerPlanLocalService> {
 
+	public BatchPlannerPlanLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BatchPlannerPlanLocalServiceWrapper(
 		BatchPlannerPlanLocalService batchPlannerPlanLocalService) {
 

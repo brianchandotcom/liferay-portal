@@ -27,6 +27,10 @@ public class CTPreferencesLocalServiceWrapper
 	implements CTPreferencesLocalService,
 			   ServiceWrapper<CTPreferencesLocalService> {
 
+	public CTPreferencesLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTPreferencesLocalServiceWrapper(
 		CTPreferencesLocalService ctPreferencesLocalService) {
 

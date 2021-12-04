@@ -27,6 +27,10 @@ public class ScreensJournalArticleServiceWrapper
 	implements ScreensJournalArticleService,
 			   ServiceWrapper<ScreensJournalArticleService> {
 
+	public ScreensJournalArticleServiceWrapper() {
+		this(null);
+	}
+
 	public ScreensJournalArticleServiceWrapper(
 		ScreensJournalArticleService screensJournalArticleService) {
 

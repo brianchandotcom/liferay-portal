@@ -30,6 +30,10 @@ public class LayoutPageTemplateStructureRelLocalServiceWrapper
 	implements LayoutPageTemplateStructureRelLocalService,
 			   ServiceWrapper<LayoutPageTemplateStructureRelLocalService> {
 
+	public LayoutPageTemplateStructureRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPageTemplateStructureRelLocalServiceWrapper(
 		LayoutPageTemplateStructureRelLocalService
 			layoutPageTemplateStructureRelLocalService) {

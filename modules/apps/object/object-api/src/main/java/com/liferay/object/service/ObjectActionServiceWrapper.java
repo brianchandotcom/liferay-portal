@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ObjectActionServiceWrapper
 	implements ObjectActionService, ServiceWrapper<ObjectActionService> {
 
+	public ObjectActionServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectActionServiceWrapper(ObjectActionService objectActionService) {
 		_objectActionService = objectActionService;
 	}

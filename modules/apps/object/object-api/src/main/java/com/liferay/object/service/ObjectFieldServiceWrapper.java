@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ObjectFieldServiceWrapper
 	implements ObjectFieldService, ServiceWrapper<ObjectFieldService> {
 
+	public ObjectFieldServiceWrapper() {
+		this(null);
+	}
+
 	public ObjectFieldServiceWrapper(ObjectFieldService objectFieldService) {
 		_objectFieldService = objectFieldService;
 	}

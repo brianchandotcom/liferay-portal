@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class RepositoryServiceWrapper
 	implements RepositoryService, ServiceWrapper<RepositoryService> {
 
+	public RepositoryServiceWrapper() {
+		this(null);
+	}
+
 	public RepositoryServiceWrapper(RepositoryService repositoryService) {
 		_repositoryService = repositoryService;
 	}

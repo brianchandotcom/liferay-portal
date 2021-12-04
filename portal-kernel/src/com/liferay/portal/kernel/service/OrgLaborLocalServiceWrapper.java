@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class OrgLaborLocalServiceWrapper
 	implements OrgLaborLocalService, ServiceWrapper<OrgLaborLocalService> {
 
+	public OrgLaborLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OrgLaborLocalServiceWrapper(
 		OrgLaborLocalService orgLaborLocalService) {
 

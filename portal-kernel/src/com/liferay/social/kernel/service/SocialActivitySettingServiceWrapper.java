@@ -28,6 +28,10 @@ public class SocialActivitySettingServiceWrapper
 	implements ServiceWrapper<SocialActivitySettingService>,
 			   SocialActivitySettingService {
 
+	public SocialActivitySettingServiceWrapper() {
+		this(null);
+	}
+
 	public SocialActivitySettingServiceWrapper(
 		SocialActivitySettingService socialActivitySettingService) {
 

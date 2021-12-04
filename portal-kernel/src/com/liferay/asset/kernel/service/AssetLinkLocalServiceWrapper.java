@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class AssetLinkLocalServiceWrapper
 	implements AssetLinkLocalService, ServiceWrapper<AssetLinkLocalService> {
 
+	public AssetLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AssetLinkLocalServiceWrapper(
 		AssetLinkLocalService assetLinkLocalService) {
 

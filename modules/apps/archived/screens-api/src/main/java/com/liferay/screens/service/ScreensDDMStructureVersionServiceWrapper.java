@@ -27,6 +27,10 @@ public class ScreensDDMStructureVersionServiceWrapper
 	implements ScreensDDMStructureVersionService,
 			   ServiceWrapper<ScreensDDMStructureVersionService> {
 
+	public ScreensDDMStructureVersionServiceWrapper() {
+		this(null);
+	}
+
 	public ScreensDDMStructureVersionServiceWrapper(
 		ScreensDDMStructureVersionService screensDDMStructureVersionService) {
 

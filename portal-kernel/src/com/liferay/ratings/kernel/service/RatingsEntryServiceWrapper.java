@@ -27,6 +27,10 @@ import com.liferay.ratings.kernel.model.RatingsEntry;
 public class RatingsEntryServiceWrapper
 	implements RatingsEntryService, ServiceWrapper<RatingsEntryService> {
 
+	public RatingsEntryServiceWrapper() {
+		this(null);
+	}
+
 	public RatingsEntryServiceWrapper(RatingsEntryService ratingsEntryService) {
 		_ratingsEntryService = ratingsEntryService;
 	}

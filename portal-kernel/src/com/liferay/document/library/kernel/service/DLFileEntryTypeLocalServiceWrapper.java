@@ -30,6 +30,10 @@ public class DLFileEntryTypeLocalServiceWrapper
 	implements DLFileEntryTypeLocalService,
 			   ServiceWrapper<DLFileEntryTypeLocalService> {
 
+	public DLFileEntryTypeLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLFileEntryTypeLocalServiceWrapper(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 

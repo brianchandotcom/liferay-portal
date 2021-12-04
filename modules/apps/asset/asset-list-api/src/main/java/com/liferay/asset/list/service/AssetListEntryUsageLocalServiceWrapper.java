@@ -30,6 +30,10 @@ public class AssetListEntryUsageLocalServiceWrapper
 	implements AssetListEntryUsageLocalService,
 			   ServiceWrapper<AssetListEntryUsageLocalService> {
 
+	public AssetListEntryUsageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AssetListEntryUsageLocalServiceWrapper(
 		AssetListEntryUsageLocalService assetListEntryUsageLocalService) {
 

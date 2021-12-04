@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class ReleaseLocalServiceWrapper
 	implements ReleaseLocalService, ServiceWrapper<ReleaseLocalService> {
 
+	public ReleaseLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ReleaseLocalServiceWrapper(ReleaseLocalService releaseLocalService) {
 		_releaseLocalService = releaseLocalService;
 	}

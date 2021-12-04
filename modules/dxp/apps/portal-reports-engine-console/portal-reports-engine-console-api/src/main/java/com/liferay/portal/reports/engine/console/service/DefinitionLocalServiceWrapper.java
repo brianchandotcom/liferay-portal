@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DefinitionLocalServiceWrapper
 	implements DefinitionLocalService, ServiceWrapper<DefinitionLocalService> {
 
+	public DefinitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DefinitionLocalServiceWrapper(
 		DefinitionLocalService definitionLocalService) {
 

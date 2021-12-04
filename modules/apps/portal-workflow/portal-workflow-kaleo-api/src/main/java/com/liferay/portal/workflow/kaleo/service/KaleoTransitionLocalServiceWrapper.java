@@ -27,6 +27,10 @@ public class KaleoTransitionLocalServiceWrapper
 	implements KaleoTransitionLocalService,
 			   ServiceWrapper<KaleoTransitionLocalService> {
 
+	public KaleoTransitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoTransitionLocalServiceWrapper(
 		KaleoTransitionLocalService kaleoTransitionLocalService) {
 

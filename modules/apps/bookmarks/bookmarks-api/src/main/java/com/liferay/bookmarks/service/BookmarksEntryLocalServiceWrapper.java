@@ -27,6 +27,10 @@ public class BookmarksEntryLocalServiceWrapper
 	implements BookmarksEntryLocalService,
 			   ServiceWrapper<BookmarksEntryLocalService> {
 
+	public BookmarksEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BookmarksEntryLocalServiceWrapper(
 		BookmarksEntryLocalService bookmarksEntryLocalService) {
 

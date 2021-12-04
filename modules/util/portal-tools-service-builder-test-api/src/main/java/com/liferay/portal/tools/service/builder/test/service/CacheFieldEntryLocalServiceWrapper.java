@@ -27,6 +27,10 @@ public class CacheFieldEntryLocalServiceWrapper
 	implements CacheFieldEntryLocalService,
 			   ServiceWrapper<CacheFieldEntryLocalService> {
 
+	public CacheFieldEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CacheFieldEntryLocalServiceWrapper(
 		CacheFieldEntryLocalService cacheFieldEntryLocalService) {
 

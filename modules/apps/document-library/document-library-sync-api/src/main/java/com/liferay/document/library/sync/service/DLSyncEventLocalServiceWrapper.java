@@ -27,6 +27,10 @@ public class DLSyncEventLocalServiceWrapper
 	implements DLSyncEventLocalService,
 			   ServiceWrapper<DLSyncEventLocalService> {
 
+	public DLSyncEventLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLSyncEventLocalServiceWrapper(
 		DLSyncEventLocalService dlSyncEventLocalService) {
 

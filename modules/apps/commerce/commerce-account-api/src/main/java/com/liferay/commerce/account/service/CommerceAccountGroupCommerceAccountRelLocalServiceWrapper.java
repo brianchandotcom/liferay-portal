@@ -28,6 +28,10 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 			   ServiceWrapper
 				   <CommerceAccountGroupCommerceAccountRelLocalService> {
 
+	public CommerceAccountGroupCommerceAccountRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceAccountGroupCommerceAccountRelLocalServiceWrapper(
 		CommerceAccountGroupCommerceAccountRelLocalService
 			commerceAccountGroupCommerceAccountRelLocalService) {

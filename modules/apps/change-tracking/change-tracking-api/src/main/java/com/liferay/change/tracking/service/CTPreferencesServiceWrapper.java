@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CTPreferencesServiceWrapper
 	implements CTPreferencesService, ServiceWrapper<CTPreferencesService> {
 
+	public CTPreferencesServiceWrapper() {
+		this(null);
+	}
+
 	public CTPreferencesServiceWrapper(
 		CTPreferencesService ctPreferencesService) {
 

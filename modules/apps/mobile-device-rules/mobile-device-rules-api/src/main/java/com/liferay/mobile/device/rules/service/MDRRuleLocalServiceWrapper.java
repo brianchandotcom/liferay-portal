@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class MDRRuleLocalServiceWrapper
 	implements MDRRuleLocalService, ServiceWrapper<MDRRuleLocalService> {
 
+	public MDRRuleLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MDRRuleLocalServiceWrapper(MDRRuleLocalService mdrRuleLocalService) {
 		_mdrRuleLocalService = mdrRuleLocalService;
 	}

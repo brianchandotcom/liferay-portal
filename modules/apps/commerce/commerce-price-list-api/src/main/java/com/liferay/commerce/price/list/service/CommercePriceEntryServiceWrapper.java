@@ -27,6 +27,10 @@ public class CommercePriceEntryServiceWrapper
 	implements CommercePriceEntryService,
 			   ServiceWrapper<CommercePriceEntryService> {
 
+	public CommercePriceEntryServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePriceEntryServiceWrapper(
 		CommercePriceEntryService commercePriceEntryService) {
 

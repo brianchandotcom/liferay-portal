@@ -25,6 +25,10 @@ public class PluginSettingLocalServiceWrapper
 	implements PluginSettingLocalService,
 			   ServiceWrapper<PluginSettingLocalService> {
 
+	public PluginSettingLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PluginSettingLocalServiceWrapper(
 		PluginSettingLocalService pluginSettingLocalService) {
 

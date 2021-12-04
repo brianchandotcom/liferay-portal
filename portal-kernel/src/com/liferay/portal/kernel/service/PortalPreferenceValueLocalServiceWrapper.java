@@ -25,6 +25,10 @@ public class PortalPreferenceValueLocalServiceWrapper
 	implements PortalPreferenceValueLocalService,
 			   ServiceWrapper<PortalPreferenceValueLocalService> {
 
+	public PortalPreferenceValueLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PortalPreferenceValueLocalServiceWrapper(
 		PortalPreferenceValueLocalService portalPreferenceValueLocalService) {
 

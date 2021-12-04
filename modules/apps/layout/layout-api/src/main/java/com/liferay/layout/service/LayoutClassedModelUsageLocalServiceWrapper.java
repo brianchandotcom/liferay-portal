@@ -30,6 +30,10 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 	implements LayoutClassedModelUsageLocalService,
 			   ServiceWrapper<LayoutClassedModelUsageLocalService> {
 
+	public LayoutClassedModelUsageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutClassedModelUsageLocalServiceWrapper(
 		LayoutClassedModelUsageLocalService
 			layoutClassedModelUsageLocalService) {

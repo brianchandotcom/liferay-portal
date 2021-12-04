@@ -27,6 +27,10 @@ public class CPDefinitionLinkServiceWrapper
 	implements CPDefinitionLinkService,
 			   ServiceWrapper<CPDefinitionLinkService> {
 
+	public CPDefinitionLinkServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionLinkServiceWrapper(
 		CPDefinitionLinkService cpDefinitionLinkService) {
 

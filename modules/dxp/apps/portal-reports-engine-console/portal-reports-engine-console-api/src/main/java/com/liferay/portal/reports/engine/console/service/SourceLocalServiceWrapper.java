@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class SourceLocalServiceWrapper
 	implements ServiceWrapper<SourceLocalService>, SourceLocalService {
 
+	public SourceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SourceLocalServiceWrapper(SourceLocalService sourceLocalService) {
 		_sourceLocalService = sourceLocalService;
 	}

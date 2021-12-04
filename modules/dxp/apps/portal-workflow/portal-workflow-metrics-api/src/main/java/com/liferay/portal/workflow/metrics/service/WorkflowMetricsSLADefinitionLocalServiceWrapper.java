@@ -27,6 +27,10 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	implements ServiceWrapper<WorkflowMetricsSLADefinitionLocalService>,
 			   WorkflowMetricsSLADefinitionLocalService {
 
+	public WorkflowMetricsSLADefinitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public WorkflowMetricsSLADefinitionLocalServiceWrapper(
 		WorkflowMetricsSLADefinitionLocalService
 			workflowMetricsSLADefinitionLocalService) {

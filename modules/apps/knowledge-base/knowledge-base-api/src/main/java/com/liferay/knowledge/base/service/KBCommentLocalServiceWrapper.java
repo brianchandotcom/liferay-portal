@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KBCommentLocalServiceWrapper
 	implements KBCommentLocalService, ServiceWrapper<KBCommentLocalService> {
 
+	public KBCommentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KBCommentLocalServiceWrapper(
 		KBCommentLocalService kbCommentLocalService) {
 

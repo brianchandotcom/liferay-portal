@@ -32,6 +32,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class DDMContentLocalServiceWrapper
 	implements DDMContentLocalService, ServiceWrapper<DDMContentLocalService> {
 
+	public DDMContentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMContentLocalServiceWrapper(
 		DDMContentLocalService ddmContentLocalService) {
 

@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DDMStructureServiceWrapper
 	implements DDMStructureService, ServiceWrapper<DDMStructureService> {
 
+	public DDMStructureServiceWrapper() {
+		this(null);
+	}
+
 	public DDMStructureServiceWrapper(DDMStructureService ddmStructureService) {
 		_ddmStructureService = ddmStructureService;
 	}

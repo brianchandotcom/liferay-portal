@@ -27,6 +27,10 @@ public class DLStorageQuotaLocalServiceWrapper
 	implements DLStorageQuotaLocalService,
 			   ServiceWrapper<DLStorageQuotaLocalService> {
 
+	public DLStorageQuotaLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLStorageQuotaLocalServiceWrapper(
 		DLStorageQuotaLocalService dlStorageQuotaLocalService) {
 

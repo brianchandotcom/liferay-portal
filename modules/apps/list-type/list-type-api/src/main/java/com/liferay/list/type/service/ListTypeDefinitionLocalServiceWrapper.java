@@ -27,6 +27,10 @@ public class ListTypeDefinitionLocalServiceWrapper
 	implements ListTypeDefinitionLocalService,
 			   ServiceWrapper<ListTypeDefinitionLocalService> {
 
+	public ListTypeDefinitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ListTypeDefinitionLocalServiceWrapper(
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService) {
 

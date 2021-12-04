@@ -27,6 +27,10 @@ public class SXPBlueprintLocalServiceWrapper
 	implements ServiceWrapper<SXPBlueprintLocalService>,
 			   SXPBlueprintLocalService {
 
+	public SXPBlueprintLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SXPBlueprintLocalServiceWrapper(
 		SXPBlueprintLocalService sxpBlueprintLocalService) {
 

@@ -30,6 +30,10 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	implements AssetListEntryAssetEntryRelLocalService,
 			   ServiceWrapper<AssetListEntryAssetEntryRelLocalService> {
 
+	public AssetListEntryAssetEntryRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AssetListEntryAssetEntryRelLocalServiceWrapper(
 		AssetListEntryAssetEntryRelLocalService
 			assetListEntryAssetEntryRelLocalService) {

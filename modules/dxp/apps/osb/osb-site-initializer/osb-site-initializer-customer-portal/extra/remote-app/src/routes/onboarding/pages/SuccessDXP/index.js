@@ -1,11 +1,17 @@
+import { useContext } from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import {LiferayTheme} from '../../../../common/services/liferay';
+import { PARAMS_KEYS } from '../../../../common/services/liferay/search-params';
 import {API_BASE_URL} from '../../../../common/utils';
 import Layout from '../../components/Layout';
+import { AppContext } from '../../context';
 
 const SuccessDXP = () => {
-	function onClickDone() {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}`;
+	const [{ project }] = useContext(AppContext);
+
+	const onClickDone = () => {
+		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+		}=${project.accountKey}`;
 	}
 
 	return (

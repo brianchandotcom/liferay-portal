@@ -230,13 +230,51 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136827. It checks that the related asset of a file can be published."
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishRelatedAsset {
-		property portal.acceptance = "false";
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			title = "Web Content Title");
 
-		// TODO LPS-136827 CanPublishRelatedAsset pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			site = "false",
+			sourceFileName = "Document_1.jpeg");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Web Content Title",
+			assetType = "Basic Web Content");
+
+		Button.clickPublish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.expandInfo();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",
+			value1 = "Web Content Title");
 	}
 
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."

@@ -1,8 +1,6 @@
 import {useQuery} from '@apollo/client';
 import {useContext, useEffect} from 'react';
 import {
-	onboardingPageGuard,
-	overviewPageGuard,
 	usePageGuard,
 } from '../../../../common/hooks/usePageGuard';
 import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
@@ -14,9 +12,8 @@ const Overview = ({userAccount}) => {
 	const [{project}, dispatch] = useContext(AppContext);
 	const {isLoading} = usePageGuard(
 		userAccount,
-		overviewPageGuard,
-		onboardingPageGuard,
-		project.accountKey
+		project.accountKey,
+		'overview'
 	);
 	const {data, isLoading: isLoadingKoroneiki} = useQuery(
 		getKoroneikiAccounts,

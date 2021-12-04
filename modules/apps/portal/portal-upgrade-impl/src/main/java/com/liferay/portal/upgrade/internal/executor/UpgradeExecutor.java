@@ -164,7 +164,8 @@ public class UpgradeExecutor {
 		ServiceRegistration<Release> inProgressServiceRegistration = null;
 
 		if (release != null) {
-			inProgressServiceRegistration = _releasePublisher.publish(release);
+			inProgressServiceRegistration = _releasePublisher.publish(
+				release, true);
 		}
 
 		if (inProgressServiceRegistration != null) {

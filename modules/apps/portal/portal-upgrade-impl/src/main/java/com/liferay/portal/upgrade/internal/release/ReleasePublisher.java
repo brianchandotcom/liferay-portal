@@ -65,12 +65,15 @@ public final class ReleasePublisher extends BaseModelListener<Release> {
 			});
 	}
 
-	public ServiceRegistration<Release> publish(Release release) {
+	public ServiceRegistration<Release> publish(
+		Release release, boolean isNew) {
+
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
 			"release.bundle.symbolic.name", release.getBundleSymbolicName());
 		properties.put("release.state", release.getState());
+		properties.put("release.new", isNew);
 
 		try {
 			if (Validator.isNotNull(release.getSchemaVersion())) {
@@ -97,7 +100,7 @@ public final class ReleasePublisher extends BaseModelListener<Release> {
 	public ServiceRegistration<Release> publishInProgress(Release release) {
 		release.setState(_STATE_IN_PROGRESS);
 
-		return publish(release);
+		return publish(release, true);
 	}
 
 	@Activate
@@ -108,7 +111,7 @@ public final class ReleasePublisher extends BaseModelListener<Release> {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Release release : releases) {
-			publish(release);
+			publish(release, false);
 		}
 	}
 

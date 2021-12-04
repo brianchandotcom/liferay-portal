@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.internal.model.listener;
 
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,6 +50,17 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 				return null;
 			});
+	}
+
+	@Override
+	public void onAfterRemove(Company company) throws ModelListenerException {
+		try {
+			_remoteAppEntryLocalService.deleteRemoteAppEntries(
+				company.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

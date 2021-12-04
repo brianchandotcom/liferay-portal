@@ -399,23 +399,21 @@ public class GitWorkingDirectory {
 	}
 
 	public LocalGitBranch createLocalGitBranch(
-		String localGitBranchName, boolean force, String startPoint) {
+		final String localGitBranchName, final boolean force,
+		final String startPoint) {
 
-		int i = 0;
+		Retryable<LocalGitBranch> createLocalGitBranchRetryable =
+			new Retryable<LocalGitBranch>(true, 3, 0, true) {
 
-		while (true) {
-			try {
-				return _createLocalGitBranch(
-					localGitBranchName, force, startPoint);
-			}
-			catch (Exception exception) {
-				if (i == 2) {
-					throw new RuntimeException(exception);
+				@Override
+				public LocalGitBranch execute() {
+					return _createLocalGitBranch(
+						localGitBranchName, force, startPoint);
 				}
 
-				i++;
-			}
-		}
+			};
+
+		return createLocalGitBranchRetryable.executeWithRetries();
 	}
 
 	public String createPullRequest(

@@ -119,33 +119,26 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			return;
 		}
 
-		int i = 0;
+		Retryable<Object> setupProfileDXPRetryable = new Retryable<Object>(
+			true, _SETUP_PROFILE_DXP_RETRY_COUNT,
+			_SETUP_PROFILE_DXP_RETRY_DELAY, true) {
 
-		while (true) {
-			try {
-				AntUtil.callTarget(
-					getDirectory(), "build.xml", "setup-profile-dxp");
-
-				return;
-			}
-			catch (AntException antException) {
-				if (i == _SETUP_PROFILE_DXP_RETRY_COUNT) {
+			@Override
+			public Object execute() {
+				try {
+					AntUtil.callTarget(
+						getDirectory(), "build.xml", "setup-profile-dxp");
+				}
+				catch (AntException antException) {
 					throw new RuntimeException(antException);
 				}
 
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Will retry 'setup-profile-dxp' in ",
-						String.valueOf(_SETUP_PROFILE_DXP_RETRY_DELAY),
-						" seconds (attempt ", String.valueOf(i + 1), " of ",
-						String.valueOf(_SETUP_PROFILE_DXP_RETRY_COUNT), ")"));
-
-				JenkinsResultsParserUtil.sleep(
-					_SETUP_PROFILE_DXP_RETRY_DELAY * 1000);
-
-				i++;
+				return null;
 			}
-		}
+
+		};
+
+		setupProfileDXPRetryable.executeWithRetries();
 	}
 
 	public void setUpTCKHome() {

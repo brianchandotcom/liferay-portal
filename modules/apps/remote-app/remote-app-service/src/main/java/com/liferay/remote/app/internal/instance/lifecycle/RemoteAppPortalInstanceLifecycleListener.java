@@ -14,16 +14,12 @@
 
 package com.liferay.remote.app.internal.instance.lifecycle;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.remote.app.internal.data.RemoteAppDataUtil;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
-
-import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,18 +43,8 @@ public class RemoteAppPortalInstanceLifecycleListener
 			return;
 		}
 
-		_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
-			_userLocalService.getDefaultUserId(company.getCompanyId()),
-			StringPool.BLANK, "vanilla-counter",
-			"https://liferay.github.io/liferay-frontend-projects" +
-				"/vanilla-counter/index.js",
-			"See how a vanilla counter works as a remote app.",
-			"vanilla_counter", false,
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), "Vanilla Counter"),
-			"category.remote-apps", "friendly-url-mapping=vanilla_counter",
-			"https://liferay.github.io/liferay-frontend-projects",
-			WorkflowConstants.STATUS_APPROVED);
+		RemoteAppDataUtil.addRemoteApp(
+			_remoteAppEntryLocalService, _userLocalService, company);
 	}
 
 	@Reference

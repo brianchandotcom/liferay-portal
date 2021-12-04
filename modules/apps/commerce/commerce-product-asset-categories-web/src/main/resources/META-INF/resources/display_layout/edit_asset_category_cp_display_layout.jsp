@@ -38,7 +38,7 @@ if (cpDisplayLayout != null) {
 	}
 
 	if (selLayout != null) {
-		layoutBreadcrumb = categoryCPDisplayLayoutDisplayContext.getLayoutBreadcrumb(selLayout);
+		layoutBreadcrumb = selLayout.getBreadcrumb(locale);
 	}
 }
 %>

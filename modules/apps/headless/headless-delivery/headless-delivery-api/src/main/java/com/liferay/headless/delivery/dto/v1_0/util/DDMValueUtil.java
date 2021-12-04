@@ -31,13 +31,11 @@ import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constant
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -46,7 +44,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -275,43 +272,6 @@ public class DDMValueUtil {
 		return layout;
 	}
 
-	private static String _getLayoutBreadcrumb(Layout layout, Locale locale) {
-		try {
-			List<Layout> ancestors = layout.getAncestors();
-
-			StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
-
-			if (layout.isPrivateLayout()) {
-				sb.append(LanguageUtil.get(locale, "private-pages"));
-			}
-			else {
-				sb.append(LanguageUtil.get(locale, "public-pages"));
-			}
-
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(StringPool.SPACE);
-
-			Collections.reverse(ancestors);
-
-			for (Layout ancestor : ancestors) {
-				sb.append(HtmlUtil.escape(ancestor.getName(locale)));
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.GREATER_THAN);
-				sb.append(StringPool.SPACE);
-			}
-
-			sb.append(HtmlUtil.escape(layout.getName(locale)));
-
-			return sb.toString();
-		}
-		catch (PortalException portalException) {
-			throw new BadRequestException(
-				"No page found with friendly URL " + layout.getName(),
-				portalException);
-		}
-	}
-
 	private static String _toJSON(
 		String description, DLAppService dlAppService, long fileEntryId) {
 
@@ -454,7 +414,15 @@ public class DDMValueUtil {
 			).put(
 				"layoutId", layout.getLayoutId()
 			).put(
-				"name", _getLayoutBreadcrumb(layout, locale)
+				"name",
+				() -> {
+					try {
+						return layout.getBreadcrumb(locale);
+					}
+					catch (Exception exception) {
+						return StringPool.BLANK;
+					}
+				}
 			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).toString();

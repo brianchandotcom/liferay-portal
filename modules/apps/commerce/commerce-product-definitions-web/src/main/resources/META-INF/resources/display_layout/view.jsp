@@ -24,7 +24,7 @@ String layoutBreadcrumb = StringPool.BLANK;
 Layout selLayout = cpDefinitionDisplayLayoutDisplayContext.getDefaultProductLayout();
 
 if (selLayout != null) {
-	layoutBreadcrumb = cpDefinitionDisplayLayoutDisplayContext.getLayoutBreadcrumb(selLayout);
+	layoutBreadcrumb = selLayout.getBreadcrumb(locale);
 }
 %>
 

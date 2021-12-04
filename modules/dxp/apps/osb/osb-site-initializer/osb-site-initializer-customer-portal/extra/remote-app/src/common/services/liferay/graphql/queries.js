@@ -13,9 +13,7 @@ export const getSetupDXPInfo = gql`
 					value
 				}
 			}
-			accountSubscriptions(
-				filter: $accountSubscriptionsFilter
-			) {
+			accountSubscriptions(filter: $accountSubscriptionsFilter) {
 				items {
 					accountKey
 					name
@@ -68,11 +66,9 @@ export const getAccountSubscriptions = gql`
 `;
 
 export const addAccountFlag = gql`
-	mutation addAccountFlag($accountFlag: InputC_AccountFlag!){
-  		c {
-			createAccountFlag(
-				AccountFlag: $accountFlag
-			){
+	mutation addAccountFlag($accountFlag: InputC_AccountFlag!) {
+		c {
+			createAccountFlag(AccountFlag: $accountFlag) {
 				accountFlagId
 				accountKey
 				name
@@ -123,7 +119,6 @@ export const addSetupDXP = gql`
 	}
 `;
 
-
 export const getAccountRolesAndAccountFlags = gql`
 	query getAccountRolesAndAccountFlags(
 		$accountId: Long!
@@ -146,7 +141,6 @@ export const getAccountRolesAndAccountFlags = gql`
 		}
 	}
 `;
-
 
 export const getAccountSubscriptionGroups = gql`
 	query accountSubscriptionGroups(

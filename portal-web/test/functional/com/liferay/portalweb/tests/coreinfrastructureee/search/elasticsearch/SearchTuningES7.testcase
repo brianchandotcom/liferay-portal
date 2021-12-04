@@ -795,6 +795,59 @@ definition {
 	}
 
 	@priority = "5"
+	test ReindexingRestoresResultRankingsIndex {
+		var companyId = JSONCompany.getCompanyId();
+
+		for (var title : list "Article,Journal") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "Liferay ${title}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Result Rankings");
+
+		SearchTuning.addResultRanking(searchQuery = "Article");
+
+		SearchTuning.pinResult(assetTitle = "Liferay Article");
+
+		Button.clickSave();
+
+		SearchTuning.addResultRanking(searchQuery = "Journal");
+
+		Button.clickSave();
+
+		SearchAdministration.executeReindex();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Result Rankings");
+
+		for (var title : list "Article,Journal") {
+			AssertElementPresent(
+				key_query = "${title}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+		}
+
+		SearchAdministration.openSearchAdmin();
+
+		Navigator.gotoNavItem(navItem = "Field Mappings");
+
+		Click(
+			key_navNested = "liferay-${companyId}-search-tuning-rankings",
+			locator1 = "NavNested#NAV_NESTED_LINK");
+
+		AssertTextEquals.assertPartialText(
+			indexName = "liferay-${companyId}-search-tuning-rankings",
+			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
+			value1 = "liferay-${companyId}-search-tuning-rankings");
+	}
+
+	@priority = "5"
 	test ReindexingRestoresSynonymsIndex {
 		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresSynonymsIndex";
 

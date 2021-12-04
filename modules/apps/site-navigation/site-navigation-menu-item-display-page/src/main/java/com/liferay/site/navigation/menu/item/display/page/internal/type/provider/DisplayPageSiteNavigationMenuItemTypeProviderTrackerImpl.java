@@ -16,7 +16,6 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type.provide
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.capability.InfoItemCapability;
@@ -29,6 +28,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -145,9 +145,8 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 				return infoItemFormProvider;
 			}
 
-			InfoForm infoForm = infoItemFormProvider.getInfoForm();
-
-			String className = infoForm.getName();
+			String className = GenericUtil.getGenericClassName(
+				infoItemFormProvider);
 
 			if (Validator.isNull(className) ||
 				!_hasDisplayPageInfoItemCapability(className)) {
@@ -219,15 +218,15 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 			ServiceReference<InfoItemFormProvider<?>> serviceReference,
 			InfoItemFormProvider<?> infoItemFormProvider) {
 
-			InfoForm infoForm = infoItemFormProvider.getInfoForm();
+			String className = GenericUtil.getGenericClassName(
+				infoItemFormProvider);
 
-			if (Validator.isNull(infoForm.getName())) {
+			if (Validator.isNull(className)) {
 				return;
 			}
 
 			ServiceRegistration<SiteNavigationMenuItemType>
-				serviceRegistration = _serviceRegistrations.remove(
-					infoForm.getName());
+				serviceRegistration = _serviceRegistrations.remove(className);
 
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();

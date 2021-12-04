@@ -14,13 +14,14 @@
 
 package com.liferay.search.experiences.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.search.experiences.internal.util.SXPElementDataUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
@@ -30,11 +31,27 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(enabled = true, immediate = true, service = ModelListener.class)
 public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
-	public void onAfterRemove(Company company) throws ModelListenerException {
+	public void onAfterCreate(Company company) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				try {
+					SXPElementDataUtil.addSXPElements(
+						_sxpElementLocalService, company);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
+
+				return null;
+			});
+	}
+
+	@Override
+	public void onAfterRemove(Company company) {
 		try {
 			_sxpBlueprintLocalService.deleteCompanySXPBlueprints(
 				company.getCompanyId());

@@ -22,15 +22,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -39,7 +42,9 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CLASS_DEF};
+		return new int[] {
+			TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF
+		};
 	}
 
 	@Override
@@ -70,12 +75,32 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 			_checkRemovedMethods(
 				detailAST, removedImportNames, upgradeFromJavaClassesJSONObject,
 				upgradeToJavaClassesJSONObject, upgradeToVersion);
+			_checkRemovedTypes(
+				detailAST, removedImportNames, upgradeFromJavaClassesJSONObject,
+				upgradeToJavaClassesJSONObject, upgradeToVersion);
 			_checkRemovedVariables(
 				detailAST, removedImportNames, upgradeFromJavaClassesJSONObject,
 				upgradeToJavaClassesJSONObject, upgradeToVersion);
 		}
 		catch (Exception exception) {
 		}
+	}
+
+	private Map<String, Set<Integer>> _addTypeName(
+		Map<String, Set<Integer>> typeNamesMap, String typeName,
+		int lineNumber) {
+
+		Set<Integer> lineNumbers = typeNamesMap.get(typeName);
+
+		if (lineNumbers == null) {
+			lineNumbers = new HashSet<>();
+		}
+
+		lineNumbers.add(lineNumber);
+
+		typeNamesMap.put(typeName, lineNumbers);
+
+		return typeNamesMap;
 	}
 
 	private void _checkRemovedMethods(
@@ -140,6 +165,41 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 				log(
 					methodCallDetailAST, _MSG_METHOD_NOT_FOUND, methodName,
 					variableTypeName, upgradeToVersion);
+			}
+		}
+	}
+
+	private void _checkRemovedTypes(
+		DetailAST detailAST, List<String> removedImportNames,
+		JSONObject upgradeFromJavaClassesJSONObject,
+		JSONObject upgradeToJavaClassesJSONObject, String upgradeToVersion) {
+
+		Map<String, Set<Integer>> typeNamesMap = _getTypeNamesMap(detailAST);
+
+		for (Map.Entry<String, Set<Integer>> entry : typeNamesMap.entrySet()) {
+			String typeName = entry.getKey();
+
+			if (!typeName.startsWith("com.liferay.") ||
+				removedImportNames.contains(typeName)) {
+
+				continue;
+			}
+
+			JSONObject upgradeFromClassJSONObject =
+				upgradeFromJavaClassesJSONObject.getJSONObject(typeName);
+			JSONObject upgradeToClassJSONObject =
+				upgradeToJavaClassesJSONObject.getJSONObject(typeName);
+
+			if ((upgradeFromClassJSONObject != null) &&
+				(upgradeToClassJSONObject == null)) {
+
+				Set<Integer> lineNumbers = entry.getValue();
+
+				for (int lineNumber : lineNumbers) {
+					log(
+						lineNumber, _MSG_CLASS_NOT_FOUND, typeName,
+						upgradeToVersion);
+				}
 			}
 		}
 	}
@@ -485,6 +545,62 @@ public class UpgradeRemovedAPICheck extends BaseCheck {
 		}
 
 		return removedImportNames;
+	}
+
+	private Map<String, Set<Integer>> _getTypeNamesMap(DetailAST detailAST) {
+		Map<String, Set<Integer>> typeNamesMap = new HashMap<>();
+
+		List<DetailAST> clauseDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.EXTENDS_CLAUSE,
+			TokenTypes.IMPLEMENTS_CLAUSE);
+
+		for (DetailAST clauseDetailAST : clauseDetailASTList) {
+			List<DetailAST> childDetailASTList = getAllChildTokens(
+				clauseDetailAST, false, TokenTypes.DOT, TokenTypes.IDENT);
+
+			for (DetailAST childDetailAST : childDetailASTList) {
+				if (childDetailAST.getType() == TokenTypes.IDENT) {
+					typeNamesMap = _addTypeName(
+						typeNamesMap,
+						getVariableTypeName(
+							childDetailAST, childDetailAST.getText(), false,
+							false, true),
+						childDetailAST.getLineNo());
+
+					continue;
+				}
+
+				DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+					typeNamesMap = _addTypeName(
+						typeNamesMap,
+						getVariableTypeName(
+							firstChildDetailAST, firstChildDetailAST.getText(),
+							false, false, true),
+						firstChildDetailAST.getLineNo());
+				}
+				else {
+					FullIdent fullIdent = FullIdent.createFullIdent(
+						childDetailAST);
+
+					typeNamesMap = _addTypeName(
+						typeNamesMap, fullIdent.getText(),
+						firstChildDetailAST.getLineNo());
+				}
+			}
+		}
+
+		List<DetailAST> typeDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.TYPE);
+
+		for (DetailAST typeDetailAST : typeDetailASTList) {
+			typeNamesMap = _addTypeName(
+				typeNamesMap, getTypeName(typeDetailAST, false, false, true),
+				typeDetailAST.getLineNo());
+		}
+
+		return typeNamesMap;
 	}
 
 	private VariableStatus _getVariableStatus(

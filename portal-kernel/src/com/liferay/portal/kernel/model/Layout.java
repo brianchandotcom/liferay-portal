@@ -113,6 +113,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public java.util.List<Layout> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getBreadcrumb(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	 * Returns all child layouts of the current layout, independent of user
 	 * access permissions.

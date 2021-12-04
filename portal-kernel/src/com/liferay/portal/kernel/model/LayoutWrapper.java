@@ -416,6 +416,13 @@ public class LayoutWrapper
 		return model.getAvailableLanguageIds();
 	}
 
+	@Override
+	public String getBreadcrumb(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getBreadcrumb(locale);
+	}
+
 	/**
 	 * Returns all child layouts of the current layout, independent of user
 	 * access permissions.

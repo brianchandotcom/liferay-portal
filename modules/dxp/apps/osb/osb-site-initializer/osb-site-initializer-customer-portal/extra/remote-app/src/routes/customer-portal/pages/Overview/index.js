@@ -1,8 +1,6 @@
 import {useQuery} from '@apollo/client';
 import {useContext, useEffect} from 'react';
-import {
-	usePageGuard,
-} from '../../../../common/hooks/usePageGuard';
+import {usePageGuard} from '../../../../common/hooks/usePageGuard';
 import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';

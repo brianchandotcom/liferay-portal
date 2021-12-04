@@ -13,5 +13,4 @@ const WarningBadge = ({children, ...props}) => {
 	);
 };
 
-
-export default WarningBadge
+export default WarningBadge;

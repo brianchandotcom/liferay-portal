@@ -1,46 +1,50 @@
-import { useMutation, useQuery } from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
-import { useFormikContext } from 'formik';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {useFormikContext} from 'formik';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
-import { LiferayTheme } from '../../../../common/services/liferay';
+import {LiferayTheme} from '../../../../common/services/liferay';
 import {
 	addSetupDXP,
-	getSetupDXPInfo
+	getSetupDXPInfo,
 } from '../../../../common/services/liferay/graphql/queries';
-import { PARAMS_KEYS } from '../../../../common/services/liferay/search-params';
-import { API_BASE_URL } from '../../../../common/utils';
-import { isLowercaseAndNumbers } from '../../../../common/utils/validations.form';
-import { AppContext } from '../../../../routes/onboarding/context';
+import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
+import {API_BASE_URL} from '../../../../common/utils';
+import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
+import {AppContext} from '../../../../routes/onboarding/context';
 import AdminInputs from '../../components/AdminInputs';
 import Layout from '../../components/Layout';
-import { actionTypes } from '../../context/reducer';
-import { getInitialDxpAdmin, steps } from '../../utils/constants';
+import {actionTypes} from '../../context/reducer';
+import {getInitialDxpAdmin, steps} from '../../utils/constants';
 
 const SetupDXP = () => {
-	const [{ project }, dispatch] = useContext(AppContext);
-	const { errors, setFieldValue, touched, values } = useFormikContext();
+	const [{project}, dispatch] = useContext(AppContext);
+	const {errors, setFieldValue, touched, values} = useFormikContext();
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const { data } = useQuery(getSetupDXPInfo, {
+	const {data} = useQuery(getSetupDXPInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (contains(name, 'HA DR') or contains(name, 'Std DR'))`,
-			koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`
-		}
+			koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`,
+		},
 	});
 
-	const dXPCDataCenterRegions = useMemo(() => (data?.c?.dXPCDataCenterRegions?.items.map(
-		({ dxpcDataCenterRegionId, name }) => ({
-			label: name,
-			value: dxpcDataCenterRegionId,
-		})
-	) || []), [data]);
+	const dXPCDataCenterRegions = useMemo(
+		() =>
+			data?.c?.dXPCDataCenterRegions?.items.map(
+				({dxpcDataCenterRegionId, name}) => ({
+					label: name,
+					value: dxpcDataCenterRegionId,
+				})
+			) || [],
+		[data]
+	);
 
 	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
 	const projectBrief = data?.c?.koroneikiAccounts?.items?.map(
-		({ code, dxpVersion }) => ({
+		({code, dxpVersion}) => ({
 			code,
 			dxpVersion,
 		})
@@ -49,18 +53,22 @@ const SetupDXP = () => {
 	useEffect(() => {
 		if (dXPCDataCenterRegions.length) {
 			setFieldValue('dxp.dataCenterRegion', dXPCDataCenterRegions[0]);
-	
+
 			if (hasDisasterRecovery) {
-				setFieldValue('dxp.disasterDataCenterRegion', dXPCDataCenterRegions[0]);
+				setFieldValue(
+					'dxp.disasterDataCenterRegion',
+					dXPCDataCenterRegions[0]
+				);
 			}
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
 	const handleSkip = () => {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
+			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${project.accountKey}`;
-	}
+	};
 
 	useEffect(() => {
 		const hasTouched = !Object.keys(touched).length;
@@ -69,7 +77,7 @@ const SetupDXP = () => {
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	const [sendEmailData, { called, error }] = useMutation(addSetupDXP);
+	const [sendEmailData, {called, error}] = useMutation(addSetupDXP);
 
 	const sendEmail = () => {
 		const dxp = values?.dxp;
@@ -96,7 +104,7 @@ const SetupDXP = () => {
 				});
 			}
 		}
-	}
+	};
 
 	return (
 		<Layout
@@ -128,9 +136,7 @@ const SetupDXP = () => {
 					<label>Project Name</label>
 
 					<p className="text-neutral-3 text-paragraph-lg">
-						<strong>
-							{projectBrief ? projectBrief.code : ''}
-						</strong>
+						<strong>{projectBrief ? projectBrief.code : ''}</strong>
 					</p>
 				</div>
 

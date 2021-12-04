@@ -574,23 +574,27 @@ definition {
 		}
 
 		task ("Set filters, open filter panel, and check the filter.") {
-			A11yTool.setFilter(filterType = "critical");
-
-			A11yTool.setFilter(filterType = "serious");
-
 			A11yTool.openFilterPanel();
 
 			A11yTool.checkFilter(filterType = "critical");
 
 			A11yTool.checkFilter(filterType = "serious");
+
+			A11yTool.closeFilterPanel();
 		}
 
 		task ("Refresh page and assert filters are default") {
 			Refresh();
 
-			FormFields.viewCheckboxNotChecked(fieldName = "Critical");
+			A11yTool.openFilterPanel();
 
-			FormFields.viewCheckboxNotChecked(fieldName = "Serious");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_filter = "critical",
+				locator1 = "A11yTool#FILTER_CHECKBOX");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_filter = "serious",
+				locator1 = "A11yTool#FILTER_CHECKBOX");
 		}
 	}
 

@@ -14,33 +14,12 @@
 
 package com.liferay.search.experiences.internal.instance.lifecycle;
 
-import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
-import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
+import com.liferay.search.experiences.internal.util.SXPElementDataUtil;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
-import java.io.IOException;
-
-import java.net.URL;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,80 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 public class SXPPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
-	public SXPPortalInstanceLifecycleListener() throws IOException {
-		Class<?> clazz = getClass();
-
-		Bundle bundle = FrameworkUtil.getBundle(clazz);
-
-		Package pkg = clazz.getPackage();
-
-		String path = StringUtil.replace(
-			pkg.getName(), CharPool.PERIOD, CharPool.SLASH);
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			path.concat("/dependencies"), "*.json", false);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			_sxpElements.add(
-				SXPElementUtil.toSXPElement(
-					StreamUtil.toString(url.openStream())));
-		}
-	}
-
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 
 		// TODO Move to an upgrade process for existing companies. For new
 		// companies, use a model listener.
 
-		_addSXPElements(company);
-	}
-
-	private void _addSXPElements(Company company) throws Exception {
-		Set<String> titles = new HashSet<>();
-
-		for (com.liferay.search.experiences.model.SXPElement sxpPElement :
-				_sxpElementLocalService.getSXPElements(
-					company.getCompanyId(), true)) {
-
-			titles.add(sxpPElement.getTitle(LocaleUtil.US));
-		}
-
-		for (SXPElement sxpElement : _sxpElements) {
-
-			// TODO Should this be en_US or en-US?
-
-			if (titles.contains(
-					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
-
-				continue;
-			}
-
-			User user = company.getDefaultUser();
-
-			_sxpElementLocalService.addSXPElement(
-				user.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(
-					sxpElement.getDescription_i18n()),
-				String.valueOf(sxpElement.getElementDefinition()), true,
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
-				new ServiceContext() {
-					{
-						setAddGroupPermissions(true);
-						setAddGuestPermissions(true);
-						setCompanyId(company.getCompanyId());
-						setScopeGroupId(company.getGroupId());
-						setUserId(user.getUserId());
-					}
-				});
-		}
+		SXPElementDataUtil.addSXPElements(_sxpElementLocalService, company);
 	}
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
-
-	private final List<SXPElement> _sxpElements = new ArrayList<>();
 
 }

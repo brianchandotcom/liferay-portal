@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.search.experiences.internal.instance.lifecycle.test;
+package com.liferay.search.experiences.internal.instance.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -30,11 +30,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author André de Oliveira
  */
 @RunWith(Arquillian.class)
-public class SXPPortalInstanceLifecycleListenerTest {
+public class SXPElementDataUtilTest {
 
 	@ClassRule
 	@Rule
@@ -43,8 +46,13 @@ public class SXPPortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testSXPElements() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(_modelListener.getClass());
+
+		Class<?> clazz = bundle.loadClass(
+			"com.liferay.search.experiences.internal.util.SXPElementDataUtil");
+
 		List<SXPElement> sxpElements = ReflectionTestUtil.getFieldValue(
-			_portalInstanceLifecycleListener, "_sxpElements");
+			clazz, "_sxpElements");
 
 		Assert.assertNotEquals(0, sxpElements.size());
 
@@ -54,8 +62,8 @@ public class SXPPortalInstanceLifecycleListenerTest {
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.search.experiences.internal.instance.lifecycle.SXPPortalInstanceLifecycleListener"
+		filter = "component.name=com.liferay.search.experiences.internal.model.listener.CompanyModelListener"
 	)
-	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
+	private ModelListener<?> _modelListener;
 
 }

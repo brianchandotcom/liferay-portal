@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -131,15 +130,12 @@ public class LayoutPortletsDisplayContext {
 		searchContainer.setId("layoutPortlets");
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
+		searchContainer.setResults(
+			ListUtil.subList(
+				ListUtil.sort(
+					_layoutPortlets, searchContainer.getOrderByComparator()),
+				searchContainer.getStart(), searchContainer.getEnd()));
 		searchContainer.setTotal(_layoutPortlets.size());
-
-		List<Portlet> results = ListUtil.sort(
-			_layoutPortlets, searchContainer.getOrderByComparator());
-
-		results = ListUtil.subList(
-			results, searchContainer.getStart(), searchContainer.getEnd());
-
-		searchContainer.setResults(results);
 
 		return searchContainer;
 	}

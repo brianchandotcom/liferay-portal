@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -67,7 +66,6 @@ import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLi
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionScopePredicate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -220,7 +218,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/view.jsp"
@@ -250,14 +248,10 @@ public class WorkflowDefinitionLinkDisplayContext {
 				return null;
 			}
 		).setParameter(
+			"orderByType", getOrderByType()
+		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
 		).buildPortletURL();
-
-		String orderByType = getOrderByType();
-
-		portletURL.setParameter("orderByType", orderByType);
-
-		return portletURL;
 	}
 
 	public ResourceBundle getResourceBundle() {
@@ -321,13 +315,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 		WorkflowDefinitionLinkSearchTerms searchTerms =
 			(WorkflowDefinitionLinkSearchTerms)searchContainer.getSearchTerms();
 
-		OrderByComparator<WorkflowDefinitionLinkSearchEntry> orderByComparator =
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(
 			WorkflowDefinitionLinkPortletUtil.
 				getWorkflowDefinitionLinkOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+					getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
 		List<WorkflowDefinitionLinkSearchEntry>
@@ -345,17 +337,13 @@ public class WorkflowDefinitionLinkDisplayContext {
 				searchTerms.getKeywords(), false);
 		}
 
+		searchContainer.setResults(
+			ListUtil.subList(
+				ListUtil.sort(
+					workflowDefinitionLinkSearchEntries,
+					searchContainer.getOrderByComparator()),
+				searchContainer.getStart(), searchContainer.getEnd()));
 		searchContainer.setTotal(workflowDefinitionLinkSearchEntries.size());
-
-		Collections.sort(
-			workflowDefinitionLinkSearchEntries,
-			searchContainer.getOrderByComparator());
-
-		List<WorkflowDefinitionLinkSearchEntry> results = ListUtil.subList(
-			workflowDefinitionLinkSearchEntries, searchContainer.getStart(),
-			searchContainer.getEnd());
-
-		searchContainer.setResults(results);
 
 		return searchContainer;
 	}
@@ -382,9 +370,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = getOrderByType();
-
-				if (Objects.equals(orderByType, "asc")) {
+				if (Objects.equals(getOrderByType(), "asc")) {
 					return "desc";
 				}
 

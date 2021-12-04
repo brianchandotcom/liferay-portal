@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,18 +65,11 @@ public class DisplayPageDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-display-page-templates");
 
-		displayPagesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		displayPagesSearchContainer.setOrderByCol(getOrderByCol());
-
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+		displayPagesSearchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		displayPagesSearchContainer.setOrderByComparator(orderByComparator);
-
+					getOrderByCol(), getOrderByType()));
 		displayPagesSearchContainer.setOrderByType(getOrderByType());
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries = null;
@@ -89,8 +81,8 @@ public class DisplayPageDisplayContext {
 					_themeDisplay.getScopeGroupId(), getKeywords(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 					displayPagesSearchContainer.getStart(),
-					displayPagesSearchContainer.getEnd(), orderByComparator);
-
+					displayPagesSearchContainer.getEnd(),
+					displayPagesSearchContainer.getOrderByComparator());
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
@@ -103,8 +95,8 @@ public class DisplayPageDisplayContext {
 					_themeDisplay.getScopeGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 					displayPagesSearchContainer.getStart(),
-					displayPagesSearchContainer.getEnd(), orderByComparator);
-
+					displayPagesSearchContainer.getEnd(),
+					displayPagesSearchContainer.getOrderByComparator());
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
@@ -113,6 +105,8 @@ public class DisplayPageDisplayContext {
 		}
 
 		displayPagesSearchContainer.setResults(layoutPageTemplateEntries);
+		displayPagesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		displayPagesSearchContainer.setTotal(layoutPageTemplateEntriesCount);
 
 		_displayPagesSearchContainer = displayPagesSearchContainer;

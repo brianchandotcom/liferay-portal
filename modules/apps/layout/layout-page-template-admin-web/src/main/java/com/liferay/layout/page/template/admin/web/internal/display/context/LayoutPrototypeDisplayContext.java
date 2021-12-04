@@ -23,12 +23,9 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -126,37 +123,26 @@ public class LayoutPrototypeDisplayContext {
 				"there-are-no-page-templates");
 
 		searchContainer.setId("layoutPrototype");
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		searchContainer.setOrderByCol(getOrderByCol());
-
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+		searchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByComparator(orderByComparator);
-
+					getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-
-		int count =
-			LayoutPageTemplateEntryServiceUtil.
-				getLayoutPageTemplateEntriesCountByType(
-					themeDisplay.getScopeGroupId(), 0,
-					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
-
-		searchContainer.setTotal(count);
-
-		List<LayoutPageTemplateEntry> results =
+		searchContainer.setResults(
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesByType(
 					themeDisplay.getScopeGroupId(), 0,
 					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
 					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
-
-		searchContainer.setResults(results);
+					searchContainer.getOrderByComparator()));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+		searchContainer.setTotal(
+			LayoutPageTemplateEntryServiceUtil.
+				getLayoutPageTemplateEntriesCountByType(
+					themeDisplay.getScopeGroupId(), 0,
+					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE));
 
 		return searchContainer;
 	}

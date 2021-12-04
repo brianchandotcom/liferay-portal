@@ -55,9 +55,9 @@ public class CPInstanceTable {
 		{"deliverySubTypeSettings", Types.VARCHAR},
 		{"deliveryMaxSubscriptionCycles", Types.BIGINT},
 		{"unspsc", Types.VARCHAR}, {"discontinued", Types.BOOLEAN},
-		{"discontinuedCPInstanceUuid", Types.VARCHAR},
-		{"discontinuedCProductId", Types.BIGINT},
-		{"discontinuedDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"discontinuedDate", Types.TIMESTAMP},
+		{"replacementCPInstanceUuid", Types.VARCHAR},
+		{"replacementCProductId", Types.BIGINT}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
 	};
@@ -146,11 +146,11 @@ TABLE_COLUMNS_MAP.put("unspsc", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("discontinued", Types.BOOLEAN);
 
-TABLE_COLUMNS_MAP.put("discontinuedCPInstanceUuid", Types.VARCHAR);
-
-TABLE_COLUMNS_MAP.put("discontinuedCProductId", Types.BIGINT);
-
 TABLE_COLUMNS_MAP.put("discontinuedDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("replacementCPInstanceUuid", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("replacementCProductId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 
@@ -162,7 +162,7 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table CPInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPInstanceUuid VARCHAR(75) null,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,overrideSubscriptionInfo BOOLEAN,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,unspsc VARCHAR(75) null,discontinued BOOLEAN,discontinuedCPInstanceUuid VARCHAR(75) null,discontinuedCProductId LONG,discontinuedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+"create table CPInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPInstanceUuid VARCHAR(75) null,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,overrideSubscriptionInfo BOOLEAN,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,unspsc VARCHAR(75) null,discontinued BOOLEAN,discontinuedDate DATE null,replacementCPInstanceUuid VARCHAR(75) null,replacementCProductId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 
@@ -173,8 +173,10 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 		"create index IX_F4C9CDD on CPInstance (CPDefinitionId, status)",
 		"create index IX_34763899 on CPInstance (CPInstanceUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_E2C3A97D on CPInstance (companyId, externalReferenceCode[$COLUMN_LENGTH:75$])",
+		"create index IX_9FB1144D on CPInstance (companyId, sku[$COLUMN_LENGTH:75$])",
 		"create index IX_7C65903E on CPInstance (displayDate, status)",
 		"create index IX_FF605F28 on CPInstance (groupId, status)",
+		"create index IX_845761A5 on CPInstance (sku[$COLUMN_LENGTH:75$])",
 		"create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId)",
 		"create unique index IX_F902ECDE on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId)"
 	};

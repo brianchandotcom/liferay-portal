@@ -30,10 +30,10 @@ public class CPInstanceUpgradeProcess
 			"BOOLEAN");
 		addColumn(
 			CPInstanceTable.class, CPInstanceTable.TABLE_NAME,
-			"discontinuedCPInstanceUuid", "VARCHAR(75)");
+			"replacementCPInstanceUuid", "VARCHAR(75)");
 		addColumn(
 			CPInstanceTable.class, CPInstanceTable.TABLE_NAME,
-			"discontinuedCProductId", "LONG");
+			"replacementCProductId", "LONG");
 		addColumn(
 			CPInstanceTable.class, CPInstanceTable.TABLE_NAME,
 			"discontinuedDate", "DATE");

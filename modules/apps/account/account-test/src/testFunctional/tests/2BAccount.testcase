@@ -1318,35 +1318,41 @@ definition {
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
 	@priority = "4"
 	test CanSetActiveAccount {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		task ("Sign in as Super User to give permissions to add accounts to the Account Administrator user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 
-		Accounts.setAddAccountEntryPermissions(
-			roleTitle = "Reg Role Name",
-			userEmailAddress = "userea@liferay.com");
+			Accounts.setAddAccountEntryPermissions(
+				roleTitle = "Reg Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Sign in as Account Administrator and create a new account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.addBusinessAccount(
-			accountDescription = "New Active Account Selection",
-			accountName = "New Selection for Test");
+			Accounts.addBusinessAccount(
+				accountDescription = "New Active Account Selection",
+				accountName = "New Selection for Test");
+		}
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+		task ("Select new account to be main active account, denoted by a checkmark, and assert that previous account is no longer selected") {
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Select Account",
-			rowEntry = "New Selection for Test");
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Select Account",
+				rowEntry = "New Selection for Test");
 
-		Accounts.viewSelectedAccount(
-			previousAccount = "Account Name",
-			previousAccountSearchTerm = "&quot;Account Name&quot;",
-			selectedAccount = "New Selection for Test",
-			selectedAccountSearchTerm = "&quot;New Selection for Test&quot;");
+			Accounts.viewSelectedAccount(entryName = "New Selection for Test");
+
+			AssertElementNotPresent(
+				key_entryName = "Account Name",
+				locator1 = "Account#SELECT_ACCOUNT_ENTRY_CHECKMARK");
+		}
 	}
 
 	@description = "This test searches for an Account within the list by Account Name and Account ID."

@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.product.exception.CPInstanceDiscontinuedDateException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
@@ -110,8 +109,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles, String unspsc,
-			boolean discontinued, String discontinuedCPInstanceUuid,
-			long discontinuedCProductId, int discontinuedDateMonth,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
 			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)
@@ -204,8 +203,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
-		cpInstance.setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
-		cpInstance.setDiscontinuedCProductId(discontinuedCProductId);
+		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
+		cpInstance.setReplacementCProductId(replacementCProductId);
 
 		Date discontinuedDate = PortalUtil.getDate(
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear);
@@ -214,10 +213,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
-		if ( (cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds != null) && !cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.isEmpty() ) {
-			cpInstanceOptionValueRelLocalService.updateCPInstanceOptionValueRels(
-				groupId, user.getCompanyId(), user.getUserId(), cpInstanceId,
-				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
+		if ((cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds != null) &&
+			!cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.isEmpty()) {
+
+			cpInstanceOptionValueRelLocalService.
+				updateCPInstanceOptionValueRels(
+					groupId, user.getCompanyId(), user.getUserId(),
+					cpInstanceId,
+					cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
 		}
 
 		reindexCPDefinition(cpDefinitionId);
@@ -407,7 +410,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String unspsc, boolean discontinued,
-			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
 			int discontinuedDateYear, int discontinuedDateHour,
 			int discontinuedDateMinute, ServiceContext serviceContext)
@@ -429,7 +432,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, unspsc, discontinued,
-					discontinuedCPInstanceUuid, discontinuedCProductId,
+					replacementCPInstanceUuid, replacementCProductId,
 					discontinuedDateMonth, discontinuedDateDay,
 					discontinuedDateYear, discontinuedDateHour,
 					discontinuedDateMinute, serviceContext);
@@ -448,7 +451,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, false, false, 1, StringPool.BLANK, null, 0, false, 1,
 			StringPool.BLANK, null, 0, unspsc, discontinued,
-			discontinuedCPInstanceUuid, discontinuedCProductId,
+			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
 			discontinuedDateHour, discontinuedDateMinute, serviceContext);
 	}
@@ -1001,7 +1004,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String unspsc, boolean discontinued,
-			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
 			int discontinuedDateYear, int discontinuedDateHour,
 			int discontinuedDateMinute, ServiceContext serviceContext)
@@ -1067,8 +1070,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
-		cpInstance.setDiscontinuedCPInstanceUuid(discontinuedCPInstanceUuid);
-		cpInstance.setDiscontinuedCProductId(discontinuedCProductId);
+		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
+		cpInstance.setReplacementCProductId(replacementCProductId);
 
 		Date discontinuedDate = PortalUtil.getDate(
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear);
@@ -1161,7 +1164,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, unspsc, cpInstance.isDiscontinued(),
 			cpInstance.getCPInstanceUuid(),
-			cpInstance.getDiscontinuedCProductId(), discontinuedDateMonth,
+			cpInstance.getReplacementCProductId(), discontinuedDateMonth,
 			discontinuedDateDay, discontinuedDateYear, discontinuedDateHour,
 			discontinuedDateMinute, serviceContext);
 	}

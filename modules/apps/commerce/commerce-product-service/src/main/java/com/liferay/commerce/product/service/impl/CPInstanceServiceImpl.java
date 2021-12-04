@@ -114,7 +114,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String unspsc, boolean discontinued,
-			String discontinuedCPInstanceUuid, long discontinuedCProductId,
+			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
 			int discontinuedDateYear, int discontinuedDateHour,
 			int discontinuedDateMinute, ServiceContext serviceContext)
@@ -129,7 +129,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			discontinued, discontinuedCPInstanceUuid, discontinuedCProductId,
+			discontinued, replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
 			discontinuedDateHour, discontinuedDateMinute, serviceContext);
 	}
@@ -365,8 +365,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, String unspsc,
-			boolean discontinued, String discontinuedCPInstanceUuid,
-			long discontinuedCProductId, int discontinuedDateMonth,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
 			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)

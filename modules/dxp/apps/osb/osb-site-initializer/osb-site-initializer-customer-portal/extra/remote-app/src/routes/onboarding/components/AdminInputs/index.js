@@ -1,11 +1,9 @@
 import {useLazyQuery} from '@apollo/client';
 import ClayForm, {ClayInput} from '@clayui/form';
-import { useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Input from '../../../../common/components/Input';
 import useDebounce from '../../../../common/hooks/useDebounce';
-import {
-	getBannedEmailDomains,
-} from '../../../../common/services/liferay/graphql/queries';
+import {getBannedEmailDomains} from '../../../../common/services/liferay/graphql/queries';
 import {isValidEmail} from '../../../../common/utils/validations.form';
 
 const AdminInputs = ({admin, id}) => {
@@ -29,7 +27,7 @@ const AdminInputs = ({admin, id}) => {
 				setBannedDomain(bannedDomainsItems[0].domain);
 			}
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [bannedDomainsItems, debouncedEmail]);
 
 	return (
@@ -77,4 +75,4 @@ const AdminInputs = ({admin, id}) => {
 	);
 };
 
-export default AdminInputs
+export default AdminInputs;

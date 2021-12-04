@@ -164,7 +164,8 @@ public class UpgradeExecutor {
 		ServiceRegistration<Release> inProgressServiceRegistration = null;
 
 		if (release != null) {
-			inProgressServiceRegistration = _releasePublisher.publish(release);
+			inProgressServiceRegistration = _releasePublisher.publish(
+				release, _isInitialRelease(upgradeInfos));
 		}
 
 		if (inProgressServiceRegistration != null) {
@@ -181,6 +182,22 @@ public class UpgradeExecutor {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private boolean _isInitialRelease(List<UpgradeInfo> upgradeInfos) {
+		UpgradeInfo upgradeInfo = upgradeInfos.get(0);
+
+		String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
+
+		String upgradeStepName = String.valueOf(upgradeInfo.getUpgradeStep());
+
+		if (fromSchemaVersion.equals("0.0.0") &&
+			upgradeStepName.equals("Initial Database Creation")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -286,20 +303,7 @@ public class UpgradeExecutor {
 				return true;
 			}
 
-			UpgradeInfo upgradeInfo = _upgradeInfos.get(0);
-
-			String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
-
-			String upgradeStepName = String.valueOf(
-				upgradeInfo.getUpgradeStep());
-
-			if (fromSchemaVersion.equals("0.0.0") &&
-				upgradeStepName.equals("Initial Database Creation")) {
-
-				return false;
-			}
-
-			return true;
+			return !_isInitialRelease(_upgradeInfos);
 		}
 
 		private void _updateReleaseState(int state) {

@@ -155,13 +155,9 @@ const SetupDXP = () => {
 				<ClayForm.Group className="mb-0 pb-1">
 					<Input
 						groupStyle="pb-1"
-						helper={
-							!errors?.dxp?.projectId &&
-							'Lowercase letters and numbers only. Project IDs cannot be change.'
-						}
+						helper="Lowercase letters and numbers only. Project IDs cannot be change."
 						label="Project ID"
 						name="dxp.projectId"
-						placeholder="superbank1"
 						required
 						type="text"
 						validations={[(value) => isLowercaseAndNumbers(value)]}

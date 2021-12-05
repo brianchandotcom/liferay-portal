@@ -357,25 +357,24 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String getLayoutRootNodeName(boolean privateLayout, Locale locale) {
-		String pagesName = null;
+		String pagesName = "pages";
 
-		if (isLayoutPrototype() || isLayoutSetPrototype()) {
-			pagesName = "pages";
-		}
-		else if (privateLayout) {
-			if (isUser() || isUserGroup()) {
-				pagesName = "my-dashboard";
+		if (!isLayoutPrototype() && !isLayoutSetPrototype()) {
+			if (privateLayout) {
+				if (isUser() || isUserGroup()) {
+					pagesName = "my-dashboard";
+				}
+				else if (isPrivateLayoutsEnabled()) {
+					pagesName = "private-pages";
+				}
 			}
 			else {
-				pagesName = "private-pages";
-			}
-		}
-		else {
-			if (isUser() || isUserGroup()) {
-				pagesName = "my-profile";
-			}
-			else {
-				pagesName = "public-pages";
+				if (isUser() || isUserGroup()) {
+					pagesName = "my-profile";
+				}
+				else if (isPrivateLayoutsEnabled()) {
+					pagesName = "public-pages";
+				}
 			}
 		}
 

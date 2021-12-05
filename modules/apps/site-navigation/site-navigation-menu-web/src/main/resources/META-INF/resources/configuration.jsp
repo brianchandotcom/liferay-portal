@@ -20,21 +20,6 @@
 String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType();
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
-
-String siteNavigationMenuName = StringPool.BLANK;
-
-if (siteNavigationMenu != null) {
-	siteNavigationMenuName = HtmlUtil.escape(siteNavigationMenu.getName());
-}
-else if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
-	siteNavigationMenuName = LanguageUtil.get(request, "private-pages-hierarchy");
-}
-else if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
-	siteNavigationMenuName = LanguageUtil.get(request, "public-pages-hierarchy");
-}
-else {
-	siteNavigationMenuName = LanguageUtil.get(request, layout.isPrivateLayout() ? "private-pages-hierarchy" : "public-pages-hierarchy");
-}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -88,7 +73,7 @@ else {
 						<div class="mb-2 text-muted">
 							<span id="<portlet:namespace />navigationMenuName">
 								<c:if test="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null) %>">
-									<%= siteNavigationMenuName %>
+									<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuName() %>
 								</c:if>
 							</span>
 							<span class="mt-1 <%= (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
@@ -153,7 +138,7 @@ else {
 										<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
 										<%
-										String rootMenuItemName = siteNavigationMenuName;
+										String rootMenuItemName = siteNavigationMenuDisplayContext.getSiteNavigationMenuName();
 
 										SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
 

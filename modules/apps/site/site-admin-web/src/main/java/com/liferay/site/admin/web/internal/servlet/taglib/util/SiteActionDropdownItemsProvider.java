@@ -236,7 +236,10 @@ public class SiteActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, true));
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "go-to-private-pages"));
+				LanguageUtil.format(
+					_httpServletRequest, "go-to-x",
+					_group.getLayoutRootNodeName(
+						true, _themeDisplay.getLocale())));
 			dropdownItem.setTarget("_blank");
 		};
 	}
@@ -249,7 +252,10 @@ public class SiteActionDropdownItemsProvider {
 				_group.getDisplayURL(_themeDisplay, false, true));
 			dropdownItem.setIcon("shortcut");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "go-to-public-pages"));
+				LanguageUtil.format(
+					_httpServletRequest, "go-to-x",
+					_group.getLayoutRootNodeName(
+						false, _themeDisplay.getLocale())));
 			dropdownItem.setTarget("_blank");
 		};
 	}

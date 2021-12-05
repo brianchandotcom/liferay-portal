@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -137,7 +138,19 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		if (siteNavigationMenuType ==
 				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
 
-			name = "public-pages-hierarchy";
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group.isPrivateLayoutsEnabled()) {
+				name = "public-pages-hierarchy";
+			}
+			else {
+				name = "pages-hierarchy";
+			}
+
 			privateLayout = false;
 		}
 

@@ -192,6 +192,12 @@ public class LayoutSiteNavigationMenuItemType
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
+		Group group = layout.getGroup();
+
+		if (!group.isPrivateLayoutsEnabled()) {
+			return LanguageUtil.get(locale, "page");
+		}
+
 		if (layout.isPublicLayout()) {
 			return LanguageUtil.get(locale, "public-page");
 		}

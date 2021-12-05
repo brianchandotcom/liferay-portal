@@ -195,7 +195,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 				linkTemplate="<%= linkTemplate %>"
 				privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
 				rootLinkTemplate='<a tabindex="-1" class="{cssClass}ml-1" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
-				rootNodeName='<%= layoutsTreeDisplayContext.isShowPrivateLayouts() ? siteGroup.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) : LanguageUtil.get(request, "pages") %>'
+				rootNodeName="<%= siteGroup.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
 				selPlid="<%= layoutsTreeDisplayContext.getSelPlid() %>"
 				treeId="pagesTree"
 			/>

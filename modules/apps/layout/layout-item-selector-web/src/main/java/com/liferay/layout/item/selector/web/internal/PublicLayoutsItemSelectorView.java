@@ -15,10 +15,8 @@
 package com.liferay.layout.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -47,28 +45,21 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 
 	@Override
 	public String getTitle(Locale locale) {
-		String title = "public-pages";
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext != null) {
-			try {
-				Group scopeGroup = serviceContext.getScopeGroup();
+			Group group = _groupLocalService.fetchGroup(
+				serviceContext.getScopeGroupId());
 
-				if (!scopeGroup.isPrivateLayoutsEnabled()) {
-					title = "pages";
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
+			if (!group.isPrivateLayoutsEnabled()) {
+				return ResourceBundleUtil.getString(
+					_portal.getResourceBundle(locale), "pages");
 			}
 		}
 
 		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), title);
+			_portal.getResourceBundle(locale), "public-pages");
 	}
 
 	@Override
@@ -84,8 +75,8 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 		_servletContext = servletContext;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PublicLayoutsItemSelectorView.class);
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

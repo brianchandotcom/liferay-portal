@@ -130,6 +130,7 @@ export interface Config {
 	imageSelectorURL: string;
 	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;
+	isPrivateLayoutsEnabled: boolean;
 	layoutConversionWarningMessages: string[] | null;
 	layoutItemSelectorURL: String;
 	layoutType: LayoutTypes[keyof LayoutTypes];

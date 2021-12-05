@@ -32,7 +32,11 @@ export function NavigationMenuSelectorField({field, onValueSelect, value}) {
 						? `... / ${value.title}`
 						: value.title,
 		  }
-		: {title: Liferay.Language.get('public-pages-hierarchy')};
+		: {
+				title: config.isPrivateLayoutsEnabled
+					? Liferay.Language.get('public-pages-hierarchy')
+					: Liferay.Language.get('pages-hierarchy'),
+		  };
 
 	return (
 		<ItemSelector

@@ -98,6 +98,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -460,6 +461,13 @@ public class ContentPageEditorDisplayContext {
 				"infoItemSelectorURL", _getInfoItemSelectorURL()
 			).put(
 				"infoListSelectorURL", _getInfoListSelectorURL()
+			).put(
+				"isPrivateLayoutsEnabled",
+				() -> {
+					Group group = themeDisplay.getScopeGroup();
+
+					return group.isPrivateLayoutsEnabled();
+				}
 			).put(
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(

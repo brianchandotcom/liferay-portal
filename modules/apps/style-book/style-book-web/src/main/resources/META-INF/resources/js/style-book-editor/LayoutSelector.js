@@ -55,7 +55,7 @@ export default function LayoutSelector() {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{config.showPrivateLayouts && (
+				{config.isPrivateLayoutsEnabled && (
 					<div className="style-book-editor__page-type-selector">
 						<ClayForm.Group small>
 							<label className="sr-only" htmlFor={id}>

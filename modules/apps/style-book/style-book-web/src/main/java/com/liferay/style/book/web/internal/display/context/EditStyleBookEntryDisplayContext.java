@@ -112,6 +112,13 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"initialPreviewLayout", _getInitialPreviewLayoutJSONObject()
 		).put(
+			"isPrivateLayoutsEnabled",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.isPrivateLayoutsEnabled();
+			}
+		).put(
 			"layoutsTreeURL",
 			() -> {
 				ResourceURL resourceURL = _renderResponse.createResourceURL();
@@ -158,13 +165,6 @@ public class EditStyleBookEntryDisplayContext {
 			"redirectURL", _getRedirect()
 		).put(
 			"saveDraftURL", _getActionURL("/style_book/edit_style_book_entry")
-		).put(
-			"showPrivateLayouts",
-			() -> {
-				Group group = _themeDisplay.getScopeGroup();
-
-				return group.isPrivateLayoutsEnabled();
-			}
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(

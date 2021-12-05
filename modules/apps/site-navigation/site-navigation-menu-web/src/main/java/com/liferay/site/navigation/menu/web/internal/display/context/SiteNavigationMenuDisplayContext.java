@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -343,6 +344,16 @@ public class SiteNavigationMenuDisplayContext {
 			return HtmlUtil.escape(siteNavigationMenu.getName());
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!group.isPrivateLayoutsEnabled()) {
+			return LanguageUtil.get(_httpServletRequest, "pages-hierarchy");
+		}
+
 		if (getSelectSiteNavigationMenuType() ==
 				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
 
@@ -356,10 +367,6 @@ public class SiteNavigationMenuDisplayContext {
 			return LanguageUtil.get(
 				_httpServletRequest, "public-pages-hierarchy");
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -397,7 +404,18 @@ public class SiteNavigationMenuDisplayContext {
 			typeKey = "private-pages-hierarchy";
 		}
 		else if (type == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
-			typeKey = "public-pages-hierarchy";
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group.isPrivateLayoutsEnabled()) {
+				typeKey = "public-pages-hierarchy";
+			}
+			else {
+				typeKey = "pages-hierarchy";
+			}
 		}
 		else if (type == SiteNavigationConstants.TYPE_SECONDARY) {
 			typeKey = "secondary-navigation";

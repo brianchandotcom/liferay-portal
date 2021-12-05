@@ -118,13 +118,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 		if (siteNavigationMenuId == 0) {
 			if (parentSiteNavigationMenuItemId == 0) {
-				String key = "public-pages-hierarchy";
-
-				if (isPrivateLayout()) {
-					key = "private-pages-hierarchy";
-				}
-
-				return LanguageUtil.get(_themeDisplay.getLocale(), key);
+				return LanguageUtil.get(_themeDisplay.getLocale(), _getKey());
 			}
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
@@ -329,20 +323,22 @@ public class SelectSiteNavigationMenuDisplayContext {
 		).buildPortletURL();
 	}
 
+	private String _getKey() {
+		if (isPrivateLayout()) {
+			return "private-pages-hierarchy";
+		}
+
+		return "public-pages-hierarchy";
+	}
+
 	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries()
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
-		String key = "public-pages-hierarchy";
-
-		if (isPrivateLayout()) {
-			key = "private-pages-hierarchy";
-		}
-
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(
-				LanguageUtil.get(_themeDisplay.getLocale(), key),
+				LanguageUtil.get(_themeDisplay.getLocale(), _getKey()),
 				_getSelectSiteNavigationMenuLevelURL(
 					getSiteNavigationMenuId(), 0)));
 

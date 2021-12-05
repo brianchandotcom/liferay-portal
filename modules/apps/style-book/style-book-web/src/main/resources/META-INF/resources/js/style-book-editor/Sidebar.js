@@ -64,9 +64,13 @@ function ThemeInformation() {
 	return (
 		<div className="pb-3">
 			<p className="small text-secondary">
-				{Liferay.Language.get(
-					'this-token-definition-belongs-to-the-theme-set-for-public-pages'
-				)}
+				{config.showPrivateLayouts
+					? Liferay.Language.get(
+							'this-token-definition-belongs-to-the-theme-set-for-public-pages'
+					  )
+					: Liferay.Language.get(
+							'this-token-definition-belongs-to-the-theme-set-for-pages'
+					  )}
 			</p>
 
 			<p className="mb-0 small">

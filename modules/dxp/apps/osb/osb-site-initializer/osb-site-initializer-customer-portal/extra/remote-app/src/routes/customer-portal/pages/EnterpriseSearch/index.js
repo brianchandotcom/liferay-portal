@@ -8,6 +8,8 @@ import {
 	getAccountSubscriptionsTerms,
 } from '../../../../common/services/liferay/graphql/queries';
 import {getCurrentEndDate} from '../../../../common/utils';
+import {getYearlyTerms} from '../../utils/constants';
+import EnterpriseSearchSkeleton from './Skeleton';
 const CRYSTAL = 'KOR-1776780';
 
 const EnterpriseSearch = () => {
@@ -43,61 +45,7 @@ const EnterpriseSearch = () => {
 		return (
 			dataSubscriptionsTermsBase?.c?.accountSubscriptionTerms?.items.reduce(
 				(acc, item) => {
-					const yearStartDate = new Date(
-						item.startDate
-					).getFullYear();
-					const yearEndDate = new Date(item.endDate).getFullYear();
-					if (yearStartDate + 1 < yearEndDate) {
-						const yearDateSplitted = new Array(
-							yearEndDate - yearStartDate + 1
-						)
-							.fill()
-							.map((_, index, array) => {
-								const currentYear = yearStartDate + index;
-
-								const yearNumStartDate = new Date(
-									item.startDate
-								).setFullYear(currentYear);
-								const yearNumEndDate = currentYear + 1;
-
-								const daysEndDate = new Date(
-									item.startDate
-								).getDate();
-								const monthsEndDate = new Date(
-									item.startDate
-								).getMonth();
-
-								if (index + 2 >= array.length) {
-									const yearNumEndDate = new Date(
-										item.endDate
-									).setFullYear(currentYear + 1);
-
-									return index + 2 === array.length
-										? {
-												endDate: new Date(
-													yearNumEndDate
-												),
-												startDate: new Date(
-													yearNumStartDate
-												),
-										  }
-										: null;
-								}
-
-								return {
-									endDate: new Date(
-										yearNumEndDate,
-										monthsEndDate,
-										daysEndDate - 1
-									),
-									startDate: new Date(yearNumStartDate),
-								};
-							})
-							.filter((item) => item);
-
-						return yearDateSplitted;
-					}
-					acc.push(item);
+					acc.push(...getYearlyTerms(item));
 
 					return acc;
 				},
@@ -147,8 +95,8 @@ const EnterpriseSearch = () => {
 				</p>
 			</div>
 
-			<div className="d-flex mb-3">
-				<div className="mr-3">
+			<div className="d-flex flex-wrap mb-3">
+				<div className="mr-3 subscription-form">
 					<label className="ml-3" htmlFor="subscription1">
 						Subscription
 					</label>
@@ -173,7 +121,7 @@ const EnterpriseSearch = () => {
 					</ClaySelect>
 				</div>
 
-				<div>
+				<div className="subscription-term-form">
 					<label className="ml-3" htmlFor="subscription-term">
 						Subscription Term
 					</label>
@@ -187,7 +135,6 @@ const EnterpriseSearch = () => {
 									event.target.value
 								)
 							}
-							placeholder="Choose the period"
 						>
 							{dataSubscriptionsTerms.map((account) => {
 								const formattedDate = `${getCurrentEndDate(
@@ -233,5 +180,5 @@ const EnterpriseSearch = () => {
 		</div>
 	);
 };
-
+EnterpriseSearch.Skeleton = EnterpriseSearchSkeleton;
 export default EnterpriseSearch;

@@ -28,9 +28,7 @@ PortletURL portletURL = currentURLObj;
 			{
 				Group group = themeDisplay.getScopeGroup();
 
-				boolean privateLayoutsEnabled = group.isPrivateLayoutsEnabled();
-
-				if (privateLayoutsEnabled) {
+				if (group.isPrivateLayoutsEnabled()) {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(!privateLayout);

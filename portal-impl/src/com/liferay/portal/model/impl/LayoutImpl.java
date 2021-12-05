@@ -308,12 +308,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
 
-		if (isPrivateLayout()) {
-			sb.append(LanguageUtil.get(locale, "private-pages"));
-		}
-		else {
-			sb.append(LanguageUtil.get(locale, "public-pages"));
-		}
+		Group group = getGroup();
+
+		sb.append(group.getLayoutRootNodeName(isPrivateLayout(), locale));
 
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.GREATER_THAN);

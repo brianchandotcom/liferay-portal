@@ -331,7 +331,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			return false;
 		}
 
-		Group group = depotEntry.getGroup();
+		Group group = _groupLocalService.fetchGroup(depotEntry.getGroupId());
+
+		if (group == null) {
+			return false;
+		}
 
 		if (group.isStaged()) {
 			return true;

@@ -1,9 +1,9 @@
 import {useContext} from 'react';
 import {AppContext} from '../context';
+import Commerce from './Commerce';
+import EnterpriseSearch from './EnterpriseSearch';
 import Home from './Home';
 import Overview from './Overview';
-import CommercePage from './commerce';
-import EnterpriseSearch from './enterpriseSearch';
 
 const Pages = () => {
 	const [{page, project, userAccount}] = useContext(AppContext);
@@ -21,15 +21,14 @@ const Pages = () => {
 			return <EnterpriseSearch accountKey={project.accountKey} />;
 		}
 
-		return <div>Overview Skeleton</div>;
+		return <EnterpriseSearch.Skeleton />;
 	}
-
 	if (page === 'commerce') {
 		if (userAccount) {
-			return <CommercePage userAccount={userAccount} />;
+			return <Commerce accountKey={project.accountKey} />;
 		}
 
-		return <div>Overview Skeleton</div>;
+		return <Commerce.Skeleton />;
 	}
 
 	if (userAccount) {

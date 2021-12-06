@@ -29,10 +29,9 @@ definition {
 	@description = "LPS-142532 - Verify if Continue Button is only enabled when all required fields have been filled in."
 	@priority = "4"
 	test CanContinueOnContactsInfoWithAllFilled {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
+
+		RaylifeHomePage.getAQuote();
 
 		RaylifeIndustry.typeIndustry();
 
@@ -40,186 +39,173 @@ definition {
 
 		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142208 - Verify e-mail validation is required (Must have '@' and a '.' or else display, 'Please enter a valid email address.')"
 	@priority = "4"
 	test CanViewErrorMessageForEmail {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
-        
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeIndustry.typeIndustry();
+		RaylifeHomePage.getAQuote();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
-            locator1 = "RaylifeContactInfo#FORMS_FIELDS",
 			label = "basics.businessInformation.business.email",
-            value1 = "aaa");
-		
+			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			value1 = "aaa");
+
 		AssertTextEquals(
-            locator1 = "Raylife#ERROR_MESSAGE",
-            value1 = "Must be a valid email address.");
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "Must be a valid email address.");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142538 - Verify if Zip Code field shows error message when filling in an invalid Zip Code"
 	@priority = "4"
 	test CanViewErrorMessageForInvalidZipCode {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeIndustry.typeIndustry();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
-            locator1 = "RaylifeContactInfo#FORMS_FIELDS",
 			label = "basics.businessInformation.business.location.zip",
-            value1 = "1");
+			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			value1 = "1");
 
-        Type(
-		    locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+		Type(
 			label = "basics.businessInformation.business.location.zip",
-		    value1 = "\BACK_SPACE");
-		
+			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			value1 = "\BACK_SPACE");
+
 		AssertTextEquals(
-            locator1 = "Raylife#ERROR_MESSAGE",
-            value1 = "ZIP is required.");
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "ZIP is required.");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142536 - Verify if Phone field shows error message when filling in an invalid Phone number"
 	@priority = "4"
 	test CanViewErrorMessageForPhoneNumber {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeIndustry.typeIndustry();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
-            locator1 = "RaylifeContactInfo#FORMS_FIELDS",
 			label = "basics.businessInformation.business.phone",
-            value1 = "1");
+			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			value1 = "1");
 
-        Type(
-		    locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+		Type(
 			label = "basics.businessInformation.business.phone",
-		    value1 = "\BACK_SPACE");
-		
+			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			value1 = "\BACK_SPACE");
+
 		AssertTextEquals(
-            locator1 = "Raylife#ERROR_MESSAGE",
-            value1 = "Phone number is required.");
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "Phone number is required.");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142207 - Verify name persistence in tip (information panel) in Basics section"
 	@priority = "3"
 	test CanViewFirstNameInTip {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeIndustry.typeIndustry();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-        
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		RaylifeIndustry.typeIndustry();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");   
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-        AssertElementPresent(
-            locator1 = "RaylifeContactInfo#FORMS_VALUE",
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		AssertElementPresent(
 			label = "basics.businessInformation.firstName",
-            value = "FirstName");
+			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			value = "FirstName");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142209 - Verify Max number of characters in the First Name field (max chars 256)"
 	@priority = "3"
 	test FirstNameMaxNumber {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeIndustry.typeIndustry();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeIndustry.typeIndustry();
 
-        AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_FIRST_NAME_MAX_NUMBER");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_FIRST_NAME_MAX_NUMBER");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142533 - Verify Max number of characters in the Last Name field (max chars 256)"
 	@priority = "3"
 	test LastNameMaxNumber {
-
 		ApplicationsMenu.gotoSite(site = "Raylife");
-            
-        RaylifeHomePage.getAQuote();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeIndustry.typeIndustry();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeIndustry.typeIndustry();
 
-        AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_LAST_NAME_MAX_NUMBER");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_LAST_NAME_MAX_NUMBER");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 }

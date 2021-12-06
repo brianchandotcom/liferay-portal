@@ -1,12 +1,3 @@
-h1 {
-	color: var(--color-neutral-9);
-	font-weight: var(--display1-weight);
-}
-
-p {
-	color: var(--color-neutral-8);
-}
-
 .hang-tight-image {
 	width: 718px;
 }

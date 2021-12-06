@@ -55,20 +55,20 @@ public class SiteNavigationMenuItemServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
-			long siteNavigationMenuItemId, boolean deleteChildren)
-		throws PortalException {
-
-		return siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
-			siteNavigationMenuItemId, deleteChildren);
-	}
-
-	@Override
-	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 			long siteNavigationMenuItemId)
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
 			siteNavigationMenuItemId);
+	}
+
+	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId, boolean deleteChildren)
+		throws PortalException {
+
+		return siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItemId, deleteChildren);
 	}
 
 	@Override

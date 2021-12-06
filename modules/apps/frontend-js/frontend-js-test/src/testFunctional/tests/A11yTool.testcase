@@ -376,6 +376,43 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142331 Assert that user can filter violations by all impact."
+	@priority = "3"
+	test CanFilterViolationsByAllImpact {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Set and check the filters.") {
+			A11yTool.openFilterPanel();
+
+			A11yTool.checkFilter(filterType = "critical");
+
+			A11yTool.checkFilter(filterType = "serious");
+
+			A11yTool.checkFilter(filterType = "moderate");
+
+			A11yTool.checkFilter(filterType = "minor");
+
+			A11yTool.closeFilterPanel();
+		}
+
+		task ("Show four violations and assert elements are highlighted.") {
+			A11yTool.assertAllImpactViolationsPresentInSidePanel();
+
+			A11yTool.assertAllImpactViolationsPresentOnPage();
+
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+	}
+
 	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only. Also verifies all violations are present when unfiltered."
 	@priority = "5"
 	test CanFilterViolationsByCriticalImpactOnly {

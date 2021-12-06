@@ -88,11 +88,9 @@ definition {
 
 		if ("${testRunEnvironment}" == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
-			var consoleText = "STOPPED Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
 			var symbolicName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
-			var consoleText = "STOPPED Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
 		}
 
 		BundleBlacklist.blacklistModuleAndComponentConfiguration(
@@ -101,7 +99,7 @@ definition {
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
-			consoleText = "${consoleText}",
+			consoleText = "STOPPED ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 	}
@@ -153,11 +151,9 @@ definition {
 
 		if ("${testRunEnvironment}" == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
-			var consoleText = "STOPPED Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
 			var symbolicName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
-			var consoleText = "STOPPED Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
 		}
 
 		OSGiConfig.deployOSGiConfigFile(
@@ -168,7 +164,7 @@ definition {
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
-			consoleText = "${consoleText}",
+			consoleText = "STOPPED ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -188,14 +184,7 @@ definition {
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
-			var consoleText = "STARTED Liferay Foundation - Liferay Gogo Shell - Impl";
-		}
-		else {
-			var consoleText = "STARTED Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
-		}
-
-		AssertConsoleTextPresent(value1 = "${consoleText}");
+		AssertConsoleTextPresent(value1 = "STARTED ${symbolicName}");
 	}
 
 	@priority = "3"

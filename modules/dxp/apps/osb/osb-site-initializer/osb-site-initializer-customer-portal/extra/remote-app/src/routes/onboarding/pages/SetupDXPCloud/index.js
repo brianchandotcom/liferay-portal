@@ -7,8 +7,8 @@ import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {
-	addSetupDXP,
-	getSetupDXPInfo,
+	addSetupDXPCloud,
+	getSetupDXPCloudInfo,
 } from '../../../../common/services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {API_BASE_URL} from '../../../../common/utils';
@@ -19,12 +19,12 @@ import Layout from '../../components/Layout';
 import {actionTypes} from '../../context/reducer';
 import {getInitialDxpAdmin, steps} from '../../utils/constants';
 
-const SetupDXP = () => {
+const SetupDXPCloud = () => {
 	const [{project}, dispatch] = useContext(AppContext);
 	const {errors, setFieldValue, touched, values} = useFormikContext();
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const {data} = useQuery(getSetupDXPInfo, {
+	const {data} = useQuery(getSetupDXPCloudInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (contains(name, 'HA DR') or contains(name, 'Std DR'))`,
 			koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`,
@@ -77,7 +77,7 @@ const SetupDXP = () => {
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	const [sendEmailData, {called, error}] = useMutation(addSetupDXP);
+	const [sendEmailData, {called, error}] = useMutation(addSetupDXPCloud);
 
 	const sendEmail = () => {
 		const dxp = values?.dxp;
@@ -85,7 +85,7 @@ const SetupDXP = () => {
 		if (!called && dxp) {
 			sendEmailData({
 				variables: {
-					SetupDXP: {
+					SetupDXPCloud: {
 						admins: JSON.stringify(dxp.admins),
 						dataCenterRegion: JSON.stringify(dxp.dataCenterRegion),
 						disasterDataCenterRegion: JSON.stringify(
@@ -99,7 +99,7 @@ const SetupDXP = () => {
 
 			if (!error) {
 				dispatch({
-					payload: steps.success,
+					payload: steps.successDxpCloud,
 					type: actionTypes.CHANGE_STEP,
 				});
 			}
@@ -206,4 +206,4 @@ const SetupDXP = () => {
 	);
 };
 
-export default SetupDXP;
+export default SetupDXPCloud;

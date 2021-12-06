@@ -25,6 +25,14 @@ definition {
 	}
 
 	macro createCustomEvent {
+		if (!(isSet(attributesName))) {
+			var attributesName = "category,price,temp,birthdate,like";
+		}
+
+		if (!(isSet(attributesValue))) {
+			var attributesValue = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
+		}
+
 		Type(
 			key_inputID = "name-custom",
 			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",

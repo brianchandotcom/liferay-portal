@@ -45,9 +45,6 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10004 | Test Summary: Rename Custom Event Display Name"
 	@priority = "4"
 	test CanRenameCustomEventName {
-		var attributesNameList = "category,price,temp,birthdate,like";
-		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
-
 		task ("Add a Web Content Display to page and display the custom event") {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
@@ -85,8 +82,6 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName}",
 				timeToSendCustomEvent = "1");
 		}
@@ -137,9 +132,6 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10005 | Test Summary: Update Custom Events description"
 	@priority = "4"
 	test CanUpdateCustomEventDescription {
-		var attributesNameList = "category,price,temp,birthdate,like";
-		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
-
 		task ("Add a Web Content Display to page and display the custom event") {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
@@ -177,8 +169,6 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName}",
 				timeToSendCustomEvent = "1");
 		}
@@ -229,9 +219,6 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (255 chars)"
 	@priority = "4"
 	test CheckLimitOfCustomEventName {
-		var attributesNameList = "category,price,temp,birthdate,like";
-		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
-
 		task ("Add a Web Content Display to page and display the custom event") {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
@@ -269,8 +256,6 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName}",
 				timeToSendCustomEvent = "1");
 		}
@@ -313,9 +298,6 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-9865 | Test Summary: Custom Event shown in AC"
 	@priority = "5"
 	test CustomEventIsShownInAC {
-		var attributesNameList = "category,price,temp,birthdate,like";
-		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
-
 		task ("Add a Web Content Display to page and display the custom event") {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
@@ -353,8 +335,6 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName}",
 				timeToSendCustomEvent = "1");
 		}
@@ -387,9 +367,6 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10006 | Test Summary: Rename Custom Event that already exists custom event name"
 	@priority = "4"
 	test RenameCustomEventToExistingName {
-		var attributesNameList = "category,price,temp,birthdate,like";
-		var attributesValueList = "wetsuit,259.95,11,2021-11-25T14:36:30.685Z,true";
-
 		task ("Add a Web Content Display to page and display the custom event") {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}
@@ -427,24 +404,18 @@ definition {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName1}",
 				timeToSendCustomEvent = "1");
 
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName2}",
 				timeToSendCustomEvent = "1");
 
 			var customEventName3 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				attributesName = "${attributesNameList}",
-				attributesValue = "${attributesValueList}",
 				customEventName = "${customEventName3}",
 				timeToSendCustomEvent = "1");
 		}

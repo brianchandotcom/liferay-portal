@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -918,32 +917,8 @@ public class BaseAutoDeployer implements AutoDeployer {
 			_log.debug("Excludes " + excludes);
 		}
 
-		// The deployer might only copy files that have been modified.
-		// However, the deployer always copies and overwrites web.xml after
-		// the other files have been copied because application servers
-		// usually detect that a WAR has been modified based on the web.xml
-		// timestamp.
-
-		excludes += "**/WEB-INF/web.xml";
-
 		CopyTask.copyDirectory(
 			srcFile, deployDir, StringPool.BLANK, excludes, overwrite, true);
-
-		CopyTask.copyDirectory(
-			srcFile, deployDir, "**/WEB-INF/web.xml", StringPool.BLANK, true,
-			false);
-
-		if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
-
-			// See org.apache.catalina.startup.HostConfig to see how Tomcat
-			// checks to make sure that web.xml was modified 5 seconds after
-			// WEB-INF
-
-			File deployWebXml = new File(deployDir + "/WEB-INF/web.xml");
-
-			deployWebXml.setLastModified(
-				System.currentTimeMillis() + (Time.SECOND * 6));
-		}
 	}
 
 	private boolean _deployFile(

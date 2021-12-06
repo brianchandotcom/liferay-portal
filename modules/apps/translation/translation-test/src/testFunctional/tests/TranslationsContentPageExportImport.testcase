@@ -40,10 +40,6 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "NewAnyoneExperience${num}",
 				segmentName = "Anyone");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
 		}
 
 		PageEditor.clickPublish();

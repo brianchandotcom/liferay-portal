@@ -330,7 +330,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "4",
+			productQuantity = "4.00",
 			productSKU = "MIN93015",
 			productTotalPrice = "100.00");
 	}

@@ -266,15 +266,14 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.expandInfo();
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",
-			value1 = "Web Content Title");
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			relatedAssetsTitle = "Web Content Title");
 	}
 
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."

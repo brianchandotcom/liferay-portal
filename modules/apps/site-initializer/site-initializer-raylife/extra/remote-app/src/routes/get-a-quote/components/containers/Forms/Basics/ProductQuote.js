@@ -26,7 +26,11 @@ export function FormBasicProductQuote({form}) {
 		<div className="card">
 			<div className="card-content">
 				<div className="content-column">
-					<label>Select a product to quote.</label>
+					<label>
+						<h6 className="font-weight-bolder">
+							Select a product to quote.
+						</h6>
+					</label>
 
 					<fieldset className="content-column" id="productQuote">
 						<Controller

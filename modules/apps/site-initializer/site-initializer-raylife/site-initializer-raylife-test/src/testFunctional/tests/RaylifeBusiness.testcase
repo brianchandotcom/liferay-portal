@@ -5,111 +5,550 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Raylife.createRaylifeSite(siteName = "Raylife");
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            Raylife.tearDownCP();
+
+            User.logoutPG();
+        }
+    }
+
 	@description = "LPS-142371 - Verify if Continue Button is only enabled when all required fields have been filled in."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanContinueOnBusinessInfoWithAllFilled {
 
-		// TODO LPS-142371 CanContinueOnBusinessInfoWithAllFilled pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        RaylifeBusiness.typeAllBusinessInfoFields();
+
+        AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-135198 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Percent of sales from used merchandise?')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissSalesMerchandiseInfoPanel {
 
-		// TODO LPS-135198 CanDismissSalesMerchandiseInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        Select(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "3%");
+
+        Click(locator1 = "Raylife#FIRST_MORE_INFO");
+
+        Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+        AssertElementPresent(
+            locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+            value1 = "Percent of sales from used merchandise");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142392 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Years of industry experience?')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissYearsOfExperienceInfoPanel {
 
-		// TODO LPS-142392 CanDismissYearsOfExperienceInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(locator1 = "Raylife#FIRST_MORE_INFO");
+
+        Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+        AssertElementPresent(
+            locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+            value1 = "Years of industry experience");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142379 - Verify if clicking on Previous returns to Previous Screen (Product Selection/'Select a product.') and all information is maintained in the Business page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanGoBackOnBusinessInfoKeepingAllData {
 
-		// TODO LPS-142379 CanGoBackOnBusinessInfoKeepingAllData pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeAllBusinessInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.viewBusinessInfo();
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142393 - Verify clicking 'More Info' in the 'Percent of sales from used merchandise?' field opens an Information Panel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewSalesMerchandiseInfoPanel {
 
-		// TODO LPS-142393 CanViewSalesMerchandiseInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        Select(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "3%");
+
+        Click(locator1 = "Raylife#FIRST_MORE_INFO");
+
+        AssertElementPresent(
+            locator1 = "Raylife#TIP_INFO_PANEL",
+            value1 = "Percent of sales from used merchandise");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
 
 	}
 
 	@description = "LPS-142390 - Verify clicking 'More Info' in the 'Years of industry experience?' field opens an Information Panel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewYearsOfExperienceInfoPanel {
 
-		// TODO LPS-142390 CanViewYearsOfExperienceInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(locator1 = "Raylife#FIRST_MORE_INFO");
+
+        AssertElementPresent(
+            locator1 = "Raylife#TIP_INFO_PANEL",
+            value1 = "Years of industry experience");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142387 - Verify error message 'Percent of overall sales is required.' in the 'What percentage of overall sales involve delivery?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test OverallSalesIsRequired {
 
-		// TODO LPS-142387 OverallSalesIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        Select(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "3%");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasSellProductsUnderOwnBrand");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.overallSales",
+            value = "3%");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.overallSales",
+            value = "");
+
+        AssertElementPresent(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "Percent of overall sales is required.");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142388 - Verify error message 'Value must not be greater than 100%.' in the 'What percentage of overall sales involve delivery?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test OverallSalesNotAbove100 {
 
-		// TODO LPS-142388 OverallSalesNotAbove100 pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        Select(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "3%");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasSellProductsUnderOwnBrand");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.overallSales",
+            value = "101%");
+
+
+        AssertTextEquals(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "Value must not be greater than 100%.");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142386 - Verify error message 'Percent of sales is required.' in the 'Percent of sales from used merchandise?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SalesMerchandiseIsRequired {
 
-		// TODO LPS-142386 SalesMerchandiseIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        Select(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "3%");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "");
+
+        AssertElementPresent(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "Percent of sales is required.");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142385 - Verify error message 'Value must not be greater than 100%.' in the 'Percent of sales from used merchandise?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SalesMerchandiseNotAbove100 {
 
-		// TODO LPS-142385 SalesMerchandiseNotAbove100 pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        Click(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        Select(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.salesMerchandise",
+            value = "101%");
+
+        AssertElementPresent(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "Value must not be greater than 100%.");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142382 - Verify error message 'This field is required' in the 'Years of industry experience?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test YearsOfExperienceIsRequired {
 
-		// TODO LPS-142382 YearsOfExperienceIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "");
+
+        AssertElementPresent(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "This field is required");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142383 - Verify error message 'Must be equal or greater than 0.' in the 'Years of industry experience?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test YearsOfExperienceNotBelowZero {
 
-		// TODO LPS-142383 YearsOfExperienceNotBelowZero pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.getAQuote();
+
+        RaylifeIndustry.typeIndustry();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeBusinessInfoFields(
+            label = "business.yearsOfExperience",
+            value = "-1");
+
+        AssertElementPresent(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "Must be equal or greater than 0.");
+
+        Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 

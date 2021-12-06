@@ -37,4 +37,40 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro viewBusinessInfo {
+
+        AssertElementPresent(
+            locator1 = "Raylife#FORMS_VALUE",
+            label = "business.yearsOfExperience",
+            value = "3");
+
+        AssertElementPresent(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasStoredCustomerInformation");
+
+        AssertElementPresent(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasAutoPolicy");
+
+        AssertElementPresent(
+            locator1 = "Raylife#FORMS_FIELDS",
+            label = "business.legalEntity",
+            value1 = "Association");
+
+        AssertElementPresent(
+            locator1 = "Raylife#FORMS_VALUE",
+            label = "business.salesMerchandise",
+            value = "3%");
+
+        AssertElementPresent(
+            locator1 = "Raylife#BUTTON_NO_OPTION",
+            field = "business.hasSellProductsUnderOwnBrand");
+
+        AssertElementPresent(
+            locator1 = "Raylife#FORMS_VALUE",
+            label = "business.overallSales",
+            value = "3%");
+
+    }
+	
 }

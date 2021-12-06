@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>FORMS_VALUE</td>
+    <td>css=liferay-remote-app-raylife>>>[name='${label}'][value='${value}']</td>
+    <td></td>
+</tr>
+<tr>
 	<td>TABLE_CATALOG_NAME</td>
 	<td>//a[contains(text(),'${name}')]</td>
 	<td></td>

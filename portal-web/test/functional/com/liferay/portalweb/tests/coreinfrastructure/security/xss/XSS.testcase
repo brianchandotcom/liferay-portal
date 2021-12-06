@@ -114,6 +114,7 @@ definition {
 
 	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content"
 	@priority = "5"
+	@uitest
 	test NoXSSVulnerabilityInAssetPublisherContent {
 		task ("Add web content") {
 			JSONWebcontent.addWebContent(
@@ -162,6 +163,7 @@ definition {
 
 	@description = "This is a use case for LPS-82204. View blogs entry with XSS custom abstract"
 	@priority = "5"
+	@uitest
 	test NoXSSVulnerabilityInBlogsEntryCustomAbstract {
 		var entryAbstractDescription = '''<script>alert(123)</script>''';
 		var key_entryAbstractDescription = "${entryAbstractDescription}";
@@ -219,6 +221,7 @@ definition {
 
 	@description = "This is a use case for LPS-83273. View forms entry with XSS"
 	@priority = "5"
+	@uitest
 	test NoXSSVulnerabilityInForms {
 		var formDescription = '''<script>alert(222)</script>''';
 
@@ -286,6 +289,7 @@ definition {
 
 	@description = "This is a use case for LPS-72807. View google analytics ID"
 	@priority = "3"
+	@uitest
 	test NoXSSVulnerabilityInGoogleAnalyticsID {
 		task ("Edit google analytics Id successfully") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -300,6 +304,7 @@ definition {
 
 	@description = "This is a use case for LPS-59198. View LDAP"
 	@priority = "3"
+	@uitest
 	test NoXSSVulnerabilityInLDAP {
 		task ("Add LDAP server successfully") {
 			PortalSettings.gotoConfiguration(
@@ -360,6 +365,7 @@ definition {
 
 	@description = "This is a use case for LRQA-10472. View, look and feel"
 	@priority = "4"
+	@uitest
 	test NoXSSVulnerabilityInLookAndFeel {
 		task ("Add public page") {
 			JSONLayout.addPublicLayout(
@@ -397,6 +403,7 @@ definition {
 
 	@description = "This is a use case for LPS-42750. View mobile device families"
 	@priority = "3"
+	@uitest
 	test NoXSSVulnerabilityInMobileDeviceFamilies {
 		property test.name.skip.portal.instance = "XSS#ViewMobileDeviceFamilies";
 
@@ -439,6 +446,7 @@ definition {
 
 	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Piwik"
 	@priority = "3"
+	@uitest
 	test NoXSSVulnerabilityInPiwik {
 		property test.name.skip.portal.instance = "XSS#ViewPiwik";
 
@@ -461,6 +469,7 @@ definition {
 
 	@description = "This is a use case for LRQA-10472. View Recycle bin"
 	@priority = "4"
+	@uitest
 	test NoXSSVulnerabilityInRecyleBin {
 		var entryTitle = '''<script>alert(123);</script>''';
 
@@ -502,6 +511,7 @@ definition {
 
 	@description = "This is a use case for LPS-48990. View roles"
 	@priority = "4"
+	@uitest
 	test NoXSSVulnerabilityInRoles {
 		task ("Add role") {
 			Role.openRolesAdmin();
@@ -545,6 +555,7 @@ definition {
 
 	@description = "This is a use case for LRQA-30154. View search results"
 	@priority = "5"
+	@uitest
 	test NoXSSVulnerabilityInSearchResults {
 		var siteName = '''<script>alert(123);</script>''';
 
@@ -577,6 +588,7 @@ definition {
 
 	@description = "This is a use case for LPS-71236 and LPS-71307. View web content"
 	@priority = "5"
+	@uitest
 	test NoXSSVulnerabilityInWebContent {
 		task ("Add CP") {
 			JSONWebcontent.addWebContent(
@@ -641,6 +653,7 @@ definition {
 
 	@description = "This is a use case for LPS-45254. View wiki"
 	@priority = "5"
+	@uitest
 	test NoXSSVulnerabilityInWiki {
 		task ("Edit user information") {
 			Navigator.openURL();

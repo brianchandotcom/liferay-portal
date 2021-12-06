@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
@@ -183,7 +182,7 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 			null);
 
 		List<AssetCategory> assetCategories =
-			AssetCategoryServiceUtil.getCategories(
+			_assetCategoryLocalService.getCategories(
 				User.class.getName(), _user.getUserId());
 
 		Assert.assertEquals(

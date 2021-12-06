@@ -1,8 +1,8 @@
 {
 	"label": {
-		"en-US": "SetupDXP"
+		"en-US": "SetupDXPCloud"
 	},
-	"name": "SetupDXP",
+	"name": "SetupDXPCloud",
 	"objectFields": [
 		{
 			"indexed": true,
@@ -55,7 +55,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "SetupDXPs"
+		"en_US": "SetupDXPClouds"
 	},
 	"scope": "site",
 	"status": {

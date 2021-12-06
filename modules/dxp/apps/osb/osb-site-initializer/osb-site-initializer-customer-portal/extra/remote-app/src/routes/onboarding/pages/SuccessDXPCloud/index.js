@@ -6,7 +6,7 @@ import {API_BASE_URL} from '../../../../common/utils';
 import Layout from '../../components/Layout';
 import {AppContext} from '../../context';
 
-const SuccessDXP = () => {
+const SuccessDXPCloud = () => {
 	const [{project}] = useContext(AppContext);
 
 	const onClickDone = () => {
@@ -41,4 +41,4 @@ const SuccessDXP = () => {
 	);
 };
 
-export default SuccessDXP;
+export default SuccessDXPCloud;

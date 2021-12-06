@@ -173,13 +173,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136828. It checks that multiple metadata sets can be published."
-	@ignore = "true"
 	@priority = "3"
 	test CanPublishMetadataSets {
-		property portal.acceptance = "false";
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
 
-		// TODO LPS-136828 CanPublishRelatedAsset pending implementation
+		for (var n : list "1,2") {
+			DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name ${n}");
 
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			DDLDataDefinition.save();
+		}
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+
+		for (var n : list "1,2") {
+			DMMetadataSet.viewMetadataSetTitle(metadataSetTitle = "DM Metadata Set Name ${n}");
+		}
 	}
 
 	@description = "This is a test for LPS-136823. It checks that a minor version of a file can be published."

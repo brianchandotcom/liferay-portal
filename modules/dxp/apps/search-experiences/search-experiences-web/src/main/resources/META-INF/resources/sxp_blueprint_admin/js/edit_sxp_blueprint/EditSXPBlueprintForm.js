@@ -348,7 +348,7 @@ function EditSXPBlueprintForm({
 	const formik = useFormik({
 		initialValues: {
 			advancedConfig: JSON.stringify(
-				initialConfiguration.advanced,
+				initialConfiguration.advancedConfiguration,
 				null,
 				'\t'
 			),
@@ -366,14 +366,14 @@ function EditSXPBlueprintForm({
 					id: index,
 				})
 			),
-			frameworkConfig: initialConfiguration.general || {},
+			frameworkConfig: initialConfiguration.generalConfiguration || {},
 			highlightConfig: JSON.stringify(
-				initialConfiguration.highlight,
+				initialConfiguration.highlightConfiguration,
 				null,
 				'\t'
 			),
 			parameterConfig: JSON.stringify(
-				initialConfiguration.parameters,
+				initialConfiguration.parameterConfiguration,
 				null,
 				'\t'
 			),

@@ -287,9 +287,6 @@ public class PropsValues {
 	public static final String AUTO_DEPLOY_TOMCAT_CONF_DIR = PropsUtil.get(
 		PropsKeys.AUTO_DEPLOY_TOMCAT_CONF_DIR);
 
-	public static final String AUTO_DEPLOY_TOMCAT_LIB_DIR = PropsUtil.get(
-		PropsKeys.AUTO_DEPLOY_TOMCAT_LIB_DIR);
-
 	public static final String
 		AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_INSTALL_OPTIONS =
 			PropsUtil.get(

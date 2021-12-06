@@ -614,7 +614,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String securityTaglibDTD;
 	protected final Set<Path> tempDirPaths = new HashSet<>();
 	protected String themeTaglibDTD;
-	protected String tomcatLibDir;
 	protected String uiTaglibDTD;
 	protected String utilTaglibDTD;
 	protected String wildflyPrefix;

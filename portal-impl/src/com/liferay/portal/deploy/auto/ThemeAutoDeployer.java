@@ -48,7 +48,6 @@ public class ThemeAutoDeployer
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
 			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
-			tomcatLibDir = PropsValues.AUTO_DEPLOY_TOMCAT_LIB_DIR;
 			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;
 
 			checkArguments();

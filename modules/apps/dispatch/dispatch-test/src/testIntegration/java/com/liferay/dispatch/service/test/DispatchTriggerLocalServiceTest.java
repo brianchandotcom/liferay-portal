@@ -24,6 +24,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.service.persistence.DispatchTriggerUtil;
 import com.liferay.dispatch.service.test.util.CronExpressionUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -101,6 +103,62 @@ public class DispatchTriggerLocalServiceTest {
 		Assert.assertEquals(
 			"Add dispatch trigger with no name",
 			DispatchTriggerNameException.class, exceptionClass);
+	}
+
+	@Test
+	public void testDeleteSystemDispatchTrigger() throws Exception {
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			Company company = CompanyTestUtil.addCompany();
+
+			User user = UserTestUtil.addUser(company);
+
+			DispatchTrigger systemDispatchTrigger = DispatchTriggerUtil.create(
+				RandomTestUtil.nextLong());
+
+			systemDispatchTrigger.setCompanyId(user.getCompanyId());
+			systemDispatchTrigger.setUserId(user.getUserId());
+			systemDispatchTrigger.setActive(true);
+			systemDispatchTrigger.setSystem(true);
+
+			systemDispatchTrigger = _addDispatchTrigger(
+				DispatchTriggerTestUtil.randomDispatchTrigger(
+					systemDispatchTrigger, 1));
+
+			DispatchTrigger regularDispatchTrigger = DispatchTriggerUtil.create(
+				RandomTestUtil.nextLong());
+
+			regularDispatchTrigger.setCompanyId(user.getCompanyId());
+			regularDispatchTrigger.setUserId(user.getUserId());
+			regularDispatchTrigger.setActive(true);
+			regularDispatchTrigger.setSystem(false);
+
+			regularDispatchTrigger = _addDispatchTrigger(
+				DispatchTriggerTestUtil.randomDispatchTrigger(
+					regularDispatchTrigger, 2));
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(
+				systemDispatchTrigger);
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(
+				regularDispatchTrigger);
+
+			Assert.assertNotNull(
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					systemDispatchTrigger.getDispatchTriggerId()));
+
+			Assert.assertNull(
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					regularDispatchTrigger.getDispatchTriggerId()));
+
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+		catch (Exception exception) {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
 	}
 
 	@Test

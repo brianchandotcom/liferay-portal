@@ -2,8 +2,8 @@ import {useContext} from 'react';
 import {AppContext} from '../context';
 import {steps} from '../utils/constants';
 import Invites from './Invites';
-import SetupDXP from './SetupDXP';
-import SuccessDXP from './SuccessDXP';
+import SetupDXPCloud from './SetupDXPCloud';
+import SuccessDXPCloud from './SuccessDXPCloudCloud';
 import Welcome from './Welcome';
 
 const Pages = () => {
@@ -13,11 +13,12 @@ const Pages = () => {
 		return <Invites />;
 	}
 
-	if (step === steps.dxp) {
-		return <SetupDXP />;
+	if (step === steps.dxpCloud) {
+		return <SetupDXPCloud />;
 	}
-	if (step === steps.success) {
-		return <SuccessDXP />;
+
+	if (step === steps.successDxpCloud) {
+		return <SuccessDXPCloud />;
 	}
 
 	if (userAccount) {

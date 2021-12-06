@@ -1,7 +1,7 @@
 import {gql} from '@apollo/client';
 
-export const getSetupDXPInfo = gql`
-	query getSetupDXPInfo(
+export const getSetupDXPCloudInfo = gql`
+	query getSetupDXPCloudInfo(
 		$accountSubscriptionsFilter: String
 		$koroneikiAccountsFilter: String
 	) {
@@ -106,10 +106,10 @@ export const getBannedEmailDomains = gql`
 	}
 `;
 
-export const addSetupDXP = gql`
-	mutation addSetupDXP($SetupDXP: InputC_SetupDXP!, $scopeKey: String) {
+export const addSetupDXPCloud = gql`
+	mutation addSetupDXPCloud($SetupDXPCloud: InputC_SetupDXPCloud!, $scopeKey: String) {
 		c {
-			createSetupDXP(SetupDXP: $SetupDXP, scopeKey: $scopeKey) {
+			createSetupDXPCloud(SetupDXPCloud: $SetupDXPCloud, scopeKey: $scopeKey) {
 				admins
 				disasterDataCenterRegion
 				dataCenterRegion

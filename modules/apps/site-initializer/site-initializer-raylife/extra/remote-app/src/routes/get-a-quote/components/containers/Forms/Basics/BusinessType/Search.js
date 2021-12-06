@@ -1,5 +1,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+
 import classNames from 'classnames';
 import useDebounce from 'lodash.debounce';
 
@@ -90,20 +92,28 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 	};
 
 	const infoPanelButton = () => (
-		<button
-			className={classNames('btn badge bottom-list', {
-				open: selectedTrigger,
+		<ClayLabel
+			className={classNames('label-inverse-primary btn-info-panel', {
+				'label-solid-info': selectedTrigger,
 			})}
 			onClick={showInfoPanel}
-			type="button"
 		>
-			I am unable to find my industry
-			<ClayIcon
-				symbol={
-					selectedTrigger ? 'question-circle-full' : 'question-circle'
-				}
-			/>
-		</button>
+			<div className="align-items-center d-flex mx-2">
+				<span className="text-paragraph-sm">
+					I am unable to find my industry
+				</span>
+
+				<span className="inline-item inline-item-after">
+					<ClayIcon
+						symbol={
+							selectedTrigger
+								? 'question-circle-full'
+								: 'question-circle'
+						}
+					/>
+				</span>
+			</div>
+		</ClayLabel>
 	);
 
 	const renderResults = () => {

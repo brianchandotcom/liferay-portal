@@ -1,41 +1,10 @@
 .badge {
-	align-items: center;
-	background: $color-brand-primary-lighten-5;
-	border: none;
-	border-radius: 0.25rem;
-	color: $color-action-primary-hover;
-	display: flex;
-	fill: $color-action-primary-hover;
-	font-family: $font-family;
-	font-size: 0.8rem;
-	font-weight: 500;
-	gap: 0.5rem;
-	height: 2rem;
-	justify-content: flex-start;
-	padding: 0 $spacer-3;
-}
-
-button.btn.badge {
-	background: $color-brand-primary-lighten-5;
-	font-weight: 500;
-
-	&.open {
-		background: $color-action-primary-hover;
-		color: $color-neutral-white;
-		fill: $color-neutral-white;
+	&.warning {
+		svg {
+			height: 16px !important;
+			width: 16px !important;
+		}
 	}
-}
-
-.badge-primary {
-	background: $color-brand-primary-lighten-5;
-	color: $color-action-primary-hover;
-	fill: $color-action-primary-hover;
-}
-
-.badge-error {
-	background: $color-state-error-lighten-1;
-	color: $color-state-error;
-	fill: $color-state-error;
 }
 
 .badge-info {

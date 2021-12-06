@@ -29,22 +29,22 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		for (var num : list "1,2") {
+		task ("Create an user using JSONWS") {
 			JSONUser.addUser(
-				jobTitle = "Test Engineer${num}",
-				userEmailAddress = "userea${num}@liferay.com",
-				userFirstName = "userfn${num}",
-				userLastName = "userln${num}",
-				userScreenName = "usersn${num}");
+				jobTitle = "Test Engineer1",
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea${num}@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
-				userEmailAddress = "userea${num}@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -64,6 +64,8 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
+
+		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea1@liferay.com");
 	}
 
 	@description = "This is a use case for LPS-106776. When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
@@ -177,6 +179,22 @@ definition {
 	test AddNewExperienceBasedOtherSegmentsSegment {
 		property portal.acceptance = "false";
 
+		JSONUser.addUser(
+			jobTitle = "Test Engineer2",
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea2@liferay.com");
+
 		for (var num : list "1,2") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Last Name",
@@ -249,6 +267,8 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "User1 and User2 will see this heading");
 		}
+
+		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea2@liferay.com");
 	}
 
 	@description = "This is a test for LPS-130309."
@@ -260,7 +280,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -293,7 +313,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -326,8 +346,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -345,7 +365,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -363,7 +383,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -396,8 +416,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -417,7 +437,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -437,7 +457,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -470,8 +490,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -491,7 +511,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -511,7 +531,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -544,8 +564,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -565,7 +585,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -612,8 +632,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -633,13 +653,13 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		JSONOrganization.addOrganization(organizationName = "Suborganization Name");
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "Suborganization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		User.openUsersAdmin();
 
@@ -671,7 +691,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -704,8 +724,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -725,7 +745,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -762,7 +782,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -795,8 +815,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -816,7 +836,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -847,7 +867,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -880,8 +900,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -928,7 +948,7 @@ definition {
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "United States",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -948,7 +968,7 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -981,8 +1001,8 @@ definition {
 
 		User.logoutAndLoginPG(
 			freeLogin = "true",
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -2527,7 +2547,7 @@ definition {
 
 		JSONGroup.assignUserToGroup(
 			groupName = "Test Site Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		JSONRole.addSiteRole(
 			roleKey = "Site Role Name",
@@ -2536,7 +2556,7 @@ definition {
 		JSONGroup.assignGroupRoleToUser(
 			groupName = "Test Site Name",
 			roleTitle = "Site Role Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		SearchAdministration.executeReindex();
 
@@ -2550,7 +2570,7 @@ definition {
 
 		Segmentation.fillProperty(selectCheckbox = "Site Role Name");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -2584,8 +2604,8 @@ definition {
 		PageEditor.clickPublish();
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -2601,7 +2621,7 @@ definition {
 
 		JSONGroup.assignUserToGroup(
 			groupName = "Test Site Name",
-			userEmailAddress = "userea2@liferay.com");
+			userEmailAddress = "userea1@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -2613,7 +2633,7 @@ definition {
 
 		Segmentation.fillProperty(selectLink = "Test Site Name");
 
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
 		Button.clickSave();
 
@@ -2647,8 +2667,8 @@ definition {
 		PageEditor.clickPublish();
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 

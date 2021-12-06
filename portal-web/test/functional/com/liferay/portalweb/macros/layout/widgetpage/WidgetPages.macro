@@ -2,7 +2,7 @@ definition {
 
 	macro switchToggleControls {
 		Click(
-			key_status = "${click}",
+			key_status = "${status}",
 			locator1 = "ControlMenu#TOGGLE_CONTROLS");
 	}
 

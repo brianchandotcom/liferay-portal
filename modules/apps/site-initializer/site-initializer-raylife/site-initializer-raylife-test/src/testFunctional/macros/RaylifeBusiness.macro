@@ -38,39 +38,37 @@ definition {
 	}
 
 	macro viewBusinessInfo {
+		AssertElementPresent(
+			label = "business.yearsOfExperience",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "3");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "business.yearsOfExperience",
-            value = "3");
+		AssertElementPresent(
+			field = "business.hasStoredCustomerInformation",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        AssertElementPresent(
-            locator1 = "Raylife#BUTTON_NO_OPTION",
-            field = "business.hasStoredCustomerInformation");
+		AssertElementPresent(
+			field = "business.hasAutoPolicy",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        AssertElementPresent(
-            locator1 = "Raylife#BUTTON_NO_OPTION",
-            field = "business.hasAutoPolicy");
+		AssertElementPresent(
+			label = "business.legalEntity",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "Association");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_FIELDS",
-            label = "business.legalEntity",
-            value1 = "Association");
+		AssertElementPresent(
+			label = "business.salesMerchandise",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "3%");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "business.salesMerchandise",
-            value = "3%");
+		AssertElementPresent(
+			field = "business.hasSellProductsUnderOwnBrand",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        AssertElementPresent(
-            locator1 = "Raylife#BUTTON_NO_OPTION",
-            field = "business.hasSellProductsUnderOwnBrand");
+		AssertElementPresent(
+			label = "business.overallSales",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "3%");
+	}
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "business.overallSales",
-            value = "3%");
-
-    }
-	
 }

@@ -227,7 +227,7 @@ definition {
 
 				SelectFrameTop();
 
-				Button.clickAdd();
+				Button.click(button = "Select");
 
 				IFrame.selectTopFrame();
 			}

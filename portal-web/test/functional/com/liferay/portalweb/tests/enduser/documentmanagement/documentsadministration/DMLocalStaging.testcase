@@ -246,11 +246,11 @@ definition {
 			site = "false",
 			sourceFileName = "Document_1.jpeg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
 
 		RelatedAssets.selectAsset(
 			assetTitle = "Web Content Title",

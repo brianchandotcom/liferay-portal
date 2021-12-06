@@ -617,16 +617,13 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 					'<portlet:namespace />ldap--<%= LDAPConstants.SECURITY_CREDENTIAL %>--'
 				].value;
 
-			var url = new URL(baseUrl);
-
-			var searchParams = Liferay.Util.objectToURLSearchParams(data);
-
-			searchParams.forEach((value, key) => {
-				url.searchParams.append(key, value);
-			});
-
-			Liferay.Util.fetch(url)
-				.then((response) => {
+			Liferay.Util.fetch(
+				new URL(baseUrl),
+				{
+					body: Liferay.Util.objectToURLSearchParams(data),
+					method: 'POST'
+				}
+				).then((response) => {
 					return response.text();
 				})
 				.then((text) => {

@@ -79,18 +79,9 @@ definition {
 	test CanCreateANewFieldSet {
 		Click(locator1 = "Button#PLUS");
 
-		PortletEntry.inputName(name = "Workflow Field");
-
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		KaleoFormsAdmin.saveFieldSet();
-
-		AssertElementPresent(
-			key_ddlDataDefinitionName = "Workflow Field",
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
+		KaleoFormsManageFieldSets.createNewFieldSet(
+			fieldSetName = "New Field Set",
+			fieldType = "Text");
 	}
 
 	@description = "Verify that the user can delete a field set."
@@ -112,8 +103,6 @@ definition {
 			nameFieldset = "Contacts",
 			newNameFieldset = "Contacts Test");
 
-		Button.clickSave();
-
 		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
 
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Events,Inventory,Issues Tracking,Meeting Minutes,To Do,Contacts Test");
@@ -121,14 +110,14 @@ definition {
 
 	@description = "Verify that the user can not delete a field set that is required by one or more templates."
 	@priority = "4"
-	test CanNotDeleteFieldSets {
+	test CanNotDeleteFieldSetInUse {
 		KaleoFormsManageFieldSets.viewFieldSetCannotBeDeleted(fieldSetName = "Contacts");
 	}
 
 	@description = "Verify that user can Reverse sort Direction and if the elements reverse position."
 	@priority = "3"
 	test CanReverseSortDirectionTheElement {
-		KaleoFormsManageFieldSets.clickFilterById();
+		KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "ID");
 
 		KaleoFormsManageFieldSets.viewUpDirectionOfSortButton();
 
@@ -142,16 +131,23 @@ definition {
 	@description = "Verify that the user can search for a field set on manage field set page."
 	@priority = "4"
 	test CanSearchFieldSet {
-		KaleoFormsManageFieldSets.searchFieldSet(fieldSetName = "Inventory");
+		KaleoFormsManageFieldSets.searchFieldSet(
+			fieldSetName = "Inventory");
 	}
 
 	@description = "Verify that user can view of values on columns -ID-, -Name-,  -Description-, -Scope-, -Modified Date-."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewValuesOnColumns {
+		KaleoFormsManageFieldSets.editFieldSets(
+			nameFieldset = "Contacts",
+			newNameFieldset = "Contacts Edited",
+			newDescription = "Contacts description edited");
 
-		// TODO LRQA-70712 CanViewValuesOnColumns pending implementation
-
+		KaleoFormsManageFieldSets.viewValuesOnColumns(
+			rowNumber = "6",
+			nameField = "Contacts Edited",
+			descriptionField = "Contacts description edited",
+			modifiedDateField = "0 Seconds Ago");
 	}
 
 	@description = "Verify that the user can navigate to the next page."

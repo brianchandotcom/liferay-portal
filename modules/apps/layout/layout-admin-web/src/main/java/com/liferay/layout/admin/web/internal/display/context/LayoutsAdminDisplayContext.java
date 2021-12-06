@@ -776,10 +776,12 @@ public class LayoutsAdminDisplayContext {
 			return breadcrumbEntries;
 		}
 
-		breadcrumbEntries.add(
-			_getBreadcrumbEntry(
-				LayoutConstants.DEFAULT_PLID, privatePages,
-				getTitle(privatePages)));
+		if (isShowPrivateLayouts()) {
+			breadcrumbEntries.add(
+				_getBreadcrumbEntry(
+					LayoutConstants.DEFAULT_PLID, privatePages,
+					getTitle(privatePages)));
+		}
 
 		if ((getSelPlid() == LayoutConstants.DEFAULT_PLID) ||
 			(selLayout == null)) {

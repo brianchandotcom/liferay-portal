@@ -86,7 +86,7 @@ definition {
 		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION");
 	}
 
-	macro viewExceedsMaximumLength {
+	macro viewInvalidCustomEventEdition {
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#INVALID_MESSAGE",
 			value1 = "${invalidMessage}");

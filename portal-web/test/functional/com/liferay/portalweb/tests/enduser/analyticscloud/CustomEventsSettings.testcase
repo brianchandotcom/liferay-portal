@@ -291,7 +291,7 @@ definition {
 		}
 
 		task ("Check that the custom event name cannot be more than 255 characters") {
-			ACCustomEvents.viewExceedsMaximumLength(invalidMessage = "Exceeds maximum length.");
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "Exceeds maximum length.");
 		}
 	}
 
@@ -558,7 +558,7 @@ definition {
 		}
 
 		task ("Check that the display name cannot be renamed to an existing one") {
-			ACCustomEvents.viewExceedsMaximumLength(invalidMessage = "An event already exists with that display name. Please enter a different display name.");
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An event already exists with that display name. Please enter a different display name.");
 		}
 
 		task ("Rename to an existing display name") {
@@ -566,7 +566,7 @@ definition {
 		}
 
 		task ("Check that the display name cannot be renamed to an existing one") {
-			ACCustomEvents.viewExceedsMaximumLength(invalidMessage = "An event already exists with that display name. Please enter a different display name.");
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An event already exists with that display name. Please enter a different display name.");
 		}
 	}
 

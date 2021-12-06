@@ -29,7 +29,7 @@ definition {
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
-		DDLDataDefinition.save();
+		Button.clickSave();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
@@ -39,7 +39,7 @@ definition {
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
-		DDLDataDefinition.save();
+		Button.clickSave();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",

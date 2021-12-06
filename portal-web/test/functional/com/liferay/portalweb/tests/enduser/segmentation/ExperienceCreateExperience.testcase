@@ -47,12 +47,6 @@ definition {
 				userEmailAddress = "userea${num}@liferay.com");
 		}
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
-
-		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
-			userEmailAddress = "userea2@liferay.com");
-
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -262,6 +256,12 @@ definition {
 	test AddNewExperienceOrganizationCountrySegment {
 		property portal.acceptance = "false";
 
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -339,6 +339,12 @@ definition {
 	@description = "This is a test for LPS-130302."
 	@priority = "5"
 	test AddNewExperienceOrganizationDateModifiedSegment {
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
+
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
@@ -402,6 +408,12 @@ definition {
 	@priority = "5"
 	test AddNewExperienceOrganizationHierarchyPathSegment {
 		property portal.acceptance = "false";
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
@@ -469,6 +481,12 @@ definition {
 	test AddNewExperienceOrganizationNameSegment {
 		property portal.acceptance = "false";
 
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
+
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
@@ -535,6 +553,12 @@ definition {
 	test AddNewExperienceOrganizationOrganizationSegment {
 		property portal.acceptance = "false";
 
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
+
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
@@ -594,6 +618,12 @@ definition {
 	@priority = "5"
 	test AddNewExperienceOrganizationParentOrganizationSegment {
 		property portal.acceptance = "false";
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
 
 		JSONOrganization.addOrganization(organizationName = "Suborganization Name");
 
@@ -679,6 +709,12 @@ definition {
 	test AddNewExperienceOrganizationRegionSegment {
 		property portal.acceptance = "false";
 
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -762,6 +798,12 @@ definition {
 	test AddNewExperienceOrganizationTagSegment {
 		property portal.acceptance = "false";
 
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -839,6 +881,12 @@ definition {
 	test AddNewExperienceOrganizationTypeSegment {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceOrganizationTypeSegment";
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea2@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

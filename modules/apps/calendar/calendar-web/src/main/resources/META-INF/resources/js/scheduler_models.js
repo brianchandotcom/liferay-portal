@@ -15,8 +15,6 @@
 AUI.add(
 	'liferay-scheduler-models',
 	(A) => {
-		var AObject = A.Object;
-
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
 
@@ -641,7 +639,7 @@ AUI.add(
 
 					var calendarContainer = scheduler.get('calendarContainer');
 
-					var calendarIds = AObject.keys(
+					var calendarIds = Object.keys(
 						calendarContainer.get('availableCalendars')
 					);
 

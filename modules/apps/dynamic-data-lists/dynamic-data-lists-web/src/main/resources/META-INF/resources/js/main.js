@@ -765,6 +765,7 @@ AUI.add(
 
 				callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
 
+				// eslint-disable-next-line @liferay/aui/no-io
 				A.io.request(updateRecordURL, {
 					data: Liferay.Util.ns(portletNamespace, {
 						ddmFormValues: JSON.stringify(ddmFormValues),

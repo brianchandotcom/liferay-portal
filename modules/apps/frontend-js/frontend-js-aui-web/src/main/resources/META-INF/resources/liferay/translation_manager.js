@@ -344,6 +344,7 @@ AUI.add(
 
 					var localesMap = instance.get('localesMap');
 
+					// eslint-disable-next-line @liferay/aui/no-object
 					return A.Object.hasKey(localesMap, val)
 						? val
 						: instance._valueEditingLocale();
@@ -352,7 +353,7 @@ AUI.add(
 				_setLocalesMap(val) {
 					var instance = this;
 
-					var locales = A.Object.keys(val);
+					var locales = Object.keys(val);
 
 					if (locales.length !== 0) {
 						this.syncAvailableLocales(locales);

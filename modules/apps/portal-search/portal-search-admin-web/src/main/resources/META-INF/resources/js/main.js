@@ -84,6 +84,7 @@ AUI.add(
 
 					var form = instance.get(STR_FORM);
 
+					// eslint-disable-next-line @liferay/aui/no-object
 					var inputsArray = A.Object.map(data, (value, key) => {
 						key = MAP_DATA_PARAMS[key] || key;
 

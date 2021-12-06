@@ -589,6 +589,7 @@ AUI.add(
 						queue &&
 						(queue.queuedFiles.length > 0 ||
 							queue.numberOfUploads > 0 ||
+							// eslint-disable-next-line @liferay/aui/no-object
 							!A.Object.isEmpty(queue.currentFiles)) &&
 						queue._currentState === UploaderQueue.UPLOADING
 					);

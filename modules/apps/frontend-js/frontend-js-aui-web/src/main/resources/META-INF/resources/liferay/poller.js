@@ -18,6 +18,7 @@
 AUI.add(
 	'liferay-poller',
 	(A) => {
+		// eslint-disable-next-line @liferay/aui/no-object
 		var AObject = A.Object;
 
 		var _browserKey = Math.ceil(Math.random() * Number.MAX_SAFE_INTEGER);

@@ -16,7 +16,6 @@ AUI.add(
 	'liferay-scheduler-event-recorder',
 	(A) => {
 		var AArray = A.Array;
-		var AObject = A.Object;
 		var Lang = A.Lang;
 
 		var CalendarWorkflow = Liferay.CalendarWorkflow;
@@ -641,7 +640,7 @@ AUI.add(
 							'availableCalendars'
 						),
 						calendar,
-						calendarIds: AObject.keys(
+						calendarIds: Object.keys(
 							calendarContainer.get('availableCalendars')
 						),
 						declineLinkEnabled: instance._hasWorkflowStatusPermission(

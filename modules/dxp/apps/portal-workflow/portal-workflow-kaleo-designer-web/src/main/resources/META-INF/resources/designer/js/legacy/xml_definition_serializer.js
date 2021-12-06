@@ -13,6 +13,7 @@ AUI.add(
 	'liferay-kaleo-designer-xml-definition-serializer',
 	(A) => {
 		var AArray = A.Array;
+		// eslint-disable-next-line @liferay/aui/no-object
 		var AObject = A.Object;
 		var Lang = A.Lang;
 

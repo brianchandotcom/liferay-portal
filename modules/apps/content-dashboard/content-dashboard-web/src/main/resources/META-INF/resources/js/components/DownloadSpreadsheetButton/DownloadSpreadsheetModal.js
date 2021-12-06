@@ -66,8 +66,9 @@ const DownloadSpreadsheetModal = ({
 											className="m-0 mr-2"
 											small
 										/>
-									)}{' '}
-									{secondaryButtonText}
+									)}
+
+									{` ${secondaryButtonText}`}
 								</ClayButton>
 
 								<ClayButton

@@ -260,6 +260,7 @@ AUI.add(
 					] = JSON.stringify(ddmFormValues);
 					data.groupId = themeDisplay.getScopeGroupId();
 
+					// eslint-disable-next-line @liferay/aui/no-io
 					A.io.request(instance.get('viewAttachmentURL'), {
 						data,
 						on: {

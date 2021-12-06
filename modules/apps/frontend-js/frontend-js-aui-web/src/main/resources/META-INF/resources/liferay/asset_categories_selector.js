@@ -19,6 +19,7 @@ AUI.add(
 
 		var LString = Lang.String;
 
+		// eslint-disable-next-line @liferay/aui/no-object
 		var AObject = A.Object;
 
 		var BOUNDING_BOX = 'boundingBox';

@@ -19,8 +19,6 @@
 
 	var Lang = A.Lang;
 
-	var AObject = A.Object;
-
 	var htmlEscapedValues = [];
 	var htmlUnescapedValues = [];
 
@@ -36,7 +34,8 @@
 
 	var MAP_HTML_CHARS_UNESCAPED = {};
 
-	AObject.each(MAP_HTML_CHARS_ESCAPED, (item, index) => {
+	// eslint-disable-next-line @liferay/aui/no-object
+	A.Object.each(MAP_HTML_CHARS_ESCAPED, (item, index) => {
 		MAP_HTML_CHARS_UNESCAPED[item] = index;
 
 		htmlEscapedValues.push(item);

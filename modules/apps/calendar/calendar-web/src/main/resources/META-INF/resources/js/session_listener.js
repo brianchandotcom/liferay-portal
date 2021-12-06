@@ -34,6 +34,7 @@ AUI.add(
 
 					var calendars = instance.get('calendars');
 
+					// eslint-disable-next-line @liferay/aui/no-object
 					A.Object.each(calendars, (calendar) => {
 						var permissions = calendar.get('permissions');
 

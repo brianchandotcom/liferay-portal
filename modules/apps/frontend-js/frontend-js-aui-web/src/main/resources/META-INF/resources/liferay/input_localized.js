@@ -37,7 +37,7 @@ AUI.add(
 
 		var availableLanguageIds = A.Array.dedupe(
 			[defaultLanguageId, userLanguageId].concat(
-				A.Object.keys(availableLanguages)
+				Object.keys(availableLanguages)
 			)
 		);
 

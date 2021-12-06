@@ -128,7 +128,7 @@ AUI.add(
 			namespaceObject(namespace, object) {
 				var returnObject = {};
 
-				var keys = A.Object.keys(object);
+				var keys = Object.keys(object);
 
 				A.Array.each(keys, (key) => {
 					returnObject[namespace + key] = object[key];

@@ -13,7 +13,6 @@ AUI.add(
 	'liferay-kaleo-designer-editors',
 	(A) => {
 		var AArray = A.Array;
-		var AObject = A.Object;
 		var getClassName = A.getClassName;
 		var Lang = A.Lang;
 		var Template = A.Template;
@@ -1576,7 +1575,8 @@ AUI.add(
 
 					var value = recipients[index];
 
-					if (value && AObject.isEmpty(value)) {
+					// eslint-disable-next-line @liferay/aui/no-object
+					if (value && A.Object.isEmpty(value)) {
 						value.assignmentType = 'taskAssignees';
 						value.receptionType = ['to'];
 						value.taskAssignees = [''];

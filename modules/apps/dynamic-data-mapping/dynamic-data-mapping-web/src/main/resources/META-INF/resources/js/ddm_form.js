@@ -17,8 +17,6 @@ AUI.add(
 	(A) => {
 		var AArray = A.Array;
 
-		var AObject = A.Object;
-
 		var AQueue = A.Queue;
 
 		var DateMath = A.DataType.DateMath;
@@ -162,7 +160,7 @@ AUI.add(
 				var FieldClass = getFieldClass(fieldDefinition.type);
 
 				var field = new FieldClass({
-					...instance.getAttrs(AObject.keys(DDMPortletSupport.ATTRS)),
+					...instance.getAttrs(Object.keys(DDMPortletSupport.ATTRS)),
 					container: fieldNode,
 					dataType: fieldDefinition.dataType,
 					definition,
@@ -909,6 +907,7 @@ AUI.add(
 						if (
 							type === 'select' &&
 							(predefinedValue === '[""]' ||
+								// eslint-disable-next-line @liferay/aui/no-object
 								!A.Object.isEmpty(localizationMap))
 						) {
 							predefinedValue = '';
@@ -1202,6 +1201,7 @@ AUI.add(
 						var value;
 
 						if (instance.get('localizable')) {
+							// eslint-disable-next-line @liferay/aui/no-object
 							if (!A.Object.isEmpty(localizationMap)) {
 								value =
 									localizationMap[
@@ -1221,6 +1221,7 @@ AUI.add(
 							if (
 								(dataType === 'double' ||
 									dataType === 'number') &&
+								// eslint-disable-next-line @liferay/aui/no-object
 								!A.Object.isEmpty(localizationMap)
 							) {
 								instance.setValue(localizationMap);
@@ -1251,7 +1252,7 @@ AUI.add(
 							var form = instance.getForm();
 
 							form.addAvailableLanguageIds(
-								AObject.keys(fieldJSON.value)
+								Object.keys(fieldJSON.value)
 							);
 						}
 					}

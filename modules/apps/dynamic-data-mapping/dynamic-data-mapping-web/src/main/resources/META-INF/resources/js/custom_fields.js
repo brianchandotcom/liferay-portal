@@ -989,12 +989,14 @@ AUI.add(
 
 			var defaultLocale = translationManager.get('defaultLocale');
 
+			// eslint-disable-next-line @liferay/aui/no-object
 			var value = A.Object.getValue(localizationMap, [locale, attribute]);
 
 			if (isValue(value)) {
 				return value;
 			}
 
+			// eslint-disable-next-line @liferay/aui/no-object
 			value = A.Object.getValue(localizationMap, [
 				defaultLocale,
 				attribute,
@@ -1005,6 +1007,7 @@ AUI.add(
 			}
 
 			for (var localizationMapLocale in localizationMap) {
+				// eslint-disable-next-line @liferay/aui/no-object
 				value = A.Object.getValue(localizationMap, [
 					localizationMapLocale,
 					attribute,

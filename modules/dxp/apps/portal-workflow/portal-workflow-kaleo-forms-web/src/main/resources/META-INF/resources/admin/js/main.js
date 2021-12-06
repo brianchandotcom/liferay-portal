@@ -337,6 +337,7 @@ AUI.add(
 				saveInPortletSession(data) {
 					var instance = this;
 
+					// eslint-disable-next-line @liferay/aui/no-io
 					A.io.request(instance.get('saveInPortletSessionURL'), {
 						data: instance.ns(data),
 					});

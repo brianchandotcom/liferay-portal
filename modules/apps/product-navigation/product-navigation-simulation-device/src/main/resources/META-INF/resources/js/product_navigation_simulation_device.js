@@ -15,6 +15,7 @@
 AUI.add(
 	'liferay-product-navigation-simulation-device',
 	(A) => {
+		// eslint-disable-next-line @liferay/aui/no-object
 		var AObject = A.Object;
 		var Lang = A.Lang;
 

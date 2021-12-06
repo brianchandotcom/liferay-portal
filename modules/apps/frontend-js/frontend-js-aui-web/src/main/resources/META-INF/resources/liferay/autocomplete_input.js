@@ -276,7 +276,7 @@ AUI.add(
 
 				instance._bindUIACIBase();
 
-				var autocompleteAttrs = A.Object.keys(
+				var autocompleteAttrs = Object.keys(
 					A.AutoComplete.ATTRS
 				).filter((item) => {
 					return item !== 'value';

@@ -78,6 +78,7 @@ AUI.add(
 			_encodeRRule(rrule) {
 				var instance = this;
 
+				// eslint-disable-next-line @liferay/aui/no-object
 				var components = A.Object.map(rrule, (item, index) => {
 					return (
 						index.toUpperCase() +

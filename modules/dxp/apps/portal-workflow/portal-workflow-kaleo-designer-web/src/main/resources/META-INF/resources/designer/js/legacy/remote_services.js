@@ -22,6 +22,7 @@ AUI.add(
 				);
 				url.setResourceId(params.resourceId);
 
+				// eslint-disable-next-line @liferay/aui/no-io
 				A.io.request(url.toString(), {
 					dataType: 'JSON',
 					on: {

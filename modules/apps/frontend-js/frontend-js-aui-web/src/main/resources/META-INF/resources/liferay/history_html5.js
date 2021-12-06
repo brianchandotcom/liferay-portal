@@ -22,6 +22,7 @@
 AUI.add(
 	'liferay-history-html5',
 	(A) => {
+		// eslint-disable-next-line @liferay/aui/no-object
 		var AObject = A.Object;
 		var History = Liferay.History;
 		var Lang = A.Lang;

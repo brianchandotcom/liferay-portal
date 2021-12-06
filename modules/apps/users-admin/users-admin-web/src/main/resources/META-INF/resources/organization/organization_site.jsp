@@ -23,11 +23,9 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 
-LayoutSet privateLayoutSet = null;
 LayoutSetPrototype privateLayoutSetPrototype = null;
 boolean privateLayoutSetPrototypeLinkEnabled = true;
 
-LayoutSet publicLayoutSet = null;
 LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = true;
 
@@ -36,36 +34,32 @@ Group organizationGroup = organization.getGroup();
 boolean site = organizationGroup.isSite();
 
 if (site) {
-	try {
-		LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), true);
+	LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(organizationGroup.getGroupId(), true);
 
+	if (privateLayoutSet != null) {
 		privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
 		String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
+			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 		}
 	}
-	catch (Exception e) {
-	}
 
-	try {
-		LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), false);
+	LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(organizationGroup.getGroupId(), false);
 
+	if (publicLayoutSet != null) {
 		publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
 		String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
+			publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 		}
-	}
-	catch (Exception e) {
 	}
 }
 %>

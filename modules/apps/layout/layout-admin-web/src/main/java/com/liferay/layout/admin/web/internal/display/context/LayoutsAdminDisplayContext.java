@@ -804,7 +804,7 @@ public class LayoutsAdminDisplayContext {
 			return breadcrumbEntries;
 		}
 
-		if (isShowPrivateLayouts()) {
+		if (isPrivateLayoutsEnabled()) {
 			breadcrumbEntries.add(
 				_getBreadcrumbEntry(
 					LayoutConstants.DEFAULT_PLID, privatePages,
@@ -1415,6 +1415,23 @@ public class LayoutsAdminDisplayContext {
 		return _privateLayout;
 	}
 
+	public boolean isPrivateLayoutsEnabled() {
+		if (_privateLayoutsEnabled != null) {
+			return _privateLayoutsEnabled;
+		}
+
+		Group group = getSelGroup();
+
+		if (group.isPrivateLayoutsEnabled()) {
+			_privateLayoutsEnabled = true;
+		}
+		else {
+			_privateLayoutsEnabled = false;
+		}
+
+		return _privateLayoutsEnabled;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -1649,23 +1666,6 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isShowPrivateLayouts() {
-		if (_showPrivateLayouts != null) {
-			return _showPrivateLayouts;
-		}
-
-		Group group = getSelGroup();
-
-		if (group.isPrivateLayoutsEnabled()) {
-			_showPrivateLayouts = true;
-		}
-		else {
-			_showPrivateLayouts = false;
-		}
-
-		return _showPrivateLayouts;
-	}
-
 	public boolean isShowPublicLayouts() {
 		Group selGroup = getSelGroup();
 
@@ -1677,7 +1677,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowUserPrivateLayouts() throws PortalException {
-		if (!isShowPrivateLayouts()) {
+		if (!isPrivateLayoutsEnabled()) {
 			return false;
 		}
 
@@ -2040,12 +2040,12 @@ public class LayoutsAdminDisplayContext {
 	private String _orderByType;
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
+	private Boolean _privateLayoutsEnabled;
 	private String _redirect;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
-	private Boolean _showPrivateLayouts;
 	private final StagingGroupHelper _stagingGroupHelper;
 	private String _tabs1;
 	private String _themeId;

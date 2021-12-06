@@ -89,7 +89,7 @@ public class MillerColumnsDisplayContext {
 	public JSONArray getLayoutColumnsJSONArray() throws Exception {
 		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (_layoutsAdminDisplayContext.isShowPrivateLayouts()) {
+		if (_layoutsAdminDisplayContext.isPrivateLayoutsEnabled()) {
 			layoutColumnsJSONArray = JSONUtil.put(
 				_getFirstLayoutColumnJSONArray());
 

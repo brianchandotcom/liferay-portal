@@ -297,7 +297,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 				httpServletRequest, "private-collection-page");
 		}
 
-		if (_layoutsAdminDisplayContext.isShowPrivateLayouts()) {
+		if (_layoutsAdminDisplayContext.isPrivateLayoutsEnabled()) {
 			return LanguageUtil.get(
 				httpServletRequest, "public-collection-page");
 		}
@@ -323,7 +323,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			return LanguageUtil.get(httpServletRequest, "private-page");
 		}
 
-		if (_layoutsAdminDisplayContext.isShowPrivateLayouts()) {
+		if (_layoutsAdminDisplayContext.isPrivateLayoutsEnabled()) {
 			return LanguageUtil.get(httpServletRequest, "public-page");
 		}
 

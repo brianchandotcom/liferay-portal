@@ -62,13 +62,34 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136924. It checks that an email notification can be received when a post is flagged."
-	@ignore = "true"
 	@priority = "3"
 	test CanReceiveEmailWhenPostIsFlagged {
-		property portal.acceptance = "false";
+		property custom.properties = "message.boards.email.bulk=false";
+		property test.smtp.server.enabled = "true";
 
-		// TODO LPS-136924 CanReceiveEmailWhenPostIsFlagged pending implementation
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.flagThread(
+			flagReason = "Spam",
+			siteName = "${siteName}");
+
+		MockMock.viewMail(
+			asset = "Inappropriate Content Flagged in ${siteName}",
+			content = "flagged as inappropriate by Test Test",
+			recipient = "Test Test",
+			sender = "Joe Bloggs",
+			subject = "Inappropriate Content Flagged in ${siteName}");
 	}
 
 	@description = "This is a test for LPS-136927. It checks that an email with a localized template can be received."

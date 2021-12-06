@@ -1,0 +1,15 @@
+definition {
+
+	macro switchToggleControls {
+		Click(
+			key_status = "${click}",
+			locator1 = "ControlMenu#TOGGLE_CONTROLS");
+	}
+
+	macro viewToggleControls {
+		AssertVisible(
+			key_status = "${status}",
+			locator1 = "ControlMenu#TOGGLE_CONTROLS");
+	}
+
+}

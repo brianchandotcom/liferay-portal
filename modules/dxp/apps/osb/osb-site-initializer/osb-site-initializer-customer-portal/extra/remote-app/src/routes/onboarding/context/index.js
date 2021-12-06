@@ -18,8 +18,8 @@ import reducer, {actionTypes} from './reducer';
 const initialForm = {
 	dxp: {
 		admins: [getInitialDxpAdmin()],
-		dataCenterRegion: '',
-		disasterDataCenterRegion: '',
+		dataCenterRegion: {},
+		disasterDataCenterRegion: {},
 		projectId: '',
 	},
 	invites: [

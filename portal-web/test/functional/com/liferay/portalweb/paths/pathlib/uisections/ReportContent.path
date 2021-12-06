@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>FLAG_LINK</td>
+	<td>//button/span[*[name()='svg'][contains(@class,'lexicon-icon-flag-empty')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FLAG_MODAL</td>
+	<td>//div[@class='modal-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WARNING</td>
 	<td>//p[contains(.,'You are about to report a violation')]</td>
 	<td></td>

@@ -2489,6 +2489,12 @@ definition {
 				value1 = "${dmDocumentType}");
 		}
 
+		if (isSet(relatedAssetsTitle)) {
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",
+				value1 = "${relatedAssetsTitle}");
+		}
+
 		if (isSet(reviewDate)) {
 			if (isSet(disabledReviewDate)) {
 				AssertElementPresent(

@@ -358,8 +358,7 @@ function EditSXPBlueprintForm({
 				'\t'
 			),
 			applyIndexerClauses:
-				initialConfiguration.queryConfiguration?.applyIndexerClauses ||
-				true,
+				initialConfiguration.queryConfiguration?.applyIndexerClauses,
 			elementInstances: initialSXPElementInstances.map(
 				(elementInstance, index) => ({
 					...elementInstance,

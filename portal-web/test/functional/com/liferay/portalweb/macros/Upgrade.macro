@@ -3049,6 +3049,8 @@ definition {
 			locator1 = "Home#PAGE",
 			value1 = "Documents and Media");
 
+		LiferayEvent.waitForPortletReady();
+
 		DMDocument.viewPG(dmDocumentTitle = "Document txt Title");
 
 		Navigator.gotoBack();

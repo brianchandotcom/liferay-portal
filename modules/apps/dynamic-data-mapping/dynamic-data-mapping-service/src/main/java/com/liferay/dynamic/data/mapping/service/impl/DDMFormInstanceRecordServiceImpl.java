@@ -90,7 +90,7 @@ public class DDMFormInstanceRecordServiceImpl
 			long ddmFormInstanceId)
 		throws PortalException {
 
-		_ddmFormInstanceModelResourcePermission.contains(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordLocalService.getFormInstanceRecords(
@@ -103,7 +103,7 @@ public class DDMFormInstanceRecordServiceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws PortalException {
 
-		_ddmFormInstanceModelResourcePermission.contains(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordLocalService.getFormInstanceRecords(
@@ -114,7 +114,7 @@ public class DDMFormInstanceRecordServiceImpl
 	public int getFormInstanceRecordsCount(long ddmFormInstanceId)
 		throws PortalException {
 
-		_ddmFormInstanceModelResourcePermission.contains(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(

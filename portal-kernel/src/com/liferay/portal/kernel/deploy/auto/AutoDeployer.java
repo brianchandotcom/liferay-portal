@@ -38,8 +38,6 @@ public interface AutoDeployer extends Closeable {
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException;
 
-	public void checkArguments();
-
 	@Override
 	public default void close() throws IOException {
 	}

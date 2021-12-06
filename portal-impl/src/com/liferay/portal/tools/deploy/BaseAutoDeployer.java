@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -244,19 +243,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		}
 		catch (Exception exception) {
 			throw new AutoDeployException(exception);
-		}
-	}
-
-	@Override
-	public void checkArguments() {
-		if (Validator.isNull(appServerType)) {
-			throw new IllegalArgumentException(
-				"The system property deployer.app.server.type is not set");
-		}
-
-		if (!ServerDetector.isSupported(appServerType)) {
-			throw new IllegalArgumentException(
-				appServerType + " is not a valid application server type");
 		}
 	}
 
@@ -545,7 +531,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	public void updateDeployDirectory(File srcFile) throws Exception {
 	}
 
-	protected String appServerType;
 	protected String auiTaglibDTD;
 	protected String portletExtTaglibDTD;
 	protected String portletTaglibDTD;

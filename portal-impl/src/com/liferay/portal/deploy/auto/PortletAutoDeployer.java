@@ -52,11 +52,18 @@ public class PortletAutoDeployer
 
 	public PortletAutoDeployer() {
 		try {
-			appServerType = ServerDetector.getServerId();
 			auiTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-aui.tld");
+
 			portletTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-portlet.tld");
+
+			if (Validator.isNull(portletTaglibDTD)) {
+				throw new IllegalArgumentException(
+					"The system property deployer.portlet.taglib.dtd is not " +
+						"set");
+			}
+
 			portletExtTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-portlet-ext.tld");
 			securityTaglibDTD = DeployUtil.getResourcePath(
@@ -67,21 +74,9 @@ public class PortletAutoDeployer
 				tempDirPaths, "liferay-ui.tld");
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
-
-			checkArguments();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-		}
-	}
-
-	@Override
-	public void checkArguments() {
-		super.checkArguments();
-
-		if (Validator.isNull(portletTaglibDTD)) {
-			throw new IllegalArgumentException(
-				"The system property deployer.portlet.taglib.dtd is not set");
 		}
 	}
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
@@ -41,13 +40,21 @@ public class ThemeAutoDeployer
 
 	public ThemeAutoDeployer() {
 		try {
-			appServerType = ServerDetector.getServerId();
 			themeTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-theme.tld");
+
+			if (Validator.isNull(themeTaglibDTD)) {
+				throw new IllegalArgumentException(
+					"The system property deployer.theme.taglib.dtd is not set");
+			}
+
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
 
-			checkArguments();
+			if (Validator.isNull(utilTaglibDTD)) {
+				throw new IllegalArgumentException(
+					"The system property deployer.util.taglib.dtd is not set");
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -84,21 +91,6 @@ public class ThemeAutoDeployer
 		}
 		else {
 			return super.autoDeploy(autoDeploymentContext);
-		}
-	}
-
-	@Override
-	public void checkArguments() {
-		super.checkArguments();
-
-		if (Validator.isNull(themeTaglibDTD)) {
-			throw new IllegalArgumentException(
-				"The system property deployer.theme.taglib.dtd is not set");
-		}
-
-		if (Validator.isNull(utilTaglibDTD)) {
-			throw new IllegalArgumentException(
-				"The system property deployer.util.taglib.dtd is not set");
 		}
 	}
 

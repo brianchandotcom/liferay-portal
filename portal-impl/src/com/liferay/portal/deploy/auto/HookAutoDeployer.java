@@ -15,10 +15,7 @@
 package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 
 /**
@@ -26,23 +23,9 @@ import com.liferay.portal.tools.deploy.BaseAutoDeployer;
  */
 public class HookAutoDeployer extends BaseAutoDeployer implements AutoDeployer {
 
-	public HookAutoDeployer() {
-		try {
-			appServerType = ServerDetector.getServerId();
-
-			checkArguments();
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-	}
-
 	@Override
 	public String getPluginType() {
 		return Plugin.TYPE_HOOK;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		HookAutoDeployer.class);
 
 }

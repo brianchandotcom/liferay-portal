@@ -131,8 +131,7 @@ definition {
 	@description = "Verify that the user can search for a field set on manage field set page."
 	@priority = "4"
 	test CanSearchFieldSet {
-		KaleoFormsManageFieldSets.searchFieldSet(
-			fieldSetName = "Inventory");
+		KaleoFormsManageFieldSets.searchFieldSet(fieldSetName = "Inventory");
 	}
 
 	@description = "Verify that user can view of values on columns -ID-, -Name-,  -Description-, -Scope-, -Modified Date-."
@@ -140,14 +139,14 @@ definition {
 	test CanViewValuesOnColumns {
 		KaleoFormsManageFieldSets.editFieldSets(
 			nameFieldset = "Contacts",
-			newNameFieldset = "Contacts Edited",
-			newDescription = "Contacts description edited");
+			newDescription = "Contacts description edited",
+			newNameFieldset = "Contacts Edited");
 
 		KaleoFormsManageFieldSets.viewValuesOnColumns(
-			rowNumber = "6",
-			nameField = "Contacts Edited",
 			descriptionField = "Contacts description edited",
-			modifiedDateField = "0 Seconds Ago");
+			modifiedDateField = "0 Seconds Ago",
+			nameField = "Contacts Edited",
+			rowNumber = "6");
 	}
 
 	@description = "Verify that the user can navigate to the next page."

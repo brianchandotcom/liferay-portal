@@ -1,5 +1,15 @@
 definition {
 
+	macro clickFilterAndOrderBy {
+		var filterOption = "${filterOption}";
+
+		Click(
+			locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+			value1 = "Filter and Order");
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
+
 	macro createNewFieldSet {
 		PortletEntry.inputName(name = "${fieldSetName}");
 
@@ -15,14 +25,6 @@ definition {
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
 	}
 
-	macro searchFieldSet {
-		Search.searchCP(searchTerm = "${fieldSetName}");
-
-		AssertElementPresent(
-			key_submissionName = "${fieldSetName}",
-			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
-    }
-
 	macro deleteOneFieldSet {
 		Search.searchCP(searchTerm = "${fieldSetName}");
 
@@ -37,12 +39,37 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewFieldSetCannotBeFound {
+	macro editFieldSets {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Edit",
+			rowEntry = "${nameFieldset}");
+
+		PortletEntry.inputName(name = "${newNameFieldset}");
+
+		if (isSet(newDescription)) {
+			if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#DETAILS_PANEL_HEADER_COLLAPSED")) {
+				Click(locator1 = "KaleoFormsManageFieldSets#DETAILS_PANEL_HEADER");
+
+				Type(
+					locator1 = "KaleoFormsManageFieldSets#DESCRIPTION_FIELD",
+					value1 = "${newDescription}");
+			}
+			else {
+				Type(
+					locator1 = "KaleoFormsManageFieldSets#DESCRIPTION_FIELD",
+					value1 = "${newDescription}");
+			}
+		}
+
+		Button.clickSave();
+	}
+
+	macro searchFieldSet {
 		Search.searchCP(searchTerm = "${fieldSetName}");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No Field Sets were found.");
+		AssertElementPresent(
+			key_submissionName = "${fieldSetName}",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
 	macro viewFieldSetCannotBeDeleted {
@@ -58,18 +85,16 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "The structure cannot be deleted because it is required by one or more structure links.");
 	}
-	
-	macro clickFilterAndOrderBy {
-		var filterOption = "${filterOption}";
 
-		Click(
-			locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-			value1 = "Filter and Order");
+	macro viewFieldSetCannotBeFound {
+		Search.searchCP(searchTerm = "${fieldSetName}");
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No Field Sets were found.");
 	}
 
-    macro viewFieldSetOrder {
+	macro viewFieldSetOrder {
 		var rowNumber = "1";
 
 		for (var nameFieldset : list "${fieldSetList}") {
@@ -78,63 +103,9 @@ definition {
 				key_rowNumber = "${rowNumber}",
 				locator1 = "KaleoFormsManageFieldSets#NAME_ROW_FROM_MANAGE_FIELD");
 
-			var rowNumber = MathUtil.sum("${rowNumber}", "1");
+			var rowNumber = ${rowNumber} + 1;
 		}
 	}
-
-
-	macro viewUpDirectionOfSortButton {
-		if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON")) {
-			AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON");
-		}
-
-		else {
-			Workflow.clickRevertSortDirection();
-		}
-	}
-
-	macro editFieldSets {
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Edit",
-			rowEntry = "${nameFieldset}");
-
-		PortletEntry.inputName(name = "${newNameFieldset}");
-
-		if (isSet(newDescription)) {
-			if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#DETAILS_PANEL_HEADER_COLLAPSED")) {
-				Click(locator1="KaleoFormsManageFieldSets#DETAILS_PANEL_HEADER");
-				
-				Type(
-					locator1 = "KaleoFormsManageFieldSets#DESCRIPTION_FIELD",
-					value1 = "${newDescription}");
-			}
-			else {
-				Type(
-					locator1 = "KaleoFormsManageFieldSets#DESCRIPTION_FIELD",
-					value1 = "${newDescription}");
-			}
-		}
-
-		Button.clickSave();
-
-	}
-
-	macro viewValuesOnColumns {
-		key_rowNumber = "${rowNumber}";
-
-        AssertTextEquals(
-            value1 = "${nameField}",
-            locator1 = "KaleoFormsManageFieldSets#COLUMN_NAME_VALUE");
-        
-		AssertTextEquals(
-            value1 = "${descriptionField}",
-            locator1 = "KaleoFormsManageFieldSets#COLUMN_DESCRIPTION_VALUE");
-        
-		AssertTextEquals(
-            value1 = "${modifiedDateField}",
-            locator1 = "KaleoFormsManageFieldSets#COLUMN_MODIFIED_DATE_VALUE");
-        
-    }
 
 	macro viewPageNumber {
 		for (var pageNumber : list "${pageNumberList}") {
@@ -142,6 +113,31 @@ definition {
 
 			AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#PAGINATION_NUMBER");
 		}
+	}
+
+	macro viewUpDirectionOfSortButton {
+		if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON")) {
+			AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#SORTED_UP_ICON");
+		}
+		else {
+			Workflow.clickRevertSortDirection();
+		}
+	}
+
+	macro viewValuesOnColumns {
+		var key_rowNumber = "${rowNumber}";
+
+		AssertTextEquals(
+			locator1 = "KaleoFormsManageFieldSets#COLUMN_NAME_VALUE",
+			value1 = "${nameField}");
+
+		AssertTextEquals(
+			locator1 = "KaleoFormsManageFieldSets#COLUMN_DESCRIPTION_VALUE",
+			value1 = "${descriptionField}");
+
+		AssertTextEquals(
+			locator1 = "KaleoFormsManageFieldSets#COLUMN_MODIFIED_DATE_VALUE",
+			value1 = "${modifiedDateField}");
 	}
 
 }

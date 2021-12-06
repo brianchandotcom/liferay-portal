@@ -31,56 +31,50 @@ LayoutSet publicLayoutSet = null;
 LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = true;
 
-boolean site = false;
+Group organizationGroup = organization.getGroup();
 
-Group organizationGroup = null;
+boolean site = organizationGroup.isSite();
 
-if (organization != null) {
-	organizationGroup = organization.getGroup();
+if (site) {
+	try {
+		LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-	site = organizationGroup.isSite();
+		privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), true);
 
-	if (site) {
-		try {
-			LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
-			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), true);
+		String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
 
-			privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
-
-			String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
-
-			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-				privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
-			}
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 		}
-		catch (Exception e) {
+	}
+	catch (Exception e) {
+	}
+
+	try {
+		LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), false);
+
+		publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
+
+		String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
+
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 		}
-
-		try {
-			LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), false);
-
-			publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
-
-			String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
-
-			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-				publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
-			}
-		}
-		catch (Exception e) {
-		}
+	}
+	catch (Exception e) {
 	}
 }
 %>
 
 <c:choose>
-	<c:when test="<%= (organizationGroup == null) || GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.UPDATE) %>">
+	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.UPDATE) %>">
 		<clay:sheet-section>
 			<c:choose>
-				<c:when test="<%= (organization == null) || ((publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null)) %>">
+				<c:when test="<%= (publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null) %>">
 					<p class="sheet-text"><liferay-ui:message key="by-clicking-this-toggle-you-could-create-a-public-and-or-private-site-for-your-organization" /></p>
 
 					<aui:input inlineLabel="right" label="create-site" labelCssClass="simple-toggle-switch" name="site" type="toggle-switch" value="<%= site %>" />
@@ -119,7 +113,7 @@ if (organization != null) {
 				<h3 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h3>
 
 				<c:choose>
-					<c:when test="<%= ((organization == null) || ((publicLayoutSetPrototype == null) && (organization.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+					<c:when test="<%= (publicLayoutSetPrototype == null) && (organization.getPublicLayoutsPageCount() == 0) && !layoutSetPrototypes.isEmpty() %>">
 						<clay:alert
 							displayType="warning"
 							message="this-action-cannot-be-undone"
@@ -152,40 +146,36 @@ if (organization != null) {
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<c:choose>
-							<c:when test="<%= organization != null %>">
-								<div class="form-group">
-									<c:choose>
-										<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
-											<liferay-ui:icon
-												iconCssClass="icon-search"
-												label="<%= true %>"
-												message="open-public-pages"
-												method="get"
-												target="_blank"
-												url="<%= organizationGroup.getDisplayURL(themeDisplay, false) %>"
-											/>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="this-organization-does-not-have-any-public-pages" />
-										</c:otherwise>
-									</c:choose>
-								</div>
+						<div class="form-group">
+							<c:choose>
+								<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
+									<liferay-ui:icon
+										iconCssClass="icon-search"
+										label="<%= true %>"
+										message="open-public-pages"
+										method="get"
+										target="_blank"
+										url="<%= organizationGroup.getDisplayURL(themeDisplay, false) %>"
+									/>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="this-organization-does-not-have-any-public-pages" />
+								</c:otherwise>
+							</c:choose>
+						</div>
 
-								<div class="form-group">
-									<c:choose>
-										<c:when test="<%= (publicLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
-											<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
-										</c:when>
-										<c:when test="<%= publicLayoutSetPrototype != null %>">
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)) %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+						<div class="form-group">
+							<c:choose>
+								<c:when test="<%= (publicLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+									<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+								</c:when>
+								<c:when test="<%= publicLayoutSetPrototype != null %>">
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)) %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
-											<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
-										</c:when>
-									</c:choose>
-								</div>
-							</c:when>
-						</c:choose>
+									<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+								</c:when>
+							</c:choose>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</clay:sheet-section>
@@ -194,7 +184,7 @@ if (organization != null) {
 				<h3 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h3>
 
 				<c:choose>
-					<c:when test="<%= ((organization == null) || ((privateLayoutSetPrototype == null) && (organization.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+					<c:when test="<%= (privateLayoutSetPrototype == null) && (organization.getPrivateLayoutsPageCount() == 0) && !layoutSetPrototypes.isEmpty() %>">
 						<clay:alert
 							displayType="warning"
 							message="this-action-cannot-be-undone"
@@ -227,40 +217,36 @@ if (organization != null) {
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<c:choose>
-							<c:when test="<%= organization != null %>">
-								<div class="form-group">
-									<c:choose>
-										<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
-											<liferay-ui:icon
-												iconCssClass="icon-search"
-												label="<%= true %>"
-												message="open-private-pages"
-												method="get"
-												target="_blank"
-												url="<%= organizationGroup.getDisplayURL(themeDisplay, true) %>"
-											/>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="this-organization-does-not-have-any-private-pages" />
-										</c:otherwise>
-									</c:choose>
-								</div>
+						<div class="form-group">
+							<c:choose>
+								<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
+									<liferay-ui:icon
+										iconCssClass="icon-search"
+										label="<%= true %>"
+										message="open-private-pages"
+										method="get"
+										target="_blank"
+										url="<%= organizationGroup.getDisplayURL(themeDisplay, true) %>"
+									/>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="this-organization-does-not-have-any-private-pages" />
+								</c:otherwise>
+							</c:choose>
+						</div>
 
-								<div class="form-group">
-									<c:choose>
-										<c:when test="<%= (privateLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
-											<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-										</c:when>
-										<c:when test="<%= privateLayoutSetPrototype != null %>">
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)) %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+						<div class="form-group">
+							<c:choose>
+								<c:when test="<%= (privateLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+									<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+								</c:when>
+								<c:when test="<%= privateLayoutSetPrototype != null %>">
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)) %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
-											<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-										</c:when>
-									</c:choose>
-								</div>
-							</c:when>
-						</c:choose>
+									<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+								</c:when>
+							</c:choose>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</clay:sheet-section>
@@ -275,12 +261,6 @@ if (organization != null) {
 				<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
 			</clay:sheet-footer>
 		</div>
-
-		<%
-		if ((organization == null) && layoutSetPrototypes.isEmpty()) {
-			request.setAttribute(WebKeys.FORM_NAVIGATOR_SECTION_SHOW + "pages", Boolean.FALSE);
-		}
-		%>
 
 		<c:if test="<%= !site %>">
 			<aui:script>

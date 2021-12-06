@@ -37,23 +37,7 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>
-					<clay:row>
-						<clay:col>
-
-							<react:component
-								module="js/TemplateSelect"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
-									).put(
-										"selectedTemplateMapping", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
-									).put(
-										"selectedTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
-									).build()
-								%>'
-							/>
-						</clay:col>
-					</clay:row>
+					<div id="<portlet:namespace />templateSelect"></div>
 
 					<clay:row>
 						<clay:col
@@ -210,5 +194,16 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 </div>
 
 <liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"initialTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
+		).put(
+			"initialTemplateHeadlessEndpoint", editBatchPlannerPlanDisplayContext.getSelectedHeadlessEndpoint()
+		).put(
+			"initialTemplateMapping", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
+		).put(
+			"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
+		).build()
+	%>'
 	module="js/edit_batch_planner_plan"
 />

@@ -17,6 +17,7 @@ import {useModal} from '@clayui/modal';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import SaveTemplateModal from './SaveTemplateModal';
+import {SCHEMA_SELECTED_EVENT} from './constants';
 
 function SaveTemplate({
 	formSaveAsTemplateDataQuerySelector,
@@ -33,27 +34,14 @@ function SaveTemplate({
 	}, [setVisible]);
 
 	useEffect(() => {
-		const externalInput = document.querySelector(
-			`#${portletNamespace}internalClassName`
-		);
-
-		if (!externalInput) {
-			setDisable(false);
-
-			return;
+		function handleSchemaChange({schema}) {
+			if (schema) {
+				setDisable(false);
+			}
 		}
+		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaChange);
 
-		function handleExternalInputChange() {
-			setDisable(false);
-		}
-
-		externalInput.addEventListener('change', handleExternalInputChange);
-
-		return () =>
-			externalInput.removeEventListener(
-				'change',
-				handleExternalInputChange
-			);
+		return () => Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaChange);
 	}, [portletNamespace]);
 
 	return (

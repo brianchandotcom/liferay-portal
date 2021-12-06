@@ -14,10 +14,15 @@
 
 import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
-import {FILE_SCHEMA_EVENT, SCHEMA_SELECTED_EVENT} from '../constants';
+import {
+	FILE_SCHEMA_EVENT,
+	SCHEMA_SELECTED_EVENT,
+	TEMPLATE_SELECTED_EVENT,
+	TEMPLATE_SOILED,
+} from '../constants';
 import getFieldsFromSchema from '../getFieldsFromSchema';
 import ImportMappingItem from './ImportMappingItem';
 import ImportSubmit from './ImportSubmit';
@@ -32,6 +37,7 @@ function ImportForm({
 	const [fileFields, setFileFields] = useState();
 	const [dbFields, setDbFields] = useState();
 	const [fieldsSelections, setFieldsSelections] = useState({});
+	const useTemplateMappingRef = useRef();
 
 	const onFieldChange = useCallback((selectedItem, field) => {
 		setFieldsSelections((prevSelections) => ({
@@ -53,19 +59,41 @@ function ImportForm({
 			const fileSchema = event.schema;
 			setFileFields(fileSchema);
 
-			const newFieldsSelection = {};
-			fileSchema.forEach((field) => {
-				newFieldsSelection[field] = null;
-			});
-			setFieldsSelections(newFieldsSelection);
+			if (!useTemplateMappingRef.current) {
+				const newFieldsSelection = {};
+				fileSchema.forEach((field) => {
+					newFieldsSelection[field] = null;
+				});
+				setFieldsSelections(newFieldsSelection);
+			}
 		}
+
+		function handleTemplateSelect(event) {
+			const {template} = event;
+
+			if (template) {
+				useTemplateMappingRef.current = true;
+				setFieldsSelections(template.mapping);
+			}
+			else {
+				useTemplateMappingRef.current = false;
+			}
+		}
+
+		const handleTemplateDirty = () => {
+			useTemplateMappingRef.current = false;
+		};
 
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
+		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
+		Liferay.on(TEMPLATE_SOILED, handleTemplateDirty);
 
 		return () => {
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
+			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
+			Liferay.detach(TEMPLATE_SOILED, handleTemplateDirty);
 		};
 	}, []);
 

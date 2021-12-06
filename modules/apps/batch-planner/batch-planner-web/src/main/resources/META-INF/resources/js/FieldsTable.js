@@ -14,14 +14,19 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {SCHEMA_SELECTED_EVENT} from './constants';
+import {
+	SCHEMA_SELECTED_EVENT,
+	TEMPLATE_SELECTED_EVENT,
+	TEMPLATE_SOILED,
+} from './constants';
 import getFieldsFromSchema from './getFieldsFromSchema';
 
 function FieldsTable({portletNamespace}) {
 	const [fields, setFields] = useState([]);
 	const [selectedFields, setSelectedFields] = useState([]);
+	const useTemplateMappingRef = useRef();
 
 	useEffect(() => {
 		const handleSchemaUpdated = (event) => {
@@ -29,17 +34,48 @@ function FieldsTable({portletNamespace}) {
 				const newFields = getFieldsFromSchema(event.schema);
 
 				setFields(newFields);
-				setSelectedFields(newFields);
+				if (!useTemplateMappingRef.current) {
+					setSelectedFields(newFields);
+				}
 			}
 			else {
 				setFields([]);
-				setSelectedFields([]);
+				if (!useTemplateMappingRef.current) {
+					setSelectedFields([]);
+				}
 			}
 		};
 
-		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
+		const handleTemplateUpdate = (event) => {
+			const {template} = event;
 
-		return () => Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
+			if (template) {
+				useTemplateMappingRef.current = true;
+				setSelectedFields(
+					Object.keys(template.mapping).map((fields) => ({
+						label: fields,
+						value: fields,
+					}))
+				);
+			}
+			else {
+				useTemplateMappingRef.current = false;
+			}
+		};
+
+		const handleTemplateSoiled = () => {
+			useTemplateMappingRef.current = false;
+		};
+
+		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
+		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateUpdate);
+		Liferay.on(TEMPLATE_SOILED, handleTemplateSoiled);
+
+		return () => {
+			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
+			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateUpdate);
+			Liferay.detach(TEMPLATE_SOILED, handleTemplateSoiled);
+		};
 	}, []);
 
 	if (!fields.length) {
@@ -91,7 +127,10 @@ function FieldsTable({portletNamespace}) {
 
 					<ClayTable.Body>
 						{fields.map((field) => {
-							const included = selectedFields.includes(field);
+							const included = selectedFields.some(
+								(selectedField) =>
+									selectedField.value === field.value
+							);
 
 							return (
 								<ClayTable.Row key={field.label}>
@@ -101,12 +140,17 @@ function FieldsTable({portletNamespace}) {
 											id={`${portletNamespace}fieldName_${field.label}`}
 											name={`${portletNamespace}fieldName`}
 											onChange={() => {
+												if (useTemplateMappingRef) {
+													Liferay.fire(
+														TEMPLATE_SOILED
+													);
+												}
 												if (included) {
 													setSelectedFields(
 														selectedFields.filter(
 															(selected) =>
-																selected !==
-																field
+																selected.value !==
+																field.value
 														)
 													);
 												}

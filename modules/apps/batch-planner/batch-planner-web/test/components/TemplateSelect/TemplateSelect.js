@@ -30,15 +30,22 @@ const BASE_PROPS = {
 		{label: 'Hello', selected: true, value: '42147'},
 	],
 };
-
+const headlessEndpoint = '/o/headless-commerce-admin-channel/v1.0/openapi.json';
 const internalClassName =
 	'com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel';
+
 const mockedMapping = {
 	currencyCode: 'currencyCode',
 	id: 'externalReferenceCode',
 	siteGroupId: 'siteGroupId',
 	testFieldName: 'name',
 	type: 'type',
+};
+
+const initialTemplate = {
+	headlessEndpoint,
+	internalClassName,
+	mapping: mockedMapping,
 };
 const mockPlanId = 106902;
 const getPlanInfoURL = `${HEADERS_BATCH_PLANNER_URL}/plans/${mockPlanId}`;
@@ -54,40 +61,40 @@ describe('TemplateSelect', () => {
 		cleanup();
 	});
 
-	it('must has label', () => {
+	it('must have label', () => {
 		const {getByLabelText} = render(<TemplateSelect {...BASE_PROPS} />);
 
 		getByLabelText(Liferay.Language.get('template'));
 	});
 
 	it('must fire new template event when preselected', async () => {
-		const mockTempalteSelected = jest.fn();
-		Liferay.on(TEMPLATE_SELECTED_EVENT, mockTempalteSelected);
+		const mockTemplateSelected = jest.fn();
+		Liferay.on(TEMPLATE_SELECTED_EVENT, mockTemplateSelected);
 		render(
-			<TemplateSelect
-				{...BASE_PROPS}
-				selectedTemplateClassName={internalClassName}
-				selectedTemplateMapping={mockedMapping}
-			/>
+			<TemplateSelect {...BASE_PROPS} initialTemplate={initialTemplate} />
 		);
+
+		const documentReadyEvent = document.createEvent('CustomEvent');
+		documentReadyEvent.initEvent('readystatechange', false, true);
+		document.dispatchEvent(documentReadyEvent);
 
 		await wait(() => {
 			const expectedEvent = new CustomEvent(TEMPLATE_SELECTED_EVENT);
-			expectedEvent.templateClassName = internalClassName;
-			expectedEvent.templateMapping = mockedMapping;
 
-			expect(mockTempalteSelected).toBeCalledWith(expectedEvent);
+			expectedEvent.template = {...initialTemplate};
+			expect(mockTemplateSelected).toBeCalledWith(expectedEvent);
 		});
 	});
 
 	it('must fire empty event when no template get selected', async () => {
-		const mockTempalteSelected = jest.fn();
-		Liferay.on(TEMPLATE_SELECTED_EVENT, mockTempalteSelected);
+		const mockTemplateSelected = jest.fn();
+		Liferay.on(TEMPLATE_SELECTED_EVENT, mockTemplateSelected);
 
 		const {getByLabelText} = render(
 			<TemplateSelect
 				{...BASE_PROPS}
 				selectedTemplateClassName={internalClassName}
+				selectedTemplateHeadlessEndpoint={headlessEndpoint}
 				selectedTemplateMapping={mockedMapping}
 			/>
 		);
@@ -100,9 +107,8 @@ describe('TemplateSelect', () => {
 
 		await wait(() => {
 			const expectedEvent = new CustomEvent(TEMPLATE_SELECTED_EVENT);
-			expectedEvent.templateClassName = null;
-			expectedEvent.templateMapping = null;
-			expect(mockTempalteSelected).toHaveBeenLastCalledWith(
+			expectedEvent.template = null;
+			expect(mockTemplateSelected).toHaveBeenLastCalledWith(
 				expectedEvent
 			);
 		});
@@ -121,8 +127,8 @@ describe('TemplateSelect', () => {
 
 		await wait(() => {
 			const expectedEvent = new CustomEvent(TEMPLATE_SELECTED_EVENT);
-			expectedEvent.templateClassName = internalClassName;
-			expectedEvent.templateMapping = mockedMapping;
+
+			expectedEvent.template = {...initialTemplate};
 
 			expect(mockTempalteSelected).toBeCalledWith(expectedEvent);
 		});
@@ -199,6 +205,12 @@ const mockGetPlan = {
 			name: 'saveExport',
 			planId: 106902,
 			value: 'saveExport',
+		},
+		{
+			id: 54404,
+			name: 'headlessEndpoint',
+			planId: 54402,
+			value: headlessEndpoint,
 		},
 		{
 			id: 106903,

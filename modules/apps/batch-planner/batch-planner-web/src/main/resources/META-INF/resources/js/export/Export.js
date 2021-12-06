@@ -17,6 +17,7 @@ import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {SCHEMA_SELECTED_EVENT} from '../constants';
 import ExportModal from './ExportModal';
 
 function Export({
@@ -39,27 +40,14 @@ function Export({
 	);
 
 	useEffect(() => {
-		const externalInput = document.querySelector(
-			`#${portletNamespace}internalClassName`
-		);
-
-		if (!externalInput) {
-			setDisable(false);
-
-			return;
+		function handleSchemaChange(event) {
+			if (event.schema) {
+				setDisable(false);
+			}
 		}
+		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaChange);
 
-		function handleExternalInputChange() {
-			setDisable(false);
-		}
-
-		externalInput.addEventListener('change', handleExternalInputChange);
-
-		return () =>
-			externalInput.removeEventListener(
-				'change',
-				handleExternalInputChange
-			);
+		return () => Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaChange);
 	}, [portletNamespace]);
 
 	return (

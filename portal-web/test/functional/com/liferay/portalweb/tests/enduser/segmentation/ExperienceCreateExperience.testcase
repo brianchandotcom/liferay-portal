@@ -13,6 +13,8 @@ definition {
 
 		User.firstLoginPG();
 
+		Navigator.openURL();
+
 		task ("Create an user using JSONWS") {
 			JSONUser.addUser(
 				jobTitle = "Test Engineer1",
@@ -3369,8 +3371,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Uncheck verify strangers email option") {
-			Navigator.openURL();
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -3480,8 +3480,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Uncheck verify strangers email option") {
-			Navigator.openURL();
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",

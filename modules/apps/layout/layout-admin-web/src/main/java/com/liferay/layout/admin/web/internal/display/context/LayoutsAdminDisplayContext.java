@@ -619,10 +619,16 @@ public class LayoutsAdminDisplayContext {
 			return _layoutsSearchContainer;
 		}
 
-		String emptyResultMessage = "there-are-no-public-pages";
+		String emptyResultMessage = "there-are-no-pages";
 
-		if (isPrivateLayout()) {
-			emptyResultMessage = "there-are-no-private-pages";
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isPrivateLayoutsEnabled()) {
+			emptyResultMessage = "there-are-no-public-pages";
+
+			if (isPrivateLayout()) {
+				emptyResultMessage = "there-are-no-private-pages";
+			}
 		}
 
 		SearchContainer<Layout> layoutsSearchContainer = new SearchContainer(
@@ -1122,10 +1128,19 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (_selLayout != null) {
+			Group group = getGroup();
+
+			if (group.isPrivateLayoutsEnabled()) {
+				return LanguageUtil.get(
+					httpServletRequest,
+					"this-page-is-using-a-different-theme-than-the-one-set-" +
+						"for-public-pages");
+			}
+
 			return LanguageUtil.get(
 				httpServletRequest,
 				"this-page-is-using-a-different-theme-than-the-one-set-for-" +
-					"public-pages");
+					"pages");
 		}
 
 		return LanguageUtil.format(
@@ -1166,7 +1181,7 @@ public class LayoutsAdminDisplayContext {
 	public String getTitle(boolean privatePages) {
 		String title = "pages";
 
-		if (isShowPublicLayouts()) {
+		if (isShowPublicLayouts() && isPrivateLayoutsEnabled()) {
 			if (privatePages) {
 				title = "private-pages";
 			}

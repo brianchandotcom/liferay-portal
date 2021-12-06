@@ -93,20 +93,14 @@ public class LayoutSetCTDisplayRenderer
 	public String getTitle(Locale locale, LayoutSet layoutSet)
 		throws PortalException {
 
-		String title = "pages";
-
 		Group group = layoutSet.getGroup();
 
 		if (!group.isLayoutSetPrototype() && !group.isLayoutPrototype()) {
-			if (layoutSet.isPrivateLayout()) {
-				title = "private-pages";
-			}
-			else {
-				title = "public-pages";
-			}
+			return group.getLayoutRootNodeName(
+				layoutSet.isPrivateLayout(), locale);
 		}
 
-		return _language.get(locale, title);
+		return _language.get(locale, "pages");
 	}
 
 	@Override

@@ -25,7 +25,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddCustomTypeWithoutFields {
-		DMNavigator.openToAddDocumentType(siteURLKey = "site-name");
+		DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -35,7 +35,7 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "Error:At least one field must be added.");
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 

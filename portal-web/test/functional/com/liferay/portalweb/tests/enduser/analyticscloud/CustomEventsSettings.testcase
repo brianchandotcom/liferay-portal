@@ -111,7 +111,7 @@ definition {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
-		task ("Edit the new custom events") {
+		task ("Edit the new custom event") {
 			ACNavigation.openItem(itemName = "${customEventName}");
 
 			ACUtils.clickAnyButton(button = "Edit");
@@ -203,7 +203,7 @@ definition {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
-		task ("Edit the new custom events") {
+		task ("Edit the new custom event") {
 			ACNavigation.openItem(itemName = "${customEventName}");
 
 			ACUtils.clickAnyButton(button = "Edit");
@@ -295,7 +295,7 @@ definition {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
-		task ("Edit the new custom events") {
+		task ("Edit the new custom event") {
 			ACNavigation.openItem(itemName = "${customEventName}");
 
 			ACUtils.clickAnyButton(button = "Edit");
@@ -469,7 +469,7 @@ definition {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
-		task ("Edit the new custom events") {
+		task ("Edit the new custom event") {
 			ACNavigation.openItem(itemName = "${customEventName2}");
 
 			ACUtils.clickAnyButton(button = "Edit");

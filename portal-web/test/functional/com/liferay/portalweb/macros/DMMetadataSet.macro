@@ -178,4 +178,10 @@ definition {
 			value1 = "No results were found.");
 	}
 
+	macro viewMetadataSetTitle {
+		AssertElementPresent(
+			key_metadataSetName = "${metadataSetTitle}",
+			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+	}
+
 }

@@ -393,6 +393,10 @@ definition {
 	test SearchDepotWithoutViewPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "No View Permissions Depot Name");
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea1@liferay.com",
@@ -410,48 +414,36 @@ definition {
 			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 			roleTitle = "Depot Regrole Name");
 
+		DepotNavigator.openDepotAdmin();
+
+		PermissionsInline.gotoDepotEntry(depotName = "Test Depot Name");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Depot Regrole Name");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",
 			userLoginFullName = "userfn1 userln1");
 
 		DepotNavigator.openDepotAdmin();
 
-		Pause(locator1 = "3000");
+		LexiconEntry.viewEntryName(rowEntry = "Test Depot Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "No View Permissions Depot Name");
 
 		Search.searchCP(searchTerm = "Depot");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "0 Results for Depot");
+			value1 = "1 Results for Depot");
 
-		AssertElementNotPresent(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE");
+		Search.searchCP(searchTerm = "No View Permissions");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
-			roleTitle = "Depot Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.depot.model.DepotEntry",
-			roleTitle = "Depot Regrole Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Pause(locator1 = "3000");
-
-		Search.searchCP(searchTerm = "Depot");
-
-		Depot.viewSearchResult(
-			includedResults = "Test Depot Name",
-			resultCount = "1",
-			searchTerm = "Depot");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "0 Results for No View Permissions");
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."

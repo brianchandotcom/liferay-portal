@@ -31,19 +31,18 @@ definition {
 	test CanClickInContinueButton {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-       	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-        Type(
-			locator1 = "Raylife#FORMS_FIELDS",
+		Type(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "pet");
 
-        Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
 
-        AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142198 - Verify search field supports non-ascii chars."
@@ -51,16 +50,16 @@ definition {
 	test CanPutNonAsciiInIndustrySearch {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
 		Type(
-			locator1 = "Raylife#FORMS_FIELDS",
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "ペット");
 
-        AssertElementPresent(
-            locator1 = "Raylife#ERROR_MESSAGE",
-            value1 = "There are no results for 'ペット'. Please try a different search.");
+		AssertElementPresent(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "There are no results for 'ペット'. Please try a different search.");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -70,14 +69,14 @@ definition {
 	test CanViewNoResultsMessage {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-       	Type(
-			locator1 = "Raylife#FORMS_FIELDS",
+		Type(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "mercado");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "There are no results for 'mercado'. Please try a different search.");
 
@@ -89,16 +88,16 @@ definition {
 	test CanViewTipButtonInBusinessPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-       	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-        Type(
-			locator1 = "Raylife#FORMS_FIELDS",
+		Type(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "mercado");
 
-        AssertElementPresent(
-            locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY",
-            value1 = "I am unable to find my industry");
+		AssertElementPresent(
+			locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY",
+			value1 = "I am unable to find my industry");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -108,16 +107,16 @@ definition {
 	test CanViewTipInfoPanelInBusinessPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-    	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-        Type(
-			locator1 = "Raylife#FORMS_FIELDS",
+		Type(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "mercado");
 
 		Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			locator1 = "Raylife#TIP_INFO_PANEL",
 			value1 = "I am unable to find my industry");
 
@@ -129,9 +128,9 @@ definition {
 	test IndustrySearchMaxNumber {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-    	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-        AssertElementPresent(locator1 = "RaylifeIndustry#MAX_NUMBER_OF_CHARACTERS");
+		AssertElementPresent(locator1 = "RaylifeIndustry#MAX_NUMBER_OF_CHARACTERS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -141,20 +140,20 @@ definition {
 	test InfoPanelIsDismissedInBusinessPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-      	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
 		Type(
-			locator1 = "Raylife#FORMS_FIELDS",
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "mercado");
 
-        Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
+		Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
 
-        Click(locator1 = "Raylife#BUTTON_DISMISS");
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
-        AssertElementPresent(
-            locator1 = "Raylife#HIDE_DISMISS_BUTTON",
-            value1 = "I am unable to find my industry");
+		AssertElementPresent(
+			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			value1 = "I am unable to find my industry");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -164,18 +163,18 @@ definition {
 	test IsTipButtonHighlighted {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-       	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
-        Type(
-			locator1 = "Raylife#FORMS_FIELDS",
+		Type(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "mercado");
 
-        Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
+		Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
 
-        AssertElementPresent(
-            locator1 = "RaylifeIndustry#BUTTON_HIGHLIGHTED",
-            value1 = "I am unable to find my industry");
+		AssertElementPresent(
+			locator1 = "RaylifeIndustry#BUTTON_HIGHLIGHTED",
+			value1 = "I am unable to find my industry");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -184,23 +183,23 @@ definition {
 	@priority = "4"
 	test NavigateToPreviousScreenDiscardChanges {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
-		
+
 		RaylifeHomePage.getAQuote();
 
-        Type(
-			locator1 = "Raylife#FORMS_FIELDS",
+		Type(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "pet");
 
-        Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
 
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
-       	RaylifeHomePage.getAQuote();
-		
-        AssertTextNotEquals(
-			locator1 = "Raylife#FORMS_FIELDS",
+		RaylifeHomePage.getAQuote();
+
+		AssertTextNotEquals(
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "pet");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
@@ -211,14 +210,14 @@ definition {
 	test SearchFieldIsRequiredInBusinessPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-       	RaylifeHomePage.getAQuote();
+		RaylifeHomePage.getAQuote();
 
 		Type(
-			locator1 = "Raylife#FORMS_FIELDS",
 			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "pet");
-		
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}

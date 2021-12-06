@@ -454,32 +454,6 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public SearchContainer<String> getFirstColumnLayoutsSearchContainer() {
-		if (_firstColumnLayoutsSearchContainer != null) {
-			return _firstColumnLayoutsSearchContainer;
-		}
-
-		SearchContainer<String> firstColumnLayoutsSearchContainer =
-			new SearchContainer(
-				_liferayPortletRequest, getPortletURL(), null,
-				StringPool.BLANK);
-
-		List<String> results = new ArrayList<>();
-
-		if (isShowPublicLayouts()) {
-			results.add("public-pages");
-		}
-
-		results.add("private-pages");
-
-		firstColumnLayoutsSearchContainer.setTotal(results.size());
-		firstColumnLayoutsSearchContainer.setResults(results);
-
-		_firstColumnLayoutsSearchContainer = firstColumnLayoutsSearchContainer;
-
-		return _firstColumnLayoutsSearchContainer;
-	}
-
 	public long getFirstLayoutPageTemplateCollectionId() {
 		LayoutPageTemplateCollectionNameComparator
 			layoutPageTemplateCollectionNameComparator =
@@ -2025,7 +1999,6 @@ public class LayoutsAdminDisplayContext {
 	private String _backURL;
 	private String _displayStyle;
 	private Boolean _firstColumn;
-	private SearchContainer<String> _firstColumnLayoutsSearchContainer;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private String _keywords;
 	private final LayoutConverterRegistry _layoutConverterRegistry;

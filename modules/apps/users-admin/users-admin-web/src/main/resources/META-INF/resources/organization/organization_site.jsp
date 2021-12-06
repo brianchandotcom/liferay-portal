@@ -34,8 +34,6 @@ Group organizationGroup = organization.getGroup();
 boolean site = organizationGroup.isSite();
 
 if (site) {
-	LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
 	LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(organizationGroup.getGroupId(), true);
 
 	if (privateLayoutSet != null) {
@@ -47,8 +45,6 @@ if (site) {
 			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 		}
 	}
-
-	LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 	LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(organizationGroup.getGroupId(), false);
 

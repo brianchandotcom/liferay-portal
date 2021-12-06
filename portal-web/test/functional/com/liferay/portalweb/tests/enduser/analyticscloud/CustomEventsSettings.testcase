@@ -364,6 +364,95 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10007 | Test Summary: Search for Custom Event"
+	@priority = "3"
+	test CustomEventListSearchable {
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create 2 custom events") {
+			var customEventName1 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName1}",
+				timeToSendCustomEvent = "1");
+
+			var customEventName2 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName2}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Search for the name of the custom event and verify that it was found") {
+			ACUtils.searchBar(searchItem = "${customEventName1}");
+
+			ACUtils.viewNameList(nameList = "${customEventName1}");
+		}
+
+		task ("Search for the name of the custom event and verify that it was found") {
+			ACUtils.searchBar(searchItem = "${customEventName2}");
+
+			ACUtils.viewNameList(nameList = "${customEventName2}");
+		}
+
+		task ("Search for the name of the custom event that doesn't exist and verify that it didn't find anything") {
+			ACUtils.searchBar(searchItem = "acqa");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
+	}
+
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10006 | Test Summary: Rename Custom Event that already exists custom event name"
 	@priority = "4"
 	test RenameCustomEventToExistingName {

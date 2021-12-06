@@ -67,10 +67,10 @@ definition {
 			dmDocumentTitle = "DM Without Autotagging",
 			dmTagName = "jersey,t-shirt",
 			dmTagNum = "11",
-			webContentTitle = "WC Without Autotagging",
-			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''',
 			wcTagName = "herbert,industrial",
-			wcTagNum = "5");
+			wcTagNum = "5",
+			webContentTitle = "WC Without Autotagging",
+			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');
 	}
 
 	@priority = "5"
@@ -122,10 +122,10 @@ definition {
 			dmDocumentTitle = "DM Without Autotagging",
 			dmTagName = "jersey,t-shirt",
 			dmTagNum = "11",
-			webContentTitle = "WC Without Autotagging",
-			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''',
 			wcTagName = "herbert,industrial",
-			wcTagNum = "5");
+			wcTagNum = "5",
+			webContentTitle = "WC Without Autotagging",
+			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');
 	}
 
 }

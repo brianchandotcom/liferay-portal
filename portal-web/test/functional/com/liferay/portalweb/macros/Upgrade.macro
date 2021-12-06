@@ -118,6 +118,39 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
 	}
 
+	macro addAutoTaggedWebContent {
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		PortletEntry.publish();
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssertTextEquals(
+			key_tagName = "${tagName}",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "${tagName}");
+	}
+
 	macro addAutoTagViaGogoShell {
 		var companyId = JSONCompany.getCompanyId();
 
@@ -174,39 +207,6 @@ definition {
 		for (var tagName : list "${wcTagName}") {
 			AssetCategorization.viewTag(tagName = "${tagName}");
 		}
-	}
-
-	macro addAutoTaggedWebContent {
-		if (isSet(depotName)) {
-			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-		}
-		else {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-		}
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}");
-
-		PortletEntry.publish();
-
-		if (isSet(depotName)) {
-			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-		}
-		else {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-		}
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
-
-		Panel.expandPanel(panel = "Categorization");
-
-		AssertTextEquals(
-			key_tagName = "${tagName}",
-			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
 	}
 
 	macro addContentPage {
@@ -2144,7 +2144,7 @@ definition {
 			DMDocumentSharing.editViaSharedwithMe(
 				entryTitle = "${blogsEntryTitleUpdate}",
 				entryTitleEdit = "${blogsEntryTitleUpdate} Edit");
-			}
+		}
 
 		User.logoutPG();
 

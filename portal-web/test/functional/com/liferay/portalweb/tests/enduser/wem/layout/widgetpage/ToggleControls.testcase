@@ -68,7 +68,7 @@ definition {
 		}
 
 		task ("Switch Toggle Controls to hidden then invisible widgets are not shown") {
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 
 			WidgetPages.viewToggleControls(status = "hidden");
 
@@ -82,7 +82,7 @@ definition {
 		}
 
 		task ("Switch Toggle Controls to view then view invisible widgets are shown") {
-			WidgetPages.switchToggleControls(click = "hidden");
+			WidgetPages.switchToggleControls(status = "hidden");
 
 			AssertVisible(
 				key_portletName = "Web Content Display",
@@ -94,7 +94,7 @@ definition {
 		}
 
 		task ("View Toggle Controls affects all widget pages in virtual instance scoped") {
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("Switch Toggle Controls to hidden then view Asset Publisher's borderless is not shown") {
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 
 			MouseOver(
 				key_portletName = "Asset Publisher",
@@ -144,7 +144,7 @@ definition {
 		}
 
 		task ("Switch Toggle Controls to view then view Asset Publisher's borderless is shown") {
-			WidgetPages.switchToggleControls(click = "hidden");
+			WidgetPages.switchToggleControls(status = "hidden");
 
 			MouseOver(
 				key_portletName = "Asset Publisher",
@@ -164,7 +164,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
 
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 
 			WidgetPages.viewToggleControls(status = "hidden");
 
@@ -217,7 +217,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
 
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 
 			WidgetPages.viewToggleControls(status = "hidden");
 
@@ -275,7 +275,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 2");
 
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 
 			WidgetPages.viewToggleControls(status = "hidden");
 		}
@@ -296,7 +296,7 @@ definition {
 				pageName = "Test Site Page",
 				url = "http://www.able.com:8080");
 
-			WidgetPages.switchToggleControls(click = "view");
+			WidgetPages.switchToggleControls(status = "view");
 		}
 	}
 

@@ -855,70 +855,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 		updateDeployDirectory(srcFile);
 
-		String excludes = StringPool.BLANK;
-
-		if (appServerType.equals(ServerDetector.JBOSS_ID) ||
-			appServerType.equals(ServerDetector.WILDFLY_ID)) {
-
-			excludes = StringBundler.concat(
-				excludes, "**/WEB-INF/lib/log4j-1.2-api.jar,",
-				"**/WEB-INF/lib/log4j-api.jar,**/WEB-INF/lib/log4j-core.jar,");
-		}
-		else if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
-			String[] libs = FileUtil.listFiles(tomcatLibDir);
-
-			for (String lib : libs) {
-				excludes += "**/WEB-INF/lib/" + lib + ",";
-			}
-
-			try {
-
-				// LEP-2990
-
-				Class.forName("javax.el.ELContext");
-
-				excludes += "**/WEB-INF/lib/el-api.jar,";
-			}
-			catch (ClassNotFoundException classNotFoundException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
-				}
-			}
-		}
-
-		// LPS-11268
-
-		Properties properties = _getPluginPackageProperties(srcFile);
-
-		if (properties != null) {
-			String deployExcludes = properties.getProperty("deploy-excludes");
-
-			if (deployExcludes != null) {
-				excludes += deployExcludes.trim();
-
-				if (!excludes.endsWith(",")) {
-					excludes += ",";
-				}
-			}
-
-			deployExcludes = properties.getProperty(
-				"deploy-excludes-" + appServerType);
-
-			if (deployExcludes != null) {
-				excludes += deployExcludes.trim();
-
-				if (!excludes.endsWith(",")) {
-					excludes += ",";
-				}
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Excludes " + excludes);
-		}
-
-		CopyTask.copyDirectory(
-			srcFile, deployDir, StringPool.BLANK, excludes, overwrite, true);
+		CopyTask.copyDirectory(srcFile, deployDir, null, null, overwrite, true);
 	}
 
 	private boolean _deployFile(

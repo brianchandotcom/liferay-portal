@@ -39,6 +39,8 @@ public class ThemeAutoDeployer
 	extends BaseAutoDeployer implements AutoDeployer {
 
 	public ThemeAutoDeployer() {
+		super(Plugin.TYPE_THEME);
+
 		try {
 			themeTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-theme.tld");
@@ -114,11 +116,6 @@ public class ThemeAutoDeployer
 		sb.append(getSpeedFiltersContent(srcFile));
 
 		return sb.toString();
-	}
-
-	@Override
-	public String getPluginType() {
-		return Plugin.TYPE_THEME;
 	}
 
 	@Override

@@ -85,6 +85,10 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	public static final String DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
+	public BaseAutoDeployer(String pluginType) {
+		_pluginType = pluginType;
+	}
+
 	@Override
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -453,7 +457,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 	}
 
 	public String getPluginType() {
-		return null;
+		return _pluginType;
 	}
 
 	public String getServletContextIncludeFiltersContent(
@@ -1556,5 +1560,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	private static final List<String> _jars = Arrays.asList(
 		"util-bridges.jar", "util-java.jar", "util-taglib.jar");
+
+	private final String _pluginType;
 
 }

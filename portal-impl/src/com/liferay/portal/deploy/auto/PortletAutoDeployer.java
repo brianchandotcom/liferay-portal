@@ -51,6 +51,8 @@ public class PortletAutoDeployer
 		"javax.portlet.faces.GenericFacesPortlet";
 
 	public PortletAutoDeployer() {
+		super(Plugin.TYPE_PORTLET);
+
 		try {
 			auiTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-aui.tld");
@@ -149,11 +151,6 @@ public class PortletAutoDeployer
 			getServletContextIncludeFiltersContent(webXmlVersion, srcFile));
 
 		return sb.toString();
-	}
-
-	@Override
-	public String getPluginType() {
-		return Plugin.TYPE_PORTLET;
 	}
 
 	public String getServletContent(File portletXML, File webXML)

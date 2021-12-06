@@ -213,7 +213,7 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			var entries = selenium.getText(locator1 = "ACUtils#RESULT_MESSAGE");
+			var entries = selenium.getText("ACUtils#RESULT_MESSAGE");
 
 			ACSettings.clickGenericAddOrConfirmationButton();
 

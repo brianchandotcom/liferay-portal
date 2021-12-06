@@ -281,9 +281,6 @@ public class PropsValues {
 	public static final int AUTO_DEPLOY_INTERVAL = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.AUTO_DEPLOY_INTERVAL));
 
-	public static final String AUTO_DEPLOY_JBOSS_PREFIX = PropsUtil.get(
-		PropsKeys.AUTO_DEPLOY_JBOSS_PREFIX);
-
 	public static final String AUTO_DEPLOY_TOMCAT_CONF_DIR = PropsUtil.get(
 		PropsKeys.AUTO_DEPLOY_TOMCAT_CONF_DIR);
 
@@ -312,9 +309,6 @@ public class PropsValues {
 
 	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE =
 		PropsUtil.get(PropsKeys.AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE);
-
-	public static final String AUTO_DEPLOY_WILDFLY_PREFIX = PropsUtil.get(
-		PropsKeys.AUTO_DEPLOY_WILDFLY_PREFIX);
 
 	public static final boolean AXIS_SERVLET_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.AXIS_SERVLET_ENABLED));

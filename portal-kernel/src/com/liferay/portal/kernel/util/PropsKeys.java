@@ -266,9 +266,6 @@ public interface PropsKeys {
 
 	public static final String AUTO_DEPLOY_INTERVAL = "auto.deploy.interval";
 
-	public static final String AUTO_DEPLOY_JBOSS_PREFIX =
-		"auto.deploy.jboss.prefix";
-
 	public static final String AUTO_DEPLOY_LISTENERS = "auto.deploy.listeners";
 
 	public static final String AUTO_DEPLOY_TOMCAT_CONF_DIR =
@@ -294,9 +291,6 @@ public interface PropsKeys {
 
 	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE =
 		"auto.deploy.websphere.wsadmin.properties.file.name";
-
-	public static final String AUTO_DEPLOY_WILDFLY_PREFIX =
-		"auto.deploy.wildfly.prefix";
 
 	public static final String AUTO_LOGIN_HOOKS = "auto.login.hooks";
 

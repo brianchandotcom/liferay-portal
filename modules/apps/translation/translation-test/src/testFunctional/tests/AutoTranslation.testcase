@@ -499,9 +499,7 @@ definition {
 
 			PortletEntry.publish();
 
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Translation Processes");
+			Translations.openTranslationAdmin(siteURLKey = "site-name");
 
 			Translations.viewTranslationEntry(
 				language = "ja-JP",

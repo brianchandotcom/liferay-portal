@@ -1,5 +1,21 @@
 # Poshi Runner Change Log
 
+## 1.0.324
+
+### Other
+
+* [LPS-141109](https://issues.liferay.com/browse/LPS-141109) - SF: Rebuild Poshi Script
+* [LRCI-2648](https://issues.liferay.com/browse/LRCI-2648) - Shift Testray 1 over to GCP instead of the Testray Mount
+
+### Script
+
+* [POSHI-211](https://issues.liferay.com/browse/POSHI-211) - Fix poshi script parsing to generate Poshi files
+
+### WebDriver
+
+* [POSHI-208](https://issues.liferay.com/browse/POSHI-208) - Update Ocular for use and replacement within Poshi
+* [POSHI-220](https://issues.liferay.com/browse/POSHI-220) - Add size method to ListUtil
+
 ## 1.0.322
 
 ### Other

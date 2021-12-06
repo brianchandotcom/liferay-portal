@@ -114,7 +114,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Navigator.gotoNavItem(navItem = "My Sites");
+		Navigator.gotoNavItem(navItem = "All Sites");
 
 		SiteSelector.selectSite(site = "Site Name");
 
@@ -327,7 +327,7 @@ definition {
 			value1 = "Recent");
 
 		AssertVisible(
-			key_navItem = "My Sites",
+			key_navItem = "All Sites",
 			locator1 = "NavBar#NAV_ITEM_LINK",
 			value1 = "My Sites");
 

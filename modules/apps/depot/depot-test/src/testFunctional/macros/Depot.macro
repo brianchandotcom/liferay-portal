@@ -401,7 +401,7 @@ definition {
 
 			Pause(locator1 = "3000");
 
-			Navigator.gotoNavItem(navItem = "My Sites");
+			Navigator.gotoNavItem(navItem = "All Sites");
 
 			if (isSet(parentSiteName)) {
 				Search.searchCP(searchTerm = "${parentSiteName}");

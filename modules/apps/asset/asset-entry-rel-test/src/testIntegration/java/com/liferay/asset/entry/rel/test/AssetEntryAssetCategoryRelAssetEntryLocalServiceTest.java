@@ -24,13 +24,18 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -96,6 +101,55 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 		_assertSize(2, null);
 
 		_assertSize(0, new long[0]);
+	}
+
+	@Test
+	public void testUserCategoryIdsWithoutViewPermissionsOverCategory()
+		throws Exception {
+
+		_assertSize(2, _assetCategoryIds);
+
+		AssetCategory assetCategory1 = _assetCategories.get(0);
+		AssetCategory assetCategory2 = _assetCategories.get(1);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, AssetCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(assetCategory1.getCategoryId()), ActionKeys.VIEW);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, AssetCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(assetCategory1.getCategoryId()), ActionKeys.VIEW);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		_assertSize(2, new long[] {assetCategory2.getCategoryId()});
+	}
+
+	@Test
+	public void testUserCategoryIdsWithoutViewPermissionsOverVocabulary()
+		throws Exception {
+
+		_assertSize(2, _assetCategoryIds);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, AssetVocabulary.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_assetVocabulary.getVocabularyId()),
+			ActionKeys.VIEW);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, AssetVocabulary.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_assetVocabulary.getVocabularyId()),
+			ActionKeys.VIEW);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		_assertSize(2, new long[0]);
 	}
 
 	@Inject

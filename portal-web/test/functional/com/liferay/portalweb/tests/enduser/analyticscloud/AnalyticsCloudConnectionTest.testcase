@@ -630,7 +630,7 @@ definition {
 
 			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
-			var entrieGrup = selenium.getText(locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW");
+			var entrieGrup = selenium.getText("ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW");
 			var numberGrup = StringUtil.extractDigits("${entrieGrup}");
 
 			AssertTextEquals(

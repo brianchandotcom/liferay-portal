@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long organizationId = ParamUtil.getLong(request, "organizationId");
+OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
+Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 
@@ -259,10 +259,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 	<clay:sheet-footer>
 		<aui:button primary="<%= true %>" type="submit" />
-
-		<%
-		OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
-		%>
 
 		<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
 	</clay:sheet-footer>

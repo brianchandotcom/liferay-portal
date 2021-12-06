@@ -1,0 +1,112 @@
+@component-name = "portal-publications"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONPublications.enablePublications();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert we can publish a publication with a Segment and Page Experience."
+	@priority = "4"
+	test CanPublishWithSegmentAndPageExperience {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Experience Content Page",
+			type = "content");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Regular Role");
+
+		Segmentation.fillTitle(titleField = "Segment Title");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+		Segmentation.fillProperty(selectCheckbox = "Administrator");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/experience-content-page");
+
+		ContentPages.gotoPageEditor();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "New Experience",
+			segmentName = "Segment Title");
+
+		Button.clickPublish();
+
+		ContentPages.gotoPageEditor();
+
+		PageEditor.changeExperience(newExperience = "New Experience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "This experience is for Administrators only.");
+
+		PageEditor.prioritizeExperience(experienceName = "New Experience");
+
+		PageEditor.clickPublish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "This experience is for Administrators only.");
+	}
+
+}

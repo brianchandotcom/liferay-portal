@@ -15,16 +15,27 @@
 package com.liferay.commerce.product.internal.data.source;
 
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.model.CommerceAccountGroupRel;
+import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.permission.CommerceCatalogPermission;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -90,12 +101,20 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 				cpCatalogEntry.getCPDefinitionId());
 
 		for (CSDiagramEntry csDiagramEntry : csDiagramEntries) {
-			cpCatalogEntries.add(
-				_cpDefinitionHelper.getCPCatalogEntry(
-					commerceAccountId,
-					commerceContext.getCommerceChannelGroupId(),
-					csDiagramEntry.getCPDefinitionId(),
-					_portal.getLocale(httpServletRequest)));
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(
+					csDiagramEntry.getCPDefinitionId());
+
+			if (_accountEnabled(commerceAccountId, cpDefinition) &&
+				_viewCatalog(cpDefinition)) {
+
+				cpCatalogEntries.add(
+					_cpDefinitionHelper.getCPCatalogEntry(
+						commerceAccountId,
+						commerceContext.getCommerceChannelGroupId(),
+						csDiagramEntry.getCPDefinitionId(),
+						_portal.getLocale(httpServletRequest)));
+			}
 		}
 
 		if (cpCatalogEntries.size() > end) {
@@ -106,8 +125,60 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 			cpCatalogEntries, cpCatalogEntries.size());
 	}
 
+	private boolean _accountEnabled(
+			long commerceAccountId, CPDefinition cpDefinition)
+		throws Exception {
+
+		if (!cpDefinition.isAccountGroupFilterEnabled()) {
+			return true;
+		}
+
+		List<CommerceAccountGroupRel> commerceAccountGroupRels =
+			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		long[] commerceAccountGroupIds =
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				commerceAccountId);
+
+		for (CommerceAccountGroupRel commerceAccountGroupRel :
+				commerceAccountGroupRels) {
+
+			if (ArrayUtil.contains(
+					commerceAccountGroupIds,
+					commerceAccountGroupRel.getCommerceAccountGroupId())) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _viewCatalog(CPDefinition cpDefinition) throws Exception {
+		return _commerceCatalogPermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
+	}
+
+	@Reference
+	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceCatalogPermission _commerceCatalogPermission;
+
+	@Reference
+	private CommerceProductViewPermission _commerceProductViewPermission;
+
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;

@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BASICS_SELECT_PRODUCT_QUOTE</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.productQuote']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BASICS_FIRST_NAME_MAX_NUMBER</td>
 	<td>css=liferay-remote-app-raylife>>>[for='basics.businessInformation.firstName']+[maxlength='256']</td>
 	<td></td>
@@ -36,63 +31,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MORE_INFO_TITLE_SELECT_PRODUCT</td>
-	<td>//h1[contains(text(),'General Liability')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HI_MESSAGE_FROM_BASICS</td>
 	<td>//h1[contains(text(),'Hi First Name! 👋')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_SEARCH</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessSearch']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_CATEGORY_ID</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessCategoryId']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_FIRST_NAME</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.firstName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_LAST_NAME</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.lastName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_EMAIL</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.business.email']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_PHONE</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.business.phone']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_LOCATION_ADDRESS</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.business.location.address']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_LOCATION_CITY</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.business.location.city']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_LOCATION_STATE</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.business.location.state']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_LOCATION_ZIP</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessInformation.business.location.zip']</td>
 	<td></td>
 </tr>
 <tr>

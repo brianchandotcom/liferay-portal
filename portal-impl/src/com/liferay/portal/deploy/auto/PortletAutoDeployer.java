@@ -67,8 +67,6 @@ public class PortletAutoDeployer
 				tempDirPaths, "liferay-ui.tld");
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
-			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
-			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;
 
 			checkArguments();
 		}

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -47,8 +46,6 @@ public class ThemeAutoDeployer
 				tempDirPaths, "liferay-theme.tld");
 			utilTaglibDTD = DeployUtil.getResourcePath(
 				tempDirPaths, "liferay-util.tld");
-			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
-			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;
 
 			checkArguments();
 		}

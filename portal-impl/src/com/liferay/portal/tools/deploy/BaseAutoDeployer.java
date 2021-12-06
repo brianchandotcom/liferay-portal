@@ -181,18 +181,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 				displayName = _getDisplayName(srcFile);
 			}
 
-			if (appServerType.equals(ServerDetector.JBOSS_ID)) {
-				deployDir = jbossPrefix + deployDir;
-			}
-			else if (appServerType.equals(ServerDetector.WILDFLY_ID)) {
-				deployDir = GetterUtil.getString(wildflyPrefix) + deployDir;
-			}
-			else if (appServerType.equals(ServerDetector.TOMCAT_ID) ||
-					 appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
-
-				deployDir = deployDir.substring(0, deployDir.length() - 4);
-			}
-
 			String destDir = autoDeploymentContext.getDestDir();
 
 			File deployDirFile = new File(destDir + "/" + deployDir);
@@ -285,18 +273,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		if (!ServerDetector.isSupported(appServerType)) {
 			throw new IllegalArgumentException(
 				appServerType + " is not a valid application server type");
-		}
-
-		if (Validator.isNotNull(jbossPrefix) &&
-			!Validator.isNumber(jbossPrefix)) {
-
-			jbossPrefix = "1";
-		}
-
-		if (Validator.isNotNull(wildflyPrefix) &&
-			!Validator.isNumber(wildflyPrefix)) {
-
-			wildflyPrefix = "1";
 		}
 	}
 
@@ -608,7 +584,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	protected String appServerType;
 	protected String auiTaglibDTD;
-	protected String jbossPrefix;
 	protected String portletExtTaglibDTD;
 	protected String portletTaglibDTD;
 	protected String securityTaglibDTD;
@@ -616,7 +591,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String themeTaglibDTD;
 	protected String uiTaglibDTD;
 	protected String utilTaglibDTD;
-	protected String wildflyPrefix;
 
 	private void _copyJars(File srcFile) throws Exception {
 		for (String jar : _jars) {
@@ -893,16 +867,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 			StringUtil.endsWith(displayName, ".xml")) {
 
 			displayName = displayName.substring(0, displayName.length() - 4);
-		}
-
-		if ((appServerType.equals(ServerDetector.JBOSS_ID) &&
-			 Validator.isNotNull(jbossPrefix) &&
-			 displayName.startsWith(jbossPrefix)) ||
-			(appServerType.equals(ServerDetector.WILDFLY_ID) &&
-			 Validator.isNotNull(wildflyPrefix) &&
-			 displayName.startsWith(wildflyPrefix))) {
-
-			displayName = displayName.substring(1);
 		}
 
 		return displayName;

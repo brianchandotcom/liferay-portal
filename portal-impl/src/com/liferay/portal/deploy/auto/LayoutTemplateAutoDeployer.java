@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
-import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Ivica Cardic
@@ -32,8 +31,6 @@ public class LayoutTemplateAutoDeployer
 	public LayoutTemplateAutoDeployer() {
 		try {
 			appServerType = ServerDetector.getServerId();
-			jbossPrefix = PropsValues.AUTO_DEPLOY_JBOSS_PREFIX;
-			wildflyPrefix = PropsValues.AUTO_DEPLOY_WILDFLY_PREFIX;
 
 			checkArguments();
 		}

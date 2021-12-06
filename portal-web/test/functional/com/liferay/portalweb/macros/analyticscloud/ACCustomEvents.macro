@@ -1,21 +1,17 @@
 definition {
 
-	macro changeCustomEventDescription {
-		Type(
-			locator1 = "TextArea#DESCRIPTION",
-			value1 = "${newDescription}");
-
-		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
-
-		if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY_ENABLED")) {
-			Button.clickSave();
+	macro changeCustomEventDisplayNameOrDescription {
+		if (isSet(newDisplayName)) {
+			Type(
+				locator1 = "TextInput#TEXT",
+				value1 = "${newDisplayName}");
 		}
-	}
 
-	macro changeCustomEventDisplayName {
-		Type(
-			locator1 = "TextInput#TEXT",
-			value1 = "${newDisplayName}");
+		if (isSet(newDescription)) {
+			Type(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${newDescription}");
+		}
 
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
 

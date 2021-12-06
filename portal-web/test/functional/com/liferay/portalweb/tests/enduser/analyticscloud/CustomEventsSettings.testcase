@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Change the display name of the custom event") {
-			ACCustomEvents.changeCustomEventDisplayName(newDisplayName = "${customEventName} Display Name");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${customEventName} Display Name");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("Change the description of the custom event") {
-			ACCustomEvents.changeCustomEventDescription(newDescription = "${customEventName} Description");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDescription = "${customEventName} Description");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -287,7 +287,7 @@ definition {
 		}
 
 		task ("Change the name of the custom event using 255+ characters") {
-			ACCustomEvents.changeCustomEventDisplayName(newDisplayName = "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 		}
 
 		task ("Check that the custom event name cannot be more than 255 characters") {
@@ -536,7 +536,7 @@ definition {
 		}
 
 		task ("Change the display name of the custom event") {
-			ACCustomEvents.changeCustomEventDisplayName(newDisplayName = "${customEventName2} Display Name");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${customEventName2} Display Name");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -554,7 +554,7 @@ definition {
 		}
 
 		task ("Rename to an existing display name") {
-			ACCustomEvents.changeCustomEventDisplayName(newDisplayName = "${customEventName3}");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${customEventName3}");
 		}
 
 		task ("Check that the display name cannot be renamed to an existing one") {
@@ -562,7 +562,7 @@ definition {
 		}
 
 		task ("Rename to an existing display name") {
-			ACCustomEvents.changeCustomEventDisplayName(newDisplayName = "${customEventName2} Display Name");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${customEventName2} Display Name");
 		}
 
 		task ("Check that the display name cannot be renamed to an existing one") {

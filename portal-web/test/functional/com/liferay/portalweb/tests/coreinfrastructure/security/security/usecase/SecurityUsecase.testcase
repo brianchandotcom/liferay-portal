@@ -26,6 +26,7 @@ definition {
 
 	@description = "This is a use case for LPS-107017. Creater user via JSONWSAPUI"
 	@priority = "4"
+	@uitest
 	test CreateUserViaJSONWSAPIUI {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -139,6 +140,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin"
 	@priority = "5"
+	@uitest
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
 

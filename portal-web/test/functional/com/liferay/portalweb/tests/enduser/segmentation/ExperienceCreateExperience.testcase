@@ -277,7 +277,7 @@ definition {
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -362,7 +362,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -444,7 +444,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -458,7 +458,7 @@ definition {
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -530,7 +530,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -544,7 +544,7 @@ definition {
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -616,7 +616,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -630,7 +630,7 @@ definition {
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -696,7 +696,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -800,7 +800,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -814,7 +814,7 @@ definition {
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -903,7 +903,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -1000,7 +1000,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 	}
 
@@ -1113,7 +1113,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Org users will see this heading");
-		
+
 		JSONOrganization.deleteOrganizationByName(organizationName = "United States");
 	}
 
@@ -1217,7 +1217,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -2978,7 +2978,7 @@ definition {
 		JSONGroup.assignUserToGroup(
 			groupName = "Test Site Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -3131,7 +3131,7 @@ definition {
 		JSONGroup.assignUserToGroup(
 			groupName = "Test Site Name",
 			userEmailAddress = "userea1@liferay.com");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -3222,7 +3222,7 @@ definition {
 		JSONUser.addUserToUserGroup(
 			userEmailAddress = "userea1@liferay.com",
 			userGroupName = "UG UserGroup Name");
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

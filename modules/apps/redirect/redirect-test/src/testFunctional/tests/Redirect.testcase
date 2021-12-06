@@ -1073,8 +1073,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewEntryInfo {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONRedirect.addRedirect(

@@ -5,94 +5,222 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
 	@description = "LPS-142195 - Verify if Continue Button only will be enabled when all required fields have been filled in."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanClickInContinueButton {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		// TODO LPS-142195 CanClickInContinueButton pending implementation
+       	RaylifeHomePage.getAQuote();
+
+        Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "pet");
+
+        Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+
+        AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142198 - Verify search field supports non-ascii chars."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanPutNonAsciiInIndustrySearch {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		// TODO LPS-142198 CanPutNonAsciiInIndustrySearch pending implementation
+        RaylifeHomePage.getAQuote();
 
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "ペット");
+
+        AssertElementPresent(
+            locator1 = "Raylife#ERROR_MESSAGE",
+            value1 = "There are no results for 'ペット'. Please try a different search.");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142192 - Verify if when no search results are found, a message will appear in place of the search results."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewNoResultsMessage {
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		// TODO LPS-142192 CanViewNoResultsMessage pending implementation
+        RaylifeHomePage.getAQuote();
 
+       	Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "mercado");
+
+        AssertElementPresent(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "There are no results for 'mercado'. Please try a different search.");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142202 - Verify if when the user does not find your business, a button will be displayed with tips."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewTipButtonInBusinessPage {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142202 CanViewTipButtonInBusinessPage pending implementation
+       	RaylifeHomePage.getAQuote();
 
+        Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "mercado");
+
+        AssertElementPresent(
+            locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY",
+            value1 = "I am unable to find my industry");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142204 - Verify if the button 'I am unable to find my industry' opens an information panel when clicking on it."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewTipInfoPanelInBusinessPage {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142204 CanViewTipInfoPanelInBusinessPage pending implementation
+    	RaylifeHomePage.getAQuote();
 
+        Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "mercado");
+
+		Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
+
+        AssertElementPresent(
+			locator1 = "Raylife#TIP_INFO_PANEL",
+			value1 = "I am unable to find my industry");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142197 - Verify Max number of characters in the search field (max chars 256)."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test IndustrySearchMaxNumber {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142197 IndustrySearchMaxNumber pending implementation
+    	RaylifeHomePage.getAQuote();
 
+        AssertElementPresent(locator1 = "RaylifeIndustry#MAX_NUMBER_OF_CHARACTERS");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142205 - Verify if information panel is closed when clicking on dismiss (information panel from button 'I am unable to find my industry')."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test InfoPanelIsDismissedInBusinessPage {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142205 InfoPanelIsDismissedInBusinessPage pending implementation
+      	RaylifeHomePage.getAQuote();
 
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "mercado");
+
+        Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
+
+        Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+        AssertElementPresent(
+            locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+            value1 = "I am unable to find my industry");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142203 - Verify if the button 'I am unable to find my industry' becomes highlighted when clicking on it."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test IsTipButtonHighlighted {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142203 IsTipButtonHighlighted pending implementation
+       	RaylifeHomePage.getAQuote();
 
+        Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "mercado");
+
+        Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
+
+        AssertElementPresent(
+            locator1 = "RaylifeIndustry#BUTTON_HIGHLIGHTED",
+            value1 = "I am unable to find my industry");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142201 - Verify if by selecting Previous users will be navigated to the previous screen and changes will be discarded."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test NavigateToPreviousScreenDiscardChanges {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		
+		RaylifeHomePage.getAQuote();
 
-		// TODO LPS-142201 NavigateToPreviousScreenDiscardChanges pending implementation
+        Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "pet");
 
+        Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+
+        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+       	RaylifeHomePage.getAQuote();
+		
+        AssertTextNotEquals(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "pet");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142200 - Verify if in the first page of Basics section, the field Search is required."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SearchFieldIsRequiredInBusinessPage {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142200 SearchFieldIsRequiredInBusinessPage pending implementation
+       	RaylifeHomePage.getAQuote();
 
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
+			value1 = "pet");
+		
+        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 }

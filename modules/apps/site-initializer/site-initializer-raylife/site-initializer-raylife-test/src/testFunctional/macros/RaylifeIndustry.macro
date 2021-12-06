@@ -6,7 +6,8 @@ definition {
 		}
 
 		Type(
-			locator1 = "Raylife#SEARCH_FIELD",
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "basics.businessSearch",
 			value1 = "${primaryIndustry}");
 
 		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");

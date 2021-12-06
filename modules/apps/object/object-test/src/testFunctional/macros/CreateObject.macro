@@ -102,6 +102,12 @@ definition {
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
+	macro assertTitleFieldIsSelected {
+		AssertElementPresent(
+			locator1 = "CreateObject#TITLE_FIELD",
+			value1 = "${fieldLabel}");
+	}
+
 	macro assertToggleCollapsibleChecked {
 		AssertChecked.assertCheckedNotVisible(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
 	}
@@ -180,12 +186,6 @@ definition {
 		Click(
 			key_labelName = "${labelName}",
 			locator1 = "CreateObject#VIEW_OBJECT");
-	}
-
-	macro assertTitleFieldIsSelected {
-		AssertElementPresent(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "${fieldLabel}");
 	}
 
 }

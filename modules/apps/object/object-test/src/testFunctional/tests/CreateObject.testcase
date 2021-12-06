@@ -299,23 +299,22 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-        ObjectAdmin.addObjectFieldViaAPI(
+		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject");
-			
-        ObjectAdmin.openObjectAdmin();
 
-        ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
 		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field");
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"

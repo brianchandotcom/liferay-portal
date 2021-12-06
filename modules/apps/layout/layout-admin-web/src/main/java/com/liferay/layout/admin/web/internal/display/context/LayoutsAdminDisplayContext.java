@@ -139,44 +139,55 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<DropdownItem> getAddLayoutDropdownItems() {
+		Group group = getSelGroup();
+
+		if (!group.isPrivateLayoutsEnabled()) {
+			return DropdownItemListBuilder.add(
+				() -> isShowPublicLayouts(),
+				dropdownItem -> {
+					dropdownItem.setHref(
+						getSelectLayoutPageTemplateEntryURL(false));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "page"));
+				}
+			).add(
+				() -> isShowPublicLayouts(),
+				dropdownItem -> {
+					dropdownItem.setHref(
+						getSelectLayoutCollectionURL(
+							LayoutConstants.DEFAULT_PLID, null, false));
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							httpServletRequest, "collection-page"));
+				}
+			).build();
+		}
+
 		return DropdownItemListBuilder.add(
 			() -> isShowPublicLayouts(),
 			dropdownItem -> {
-				String label = "public-page";
-
-				if (!isShowPrivateLayouts()) {
-					label = "page";
-				}
-
 				dropdownItem.setHref(
 					getSelectLayoutPageTemplateEntryURL(false));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, label));
+					LanguageUtil.get(httpServletRequest, "public-page"));
 			}
 		).add(
 			() -> isShowPublicLayouts(),
 			dropdownItem -> {
-				String label = "public-collection-page";
-
-				if (!isShowPrivateLayouts()) {
-					label = "collection-page";
-				}
-
 				dropdownItem.setHref(
 					getSelectLayoutCollectionURL(
 						LayoutConstants.DEFAULT_PLID, null, false));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, label));
+					LanguageUtil.get(
+						httpServletRequest, "public-collection-page"));
 			}
 		).add(
-			() -> isShowPrivateLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(getSelectLayoutPageTemplateEntryURL(true));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "private-page"));
 			}
 		).add(
-			() -> isShowPrivateLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					getSelectLayoutCollectionURL(

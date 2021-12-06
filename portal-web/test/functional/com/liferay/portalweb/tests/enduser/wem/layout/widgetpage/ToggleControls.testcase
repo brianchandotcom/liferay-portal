@@ -6,21 +6,25 @@ definition {
 	property testray.main.component.name = "Site Pages Administration";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add two sites") {
+			for (var i : list "1,2") {
+				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
+			}
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		JSONGroup.addGroup(groupName = "Secondary Test Site");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Secondary Test Site",
-			layoutName = "Secondary Widget Page");
+		task ("Add a widget page in each site") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name ${i}",
+					layoutName = "Test Page Name");
+			}
+		}
 	}
 
 	tearDown {
@@ -30,9 +34,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "Secondary Test Site");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			for (var i : list "1,2") {
+				JSONGroup.deleteGroupByName(groupName = "Test Site Name ${i}");
+			}
 		}
 	}
 
@@ -41,15 +45,15 @@ definition {
 	test HideAndShowExistingInvisiblePortlet {
 		property portal.acceptance = "true";
 
-		task ("Can hide and show existing invisible portlets on widget page via switch toggle controls.") {
+		task ("View toggle controls is at view status") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Test Site Name 1");
 
-			AssertVisible(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "view");
+		}
 
+		task ("View invisible widgets are shown on page") {
 			Portlet.addPG(
 				pageName = "Test Page Name",
 				portletName = "Web Content Display");
@@ -61,14 +65,12 @@ definition {
 			AssertVisible(
 				key_portletName = "Search",
 				locator1 = "ManagementBar#PORTLET_BODY");
+		}
 
-			Click(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+		task ("Switch Toggle Controls to hidden then invisible widgets are not shown") {
+			WidgetPages.switchToggleControls(click = "view");
 
-			AssertVisible(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "hidden");
 
 			AssertNotVisible(
 				key_portletName = "Web Content Display",
@@ -77,10 +79,10 @@ definition {
 			AssertNotVisible(
 				key_portletName = "Search",
 				locator1 = "ManagementBar#PORTLET_BODY");
+		}
 
-			Click(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+		task ("Switch Toggle Controls to view then view invisible widgets are shown") {
+			WidgetPages.switchToggleControls(click = "hidden");
 
 			AssertVisible(
 				key_portletName = "Web Content Display",
@@ -91,18 +93,14 @@ definition {
 				locator1 = "ManagementBar#PORTLET_BODY");
 		}
 
-		task ("Assert Toggle Controls affects all widget pages in virtual instance scoped.") {
-			Click(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+		task ("View Toggle Controls affects all widget pages in virtual instance scoped") {
+			WidgetPages.switchToggleControls(click = "view");
 
 			Navigator.gotoSitePage(
-				pageName = "Secondary Widget Page",
-				siteName = "Secondary Test Site");
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 2");
 
-			AssertVisible(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "hidden");
 		}
 	}
 
@@ -111,15 +109,15 @@ definition {
 	test HideAndShowHeaderOfExistingVisiblePortlet {
 		property portal.acceptance = "true";
 
-		task ("Switch Toggle Controls to hidden") {
+		task ("View toggle controls is at view status") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Test Site Name 1");
 
-			AssertVisible(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "view");
+		}
 
+		task ("Add an Asset Publisher widget to page then view its bordless is shown when mouse over") {
 			Portlet.addPG(
 				pageName = "Test Page Name",
 				portletName = "Asset Publisher");
@@ -131,10 +129,10 @@ definition {
 			AssertVisible(
 				key_portletName = "Asset Publisher",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
+		}
 
-			Click(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+		task ("Switch Toggle Controls to hidden then view Asset Publisher's borderless is not shown") {
+			WidgetPages.switchToggleControls(click = "view");
 
 			MouseOver(
 				key_portletName = "Asset Publisher",
@@ -145,10 +143,8 @@ definition {
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
 		}
 
-		task ("Switch Toggle Controls to view") {
-			Click(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+		task ("Switch Toggle Controls to view then view Asset Publisher's borderless is shown") {
+			WidgetPages.switchToggleControls(click = "hidden");
 
 			MouseOver(
 				key_portletName = "Asset Publisher",
@@ -166,31 +162,15 @@ definition {
 		task ("Can hide future invisible portlets on widget page when Toggle Controls is closed") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Test Site Name 1");
 
-			Click(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.switchToggleControls(click = "view");
 
-			AssertVisible(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "hidden");
 
-			if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
-				Click.clickAt(locator1 = "ControlMenu#ADD");
-			}
-
-			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
-
-			Navigator.gotoNavTab(navTab = "Widgets");
-
-			Pause(locator1 = "5000");
-
-			Type.sendKeysApplicationSearch(
-				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-				value1 = "Web Content Display");
-
-			Portlet._clickAddPortlet(portletName = "Web Content Display");
+			Portlet.addPG(
+				pageName = "Test Page Name",
+				portletName = "Web Content Display");
 
 			AssertElementPresent(
 				key_portletName = "Web Content Display",
@@ -202,13 +182,7 @@ definition {
 		}
 
 		task ("Can hide portlet header of future visible portlets on widget page when Toggle Controls is closed") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			AssertVisible(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "hidden");
 
 			Portlet.addPG(
 				pageName = "Test Page Name",
@@ -226,32 +200,26 @@ definition {
 
 	@description = "This is a use case for LPS-108216. Switch toggle controls shouldn't affect portlets on content page."
 	@priority = "4"
-	test ToggleControlsNotAffectPortletsOnContentPage {
-		task ("Create a new Content Page") {
+	test ViewNotAffectPortletsOnContentPage {
+		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = "Test Site Name 1",
 				layoutName = "Test Content Page Name",
 				type = "content");
 
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.clickPublish();
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Content Page Name");
 		}
 
 		task ("Switch Toggle Controls to hidden") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Test Site Name 1");
 
-			Click(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.switchToggleControls(click = "view");
 
-			AssertVisible(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "hidden");
 
 			MouseOver(
 				key_portletName = "Navigation Menu",
@@ -262,10 +230,10 @@ definition {
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
 		}
 
-		task ("Assert not affect portlets on content page") {
+		task ("View not affect portlets on content page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = "Test Site Name 1");
 
 			AssertElementNotPresent(
 				key_status = "hidden",
@@ -287,8 +255,8 @@ definition {
 
 	@description = "This is a use case for LPS-108216. Assert Toggle Controls doesn't affect widget pages in other virtual instance scoped."
 	@priority = "4"
-	test ToggleControlsOnlyAffectCurrentInstance {
-		property test.name.skip.portal.instance = "ToggleControls#ToggleControlsOnlyAffectCurrentInstance";
+	test ViewOnlyAffectCurrentInstance {
+		property test.name.skip.portal.instance = "ToggleControls#ViewOnlyAffectCurrentInstance";
 
 		task ("Add a virtual instance") {
 			ApplicationsMenu.gotoPortlet(
@@ -304,19 +272,15 @@ definition {
 
 		task ("Switch Toggle Controls to hidden in current instance") {
 			Navigator.gotoSitePage(
-				pageName = "Secondary Widget Page",
-				siteName = "Secondary Test Site");
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 2");
 
-			Click(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.switchToggleControls(click = "view");
 
-			AssertVisible(
-				key_status = "hidden",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.viewToggleControls(status = "hidden");
 		}
 
-		task ("Assert Toggle Controls doesn't affect widget pages in other virtual instance scoped.") {
+		task ("View Toggle Controls doesn't affect widget pages in other virtual instance scope") {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
@@ -332,9 +296,7 @@ definition {
 				pageName = "Test Site Page",
 				url = "http://www.able.com:8080");
 
-			AssertVisible(
-				key_status = "view",
-				locator1 = "ControlMenu#TOGGLE_CONTROLS");
+			WidgetPages.switchToggleControls(click = "view");
 		}
 	}
 

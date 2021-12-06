@@ -383,7 +383,7 @@ definition {
 
 			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
-			var entrieOrg = selenium.getText(locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW");
+			var entrieOrg = selenium.getText("ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW");
 			var numberOrg = StringUtil.extractDigits("${entrieOrg}");
 
 			AssertTextEquals(

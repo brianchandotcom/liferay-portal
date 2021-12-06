@@ -2071,12 +2071,6 @@ definition {
 		}
 
 		task ("configure samlidp as IdP") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.saml.runtime.configuration.SamlConfiguration");
-
-			SAML.goToSAMLAdmin();
-
 			SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 		}
 	}
@@ -2117,8 +2111,6 @@ definition {
 		}
 
 		task ("Convert encryption certificate") {
-			Navigator.openSpecificURL(url = "http://www.able.com:9080");
-
 			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:9080");
 
 			SAML.downloadCertificate(certificate = "ENCRYPTION");

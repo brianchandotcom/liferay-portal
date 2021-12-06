@@ -599,7 +599,7 @@ definition {
 				userPassword = "test");
 
 			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
+				category = "Content & Data",
 				portlet = "Wiki");
 
 			WikiNavigator.gotoNode(wikiNodeName = "Main");
@@ -819,7 +819,7 @@ definition {
 				userPassword = "test");
 		}
 
-		task ("Sign in as Super User and begin data export process") { 
+		task ("Sign in as Super User and begin data export process") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
@@ -864,7 +864,7 @@ definition {
 				key_rowNumber = "3",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Message Boards");
-		}		
+		}
 	}
 
 	@description = "This test filters application to Forms, Web Content and Contacts and views all filtered data in Review Data section"

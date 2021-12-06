@@ -21,6 +21,9 @@ export const EXPORT_FILE_NAME = 'Export.zip';
 export const FILE_SCHEMA_EVENT = 'file-schema';
 export const SCHEMA_SELECTED_EVENT = 'schema-selected';
 export const TEMPLATE_SELECTED_EVENT = 'template-selected';
+export const HEADLESS_ENDPOINT_POLICY_NAME = 'headlessEndpoint';
+export const TEMPLATE_SOILED = 'template-soiled';
+export const NULL_TEMPLATE_VALUE = '';
 
 export const PARSE_FILE_CHUNK_SIZE = 64 * 1024;
 

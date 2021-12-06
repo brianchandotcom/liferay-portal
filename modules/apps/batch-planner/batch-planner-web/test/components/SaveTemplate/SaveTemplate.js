@@ -23,6 +23,7 @@ import fetchMock from 'fetch-mock';
 import React from 'react';
 
 import SaveTemplate from '../../../src/main/resources/META-INF/resources/js/SaveTemplate';
+import {SCHEMA_SELECTED_EVENT} from '../../../src/main/resources/META-INF/resources/js/constants';
 
 const INPUT_VALUE_TEST = 'test';
 const BASE_PROPS = {
@@ -30,6 +31,10 @@ const BASE_PROPS = {
 	formSaveAsTemplateURL: 'https://formUrl.test',
 	portletNamespace: 'test',
 };
+
+function fireSchemaChangeEvent() {
+	Liferay.fire(SCHEMA_SELECTED_EVENT, {schema: 'something'});
+}
 
 describe('SaveTemplateModal', () => {
 	beforeEach(() => {
@@ -55,8 +60,26 @@ describe('SaveTemplateModal', () => {
 		).toBeInTheDocument();
 	});
 
+	it('must initially has button disabled', () => {
+		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
+
+		expect(
+			getByText(Liferay.Language.get('save-as-template'))
+		).toBeDisabled();
+	});
+
+	it('must enable button on Schema Change Event', () => {
+		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
+		fireSchemaChangeEvent();
+
+		expect(
+			getByText(Liferay.Language.get('save-as-template'))
+		).not.toBeDisabled();
+	});
+
 	it('must show modal when the button is clicked', async () => {
 		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
+		fireSchemaChangeEvent();
 
 		fireEvent.click(getByText(Liferay.Language.get('save-as-template')));
 
@@ -70,6 +93,7 @@ describe('SaveTemplateModal', () => {
 	describe('modal', () => {
 		it('must has button disabled if no text input provided', async () => {
 			const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
+			fireSchemaChangeEvent();
 
 			fireEvent.click(
 				getByText(Liferay.Language.get('save-as-template'))
@@ -87,6 +111,7 @@ describe('SaveTemplateModal', () => {
 			const {getByPlaceholderText, getByText} = render(
 				<SaveTemplate {...BASE_PROPS} />
 			);
+			fireSchemaChangeEvent();
 
 			fireEvent.click(
 				getByText(Liferay.Language.get('save-as-template'))
@@ -114,6 +139,7 @@ describe('SaveTemplateModal', () => {
 			const {getByPlaceholderText, getByText} = render(
 				<SaveTemplate {...BASE_PROPS} />
 			);
+			fireSchemaChangeEvent();
 
 			fireEvent.click(
 				getByText(Liferay.Language.get('save-as-template'))

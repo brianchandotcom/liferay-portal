@@ -3,10 +3,11 @@
 
 <div class="business-home-cover">
 	<div class="container position-relative">
-		<div class="business-home-cover-box mb-0 px-5 py-6">
+		<div class="business-home-cover-box bg-neutral-0 rounded shadow-lg
+mb-0 px-5 py-6">
 			<div class="business-home-cover-box-title">
-			<span class="title-highlight" data-lfr-editable-id="business-home-cover-title" data-lfr-editable-type="text">More than Insurance.</span>
-			<span class="subtitle" data-lfr-editable-id="business-home-cover-title2" data-lfr-editable-type="text">We partner with your business.</span>
+			<span class="text-brand-primary" data-lfr-editable-id="business-home-cover-title" data-lfr-editable-type="text">More than Insurance.</span>
+			<span class="text-brand-primary-darken-5" data-lfr-editable-id="business-home-cover-title2" data-lfr-editable-type="text">We partner with your business.</span>
 			</div>
 
 			<div class="d-flex">
@@ -21,18 +22,18 @@
 					</div>
 
 					<div class="d-flex new-quote-form">
-						<div class="d-flex flex-column position-relative" id="email-container">
-						<label for="email" class="position-absolute bg-white px-1">Email Address</label>
+						<div class="d-flex flex-column form-group position-relative" id="email-container">
+							<input class="form-control" id="email" name="email" type="text" />
 
-						<input class="px-3 rounded" id="email" name="email" type="text" />
+							<label for="email" class="position-absolute bg-white px-1 text-paragraph-sm">Email Address</label>
 
-							<div class="error-feedback">
-								<span></span>
+							<div class="form-feedback-group">
+									<span class="form-feedback-item"></span>
 							</div>
 						</div>
 
 						<div>
-						<button class="btn btn-solid btn-variant-secondary disabled ml-4" id="continue-quote" type="submit">
+						<button class="btn btn-solid btn-variant-secondary ml-4" id="continue-quote" type="submit">
 							<span class="action-button-text align-items-center d-flex font-weight-bold">
 									CONTINUE QUOTE
 								<svg class="arrow-icon lexicon-icon lexicon-icon-angle-right ml-2" focusable="false" role="presentation">
@@ -55,27 +56,27 @@
 
 				<div class="position-relative" id="retrieve-quote">
 					<form class="align-items-start d-flex" id="get-quote-form">
-						<div id="zip-container">
-						<label for="zip" class="position-absolute placeholder-title bg-white px-1">Zip</label>
+						<div class="filled form-condensed form-group" id="zip-container">
+							<input class="form-control" id="zip" maxlength="5" name="zip" placeholder="Zip" type="text" />
 
-						<input class="px-3 rounded w-100" id="zip" maxlength="5" name="zip" placeholder="Zip" type="text" />
+							<label for="zip" class="bg-neutral-0 position-absolute px-1 text-paragraph-sm">Zip</label>
 
-							<div class="error-feedback">
-								<span>Enter a valid 5 digit Zip</span>
+							<div class="form-feedback-group">
+								<span class="form-feedback-item"></span>
 							</div>
 						</div>
 
 						<div class="flex-grow-1 position-relative" id="product-container">
-						<label for="product" class="position-absolute placeholder-title bg-white px-1">Product</label>
-
-						<svg class="lexicon-icon lexicon-icon-caret-bottom position-absolute select-icon" focusable="false" role="presentation">
+							<svg class="lexicon-icon lexicon-icon-caret-bottom position-absolute select-icon" focusable="false" role="presentation">
 								<use xlink:href="${clayIconSVG}#caret-bottom" />
 							</svg>
 
-						<select class="bg-white px-3 rounded" id="product" name="product" />
+							<select class="form-control" id="product" name="product" />
 
-							<div class="error-feedback">
-								<span>Please select a product</span>
+							<label for="product" class="bg-neutral-0 position-absolute px-1 text-paragraph-sm ">Product</label>
+
+							<div class="form-feedback-group">
+								<span class="form-feedback-item"></span>
 							</div>
 						</div>
 

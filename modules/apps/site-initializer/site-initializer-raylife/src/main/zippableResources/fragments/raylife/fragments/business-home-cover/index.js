@@ -33,6 +33,15 @@ const businessEmailDeliveredContainer = fragmentElement.querySelector(
 const continueQuoteButton = fragmentElement.querySelector('#continue-quote');
 const emailInput = fragmentElement.querySelector('#email');
 const emailContainer = fragmentElement.querySelector('#email-container');
+const emailErrorFeedback = fragmentElement.querySelector(
+	'#email-container .form-feedback-group .form-feedback-item'
+);
+const zipErrorFeedback = fragmentElement.querySelector(
+	'#zip-container .form-feedback-group .form-feedback-item'
+);
+const productErrorFeedback = fragmentElement.querySelector(
+	'#product-container .form-feedback-group .form-feedback-item'
+);
 const getQuoteForm = fragmentElement.querySelector('#get-quote-form');
 const newQuoteButton = fragmentElement.querySelector('#new-quote-button');
 const newQuoteContainer = fragmentElement.querySelector('#new-quote');
@@ -64,6 +73,7 @@ newQuoteButton.onclick = function () {
 
 emailInput.oninput = function () {
 	emailContainer.classList.remove('has-error');
+	emailErrorFeedback.innerText = '';
 
 	if (emailInput.value) {
 		return continueQuoteButton.classList.remove('disabled');
@@ -73,14 +83,11 @@ emailInput.oninput = function () {
 };
 
 continueQuoteButton.onclick = async function () {
-	const errorFeedback = fragmentElement.querySelector(
-		'#email-container .error-feedback span'
-	);
-
 	if (
 		!new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(emailInput.value)
 	) {
-		errorFeedback.innerText = 'Please enter a valid email address';
+		emailErrorFeedback.innerHTML =
+			'<span class="form-feedback-indicator"></span> Please enter a valid email address';
 
 		return emailContainer.classList.add('has-error');
 	}
@@ -90,8 +97,8 @@ continueQuoteButton.onclick = async function () {
 	);
 
 	if (!raylifeApplicationResponse.items.length) {
-		errorFeedback.innerHTML =
-			'We were unable to find your quote. Please start a new one.';
+		emailErrorFeedback.innerHTML =
+			'<span class="form-feedback-indicator"></span> We were unable to find your quote. Please start a new one.';
 
 		return emailContainer.classList.add('has-error');
 	}
@@ -133,6 +140,8 @@ getQuoteForm.onsubmit = function (event) {
 
 	zipContainer.classList.remove('has-error');
 	productContainer.classList.remove('has-error');
+	zipErrorFeedback.innerText = '';
+	productErrorFeedback.innerText = '';
 
 	if (localStorage.getItem('raylife-back-to-edit')) {
 		localStorage.removeItem('raylife-back-to-edit');
@@ -154,9 +163,13 @@ getQuoteForm.onsubmit = function (event) {
 		!formProps.product
 	) {
 		if (!formProps.zip || formProps.zip.length !== maxCharactersZIP) {
+			zipErrorFeedback.innerHTML =
+				'<span class="form-feedback-indicator"></span> Enter a valid 5 digit Zip';
 			zipContainer.classList.add('has-error');
 		}
 		if (!formProps.product) {
+			productErrorFeedback.innerHTML =
+				'<span class="form-feedback-indicator"></span> Please select a product';
 			productContainer.classList.add('has-error');
 		}
 	}

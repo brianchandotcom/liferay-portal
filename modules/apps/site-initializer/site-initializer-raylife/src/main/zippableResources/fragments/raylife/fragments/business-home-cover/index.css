@@ -1,26 +1,25 @@
-.business-home-cover .action-button-text {
-	font-size: 15px;
-}
-
-.business-home-cover .btn {
-	border-radius: 4px;
-}
-
 .business-home-cover .business-home-cover-box {
-	background-color: var(--color-neutral-0);
-	border-radius: 8px;
-	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
 	font-size: var(--font-size-lg);
 	max-width: 100%;
 	position: absolute;
 	right: 0;
-	top: 100px;
+	top: 45px;
 	width: 653px;
 }
 
-.business-home-cover .business-home-cover-box label {
+.business-home-cover-box #email ~label{
+	left: -3px;
+	top: -16px;
+}
+
+.business-home-cover-box #zip ~label{
+	left: 1px;
+	top: -1px;
+}
+
+.business-home-cover-box #product ~ label{
 	left: 14px;
-	top: -12px;
+	top: -11px;
 }
 
 .business-home-cover .business-home-cover-box input,
@@ -28,11 +27,9 @@ select {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
-	border: 0.0625rem solid var(--color-action-neutral-default);
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-bolder);
 	height: 48px;
-	padding-right: 46px;
 	width: 265px;
 }
 
@@ -42,14 +39,13 @@ select {
 }
 
 .business-home-cover .select-icon {
-	color: var(--color-action-neutral-default);
 	pointer-events: none;
 	right: 20px;
 	top: 17px;
 }
 
 .business-home-cover .business-home-cover-box .business-home-cover-box-title {
-	font-size: var(--display4-1-size, 2.313rem);
+	font-size: var(--displaycolor4-1-size, 2.313rem);
 	font-weight: var(--display3-weight);
 	line-height: var(--display-line-height);
 	margin-bottom: var(--spacer-6-1, 2.5rem);
@@ -58,17 +54,13 @@ select {
 .business-home-cover
 	.business-home-cover-box
 	.business-home-cover-box-title
-	.title-highlight {
-	color: var(--color-brand-primary);
+	 {
 	display: block;
 }
 
-.business-home-cover .subtitle {
-	color: var(--color-neutral-9);
-}
-
-.business-home-cover .placeholder-title {
-	color: var(--color-neutral-black);
+.business-home-cover .form-feedback-indicator::before {
+	content: url('[resources:error.svg]');
+	margin-right: 4px;
 }
 
 .business-home-cover .business-home-cover-image {
@@ -78,12 +70,12 @@ select {
 }
 
 .page-editor__layout-viewport .business-home-cover .business-home-cover-box {
-	top: 88px;
+	top: 5.5rem;
 }
 
 .business-home-cover .business-email-delivered h2 {
-	font-size: 24px;
-	font-weight: bold;
+	font-size: var(--h4-font-size);
+	font-weight: var(--font-weight-bold);
 }
 
 .business-home-cover .business-email-delivered p {
@@ -93,39 +85,7 @@ select {
 
 .business-home-cover .business-home-cover-link {
 	color: var(--color-neutral-8);
-	font-weight: bold;
-}
-
-.business-home-cover .has-error input,
-.business-home-cover .has-error select {
-	border-color: var(--color-state-error);
-	outline-color: var(--color-state-error);
-}
-
-.business-home-cover .has-error label {
-	color: var(--color-state-error);
-}
-
-.business-home-cover .error-feedback {
-	background-color: var(--color-state-error-lighten-1);
-	border-radius: 8px;
-	color: var(--color-state-error);
-	display: none;
-	font-size: 13px;
-	font-weight: var(--display3-weight);
-	padding: 8px;
-	width: 119px;
-}
-
-.business-home-cover .has-error .error-feedback {
-	align-items: center;
-	display: flex;
-	position: relative;
-}
-
-.business-home-cover .error-feedback::before {
-	content: url('[resources:error.svg]');
-	margin-right: 4px;
+	font-weight: var(--font-weight-bold);
 }
 
 .business-home-cover #email-container {
@@ -142,4 +102,32 @@ select {
 
 .business-home-cover a:visited {
 	color: var(--color-action-primary-default);
+}
+
+.business-home-cover #zip-container .form-control{
+	width: 119px;
+}
+
+.business-home-cover #product-container select.form-control {
+	background-image: none;
+	font-weight: var(--font-weight-bold);
+	padding-right: 3em;
+}
+
+#zip-container .form-control:focus + label,
+#product-container .form-control:focus + label,
+#email-container .form-control:focus + label{
+	color: var(--color-brand-primary-lighten-3) ;
+}
+
+.has-error label {
+	color: var(--warning)
+}
+
+span.form-feedback-indicator {
+    margin-top: 2px;
+}
+
+.form-group .form-feedback-group .form-feedback-item {
+	padding: 5px 10px;
 }

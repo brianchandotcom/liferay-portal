@@ -52,6 +52,7 @@ export default function ({
 	return (
 		<ThemeContext.Provider
 			value={{
+				availableLanguages: Liferay.Language.available,
 				defaultLocale,
 				namespace,
 				redirectURL,

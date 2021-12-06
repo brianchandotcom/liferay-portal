@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -63,6 +65,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -564,6 +567,69 @@ public class LayoutSetPrototypePropagationTest
 			userGroup.getGroupId(), true);
 
 		SitesUtil.resetPrototype(layoutSet);
+	}
+
+	@Test
+	public void testThemeSettingsWithLinkEnabled() throws Exception {
+		LayoutSet prototypeLayoutSet =
+			_layoutSetPrototypeGroup.getPrivateLayoutSet();
+
+		Theme prototypeTheme = prototypeLayoutSet.getTheme();
+
+		prototypeTheme.addSetting("test", "true", true, null, null, null);
+
+		Map<String, ThemeSetting> prototypeThemeSettings =
+			prototypeTheme.getConfigurableSettings();
+
+		UnicodeProperties settingsUnicodeProperties =
+			prototypeLayoutSet.getSettingsProperties();
+
+		String device = "regular";
+
+		for (String propertyKey : prototypeThemeSettings.keySet()) {
+			settingsUnicodeProperties.setProperty(
+				ThemeSettingImpl.namespaceProperty(device, propertyKey),
+				RandomTestUtil.randomString());
+		}
+
+		prototypeLayoutSet.setSettingsProperties(settingsUnicodeProperties);
+
+		prototypeLayoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(
+			prototypeLayoutSet);
+
+		setLinkEnabled(true);
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+				_layoutSetPrototype.getLayoutSetPrototypeId());
+
+		_layoutSetPrototype.setModifiedDate(new Date());
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototype);
+
+		propagateChanges(group);
+
+		layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false, prototypeLayout.getFriendlyURL());
+
+		_layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false, _prototypeLayout.getFriendlyURL());
+
+		LayoutSet targetLayoutSet = layout.getLayoutSet();
+
+		for (String propertyKey : prototypeThemeSettings.keySet()) {
+			String prototypeValue = prototypeLayoutSet.getThemeSetting(
+				propertyKey, device);
+
+			String targetValue = targetLayoutSet.getThemeSetting(
+				propertyKey, device);
+
+			Assert.assertEquals(
+				propertyKey + "=" + prototypeValue,
+				propertyKey + "=" + targetValue);
+		}
 	}
 
 	@Override

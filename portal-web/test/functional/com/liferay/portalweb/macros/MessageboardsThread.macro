@@ -659,6 +659,28 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro flagThread {
+		Click(locator1 = "ReportContent#FLAG_LINK");
+
+		AssertElementPresent.assertVisible(locator1 = "ReportContent#FLAG_MODAL");
+
+		Select(
+			locator1 = "ReportContent#REASON_SELECT",
+			value1 = "${flagReason}");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
+
+		AssertClick(
+			locator1 = "ReportContent#REPORT_BUTTON",
+			value1 = "Report");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ReportContent#SUCCESS_MESSAGE",
+			value1 = "Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure ${siteName} is a safe environment for everyone.");
+
+		Click(locator1 = "Button#CLOSE");
+	}
+
 	macro gotoCP {
 		AssertClick.assertPartialTextClickAt(
 			key_threadSubject = "${threadSubject}",

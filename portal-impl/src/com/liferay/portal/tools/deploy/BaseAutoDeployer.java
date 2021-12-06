@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.WebXMLBuilder;
-import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.webserver.DynamicResourceServlet;
 import com.liferay.util.ant.CopyTask;
@@ -69,13 +68,10 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -89,15 +85,6 @@ import org.apache.oro.io.GlobFilenameFilter;
 public class BaseAutoDeployer implements AutoDeployer {
 
 	public static final String DEPLOY_TO_PREFIX = "DEPLOY_TO__";
-
-	public BaseAutoDeployer() {
-		ServiceLoader<DeploymentExtension> serviceLoader = ServiceLoader.load(
-			DeploymentExtension.class, BaseAutoDeployer.class.getClassLoader());
-
-		for (DeploymentExtension deploymentExtension : serviceLoader) {
-			_deploymentExtensions.add(deploymentExtension);
-		}
-	}
 
 	@Override
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
@@ -242,9 +229,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 						PluginPackageUtil.endPluginPackageInstallation(context);
 					}
-					else {
-						_postDeploy(destDir, deployDir);
-					}
 				}
 
 				return AutoDeployer.CODE_DEFAULT;
@@ -311,27 +295,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	public void copyXmls(
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception {
-
-		if (appServerType.equals(ServerDetector.JBOSS_ID) ||
-			appServerType.equals(ServerDetector.WILDFLY_ID)) {
-
-			File file = new File(PropsValues.LIFERAY_WEB_PORTAL_DIR);
-
-			copyDependencyXml(
-				"jboss-all.xml", srcFile + "/WEB-INF",
-				Collections.singletonMap("root_war", file.getName()), true);
-
-			copyDependencyXml(
-				"jboss-deployment-structure.xml", srcFile + "/WEB-INF");
-		}
-
-		for (DeploymentExtension deploymentExtension : _deploymentExtensions) {
-			if (Objects.equals(
-					appServerType, deploymentExtension.getServerId())) {
-
-				deploymentExtension.copyXmls(this, srcFile);
-			}
-		}
 
 		copyDependencyXml("web.xml", srcFile + "/WEB-INF");
 	}
@@ -1143,41 +1106,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		CopyTask.copyDirectory(mergeDir, targetDir, null, null, true, false);
 	}
 
-	private void _postDeploy(String destDir, String deployDir)
-		throws Exception {
-
-		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
-			_postDeployJBoss(destDir, deployDir);
-		}
-		else if (appServerType.equals(ServerDetector.WILDFLY_ID)) {
-			_postDeployWildfly(destDir, deployDir);
-		}
-
-		for (DeploymentExtension deploymentExtension : _deploymentExtensions) {
-			if (Objects.equals(
-					appServerType, deploymentExtension.getServerId())) {
-
-				deploymentExtension.postDeploy(destDir, deployDir);
-			}
-		}
-	}
-
-	private void _postDeployJBoss(String destDir, String deployDir)
-		throws Exception {
-
-		FileUtil.write(
-			StringBundler.concat(destDir, "/", deployDir, ".dodeploy"),
-			StringPool.BLANK);
-	}
-
-	private void _postDeployWildfly(String destDir, String deployDir)
-		throws Exception {
-
-		FileUtil.write(
-			StringBundler.concat(destDir, "/", deployDir, ".dodeploy"),
-			StringPool.BLANK);
-	}
-
 	private PluginPackage _readPluginPackage(File file) {
 		if (!file.exists()) {
 			return null;
@@ -1643,8 +1571,5 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	private static final List<String> _jars = Arrays.asList(
 		"util-bridges.jar", "util-java.jar", "util-taglib.jar");
-
-	private final List<DeploymentExtension> _deploymentExtensions =
-		new ArrayList<>();
 
 }

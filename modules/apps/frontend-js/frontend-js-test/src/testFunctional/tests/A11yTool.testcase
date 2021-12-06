@@ -202,7 +202,7 @@ definition {
 
 		task ("Click on an occurrence") {
 			Click(
-				key_text = "Occurrence 2",
+				key_text = "Occurrence 1",
 				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_LIST_ITEM");
 		}
 
@@ -213,11 +213,58 @@ definition {
 				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
 
 			AssertElementPresent(
-				key_text = "button:nth-child(10)",
+				key_text = "button:nth-child(9)",
 				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_TARGET_SELECTOR");
 		}
 
 		task ("Assert the correct code is displayed on the side panel") {
+			AssertElementPresent(
+				key_header = "Code",
+				key_label = "Code of the Element",
+				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
+
+			AssertElementPresent(
+				key_text = "<button></button>",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_CODE_ELEMENT");
+		}
+
+		takeScreenshot();
+	}
+
+	@description = "LPS-142330. Verifies the correct target and code is displayed for the second occurrence."
+	@priority = "3"
+	test CanDisplayTargetCodeOfSecondViolation {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Click the rule violation in the panel") {
+			Click(
+				key_text = "button-name",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		}
+
+		task ("Click on the 2nd occurrence") {
+			Click(
+				key_text = "Occurrence 2",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_LIST_ITEM");
+		}
+
+		task ("Assert occurrence 2's target and code information is correctly displayed") {
+			AssertElementPresent(
+				key_header = "Target",
+				key_label = "Target Selector",
+				locator1 = "A11yTool#VIOLATION_PANEL_TARGET_CODE_HEADER");
+
+			AssertElementPresent(
+				key_text = "button:nth-child(10)",
+				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_TARGET_SELECTOR");
+
 			AssertElementPresent(
 				key_header = "Code",
 				key_label = "Code of the Element",

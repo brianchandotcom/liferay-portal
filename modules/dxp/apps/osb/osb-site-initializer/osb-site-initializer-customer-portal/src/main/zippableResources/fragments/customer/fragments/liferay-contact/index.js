@@ -11,13 +11,11 @@
  * distribution rights of the Software.
  */
 
-const eventName = 'customer-portal-project-loading';
-
-const contactName = fragmentElement.querySelector(
-	'#customer-portal-liferay-contact-name'
-);
 const contactEmail = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-email'
+);
+const contactName = fragmentElement.querySelector(
+	'#customer-portal-liferay-contact-name'
 );
 const contactRole = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-role'
@@ -25,18 +23,19 @@ const contactRole = fragmentElement.querySelector(
 const contactTitle = fragmentElement.querySelector(
 	'#customer-portal-liferay-contact-title'
 );
+const eventName = 'customer-portal-project-loading';
 
 (async () => {
 	try {
 		window.addEventListener(eventName, ({detail: project}) => {
-			contactName.classList.toggle('skeleton');
 			contactEmail.classList.toggle('skeleton');
+			contactName.classList.toggle('skeleton');
 			contactRole.classList.toggle('skeleton');
 			contactTitle.classList.toggle('skeleton');
 
+			contactEmail.innerHTML = project.liferayContactEmailAddress;
 			contactName.innerHTML = project.liferayContactName;
 			contactRole.innerHTML = project.liferayContactRole;
-			contactEmail.innerHTML = project.liferayContactEmailAddress;
 		});
 	}
 	catch (error) {

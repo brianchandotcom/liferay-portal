@@ -968,9 +968,7 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout)
-		throws PortalException {
-
+	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout) {
 		return getSelectLayoutPageTemplateEntryURL(
 			getFirstLayoutPageTemplateCollectionId(), privateLayout);
 	}
@@ -1088,7 +1086,7 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getStagingGroupId();
 	}
 
-	public String getStyleBookWarningMessage() throws WindowStateException {
+	public String getStyleBookWarningMessage() {
 		LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
 			getSelGroupId(), false);
 

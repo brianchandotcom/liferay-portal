@@ -143,7 +143,7 @@ public class LayoutsAdminDisplayContext {
 
 		if (!group.isPrivateLayoutsEnabled()) {
 			return DropdownItemListBuilder.add(
-				() -> isShowPublicLayouts(),
+				this::isShowPublicLayouts,
 				dropdownItem -> {
 					dropdownItem.setHref(
 						getSelectLayoutPageTemplateEntryURL(false));
@@ -151,7 +151,7 @@ public class LayoutsAdminDisplayContext {
 						LanguageUtil.get(httpServletRequest, "page"));
 				}
 			).add(
-				() -> isShowPublicLayouts(),
+				this::isShowPublicLayouts,
 				dropdownItem -> {
 					dropdownItem.setHref(
 						getSelectLayoutCollectionURL(
@@ -164,7 +164,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return DropdownItemListBuilder.add(
-			() -> isShowPublicLayouts(),
+			this::isShowPublicLayouts,
 			dropdownItem -> {
 				dropdownItem.setHref(
 					getSelectLayoutPageTemplateEntryURL(false));
@@ -172,7 +172,7 @@ public class LayoutsAdminDisplayContext {
 					LanguageUtil.get(httpServletRequest, "public-page"));
 			}
 		).add(
-			() -> isShowPublicLayouts(),
+			this::isShowPublicLayouts,
 			dropdownItem -> {
 				dropdownItem.setHref(
 					getSelectLayoutCollectionURL(

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -49,8 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout_admin/reset_merge_fail_count_and_merge"
+		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+		"mvc.command.name=/layout_page_template_admin/reset_merge_fail_count_and_merge"
 	},
 	service = MVCActionCommand.class
 )

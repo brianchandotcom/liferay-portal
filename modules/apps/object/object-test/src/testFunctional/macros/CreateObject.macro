@@ -15,9 +15,15 @@ definition {
 
 		Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
 
+		WaitForSPARefresh();
+
 		AssertNotVisible(locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD");
 
 		Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
+
+		WaitForSPARefresh();
+
+		WaitForVisible(locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD");
 
 		AssertVisible(locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD");
 	}
@@ -168,6 +174,8 @@ definition {
 
 	macro saveObject {
 		Click(locator1 = "CreateObject#SAVE_BUTTON");
+
+		WaitForSPARefresh();
 	}
 
 	macro selectPanelCategoryKey {

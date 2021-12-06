@@ -187,7 +187,7 @@ definition {
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayDateMonth = DateUtil.getCurrentMonthName();
 			var displayDateYear = DateUtil.getCurrentYear();
-			var individualCurrentDate = selenium.getText(locator1 = "ACIndividualsDashboard#INDIVIDUALS_EVENTS_DATE");
+			var individualCurrentDate = selenium.getText("ACIndividualsDashboard#INDIVIDUALS_EVENTS_DATE");
 			var monthAndDay = StringUtil.extractFirst("${individualCurrentDate}", ",");
 			var currentDay = StringUtil.extractLast("${monthAndDay}", " ");
 			var result = MathUtil.isGreaterThan("${currentDay}", "${displayDateDay}");

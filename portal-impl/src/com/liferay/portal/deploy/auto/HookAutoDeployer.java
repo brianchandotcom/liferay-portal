@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
-import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,16 +39,6 @@ public class HookAutoDeployer extends BaseAutoDeployer implements AutoDeployer {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
-	}
-
-	@Override
-	public void copyXmls(
-			File srcFile, String displayName, PluginPackage pluginPackage)
-		throws Exception {
-
-		super.copyXmls(srcFile, displayName, pluginPackage);
-
-		copyTomcatContextXml(srcFile);
 	}
 
 	@Override

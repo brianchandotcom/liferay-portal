@@ -332,23 +332,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 			fileName, targetDir, fileName, filterMap, overwrite);
 	}
 
-	public void copyTomcatContextXml(File targetDir) throws Exception {
-		if (!appServerType.equals(ServerDetector.TOMCAT_ID)) {
-			return;
-		}
-
-		File targetFile = new File(targetDir, "META-INF/context.xml");
-
-		if (targetFile.exists()) {
-			return;
-		}
-
-		String contextPath = DeployUtil.getResourcePath(
-			tempDirPaths, "context.xml");
-
-		FileUtil.write(targetFile, FileUtil.read(contextPath));
-	}
-
 	@Override
 	public void copyXmls(
 			File srcFile, String displayName, PluginPackage pluginPackage)

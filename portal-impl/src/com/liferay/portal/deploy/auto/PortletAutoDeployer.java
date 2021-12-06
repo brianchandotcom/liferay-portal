@@ -95,8 +95,6 @@ public class PortletAutoDeployer
 
 		super.copyXmls(srcFile, displayName, pluginPackage);
 
-		copyTomcatContextXml(srcFile);
-
 		copyDependencyXml(
 			"_servlet_context_include.jsp", srcFile + "/WEB-INF/jsp");
 	}

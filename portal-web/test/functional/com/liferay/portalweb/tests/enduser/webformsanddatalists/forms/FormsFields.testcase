@@ -331,7 +331,7 @@ definition {
 			fieldName = "${fieldTextField}",
 			fieldValue = "Single Line Text");
 
-		FormFields.editTextMultiline(
+		FormFields.editTextMultilineOnPages(
 			fieldName = "${fieldMultilineTextField}",
 			fieldValue = "Multiline Text");
 
@@ -373,13 +373,13 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
 
-		ItemSelector.uploadFile(
-			navTab = "Documents and Media",
-			uploadFileName = "Document_1.jpg");
-
 		FormFields.editColor(
 			colorSwatchItem = "2BA676",
 			fieldLabel = "Color");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
 
 		FormPortlet.submitSuccessfully();
 	}

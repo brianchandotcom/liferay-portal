@@ -43,6 +43,7 @@ const StateSync = ({
 	defaultLanguageId,
 	editingLanguageId,
 	focusedField,
+	formBuilder,
 	objectFields,
 	pages,
 	rules,
@@ -83,6 +84,13 @@ const StateSync = ({
 			type: EVENT_TYPES.FORM_BUILDER.FOCUSED_FIELD.CHANGE,
 		});
 	}, [dispatch, focusedField]);
+
+	useEffect(() => {
+		dispatch({
+			payload: formBuilder,
+			type: EVENT_TYPES.FORM_BUILDER.PAGES.UPDATE,
+		});
+	}, [dispatch, formBuilder]);
 
 	return null;
 };

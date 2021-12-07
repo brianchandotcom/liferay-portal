@@ -74,13 +74,13 @@ export default function FieldsSidebarSettingsBody({field}) {
 		<form onSubmit={(event) => event.preventDefault()}>
 			<FormFieldSettings
 				{...filteredSettingsContext}
-				builderPages={pages}
 				builderRules={rules}
 				defaultLanguageId={defaultLanguageId}
 				displayable={true}
 				editable={false}
 				editingLanguageId={editingLanguageId}
 				focusedField={field}
+				formBuilder={{pages}}
 				objectFields={objectFields}
 				onAction={({payload, type}) => {
 					switch (type) {

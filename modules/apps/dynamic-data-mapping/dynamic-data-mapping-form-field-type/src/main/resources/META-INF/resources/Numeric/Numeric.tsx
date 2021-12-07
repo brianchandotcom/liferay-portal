@@ -227,7 +227,7 @@ const Numeric: React.FC<IProps> = ({
 					includeThousandsSeparator: Boolean(
 						symbols.thousandsSeparator
 					),
-					inputMaskFormat: inputMaskFormat as string,
+					inputMaskFormat: String(inputMaskFormat),
 					symbols,
 					value: newValue,
 			  })
@@ -281,7 +281,7 @@ const Numeric: React.FC<IProps> = ({
 			? getMaskedValue({
 					dataType,
 					decimalPlaces,
-					inputMaskFormat: inputMaskFormat as string,
+					inputMaskFormat: String(inputMaskFormat),
 					symbols,
 					value,
 			  })

@@ -122,11 +122,7 @@ definition {
 			value1 = "${threadSubject}");
 
 		if (isSet(source)) {
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-			Type(
-				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
-				value1 = "${threadBody}");
+			CKEditor.addSourceContent(content = "${threadBody}");
 		}
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");

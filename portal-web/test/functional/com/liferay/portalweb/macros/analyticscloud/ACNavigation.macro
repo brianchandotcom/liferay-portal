@@ -6,6 +6,12 @@ definition {
 			value1 = "${headerTitle}");
 	}
 
+	macro backNavigation {
+		var key_pageName = "${pageName}";
+
+		Click(locator1 = "ACNavigation#BACK_NAVIGATION");
+	}
+
 	macro clickCancelButton {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
 	}
@@ -99,12 +105,6 @@ definition {
 			key_tabName = "${tabName}",
 			locator1 = "ACNavigation#ACTIVE_CARD_TAB_NAME",
 			value1 = "${tabName}");
-	}
-
-	macro backNavigation {
-		var key_pageName = "${pageName}";
-
-		Click(locator1 = "ACNavigation#BACK_NAVIGATION");
 	}
 
 }

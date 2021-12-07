@@ -1,5 +1,13 @@
 definition {
 
+	macro changeAttributeDataType {
+		Select(
+			locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
+			value1 = "${newDataType}");
+
+		Button.clickSave();
+	}
+
 	macro changeCustomEventDisplayNameOrDescription {
 		if (isSet(newDisplayName)) {
 			Type(
@@ -18,14 +26,6 @@ definition {
 		if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY_ENABLED")) {
 			Button.clickSave();
 		}
-	}
-
-	macro changeAttributeDataType {
-		Select(
-			locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
-			value1 = "${newDataType}");
-
-		Button.clickSave();
 	}
 
 	macro createCustomEvent {
@@ -88,30 +88,6 @@ definition {
 		return "${customEventName}";
 	}
 
-	macro viewDisplayNameOrDescriptionList {
-		var key_nameValue = "${nameValue}";
-
-		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION_LIST");
-	}
-
-	macro viewDataTypeList {
-		var key_attributeName = "${attributeName}";
-
-		AssertTextEquals(
-			locator1 = "ACCustomEvents#DATA_TYPE_LIST",
-			value1 = "${typeValue}");
-	}
-
-	macro viewInvalidCustomEventEdition {
-		AssertTextEquals(
-			locator1 = "ACCustomEvents#INVALID_MESSAGE",
-			value1 = "${invalidMessage}");
-
-		AssertElementPresent(
-			key_text = "Save",
-			locator1 = "Button#ANY_DISABLED");
-	}
-
 	macro viewDataAttribute {
 		for (var attributeValue : list "${attributeValueList}") {
 			AssertElementPresent(
@@ -124,6 +100,30 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#EDITOR_LABEL",
 			value1 = "${typeValue}");
+	}
+
+	macro viewDataTypeList {
+		var key_attributeName = "${attributeName}";
+
+		AssertTextEquals(
+			locator1 = "ACCustomEvents#DATA_TYPE_LIST",
+			value1 = "${typeValue}");
+	}
+
+	macro viewDisplayNameOrDescriptionList {
+		var key_nameValue = "${nameValue}";
+
+		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION_LIST");
+	}
+
+	macro viewInvalidCustomEventEdition {
+		AssertTextEquals(
+			locator1 = "ACCustomEvents#INVALID_MESSAGE",
+			value1 = "${invalidMessage}");
+
+		AssertElementPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY_DISABLED");
 	}
 
 }

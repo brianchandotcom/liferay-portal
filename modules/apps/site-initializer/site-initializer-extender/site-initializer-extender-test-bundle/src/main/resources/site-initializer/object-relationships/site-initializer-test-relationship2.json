@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "relationship2"
+	},
+	"name": "relationship2",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]",
+	"objectDefinitionName2": "TestObjectDefinition2",
+	"type": "manyToMany"
+}

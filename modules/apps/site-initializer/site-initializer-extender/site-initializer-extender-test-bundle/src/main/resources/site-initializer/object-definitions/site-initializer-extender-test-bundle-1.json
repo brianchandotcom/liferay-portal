@@ -1,0 +1,10 @@
+{
+	"label": {
+		"en_US": "TestObjectDefinition1"
+	},
+	"name": "TestObjectDefinition1",
+	"pluralLabel": {
+		"en_US": "TestObjectDefinition1"
+	},
+	"scope": "site"
+}

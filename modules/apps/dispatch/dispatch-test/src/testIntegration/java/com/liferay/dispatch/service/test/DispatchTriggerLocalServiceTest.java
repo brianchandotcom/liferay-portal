@@ -107,38 +107,38 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testDeleteSystemDispatchTrigger() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
+
+		DispatchTrigger systemDispatchTrigger = DispatchTriggerUtil.create(
+			RandomTestUtil.nextLong());
+
+		systemDispatchTrigger.setCompanyId(user.getCompanyId());
+		systemDispatchTrigger.setUserId(user.getUserId());
+		systemDispatchTrigger.setActive(true);
+		systemDispatchTrigger.setSystem(true);
+
+		systemDispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				systemDispatchTrigger, 1));
+
+		DispatchTrigger regularDispatchTrigger = DispatchTriggerUtil.create(
+			RandomTestUtil.nextLong());
+
+		regularDispatchTrigger.setCompanyId(user.getCompanyId());
+		regularDispatchTrigger.setUserId(user.getUserId());
+		regularDispatchTrigger.setActive(true);
+		regularDispatchTrigger.setSystem(false);
+
+		regularDispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				regularDispatchTrigger, 2));
+
 		String liferayMode = SystemProperties.get("liferay.mode");
 
-		SystemProperties.clear("liferay.mode");
-
 		try {
-			Company company = CompanyTestUtil.addCompany();
-
-			User user = UserTestUtil.addUser(company);
-
-			DispatchTrigger systemDispatchTrigger = DispatchTriggerUtil.create(
-				RandomTestUtil.nextLong());
-
-			systemDispatchTrigger.setCompanyId(user.getCompanyId());
-			systemDispatchTrigger.setUserId(user.getUserId());
-			systemDispatchTrigger.setActive(true);
-			systemDispatchTrigger.setSystem(true);
-
-			systemDispatchTrigger = _addDispatchTrigger(
-				DispatchTriggerTestUtil.randomDispatchTrigger(
-					systemDispatchTrigger, 1));
-
-			DispatchTrigger regularDispatchTrigger = DispatchTriggerUtil.create(
-				RandomTestUtil.nextLong());
-
-			regularDispatchTrigger.setCompanyId(user.getCompanyId());
-			regularDispatchTrigger.setUserId(user.getUserId());
-			regularDispatchTrigger.setActive(true);
-			regularDispatchTrigger.setSystem(false);
-
-			regularDispatchTrigger = _addDispatchTrigger(
-				DispatchTriggerTestUtil.randomDispatchTrigger(
-					regularDispatchTrigger, 2));
+			SystemProperties.clear("liferay.mode");
 
 			_dispatchTriggerLocalService.deleteDispatchTrigger(
 				systemDispatchTrigger);
@@ -153,10 +153,8 @@ public class DispatchTriggerLocalServiceTest {
 			Assert.assertNull(
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					regularDispatchTrigger.getDispatchTriggerId()));
-
-			SystemProperties.set("liferay.mode", liferayMode);
 		}
-		catch (Exception exception) {
+		finally {
 			SystemProperties.set("liferay.mode", liferayMode);
 		}
 	}

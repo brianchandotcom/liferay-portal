@@ -1,5 +1,33 @@
 definition {
 
+	macro _addCustomElementRemoteAppEntry {
+		Variables.assertDefined(parameterList = "${customElementName},${customElementHTMLName},${customElementURL}");
+
+		var customElementURLModified = StringUtil.replace("${customElementURL}", ":", "%3A");
+		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
+		var htmlNameModified = StringUtil.replace("${customElementHTMLName}", " ", "%20");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-custom-element-remote-app-entry \
+				  -u test@liferay.com:test \
+				  -d customElementCSSURLs= \
+				  -d customElementHTMLElementName=${htmlNameModified} \
+				  -d customElementURLs=${customElementURLModified} \
+				  -d description= \
+				  -d friendlyURLMapping= \
+				  -d instanceable=true \
+				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
+				  -d portletCategoryName=RemoteApps \
+				  -d properties= \
+				  -d sourceCodeURL=
+		''';
+		var remoteAppEntryID = JSONCurlUtil.post("${curl}", "$.['remoteAppEntryId']");
+
+		return "${remoteAppEntryID}";
+	}
+
 	macro _addIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 

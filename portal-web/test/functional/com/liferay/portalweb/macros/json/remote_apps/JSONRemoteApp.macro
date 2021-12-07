@@ -1,5 +1,16 @@
 definition {
 
+	macro addCustomElementRemoteAppEntry {
+		Variables.assertDefined(parameterList = "${customElementName},${customElementHTMLName},${customElementURL}");
+
+		var response = JSONRemoteAppAPI._addCustomElementRemoteAppEntry(
+			customElementHTMLName = "${customElementHTMLName}",
+			customElementName = "${customElementName}",
+			customElementURL = "${customElementURL}");
+
+		return "{response}";
+	}
+
 	macro addIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 

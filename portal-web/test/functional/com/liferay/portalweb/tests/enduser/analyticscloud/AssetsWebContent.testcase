@@ -151,8 +151,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8448 | Test Summary: Web content audience card shows expected amount of known and anonymous individuals"
+	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInWC {
+
+		// AC Bug Ticket: LRAC-10049
+
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -727,9 +731,12 @@ definition {
 	}
 
 	@description = "Web content visitor behavior card shows expected amount of views"
+	@ignore = "true"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10049
 
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -863,8 +870,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"
+	@ignore = "true"
 	@priority = "5"
 	test WebContentTechnologyCardShowsViewsByExpectedBrowser {
+
+		// AC Bug Ticket: LRAC-10049
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -918,9 +929,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8453 | Test Summary: Web content submissions by technology card shows views by expected device"
+	@ignore = "true"
 	@priority = "5"
 	test WebContentTechnologyCardShowsViewsByExpectedDevice {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10049
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

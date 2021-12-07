@@ -17,8 +17,10 @@ package com.liferay.translation.web.internal.display.context;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.translation.model.TranslationEntry;
 
 import java.io.Serializable;
 
@@ -34,17 +36,21 @@ import javax.servlet.http.HttpServletRequest;
 public class ImportTranslationResultsDisplayContext implements Serializable {
 
 	public ImportTranslationResultsDisplayContext(
-		long classNameId, long classPK, long groupId,
+		long classNameId, long classPK, long companyId, long groupId,
 		Map<String, String> failureMessages, String fileName,
-		List<String> successMessages, String title) {
+		List<String> successMessages, String title,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		_classNameId = classNameId;
 		_classPK = classPK;
+		_companyId = companyId;
 		_groupId = groupId;
 		_failureMessages = failureMessages;
 		_fileName = fileName;
 		_successMessages = successMessages;
 		_title = title;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	public Map<String, String> getFailureMessages() {
@@ -89,16 +95,33 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 	}
 
 	public String getSuccessMessageLabel(Locale locale) {
+		boolean workflowEnabled =
+			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				_companyId, _groupId, TranslationEntry.class.getName());
+
 		if ((getSuccessMessagesCount() > 1) &&
 			(getFailureMessagesCount() == 0)) {
+
+			if (workflowEnabled) {
+				return LanguageUtil.get(
+					locale, "all-files-sent-for-publication");
+			}
 
 			return LanguageUtil.get(locale, "all-files-published");
 		}
 
 		String pattern = "x-files-published";
 
+		if (workflowEnabled) {
+			pattern = "x-files-sent-for-publication";
+		}
+
 		if (getSuccessMessagesCount() == 1) {
 			pattern = "x-file-published";
+
+			if (workflowEnabled) {
+				pattern = "x-file-sent-for-publication";
+			}
 		}
 
 		return LanguageUtil.format(locale, pattern, getSuccessMessagesCount());
@@ -118,11 +141,14 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 
 	private final long _classNameId;
 	private final long _classPK;
+	private final long _companyId;
 	private final Map<String, String> _failureMessages;
 	private final String _fileName;
 	private final long _groupId;
 	private String _redirect;
 	private final List<String> _successMessages;
 	private final String _title;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -169,8 +170,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			httpSession.setAttribute(
 				ImportTranslationResultsDisplayContext.class.getName(),
 				new ImportTranslationResultsDisplayContext(
-					classNameId, classPK, groupId, failureMessages, fileName,
-					successMessages, title));
+					classNameId, classPK, themeDisplay.getCompanyId(), groupId,
+					failureMessages, fileName, successMessages, title,
+					_workflowDefinitionLinkLocalService));
 		}
 		catch (Exception exception) {
 			try {
@@ -402,5 +404,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private TranslationURLProvider _translationURLProvider;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

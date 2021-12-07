@@ -47,7 +47,11 @@ export default function SidebarHeader({backButtonFunction = () => {}, title}) {
 			setModalInfo(getModalInfo(selectedNode.type));
 
 			const handleKeyDown = (event) => {
-				if (event.key === 'Backspace' || event.key === 'Delete') {
+				if (
+					(event.key === 'Backspace' || event.key === 'Delete') &&
+					document.querySelectorAll('.form-control:focus').length ===
+						0
+				) {
 					setShowDeleteConfirmationModal(true);
 				}
 			};

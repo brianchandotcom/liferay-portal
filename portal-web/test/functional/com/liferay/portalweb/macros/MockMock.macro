@@ -73,7 +73,9 @@ definition {
 	}
 
 	macro clickBodyLink {
-		MockMock._gotoMailMessage(asset = "${asset}");
+		MockMock._gotoMailMessage(
+			asset = "${asset}",
+			recipient = "${recipient}");
 
 		var key_bodyLink = "${bodyLink}";
 

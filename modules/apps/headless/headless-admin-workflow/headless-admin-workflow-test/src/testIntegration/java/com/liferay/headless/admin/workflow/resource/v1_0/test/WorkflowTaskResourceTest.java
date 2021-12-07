@@ -1052,6 +1052,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;
 
-	private Stack<WorkflowTask> _workflowTasks = new Stack<>();
+	private final Stack<WorkflowTask> _workflowTasks = new Stack<>();
 
 }

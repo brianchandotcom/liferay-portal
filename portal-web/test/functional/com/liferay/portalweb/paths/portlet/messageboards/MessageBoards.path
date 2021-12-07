@@ -208,7 +208,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_VIEWS</td>
-	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[contains(.,'View')]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[3]</td>
 	<td></td>
 </tr>
 <tr>

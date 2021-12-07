@@ -3951,6 +3951,19 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
+		if ((url != null) && url.startsWith("file:")) {
+			try {
+				return toJSONObject(url, false, 1, null, null, 0, 5, null);
+			}
+			catch (IOException ioException) {
+				if (!url.contains("[qt]")) {
+					throw ioException;
+				}
+
+				return toJSONObject(url.substring(0, url.indexOf("[qt]")));
+			}
+		}
+
 		return toJSONObject(
 			url, true, _RETRIES_SIZE_MAX_DEFAULT, null, null,
 			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);

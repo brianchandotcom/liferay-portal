@@ -131,9 +131,11 @@ definition {
 		}
 
 		task ("Assert that the cohort analysis card shows which individuals are returning after their first views") {
-			AssertTextEquals(
-				locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE",
-				value1 = "100.00%");
+			while (IsElementNotPresent(locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+			}
+
+			AssertElementPresent(locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE");
 		}
 	}
 

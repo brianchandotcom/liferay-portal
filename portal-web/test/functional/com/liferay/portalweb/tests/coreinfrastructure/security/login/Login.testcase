@@ -51,16 +51,10 @@ definition {
 		task ("Login and add CP") {
 			User.firstLoginPG();
 
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-		}
-
-		task ("View CP") {
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Goto new CP url and sign in") {
@@ -173,23 +167,17 @@ definition {
 		task ("Login and add CP www.able.com") {
 			User.firstLoginPG();
 
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("add CP www.baker.com") {
-			PortalInstances.addCP(
-				mailDomain = "www.baker.com",
-				virtualHost = "www.baker.com",
-				webId = "www.baker.com");
-
-			PortalInstances.viewCP(virtualHost = "www.baker.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
 		}
 
 		task ("Add SSO openID connect provider") {
@@ -328,14 +316,10 @@ definition {
 		task ("Login and add CP") {
 			User.firstLoginPG();
 
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com and enable OpenId connect CP") {
@@ -585,12 +569,10 @@ definition {
 		}
 
 		task ("Add CP able.com") {
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com and enable token based SSO") {

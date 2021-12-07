@@ -112,4 +112,11 @@ definition {
 			locator1 = "Button#ANY_DISABLED");
 	}
 
+	macro viewDataAttribute {
+		for (var attributeValue : list "${attributeValueList}") {
+			AssertElementPresent(
+				itemName = "${attributeValue}",
+				locator1 = "ACSettings#ITEM_ON_LIST");
+		}
+	}
 }

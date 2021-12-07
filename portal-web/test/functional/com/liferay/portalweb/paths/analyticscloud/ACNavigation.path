@@ -52,6 +52,11 @@
 	<td>//li[@class='nav-item active']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BACK_NAVIGATION</td>
+	<td>//ol[contains(@class,'breadcrumb')]//a[text()='${key_pageName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

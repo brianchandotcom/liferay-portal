@@ -101,4 +101,10 @@ definition {
 			value1 = "${tabName}");
 	}
 
+	macro backNavigation {
+		var key_pageName = "${pageName}";
+
+		Click(locator1 = "ACNavigation#BACK_NAVIGATION");
+	}
+
 }

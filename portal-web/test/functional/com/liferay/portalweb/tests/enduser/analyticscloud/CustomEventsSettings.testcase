@@ -117,9 +117,7 @@ definition {
 		}
 
 		task ("Navigation to custom events tab") {
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
+			ACNavigation.backNavigation(pageName = "Events");
 
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
@@ -204,9 +202,7 @@ definition {
 		}
 
 		task ("Navigation to custom events tab") {
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
+			ACNavigation.backNavigation(pageName = "Events");
 
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
@@ -540,9 +536,7 @@ definition {
 		}
 
 		task ("Navigation to custom events tab") {
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
+			ACNavigation.backNavigation(pageName = "Events");
 
 			ACNavigation.openItem(itemName = "Custom Events");
 		}

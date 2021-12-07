@@ -23,8 +23,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.form.report.web.internal.display.context.DDMFormReportDisplayContext" %><%@
@@ -42,4 +41,14 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%
 DDMFormReportDisplayContext ddmFormReportDisplayContext = (DDMFormReportDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+int totalItems = ddmFormReportDisplayContext.getTotalItems();
+
+String ddmFormInstanceReportData = StringPool.BLANK;
+
+DDMFormInstanceReport ddmFormInstanceReport = ddmFormReportDisplayContext.getDDMFormInstanceReport();
+
+if (ddmFormInstanceReport != null) {
+	ddmFormInstanceReportData = ddmFormInstanceReport.getData();
+}
 %>

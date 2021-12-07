@@ -16,17 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int totalItems = ddmFormReportDisplayContext.getTotalItems();
-%>
-
 <div class="hide portlet-ddm-form-report" id="container-portlet-ddm-form-report">
-	<div class="portlet-ddm-form-report-header">
+	<div class="portlet-ddm-form-report__header">
 		<clay:container-fluid>
 			<clay:content-row
 				cssClass="align-items-center"
 			>
-				<span class="portlet-ddm-form-report-header-title text-truncate">
+				<h2 class="portlet-ddm-form-report__title text-truncate">
 					<c:choose>
 						<c:when test="<%= totalItems == 1 %>">
 							<liferay-ui:message arguments="<%= totalItems %>" key="x-entry" />
@@ -35,13 +31,13 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 							<liferay-ui:message arguments="<%= totalItems %>" key="x-entries" />
 						</c:otherwise>
 					</c:choose>
-				</span>
+				</h2>
 			</clay:content-row>
 
 			<clay:content-row
 				cssClass="align-items-center"
 			>
-				<span class="portlet-ddm-form-report-header-subtitle text-truncate">
+				<span class="portlet-ddm-form-report__subtitle text-truncate">
 					<c:choose>
 						<c:when test="<%= totalItems > 0 %>">
 							<%= ddmFormReportDisplayContext.getLastModifiedDate() %>
@@ -56,7 +52,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 	</div>
 
 	<clay:navigation-bar
-		cssClass="portlet-ddm-form-report-tabs"
+		cssClass="portlet-ddm-form-report__tabs"
 		navigationItems='<%=
 			new JSPNavigationItemList(pageContext) {
 				{
@@ -72,8 +68,21 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 
 	<hr class="m-0" />
 
-	<div id="<portlet:namespace />summaryTabContent">
-		<liferay-util:include page="/view_summary.jsp" servletContext="<%= application %>" />
+	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />summaryTabContent">
+		<react:component
+			module="js/index"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"data", ddmFormInstanceReportData
+				).put(
+					"fields", ddmFormReportDisplayContext.getFieldsJSONArray()
+				).put(
+					"formReportRecordsFieldValuesURL", ddmFormReportDisplayContext.getFormReportRecordsFieldValuesURL()
+				).put(
+					"portletNamespace", PortalUtil.getPortletNamespace(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_REPORT)
+				).build()
+			%>'
+		/>
 	</div>
 </div>
 
@@ -81,7 +90,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 	var delegate = delegateModule.default;
 
 	delegate(
-		document.querySelector('.portlet-ddm-form-report-tabs'),
+		document.querySelector('.portlet-ddm-form-report__tabs'),
 		'click',
 		'li',
 		(event) => {
@@ -90,7 +99,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 			var navLink = navItem.querySelector('.nav-link');
 
 			document
-				.querySelector('.portlet-ddm-form-report-tabs li > .active')
+				.querySelector('.portlet-ddm-form-report__tabs li > .active')
 				.classList.remove('active');
 			navLink.classList.add('active');
 

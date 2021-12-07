@@ -61,6 +61,10 @@ export {enableSubmitButton} from './core/utils/submitButtonController.es';
 
 export {EVENT_TYPES as FORM_EVENT_TYPES} from './custom/form/eventTypes.es';
 
+// Custom Form Report
+
+export {default as FormReport} from './custom/form-report/index';
+
 // Containers
 
 export {FormFieldSettings} from './custom/form/FormFieldSettings.es';

@@ -15,15 +15,19 @@ import '../../css/definition-builder/main.scss';
 import {DefinitionBuilderContextProvider} from './DefinitionBuilderContext';
 import DiagramBuilder from './diagram-builder/DiagramBuilder';
 import UpperToolbar from './shared/components/toolbar/UpperToolbar';
+import SourceBuilder from './source-builder/SourceBuilder';
 
 export default function (props) {
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
+	const [sourceView, setSourceView] = useState(false);
 	const defaultLanguageId = themeDisplay.getLanguageId();
 
 	const contextProps = {
 		defaultLanguageId,
 		selectedLanguageId,
 		setSelectedLanguageId,
+		setSourceView,
+		sourceView,
 	};
 
 	return (
@@ -31,7 +35,11 @@ export default function (props) {
 			<div className="definition-builder-app">
 				<UpperToolbar {...props} />
 
-				<DiagramBuilder version={props.version} />
+				{sourceView ? (
+					<SourceBuilder />
+				) : (
+					<DiagramBuilder version={props.version} />
+				)}
 			</div>
 		</DefinitionBuilderContextProvider>
 	);

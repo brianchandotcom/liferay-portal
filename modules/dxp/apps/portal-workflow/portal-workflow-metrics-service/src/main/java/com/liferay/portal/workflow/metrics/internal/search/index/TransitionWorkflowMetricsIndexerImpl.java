@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteTransitionRequest;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -73,6 +74,26 @@ public class TransitionWorkflowMetricsIndexerImpl
 		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 
 		return document;
+	}
+
+	public void deleteTransition(
+		DeleteTransitionRequest deleteTransitionRequest) {
+
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setLong(
+			"companyId", deleteTransitionRequest.getCompanyId()
+		).setLong(
+			"transitionId", deleteTransitionRequest.getTransitionId()
+		).setString(
+			"uid",
+			digest(
+				deleteTransitionRequest.getCompanyId(),
+				deleteTransitionRequest.getTransitionId())
+		);
+
+		workflowMetricsPortalExecutor.execute(
+			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override

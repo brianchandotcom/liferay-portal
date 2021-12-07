@@ -136,8 +136,8 @@ const CustomDate: React.FC<IProps> = ({
 					value={parameters.quantity < 0 ? MINUS_VALUE : PLUS_VALUE}
 				/>
 
-				<label>
-					{Liferay.Language.get('quantity')}
+				<div>
+					<label>{Liferay.Language.get('quantity')}</label>
 
 					<ClayInput
 						className="ddm-field-text"
@@ -149,7 +149,7 @@ const CustomDate: React.FC<IProps> = ({
 						type="number"
 						value={Math.abs(parameters.quantity)}
 					/>
-				</label>
+				</div>
 
 				<DDMSelect
 					disabled={readOnly}

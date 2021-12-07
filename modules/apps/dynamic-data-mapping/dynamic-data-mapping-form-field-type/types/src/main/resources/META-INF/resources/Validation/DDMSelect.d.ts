@@ -15,6 +15,7 @@
 import React from 'react';
 declare function DDMSelect({
 	disabled,
+	label,
 	name,
 	onChange,
 	options,
@@ -23,6 +24,7 @@ declare function DDMSelect({
 export default DDMSelect;
 interface IProps {
 	disabled?: boolean;
+	label: string;
 	name: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
 	options: IOption[];

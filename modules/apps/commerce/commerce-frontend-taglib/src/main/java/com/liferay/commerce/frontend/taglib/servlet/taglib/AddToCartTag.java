@@ -177,9 +177,6 @@ public class AddToCartTag extends IncludeTag {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		setNamespacedAttribute(httpServletRequest, "alignment", _alignment);
-		setNamespacedAttribute(httpServletRequest, "size", _size);
-		setNamespacedAttribute(httpServletRequest, "inline", _inline);
-		setNamespacedAttribute(httpServletRequest, "iconOnly", _iconOnly);
 		setNamespacedAttribute(
 			httpServletRequest, "commerceAccountId", _commerceAccountId);
 		setNamespacedAttribute(
@@ -194,12 +191,15 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "cpInstanceId", _cpInstanceId);
 		setNamespacedAttribute(httpServletRequest, "disabled", _disabled);
+		setNamespacedAttribute(httpServletRequest, "iconOnly", _iconOnly);
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
+		setNamespacedAttribute(httpServletRequest, "inline", _inline);
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
 		setNamespacedAttribute(httpServletRequest, "options", _options);
 		setNamespacedAttribute(
 			httpServletRequest, "productSettingsModel", _productSettingsModel);
 
+		setNamespacedAttribute(httpServletRequest, "size", _size);
 		setNamespacedAttribute(
 			httpServletRequest, "stockQuantity", _stockQuantity);
 	}

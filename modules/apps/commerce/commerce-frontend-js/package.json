@@ -42,8 +42,8 @@
 			"!<rootDir>/src/**/entry.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/components/MiniCart",
 			"<rootDir>/test/components/AddToCart",
+			"<rootDir>/test/components/MiniCart",
 			"<rootDir>/test/components/QuantitySelector",
 			"<rootDir>/test/utils/"
 		]

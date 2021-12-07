@@ -28,10 +28,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -194,24 +191,9 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			if (AccountEntryPermission.contains(
-					themeDisplay.getPermissionChecker(), _getAccountEntryId(),
-					AccountActionKeys.MANAGE_ORGANIZATIONS)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountEntryPermission.contains(
+			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
+			AccountActionKeys.MANAGE_ORGANIZATIONS);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewAccountOrganizationsManagementToolbarDisplayContext.class);
 
 }

@@ -191,26 +191,14 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			if (AccountEntryPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
-					ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountEntryPermission.contains(
+			themeDisplay.getPermissionChecker(),
+			ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
+			ActionKeys.UPDATE);
 	}
 
 	@Override

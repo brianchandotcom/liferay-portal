@@ -27,7 +27,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -87,8 +86,7 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 	}
 
 	public List<String> getAvailableActions(
-			AccountRoleDisplay accountRoleDisplay)
-		throws PortalException {
+		AccountRoleDisplay accountRoleDisplay) {
 
 		List<String> availableActions = new ArrayList<>();
 
@@ -161,19 +159,10 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			return AccountEntryPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ParamUtil.getLong(httpServletRequest, "accountEntryId"),
-				AccountActionKeys.ADD_ACCOUNT_ROLE);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountEntryPermission.contains(
+			themeDisplay.getPermissionChecker(),
+			ParamUtil.getLong(httpServletRequest, "accountEntryId"),
+			AccountActionKeys.ADD_ACCOUNT_ROLE);
 	}
 
 	@Override

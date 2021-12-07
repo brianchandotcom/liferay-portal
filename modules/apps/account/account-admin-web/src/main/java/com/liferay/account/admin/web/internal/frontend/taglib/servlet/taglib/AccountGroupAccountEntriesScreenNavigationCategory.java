@@ -21,10 +21,7 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
@@ -81,22 +78,10 @@ public class AccountGroupAccountEntriesScreenNavigationCategory
 			return false;
 		}
 
-		try {
-			if (AccountGroupPermission.contains(
-					PermissionCheckerFactoryUtil.create(user),
-					accountGroupDisplay.getAccountGroupId(),
-					AccountActionKeys.VIEW_ACCOUNTS)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountGroupPermission.contains(
+			PermissionCheckerFactoryUtil.create(user),
+			accountGroupDisplay.getAccountGroupId(),
+			AccountActionKeys.VIEW_ACCOUNTS);
 	}
 
 	@Override
@@ -112,8 +97,5 @@ public class AccountGroupAccountEntriesScreenNavigationCategory
 
 	@Reference
 	protected JSPRenderer jspRenderer;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountGroupAccountEntriesScreenNavigationCategory.class);
 
 }

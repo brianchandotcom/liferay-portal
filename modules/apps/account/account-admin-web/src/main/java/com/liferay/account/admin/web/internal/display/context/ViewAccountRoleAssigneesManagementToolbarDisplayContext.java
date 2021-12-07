@@ -26,7 +26,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -168,19 +167,10 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			return AccountRolePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ParamUtil.getLong(httpServletRequest, "accountRoleId"),
-				AccountActionKeys.ASSIGN_USERS);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountRolePermission.contains(
+			themeDisplay.getPermissionChecker(),
+			ParamUtil.getLong(httpServletRequest, "accountRoleId"),
+			AccountActionKeys.ASSIGN_USERS);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

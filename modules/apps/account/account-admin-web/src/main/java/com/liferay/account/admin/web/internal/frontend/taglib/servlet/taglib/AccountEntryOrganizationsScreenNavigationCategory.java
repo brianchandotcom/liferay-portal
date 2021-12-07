@@ -20,10 +20,7 @@ import com.liferay.account.admin.web.internal.security.permission.resource.Accou
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
@@ -74,25 +71,10 @@ public class AccountEntryOrganizationsScreenNavigationCategory
 			return false;
 		}
 
-		try {
-			if (AccountEntryPermission.contains(
-					PermissionCheckerFactoryUtil.create(user),
-					accountEntryDisplay.getAccountEntryId(),
-					AccountActionKeys.VIEW_ORGANIZATIONS)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountEntryPermission.contains(
+			PermissionCheckerFactoryUtil.create(user),
+			accountEntryDisplay.getAccountEntryId(),
+			AccountActionKeys.VIEW_ORGANIZATIONS);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountEntryOrganizationsScreenNavigationCategory.class);
 
 }

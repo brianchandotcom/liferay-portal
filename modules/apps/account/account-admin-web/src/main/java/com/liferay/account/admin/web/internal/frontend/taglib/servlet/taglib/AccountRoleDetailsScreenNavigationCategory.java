@@ -21,10 +21,7 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -87,18 +84,9 @@ public class AccountRoleDetailsScreenNavigationCategory
 			return false;
 		}
 
-		try {
-			return AccountRolePermission.contains(
-				PermissionCheckerFactoryUtil.create(user),
-				accountRole.getAccountRoleId(), ActionKeys.UPDATE);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return false;
+		return AccountRolePermission.contains(
+			PermissionCheckerFactoryUtil.create(user),
+			accountRole.getAccountRoleId(), ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -114,9 +102,6 @@ public class AccountRoleDetailsScreenNavigationCategory
 
 	@Reference
 	protected JSPRenderer jspRenderer;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountRoleDetailsScreenNavigationCategory.class);
 
 	@Reference
 	private RoleLocalService _roleLocalService;

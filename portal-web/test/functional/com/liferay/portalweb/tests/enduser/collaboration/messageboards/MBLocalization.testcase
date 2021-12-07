@@ -27,43 +27,79 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136929. It checks that categories can be viewed in Arabic."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewCategoriesInArabic {
-		property portal.acceptance = "false";
+		JSONMBMessage.addCategory(
+			categoryDescription = "وصف الفئة",
+			categoryName = "اسم الفئة",
+			userEmailAddress = "test@liferay.com");
 
-		// TODO LPS-136929 CanViewCategoriesInArabic pending implementation
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
+		Navigator.ensureLocaleURL(locale = "ar");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "0 فئات",
+			categoryName = "اسم الفئة",
+			localizedHeader = "لوحات الرسائل",
+			threadCount = "0 من النقاشات");
 	}
 
 	@description = "This is a test for LPS-136930. It checks that categories can be viewed in Japanese."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewCategoriesInJapanese {
-		property portal.acceptance = "false";
+		JSONMBMessage.addCategory(
+			categoryDescription = "カテゴリ説明",
+			categoryName = "種別名",
+			userEmailAddress = "test@liferay.com");
 
-		// TODO LPS-136930 CanViewCategoriesInJapanese pending implementation
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "0件のカテゴリ",
+			categoryName = "種別名",
+			localizedHeader = "掲示板",
+			threadCount = "スレッド 0");
 	}
 
 	@description = "This is a test for LPS-136931. It checks that a thread can be viewed in Arabic."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewThreadInArabic {
-		property portal.acceptance = "false";
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "نص رسالة الموضوع",
+			threadSubject = "موضوع رسالة الموضوع");
 
-		// TODO LPS-136931 CanViewThreadInArabic pending implementation
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
+		Navigator.ensureLocaleURL(locale = "ar");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0 من الردود",
+			threadBody = "نص رسالة الموضوع",
+			threadSubject = "موضوع رسالة الموضوع",
+			userName = "Test Test");
 	}
 
 	@description = "This is a test for LPS-136932. It checks that a thread can be viewed in Japanese."
-	@ignore = "true"
 	@priority = "3"
 	test CanViewThreadInJapanese {
-		property portal.acceptance = "false";
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "メッセージボードのネジ本体",
+			threadSubject = "スレッドメッセージの件名");
 
-		// TODO LPS-136932 CanViewThreadInJapanese pending implementation
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		MessageboardsThread.viewCP(
+			replyCount = "返信数：0",
+			threadBody = "メッセージボードのネジ本体",
+			threadSubject = "スレッドメッセージの件名",
+			userName = "Test Test");
 	}
 
 }

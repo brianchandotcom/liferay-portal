@@ -86,6 +86,27 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureMessageFormat {
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Select(
+			locator1 = "MessageBoardsThread#THREAD_FORMAT_SELECT",
+			value1 = "${messageFormat}");
+
+		AssertSelectedLabel(
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "messageFormat",
+			value1 = "${messageFormat}");
+
+		PortletEntry.save();
+	}
+
 	macro configureMessageUpdatedEmail {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 

@@ -15,6 +15,7 @@ export function CardFormActionsWithSave({
 	const {
 		formState: {errors},
 		getValues,
+		setValue,
 	} = useFormContext();
 
 	const email = getValues('basics.businessInformation.business.email');
@@ -84,7 +85,16 @@ export function CardFormActionsWithSave({
 
 				<ProgressSavedModal
 					email={email}
-					onClose={() => setShowProgressModal(false)}
+					onClose={() => {
+						setShowProgressModal(false);
+						setValue(
+							'basics.businessInformation.business.email',
+							email,
+							{
+								shouldValidate: true,
+							}
+						);
+					}}
 					setError={(message) => setErrorModal(message)}
 					show={showProgressModal}
 				/>

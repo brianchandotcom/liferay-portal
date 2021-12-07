@@ -20,6 +20,14 @@ definition {
 		}
 	}
 
+	macro changeAttributeDataType {
+		Select(
+			locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
+			value1 = "${newDataType}");
+
+		Button.clickSave();
+	}
+
 	macro createCustomEvent {
 		if (!(isSet(attributesName))) {
 			var attributesName = "category,price,temp,birthdate,like";

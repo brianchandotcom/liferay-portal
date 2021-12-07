@@ -52,13 +52,48 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136925. It checks that an email notification can be received in HTML format."
-	@ignore = "true"
 	@priority = "3"
 	test CanReceiveEmailInHTMLFormat {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.email.bulk=false";
+		property test.smtp.server.enabled = "true";
 
-		// TODO LPS-136925 CanReceiveEmailInHTMLFormat pending implementation
+		MessageboardsPortlet.configureMessageFormat(
+			messageFormat = "HTML",
+			siteURLKey = "guest");
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			source = "true",
+			threadBody = '''<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>''',
+			threadSubject = "MB Thread Message Subject");
+
+		MockMock.viewMail(
+			asset = "MB Thread Message Subject",
+			content = "Welcome to LIFERAY",
+			recipient = "userfn userln",
+			sender = "Test Test",
+			subject = "MB Thread Message Subject");
+
+		MockMock.clickBodyLink(
+			asset = "MB Thread Message Subject",
+			bodyLink = "Welcome to LIFERAY",
+			recipient = "userfn userln");
+
+		AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 	}
 
 	@description = "This is a test for LPS-136924. It checks that an email notification can be received when a post is flagged."

@@ -610,8 +610,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8288 | Test Summary: Unique Visitors label is shown on the tabs of Sites dashboards"
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowSitesDashboards {
-		property portal.upstream = "quarantine";
-
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",

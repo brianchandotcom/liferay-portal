@@ -97,22 +97,6 @@ public class TransitionWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void deleteTransition(long companyId, long transitionId) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setLong(
-			"transitionId", transitionId
-		).setString(
-			"uid", digest(companyId, transitionId)
-		);
-
-		workflowMetricsPortalExecutor.execute(
-			() -> deleteDocument(documentBuilder));
-	}
-
-	@Override
 	public String getIndexName(long companyId) {
 		return _transitionWorkflowMetricsIndex.getIndexName(companyId);
 	}

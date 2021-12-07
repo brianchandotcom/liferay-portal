@@ -28,6 +28,4 @@ public interface TransitionWorkflowMetricsIndexer {
 	public void deleteTransition(
 		DeleteTransitionRequest deleteTransitionRequest);
 
-	public void deleteTransition(long companyId, long transitionId);
-
 }

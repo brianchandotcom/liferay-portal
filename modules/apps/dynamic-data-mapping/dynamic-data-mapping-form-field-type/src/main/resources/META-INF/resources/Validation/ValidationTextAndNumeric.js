@@ -20,9 +20,14 @@ import Text from '../Text/Text.es';
 import {EVENT_TYPES} from './validationReducer';
 
 const ValidationTextAndNumeric = ({
+	append,
+	appendType,
 	dataType,
+	decimalPlaces,
 	dispatch,
 	errorMessage,
+	inputMask,
+	inputMaskFormat,
 	localizationMode,
 	localizedValue,
 	name,
@@ -30,6 +35,7 @@ const ValidationTextAndNumeric = ({
 	parameter,
 	readOnly,
 	selectedValidation,
+	symbols,
 	transformSelectedValidation,
 	validations,
 	visible,
@@ -67,6 +73,14 @@ const ValidationTextAndNumeric = ({
 
 			{selectedValidation.parameterMessage && (
 				<DynamicComponent
+					{...(dataType !== 'string' && {
+						append,
+						appendType,
+						decimalPlaces,
+						inputMask,
+						inputMaskFormat,
+						symbols,
+					})}
 					dataType={dataType}
 					label={Liferay.Language.get('value')}
 					name={`${name}_parameter`}

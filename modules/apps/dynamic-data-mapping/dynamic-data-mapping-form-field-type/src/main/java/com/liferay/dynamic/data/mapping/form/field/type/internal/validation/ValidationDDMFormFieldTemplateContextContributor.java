@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.validation;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.NumericDDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONException;
@@ -51,10 +52,16 @@ public class ValidationDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		String dataType = getDataType(
+			ddmFormField, ddmFormFieldRenderingContext);
+
 		return HashMapBuilder.<String, Object>put(
-			"dataType", getDataType(ddmFormField, ddmFormFieldRenderingContext)
+			"dataType", dataType
 		).put(
 			"value", _getValue(ddmFormFieldRenderingContext)
+		).putAll(
+			NumericDDMFormFieldTypeUtil.getParameters(
+				dataType, ddmFormField, ddmFormFieldRenderingContext)
 		).build();
 	}
 

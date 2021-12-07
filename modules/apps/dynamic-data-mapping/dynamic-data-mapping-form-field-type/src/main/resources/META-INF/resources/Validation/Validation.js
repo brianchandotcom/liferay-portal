@@ -50,6 +50,7 @@ const Validation = ({
 	validation,
 	validations,
 	visible,
+	...otherProps
 }) => {
 	const {focusedField} = useFormState();
 
@@ -110,6 +111,7 @@ const Validation = ({
 
 			{enableValidation && (
 				<ValidationComponent
+					{...otherProps}
 					dataType={dataType}
 					dispatch={dispatch}
 					errorMessage={errorMessage}
@@ -141,6 +143,7 @@ const ValidationWrapper = ({
 	validation,
 	value,
 	visible,
+	...otherProps
 }) => {
 	const {validations} = useFormState();
 	const data = transformData({
@@ -154,6 +157,7 @@ const ValidationWrapper = ({
 
 	return (
 		<Validation
+			{...otherProps}
 			{...data}
 			defaultLanguageId={defaultLanguageId}
 			editingLanguageId={editingLanguageId}

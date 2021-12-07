@@ -113,8 +113,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8261 | Test Summary: Make sure the Site Reports is the home page of AC"
 	@priority = "5"
 	test ViewSitesReportsAsHomePageAC {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();

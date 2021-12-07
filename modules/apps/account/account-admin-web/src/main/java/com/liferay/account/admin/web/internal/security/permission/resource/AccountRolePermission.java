@@ -16,6 +16,8 @@ package com.liferay.account.admin.web.internal.security.permission.resource;
 
 import com.liferay.account.model.AccountRole;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -29,21 +31,37 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountRolePermission {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, AccountRole accountRole,
-			String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, AccountRole accountRole,
+		String actionId) {
 
-		return _accountRoleModelResourcePermission.contains(
-			permissionChecker, accountRole, actionId);
+		try {
+			return _accountRoleModelResourcePermission.contains(
+				permissionChecker, accountRole, actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long accountRoleId,
-			String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long accountRoleId,
+		String actionId) {
 
-		return _accountRoleModelResourcePermission.contains(
-			permissionChecker, accountRoleId, actionId);
+		try {
+			return _accountRoleModelResourcePermission.contains(
+				permissionChecker, accountRoleId, actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Reference(
@@ -55,6 +73,9 @@ public class AccountRolePermission {
 
 		_accountRoleModelResourcePermission = modelResourcePermission;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountRolePermission.class);
 
 	private static ModelResourcePermission<AccountRole>
 		_accountRoleModelResourcePermission;

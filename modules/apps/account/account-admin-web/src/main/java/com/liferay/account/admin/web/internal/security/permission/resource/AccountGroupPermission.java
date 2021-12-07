@@ -16,6 +16,8 @@ package com.liferay.account.admin.web.internal.security.permission.resource;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -29,21 +31,37 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountGroupPermission {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, AccountGroup accountGroup,
-			String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, AccountGroup accountGroup,
+		String actionId) {
 
-		return _accountGroupModelResourcePermission.contains(
-			permissionChecker, accountGroup, actionId);
+		try {
+			return _accountGroupModelResourcePermission.contains(
+				permissionChecker, accountGroup, actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long accountGroupId,
-			String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long accountGroupId,
+		String actionId) {
 
-		return _accountGroupModelResourcePermission.contains(
-			permissionChecker, accountGroupId, actionId);
+		try {
+			return _accountGroupModelResourcePermission.contains(
+				permissionChecker, accountGroupId, actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Reference(
@@ -55,6 +73,9 @@ public class AccountGroupPermission {
 
 		_accountGroupModelResourcePermission = modelResourcePermission;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountGroupPermission.class);
 
 	private static ModelResourcePermission<AccountGroup>
 		_accountGroupModelResourcePermission;

@@ -15,6 +15,7 @@
 package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +86,22 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 		_redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		return _redirect;
+	}
+
+	public String getSuccessMessageLabel(Locale locale) {
+		if ((getSuccessMessagesCount() > 1) &&
+			(getFailureMessagesCount() == 0)) {
+
+			return LanguageUtil.get(locale, "all-files-published");
+		}
+
+		String pattern = "x-files-published";
+
+		if (getSuccessMessagesCount() == 1) {
+			pattern = "x-file-published";
+		}
+
+		return LanguageUtil.format(locale, pattern, getSuccessMessagesCount());
 	}
 
 	public List<String> getSuccessMessages() {

@@ -68,14 +68,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 							/>
 						</span>
 
-						<c:choose>
-							<c:when test="<%= (importTranslationResultsDisplayContext.getSuccessMessagesCount() > 1) && (importTranslationResultsDisplayContext.getFailureMessagesCount() == 0) %>">
-								<liferay-ui:message key="all-files-published" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message arguments="<%= importTranslationResultsDisplayContext.getSuccessMessagesCount() %>" key='<%= (importTranslationResultsDisplayContext.getSuccessMessagesCount() == 1) ? "x-file-published" : "x-files-published" %>' />
-							</c:otherwise>
-						</c:choose>
+						<%= importTranslationResultsDisplayContext.getSuccessMessageLabel(locale) %>
 					</h4>
 
 					<ul class="list-group list-group-no-bordered list-group-sm">

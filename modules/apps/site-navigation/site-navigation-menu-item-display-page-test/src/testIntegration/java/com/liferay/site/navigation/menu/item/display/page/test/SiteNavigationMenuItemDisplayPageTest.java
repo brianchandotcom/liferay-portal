@@ -45,7 +45,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
-import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -121,7 +120,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
-				SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE,
+				AssetCategory.class.getName(),
 				typeSettingsUnicodeProperties.toString(), _serviceContext);
 
 		Assert.assertEquals(
@@ -177,7 +176,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
-				SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE,
+				AssetCategory.class.getName(),
 				typeSettingsUnicodeProperties.toString(), _serviceContext);
 
 		Assert.assertEquals(

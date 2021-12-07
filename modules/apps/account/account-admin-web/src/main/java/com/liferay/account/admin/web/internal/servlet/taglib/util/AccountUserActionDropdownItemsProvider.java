@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -87,8 +88,13 @@ public class AccountUserActionDropdownItemsProvider {
 					LanguageUtil.get(_httpServletRequest, "edit"));
 			}
 		).add(
-			() -> AccountEntryPermission.contains(
-				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
+			() ->
+				AccountEntryPermission.contains(
+					_permissionChecker, _accountEntryId,
+					ActionKeys.MANAGE_USERS) &&
+				AccountEntryPermission.contains(
+					_permissionChecker, _accountEntryId,
+					AccountActionKeys.VIEW_ACCOUNT_ROLES),
 			dropdownItem -> {
 				dropdownItem.putData("action", "assignRoleAccountUsers");
 				dropdownItem.putData(

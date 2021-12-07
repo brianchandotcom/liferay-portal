@@ -450,6 +450,44 @@ export function updateEditorConfigInstanceId(editorConfig, instanceId) {
 	return updatedEditorConfig;
 }
 
+export function updateInputMaskProperties(editingLanguageId, field) {
+	let inputMaskFormat = '';
+	let numericInputMask = {};
+	let predefinedValueField;
+	let validationField;
+
+	const visitor = new PagesVisitor(field.settingsContext.pages);
+
+	visitor.visitFields((setting) => {
+		if (setting.fieldName === 'inputMaskFormat') {
+			inputMaskFormat = setting.localizedValue?.[editingLanguageId];
+		}
+		else if (setting.fieldName === 'numericInputMask') {
+			numericInputMask = setting.localizedValue?.[editingLanguageId];
+
+			if (typeof numericInputMask === 'string') {
+				numericInputMask = JSON.parse(numericInputMask);
+			}
+		}
+		else if (setting.fieldName === 'predefinedValue') {
+			predefinedValueField = setting;
+		}
+		else if (setting.fieldName === 'validation') {
+			validationField = setting;
+		}
+	});
+
+	field.inputMaskFormat = inputMaskFormat;
+	predefinedValueField.inputMaskFormat = inputMaskFormat;
+	validationField.inputMaskFormat = inputMaskFormat;
+
+	Object.keys(numericInputMask).forEach((key) => {
+		field[key] = numericInputMask[key];
+		predefinedValueField[key] = numericInputMask[key];
+		validationField[key] = numericInputMask[key];
+	});
+}
+
 export function formatFieldName(instanceId, languageId, value) {
 	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
 }

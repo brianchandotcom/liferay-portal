@@ -107,9 +107,15 @@ export const getBannedEmailDomains = gql`
 `;
 
 export const addSetupDXPCloud = gql`
-	mutation addSetupDXPCloud($SetupDXPCloud: InputC_SetupDXPCloud!, $scopeKey: String) {
+	mutation addSetupDXPCloud(
+		$SetupDXPCloud: InputC_SetupDXPCloud!
+		$scopeKey: String
+	) {
 		c {
-			createSetupDXPCloud(SetupDXPCloud: $SetupDXPCloud, scopeKey: $scopeKey) {
+			createSetupDXPCloud(
+				SetupDXPCloud: $SetupDXPCloud
+				scopeKey: $scopeKey
+			) {
 				admins
 				disasterDataCenterRegion
 				dataCenterRegion

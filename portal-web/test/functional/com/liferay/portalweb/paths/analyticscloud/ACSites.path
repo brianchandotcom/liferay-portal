@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE</td>
-	<td>//th[text()='Day 0']/ancestor::tr/following-sibling::tr//th[3]</td>
+	<td>xpath=(//th[contains(@class, 'period table-cell-expand')]/ancestor::tr/following-sibling::tr//th[contains(., '100.00%')])[1]</td>
 	<td></td>
 </tr>
 <tr>

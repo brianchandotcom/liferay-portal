@@ -72,7 +72,7 @@ export function normalizeDataType(initialDataType) {
 }
 
 export function getLocalizedValue({defaultLanguageId, editingLanguageId}) {
-	return (value) => value[editingLanguageId] || value[defaultLanguageId];
+	return (value) => value[editingLanguageId] ?? value[defaultLanguageId];
 }
 
 export function getSelectedValidation(validations) {

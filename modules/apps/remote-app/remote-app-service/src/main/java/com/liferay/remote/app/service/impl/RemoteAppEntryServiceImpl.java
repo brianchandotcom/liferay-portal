@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryServiceBaseImpl;
@@ -57,8 +56,7 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 		return remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			getUserId(), customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs, description, friendlyURLMapping, instanceable,
-			nameMap, portletCategoryName, properties, sourceCodeURL,
-			WorkflowConstants.STATUS_DRAFT);
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override

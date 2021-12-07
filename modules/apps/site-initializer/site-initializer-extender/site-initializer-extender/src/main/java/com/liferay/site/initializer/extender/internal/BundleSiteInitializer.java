@@ -1775,7 +1775,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						group.getName(LocaleUtil.getSiteDefault()) + ": ",
 						jsonObject.getString("name_i18n")),
 					jsonObject.getString("portletCategoryName"), sb.toString(),
-					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED);
+					StringPool.BLANK);
 
 			remoteAppEntryIdsStringUtilReplaceValues.put(
 				"REMOTE_APP_ENTRY_ID:" +

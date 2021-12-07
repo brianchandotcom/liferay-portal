@@ -18,6 +18,7 @@ import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.friendly.url.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.friendly.url.taglib.util.InfoItemObjectProviderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -173,13 +174,8 @@ public class InputTag extends IncludeTag {
 
 	private String _getFallbackValue() {
 		try {
-			PersistedModelLocalService persistedModelLocalService =
-				PersistedModelLocalServiceRegistryUtil.
-					getPersistedModelLocalService(getClassName());
-
 			String urlTitle = BeanPropertiesUtil.getString(
-				persistedModelLocalService.getPersistedModel(getClassPK()),
-				"urlTitle");
+				_getModel(), "urlTitle");
 
 			if (Validator.isNull(urlTitle)) {
 				return StringPool.BLANK;
@@ -201,6 +197,21 @@ public class InputTag extends IncludeTag {
 		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
+	}
+
+	private Object _getModel() throws PortalException {
+		Object model = InfoItemObjectProviderUtil.getInfoItem(
+			getClassName(), getClassPK());
+
+		if (model != null) {
+			return model;
+		}
+
+		PersistedModelLocalService persistedModelLocalService =
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(getClassName());
+
+		return persistedModelLocalService.getPersistedModel(getClassPK());
 	}
 
 	private String _getValue() {

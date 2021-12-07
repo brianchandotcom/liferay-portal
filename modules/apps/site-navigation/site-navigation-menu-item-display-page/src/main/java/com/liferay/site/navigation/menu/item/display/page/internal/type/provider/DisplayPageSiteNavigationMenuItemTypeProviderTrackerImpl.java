@@ -16,15 +16,11 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type.provide
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -154,25 +150,6 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 				return infoItemFormProvider;
 			}
 
-			InfoItemDetailsProvider<?> infoItemDetailsProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemDetailsProvider.class, className);
-
-			if (infoItemDetailsProvider == null) {
-				return infoItemFormProvider;
-			}
-
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				_layoutDisplayPageProviderTracker.
-					getLayoutDisplayPageProviderByClassName(className);
-
-			if (layoutDisplayPageProvider == null) {
-				return infoItemFormProvider;
-			}
-
-			InfoItemClassDetails infoItemClassDetails =
-				infoItemDetailsProvider.getInfoItemClassDetails();
-
 			try {
 				_serviceRegistrations.put(
 					className,
@@ -181,11 +158,8 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 						new DisplayPageTypeSiteNavigationMenuItemType(
 							_assetDisplayPageFriendlyURLProvider,
 							new DisplayPageTypeContext(
-								infoItemClassDetails,
-								_infoItemServiceTracker.getFirstInfoItemService(
-									InfoItemFormVariationsProvider.class,
-									className),
-								layoutDisplayPageProvider),
+								className, _infoItemServiceTracker,
+								_layoutDisplayPageProviderTracker),
 							_itemSelector, _jspRenderer, _portal,
 							_servletContext),
 						HashMapDictionaryBuilder.<String, Object>put(

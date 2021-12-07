@@ -128,13 +128,40 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136927. It checks that an email with a localized template can be received."
-	@ignore = "true"
 	@priority = "3"
 	test CanReceiveEmailWithLocalizedTemplate {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.email.bulk=false";
+		property test.smtp.server.enabled = "true";
 
-		// TODO LPS-136927 CanReceiveEmailWithLocalizedTemplate pending implementation
+		MessageboardsPortlet.configureMessageAddedEmail(
+			bodyContent = "[$MESSAGE_BODY$] este es un campo de tablero de mensajes",
+			siteURLKey = "guest");
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBody = "MB Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MockMock.viewMail(
+			asset = "MB Thread Message Subject",
+			content = "MB Body este es un campo de tablero de mensajes",
+			recipient = "userfn userln",
+			sender = "Test Test",
+			subject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"

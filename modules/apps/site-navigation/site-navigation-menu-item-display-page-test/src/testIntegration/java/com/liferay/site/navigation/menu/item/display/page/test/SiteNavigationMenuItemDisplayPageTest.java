@@ -22,7 +22,10 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -90,6 +93,21 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			_serviceContext);
+	}
+
+	@Test
+	public void testSiteNavigationMenuItemDisplayPageTypes() {
+		for (InfoItemClassDetails infoItemClassDetails :
+				_infoItemServiceTracker.getInfoItemClassDetails(
+					DisplayPageInfoItemCapability.KEY)) {
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(
+						infoItemClassDetails.getClassName());
+
+			Assert.assertNotNull(siteNavigationMenuItemType);
+		}
 	}
 
 	@Test
@@ -243,6 +261,9 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

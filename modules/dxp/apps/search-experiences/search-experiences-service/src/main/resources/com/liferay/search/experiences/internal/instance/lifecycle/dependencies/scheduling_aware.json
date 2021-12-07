@@ -84,7 +84,9 @@
 				]
 			}
 		},
-		"icon": "filter"
+		"icon": "filter",
+		"uiConfiguration": {
+		}
 	},
 	"title_i18n": {
 		"en_US": "Scheduling Aware"

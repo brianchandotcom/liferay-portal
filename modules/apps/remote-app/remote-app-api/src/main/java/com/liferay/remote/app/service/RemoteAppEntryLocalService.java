@@ -98,6 +98,8 @@ public interface RemoteAppEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
+	public int countByCompanyId(long companyId) throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -286,9 +288,6 @@ public interface RemoteAppEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRemoteAppEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRemoteAppEntriesCount(long companyId) throws PortalException;
 
 	/**
 	 * Returns the remote app entry with the primary key.

@@ -19,8 +19,6 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 
-import java.util.Date;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,56 +69,6 @@ public class TransitionWorkflowMetricsIndexerImpl
 		).setString(
 			"version", addTransitionRequest.getProcessVersion()
 		).build();
-
-		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
-
-		return document;
-	}
-
-	@Override
-	public Document addTransition(
-		long companyId, Date createDate, Date modifiedDate, String name,
-		long nodeId, long processId, String processVersion, long sourceNodeId,
-		String sourceNodeName, long targetNodeId, String targetNodeName,
-		long transitionId, long userId) {
-
-		if (searchEngineAdapter == null) {
-			return null;
-		}
-
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setDate(
-			"createDate", getDate(createDate)
-		).setValue(
-			"deleted", false
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setString(
-			"name", name
-		).setLong(
-			"nodeId", nodeId
-		).setLong(
-			"processId", processId
-		).setLong(
-			"sourceNodeId", sourceNodeId
-		).setString(
-			"sourceNodeName", sourceNodeName
-		).setLong(
-			"targetNodeId", targetNodeId
-		).setString(
-			"targetNodeName", targetNodeName
-		).setString(
-			"uid", digest(companyId, transitionId)
-		).setLong(
-			"userId", userId
-		).setString(
-			"version", processVersion
-		);
-
-		Document document = documentBuilder.build();
 
 		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 

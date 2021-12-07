@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.search.index;
 
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 
 import java.util.Date;
 
@@ -22,6 +23,8 @@ import java.util.Date;
  * @author Rafael Praxedes
  */
 public interface TransitionWorkflowMetricsIndexer {
+
+	public Document addTransition(AddTransitionRequest addTransitionRequest);
 
 	public Document addTransition(
 		long companyId, Date createDate, Date modifiedDate, String name,

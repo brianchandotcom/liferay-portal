@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 
 import java.util.Date;
@@ -30,6 +31,51 @@ import org.osgi.service.component.annotations.Reference;
 public class TransitionWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
 	implements TransitionWorkflowMetricsIndexer {
+
+	public Document addTransition(AddTransitionRequest addTransitionRequest) {
+		if (searchEngineAdapter == null) {
+			return null;
+		}
+
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		Document document = documentBuilder.setLong(
+			"companyId", addTransitionRequest.getCompanyId()
+		).setDate(
+			"createDate", getDate(addTransitionRequest.getCreateDate())
+		).setValue(
+			"deleted", false
+		).setDate(
+			"modifiedDate", getDate(addTransitionRequest.getModifiedDate())
+		).setString(
+			"name", addTransitionRequest.getName()
+		).setLong(
+			"nodeId", addTransitionRequest.getNodeId()
+		).setLong(
+			"processId", addTransitionRequest.getProcessId()
+		).setLong(
+			"sourceNodeId", addTransitionRequest.getSourceNodeId()
+		).setString(
+			"sourceNodeName", addTransitionRequest.getSourceNodeName()
+		).setLong(
+			"targetNodeId", addTransitionRequest.getTargetNodeId()
+		).setString(
+			"targetNodeName", addTransitionRequest.getTargetNodeName()
+		).setString(
+			"uid",
+			digest(
+				addTransitionRequest.getCompanyId(),
+				addTransitionRequest.getTransitionId())
+		).setLong(
+			"userId", addTransitionRequest.getUserId()
+		).setString(
+			"version", addTransitionRequest.getProcessVersion()
+		).build();
+
+		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
+
+		return document;
+	}
 
 	@Override
 	public Document addTransition(

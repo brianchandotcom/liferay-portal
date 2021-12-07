@@ -1,4 +1,20 @@
 <style>
+	.back-to-edit-info {
+		background-color: transparent;
+		border-radius: 4px;
+		border: 1px solid #7D7E85;
+		box-sizing: border-box;
+		color: #7D7E85;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: bold;
+		letter-spacing: 0.03em;
+		line-height: 24px;
+		margin-bottom: 8px;
+		padding: 10px;
+		text-transform: uppercase;
+	}
+	
 	#tip {
 		background-color: #F9F9F9;
 		border-radius: 8px;
@@ -12,18 +28,12 @@
 		transition: opacity .5s linear;
 	}
 
-	#tip ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-
 	#tip li {
+		align-items: center;
 		color: #606167;
 		display: flex;
 		font-size: 16px;
 		font-weight: bold;
-		align-items: center;
 	}
 
 	#tip li::before {
@@ -37,6 +47,12 @@
 		margin-right: 4px;
 		mask: url(${listIcon.getData()}) no-repeat 50% 50%;
 		width: 16px;
+	}
+
+	#tip ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
 	}
 
 	#tip #dismiss {
@@ -70,22 +86,6 @@
 			width: 20px;
 		}
 	</#if>
-
-	.back-to-edit-info {
-		background-color: transparent;
-		border-radius: 4px;
-		border: 1px solid #7D7E85;
-		box-sizing: border-box;
-		color: #7D7E85;
-		font-size: 14px;
-		font-style: normal;
-		font-weight: bold;
-		letter-spacing: 0.03em;
-		line-height: 24px;
-		margin-bottom: 8px;
-		padding: 10px;
-		text-transform: uppercase;
-	}
 </style>
 
 <#assign applicationNameSpace = randomNamespace />
@@ -95,8 +95,8 @@
 		let siteName = '';
 
 		try {
-			const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-			const urlPaths = pathname.split('/').filter(Boolean);
+			const {pathName} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+			const urlPaths = pathName.split('/').filter(Boolean);
 			siteName = '/' + urlPaths.slice(0, urlPaths.length - 1).join('/');
 		} catch (error) {
 			console.warn(error);
@@ -145,7 +145,7 @@
 
 	<#if pageOptions.getData()?contains("dismissible")>
 		<div class="d-flex justify-content-center">
-			<button class="btn btn-link font-weight-normal p-0 text-neutral-8" type="button" id="dismiss" onclick="event.preventDefault(); document.getElementById('tip').classList.add('hide');">Dismiss</button>
+			<button class="btn btn-link font-weight-normal p-0 text-neutral-8" id="dismiss" onclick="event.preventDefault(); document.getElementById('tip').classList.add('hide');" type="button">Dismiss</button>
 		</div>
 	</#if>
 </div>

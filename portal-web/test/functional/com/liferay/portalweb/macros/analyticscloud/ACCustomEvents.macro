@@ -119,4 +119,11 @@ definition {
 				locator1 = "ACSettings#ITEM_ON_LIST");
 		}
 	}
+
+	macro viewDataType {
+		AssertTextEquals(
+			locator1 = "ACSegments#EDITOR_LABEL",
+			value1 = "${typeValue}");
+	}
+
 }

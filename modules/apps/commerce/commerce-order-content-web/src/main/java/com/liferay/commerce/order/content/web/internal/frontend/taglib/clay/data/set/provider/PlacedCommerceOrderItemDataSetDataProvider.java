@@ -289,6 +289,7 @@ public class PlacedCommerceOrderItemDataSetDataProvider
 
 			orderItems.add(
 				new OrderItem(
+					commerceOrderItem.getCPInstanceId(),
 					_formatDiscountAmount(commerceOrderItemPrice, locale), null,
 					_commerceOrderItemQuantityFormatter.format(
 						commerceOrderItem, locale),

@@ -22,12 +22,14 @@ import java.util.List;
 public class OrderItem {
 
 	public OrderItem(
-		String discount, String[] errorMessages, String formattedQuantity,
-		String formattedSubscriptionPeriod, String name, String options,
-		long orderId, long orderItemId, List<OrderItem> orderItems,
-		long parentOrderItemId, String price, String promoPrice,
-		int shippedQuantity, String sku, String thumbnail, String total) {
+		long cpInstanceId, String discount, String[] errorMessages,
+		String formattedQuantity, String formattedSubscriptionPeriod,
+		String name, String options, long orderId, long orderItemId,
+		List<OrderItem> orderItems, long parentOrderItemId, String price,
+		String promoPrice, int shippedQuantity, String sku, String thumbnail,
+		String total) {
 
+		_cpInstanceId = cpInstanceId;
 		_discount = discount;
 		_errorMessages = errorMessages;
 		_formattedQuantity = formattedQuantity;
@@ -44,6 +46,10 @@ public class OrderItem {
 		_sku = sku;
 		_thumbnail = thumbnail;
 		_total = total;
+	}
+
+	public long getCPInstanceId() {
+		return _cpInstanceId;
 	}
 
 	public String getDiscount() {
@@ -110,6 +116,7 @@ public class OrderItem {
 		return _total;
 	}
 
+	private final long _cpInstanceId;
 	private final String _discount;
 	private final String[] _errorMessages;
 	private final String _formattedQuantity;

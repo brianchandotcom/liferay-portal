@@ -335,6 +335,7 @@ public class PendingCommerceOrderItemDataSetDataProvider
 
 			orderItems.add(
 				new OrderItem(
+					commerceOrderItem.getCPInstanceId(),
 					_formatDiscountAmount(commerceOrderItemPrice, locale),
 					_getCommerceOrderErrorMessages(
 						commerceOrderItem, commerceOrderValidatorResultMap),

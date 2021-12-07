@@ -18,10 +18,14 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -68,6 +72,30 @@ public class PlacedCommerceOrderItemDataSetActionProvider
 				PermissionThreadLocal.getPermissionChecker(), commerceOrder,
 				ActionKeys.VIEW),
 			dropdownItem -> {
+				CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+					orderItem.getCPInstanceId());
+
+				if (cpInstance == null) {
+					dropdownItem.setHref(StringPool.BLANK);
+				}
+				else {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					dropdownItem.setHref(
+						_cpDefinitionHelper.getFriendlyURL(
+							cpInstance.getCPDefinitionId(), themeDisplay));
+				}
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "view"));
+			}
+		).add(
+			() -> _modelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+				ActionKeys.VIEW),
+			dropdownItem -> {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
@@ -85,6 +113,12 @@ public class PlacedCommerceOrderItemDataSetActionProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

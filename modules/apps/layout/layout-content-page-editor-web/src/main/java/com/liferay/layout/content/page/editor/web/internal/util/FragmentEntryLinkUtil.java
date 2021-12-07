@@ -25,6 +25,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -68,8 +69,20 @@ public class FragmentEntryLinkUtil {
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkServiceUtil.deleteFragmentEntryLink(
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentEntryLinkId);
+
+		if (fragmentEntryLink == null) {
+			LayoutClassedModelUsageLocalServiceUtil.
+				deleteLayoutClassedModelUsages(
+					String.valueOf(fragmentEntryLinkId),
+					PortalUtil.getClassNameId(FragmentEntryLink.class), plid);
+
+			return;
+		}
+
+		FragmentEntryLinkServiceUtil.deleteFragmentEntryLink(
+			fragmentEntryLinkId);
 
 		if (fragmentEntryLink.getFragmentEntryId() == 0) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

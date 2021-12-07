@@ -796,6 +796,8 @@ definition {
 
 	@priority = "5"
 	test ReindexingRestoresResultRankingsIndex {
+		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresResultRankingsIndex";
+
 		var companyId = JSONCompany.getCompanyId();
 
 		for (var title : list "Article,Journal") {

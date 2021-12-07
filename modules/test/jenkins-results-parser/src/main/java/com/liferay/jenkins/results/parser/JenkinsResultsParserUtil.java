@@ -930,17 +930,50 @@ public class JenkinsResultsParserUtil {
 		return json;
 	}
 
-	public static String fixURL(String url) {
-		url = url.replace(" ", "%20");
-		url = url.replace("#", "%23");
-		url = url.replace("(", "%28");
-		url = url.replace(")", "%29");
-		url = url.replace("[", "%5B");
-		url = url.replace("]", "%5D");
-		url = url.replace("<", "%3C");
-		url = url.replace(">", "%3E");
+	public static String fixURL(String urlString) {
+		URL url = null;
 
-		return url;
+		try {
+			url = new URL(urlString);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+
+		if (!urlString.contains("?")) {
+			return urlString;
+		}
+
+		StringBuilder sb = new StringBuilder(
+			urlString.replaceAll("(.*\\?).*", "$1"));
+
+		String queryString = url.getQuery();
+
+		if ((queryString == null) || queryString.isEmpty()) {
+			return sb.toString();
+		}
+
+		Matcher matcher = _urlQueryStringPattern.matcher(url.getQuery());
+
+		while (matcher.find()) {
+			sb.append(matcher.group(1));
+			sb.append("=");
+
+			try {
+				sb.append(
+					URLEncoder.encode(
+						matcher.group(2), StandardCharsets.UTF_8.name()));
+			}
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				throw new RuntimeException(unsupportedEncodingException);
+			}
+
+			if (!matcher.hitEnd()) {
+				sb.append("&");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public static List<Build> flatten(List<Build> builds) {

@@ -380,7 +380,7 @@ definition {
 		task ("Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet");
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
 			ServiceAccessPolicy.addServiceAccessPolicy(
 				enabled = "true",
@@ -986,7 +986,7 @@ definition {
 		task ("Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet");
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
 			ServiceAccessPolicy.addServiceAccessPolicy(
 				enabled = "true",
@@ -1032,7 +1032,7 @@ definition {
 		}
 
 		task ("Edit SAP successfully") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet");
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
 			ServiceAccessPolicy.editServiceAccessPolicy(
 				enabled = "false",
@@ -1055,7 +1055,7 @@ definition {
 		}
 
 		task ("Edit SAP") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet");
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
 			ServiceAccessPolicy.editServiceAccessPolicy(
 				enabled = "true",

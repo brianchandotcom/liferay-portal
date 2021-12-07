@@ -19,6 +19,12 @@
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
+String backURL = ParamUtil.getString(request, "backURL");
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setURLBack(backURL);
+}
+
 if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 	KBArticle latestKBArticle = KBArticleLocalServiceUtil.getLatestKBArticle(kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 

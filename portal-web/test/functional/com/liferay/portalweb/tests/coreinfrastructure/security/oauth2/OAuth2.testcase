@@ -127,7 +127,7 @@ definition {
 		task ("Add an OAuth 2 application") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -148,9 +148,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:9080");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -168,7 +166,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -297,10 +295,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#AuthPromptInRequestScopeShouldNotBeVisible";
 
 		task ("Go to OAuth 2 administration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -349,10 +344,7 @@ definition {
 		}
 
 		task ("Save OAuth 2 scopes configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -407,7 +399,7 @@ definition {
 		}
 
 		task ("Add OAuth application") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -481,10 +473,7 @@ definition {
 		}
 
 		task ("Verify WC deleted") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content",
-				site = "${siteName}");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			AssertTextNotPresent(value1 = "WC Title");
 		}
@@ -496,10 +485,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ConfigureOnSystemLevelShouldApplyToInstanceLevel";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "OAuth 2",
@@ -514,7 +500,7 @@ definition {
 		task ("Verify resource and global scopes are present in OAuth 2 administration entry scopes") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -526,14 +512,10 @@ definition {
 		}
 
 		task ("Add able.com as a new virtual instance") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com and unassign power user role from the test user") {
@@ -542,9 +524,7 @@ definition {
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 			User.unassignRegularRoleCP(
 				regularRoleName = "Power User",
@@ -552,7 +532,7 @@ definition {
 		}
 
 		task ("Verify resource scopes are not present in OAuth 2 administration entry scope") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -588,7 +568,7 @@ definition {
 		}
 
 		task ("Add a new OAuth 2 application") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -677,7 +657,7 @@ definition {
 		task ("Add a new OAuth 2 application") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			var clientId = "abc123";
 			var clientSecret = "abc123";
@@ -758,7 +738,7 @@ definition {
 		task ("Add a new OAuth 2 application") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -916,7 +896,7 @@ definition {
 		task ("Add a new external application") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -974,7 +954,7 @@ definition {
 		}
 
 		task ("Post client credential token via curl") {
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -1017,7 +997,7 @@ definition {
 		}
 
 		task ("Add a new OAuth 2 application") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -1066,7 +1046,7 @@ definition {
 		}
 
 		task ("View OAuth 2 application scope") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewScopes(
 				applicationName = "OAuth Application",
@@ -1097,7 +1077,7 @@ definition {
 		}
 
 		task ("View and edit the new OAuth 2 application scopes") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewScopes(
 				applicationName = "OAuth Application",
@@ -1139,7 +1119,7 @@ definition {
 		}
 
 		task ("Go to the scopes of an OAuth 2 application entry navbar") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -1202,7 +1182,7 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 			var clientId = "abc123";
 
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "Remember Device Application",
@@ -1339,7 +1319,7 @@ definition {
 		task ("Add OAuth 2 Application") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
@@ -1356,10 +1336,7 @@ definition {
 		}
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "OAuth 2",
@@ -1372,10 +1349,7 @@ definition {
 		}
 
 		task ("View scope aliases without prefixes") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewScopeAliases(
 				applicationName = "OAuth Application",
@@ -1392,10 +1366,7 @@ definition {
 		}
 
 		task ("Verify that the added prefix is visible in scope aliases") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewScopeAliases(
 				applicationName = "OAuth Application",
@@ -1423,7 +1394,7 @@ definition {
 		}
 
 		task ("View installed QA app in scope mapping") {
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewScopeMappings(
 				applicationName = "Analytics Cloud",
@@ -1442,16 +1413,10 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ScopesShouldBeDisplayedAsListOnInstanceLevel";
 
 		task ("Add CP able.com") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Login at able.com and unassign power user role from the test user") {
@@ -1460,7 +1425,7 @@ definition {
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 			User.unassignRegularRoleCP(
 				regularRoleName = "Power User",
@@ -1468,12 +1433,7 @@ definition {
 		}
 
 		task ("Verify user is not able to view Analytics in OAuth 2 administration scopes") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "OAuth 2 Administration");
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -1493,7 +1453,7 @@ definition {
 		task ("Add a trusted OAuth 2 application") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
+			OAuth2.openOAuth2Admin();
 
 			var clientId = "abc123";
 

@@ -75,7 +75,7 @@ public interface RemoteAppEntryLocalService
 			String customElementHTMLElementName, String customElementURLs,
 			String description, String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL, int status)
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

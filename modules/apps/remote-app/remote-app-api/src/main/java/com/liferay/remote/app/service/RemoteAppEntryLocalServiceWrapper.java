@@ -42,13 +42,13 @@ public class RemoteAppEntryLocalServiceWrapper
 				boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
-				String sourceCodeURL, int status)
+				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			userId, customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs, description, friendlyURLMapping, instanceable,
-			nameMap, portletCategoryName, properties, sourceCodeURL, status);
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override

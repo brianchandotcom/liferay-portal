@@ -54,5 +54,10 @@
 			}
 		],
 		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "master"
+		}
 	}
 }

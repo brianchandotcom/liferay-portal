@@ -33,6 +33,8 @@ export default function UpperToolbar({
 		defaultLanguageId,
 		selectedLanguageId,
 		setSelectedLanguageId,
+		setSourceView,
+		sourceView,
 	} = useContext(DefinitionBuilderContext);
 	const inputRef = useRef(null);
 
@@ -137,11 +139,21 @@ export default function UpperToolbar({
 					</ClayToolbar.Item>
 
 					<ClayToolbar.Item>
-						<ClayButtonWithIcon
-							displayType="secondary"
-							onClick={() => {}}
-							symbol="code"
-						/>
+						{sourceView ? (
+							<ClayButtonWithIcon
+								displayType="secondary"
+								onClick={() => setSourceView(false)}
+								symbol="rules"
+								title={Liferay.Language.get('diagram-view')}
+							/>
+						) : (
+							<ClayButtonWithIcon
+								displayType="secondary"
+								onClick={() => setSourceView(true)}
+								symbol="code"
+								title={Liferay.Language.get('source-view')}
+							/>
+						)}
 					</ClayToolbar.Item>
 				</ClayToolbar.Nav>
 			</ClayLayout.ContainerFluid>

@@ -11,6 +11,7 @@
 
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayList from '@clayui/list';
 import ClayModal from '@clayui/modal';
 import getCN from 'classnames';
 import React, {useContext, useEffect, useRef, useState} from 'react';
@@ -188,12 +189,12 @@ function TimePickerInputWithOptions({format, isAmPm, setValue, value}) {
 					<div className="inline-scroller">
 						<div className="popover-body">
 							{options.map((option, index) => (
-								<li
+								<ClayList.Item
 									key={index}
 									onMouseDown={() => setValue(option)}
 								>
 									{option}
-								</li>
+								</ClayList.Item>
 							))}
 						</div>
 					</div>

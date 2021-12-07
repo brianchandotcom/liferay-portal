@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayList from '@clayui/list';
 import React from 'react';
 
 const FilterSearch = ({
@@ -47,13 +48,13 @@ const FilterSearch = ({
 			)}
 
 			{emptyResults && (
-				<ul className="list-unstyled">
-					<li>
+				<ClayList className="list-unstyled">
+					<ClayList.Item>
 						<span className="disabled dropdown-item">
 							{Liferay.Language.get('no-results-were-found')}
 						</span>
-					</li>
-				</ul>
+					</ClayList.Item>
+				</ClayList>
 			)}
 
 			{children}

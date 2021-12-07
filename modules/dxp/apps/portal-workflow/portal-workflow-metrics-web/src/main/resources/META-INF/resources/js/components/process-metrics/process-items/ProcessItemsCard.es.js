@@ -12,6 +12,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
 import React, {useMemo} from 'react';
 
@@ -127,7 +128,7 @@ const Header = ({children, data, description, title}) => (
 
 			{children && data && (
 				<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
-					<ul className="navbar-nav">{children}</ul>
+					<ClayList className="navbar-nav">{children}</ClayList>
 				</ClayLayout.ContentCol>
 			)}
 		</ClayLayout.ContentRow>

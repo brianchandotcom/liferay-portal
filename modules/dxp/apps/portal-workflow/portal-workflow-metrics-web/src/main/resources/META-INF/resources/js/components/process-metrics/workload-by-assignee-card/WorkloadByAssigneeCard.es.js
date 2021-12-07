@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
@@ -33,7 +34,7 @@ function Header({processId}) {
 			/>
 
 			<div className="management-bar management-bar-light ml-3 navbar navbar-expand-md pl-1">
-				<ul className="navbar-nav">
+				<ClayList className="navbar-nav">
 					<ProcessStepFilter
 						options={{
 							hideControl: true,
@@ -43,7 +44,7 @@ function Header({processId}) {
 						}}
 						processId={processId}
 					/>
-				</ul>
+				</ClayList>
 			</div>
 		</>
 	);

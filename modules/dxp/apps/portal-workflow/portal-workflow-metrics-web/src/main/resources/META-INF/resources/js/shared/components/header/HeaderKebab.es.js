@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayList from '@clayui/list';
 import React, {useState} from 'react';
 
 import Portal from '../portal/Portal.es';
@@ -64,11 +65,11 @@ const Item = ({action = () => {}, label, link}) => {
 
 	return (
 		<ClayDropDown.ItemList>
-			<li>
+			<ClayList.ItemText>
 				<DropDownItem className="dropdown-item" {...props}>
 					{label}
 				</DropDownItem>
-			</li>
+			</ClayList.ItemText>
 		</ClayDropDown.ItemList>
 	);
 };

@@ -31,7 +31,7 @@ export function CardFormActionsWithSave({
 			await onSave();
 			setShowProgressModal(true);
 		} catch (error) {
-			alert('Unable to save your information. Please try again');
+			console.error(error);
 		}
 
 		setLoading(false);

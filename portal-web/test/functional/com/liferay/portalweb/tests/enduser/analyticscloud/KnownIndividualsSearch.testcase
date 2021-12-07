@@ -114,8 +114,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9020 | Test Summary: Search associated segment will not return results in the individual List"
 	@priority = "3"
 	test AssertNoIndividualsAssociatedSegmentsResults {
-		property portal.upstream = "quarantine";
-
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

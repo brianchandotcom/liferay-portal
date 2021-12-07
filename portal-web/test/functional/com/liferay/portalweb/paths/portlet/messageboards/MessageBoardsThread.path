@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_FORMAT_SELECT</td>
+	<td>//select[contains(@id,'PortletConfigurationPortlet') and contains(@id,'messageFormat')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_PRIORITY_SELECT</td>
 	<td>//select[contains(@id,'MBPortlet') and contains(@id,'priority')]</td>
 	<td></td>

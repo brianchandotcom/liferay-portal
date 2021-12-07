@@ -1,0 +1,109 @@
+{
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"publish": {
+		},
+		"update": {
+		}
+	},
+	"label": {
+		"en-US": "Object Definition"
+	},
+	"name": "ImportedObjectDefinition",
+	"objectActions": [
+		{
+			"active": true,
+			"name": "Action",
+			"objectActionExecutorKey": "webhook",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"url": "www.liferay.com"
+			}
+		}
+	],
+	"objectFields": [
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Text Field 1"
+			},
+			"name": "textField1",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Text Field 2"
+			},
+			"name": "textField2",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+		{
+			"defaultObjectLayout": true,
+			"name": {
+				"en-US": "Layout"
+			},
+			"objectLayoutTabs": [
+				{
+					"name": {
+						"en-US": "Tab"
+					},
+					"objectLayoutBoxes": [
+						{
+							"collapsable": false,
+							"name": {
+								"en-US": "Block"
+							},
+							"objectLayoutRows": [
+								{
+									"objectLayoutColumns": [
+										{
+											"objectFieldName": "textField1",
+											"priority": 0,
+											"size": 12
+										}
+									],
+									"priority": 0
+								},
+								{
+									"objectLayoutColumns": [
+										{
+											"objectFieldName": "textField2",
+											"priority": 0,
+											"size": 12
+										}
+									],
+									"priority": 0
+								}
+							],
+							"priority": 0
+						}
+					],
+					"priority": 0
+				}
+			]
+		}
+	],
+	"pluralLabel": {
+		"en-US": "Object Definitions"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 2,
+		"label": "draft",
+		"label_i18n": "Draft"
+	},
+	"system": false
+}

@@ -22,19 +22,10 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.item.selector.ItemSelector" %><%@
-page import="com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys" %><%@
-page import="com.liferay.site.navigation.menu.item.display.page.internal.display.context.DisplayPageSiteNavigationMenuTypeDisplayContext" %><%@
 page import="com.liferay.site.navigation.menu.item.display.page.internal.display.context.DisplayPageTypeSiteNavigationMenuTypeDisplayContext" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

@@ -1,8 +1,0 @@
-.colorful-head {
-	font-size: var(--display4-size);
-	font-weight: var(--font-weight-bolder);
-}
-
-.colorful-head #color-text {
-	color: var(--color-brand-primary);
-}

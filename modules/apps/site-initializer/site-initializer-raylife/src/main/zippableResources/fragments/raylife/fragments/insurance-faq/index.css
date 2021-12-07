@@ -1,19 +1,9 @@
-.insurance-faq .content-div {
+.insurance-faq .content-area {
 	width: 50.5rem;
 }
 
-.insurance-faq p {
-	font-size: var(--h4-font-size, 1rem);
-	font-weight: var(--font-weight-bold);
-}
-
 .insurance-faq .custom-icon {
+	cursor: pointer;
 	height: 1.5rem;
-	width:1.5rem;
-	cursor:pointer;
-}
-
-.fragment_71 {
-	font-size:var(--text-paragraph-sm, 1rem);
-	color:var(--bg-neutral-8);
+	width: 1.5rem;
 }

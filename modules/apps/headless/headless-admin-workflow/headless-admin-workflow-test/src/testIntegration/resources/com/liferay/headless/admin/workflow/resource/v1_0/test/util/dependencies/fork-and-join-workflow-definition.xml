@@ -24,7 +24,7 @@
 			<transition>
 				<name>task1</name>
 				<target>task1</target>
-				<default>true</default>
+				<default>false</default>
 			</transition>
 			<transition>
 				<name>task2</name>
@@ -107,14 +107,8 @@
 		<assignments>
 			<roles>
 				<role>
-					<role-type>regular</role-type>
-					<name>Administrator</name>
-					<auto-create>false</auto-create>
-				</role>
-				<role>
-					<role-type>regular</role-type>
-					<name>Power User</name>
-					<auto-create>false</auto-create>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
 				</role>
 			</roles>
 		</assignments>
@@ -141,14 +135,8 @@
 		<assignments>
 			<roles>
 				<role>
-					<role-type>regular</role-type>
-					<name>Administrator</name>
-					<auto-create>false</auto-create>
-				</role>
-				<role>
-					<role-type>regular</role-type>
-					<name>Power User</name>
-					<auto-create>false</auto-create>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
 				</role>
 			</roles>
 		</assignments>
@@ -175,14 +163,8 @@
 		<assignments>
 			<roles>
 				<role>
-					<role-type>regular</role-type>
-					<name>Administrator</name>
-					<auto-create>false</auto-create>
-				</role>
-				<role>
-					<role-type>regular</role-type>
-					<name>Power User</name>
-					<auto-create>false</auto-create>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
 				</role>
 			</roles>
 		</assignments>

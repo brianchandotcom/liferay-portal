@@ -19,8 +19,6 @@ package com.liferay.site.navigation.menu.item.layout.constants;
  */
 public class SiteNavigationMenuItemTypeConstants {
 
-	public static final String DISPLAY_PAGE = "display_page";
-
 	public static final String LAYOUT = "layout";
 
 	public static final String NODE = "node";

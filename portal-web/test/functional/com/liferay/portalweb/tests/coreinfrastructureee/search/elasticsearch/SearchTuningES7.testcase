@@ -796,6 +796,8 @@ definition {
 
 	@priority = "5"
 	test ReindexingRestoresSynonymsIndex {
+		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresSynonymsIndex";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Applications",

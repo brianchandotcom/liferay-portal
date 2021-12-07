@@ -5,6 +5,8 @@ definition {
 	function ocularAssertElementImage {
 		WaitForSPARefresh();
 
+		selenium.waitForVisible();
+
 		selenium.ocularAssertElementImage();
 	}
 

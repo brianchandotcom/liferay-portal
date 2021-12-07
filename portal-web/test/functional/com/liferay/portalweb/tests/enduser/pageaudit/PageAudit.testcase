@@ -3432,12 +3432,48 @@ definition {
 	@description = "LPS-130636: Given a site
 	When the user visits a page where s/he had opened the Page Audit Panel previously to that visit
 	Then the API / cached data is called for the selected language URL and the progress bar shows"
-	@ignore = "true"
 	@priority = "3"
 	test LanguageCacheData {
+		property portal.acceptance = "true";
 
-		// TODO LPS-130636 LanguageCacheData pending implementation
+		task ("Create second content page") {
+			task ("Create content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Second Page",
+					type = "content");
+			}
+		}
 
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Navigate to second page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/second-page");
+		}
+
+		task ("Navigate back to audited page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Assert if cached data is displayed") {
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_PAGE_TITLE",
+				value1 = "Home");
+		}
 	}
 
 	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section

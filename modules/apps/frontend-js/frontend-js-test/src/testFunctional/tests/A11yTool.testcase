@@ -561,6 +561,34 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "LPS-142328. Verifies the popup panel should not be present when clicked outside of it."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewViolations {
+		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
+		property osgi.module.configurations = "enable=B&quot;true&quot;";
+
+		// Workaround for side panel sometimes not displaying LPS-141442
+
+		while (IsElementNotPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+			Refresh();
+		}
+
+		task ("Click on the icon next to the highlighted violation") {
+			Click(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
+
+		task ("Click outside the highlighted violation") {
+			Click(locator1 = "//body");
+		}
+
+		task ("Assert popup panel is not present") {
+			AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_ITEM");
+		}
+
+		takeScreenshot();
+	}
+
 	@description = "LPS-142333. To assert that filters reset to default after page refresh."
 	@priority = "2"
 	test FiltersAreResetToDefaultAfterPageRefresh {

@@ -72,7 +72,7 @@ function ProcessListPage({history, query, routeParams}) {
 		return [new Promise(() => {})];
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page, pageSize, sort]);
+	}, [page, pageSize, search, sort]);
 
 	return (
 		<PromisesResolver promises={promises}>

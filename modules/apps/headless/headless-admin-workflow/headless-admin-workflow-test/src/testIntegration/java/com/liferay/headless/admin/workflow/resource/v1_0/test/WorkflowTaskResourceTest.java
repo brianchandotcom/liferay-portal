@@ -46,22 +46,24 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import org.apache.commons.lang.time.DateUtils;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+
+import org.apache.commons.lang.time.DateUtils;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
@@ -75,7 +77,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		BaseWorkflowTaskResourceTestCase.setUpClass();
 
 		_workflowDefinition = WorkflowDefinitionTestUtil.addWorkflowDefinition(
-			"fork-workflow-definition.xml");
+			"fork-and-join-workflow-definition.xml");
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(
@@ -179,14 +181,16 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 			workflowTaskResource.getWorkflowTaskHasAssignableUsers(
 				workflowTask.getId()));
 
-		Assert.assertFalse(
+		Assignee assignee = AssigneeTestUtil.addAssignee(testGroup);
+
+		Assert.assertTrue(
 			workflowTaskResource.getWorkflowTaskHasAssignableUsers(
 				workflowTask.getId()));
 
 		_workflowTaskManager.assignWorkflowTaskToUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getId(), TestPropsValues.getUserId(), StringPool.BLANK,
-			null, null);
+			workflowTask.getId(), assignee.getId(), StringPool.BLANK, null,
+			null);
 
 		Assert.assertFalse(
 			workflowTaskResource.getWorkflowTaskHasAssignableUsers(
@@ -200,7 +204,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 			workflowTaskResource.getWorkflowTasksAssignedToMyRolesPage(
 				Pagination.of(1, 3));
 
-		Assert.assertEquals(3, page.getTotalCount());
+		Assert.assertEquals(0, page.getTotalCount());
 
 		WorkflowTask workflowTask1 = testGetWorkflowTask_addWorkflowTask();
 
@@ -281,12 +285,12 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Override
 	@Test
 	public void testGetWorkflowTasksAssignedToRolePage() throws Exception {
-		Role siteContentReviewerRole = _roleLocalService.getRole(
-			testGroup.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER);
+		Role guestRole = _roleLocalService.getRole(
+			testGroup.getCompanyId(), RoleConstants.GUEST);
 
 		Page<WorkflowTask> page =
 			workflowTaskResource.getWorkflowTasksAssignedToRolePage(
-				siteContentReviewerRole.getRoleId(), Pagination.of(1, 2));
+				guestRole.getRoleId(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -294,13 +298,13 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 			testGetWorkflowTasksAssignedToRolePage_addWorkflowTask(
 				randomWorkflowTask());
 
-		WorkflowTaskManagerUtil.assignWorkflowTaskToRole(
+		_workflowTaskManager.assignWorkflowTaskToRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask1.getId(), siteContentReviewerRole.getRoleId(),
-			StringPool.BLANK, null, null);
+			workflowTask1.getId(), guestRole.getRoleId(), StringPool.BLANK,
+			null, null);
 
 		page = workflowTaskResource.getWorkflowTasksAssignedToRolePage(
-			siteContentReviewerRole.getRoleId(), Pagination.of(1, 2));
+			guestRole.getRoleId(), Pagination.of(1, 2));
 
 		Assert.assertEquals(1, page.getTotalCount());
 
@@ -317,33 +321,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 
 		Role siteContentReviewerRole = _roleLocalService.getRole(
 			testGroup.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER);
-
-		WorkflowTask workflowTask1 =
-			testGetWorkflowTasksAssignedToRolePage_addWorkflowTask(
-				randomWorkflowTask());
-
-		WorkflowTaskManagerUtil.assignWorkflowTaskToRole(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask1.getId(), siteContentReviewerRole.getRoleId(),
-			StringPool.BLANK, null, null);
-
-		WorkflowTask workflowTask2 =
-			testGetWorkflowTasksAssignedToRolePage_addWorkflowTask(
-				randomWorkflowTask());
-
-		WorkflowTaskManagerUtil.assignWorkflowTaskToRole(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask2.getId(), siteContentReviewerRole.getRoleId(),
-			StringPool.BLANK, null, null);
-
-		WorkflowTask workflowTask3 =
-			testGetWorkflowTasksAssignedToRolePage_addWorkflowTask(
-				randomWorkflowTask());
-
-		WorkflowTaskManagerUtil.assignWorkflowTaskToRole(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask3.getId(), siteContentReviewerRole.getRoleId(),
-			StringPool.BLANK, null, null);
 
 		Page<WorkflowTask> page1 =
 			workflowTaskResource.getWorkflowTasksAssignedToRolePage(
@@ -372,7 +349,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				siteContentReviewerRole.getRoleId(), Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
+			Arrays.asList(
+				_workflowTasks.pop(), _workflowTasks.pop(),
+				_workflowTasks.pop()),
 			(List<WorkflowTask>)page3.getItems());
 	}
 
@@ -455,36 +434,24 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Override
 	@Test
 	public void testGetWorkflowTasksAssignedToUserRolesPage() throws Exception {
-		Assignee assignee = AssigneeTestUtil.addAssignee(testGroup);
+		Assignee assignee = AssigneeTestUtil.addAssignee(
+			testGroup, RoleConstants.GUEST);
 
 		Page<WorkflowTask> page =
 			workflowTaskResource.getWorkflowTasksAssignedToUserRolesPage(
-				assignee.getId(), Pagination.of(1, 2));
+				assignee.getId(), Pagination.of(1, 1));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		WorkflowTask workflowTask1 =
-			testGetWorkflowTasksAssignedToUserRolesPage_addWorkflowTask(
-				randomWorkflowTask());
-
-		_assignWorkflowTaskToMyRolesPage(
-			TestPropsValues.getUser(), workflowTask1.getId());
-
-		WorkflowTask workflowTask2 =
-			testGetWorkflowTasksAssignedToUserRolesPage_addWorkflowTask(
-				randomWorkflowTask());
-
-		_assignWorkflowTaskToMyRolesPage(
-			TestPropsValues.getUser(), workflowTask2.getId());
+		UserTestUtil.addUserGroupRole(
+			assignee.getId(), testGroup.getGroupId(),
+			RoleConstants.SITE_CONTENT_REVIEWER);
 
 		page = workflowTaskResource.getWorkflowTasksAssignedToUserRolesPage(
-			assignee.getId(), Pagination.of(1, 2));
+			assignee.getId(), Pagination.of(1, 3));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(3, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2),
-			(List<WorkflowTask>)page.getItems());
 		assertValid(page);
 	}
 
@@ -492,27 +459,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Test
 	public void testGetWorkflowTasksAssignedToUserRolesPageWithPagination()
 		throws Exception {
-
-		WorkflowTask workflowTask1 =
-			testGetWorkflowTasksAssignedToUserRolesPage_addWorkflowTask(
-				randomWorkflowTask());
-
-		_assignWorkflowTaskToMyRolesPage(
-			TestPropsValues.getUser(), workflowTask1.getId());
-
-		WorkflowTask workflowTask2 =
-			testGetWorkflowTasksAssignedToUserRolesPage_addWorkflowTask(
-				randomWorkflowTask());
-
-		_assignWorkflowTaskToMyRolesPage(
-			TestPropsValues.getUser(), workflowTask2.getId());
-
-		WorkflowTask workflowTask3 =
-			testGetWorkflowTasksAssignedToUserRolesPage_addWorkflowTask(
-				randomWorkflowTask());
-
-		_assignWorkflowTaskToMyRolesPage(
-			TestPropsValues.getUser(), workflowTask3.getId());
 
 		Assignee assignee = AssigneeTestUtil.addAssignee(testGroup);
 
@@ -543,24 +489,23 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				assignee.getId(), Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
+			Arrays.asList(
+				_workflowTasks.pop(), _workflowTasks.pop(),
+				_workflowTasks.pop()),
 			(List<WorkflowTask>)page3.getItems());
 	}
 
 	@Override
 	@Test
 	public void testGetWorkflowTasksSubmittingUserPage() throws Exception {
+		Assignee assignee = AssigneeTestUtil.addAssignee(
+			testGroup, RoleConstants.GUEST);
+
 		Page<WorkflowTask> page =
 			workflowTaskResource.getWorkflowTasksSubmittingUserPage(
-				TestPropsValues.getUserId(), Pagination.of(1, 2));
+				assignee.getId(), Pagination.of(1, 3));
 
-		Assert.assertEquals(3, page.getTotalCount());
-
-		WorkflowTask workflowTask1 = testGetWorkflowTask_addWorkflowTask();
-
-		WorkflowTask workflowTask2 = testGetWorkflowTask_addWorkflowTask();
-
-		WorkflowTask workflowTask3 = testGetWorkflowTask_addWorkflowTask();
+		Assert.assertEquals(0, page.getTotalCount());
 
 		page = workflowTaskResource.getWorkflowTasksSubmittingUserPage(
 			TestPropsValues.getUserId(), Pagination.of(1, 3));
@@ -568,7 +513,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		Assert.assertEquals(3, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
+			Arrays.asList(
+				_workflowTasks.pop(), _workflowTasks.pop(),
+				_workflowTasks.pop()),
 			(List<WorkflowTask>)page.getItems());
 		assertValid(page);
 	}
@@ -577,12 +524,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Test
 	public void testGetWorkflowTasksSubmittingUserPageWithPagination()
 		throws Exception {
-
-		WorkflowTask workflowTask1 = testGetWorkflowTask_addWorkflowTask();
-
-		WorkflowTask workflowTask2 = testGetWorkflowTask_addWorkflowTask();
-
-		WorkflowTask workflowTask3 = testGetWorkflowTask_addWorkflowTask();
 
 		Page<WorkflowTask> page1 =
 			workflowTaskResource.getWorkflowTasksSubmittingUserPage(
@@ -611,7 +552,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				TestPropsValues.getUserId(), Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
+			Arrays.asList(
+				_workflowTasks.pop(), _workflowTasks.pop(),
+				_workflowTasks.pop()),
 			(List<WorkflowTask>)page3.getItems());
 	}
 
@@ -662,13 +605,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Override
 	@Test
 	public void testPatchWorkflowTaskChangeTransition() throws Exception {
-		WorkflowTask workflowTask1 =
-			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
-				null, null);
-
-		WorkflowTask workflowTask2 =
-			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
-				null, null);
+		WorkflowTask workflowTask1 = _workflowTasks.pop();
 
 		assertHttpResponseStatusCode(
 			204,
@@ -678,12 +615,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						{
 							transitionName = "join";
 							workflowTaskId = workflowTask1.getId();
-						}
-					},
-					new ChangeTransition() {
-						{
-							transitionName = "join";
-							workflowTaskId = workflowTask2.getId();
 						}
 					}
 				}));
@@ -698,8 +629,23 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						new ChangeTransition[] {
 							new ChangeTransition() {
 								{
-									transitionName = "approve";
+									transitionName = "join";
 									workflowTaskId = 0L;
+								}
+							}
+						}));
+
+			WorkflowTask workflowTask2 = _workflowTasks.pop();
+
+			assertHttpResponseStatusCode(
+				404,
+				workflowTaskResource.
+					patchWorkflowTaskChangeTransitionHttpResponse(
+						new ChangeTransition[] {
+							new ChangeTransition() {
+								{
+									transitionName = "non-existent-transition";
+									workflowTaskId = workflowTask2.getId();
 								}
 							}
 						}));
@@ -709,13 +655,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Override
 	@Test
 	public void testPatchWorkflowTaskUpdateDueDate() throws Exception {
-		WorkflowTask workflowTask1 =
-			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
-				null, null);
+		WorkflowTask workflowTask1 = _workflowTasks.pop();
 
-		WorkflowTask workflowTask2 =
-			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
-				null, null);
+		WorkflowTask workflowTask2 = _workflowTasks.pop();
 
 		assertHttpResponseStatusCode(
 			204,
@@ -763,35 +705,44 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Override
 	@Test
 	public void testPostWorkflowTaskAssignToMe() throws Exception {
-		WorkflowTask workflowTask = testGetWorkflowTask_addWorkflowTask();
+		WorkflowTask workflowTask = _workflowTasks.pop();
+
+		Page<WorkflowTask> page1 =
+			workflowTaskResource.getWorkflowTasksAssignedToMePage(
+				Pagination.of(1, 1));
+
+		Assert.assertEquals(0, page1.getTotalCount());
 
 		WorkflowTask postWorkflowTask =
 			workflowTaskResource.postWorkflowTaskAssignToMe(
 				workflowTask.getId(), new WorkflowTaskAssignToMe());
 
-		Page<WorkflowTask> page =
+		Page<WorkflowTask> page2 =
 			workflowTaskResource.getWorkflowTasksAssignedToMePage(
 				Pagination.of(1, 1));
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(1, page2.getTotalCount());
 
-		List<WorkflowTask> items = (List<WorkflowTask>)page.getItems();
+		List<WorkflowTask> items = (List<WorkflowTask>)page2.getItems();
 
 		equals(postWorkflowTask, items.get(0));
 
-		assertValid(page);
+		assertValid(page2);
 	}
 
 	@Override
 	@Test
 	public void testPostWorkflowTaskAssignToRole() throws Exception {
-		WorkflowTask workflowTask = testGetWorkflowTask_addWorkflowTask();
-
-		workflowTaskResource.postWorkflowTaskAssignToMe(
-			workflowTask.getId(), new WorkflowTaskAssignToMe());
+		WorkflowTask workflowTask = _workflowTasks.pop();
 
 		Role administratorRole = _roleLocalService.getRole(
 			testGroup.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		Page<WorkflowTask> page1 =
+			workflowTaskResource.getWorkflowTasksAssignedToRolePage(
+				administratorRole.getRoleId(), Pagination.of(1, 1));
+
+		Assert.assertEquals(0, page1.getTotalCount());
 
 		WorkflowTask postWorkflowTask =
 			workflowTaskResource.postWorkflowTaskAssignToRole(
@@ -802,23 +753,29 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 					}
 				});
 
-		Page<WorkflowTask> page =
+		Page<WorkflowTask> page2 =
 			workflowTaskResource.getWorkflowTasksAssignedToRolePage(
 				administratorRole.getRoleId(), Pagination.of(1, 3));
 
-		Assert.assertEquals(3, page.getTotalCount());
+		Assert.assertEquals(1, page2.getTotalCount());
 
-		List<WorkflowTask> items = (List<WorkflowTask>)page.getItems();
+		List<WorkflowTask> items = (List<WorkflowTask>)page2.getItems();
 
 		equals(postWorkflowTask, items.get(0));
 
-		assertValid(page);
+		assertValid(page2);
 	}
 
 	@Override
 	@Test
 	public void testPostWorkflowTaskAssignToUser() throws Exception {
-		WorkflowTask workflowTask = testGetWorkflowTask_addWorkflowTask();
+		WorkflowTask workflowTask = _workflowTasks.pop();
+
+		Page<WorkflowTask> page1 =
+			workflowTaskResource.getWorkflowTasksAssignedToUserPage(
+				TestPropsValues.getUserId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page1.getTotalCount());
 
 		WorkflowTask postWorkflowTask =
 			workflowTaskResource.postWorkflowTaskAssignToUser(
@@ -830,17 +787,17 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 					}
 				});
 
-		Page<WorkflowTask> page =
+		Page<WorkflowTask> page2 =
 			workflowTaskResource.getWorkflowTasksAssignedToUserPage(
 				TestPropsValues.getUserId(), Pagination.of(1, 2));
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(1, page2.getTotalCount());
 
-		List<WorkflowTask> items = (List<WorkflowTask>)page.getItems();
+		List<WorkflowTask> items = (List<WorkflowTask>)page2.getItems();
 
 		equals(postWorkflowTask, items.get(0));
 
-		assertValid(page);
+		assertValid(page2);
 	}
 
 	@Override
@@ -900,7 +857,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		WorkflowTask workflowTask2 = testGetWorkflowTask_addWorkflowTask();
 
 		Page<WorkflowTask> page = workflowTaskResource.postWorkflowTasksPage(
-			Pagination.of(1, 2), null,
+			Pagination.of(1, 3), null,
 			new WorkflowTasksBulkSelection() {
 				{
 					assigneeIds = new Long[] {TestPropsValues.getUserId()};
@@ -915,7 +872,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		assertValid(page);
 
 		page = workflowTaskResource.postWorkflowTasksPage(
-			Pagination.of(1, 2), null,
+			Pagination.of(1, 3), null,
 			new WorkflowTasksBulkSelection() {
 				{
 					workflowTaskNames = new String[] {"task2"};
@@ -1078,7 +1035,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		throws Exception {
 
 		for (Role role : RoleLocalServiceUtil.getUserRoles(user.getUserId())) {
-			WorkflowTaskManagerUtil.assignWorkflowTaskToRole(
+			_workflowTaskManager.assignWorkflowTaskToRole(
 				user.getCompanyId(), user.getUserId(), workflowTaskId,
 				role.getRoleId(), StringPool.BLANK, null, null);
 		}

@@ -14,7 +14,7 @@
 		padding: 10px;
 		text-transform: uppercase;
 	}
-	
+
 	#tip {
 		background-color: #F9F9F9;
 		border-radius: 8px;

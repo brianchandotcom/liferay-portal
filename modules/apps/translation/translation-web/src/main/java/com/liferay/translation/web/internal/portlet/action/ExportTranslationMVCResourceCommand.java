@@ -137,18 +137,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			String[] targetLanguageIds, Locale locale)
 		throws IOException, PortalException {
 
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
-
-		Object object = infoItemObjectProvider.getInfoItem(classPK);
-
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
-			className, infoItemObjectProvider, infoItemFieldValuesProvider);
+			className, _infoItemServiceTracker);
 
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
@@ -164,6 +154,16 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 					getTranslationInfoItemFieldValuesExporterOptional(
 						exportMimeType);
 
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
+
+		Object object = infoItemObjectProvider.getInfoItem(classPK);
+
 		TranslationInfoItemFieldValuesExporter
 			translationInfoItemFieldValuesExporter =
 				exportFileFormatOptional.orElseThrow(
@@ -173,8 +173,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		for (String targetLanguageId : targetLanguageIds) {
 			zipWriter.addEntry(
 				_getXLIFFFileName(
-					className, classPK, infoItemTitle, sourceLanguageId,
-					targetLanguageId, locale),
+					infoItemTitle, sourceLanguageId, targetLanguageId),
 				translationInfoItemFieldValuesExporter.
 					exportInfoItemFieldValues(
 						infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -185,28 +184,12 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private String _getXLIFFFileName(
-			String className, long classPK, String title,
-			String sourceLanguageId, String targetLanguageId, Locale locale)
+			String title, String sourceLanguageId, String targetLanguageId)
 		throws PortalException {
-
-		String suffix = StringPool.BLANK;
-
-		if (className.equals(SegmentsExperience.class.getName()) &&
-			(classPK != SegmentsExperienceConstants.ID_DEFAULT)) {
-
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.getSegmentsExperience(classPK);
-
-			suffix = StringBundler.concat(
-				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-				segmentsExperience.getName(locale),
-				StringPool.CLOSE_PARENTHESIS);
-		}
 
 		return StringBundler.concat(
 			StringPool.FORWARD_SLASH,
-			StringUtil.removeSubstrings(
-				title + suffix, PropsValues.DL_CHAR_BLACKLIST),
+			StringUtil.removeSubstrings(title, PropsValues.DL_CHAR_BLACKLIST),
 			StringPool.DASH, sourceLanguageId, StringPool.DASH,
 			targetLanguageId, ".xlf");
 	}
@@ -216,16 +199,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			Locale locale)
 		throws NoSuchInfoItemException {
 
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
-
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
-			className, infoItemObjectProvider, infoItemFieldValuesProvider);
+			className, _infoItemServiceTracker);
 
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);

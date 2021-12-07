@@ -16,6 +16,7 @@ package com.liferay.translation.web.internal.helper;
 
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.StringBundler;
@@ -36,12 +37,10 @@ import java.util.Optional;
 public class InfoItemHelper {
 
 	public InfoItemHelper(
-		String className, InfoItemObjectProvider<Object> infoItemObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider) {
+		String className, InfoItemServiceTracker infoItemServiceTracker) {
 
 		_className = className;
-		_infoItemObjectProvider = infoItemObjectProvider;
-		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
+		_infoItemServiceTracker = infoItemServiceTracker;
 	}
 
 	public Optional<String> getInfoItemTitleOptional(
@@ -56,11 +55,16 @@ public class InfoItemHelper {
 			InfoItemReference infoItemReference =
 				infoItemReferenceSuffixObjectValuePair.getKey();
 
-			Object object = _infoItemObjectProvider.getInfoItem(
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					infoItemReference.getClassName());
+
+			Object object = infoItemObjectProvider.getInfoItem(
 				infoItemReference.getClassPK());
 
 			return _getTitleOptional(
-				object, locale
+				infoItemReference.getClassName(), object, locale
 			).map(
 				title ->
 					title + infoItemReferenceSuffixObjectValuePair.getValue()
@@ -100,9 +104,15 @@ public class InfoItemHelper {
 				StringPool.CLOSE_PARENTHESIS));
 	}
 
-	private Optional<String> _getTitleOptional(Object object, Locale locale) {
+	private Optional<String> _getTitleOptional(
+		String className, Object object, Locale locale) {
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
 		InfoFieldValue<Object> titleInfoFieldValue =
-			_infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
+			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
 
 		if (titleInfoFieldValue != null) {
 			return Optional.ofNullable(
@@ -110,7 +120,7 @@ public class InfoItemHelper {
 		}
 
 		InfoFieldValue<Object> nameInfoFieldValue =
-			_infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
+			infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 
 		return Optional.ofNullable((String)nameInfoFieldValue.getValue(locale));
 	}
@@ -118,8 +128,6 @@ public class InfoItemHelper {
 	private static final Log _log = LogFactoryUtil.getLog(InfoItemHelper.class);
 
 	private final String _className;
-	private final InfoItemFieldValuesProvider<Object>
-		_infoItemFieldValuesProvider;
-	private final InfoItemObjectProvider<Object> _infoItemObjectProvider;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 
 }

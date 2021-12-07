@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.CharPool;
@@ -108,12 +107,7 @@ public class TranslationEntryAssetRenderer
 	@Override
 	public String getTitle(Locale locale) {
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
-			_translationEntry.getClassName(),
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, _translationEntry.getClassName()),
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				_translationEntry.getClassName()));
+			_translationEntry.getClassName(), _infoItemServiceTracker);
 
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(

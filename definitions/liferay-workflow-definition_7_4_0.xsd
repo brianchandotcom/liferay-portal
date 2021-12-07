@@ -316,6 +316,7 @@
 				<xs:element maxOccurs="unbounded" name="transition">
 					<xs:complexType>
 						<xs:sequence>
+							<xs:element minOccurs="0" ref="labels" />
 							<xs:element name="name" type="xs:string" />
 							<xs:element name="target" type="xs:string" />
 							<xs:element default="true" minOccurs="0" name="default" type="xs:boolean" />

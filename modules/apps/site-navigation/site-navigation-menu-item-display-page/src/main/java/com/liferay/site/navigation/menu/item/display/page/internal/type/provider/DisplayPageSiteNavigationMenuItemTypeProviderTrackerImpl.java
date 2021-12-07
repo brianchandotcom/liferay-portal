@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfigurationUtil;
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeSiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -136,12 +135,6 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 
 			InfoItemCapabilitiesProvider<?> infoItemCapabilitiesProvider =
 				_bundleContext.getService(serviceReference);
-
-			if (!FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
-					displayPageTypesEnabled()) {
-
-				return infoItemCapabilitiesProvider;
-			}
 
 			String className = GetterUtil.getString(
 				serviceReference.getProperty("item.class.name"));

@@ -152,11 +152,7 @@ definition {
 		task ("Goto new CP url and sign in") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/");
 
-			AssertClick(
-				locator1 = "UserBar#USER_SIGN_IN",
-				value1 = "Sign In");
-
-			AssertElementNotPresent(locator1 = "Icon#OPENID_CONNECT");
+			OpenIDConnect.viewNoProvider();
 		}
 
 		task ("Enable openID connect CP") {
@@ -189,11 +185,7 @@ definition {
 		task ("Go to able.com and assert openId connect") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/");
 
-			AssertClick(
-				locator1 = "UserBar#USER_SIGN_IN",
-				value1 = "Sign In");
-
-			AssertElementPresent(locator1 = "Icon#OPENID_CONNECT");
+			OpenIDConnect.viewProvider();
 		}
 	}
 

@@ -118,6 +118,14 @@ definition {
 			value1 = "${expirationTime}");
 	}
 
+	macro viewNoProvider {
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		AssertElementNotPresent(locator1 = "Icon#OPENID_CONNECT");
+	}
+
 	macro viewProvider {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",

@@ -91,7 +91,15 @@ definition {
 	macro viewDisplayNameOrDescriptionList {
 		var key_nameValue = "${nameValue}";
 
-		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION");
+		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION_LIST");
+	}
+
+	macro viewDataTypeList {
+		var key_attributeName = "${attributeName}";
+
+		AssertTextEquals(
+			locator1 = "ACCustomEvents#DATA_TYPE_LIST",
+			value1 = "${typeValue}");
 	}
 
 	macro viewInvalidCustomEventEdition {

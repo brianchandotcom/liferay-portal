@@ -16,6 +16,12 @@
 	<td>//td[contains(@class,'text-truncate')and text()='${key_nameValue}']</td>
 	<td></td>
 </tr>
+<!-- DATA_TYPE -->
+<tr>
+	<td>DATA_TYPE_LIST</td>
+	<td>//td[contains(@class,'text-truncate')and text()='${key_attributeName}']//following-sibling::td//div</td>
+	<td></td>
+</tr>
 <!-- EDIT_CUSTOM_EVENT -->
 <tr>
 	<td>EDIT_MODAL_TITLE</td>

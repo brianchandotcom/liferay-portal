@@ -75,8 +75,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8266 | Test Summary: Sites Report page has an empty state If no data source is connect"
 	@priority = "4"
 	test SitesReportPageHasEmptyStateIfNoDataSourceConnect {
-		property portal.upstream = "quarantine";
-
 		task ("Create site and page, connect the AC and disconnect") {
 			ACUtils.addSiteAndPage();
 

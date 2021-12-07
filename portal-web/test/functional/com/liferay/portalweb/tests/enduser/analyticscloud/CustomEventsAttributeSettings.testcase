@@ -1,0 +1,192 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10011 | Test Summary: Attributes shown in AC"
+	@priority = "5"
+	test CustomEventAttributeIsShownInACSettings {
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigation to attributes tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+        task ("Select an attribute") {
+			ACUtils.searchBar(searchItem = "category");
+
+			ACNavigation.openItem(itemName = "category");
+		}
+
+		task ("Check the data related to attribute appears") {
+			ACCustomEvents.viewDataAttribute(attributeValueList = "wetsuit");
+
+			ACCustomEvents.viewDataType(typeValue = "STRING");
+		}
+
+		task ("Back to Event Attributes and Navigation to attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+        task ("Select an attribute") {
+			ACUtils.searchBar(searchItem = "price");
+
+			ACNavigation.openItem(itemName = "price");
+		}
+
+		task ("Check the data related to attribute appears") {
+			ACCustomEvents.viewDataAttribute(attributeValueList = "259.95");
+
+			ACCustomEvents.viewDataType(typeValue = "NUMBER");
+		}
+
+		task ("Back to Event Attributes and Navigation to attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+        task ("Select an attribute") {
+			ACUtils.searchBar(searchItem = "temp");
+
+			ACNavigation.openItem(itemName = "temp");
+		}
+
+		task ("Check the data related to attribute appears") {
+			ACCustomEvents.viewDataAttribute(attributeValueList = "11");
+
+			ACCustomEvents.viewDataType(typeValue = "NUMBER");
+		}
+
+		task ("Back to Event Attributes and Navigation to attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+        task ("Select an attribute") {
+			ACUtils.searchBar(searchItem = "birthdate");
+
+			ACNavigation.openItem(itemName = "birthdate");
+		}
+
+		task ("Check the data related to attribute appears") {
+			ACCustomEvents.viewDataAttribute(attributeValueList = "2021-11-25T14:36:30.685Z");
+
+			ACCustomEvents.viewDataType(typeValue = "DATE");
+		}
+
+		task ("Back to Event Attributes and Navigation to attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+        task ("Select an attribute") {
+			ACUtils.searchBar(searchItem = "like");
+
+			ACNavigation.openItem(itemName = "like");
+		}
+
+		task ("Check the data related to attribute appears") {
+			ACCustomEvents.viewDataAttribute(attributeValueList = "true");
+
+			ACCustomEvents.viewDataType(typeValue = "BOOLEAN");
+		}
+	}

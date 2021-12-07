@@ -851,12 +851,6 @@ AUI.add(
 							params.privateLayout = privateLayoutNode.val();
 						}
 
-						var rootNodeNameNode = instance.byId('rootNodeName');
-
-						if (rootNodeNameNode) {
-							params.rootNodeName = rootNodeNameNode.val();
-						}
-
 						var portletURL = Liferay.Util.PortletURL.createPortletURL(
 							redirectNode.val(),
 							params

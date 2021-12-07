@@ -28,8 +28,6 @@ boolean privateLayout = false;
 if (tabs1.equals("private-pages")) {
 	privateLayout = true;
 }
-
-String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDisplay.getLocale());
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
@@ -52,7 +50,6 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 				<portlet:param name="liveGroupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</liferay-portlet:renderURL>
 
 			<aui:nav-item href="<%= exportPagesURL %>" label="export" />
@@ -63,7 +60,6 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</liferay-portlet:renderURL>
 
 			<aui:nav-item href="<%= importPagesURL %>" label="import" />

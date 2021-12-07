@@ -12,7 +12,7 @@
 <tbody>
 <!-- DISPLAY_NAME_OR_DESCRIPTION -->
 <tr>
-	<td>DISPLAY_NAME_OR_DESCRIPTION</td>
+	<td>DISPLAY_NAME_OR_DESCRIPTION_LIST</td>
 	<td>//td[contains(@class,'text-truncate')and text()='${key_nameValue}']</td>
 	<td></td>
 </tr>

@@ -88,7 +88,7 @@ definition {
 		return "${customEventName}";
 	}
 
-	macro viewDisplayNameOrDescription {
+	macro viewDisplayNameOrDescriptionList {
 		var key_nameValue = "${nameValue}";
 
 		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION");

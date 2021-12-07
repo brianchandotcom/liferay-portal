@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("Check if the display name has been changed") {
-			ACCustomEvents.viewDisplayNameOrDescription(nameValue = "${customEventName} Display Name");
+			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${customEventName} Display Name");
 		}
 	}
 
@@ -208,7 +208,7 @@ definition {
 		}
 
 		task ("Check if the description has been changed") {
-			ACCustomEvents.viewDisplayNameOrDescription(nameValue = "${customEventName} Description");
+			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${customEventName} Description");
 		}
 	}
 

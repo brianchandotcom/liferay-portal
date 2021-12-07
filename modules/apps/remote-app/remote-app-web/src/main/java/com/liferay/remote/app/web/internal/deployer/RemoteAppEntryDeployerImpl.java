@@ -32,6 +32,7 @@ import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
@@ -67,10 +68,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 		serviceRegistrations.add(_registerPortlet(remoteAppEntry));
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			serviceRegistrations.add(
-				_registerResourceBundle(locale, remoteAppEntry));
-		}
+		serviceRegistrations.addAll(_registerResourceBundles(remoteAppEntry));
 
 		return serviceRegistrations;
 	}
@@ -130,6 +128,9 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			).put(
 				"com.liferay.portlet.instanceable",
 				remoteAppEntry.isInstanceable()
+			//).put(
+			//	"javax.portlet.display-name",
+			//	remoteAppEntry.getName(LocaleUtil.US)
 			).put(
 				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).put(
@@ -173,15 +174,22 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			dictionary);
 	}
 
-	private ServiceRegistration<?> _registerResourceBundle(
-		Locale locale, RemoteAppEntry remoteAppEntry) {
+	private Collection<? extends ServiceRegistration<?>>
+		_registerResourceBundles(RemoteAppEntry remoteAppEntry) {
 
-		return _bundleContext.registerService(
-			ResourceBundle.class,
-			new RemoteAppEntryResourceBundle(
-				locale, _getPortletId(remoteAppEntry), remoteAppEntry),
-			MapUtil.singletonDictionary(
-				"language.id", LocaleUtil.toLanguageId(locale)));
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					ResourceBundle.class,
+					new RemoteAppEntryResourceBundle(
+						locale, _getPortletId(remoteAppEntry), remoteAppEntry),
+					MapUtil.singletonDictionary(
+						"language.id", LocaleUtil.toLanguageId(locale))));
+		}
+
+		return serviceRegistrations;
 	}
 
 	private BundleContext _bundleContext;

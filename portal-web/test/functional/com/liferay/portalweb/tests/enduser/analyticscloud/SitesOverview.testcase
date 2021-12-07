@@ -35,7 +35,6 @@ definition {
 	@priority = "3"
 	test CanViewSitesOverviewDashboardCards {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 

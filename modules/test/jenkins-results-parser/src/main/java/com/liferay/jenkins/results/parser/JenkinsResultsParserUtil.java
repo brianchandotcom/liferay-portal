@@ -911,6 +911,15 @@ public class JenkinsResultsParserUtil {
 		return prefix + fileName;
 	}
 
+	public static String fixFileURL(String fileURL) {
+		try {
+			return URLDecoder.decode(fileURL, "UTF-8");
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new RuntimeException(unsupportedEncodingException);
+		}
+	}
+
 	public static String fixJSON(String json) {
 		json = json.replaceAll("'", "&#39;");
 		json = json.replaceAll("<", "&#60;");

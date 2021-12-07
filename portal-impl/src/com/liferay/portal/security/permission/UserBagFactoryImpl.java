@@ -15,13 +15,11 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactory;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -76,30 +74,10 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			allGroupIds.add(groupId);
 		}
 
-		long[] userGroupIds = null;
+		long[] userGroupIds = UserLocalServiceUtil.getGroupPrimaryKeys(userId);
 
-		if (userOrgs.isEmpty() && userUserGroups.isEmpty()) {
-			userGroupIds = UserLocalServiceUtil.getGroupPrimaryKeys(userId);
-
-			for (long userGroupId : userGroupIds) {
-				allGroupIds.add(userGroupId);
-			}
-		}
-		else {
-			List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(
-				userId, true);
-
-			userGroupIds = new long[userGroups.size()];
-
-			for (int i = 0; i < userGroups.size(); i++) {
-				Group userGroup = userGroups.get(i);
-
-				long groupId = userGroup.getGroupId();
-
-				userGroupIds[i] = groupId;
-
-				allGroupIds.add(groupId);
-			}
+		for (long userGroupId : userGroupIds) {
+			allGroupIds.add(userGroupId);
 		}
 
 		if (allGroupIds.isEmpty()) {

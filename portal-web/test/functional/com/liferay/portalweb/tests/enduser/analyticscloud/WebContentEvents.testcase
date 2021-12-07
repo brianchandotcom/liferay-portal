@@ -68,6 +68,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8706 | Test Summary: Check webContentClicked triggers and check its properties (see reference document in comments)"
 	@priority = "5"
 	test CheckWebContentClickedProperties {
+		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {
@@ -157,6 +158,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8707 | Test Summary: Check webContentViewed triggers and check its properties (see reference document in comments)"
 	@priority = "5"
 	test CheckWebContentViewedProperties {
+		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

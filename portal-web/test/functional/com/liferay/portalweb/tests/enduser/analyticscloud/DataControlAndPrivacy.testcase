@@ -59,6 +59,8 @@ definition {
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
 	@priority = "5"
 	test CanCreateAccessRequest {
+		property portal.upstream = "quarantine";
+
 		task ("Create Access Request") {
 			ACNavigation.goToSettings();
 
@@ -81,6 +83,8 @@ definition {
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"
 	@priority = "5"
 	test CanCreateDeleteRequest {
+		property portal.upstream = "quarantine";
+
 		task ("Create Delete Request") {
 			ACNavigation.goToSettings();
 
@@ -103,6 +107,8 @@ definition {
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"
 	@priority = "5"
 	test CanCreateSuppressRequest {
+		property portal.upstream = "quarantine";
+
 		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
 

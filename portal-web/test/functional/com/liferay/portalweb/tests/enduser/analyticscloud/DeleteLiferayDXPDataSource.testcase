@@ -35,6 +35,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8852 | Test Summary: Delete a DXP Data Source connected via Token Auth"
 	@priority = "4"
 	test DeleteDXPDataSourceViaTokenAuth {
+		property portal.upstream = "quarantine";
+
 		task ("Site creation and connection with AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 

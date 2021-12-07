@@ -600,6 +600,8 @@ definition {
 	@description = "Automation ID: LRAC-9091 | Test Summary: Owner can remove data sources"
 	@priority = "5"
 	test OwnerCanRemoveDataSources {
+		property portal.upstream = "quarantine";
+
 		task ("Connect DXP to AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 

@@ -186,6 +186,11 @@ public class RemoteAppEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getRemoteAppEntriesCount(long companyId) throws PortalException {
+		return remoteAppEntryPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
 	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
@@ -220,11 +225,6 @@ public class RemoteAppEntryLocalServiceImpl
 		_serviceRegistrationsMaps.put(
 			remoteAppEntry.getRemoteAppEntryId(),
 			_remoteAppEntryDeployer.deploy(remoteAppEntry));
-	}
-
-	@Override
-	public int getRemoteAppEntriesCount(long companyId) throws PortalException {
-		return remoteAppEntryPersistence.countByCompanyId(companyId);
 	}
 
 	@Override

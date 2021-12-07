@@ -40,17 +40,7 @@
 	}
 
 	#tip #dismiss {
-		background: none;
-		border: none;
-		color: #7D7E85;
-		cursor: pointer;
-		padding: 0;
 		text-decoration-line: underline;
-	}
-
-	#tip .title {
-		font-size: 24px;
-		word-wrap: break-word;
 	}
 
 	<#if titleIcon.getData() ?? && titleIcon.getData() != "">
@@ -119,7 +109,7 @@
 
 <div id="tip">
 	<#if (title.getData())??>
-		<h1 class="title">${title.getData()}</h1>
+		<h4 class="title font-weight-bolder">${title.getData()}</h4>
 	</#if>
 
 	<#if (subtitle.getData())??>
@@ -155,7 +145,7 @@
 
 	<#if pageOptions.getData()?contains("dismissible")>
 		<div class="d-flex justify-content-center">
-			<button type="button" id="dismiss" onclick="event.preventDefault(); document.getElementById('tip').classList.add('hide');">Dismiss</button>
+			<button class="btn btn-link font-weight-normal p-0 text-neutral-8" type="button" id="dismiss" onclick="event.preventDefault(); document.getElementById('tip').classList.add('hide');">Dismiss</button>
 		</div>
 	</#if>
 </div>

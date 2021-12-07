@@ -1077,8 +1077,6 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
-		property portal.upstream = "quarantine";
-
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

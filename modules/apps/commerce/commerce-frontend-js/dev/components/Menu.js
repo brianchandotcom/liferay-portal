@@ -48,6 +48,7 @@ function Menu({spritemap}) {
 											symbol="caret-right"
 										/>
 									</ClayList.ItemField>
+
 									<ClayList.ItemField>
 										<ClayLink
 											href={`#${component.entry}`}
@@ -62,6 +63,7 @@ function Menu({spritemap}) {
 							))}
 					</ClayList>
 				</div>
+
 				<div className="col-9">
 					{current && <iframe frameBorder="0" src={current}></iframe>}
 				</div>

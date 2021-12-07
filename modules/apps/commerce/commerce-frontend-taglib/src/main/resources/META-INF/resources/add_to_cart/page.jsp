@@ -17,8 +17,8 @@
 <%@ include file="/add_to_cart/init.jsp" %>
 
 <%
-String spacer = size.equals("sm") ? "1" : "3";
 String spaceDirection = GetterUtil.getBoolean(inline) ? "ml" : "mt";
+String spacer = size.equals("sm") ? "1" : "3";
 
 String buttonCssClasses = "btn btn-add-to-cart btn-" + size + " " + spaceDirection + "-" + spacer;
 
@@ -56,6 +56,7 @@ if (alignment.equals("full-width")) {
 <aui:script require="commerce-frontend-js/components/add_to_cart/entry as AddToCart">
 	const props = {
 		accountId: <%= commerceAccountId %>,
+		cartId: <%= commerceOrderId %>,
 		channel: {
 			currencyCode: '<%= commerceCurrencyCode %>',
 			groupId: <%= commerceChannelGroupId %>,
@@ -67,7 +68,6 @@ if (alignment.equals("full-width")) {
 			skuId: <%= cpInstanceId %>,
 			stockQuantity: <%= stockQuantity %>,
 		},
-		cartId: <%= commerceOrderId %>,
 		disabled: <%= disabled %>,
 		settings: {
 			alignment: '<%= alignment %>',

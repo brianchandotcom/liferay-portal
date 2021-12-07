@@ -49,6 +49,7 @@ function AddToCart({
 	disabled: initialDisabled,
 	settings,
 }) {
+	const account = useCommerceAccount({id: initialAccountId});
 	const cart = useCommerceCart(
 		{
 			UUID: initialCartUUID,
@@ -56,7 +57,6 @@ function AddToCart({
 		},
 		channel.groupId
 	);
-	const account = useCommerceAccount({id: initialAccountId});
 	const [cpInstance, setCpInstance] = useState({
 		...initialCpInstance,
 		quantity: getMinQuantity(settings),
@@ -194,7 +194,7 @@ AddToCart.propTypes = {
 			minQuantity: PropTypes.number,
 			multipleQuantity: PropTypes.number,
 		}),
-		size: PropTypes.oneOf(['sm', 'md', 'lg']),
+		size: PropTypes.oneOf(['lg', 'md', 'sm']),
 	}),
 };
 

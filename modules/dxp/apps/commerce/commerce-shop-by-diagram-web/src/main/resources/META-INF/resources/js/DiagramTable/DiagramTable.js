@@ -63,15 +63,15 @@ function DiagramTable({
 	productId,
 }) {
 	const [currentPage, setCurrentPage] = useState(1);
-	const [loaderActive, setLoaderActive] = useState(true);
 	const [lastPage, setLastPage] = useState(null);
-	const [query, setQuery] = useState('');
+	const [loaderActive, setLoaderActive] = useState(true);
 	const [mappedProducts, setMappedProducts] = useState(null);
+	const [newQuantities, setNewQuantities] = useState({});
+	const [query, setQuery] = useState('');
 	const [refreshTrigger, setRefreshTrigger] = useState(false);
 	const [selectedSkusId, setSelectedSkusId] = useState([]);
-	const [newQuantities, setNewQuantities] = useState({});
-	const commerceCart = useCommerceCart({id: initialCartId});
 	const commerceAccount = useCommerceAccount({id: initialAccountId});
+	const commerceCart = useCommerceCart({id: initialCartId});
 	const wrapperRef = useRef();
 
 	const handleDiagramUpdated = useCallback(

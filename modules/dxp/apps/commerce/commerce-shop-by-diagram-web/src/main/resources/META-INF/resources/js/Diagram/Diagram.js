@@ -144,14 +144,14 @@ function Diagram({
 	};
 
 	const handlePinSave = (type, quantity, sequence, linkedProduct) => {
+		const update = Boolean(tooltipData.selectedPin?.id);
+
 		const linkedProductDetails = formatMappedProduct(
 			type,
 			quantity,
 			sequence,
 			linkedProduct
 		);
-
-		const update = Boolean(tooltipData.selectedPin?.id);
 
 		return savePin(
 			update ? tooltipData.selectedPin.id : null,

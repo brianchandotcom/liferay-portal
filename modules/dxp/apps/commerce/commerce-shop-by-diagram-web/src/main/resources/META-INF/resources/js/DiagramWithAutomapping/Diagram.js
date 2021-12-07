@@ -56,12 +56,6 @@ function Diagram({
 	productBaseURL,
 	productId,
 }) {
-	const commerceCart = useCommerceCart({id: initialCartId});
-	const commerceAccount = useCommerceAccount({id: initialAccountId});
-	const chartInstanceRef = useRef(null);
-	const svgRef = useRef(null);
-	const wrapperRef = useRef(null);
-	const zoomHandlerRef = useRef(null);
 	const [mappedProducts, setMappedProducts] = useState(null);
 	const [tooltipData, setTooltipData] = useState(false);
 	const [currentZoom, setCurrentZoom] = useState(1);
@@ -69,7 +63,13 @@ function Diagram({
 	const [labels, setLabels] = useState([]);
 	const [selectedText, setSelectedText] = useState(null);
 	const [highlightedTexts, setHighlightedTexts] = useState([]);
+	const chartInstanceRef = useRef(null);
+	const commerceAccount = useCommerceAccount({id: initialAccountId});
+	const commerceCart = useCommerceCart({id: initialCartId});
 	const isMounted = useIsMounted();
+	const svgRef = useRef(null);
+	const wrapperRef = useRef(null);
+	const zoomHandlerRef = useRef(null);
 
 	useEffect(() => {
 		getMappedProducts(
@@ -228,12 +228,12 @@ function Diagram({
 		};
 	}, [
 		channelId,
-		handleMouseEnterOnLabel,
+		commerceAccount,
 		isAdmin,
+		handleMouseEnterOnLabel,
 		labels,
 		mappedProducts,
 		productId,
-		commerceAccount,
 	]);
 
 	useLayoutEffect(() => {

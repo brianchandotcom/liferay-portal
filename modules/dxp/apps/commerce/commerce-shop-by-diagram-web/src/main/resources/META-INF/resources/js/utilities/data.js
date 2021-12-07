@@ -13,6 +13,8 @@ import {fetch} from 'frontend-js-web';
 
 import {HEADERS} from './constants';
 
+export const CART_FRONTSTORE_ENDPOINT_BASE =
+	'/o/headless-commerce-delivery-cart/v1.0/carts';
 export const PINS_ADMIN_ENDPOINT_BASE =
 	'/o/headless-commerce-admin-catalog/v1.0';
 export const PINS_FRONTSTORE_ENDPOINT_BASE =
@@ -179,11 +181,12 @@ export function getMappedProducts(
 
 	return fetch(url, {
 		headers: HEADERS,
-	}).then((response) => {
-		if (!response.ok) {
-			throw new Error(Liferay.Language.get('unexpected-error'));
-		}
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(Liferay.Language.get('unexpected-error'));
+			}
 
-		return response.json();
-	});
+			return response.json();
+		})
 }

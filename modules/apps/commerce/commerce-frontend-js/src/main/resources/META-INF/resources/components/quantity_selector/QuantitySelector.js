@@ -68,7 +68,7 @@ QuantitySelector.propTypes = {
 	name: PropTypes.string,
 	onUpdate: PropTypes.func.isRequired,
 	quantity: PropTypes.number,
-	size: PropTypes.oneOf(['sm', 'md', 'lg']),
+	size: PropTypes.oneOf(['lg', 'md', 'sm']),
 };
 
 export default QuantitySelector;

@@ -12,10 +12,9 @@
  * details.
  */
 
-import React from 'react';
-
 import {DataSet} from '@liferay/frontend-data-set-web';
 import {render} from '@liferay/frontend-js-react-web';
+import React from 'react';
 
 import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
@@ -214,12 +213,14 @@ const fluidDataSetProps = {
 						<h4 className="bg-dark mb-0 p-3 text-center text-white">
 							Hey, I&apos;m a custom template from the outside
 						</h4>
+
 						{props.items.map((item) => (
 							<div
 								className="bg-white p-3 text-center"
 								key={item.skuId}
 							>
 								<strong className="mr-3">{item.skuId}</strong>
+
 								{item.name}
 							</div>
 						))}

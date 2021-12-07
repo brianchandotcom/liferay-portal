@@ -31,9 +31,6 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String alignment = (String)request.getAttribute("liferay-commerce:add-to-cart:alignment");
-String size = (String)request.getAttribute("liferay-commerce:add-to-cart:size");
-String inline = (String)request.getAttribute("liferay-commerce:add-to-cart:inline");
-String iconOnly = (String)request.getAttribute("liferay-commerce:add-to-cart:iconOnly");
 String disabled = (String)request.getAttribute("liferay-commerce:add-to-cart:disabled");
 String commerceAccountId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceAccountId");
 String commerceChannelGroupId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceChannelGroupId");
@@ -41,10 +38,13 @@ String commerceChannelId = (String)request.getAttribute("liferay-commerce:add-to
 String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceCurrencyCode");
 String commerceOrderId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceOrderId");
 String cpInstanceId = (String)request.getAttribute("liferay-commerce:add-to-cart:cpInstanceId");
+String iconOnly = (String)request.getAttribute("liferay-commerce:add-to-cart:iconOnly");
 String inCart = (String)request.getAttribute("liferay-commerce:add-to-cart:inCart");
+String inline = (String)request.getAttribute("liferay-commerce:add-to-cart:inline");
 String namespace = (String)request.getAttribute("liferay-commerce:add-to-cart:namespace");
 String options = (String)request.getAttribute("liferay-commerce:add-to-cart:options");
 ProductSettingsModel productSettingsModel = (ProductSettingsModel)request.getAttribute("liferay-commerce:add-to-cart:productSettingsModel");
+String size = (String)request.getAttribute("liferay-commerce:add-to-cart:size");
 String stockQuantity = (String)request.getAttribute("liferay-commerce:add-to-cart:stockQuantity");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;

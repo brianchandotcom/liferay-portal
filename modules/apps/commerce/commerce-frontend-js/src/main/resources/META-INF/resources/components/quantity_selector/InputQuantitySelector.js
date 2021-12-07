@@ -31,14 +31,14 @@ function InputQuantitySelector({
 	onUpdate,
 	quantity,
 }) {
-	const inputMin = useMemo(
-		() => getProductMinQuantity(minQuantity, multipleQuantity),
-		[multipleQuantity, minQuantity]
-	);
-
 	const inputMax = useMemo(
 		() => getProductMaxQuantity(maxQuantity, multipleQuantity),
 		[maxQuantity, multipleQuantity]
+	);
+
+	const inputMin = useMemo(
+		() => getProductMinQuantity(minQuantity, multipleQuantity),
+		[multipleQuantity, minQuantity]
 	);
 
 	const [typedQuantity, setTypedQuantity] = useState(quantity);

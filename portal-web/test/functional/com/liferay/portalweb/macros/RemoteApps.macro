@@ -43,8 +43,6 @@ definition {
 	macro deleteRemoteAppAPI {
 		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
 
-		WaitForSPARefresh();
-
 		var remoteAppNameToBeRemoved = RemoteApps.getRemoteAppEntryName();
 
 		RemoteApps._deleteRemoteAppAPI();

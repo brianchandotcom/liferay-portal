@@ -30,8 +30,6 @@ definition {
 
 		var remoteAppName = "My New Remote App To Delete";
 
-		RemoteApps.tearDown();
-
 		JSONRemoteApp.addIFrameRemoteAppEntry(
 			iFrameURL = "http://www.liferay.com/my_new_remote_app",
 			name = "${remoteAppName}");

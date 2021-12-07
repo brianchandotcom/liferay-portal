@@ -440,6 +440,23 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		return joinXor;
 	}
 
+	protected Map<Locale, String> parseLabels(Element labelsElement) {
+		if (labelsElement == null) {
+			return Collections.emptyMap();
+		}
+
+		Map<Locale, String> labelMap = new HashMap<>();
+
+		for (Element labelElement : labelsElement.elements()) {
+			labelMap.put(
+				LocaleUtil.fromLanguageId(
+					labelElement.attributeValue("language-id")),
+				labelElement.getText());
+		}
+
+		return labelMap;
+	}
+
 	protected void parseLabels(Element labelsElement, Node node) {
 		if (labelsElement == null) {
 			return;
@@ -875,7 +892,8 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				transitionElement.elementTextTrim("default"), true);
 
 			Transition transition = new Transition(
-				transitionName, sourceNode, targetNode, defaultValue);
+				defaultValue, parseLabels(transitionElement.element("labels")),
+				transitionName, sourceNode, targetNode);
 
 			Element timerElement = transitionElement.element("timer");
 

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
@@ -167,12 +168,16 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			HttpSession httpSession = httpServletRequest.getSession();
 
+			int workflowAction = ParamUtil.getInteger(
+				actionRequest, "workflowAction",
+				WorkflowConstants.ACTION_PUBLISH);
+
 			httpSession.setAttribute(
 				ImportTranslationResultsDisplayContext.class.getName(),
 				new ImportTranslationResultsDisplayContext(
 					classNameId, classPK, themeDisplay.getCompanyId(), groupId,
 					failureMessages, fileName, successMessages, title,
-					_workflowDefinitionLinkLocalService));
+					workflowAction, _workflowDefinitionLinkLocalService));
 		}
 		catch (Exception exception) {
 			try {

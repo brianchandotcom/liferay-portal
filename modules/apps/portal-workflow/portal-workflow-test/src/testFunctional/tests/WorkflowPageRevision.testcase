@@ -244,6 +244,8 @@ definition {
 	@description = "Verify that a Staging Area Page is Pending after it is submitted for publication"
 	@priority = "5"
 	test StatusIsPendingAfterSubmitForPublication {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "${pageName}",
 			siteName = "${siteName}");

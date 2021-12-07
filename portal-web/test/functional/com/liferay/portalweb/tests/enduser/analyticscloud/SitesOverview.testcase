@@ -50,8 +50,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8260 | Test Summary: Site report page returns all cards filled out according to the site selected in the Site dropdown field"
 	@priority = "5"
 	test SiteReportPageReturnsAllCardsFilledAccordingSiteSelected {
-		property portal.upstream = "quarantine";
-
 		ACUtils.addSiteAndPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

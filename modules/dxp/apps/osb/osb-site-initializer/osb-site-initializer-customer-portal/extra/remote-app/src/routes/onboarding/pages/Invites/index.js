@@ -57,7 +57,9 @@ const Invites = () => {
 	const hasSubscriptionsDXPCloud = !!data?.c?.accountSubscriptionGroups?.items
 		?.length;
 
-	const nextStep = hasSubscriptionsDXPCloud ? steps.dxpCloud : steps.successDxpCloud;
+	const nextStep = hasSubscriptionsDXPCloud
+		? steps.dxpCloud
+		: steps.successDxpCloud;
 
 	const handleSkip = () => {
 		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${

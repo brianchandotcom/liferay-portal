@@ -111,6 +111,11 @@ export function handleAction(
 
 		window.open(url);
 	}
+	else if (target === 'self') {
+		event.preventDefault();
+
+		window.open(url, '_self');
+	}
 	else if (onClick) {
 		event.preventDefault();
 
@@ -410,6 +415,8 @@ ActionsDropdownRenderer.propTypes = {
 				'async',
 				'headless',
 				'inlineEdit',
+				'blank',
+				'self',
 			]),
 		})
 	),

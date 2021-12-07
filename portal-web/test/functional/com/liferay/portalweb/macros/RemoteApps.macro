@@ -49,11 +49,11 @@ definition {
 				value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementAllFields(
-				entryName = "${entryName}",
-				entryHTMLName = "${entryHTMLName}",
-				entryURL = "${entryURL}",
-				entryCSSURL = "${entryCSSURL}",
-				entryProperties = "${entryProperties}");
+			entryCSSURL = "${entryCSSURL}",
+			entryHTMLName = "${entryHTMLName}",
+			entryName = "${entryName}",
+			entryProperties = "${entryProperties}",
+			entryURL = "${entryURL}");
 
 		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
 
@@ -61,42 +61,41 @@ definition {
 	}
 
 	macro editCustomElement {
-
 		TripleClick(
-				key_text = "Name",
-				locator1 = "TextInput#ANY");
+			key_text = "Name",
+			locator1 = "TextInput#ANY");
 
 		Type(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "${entryName}");
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryName}");
 
 		TripleClick(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY");
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY");
 
 		Type(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY",
-				value1 = "${entryHTMLName}");
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryHTMLName}");
 
 		TripleClick(
-				key_text = "CSS URL",
-				locator1 = "TextInput#ANY");
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY");
 
 		Type(
-				key_text = "CSS URL",
-				locator1 = "TextInput#ANY",
-				value1 = "${entryCSSURL}");
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryCSSURL}");
 
 		TripleClick(
-				key_text = "Properties",
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES");
+			key_text = "Properties",
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES");
 
 		Type(
-				key_text = "Properties",
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
-				value1 = "${entryProperties}");
+			key_text = "Properties",
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			value1 = "${entryProperties}");
 
 		PortletEntry.publish();
 	}
@@ -147,11 +146,11 @@ definition {
 	}
 
 	macro viewCustomElementFields {
-		 AssertTextEquals(
-			 custom_entryName = "${entryName}",
-			 key_text = "Name",
-			 locator1 = "TextInput#ANY",
-			 value1 = "${entryName}");
+		AssertTextEquals(
+			custom_entryName = "${entryName}",
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryName}");
 
 		AssertTextEquals(
 			custom_entryHTMLName = "${entryHTMLName}",

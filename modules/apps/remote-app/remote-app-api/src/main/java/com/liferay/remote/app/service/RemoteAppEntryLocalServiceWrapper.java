@@ -81,13 +81,6 @@ public class RemoteAppEntryLocalServiceWrapper
 		return _remoteAppEntryLocalService.addRemoteAppEntry(remoteAppEntry);
 	}
 
-	@Override
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _remoteAppEntryLocalService.countByCompanyId(companyId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

@@ -34,8 +34,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8153 | Test Summary: Redirects to Accounts page"
 	@priority = "5"
 	test CanRedirectsToAccountsPage {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();

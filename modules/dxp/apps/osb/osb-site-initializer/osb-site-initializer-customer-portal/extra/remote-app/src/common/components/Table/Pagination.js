@@ -1,31 +1,30 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 const TablePagination = ({
+	activeDelta = 5,
 	activePage,
+	ellipsisBuffer = 3,
 	itemsPerPage,
 	setActivePage,
-	totalItems,
+	showDeltasDropDown = false,
+	totalItems
 }) => {
-	const handlePageChange = (page) => {
-		setActivePage(page);
-	};
-
 	return (
 		<>
 			{totalItems > itemsPerPage ? (
 				<div className="mb-3 mx-3">
 					<ClayPaginationBarWithBasicItems
-						activeDelta={5}
+						activeDelta={activeDelta}
 						activePage={activePage}
-						ellipsisBuffer={3}
-						onPageChange={handlePageChange}
-						showDeltasDropDown={false}
+						ellipsisBuffer={ellipsisBuffer}
+						onPageChange={(page) => setActivePage(page)}
+						showDeltasDropDown={showDeltasDropDown}
 						spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`}
 						totalItems={totalItems}
 					/>
 				</div>
 			) : (
-				<p className="mb-4 mx-4 text-paragraph">{`Showing 1 to ${totalItems} of ${totalItems} entries.`}</p>
+				<p className="mb-4 mx-4 text-paragraph">{`Showing ${(itemsPerPage * activePage) + 1 - itemsPerPage} to ${itemsPerPage * activePage} of ${totalItems} entries.`}</p>
 			)}
 		</>
 	);

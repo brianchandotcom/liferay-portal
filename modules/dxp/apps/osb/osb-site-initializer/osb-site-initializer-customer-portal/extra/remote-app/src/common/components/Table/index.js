@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import ClayTable from '@clayui/table';
 import React from 'react';
 import TablePagination from './Pagination';
@@ -21,13 +20,14 @@ const Table = ({
 							<ClayTable.Cell
 								align={column.align}
 								className={
-									column.headerClass ||
+									column.header.styles ||
 									'bg-neutral-1 font-weight-bold text-neutral-8'
 								}
+								expanded={column.expanded}
 								headingCell
 								key={column.accessor}
 							>
-								{column.Header}
+								{column.header.name}
 							</ClayTable.Cell>
 						))}
 					</ClayTable.Row>
@@ -43,9 +43,7 @@ const Table = ({
 									headingTitle={column.headingTitle}
 									key={item[column.accessor]}
 								>
-									{column.Cell
-										? column.Cell(item)
-										: item[column.accessor]}
+									{item[column.accessor]}
 								</ClayTable.Cell>
 							))}
 						</ClayTable.Row>

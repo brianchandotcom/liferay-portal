@@ -1,0 +1,18 @@
+.cke_contents,
+.CodeMirror {
+	height: calc(100vh - 90px - 64px - 56px) !important;
+}
+
+#cke_1_top {
+	display: none;
+}
+
+.source-toolbar {
+	background-color: white;
+
+	span {
+		color: #272833;
+		font-size: 20px;
+		font-weight: 700;
+	}
+}

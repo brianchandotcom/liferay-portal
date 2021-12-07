@@ -9,16 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
 	}
 
 	tearDown {

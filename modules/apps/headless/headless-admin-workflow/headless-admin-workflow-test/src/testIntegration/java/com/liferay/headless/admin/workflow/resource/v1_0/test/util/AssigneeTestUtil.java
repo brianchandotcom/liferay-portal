@@ -30,6 +30,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 public class AssigneeTestUtil {
 
 	public static Assignee addAssignee(Group group) throws Exception {
+		return addAssignee(group, RoleConstants.SITE_CONTENT_REVIEWER);
+	}
+
+	public static Assignee addAssignee(Group group, String roleName)
+		throws Exception {
+
 		User user = UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			RandomTestUtil.randomString(),
@@ -39,8 +45,7 @@ public class AssigneeTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 
 		UserTestUtil.addUserGroupRole(
-			user.getUserId(), group.getGroupId(),
-			RoleConstants.SITE_CONTENT_REVIEWER);
+			user.getUserId(), group.getGroupId(), roleName);
 
 		return new Assignee() {
 			{

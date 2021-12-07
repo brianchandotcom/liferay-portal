@@ -253,7 +253,7 @@ public class DXPCloudClientTestrayImporter {
 			int x = content.indexOf("<system-out>");
 			int y = content.indexOf("</system-err>") + 13;
 
-			content = content.replace(content.substring(x, y), "");
+			content = content.substring(0, x) + content.substring(y);
 
 			Document document = Dom4JUtil.parse(content);
 

@@ -23,6 +23,7 @@ export function CardFormActionsWithSave({
 
 	const [showProgressModal, setShowProgressModal] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [errorModal, setErrorModal] = useState();
 
 	const onClickSaveAndExit = async () => {
 		setLoading(true);
@@ -39,8 +40,10 @@ export function CardFormActionsWithSave({
 
 	return (
 		<>
-			{errors?.continueButton?.message && (
-				<WarningBadge>{errors?.continueButton?.message}</WarningBadge>
+			{(errors?.continueButton?.message || errorModal) && (
+				<WarningBadge>
+					{errors?.continueButton?.message || errorModal}
+				</WarningBadge>
 			)}
 			<div className="card-actions">
 				{onPrevious && (
@@ -82,6 +85,7 @@ export function CardFormActionsWithSave({
 				<ProgressSavedModal
 					email={email}
 					onClose={() => setShowProgressModal(false)}
+					setError={(message) => setErrorModal(message)}
 					show={showProgressModal}
 				/>
 			</div>

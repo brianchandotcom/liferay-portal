@@ -1,6 +1,5 @@
 import ClayIcon from '@clayui/icon';
 import Modal from '../../../../../../common/components/modal';
-
 import {LiferayService} from '../../../../../../common/services/liferay';
 import {
 	STORAGE_KEYS,
@@ -11,23 +10,28 @@ import {createQuoteRetrieve} from '../../../../services/QuoteRetrieve';
 
 const liferaySiteName = LiferayService.getLiferaySiteName();
 
-const ProgressSaved = ({email, onClose, show}) => {
+const ProgressSaved = ({email, onClose, setError, show}) => {
 	const onSendLinkAndExit = async () => {
-		const applicationId = Storage.getItem(STORAGE_KEYS.APPLICATION_ID);
+		try {
+			const applicationId = Storage.getItem(STORAGE_KEYS.APPLICATION_ID);
 
-		const raylifeProductName = JSON.parse(
-			Storage.getItem(STORAGE_KEYS.PRODUCT)
-		).productName;
+			const raylifeProductName = JSON.parse(
+				Storage.getItem(STORAGE_KEYS.PRODUCT)
+			).productName;
 
-		await createQuoteRetrieve({
-			productName: raylifeProductName,
-			quoteRetrieveLink: `${origin}${liferaySiteName}/get-a-quote?applicationId=${applicationId}`,
-			retrieveEmail: email,
-		});
+			await createQuoteRetrieve({
+				productName: raylifeProductName,
+				quoteRetrieveLink: `${origin}${liferaySiteName}/get-a-quote?applicationId=${applicationId}`,
+				retrieveEmail: email,
+			});
 
-		clearExitAlert();
+			clearExitAlert();
 
-		window.location.href = liferaySiteName;
+			window.location.href = liferaySiteName;
+		} catch (error) {
+			setError('Unable to save your information. Please try again.');
+			onClose();
+		}
 	};
 
 	return (

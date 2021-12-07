@@ -414,6 +414,14 @@ table.publications-render-view {
 		flex-grow: 1;
 	}
 
+	.navbar-nav .nav-link {
+		cursor: pointer;
+	}
+
+	.navbar-nav .nav-link.disabled {
+		cursor: not-allowed;
+	}
+
 	.publications-changes-content {
 		.panel-body {
 			margin-top: 1rem;

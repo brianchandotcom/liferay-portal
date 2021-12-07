@@ -48,6 +48,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -149,7 +150,7 @@ public class XLIFFInfoFormTranslationImporter
 				unsafeConsumer, events, sourceLocale, targetLocale,
 				includeSource)
 		).infoItemReference(
-			infoItemReference
+			_getInfoItemReference(events)
 		).build();
 	}
 
@@ -177,8 +178,54 @@ public class XLIFFInfoFormTranslationImporter
 				unsafeConsumer, xliffDocument, sourceLocale, targetLocale,
 				includeSource)
 		).infoItemReference(
-			infoItemReference
+			_getInfoItemReference(xliffDocument)
 		).build();
+	}
+
+	private InfoItemReference _getInfoItemReference(List<Event> events)
+		throws XLIFFFileException {
+
+		Stream<Event> stream = events.stream();
+
+		Optional<Event> startSubDocumentEventOptional = stream.filter(
+			Event::isStartSubDocument
+		).findFirst();
+
+		return startSubDocumentEventOptional.flatMap(
+			event -> {
+				StartSubDocument startSubDocument = event.getStartSubDocument();
+
+				Matcher matcher = _pattern.matcher(startSubDocument.getName());
+
+				if (!matcher.matches()) {
+					return Optional.empty();
+				}
+
+				return Optional.of(
+					new InfoItemReference(
+						matcher.group(1),
+						GetterUtil.getLong(matcher.group(2))));
+			}
+		).orElseThrow(
+			() -> new XLIFFFileException.MustBeWellFormed(
+				"The XLIFF file is not well Formed")
+		);
+	}
+
+	private InfoItemReference _getInfoItemReference(XLIFFDocument xliffDocument)
+		throws XLIFFFileException {
+
+		List<String> fileNodeIds = xliffDocument.getFileNodeIds();
+
+		Matcher matcher = _pattern.matcher(fileNodeIds.get(0));
+
+		if (!matcher.matches()) {
+			throw new XLIFFFileException.MustBeWellFormed(
+				"The XLIFF file is not well Formed");
+		}
+
+		return new InfoItemReference(
+			matcher.group(1), GetterUtil.getLong(matcher.group(2)));
 	}
 
 	private long _getSegmentsExperienceClassPK(

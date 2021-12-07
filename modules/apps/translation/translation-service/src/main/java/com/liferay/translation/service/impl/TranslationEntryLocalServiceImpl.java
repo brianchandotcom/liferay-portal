@@ -76,6 +76,8 @@ public class TranslationEntryLocalServiceImpl
 		throws PortalException {
 
 		try {
+			infoItemReference = infoItemFieldValues.getInfoItemReference();
+
 			return addOrUpdateTranslationEntry(
 				groupId, infoItemReference.getClassName(),
 				infoItemReference.getClassPK(),

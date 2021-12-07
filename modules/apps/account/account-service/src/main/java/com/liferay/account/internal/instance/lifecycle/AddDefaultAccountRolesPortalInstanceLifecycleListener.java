@@ -105,6 +105,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			AccountEntry.class.getName(),
 			new String[] {
 				ActionKeys.UPDATE, ActionKeys.MANAGE_USERS,
+				AccountActionKeys.VIEW_ACCOUNT_ROLES,
+				AccountActionKeys.VIEW_ORGANIZATIONS,
 				AccountActionKeys.VIEW_USERS
 			}
 		).build();

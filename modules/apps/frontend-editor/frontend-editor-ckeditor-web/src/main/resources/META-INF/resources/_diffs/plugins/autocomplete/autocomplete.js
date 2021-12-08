@@ -12,9 +12,12 @@
  * details.
  */
 
+/* eslint-disable @liferay/aui/no-one */
+
 (function () {
 	var A = AUI();
 
+	// eslint-disable-next-line @liferay/aui/no-array
 	var AArray = A.Array;
 	var KeyMap = A.Event.KeyMap;
 	var Lang = A.Lang;

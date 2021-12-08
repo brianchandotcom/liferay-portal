@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable @liferay/aui/no-one */
+
 // For details about this file see: LPS-2155
 
 (function (A) {

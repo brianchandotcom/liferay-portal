@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint-disable @liferay/aui/no-node */
+/* eslint-disable @liferay/aui/no-one */
+
 (function (A) {
 	var Lang = A.Lang;
 

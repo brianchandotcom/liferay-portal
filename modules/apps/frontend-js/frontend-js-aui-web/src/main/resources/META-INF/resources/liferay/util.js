@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/aui/no-one */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -1077,6 +1078,7 @@
 		Util,
 		'afterIframeLoaded',
 		(event) => {
+			// eslint-disable-next-line @liferay/aui/no-node
 			var nodeInstances = A.Node._instances;
 
 			var docEl = event.doc;
@@ -1546,6 +1548,7 @@
 				);
 
 				if (selectedData) {
+					// eslint-disable-next-line @liferay/aui/no-each
 					A.each(selectorButtons, (item) => {
 						var assetEntryId =
 							item.attr('data-entityid') ||

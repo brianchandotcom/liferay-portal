@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable @liferay/aui/no-node */
+
 const FORM_TEMPLATE = `
 	<form id="_NAMESPACE_fm">
 		<input class="search-bar-empty-search-input" type="hidden" value="{emptySearchEnabled}">

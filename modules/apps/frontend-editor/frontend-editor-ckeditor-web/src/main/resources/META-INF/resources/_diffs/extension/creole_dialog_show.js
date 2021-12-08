@@ -22,23 +22,24 @@ ckEditor.on('dialogShow', (event) => {
 	var dialog = event.data.definition.dialog;
 
 	if (dialog.getName() === 'image') {
-		var lockButton = A.one('.cke_btn_locked');
+		var lockButton = document.querySelector('.cke_btn_locked');
 
 		if (lockButton) {
-			var imageProperties = lockButton.ancestor(SELECTOR_HBOX_FIRST);
+			var imageProperties = lockButton.closest(SELECTOR_HBOX_FIRST);
 
 			if (imageProperties) {
-				imageProperties.hide();
+				imageProperties.style.display = 'none';
 			}
 		}
 
-		var imagePreviewBox = A.one('.ImagePreviewBox');
+		var imagePreviewBox = document.querySelector('.ImagePreviewBox');
 
 		if (imagePreviewBox) {
-			imagePreviewBox.setStyle('width', 410);
+			imagePreviewBox.style.width = 410;
 		}
 	}
 	else if (dialog.getName() === 'cellProperties') {
+		// eslint-disable-next-line @liferay/aui/no-one
 		var containerNode = A.one('#' + dialog.getElement('cellType').$.id);
 
 		if (!containerNode.getData(MODIFIED)) {

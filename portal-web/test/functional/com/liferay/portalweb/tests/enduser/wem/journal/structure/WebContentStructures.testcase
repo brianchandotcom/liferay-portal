@@ -66,7 +66,7 @@ definition {
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2");
 	}
 
-	@description = "This is a use case for LPS-82208."
+	@description = "This is a use case for LPS-82208 and LPS-89641."
 	@priority = "5"
 	test CannotDeleteStructureReferencedByDisplayPage {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -99,6 +99,20 @@ definition {
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy",
+			rowEntry = "WC Structure Name");
+
+		PortletEntry.inputName(name = "WC Structure Name Copy");
+
+		AssertClick(
+			locator1 = "Button#COPY",
+			value1 = "Copy");
+
+		LexiconEntry.viewEntryName(rowEntry = "WC Structure Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "WC Structure Name Copy");
 	}
 
 	@description = "This is a use case for LPS-126248. Edit field reference of field options in structure editor."

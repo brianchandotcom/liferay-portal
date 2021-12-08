@@ -139,13 +139,42 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136816. It checks that custom fields can be rendered properly when a DM notification email is sent."
-	@ignore = "true"
 	@priority = "4"
 	test CanViewCustomFieldsInEmail {
-		property portal.acceptance = "false";
+		DMDocument.configureDocumentEmailTemplate(
+			bodyContent = '''Hi [$TO_NAME$],
+The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
+[$FROM_ADDRESS$]''',
+			navTab = "Document Added Email",
+			siteURLKey = "guest");
 
-		// TODO LPS-136816 CanViewCustomFieldsInEmail pending implementation
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc");
+
+		MockMock.viewMail(
+			asset = "New Basic Document: Document_1.doc",
+			content = "The DM file Document_1.doc has been added to Home folder.",
+			fromAddress = "test@liferay.com",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "New Basic Document: Document_1.doc",
+			toName = "userfn userln");
 	}
 
 	@priority = "5"

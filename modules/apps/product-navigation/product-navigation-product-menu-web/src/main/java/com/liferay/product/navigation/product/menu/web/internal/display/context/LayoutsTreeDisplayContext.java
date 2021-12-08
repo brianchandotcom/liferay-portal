@@ -316,6 +316,13 @@ public class LayoutsTreeDisplayContext {
 				return _setSelPlid(getConfigureLayoutSetURL());
 			}
 		).put(
+			"isPrivateLayoutsEnabled",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.isPrivateLayoutsEnabled();
+			}
+		).put(
 			"namespace", getNamespace()
 		).put(
 			"pageTypeOptions", _getPageTypeOptionsJSONArray()
@@ -470,16 +477,6 @@ public class LayoutsTreeDisplayContext {
 			_getPageTypeSelectedOption());
 	}
 
-	public boolean isShowConfigureLayout() throws PortalException {
-		if (_isPageHierarchySelectedOption() &&
-			hasConfigureLayoutPermission()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isPrivateLayoutsEnabled() {
 		if (_privateLayoutsEnabled != null) {
 			return _privateLayoutsEnabled;
@@ -495,6 +492,16 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		return _privateLayoutsEnabled;
+	}
+
+	public boolean isShowConfigureLayout() throws PortalException {
+		if (_isPageHierarchySelectedOption() &&
+			hasConfigureLayoutPermission()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSiteNavigationMenu() {
@@ -857,8 +864,8 @@ public class LayoutsTreeDisplayContext {
 	private final String _namespace;
 	private Boolean _pageHierarchySelectedOption;
 	private String _pageTypeSelectedOption;
-	private Long _selectedSiteNavigationMenuItemId;
 	private Boolean _privateLayoutsEnabled;
+	private Long _selectedSiteNavigationMenuItemId;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;

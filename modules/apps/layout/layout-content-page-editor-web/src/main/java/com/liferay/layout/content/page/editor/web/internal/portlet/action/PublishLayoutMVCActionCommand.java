@@ -152,7 +152,9 @@ public class PublishLayoutMVCActionCommand
 				serviceContext, Collections.emptyMap());
 		}
 		else {
-			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			layout = _layoutLocalService.getLayout(layout.getPlid());
 
 			layout.setType(draftLayout.getType());
 			layout.setStatus(WorkflowConstants.STATUS_APPROVED);

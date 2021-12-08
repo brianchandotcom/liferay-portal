@@ -52,7 +52,7 @@ definition {
 			tagName = "alice");
 
 		Upgrade.addAutoTaggedDM(
-			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentFile = "Commerce_White.jpg",
 			dmDocumentTitle = "Document New Google Image AutoTagging",
 			tagName = "pattern");
 

@@ -86,9 +86,7 @@ describe('EditSXPBlueprintForm', () => {
 				(sxpElement) => ({
 					sxpElement,
 					type: 10,
-					uiConfigurationValues: getUIConfigurationValues(
-						sxpElement.elementDefinition.uiConfiguration
-					),
+					uiConfigurationValues: getUIConfigurationValues(sxpElement),
 				})
 			),
 		});
@@ -141,9 +139,7 @@ describe('EditSXPBlueprintForm', () => {
 				(sxpElement) => ({
 					sxpElement,
 					type: 10,
-					uiConfigurationValues: getUIConfigurationValues(
-						sxpElement.elementDefinition.uiConfiguration
-					),
+					uiConfigurationValues: getUIConfigurationValues(sxpElement),
 				})
 			),
 		});

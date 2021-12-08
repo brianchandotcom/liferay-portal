@@ -37,12 +37,7 @@ const ADD_EVENT = 'addSXPBlueprint';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
 	(sxpElement) => {
-		const uiConfigurationValues = sxpElement.elementDefinition
-			?.uiConfiguration
-			? getUIConfigurationValues(
-					sxpElement.elementDefinition.uiConfiguration
-			  )
-			: {sxpElement: JSON.stringify(sxpElement, null, '\t')};
+		const uiConfigurationValues = getUIConfigurationValues(sxpElement);
 
 		return {
 			configurationEntry: getConfigurationEntry({

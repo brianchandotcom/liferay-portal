@@ -51,12 +51,7 @@ function renderBuilder(props) {
 			elementInstances={QUERY_SXP_ELEMENTS.map((sxpElement, index) => ({
 				id: index,
 				sxpElement,
-				uiConfigurationValues: sxpElement.elementDefinition
-					?.uiConfiguration
-					? getUIConfigurationValues(
-							sxpElement.elementDefinition.uiConfiguration
-					  )
-					: {sxpElement: JSON.stringify(sxpElement, null, '\t')},
+				uiConfigurationValues: getUIConfigurationValues(sxpElement),
 			}))}
 			onDeleteSXPElement={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}

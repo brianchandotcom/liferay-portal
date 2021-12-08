@@ -505,55 +505,35 @@ export function parseCustomSXPElement(sxpElement, uiConfigurationValues) {
 }
 
 /**
- * Function for getting all the default values from a UI configuration.
+ * Function for getting all the default values from an SXPElement.
  *
- * Example:
- * getUIConfigurationValues({
- * 	fieldSets: [
- * 		{
- * 			fields: [
- * 				{
- * 					defaultValue: 10,
- * 					label: 'Boost',
- * 					name: 'boost',
- * 					type: 'slider',
- * 				},
- * 			],
- * 		},
- * 		{
- * 			fields: [
- * 				{
- * 					defaultValue: 'en_US',
- * 					label: 'Language',
- * 					name: 'language',
- * 					type: 'text',
- * 				},
- * 			],
- * 		},
- * 	],
- * });
- * => {boost: 10, language: 'en_US'}
- *
- * @param {object} uiConfiguration Object with UI configuration
+ * @param {object} sxpElement SXPElement with elementDefinition
  * @return {object}
  */
-export function getUIConfigurationValues(uiConfiguration = {}) {
-	return cleanUIConfiguration(uiConfiguration).fieldSets.reduce(
-		(allValues, fieldSet) => {
-			const uiConfigurationValues = fieldSet.fields.reduce(
-				(acc, curr) => ({
-					...acc,
-					[`${curr.name}`]: getDefaultValue(curr),
-				}),
-				{}
-			);
+export function getUIConfigurationValues(sxpElement = {}) {
+	const uiConfiguration = sxpElement.elementDefinition?.uiConfiguration;
 
-			// gets uiConfigurationValues within each fields array
+	if (uiConfiguration) {
+		return cleanUIConfiguration(uiConfiguration).fieldSets.reduce(
+			(allValues, fieldSet) => {
+				const uiConfigurationValues = fieldSet.fields.reduce(
+					(acc, curr) => ({
+						...acc,
+						[`${curr.name}`]: getDefaultValue(curr),
+					}),
+					{}
+				);
 
-			return {...allValues, ...uiConfigurationValues};
-		},
-		{}
-	);
+				// gets uiConfigurationValues within each fields array
+
+				return {...allValues, ...uiConfigurationValues};
+			},
+			{}
+		);
+	}
+	else {
+		return {sxpElement: JSON.stringify(sxpElement, null, '\t')};
+	}
 }
 
 /**

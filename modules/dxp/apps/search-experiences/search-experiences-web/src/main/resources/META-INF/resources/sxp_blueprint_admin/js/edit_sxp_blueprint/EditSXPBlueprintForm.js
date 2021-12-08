@@ -401,9 +401,7 @@ function EditSXPBlueprintForm({
 			{
 				id: sxpElementIdCounterRef.current++,
 				sxpElement,
-				uiConfigurationValues: getUIConfigurationValues(
-					sxpElement.elementDefinition?.uiConfiguration
-				),
+				uiConfigurationValues: getUIConfigurationValues(sxpElement),
 			},
 			...formik.values.elementInstances,
 		]);

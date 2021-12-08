@@ -35,7 +35,7 @@ function renderSXPElement(props) {
 			onDeleteSXPElement={onDeleteSXPElement}
 			sxpElement={QUERY_SXP_ELEMENTS[0]}
 			uiConfigurationValues={getUIConfigurationValues(
-				QUERY_SXP_ELEMENTS[0].elementDefinition?.uiConfiguration
+				QUERY_SXP_ELEMENTS[0]
 			)}
 			{...props}
 		/>

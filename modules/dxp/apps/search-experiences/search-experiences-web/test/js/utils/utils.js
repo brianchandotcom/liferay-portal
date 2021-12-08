@@ -683,28 +683,58 @@ describe('utils', () => {
 		it('extracts the values within list of fieldsets', () => {
 			expect(
 				getUIConfigurationValues({
-					fieldSets: [
-						{
-							fields: [
+					description_i18n: {
+						en_US: '',
+					},
+					elementDefinition: {
+						category: 'match',
+						configuration: {
+							queryConfiguration: {
+								queryEntries: [
+									{
+										clauses: [
+											{
+												context: 'query',
+												occur: 'must',
+												query: {
+													multi_match: {
+														boost:
+															'${configuration.boost}',
+														language:
+															'${configuration.language}',
+													},
+												},
+											},
+										],
+									},
+								],
+							},
+						},
+						icon: 'picture',
+						uiConfiguration: {
+							fieldSets: [
 								{
-									defaultValue: 10,
-									label: 'Boost',
-									name: 'boost',
-									type: 'slider',
+									fields: [
+										{
+											defaultValue: 10,
+											label: 'Boost',
+											name: 'boost',
+											type: 'slider',
+										},
+										{
+											defaultValue: 'en_US',
+											label: 'Language',
+											name: 'language',
+											type: 'text',
+										},
+									],
 								},
 							],
 						},
-						{
-							fields: [
-								{
-									defaultValue: 'en_US',
-									label: 'Language',
-									name: 'language',
-									type: 'text',
-								},
-							],
-						},
-					],
+					},
+					title_i18n: {
+						en_US: 'Text Match',
+					},
 				})
 			).toEqual({boost: 10, language: 'en_US'});
 		});

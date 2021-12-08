@@ -357,7 +357,7 @@ function EditSXPElementForm({
 						collapseAll={false}
 						sxpElement={sxpElement}
 						uiConfigurationValues={getUIConfigurationValues(
-							previewUIConfigurationJSON
+							sxpElement
 						)}
 					/>
 				</ErrorBoundary>

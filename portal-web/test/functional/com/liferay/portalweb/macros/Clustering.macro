@@ -144,6 +144,7 @@ definition {
 		return "${fileContent}";
 
 		echo("${liferayHome}/cluster${bundleIndex}.log");
+
 		echo("${fileContent}");
 	}
 

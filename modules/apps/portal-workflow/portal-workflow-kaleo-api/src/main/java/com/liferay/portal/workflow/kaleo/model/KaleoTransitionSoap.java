@@ -46,6 +46,7 @@ public class KaleoTransitionSoap implements Serializable {
 			model.getKaleoDefinitionVersionId());
 		soapModel.setKaleoNodeId(model.getKaleoNodeId());
 		soapModel.setName(model.getName());
+		soapModel.setLabel(model.getLabel());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSourceKaleoNodeId(model.getSourceKaleoNodeId());
 		soapModel.setSourceKaleoNodeName(model.getSourceKaleoNodeName());
@@ -207,6 +208,14 @@ public class KaleoTransitionSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -271,6 +280,7 @@ public class KaleoTransitionSoap implements Serializable {
 	private long _kaleoDefinitionVersionId;
 	private long _kaleoNodeId;
 	private String _name;
+	private String _label;
 	private String _description;
 	private long _sourceKaleoNodeId;
 	private String _sourceKaleoNodeName;

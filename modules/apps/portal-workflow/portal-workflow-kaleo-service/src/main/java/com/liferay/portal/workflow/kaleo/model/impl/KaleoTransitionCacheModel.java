@@ -78,7 +78,7 @@ public class KaleoTransitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class KaleoTransitionCacheModel
 		sb.append(kaleoNodeId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", sourceKaleoNodeId=");
@@ -164,6 +166,13 @@ public class KaleoTransitionCacheModel
 			kaleoTransitionImpl.setName(name);
 		}
 
+		if (label == null) {
+			kaleoTransitionImpl.setLabel("");
+		}
+		else {
+			kaleoTransitionImpl.setLabel(label);
+		}
+
 		if (description == null) {
 			kaleoTransitionImpl.setDescription("");
 		}
@@ -217,6 +226,7 @@ public class KaleoTransitionCacheModel
 
 		kaleoNodeId = objectInput.readLong();
 		name = objectInput.readUTF();
+		label = objectInput.readUTF();
 		description = objectInput.readUTF();
 
 		sourceKaleoNodeId = objectInput.readLong();
@@ -263,6 +273,13 @@ public class KaleoTransitionCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (description == null) {
 			objectOutput.writeUTF("");
 		}
@@ -303,6 +320,7 @@ public class KaleoTransitionCacheModel
 	public long kaleoDefinitionVersionId;
 	public long kaleoNodeId;
 	public String name;
+	public String label;
 	public String description;
 	public long sourceKaleoNodeId;
 	public String sourceKaleoNodeName;

@@ -18,7 +18,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -26,8 +28,11 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransitionModel;
 
@@ -43,8 +48,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -77,7 +85,8 @@ public class KaleoTransitionModelImpl
 		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoNodeId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"sourceKaleoNodeId", Types.BIGINT},
+		{"label", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"sourceKaleoNodeId", Types.BIGINT},
 		{"sourceKaleoNodeName", Types.VARCHAR},
 		{"targetKaleoNodeId", Types.BIGINT},
 		{"targetKaleoNodeName", Types.VARCHAR},
@@ -100,6 +109,7 @@ public class KaleoTransitionModelImpl
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sourceKaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sourceKaleoNodeName", Types.VARCHAR);
@@ -109,7 +119,7 @@ public class KaleoTransitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTransition (mvccVersion LONG default 0 not null,kaleoTransitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null,sourceKaleoNodeId LONG,sourceKaleoNodeName VARCHAR(200) null,targetKaleoNodeId LONG,targetKaleoNodeName VARCHAR(200) null,defaultTransition BOOLEAN)";
+		"create table KaleoTransition (mvccVersion LONG default 0 not null,kaleoTransitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,label STRING null,description STRING null,sourceKaleoNodeId LONG,sourceKaleoNodeName VARCHAR(200) null,targetKaleoNodeId LONG,targetKaleoNodeName VARCHAR(200) null,defaultTransition BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTransition";
 
@@ -362,6 +372,10 @@ public class KaleoTransitionModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<KaleoTransition, String>)KaleoTransition::setName);
+		attributeGetterFunctions.put("label", KaleoTransition::getLabel);
+		attributeSetterBiConsumers.put(
+			"label",
+			(BiConsumer<KaleoTransition, String>)KaleoTransition::setLabel);
 		attributeGetterFunctions.put(
 			"description", KaleoTransition::getDescription);
 		attributeSetterBiConsumers.put(
@@ -645,6 +659,114 @@ public class KaleoTransitionModelImpl
 	}
 
 	@Override
+	public String getLabel() {
+		if (_label == null) {
+			return "";
+		}
+		else {
+			return _label;
+		}
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getLabel(languageId);
+	}
+
+	@Override
+	public String getLabel(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getLabel(String languageId) {
+		return LocalizationUtil.getLocalization(getLabel(), languageId);
+	}
+
+	@Override
+	public String getLabel(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getLabel(), languageId, useDefault);
+	}
+
+	@Override
+	public String getLabelCurrentLanguageId() {
+		return _labelCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getLabelCurrentValue() {
+		Locale locale = getLocale(_labelCurrentLanguageId);
+
+		return getLabel(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getLabelMap() {
+		return LocalizationUtil.getLocalizationMap(getLabel());
+	}
+
+	@Override
+	public void setLabel(String label) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_label = label;
+	}
+
+	@Override
+	public void setLabel(String label, Locale locale) {
+		setLabel(label, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setLabel(String label, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(label)) {
+			setLabel(
+				LocalizationUtil.updateLocalization(
+					getLabel(), "Label", label, languageId, defaultLanguageId));
+		}
+		else {
+			setLabel(
+				LocalizationUtil.removeLocalization(
+					getLabel(), "Label", languageId));
+		}
+	}
+
+	@Override
+	public void setLabelCurrentLanguageId(String languageId) {
+		_labelCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setLabelMap(Map<Locale, String> labelMap) {
+		setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setLabelMap(
+		Map<Locale, String> labelMap, Locale defaultLocale) {
+
+		if (labelMap == null) {
+			return;
+		}
+
+		setLabel(
+			LocalizationUtil.updateLocalization(
+				labelMap, getLabel(), "Label",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return "";
@@ -796,6 +918,72 @@ public class KaleoTransitionModelImpl
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> labelMap = getLabelMap();
+
+		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getLabel();
+
+		if (xml == null) {
+			return "";
+		}
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			KaleoTransition.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String label = getLabel(defaultLocale);
+
+		if (Validator.isNull(label)) {
+			setLabel(getLabel(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setLabel(getLabel(defaultLocale), defaultLocale, defaultLocale);
+		}
+	}
+
+	@Override
 	public KaleoTransition toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, KaleoTransition>
@@ -827,6 +1015,7 @@ public class KaleoTransitionModelImpl
 			getKaleoDefinitionVersionId());
 		kaleoTransitionImpl.setKaleoNodeId(getKaleoNodeId());
 		kaleoTransitionImpl.setName(getName());
+		kaleoTransitionImpl.setLabel(getLabel());
 		kaleoTransitionImpl.setDescription(getDescription());
 		kaleoTransitionImpl.setSourceKaleoNodeId(getSourceKaleoNodeId());
 		kaleoTransitionImpl.setSourceKaleoNodeName(getSourceKaleoNodeName());
@@ -867,6 +1056,8 @@ public class KaleoTransitionModelImpl
 			this.<Long>getColumnOriginalValue("kaleoNodeId"));
 		kaleoTransitionImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		kaleoTransitionImpl.setLabel(
+			this.<String>getColumnOriginalValue("label"));
 		kaleoTransitionImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
 		kaleoTransitionImpl.setSourceKaleoNodeId(
@@ -1016,6 +1207,14 @@ public class KaleoTransitionModelImpl
 			kaleoTransitionCacheModel.name = null;
 		}
 
+		kaleoTransitionCacheModel.label = getLabel();
+
+		String label = kaleoTransitionCacheModel.label;
+
+		if ((label != null) && (label.length() == 0)) {
+			kaleoTransitionCacheModel.label = null;
+		}
+
 		kaleoTransitionCacheModel.description = getDescription();
 
 		String description = kaleoTransitionCacheModel.description;
@@ -1157,6 +1356,8 @@ public class KaleoTransitionModelImpl
 	private long _kaleoDefinitionVersionId;
 	private long _kaleoNodeId;
 	private String _name;
+	private String _label;
+	private String _labelCurrentLanguageId;
 	private String _description;
 	private long _sourceKaleoNodeId;
 	private String _sourceKaleoNodeName;
@@ -1204,6 +1405,7 @@ public class KaleoTransitionModelImpl
 			"kaleoDefinitionVersionId", _kaleoDefinitionVersionId);
 		_columnOriginalValues.put("kaleoNodeId", _kaleoNodeId);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("sourceKaleoNodeId", _sourceKaleoNodeId);
 		_columnOriginalValues.put("sourceKaleoNodeName", _sourceKaleoNodeName);
@@ -1247,17 +1449,19 @@ public class KaleoTransitionModelImpl
 
 		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("label", 4096L);
 
-		columnBitmasks.put("sourceKaleoNodeId", 8192L);
+		columnBitmasks.put("description", 8192L);
 
-		columnBitmasks.put("sourceKaleoNodeName", 16384L);
+		columnBitmasks.put("sourceKaleoNodeId", 16384L);
 
-		columnBitmasks.put("targetKaleoNodeId", 32768L);
+		columnBitmasks.put("sourceKaleoNodeName", 32768L);
 
-		columnBitmasks.put("targetKaleoNodeName", 65536L);
+		columnBitmasks.put("targetKaleoNodeId", 65536L);
 
-		columnBitmasks.put("defaultTransition", 131072L);
+		columnBitmasks.put("targetKaleoNodeName", 131072L);
+
+		columnBitmasks.put("defaultTransition", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

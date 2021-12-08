@@ -411,6 +411,7 @@ create table KaleoTransition (
 	kaleoDefinitionVersionId LONG,
 	kaleoNodeId LONG,
 	name VARCHAR(200) null,
+	label STRING null,
 	description STRING null,
 	sourceKaleoNodeId LONG,
 	sourceKaleoNodeName VARCHAR(200) null,

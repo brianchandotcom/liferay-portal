@@ -10,6 +10,12 @@
 </thead>
 
 <tbody>
+<!--CONFIGURATION-->
+<tr>
+	<td>CONFIGURATION_NAV_ITEM</td>
+	<td>//ul[contains(@class,'nav nav-underline')]/li/a[contains(.,'${key_navTab}')]</td>
+	<td></td>
+</tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_DROPDOWN</td>

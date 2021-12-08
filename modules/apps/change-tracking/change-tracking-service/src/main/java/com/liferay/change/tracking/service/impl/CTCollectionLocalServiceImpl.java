@@ -482,20 +482,15 @@ public class CTCollectionLocalServiceImpl
 
 		List<CTMappingTableInfo> mappingTableInfos = new ArrayList<>();
 
-		try {
-			for (CTTableMapperHelper ctTableMapperHelper :
-					_ctServiceRegistry.getCTTableMapperHelpers()) {
+		for (CTTableMapperHelper ctTableMapperHelper :
+				_ctServiceRegistry.getCTTableMapperHelpers()) {
 
-				CTMappingTableInfo ctMappingTableInfo =
-					ctTableMapperHelper.getCTMappingTableInfo(ctCollectionId);
+			CTMappingTableInfo ctMappingTableInfo =
+				ctTableMapperHelper.getCTMappingTableInfo(ctCollectionId);
 
-				if (ctMappingTableInfo != null) {
-					mappingTableInfos.add(ctMappingTableInfo);
-				}
+			if (ctMappingTableInfo != null) {
+				mappingTableInfos.add(ctMappingTableInfo);
 			}
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
 		}
 
 		return mappingTableInfos;

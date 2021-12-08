@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
@@ -66,9 +67,7 @@ public class CTTableMapperHelper {
 			});
 	}
 
-	public CTMappingTableInfo getCTMappingTableInfo(long ctCollectionId)
-		throws Exception {
-
+	public CTMappingTableInfo getCTMappingTableInfo(long ctCollectionId) {
 		CTMappingTableInfo ctMappingTableInfo = null;
 
 		List<Map.Entry<Long, Long>> addedMappings = _getCTMappingChangeList(
@@ -174,29 +173,32 @@ public class CTTableMapperHelper {
 	}
 
 	private List<Map.Entry<Long, Long>> _getCTMappingChangeList(
-			long ctCollectionId, int ctChangeType)
-		throws Exception {
+		long ctCollectionId, int ctChangeType) {
 
 		CTPersistence<?> ctPersistence = _ctService.getCTPersistence();
 
-		Connection connection = CurrentConnectionUtil.getConnection(
-			ctPersistence.getDataSource());
-
 		List<Map.Entry<Long, Long>> mappingChanges = new ArrayList<>();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select ", _leftColumnName, ", ", _rightColumnName,
-					" from ", _tableName, " where ctCollectionId = ",
-					ctCollectionId, " and ctChangeType = ", ctChangeType));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		Session session = ctPersistence.getCurrentSession();
 
-			while (resultSet.next()) {
-				mappingChanges.add(
-					new AbstractMap.SimpleImmutableEntry<>(
-						resultSet.getLong(1), resultSet.getLong(2)));
-			}
-		}
+		session.apply(
+			connection -> {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"select ", _leftColumnName, ", ",
+								_rightColumnName, " from ", _tableName,
+								" where ctCollectionId = ", ctCollectionId,
+								" and ctChangeType = ", ctChangeType));
+					ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					while (resultSet.next()) {
+						mappingChanges.add(
+							new AbstractMap.SimpleImmutableEntry<>(
+								resultSet.getLong(1), resultSet.getLong(2)));
+					}
+				}
+			});
 
 		return mappingChanges;
 	}

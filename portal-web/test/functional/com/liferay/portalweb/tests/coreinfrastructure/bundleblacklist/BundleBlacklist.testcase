@@ -169,9 +169,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+		Portlet.startServer(keepOSGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
 
@@ -225,9 +223,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+		Portlet.startServer(keepOSGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED ${symbolicName}");
 
@@ -262,9 +258,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+		Portlet.startServer(keepOSGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED minium-theme");
 
@@ -452,9 +446,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+		Portlet.startServer(keepOSGiState = "true");
 
 		Navigator.openURL();
 

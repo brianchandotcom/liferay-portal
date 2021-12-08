@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
@@ -192,12 +191,8 @@ public class WorkflowDefinitionResourceImpl
 				transitions = transformToArray(
 					workflowDefinition.getWorkflowTransitions(),
 					workflowTransition -> TransitionUtil.toTransition(
-						_language, workflowTransition.getName(),
-						ResourceBundleUtil.getModuleAndPortalResourceBundle(
-							contextAcceptLanguage.getPreferredLocale(),
-							WorkflowDefinitionResourceImpl.class),
-						workflowTransition.getSourceNodeName(),
-						workflowTransition.getTargetNodeName()),
+						contextAcceptLanguage.getPreferredLocale(),
+						workflowTransition),
 					Transition.class);
 				version = String.valueOf(workflowDefinition.getVersion());
 			}

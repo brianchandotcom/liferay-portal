@@ -15,31 +15,48 @@
 package com.liferay.headless.admin.workflow.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowTransition;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Inácio Nery
  */
 public class TransitionUtil {
 
-	public static Transition toTransition(
-		Language language, String name, ResourceBundle resourceBundle) {
+	public static Transition toTransition(Locale locale, String name) {
+		DefaultWorkflowTransition defaultWorkflowTransition =
+			new DefaultWorkflowTransition();
 
-		return toTransition(language, name, resourceBundle, null, null);
+		defaultWorkflowTransition.setName(name);
+
+		return toTransition(locale, defaultWorkflowTransition);
 	}
 
 	public static Transition toTransition(
-		Language language, String name, ResourceBundle resourceBundle,
-		String sourceNodeName, String targetNodeName) {
+		Locale locale, WorkflowTransition workflowTransition) {
 
 		Transition transition = new Transition();
 
-		transition.setLabel(language.get(resourceBundle, name));
-		transition.setName(name);
-		transition.setSourceNodeName(sourceNodeName);
-		transition.setTargetNodeName(targetNodeName);
+		transition.setLabel(
+			() -> {
+				Map<Locale, String> labelMap = workflowTransition.getLabelMap();
+
+				if (MapUtil.isNotEmpty(labelMap) &&
+					(labelMap.get(locale) != null)) {
+
+					return labelMap.get(locale);
+				}
+
+				return LanguageUtil.get(locale, workflowTransition.getName());
+			});
+		transition.setName(workflowTransition.getName());
+		transition.setSourceNodeName(workflowTransition.getSourceNodeName());
+		transition.setTargetNodeName(workflowTransition.getTargetNodeName());
 
 		return transition;
 	}

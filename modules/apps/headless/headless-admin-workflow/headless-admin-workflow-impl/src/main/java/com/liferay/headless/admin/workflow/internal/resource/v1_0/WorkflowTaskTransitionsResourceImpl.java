@@ -87,10 +87,7 @@ public class WorkflowTaskTransitionsResourceImpl
 			transformToArray(
 				transitionNames,
 				transitionName -> TransitionUtil.toTransition(
-					_language, transitionName,
-					ResourceBundleUtil.getModuleAndPortalResourceBundle(
-						contextAcceptLanguage.getPreferredLocale(),
-						WorkflowTaskTransitionsResourceImpl.class)),
+					contextAcceptLanguage.getPreferredLocale(), transitionName),
 				Transition.class));
 		workflowTaskTransition.setWorkflowDefinitionVersion(
 			String.valueOf(workflowTask.getWorkflowDefinitionVersion()));

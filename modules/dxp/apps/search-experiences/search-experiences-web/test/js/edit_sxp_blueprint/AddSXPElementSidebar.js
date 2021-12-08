@@ -52,11 +52,13 @@ describe('AddSXPElementSidebar', () => {
 	it('renders the titles for the possible query elements', async () => {
 		const {container, findByText, getByText} = renderAddSXPElementSidebar();
 
-		await findByText('boost');
+		await findByText(QUERY_SXP_ELEMENTS[0].elementDefinition.category);
 
-		container.querySelectorAll('.panel-header').forEach((header) => {
-			fireEvent.click(header);
-		});
+		container
+			.querySelectorAll('.lexicon-icon-angle-right')
+			.forEach((header) => {
+				fireEvent.click(header);
+			});
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) => {
 			getByText(sxpElement.title_i18n['en_US']);
@@ -66,11 +68,13 @@ describe('AddSXPElementSidebar', () => {
 	it('renders the descriptions for the possible query elements', async () => {
 		const {container, findByText, getByText} = renderAddSXPElementSidebar();
 
-		await findByText('boost');
+		await findByText(QUERY_SXP_ELEMENTS[0].elementDefinition.category);
 
-		container.querySelectorAll('.panel-header').forEach((header) => {
-			fireEvent.click(header);
-		});
+		container
+			.querySelectorAll('.lexicon-icon-angle-right')
+			.forEach((header) => {
+				fireEvent.click(header);
+			});
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) => {
 			getByText(sxpElement.description_i18n['en_US']);
@@ -84,11 +88,13 @@ describe('AddSXPElementSidebar', () => {
 			queryAllByText,
 		} = renderAddSXPElementSidebar();
 
-		await findByText('boost');
+		await findByText(QUERY_SXP_ELEMENTS[0].elementDefinition.category);
 
-		container.querySelectorAll('.panel-header').forEach((header) => {
-			fireEvent.click(header);
-		});
+		container
+			.querySelectorAll('.lexicon-icon-angle-right')
+			.forEach((header) => {
+				fireEvent.click(header);
+			});
 
 		fireEvent.mouseOver(container.querySelectorAll('.list-group-title')[0]);
 

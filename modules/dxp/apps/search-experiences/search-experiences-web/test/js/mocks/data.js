@@ -9,8 +9,7 @@
  * distribution rights of the Software.
  */
 
-import boostAllKeywordsMatch from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/sxp_elements/boostAllKeywordsMatch';
-import pasteAnyElasticsearchQuery from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/sxp_elements/pasteAnyElasticsearchQuery';
+import textMatchOverMultipleFields from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/sxp_elements/textMatchOverMultipleFields';
 import {
 	DEFAULT_ADVANCED_CONFIGURATION,
 	DEFAULT_HIGHLIGHT_CONFIGURATION,
@@ -109,10 +108,7 @@ export const INDEX_FIELDS = [
 	},
 ];
 
-export const QUERY_SXP_ELEMENTS = [
-	boostAllKeywordsMatch,
-	pasteAnyElasticsearchQuery,
-];
+export const QUERY_SXP_ELEMENTS = [textMatchOverMultipleFields];
 
 export const INITIAL_CONFIGURATION = {
 	advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,

@@ -152,21 +152,27 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B&quot;true&quot;";
 
-		Navigator.gotoPage(pageName = "Blank Test Page");
+		task ("Navigate to a page with no violations") {
+			Navigator.gotoPage(pageName = "Blank Test Page");
+		}
 
-		// Workaround for side panel sometimes displaying previous violations inccorectly LPS-138624
+		// Workaround for side panel sometimes displaying previous violations incorrectly LPS-138624
 
 		if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
 			Refresh();
 		}
 
-		if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
-			AssertElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_NO_VIOLATIONS");
+		task ("Assert no violations are listed in the side panel") {
+			if (IsElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_HEADER")) {
+				AssertElementPresent(locator1 = "A11yTool#VIOLATION_PANEL_NO_VIOLATIONS");
+			}
 		}
 
-		AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+		task ("Assert there are no highlighted violations or icons") {
+			AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
 
-		AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+			AssertElementNotPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
 
 		takeScreenshot();
 	}
@@ -183,13 +189,17 @@ definition {
 			Refresh();
 		}
 
-		AssertElementPresent(
-			key_text = "",
-			locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		task ("Assert violations are displayed in the side panel") {
+			AssertElementPresent(
+				key_text = "",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		}
 
-		AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
+		task ("Assert there are highlighted violations with icons") {
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT");
 
-		AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+			AssertElementPresent(locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_ICON");
+		}
 
 		takeScreenshot();
 	}
@@ -554,15 +564,19 @@ definition {
 			Refresh();
 		}
 
-		Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
+		task ("Open the filter panel") {
+			A11yTool.openFilterPanel();
+		}
 
-		AssertElementPresent(locator1 = "A11yTool#FILTER_BY_IMPACT_HEADER");
+		task ("Assert toggles to filter by impact and category are displayed") {
+			AssertElementPresent(locator1 = "A11yTool#FILTER_BY_IMPACT_HEADER");
 
-		AssertElementPresent(locator1 = "A11yTool#FILTER_BY_CATEGORY_HEADER");
+			AssertElementPresent(locator1 = "A11yTool#FILTER_BY_CATEGORY_HEADER");
 
-		AssertElementPresent(
-			key_text = "",
-			locator1 = "A11yTool#FILTER_LIST_ITEM");
+			AssertElementPresent(
+				key_text = "",
+				locator1 = "A11yTool#FILTER_LIST_ITEM");
+		}
 
 		takeScreenshot();
 	}
@@ -758,9 +772,11 @@ definition {
 			Refresh();
 		}
 
-		AssertElementPresent(
-			key_text = "",
-			locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		task ("Assert the side panel is displayed") {
+			AssertElementPresent(
+				key_text = "",
+				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_ITEM");
+		}
 
 		takeScreenshot();
 	}

@@ -37,9 +37,12 @@ const ADD_EVENT = 'addSXPBlueprint';
 
 const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
 	(sxpElement) => {
-		const uiConfigurationValues = getUIConfigurationValues(
-			sxpElement.elementDefinition?.uiConfiguration
-		);
+		const uiConfigurationValues = sxpElement.elementDefinition
+			?.uiConfiguration
+			? getUIConfigurationValues(
+					sxpElement.elementDefinition.uiConfiguration
+			  )
+			: {sxpElement: JSON.stringify(sxpElement, null, '\t')};
 
 		return {
 			configurationEntry: getConfigurationEntry({
@@ -130,24 +133,22 @@ const AddModal = ({
 		advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 		aggregationConfiguration: {},
 		generalConfiguration: {
-			clauseContributorsExcludes:
-				framework === FRAMEWORK_TYPES.ALL
-					? []
-					: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION.excludes,
-			clauseContributorsIncludes:
-				framework === FRAMEWORK_TYPES.ALL
-					? [
+			...(framework === FRAMEWORK_TYPES.BASELINE
+				? BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION
+				: {
+						clauseContributorsExcludes: [],
+						clauseContributorsIncludes: [
 							...keywordQueryContributors,
 							...modelPrefilterContributors,
 							...queryPrefilterContributors,
-					  ]
-					: BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION.includes,
+						],
+				  }),
 			searchableAssetTypes: searchableTypes,
 		},
 		highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 		parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
 		queryConfiguration: {
-			applyIndexerClauses: framework === FRAMEWORK_TYPES.ALL,
+			applyIndexerClauses: true,
 		},
 		sortConfiguration: DEFAULT_SORT_CONFIGURATION,
 	});

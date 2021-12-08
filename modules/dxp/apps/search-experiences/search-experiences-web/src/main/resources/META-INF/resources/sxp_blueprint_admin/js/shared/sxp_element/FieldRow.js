@@ -67,9 +67,7 @@ function AutocompleteItem({indexField, match = '', onClick}) {
 				indexField.name
 			)}
 
-			{indexField.language_id_position > -1 && (
-				<ClayIcon symbol="globe" />
-			)}
+			{indexField.languageIdPosition > -1 && <ClayIcon symbol="globe" />}
 
 			<span className="type">{indexField.type}</span>
 		</ClayDropDown.Item>
@@ -81,7 +79,7 @@ function AutocompleteItem({indexField, match = '', onClick}) {
  *
  * Example index field object:
  * {
- * 	language_id_position: -1,
+ * 	languageIdPosition: -1,
  * 	name: 'ddmTemplateKey',
  * 	type: 'keyword'
  * }
@@ -120,8 +118,8 @@ function FieldRow({
 	const _handleFieldChange = (event) => {
 		const indexField = _getIndexField(event.target.value) || {};
 
-		let languageIdPosition = isDefined(indexField.language_id_position)
-			? indexField.language_id_position
+		let languageIdPosition = isDefined(indexField.languageIdPosition)
+			? indexField.languageIdPosition
 			: -1;
 
 		if (indexField.locale && languageIdPosition === -1) {
@@ -141,23 +139,23 @@ function FieldRow({
 		// non-localized option.
 		//
 		// For example 'title':
-		// {name: 'title', type: 'text', language_id_position: 5}
-		// {name: 'title', type: 'text', language_id_position: -1}
+		// {name: 'title', type: 'text', languageIdPosition: 5}
+		// {name: 'title', type: 'text', languageIdPosition: -1}
 		//
 		// Reset the locale to "no localization" if the non-localized field
 		// is autocompleted to.
 
-		if (indexField.language_id_position === -1) {
+		if (indexField.languageIdPosition === -1) {
 			onChange({
 				field: indexField.name,
-				languageIdPosition: indexField.language_id_position,
+				languageIdPosition: indexField.languageIdPosition,
 				locale: '',
 			});
 		}
 		else {
 			onChange({
 				field: indexField.name,
-				languageIdPosition: indexField.language_id_position,
+				languageIdPosition: indexField.languageIdPosition,
 			});
 		}
 

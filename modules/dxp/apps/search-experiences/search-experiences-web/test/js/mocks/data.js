@@ -58,52 +58,52 @@ export const ENTITY_JSON = {
 
 export const INDEX_FIELDS = [
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'ddmTemplateKey',
 		type: 'keyword',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'entryClassPK',
 		type: 'keyword',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'publishDate',
 		type: 'date',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'configurationModelFactoryPid',
 		type: 'keyword',
 	},
 	{
-		language_id_position: 11,
+		languageIdPosition: 11,
 		name: 'description',
 		type: 'text',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'discussion',
 		type: 'keyword',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'screenName',
 		type: 'keyword',
 	},
 	{
-		language_id_position: 15,
+		languageIdPosition: 15,
 		name: 'localized_title',
 		type: 'text',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'catalogBasePriceList',
 		type: 'text',
 	},
 	{
-		language_id_position: -1,
+		languageIdPosition: -1,
 		name: 'path',
 		type: 'keyword',
 	},

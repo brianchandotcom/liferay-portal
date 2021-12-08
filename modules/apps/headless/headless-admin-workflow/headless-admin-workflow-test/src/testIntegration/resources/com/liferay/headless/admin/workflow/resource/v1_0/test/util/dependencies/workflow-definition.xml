@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.3.0"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>[$WORKFLOW-DEFINITION-NAME$]</name>
 	<description>[$WORKFLOW-DEFINITION-DESCRIPTION$]</description>
@@ -11,8 +11,14 @@
 	<state>
 		<name>created</name>
 		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">Created</label>
+		</labels>
 		<transitions>
 			<transition>
+				<labels>
+					<label language-id="en_US">Review</label>
+				</labels>
 				<name>review</name>
 				<target>review</target>
 				<default>true</default>
@@ -36,14 +42,23 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
+		<labels>
+			<label language-id="en_US">Approved</label>
+		</labels>
 	</state>
 	<task>
 		<name>update</name>
 		<assignments>
 			<user />
 		</assignments>
+		<labels>
+			<label language-id="en_US">Update</label>
+		</labels>
 		<transitions>
 			<transition>
+				<labels>
+					<label language-id="en_US">Resubmit</label>
+				</labels>
 				<name>resubmit</name>
 				<target>review</target>
 				<default>true</default>
@@ -60,13 +75,22 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">Review</label>
+		</labels>
 		<transitions>
 			<transition>
+				<labels>
+					<label language-id="en_US">Approve</label>
+				</labels>
 				<name>approve</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
+				<labels>
+					<label language-id="en_US">Reject</label>
+				</labels>
 				<name>reject</name>
 				<target>update</target>
 				<default>false</default>

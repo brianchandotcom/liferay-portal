@@ -425,12 +425,12 @@ definition {
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
 			value1 = "${type}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_itemName = "Create Date",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
 			value1 = "${createDate}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_itemName = "Latest Occurrence",
 			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
 			value1 = "${latestOccurrence}");

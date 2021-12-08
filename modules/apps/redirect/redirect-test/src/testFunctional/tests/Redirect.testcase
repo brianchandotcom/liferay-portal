@@ -1073,6 +1073,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewEntryInfo {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONRedirect.addRedirect(
@@ -1086,10 +1088,10 @@ definition {
 			Redirect.viewEntryFloatingURL(redirectURL = "${redirectURL}");
 		}
 
-		var currentDate = DateUtil.getFormattedCurrentDate("MMMM d, yyyy");
+		var currentMonth = DateUtil.getFormattedCurrentDate("MMMM");
 
 		Redirect.viewEntryInfo(
-			createDate = "${currentDate}",
+			createDate = "${currentMonth}",
 			createdBy = "Test Test",
 			expirationDate = "January 1, 2100",
 			latestOccurrence = "Never",
@@ -1100,10 +1102,10 @@ definition {
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.viewEntryInfo(
-			createDate = "${currentDate}",
+			createDate = "${currentMonth}",
 			createdBy = "Test Test",
 			expirationDate = "January 1, 2100",
-			latestOccurrence = "${currentDate}",
+			latestOccurrence = "${currentMonth}",
 			type = "Temporary");
 	}
 

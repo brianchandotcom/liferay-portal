@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = SiteSettingsConfigurationScreenContributor.class)
-public class PagesSiteSettingsConfigurationScreenContributor
+public class PublicPrivatePagesSiteSettingsConfigurationScreenContributor
 	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
@@ -46,12 +46,12 @@ public class PagesSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/site_settings/pages.jsp";
+		return "/site_settings/public_private_pages.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-pages";
+		return "site-configuration-public-private-pages";
 	}
 
 	@Override

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -168,19 +167,11 @@ public class LayoutPageTemplateDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-page-templates");
 
-		layoutPageTemplateEntriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		layoutPageTemplateEntriesSearchContainer.setOrderByCol(getOrderByCol());
-
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+		layoutPageTemplateEntriesSearchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		layoutPageTemplateEntriesSearchContainer.setOrderByComparator(
-			orderByComparator);
-
+					getOrderByCol(), getOrderByType()));
 		layoutPageTemplateEntriesSearchContainer.setOrderByType(
 			getOrderByType());
 
@@ -194,8 +185,8 @@ public class LayoutPageTemplateDisplayContext {
 					getLayoutPageTemplateCollectionId(), getKeywords(),
 					layoutPageTemplateEntriesSearchContainer.getStart(),
 					layoutPageTemplateEntriesSearchContainer.getEnd(),
-					orderByComparator);
-
+					layoutPageTemplateEntriesSearchContainer.
+						getOrderByComparator());
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
@@ -209,8 +200,8 @@ public class LayoutPageTemplateDisplayContext {
 					getLayoutPageTemplateCollectionId(),
 					layoutPageTemplateEntriesSearchContainer.getStart(),
 					layoutPageTemplateEntriesSearchContainer.getEnd(),
-					orderByComparator);
-
+					layoutPageTemplateEntriesSearchContainer.
+						getOrderByComparator());
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
@@ -220,6 +211,8 @@ public class LayoutPageTemplateDisplayContext {
 
 		layoutPageTemplateEntriesSearchContainer.setResults(
 			layoutPageTemplateEntries);
+		layoutPageTemplateEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		layoutPageTemplateEntriesSearchContainer.setTotal(
 			layoutPageTemplateEntriesCount);
 

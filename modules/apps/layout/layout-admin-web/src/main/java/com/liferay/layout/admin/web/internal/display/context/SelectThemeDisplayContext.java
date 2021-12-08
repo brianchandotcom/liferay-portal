@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -185,24 +186,21 @@ public class SelectThemeDisplayContext {
 		GroupDisplayContextHelper groupDisplayContextHelper =
 			new GroupDisplayContextHelper(_httpServletRequest);
 
-		List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(
-			themeDisplay.getCompanyId(),
-			groupDisplayContextHelper.getLiveGroupId(),
-			themeDisplay.getUserId());
-
-		themesSearchContainer.setTotal(themes.size());
-
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
-		themes = ListUtil.sort(themes, new ThemeNameComparator(orderByAsc));
+		List<Theme> themes = ListUtil.sort(
+			ThemeLocalServiceUtil.getPageThemes(
+				themeDisplay.getCompanyId(),
+				groupDisplayContextHelper.getLiveGroupId(),
+				themeDisplay.getUserId()),
+			new ThemeNameComparator(orderByAsc));
 
 		themesSearchContainer.setResults(themes);
+		themesSearchContainer.setTotal(themes.size());
 
 		_themesSearchContainer = themesSearchContainer;
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -87,19 +86,12 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
+		searchContainer.setOrderByCol(_getOrderByCol());
+		searchContainer.setOrderByComparator(
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateCollectionOrderByComparator(
-					_getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+					_getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections = null;
 		int layoutPageTemplateCollectionsCount = 0;
@@ -110,8 +102,7 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 					getLayoutPageTemplateCollections(
 						themeDisplay.getScopeGroupId(), _getKeywords(),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator);
-
+						searchContainer.getOrderByComparator());
 			layoutPageTemplateCollectionsCount =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
@@ -123,16 +114,17 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 					getLayoutPageTemplateCollections(
 						themeDisplay.getScopeGroupId(),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator);
-
+						searchContainer.getOrderByComparator());
 			layoutPageTemplateCollectionsCount =
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId());
 		}
 
-		searchContainer.setTotal(layoutPageTemplateCollectionsCount);
 		searchContainer.setResults(layoutPageTemplateCollections);
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+		searchContainer.setTotal(layoutPageTemplateCollectionsCount);
 
 		_searchContainer = searchContainer;
 

@@ -155,12 +155,11 @@ public class OrphanPortletsDisplayContext {
 			orderByAsc = true;
 		}
 
-		PortletTitleComparator portletTitleComparator =
+		return ListUtil.sort(
+			orphanPortlets,
 			new PortletTitleComparator(
 				httpServletRequest.getServletContext(),
-				themeDisplay.getLocale(), orderByAsc);
-
-		return ListUtil.sort(orphanPortlets, portletTitleComparator);
+				themeDisplay.getLocale(), orderByAsc));
 	}
 
 	public SearchContainer<Portlet> getOrphanPortletsSearchContainer() {
@@ -177,6 +176,13 @@ public class OrphanPortletsDisplayContext {
 		orphanPortletsSearchContainer.setOrderByCol("name");
 		orphanPortletsSearchContainer.setOrderByType(getOrderByType());
 
+		List<Portlet> portlets = getOrphanPortlets();
+
+		orphanPortletsSearchContainer.setResults(
+			ListUtil.subList(
+				portlets, orphanPortletsSearchContainer.getStart(),
+				orphanPortletsSearchContainer.getEnd()));
+
 		Layout selLayout = getSelLayout();
 
 		if (!selLayout.isLayoutPrototypeLinkActive()) {
@@ -184,12 +190,6 @@ public class OrphanPortletsDisplayContext {
 				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}
 
-		List<Portlet> portlets = getOrphanPortlets();
-
-		orphanPortletsSearchContainer.setResults(
-			ListUtil.subList(
-				portlets, orphanPortletsSearchContainer.getStart(),
-				orphanPortletsSearchContainer.getEnd()));
 		orphanPortletsSearchContainer.setTotal(portlets.size());
 
 		_orphanPortletsSearchContainer = orphanPortletsSearchContainer;

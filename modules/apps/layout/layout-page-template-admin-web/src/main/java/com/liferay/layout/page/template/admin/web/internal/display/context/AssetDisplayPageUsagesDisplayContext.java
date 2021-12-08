@@ -36,12 +36,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -158,39 +156,29 @@ public class AssetDisplayPageUsagesDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-display-page-template-usages");
 
+		searchContainer.setOrderByCol(getOrderByCol());
+
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator =
-			new AssetDisplayPageEntryModifiedDateComparator(orderByAsc);
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			new AssetDisplayPageEntryModifiedDateComparator(orderByAsc));
 		searchContainer.setOrderByType(getOrderByType());
-
-		List<AssetDisplayPageEntry> assetDisplayPageEntries =
+		searchContainer.setResults(
 			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
 				getClassNameId(), getClassTypeId(),
 				getLayoutPageTemplateEntryId(), isDefaultTemplate(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
-
-		searchContainer.setResults(assetDisplayPageEntries);
-
+				searchContainer.getOrderByComparator()));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-
-		int count =
+		searchContainer.setTotal(
 			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntriesCount(
 				getClassNameId(), getClassTypeId(),
-				getLayoutPageTemplateEntryId(), isDefaultTemplate());
-
-		searchContainer.setTotal(count);
+				getLayoutPageTemplateEntryId(), isDefaultTemplate()));
 
 		_searchContainer = searchContainer;
 

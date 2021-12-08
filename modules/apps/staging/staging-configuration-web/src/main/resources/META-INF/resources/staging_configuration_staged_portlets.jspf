@@ -25,16 +25,8 @@
 				<liferay-ui:message key="page-versioning-help" />
 			</div>
 
-			<%
-			boolean privateLayoutsEnabled = liveGroup.isPrivateLayoutsEnabled();
-
-			if (stagingGroup != null) {
-				privateLayoutsEnabled = stagingGroup.isPrivateLayoutsEnabled();
-			}
-			%>
-
 			<c:choose>
-				<c:when test="<%= privateLayoutsEnabled %>">
+				<c:when test="<%= liveGroup.isPrivateLayoutsEnabled() %>">
 					<div class="custom-distance">
 						<liferay-staging:checkbox
 							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>'

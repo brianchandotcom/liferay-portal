@@ -3,7 +3,7 @@ definition {
 	macro getClientVersion {
 		var projectDir = PropsUtil.get("project.dir");
 		var fileContent = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch7/portal-search-elasticsearch7-impl/build.gradle");
-		var clientVersion = RegexUtil.replace("${fileContent}", "elasticsearchClientVersion = &quot;(\d+\.\d+\.\d+)", "1");
+		var clientVersion = RegexUtil.replace("${fileContent}", "elasticsearchClientVersion = \"(\d+\.\d+\.\d+)", "1");
 
 		echo("Elasticsearch client version: ${clientVersion}");
 
@@ -29,7 +29,7 @@ definition {
 		var portalHostname = PropsUtil.get("portal.hostname");
 		var curl = "http://${portalHostname}:${port}";
 		var serverInfo = JSONCurlUtil.get("${curl}");
-		var serverVersion = RegexUtil.replace("${serverInfo}", "number&quot; : &quot;(\d+\.\d+\.\d+)", "1");
+		var serverVersion = RegexUtil.replace("${serverInfo}", "number\" : \"(\d+\.\d+\.\d+)", "1");
 
 		echo("Version of the Elasticsearch server on port ${port}: ${serverVersion}");
 
@@ -43,7 +43,7 @@ definition {
 
 		if ("${fileExists}" == "true") {
 			var fileContent = FileUtil.read("${fileLocation}");
-			var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
+			var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=\"(.*)\"", "1");
 
 			if ("${productionModeEnabled}" == "true") {
 				return "true";

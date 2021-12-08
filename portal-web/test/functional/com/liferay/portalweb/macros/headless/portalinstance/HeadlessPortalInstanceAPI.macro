@@ -27,9 +27,20 @@ definition {
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
-		var parameters = JSONUtil2._addJSONObject(JSON = "{}", key = "domain", value = "&quot;${domain}&quot;");
-		var parameters = JSONUtil2._addJSONObject(JSON = "${parameters}", key = "virtualHost", value = "&quot;${virtualHost}&quot;");
-		var parameters = JSONUtil2._addJSONObject(JSON = "${parameters}", key = "portalInstanceId", value = "&quot;${portalInstanceId}&quot;");
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "{}",
+			key = "domain",
+			value = "&quot;${domain}&quot;");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "virtualHost",
+			value = "&quot;${virtualHost}&quot;");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "portalInstanceId",
+			value = "&quot;${portalInstanceId}&quot;");
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -54,10 +65,25 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var parameters = JSONUtil2._addJSONObject(JSON = "{}", key = "domain", value = "&quot;${domain}&quot;");
-		var parameters = JSONUtil2._addJSONObject(JSON = "${parameters}", key = "virtualHost", value = "&quot;${virtualHost}&quot;");
-		var parameters = JSONUtil2._addJSONObject(JSON = "${parameters}", key = "portalInstanceId", value = "&quot;${portalInstanceId}&quot;");
-		var parameters = JSONUtil2._addJSONObject(JSON = "${parameters}", key = "siteInitializerKey", value = "&quot;${siteInitializerKey}&quot;");
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "{}",
+			key = "domain",
+			value = "&quot;${domain}&quot;");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "virtualHost",
+			value = "&quot;${virtualHost}&quot;");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "portalInstanceId",
+			value = "&quot;${portalInstanceId}&quot;");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "siteInitializerKey",
+			value = "&quot;${siteInitializerKey}&quot;");
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";

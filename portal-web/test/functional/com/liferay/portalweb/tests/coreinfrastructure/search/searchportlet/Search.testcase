@@ -1895,7 +1895,7 @@ definition {
 		var portalHostname = PropsUtil.get("portal.hostname");
 		var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
 		var journalArticleDocumentType = JSONCurlUtil.get("${curl}");
-		var aggregationField = RegexUtil.replace("${journalArticleDocumentType}", "ddmFieldName&quot;:&quot;(.*)&quot;,&quot;ddmFieldValueKeyword&quot;", "1");
+		var aggregationField = RegexUtil.replace("${journalArticleDocumentType}", "ddmFieldName\":\"(.*)\",\"ddmFieldValueKeyword\"", "1");
 
 		Search.openSearchPage();
 

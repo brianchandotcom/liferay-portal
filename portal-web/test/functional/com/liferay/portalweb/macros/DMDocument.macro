@@ -3219,7 +3219,6 @@ definition {
 			value1 = "${assetTitle}");
 
 		// LRCI-276
-
 		//AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 
 		AssertTextEquals(

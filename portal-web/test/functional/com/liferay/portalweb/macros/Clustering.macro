@@ -16,9 +16,7 @@ definition {
 	@description = "Deploy the following jar into Liferay Portal server at port ${nodePort}"
 	macro deployClusteringModule {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-
 		var bundleIndex = ${leadingPortNumber} - 8;
-
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		if ("${bundleIndex}" != "0") {

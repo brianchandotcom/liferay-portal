@@ -20,7 +20,7 @@ definition {
 				var JSON = '''{"${key}" : []}''';
 			}
 			else {
-				var JSON = StringUtil.regexReplaceFirst("${JSON}", "(.*)\}", "$1, "${key}": []}");
+				var JSON = StringUtil.regexReplaceFirst("${JSON}", "(.*)\}", "$1, \"${key}\": []}");
 			}
 		}
 
@@ -52,10 +52,10 @@ definition {
 
 				// If empty no need to add comma
 
-				var JSON = StringUtil.regexReplaceFirst("${JSON}", "(\"${key}\"\s*:\s*)\[\]", "$1["${value}"]");
+				var JSON = StringUtil.regexReplaceFirst("${JSON}", "(\"${key}\"\s*:\s*)\[\]", "$1[\"${value}\"]");
 			}
 			else {
-				var JSON = StringUtil.regexReplaceFirst("${JSON}", "(\"${key}\"\s*:\s*)(\[.*?)\]", "$1$2, "${value}"]");
+				var JSON = StringUtil.regexReplaceFirst("${JSON}", "(\"${key}\"\s*:\s*)(\[.*?)\]", "$1$2, \"${value}\"]");
 			}
 		}
 
@@ -80,7 +80,7 @@ definition {
 			var JSON = '''{"${key}" : ${value}}''';
 		}
 		else {
-			var JSON = StringUtil.regexReplaceFirst("${JSON}", "(.*)\}", "$1, "${key}": ${value}}");
+			var JSON = StringUtil.regexReplaceFirst("${JSON}", "(.*)\}", "$1, \"${key}\": ${value}}");
 		}
 
 		return "${JSON}";

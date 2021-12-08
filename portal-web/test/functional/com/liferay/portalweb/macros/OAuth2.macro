@@ -384,8 +384,8 @@ definition {
 		}
 
 		var response = JSONCurlUtil.post("${tokenCurl}");
-		var partialResponse = StringUtil.extractFirst("${response}", "&quot;,&quot;token_type");
-		var accessToken = StringUtil.extractLast("${partialResponse}", "access_token&quot;:&quot;");
+		var partialResponse = StringUtil.extractFirst("${response}", "\",\"token_type");
+		var accessToken = StringUtil.extractLast("${partialResponse}", "access_token\":\"");
 
 		echo("## * Access Token: ${accessToken}");
 

@@ -453,6 +453,8 @@ public class KaleoWorkflowModelConverterImpl
 				DefaultWorkflowTransition defaultWorkflowTransition =
 					new DefaultWorkflowTransition();
 
+				defaultWorkflowTransition.setLabelMap(
+					kaleoTransition.getLabelMap());
 				defaultWorkflowTransition.setName(kaleoTransition.getName());
 				defaultWorkflowTransition.setSourceNodeName(
 					kaleoTransition.getSourceKaleoNodeName());

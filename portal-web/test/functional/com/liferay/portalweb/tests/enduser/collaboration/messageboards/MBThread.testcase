@@ -334,13 +334,18 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136920. It checks that a thread can be exported."
-	@ignore = "true"
 	@priority = "3"
 	test CanExportThread {
-		property portal.acceptance = "false";
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 
-		// TODO LPS-136920 CanExportThread pending implementation
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
+		LAR.exportPortlet(larFileName = "ExportMBThread.lar");
+
+		MessageboardsThread.assertDownloadedFileNameFromTempFolder(exportedFileName = "ExportMBThread");
 	}
 
 	@description = "This is a test for LPS-136919. It checks that a thread can be imported."

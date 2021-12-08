@@ -678,9 +678,11 @@ definition {
 	}
 
 	macro viewContentAbstractDescription {
+		var key_entryAbstractDescription = "${descriptionValue}";
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT_ABSTRACT_AP",
-			value1 = "${descriptionValue}");
+			value1 = "${key_entryAbstractDescription}");
 	}
 
 	macro viewEntryNotPresent {

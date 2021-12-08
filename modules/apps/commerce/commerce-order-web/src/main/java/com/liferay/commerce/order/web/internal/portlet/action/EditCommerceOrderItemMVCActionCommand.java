@@ -199,6 +199,22 @@ public class EditCommerceOrderItemMVCActionCommand
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
 					commerceOrderItemId, decimalQuantity, price);
+
+			BigDecimal discountAmount = (BigDecimal)ParamUtil.getNumber(
+				actionRequest, "discountAmount");
+
+			BigDecimal finalPrice = (BigDecimal)ParamUtil.getNumber(
+				actionRequest, "finalPrice");
+
+			commerceOrderItem =
+				_commerceOrderItemService.updateCommerceOrderItemPrices(
+					commerceOrderItemId, discountAmount,
+					commerceOrderItem.getDiscountPercentageLevel1(),
+					commerceOrderItem.getDiscountPercentageLevel2(),
+					commerceOrderItem.getDiscountPercentageLevel3(),
+					commerceOrderItem.getDiscountPercentageLevel4(), finalPrice,
+					commerceOrderItem.getPromoPrice(),
+					commerceOrderItem.getUnitPrice());
 		}
 
 		String deliveryGroup = ParamUtil.getString(

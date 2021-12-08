@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.service.ExportImportService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -143,13 +144,20 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String taskName = ParamUtil.getString(actionRequest, "name");
 
 		if (Validator.isNull(taskName)) {
-			if (privateLayout) {
-				taskName = LanguageUtil.get(
-					actionRequest.getLocale(), "private-pages");
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group.isPrivateLayoutsEnabled()) {
+				if (privateLayout) {
+					taskName = LanguageUtil.get(
+						actionRequest.getLocale(), "private-pages");
+				}
+				else {
+					taskName = LanguageUtil.get(
+						actionRequest.getLocale(), "public-pages");
+				}
 			}
 			else {
-				taskName = LanguageUtil.get(
-					actionRequest.getLocale(), "public-pages");
+				taskName = LanguageUtil.get(actionRequest.getLocale(), "pages");
 			}
 		}
 

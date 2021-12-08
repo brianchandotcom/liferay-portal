@@ -19,13 +19,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -36,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -59,6 +63,22 @@ public class ProcessSummaryDisplayContext {
 		}
 
 		return new ArrayList<>(pageNames);
+	}
+
+	public String getPagesDescription(
+		long groupId, Locale locale, boolean settingsMapPrivateLayout) {
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if ((group != null) && !group.isPrivateLayoutsEnabled()) {
+			return LanguageUtil.get(locale, "pages");
+		}
+
+		if (settingsMapPrivateLayout) {
+			return LanguageUtil.get(locale, "private-pages");
+		}
+
+		return LanguageUtil.get(locale, "public-pages");
 	}
 
 	private void _addPageNames(

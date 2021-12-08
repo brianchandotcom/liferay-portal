@@ -159,9 +159,16 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 				<c:choose>
 					<c:when test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
-						<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
+						<c:choose>
+							<c:when test="<%= group.isPrivateLayoutsEnabled() %>">
+								<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
 
-						<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
+								<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
+							</c:when>
+							<c:otherwise>
+								<aui:input name="privateLayout" type="hidden" value="<%= false %>" />
+							</c:otherwise>
+						</c:choose>
 
 						<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
 

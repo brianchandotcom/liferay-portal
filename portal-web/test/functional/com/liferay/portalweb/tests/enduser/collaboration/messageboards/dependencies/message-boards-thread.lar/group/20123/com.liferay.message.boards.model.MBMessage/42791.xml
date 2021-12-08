@@ -1,0 +1,37 @@
+<MBMessage>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>dd06e4c2-6ece-5400-cf62-9d6343f33586</__uuid>
+  <__externalReferenceCode>42791</__externalReferenceCode>
+  <__messageId>42791</__messageId>
+  <__groupId>20123</__groupId>
+  <__companyId>20099</__companyId>
+  <__userId>20127</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2021-12-08 02:27:37.997</__createDate>
+  <__modifiedDate class="sql-timestamp">2021-12-08 02:27:38.013</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>0</__classNameId>
+  <__classPK>0</__classPK>
+  <__categoryId>0</__categoryId>
+  <__threadId>42792</__threadId>
+  <__rootMessageId>42791</__rootMessageId>
+  <__parentMessageId>0</__parentMessageId>
+  <__treePath>/42791/</__treePath>
+  <__subject>MB Thread Message Subject</__subject>
+  <__urlSubject>mb-thread-message-subject</__urlSubject>
+  <__body>MB Thread Message Body</__body>
+  <__format>bbcode</__format>
+  <__anonymous>false</__anonymous>
+  <__priority>0.0</__priority>
+  <__allowPingbacks>true</__allowPingbacks>
+  <__answer>false</__answer>
+  <__status>0</__status>
+  <__statusByUserId>20127</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2021-12-08 02:27:38.013</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__attachmentsFolderId>0</__attachmentsFolderId>
+</MBMessage>

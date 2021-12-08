@@ -75,7 +75,7 @@ public class PagesSiteSettingsConfigurationScreenContributor
 			return false;
 		}
 
-		if (group != null) {
+		if ((group != null) && !group.isPrivateLayoutsEnabled()) {
 			return true;
 		}
 

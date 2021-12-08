@@ -45,6 +45,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,8 @@ import org.apache.commons.io.FileUtils;
 public class LangBuilder {
 
 	public static void main(String[] args) throws Exception {
-		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+		Map<String, String> arguments = new HashMap<>(
+			ArgumentsUtil.parseArguments(args));
 
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 

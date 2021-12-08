@@ -1083,6 +1083,7 @@
 		<column name="kaleoDefinitionVersionId" type="long" />
 		<column name="kaleoNodeId" type="long" />
 		<column name="name" type="String" />
+		<column localized="true" name="label" type="String" />
 		<column name="description" type="String" />
 		<column name="sourceKaleoNodeId" type="long" />
 		<column name="sourceKaleoNodeName" type="String" />

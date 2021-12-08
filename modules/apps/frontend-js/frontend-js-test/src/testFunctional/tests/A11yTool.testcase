@@ -561,7 +561,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142328. Verifies the popup panel should not be present when clicked outside of it."
+	@description = "LPS-142328. Verifies the popup panel will close when click outside of it."
 	@ignore = "true"
 	@priority = "3"
 	test CanViewViolations {

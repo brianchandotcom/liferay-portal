@@ -53,7 +53,6 @@ import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.webserver.DynamicResourceServlet;
 import com.liferay.util.ant.CopyTask;
-import com.liferay.util.ant.DeleteTask;
 import com.liferay.util.ant.ExpandTask;
 
 import java.io.File;
@@ -799,7 +798,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 			tempDir, mergeDir, deployDir, displayName, overwrite,
 			pluginPackage);
 
-		DeleteTask.deleteDirectory(tempDir);
+		FileUtil.deltree(tempDir);
 
 		return true;
 	}

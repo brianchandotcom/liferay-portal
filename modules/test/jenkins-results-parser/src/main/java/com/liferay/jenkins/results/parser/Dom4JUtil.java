@@ -329,6 +329,8 @@ public class Dom4JUtil {
 	}
 
 	public static Element toCodeSnippetElement(String content) {
+		content = content.replaceAll("\t", "  ");
+
 		return getNewElement(
 			"pre", null,
 			getNewElement(

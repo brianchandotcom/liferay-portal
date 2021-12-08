@@ -105,8 +105,9 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 			Node targetNode = definition.getNode(targetNodeName);
 
 			Transition transition = new Transition(
-				kaleoTransition.getName(), sourceNode, targetNode,
-				kaleoTransition.isDefaultTransition());
+				kaleoTransition.isDefaultTransition(),
+				kaleoTransition.getLabelMap(), kaleoTransition.getName(),
+				sourceNode, targetNode);
 
 			sourceNode.addOutgoingTransition(transition);
 

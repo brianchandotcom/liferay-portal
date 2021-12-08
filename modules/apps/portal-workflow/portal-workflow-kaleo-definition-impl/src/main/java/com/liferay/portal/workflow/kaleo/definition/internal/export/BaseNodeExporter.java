@@ -58,8 +58,6 @@ public abstract class BaseNodeExporter implements NodeExporter {
 	public void exportNode(Node node, Element element, String namespace) {
 		Element nodeElement = createNodeElement(element, namespace);
 
-		exportLabelsElement(nodeElement, node);
-
 		addTextElement(nodeElement, "name", node.getName());
 
 		if (Validator.isNotNull(node.getDescription())) {
@@ -82,6 +80,7 @@ public abstract class BaseNodeExporter implements NodeExporter {
 		}
 
 		exportAdditionalNodeElements(node, nodeElement);
+		exportLabelsElement(nodeElement, node.getLabelMap());
 		exportTransitionsElement(node, nodeElement);
 	}
 
@@ -242,21 +241,21 @@ public abstract class BaseNodeExporter implements NodeExporter {
 		}
 	}
 
-	protected void exportLabelsElement(Element element, Node node) {
-		if (MapUtil.isEmpty(node.getLabelMap())) {
+	protected void exportLabelsElement(
+		Element element, Map<Locale, String> labelMap) {
+
+		if (MapUtil.isEmpty(labelMap)) {
 			return;
 		}
-
-		Map<Locale, String> labelMap = node.getLabelMap();
 
 		Element labelsElement = element.addElement("labels");
 
 		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
-			Element label = labelsElement.addElement("label");
+			Element labelElement = labelsElement.addElement("label");
 
-			label.addAttribute(
+			labelElement.addAttribute(
 				"language-id", LocaleUtil.toLanguageId(entry.getKey()));
-			label.addText(entry.getValue());
+			labelElement.addText(entry.getValue());
 		}
 	}
 
@@ -458,6 +457,8 @@ public abstract class BaseNodeExporter implements NodeExporter {
 			Node targetNode = outgoingTransition.getTargetNode();
 
 			addTextElement(transition, "target", targetNode.getName());
+
+			exportLabelsElement(transition, outgoingTransition.getLabelMap());
 		}
 	}
 

@@ -122,6 +122,18 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 	}
 
 	@Override
+	public void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		accountRoleLocalService.setUserAccountRoles(
+			accountEntryId, accountRoleIds, userId);
+	}
+
+	@Override
 	public void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException {

@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -296,6 +297,32 @@ public class AccountRoleLocalServiceImpl
 					DSLQueryFactoryUtil.countDistinct(
 						AccountRoleTable.INSTANCE.roleId),
 					keywords, params)));
+	}
+
+	@Override
+	public void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException {
+
+		List<AccountRole> removeAccountRoles = new ArrayList<>();
+
+		List<AccountRole> currentAccountRoles = getAccountRoles(
+			accountEntryId, userId);
+
+		for (AccountRole accountRole : currentAccountRoles) {
+			if (!ArrayUtil.contains(
+					accountRoleIds, accountRole.getAccountRoleId())) {
+
+				removeAccountRoles.add(accountRole);
+			}
+		}
+
+		associateUser(accountEntryId, accountRoleIds, userId);
+
+		for (AccountRole accountRole : removeAccountRoles) {
+			unassociateUser(
+				accountEntryId, accountRole.getAccountRoleId(), userId);
+		}
 	}
 
 	@Override

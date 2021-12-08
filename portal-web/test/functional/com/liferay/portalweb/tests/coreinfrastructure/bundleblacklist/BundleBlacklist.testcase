@@ -340,11 +340,9 @@ definition {
 
 		if ("${testRunEnvironment}" == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
-			var consoleText = "STOPPED Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
 			var symbolicName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
-			var consoleText = "STOPPED Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
 		}
 
 		BundleBlacklist.blacklistModuleAndComponentConfiguration(
@@ -353,21 +351,19 @@ definition {
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
-			consoleText = "${consoleText}",
+			consoleText = "STOPPED ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+		Portlet.startServer(keepOSGiState = "true");
 
 		Navigator.openURL();
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
-			consoleText = "${consoleText}",
+			consoleText = "STOPPED ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 	}
@@ -394,9 +390,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+		Portlet.startServer(keepOSGiState = "true");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

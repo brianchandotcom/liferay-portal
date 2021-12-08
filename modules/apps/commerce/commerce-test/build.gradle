@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-account-api")
 	testIntegrationCompile project(":apps:commerce:commerce-account-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-api")

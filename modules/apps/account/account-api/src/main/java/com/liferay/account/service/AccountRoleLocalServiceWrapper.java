@@ -407,6 +407,15 @@ public class AccountRoleLocalServiceWrapper
 	}
 
 	@Override
+	public void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountRoleLocalService.setUserAccountRoles(
+			accountEntryId, accountRoleIds, userId);
+	}
+
+	@Override
 	public void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -359,6 +359,14 @@ public class AccountRoleLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException {
+
+		getService().setUserAccountRoles(
+			accountEntryId, accountRoleIds, userId);
+	}
+
 	public static void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException {

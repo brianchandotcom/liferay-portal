@@ -287,6 +287,43 @@ public class AccountRoleServiceHttp {
 		}
 	}
 
+	public static void setUserAccountRoles(
+			HttpPrincipal httpPrincipal, long accountEntryId,
+			long[] accountRoleIds, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountRoleServiceUtil.class, "setUserAccountRoles",
+				_setUserAccountRolesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, accountRoleIds, userId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void unassociateUser(
 			HttpPrincipal httpPrincipal, long accountEntryId,
 			long accountRoleId, long userId)
@@ -295,7 +332,7 @@ public class AccountRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountRoleServiceUtil.class, "unassociateUser",
-				_unassociateUserParameterTypes6);
+				_unassociateUserParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, accountRoleId, userId);
@@ -341,7 +378,9 @@ public class AccountRoleServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getAccountRoleByRoleIdParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _unassociateUserParameterTypes6 =
+	private static final Class<?>[] _setUserAccountRolesParameterTypes6 =
+		new Class[] {long.class, long[].class, long.class};
+	private static final Class<?>[] _unassociateUserParameterTypes7 =
 		new Class[] {long.class, long.class, long.class};
 
 }

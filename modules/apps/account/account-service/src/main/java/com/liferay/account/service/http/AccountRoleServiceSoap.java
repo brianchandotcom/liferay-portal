@@ -180,6 +180,21 @@ public class AccountRoleServiceSoap {
 		}
 	}
 
+	public static void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws RemoteException {
+
+		try {
+			AccountRoleServiceUtil.setUserAccountRoles(
+				accountEntryId, accountRoleIds, userId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws RemoteException {

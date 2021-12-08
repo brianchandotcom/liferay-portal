@@ -304,6 +304,10 @@ public interface AccountRoleLocalService
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<?> orderByComparator);
 
+	public void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException;
+
 	public void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException;

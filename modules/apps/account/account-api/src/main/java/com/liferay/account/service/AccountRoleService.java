@@ -82,6 +82,10 @@ public interface AccountRoleService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public void setUserAccountRoles(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException;
+
 	public void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException;

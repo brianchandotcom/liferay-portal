@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -134,6 +135,7 @@ export default function ChangeTrackingRenderView({
 	discardURL,
 	getCache,
 	handleNavigation,
+	handleShowHideable,
 	parentEntries,
 	showDropdown,
 	showHeader = true,
@@ -861,6 +863,30 @@ export default function ChangeTrackingRenderView({
 		);
 	};
 
+	const renderShowHideableToggle = () => {
+		const elements = [];
+
+		elements.push(
+			<div className="autofit-col autofit-col-expand">
+				<div />
+			</div>
+		);
+
+		elements.push(
+			<div className="autofit-col">
+				<ClayToggle
+					label={Liferay.Language.get('show-all-items')}
+					onToggle={(showHideable) =>
+						handleShowHideable(showHideable)
+					}
+					toggled={showHideable}
+				/>
+			</div>
+		);
+
+		return elements;
+	};
+
 	const renderViewDropdown = () => {
 		if (
 			!Object.prototype.hasOwnProperty.call(
@@ -1295,9 +1321,9 @@ export default function ChangeTrackingRenderView({
 			(state.children && state.children.length > 0)
 		) {
 			items.push(
-				<div className="autofit-col row-divider">
+				<li className="autofit-col nav-item row-divider">
 					<div />
-				</div>
+				</li>
 			);
 
 			items.push(
@@ -1370,6 +1396,8 @@ export default function ChangeTrackingRenderView({
 						</div>
 
 						{renderDiffLegend()}
+
+						{renderShowHideableToggle()}
 					</div>
 				</td>
 			</tr>

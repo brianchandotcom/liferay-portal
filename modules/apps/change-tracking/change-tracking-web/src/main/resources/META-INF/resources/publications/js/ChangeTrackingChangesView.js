@@ -2430,6 +2430,7 @@ export default function ChangeTrackingChangesView({
 								handleNavigation={(nodeId) =>
 									handleNavigationUpdate(nodeId, true)
 								}
+								handleShowHideable={handleShowHideableToggle}
 								parentEntries={renderState.parents}
 								showDropdown={
 									activeCTCollection &&

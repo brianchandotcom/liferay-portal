@@ -14,10 +14,18 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Feliphe Marinho
  */
 public class DefaultWorkflowTransition implements WorkflowTransition {
+
+	@Override
+	public Map<Locale, String> getLabelMap() {
+		return _labelMap;
+	}
 
 	@Override
 	public String getName() {
@@ -34,6 +42,10 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 		return _targetNodeName;
 	}
 
+	public void setLabelMap(Map<Locale, String> labelMap) {
+		_labelMap = labelMap;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -46,6 +58,7 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 		_targetNodeName = targetNodeName;
 	}
 
+	private Map<Locale, String> _labelMap;
 	private String _name;
 	private String _sourceNodeName;
 	private String _targetNodeName;

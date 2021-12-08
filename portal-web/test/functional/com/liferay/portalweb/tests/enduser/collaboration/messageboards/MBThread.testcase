@@ -349,13 +349,19 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136919. It checks that a thread can be imported."
-	@ignore = "true"
 	@priority = "3"
 	test CanImportThread {
-		property portal.acceptance = "false";
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
-		// TODO LPS-136919 CanImportThread pending implementation
+		LAR.importPortlet(
+			initializeLiferayEvent = "true",
+			larFileName = "message-boards-thread.lar",
+			uploadFrom = "dependencies");
 
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"

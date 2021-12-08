@@ -505,7 +505,9 @@ export function parseCustomSXPElement(sxpElement, uiConfigurationValues) {
 }
 
 /**
- * Function for getting all the default values from an SXPElement.
+ * Function for getting all the default values from an SXPElement. For non-custom
+ * json elements, returns the configuration values after looping over all fieldSets.
+ * For custom json elements, returns a stringified sxpElement for the editor.
  *
  * @param {object} sxpElement SXPElement with elementDefinition
  * @return {object}
@@ -515,8 +517,8 @@ export function getUIConfigurationValues(sxpElement = {}) {
 
 	if (uiConfiguration) {
 		return cleanUIConfiguration(uiConfiguration).fieldSets.reduce(
-			(allValues, fieldSet) => {
-				const uiConfigurationValues = fieldSet.fields.reduce(
+			(uiConfigurationValues, fieldSet) => {
+				const fieldsUIConfigurationValues = fieldSet.fields.reduce(
 					(acc, curr) => ({
 						...acc,
 						[`${curr.name}`]: getDefaultValue(curr),
@@ -526,14 +528,16 @@ export function getUIConfigurationValues(sxpElement = {}) {
 
 				// gets uiConfigurationValues within each fields array
 
-				return {...allValues, ...uiConfigurationValues};
+				return {
+					...uiConfigurationValues,
+					...fieldsUIConfigurationValues,
+				};
 			},
 			{}
 		);
 	}
-	else {
-		return {sxpElement: JSON.stringify(sxpElement, null, '\t')};
-	}
+
+	return {sxpElement: JSON.stringify(sxpElement, null, '\t')};
 }
 
 /**

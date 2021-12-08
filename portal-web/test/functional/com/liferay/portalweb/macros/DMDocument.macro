@@ -1063,6 +1063,35 @@ definition {
 			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 	}
 
+	macro configureDocumentEmailTemplate {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${siteURLKey}");
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertClick(
+			key_navTab = "${navTab}",
+			locator1 = "DocumentsAndMediaConfiguration#CONFIGURATION_NAV_ITEM",
+			value1 = "${navTab}");
+
+		if (isSet(bodyContent)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${bodyContent}");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro deleteCP {
 		if (isSet(recycleBinDisabled)) {
 			LexiconEntry.delete(rowEntry = "${dmDocumentTitle}");

@@ -969,6 +969,8 @@ definition {
 
 			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
 
+			var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
+
 			MultiFactorAuthentication.getTOTP();
 		}
 

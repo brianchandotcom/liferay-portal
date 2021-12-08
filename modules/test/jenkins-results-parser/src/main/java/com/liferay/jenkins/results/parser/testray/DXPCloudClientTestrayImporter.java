@@ -46,17 +46,15 @@ public class DXPCloudClientTestrayImporter {
 		Element rootElement = Dom4JUtil.getNewElement("testsuite");
 
 		rootElement.add(_getTestSuiteEnvironmentsElement());
-
 		rootElement.add(_getTestSuitePropertiesElement());
 
 		for (Element testCaseResultElement : _getTestCaseResultElements()) {
 			Element testCaseElement = rootElement.addElement("testcase");
 
 			testCaseElement.add(
-				_getTestCasePropertiesElement(testCaseResultElement));
-
-			testCaseElement.add(
 				_getTestCaseAttachmentsElement(testCaseResultElement));
+			testCaseElement.add(
+				_getTestCasePropertiesElement(testCaseResultElement));
 		}
 
 		JenkinsResultsParserUtil.toJSONObject(

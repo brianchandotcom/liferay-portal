@@ -43,10 +43,14 @@ else {
 
 	<%
 	List<Layout> publicLayouts = LayoutServiceUtil.getLayouts(actionGroupId, false);
+
+	Group group = themeDisplay.getScopeGroup();
 	%>
 
 	<c:if test="<%= !publicLayouts.isEmpty() %>">
-		<aui:option disabled="<%= true %>" label="public-pages" value="0" />
+		<c:if test="<%= group.isPrivateLayoutsEnabled() %>">
+			<aui:option disabled="<%= true %>" label="public-pages" value="0" />
+		</c:if>
 
 		<%
 		for (Layout publicLayout : publicLayouts) {
@@ -64,7 +68,7 @@ else {
 	List<Layout> privateLayouts = LayoutServiceUtil.getLayouts(actionGroupId, true);
 	%>
 
-	<c:if test="<%= !privateLayouts.isEmpty() %>">
+	<c:if test="<%= !privateLayouts.isEmpty() && group.isPrivateLayoutsEnabled() %>">
 		<aui:option disabled="<%= true %>" label="private-pages" value="0" />
 
 		<%

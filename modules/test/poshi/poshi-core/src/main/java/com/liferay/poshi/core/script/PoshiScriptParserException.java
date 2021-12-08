@@ -33,6 +33,10 @@ public class PoshiScriptParserException extends Exception {
 	public static final String TRANSLATION_LOSS_MESSAGE =
 		"Poshi Script syntax is not preserved in translation";
 
+	public static void clear() {
+		_poshiScriptParserExceptions.clear();
+	}
+
 	public static void throwExceptions() throws Exception {
 		if (!_poshiScriptParserExceptions.isEmpty()) {
 			StringBuilder sb = new StringBuilder();

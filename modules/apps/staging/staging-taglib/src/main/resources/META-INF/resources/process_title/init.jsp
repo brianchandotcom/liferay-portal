@@ -24,7 +24,7 @@ BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.g
 
 String backgroundTaskName = backgroundTaskDisplay.getDisplayName(request);
 
-if (GroupCapabilityUtil.isSupportsPages(liveGroup)) {
+if ((liveGroup != null) && GroupCapabilityUtil.isSupportsPages(liveGroup) && liveGroup.isPrivateLayoutsEnabled()) {
 	boolean processPrivateLayout = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout");
 
 	String publicPagesDescription = processPrivateLayout ? LanguageUtil.get(request, "private-pages") : LanguageUtil.get(request, "public-pages");

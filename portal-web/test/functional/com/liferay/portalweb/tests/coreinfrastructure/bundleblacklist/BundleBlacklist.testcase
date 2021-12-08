@@ -363,7 +363,7 @@ definition {
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
-			consoleText = "STOPPED ${symbolicName}",
+			consoleText = "Stopping blacklisted bundle ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 	}

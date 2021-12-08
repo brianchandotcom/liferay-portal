@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -1898,8 +1899,9 @@ public class LayoutsAdminDisplayContext {
 			defaultOrderByCol = "relevance";
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol", defaultOrderByCol);
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			defaultOrderByCol);
 
 		return _orderByCol;
 	}
@@ -1913,8 +1915,8 @@ public class LayoutsAdminDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES, "asc");
 
 		return _orderByType;
 	}

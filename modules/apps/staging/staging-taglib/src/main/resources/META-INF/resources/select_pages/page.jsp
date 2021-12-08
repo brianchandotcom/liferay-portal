@@ -137,7 +137,7 @@
 									incomplete="<%= false %>"
 									portletURL="<%= renderResponse.createRenderURL() %>"
 									privateLayout="<%= selectPagesPrivateLayout %>"
-									rootNodeName='<%= selectPagesGroup.isPrivateLayoutsEnabled() ? selectPagesGroup.getLayoutRootNodeName(selectPagesPrivateLayout, locale) : LanguageUtil.get(request, "pages") %>'
+									rootNodeName="<%= selectPagesGroup.getLayoutRootNodeName(selectPagesPrivateLayout, locale) %>"
 									selectableTree="<%= true %>"
 									selectedLayoutIds="<%= selectedLayoutIds %>"
 									selPlid='<%= ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID) %>'

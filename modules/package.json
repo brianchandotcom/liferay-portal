@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"@liferay/eslint-plugin": "1.1.0",
+		"@liferay/eslint-plugin": "1.2.0",
 		"@liferay/npm-scripts": "46.5.0",
 		"acorn": "7.1.0",
 		"alloy-ui": "^3.1.0-deprecated.40",
@@ -12,7 +12,7 @@
 	},
 	"private": true,
 	"resolutions": {
-		"@liferay/eslint-plugin": "1.1.0",
+		"@liferay/eslint-plugin": "1.2.0",
 		"ua-parser-js": "^0.7.30"
 	},
 	"scripts": {

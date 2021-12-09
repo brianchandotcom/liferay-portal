@@ -6,6 +6,20 @@ definition {
 			locator1 = "ControlMenu#TOGGLE_CONTROLS");
 	}
 
+	macro viewPageLayout {
+		if (isSet(pageLayout)) {
+			for (var pageColAndId : list "${pageColAndIdList}") {
+				var colNumber = StringUtil.extractFirst("${pageColAndId}", "-");
+				var idNumber = StringUtil.extractLast("${pageColAndId}", "-");
+
+				AssertVisible(
+					key_colNumber = "${colNumber}",
+					key_idNumber = "${idNumber}",
+					locator1 = "Home#PAGE_COLUMN_LAYOUT");
+			}
+		}
+	}
+
 	macro viewToggleControls {
 		AssertVisible(
 			key_status = "${status}",

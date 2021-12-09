@@ -371,38 +371,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_COLUMN_2</td>
-	<td>//div[@id='layout-column_column-2']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_3</td>
-	<td>//div[@id='layout-column_column-3']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_1_LAYOUT_1_COLUMN</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-12')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-4')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_2_LAYOUT_2_COLUMNS_70_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'col-md-8')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_1_LAYOUT_2_COLUMNS_50_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-6')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_2_LAYOUT_2_COLUMNS_50_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'col-md-6')]</td>
+	<td>PAGE_COLUMN_LAYOUT</td>
+	<td>//div[contains(@id,'main-content')]//div[contains(@class,'col-md-${key_colNumber}') and contains(@id,'column-${key_idNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

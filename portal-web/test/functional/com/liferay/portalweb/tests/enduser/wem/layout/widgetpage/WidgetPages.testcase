@@ -304,7 +304,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Page.viewPageLayout(pageLayout = "2 Column (30/70)");
+			WidgetPages.viewPageLayout(
+				pageColAndIdList = "4-1,8-2",
+				pageLayout = "2 Column (30/70)");
 		}
 
 		task ("Change the layout template then view the layout is applied to page") {

@@ -937,19 +937,6 @@ definition {
 			value1 = "/${pageName}");
 	}
 
-	macro viewPageLayout {
-		if ("${pageLayout}" == "1 Column") {
-			AssertVisible(locator1 = "Home#PAGE_COLUMN_1_LAYOUT_1_COLUMN");
-
-			AssertElementNotPresent(locator1 = "Home#PAGE_COLUMN_2");
-		}
-		else if ("${pageLayout}" == "2 Column (30/70)") {
-			AssertVisible(locator1 = "Home#PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT");
-
-			AssertVisible(locator1 = "Home#PAGE_COLUMN_2_LAYOUT_2_COLUMNS_70_SPLIT");
-		}
-	}
-
 	macro viewPageLayoutColumn {
 		AssertElementPresent(
 			key_columnName = "${columnName}",

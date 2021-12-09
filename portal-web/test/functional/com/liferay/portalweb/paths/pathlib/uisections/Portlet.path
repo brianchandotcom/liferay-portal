@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_INSIDE_PAGE_COLUMN</td>
+	<td>//div[@id='main-content']//div[contains(@id,'column-${key_pageColumnNumber}')]//header[contains(@class,'portlet-topper')]//span[.='${key_portletName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_PLUS_SIGN</td>
 	<td>//header[div/span[.='${key_portletName}']]//*[@data-qa-id='addButton']//a/span</td>
 	<td></td>
@@ -96,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NESTED_APPLICATION_COLUMN</td>
+	<td>//div[contains(@id,'NestedPortletsPortlet')]//div[contains(@class,'portlet-dropzone') and contains(@id,'column-${key_nestedColumnNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
@@ -113,6 +123,16 @@
 <tr>
 	<td>PORTLET_CONTENT</td>
 	<td>//section[@id='content']//div[contains(@class,'portlet-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE_INSIDE_NESTED_APPLICATION_COLUMN</td>
+	<td>//section[contains(@id,'NestedPortlets')]//div[contains(@id,'column-${key_nestedColumnNumber}')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE_INSIDE_PAGE_COLUMN</td>
+	<td>//div[@id='main-content']//div[contains(@id,'column-${key_pageColumnNumber}')]//h2[contains(@class,'portlet-title') and (.='${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

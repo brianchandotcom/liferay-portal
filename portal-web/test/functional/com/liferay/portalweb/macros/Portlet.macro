@@ -317,19 +317,23 @@ definition {
 
 	@summary = "Drag and drop the '${portletName}' portlet from column ${columnNumberFrom} to column ${columnNumberTo}"
 	macro dragAndDropPortletToColumnPG {
-		var key_portletTitleName = "${portletName}";
+		var key_portletName = "${portletName}";
 
 		AssertTextEquals(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE",
+			key_pageColumnNumber = "${columnNumberFrom}",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN",
 			value1 = "${portletName}");
 
 		DragAndDrop.dragAndDropPortletToObject(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
-			locator2 = "Home#PAGE_COLUMN_${columnNumberTo}",
+			key_pageColumnId = "${columnNumberTo}",
+			key_pageColumnNumber = "${columnNumberFrom}",
+			locator1 = "Portlet#HEADER_INSIDE_PAGE_COLUMN",
+			locator2 = "Home#PAGE_COLUMN",
 			value1 = "${portletName}");
 
 		AssertTextEquals(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE",
+			key_pageColumnNumber = "${columnNumberTo}",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN",
 			value1 = "${portletName}");
 	}
 

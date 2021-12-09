@@ -1,21 +1,28 @@
 definition {
 
+	@summary = "Drag and drop the '${portletName}' widget from column ${columnNumberFrom} to nested column ${nestedColumnNumberTo}"
 	macro dragAndDropPortletToPortletColumnPG {
-		var key_portletTitleName = "${portletName}";
+		var key_portletName = "${portletName}";
 
-		MouseOver.mouseOverNotVisible(locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER");
+		MouseOver.mouseOverNotVisible(
+			key_pageColumnNumber = "${columnNumberFrom}",
+			locator1 = "Portlet#HEADER_INSIDE_PAGE_COLUMN");
 
 		AssertTextEquals(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
+			key_pageColumnNumber = "${columnNumberFrom}",
+			locator1 = "Portlet#HEADER_INSIDE_PAGE_COLUMN",
 			value1 = "${portletName}");
 
 		DragAndDrop.dragAndDropPortletToPortlet(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
-			locator2 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}",
+			key_nestedColumnNumber = "${nestedColumnNumberTo}",
+			key_pageColumnNumber = "${columnNumberFrom}",
+			locator1 = "Portlet#HEADER_INSIDE_PAGE_COLUMN",
+			locator2 = "Portlet#NESTED_APPLICATION_COLUMN",
 			value1 = "${portletName}");
 
 		AssertTextEquals(
-			locator1 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE",
+			key_nestedColumnNumber = "${nestedColumnNumberTo}",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_NESTED_APPLICATION_COLUMN",
 			value1 = "${portletName}");
 	}
 
@@ -30,14 +37,14 @@ definition {
 			key_card = "${defaultColumnName}",
 			locator1 = "Card#CARD_RADIO");
 
-		SelectFrameTop(value1 = "relative=top");
+		IFrame.closeFrame();
 	}
 
 	macro viewPG {
-		var key_portletTitleName = "${portletName}";
-
 		AssertTextEquals(
-			locator1 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE",
+			key_nestedColumnNumber = "${nestedColumnNumber}",
+			key_portletName = "${portletName}",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_NESTED_APPLICATION_COLUMN",
 			value1 = "${portletName}");
 	}
 

@@ -52,19 +52,15 @@ definition {
 			defaultColumnName = "2 Columns (50/50)",
 			portletName = "Nested Applications");
 
-		Click(locator1 = "Modal#CLOSE_BUTTON");
-
-		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-
 		NestedPortlets.dragAndDropPortletToPortletColumnPG(
 			columnNumberFrom = "1",
-			portletColumnNumberTo = "1",
+			nestedColumnNumberTo = "1",
 			portletName = "Web Content Display");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
 		NestedPortlets.viewPG(
-			portletColumnNumberTo = "1",
+			nestedColumnNumber = "1",
 			portletName = "Web Content Display");
 	}
 

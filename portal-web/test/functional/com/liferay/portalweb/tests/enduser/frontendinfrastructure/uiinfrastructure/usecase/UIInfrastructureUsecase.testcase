@@ -131,24 +131,27 @@ definition {
 			portletName = "Documents and Media");
 
 		MouseOver(
-			key_portletTitleName = "Message Boards",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE");
+			key_pageColumnNumber = "1",
+			key_portletName = "Message Boards",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN");
 
 		Portlet.assertPortletHeader(portletName = "MBPortlet");
 
 		takeScreenshot();
 
 		MouseOver(
-			key_portletTitleName = "Clay Sample",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE");
+			key_pageColumnNumber = "2",
+			key_portletName = "Clay Sample",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN");
 
 		Portlet.assertPortletHeader(portletName = "ClaySamplePortlet");
 
 		takeScreenshot();
 
 		MouseOver(
-			key_portletTitleName = "Documents and Media",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE");
+			key_pageColumnNumber = "3",
+			key_portletName = "Documents and Media",
+			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN");
 
 		Portlet.assertPortletHeader(portletName = "DLPortlet");
 

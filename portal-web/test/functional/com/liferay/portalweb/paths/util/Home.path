@@ -366,8 +366,8 @@
 </tr>
 <!--PAGE_COLUMN-->
 <tr>
-	<td>PAGE_COLUMN_1</td>
-	<td>//div[@id='layout-column_column-1']</td>
+	<td>PAGE_COLUMN</td>
+	<td>//div[contains(@id,'main-content')]//div[contains(@class,'portlet-dropzone') and contains(@id,'layout-column_column-${key_pageColumnId}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -382,37 +382,6 @@
 </tr>
 <!--PAGE_COLUMN_PORTLET-->
 <tr>
-	<td>PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE</td>
-	<td>//div[@id='column-1']//h2[contains(.,'${key_portletTitleName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE</td>
-	<td>//div[@id='column-2']//h2[contains(.,'${key_portletTitleName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE</td>
-	<td>//div[@id='column-3']//h2[contains(.,'${key_portletTitleName}')]</td>
-	//div[@id='layout-column_column-3']
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_HEADER</td>
-	<td>//div[@id='column-1']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER</td>
-	<td>//div[@id='column-2']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_HEADER</td>
-	<td>//div[@id='column-3']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS</td>
 	<td>//div[@id='column-${key_columnNumber}']//header[contains(@class,'portlet-topper') and contains(.,'${key_portletName}')]//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
@@ -426,32 +395,6 @@
 <tr>
 	<td>PAGE_CUSTOMIZATION_MESSAGE_INFO</td>
 	<td>//div[contains(@id,'customizationBar')]//li[contains(@class,'control-menu')]/span[@class='text-info']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PORTLET_COLUMN-->
-<tr>
-	<td>PORTLET_COLUMN_1</td>
-	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_COLUMN_2</td>
-	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-last')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_COLUMN_1_NESTED_PORTLET_TITLE</td>
-	<td>//section[contains(@id,'NestedPortlets')]//div[contains(@id,'column-1')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_COLUMN_2_NESTED_PORTLET_TITLE</td>
-	<td>//section[contains(@id,'NestedPortlets')]//div[contains(@id,'column-2')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>

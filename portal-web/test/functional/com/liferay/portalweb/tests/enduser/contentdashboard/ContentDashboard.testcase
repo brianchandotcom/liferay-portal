@@ -240,9 +240,8 @@ definition {
 
 	@description = "LPS-131793: Given the categorization section in Documents and Media
 	Then the OOTB Internal (Topic) and Public (Audience & Stage) vocabularies are shown"
-	@ignore = "true"
 	@priority = "3"
-	test CategorizationInOotbTable {
+	test CategorizationInOOTBTable {
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -2523,7 +2522,6 @@ definition {
 	@description = "LPS-131793: Given the categorization section in Documents and Media
 	When the user creates a Global internal vocabulary
 	Then the vocabulary is shown"
-	@ignore = "true"
 	@priority = "3"
 	test NewVocabularyGlobalInOOTBTable {
 		task ("Add a Global Internal Vocabulary") {
@@ -2559,7 +2557,6 @@ definition {
 	@description = "LPS-131793: Given the categorization section in Documents and Media
 	When the user creates a Site internal vocabulary
 	Then the vocabulary is shown"
-	@ignore = "true"
 	@priority = "3"
 	test NewVocabularyInternalInOOTBTable {
 		task ("Add a Site Internal Vocabulary") {
@@ -2595,7 +2592,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are NOT file extensions for any MIME type
 	Then the MIME type does NOT appear listed in the Extension modal"
-	@ignore = "true"
 	@priority = "3"
 	test NoMimeType {
 		task ("Navigate to the content Dashboard and filter by file extension") {

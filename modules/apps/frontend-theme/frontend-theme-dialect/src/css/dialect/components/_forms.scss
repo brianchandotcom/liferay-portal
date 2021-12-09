@@ -161,21 +161,21 @@ fieldset > .lfr-ddm-legend {
 }
 
 .has-error {
-	--condensed-form-input-filled-label-color: #{$dialect-danger};
+	--condensed-form-input-filled-label-color: #{$danger};
 	--form-feedback-background-color: #{$danger-l2};
-	--form-feedback-color: #{$dialect-danger};
+	--form-feedback-color: #{$danger};
 }
 
 .has-success {
-	--condensed-form-input-filled-label-color: #{$dialect-success};
+	--condensed-form-input-filled-label-color: #{$success};
 	--form-feedback-background-color: #{$success-l2};
-	--form-feedback-color: #{$dialect-success};
+	--form-feedback-color: #{$success};
 }
 
 .has-warning {
-	--condensed-form-input-filled-label-color: #{$dialect-warning};
+	--condensed-form-input-filled-label-color: #{$warning};
 	--form-feedback-background-color: #{$warning-l2};
-	--form-feedback-color: #{$dialect-warning};
+	--form-feedback-color: #{$warning};
 }
 
 .form-text {

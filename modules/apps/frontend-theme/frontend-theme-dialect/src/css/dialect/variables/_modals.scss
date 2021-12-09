@@ -9,8 +9,8 @@ $header-close: (
 
 $modal-success: (
 	header-bg: $success-l2,
-	header-border-color: $dialect-success,
-	header-color: $dialect-success,
+	header-border-color: $success,
+	header-color: $success,
 	header-close: $header-close,
 );
 
@@ -18,8 +18,8 @@ $modal-success: (
 
 $modal-info: (
 	header-bg: $info-l2,
-	header-border-color: $dialect-info,
-	header-color: $dialect-info,
+	header-border-color: $info,
+	header-color: $info,
 	header-close: $header-close,
 );
 
@@ -27,8 +27,8 @@ $modal-info: (
 
 $modal-warning: (
 	header-bg: $warning-l2,
-	header-border-color: $dialect-warning,
-	header-color: $dialect-warning,
+	header-border-color: $warning,
+	header-color: $warning,
 	header-close: $header-close,
 );
 
@@ -36,7 +36,7 @@ $modal-warning: (
 
 $modal-danger: (
 	header-bg: $danger-l2,
-	header-border-color: $dialect-danger,
-	header-color: $dialect-danger,
+	header-border-color: $danger,
+	header-color: $danger,
 	header-close: $header-close,
 );

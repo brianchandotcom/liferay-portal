@@ -8,6 +8,7 @@ export function PhoneControlledInput({rules = {}, inputProps = {}, ...props}) {
 		<ControlledInputWithMask
 			{...props}
 			inputProps={{
+				className: 'mb-5 mr-0 row',
 				format: '(###) ###-####',
 				mask: '_',
 				...inputProps,

@@ -6,8 +6,12 @@ import {EmailControlledInput} from '../../../../../../../common/components/conne
 import {WebsiteControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Website';
 import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
 import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
-import {STORAGE_KEYS, Storage} from '../../../../../../../common/services/liferay/storage';
+import {
+	STORAGE_KEYS,
+	Storage,
+} from '../../../../../../../common/services/liferay/storage';
 import {TIP_EVENT} from '../../../../../../../common/utils/events';
 import useFormActions from '../../../../../hooks/useFormActions';
 import {useProductQuotes} from '../../../../../hooks/useProductQuotes';
@@ -21,8 +25,7 @@ const setFormPath = (value) => `basics.businessInformation.${value}`;
 const getSelectedProductName = () => {
 	try {
 		return JSON.parse(Storage.getItem(STORAGE_KEYS.PRODUCT))?.productName;
-	}
-	catch (error) {
+	} catch (error) {
 		return '';
 	}
 };
@@ -85,13 +88,14 @@ export function FormBasicBusinessInformation({form}) {
 	}, [defaultProductId, form.basics.productQuote]);
 
 	return (
-		<div className="card">
-			<div className="card-content">
-				<div className="content-row">
+		<FormCard>
+			<div className="container pr-0">
+				<div className="mb-5 row">
 					<ControlledInput
 						control={control}
 						inputProps={{
 							autoFocus: true,
+							className: 'col p-0 mr-4',
 							maxLength: 256,
 							onBlur: onFirstNameSettled,
 						}}
@@ -105,6 +109,7 @@ export function FormBasicBusinessInformation({form}) {
 					<ControlledInput
 						control={control}
 						inputProps={{
+							className: 'col p-0 mr-3',
 							maxLength: 256,
 						}}
 						label="Last Name"
@@ -148,6 +153,6 @@ export function FormBasicBusinessInformation({form}) {
 				onPrevious={onPrevious}
 				onSave={onSave}
 			/>
-		</div>
+		</FormCard>
 	);
 }

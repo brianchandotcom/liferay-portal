@@ -1,8 +1,12 @@
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {LiferayService} from '../../../../../../../common/services/liferay';
-import {STORAGE_KEYS, Storage} from '../../../../../../../common/services/liferay/storage';
+import {
+	STORAGE_KEYS,
+	Storage,
+} from '../../../../../../../common/services/liferay/storage';
 import {clearExitAlert} from '../../../../../../../common/utils/exitAlert';
 import {smoothScroll} from '../../../../../../../common/utils/scroll';
 import {AppContext} from '../../../../../context/AppContext';
@@ -39,8 +43,8 @@ export function FormBasicBusinessType({form}) {
 	};
 
 	return (
-		<div className="card">
-			<div className="card-content">
+		<FormCard>
+					<div className="d-flex flex-column">
 				<BusinessTypeSearch
 					form={form}
 					setNewSelectedProduct={setNewSelectedProduct}
@@ -52,6 +56,6 @@ export function FormBasicBusinessType({form}) {
 				onNext={goToNextForm}
 				onPrevious={goToPreviousPage}
 			/>
-		</div>
+		</FormCard>
 	);
 }

@@ -46,10 +46,10 @@ export function CardFormActionsWithSave({
 					{errors?.continueButton?.message || errorModal}
 				</WarningBadge>
 			)}
-			<div className="card-actions">
+			<div className="d-flex justify-content-between mt-7">
 				{onPrevious && (
 					<ClayButton
-						className="btn btn-borderless font-weight-bolder previous text-paragraph text-small-caps"
+						className="btn btn-borderless btn-variant-neutral font-weight-bolder previous text-paragraph text-small-caps"
 						displayType="null"
 						onClick={onPrevious}
 					>
@@ -57,10 +57,10 @@ export function CardFormActionsWithSave({
 					</ClayButton>
 				)}
 
-				<div>
+				<div className="d-flex">
 					{onSave && (
 						<ClayButton
-							className="font-weight-bolder save-exit text-paragraph text-small-caps"
+							className="font-weight-bolder mr-3 save-exit text-paragraph text-small-caps"
 							disabled={!email || emailHasError || loading}
 							displayType="secondary"
 							onClick={onClickSaveAndExit}

@@ -14,7 +14,7 @@ export function Radio({
 }) {
 	return (
 		<ClayCard
-			className={`align-items-baseline flex-row d-flex mb-3 pb-3 pr-3 pl-3
+			className={`align-items-baseline flex-row d-flex mb-3 mt-3 pb-3 pr-3 pl-3
 			pt-3 radio-card rounded user-select-auto  ${
 				selected &&
 				'bg-brand-primary-lighten-5 border border-primary text-brand-primary'

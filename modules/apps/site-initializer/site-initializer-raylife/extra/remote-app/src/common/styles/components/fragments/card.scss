@@ -1,39 +1,5 @@
 .card {
-	border-radius: 0.5rem;
-	box-shadow: 0 10px 30px rgba(77, 133, 255, 0.09);
-	display: flex;
-	flex-direction: column;
-	gap: $spacer-6;
-	padding: $spacer-6;
+	border-style: none;
 	width: 688px;
-
-	& > .card-actions,
-	& > .card-actions > div {
-		align-items: center;
-		display: flex;
-		flex-direction: row;
-		gap: $spacer-3;
-		justify-content: space-between;
-
-		div {
-			justify-content: flex-end;
-		}
-	}
-
-	& > .card-content {
-		display: flex;
-		flex-direction: column;
-		gap: $spacer-5;
-
-		.content-row {
-			align-items: flex-start;
-			display: flex;
-			flex: 1;
-			flex-direction: row;
-			gap: $spacer-3;
-			justify-content: space-between;
-			margin-bottom: $spacer-1;
-			margin-top: $spacer-2;
-		}
-	}
 }
+

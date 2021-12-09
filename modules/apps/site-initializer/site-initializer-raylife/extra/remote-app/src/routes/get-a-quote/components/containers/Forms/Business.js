@@ -5,6 +5,7 @@ import {PercentageControlledInput} from '../../../../../common/components/connec
 import {LegalEntityControlledSelect} from '../../../../../common/components/connectors/Controlled/Select/LegalEntity';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
 import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import FormCard from '../../../../../common/components/fragments/Card/FormCard';
 import {TIP_EVENT} from '../../../../../common/utils/events';
 import {PERCENTAGE_REGEX_MAX_100} from '../../../../../common/utils/patterns';
 import useFormActions from '../../../hooks/useFormActions';
@@ -49,7 +50,7 @@ export function FormBusiness({form}) {
 	const {isSelected, updateState} = useTriggerContext();
 
 	return (
-		<div className="card">
+		<FormCard>
 			<div className="card-content">
 				<NumberControlledInput
 					control={control}
@@ -160,6 +161,6 @@ export function FormBusiness({form}) {
 				onPrevious={onPrevious}
 				onSave={onSave}
 			/>
-		</div>
+		</FormCard>
 	);
 }

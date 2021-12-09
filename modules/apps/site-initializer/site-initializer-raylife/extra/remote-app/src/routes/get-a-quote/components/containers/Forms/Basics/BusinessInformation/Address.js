@@ -22,7 +22,6 @@ export function BusinessInformationAddress() {
 	}, [ref]);
 
 	const updateFormWithGoogleAddress = (address) => {
-
 		// We need to put shouldValidate at least in one Field
 		// to force validation to others
 
@@ -37,16 +36,11 @@ export function BusinessInformationAddress() {
 
 	return (
 		<>
-			<div
-				className="content-row"
-				style={{
-					display: 'grid',
-					gridTemplateColumns: '1fr 29.7%',
-				}}
-			>
+			<div className="row">
 				<ControlledInput
 					control={control}
 					inputProps={{
+						className: 'col mr-4 p-0',
 						placeholder: 'Street address',
 						ref,
 					}}
@@ -57,44 +51,43 @@ export function BusinessInformationAddress() {
 
 				<Input
 					{...register(setFormPath('addressApt'))}
+					className="col-sm-4 mr-3 p-0"
 					label="&nbsp;"
 					placeholder="Apt/Suite (optional)"
 				/>
+			</div>
 
-				<div
-					className="content-row"
-					style={{
-						display: 'grid',
-						gridTemplateColumns: '1fr 25.2%',
+			<div className="mt-5 row">
+				<ControlledInput
+					control={control}
+					inputProps={{
+						className: 'col-lg-5 p-0',
 					}}
-				>
-					<ControlledInput
-						control={control}
-						label="City"
-						name={setFormPath('city')}
-						rules={{required: 'City is required.'}}
-					/>
+					label="City"
+					name={setFormPath('city')}
+					rules={{required: 'City is required.'}}
+				/>
 
-					<StatesControlledSelect
-						control={control}
-						label="State"
-						name={setFormPath('state')}
-						rules={{
-							required: 'This field is required.',
-						}}
-					/>
-				</div>
+				<StatesControlledSelect
+					control={control}
+					inputProps={{
+						className: 'col p-0 ml-4 mr-2',
+					}}
+					label="State"
+					name={setFormPath('state')}
+					rules={{
+						required: 'This field is required.',
+					}}
+				/>
 
-				<div className="content-row">
-					<ZIPControlledInput
-						control={control}
-						label="ZIP"
-						name={setFormPath('zip')}
-						rules={{
-							required: 'ZIP is required.',
-						}}
-					/>
-				</div>
+				<ZIPControlledInput
+					control={control}
+					label="ZIP"
+					name={setFormPath('zip')}
+					rules={{
+						required: 'ZIP is required.',
+					}}
+				/>
 			</div>
 		</>
 	);

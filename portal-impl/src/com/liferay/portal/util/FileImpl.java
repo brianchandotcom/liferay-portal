@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.ant.ExpandTask;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,6 +57,9 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,6 +68,8 @@ import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.io.FileUtils;
@@ -958,7 +962,31 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void unzip(File source, File destination) {
-		ExpandTask.expand(source, destination);
+		Path destinationPath = destination.toPath();
+
+		try (InputStream inputStream = new FileInputStream(source);
+			ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+
+			ZipEntry entry = null;
+
+			while ((entry = zipInputStream.getNextEntry()) != null) {
+				Path path = destinationPath.resolve(entry.getName());
+
+				if (entry.isDirectory()) {
+					Files.createDirectories(path);
+				}
+				else {
+					Files.createDirectories(path.getParent());
+
+					Files.copy(
+						zipInputStream, path,
+						StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
 	}
 
 	@Override

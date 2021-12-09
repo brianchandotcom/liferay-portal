@@ -53,7 +53,6 @@ import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.webserver.DynamicResourceServlet;
 import com.liferay.util.ant.CopyTask;
-import com.liferay.util.ant.ExpandTask;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -792,7 +791,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 		File tempDir = tempDirPath.toFile();
 
-		ExpandTask.expand(srcFile, tempDir);
+		FileUtil.unzip(srcFile, tempDir);
 
 		_deployDirectory(
 			tempDir, mergeDir, deployDir, displayName, overwrite,

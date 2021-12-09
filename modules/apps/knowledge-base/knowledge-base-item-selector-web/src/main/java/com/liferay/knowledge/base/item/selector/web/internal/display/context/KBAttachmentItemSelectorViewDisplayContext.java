@@ -69,7 +69,7 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	public long getAttachmentsFolderId() throws PortalException {
 		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 			_kbAttachmentItemSelectorCriterion.getResourcePrimKey(),
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_ANY);
 
 		return kbArticle.getAttachmentsFolderId();
 	}

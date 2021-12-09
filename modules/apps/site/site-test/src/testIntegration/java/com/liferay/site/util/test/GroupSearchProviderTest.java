@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,12 +38,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,6 +64,19 @@ public class GroupSearchProviderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		_originalGroupsComplexSQLClassNames =
+			PropsValues.GROUPS_COMPLEX_SQL_CLASS_NAMES;
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
+			_originalGroupsComplexSQLClassNames);
+	}
 
 	@Test
 	public void testSearchPrivateMembershipGroups() throws Exception {
@@ -99,16 +116,28 @@ public class GroupSearchProviderTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"groupId", String.valueOf(parentGroup.getGroupId()));
 
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
+			new String[] {"com.liferay.portal.kernel.model.User"});
+
 		GroupSearch groupSearch = _groupSearchProvider.getGroupSearch(
 			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
 
-		List<Group> results = groupSearch.getResults();
+		_verifyGroupSearch(childGroup1, groupSearch);
 
-		Assert.assertEquals(results.toString(), 1, results.size());
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
+			new String[] {
+				"com.liferay.portal.kernel.model.User",
+				"com.liferay.portal.kernel.model.Organization",
+				"com.liferay.portal.kernel.model.UserGroup",
+				"com.liferay.portal.kernel.model.Company"
+			});
 
-		Group group = results.get(0);
+		GroupSearch complexSQLGroupSearch = _groupSearchProvider.getGroupSearch(
+			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
 
-		Assert.assertEquals(childGroup1.getGroupId(), group.getGroupId());
+		_verifyGroupSearch(childGroup1, complexSQLGroupSearch);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, User user)
@@ -128,6 +157,20 @@ public class GroupSearchProviderTest {
 
 		return themeDisplay;
 	}
+
+	private void _verifyGroupSearch(
+		Group childGroup1, GroupSearch groupSearch) {
+
+		List<Group> results = groupSearch.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
+
+		Group group = results.get(0);
+
+		Assert.assertEquals(childGroup1.getGroupId(), group.getGroupId());
+	}
+
+	private static String[] _originalGroupsComplexSQLClassNames;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

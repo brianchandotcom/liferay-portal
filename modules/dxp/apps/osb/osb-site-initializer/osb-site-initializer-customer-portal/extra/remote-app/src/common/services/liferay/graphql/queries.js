@@ -25,14 +25,14 @@ export const getSetupDXPCloudInfo = gql`
 					accountKey
 					code
 					dxpVersion
-					slaCurrent
-					slaExpired
-					slaFuture
-					slaCurrentEndDate
-					region
+					liferayContactEmailAddress
 					liferayContactName
 					liferayContactRole
-					liferayContactEmailAddress
+					region
+					slaCurrent
+					slaCurrentEndDate
+					slaExpired
+					slaFuture
 				}
 			}
 		}
@@ -118,8 +118,8 @@ export const addSetupDXPCloud = gql`
 				scopeKey: $scopeKey
 			) {
 				admins
-				disasterDataCenterRegion
 				dataCenterRegion
+				disasterDataCenterRegion
 				projectId
 			}
 		}
@@ -198,14 +198,14 @@ export const getKoroneikiAccounts = gql`
 					accountKey
 					code
 					dxpVersion
-					slaCurrent
-					slaExpired
-					slaFuture
-					slaCurrentEndDate
-					region
+					liferayContactEmailAddress
 					liferayContactName
 					liferayContactRole
-					liferayContactEmailAddress
+					region
+					slaCurrent
+					slaCurrentEndDate
+					slaExpired
+					slaFuture
 				}
 			}
 		}
@@ -215,15 +215,15 @@ export const getKoroneikiAccounts = gql`
 export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
 		userAccount(userAccountId: $id) {
-			id
-			name
-			image
-			externalReferenceCode
 			accountBriefs {
 				id
-				name
 				externalReferenceCode
+				name
 			}
+			id
+			externalReferenceCode
+			image
+			name
 		}
 	}
 `;

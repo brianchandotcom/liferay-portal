@@ -980,22 +980,18 @@ definition {
 			panel = "Applications",
 			portlet = "Synonyms");
 
-		var i = "1";
-		var j = "2";
-		var k = "3";
+		var index = "0";
 
-		for (var title : list "ABC,BCD,CDE,DEF,EFG,FGH,GHI,HIJ") {
-			SearchTuning.addSynonymSet(synonyms = "${i}${j}${k} Building,${title} Building");
-			var i = ${i} + 1;
-			var j = ${j} + 1;
-			var k = ${k} + 1;
+		var list1 = ListUtil.newListFromString("123,234,345,456,567,678,789,890,901,012,101");
+		var list2 = ListUtil.newListFromString("ABC,BCD,CDE,DEF,EFG,FGH,GHI,HIJ,IJK,JKL,AAA");
+
+		for (var list1item : list "${list1}") {
+			var list2item = ListUtil.get("${list2}", "${index}");
+
+			SearchTuning.addSynonymSet(synonyms = "${list1item} Building,${list2item} Building");
+
+			var index = ${index} + 1;
 		}
-
-		SearchTuning.addSynonymSet(synonyms = "901 Building,IJK Building");
-
-		SearchTuning.addSynonymSet(synonyms = "012 Building,JKL Building");
-
-		SearchTuning.addSynonymSet(synonyms = "101 Building,AAA Building");
 
 		JSONWebcontent.addWebContent(
 			content = "CDE Building",

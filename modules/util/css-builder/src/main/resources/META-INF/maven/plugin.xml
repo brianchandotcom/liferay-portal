@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.css.builder</artifactId>
-	<version>3.0.3</version>
+	<version>3.0.4</version>
 	<goalPrefix>css-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -183,6 +183,12 @@
 			<artifactId>plexus-build-api</artifactId>
 			<type>jar</type>
 			<version>0.0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.sass.compiler.dart</artifactId>
+			<type>jar</type>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay</groupId>

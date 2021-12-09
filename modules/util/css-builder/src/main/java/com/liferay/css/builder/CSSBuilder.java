@@ -22,6 +22,7 @@ import com.liferay.css.builder.internal.util.FileUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.rtl.css.RTLCSSConverter;
 import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.dart.internal.DartSassCompiler;
 import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
 import com.liferay.sass.compiler.jsass.internal.JSassCompiler;
 import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
@@ -332,6 +333,19 @@ public class CSSBuilder implements AutoCloseable {
 					"Unable to load Ruby compiler, falling back to native");
 
 				_sassCompiler = new JSassCompiler(precision);
+			}
+		}
+		else if (sassCompilerClassName.equals("dart")) {
+			try {
+				_sassCompiler = new DartSassCompiler();
+
+				System.out.println("Using Dart Sass compiler");
+			}
+			catch (Exception exception) {
+				System.out.println(
+					"Unable to load Dart compiler, falling back to Ruby");
+
+				_sassCompiler = new RubySassCompiler(precision);
 			}
 		}
 	}

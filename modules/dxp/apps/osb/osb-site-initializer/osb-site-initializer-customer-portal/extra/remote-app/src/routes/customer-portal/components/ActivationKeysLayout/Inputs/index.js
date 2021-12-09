@@ -46,7 +46,7 @@ const ActivationKeysInputs = ({accountKey, productKey, productTitle}) => {
 
 				fetchAccountSubscriptionsTerms({
 					variables: {
-						accountSubscriptionERC: filterAccountSubscriptionERC,
+						filter: filterAccountSubscriptionERC,
 					},
 				});
 			}

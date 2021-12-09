@@ -132,7 +132,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		_initThemeDisplay(commerceOrder);
+		_initThemeDisplay(
+			commerceOrder,
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
 
 		StringBundler sb = new StringBundler(14);
 
@@ -632,8 +635,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		return cartItems.toArray(new CartItem[0]);
 	}
 
-	private void _initThemeDisplay(CommerceOrder commerceOrder)
+	private void _initThemeDisplay(
+			CommerceOrder commerceOrder, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		if (themeDisplay != null) {
+			return;
+		}
 
 		ServicePreAction servicePreAction = new ServicePreAction();
 
@@ -649,9 +657,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		themeServicePreAction.run(
 			contextHttpServletRequest, httpServletResponse);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)contextHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(

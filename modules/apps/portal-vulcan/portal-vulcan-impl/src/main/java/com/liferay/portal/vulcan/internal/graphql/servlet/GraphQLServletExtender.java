@@ -1855,15 +1855,14 @@ public class GraphQLServletExtender {
 						httpServletRequestOptional.orElse(null), _language,
 						_portal);
 
-					String aggregationString =
+					List<String> aggregations =
 						dataFetchingEnvironment.getArgument("aggregation");
 
 					Aggregation aggregation = null;
 
-					if (aggregationString != null) {
+					if (aggregations != null) {
 						aggregation = _getAggregation(
-							acceptLanguage,
-							Arrays.asList(aggregationString.split(",")),
+							acceptLanguage, aggregations,
 							graphQLDTOContributor.getEntityModel());
 					}
 

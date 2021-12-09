@@ -582,10 +582,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		ContentDashboard.goToContentDashboard();
 
 		ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
 

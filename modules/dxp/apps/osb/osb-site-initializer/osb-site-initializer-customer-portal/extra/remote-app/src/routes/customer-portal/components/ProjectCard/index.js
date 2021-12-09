@@ -6,14 +6,27 @@ import ProjectCardSkeleton from './Skeleton';
 
 const getCurrentEndDate = (currentEndDate) => {
 	const date = new Date(currentEndDate);
-	const month = date.toLocaleDateString('default', {month: 'short'});
+	const month = date.toLocaleDateString('default', { month: 'short' });
 	const day = date.getDate();
 	const year = date.getFullYear();
 
 	return `${month} ${day}, ${year}`;
 };
 
-const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
+const ProjectCard = ({ code, isSmall, onClick, region, sla, status, title }) => {
+
+	const getStatusMessage = (status) => {
+		if (status === 1) {
+			return 'Ends on  '
+		}
+
+		if (status === 2) {
+			return 'Ended on  '
+		}
+
+		return 'Starts on	 ';
+	};
+
 	return (
 		<ClayCard
 			className={classNames('m-0', {
@@ -66,7 +79,7 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 								}
 							)}
 						>
-							{'Ends on '}
+							{getStatusMessage(status)}
 
 							<span className="font-weight-bold text-paragraph">
 								{getCurrentEndDate(sla.currentEndDate)}

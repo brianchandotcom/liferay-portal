@@ -101,24 +101,31 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	public Layout copyLayout(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				sourceLayout.getGroupId(), _portal.getClassNameId(Layout.class),
+				sourceLayout.getPlid());
+
+		List<Long> segmentsExperiencesIds = ListUtil.toList(
+			segmentsExperiences,
+			SegmentsExperience.SEGMENTS_EXPERIENCE_ID_ACCESSOR);
+
+		segmentsExperiencesIds.add(0, SegmentsExperienceConstants.ID_DEFAULT);
+
+		return copyLayout(
+			ArrayUtil.toLongArray(segmentsExperiencesIds), sourceLayout,
+			targetLayout);
+	}
+
+	@Override
+	public Layout copyLayout(
+			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
 		Consumer<Layout> consumer = processedTargetLayout -> {
 			try {
-				List<SegmentsExperience> segmentsExperiences =
-					_segmentsExperienceLocalService.getSegmentsExperiences(
-						sourceLayout.getGroupId(),
-						_portal.getClassNameId(Layout.class),
-						sourceLayout.getPlid());
-
-				List<Long> segmentsExperiencesIds = ListUtil.toList(
-					segmentsExperiences,
-					SegmentsExperience.SEGMENTS_EXPERIENCE_ID_ACCESSOR);
-
-				segmentsExperiencesIds.add(
-					0, SegmentsExperienceConstants.ID_DEFAULT);
-
-				_copyLayoutPageTemplateStructure(
-					ArrayUtil.toLongArray(segmentsExperiencesIds),
-					sourceLayout, processedTargetLayout);
+				_copyLayoutPageTemplateStructureFromSegmentsExperience(
+					segmentsExperienceId, sourceLayout, processedTargetLayout);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -152,13 +159,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Override
 	public Layout copyLayout(
-			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+			long[] segmentsExperiencesIds, Layout sourceLayout,
+			Layout targetLayout)
 		throws Exception {
 
 		Consumer<Layout> consumer = processedTargetLayout -> {
 			try {
-				_copyLayoutPageTemplateStructureFromSegmentsExperience(
-					segmentsExperienceId, sourceLayout, processedTargetLayout);
+				_copyLayoutPageTemplateStructure(
+					segmentsExperiencesIds, sourceLayout,
+					processedTargetLayout);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

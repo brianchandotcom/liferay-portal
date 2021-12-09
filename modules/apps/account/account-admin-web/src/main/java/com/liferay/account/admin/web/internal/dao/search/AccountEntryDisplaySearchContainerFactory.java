@@ -54,6 +54,17 @@ public class AccountEntryDisplaySearchContainerFactory {
 			new LinkedHashMap<>(), true);
 	}
 
+	public static SearchContainer<AccountEntryDisplay> create(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			boolean filterManageableAccountEntries)
+		throws PortalException {
+
+		return _create(
+			liferayPortletRequest, liferayPortletResponse,
+			new LinkedHashMap<>(), filterManageableAccountEntries);
+	}
+
 	public static SearchContainer<AccountEntryDisplay> createWithAccountGroupId(
 			long accountGroupId, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

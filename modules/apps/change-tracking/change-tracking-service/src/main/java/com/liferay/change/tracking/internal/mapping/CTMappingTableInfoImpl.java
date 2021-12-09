@@ -25,13 +25,16 @@ import java.util.Map;
 public final class CTMappingTableInfoImpl implements CTMappingTableInfo {
 
 	public CTMappingTableInfoImpl(
-		String tableName, String leftColumnName, String rightColumnName,
+		String tableName, String leftColumnName, Class<?> leftModelClass,
+		String rightColumnName, Class<?> rightModelClass,
 		List<Map.Entry<Long, Long>> addedMappings,
 		List<Map.Entry<Long, Long>> removedMappings) {
 
 		_tableName = tableName;
 		_leftColumnName = leftColumnName;
+		_leftModelClass = leftModelClass;
 		_rightColumnName = rightColumnName;
+		_rightModelClass = rightModelClass;
 		_addedMappings = addedMappings;
 		_removedMappings = removedMappings;
 	}
@@ -47,6 +50,11 @@ public final class CTMappingTableInfoImpl implements CTMappingTableInfo {
 	}
 
 	@Override
+	public Class<?> getLeftModelClass() {
+		return _leftModelClass;
+	}
+
+	@Override
 	public List<Map.Entry<Long, Long>> getRemovedMappings() {
 		return _removedMappings;
 	}
@@ -57,14 +65,21 @@ public final class CTMappingTableInfoImpl implements CTMappingTableInfo {
 	}
 
 	@Override
+	public Class<?> getRightModelClass() {
+		return _rightModelClass;
+	}
+
+	@Override
 	public String getTableName() {
 		return _tableName;
 	}
 
 	private final List<Map.Entry<Long, Long>> _addedMappings;
 	private final String _leftColumnName;
+	private final Class<?> _leftModelClass;
 	private final List<Map.Entry<Long, Long>> _removedMappings;
 	private final String _rightColumnName;
+	private final Class<?> _rightModelClass;
 	private final String _tableName;
 
 }

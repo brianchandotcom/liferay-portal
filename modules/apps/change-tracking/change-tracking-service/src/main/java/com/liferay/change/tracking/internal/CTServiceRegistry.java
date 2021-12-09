@@ -93,10 +93,13 @@ public class CTServiceRegistry {
 					(key, ctTableMapperHelper) -> {
 						if (ctTableMapperHelper == null) {
 							return new CTTableMapperHelper(
-								ctService, mappingTableName, primaryKeyName);
+								ctService, mappingTableName, primaryKeyName,
+								ctService.getModelClass());
 						}
 
 						ctTableMapperHelper.setRightColumnName(primaryKeyName);
+						ctTableMapperHelper.setRightModelClass(
+							ctService.getModelClass());
 
 						return ctTableMapperHelper;
 					});

@@ -40,11 +40,13 @@ import java.util.Map;
 public class CTTableMapperHelper {
 
 	public CTTableMapperHelper(
-		CTService<?> ctService, String tableName, String leftColumnName) {
+		CTService<?> ctService, String tableName, String leftColumnName,
+		Class<?> leftModelClass) {
 
 		_ctService = ctService;
 		_tableName = tableName;
 		_leftColumnName = leftColumnName;
+		_leftModelClass = leftModelClass;
 	}
 
 	public void delete(long ctCollectionId) throws Exception {
@@ -77,8 +79,16 @@ public class CTTableMapperHelper {
 		}
 
 		return new CTMappingTableInfoImpl(
-			_tableName, _leftColumnName, _rightColumnName, addedMappings,
-			removedMappings);
+			_tableName, _leftColumnName, _leftModelClass, _rightColumnName,
+			_rightModelClass, addedMappings, removedMappings);
+	}
+
+	public Class<?> getLeftModelClass() {
+		return _leftModelClass;
+	}
+
+	public Class<?> getRightModelClass() {
+		return _rightModelClass;
 	}
 
 	public void publish(
@@ -108,6 +118,10 @@ public class CTTableMapperHelper {
 
 	public void setRightColumnName(String rightColumnName) {
 		_rightColumnName = rightColumnName;
+	}
+
+	public void setRightModelClass(Class<?> rightModelClass) {
+		_rightModelClass = rightModelClass;
 	}
 
 	public void undo(long fromCTCollectionId, long toCTCollectionId)
@@ -277,7 +291,9 @@ public class CTTableMapperHelper {
 
 	private final CTService<?> _ctService;
 	private final String _leftColumnName;
+	private final Class<?> _leftModelClass;
 	private String _rightColumnName;
+	private Class<?> _rightModelClass;
 	private final String _tableName;
 
 }

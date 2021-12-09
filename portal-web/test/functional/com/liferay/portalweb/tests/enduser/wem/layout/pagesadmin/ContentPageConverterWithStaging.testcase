@@ -58,7 +58,7 @@ definition {
 				widgetName = "Asset Publisher");
 		}
 
-		task ("Assert the web content is shown in Asset Publisher") {
+		task ("View the web content is shown in Asset Publisher") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -76,13 +76,12 @@ definition {
 			Staging.publishToLive();
 		}
 
-		task ("Assert the page type is Widget Page in Live site") {
+		task ("View the page type is Widget Page in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			AssertVisible(
-				key_pageName = "Test Page Name",
-				key_pageType = "Widget Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Widget Page");
 		}
 
 		task ("Convert the widget page to content page") {
@@ -96,10 +95,9 @@ definition {
 
 			PageEditor.clickPublish();
 
-			AssertVisible(
-				key_pageName = "Test Page Name",
-				key_pageType = "Content Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Content Page");
 		}
 
 		task ("Publish to Live") {
@@ -112,7 +110,7 @@ definition {
 			Staging.publishToLive();
 		}
 
-		task ("Assert the Asset Publisher is shown in Live site") {
+		task ("View the Asset Publisher is shown in Live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -124,13 +122,12 @@ definition {
 				assetTitle = "Web Content Title");
 		}
 
-		task ("Assert the page type is Content Page in Live site") {
+		task ("View the page type is Content Page in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			AssertVisible(
-				key_pageName = "Test Page Name",
-				key_pageType = "Content Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Content Page");
 		}
 	}
 
@@ -160,7 +157,7 @@ definition {
 				widgetName = "Asset Publisher");
 		}
 
-		task ("Assert the web content is shown in Asset Publisher") {
+		task ("View the web content is shown in Asset Publisher") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -178,13 +175,12 @@ definition {
 			Staging.publishToLive();
 		}
 
-		task ("Assert the page type is Widget Page in Live site") {
+		task ("View the page type is Widget Page in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			AssertVisible(
-				key_pageName = "Test Page Name",
-				key_pageType = "Widget Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Widget Page");
 		}
 
 		task ("Convert the widget page to content page without publish") {
@@ -198,10 +194,9 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			AssertVisible(
-				key_pageName = "Test Page Name",
-				key_pageType = "Widget Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Widget Page");
 
 			SitePages.viewPageStatus(
 				pageName = "Test Page Name",
@@ -218,7 +213,7 @@ definition {
 			Staging.publishToLive();
 		}
 
-		task ("Assert the Asset Publisher is shown in Live site") {
+		task ("View the Asset Publisher is shown in Live site") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -230,13 +225,12 @@ definition {
 				assetTitle = "Web Content Title");
 		}
 
-		task ("Assert the page type is Widget Page in Live site") {
+		task ("View the page type is Widget Page in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			AssertVisible(
-				key_pageName = "Test Page Name",
-				key_pageType = "Widget Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Widget Page");
 
 			SitePages.viewPageStatus(
 				pageName = "Test Page Name",

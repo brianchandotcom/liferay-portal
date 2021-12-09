@@ -164,6 +164,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 			groupId, classNameId, classPK);
 	}
 
+	public static List<FragmentEntryLink>
+		deleteLayoutPageTemplateEntryFragmentEntryLinks(
+			long groupId, long[] segmentsExperienceIds, long plid) {
+
+		return getService().deleteLayoutPageTemplateEntryFragmentEntryLinks(
+			groupId, segmentsExperienceIds, plid);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -428,6 +436,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 		return getService().getFragmentEntryLinksBySegmentsExperienceId(
 			groupId, segmentsExperienceId, plid, rendererKey);
+	}
+
+	public static List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long[] segmentsExperienceIds, long plid) {
+
+		return getService().getFragmentEntryLinksBySegmentsExperienceId(
+			groupId, segmentsExperienceIds, plid);
 	}
 
 	/**

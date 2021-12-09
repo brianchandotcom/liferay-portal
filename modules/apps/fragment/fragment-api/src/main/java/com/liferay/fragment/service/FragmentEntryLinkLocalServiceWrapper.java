@@ -172,6 +172,16 @@ public class FragmentEntryLinkLocalServiceWrapper
 				groupId, classNameId, classPK);
 	}
 
+	@Override
+	public java.util.List<FragmentEntryLink>
+		deleteLayoutPageTemplateEntryFragmentEntryLinks(
+			long groupId, long[] segmentsExperienceIds, long plid) {
+
+		return _fragmentEntryLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryLinks(
+				groupId, segmentsExperienceIds, plid);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -484,6 +494,16 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.
 			getFragmentEntryLinksBySegmentsExperienceId(
 				groupId, segmentsExperienceId, plid, rendererKey);
+	}
+
+	@Override
+	public java.util.List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long[] segmentsExperienceIds, long plid) {
+
+		return _fragmentEntryLinkLocalService.
+			getFragmentEntryLinksBySegmentsExperienceId(
+				groupId, segmentsExperienceIds, plid);
 	}
 
 	/**

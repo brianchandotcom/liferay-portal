@@ -71,8 +71,10 @@ function getPreviewProps({
 			});
 		},
 		headerTitle: closeCaption,
+		itemReturnType: uploadItemReturnType,
 		items: [
 			{
+				fileEntryId: itemFile.fileEntryId,
 				metadata: JSON.stringify(getUploadFileMetadata(file)),
 				returntype: uploadItemReturnType,
 				title: itemFile.title,

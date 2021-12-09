@@ -266,9 +266,11 @@ ItemSelectorPreview.propTypes = {
 	editItemURL: PropTypes.string,
 	handleSelectedItem: PropTypes.func.isRequired,
 	headerTitle: PropTypes.string.isRequired,
+	itemReturnType: PropTypes.string,
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
 			base64: PropTypes.string,
+			fileEntryId: PropTypes.string,
 			metadata: PropTypes.string,
 			returntype: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,

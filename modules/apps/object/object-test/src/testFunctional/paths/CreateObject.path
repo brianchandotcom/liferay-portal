@@ -140,6 +140,16 @@
 		<td>//button[contains(@class,'dropdown-item') and contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SELECT_ENTRY_IN_RELATIONSHIP_TAB</td>
+		<td>//div[contains(@class,'entry autofit-col autofit-col-expand') and contains(.,'${key_titleFieldName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_CUSTOM_OBJECT_IN_FIELD_TAB</td>
+		<td>//input[contains(@name,'r_relationship_c_customObjectId') and contains(@value,'${key_entryCustomObject}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

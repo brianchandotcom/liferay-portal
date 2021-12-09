@@ -262,7 +262,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_RELATIONSHIPS_TAB</td>
-		<td>//a[contains(text(),'Relationships')]</td>
+		<td>//a[contains(text(),'Relationship')]</td>
 		<td></td>
 	</tr>
 	<tr>

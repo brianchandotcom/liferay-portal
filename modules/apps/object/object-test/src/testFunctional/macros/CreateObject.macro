@@ -1,5 +1,15 @@
 definition {
 
+	macro addRelationshipAndSelectEntry {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		ClickNoError(
+			key_titleFieldName = "${titleFieldName}",
+			locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+	}
+
 	macro assertAddedEntryRelationshipIsDisplayed {
 		LexiconEntry.gotoAdd();
 
@@ -50,6 +60,12 @@ definition {
 
 	macro assertDisabledObjectName {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
+	}
+
+	macro assertEntryInCustomObject {
+		AssertElementPresent(
+			key_entryCustomObject = "${entryCustomObject}",
+			locator1 = "CreateObject#VIEW_CUSTOM_OBJECT_IN_FIELD_TAB");
 	}
 
 	macro assertFieldAddedOnBlock {

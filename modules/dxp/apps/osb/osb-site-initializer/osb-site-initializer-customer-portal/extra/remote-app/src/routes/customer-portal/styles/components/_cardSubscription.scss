@@ -1,5 +1,5 @@
 .card-subscription {
-	background: #ffffff;
+	background: #fff;
 	border: 1px solid #dcd9e2;
 	border-radius: 10px;
 	height: 256px;
@@ -11,9 +11,9 @@
 }
 
 .card-subscription:hover {
-	transform: scale(1.02);
 	border: none;
-	box-shadow: 0px 10px 30px rgba(11, 95, 255, 0.09),
+	transform: scale(1.02);
+	box-shadow: 0 10px 30px rgba(11, 95, 255, 0.09),
 		0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
@@ -23,47 +23,47 @@ input:checked {
 	border-radius: 2px;
 	box-sizing: border-box;
 	height: 16px !important;
-	width: 16px;
 	padding-left: 10px;
+	width: 16px;
 }
 
 .head-text {
 	font-family: Source Sans Pro;
+	font-size: 18px;
 	font-style: normal;
 	font-weight: bold;
-	font-size: 18px;
 	line-height: 20px;
 }
 
 .head-text-2 {
 	color: #5a5469;
 	font-family: Source Sans Pro;
+	font-size: 13px;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 13px;
 	line-height: 16px;
 }
 
 .card-date {
 	font-family: Source Sans Pro;
+	font-size: 16px;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 16px;
 	line-height: 24px;
 }
 
 .badge-card-subscription {
-	padding: 2px 8px;
+	background: #eef8ec;
+	border-radius: 4px;
+	color: #4aab3b;
 	font-family: Source Sans Pro;
+	font-size: 13px;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 13px;
-	line-height: 16px;
-	background: #eef8ec;
-	color: #4aab3b;
 	height: 20px;
-	width: 49px;
-	border-radius: 4px;
+	line-height: 16px;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 2px 8px;
+	width: 49px;
 }

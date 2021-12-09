@@ -17,15 +17,15 @@ const labelProps = {
 };
 
 const StatusTag = ({currentStatus}) => {
-  if (Object.values(status).includes(currentStatus)) {
-    const labelProp = labelProps[currentStatus];
+	if (Object.values(status).includes(currentStatus)) {
+		const labelProp = labelProps[currentStatus];
 
-    return (
-      <ClayLabel className={`label-inverse-${labelProp.displayType}`}>
-        {labelProp.label}
-      </ClayLabel>
-    );
-  }
-}
+		return (
+			<ClayLabel className={`label-inverse-${labelProp.displayType}`}>
+				{labelProp.label}
+			</ClayLabel>
+		);
+	}
+};
 
 export default StatusTag;

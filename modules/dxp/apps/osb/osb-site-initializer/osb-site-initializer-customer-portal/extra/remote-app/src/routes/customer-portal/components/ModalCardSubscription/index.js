@@ -31,8 +31,10 @@ const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 		},
 	});
 
-	const accountSubscriptionTermsItems = subscriptionsTerms?.c?.accountSubscriptionTerms?.items;
-	const totalCount = subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
+	const accountSubscriptionTermsItems =
+		subscriptionsTerms?.c?.accountSubscriptionTerms?.items;
+	const totalCount =
+		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
 
 	const columns = useMemo(
 		() => [
@@ -77,9 +79,16 @@ const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 				Cell: (props) => {
 					return (
 						<>
-							{props?.subscriptionTermStatus && (
-								<StatusTag currentStatus={status[`${props.subscriptionTermStatus.toLowerCase()}`]} />
-							) || "-"}
+							{(props?.subscriptionTermStatus && (
+								<StatusTag
+									currentStatus={
+										status[
+											`${props.subscriptionTermStatus.toLowerCase()}`
+										]
+									}
+								/>
+							)) ||
+								'-'}
 						</>
 					);
 				},

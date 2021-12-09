@@ -3,7 +3,11 @@ import React, {useEffect, useState} from 'react';
 import {getAccountSubscriptionGroupsByFilter} from '../../../../common/services/liferay/graphql/queries';
 import SubscriptionsFilterByStatus from '../SubscriptionsFilterByStatus';
 
-const SubscriptionsNavbar = ({accountKey, setSelectedStatus, setSelectedTag}) => {
+const SubscriptionsNavbar = ({
+	accountKey,
+	setSelectedStatus,
+	setSelectedTag,
+}) => {
 	const [subscriptionsTags, setSubscriptionsTags] = useState(() => []);
 
 	const {

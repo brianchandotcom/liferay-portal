@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>AB_TEST_SIDE_BAR</td>
-	<td>//*[contains(@class, 'sidebar sidebar-light sidenav-menu sidebar-sm')]</td>
+	<td>//*[contains(@class, 'sidebar sidebar-light sidenav-menu sidebar-sm')]//*[text() ='A/B Test']</td>
 	<td></td>
 </tr>
 <tr>

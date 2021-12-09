@@ -3774,6 +3774,10 @@ definition {
 	}
 
 	macro viewFragmentStyle {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
 		if (isSet(alignment)) {
 			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
 
@@ -3839,6 +3843,7 @@ definition {
 				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					key_headingLevel = "${headingLevel}",
+					key_position = "${position}",
 					locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
 			}
 		}
@@ -3950,6 +3955,7 @@ definition {
 
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
+				key_position = "${position}",
 				key_textColor = "${textColor}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR");
 		}

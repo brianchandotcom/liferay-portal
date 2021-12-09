@@ -162,6 +162,23 @@ definition {
 		}
 	}
 
+	macro configureApplicationDecorator {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		Select(
+			key_selectFieldLabel = "Application Decorators",
+			locator1 = "Select#ANY",
+			value1 = "${decorator}");
+
+		PortletEntry.save();
+	}
+
 	macro configureApplicationDecoratorViaLookandfeelPG {
 		Navigator.gotoNavTab(navTab = "General");
 

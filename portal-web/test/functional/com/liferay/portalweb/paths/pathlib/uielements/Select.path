@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>APPLICATION_DECORATORS</td>
-	<td>//div[label[contains(.,'Application Decorators')]]/select[contains(@id,'portletDecorator')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ANY_DISABLED</td>
 	<td>//div[not(contains(@class,'hide'))]/div[contains(@class,'input-select-wrapper')][label[contains(.,'${key_selectFieldLabel}')]]/select[contains(@class,'disabled')]</td>
 	<td></td>

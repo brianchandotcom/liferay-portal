@@ -750,15 +750,9 @@ definition {
 			assetTitle = "The SPACE Family",
 			pageName = "Home");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Look and Feel Configuration");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.selectApplicationDecorator(decorator = "Barebone");
-
-		PortletEntry.save();
+		Portlet.configureApplicationDecorator(
+			decorator = "Barebone",
+			portletName = "Web Content Display");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",

@@ -15,11 +15,11 @@ const maxLength = (value, max) => {
 
 const isValidEmail = (value, bannedEmailDomains) => {
 	if (!EMAIL_REGEX.test(value)) {
-		return 'Please insert a valid email.';
+		return 'Please insert a valid e-mail.';
 	}
 
 	if (bannedEmailDomains.includes(value.split('@')[1])) {
-		return 'Email domain not allowed.';
+		return 'E-mail domain not allowed.';
 	}
 };
 

@@ -977,12 +977,27 @@ definition {
 	}
 
 	@description = "LRQA-71887 - Verify that the user can save a new event as Draft"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSaveAsDraft {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71912 CanSaveAsDraft pending implementation
+		Button.viewPresent(button = "Save as Draft");
 
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.setDatesToday();
+
+		CalendarEvent.setTimes(
+			endDateTime = "03:00 PM",
+			startDateTime = "02:00 PM");
+
+		Button.clickSaveAsDraft();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.viewStatusViaDetails(status = "Draft");
 	}
 
 	@description = "LRQA-71887 - Verify that the user can select Start / End dates from the datepicker component"

@@ -26,7 +26,7 @@ const SetupDXPCloud = () => {
 
 	const {data} = useQuery(getSetupDXPCloudInfo, {
 		variables: {
-			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (contains(name, 'HA DR') or contains(name, 'Std DR'))`,
+			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
 			koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`,
 		},
 	});

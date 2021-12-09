@@ -17,6 +17,7 @@ export const getSetupDXPCloudInfo = gql`
 				items {
 					accountKey
 					name
+					hasDisasterDataCenterRegion
 				}
 			}
 			koroneikiAccounts(filter: $koroneikiAccountsFilter) {

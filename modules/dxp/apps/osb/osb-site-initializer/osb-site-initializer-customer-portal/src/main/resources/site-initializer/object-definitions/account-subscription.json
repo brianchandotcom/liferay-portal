@@ -45,6 +45,18 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
+				"en-US": "Has Disaster Data Center Region?"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "hasDisasterDataCenterRegion",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
 				"en-US": "Instance Size"
 			},
 			"listTypeDefinitionId": 0,

@@ -34,6 +34,13 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro assertTableEntryNameNotPresent {
+		AssertElementNotPresent(
+			key_tableEntryName = "${entryName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			value1 = "${entryName}");
+	}
+
 	macro deleteRemoteApp {
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
 
@@ -49,7 +56,7 @@ definition {
 
 		RemoteApps.goToRemoteAppsPortlet();
 
-		RemoteApps.viewTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
+		RemoteApps.assertTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
 	}
 
 	macro getRemoteAppEntryName {
@@ -97,13 +104,6 @@ definition {
 
 	macro viewTableEntryName {
 		AssertTextEquals(
-			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
-			value1 = "${entryName}");
-	}
-
-	macro viewTableEntryNameNotPresent {
-		AssertElementNotPresent(
 			key_tableEntryName = "${entryName}",
 			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");

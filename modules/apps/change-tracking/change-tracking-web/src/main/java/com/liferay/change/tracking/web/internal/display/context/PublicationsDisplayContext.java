@@ -16,8 +16,10 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.mapping.CTMappingTableInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
@@ -63,6 +65,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 	public PublicationsDisplayContext(
+		CTCollectionLocalService ctCollectionLocalService,
 		CTCollectionService ctCollectionService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
@@ -72,6 +75,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 		super(httpServletRequest);
 
+		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctCollectionService = ctCollectionService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
@@ -486,6 +490,13 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			return true;
 		}
 
+		List<CTMappingTableInfo> mappingTableInfos =
+			_ctCollectionLocalService.getCTMappingTableInfos(ctCollectionId);
+
+		if (!mappingTableInfos.isEmpty()) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -500,6 +511,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	}
 
 	private final long _ctCollectionId;
+	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTCollectionService _ctCollectionService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;

@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>RaylifeBusiness</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeBusiness</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SELECT_LEGAL_ENTITY</td>
+	<td>//select[contains(@name,'business.legalEntity')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

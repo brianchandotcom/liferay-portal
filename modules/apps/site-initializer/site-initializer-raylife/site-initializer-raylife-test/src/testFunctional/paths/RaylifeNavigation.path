@@ -12,27 +12,27 @@
 <tbody>
 <tr>
 	<td>SECTION_COMPLETED_SELECTED</td>
-	<td>css=liferay-remote-app-raylife>>>.step-item.completed.partially.selected</td>
+	<td>//div[contains(@class, 'completed') and contains(@class, 'selected') and contains(., '${section}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_COMPLETED</td>
-	<td>css=liferay-remote-app-raylife>>>.step-item.completed.partially</td>
+	<td>//div[contains(@class, 'completed') and contains(., '${section}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_INCOMPLETED</td>
-	<td>css=liferay-remote-app-raylife>>>.step-item.partially</td>
+	<td>//div[contains(@class, 'partially') and contains(., '${section}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_INCOMPLETED_SELECTED</td>
-	<td>css=liferay-remote-app-raylife>>>.step-item.partially.selected</td>
+	<td>//div[contains(@class, 'partially') and contains(@class, 'selected') and contains(., '${section}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_UNSTARTED</td>
-	<td>css=liferay-remote-app-raylife>>>.step-item+.step-item</td>
+	<td>//div[contains(@class, 'step-item') and not(contains(@class, 'selected') and not(contains(@class, 'completed')))]</td>
 	<td></td>
 </tr>
 </tbody>

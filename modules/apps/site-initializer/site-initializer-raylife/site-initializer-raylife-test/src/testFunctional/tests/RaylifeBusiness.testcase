@@ -49,7 +49,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -71,28 +73,9 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
 		Click(
-			field = "business.hasStoredCustomerInformation",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "business.hasAutoPolicy",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.salesMerchandise",
-			value = "3%");
-
-		Click(locator1 = "Raylife#FIRST_MORE_INFO");
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "Percent of sales from used merchandise?");
 
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
@@ -100,7 +83,9 @@ definition {
 			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
 			value1 = "Percent of sales from used merchandise");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -122,11 +107,9 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(locator1 = "Raylife#FIRST_MORE_INFO");
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "Years of industry experience?");
 
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
@@ -134,7 +117,9 @@ definition {
 			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
 			value1 = "Years of industry experience");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -164,7 +149,9 @@ definition {
 
 		RaylifeBusiness.viewBusinessInfo();
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -186,34 +173,17 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
 		Click(
-			field = "business.hasStoredCustomerInformation",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "business.hasAutoPolicy",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.salesMerchandise",
-			value = "3%");
-
-		Click(locator1 = "Raylife#FIRST_MORE_INFO");
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "Percent of sales from used merchandise?");
 
 		AssertElementPresent(
 			locator1 = "Raylife#TIP_INFO_PANEL",
 			value1 = "Percent of sales from used merchandise");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -235,17 +205,17 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(locator1 = "Raylife#FIRST_MORE_INFO");
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "Years of industry experience?");
 
 		AssertElementPresent(
 			locator1 = "Raylife#TIP_INFO_PANEL",
 			value1 = "Years of industry experience");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -272,25 +242,24 @@ definition {
 			value = "3");
 
 		Click(
-			field = "business.hasStoredCustomerInformation",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+            field = "Do you store personally identifiable information about your customers?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
-		Click(
-			field = "business.hasAutoPolicy",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+        Click(
+            field = "Do you have a Raylife Auto policy?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "Association");
+            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+            value1 = "Association");
 
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.salesMerchandise",
 			value = "3%");
 
-		Click(
-			field = "business.hasSellProductsUnderOwnBrand",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+        Click(
+            field = "Do you sell products under your own brand or label?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.overallSales",
@@ -304,7 +273,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Percent of overall sales is required.");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -331,25 +302,24 @@ definition {
 			value = "3");
 
 		Click(
-			field = "business.hasStoredCustomerInformation",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+            field = "Do you store personally identifiable information about your customers?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
-		Click(
-			field = "business.hasAutoPolicy",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+        Click(
+            field = "Do you have a Raylife Auto policy?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "Association");
+            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+            value1 = "Association");
 
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.salesMerchandise",
 			value = "3%");
 
 		Click(
-			field = "business.hasSellProductsUnderOwnBrand",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+            field = "Do you sell products under your own brand or label?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.overallSales",
@@ -359,7 +329,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Value must not be greater than 100%.");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -382,23 +354,6 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(
-			field = "business.hasStoredCustomerInformation",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "business.hasAutoPolicy",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.salesMerchandise",
 			value = "3%");
 
@@ -410,7 +365,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Percent of sales is required.");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -437,17 +394,16 @@ definition {
 			value = "3");
 
 		Click(
-			field = "business.hasStoredCustomerInformation",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+            field = "Do you store personally identifiable information about your customers?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
-		Click(
-			field = "business.hasAutoPolicy",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
+        Click(
+            field = "Do you have a Raylife Auto policy?",
+            locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "Association");
+            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+            value1 = "Association");
 
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.salesMerchandise",
@@ -457,7 +413,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Value must not be greater than 100%.");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -491,7 +449,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "This field is required");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -521,7 +481,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Must be equal or greater than 0.");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+            locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+            section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}

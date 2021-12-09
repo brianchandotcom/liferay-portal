@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.portlet;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
@@ -86,8 +87,9 @@ public class PublicationsPortlet extends MVCPortlet {
 
 		PublicationsDisplayContext publicationsDisplayContext =
 			new PublicationsDisplayContext(
-				_ctCollectionService, _ctDisplayRendererRegistry,
-				_ctEntryLocalService, _ctPreferencesLocalService,
+				_ctCollectionLocalService, _ctCollectionService,
+				_ctDisplayRendererRegistry, _ctEntryLocalService,
+				_ctPreferencesLocalService,
 				_portal.getHttpServletRequest(renderRequest), _language,
 				renderRequest, renderResponse);
 
@@ -127,6 +129,9 @@ public class PublicationsPortlet extends MVCPortlet {
 		_portletPermission.check(
 			permissionChecker, CTPortletKeys.PUBLICATIONS, ActionKeys.VIEW);
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTCollectionService _ctCollectionService;

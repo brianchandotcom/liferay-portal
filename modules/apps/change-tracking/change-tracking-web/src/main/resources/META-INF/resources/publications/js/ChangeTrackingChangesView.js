@@ -2668,7 +2668,10 @@ export default function ChangeTrackingChangesView({
 					className={classNames(
 						'btn btn-' + displayType + ' btn-sm',
 						{
-							disabled: changes.length === 0 || expired,
+							disabled:
+								(changes.length === 0 &&
+									ctMappingInfos.length === 0) ||
+								expired,
 						}
 					)}
 					href={setParameter(

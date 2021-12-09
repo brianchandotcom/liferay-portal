@@ -53,12 +53,12 @@ public class ProjectTemplatesNpmReactPortletTest
 				{"foo", "foo", "Foo", "7.1.3-1"},
 				{"foo", "foo", "Foo", "7.2.1-1"},
 				{"foo", "foo", "Foo", "7.3.7"},
-				{"foo", "foo", "Foo", "7.4.1-1"},
+				{"foo", "foo", "Foo", "7.4.3.4"},
 				{"foo-bar", "foo.bar", "FooBar", "7.0.6-2"},
 				{"foo-bar", "foo.bar", "FooBar", "7.1.3-1"},
 				{"foo-bar", "foo.bar", "FooBar", "7.2.1-1"},
 				{"foo-bar", "foo.bar", "FooBar", "7.3.7"},
-				{"foo-bar", "foo.bar", "FooBar", "7.4.1-1"}
+				{"foo-bar", "foo.bar", "FooBar", "7.4.3.4"}
 			});
 	}
 

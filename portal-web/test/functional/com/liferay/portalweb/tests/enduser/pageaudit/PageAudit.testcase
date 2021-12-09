@@ -3470,9 +3470,9 @@ definition {
 		}
 
 		task ("Assert if cached data is displayed") {
-			AssertTextPresent(
-				locator1 = "PageAudit#PANEL_PAGE_TITLE",
-				value1 = "Home");
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
 	}
 

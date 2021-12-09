@@ -334,16 +334,20 @@ public class SourceFormatterUtil {
 			sourceFormatterExcludes, true);
 
 		for (String fileName : fileNames) {
-			if (fileName.endsWith(".dtd")) {
+			String normalizedFileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			if (normalizedFileName.endsWith(".dtd")) {
 				xmlDefinitionsJSONObject = _addXMLdefinition(
-					xmlDefinitionsJSONObject, fileName);
+					xmlDefinitionsJSONObject, normalizedFileName);
 			}
 
-			if (fileName.endsWith(".tld")) {
-				taglibsJSONObject = _addTaglib(taglibsJSONObject, fileName);
+			if (normalizedFileName.endsWith(".tld")) {
+				taglibsJSONObject = _addTaglib(
+					taglibsJSONObject, normalizedFileName);
 			}
 
-			if (!fileName.contains("/com/liferay/")) {
+			if (!normalizedFileName.contains("/com/liferay/")) {
 				continue;
 			}
 
@@ -352,7 +356,8 @@ public class SourceFormatterUtil {
 
 					@Override
 					public Tuple call() throws Exception {
-						return _getClassTuple(fileName, maxLineLength);
+						return _getClassTuple(
+							normalizedFileName, maxLineLength);
 					}
 
 				});

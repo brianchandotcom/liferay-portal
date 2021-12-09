@@ -1352,14 +1352,6 @@ components:
                     example: 2017-07-21
                     format: date
                     type: string
-                discontinuedSkuExternalReferenceCode:
-                    example: SKU0111
-                    type: string
-                discontinuedSkuId:
-                    example: 33135
-                    format: int64
-                    minimum: 0
-                    type: integer
                 displayDate:
                     example: 2017-07-21
                     format: date
@@ -1434,6 +1426,14 @@ components:
                 purchasable:
                     example: true
                     type: boolean
+                replacementSkuExternalReferenceCode:
+                    example: SKU0111
+                    type: string
+                replacementSkuId:
+                    example: 33135
+                    format: int64
+                    minimum: 0
+                    type: integer
                 sku:
                     example: "12341234"
                     type: string

@@ -24,7 +24,8 @@ const MAX_LENGTH_TO_TRUNCATE = 28;
 
 export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 	const {
-		formState: {errors},
+		// formState: {errors},
+
 		register,
 		setValue,
 	} = useFormContext();
@@ -93,7 +94,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 
 	const infoPanelButton = () => (
 		<ClayLabel
-			className={classNames('label-inverse-primary btn-info-panel', {
+			className={classNames('label-inverse-primary btn-info-panel mb-2', {
 				'label-solid-info': selectedTrigger,
 			})}
 			onClick={showInfoPanel}
@@ -122,7 +123,11 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 		}
 
 		if (isError) {
-			return <WarningBadge>{isError}</WarningBadge>;
+			return (
+				<>
+					<WarningBadge>{isError}</WarningBadge>
+				</>
+			);
 		}
 
 		if (businessTypes.length) {
@@ -154,9 +159,8 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 		<>
 			<div>
 				<SearchInput
-					className="bg-neutral-1 px-4 py-0 search"
+					className="bg-neutral-1 d-flex px-4 py-0 search"
 					defaultValue=""
-					error={errors?.basics?.businessSearch}
 					label="Search for your primary industry and then select it from the list."
 					placeholder="Begin typing to show options..."
 					required
@@ -166,7 +170,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 					})}
 				>
 					<ClayButton
-						className="btn btn-primary font-weight-bolder search text-paragraph text-small-caps"
+						className="btn btn-primary font-weight-bolder ml-3 search text-paragraph text-small-caps"
 						onClick={() => {
 							onSearch(form?.basics?.businessSearch);
 						}}

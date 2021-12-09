@@ -8,6 +8,7 @@ export const Select = React.forwardRef(
 	(
 		{
 			children,
+			className,
 			error,
 			label,
 			name,
@@ -18,7 +19,7 @@ export const Select = React.forwardRef(
 		ref
 	) => {
 		return (
-			<InputAreaWithError error={error}>
+			<InputAreaWithError className={className} error={error}>
 				{label && (
 					<Label label={label} name={name} required={required}>
 						{renderActions}

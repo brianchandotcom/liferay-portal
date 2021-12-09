@@ -20,11 +20,13 @@ export const SearchInput = React.forwardRef(
 		return (
 			<>
 				{label && (
-					<Label label={label} name={name} required={required}>
-						{renderActions}
-					</Label>
+					<div className="mb-2">
+						<Label label={label} name={name} required={required}>
+							{renderActions}
+						</Label>
+					</div>
 				)}
-				<div className="content-row">
+				<div className="row">
 					<InputAreaWithError error={error}>
 						<ClayInput
 							{...props}

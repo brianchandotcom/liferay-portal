@@ -6,6 +6,7 @@ import {FEINControlledInput} from '../../../../../common/components/connectors/C
 import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
 import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import FormCard from '../../../../../common/components/fragments/Card/FormCard';
 import {TIP_EVENT} from '../../../../../common/utils/events';
 import useFormActions from '../../../hooks/useFormActions';
 import {useStepWizard} from '../../../hooks/useStepWizard';
@@ -47,7 +48,7 @@ export function FormEmployees({form}) {
 	const {isSelected, updateState} = useTriggerContext();
 
 	return (
-		<div className="card">
+		<FormCard>
 			<div className="card-content">
 				<ControlledSwitch
 					control={control}
@@ -156,6 +157,6 @@ export function FormEmployees({form}) {
 				onPrevious={onPrevious}
 				onSave={onSave}
 			/>
-		</div>
+		</FormCard>
 	);
 }

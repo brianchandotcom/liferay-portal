@@ -7,6 +7,9 @@ export function EmailControlledInput({rules, ...props}) {
 	return (
 		<ControlledInput
 			{...props}
+			inputProps={{
+				className: 'mb-5 mr-0 row',
+			}}
 			rules={{
 				pattern: {
 					message: 'Must be a valid email address.',

@@ -2,6 +2,7 @@ import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {MoreInfoButton} from '../../../../../../common/components/fragments/Buttons/MoreInfo';
 import {CardFormActionsWithSave} from '../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import FormCard from '../../../../../../common/components/fragments/Card/FormCard';
 import {Radio} from '../../../../../../common/components/fragments/Forms/Radio';
 import {TIP_EVENT} from '../../../../../../common/utils/events';
 import useFormActions from '../../../../hooks/useFormActions';
@@ -23,8 +24,8 @@ export function FormBasicProductQuote({form}) {
 	const {isSelected, updateState} = useTriggerContext();
 
 	return (
-		<div className="card">
-			<div className="card-content">
+		<FormCard>
+			<div className="card-content d-flex">
 				<div className="content-column">
 					<label>
 						<h6 className="font-weight-bolder">
@@ -32,7 +33,10 @@ export function FormBasicProductQuote({form}) {
 						</h6>
 					</label>
 
-					<fieldset className="content-column" id="productQuote">
+					<fieldset
+						className="d-flex flex-column spacer-3"
+						id="productQuote"
+					>
 						<Controller
 							control={control}
 							defaultValue={form?.basics?.productQuote}
@@ -85,6 +89,6 @@ export function FormBasicProductQuote({form}) {
 				onPrevious={onPrevious}
 				onSave={onSave}
 			/>
-		</div>
+		</FormCard>
 	);
 }

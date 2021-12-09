@@ -7,7 +7,12 @@ export function ZIPControlledInput({rules = {}, inputProps = {}, ...props}) {
 	return (
 		<ControlledInputWithMask
 			{...props}
-			inputProps={{format: '#####', mask: '_', ...inputProps}}
+			inputProps={{
+				className: 'col',
+				format: '#####',
+				mask: '_',
+				...inputProps,
+			}}
 			rules={{
 				pattern: {
 					message: 'Must be a five digit number.',

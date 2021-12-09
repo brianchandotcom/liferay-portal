@@ -5,15 +5,13 @@ import {SquareFeatControlledInput} from '../../../../../common/components/connec
 import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
 import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import FormCard from '../../../../../common/components/fragments/Card/FormCard';
 import {TIP_EVENT} from '../../../../../common/utils/events';
 import useFormActions from '../../../hooks/useFormActions';
 import {useStepWizard} from '../../../hooks/useStepWizard';
 import {useTriggerContext} from '../../../hooks/useTriggerContext';
 import {AVAILABLE_STEPS} from '../../../utils/constants';
-import {
-	isHabitational,
-	isThereSwimming,
-} from '../../../utils/propertyFields';
+import {isHabitational, isThereSwimming} from '../../../utils/propertyFields';
 
 const setFormPath = (value) => `property.${value}`;
 
@@ -46,7 +44,7 @@ export function FormProperty({form}) {
 	const {isSelected, updateState} = useTriggerContext();
 
 	return (
-		<div className="card">
+		<FormCard>
 			<div className="card-content">
 				<ControlledSwitch
 					control={control}
@@ -193,6 +191,6 @@ export function FormProperty({form}) {
 				onPrevious={onPrevious}
 				onSave={onSave}
 			/>
-		</div>
+		</FormCard>
 	);
 }

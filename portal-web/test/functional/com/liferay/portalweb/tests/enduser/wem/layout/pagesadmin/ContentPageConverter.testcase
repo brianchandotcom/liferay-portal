@@ -35,51 +35,70 @@ definition {
 	test ConvertBasicWidgetPageToContentPage {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Get plids of the widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		var plid1 = Page.getPlidFromHtmlSource();
+			var plid1 = Page.getPlidFromHtmlSource();
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("View current page type before conversion") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Widget Page");
+		}
 
-		PageEditor.assertFragmentSidebarLoaded();
+		task ("Convert widget page to content page") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		PageEditor.clickPublish();
+			PageEditor.assertFragmentSidebarLoaded();
 
-		AssertElementPresent(
-			key_pageName = "Test Page Name",
-			key_pageType = "Content Page",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PageEditor.clickPublish();
+		}
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View current page type after conversion") {
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Content Page");
+		}
 
-		Pause(locator1 = "1000");
+		task ("Get plids of the converted content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		var plid2 = Page.getPlidFromHtmlSource();
+			var plid2 = Page.getPlidFromHtmlSource();
+		}
 
-		TestUtils.assertEquals(
-			actual = "${plid2}",
-			expected = "${plid1}");
+		task ("View pldi is the same after conversion") {
+			TestUtils.assertEquals(
+				actual = "${plid2}",
+				expected = "${plid1}");
+		}
 
-		ContentPages.gotoPageEditor();
+		task ("View fragments and widgets sidebar at edit mode") {
+			ContentPages.gotoPageEditor();
 
-		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
+			AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
+		}
 	}
 
 	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, if convertLayouts and getConvertibleLayoutPlid is invoked, an array with the plids of the widget pages that are convertible to content pages is returned and all convertibles widget pages in the site are converted to content pages."
@@ -88,62 +107,34 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesToContentPagesViaAPI";
 
-		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name ${i}");
+		task ("Add ten widget pages") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+			}
 		}
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 1",
-			layoutTemplate = "1 Column");
+		task ("Change layout template of each page") {
+			var i = "1";
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 2",
-			layoutTemplate = "2 Columns (50/50)");
+			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns") {
+				JSONLayout.updateLayoutTemplateOfPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}",
+					layoutTemplate = "${layoutTemplate}");
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 4",
-			layoutTemplate = "2 Columns (70/30)");
+				var i = ${i} + 1;
+			}
+		}
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 5",
-			layoutTemplate = "3 Columns");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 6",
-			layoutTemplate = "1-2 Columns (30/70)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 7",
-			layoutTemplate = "1-2 Columns (70/30)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 8",
-			layoutTemplate = "1-2-1 Columns (50/50)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 9",
-			layoutTemplate = "1-3-1 Columns");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 10",
-			layoutTemplate = "1-2-1 Columns (70/30)");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name ${i}",
-				widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher to each widget page") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}",
+					widgetName = "Asset Publisher");
+			}
 		}
 
 		task ("Get plids of widget pages before conversion") {
@@ -169,17 +160,27 @@ definition {
 			echo("${plidsBeforeConversion}");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("View current page type before conversion") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		ServerAdministration.openServerAdmin();
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				PagesAdmin.viewPageType(
+					pageName = "Test Page Name ${i}",
+					pageType = "Widget Page");
+			}
+		}
 
-		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+		task ("Execute grooy script to bulk convert all widget pages") {
+			ServerAdministration.openServerAdmin();
 
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
+			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
-		task ("Assert output content") {
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
+		}
+
+		task ("View output content") {
 			var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 
 			echo("${output}");
@@ -207,8 +208,6 @@ definition {
 					pageName = "Test Page Name ${i}",
 					siteName = "Test Site Name");
 
-				Pause(locator1 = "1000");
-
 				var plidAfterConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
@@ -224,7 +223,7 @@ definition {
 			echo("${plidsAfterConversion}");
 		}
 
-		task ("Assert output content") {
+		task ("View output content") {
 			if (contains("${output}", "Converted layouts:[${plidsAfterConversion}]")) {
 				echo("Returned converted layouts plids array is correct");
 			}
@@ -233,45 +232,57 @@ definition {
 			}
 		}
 
-		task ("Assert plids of before conversion are the same with converted") {
+		task ("View plids are the same after conversion") {
 			TestUtils.assertEquals(
 				actual = "${plidsAfterConversion}",
 				expected = "${plidsBeforeConversion}");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("View current page type after conversion") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-			AssertElementPresent(
-				key_pageName = "Test Page Name ${i}",
-				key_pageType = "Content Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				PagesAdmin.viewPageType(
+					pageName = "Test Page Name ${i}",
+					pageType = "Content Page");
+			}
 		}
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Page Name 1",
-			siteName = "Test Site Name");
+		task ("View page editor is available for converted page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
 
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name 1",
-			siteName = "Test Site Name");
+		task ("View Asset Publisher widget is shown") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
 
-		PageEditor.viewFragment(fragmentName = "Asset Publisher");
+			PageEditor.viewFragment(fragmentName = "Asset Publisher");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading",
-			targetFragmentName = "Asset Publisher");
+		task ("Add a Heading fragment below Asset Publisher widget") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+			PageEditor.clickPublish();
+		}
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Page Name 1",
-			siteName = "Test Site Name");
+		task ("View Heading fragment is shown at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
 
-		AssertElementPresent(locator1 = "//h1[contains(.,'Heading Example')]");
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "heading",
+				text = "Heading Example");
+		}
 	}
 
 	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and some content pages and an api to convert bulk widget pages to content pages is executed, you should be able to convert the widget pages."
@@ -279,79 +290,45 @@ definition {
 	test ConvertMultipleWidgetPagesWithContentPagesViaAPI {
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesWithContentPagesViaAPI";
 
-		task ("Add 10 widget pages") {
-			for (var n : list "1,2,3,4,5,6,7,8,9,10") {
+		task ("Add ten widget pages") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Widget Page Name ${n}");
+					layoutName = "Test Widget Page Name ${i}");
 			}
 		}
 
-		task ("Change layout of each page") {
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 1",
-				layoutTemplate = "1 Column");
+		task ("Change layout template of each page") {
+			var i = "1";
 
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 2",
-				layoutTemplate = "2 Columns (50/50)");
+			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns") {
+				JSONLayout.updateLayoutTemplateOfPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Widget Page Name ${i}",
+					layoutTemplate = "${layoutTemplate}");
 
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 4",
-				layoutTemplate = "2 Columns (70/30)");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 5",
-				layoutTemplate = "3 Columns");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 6",
-				layoutTemplate = "1-2 Columns (30/70)");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 7",
-				layoutTemplate = "1-2 Columns (70/30)");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 8",
-				layoutTemplate = "1-2-1 Columns (50/50)");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 9",
-				layoutTemplate = "1-3-1 Columns");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name 10",
-				layoutTemplate = "1-2-1 Columns (70/30)");
+				var i = ${i} + 1;
+			}
 		}
 
 		task ("Add an Asset Publisher to each widget page") {
-			for (var n : list "1,2,3,4,5,6,7,8,9,10") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Widget Page Name ${n}",
+					layoutName = "Test Widget Page Name ${i}",
 					widgetName = "Asset Publisher");
 			}
 		}
 
-		task ("Add 4 content pages with Heading fragment") {
-			for (var n : list "1,2,3,4") {
+		task ("Add four content pages with Heading fragment") {
+			for (var i : list "1,2,3,4") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Content Page Name ${n}",
+					layoutName = "Test Content Page Name ${i}",
 					type = "content");
 
 				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name ${n}",
+					pageName = "Test Content Page Name ${i}",
 					siteName = "Test Site Name");
 
 				PageEditor.addFragment(
@@ -359,6 +336,16 @@ definition {
 					fragmentName = "Heading");
 
 				PageEditor.clickPublish();
+			}
+		}
+
+		task ("View current page type before conversion") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				PagesAdmin.viewPageType(
+					pageName = "Test Widget Page Name ${i}",
+					pageType = "Widget Page");
 			}
 		}
 
@@ -371,119 +358,18 @@ definition {
 				language = "Groovy",
 				script = "${script}");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "Convertible layouts after conversion: []");
+			ServerAdministration.viewOutputField(valueName = "Convertible layouts after conversion: []");
 		}
 
-		task ("Assert all widget pages are converted to content page") {
+		task ("View current page type after conversion") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			for (var n : list "1,2,3,4,5,6,7,8,9,10") {
-				AssertVisible(
-					key_pageName = "Test Widget Page Name ${n}",
-					key_pageType = "Content Page",
-					locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				PagesAdmin.viewPageType(
+					pageName = "Test Widget Page Name ${i}",
+					pageType = "Content Page");
 			}
 		}
-	}
-
-	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."
-	@priority = "5"
-	test ConvertWidgetPageDecoratorsToContentPage {
-		property portal.acceptance = "true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Wiki");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Look and Feel Configuration");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.selectApplicationDecorator(decorator = "Borderless");
-
-		PortletEntry.save();
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Wiki",
-			portletOption = "Look and Feel Configuration");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.selectApplicationDecorator(decorator = "Barebone");
-
-		PortletEntry.save();
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Documents and Media",
-			portletOption = "Look and Feel Configuration");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.selectApplicationDecorator(decorator = "Decorate");
-
-		PortletEntry.save();
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
-
-		Pause(locator1 = "3000");
-
-		Button.clickPublish();
-
-		AssertElementPresent(
-			key_pageName = "Test Page Name",
-			key_pageType = "Content Page",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.viewApplicationDecorator(
-			decorator = "Borderless",
-			portletName = "Asset Publisher");
-
-		Portlet.viewApplicationDecorator(
-			decorator = "Barebone",
-			portletName = "Wiki");
-
-		Portlet.viewApplicationDecorator(
-			decorator = "Decorate",
-			portletName = "Documents and Media");
 	}
 
 	@description = "This is a test for LPS-98325. Assert that widget pages with nested application and customization setting can be converted to content pages via API."
@@ -492,199 +378,196 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPagesWithNestedApplicationAndCustomizationSettingToContentPagesViaAPI";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 1");
+		task ("Add three widget pages") {
+			for (var i : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 1",
-			widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher and Nested Applications to page") {
+			var i = "1";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 2");
+			for (var widgetName : list "Asset Publisher,Nested Applications") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${i}",
+					widgetName = "${widgetName}");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+				var i = ${i} + 1;
+			}
+		}
 
-		PageCustomizations.enableSectionCustomizableCP(
-			columnId = "1",
-			pageName = "Test Page Name 2");
+		task ("Enable customization in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 3");
+			PageCustomizations.enableSectionCustomizableCP(
+				columnId = "1",
+				pageName = "Test Page Name 3");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 3",
-			widgetName = "Nested Applications");
+		task ("Execute grooy script to bulk convert all widget pages") {
+			ServerAdministration.openServerAdmin();
 
-		ServerAdministration.openServerAdmin();
+			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
-		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
 
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
+			ServerAdministration.viewOutputField(valueName = "Convertible layouts before conversion");
+		}
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Convertible layouts before conversion");
+		task ("View current page type after conversion") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			for (var i : list "1,2,3") {
+				PagesAdmin.viewPageType(
+					pageName = "Test Page Name ${i}",
+					pageType = "Content Page");
+			}
+		}
+	}
 
-		for (var i : list "1,2,3") {
-			AssertElementPresent(
-				key_pageName = "Test Page Name ${i}",
-				key_pageType = "Content Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."
+	@priority = "5"
+	test ConvertWidgetPageWithCustomizableColumnContainingWidgets {
+		property portal.acceptance = "true";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher, Wiki and Documents and Media widget to page") {
+			for (var widgetName : list "Asset Publisher,Wiki,Documents and Media") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("Select a new decorator for each porlet") {
+			for (var resourceName : list "Asset Publisher-Borderless,Wiki-Barebone,Documents and Media-Decorate") {
+				var portletName = StringUtil.extractFirst("${resourceName}", "-");
+				var decoratorName = StringUtil.extractLast("${resourceName}", "-");
+
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				Portlet.configureApplicationDecorator(
+					decorator = "${decoratorName}",
+					portletName = "${portletName}");
+			}
+		}
+
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View current page type after conversion") {
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Content Page");
+		}
+
+		task ("View decorator is applied for each portlet") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var resourceName : list "Asset Publisher-Borderless,Wiki-Barebone,Documents and Media-Decorate") {
+				var portletName = StringUtil.extractFirst("${resourceName}", "-");
+				var decoratorName = StringUtil.extractLast("${resourceName}", "-");
+
+				Portlet.viewApplicationDecorator(
+					decorator = "${decoratorName}",
+					portletName = "${portletName}");
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column, there will be a warning message shown in conversion review"
 	@priority = "5"
-	test ConvertWidgetPageWithCustomizableColumnContainingWidgets {
-		property portal.acceptance = "true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			layoutTemplate = "1 Column");
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		PageCustomizations.enableSectionCustomizableCP(
-			columnId = "1",
-			pageName = "Test Page Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		PageCustomizations.viewCustomizablePagePG();
-
-		Portlet.addPG(portletName = "Asset Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.viewPG(portletName = "Asset Publisher");
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
-
-		AssertVisible(
-			key_alertMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.",
-			key_type = "warning",
-			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
-
-		AssertElementNotPresent(
-			key_portletName = "Asset Publisher",
-			locator1 = "Portlet#TITLE");
-
-		Button.clickPublish();
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
-
-		AssertElementNotPresent(
-			key_portletName = "Asset Publisher",
-			locator1 = "Portlet#TITLE");
-	}
-
-	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets, there will be a warning message shown in conversion preview"
-	@priority = "5"
 	test ConvertWidgetPageWithNestedApplicationsContainingWidgets {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			layoutTemplate = "1 Column");
+		task ("Change layout to 1 column") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				layoutTemplate = "1 Column");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Nested Applications");
+		task ("Enable customization in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
+			PageCustomizations.enableSectionCustomizableCP(
+				columnId = "1",
+				pageName = "Test Page Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View page is customizable") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		NestedPortlets.viewConfigurationDefaultLayoutTemplate(
-			defaultColumnName = "2 Columns (50/50)",
-			portletName = "Nested Applications");
+			PageCustomizations.viewCustomizablePagePG();
+		}
 
-		Click(locator1 = "Modal#CLOSE_BUTTON");
+		task ("Add an Asset Publisher to page") {
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
 
-		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		DragAndDrop.dragAndDropPortletToPortlet(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_HEADER",
-			locator2 = "Home#PORTLET_COLUMN_1",
-			value1 = "Asset Publisher");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		Portlet.viewPG(portletName = "Nested Applications");
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 
-		AssertTextEquals(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PORTLET_COLUMN_1_NESTED_PORTLET_TITLE",
-			value1 = "Asset Publisher");
+		task ("View conversion alert message and Asset Publisher widget is not shown") {
+			Alert.viewConversionMessage(
+				alertMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.",
+				alertType = "warning");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			PageEditor.viewElementOutsideModule(
+				elementNotPresent = "Asset Publisher",
+				moduleNumber = "1");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			PageEditor.clickPublish();
+		}
 
-		AssertVisible(
-			key_alertMessage = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.",
-			key_type = "warning",
-			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
+		task ("View content page is editable after conversion") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.viewPG(portletName = "Asset Publisher");
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 
-		AssertElementNotPresent(
-			key_portletName = "Nested Applications",
-			locator1 = "Portlet#TITLE");
-
-		Button.clickPublish();
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
-
-		Portlet.viewPG(portletName = "Asset Publisher");
-
-		AssertElementNotPresent(
-			key_portletName = "Nested Applications",
-			locator1 = "Portlet#TITLE");
+			Portlet.viewNoSpecificPG(portletName = "Asset Publisher");
+		}
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with a non-standard layout, there will be a warning message shown in conversion preview"
@@ -693,94 +576,111 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayout";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		task ("Upload the custom layout") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "App Manager");
 
-		AppManager.uploadApp(
-			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war");
+			AppManager.uploadApp(
+				appName = "custom-layout-layouttpl",
+				warFileName = "custom-layout-layouttpl.war");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Define the custom layout for widget page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.configurePage(
-			columnName = "Custom Layout",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+			SitePages.configurePage(
+				columnName = "Custom Layout",
+				pageName = "Test Page Name",
+				privacy = "Public Pages",
+				sitePageType = "Widget Page");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Profile and Asset Publisher widget to page") {
+			for (var widgetName : list "Profile,Asset Publisher") {
+				JSONLayout.addWidgetToPublicLayout(
+					column = "1",
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		Portlet.addPG(portletName = "Profile");
+		task ("Drop the Profile widget to second page column") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Profile");
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "1",
+				columnNumberTo = "2",
+				portletName = "Profile");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View both widgets are in the respective page column") {
+			var i = "1";
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			for (var portletName : list "Asset Publisher,Profile") {
+				Portlet.viewSpecificPG(
+					pageColumnNumber = "${i}",
+					portletName = "${portletName}");
 
-		AssertTextEquals(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-			value1 = "Asset Publisher");
+				var i = ${i} + 1;
+			}
+		}
 
-		AssertTextEquals(
-			key_portletTitleName = "Profile",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
-			value1 = "Profile");
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 
-		AssertVisible(
-			key_alertMessage = "This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
-			key_type = "warning",
-			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
+		task ("View conversion alert message is shown") {
+			Alert.viewConversionMessage(
+				alertMessage = "This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
+				alertType = "warning");
+		}
 
-		AssertElementPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		task ("View widgets are shown in conversion then publish") {
+			var i = "1";
 
-		AssertElementPresent(
-			key_columnNumber = "2",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			for (var widgetName : list "Asset Publisher,Profile") {
+				PageEditor.viewElementInsideModule(
+					elementName = "${widgetName}",
+					moduleNumber = "${i}");
 
-		Button.clickPublish();
+				var i = ${i} + 1;
+			}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			PageEditor.clickPublish();
+		}
 
-		AssertElementPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		task ("View widgets are shown at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		AssertElementPresent(
-			key_columnNumber = "2",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			var i = "1";
+
+			for (var widgetName : list "Asset Publisher,Profile") {
+				PageEditor.viewElementInsideModule(
+					elementName = "${widgetName}",
+					moduleNumber = "${i}");
+
+				var i = ${i} + 1;
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"
@@ -788,105 +688,119 @@ definition {
 	test ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns {
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		task ("Upload the custom layout") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "App Manager");
 
-		AppManager.uploadApp(
-			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war");
+			AppManager.uploadApp(
+				appName = "custom-layout-layouttpl",
+				warFileName = "custom-layout-layouttpl.war");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Define the custom layout for widget page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.configurePage(
-			columnName = "Custom Layout",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+			SitePages.configurePage(
+				columnName = "Custom Layout",
+				pageName = "Test Page Name",
+				privacy = "Public Pages",
+				sitePageType = "Widget Page");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Enable customization to page then check both columns") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		PageCustomizations.enableSectionCustomizableCP(
-			columnIdList = "1,2",
-			pageName = "Test Page Name");
+			PageCustomizations.enableSectionCustomizableCP(
+				columnIdList = "1,2",
+				pageName = "Test Page Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View page is customizable") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		PageCustomizations.viewCustomizablePagePG();
+			PageCustomizations.viewCustomizablePagePG();
+		}
 
-		Portlet.addPG(portletName = "Profile");
+		task ("Add an Asset Publisher and Profile widget to page") {
+			for (var portletName : list "Asset Publisher,Profile") {
+				Portlet.addPG(portletName = "${portletName}");
+			}
+		}
 
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Profile");
+		task ("Drop the Profile widget to second page column") {
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "1",
+				columnNumberTo = "2",
+				portletName = "Profile");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View both widgets are in the respective page column") {
+			var i = "1";
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			for (var portletName : list "Asset Publisher,Profile") {
+				Portlet.viewSpecificPG(
+					pageColumnNumber = "${i}",
+					portletName = "${portletName}");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+				var i = ${i} + 1;
+			}
+		}
 
-		AssertTextEquals(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-			value1 = "Asset Publisher");
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		AssertTextEquals(
-			key_portletTitleName = "Profile",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
-			value1 = "Profile");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+		task ("View conversion alert message is shown") {
+			Alert.viewConversionMessage(
+				alertMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
+				alertType = "warning");
+		}
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR_3",
-			value1 = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published. This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.");
+		task ("View widgets are not shown in conversion then publish") {
+			var i = "1";
 
-		AssertElementNotPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			for (var widgetName : list "Asset Publisher,Profile") {
+				PageEditor.viewElementOutsideModule(
+					elementNotPresent = "${widgetName}",
+					moduleNumber = "${i}");
 
-		AssertElementNotPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+				var i = ${i} + 1;
+			}
 
-		Button.clickPublish();
+			PageEditor.clickPublish();
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View widgets are not shown at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		AssertElementNotPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			var i = "1";
 
-		AssertElementNotPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			for (var widgetName : list "Asset Publisher,Profile") {
+				PageEditor.viewElementOutsideModule(
+					elementNotPresent = "${widgetName}",
+					moduleNumber = "${i}");
+
+				var i = ${i} + 1;
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
@@ -894,138 +808,143 @@ definition {
 	test ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets {
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		task ("Upload the custom layout") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "App Manager");
 
-		AppManager.uploadApp(
-			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war");
+			AppManager.uploadApp(
+				appName = "custom-layout-layouttpl",
+				warFileName = "custom-layout-layouttpl.war");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Define the custom layout for widget page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.configurePage(
-			columnName = "Custom Layout",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+			SitePages.configurePage(
+				columnName = "Custom Layout",
+				pageName = "Test Page Name",
+				privacy = "Public Pages",
+				sitePageType = "Widget Page");
+		}
 
-		for (var portletName : list "Profile,Asset Publisher") {
+		task ("Add a Nested Applications widget to first page column") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Nested Applications");
+		}
+
+		task ("Add a Profile and Asset Publisher widget to second page column") {
+			for (var widgetName : list "Profile,Asset Publisher") {
+				JSONLayout.addWidgetToPublicLayout(
+					column = "2",
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("Select manual selection for Asset Publisher widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.addPG(portletName = "${portletName}");
+			AssetPublisherPortlet.configureManualAssetSelectionPG(portletName = "Asset Publisher");
 
-			Portlet.dragAndDropPortletToColumnPG(
-				columnNumberFrom = "1",
-				columnNumberTo = "2",
-				portletName = "${portletName}");
+			IFrame.closeFrame();
 		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Drop Asset Publisher into first Nested Applications column") {
+			NestedPortlets.dragAndDropPortletToPortletColumnPG(
+				columnNumberFrom = "2",
+				nestedColumnNumberTo = "1",
+				portletName = "Asset Publisher");
+		}
 
-		Portlet.addPG(portletName = "Nested Applications");
+		task ("View both widgets are in the respective page column") {
+			var i = "1";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			for (var portletName : list "Nested Applications,Profile") {
+				Portlet.viewSpecificPG(
+					pageColumnNumber = "${i}",
+					portletName = "${portletName}");
 
-		ProductMenuHelper.closeProductMenu();
+				var i = ${i} + 1;
+			}
+		}
 
-		AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+		task ("View Asset Publisher widget is nested to first column") {
+			NestedPortlets.viewPG(
+				nestedColumnNumber = "1",
+				portletName = "Asset Publisher");
+		}
 
-		Navigator.gotoNavTab(navTab = "Asset Selection");
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		PortletEntry.save();
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 
-		SelectFrame(value1 = "relative=top");
+		task ("View conversion alert message is shown") {
+			Alert.viewConversionMessage(
+				alertMessage = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
+				alertType = "warning");
+		}
 
-		Click(locator1 = "Modal#CLOSE_BUTTON");
+		task ("View Nested Applications is not shown in conversion") {
+			PageEditor.viewElementOutsideModule(
+				elementNotPresent = "Nested Applications",
+				moduleNumber = "1");
+		}
 
-		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+		task ("View widgets are shown in conversion then publish") {
+			var i = "1";
 
-		DragAndDrop.dragAndDropPortletToPortlet(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER",
-			locator2 = "Home#PORTLET_COLUMN_1",
-			value1 = "Asset Publisher");
+			for (var widgetName : list "Asset Publisher,Profile") {
+				PageEditor.viewElementInsideModule(
+					elementName = "${widgetName}",
+					moduleNumber = "${i}");
 
-		AssertTextEquals(
-			key_portletTitleName = "Nested Applications",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-			value1 = "Nested Applications");
+				var i = ${i} + 1;
+			}
 
-		AssertTextEquals(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PORTLET_COLUMN_1_NESTED_PORTLET_TITLE",
-			value1 = "Asset Publisher");
+			PageEditor.clickPublish();
+		}
 
-		AssertTextEquals(
-			key_portletTitleName = "Profile",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
-			value1 = "Profile");
+		task ("View widgets are shown at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			var i = "1";
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			for (var widgetName : list "Asset Publisher,Profile") {
+				PageEditor.viewElementInsideModule(
+					elementName = "${widgetName}",
+					moduleNumber = "${i}");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR_3",
-			value1 = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization. This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.");
+				var i = ${i} + 1;
+			}
+		}
 
-		AssertElementNotPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Nested Applications')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-
-		AssertElementPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-
-		AssertElementPresent(
-			key_columnNumber = "2",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-
-		Button.clickPublish();
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		AssertElementNotPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Nested Applications')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-
-		AssertElementPresent(
-			key_columnNumber = "1",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-
-		AssertElementPresent(
-			key_columnNumber = "2",
-			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		task ("View Nested Applications is not shown at edit mode") {
+			PageEditor.viewElementOutsideModule(
+				elementNotPresent = "Nested Applications",
+				moduleNumber = "1");
+		}
 	}
 
 	@description = "This is a test for LPS-125933. Convert widget page to content page with a WCD and an Asset Publisher where web contents are displayed."
@@ -1062,7 +981,7 @@ definition {
 			}
 		}
 
-		task ("Assert the web contents are shown in Asset Publisher") {
+		task ("View the web contents are shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -1102,16 +1021,15 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Assert the widget page is converted to content page") {
+		task ("View the widget page is converted to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertElementPresent(
-				key_pageName = "Test Page Name",
-				key_pageType = "Content Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Content Page");
 		}
 
-		task ("Assert the web contents are shown in Asset Publisher and Web Content Display") {
+		task ("View the web contents are shown in Asset Publisher and Web Content Display") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -1132,149 +1050,137 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher and Documents and Media widget to page") {
+			for (var widgetName : list "Asset Publisher,Documents and Media") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Documents and Media");
+		task ("Select decoret as application decorator") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			Portlet.configureApplicationDecorator(
+				decorator = "Decorate",
+				portletName = "Documents and Media");
+		}
 
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Look and Feel Configuration");
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		IFrame.selectConfigurationFrame();
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		Portlet.selectApplicationDecorator(decorator = "Borderless");
+			PageEditor.assertFragmentSidebarLoaded();
 
-		PortletEntry.save();
+			PageEditor.clickPublish();
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View decorator is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Documents and Media",
-			portletOption = "Look and Feel Configuration");
+			Portlet.viewApplicationDecorator(
+				decorator = "Borderless",
+				portletName = "Asset Publisher");
 
-		IFrame.selectConfigurationFrame();
+			Portlet.viewApplicationDecorator(
+				decorator = "Decorate",
+				portletName = "Documents and Media");
+		}
 
-		Portlet.selectApplicationDecorator(decorator = "Decorate");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
 
-		PortletEntry.save();
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("Add a new site role") {
+			JSONRole.addSiteRole(roleTitle = "Roles Siterole Name");
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+		task ("Define permission of new site role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
 
-		WaitForElementPresent(locator1 = "//script[contains(@src,'FragmentsSidebar.js')]");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Button.clickPublish();
+		task ("Assign the user to site role") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Roles Siterole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		Portlet.viewApplicationDecorator(
-			decorator = "Borderless",
-			portletName = "Asset Publisher");
+		task ("View user has no permission to edit a portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.viewApplicationDecorator(
-			decorator = "Decorate",
-			portletName = "Documents and Media");
+			for (var widgetName : list "Asset Publisher,Documents and Media") {
+				Click(
+					key_portletTitleName = "${widgetName}",
+					locator1 = "Portlet#SPECIFIC_TITLE",
+					value1 = "${widgetName}");
 
-		JSONRole.addSiteRole(
-			roleKey = "Roles Siterole Name",
-			roleTitle = "Roles Siterole Name");
+				AssertElementNotPresent(locator1 = "Icon#OK");
+			}
+		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
+		task ("Define a new permission") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_LAYOUTS",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea1@liferay.com",
-			userFirstName = "Userfn1",
-			userLastName = "Userln1",
-			userScreenName = "usersn1");
+		task ("View user has perimissions to edit a portlet") {
+			for (var widgetName : list "Asset Publisher,Documents and Media") {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea1@liferay.com");
+				Portlet.configureCustomTitlePG(portletTitleName = "${widgetName}");
+			}
+		}
 
-		JSONUser.addUserToSite(
-			groupName = "Test Site Name",
-			userEmailAddress = "userea1@liferay.com");
-
-		JSONRole.assignSiteRoleToUser(
-			groupName = "Test Site Name",
-			roleTitle = "Roles Siterole Name",
-			userEmailAddress = "userea1@liferay.com");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Click(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Asset Publisher");
-
-		AssertElementNotPresent(locator1 = "Icon#OK");
-
-		Click(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Documents and Media");
-
-		AssertElementNotPresent(locator1 = "Icon#OK");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "MANAGE_LAYOUTS",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.configureCustomTitlePG(portletTitleName = "Asset Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.viewSpecificPG(portletName = "Asset Publisher Custom");
-
-		Portlet.configureCustomTitlePG(portletTitleName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.viewSpecificPG(portletName = "Documents and Media Custom");
+		task ("View edited portlet's name are shown") {
+			for (var widgetName : list "Asset Publisher Custom,Documents and Media Custom") {
+				Portlet.viewSpecificPG(portletName = "${widgetName}");
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-106198. check the status for convension draft page and can edit widget page to content page conversion in draft form."
@@ -1282,69 +1188,186 @@ definition {
 	test ViewAndEditConversionDraftPage {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
+		}
 
-		AssertVisible(
-			key_alertMessage = "The page conversion is shown in the preview below. Make modifications needed before publishing the conversion, or discard the draft to leave the widget page in its original state.",
-			key_type = "info",
-			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
+		task ("View conversion alert message is shown") {
+			Alert.viewConversionMessage(
+				alertMessage = "The page conversion is shown in the preview below. Make modifications needed before publishing the conversion, or discard the draft to leave the widget page in its original state.",
+				alertType = "info");
+		}
 
-		PageEditor.clickBack();
+		task ("View page status in Pages admin") {
+			PageEditor.clickBack();
 
-		SitePages.viewPageStatus(
-			pageName = "Test Page Name",
-			status = "Conversion Draft");
+			SitePages.viewPageStatus(
+				pageName = "Test Page Name",
+				status = "Conversion Draft");
+		}
 
-		Click.waitForMenuToggleJSClick(
-			key_pageName = "Test Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+		task ("View menu action is shown") {
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
-		MenuItem.viewPresent(menuItem = "Discard Conversion Draft");
+			MenuItem.viewPresent(menuItem = "Discard Conversion Draft");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View page is not converted") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		AssertElementNotPresent(locator1 = "Button#EDIT_PENCIL");
+			AssertElementNotPresent(locator1 = "Button#EDIT_PENCIL");
 
-		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
+			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("Add a Web Content Display to conversion draft page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Edit Conversion Draft",
-			pageName = "Test Page Name");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Edit Conversion Draft",
+				pageName = "Test Page Name");
 
-		PageEditor.addWidget(
-			portletName = "Web Content Display",
-			targetFragmentName = "Asset Publisher");
+			PageEditor.addWidget(
+				portletName = "Web Content Display",
+				targetFragmentName = "Asset Publisher");
+		}
 
-		PageEditor.removeFragment(fragmentName = "Asset Publisher");
+		task ("Remove Asset Publisher then view it is not shwon") {
+			PageEditor.removeFragment(fragmentName = "Asset Publisher");
 
-		Portlet.viewNoSpecificPG(portletName = "Asset Publisher");
+			PageEditor.viewElementOutsideModule(
+				elementNotPresent = "Asset Publisher",
+				moduleNumber = "1");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("Edit conversion page via Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Edit Conversion Draft",
-			pageName = "Test Page Name");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Edit Conversion Draft",
+				pageName = "Test Page Name");
+		}
 
-		PageEditor.viewFragment(fragmentName = "Web Content Display");
+		task ("View Web Content Display is shown") {
+			PageEditor.viewFragment(fragmentName = "Web Content Display");
+		}
 
-		PageEditor.viewFragmentNotPresent(fragmentName = "Asset Publisher");
+		task ("View Asset Publisher is not shown") {
+			PageEditor.viewFragmentNotPresent(fragmentName = "Asset Publisher");
+		}
+	}
+
+	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets, there will be a warning message shown in conversion preview"
+	@priority = "5"
+	test WidgetPageWithNestedApplicationsContainingWidgets {
+		property portal.acceptance = "true";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Change layout to 1 column") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				layoutTemplate = "1 Column");
+		}
+
+		task ("Add a Nested Applications and Asset Publisher widget to page") {
+			for (var widgetName : list "Nested Applications,Asset Publisher") {
+				JSONLayout.addWidgetToPublicLayout(
+					column = "1",
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("View default layout in Nested widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			NestedPortlets.viewConfigurationDefaultLayoutTemplate(
+				defaultColumnName = "2 Columns (50/50)",
+				portletName = "Nested Applications");
+		}
+
+		task ("Drop Asset Publisher widget into first column of Nested Applications") {
+			NestedPortlets.dragAndDropPortletToPortletColumnPG(
+				columnNumberFrom = "1",
+				nestedColumnNumberTo = "1",
+				portletName = "Asset Publisher");
+		}
+
+		task ("View Asset Publisher widget is nested") {
+			NestedPortlets.viewPG(
+				nestedColumnNumber = "1",
+				portletName = "Asset Publisher");
+		}
+
+		task ("Convert widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("View conversion alert message is shown") {
+			Alert.viewConversionMessage(
+				alertMessage = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.",
+				alertType = "warning");
+		}
+
+		task ("View Asset Publisher widget is shown") {
+			PageEditor.viewElementInsideModule(
+				elementName = "Asset Publisher",
+				moduleNumber = "1");
+		}
+
+		task ("View Nested Applications widget is not shown then publish") {
+			Portlet.viewNoSpecificPG(portletName = "Nested Applications");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View content page is editable after conversion") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+
+			Portlet.viewNoSpecificPG(portletName = "Nested Applications");
+		}
 	}
 
 }

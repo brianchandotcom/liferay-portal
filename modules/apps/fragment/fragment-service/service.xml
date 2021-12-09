@@ -288,7 +288,7 @@
 		</finder>
 		<finder name="G_S_P" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="segmentsExperienceId" />
+			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
 			<finder-column name="plid" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">

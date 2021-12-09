@@ -135,7 +135,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		};
 
 		Callable<Layout> callable = new CopyLayoutCallable(
-			consumer, sourceLayout, targetLayout);
+			consumer, new long[] {segmentsExperienceId}, sourceLayout,
+			targetLayout);
 
 		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
 
@@ -177,7 +178,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		};
 
 		Callable<Layout> callable = new CopyLayoutCallable(
-			consumer, sourceLayout, targetLayout);
+			consumer, segmentsExperiencesIds, sourceLayout, targetLayout);
 
 		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
 
@@ -308,8 +309,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				sourceLayout.getGroupId(), sourceLayout.getPlid());
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					sourceLayout.getGroupId(), segmentsExperiencesIds,
+					sourceLayout.getPlid());
 
 		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 
@@ -320,7 +323,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
-				targetLayout.getGroupId(), targetLayout.getPlid());
+				targetLayout.getGroupId(), segmentsExperiencesIds,
+				targetLayout.getPlid());
 
 		LayoutPageTemplateStructure targetLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -453,12 +457,14 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyPortletPermissions(
-			Layout sourceLayout, Layout targetLayout)
+			long[] segmentsExperiencesIds, Layout sourceLayout,
+			Layout targetLayout)
 		throws Exception {
 
-		_deletePortletPermissions(targetLayout);
+		_deletePortletPermissions(targetLayout, segmentsExperiencesIds);
 
-		List<String> portletIds = _getLayoutPortletIds(sourceLayout);
+		List<String> portletIds = _getLayoutPortletIds(
+			sourceLayout, segmentsExperiencesIds);
 
 		for (String portletId : portletIds) {
 			String resourceName = PortletIdCodec.decodePortletName(portletId);
@@ -525,7 +531,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyPortletPreferences(
-		Layout sourceLayout, Layout targetLayout) {
+		long[] segmentsExperiencesIds, Layout sourceLayout,
+		Layout targetLayout) {
 
 		boolean stagingAdvicesThreadLocalEnabled =
 			StagingAdvicesThreadLocal.isEnabled();
@@ -533,9 +540,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			List<String> portletIds = _getLayoutPortletIds(sourceLayout);
+			List<String> portletIds = _getLayoutPortletIds(
+				sourceLayout, segmentsExperiencesIds);
 
-			List<String> targetPortletIds = _getLayoutPortletIds(targetLayout);
+			List<String> targetPortletIds = _getLayoutPortletIds(
+				targetLayout, segmentsExperiencesIds);
 
 			for (String portletId : portletIds) {
 				Portlet portlet = _portletLocalService.getPortletById(
@@ -627,10 +636,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 	}
 
-	private void _deletePortletPermissions(Layout layout) throws Exception {
+	private void _deletePortletPermissions(
+			Layout layout, long[] segmentsExperiencesIds)
+		throws Exception {
+
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				layout.getGroupId(), layout.getPlid());
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), segmentsExperiencesIds,
+					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			List<String> portletIds =
@@ -651,12 +665,16 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 	}
 
-	private List<String> _getLayoutPortletIds(Layout layout) {
+	private List<String> _getLayoutPortletIds(
+		Layout layout, long[] segmentsExperiencesIds) {
+
 		List<String> layoutPortletIds = new ArrayList<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				layout.getGroupId(), layout.getPlid());
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), segmentsExperiencesIds,
+					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			layoutPortletIds.addAll(
@@ -943,14 +961,16 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 				_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
 
-				_copyPortletPermissions(_sourceLayout, _targetLayout);
+				_copyPortletPermissions(
+					_segmentsExperiencesIds, _sourceLayout, _targetLayout);
 			}
 
 			_copyAssetCategoryIdsAndAssetTagNames(_sourceLayout, _targetLayout);
 
 			_copyLayoutSEOEntry(_sourceLayout, _targetLayout);
 
-			_copyPortletPreferences(_sourceLayout, _targetLayout);
+			_copyPortletPreferences(
+				_segmentsExperiencesIds, _sourceLayout, _targetLayout);
 
 			_layoutLocalService.updateMasterLayoutPlid(
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
@@ -992,15 +1012,17 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		private CopyLayoutCallable(
-			Consumer<Layout> consumer, Layout sourceLayout,
-			Layout targetLayout) {
+			Consumer<Layout> consumer, long[] segmentsExperiencesIds,
+			Layout sourceLayout, Layout targetLayout) {
 
 			_consumer = consumer;
+			_segmentsExperiencesIds = segmentsExperiencesIds;
 			_sourceLayout = sourceLayout;
 			_targetLayout = targetLayout;
 		}
 
 		private final Consumer<Layout> _consumer;
+		private final long[] _segmentsExperiencesIds;
 		private final Layout _sourceLayout;
 		private final Layout _targetLayout;
 

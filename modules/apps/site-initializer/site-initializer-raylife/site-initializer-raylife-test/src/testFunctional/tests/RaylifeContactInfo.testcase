@@ -63,7 +63,7 @@ definition {
 
 		Type(
 			label = "basics.businessInformation.business.email",
-			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "aaa");
 
 		AssertTextEquals(
@@ -90,12 +90,12 @@ definition {
 
 		Type(
 			label = "basics.businessInformation.business.location.zip",
-			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "1");
 
 		Type(
 			label = "basics.businessInformation.business.location.zip",
-			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "\BACK_SPACE");
 
 		AssertTextEquals(
@@ -122,12 +122,12 @@ definition {
 
 		Type(
 			label = "basics.businessInformation.business.phone",
-			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "1");
 
 		Type(
 			label = "basics.businessInformation.business.phone",
-			locator1 = "RaylifeContactInfo#FORMS_FIELDS",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "\BACK_SPACE");
 
 		AssertTextEquals(
@@ -160,7 +160,7 @@ definition {
 
 		AssertElementPresent(
 			label = "basics.businessInformation.firstName",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "FirstName");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
@@ -181,7 +181,7 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_FIRST_NAME_MAX_NUMBER");
+		AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_NAME_MAX_NUMBER");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
@@ -201,7 +201,7 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_LAST_NAME_MAX_NUMBER");
+		AssertElementPresent(locator1 = "RaylifeContactInfo#BASICS_NAME_MAX_NUMBER");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 

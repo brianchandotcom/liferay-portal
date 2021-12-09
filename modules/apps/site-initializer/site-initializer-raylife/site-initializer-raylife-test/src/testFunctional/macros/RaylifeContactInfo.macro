@@ -39,32 +39,32 @@ definition {
 	macro viewBasicsInfo {
 		AssertElementPresent(
 			label = "basics.businessInformation.firstName",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
 			label = "basics.businessInformation.lastName",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
 			label = "basics.businessInformation.business.email",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
 			label = "basics.businessInformation.business.location.address",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "Address");
 
 		AssertElementPresent(
 			label = "basics.businessInformation.business.location.city",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "City");
 
 		AssertElementPresent(
 			label = "basics.businessInformation.business.location.zip",
-			locator1 = "RaylifeContactInfo#FORMS_VALUE",
+			locator1 = "Raylife#FORMS_VALUE",
 			value = "12345");
 	}
 

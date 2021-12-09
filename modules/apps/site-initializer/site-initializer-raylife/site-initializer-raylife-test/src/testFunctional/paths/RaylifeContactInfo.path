@@ -11,33 +11,13 @@
 
 <tbody>
 <tr>
-	<td>FORMS_FIELDS</td>
-	<td>css=liferay-remote-app-raylife>>>[name='${label}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORMS_VALUE</td>
-	<td>css=liferay-remote-app-raylife>>>[name='${label}'][value='${value}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_FIRST_NAME_MAX_NUMBER</td>
-	<td>css=liferay-remote-app-raylife>>>[for='basics.businessInformation.firstName']+[maxlength='256']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_LAST_NAME_MAX_NUMBER</td>
-	<td>css=liferay-remote-app-raylife>>>[for='basics.businessInformation.lastName']+[maxlength='256']</td>
+	<td>BASICS_NAME_MAX_NUMBER</td>
+	<td>//div[contains(., '${label}')]/input[contains(@maxlength, '256')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HI_MESSAGE_FROM_BASICS</td>
 	<td>//h1[contains(text(),'Hi First Name! 👋')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASICS_MAX_NUMBER_SEARCH_FIELD</td>
-	<td>css=liferay-remote-app-raylife>>>[maxlength='255']</td>
 	<td></td>
 </tr>
 </tbody>

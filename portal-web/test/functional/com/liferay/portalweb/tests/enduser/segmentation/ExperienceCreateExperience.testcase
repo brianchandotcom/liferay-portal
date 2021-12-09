@@ -2234,7 +2234,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
-			value1 = "3 Members");
+			value1 = "2 Members");
 
 		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
@@ -2308,7 +2308,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
-			value1 = "3 Members");
+			value1 = "2 Members");
 
 		Segmentation.viewMembers(memberName = "userfn1 userln1");
 
@@ -2764,7 +2764,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
-			value1 = "3 Members");
+			value1 = "2 Members");
 
 		Segmentation.viewMembers(memberName = "userfn1 userln1");
 

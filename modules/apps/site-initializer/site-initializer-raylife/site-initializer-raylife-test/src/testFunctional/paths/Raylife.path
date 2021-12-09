@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>SEARCH_FIELD</td>
-	<td>css=liferay-remote-app-raylife>>>[name='basics.businessSearch']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_TITLE</td>
 	<td>//div[contains(@title, '${siteTitle}')]</td>
 	<td></td>
@@ -27,7 +22,12 @@
 </tr>
 <tr>
 	<td>FORMS_FIELDS</td>
-	<td>css=liferay-remote-app-raylife>>>[name='${label}']</td>
+	<td>//input[contains(@name,'${label}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMS_VALUE</td>
+	<td>//input[contains(@name,'${label}') and contains(@value,'${value}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,12 +77,12 @@
 </tr>
 <tr>
 	<td>BUTTON_CONTINUE</td>
-	<td>css=liferay-remote-app-raylife>>>.continue</td>
+	<td>//button[contains(@class,'continue')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BUTTON_CONTINUE_DISABLED</td>
-	<td>css=liferay-remote-app-raylife>>>.continue[disabled]</td>
+	<td>//button[contains(., 'Continue')][@disabled]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,27 +92,32 @@
 </tr>
 <tr>
 	<td>BUTTON_PREVIOUS</td>
-	<td>css=liferay-remote-app-raylife>>>.btn.btn-flat</td>
+	<td>//button[contains(@class,'previous')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIRST_MORE_INFO</td>
-	<td>css=liferay-remote-app-raylife>>>.input-area .btn.badge.more-info</td>
+	<td>BUTTON_MORE_INFO_PRODUCTS</td>
+	<td>//label[contains(., '${productName}')]/parent::div//span[contains(@class,'btn-more-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_MORE_INFO_FORMS</td>
+	<td>//span[contains(., '${title}')]/parent::label//span[contains(@class,'btn-more-info')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BUTTON_YES_OPTION</td>
-	<td>css=liferay-remote-app-raylife>>>[for='${field}']+.switch-wrapper button</td>
+	<td>//label[contains(., '${field}')]/parent::div//button[contains(text(),'Yes')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BUTTON_NO_OPTION</td>
-	<td>css=liferay-remote-app-raylife>>>[for='${field}']+.switch-wrapper button+button</td>
+	<td>//label[contains(., '${field}')]/parent::div//button[contains(text(),'No')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-	<td>css=liferay-remote-app-raylife>>>.badge-error</td>
+	<td>//div[contains(@class, 'warning')]</td>
 	<td></td>
 </tr>
 <tr>

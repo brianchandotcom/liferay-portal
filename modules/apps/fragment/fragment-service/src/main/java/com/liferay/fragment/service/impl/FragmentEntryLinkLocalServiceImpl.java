@@ -255,6 +255,31 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentEntryLink>
+		deleteLayoutPageTemplateEntryFragmentEntryLinks(
+			long groupId, long[] segmentsExperienceIds, long plid) {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			getFragmentEntryLinksBySegmentsExperienceId(
+				groupId, segmentsExperienceIds, plid);
+
+		if (ListUtil.isEmpty(fragmentEntryLinks)) {
+			return Collections.emptyList();
+		}
+
+		List<FragmentEntryLink> deletedFragmentEntryLinks = new ArrayList<>();
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLink);
+
+			deletedFragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		return deletedFragmentEntryLinks;
+	}
+
+	@Override
 	public List<FragmentEntryLink> getAllFragmentEntryLinksByFragmentEntryId(
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
@@ -348,6 +373,14 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fragmentEntryLinkPersistence.findByG_S_P_R(
 			groupId, segmentsExperienceId, plid, rendererKey);
+	}
+
+	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long[] segmentsExperienceIds, long plid) {
+
+		return fragmentEntryLinkPersistence.findByG_S_P(
+			groupId, segmentsExperienceIds, plid);
 	}
 
 	@Override

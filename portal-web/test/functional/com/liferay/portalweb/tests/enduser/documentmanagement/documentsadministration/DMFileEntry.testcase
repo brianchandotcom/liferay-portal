@@ -930,6 +930,50 @@ definition {
 			value1 = "DM Document Title 2");
 	}
 
+	@description = "This test covers LPS-136334. This test ensures that users can filter documents by Recent and order by Downloads."
+	@priority = "4"
+	test CanFilterByRecentAndOrderByDownloads {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_3.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_3.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		DMDocument.downloadPG(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		ManagementBar.setFilterAndOrder(
+			filterBy = "Recent",
+			orderBy = "Downloads");
+
+		AssertTextNotPresent(value1 = "java.sql.SQLSyntaxErrorException");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "Document_3.doc");
+
+		AssertTextEquals.assertPartialText(
+			index = "2",
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "Document_2.doc");
+	}
+
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
 	@priority = "3"
 	test CanImportWithTags {

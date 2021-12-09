@@ -130,7 +130,9 @@ function SingleFileUploader({
 							padded
 						>
 							<ClayLayout.ContentCol>
-								<strong>Uploading</strong>
+								<strong>
+									{Liferay.Language.get('uploading')}
+								</strong>
 							</ClayLayout.ContentCol>
 
 							<ClayLayout.ContentCol expand>
@@ -148,8 +150,9 @@ function SingleFileUploader({
 						</ClayLayout.ContentRow>
 					) : (
 						<span>
-							<strong>NEW</strong> Drag & Drop or Click here to
-							Upload
+							{Liferay.Language.get(
+								'drag-and-drop-or-click-to-upload'
+							)}
 						</span>
 					)}
 				</div>

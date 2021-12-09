@@ -974,6 +974,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
 	}
 
+	@priority = "4"
 	test SearchSynonymSetsBeyondTen {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",

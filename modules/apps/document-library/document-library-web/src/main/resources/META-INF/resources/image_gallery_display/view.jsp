@@ -56,7 +56,7 @@ if (defaultFolderView) {
 	}
 }
 
-long repositoryId = dlPortletInstanceSettings.getRepositoryId();
+long repositoryId = dlPortletInstanceSettings.getSelectedRepositoryId();
 
 if (repositoryId == 0) {
 	if (folder != null) {

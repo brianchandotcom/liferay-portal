@@ -164,6 +164,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 
+								var repositoryIdElement = document.querySelector(
+									'#<portlet:namespace />selectedRepositoryId'
+								);
+
+								if (repositoryIdElement != null) {
+									repositoryIdElement.value = selectedItem.repositoryid;
+								}
+
 								var rootFolderInTrashWarning = document.querySelector(
 									'#<portlet:namespace />rootFolderInTrash'
 								);

@@ -3,7 +3,7 @@ import {AppContext} from '../context';
 import {steps} from '../utils/constants';
 import Invites from './Invites';
 import SetupDXPCloud from './SetupDXPCloud';
-import SuccessDXPCloud from './SuccessDXPCloudCloud';
+import SuccessDXPCloud from './SuccessDXPCloud';
 import Welcome from './Welcome';
 
 const Pages = () => {

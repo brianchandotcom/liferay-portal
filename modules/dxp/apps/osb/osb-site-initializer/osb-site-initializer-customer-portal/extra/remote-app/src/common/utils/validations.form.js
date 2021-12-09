@@ -45,4 +45,4 @@ const validate = (validations, value) => {
 	return error;
 };
 
-export {required, maxLength, isValidEmail, validate, isLowercaseAndNumbers};
+export {isLowercaseAndNumbers, isValidEmail, maxLength, required, validate};

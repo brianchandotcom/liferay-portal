@@ -419,12 +419,6 @@ definition {
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro selectApplicationDecorator {
-		Select(
-			locator1 = "Select#APPLICATION_DECORATORS",
-			value1 = "${decorator}");
-	}
-
 	macro selectScope {
 		Navigator.gotoNavTab(navTab = "Scope");
 
@@ -716,11 +710,19 @@ definition {
 	}
 
 	macro viewSpecificPG {
-		var key_portletTitleName = "${portletName}";
-
-		AssertTextEquals(
-			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "${portletName}");
+		if (isSet(pageColumnNumber)) {
+			AssertTextEquals(
+				key_pageColumnNumber = "${pageColumnNumber}",
+				key_portletName = "${portletName}",
+				locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN",
+				value1 = "${portletName}");
+		}
+		else {
+			AssertTextEquals(
+				key_portletTitleName = "${portletName}",
+				locator1 = "Portlet#SPECIFIC_TITLE",
+				value1 = "${portletName}");
+		}
 	}
 
 	@summary = "Assert that the ${portletName} portlet title has the text '${portletName}'"

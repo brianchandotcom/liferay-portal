@@ -29,9 +29,13 @@ public interface CTMappingTableInfo {
 
 	public String getLeftColumnName();
 
+	public Class<?> getLeftModelClass();
+
 	public List<Map.Entry<Long, Long>> getRemovedMappings();
 
 	public String getRightColumnName();
+
+	public Class<?> getRightModelClass();
 
 	public String getTableName();
 

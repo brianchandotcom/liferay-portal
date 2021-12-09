@@ -52,19 +52,19 @@ public class SkuUtil {
 			CPInstance discontinuedCPInstance = null;
 
 			if (Validator.isNotNull(
-					sku.getDiscontinuedSkuExternalReferenceCode())) {
+					sku.getReplacementSkuExternalReferenceCode())) {
 
 				discontinuedCPInstance =
 					cpInstanceService.fetchByExternalReferenceCode(
-						sku.getDiscontinuedSkuExternalReferenceCode(),
+						sku.getReplacementSkuExternalReferenceCode(),
 						cpDefinition.getCompanyId());
 			}
 
 			if ((discontinuedCPInstance == null) &&
-				(sku.getDiscontinuedSkuId() > 0)) {
+				(sku.getReplacementSkuId() > 0)) {
 
 				discontinuedCPInstance = cpInstanceService.fetchCPInstance(
-					sku.getDiscontinuedSkuId());
+					sku.getReplacementSkuId());
 			}
 
 			if (discontinuedCPInstance != null) {

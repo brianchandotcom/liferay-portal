@@ -89,6 +89,11 @@
 	<td>//div[contains(@class,'form-group')]//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIRST_LOGIN</td>
+	<td>//a[contains(@class,'signed-in') and contains (text(),'${userName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

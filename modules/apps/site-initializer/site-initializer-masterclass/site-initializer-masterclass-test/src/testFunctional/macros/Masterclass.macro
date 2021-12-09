@@ -25,12 +25,92 @@ definition {
 			siteTitle = "${siteName}");
 	}
 
+	macro createAccount {
+		Click(
+			labelOption = "Create Account",
+			locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+
+		Type(
+			labelTitle = "Screen Name",
+			locator1 = "Masterclass#SIGN_IN_FORM",
+			value1 = "${screenName}");
+
+		Type(
+			labelTitle = "Email Address",
+			locator1 = "Masterclass#SIGN_IN_FORM",
+			value1 = "${emailAddress}");
+
+		Type(
+			labelTitle = "First Name",
+			locator1 = "Masterclass#SIGN_IN_FORM",
+			value1 = "${firstName}");
+
+		Type(
+			labelTitle = "Last Name",
+			locator1 = "Masterclass#SIGN_IN_FORM",
+			value1 = "${lastName}");
+
+		Type(
+			labelTitle = "Password",
+			locator1 = "Masterclass#SIGN_IN_FORM",
+			value1 = "${password}");
+
+		Type(
+			labelTitle = "Enter Again",
+			locator1 = "Masterclass#SIGN_IN_FORM",
+			value1 = "${password}");
+
+		Click(locator1 = "Button#SUBMIT");
+	}
+
+	macro gotoNavItem {
+		var key_navItem = "${navItem}";
+
+		Click(locator1 = "Masterclass#NAV_TAB");
+
+		Click(locator1 = "Masterclass#NAV_ITEM");
+	}
+
 	macro previewPageandAssertFragment {
 		PageEditor.openPreviewMode();
 
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Masterclass#FRAGMENT_NAME");
+	}
+
+	macro signIn {
+		if (isSet(emailAddress)) {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "${emailAddress}");
+		}
+		else {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "test@liferay.com");
+		}
+
+		if (isSet(password)) {
+			Type(
+				labelTitle = "Password",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "${password}");
+		}
+		else {
+			Type(
+				labelTitle = "Password",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "test");
+		}
+
+		Check(
+			inputFieldId = "rememberMe",
+			locator1 = "TextInput#INPUT_ID");
+
+		Click(locator1 = "Button#SIGN_IN");
 	}
 
 	macro simulateAndViewPageElements {
@@ -62,88 +142,6 @@ definition {
 				key_href = "${key_href}",
 				locator1 = "Masterclass#FRAGMENT_LINK");
 		}
-	}
-
-	macro signIn {
-		Click(locator1 = "Masterclass#NAV_TAB");
-
-		if (isSet(emailAddress)) {
-			Type(
-				labelTitle = "Email Address",
-				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "${emailAddress}");
-		} else {
-			Type(
-				labelTitle = "Email Address",
-				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "test@liferay.com");
-		}
-
-		if (isSet(password)) {
-			Type(
-				labelTitle = "Password",
-				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "${password}");
-		} else {
-			Type(
-				labelTitle = "Password",
-				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "test");
-		}
-
-		Check(
-			locator1 = "TextInput#INPUT_ID",
-			inputFieldId = "rememberMe");
-
-		Click(locator1 = "Button#SIGN_IN");
-	}
-
-	macro gotoNavItem {
-		var key_navItem = "${navItem}";
-
-		Click(locator1 = "Masterclass#NAV_TAB");
-
-		Click(locator1 = "Masterclass#NAV_ITEM");
-	}
-
-	macro createAccount {		
-		Click(
-			labelOption = "Create Account",
-			locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
-
-		Type(
-			labelTitle = "Screen Name",
-			locator1 = "Masterclass#SIGN_IN_FORM",
-			value1 = "${screenName}");
-		
-		Type(
-			labelTitle = "Email Address",
-			locator1 = "Masterclass#SIGN_IN_FORM",
-			value1 = "${emailAddress}");
-
-		Type(
-			labelTitle = "First Name",
-			locator1 = "Masterclass#SIGN_IN_FORM",
-			value1 = "${firstName}");
-
-		Type(
-			labelTitle = "Last Name",
-			locator1 = "Masterclass#SIGN_IN_FORM",
-			value1 = "${lastName}");
-
-		Type(
-			labelTitle = "Password",
-			locator1 = "Masterclass#SIGN_IN_FORM",
-			value1 = "${password}");
-
-		Type(
-			labelTitle = "Enter Again",
-			locator1 = "Masterclass#SIGN_IN_FORM",
-			value1 = "${password}");
-
-		Click(locator1 = "Button#SUBMIT");
-
-		Alert.viewSuccessMessageText(successMessage = "Thank you for creating an account. Your email verification code was sent to ${emailAddress}. Use your password to log in.");
 	}
 
 }

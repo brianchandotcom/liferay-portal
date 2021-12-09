@@ -887,13 +887,50 @@ definition {
 
 	}
 
-	@description = "LRQA-71887 - Verify that the user can Approve an Event"
-	@ignore = "Test Stub"
+	@description = "Verify that the user can Approve an Event"
 	@priority = "4"
 	test CanApproveEvent {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-71915 CanApproveEvent pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.setDatesToday();
+
+		CalendarEvent.setTimes(
+			endDateTime = "08:00 PM",
+			startDateTime = "07:00 PM");
+
+		Button.clickSubmitForPublication();
+
+		IFrame.closeFrame();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.viewStatusViaDetails(status = "Approved");
 	}
 
 	@description = "This is a use case for LPS-45616."

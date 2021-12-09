@@ -26,6 +26,13 @@ definition {
 		}
 	}
 
+	macro viewConversionMessage {
+		AssertVisible(
+			key_alertMessage = "${alertMessage}",
+			key_type = "${alertType}",
+			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
+	}
+
 	macro viewDuplicateErrorMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",

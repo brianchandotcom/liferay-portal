@@ -266,7 +266,7 @@ definition {
 	}
 
 	macro viewOutputField {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = "${valueName}");
 	}

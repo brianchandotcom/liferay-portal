@@ -526,10 +526,25 @@ public class AssetListAssetEntryProviderImpl
 		int end) {
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			return _assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRels(
-					assetListEntry.getAssetListEntryId(),
-					_getCombinedSegmentsEntryIds(segmentsEntryIds), start, end);
+			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+				new ArrayList<>();
+
+			segmentsEntryIds = _sortSegmentsByPriority(
+				assetListEntry, segmentsEntryIds);
+
+			for (long segmentId : segmentsEntryIds) {
+				assetListEntryAssetEntryRels.addAll(
+					ListUtil.sort(
+						_assetListEntryAssetEntryRelLocalService.
+							getAssetListEntryAssetEntryRels(
+								assetListEntry.getAssetListEntryId(),
+								new long[] {segmentId}, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS),
+						Comparator.comparing(
+							AssetListEntryAssetEntryRelModel::getPosition)));
+			}
+
+			return assetListEntryAssetEntryRels;
 		}
 
 		return _assetListEntryAssetEntryRelLocalService.
@@ -898,19 +913,12 @@ public class AssetListAssetEntryProviderImpl
 		long[][] assetCategoryIds, String keywords, int start, int end) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			new ArrayList<>();
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		segmentsEntryIds = _sortSegmentsByPriority(
-			assetListEntry, segmentsEntryIds);
-
-		for (long segmentId : segmentsEntryIds) {
-			assetListEntryAssetEntryRels.addAll(
-				ListUtil.sort(
-					_getAssetListEntryAssetEntryRels(
-						assetListEntry, new long[] {segmentId},
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					Comparator.comparing(
-						AssetListEntryAssetEntryRelModel::getPosition)));
+		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
+			return Collections.emptyList();
 		}
 
 		List<Long> assetEntryIds = ListUtil.toList(
@@ -1187,8 +1195,8 @@ public class AssetListAssetEntryProviderImpl
 							segmentsEntryId));
 
 		return assetListEntrySegmentsEntryRelStream.filter(
-			Objects::nonNull)
-			.sorted(
+			Objects::nonNull
+		).sorted(
 			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
 		).mapToLong(
 			AssetListEntrySegmentsEntryRelModel::getSegmentsEntryId

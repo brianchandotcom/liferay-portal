@@ -4,5 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.language.override.exception,\
 	com.liferay.portal.language.override.model,\
+	com.liferay.portal.language.override.provider,\
 	com.liferay.portal.language.override.service,\
 	com.liferay.portal.language.override.service.persistence

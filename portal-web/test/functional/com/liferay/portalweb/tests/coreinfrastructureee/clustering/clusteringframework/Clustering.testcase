@@ -165,7 +165,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Result of invoke-method-portal is :9080");
+			value1 = "Result of invoke-method-portal: 9080");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
@@ -173,7 +173,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Result of invoke-method-portal is :8080");
+			value1 = "Result of invoke-method-portal: 8080");
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.runGroovyScript(
@@ -182,7 +182,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "Result of invoke-method-portal-on-master is :8080");
+				value1 = "Result of invoke-method-portal-on-master: 8080");
 		}
 
 		for (var serverPort : list "8080,9080") {
@@ -197,11 +197,11 @@ definition {
 			Pause(locator1 = "10000");
 
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Result of ${method} is :9080",
+				expectedText = "Result of ${method}: 9080",
 				nodePort = "8080");
 
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Result of ${method} is :8080",
+				expectedText = "Result of ${method}: 8080",
 				nodePort = "9080");
 		}
 
@@ -213,11 +213,11 @@ definition {
 			Pause(locator1 = "10000");
 
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Result of ${method} is :8080",
+				expectedText = "Result of ${method}: 8080",
 				nodePort = "8080");
 
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Result of ${method} is :8080",
+				expectedText = "Result of ${method}: 8080",
 				nodePort = "9080");
 		}
 	}

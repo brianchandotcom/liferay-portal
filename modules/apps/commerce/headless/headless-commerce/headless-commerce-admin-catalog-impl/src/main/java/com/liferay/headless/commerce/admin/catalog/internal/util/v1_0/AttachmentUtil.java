@@ -60,8 +60,7 @@ public class AttachmentUtil {
 
 		if (Validator.isNotNull(attachment.getAttachment())) {
 			return addFileEntry(
-				attachment.getAttachment(), groupId, userId,
-				uniqueFileNameProvider);
+				attachment, groupId, userId, uniqueFileNameProvider);
 		}
 
 		if (Validator.isNotNull(attachment.getSrc())) {
@@ -79,11 +78,31 @@ public class AttachmentUtil {
 			File file = FileUtil.createTempFile(urlConnection.getInputStream());
 
 			return _addFileEntry(
-				groupId, userId, file, MimeTypesUtil.getContentType(file),
+				groupId, userId, file, attachment.getContentType(),
 				uniqueFileNameProvider);
 		}
 
 		return null;
+	}
+
+	public static FileEntry addFileEntry(
+			AttachmentBase64 attachmentBase64, long groupId, long userId,
+			UniqueFileNameProvider uniqueFileNameProvider)
+		throws Exception {
+
+		String base64EncodedContent = attachmentBase64.getAttachment();
+
+		if (Validator.isNull(base64EncodedContent)) {
+			return null;
+		}
+
+		byte[] attachmentBytes = Base64.decode(base64EncodedContent);
+
+		File file = FileUtil.createTempFile(attachmentBytes);
+
+		return _addFileEntry(
+			groupId, userId, file, attachmentBase64.getContentType(),
+			uniqueFileNameProvider);
 	}
 
 	public static FileEntry addFileEntry(
@@ -99,25 +118,7 @@ public class AttachmentUtil {
 			HttpUtil.URLtoInputStream(attachmentUrl.getSrc()));
 
 		return _addFileEntry(
-			groupId, userId, file, MimeTypesUtil.getContentType(file),
-			uniqueFileNameProvider);
-	}
-
-	public static FileEntry addFileEntry(
-			String base64EncodedContent, long groupId, long userId,
-			UniqueFileNameProvider uniqueFileNameProvider)
-		throws Exception {
-
-		if (Validator.isNull(base64EncodedContent)) {
-			return null;
-		}
-
-		byte[] attachmentBytes = Base64.decode(base64EncodedContent);
-
-		File file = FileUtil.createTempFile(attachmentBytes);
-
-		return _addFileEntry(
-			groupId, userId, file, MimeTypesUtil.getContentType(file),
+			groupId, userId, file, attachmentUrl.getContentType(),
 			uniqueFileNameProvider);
 	}
 
@@ -153,7 +154,7 @@ public class AttachmentUtil {
 		long fileEntryId = 0;
 
 		FileEntry fileEntry = addFileEntry(
-			attachmentBase64.getAttachment(), serviceContext.getScopeGroupId(),
+			attachmentBase64, serviceContext.getScopeGroupId(),
 			serviceContext.getUserId(), uniqueFileNameProvider);
 
 		if (fileEntry != null) {
@@ -312,6 +313,10 @@ public class AttachmentUtil {
 		String uniqueFileName = uniqueFileNameProvider.provide(
 			file.getName(),
 			curFileName -> _exists(groupId, userId, curFileName));
+
+		if (Validator.isNull(contentType)) {
+			contentType = MimeTypesUtil.getContentType(file);
+		}
 
 		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 			groupId, userId, _TEMP_FILE_NAME, uniqueFileName, file,

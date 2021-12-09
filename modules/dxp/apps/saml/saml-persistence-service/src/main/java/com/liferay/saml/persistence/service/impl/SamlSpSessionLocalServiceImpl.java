@@ -28,6 +28,7 @@ import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseIm
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -70,6 +71,21 @@ public class SamlSpSessionLocalServiceImpl
 		}
 
 		if (samlPeerBinding == null) {
+			samlPeerBinding =
+				samlPeerBindingPersistence.fetchByC_U_D_SNIF_SNINQ_SPEI_First(
+					user.getCompanyId(), user.getUserId(), false, nameIdFormat,
+					nameIdNameQualifier, samlIdpEntityId, null);
+
+			if ((samlPeerBinding != null) &&
+				!Objects.equals(
+					nameIdValue, samlPeerBinding.getSamlNameIdValue())) {
+
+				samlPeerBinding.setDeleted(true);
+
+				samlPeerBinding = samlPeerBindingPersistence.update(
+					samlPeerBinding);
+			}
+
 			samlPeerBinding = _samlPeerBindingLocalService.addSamlPeerBinding(
 				user.getUserId(), nameIdFormat, nameIdNameQualifier,
 				nameIdSPNameQualifier, null, nameIdValue, samlIdpEntityId);

@@ -16,9 +16,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOM_ELEMENT_URL</td>
-	<td>//input[contains(@id,'customElementURLs')]</td>
-	<td></td>
+	<td>URL</td>
+<td>//input[(contains(@id,'${key_id}'))]</td>
+<td></td>
 </tr>
 <tr>
 	<td>REMOTE_APPS_INSTANCEABLE</td>

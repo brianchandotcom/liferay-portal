@@ -17,9 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
-
 long accountGroupId = ParamUtil.getLong(request, "accountGroupId");
+
+boolean filterManageableAccountEntries = true;
+
+if ((accountGroupId > 0) && AccountGroupPermission.contains(permissionChecker, accountGroupId, AccountActionKeys.ASSIGN_ACCOUNTS)) {
+	filterManageableAccountEntries = false;
+}
+
+SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse, filterManageableAccountEntries);
 
 if (accountGroupId > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));

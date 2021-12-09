@@ -1015,7 +1015,6 @@ definition {
 	}
 
 	@description = "LRQA-71887 - Verify that the user can edit the event after it has been published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditEvent {
 		CalendarNavigator.gotoAddEvent();
@@ -1037,7 +1036,7 @@ definition {
 		CalendarEvent.addDescription(
 			eventTitle = "Calendar Event Title",
 			fieldName = "Description",
-			fieldValue = "Calendar Event Description");	
+			fieldValue = "Calendar Event Description");
 
 		Button.clickPublish();
 
@@ -1049,12 +1048,49 @@ definition {
 	}
 
 	@description = "LRQA-71887 - Verify that the user can Reject an event"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanRejectEvent {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-71916 CanRejectEvent pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.setDatesToday();
+
+		CalendarEvent.setTimes(
+			endDateTime = "08:00 PM",
+			startDateTime = "07:00 PM");
+
+		Button.clickSubmitForPublication();
+
+		IFrame.closeFrame();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.viewStatusViaDetails(status = "Pending");
 	}
 
 	@description = "LRQA-71887 - Verify that the user can save a new event as Draft"

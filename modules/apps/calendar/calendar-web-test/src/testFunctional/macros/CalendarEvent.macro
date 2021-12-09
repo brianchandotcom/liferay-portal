@@ -286,6 +286,15 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addDescription {
+		CalendarNavigator.gotoEditEvent(eventTitle = "${eventTitle}");
+
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME",
+			value1 = "${fieldValue}");
+	}
+
 	macro addPGViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Calendar Event");
 
@@ -1452,6 +1461,13 @@ definition {
 		}
 
 		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewDescription {
+		AssertTextEquals(
+			key_eventDescription = "${eventDescription}",
+			locator1 = "CalendarViewEventDetails#EVENT_DESCRIPTION",
+			value1 = "${key_eventDescription}");
 	}
 
 	macro viewDetails {

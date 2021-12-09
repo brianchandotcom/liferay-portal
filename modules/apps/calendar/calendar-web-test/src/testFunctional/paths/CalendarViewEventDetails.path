@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EVENT_DESCRIPTION</td>
+	<td>//p[contains(text(),'${key_eventDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

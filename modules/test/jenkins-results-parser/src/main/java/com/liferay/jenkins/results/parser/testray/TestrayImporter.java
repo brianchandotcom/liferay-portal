@@ -45,7 +45,6 @@ import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.CucumberAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
@@ -1022,8 +1021,6 @@ public class TestrayImporter {
 							new ArrayList<>();
 
 						if (axisTestClassGroup instanceof
-								CucumberAxisTestClassGroup ||
-							axisTestClassGroup instanceof
 								FunctionalAxisTestClassGroup ||
 							axisTestClassGroup instanceof
 								JUnitAxisTestClassGroup) {

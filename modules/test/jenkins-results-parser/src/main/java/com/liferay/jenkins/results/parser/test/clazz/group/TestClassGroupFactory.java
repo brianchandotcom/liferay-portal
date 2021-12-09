@@ -41,11 +41,6 @@ public class TestClassGroupFactory {
 	public static AxisTestClassGroup newAxisTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup, File testBaseDir) {
 
-		if (batchTestClassGroup instanceof CucumberBatchTestClassGroup) {
-			return new CucumberAxisTestClassGroup(
-				(CucumberBatchTestClassGroup)batchTestClassGroup);
-		}
-
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
 			return new FunctionalAxisTestClassGroup(
 				(FunctionalBatchTestClassGroup)batchTestClassGroup,
@@ -109,13 +104,9 @@ public class TestClassGroupFactory {
 
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-			if (batchName.contains("cucumber-")) {
-				batchTestClassGroup = new CucumberBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("functional-") ||
-					 batchName.startsWith("modules-functional-") ||
-					 batchName.startsWith("subrepository-functional-")) {
+			if (batchName.startsWith("functional-") ||
+				batchName.startsWith("modules-functional-") ||
+				batchName.startsWith("subrepository-functional-")) {
 
 				batchTestClassGroup = new FunctionalBatchTestClassGroup(
 					batchName, portalTestClassJob);

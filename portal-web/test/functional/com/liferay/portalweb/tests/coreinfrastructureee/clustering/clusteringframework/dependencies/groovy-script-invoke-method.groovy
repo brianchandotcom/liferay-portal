@@ -46,7 +46,7 @@ try {
 			targetClusterNode.getClusterNodeId());
 
 	out.println(
-		"Result of invoke-method-portal is :" + clusterNodeResponse.getResult());
+		"Result of invoke-method-portal: " + clusterNodeResponse.getResult());
 }
 catch (Exception e) {
 	out.println(e);

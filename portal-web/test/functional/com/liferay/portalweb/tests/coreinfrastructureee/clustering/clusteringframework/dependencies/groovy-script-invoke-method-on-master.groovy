@@ -12,7 +12,7 @@ MethodHandler methodHandler = new MethodHandler(methodKey,false);
 Future<Integer> future = ClusterMasterExecutorUtil.executeOnMaster(methodHandler);
 
 try {
-	out.println("Result of invoke-method-portal-on-master is :" + future.get());
+	out.println("Result of invoke-method-portal-on-master: " + future.get());
 }
 catch (Exception e) {
 	out.println(e);

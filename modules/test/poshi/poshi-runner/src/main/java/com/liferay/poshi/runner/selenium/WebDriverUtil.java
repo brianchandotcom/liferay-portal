@@ -68,9 +68,7 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getChromeDriver() {
-		System.setProperty(
-			"webdriver.chrome.driver",
-			SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_CHROME_DRIVER_EXECUTABLE);
+		_validateWebDriverBinary("webdriver.chrome.driver", "chromedriver");
 
 		ChromeOptions chromeOptions = new ChromeOptions();
 
@@ -151,9 +149,8 @@ public class WebDriverUtil extends PropsValues {
 
 	private WebDriver _getFirefoxDriver() {
 		System.setProperty("webdriver.firefox.marionette", "false");
-		System.setProperty(
-			"webdriver.gecko.driver",
-			SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_GECKO_DRIVER_EXECUTABLE);
+
+		_validateWebDriverBinary("webdriver.gecko.driver", "geckodriver");
 
 		FirefoxOptions firefoxOptions = new FirefoxOptions();
 
@@ -327,6 +324,35 @@ public class WebDriverUtil extends PropsValues {
 		}
 
 		_webDriver = null;
+	}
+
+	private void _validateWebDriverBinary(
+		String webDriverBinaryPropertyName, String webDriverBinaryName) {
+
+		if ((SELENIUM_EXECUTABLE_DIR_NAME != null) &&
+			(SELENIUM_CHROME_DRIVER_EXECUTABLE != null)) {
+
+			System.setProperty(
+				webDriverBinaryPropertyName,
+				SELENIUM_EXECUTABLE_DIR_NAME +
+					SELENIUM_CHROME_DRIVER_EXECUTABLE);
+		}
+
+		String webDriverChromeDriverPath = System.getProperty(
+			webDriverBinaryPropertyName);
+
+		if (webDriverChromeDriverPath == null) {
+			throw new RuntimeException(
+				StringUtil.combine(
+					"Please set the system property '",
+					webDriverBinaryPropertyName, "' to a valid ",
+					webDriverBinaryName, " binary"));
+		}
+
+		System.out.println(
+			StringUtil.combine(
+				"Using '", webDriverChromeDriverPath, "' as '",
+				webDriverBinaryPropertyName, "' path"));
 	}
 
 	private static final URL _REMOTE_DRIVER_URL;

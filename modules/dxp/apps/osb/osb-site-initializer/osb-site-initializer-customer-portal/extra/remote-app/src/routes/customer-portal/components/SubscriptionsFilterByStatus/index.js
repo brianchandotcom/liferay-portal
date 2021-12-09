@@ -1,46 +1,61 @@
+import ClayButton from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React, {useEffect} from 'react';
 
-const options = [
-	{
-		label: 'All',
-		value: 'All',
-	},
-	{
-		label: 'Active',
-		value: 'Active',
-	},
-	{
-		label: 'Expired',
-		value: 'Expired',
-	},
-	{
-		label: 'Future',
-		value: 'Future',
-	},
-];
-
 const SubscriptionsFilterByStatus = ({setSelectedStatus}) => {
-	const handleFilterChange = (event) => {
-		setSelectedStatus(event.target.value);
-	};
+	const items = [
+		{
+			items: [
+				{
+					checked: true,
+					label: 'All',
+					onChange: () => alert('All'),
+					type: 'checkbox',
+				},
+				{
+					checked: false,
+					label: 'Active',
+					onChange: () => alert('Active'),
+					type: 'checkbox',
+				},
+				{
+					checked: false,
+					label: 'Future',
+					onChange: () => alert('Future'),
+					type: 'checkbox',
+				},
+				{
+					checked: false,
+					label: 'Expired',
+					onChange: () => alert('Expired'),
+					type: 'checkbox',
+				},
+			],
+			type: 'group',
+		},
+	];
+
+	// const handleFilterChange = (event) => {
+	// 	setSelectedStatus(event.target.value);
+	// };
 
 	useEffect(() => {
-		setSelectedStatus(options[0].value);
+		setSelectedStatus('All');
 	}, [setSelectedStatus]);
 
 	return (
-		<select
-			className="mb-2 w-25"
-			id="subscriptionStatusFilter"
-			name="subscriptionStatusFilter"
-			onChange={handleFilterChange}
-		>
-			{options.map((option, index) => (
-				<option key={index} value={option.value}>
-					{option.label}
-				</option>
-			))}
-		</select>
+		<ClayDropDownWithItems
+			className="mb-5"
+			items={items}
+			trigger={
+				<ClayButton
+					className="font-weight-semi-bold text-brand-primary"
+					displayType="unstyled"
+				>
+					Filter &#8595;
+				</ClayButton>
+			}
+		/>
 	);
 };
 

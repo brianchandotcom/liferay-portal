@@ -269,8 +269,6 @@ definition {
 			eventType = "Regular");
 
 		CalendarEvent.viewCalendarRatingPresent();
-
-
 	}
 
 	@description = "LRQA-71595 - Verify that the user can make the new Calendar as the Default Calendar"

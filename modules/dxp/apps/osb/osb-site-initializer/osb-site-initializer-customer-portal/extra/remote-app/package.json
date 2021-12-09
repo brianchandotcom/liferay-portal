@@ -21,6 +21,7 @@
 		"@clayui/card": "^3.36.0",
 		"@clayui/core": "^3.36.0",
 		"@clayui/css": "^3.36.0",
+		"@clayui/drop-down": "^3.41.0",
 		"@clayui/form": "^3.36.0",
 		"@clayui/icon": "^3.32.0",
 		"@clayui/label": "^3.32.0",

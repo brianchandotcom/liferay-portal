@@ -51,7 +51,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "nm",
+					"defaultValue": "",
 					"label": "size",
 					"name": "buttonSize",
 					"type": "select",
@@ -59,15 +59,15 @@
 						"validValues": [
 							{
 								"label": "small",
-								"value": "sm"
+								"value": "btn-sm"
 							},
 							{
-								"label": "normal",
-								"value": "nm"
+								"label": "medium",
+								"value": ""
 							},
 							{
 								"label": "large",
-								"value": "lg"
+								"value": "btn-lg"
 							}
 						]
 					}

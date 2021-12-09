@@ -878,13 +878,32 @@ definition {
 			relatedAssetTitle = "Blogs Entry Title");
 	}
 
-	@description = "LRQA-71887 - Verify that the user can add an Event with a workflow assigned"
-	@ignore = "Test Stub"
+	@description = "Verify that the user can add an Event with a workflow assigned"
 	@priority = "4"
 	test CanAddEventWithWorkflowAssigned {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-71914 CanAddEventWithWorkflowAssigned pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.setDatesToday();
+
+		CalendarEvent.setTimes(
+			endDateTime = "08:00 PM",
+			startDateTime = "07:00 PM");
+
+		Button.clickSubmitForPublication();
+
+		IFrame.closeFrame();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
 	}
 
 	@description = "Verify that the user can Approve an Event"

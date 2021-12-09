@@ -28,6 +28,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98753. The fragment styles and inline text should be copied to duplicated one."
+	@priority = "5"
+	test DuplicateFragmentWithStylesAndInlineText {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Configure the Heading fragment") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Heading Example Edited");
+
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(headingLevel = "H4");
+
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(textColor = "Warning");
+		}
+
+		task ("Duplicate the Heading fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Heading");
+		}
+
+		task ("View custom fragment styles and edited inline text are copied to duplicated Heading") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example Edited",
+				fragmentName = "Heading",
+				id = "element-text",
+				position = "2");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				headingLevel = "h4",
+				position = "2",
+				textColor = "warning");
+		}
+	}
+
 	@description = "This is a test for LPS-101255. View the actions of saved composition in Page Fragments admin."
 	@priority = "5"
 	@uitest

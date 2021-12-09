@@ -832,7 +832,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136837. It checks that a guest cannot update a folder without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test GuestCannotUpdateFolder {
 		property portal.acceptance = "false";
@@ -867,8 +867,8 @@ definition {
 		DMPortlet.viewDefaultPG();
 	}
 
-	@description = "This is a test for LPS-136832. It checks that a guest cannot access a folder without permissions."
-	@ignore = "true"
+	@description = "This is a test for LPS-136832. It checks that a guest can access an image in a folder through the URL when he has permissions."
+	@ignore = "Test Stub"
 	@priority = "3"
 	test GuestWithAccessToFolderCanAccessImageThroughURL {
 		property portal.acceptance = "false";
@@ -1183,7 +1183,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136842. It checks that a site member cannot add a shortcut without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberCannotAddShortcut {
 		property portal.acceptance = "false";
@@ -1249,7 +1249,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136846. It checks that a site member cannot delete a shortcut without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberCannotDeleteShortcut {
 		property portal.acceptance = "false";
@@ -1259,7 +1259,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136847. It checks that a site member cannot override a checkout process without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberCannotOverrideCheckout {
 		property portal.acceptance = "false";
@@ -1376,7 +1376,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136843. It checks that a site member cannot update the permissions of a file without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberCannotUpdateFilePermissions {
 		property portal.acceptance = "false";
@@ -1386,7 +1386,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136850. It checks that a site member cannot update a folder without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberCannotUpdateFolder {
 		property portal.acceptance = "false";
@@ -1396,7 +1396,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136844. It checks that a site member cannot update the permissions of a folder without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberCannotUpdateFolderPermissions {
 		property portal.acceptance = "false";
@@ -1456,7 +1456,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136840. It checks that a site member cannot access a folder without permissions."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test SiteMemberWithAccessToFolderCanAccessImageThroughURL {
 		property portal.acceptance = "false";

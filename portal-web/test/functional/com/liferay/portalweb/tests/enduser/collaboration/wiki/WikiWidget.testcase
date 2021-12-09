@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewPagesViaTreeMenu {
 		property portal.acceptance = "false";

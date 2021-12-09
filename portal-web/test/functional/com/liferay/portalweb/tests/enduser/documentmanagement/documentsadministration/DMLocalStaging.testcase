@@ -297,7 +297,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanPublishRepository {
 		property portal.acceptance = "false";

@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136991. It checks that a wiki page can be viewed in Arabic."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewEntryInArabic {
 		property portal.acceptance = "false";
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136990. It checks that a wiki page can be viewed in Japanese."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewEntryInJapanese {
 		property portal.acceptance = "false";

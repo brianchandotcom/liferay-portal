@@ -1214,13 +1214,63 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136842. It checks that a site member cannot add a shortcut without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test SiteMemberCannotAddShortcut {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-136842 SiteMemberCannotAddShortcut pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.goToPermissionOnInfoPanel();
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX",
+			roleTitle = "Site Member");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.viewNotPresent(menuItem = "Shortcut");
 	}
 
 	@description = "This is a test for LPS-136845. It checks that a site member cannot delete a file without permissions."

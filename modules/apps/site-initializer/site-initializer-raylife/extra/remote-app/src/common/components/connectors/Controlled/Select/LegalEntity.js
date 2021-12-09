@@ -1,3 +1,5 @@
+import {ClaySelect} from '@clayui/form';
+
 import React from 'react';
 import {ControlledSelect} from '.';
 
@@ -8,12 +10,10 @@ export function LegalEntityControlledSelect({...props}) {
 
 	return (
 		<ControlledSelect {...props}>
-			<option hidden>Select</option>
+			<ClaySelect.Option hidden label="Select" />
 
 			{entities.map(({name}) => (
-				<option key={name} value={name}>
-					{name}
-				</option>
+				<ClaySelect.Option key={name} label={name} value={name} />
 			))}
 		</ControlledSelect>
 	);

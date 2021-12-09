@@ -1,5 +1,6 @@
-import React from 'react';
+import {ClayInput} from '@clayui/form';
 
+import React from 'react';
 import {InputAreaWithError} from '../InputArea/WithError';
 import {Label} from '../Label';
 
@@ -13,9 +14,8 @@ export const Input = React.forwardRef(
 					</Label>
 				)}
 
-				<input
+				<ClayInput
 					{...props}
-					className="form-control input"
 					name={name}
 					ref={ref}
 					required={required}

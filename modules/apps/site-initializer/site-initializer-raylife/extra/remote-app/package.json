@@ -19,6 +19,7 @@
 	"dependencies": {
 		"@clayui/core": "^3.32.0",
 		"@clayui/css": "3.33.1",
+		"@clayui/form": "^3.40.0",
 		"@clayui/icon": "3.32.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
 		"axios": "^0.22.0",

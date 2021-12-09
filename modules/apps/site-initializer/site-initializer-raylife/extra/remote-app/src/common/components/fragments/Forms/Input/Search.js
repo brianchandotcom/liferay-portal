@@ -1,5 +1,6 @@
-import React from 'react';
+import {ClayInput} from '@clayui/form';
 
+import React from 'react';
 import {InputAreaWithError} from '../InputArea/WithError';
 import {Label} from '../Label';
 
@@ -25,7 +26,7 @@ export const SearchInput = React.forwardRef(
 				)}
 				<div className="content-row">
 					<InputAreaWithError error={error}>
-						<input
+						<ClayInput
 							{...props}
 							maxLength={255}
 							name={name}

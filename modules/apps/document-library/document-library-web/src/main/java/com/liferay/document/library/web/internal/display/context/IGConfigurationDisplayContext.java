@@ -256,7 +256,9 @@ public class IGConfigurationDisplayContext {
 			return;
 		}
 
-		if (_folder == null) {
+		if ((_folder == null) &&
+			(_folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
 			_folder = _getFolder();
 		}
 

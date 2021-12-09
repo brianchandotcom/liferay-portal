@@ -107,7 +107,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "PageAudit#PANEL_PAGE_TITLE",
-				value1 = "Home");
+				value1 = "Content Page");
 		}
 
 		task ("Change language") {

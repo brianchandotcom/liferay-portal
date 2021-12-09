@@ -42,8 +42,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:input name="preferences--repositoryId--" type="hidden" value="<%= dlAdminDisplayContext.getRepositoryId() %>" />
 			<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= dlAdminDisplayContext.getRootFolderId() %>" />
+			<aui:input name="preferences--selectedRepositoryId--" type="hidden" value="<%= dlAdminDisplayContext.getSelectedRepositoryId() %>" />
 			<aui:input name="preferences--displayViews--" type="hidden" />
 			<aui:input name="preferences--entryColumns--" type="hidden" />
 

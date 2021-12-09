@@ -245,14 +245,6 @@ public class DLAdminDisplayContext {
 			return _repositoryId;
 		}
 
-		long repositoryId = _dlPortletInstanceSettings.getRepositoryId();
-
-		if (repositoryId != 0) {
-			_repositoryId = repositoryId;
-
-			return _repositoryId;
-		}
-
 		Folder folder = getFolder();
 
 		if (folder != null) {
@@ -306,6 +298,25 @@ public class DLAdminDisplayContext {
 			"searchFolderId",
 			ParamUtil.getLong(_httpServletRequest, "searchFolderId")
 		).buildPortletURL();
+	}
+
+	public long getSelectedRepositoryId() {
+		if (_selectedRepositoryId != 0) {
+			return _selectedRepositoryId;
+		}
+
+		long repositoryId =
+			_dlPortletInstanceSettings.getSelectedRepositoryId();
+
+		if (repositoryId != 0) {
+			_selectedRepositoryId = repositoryId;
+
+			return _selectedRepositoryId;
+		}
+
+		_selectedRepositoryId = getRepositoryId();
+
+		return _selectedRepositoryId;
 	}
 
 	public boolean isDefaultFolderView() {
@@ -385,11 +396,6 @@ public class DLAdminDisplayContext {
 			Folder rootFolder = DLAppLocalServiceUtil.getFolder(_rootFolderId);
 
 			_rootFolderName = rootFolder.getName();
-
-			if (rootFolder.getGroupId() != _themeDisplay.getScopeGroupId()) {
-				_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-				_rootFolderName = StringPool.BLANK;
-			}
 
 			if (rootFolder.isRepositoryCapabilityProvided(
 					TrashCapability.class)) {
@@ -821,6 +827,7 @@ public class DLAdminDisplayContext {
 	private String _rootFolderName;
 	private boolean _rootFolderNotFound;
 	private SearchContainer<RepositoryEntry> _searchContainer;
+	private long _selectedRepositoryId;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 	private final VersioningStrategy _versioningStrategy;

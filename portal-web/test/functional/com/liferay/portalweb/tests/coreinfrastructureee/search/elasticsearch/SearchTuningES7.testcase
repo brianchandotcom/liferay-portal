@@ -982,7 +982,6 @@ definition {
 			portlet = "Synonyms");
 
 		var index = "0";
-
 		var list1 = ListUtil.newListFromString("123,234,345,456,567,678,789,890,901,012,101");
 		var list2 = ListUtil.newListFromString("ABC,BCD,CDE,DEF,EFG,FGH,GHI,HIJ,IJK,JKL,AAA");
 
@@ -1009,26 +1008,26 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "345 Building");
 
 		SearchResultPortlet.viewSearchResults(
+			highlightedSearchAssetSummary = "CDE",
 			searchAssetTitle = "Web Content Article 1",
-			searchAssetType = "Web Content Article",
-			highlightedSearchAssetSummary = "CDE");
+			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.viewSearchResults(
+			highlightedSearchAssetSummary = "Building",
 			searchAssetTitle = "Web Content Article 1",
-			searchAssetType = "Web Content Article",
-			highlightedSearchAssetSummary = "Building");
+			searchAssetType = "Web Content Article");
 
 		SearchPortlets.searchEmbedded(searchTerm = "101 Building");
 
 		SearchResultPortlet.viewSearchResults(
+			highlightedSearchAssetSummary = "AAA",
 			searchAssetTitle = "Web Content Article 2",
-			searchAssetType = "Web Content Article",
-			highlightedSearchAssetSummary = "AAA");
+			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.viewSearchResults(
+			highlightedSearchAssetSummary = "Building",
 			searchAssetTitle = "Web Content Article 2",
-			searchAssetType = "Web Content Article",
-			highlightedSearchAssetSummary = "Building");
+			searchAssetType = "Web Content Article");
 	}
 
 	@priority = "5"

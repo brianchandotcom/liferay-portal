@@ -98,8 +98,8 @@
 				<version>1.6</version>
 				<configuration>
 					<installDirectory>${project.build.directory}</installDirectory>
-					<nodeVersion>v10.15.1</nodeVersion>
-					<npmVersion>6.4.1</npmVersion>
+					<nodeVersion>v16.13.0</nodeVersion>
+					<npmVersion>8.1.0</npmVersion>
 				</configuration>
 				<executions>
 					<execution>

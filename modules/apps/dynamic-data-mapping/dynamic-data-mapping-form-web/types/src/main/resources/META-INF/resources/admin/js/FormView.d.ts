@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/asset/init.jsp" %>
-
-<%
-DDMFormViewFormInstanceRecordDisplayContext ddmFormViewFormInstanceRecordDisplayContext = (DDMFormViewFormInstanceRecordDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
-
-<clay:container-fluid>
-	<react:component
-		module="admin/js/FormView"
-		props="<%= ddmFormViewFormInstanceRecordDisplayContext.getDDMFormContext(renderRequest) %>"
-	/>
-</clay:container-fluid>
+import React from 'react';
+declare const FormView: React.FC<IProps>;
+export default FormView;
+interface IProps {
+	description?: string;
+	title?: string;
+}

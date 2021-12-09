@@ -307,22 +307,17 @@
 <!--PUBLISH-->
 <tr>
 	<td>PUBLISH_FORM_DESCRIPTION_FIELD</td>
-	<td>//div[contains(@class,'ddm-form-basic-info')]//p[contains(text(), '${key_formDescription}')]</td>
+	<td>//span[contains(@class,'lfr-ddm__default-page-header-description') and contains(., '${key_formDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_FORM_NAME_FIELD</td>
-	<td>//h1[contains(@class,'form-name') and contains(.,'${key_formName}')]</td>
+	<td>//h1[contains(@class,'lfr-ddm__default-page-header-title') and contains(.,'${key_formName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_FORM_PUBLIC_URL</td>
 	<td>//div[contains(@class,'share-form-modal-item-link')]//input[@class='form-control' and @type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_URL_FORM_PAGE</td>
-	<td>//div[contains(@class,'ddm-form-basic-info')]</td>
 	<td></td>
 </tr>
 <tr>

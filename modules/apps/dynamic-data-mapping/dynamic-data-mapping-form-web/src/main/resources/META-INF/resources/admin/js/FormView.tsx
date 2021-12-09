@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,26 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/asset/init.jsp" %>
+import {FormView as DataEngineFormView} from 'data-engine-js-components-web';
+import React from 'react';
 
-<%
-DDMFormViewFormInstanceRecordDisplayContext ddmFormViewFormInstanceRecordDisplayContext = (DDMFormViewFormInstanceRecordDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
+import DefaultPageHeader from './components/DefaultPageHeader';
 
-<clay:container-fluid>
-	<react:component
-		module="admin/js/FormView"
-		props="<%= ddmFormViewFormInstanceRecordDisplayContext.getDDMFormContext(renderRequest) %>"
-	/>
-</clay:container-fluid>
+const FormView: React.FC<IProps> = ({description, title, ...otherProps}) => {
+	return (
+		<>
+			{title && (
+				<DefaultPageHeader description={description} title={title} />
+			)}
+			<DataEngineFormView {...otherProps} />
+		</>
+	);
+};
+
+export default FormView;
+
+interface IProps {
+	description?: string;
+	title?: string;
+}

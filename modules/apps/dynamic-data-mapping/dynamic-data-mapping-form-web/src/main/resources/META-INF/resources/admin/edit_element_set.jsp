@@ -132,7 +132,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 <div class="hide">
 	<react:component
-		module="admin/js/FormView.link.es"
+		module="admin/js/FormView"
 		props="<%= ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext) %>"
 	/>
 </div>

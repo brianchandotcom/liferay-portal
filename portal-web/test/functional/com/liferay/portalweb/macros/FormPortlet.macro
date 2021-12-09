@@ -18,7 +18,7 @@ definition {
 
 	macro clickSubmit {
 		AssertClick(
-			locator1 = "Button#MAIN_CONTENT_SUBMIT",
+			locator1 = "FormPortlet#SUBMIT_BUTTON",
 			value1 = "Submit");
 	}
 
@@ -48,13 +48,8 @@ definition {
 		if (IsElementPresent(locator1 = "FormPortlet#PORTLET_CONTENT")) {
 			Click(locator1 = "FormPortlet#PORTLET_CONTENT");
 		}
-		else {
-			Click(locator1 = "Form#PUBLISH_URL_FORM_PAGE");
 
-			Click(locator1 = "Form#PUBLISH_URL_FORM_PAGE");
-		}
-
-		Pause(locator1 = "5000");
+		WaitForElementPresent(locator1 = "FormPortlet#SUBMIT_BUTTON");
 
 		FormPortlet.clickSubmit();
 	}

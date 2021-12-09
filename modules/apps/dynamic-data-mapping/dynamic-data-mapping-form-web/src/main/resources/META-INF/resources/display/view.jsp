@@ -214,20 +214,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</clay:container-fluid>
 						</div>
 
-						<div class="ddm-form-basic-info">
-							<clay:container-fluid>
-								<h1 class="ddm-form-name"><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>
-
-								<%
-								String description = StringUtil.trim(HtmlUtil.escape(formInstance.getDescription(displayLocale)));
-								%>
-
-								<c:if test="<%= Validator.isNotNull(description) %>">
-									<p class="ddm-form-description"><%= HtmlUtil.replaceNewLine(description) %></p>
-								</c:if>
-							</clay:container-fluid>
-						</div>
-
 						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/get_form_report_data" var="formReportDataURL">
 							<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
 						</liferay-portlet:resourceURL>
@@ -238,11 +224,22 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							cssClass="ddm-form-builder-app ddm-form-builder-app-not-ready"
 							id="<%= ddmFormDisplayContext.getContainerId() %>"
 						>
+
+							<%
+							String description = StringUtil.trim(HtmlUtil.escape(formInstance.getDescription(displayLocale)));
+							%>
+
 							<react:component
-								module="admin/js/FormView.link.es"
+								module="admin/js/FormView"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
+										"description", HtmlUtil.replaceNewLine(description)
+									).put(
 										"formReportDataURL", formReportDataURL.toString()
+									).put(
+										"hasDescription", StringUtils.isNotEmpty(formInstance.getDescription(displayLocale))
+									).put(
+										"title", HtmlUtil.escape(formInstance.getName(displayLocale))
 									).put(
 										"validateCSRFTokenURL", validateCSRFTokenURL.toString()
 									).putAll(

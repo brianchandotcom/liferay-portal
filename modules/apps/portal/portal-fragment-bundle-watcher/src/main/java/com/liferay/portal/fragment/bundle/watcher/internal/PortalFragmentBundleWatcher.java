@@ -69,6 +69,13 @@ public class PortalFragmentBundleWatcher {
 			FrameworkWiring.class);
 
 		_resolvedBundleListener = bundleEvent -> {
+			Map<Bundle, String> installedFragmentBundles =
+				_installedFragmentBundleTracker.getTracked();
+
+			if (installedFragmentBundles.isEmpty()) {
+				return;
+			}
+
 			Bundle bundleEventBundle = bundleEvent.getBundle();
 
 			if (((bundleEvent.getType() == BundleEvent.INSTALLED) &&
@@ -76,13 +83,6 @@ public class PortalFragmentBundleWatcher {
 				 _isFragment(bundleEventBundle)) ||
 				((bundleEvent.getType() == BundleEvent.RESOLVED) &&
 				 !_isFragment(bundleEventBundle))) {
-
-				Map<Bundle, String> installedFragmentBundles =
-					_installedFragmentBundleTracker.getTracked();
-
-				if (installedFragmentBundles.isEmpty()) {
-					return;
-				}
 
 				Map<String, List<Bundle>> fragmentBundlesMap = new HashMap<>();
 

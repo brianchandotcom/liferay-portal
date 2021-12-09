@@ -1,25 +1,4 @@
-.switch-wrapper {
-	align-items: center;
-	display: flex;
-	flex-direction: row;
-	gap: 0.75rem;
-	justify-items: flex-start;
-}
-
 .switch {
-	background: inherit;
-	border: 1px solid $color-action-primary-default;
-	border-radius: 2rem;
-	color: $color-action-primary-default;
-	padding-left: 2.5rem;
-	padding-right: 2.5rem;
-
-	&:hover {
-		background: $color-action-primary-hover;
-		border-color: $color-action-primary-hover;
-		color: $background;
-	}
-
 	&.selected {
 		background: $color-action-primary-hover;
 		color: $background;

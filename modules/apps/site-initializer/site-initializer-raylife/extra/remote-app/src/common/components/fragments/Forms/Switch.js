@@ -1,3 +1,5 @@
+import ClayButton from '@clayui/button';
+import classNames from 'classnames';
 import React from 'react';
 
 import {InputAreaWithError} from './InputArea/WithError';
@@ -25,26 +27,32 @@ export const Switch = React.forwardRef(
 					</Label>
 				)}
 
-				<div className="switch-wrapper">
-					<button
-						className={`btn switch ${
-							value === 'true' && 'selected'
-						}`}
+				<div className="align-items-center d-flex flex-row justify-content-start">
+					<ClayButton
+						className={classNames('btn btn-ghost btn-variant-primary mr-2 pl-5 pr-5 rounded-pill switch',
+							{
+								'selected': value === 'true',
+							}
+						)}
+						displayType={null}
 						onClick={() => onChange('true')}
 						type="button"
 					>
 						Yes
-					</button>
+					</ClayButton>
 
-					<button
-						className={`btn switch ${
-							value === 'false' && 'selected'
-						}`}
+					<ClayButton
+						className={classNames('btn btn-ghost btn-variant-primary pl-5 pr-5 rounded-pill switch',
+							{
+								'selected': value === 'false',
+							}
+						)}
+						displayType={null}
 						onClick={() => onChange('false')}
 						type="button"
 					>
 						No
-					</button>
+					</ClayButton>
 				</div>
 
 				<input

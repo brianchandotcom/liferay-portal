@@ -17,12 +17,14 @@ import React, {useContext} from 'react';
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import SidebarPanel from './SidebarPanel';
+import {isIdDuplicated} from './utils';
 
 export default function SelectedNodeInfo({errors, setErrors}) {
 	const {defaultLanguageId, selectedLanguageId} = useContext(
 		DefinitionBuilderContext
 	);
 	const {
+		elements,
 		selectedNode,
 		selectedNodeNewId,
 		setSelectedNode,
@@ -49,10 +51,10 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 					id="nodeLabel"
 					onChange={({target}) => {
 						if (target.value.trim() === '') {
-							setErrors({label: true});
+							setErrors({...errors, label: true});
 						}
 						else {
-							setErrors({label: false});
+							setErrors({...errors, label: false});
 						}
 
 						const key =
@@ -90,7 +92,11 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 				</ClayForm.FeedbackItem>
 			</ClayForm.Group>
 
-			<ClayForm.Group className={errors.id ? 'has-error' : ''}>
+			<ClayForm.Group
+				className={
+					errors.id.duplicated || errors.id.empty ? 'has-error' : ''
+				}
+			>
 				<label htmlFor="nodeId">
 					<span>
 						{`${Liferay.Language.get(
@@ -116,10 +122,29 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 					id="nodeId"
 					onChange={({target}) => {
 						if (target.value.trim() === '') {
-							setErrors({id: true});
+							setErrors({
+								...errors,
+								id: {...errors.id, empty: true},
+							});
 						}
 						else {
-							setErrors({id: false});
+							setErrors({
+								...errors,
+								id: {...errors.id, empty: false},
+							});
+						}
+
+						if (isIdDuplicated(elements, target.value.trim())) {
+							setErrors({
+								...errors,
+								id: {...errors.id, duplicated: true},
+							});
+						}
+						else {
+							setErrors({
+								...errors,
+								id: {...errors.id, duplicated: false},
+							});
 						}
 
 						setSelectedNodeNewId(target.value);
@@ -129,11 +154,17 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 				/>
 
 				<ClayForm.FeedbackItem>
-					{errors.id && (
+					{(errors.id.duplicated || errors.id.empty) && (
 						<>
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-							{Liferay.Language.get('this-field-is-required')}
+							{errors.id.duplicated
+								? Liferay.Language.get(
+										'a-node-with-that-id-already-exists'
+								  )
+								: Liferay.Language.get(
+										'this-field-is-required'
+								  )}
 						</>
 					)}
 				</ClayForm.FeedbackItem>

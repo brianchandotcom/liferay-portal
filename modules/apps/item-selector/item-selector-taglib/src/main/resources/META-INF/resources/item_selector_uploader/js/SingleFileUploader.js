@@ -18,66 +18,69 @@ import ClayLayout from '@clayui/layout';
 import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
 import getPreviewProps from './getPreviewProps';
-import {sendFile} from './utils';
+import {getUploadErrorMessage, sendFile} from './utils';
 
 function SingleFileUploader({
 	closeCaption,
 	editImageURL,
 	itemSelectedEventName,
-	maxFileSize,
+	maxFileSize: initialMaxFileSizeString,
 	uploadItemReturnType,
 	uploadItemURL,
 	validExtensions,
 }) {
 	const [abort, setAbort] = useState(null);
 	const [errorAnimation, setErrorAnimation] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const [file, setFile] = useState();
 	const [itemServerData, setItemServerData] = useState(null);
 	const [progress, setProgess] = useState(null);
 	const [showPreview, setShowPreview] = useState(false);
 
 	const isMounted = useIsMounted();
+	const maxFileSize = Number(initialMaxFileSizeString);
 
-	const {
-		fileRejections,
-		getInputProps,
-		getRootProps,
-		isDragActive,
-	} = useDropzone({
+	const CLIENT_ERRORS = useMemo(
+		() => ({
+			[ErrorCode.FileInvalidType]: Liferay.Util.sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-extension-x'
+				),
+				[validExtensions]
+			),
+
+			[ErrorCode.FileTooLarge]: Liferay.Util.sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+				),
+				[Liferay.Util.formatStorage(maxFileSize)]
+			),
+			[ErrorCode.TooManyFiles]: Liferay.Language.get(
+				'multiple-file-upload-is-not-supported-please-enter-a-single-file'
+			),
+		}),
+		[maxFileSize, validExtensions]
+	);
+
+	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		accept: validExtensions,
 		maxSize: maxFileSize,
 		multiple: false,
-		onDrop: (acceptedFiles) => {
+		onDropAccepted: (acceptedFiles) => {
+			setErrorMessage('');
 			setFile(acceptedFiles[0]);
 		},
+		onDropRejected: (fileRejections) => {
+			setErrorMessage(
+				CLIENT_ERRORS[fileRejections?.[0]?.errors?.[0]?.code] || ''
+			);
+		},
 	});
-
-	const ERRORS = {
-		[ErrorCode.FileInvalidType]: Liferay.Util.sub(
-			Liferay.Language.get(
-				'please-enter-a-file-with-a-valid-extension-x'
-			),
-			[validExtensions]
-		),
-
-		[ErrorCode.FileTooLarge]: Liferay.Util.sub(
-			Liferay.Language.get(
-				'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
-			),
-			[Liferay.Util.formatStorage(Number(maxFileSize))]
-		),
-		[ErrorCode.TooManyFiles]: Liferay.Language.get(
-			'multiple-file-upload-is-not-supported-please-enter-a-single-file'
-		),
-	};
-
-	const errorCode = fileRejections?.[0]?.errors?.[0]?.code;
-	const errorMessage = ERRORS[errorCode] || '';
 
 	function clear() {
 		setFile(null);
@@ -92,18 +95,30 @@ function SingleFileUploader({
 	};
 
 	useEffect(() => {
-		setErrorAnimation(Boolean(errorMessage));
-	}, [errorMessage]);
-
-	useEffect(() => {
 		if (file) {
 			const client = sendFile({
 				file,
+				onError: () => {
+					if (!isMounted()) {
+						return;
+					}
+
+					setErrorMessage(getUploadErrorMessage());
+				},
 				onProgress: setProgess,
 				onSuccess: (itemData) => {
-					if (isMounted()) {
+					if (!isMounted()) {
+						return;
+					}
+
+					if (itemData.success) {
 						setItemServerData(itemData);
 						setShowPreview(true);
+					}
+					else {
+						setErrorMessage(
+							getUploadErrorMessage(itemData.error, maxFileSize)
+						);
 					}
 				},
 				url: uploadItemURL,
@@ -114,7 +129,7 @@ function SingleFileUploader({
 				client.abort();
 			});
 		}
-	}, [file, isMounted, uploadItemURL]);
+	}, [file, isMounted, uploadItemURL, maxFileSize]);
 
 	return (
 		<>

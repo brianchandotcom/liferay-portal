@@ -101,10 +101,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-39744. Default landing page could be set by property and user is redirected to the changed landing page."
+	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = "5"
 	test DefaultPortalLandingPageSetByProperty {
-		property custom.properties = "default.landing.page.path=/web/guest/landing";
+		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
 
 		task ("Login and add a public page ") {
@@ -125,6 +125,10 @@ definition {
 
 		task ("Assert url value") {
 			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
+		}
+
+		task ("Assert no errors occurred in the console") {
+			AssertConsoleTextNotPresent(value1 = "java.lang.StackOverflowError");
 		}
 	}
 

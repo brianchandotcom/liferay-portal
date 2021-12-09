@@ -57,6 +57,27 @@ public class AttachmentBase64 implements Cloneable, Serializable {
 
 	protected String attachment;
 
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
+
+		try {
+			contentType = contentTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String contentType;
+
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}

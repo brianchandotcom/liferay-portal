@@ -63,6 +63,34 @@ public class AttachmentUrl implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AttachmentUrl.class, json);
 	}
 
+	@Schema(description = "Content type of attachment")
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	@JsonIgnore
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
+
+		try {
+			contentType = contentTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "Content type of attachment")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String contentType;
+
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
@@ -398,6 +426,20 @@ public class AttachmentUrl implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (contentType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentType));
+
+			sb.append("\"");
+		}
 
 		if (customFields != null) {
 			if (sb.length() > 1) {

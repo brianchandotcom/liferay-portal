@@ -1,0 +1,10 @@
+definition {
+
+	macro viewPageType {
+		AssertElementPresent(
+			key_pageName = "${pageName}",
+			key_pageType = "${pageType}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+	}
+
+}

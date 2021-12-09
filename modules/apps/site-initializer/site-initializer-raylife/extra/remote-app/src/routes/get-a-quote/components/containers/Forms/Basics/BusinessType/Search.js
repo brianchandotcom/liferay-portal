@@ -118,7 +118,11 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 		}
 
 		if (isError) {
-			return <WarningBadge>{isError}</WarningBadge>;
+			return (
+				<>
+					<WarningBadge>{isError}</WarningBadge>
+				</>
+			);
 		}
 
 		if (businessTypes.length) {

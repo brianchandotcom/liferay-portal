@@ -70,7 +70,7 @@ function SkuContent({
 	}, [cartId, isMounted, skuId]);
 
 	return (
-		<div className="diagram-storefront-tooltip row">
+		<div className="row">
 			{product.thumbnail && (
 				<div className="col-auto">
 					<ClaySticker className="fill-cover" size="xl">
@@ -223,7 +223,7 @@ function StorefrontTooltipContent({
 	const Renderer = ContentsMap[product.type];
 
 	return (
-		<div>
+		<div className="diagram-storefront-tooltip">
 			<Renderer
 				accountId={accountId}
 				cartId={cartId}

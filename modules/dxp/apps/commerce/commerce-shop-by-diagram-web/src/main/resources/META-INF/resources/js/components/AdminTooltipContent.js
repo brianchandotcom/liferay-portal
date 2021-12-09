@@ -243,8 +243,7 @@ AdminTooltipContent.propTypes = {
 		.isRequired,
 	readOnlySequence: PropTypes.bool,
 	selectedPin: PropTypes.shape({
-		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-			.isRequired,
+		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		mappedProduct: PropTypes.shape({
 			quantity: PropTypes.number.isRequired,
 			sequence: PropTypes.string.isRequired,
@@ -254,7 +253,6 @@ AdminTooltipContent.propTypes = {
 	}),
 	sequence: PropTypes.string,
 	target: PropTypes.any,
-	updatePins: PropTypes.func.isRequired,
 	x: PropTypes.number,
 	y: PropTypes.number,
 };

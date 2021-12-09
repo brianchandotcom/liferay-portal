@@ -22,10 +22,14 @@ import {
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
-import '../../../dev/public/js/static-env-utils';
-import {mockCommonEndpoints, pinsData, productData} from '../../utilities';
+import {
+	adminMappedProducts,
+	defaultDiagramProps,
+	frontStoreMappedProducts,
+	mockCommonEndpoints,
+} from '../../utilities';
 
-const mappedSequences = new Set(pinsData.map((pin) => pin.sequence));
+import '../../../dev/public/js/static-env-utils';
 
 const svgContent = `
     <svg>
@@ -37,16 +41,6 @@ const svgContent = `
         </g>
     </svg>
 `;
-
-const defaultDiagramProps = {
-	channelId: 'fake-channel-id',
-	datasetDisplayId: 'testDatasetDisplayId',
-	diagramId: 'fake-diagram-id',
-	imageURL: '/image/test-url.svg',
-	pinsCSSSelectors: ['.sequences text'],
-	pinsRadius: 1,
-	productId: 'fake-product-id',
-};
 
 describe('Diagram', () => {
 	beforeEach(() => {
@@ -66,6 +60,7 @@ describe('Diagram', () => {
 
 	describe('SVG Renderer Admin', () => {
 		let diagram;
+		let pinsNodes;
 
 		beforeEach(async () => {
 			await act(async () => {
@@ -76,6 +71,10 @@ describe('Diagram', () => {
 
 			await waitForElement(async () =>
 				diagram.container.querySelector('.sequences')
+			);
+
+			pinsNodes = diagram.container.querySelectorAll(
+				defaultDiagramProps.pinsCSSSelectors
 			);
 		});
 
@@ -100,18 +99,10 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', () => {
-			const pinsNodes = diagram.container.querySelectorAll(
-				defaultDiagramProps.pinsCSSSelectors
-			);
-
 			expect(pinsNodes.length).toBeGreaterThan(0);
 		});
 
 		it('must show a tooltip when a pin is clicked', () => {
-			const pinsNodes = diagram.container.querySelectorAll(
-				defaultDiagramProps.pinsCSSSelectors
-			);
-
 			fireEvent.click(pinsNodes[0]);
 
 			const tooltip = document.querySelector('.diagram-tooltip');
@@ -119,45 +110,48 @@ describe('Diagram', () => {
 			expect(tooltip).toBeInTheDocument();
 		});
 
-		it('must show consistent data within the tooltip', () => {
-			const pinsNodes = diagram.container.querySelectorAll(
-				defaultDiagramProps.pinsCSSSelectors
+		it('must handle linked skus', () => {
+			const skuNode = pinsNodes[0];
+			const skuMappedProduct = adminMappedProducts[0];
+
+			fireEvent.click(skuNode);
+
+			const tooltip = document.querySelector('.diagram-admin-tooltip');
+
+			expect(tooltip).toBeInTheDocument();
+
+			const sequenceInput = document.getElementById('sequenceInput');
+			const typeInput = document.getElementById('typeInput');
+			const quantityInput = document.getElementById('quantityInput');
+
+			expect(sequenceInput.value).toBe(skuNode.textContent);
+
+			expect(typeInput.value).toBe(skuMappedProduct.type);
+
+			expect(Number(quantityInput.value)).toBe(
+				Number(skuMappedProduct.quantity)
 			);
+		});
 
-			pinsNodes.forEach((pinNode, index) => {
-				fireEvent.click(pinNode);
+		it('must handle linked diagrams', () => {
+			const diagramNode = pinsNodes[1];
+			const skuMappedProduct = adminMappedProducts[1];
 
-				const tooltip = document.querySelector(
-					'.diagram-admin-tooltip'
-				);
+			fireEvent.click(diagramNode);
 
-				expect(tooltip).toBeInTheDocument();
+			const tooltip = document.querySelector('.diagram-admin-tooltip');
 
-				const sequenceInput = document.getElementById('sequenceInput');
-				const typeInput = document.getElementById('typeInput');
-				const quantityInput = document.getElementById('quantityInput');
+			expect(tooltip).toBeInTheDocument();
 
-				expect(sequenceInput.value).toBe(pinNode.textContent);
+			const sequenceInput = document.getElementById('sequenceInput');
+			const typeInput = document.getElementById('typeInput');
+			const quantityInput = document.getElementById('quantityInput');
 
-				if (mappedSequences.has(pinNode.textContent)) {
-					expect(typeInput.value).toBe(
-						pinsData[index].mappedProduct.type
-					);
+			expect(sequenceInput.value).toBe(diagramNode.textContent);
 
-					if (pinsData[index].mappedProduct.type === 'diagram') {
-						expect(quantityInput).not.toBeInTheDocument();
-					}
-					else {
-						expect(Number(quantityInput.value)).toBe(
-							Number(pinsData[index].mappedProduct.quantity)
-						);
-					}
-				}
-				else {
-					expect(typeInput.value).toBe('sku');
-					expect(quantityInput.value).toBe('1');
-				}
-			});
+			expect(typeInput.value).toBe(skuMappedProduct.type);
+
+			expect(quantityInput).not.toBeInTheDocument();
 		});
 	});
 
@@ -180,7 +174,7 @@ describe('Diagram', () => {
 			diagram?.unmount();
 		});
 
-		it('must not show a pin size button when on the frontstore', async () => {
+		it('must not show a pin size button when on the frontStore', async () => {
 			expect(diagram.container).not.toHaveTextContent('pin-size');
 		});
 
@@ -215,10 +209,6 @@ describe('Diagram', () => {
 
 			fireEvent.click(pinNodes[0]);
 
-			await waitForElement(async () =>
-				document.querySelector('.diagram-storefront-tooltip')
-			);
-
 			const tooltip = document.querySelector(
 				'.diagram-storefront-tooltip'
 			);
@@ -227,12 +217,19 @@ describe('Diagram', () => {
 			const link = tooltip.querySelector('a');
 			const title = tooltip.querySelector('h4');
 
-			expect(image.alt).toBe(productData.name);
-			expect(image.src).toContain(productData.urlImage);
+			const productName =
+				frontStoreMappedProducts[0].productName[
+					Liferay.ThemeDisplay.getLanguageId()
+				];
+
+			expect(image.alt).toBe(productName);
+			expect(image.src).toContain(frontStoreMappedProducts[0].thumbnail);
 			expect(link.href).toContain(
-				productData.urls[Liferay.ThemeDisplay.getLanguageId()]
+				frontStoreMappedProducts[0].urls[
+					Liferay.ThemeDisplay.getLanguageId()
+				]
 			);
-			expect(title.textContent).toBe(productData.name);
+			expect(title.textContent).toBe(productName);
 		});
 	});
 });

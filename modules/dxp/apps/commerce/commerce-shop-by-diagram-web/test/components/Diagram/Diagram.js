@@ -24,11 +24,11 @@ import React from 'react';
 
 import '../../../dev/public/js/static-env-utils';
 import {
+	adminPinsData,
 	defaultDiagramProps,
+	frontStorePinsData,
 	load,
 	mockCommonEndpoints,
-	pinsData,
-	productData,
 } from '../../utilities';
 
 describe('Diagram', () => {
@@ -83,7 +83,7 @@ describe('Diagram', () => {
 			const pinsNodes = await waitForElement(async () =>
 				diagram.getAllByRole('pin')
 			);
-			const sequences = pinsData.map((pin) => pin.sequence);
+			const sequences = adminPinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);
 
@@ -116,18 +116,18 @@ describe('Diagram', () => {
 				const typeInput = document.getElementById('typeInput');
 				const quantityInput = document.getElementById('quantityInput');
 
-				expect(sequenceInput.value).toBe(pinsData[index].sequence);
+				expect(sequenceInput.value).toBe(adminPinsData[index].sequence);
 
 				expect(typeInput.value).toBe(
-					pinsData[index].mappedProduct.type
+					adminPinsData[index].mappedProduct.type
 				);
 
-				if (pinsData[index].mappedProduct.type === 'diagram') {
+				if (adminPinsData[index].mappedProduct.type === 'diagram') {
 					expect(quantityInput).not.toBeInTheDocument();
 				}
 				else {
 					expect(Number(quantityInput.value)).toBe(
-						Number(pinsData[index].mappedProduct.quantity)
+						Number(adminPinsData[index].mappedProduct.quantity)
 					);
 				}
 			});
@@ -153,15 +153,15 @@ describe('Diagram', () => {
 			diagram?.unmount();
 		});
 
-		it('must not show a pin size button when on the frontstore', async () => {
+		it('must not show a pin size button when on the frontStore', async () => {
 			expect(diagram.container).not.toHaveTextContent('pin-size');
 		});
 
 		it('must show the pins', async () => {
-			const pinsNodes = await waitForElement(async () =>
-				diagram.getAllByRole('pin')
+			const pinsNodes = await waitForElement(
+				async () => await diagram.getAllByRole('pin')
 			);
-			const sequences = pinsData.map((pin) => pin.sequence);
+			const sequences = frontStorePinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);
 
@@ -171,15 +171,11 @@ describe('Diagram', () => {
 		});
 
 		it('must show consistent data within the tooltip', async () => {
-			const pinsNodes = await waitForElement(async () =>
-				diagram.getAllByRole('pin')
+			const pinsNodes = await waitForElement(
+				async () => await diagram.getAllByRole('pin')
 			);
 
 			fireEvent.click(pinsNodes[0]);
-
-			await waitForElement(async () =>
-				document.querySelector('.diagram-storefront-tooltip')
-			);
 
 			const tooltip = document.querySelector(
 				'.diagram-storefront-tooltip'
@@ -189,12 +185,21 @@ describe('Diagram', () => {
 			const link = tooltip.querySelector('a');
 			const title = tooltip.querySelector('h4');
 
-			expect(image.alt).toBe(productData.name);
-			expect(image.src).toContain(productData.urlImage);
-			expect(link.href).toContain(
-				productData.urls[Liferay.ThemeDisplay.getLanguageId()]
+			const productName =
+				frontStorePinsData[0].mappedProduct.productName[
+					Liferay.ThemeDisplay.getLanguageId()
+				];
+
+			expect(image.alt).toBe(productName);
+			expect(image.src).toContain(
+				frontStorePinsData[0].mappedProduct.thumbnail
 			);
-			expect(title.textContent).toBe(productData.name);
+			expect(link.href).toContain(
+				frontStorePinsData[0].mappedProduct.urls[
+					Liferay.ThemeDisplay.getLanguageId()
+				]
+			);
+			expect(title.textContent).toBe(productName);
 		});
 	});
 });

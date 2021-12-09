@@ -14,10 +14,11 @@
 
 package com.liferay.portal.deploy;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.util.ant.CopyTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,9 +53,12 @@ public class DeployUtil {
 
 			File file = new File(getResourcePath(tempPaths, fileName));
 
-			CopyTask.copyFile(
-				file, new File(targetDir), targetFileName, filterMap, overwrite,
-				true);
+			String content = FileUtil.read(file);
+
+			FileUtil.write(
+				targetFile,
+				StringUtil.replace(
+					content, StringPool.AT, StringPool.AT, filterMap));
 
 			for (Path tempPath : tempPaths) {
 				deletePath(tempPath);

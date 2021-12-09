@@ -226,6 +226,7 @@ public class IGConfigurationDisplayContext {
 		}
 
 		_folder = folder;
+		_folderName = folder.getName();
 
 		if (_folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
 			TrashCapability trashCapability = _folder.getRepositoryCapability(

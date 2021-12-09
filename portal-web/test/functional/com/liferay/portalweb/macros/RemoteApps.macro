@@ -45,8 +45,8 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Select(
-				locator1 = "Select#TYPE",
-				value1 = "Custom Element");
+			locator1 = "Select#TYPE",
+			value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementAllFields(
 			entryCSSURL = "${entryCSSURL}",
@@ -58,6 +58,56 @@ definition {
 		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
 
 		PortletEntry.publish();
+	}
+
+	macro assertCustomElementFields {
+		AssertTextEquals(
+			custom_entryName = "${entryName}",
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryName}");
+
+		AssertTextEquals(
+			custom_entryHTMLName = "${entryHTMLName}",
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryHTMLName}");
+
+		AssertTextEquals(
+			custom_entryURL = "${entryURL}",
+			key_id = "customElementURLs",
+			locator1 = "RemoteAppsEntry#URL",
+			value1 = "${entryURL}");
+
+		AssertTextEquals(
+			custom_entryCSSURL = "${entryCSSURL}",
+			key_text = "CSS URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryCSSURL}");
+
+		AssertTextEquals(
+			custom_entryProperties = "${entryProperties}",
+			key_text = "Properties",
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
+			value1 = "${entryProperties}");
+	}
+
+	macro deleteRemoteApp {
+		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
+
+		Click(locator1 = "RemoteApps#REMOTE_TABLE_DELETE");
+	}
+
+	macro deleteRemoteAppAPI {
+		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
+
+		var remoteAppNameToBeRemoved = RemoteApps.getRemoteAppEntryName();
+
+		RemoteApps._deleteRemoteAppAPI();
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		RemoteApps.viewTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
 	}
 
 	macro editCustomElement {
@@ -143,38 +193,6 @@ definition {
 		}
 
 		RemoteApps.viewEmptyRemoteTable();
-	}
-
-	macro viewCustomElementFields {
-		AssertTextEquals(
-			custom_entryName = "${entryName}",
-			key_text = "Name",
-			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
-
-		AssertTextEquals(
-			custom_entryHTMLName = "${entryHTMLName}",
-			key_text = "HTML Element Name",
-			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
-
-		AssertTextEquals(
-			custom_entryURL = "${entryURL}",
-			key_text = "URL",
-			locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_URL",
-			value1 = "${entryURL}");
-
-		AssertTextEquals(
-			custom_entryCSSURL = "${entryCSSURL}",
-			key_text = "CSS URL",
-			locator1 = "TextInput#ANY",
-			value1 = "${entryCSSURL}");
-
-		AssertTextEquals(
-			custom_entryProperties = "${entryProperties}",
-			key_text = "Properties",
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
-			value1 = "${entryProperties}");
 	}
 
 	macro viewEmptyRemoteTable {

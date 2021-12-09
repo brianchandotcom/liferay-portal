@@ -97,15 +97,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'solid',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'solid',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'solid',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-solid'),
@@ -115,15 +115,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'solid',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'solid',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'solid',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-solid-inverted'),
@@ -133,15 +133,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'ghost',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'ghost',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'ghost',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-ghost'),
@@ -151,15 +151,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'ghost',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'ghost',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'ghost',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-ghost-inverted'),
@@ -169,15 +169,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'borderless',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'borderless',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'borderless',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-borderless'),
@@ -187,15 +187,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'borderless',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'borderless',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'borderless',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-borderless-inverted'),
@@ -205,15 +205,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'rounded',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'rounded',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'rounded',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-rounded'),
@@ -223,15 +223,15 @@ const BUTTON_VARIANTS = [
 		buttons: [
 			{
 				displayType: 'rounded',
-				variant: 'primary',
+				style: 'primary',
 			},
 			{
 				displayType: 'rounded',
-				variant: 'secondary',
+				style: 'secondary',
 			},
 			{
 				displayType: 'rounded',
-				variant: 'neutral',
+				style: 'neutral',
 			},
 		],
 		categoryTitle: Liferay.Language.get('button-rounded-inverted'),
@@ -244,7 +244,7 @@ function getLabel(button, inverted) {
 		[button.displayType]: button.displayType,
 		inverted,
 		[button.size]: button.size,
-		[button.variant]: button.variant,
+		[button.style]: button.style,
 		[`icon ${button.icon}`]: button.icon,
 	});
 }
@@ -271,7 +271,7 @@ const ButtonGuide = () => {
 								className={classNames({
 									'btn-inverted': item.inverted,
 									[`btn-${button.size}`]: button.size,
-									[`btn-variant-${button.variant}`]: button.variant,
+									[`btn-style-${button.style}`]: button.style,
 								})}
 								displayType={button.displayType}
 							>

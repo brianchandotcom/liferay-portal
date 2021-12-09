@@ -32,8 +32,8 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "variant",
-					"name": "variant",
+					"label": "style",
+					"name": "style",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [

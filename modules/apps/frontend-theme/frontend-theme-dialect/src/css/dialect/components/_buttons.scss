@@ -50,7 +50,7 @@
 
 .btn-rounded,
 .btn-solid {
-	&.btn-variant-primary {
+	&.btn-style-primary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-primary-active);
 			--btn-active-border-color: var(--color-action-primary-active);
@@ -78,7 +78,7 @@
 		}
 	}
 
-	&.btn-variant-secondary {
+	&.btn-style-secondary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-secondary-active);
 			--btn-active-border-color: var(--color-action-secondary-active);
@@ -108,7 +108,7 @@
 		}
 	}
 
-	&.btn-variant-neutral {
+	&.btn-style-neutral {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-neutral-active);
 			--btn-active-border-color: var(--color-action-neutral-active);
@@ -165,15 +165,15 @@
 // Ghost
 
 .btn-ghost {
-	&.btn-variant-primary,
-	&.btn-variant-secondary,
-	&.btn-variant-neutral {
+	&.btn-style-primary,
+	&.btn-style-secondary,
+	&.btn-style-neutral {
 		&.btn-inverted {
 			--btn-default-background-color: transparent;
 		}
 	}
 
-	&.btn-variant-primary {
+	&.btn-style-primary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-primary-inverted);
 			--btn-active-border-color: var(--color-action-primary-active);
@@ -209,7 +209,7 @@
 		}
 	}
 
-	&.btn-variant-secondary {
+	&.btn-style-secondary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(
 				--color-action-secondary-inverted
@@ -251,7 +251,7 @@
 		}
 	}
 
-	&.btn-variant-neutral {
+	&.btn-style-neutral {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-neutral-inverted);
 			--btn-active-border-color: var(--color-action-neutral-active);
@@ -303,7 +303,7 @@
 		--btn-hover-background-color: transparent;
 	}
 
-	&.btn-variant-primary {
+	&.btn-style-primary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-primary-inverted);
 			--btn-active-border-color: var(--color-action-primary-active);
@@ -327,7 +327,7 @@
 		}
 	}
 
-	&.btn-variant-secondary {
+	&.btn-style-secondary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(
 				--color-action-secondary-inverted
@@ -355,7 +355,7 @@
 		}
 	}
 
-	&.btn-variant-neutral {
+	&.btn-style-neutral {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: var(--color-action-neutral-inverted);
 			--btn-active-border-color: var(--color-action-neutral-active);
@@ -385,17 +385,17 @@
 .btn-rounded {
 	border-radius: $rounded-pill;
 
-	&.btn-variant-primary {
+	&.btn-style-primary {
 		box-shadow: var(--elevation-tight-4)
 			var(--color-action-primary-disabled);
 	}
 
-	&.btn-variant-secondary {
+	&.btn-style-secondary {
 		box-shadow: var(--elevation-tight-4)
 			var(--color-action-secondary-disabled);
 	}
 
-	&.btn-variant-neutral {
+	&.btn-style-neutral {
 		box-shadow: var(--elevation-tight-4)
 			var(--color-action-neutral-disabled);
 	}
@@ -418,23 +418,23 @@
 // Defaults
 
 .btn-primary {
-	@extend .btn-solid, .btn-variant-primary, :not(.btn-inverted);
+	@extend .btn-solid, .btn-style-primary, :not(.btn-inverted);
 }
 
 .btn-secondary {
-	@extend .btn-ghost, .btn-variant-neutral, :not(.btn-inverted);
+	@extend .btn-ghost, .btn-style-neutral, :not(.btn-inverted);
 }
 
 .btn-tertiary {
-	@extend .btn-borderless, .btn-variant-neutral, :not(.btn-inverted);
+	@extend .btn-borderless, .btn-style-neutral, :not(.btn-inverted);
 }
 
 .btn-outline-primary {
-	@extend .btn-ghost, .btn-variant-primary, :not(.btn-inverted);
+	@extend .btn-ghost, .btn-style-primary, :not(.btn-inverted);
 }
 
 .btn-outline-secondary {
-	@extend .btn-ghost, .btn-variant-neutral, :not(.btn-inverted);
+	@extend .btn-ghost, .btn-style-neutral, :not(.btn-inverted);
 }
 
 .btn-outline-borderless {

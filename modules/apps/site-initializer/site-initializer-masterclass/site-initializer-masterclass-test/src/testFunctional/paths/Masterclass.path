@@ -62,6 +62,33 @@
 	<td>//div[contains(@class,'layout-content')]//div[contains(@class,'row')][1]/div[contains(@class,'col')][${key_colummnsNumber}]</td>
 	<td></td>
 </tr>
+<!--NAVBAR-->
+<tr>
+	<td>NAV_TAB</td>
+	<td>//ul[contains(@class,'masterclass-navbar-user')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LABEL_NAME</td>
+	<td>//ul[contains(@class,'masterclass-navbar-user')]//span[contains(text(),'${labelName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_ITEM</td>
+	<td>//div[contains(@class,'navbar')]//ul[contains(@class,'dropdown')]//a[contains(text(),'${key_navItem}')]</td>
+	<td></td>
+</tr>
+<!--SIGN_IN-->
+<tr>
+	<td>SIGN_IN_FORM</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${labelTitle}')]/following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_GROUP</td>
+	<td>//div[contains(@class,'form-group')]//input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

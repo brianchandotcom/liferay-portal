@@ -270,7 +270,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 						</c:if>
 					</liferay-ui:panel>
 
-					<c:if test="<%= assetEntry != null %>">
+					<c:if test="<%= (assetEntry != null) && assetRenderer.isCommentable() %>">
 						<liferay-ui:panel
 							extended="<%= true %>"
 							markupView="lexicon"

@@ -28,6 +28,7 @@ import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
 import {defaultNodes, nodeTypes} from './components/nodes/utils';
 import Sidebar from './components/sidebar/Sidebar';
+import {isIdDuplicated} from './components/sidebar/utils';
 
 let id = 2;
 const getId = () => `node_${id++}`;
@@ -155,7 +156,11 @@ export default function DiagramBuilder({version}) {
 	}, [selectedNode]);
 
 	useEffect(() => {
-		if (selectedNodeNewId && selectedNodeNewId.trim() !== '') {
+		if (
+			selectedNodeNewId &&
+			selectedNodeNewId.trim() !== '' &&
+			!isIdDuplicated(elements, selectedNodeNewId.trim())
+		) {
 			setElements((elements) =>
 				elements.map((element) => {
 					if (isNode(element) && element.id === selectedNode.id) {
@@ -173,10 +178,13 @@ export default function DiagramBuilder({version}) {
 				})
 			);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedNode, selectedNodeNewId]);
 
 	const contextProps = {
 		availableArea,
+		elements,
 		selectedNode,
 		selectedNodeNewId,
 		setElements,

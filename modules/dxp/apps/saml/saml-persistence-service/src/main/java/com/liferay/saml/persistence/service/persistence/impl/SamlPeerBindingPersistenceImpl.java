@@ -95,6 +95,870 @@ public class SamlPeerBindingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
+	private FinderPath _finderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
+	private FinderPath _finderPathCountByC_U_D_SNIF_SNINQ_SPEI;
+
+	/**
+	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @return the matching saml peer bindings
+	 */
+	@Override
+	public List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId) {
+
+		return findByC_U_D_SNIF_SNINQ_SPEI(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @return the range of matching saml peer bindings
+	 */
+	@Override
+	public List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId, int start,
+		int end) {
+
+		return findByC_U_D_SNIF_SNINQ_SPEI(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml peer bindings
+	 */
+	@Override
+	public List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId, int start,
+		int end, OrderByComparator<SamlPeerBinding> orderByComparator) {
+
+		return findByC_U_D_SNIF_SNINQ_SPEI(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching saml peer bindings
+	 */
+	@Override
+	public List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId, int start,
+		int end, OrderByComparator<SamlPeerBinding> orderByComparator,
+		boolean useFinderCache) {
+
+		samlNameIdFormat = Objects.toString(samlNameIdFormat, "");
+		samlNameIdNameQualifier = Objects.toString(samlNameIdNameQualifier, "");
+		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
+				finderArgs = new Object[] {
+					companyId, userId, deleted, samlNameIdFormat,
+					samlNameIdNameQualifier, samlPeerEntityId
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
+			finderArgs = new Object[] {
+				companyId, userId, deleted, samlNameIdFormat,
+				samlNameIdNameQualifier, samlPeerEntityId, start, end,
+				orderByComparator
+			};
+		}
+
+		List<SamlPeerBinding> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlPeerBinding>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (SamlPeerBinding samlPeerBinding : list) {
+					if ((companyId != samlPeerBinding.getCompanyId()) ||
+						(userId != samlPeerBinding.getUserId()) ||
+						(deleted != samlPeerBinding.isDeleted()) ||
+						!samlNameIdFormat.equals(
+							samlPeerBinding.getSamlNameIdFormat()) ||
+						!samlNameIdNameQualifier.equals(
+							samlPeerBinding.getSamlNameIdNameQualifier()) ||
+						!samlPeerEntityId.equals(
+							samlPeerBinding.getSamlPeerEntityId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					8 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(8);
+			}
+
+			sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_USERID_2);
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_DELETED_2);
+
+			boolean bindSamlNameIdFormat = false;
+
+			if (samlNameIdFormat.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_3);
+			}
+			else {
+				bindSamlNameIdFormat = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_2);
+			}
+
+			boolean bindSamlNameIdNameQualifier = false;
+
+			if (samlNameIdNameQualifier.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
+			}
+			else {
+				bindSamlNameIdNameQualifier = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
+			}
+
+			boolean bindSamlPeerEntityId = false;
+
+			if (samlPeerEntityId.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_3);
+			}
+			else {
+				bindSamlPeerEntityId = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(SamlPeerBindingModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(userId);
+
+				queryPos.add(deleted);
+
+				if (bindSamlNameIdFormat) {
+					queryPos.add(samlNameIdFormat);
+				}
+
+				if (bindSamlNameIdNameQualifier) {
+					queryPos.add(samlNameIdNameQualifier);
+				}
+
+				if (bindSamlPeerEntityId) {
+					queryPos.add(samlPeerEntityId);
+				}
+
+				list = (List<SamlPeerBinding>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml peer binding
+	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
+	 */
+	@Override
+	public SamlPeerBinding findByC_U_D_SNIF_SNINQ_SPEI_First(
+			long companyId, long userId, boolean deleted,
+			String samlNameIdFormat, String samlNameIdNameQualifier,
+			String samlPeerEntityId,
+			OrderByComparator<SamlPeerBinding> orderByComparator)
+		throws NoSuchPeerBindingException {
+
+		SamlPeerBinding samlPeerBinding = fetchByC_U_D_SNIF_SNINQ_SPEI_First(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, orderByComparator);
+
+		if (samlPeerBinding != null) {
+			return samlPeerBinding;
+		}
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", userId=");
+		sb.append(userId);
+
+		sb.append(", deleted=");
+		sb.append(deleted);
+
+		sb.append(", samlNameIdFormat=");
+		sb.append(samlNameIdFormat);
+
+		sb.append(", samlNameIdNameQualifier=");
+		sb.append(samlNameIdNameQualifier);
+
+		sb.append(", samlPeerEntityId=");
+		sb.append(samlPeerEntityId);
+
+		sb.append("}");
+
+		throw new NoSuchPeerBindingException(sb.toString());
+	}
+
+	/**
+	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
+	 */
+	@Override
+	public SamlPeerBinding fetchByC_U_D_SNIF_SNINQ_SPEI_First(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId,
+		OrderByComparator<SamlPeerBinding> orderByComparator) {
+
+		List<SamlPeerBinding> list = findByC_U_D_SNIF_SNINQ_SPEI(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml peer binding
+	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
+	 */
+	@Override
+	public SamlPeerBinding findByC_U_D_SNIF_SNINQ_SPEI_Last(
+			long companyId, long userId, boolean deleted,
+			String samlNameIdFormat, String samlNameIdNameQualifier,
+			String samlPeerEntityId,
+			OrderByComparator<SamlPeerBinding> orderByComparator)
+		throws NoSuchPeerBindingException {
+
+		SamlPeerBinding samlPeerBinding = fetchByC_U_D_SNIF_SNINQ_SPEI_Last(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, orderByComparator);
+
+		if (samlPeerBinding != null) {
+			return samlPeerBinding;
+		}
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", userId=");
+		sb.append(userId);
+
+		sb.append(", deleted=");
+		sb.append(deleted);
+
+		sb.append(", samlNameIdFormat=");
+		sb.append(samlNameIdFormat);
+
+		sb.append(", samlNameIdNameQualifier=");
+		sb.append(samlNameIdNameQualifier);
+
+		sb.append(", samlPeerEntityId=");
+		sb.append(samlPeerEntityId);
+
+		sb.append("}");
+
+		throw new NoSuchPeerBindingException(sb.toString());
+	}
+
+	/**
+	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
+	 */
+	@Override
+	public SamlPeerBinding fetchByC_U_D_SNIF_SNINQ_SPEI_Last(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId,
+		OrderByComparator<SamlPeerBinding> orderByComparator) {
+
+		int count = countByC_U_D_SNIF_SNINQ_SPEI(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<SamlPeerBinding> list = findByC_U_D_SNIF_SNINQ_SPEI(
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param samlPeerBindingId the primary key of the current saml peer binding
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saml peer binding
+	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
+	 */
+	@Override
+	public SamlPeerBinding[] findByC_U_D_SNIF_SNINQ_SPEI_PrevAndNext(
+			long samlPeerBindingId, long companyId, long userId,
+			boolean deleted, String samlNameIdFormat,
+			String samlNameIdNameQualifier, String samlPeerEntityId,
+			OrderByComparator<SamlPeerBinding> orderByComparator)
+		throws NoSuchPeerBindingException {
+
+		samlNameIdFormat = Objects.toString(samlNameIdFormat, "");
+		samlNameIdNameQualifier = Objects.toString(samlNameIdNameQualifier, "");
+		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
+
+		SamlPeerBinding samlPeerBinding = findByPrimaryKey(samlPeerBindingId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SamlPeerBinding[] array = new SamlPeerBindingImpl[3];
+
+			array[0] = getByC_U_D_SNIF_SNINQ_SPEI_PrevAndNext(
+				session, samlPeerBinding, companyId, userId, deleted,
+				samlNameIdFormat, samlNameIdNameQualifier, samlPeerEntityId,
+				orderByComparator, true);
+
+			array[1] = samlPeerBinding;
+
+			array[2] = getByC_U_D_SNIF_SNINQ_SPEI_PrevAndNext(
+				session, samlPeerBinding, companyId, userId, deleted,
+				samlNameIdFormat, samlNameIdNameQualifier, samlPeerEntityId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SamlPeerBinding getByC_U_D_SNIF_SNINQ_SPEI_PrevAndNext(
+		Session session, SamlPeerBinding samlPeerBinding, long companyId,
+		long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId,
+		OrderByComparator<SamlPeerBinding> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(8);
+		}
+
+		sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_USERID_2);
+
+		sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_DELETED_2);
+
+		boolean bindSamlNameIdFormat = false;
+
+		if (samlNameIdFormat.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_3);
+		}
+		else {
+			bindSamlNameIdFormat = true;
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_2);
+		}
+
+		boolean bindSamlNameIdNameQualifier = false;
+
+		if (samlNameIdNameQualifier.isEmpty()) {
+			sb.append(
+				_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
+		}
+		else {
+			bindSamlNameIdNameQualifier = true;
+
+			sb.append(
+				_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
+		}
+
+		boolean bindSamlPeerEntityId = false;
+
+		if (samlPeerEntityId.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_3);
+		}
+		else {
+			bindSamlPeerEntityId = true;
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(SamlPeerBindingModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(userId);
+
+		queryPos.add(deleted);
+
+		if (bindSamlNameIdFormat) {
+			queryPos.add(samlNameIdFormat);
+		}
+
+		if (bindSamlNameIdNameQualifier) {
+			queryPos.add(samlNameIdNameQualifier);
+		}
+
+		if (bindSamlPeerEntityId) {
+			queryPos.add(samlPeerEntityId);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						samlPeerBinding)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<SamlPeerBinding> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 */
+	@Override
+	public void removeByC_U_D_SNIF_SNINQ_SPEI(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId) {
+
+		for (SamlPeerBinding samlPeerBinding :
+				findByC_U_D_SNIF_SNINQ_SPEI(
+					companyId, userId, deleted, samlNameIdFormat,
+					samlNameIdNameQualifier, samlPeerEntityId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(samlPeerBinding);
+		}
+	}
+
+	/**
+	 * Returns the number of saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param deleted the deleted
+	 * @param samlNameIdFormat the saml name ID format
+	 * @param samlNameIdNameQualifier the saml name ID name qualifier
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @return the number of matching saml peer bindings
+	 */
+	@Override
+	public int countByC_U_D_SNIF_SNINQ_SPEI(
+		long companyId, long userId, boolean deleted, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlPeerEntityId) {
+
+		samlNameIdFormat = Objects.toString(samlNameIdFormat, "");
+		samlNameIdNameQualifier = Objects.toString(samlNameIdNameQualifier, "");
+		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
+
+		FinderPath finderPath = _finderPathCountByC_U_D_SNIF_SNINQ_SPEI;
+
+		Object[] finderArgs = new Object[] {
+			companyId, userId, deleted, samlNameIdFormat,
+			samlNameIdNameQualifier, samlPeerEntityId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(_SQL_COUNT_SAMLPEERBINDING_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_USERID_2);
+
+			sb.append(_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_DELETED_2);
+
+			boolean bindSamlNameIdFormat = false;
+
+			if (samlNameIdFormat.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_3);
+			}
+			else {
+				bindSamlNameIdFormat = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_2);
+			}
+
+			boolean bindSamlNameIdNameQualifier = false;
+
+			if (samlNameIdNameQualifier.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
+			}
+			else {
+				bindSamlNameIdNameQualifier = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
+			}
+
+			boolean bindSamlPeerEntityId = false;
+
+			if (samlPeerEntityId.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_3);
+			}
+			else {
+				bindSamlPeerEntityId = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(userId);
+
+				queryPos.add(deleted);
+
+				if (bindSamlNameIdFormat) {
+					queryPos.add(samlNameIdFormat);
+				}
+
+				if (bindSamlNameIdNameQualifier) {
+					queryPos.add(samlNameIdNameQualifier);
+				}
+
+				if (bindSamlPeerEntityId) {
+					queryPos.add(samlPeerEntityId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_COMPANYID_2 =
+			"samlPeerBinding.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_USERID_2 =
+		"samlPeerBinding.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_DELETED_2 =
+		"samlPeerBinding.deleted = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_2 =
+			"samlPeerBinding.samlNameIdFormat = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDFORMAT_3 =
+			"(samlPeerBinding.samlNameIdFormat IS NULL OR samlPeerBinding.samlNameIdFormat = '') AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_2 =
+			"samlPeerBinding.samlNameIdNameQualifier = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLNAMEIDNAMEQUALIFIER_3 =
+			"(samlPeerBinding.samlNameIdNameQualifier IS NULL OR samlPeerBinding.samlNameIdNameQualifier = '') AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_2 =
+			"samlPeerBinding.samlPeerEntityId = ?";
+
+	private static final String
+		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_3 =
+			"(samlPeerBinding.samlPeerEntityId IS NULL OR samlPeerBinding.samlPeerEntityId = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
 	private FinderPath
 		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
@@ -1557,6 +2421,51 @@ public class SamlPeerBindingPersistenceImpl
 		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByC_U_D_SNIF_SNINQ_SPEI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_U_D_SNIF_SNINQ_SPEI",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), String.class.getName(),
+				String.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {
+				"companyId", "userId", "deleted", "samlNameIdFormat",
+				"samlNameIdNameQualifier", "samlPeerEntityId"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByC_U_D_SNIF_SNINQ_SPEI",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), String.class.getName(),
+					String.class.getName(), String.class.getName()
+				},
+				new String[] {
+					"companyId", "userId", "deleted", "samlNameIdFormat",
+					"samlNameIdNameQualifier", "samlPeerEntityId"
+				},
+				true);
+
+		_finderPathCountByC_U_D_SNIF_SNINQ_SPEI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_U_D_SNIF_SNINQ_SPEI",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), String.class.getName(),
+				String.class.getName(), String.class.getName()
+			},
+			new String[] {
+				"companyId", "userId", "deleted", "samlNameIdFormat",
+				"samlNameIdNameQualifier", "samlPeerEntityId"
+			},
+			false);
 
 		_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
 			new FinderPath(

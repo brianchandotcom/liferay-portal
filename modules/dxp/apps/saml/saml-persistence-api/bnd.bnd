@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML Persistence API
 Bundle-SymbolicName: com.liferay.saml.persistence.api
-Bundle-Version: 8.0.4
+Bundle-Version: 8.1.0
 Export-Package:\
 	com.liferay.saml.persistence.exception,\
 	com.liferay.saml.persistence.model,\

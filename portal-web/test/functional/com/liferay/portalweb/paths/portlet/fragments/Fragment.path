@@ -230,7 +230,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_HEADER</td>
-	<td>//${key_headingLevel}[contains(@class,'component-${key_fragmentName}')]</td>
+	<td>xpath=(//${key_headingLevel}[contains(@class,'component-${key_fragmentName}')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--${key_textColor})')]</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--${key_textColor})')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>

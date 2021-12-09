@@ -1481,4 +1481,152 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141750. View the Sign In page elements"
+    @priority = "5"
+    test ViewSignInPageElements {
+        task ("Go to Masterclass Site") {
+            ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+        }
+
+        task ("Go to Sign In Page") {
+            Masterclass.gotoNavItem(navItem = "Sign Out");
+
+			Click(locator1 = "Masterclass#NAV_TAB");
+		}
+
+		task ("Assert the Sign In Elements are Present") {
+        	AssertElementPresent(
+				labelTitle = "Email Address",
+				locator1 = "Masterclass#SIGN_IN_FORM");
+
+        	AssertElementPresent(
+				labelTitle = "Password",
+				locator1 = "Masterclass#SIGN_IN_FORM");
+
+        	AssertElementPresent(
+				labelOption = "Create Account",
+				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+
+        	AssertElementPresent(
+				labelOption = "Forgot Password",
+				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+
+			AssertElementPresent(
+				locator1 = "TextInput#INPUT_ID",
+				inputFieldId = "rememberMe");
+
+        	AssertElementPresent(locator1 = "Button#SIGN_IN");
+        }
+    }   
+
+    @description = "This is a test for LPS-141750. Masterclass Sign In"
+    @priority = "5"
+    test MasterclassSignIn {
+		task ("Go to Masterclass Site") {
+            ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+        }
+
+        task ("Sign Out and Sign In") {
+            Masterclass.gotoNavItem(navItem = "Sign Out");
+		
+        	Masterclass.signIn();
+		}
+
+		task ("Assert the Masterclass Welcome Page presence and the User Name") {
+			AssertElementPresent(
+				key_title = "Welcome to Masterclass",
+				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
+
+			AssertElementPresent(
+				locator1 = "Masterclass#LABEL_NAME",
+				labelName = "Test");
+		}
+    }
+
+    @description = "This is a test for LPS-141750. Masterclass Sign Out"
+    @priority = "4"
+    test MasterclassSignOut {
+		task ("Go to Masterclass Site") {
+            ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+        }
+
+        task ("Sign Out and Assert the Sign In Button is presente") {
+            Masterclass.gotoNavItem(navItem = "Sign Out");
+
+			AssertElementPresent(
+				locator1 = "Masterclass#LABEL_NAME",
+				labelName = "Sign In");
+		}
+    }
+
+    @description = "This is a test for LPS-141750. Create Account in Masterclass"
+    @priority = "4"
+    test CreateAccountInMasterclass {
+		task ("Disable Captcha to Create a New User") {
+			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
+		}
+
+		task ("Go to Masterclass Site") {
+            ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+        }
+
+        task ("Go to Sign In Page") {
+            Masterclass.gotoNavItem(navItem = "Sign Out");
+
+			Click(locator1 = "Masterclass#NAV_TAB");
+		}
+
+		task ("Create a New Account") {
+			Masterclass.createAccount(
+				screenName = "User",
+				emailAddress = "user@liferay.com",
+				firstName = "User",
+				lastName = "User",
+				password = "test");
+		}
+    }
+
+    @description = "This is a test for LPS-141750. Forgot Password in Masterclass"
+    @priority = "4"
+    test ForgotPasswordInMasterclass {
+		task ("Disable Captcha to Create a New User") {
+			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
+		}
+
+		task ("Go to Masterclass Site") {
+            ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+        }
+
+        task ("Go to Sign In Page") {
+            Masterclass.gotoNavItem(navItem = "Sign Out");
+
+			Click(locator1 = "Masterclass#NAV_TAB");
+		}
+
+		task ("Go to Forgot Password") {
+			Click(
+				labelOption = "Forgot Password",
+				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+		}
+		
+		task ("Fill the Email and Go To Next") {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "test@liferay.com");
+
+			Click(locator1 = "Button#SUBMIT");
+		}
+
+		task ("Answer the Question, Submit and Assert the Success Message")	{
+			Type(
+				locator1 = "Masterclass#FORM_GROUP",
+				value1 = "test");
+			
+			Click(locator1 = "Button#SUBMIT");
+
+			Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+		}
+    }
+
 }

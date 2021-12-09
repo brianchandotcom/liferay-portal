@@ -101,7 +101,8 @@ public class PortalFragmentBundleWatcher {
 					for (Bundle bundle : bundleContext.getBundles()) {
 						if (Objects.equals(
 								bundle.getSymbolicName(),
-								hostBundleSymbolicName)) {
+								hostBundleSymbolicName) &&
+							_isHostBundleStateValid(bundle)) {
 
 							hostBundles.add(bundle);
 
@@ -149,7 +150,7 @@ public class PortalFragmentBundleWatcher {
 							}
 						}
 
-						if (needRefresh) {
+						if (needRefresh && _isHostBundleStateValid(bundle)) {
 							hostBundles.add(bundle);
 						}
 					}
@@ -216,6 +217,19 @@ public class PortalFragmentBundleWatcher {
 		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
 
 		if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) != 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isHostBundleStateValid(Bundle bundle) {
+		int hostBundleState = bundle.getState();
+
+		if ((hostBundleState == Bundle.ACTIVE) ||
+			(hostBundleState == Bundle.RESOLVED) ||
+			(hostBundleState == Bundle.STARTING)) {
+
 			return true;
 		}
 

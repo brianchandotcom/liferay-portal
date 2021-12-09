@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {useContext} from 'react';
 import {AppContext} from '../context';
 import ActivationKeys from './ActivationKeys';
@@ -9,8 +8,8 @@ const Pages = () => {
 	const [{page, project, userAccount}] = useContext(AppContext);
 
 	if (page === 'overview') {
-		if (project) {
-			return <ActivationKeys.EnterpriseSearch accountKey={project.accountKey} />;
+		if (userAccount) {
+			return <Overview userAccount={userAccount} />;
 		}
 
 		return <ActivationKeys.Skeleton />;

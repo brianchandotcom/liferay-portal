@@ -17,3 +17,22 @@ index c46588222f89..2abb403447a0 100644
  }
 +/* @generated */
 \ No newline at end of file
+diff --git a/javax/el/BeanELResolver.java b/javax/el/BeanELResolver.java
+index ea4418a320af..bae8fa0fb6bb 100644
+--- a/javax/el/BeanELResolver.java
++++ b/javax/el/BeanELResolver.java
+@@ -131,7 +131,7 @@ public class BeanELResolver extends ELResolver {
+ 
+     private boolean isReadOnly;
+ 
+-    private static final SoftConcurrentHashMap properties =
++    private final SoftConcurrentHashMap properties =
+                 new SoftConcurrentHashMap();
+ 
+     /*
+@@ -652,3 +652,4 @@ public class BeanELResolver extends ELResolver {
+     }
+ }
+ 
++/* @generated */
+\ No newline at end of file

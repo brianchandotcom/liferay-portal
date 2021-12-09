@@ -24,6 +24,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CanModuleBeShutdownDuringReplicateSession {
 		property cluster.session.replicated = "true";

@@ -118,6 +118,8 @@ public class SXPBlueprintResourceImpl
 				sxpBlueprint.getTitle(
 					contextAcceptLanguage.getPreferredLocale(), true),
 				".json\"")
+		).header(
+			"Content-Type", "application/json"
 		).build();
 	}
 

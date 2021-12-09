@@ -589,9 +589,11 @@ definition {
 			key_orderAuthor = "Test Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-		Click(
-			key_text = "Shipments",
-			locator1 = "Button#ANY");
+		ClickNoError(
+			key_entryName = "U-Joint",
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Shipments");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

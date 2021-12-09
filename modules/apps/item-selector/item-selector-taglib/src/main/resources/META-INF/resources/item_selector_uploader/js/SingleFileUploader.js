@@ -122,7 +122,7 @@ function SingleFileUploader({
 						}),
 					})}
 				>
-					<input {...getInputProps()} />
+					<input disabled={progress} {...getInputProps()} />
 
 					{progress ? (
 						<ClayLayout.ContentRow

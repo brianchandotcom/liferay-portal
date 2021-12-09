@@ -19,6 +19,8 @@ export const PINS_ADMIN_ENDPOINT_BASE =
 	'/o/headless-commerce-admin-catalog/v1.0';
 export const PINS_FRONTSTORE_ENDPOINT_BASE =
 	'/o/headless-commerce-delivery-catalog/v1.0';
+export const CART_FRONTSTORE_ENDPOINT_BASE =
+	'/o/headless-commerce-delivery-cart/v1.0/carts';
 
 export function loadPins(productId, channelId = null, accountId) {
 	const url = new URL(
@@ -189,4 +191,17 @@ export function getMappedProducts(
 
 			return response.json();
 		})
+}
+
+export function getCartItems(cartId, skuId) {
+	const url = new URL(
+		`${CART_FRONTSTORE_ENDPOINT_BASE}/${cartId}/items`,
+		themeDisplay.getPortalURL()
+	);
+
+	url.searchParams.set('skuId', skuId);
+
+	return fetch(url, {
+		headers: HEADERS,
+	}).then((response) => response.json());
 }

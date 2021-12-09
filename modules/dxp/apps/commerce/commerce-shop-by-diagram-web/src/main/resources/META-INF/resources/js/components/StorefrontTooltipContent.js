@@ -10,10 +10,13 @@
  */
 
 import ClayLabel from '@clayui/label';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import AddToCart from 'commerce-frontend-js/components/add_to_cart/AddToCart';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
+import {getCartItems} from '../utilities/data';
 import {
 	formatProductOptions,
 	getProductName,
@@ -32,9 +35,39 @@ function SkuContent({
 	productBaseURL,
 	quantity,
 	quantityDetails,
+	skuId,
 }) {
+	const isMounted = useIsMounted();
 	const productURL = getProductURL(productBaseURL, product.urls);
 	const productName = getProductName(product);
+	const [inCart, setInCart] = useState(false);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		if (!cartId) {
+			setInCart(false);
+
+			setLoading(false);
+
+			return;
+		}
+
+		setLoading(true);
+
+		getCartItems(cartId, skuId)
+			.then((jsonResponse) => {
+				if (isMounted()) {
+					setInCart(Boolean(jsonResponse.items?.length));
+
+					setLoading(false);
+				}
+			})
+			.catch(() => {
+				if (isMounted()) {
+					setLoading(false);
+				}
+			});
+	}, [cartId, isMounted, skuId]);
 
 	return (
 		<div className="diagram-storefront-tooltip row">
@@ -73,43 +106,51 @@ function SkuContent({
 				</p>
 			</div>
 
-			<div className="col-auto text-right">
-				<Price className="mb-1" {...product.price} />
+			<div className="col-3 text-right">
+				{loading ? (
+					<ClayLoadingIndicator className="my-3" small />
+				) : (
+					<>
+						<Price className="mb-1" {...product.price} />
 
-				<AddToCart
-					accountId={accountId}
-					cartId={cartId}
-					cartUUID={orderUUID}
-					channel={{
-						currencyCode,
-						groupId: channelGroupId,
-						id: channelId,
-					}}
-					cpInstance={{
-						inCart: false,
-						options: formatProductOptions(
-							product.options,
-							product.productOptions
-						),
-						quantity,
-						skuId: product.skuId,
-					}}
-					disabled={product.availability.stockQuantity < 1}
-					settings={{
-						alignment: 'full-width',
-						iconOnly: true,
-						inline: false,
-						quantityDetails: {
-							allowedQuantities:
-								quantityDetails.allowedOrderQuantities,
-							maxQuantity: quantityDetails.maxOrderQuantity,
-							minQuantity: quantityDetails.minOrderQuantity,
-							multipleQuantity:
-								quantityDetails.multipleOrderQuantity,
-						},
-						size: 'sm',
-					}}
-				/>
+						<AddToCart
+							accountId={accountId}
+							cartId={cartId}
+							cartUUID={orderUUID}
+							channel={{
+								currencyCode,
+								groupId: channelGroupId,
+								id: channelId,
+							}}
+							cpInstance={{
+								inCart,
+								options: formatProductOptions(
+									product.options,
+									product.productOptions
+								),
+								quantity,
+								skuId: product.skuId,
+							}}
+							disabled={product.availability.stockQuantity < 1}
+							settings={{
+								alignment: 'full-width',
+								iconOnly: true,
+								inline: false,
+								quantityDetails: {
+									allowedQuantities:
+										quantityDetails.allowedOrderQuantities,
+									maxQuantity:
+										quantityDetails.maxOrderQuantity,
+									minQuantity:
+										quantityDetails.minOrderQuantity,
+									multipleQuantity:
+										quantityDetails.multipleOrderQuantity,
+								},
+								size: 'sm',
+							}}
+						/>
+					</>
+				)}
 			</div>
 		</div>
 	);
@@ -193,7 +234,8 @@ function StorefrontTooltipContent({
 				product={selectedPin.mappedProduct}
 				productBaseURL={productBaseURL}
 				quantity={product.quantity}
-				quantityDetails={product?.productConfiguration || {}}
+				quantityDetails={product.productConfiguration || {}}
+				skuId={product.skuId}
 			/>
 		</div>
 	);

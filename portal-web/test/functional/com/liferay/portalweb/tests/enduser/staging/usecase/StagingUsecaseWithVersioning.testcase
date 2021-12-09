@@ -361,15 +361,9 @@ definition {
 			pageName = "Page Revision Page",
 			siteName = "Site Name");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Blogs",
-			portletOption = "Look and Feel Configuration");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.selectApplicationDecorator(decorator = "Barebone");
-
-		PortletEntry.save();
+		Portlet.configureApplicationDecorator(
+			decorator = "Barebone",
+			portletName = "Blogs");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page Revision Page",

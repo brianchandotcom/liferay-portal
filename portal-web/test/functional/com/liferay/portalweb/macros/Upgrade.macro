@@ -4248,7 +4248,7 @@ definition {
 			value1 = "Drag applications below to nest them.");
 
 		NestedPortlets.viewPG(
-			portletColumnNumberTo = "1",
+			nestedColumnNumber = "1",
 			portletName = "Web Content Display");
 	}
 
@@ -4743,11 +4743,11 @@ definition {
 			value1 = "Drag applications below to nest them.");
 
 		NestedPortlets.viewPG(
-			portletColumnNumberTo = "1",
+			nestedColumnNumber = "1",
 			portletName = "Web Content Display");
 
 		NestedPortlets.viewPG(
-			portletColumnNumberTo = "1",
+			nestedColumnNumber = "1",
 			portletName = "Blogs");
 	}
 

@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -363,15 +366,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		checkLayoutSetPrototypeLayouts(portletDataContext, modifiedLayouts);
 
 		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet, Sites.SHOW_SITE_NAME,
-			Boolean.TRUE.toString(), "lfr-theme:regular:show-footer",
-			Boolean.TRUE.toString(), "lfr-theme:regular:show-header",
-			Boolean.TRUE.toString(), "lfr-theme:regular:show-header-search",
-			Boolean.TRUE.toString(),
-			"lfr-theme:regular:show-maximize-minimize-application-links",
-			Boolean.FALSE.toString(),
-			"lfr-theme:regular:wrap-widget-page-content",
-			Boolean.TRUE.toString(), "javascript", null);
+			portletDataContext, importedStagedLayoutSet);
 
 		// Last merge time
 
@@ -893,7 +888,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	protected void updateLayoutSetSettingsProperties(
 			PortletDataContext portletDataContext,
-			StagedLayoutSet importedLayoutSet, String... defaultsArray)
+			StagedLayoutSet importedLayoutSet)
 		throws PortalException {
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
@@ -915,7 +910,30 @@ public class StagedLayoutSetStagedModelDataHandler
 			UnicodeProperties importedSettingsUnicodeProperties =
 				stagedLayoutSet.getSettingsProperties();
 
-			Map<String, String> defaultsMap = MapUtil.fromArray(defaultsArray);
+			Theme importedTheme = stagedLayoutSet.getTheme();
+
+			Map<String, ThemeSetting> themeSettings =
+				importedTheme.getConfigurableSettings();
+
+			Set<Map.Entry<String, ThemeSetting>> themeSettingsEntries =
+				themeSettings.entrySet();
+
+			Stream<Map.Entry<String, ThemeSetting>> themeSettingsEntriesStream =
+				themeSettingsEntries.stream();
+
+			Map<String, String> defaultsMap =
+				themeSettingsEntriesStream.collect(
+					Collectors.toMap(
+						entry -> ThemeSettingImpl.namespaceProperty(
+							"regular", entry.getKey()),
+						entry -> {
+							ThemeSetting themeSetting = entry.getValue();
+
+							return themeSetting.getValue();
+						}));
+
+			defaultsMap.put(Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
+			defaultsMap.put("javascript", null);
 
 			for (Map.Entry<String, String> entry : defaultsMap.entrySet()) {
 				String propertyKey = entry.getKey();
@@ -929,8 +947,13 @@ public class StagedLayoutSetStagedModelDataHandler
 						propertyKey, defaultValue);
 
 				if (!Objects.equals(currentValue, importedValue)) {
-					settingsUnicodeProperties.setProperty(
-						propertyKey, importedValue);
+					if (Objects.equals(defaultValue, importedValue)) {
+						settingsUnicodeProperties.remove(propertyKey);
+					}
+					else {
+						settingsUnicodeProperties.setProperty(
+							propertyKey, importedValue);
+					}
 
 					changed = true;
 				}

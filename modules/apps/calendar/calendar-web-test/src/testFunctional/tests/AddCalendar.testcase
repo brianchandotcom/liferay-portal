@@ -230,11 +230,46 @@ definition {
 	}
 
 	@description = "Verify that the user can Enable Ratings on Calendar"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanEnableRatings {
+		CalendarNavigator.gotoMyCalendarsManage();
 
-		// TODO LRQA-71798 CanEnableRatings pending implementation
+		CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "Calendar Name");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Calendar Name");
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "Test Test - Calendar Name",
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular");
+
+		CalendarEvent.viewCalendarRatingNotPresent();
+
+		CalendarMyCalendars.gotoCalendarSettings(calendarName = "Calendar Name");
+
+		CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.viewDetails(
+			calendarName = "Test Test - Calendar Name",
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular");
+
+		CalendarEvent.viewCalendarRatingPresent();
+
 
 	}
 

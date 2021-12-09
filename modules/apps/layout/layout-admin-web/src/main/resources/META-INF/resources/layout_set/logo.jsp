@@ -31,7 +31,19 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 </liferay-ui:error>
 
 <p class="text-muted">
-	<liferay-ui:message key='<%= "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-is-used-instead-of-the-default-enterprise-logo" %>' />
+
+	<%
+	Group group = layoutsAdminDisplayContext.getGroup();
+	%>
+
+	<c:choose>
+		<c:when test="<%= group.isPrivateLayoutsEnabled() %>">
+			<liferay-ui:message key='<%= "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-is-used-instead-of-the-default-enterprise-logo" %>' />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="upload-a-logo-for-pages-that-is-used-instead-of-the-default-enterprise-logo" />
+		</c:otherwise>
+	</c:choose>
 </p>
 
 <c:if test="<%= liveGroup.isLayoutSetPrototype() && !PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO %>">

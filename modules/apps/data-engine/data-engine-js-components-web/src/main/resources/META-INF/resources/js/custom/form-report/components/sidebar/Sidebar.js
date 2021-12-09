@@ -23,6 +23,8 @@ import List from '../list/List';
 import Summary from '../summary/Summary';
 import {SidebarContext} from './SidebarContext';
 
+import './Sidebar.scss';
+
 const SidebarContent = () => {
 	const {
 		field,

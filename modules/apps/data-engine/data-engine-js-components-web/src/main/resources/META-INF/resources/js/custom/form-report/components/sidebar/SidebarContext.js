@@ -35,7 +35,7 @@ const SidebarContextProvider = ({
 			if (
 				isClickOutside(
 					target,
-					'#' + portletNamespace + '-sidebar-reports',
+					'#' + portletNamespace + 'sidebar-reports',
 					'#' + portletNamespace + '-see-more'
 				)
 			) {

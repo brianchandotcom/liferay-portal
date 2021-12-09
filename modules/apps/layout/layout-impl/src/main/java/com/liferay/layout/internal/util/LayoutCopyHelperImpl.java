@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -101,7 +102,16 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		Consumer<Layout> consumer = processedTargetLayout -> {
 			try {
+				List<SegmentsExperience> segmentsExperiences =
+					_segmentsExperienceLocalService.getSegmentsExperiences(
+						sourceLayout.getGroupId(),
+						_portal.getClassNameId(Layout.class),
+						sourceLayout.getPlid());
+
 				_copyLayoutPageTemplateStructure(
+					ListUtil.toLongArray(
+						segmentsExperiences,
+						SegmentsExperience.SEGMENTS_EXPERIENCE_ID_ACCESSOR),
 					sourceLayout, processedTargetLayout);
 			}
 			catch (Exception exception) {
@@ -251,7 +261,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyLayoutPageTemplateStructure(
-			Layout sourceLayout, Layout targetLayout)
+			long[] segmentsExperiencesIds, Layout sourceLayout,
+			Layout targetLayout)
 		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -309,10 +320,12 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					ServiceContextThreadLocal.getServiceContext());
 		}
 
-		Map<Long, Long> segmentsExperienceIds = _getSegmentsExperienceIds(
-			sourceLayout, targetLayout);
+		Map<Long, Long> segmentsExperienceIdsMap = _getSegmentsExperienceIds(
+			segmentsExperiencesIds, sourceLayout, targetLayout);
 
-		for (Map.Entry<Long, Long> entry : segmentsExperienceIds.entrySet()) {
+		for (Map.Entry<Long, Long> entry :
+				segmentsExperienceIdsMap.entrySet()) {
+
 			String data = layoutPageTemplateStructure.getData(entry.getKey());
 
 			if (Validator.isNull(data)) {
@@ -640,25 +653,20 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private Map<Long, Long> _getSegmentsExperienceIds(
-		Layout sourceLayout, Layout targetLayout) {
+		long[] segmentsExperiencesIds, Layout sourceLayout,
+		Layout targetLayout) {
 
-		Map<Long, Long> segmentsExperienceIds = new HashMap<>();
+		Map<Long, Long> segmentsExperienceIdsMap = new HashMap<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		List<SegmentsExperience> segmentsExperiences =
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				sourceLayout.getGroupId(), _portal.getClassNameId(Layout.class),
-				sourceLayout.getPlid());
-
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+		for (long segmentsExperienceId : segmentsExperiencesIds) {
 			if (sourceLayout.isDraftLayout() &&
 				(sourceLayout.getClassPK() == targetLayout.getPlid())) {
 
-				segmentsExperienceIds.put(
-					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getSegmentsExperienceId());
+				segmentsExperienceIdsMap.put(
+					segmentsExperienceId, segmentsExperienceId);
 
 				continue;
 			}
@@ -669,6 +677,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				plid = targetLayout.getClassPK();
 			}
 
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperienceId);
+
 			SegmentsExperience existingSegmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperience.getGroupId(),
@@ -676,7 +688,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					segmentsExperience.getPriority());
 
 			if (existingSegmentsExperience != null) {
-				segmentsExperienceIds.put(
+				segmentsExperienceIdsMap.put(
 					segmentsExperience.getSegmentsExperienceId(),
 					existingSegmentsExperience.getSegmentsExperienceId());
 
@@ -704,16 +716,16 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				newSegmentsExperience);
 
-			segmentsExperienceIds.put(
+			segmentsExperienceIdsMap.put(
 				segmentsExperience.getSegmentsExperienceId(),
 				newSegmentsExperience.getSegmentsExperienceId());
 		}
 
-		segmentsExperienceIds.put(
+		segmentsExperienceIdsMap.put(
 			SegmentsExperienceConstants.ID_DEFAULT,
 			SegmentsExperienceConstants.ID_DEFAULT);
 
-		return segmentsExperienceIds;
+		return segmentsExperienceIdsMap;
 	}
 
 	private boolean _hasLayoutClassedModelUsage(

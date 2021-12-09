@@ -243,9 +243,36 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CategorizationInOotbTable {
+		task("Go to Documents and Media and clik on Add Button and File Upload"){
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 
-		// TODO LPS-131793 CategorizationInOotbTable pending implementation
+			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "File Upload");
+		}
+
+		task("Go to categorization and check if Topic, Audience and Stage are present"){
+			Panel.expandPanel(panel = "Categorization");
+		}
+
+		task("Check if the words Topic, Audience and Stage are shown"){
+			AssertTextPresent(
+				key_fieldLabel = "Topic",
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
+				value1 = "Topic");
+
+			AssertTextPresent(
+				key_fieldLabel = "Audience",
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
+				value1 = "Audience");
+
+			AssertTextPresent(
+				key_fieldLabel = "Stage",
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
+				value1 = "Stage");
+		}
 	}
 
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
@@ -2499,9 +2526,34 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NewVocabularyGlobalInOOTBTable {
+		task("Add a Global Internal Vocabulary"){
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = "Vocabulary 1",
+				visibility = "internal");
+		}
 
-		// TODO LPS-131793 NewVocabularyGlobalInOOTBTable pending implementation
+		task("Choose the site of interest") {
+			SitePages.openPagesAdmin(siteURLKey = "global");	
+		}
 
+		task("Go to Documents and Media and clik on Add Button and File Upload"){
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "File Upload");
+		}
+
+		task("Check if the Vocabulary appears in the list"){
+			Panel.expandPanel(panel = "Categorization");
+
+			AssertTextPresent(
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
+				value1 = "Vocabulary 1");
+		}	
 	}
 
 	@description = "LPS-131793: Given the categorization section in Documents and Media
@@ -2510,9 +2562,34 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NewVocabularyInternalInOOTBTable {
+		task("Add a Site Internal Vocabulary"){
+			JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary 1",
+					visibility = "internal");
+		}	
 
-		// TODO LPS-131793 NewVocabularyInternalInOOTBTable pending implementation
+		task("Choose the site of interest") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");	
+		}
 
+		task("Go to Documents and Media and clik on Add Button and File Upload"){
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "File Upload");
+		}
+
+		task("Check if the Vocabulary appears in the list"){
+			Panel.expandPanel(panel = "Categorization");
+
+			AssertTextPresent(
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
+				value1 = "Vocabulary 1");
+		}
 	}
 
 	@description = "LPS-133354: Given The Extension filter modal

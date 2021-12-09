@@ -21,14 +21,14 @@ export default function Sidebar() {
 		DiagramBuilderContext
 	);
 	const [errors, setErrors] = useState({
-		id: false,
+		id: {duplicated: false, empty: false},
 		label: false,
 	});
 
 	useEffect(() => {
 		setSelectedNodeNewId(null);
 		setErrors({
-			id: false,
+			id: {duplicated: false, empty: false},
 			label: false,
 		});
 	}, [selectedNode?.id, setSelectedNodeNewId]);
@@ -40,7 +40,7 @@ export default function Sidebar() {
 					setSelectedNode(null);
 					setSelectedNodeNewId(null);
 					setErrors({
-						id: false,
+						id: {duplicated: false, empty: false},
 						label: false,
 					});
 				}}

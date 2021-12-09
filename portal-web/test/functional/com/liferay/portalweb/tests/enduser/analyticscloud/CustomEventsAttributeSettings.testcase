@@ -538,4 +538,119 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10016 | Test Summary: Rename Attribute that already exists"
+	@priority = "4"
+	test RenameToExistingAttributeName {
+		var attributeName1 = "color1";
+
+		var attributeName2 = "color2";
+
+		var attributeName3 = "color3";
+
+		var attributeNameList = "${attributeName1},${attributeName2},${attributeName3}";
+
+		var attributeValueList = "blue,red,black";
+
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributeNameList}",
+				attributesValue = "${attributeValueList}",
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigation to attributes tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+		task ("Edit the new attribute") {
+			ACNavigation.openItem(itemName = "${attributeName2}");
+
+			ACUtils.clickAnyButton(button = "Edit");
+		}
+
+		task ("Change the display name of the attribute") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${attributeName2} Display Name");
+		}
+
+		task ("Back to Event Attributes and Navigation to attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Attributes");
+		}
+
+		task ("Edit the new attribute") {
+			ACNavigation.openItem(itemName = "${attributeName1}");
+
+			ACUtils.clickAnyButton(button = "Edit");
+		}
+
+		task ("Rename to an existing display name") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${attributeName3}");
+		}
+
+		task ("Check that the display name cannot be renamed to an existing one") {
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An attribute already exists with that display name. Please enter a different display name.");
+		}
+
+		task ("Rename to an existing display name") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${attributeName2} Display Name");
+		}
+
+		task ("Check that the display name cannot be renamed to an existing one") {
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An attribute already exists with that display name. Please enter a different display name.");
+		}
+	}
+
 }

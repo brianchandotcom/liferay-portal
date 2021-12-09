@@ -9,6 +9,18 @@
  * distribution rights of the Software.
  */
 
+function isIdDuplicated(elements, id) {
+	let duplicated = false;
+
+	elements.map((element) => {
+		if (element.id === id) {
+			duplicated = true;
+		}
+	});
+
+	return duplicated;
+}
+
 function getModalInfo(nodeType) {
 	if (nodeType === 'end') {
 		return {
@@ -39,4 +51,4 @@ function getModalInfo(nodeType) {
 	}
 }
 
-export {getModalInfo};
+export {getModalInfo, isIdDuplicated};

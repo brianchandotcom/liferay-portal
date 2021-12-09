@@ -459,7 +459,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136947. It checks that unsupported files cannot be uploaded to Blogs."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotUploadUnsupportedFilesToBlogs {
 		property portal.acceptance = "false";
@@ -1254,7 +1254,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a document."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
 		property portal.acceptance = "false";
@@ -1264,7 +1264,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136943. It checks that only 'File Upload' and 'Folder' options appear when adding images."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingImages {
 		property portal.acceptance = "false";
@@ -1274,7 +1274,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136944. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a video."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingVideos {
 		property portal.acceptance = "false";

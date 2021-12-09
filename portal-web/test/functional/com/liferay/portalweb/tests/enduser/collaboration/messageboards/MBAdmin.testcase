@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136921. It checks that the ban length and expiration of a user can be changed."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanChangeBanLengthAndExpiration {
 		property portal.acceptance = "false";
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136923. It checks that a user can be unbanned."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUnbanUser {
 		property portal.acceptance = "false";

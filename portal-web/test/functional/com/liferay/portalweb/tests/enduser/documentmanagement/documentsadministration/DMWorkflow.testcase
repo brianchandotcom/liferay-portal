@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanRemoveWorkflowFromFolder {
 		property portal.acceptance = "false";

@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136940. It checks that a comment in a thread submission can be modified."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanModifyCommentInThreadSubmission {
 		property portal.acceptance = "false";
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136941. It checks that a thread submission can be updated."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanModifyThreadSubmission {
 		property portal.acceptance = "false";

@@ -714,8 +714,12 @@ definition {
 	}
 
 	@description = "Create a Web Behavior using 'has not' segment"
+	@ignore = "true"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingHasNot {
+
+		// AC Bug Ticket: LRAC-10060
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -864,10 +868,13 @@ definition {
 	}
 
 	@description = "Add segment using a web behavior 'since' some time"
+	@ignore = "true"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
+
+		// AC Bug Ticket: LRAC-10060
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -946,8 +953,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9223 | Test Summary: Create a Web Behavior Segment of Viewing a Blog"
+	@ignore = "true"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingBlog {
+
+		// AC Bug Ticket: LRAC-10060
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

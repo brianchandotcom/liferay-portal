@@ -38,10 +38,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
+	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesBlogExists {
 		property portal.upstream = "quarantine";
 
+		// AC Bug Ticket: LRAC-10060
 		// AC Refactor: It is not possible to perform the assert because this test presents timing problems.
 		// AC Refactor ticket: LRAC-9341
 
@@ -150,9 +152,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
+	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -208,9 +213,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
+	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -354,9 +362,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"
+	@ignore = "true"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedBrowser {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -406,9 +417,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8385 | Test Summary: Blogs views by technology card shows views by the expected device"
+	@ignore = "true"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedDevice {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -452,9 +466,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
+	@ignore = "true"
 	@priority = "5"
 	test CanBlogsListSearchable {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -494,9 +511,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
+	@ignore = "true"
 	@priority = "5"
 	test CanNavigatesToBlogsOverviewPage {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -609,9 +629,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Blogs known individuals list shows individuals who have viewed the blog"
+	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var usernameList = "ac,dxp,liferay";
 		var emailList = "ac@liferay.com,dxp@liferay.com,liferay@liferay.com";
@@ -681,9 +704,12 @@ definition {
 	}
 
 	@description = "View all blogs in the property in assets"
+	@ignore = "true"
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
 

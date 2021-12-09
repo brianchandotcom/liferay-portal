@@ -104,9 +104,12 @@ definition {
 	}
 
 	@description = "Delete a dynamic segment"
+	@ignore = "true"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		ACUtils.createBlogsAndAddToPage();
 

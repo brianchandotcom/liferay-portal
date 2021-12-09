@@ -36,9 +36,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSegmentOverviewShowsCriteria {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		task ("Create Blog and Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
@@ -103,10 +106,13 @@ definition {
 	}
 
 	@description = "Edit a dynamic segment and check the edits are saved"
+	@ignore = "true"
 	@priority = "5"
 	test CanEditDynamicSegmentCheckEditSaved {
 		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -210,9 +216,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
+	@ignore = "true"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -281,9 +290,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
+	@ignore = "true"
 	@priority = "5"
 	test CanRenameIndividualsSegment {
 		property portal.upstream = "quarantine";
+
+		// AC Bug Ticket: LRAC-10060
 
 		ACUtils.createBlogsAndAddToPage();
 

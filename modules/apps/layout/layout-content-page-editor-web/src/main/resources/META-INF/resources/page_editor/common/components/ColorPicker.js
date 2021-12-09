@@ -131,7 +131,7 @@ const ColorPicker = ({
 							}}
 						/>
 
-						{label}
+						<span className="text-truncate">{label}</span>
 					</span>
 				</ClayButton>
 			) : (

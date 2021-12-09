@@ -45,7 +45,7 @@ html#{$cadmin-selector} {
 				&-splotch {
 					border: 1px solid $cadmin-gray-300;
 					height: 20px;
-					width: 20px;
+					min-width: 20px;
 				}
 			}
 		}

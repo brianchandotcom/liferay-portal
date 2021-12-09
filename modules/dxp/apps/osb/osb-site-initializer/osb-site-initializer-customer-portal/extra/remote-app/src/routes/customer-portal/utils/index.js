@@ -7,10 +7,12 @@ const getYearlyTerms = ({endDate, startDate}) => {
 			.fill()
 			.map((_, index, array) => {
 				const currentYear = yearStartDate + index;
-                const yearNumEndDate = currentYear + 1;
+				const yearNumEndDate = currentYear + 1;
 
-				const yearNumStartDate = new Date(startDate).setFullYear(currentYear);
-				
+				const yearNumStartDate = new Date(startDate).setFullYear(
+					currentYear
+				);
+
 				const daysEndDate = new Date(startDate).getDate();
 				const monthsEndDate = new Date(startDate).getMonth();
 
@@ -44,4 +46,4 @@ const getYearlyTerms = ({endDate, startDate}) => {
 	return [{endDate, startDate}];
 };
 
-export { getYearlyTerms }
+export {getYearlyTerms};

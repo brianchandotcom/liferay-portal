@@ -1,4 +1,4 @@
-import Skeleton from "../../../../common/components/Skeleton";
+import Skeleton from '../../../../common/components/Skeleton';
 
 const ActivationKeysSkeleton = () => {
 	return (

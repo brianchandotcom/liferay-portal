@@ -17,7 +17,11 @@ const Pages = () => {
 
 	if (page === 'enterprise_search') {
 		if (project) {
-			return <ActivationKeys.EnterpriseSearch accountKey={project.accountKey} />;
+			return (
+				<ActivationKeys.EnterpriseSearch
+					accountKey={project.accountKey}
+				/>
+			);
 		}
 
 		return <ActivationKeys.Skeleton />;

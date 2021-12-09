@@ -1,17 +1,14 @@
-import { useQuery } from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import Table from '../../../../common/components/Table';
-import { getKoroneikiAccounts } from '../../../../common/services/liferay/graphql/queries';
+import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
 import ActivationKeysLayout from '../../components/ActivationKeysLayout';
 
-const Commerce = ({ accountKey }) => {
-	const { data, loading } = useQuery(
-		getKoroneikiAccounts,
-		{
-			variables: {
-				filter: `accountKey eq '${accountKey}'`,
-			},
-		}
-	);
+const Commerce = ({accountKey}) => {
+	const {data, loading} = useQuery(getKoroneikiAccounts, {
+		variables: {
+			filter: `accountKey eq '${accountKey}'`,
+		},
+	});
 
 	const dxpVersion = data?.c?.koroneikiAccounts?.items[0]?.dxpVersion;
 
@@ -44,9 +41,10 @@ const Commerce = ({ accountKey }) => {
 			bodyClass: 'border border-0 py-4 pl-4',
 			header: {
 				name: 'Version',
-				styles: 'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-minw-200 py-3 pl-4'
+				styles:
+					'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-minw-200 py-3 pl-4',
 			},
-			headingTitle: true
+			headingTitle: true,
 		},
 		{
 			accessor: 'instructions',
@@ -55,7 +53,7 @@ const Commerce = ({ accountKey }) => {
 				name: 'Instructions',
 				styles:
 					'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-			}
+			},
 		},
 	];
 
@@ -64,30 +62,41 @@ const Commerce = ({ accountKey }) => {
 			{!loading ? (
 				<ActivationKeysLayout>
 					{dxpVersion && dxpVersion !== '7.3' ? (
-						<ActivationKeysLayout.Inputs accountKey={accountKey} productKey="commerce" productTitle="Commerce" />
+						<ActivationKeysLayout.Inputs
+							accountKey={accountKey}
+							productKey="commerce"
+							productTitle="Commerce"
+						/>
 					) : (
-						<Table columns={columns} data={instructionsData.map((({ instructions, version }) => ({
-							instructions: (Array.isArray(instructions) ? (
-								<div>
-									<p className="mb-0 text-neutral-9 text-paragraph">
-										{instructions[0]}
-									</p>
+						<Table
+							columns={columns}
+							data={instructionsData.map(
+								({instructions, version}) => ({
+									instructions: Array.isArray(
+										instructions
+									) ? (
+										<div>
+											<p className="mb-0 text-neutral-9 text-paragraph">
+												{instructions[0]}
+											</p>
 
-									<p className="mb-0 text-neutral-7 text-paragraph-sm">
-										{instructions[1]}
+											<p className="mb-0 text-neutral-7 text-paragraph-sm">
+												{instructions[1]}
 
-										<a className="text-neutral-7">
-											<u>{instructions[2]} </u>
-										</a>
-									</p>
-								</div>
-							) : (
-								<p className="mb-0 text-neutral-9 text-paragraph">
-									{instructions}
-								</p>
-							)),
-							version
-						})))} />
+												<a className="text-neutral-7">
+													<u>{instructions[2]} </u>
+												</a>
+											</p>
+										</div>
+									) : (
+										<p className="mb-0 text-neutral-9 text-paragraph">
+											{instructions}
+										</p>
+									),
+									version,
+								})
+							)}
+						/>
 					)}
 				</ActivationKeysLayout>
 			) : (

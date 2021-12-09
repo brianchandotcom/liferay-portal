@@ -7,7 +7,7 @@ const TablePagination = ({
 	itemsPerPage,
 	setActivePage,
 	showDeltasDropDown = false,
-	totalItems
+	totalItems,
 }) => {
 	return (
 		<>
@@ -24,7 +24,11 @@ const TablePagination = ({
 					/>
 				</div>
 			) : (
-				<p className="mb-4 mx-4 text-paragraph">{`Showing ${(itemsPerPage * activePage) + 1 - itemsPerPage} to ${itemsPerPage * activePage} of ${totalItems} entries.`}</p>
+				<p className="mb-4 mx-4 text-paragraph">{`Showing ${
+					itemsPerPage * activePage + 1 - itemsPerPage
+				} to ${
+					itemsPerPage * activePage
+				} of ${totalItems} entries.`}</p>
 			)}
 		</>
 	);

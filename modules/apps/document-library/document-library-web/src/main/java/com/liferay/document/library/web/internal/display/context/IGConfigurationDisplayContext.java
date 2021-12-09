@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
@@ -263,7 +264,9 @@ public class IGConfigurationDisplayContext {
 			_selectedRepositoryId = _folder.getRepositoryId();
 		}
 		else {
-			_selectedRepositoryId = _themeDisplay.getScopeGroupId();
+			_selectedRepositoryId = ParamUtil.getLong(
+				_httpServletRequest, "repositoryId",
+				_themeDisplay.getScopeGroupId());
 		}
 
 		try {

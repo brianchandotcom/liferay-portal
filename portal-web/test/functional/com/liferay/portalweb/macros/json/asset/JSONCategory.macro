@@ -187,4 +187,19 @@ definition {
 			vocabularyId = "${vocabularyId}");
 	}
 
+	macro tearDownCategories {
+        Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
+
+        var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+
+        var vocabularyId = JSONCategorySetter.setVocabularyId(
+            groupId = "${groupId}",
+            vocabularyName = "${vocabularyName}");
+			
+        var categoriesIds = JSONCategoryAPI._getVocabularyCategoriesIds(vocabularyId = "${vocabularyId}");
+
+        for (var categoryId : list "${categoriesIds}") {
+            JSONCategoryAPI._deleteCategory(categoryId = "${categoryId}");
+        }
+    }
 }

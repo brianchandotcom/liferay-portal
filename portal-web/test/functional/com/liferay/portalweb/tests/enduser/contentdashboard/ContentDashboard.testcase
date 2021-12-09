@@ -24,6 +24,12 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
+
+		for (var vocabulary : list "Topic,Audience,Stage") {
+			JSONCategory.tearDownCategories(
+				groupName = "Global",
+				vocabularyName = "${vocabulary}");
+		}
 	}
 
 	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "
@@ -227,15 +233,6 @@ definition {
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "A_Subaudience_3");
 		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "C_Subaudience_1,B_Subaudience_2,A_Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-		}
 	}
 
 	@description = "LPS-131793: Given the categorization section in Documents and Media
@@ -403,15 +400,6 @@ definition {
 				locator1 = "ContentDashboard#AUDIENCE_LIST_DASHBOARD",
 				value = "...");
 		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-		}
 	}
 
 	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
@@ -490,22 +478,6 @@ definition {
 				AssertElementPresent(
 					fillColor = "FF5F5F",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-
-			for (var categories : list "Substage_1,Substage_2,Substage_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Stage");
 			}
 		}
 	}
@@ -688,22 +660,6 @@ definition {
 				AssertElementPresent(
 					fillColor = "50D2A0",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-
-			for (var categories : list "Substage_1,Substage_2,Substage_3,Substage_4") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Stage");
 			}
 		}
 	}
@@ -2166,22 +2122,6 @@ definition {
 				value1 = "Substage_3",
 				xAxisCategoryName = "stage");
 		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-
-			for (var categories : list "Substage_1,Substage_2,Substage_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Stage");
-			}
-		}
 	}
 
 	@description = "LPS-116987 When the user clicks on the eye icon in any of the translated into languages within the info panel, the user navigates to the VIEW version of the page in the matching language"
@@ -2622,22 +2562,6 @@ definition {
 				categoryIndex = "3",
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "A_Subaudience_3");
-		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "C_Subaudience_1,B_Subaudience_2,A_Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-
-			for (var categories : list "Substage_1,Substage_2,Substage_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Stage");
-			}
 		}
 	}
 
@@ -3344,22 +3268,6 @@ definition {
 				AssertElementPresent(
 					fillColor = "FF5F5F",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-		}
-
-		task ("Delete the global audience categories") {
-			for (var categories : list "Subaudience_1,Subaudience_2,Subaudience_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Audience");
-			}
-
-			for (var categories : list "Substage_1,Substage_2,Substage_3") {
-				JSONCategory.deleteCategory(
-					categoryName = "${categories}",
-					groupName = "Global",
-					vocabularyName = "Stage");
 			}
 		}
 	}

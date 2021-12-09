@@ -60,6 +60,7 @@ export const getAccountSubscriptionsTerms = gql`
 					c_accountSubscriptionTermId
 					endDate
 					instanceSize
+					provisioned
 					quantity
 					startDate
 					subscriptionTermStatus

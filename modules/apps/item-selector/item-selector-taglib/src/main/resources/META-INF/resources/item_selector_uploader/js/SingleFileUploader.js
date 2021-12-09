@@ -13,12 +13,13 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
+import {ErrorCode, useDropzone} from 'react-dropzone';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
 import getPreviewProps from './getPreviewProps';
@@ -43,7 +44,12 @@ function SingleFileUploader({
 
 	const isMounted = useIsMounted();
 
-	const {getInputProps, getRootProps, isDragActive} = useDropzone({
+	const {
+		fileRejections,
+		getInputProps,
+		getRootProps,
+		isDragActive,
+	} = useDropzone({
 		accept: validExtensions,
 		maxSize: maxFileSize,
 		multiple: false,
@@ -51,6 +57,25 @@ function SingleFileUploader({
 			setFile(acceptedFiles[0]);
 		},
 	});
+
+	const ERRORS = {
+		[ErrorCode.FileInvalidType]: Liferay.Util.sub(
+			Liferay.Language.get(
+				'please-enter-a-file-with-a-valid-extension-x'
+			),
+			[validExtensions]
+		),
+
+		[ErrorCode.FileTooLarge]: Liferay.Util.sub(
+			Liferay.Language.get(
+				'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+			),
+			[Liferay.Util.formatStorage(Number(maxFileSize))]
+		),
+		[ErrorCode.TooManyFiles]: Liferay.Language.get(
+			'multiple-file-upload-is-not-supported-please-enter-a-single-file'
+		),
+	};
 
 	function clear() {
 		setFile(null);
@@ -79,44 +104,64 @@ function SingleFileUploader({
 		}
 	}, [file, isMounted, uploadItemURL]);
 
+	const errorCode = fileRejections?.[0]?.errors?.[0]?.code;
+	const errorMessage = ERRORS[errorCode] || '';
+
 	return (
 		<>
 			<div
-				{...getRootProps({
-					className: classNames('dropzone', {
-						['drag-active']: isDragActive,
-						uploading: progress,
-					}),
+				className={classNames({
+					'has-error': errorMessage,
 				})}
 			>
-				<input {...getInputProps()} />
+				<div
+					{...getRootProps({
+						className: classNames('dropzone', {
+							'drag-active': isDragActive,
+							'uploading': progress,
+						}),
+					})}
+				>
+					<input {...getInputProps()} />
 
-				{progress ? (
-					<ClayLayout.ContentRow
-						className="align-items-center"
-						padded
-					>
-						<ClayLayout.ContentCol>
-							<strong>Uploading</strong>
-						</ClayLayout.ContentCol>
+					{progress ? (
+						<ClayLayout.ContentRow
+							className="align-items-center"
+							padded
+						>
+							<ClayLayout.ContentCol>
+								<strong>Uploading</strong>
+							</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol expand>
-							<ClayProgressBar value={progress} />
-						</ClayLayout.ContentCol>
+							<ClayLayout.ContentCol expand>
+								<ClayProgressBar value={progress} />
+							</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol>
-							<ClayButtonWithIcon
-								borderless
-								displayType="secondary"
-								onClick={abort}
-								symbol="times"
-							/>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
-				) : (
-					<span>
-						<strong>NEW</strong> Drag & Drop or Click here to Upload
-					</span>
+							<ClayLayout.ContentCol>
+								<ClayButtonWithIcon
+									borderless
+									displayType="secondary"
+									onClick={abort}
+									symbol="times"
+								/>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					) : (
+						<span>
+							<strong>NEW</strong> Drag & Drop or Click here to
+							Upload
+						</span>
+					)}
+				</div>
+
+				{errorMessage && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{errorMessage}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
 				)}
 			</div>
 

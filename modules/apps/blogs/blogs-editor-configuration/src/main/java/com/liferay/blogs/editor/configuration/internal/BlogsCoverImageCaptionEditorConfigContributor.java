@@ -54,6 +54,8 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 		jsonObject.put(
 			"allowedContent", "a[*](*)"
 		).put(
+			"balloonEditorEnabled", true
+		).put(
 			"disallowedContent", "br"
 		);
 

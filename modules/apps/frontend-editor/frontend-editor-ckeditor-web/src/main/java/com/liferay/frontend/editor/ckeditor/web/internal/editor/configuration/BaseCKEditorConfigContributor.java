@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
-import com.liferay.frontend.editor.ckeditor.web.internal.configuration.FFBalloonEditorConfigurationUtil;
 import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -123,11 +122,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 			jsonObject.put("resize_dir", "vertical");
 		}
 
-		jsonObject.put(
-			"enableBalloonEditor", FFBalloonEditorConfigurationUtil.enable()
-		).put(
-			"resize_enabled", resizable
-		);
+		jsonObject.put("resize_enabled", resizable);
 	}
 
 	protected boolean isShowSource(

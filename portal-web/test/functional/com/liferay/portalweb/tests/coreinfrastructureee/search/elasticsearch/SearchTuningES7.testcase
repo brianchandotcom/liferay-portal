@@ -798,8 +798,6 @@ definition {
 	test ReindexingRestoresResultRankingsIndex {
 		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresResultRankingsIndex";
 
-		var companyId = JSONCompany.getCompanyId();
-
 		for (var title : list "Article,Journal") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -838,6 +836,8 @@ definition {
 		SearchAdministration.openSearchAdmin();
 
 		Navigator.gotoNavItem(navItem = "Field Mappings");
+
+		var companyId = JSONCompany.getCompanyId();
 
 		Click(
 			key_navNested = "liferay-${companyId}-search-tuning-rankings",

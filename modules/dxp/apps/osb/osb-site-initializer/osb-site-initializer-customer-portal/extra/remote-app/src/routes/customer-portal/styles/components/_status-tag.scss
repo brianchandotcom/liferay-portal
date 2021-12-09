@@ -1,0 +1,15 @@
+.status-tag {
+	border-radius: var(--border-radius-xs);
+
+	&.label-success {
+		background-color: var(--color-state-success-lighten-1);
+	}
+
+	&.label-info {
+		background-color: var(--color-state-info-lighten-2);
+	}
+
+	&.label-danger {
+		background-color: var(--color-state-error-lighten-2);
+	}
+}

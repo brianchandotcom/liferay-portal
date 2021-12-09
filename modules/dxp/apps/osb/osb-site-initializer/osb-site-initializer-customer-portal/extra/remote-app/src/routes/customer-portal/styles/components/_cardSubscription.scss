@@ -1,0 +1,69 @@
+.card-subscription {
+	background: #ffffff;
+	border: 1px solid #dcd9e2;
+	border-radius: 10px;
+	height: 256px;
+	width: 209px;
+	transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+		0.3s box-shadow,
+		0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+	cursor: pointer;
+}
+
+.card-subscription:hover {
+	transform: scale(1.02);
+	border: none;
+	box-shadow: 0px 10px 30px rgba(11, 95, 255, 0.09),
+		0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+input:checked {
+	background: #d3cece;
+	border: 1px solid #0b5fff !important;
+	border-radius: 2px;
+	box-sizing: border-box;
+	height: 16px !important;
+	width: 16px;
+	padding-left: 10px;
+}
+
+.head-text {
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 20px;
+}
+
+.head-text-2 {
+	color: #5a5469;
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 16px;
+}
+
+.card-date {
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.badge-card-subscription {
+	padding: 2px 8px;
+	font-family: Source Sans Pro;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 16px;
+	background: #eef8ec;
+	color: #4aab3b;
+	height: 20px;
+	width: 49px;
+	border-radius: 4px;
+	margin-left: auto;
+	margin-right: auto;
+}

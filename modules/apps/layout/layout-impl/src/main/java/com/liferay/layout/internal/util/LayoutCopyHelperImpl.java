@@ -321,25 +321,14 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				continue;
 			}
 
-			_copyLayoutPageTemplateStructureExperience(
+			JSONObject dataJSONObject = _processDataJSONObject(
 				data, targetLayout, fragmentEntryLinksMap, entry.getValue());
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					targetLayout.getGroupId(), targetLayout.getPlid(),
+					entry.getValue(), dataJSONObject.toString());
 		}
-	}
-
-	private void _copyLayoutPageTemplateStructureExperience(
-			String data, Layout targetLayout,
-			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
-			long targetSegmentsExperienceId)
-		throws Exception {
-
-		JSONObject dataJSONObject = _processDataJSONObject(
-			data, targetLayout, fragmentEntryLinksMap,
-			targetSegmentsExperienceId);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				targetLayout.getGroupId(), targetLayout.getPlid(),
-				targetSegmentsExperienceId, dataJSONObject.toString());
 	}
 
 	private void _copyLayoutPageTemplateStructureFromSegmentsExperience(

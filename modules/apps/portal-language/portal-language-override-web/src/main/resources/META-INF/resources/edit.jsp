@@ -1,0 +1,174 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+EditDisplayContext editDisplayContext = (EditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+portletDisplay.setShowBackIcon(Validator.isNotNull(editDisplayContext.getBackURL()));
+portletDisplay.setURLBack(editDisplayContext.getBackURL());
+
+renderResponse.setTitle(editDisplayContext.getPageTitle());
+%>
+
+<portlet:actionURL name="editPortalLanguageOverride" var="editURL" />
+
+<clay:container-fluid>
+	<liferay-frontend:edit-form
+		action="<%= editURL %>"
+		method="POST"
+		name="editPortalLanguageOverrideFm"
+	>
+		<aui:input name="redirect" type="hidden" value="<%= editDisplayContext.getBackURL() %>" />
+
+		<liferay-frontend:edit-form-body>
+			<clay:sheet-header>
+				<h2 class="sheet-title"><liferay-ui:message key="language-key-information" /></h2>
+			</clay:sheet-header>
+
+			<clay:sheet-section>
+				<clay:content-row
+					containerElement="h3"
+					cssClass="sheet-subtitle"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<span class="heading-text"><liferay-ui:message key="key" /></span>
+					</clay:content-col>
+				</clay:content-row>
+
+				<clay:content-row
+					containerElement="div"
+					cssClass=""
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(editDisplayContext.getKey()) %>">
+								<aui:input name="key" type="hidden" value="<%= editDisplayContext.getKey() %>" />
+
+								<span><%= editDisplayContext.getKey() %></span>
+							</c:when>
+							<c:otherwise>
+								<div class="form-group">
+									<aui:input name="key" pattern="[^ ]+" required="<%= true %>" value="<%= editDisplayContext.getKey() %>" wrapperCssClass="mb-0" />
+
+									<div class="form-feedback-group">
+										<div class="form-text">
+											<liferay-ui:message key="a-language-key-cannot-contain-any-whitespace" />
+										</div>
+									</div>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</clay:content-col>
+				</clay:content-row>
+			</clay:sheet-section>
+
+			<clay:sheet-section>
+				<clay:content-row
+					containerElement="h3"
+					cssClass="sheet-subtitle"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<span class="heading-text"><liferay-ui:message key="translation-override" /></span>
+					</clay:content-col>
+
+					<c:if test="<%= Validator.isNotNull(editDisplayContext.getKey()) %>">
+						<portlet:actionURL name="deletePortalLanguageOverrides" var="deletePortalLanguageOverridesURL">
+							<portlet:param name="redirect" value="<%= editDisplayContext.getBackURL() %>" />
+							<portlet:param name="key" value="<%= editDisplayContext.getKey() %>" />
+						</portlet:actionURL>
+
+						<clay:content-col>
+							<span class="heading-end">
+								<liferay-ui:icon-delete
+									confirmation="are-you-sure-you-want-to-reset-all-translation-overrides"
+									label="<%= true %>"
+									linkCssClass="btn btn-secondary btn-sm"
+									message="clear-all-overrides"
+									url="<%= deletePortalLanguageOverridesURL %>"
+								/>
+							</span>
+						</clay:content-col>
+					</c:if>
+				</clay:content-row>
+
+				<clay:content-row>
+					<div class="sheet-text">
+						<liferay-ui:icon
+							cssClass="font-weight-normal text-info"
+							icon="info-circle"
+							localizeMessage="<%= true %>"
+						/>
+
+						<span class="font-weight-bold text-info">
+							<clay:icon cssClass="mr-2" symbol="info-circle" /><liferay-ui:message key="please-add-at-least-one-translation-below" />
+						</span>
+					</div>
+				</clay:content-row>
+
+				<clay:content-row>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+
+						<%
+						LocalizedValuesMap valuesLocalizedValuesMap = editDisplayContext.getValuesLocalizedValuesMap();
+
+						LocalizedValuesMap originalValuesLocalizedValuesMap = editDisplayContext.getOriginalValuesLocalizedValuesMap();
+
+						for (Locale availableLocale : editDisplayContext.getAvailableLocales()) {
+							String languageId = LanguageUtil.getLanguageId(availableLocale);
+						%>
+
+							<div class="form-group" dir="<%= LanguageUtil.get(availableLocale, "lang.dir") %>" lang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>">
+								<aui:input label="<%= TextFormatter.format(languageId, TextFormatter.O) %>" name='<%= "value_" + availableLocale %>' value="<%= valuesLocalizedValuesMap.get(availableLocale) %>" wrappedField="<%= true %>" />
+
+								<c:if test="<%= editDisplayContext.isShowOriginalValues() %>">
+									<div class="form-feedback-group">
+										<div class="form-text">
+
+											<%
+											String[] taglibMessageArguments = {"<span class=\"font-weight-bold\">", "</span>", HtmlUtil.escape(originalValuesLocalizedValuesMap.get(availableLocale))};
+											%>
+
+											<liferay-ui:message arguments="<%= taglibMessageArguments %>" key="x-original-value-x-x" />
+										</div>
+									</div>
+								</c:if>
+							</div>
+
+						<%
+						}
+						%>
+
+					</clay:content-col>
+				</clay:content-row>
+			</clay:sheet-section>
+		</liferay-frontend:edit-form-body>
+
+		<liferay-frontend:edit-form-footer>
+			<aui:button name="save" type="submit" />
+			<aui:button href="<%= editDisplayContext.getBackURL() %>" type="cancel" />
+		</liferay-frontend:edit-form-footer>
+	</liferay-frontend:edit-form>
+</clay:container-fluid>

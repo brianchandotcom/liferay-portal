@@ -17,12 +17,14 @@ package com.liferay.portal.fragment.bundle.watcher.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -78,11 +80,35 @@ public class PortalFragmentBundleWatcher {
 
 			Bundle bundleEventBundle = bundleEvent.getBundle();
 
-			if (((bundleEvent.getType() == BundleEvent.INSTALLED) &&
-				 (bundleEventBundle.getState() != Bundle.UNINSTALLED) &&
-				 _isFragment(bundleEventBundle)) ||
-				((bundleEvent.getType() == BundleEvent.RESOLVED) &&
-				 !_isFragment(bundleEventBundle))) {
+			Bundle originBundle = bundleEvent.getOrigin();
+
+			List<Bundle> hostBundles = new ArrayList<>();
+
+			if ((bundleEvent.getType() == BundleEvent.INSTALLED) &&
+				(bundleEventBundle.getState() != Bundle.UNINSTALLED) &&
+				_isFragment(bundleEventBundle) &&
+				!Objects.equals(
+					originBundle.getSymbolicName(),
+					"com.liferay.portal.file.install.impl")) {
+
+				String hostBundleSymbolicName = installedFragmentBundles.remove(
+					bundleEventBundle);
+
+				if (Validator.isNotNull(hostBundleSymbolicName)) {
+					for (Bundle bundle : bundleContext.getBundles()) {
+						if (Objects.equals(
+								bundle.getSymbolicName(),
+								hostBundleSymbolicName)) {
+
+							hostBundles.add(bundle);
+
+							break;
+						}
+					}
+				}
+			}
+			else if ((bundleEvent.getType() == BundleEvent.RESOLVED) &&
+					 !_isFragment(bundleEventBundle)) {
 
 				Map<String, List<Bundle>> fragmentBundlesMap = new HashMap<>();
 
@@ -96,11 +122,7 @@ public class PortalFragmentBundleWatcher {
 					fragmentBundles.add(entry.getKey());
 				}
 
-				Bundle originBundle = bundleEvent.getOrigin();
-
 				long originBundleId = originBundle.getBundleId();
-
-				List<Bundle> hostBundles = new ArrayList<>();
 
 				for (Bundle bundle : bundleContext.getBundles()) {
 					List<Bundle> fragmantBundles = fragmentBundlesMap.remove(
@@ -130,10 +152,10 @@ public class PortalFragmentBundleWatcher {
 						break;
 					}
 				}
+			}
 
-				if (!hostBundles.isEmpty()) {
-					frameworkWiring.refreshBundles(hostBundles);
-				}
+			if (!hostBundles.isEmpty()) {
+				frameworkWiring.refreshBundles(hostBundles);
 			}
 		};
 

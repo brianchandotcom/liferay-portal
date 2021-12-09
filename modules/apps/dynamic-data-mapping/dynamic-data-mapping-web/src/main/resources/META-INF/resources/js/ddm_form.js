@@ -35,7 +35,7 @@ AUI.add(
 		var TPL_ICON_CARET =
 			'<span class="collapse-icon-closed"><span class="icon-caret-right"></span></span>';
 
-		var TPL_LAYOUTS_NAVBAR =
+		var TPL_PUBLIC_PRIVATE_LAYOUTS_NAVBAR =
 			'<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">' +
 			'<div class="collapse navbar-collapse">' +
 			'<ul class="nav navbar-nav">' +
@@ -44,6 +44,17 @@ AUI.add(
 			'</a></li>' +
 			'<li class="private {privateLayoutClass}"><a href="javascript:;">' +
 			Liferay.Language.get('private-pages') +
+			'</a></li>' +
+			'</ul>' +
+			'</div>' +
+			'</nav>';
+
+		var TPL_LAYOUTS_NAVBAR =
+			'<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">' +
+			'<div class="collapse navbar-collapse">' +
+			'<ul class="nav navbar-nav">' +
+			'<li class="public active"><a href="javascript:;">' +
+			Liferay.Language.get('pages') +
 			'</a></li>' +
 			'</ul>' +
 			'</div>' +
@@ -109,6 +120,11 @@ AUI.add(
 			doAsGroupId: {},
 
 			fieldsNamespace: {},
+
+			isPrivateLayoutsEnabled: {
+				validator: Lang.isBoolean,
+				value: true,
+			},
 
 			p_l_id: {},
 
@@ -2571,16 +2587,25 @@ AUI.add(
 					var navbar = instance._navbar;
 
 					if (!navbar) {
-						navbar = A.Node.create(
-							Lang.sub(TPL_LAYOUTS_NAVBAR, {
-								privateLayoutClass: privateLayout
-									? 'active'
-									: '',
-								publicLayoutClass: privateLayout
-									? ''
-									: 'active',
-							})
+						var isPrivateLayoutsEnabled = instance.get(
+							'isPrivateLayoutsEnabled'
 						);
+
+						if (isPrivateLayoutsEnabled) {
+							navbar = A.Node.create(
+								Lang.sub(TPL_PUBLIC_PRIVATE_LAYOUTS_NAVBAR, {
+									privateLayoutClass: privateLayout
+										? 'active'
+										: '',
+									publicLayoutClass: privateLayout
+										? ''
+										: 'active',
+								})
+							);
+						}
+						else {
+							navbar = A.Node.create(TPL_LAYOUTS_NAVBAR);
+						}
 
 						navbar.delegate(
 							'click',

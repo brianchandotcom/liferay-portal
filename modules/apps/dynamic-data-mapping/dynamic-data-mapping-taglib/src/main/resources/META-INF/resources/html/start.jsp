@@ -143,6 +143,8 @@
 
 			<%
 			}
+
+			Group group = themeDisplay.getScopeGroup();
 			%>
 
 			var liferayDDMForm = Liferay.component(
@@ -158,6 +160,7 @@
 					doAsGroupId: <%= scopeGroupId %>,
 					fieldsNamespace: '<%= HtmlUtil.escapeJS(fieldsNamespace) %>',
 					imageSelectorURL: '<%= imageSelectorURL %>',
+					isPrivateLayoutsEnabled: <%= group.isPrivateLayoutsEnabled() %>,
 					mode: '<%= HtmlUtil.escapeJS(mode) %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',

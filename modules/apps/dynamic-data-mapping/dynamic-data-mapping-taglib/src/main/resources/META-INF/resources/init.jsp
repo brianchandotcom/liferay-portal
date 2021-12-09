@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
+<%@ page import="com.liferay.portal.kernel.model.Group" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashSet" %><%@

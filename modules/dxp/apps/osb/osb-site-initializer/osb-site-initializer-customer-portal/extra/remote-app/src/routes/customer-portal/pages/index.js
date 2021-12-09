@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import {useContext} from 'react';
 import {AppContext} from '../context';
-import Commerce from './Commerce';
-import EnterpriseSearch from './EnterpriseSearch';
+import ActivationKeys from './ActivationKeys';
 import Home from './Home';
 import Overview from './Overview';
 
@@ -9,26 +9,27 @@ const Pages = () => {
 	const [{page, project, userAccount}] = useContext(AppContext);
 
 	if (page === 'overview') {
-		if (userAccount) {
-			return <Overview userAccount={userAccount} />;
+		if (project) {
+			return <ActivationKeys.EnterpriseSearch accountKey={project.accountKey} />;
 		}
 
-		return <div>Overview Skeleton</div>;
+		return <ActivationKeys.Skeleton />;
 	}
 
 	if (page === 'enterprise_search') {
-		if (userAccount) {
-			return <EnterpriseSearch accountKey={project.accountKey} />;
+		if (project) {
+			return <ActivationKeys.EnterpriseSearch accountKey={project.accountKey} />;
 		}
 
-		return <EnterpriseSearch.Skeleton />;
+		return <ActivationKeys.Skeleton />;
 	}
+
 	if (page === 'commerce') {
 		if (userAccount) {
-			return <Commerce accountKey={project.accountKey} />;
+			return <ActivationKeys.Commerce accountKey={project.accountKey} />;
 		}
 
-		return <Commerce.Skeleton />;
+		return <ActivationKeys.Skeleton />;
 	}
 
 	if (userAccount) {

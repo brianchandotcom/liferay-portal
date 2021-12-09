@@ -5,7 +5,6 @@ import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {CUSTOM_EVENTS} from '../../utils/constants';
-import EnterpriseSearch from '../enterpriseSearch';
 
 const Overview = ({userAccount}) => {
 	const [{project}, dispatch] = useContext(AppContext);
@@ -46,8 +45,6 @@ const Overview = ({userAccount}) => {
 	if (isLoading || isLoadingKoroneiki) {
 		return <div>Overview Skeleton</div>;
 	}
-
-	return <EnterpriseSearch accountKey={project.accountKey} />;
 };
 
 export default Overview;

@@ -64,7 +64,7 @@ public class PublicPrivateSiteURLSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public boolean isVisible(Group group) {
-		if (group.isCompany()) {
+		if (group.isCompany() || !group.isPrivateLayoutsEnabled()) {
 			return false;
 		}
 

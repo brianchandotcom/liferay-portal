@@ -161,22 +161,6 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro gotoPublish {
-		var key_webContentTitle = "${folderName}";
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}");
-
-		WebContentNavigator.gotoEntryMenuItem(
-			entry = "${folderName}",
-			menuItem = "Publish to Live");
-
-		AssertConfirm(value1 = "Are you sure you want to publish the selected folder?");
-	}
-
 	macro moveToRecycleBinCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

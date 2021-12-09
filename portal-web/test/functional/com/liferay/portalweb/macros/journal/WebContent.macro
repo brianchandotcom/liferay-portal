@@ -1546,14 +1546,6 @@ definition {
 		}
 	}
 
-	macro gotoPublish {
-		WebContentNavigator.gotoEntryMenuItem(
-			entry = "${webContentTitle}",
-			menuItem = "Publish to Live");
-
-		AssertConfirm(value1 = "Are you sure you want to publish the selected web content?");
-	}
-
 	macro increaseDisplayDate {
 		var displayDate = selenium.getAttribute("//input[contains(@id,'displayDate')]@value");
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");

@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136983. It checks that an external link can be accessed from a wiki page."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAccessExternalLink {
 		property portal.acceptance = "false";
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136987. It checks that related assets can be added to a page."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddRelatedAssets {
 		property portal.acceptance = "false";
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136985. It checks that a summary can be added to a page."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddSummary {
 		property portal.acceptance = "false";
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136988. It checks that a table of contents can be added to a page."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddTableOfContents {
 		property portal.acceptance = "false";
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136995. It checks that page versions can be compared."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanComparePageVersions {
 		property portal.acceptance = "false";
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136996. It checks that a minor change can be created for a page."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanCreateMinorChange {
 		property portal.acceptance = "false";
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanImportPagesIntoSpecificNode {
 		property portal.acceptance = "false";
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136984. It checks that Javascript will not be excuted from the page title."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test TitleWillNotExecuteXSS {
 		property portal.acceptance = "false";

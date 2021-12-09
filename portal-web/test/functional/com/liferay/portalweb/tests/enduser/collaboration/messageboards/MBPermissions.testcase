@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136922. It checks that a banned user cannot create a new thread."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotCreateThreadAsBannedUser {
 		property portal.acceptance = "false";

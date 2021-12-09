@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136986. It checks that page permissions can be configured via More Options."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test CanConfigurePermissionsViaMoreOptions {
 		property portal.acceptance = "false";

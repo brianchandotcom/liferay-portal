@@ -122,53 +122,6 @@ public class Sku implements Cloneable, Serializable {
 
 	protected Date discontinuedDate;
 
-	public String getDiscontinuedSkuExternalReferenceCode() {
-		return discontinuedSkuExternalReferenceCode;
-	}
-
-	public void setDiscontinuedSkuExternalReferenceCode(
-		String discontinuedSkuExternalReferenceCode) {
-
-		this.discontinuedSkuExternalReferenceCode =
-			discontinuedSkuExternalReferenceCode;
-	}
-
-	public void setDiscontinuedSkuExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			discontinuedSkuExternalReferenceCodeUnsafeSupplier) {
-
-		try {
-			discontinuedSkuExternalReferenceCode =
-				discontinuedSkuExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String discontinuedSkuExternalReferenceCode;
-
-	public Long getDiscontinuedSkuId() {
-		return discontinuedSkuId;
-	}
-
-	public void setDiscontinuedSkuId(Long discontinuedSkuId) {
-		this.discontinuedSkuId = discontinuedSkuId;
-	}
-
-	public void setDiscontinuedSkuId(
-		UnsafeSupplier<Long, Exception> discontinuedSkuIdUnsafeSupplier) {
-
-		try {
-			discontinuedSkuId = discontinuedSkuIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long discontinuedSkuId;
-
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -502,6 +455,53 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected Boolean purchasable;
+
+	public String getReplacementSkuExternalReferenceCode() {
+		return replacementSkuExternalReferenceCode;
+	}
+
+	public void setReplacementSkuExternalReferenceCode(
+		String replacementSkuExternalReferenceCode) {
+
+		this.replacementSkuExternalReferenceCode =
+			replacementSkuExternalReferenceCode;
+	}
+
+	public void setReplacementSkuExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			replacementSkuExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			replacementSkuExternalReferenceCode =
+				replacementSkuExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String replacementSkuExternalReferenceCode;
+
+	public Long getReplacementSkuId() {
+		return replacementSkuId;
+	}
+
+	public void setReplacementSkuId(Long replacementSkuId) {
+		this.replacementSkuId = replacementSkuId;
+	}
+
+	public void setReplacementSkuId(
+		UnsafeSupplier<Long, Exception> replacementSkuIdUnsafeSupplier) {
+
+		try {
+			replacementSkuId = replacementSkuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long replacementSkuId;
 
 	public String getSku() {
 		return sku;

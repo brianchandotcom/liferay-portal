@@ -962,9 +962,34 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditEvent {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71913 CanEditEvent pending implementation
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
+		CalendarEvent.setDatesToday();
+
+		CalendarEvent.setTimes(
+			endDateTime = "08:00 PM",
+			startDateTime = "07:00 PM");
+
+		Button.clickPublish();
+
+		IFrame.closeFrame();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.addDescription(
+			eventTitle = "Calendar Event Title",
+			fieldName = "Description",
+			fieldValue = "Calendar Event Description");	
+
+		Button.clickPublish();
+
+		IFrame.closeFrame();
+
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.viewDescription(eventDescription = "Calendar Event Description");
 	}
 
 	@description = "LRQA-71887 - Verify that the user can Reject an event"

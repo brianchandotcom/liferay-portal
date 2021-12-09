@@ -103,14 +103,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 								for (Group curGroup : groups) {
 									if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
-										leftList.add(new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale)));
+										leftList.add(new KeyValuePair(String.valueOf(curGroup.getGroupId()), GroupNameUtil.getGroupNameWithType(curGroup, locale)));
 									}
 								}
 
 								List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 								for (Group curGroup : groups) {
-									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale));
+									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(curGroup.getGroupId()), GroupNameUtil.getGroupNameWithType(curGroup, locale));
 
 									if (!leftList.contains(tempKeyValuePair)) {
 										rightList.add(tempKeyValuePair);

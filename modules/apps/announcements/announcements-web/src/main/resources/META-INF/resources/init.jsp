@@ -46,6 +46,7 @@ page import="com.liferay.announcements.web.internal.display.context.Announcement
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.DefaultAnnouncementsDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.helper.AnnouncementsRequestHelper" %><%@
+page import="com.liferay.announcements.web.internal.display.context.helper.GroupNameUtil" %><%@
 page import="com.liferay.announcements.web.internal.search.AnnouncementsEntryChecker" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@

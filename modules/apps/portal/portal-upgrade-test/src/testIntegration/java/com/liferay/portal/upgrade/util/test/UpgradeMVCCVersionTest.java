@@ -18,10 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
-import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.upgrade.PortalMVCCVersionUpgradeProcess;
 
 import java.io.InputStream;
 
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class UpgradeMVCCVersionTest extends MVCCVersionUpgradeProcess {
+public class UpgradeMVCCVersionTest extends PortalMVCCVersionUpgradeProcess {
 
 	@Before
 	public void setUp() throws Exception {

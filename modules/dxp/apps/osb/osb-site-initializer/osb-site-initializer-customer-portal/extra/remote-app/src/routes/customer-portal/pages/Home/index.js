@@ -1,13 +1,13 @@
-import { useQuery } from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import classNames from 'classnames';
-import { useState } from 'react';
-import { LiferayTheme } from '../../../../common/services/liferay';
-import { getKoroneikiAccounts } from '../../../../common/services/liferay/graphql/queries';
-import { PARAMS_KEYS } from '../../../../common/services/liferay/search-params';
+import {useState} from 'react';
+import {LiferayTheme} from '../../../../common/services/liferay';
+import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
+import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import Banner from '../../components/Banner';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
-import { status } from '../../utils/constants';
+import {status} from '../../utils/constants';
 import HomeSkeleton from './Skeleton';
 
 const PROJECT_THRESHOLD_COUNT = 4;
@@ -25,19 +25,20 @@ const getStatus = (slaCurrent, slaFuture) => {
 	return status.expired;
 };
 
-const Home = ({ userAccount }) => {
+const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
 
-	const { data, loading } = useQuery(getKoroneikiAccounts, {
+	const {data, loading} = useQuery(getKoroneikiAccounts, {
 		variables: {
 			filter: userAccount.accountBriefs
 				.map(
 					(
-						{ externalReferenceCode },
+						{externalReferenceCode},
 						index,
-						{ length: totalAccountBriefs }
+						{length: totalAccountBriefs}
 					) =>
-						`accountKey eq '${externalReferenceCode}' ${index + 1 < totalAccountBriefs ? ' or ' : ' '
+						`accountKey eq '${externalReferenceCode}' ${
+							index + 1 < totalAccountBriefs ? ' or ' : ' '
 						}`
 				)
 				.join(' '),
@@ -78,7 +79,7 @@ const Home = ({ userAccount }) => {
 				},
 				status: getStatus(slaCurrent, slaFuture),
 				title: userAccount.accountBriefs.find(
-					({ externalReferenceCode }) =>
+					({externalReferenceCode}) =>
 						externalReferenceCode === accountKey
 				)?.name,
 			})

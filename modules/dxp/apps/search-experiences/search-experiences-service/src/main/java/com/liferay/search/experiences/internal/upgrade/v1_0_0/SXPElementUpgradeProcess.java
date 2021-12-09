@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.data;
+package com.liferay.search.experiences.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(enabled = true, service = {})
-public class SXPElementDataCreator {
+public class SXPElementUpgradeProcess {
 
 	@Activate
 	protected void activate() throws PortalException {

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.data;
+package com.liferay.search.experiences.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;

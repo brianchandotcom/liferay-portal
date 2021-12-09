@@ -122,7 +122,19 @@ definition {
 			value1 = "${threadSubject}");
 
 		if (isSet(source)) {
-			CKEditor.addSourceContent(content = "${threadBody}");
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+			if (IsVisible(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2")) {
+				Type(
+					locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
+					value1 = "${threadBody}");
+			}
+
+			if (IsVisible(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON")) {
+				Type.typeCodeMirrorEditorNoError(
+					locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+					value1 = "${threadBody}");
+			}
 		}
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");

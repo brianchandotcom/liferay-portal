@@ -15,15 +15,15 @@ const getCurrentEndDate = (currentEndDate) => {
 
 const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 	const getStatusMessage = (status) => {
-		if (status === 1) {
-			return 'Ends on  ';
+		if (status === status.future) {
+			return 'Ends on ';
 		}
 
-		if (status === 2) {
-			return 'Ended on  ';
+		if (status === status.expired) {
+			return 'Ended on ';
 		}
 
-		return 'Starts on	 ';
+		return 'Starts on ';
 	};
 
 	return (

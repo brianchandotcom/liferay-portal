@@ -391,6 +391,35 @@ definition {
 			value1 = "Minium");
 	}
 
+	@priority = "3"
+	test EnableBlacklistedModuleAfterShutdown {
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[&quot;com.liferay.gogo.shell.web&quot;]";
+		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedModuleAfterShutdown";
+
+		BundleBlacklist.viewProductMenuBlacklistedModule(
+			category = "System",
+			consoleText = "Stopping blacklisted bundle com.liferay.gogo.shell.web",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		Portlet.shutdownServer();
+
+		OSGiConfig.deleteOSGiConfigFile(OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+
+		Portlet.startServer(
+			deleteLiferayHome = "false",
+			keepOSGiState = "true");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+	}
+
 	@priority = "5"
 	test ExportBundleBlacklistConfig {
 		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";

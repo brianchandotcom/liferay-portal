@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuItemTable;
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuTable;
+import com.liferay.site.navigation.internal.upgrade.v2_3_0.SiteNavigationMenuItemUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -56,6 +57,9 @@ public class SiteNavigationServiceUpgrade implements UpgradeStepRegistrator {
 			"2.1.0", "2.2.0",
 			new CTModelUpgradeProcess(
 				"SiteNavigationMenu", "SiteNavigationMenuItem"));
+
+		registry.register(
+			"2.2.0", "2.3.0", new SiteNavigationMenuItemUpgradeProcess());
 	}
 
 }

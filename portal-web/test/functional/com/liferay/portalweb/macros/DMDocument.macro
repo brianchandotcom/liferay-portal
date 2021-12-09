@@ -1713,6 +1713,16 @@ definition {
 		LexiconCard.clickCardTitle(card = "${dmDocumentTitle}");
 	}
 
+	macro goToPermissionOnInfoPanel {
+		DMDocument.expandInfo();
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		Click(
+			key_menuItem = "Permissions",
+			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+	}
+
 	macro linkImage {
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 

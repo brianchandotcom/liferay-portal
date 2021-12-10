@@ -48,12 +48,14 @@ definition {
 				fragmentName = "Heading");
 		}
 
-		task ("Configure the Heading fragment") {
+		task ("Edit the inline text of Heading") {
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
-				text = "Heading Example Edited");
+				text = "Welcome to Liferay");
+		}
 
+		task ("Configure the styles of Heading") {
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
 			PageEditor.configureFragment(headingLevel = "H4");
@@ -69,7 +71,7 @@ definition {
 
 		task ("View custom fragment styles and edited inline text are copied to duplicated Heading") {
 			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example Edited",
+				editableText = "Welcome to Liferay",
 				fragmentName = "Heading",
 				id = "element-text",
 				position = "2");

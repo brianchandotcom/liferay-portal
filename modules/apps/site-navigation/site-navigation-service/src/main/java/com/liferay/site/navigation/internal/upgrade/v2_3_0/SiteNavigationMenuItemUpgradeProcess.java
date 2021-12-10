@@ -16,7 +16,7 @@ package com.liferay.site.navigation.internal.upgrade.v2_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
@@ -27,10 +27,6 @@ import java.sql.ResultSet;
  * @author Lourdes Fernández Besada
  */
 public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
-
-	public SiteNavigationMenuItemUpgradeProcess(Portal portal) {
-		_portal = portal;
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -58,9 +54,8 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 				long classNameId = GetterUtil.getLong(
 					typeSettingsUnicodeProperties.getProperty("classNameId"));
 
-				String newType = _portal.getClassName(classNameId);
-
-				updatePreparedStatement.setString(1, newType);
+				updatePreparedStatement.setString(
+					1, PortalUtil.getClassName(classNameId));
 
 				updatePreparedStatement.setLong(2, siteNavigationMenuItemId);
 
@@ -68,7 +63,5 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
-
-	private final Portal _portal;
 
 }

@@ -173,6 +173,19 @@ definition {
 
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 	}
+
+	macro hideAllCustomEvents {
+		var key_actionButton = "Block";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
 	macro openBlockCustomEventList {
 		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
 	}

@@ -805,45 +805,15 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "buyer@liferay.com",
-			userFirstName = "Buyer",
-			userLastName = "User",
-			userScreenName = "buyer");
-
-		Click(locator1 = "Icon#BACK");
-
-		CommerceLogin.editPasswordCP(
-			newPassword = "ttest",
-			requirePasswordReset = "true",
-			userScreenName = "buyer");
-
-		Click(locator1 = "Icon#BACK");
-
-		User.editUserSiteCP(
-			siteName = "Speedwell",
-			userScreenName = "buyer");
-
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
 
-		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
-
-		Refresh();
-
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_toggleSwitchLabel = "Guest Checkout",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Button.clickSave();
 
 		User.logoutPG();
 
@@ -851,57 +821,11 @@ definition {
 
 		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = "1");
+		AssertElementPresent(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED");
 
-		Pause(locator1 = "5000");
-
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "Submit");
-
-		CommerceCheckout.initializersCheckout(
-			guestEmail = "buyer@liferay.com",
-			newAddressAddress = "Test Address",
-			newAddressCity = "Test City",
-			newAddressCountry = "United States",
-			newAddressName = "Address Name",
-			newAddressZipCode = "Test Zip Code",
-			paymentMethod = "Money Order",
-			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
-			shippingMethod = "Standard");
-
-		Alert.viewErrorMessage(errorMessage = "You must sign in to complete this order.");
-
-		CommerceNavigator.gotoSpeedwellAccountDropdownItem(dropdownItem = "Sign In");
-
-		CommerceLogin.loginPG(
-			password = "ttest",
-			resetPassword = "test",
-			samlEnabled = "true",
-			userEmailAddress = "buyer@liferay.com");
-
-		CommerceCheckout.viewCheckoutOrderSummary(
-			addressAddress = "Test Address",
-			addressCity = "Test City",
-			addressCountry = "United States",
-			addressName = "Address Name",
-			deliveryValue = "15",
-			paymentMethod = "Money Order",
-			productName = "U-Joint",
-			productPrice = "24",
-			productQuantity = "1",
-			subtotalValue = "24",
-			totalValue = "39");
-
-		Click(locator1 = "Button#CONTINUE");
-
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-			value1 = "Your order has been processed but not completed yet.");
+		CommerceAcceleratorsInitializer.viewDisabledAddToCartButton(productName = "U-Joint");
 	}
 
 	test GuestCheckoutEnabled {

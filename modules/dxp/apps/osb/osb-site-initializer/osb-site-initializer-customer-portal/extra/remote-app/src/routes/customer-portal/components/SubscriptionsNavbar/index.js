@@ -8,7 +8,7 @@ const SubscriptionsNavbar = ({
 	setSelectedStatus,
 	setSelectedTag,
 }) => {
-	const [subscriptionsTags, setSubscriptionsTags] = useState(() => []);
+	const [subscriptionsTags, setSubscriptionsTags] = useState([]);
 
 	const {
 		data: accountSubscriptions,

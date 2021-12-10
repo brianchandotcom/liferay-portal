@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -862,6 +864,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
 		_teamPersistence.removeUserGroups(teamId, userGroupIds);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public UserGroup updateExternalReferenceCode(
+		UserGroup userGroup, String externalReferenceCode)
+		throws PortalException {
+
 	}
 
 	/**

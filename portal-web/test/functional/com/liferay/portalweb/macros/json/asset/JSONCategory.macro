@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Delete a vocabulary"
-	macro deleteVocabulary{
+	macro deleteVocabulary {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
 		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
@@ -170,7 +170,7 @@ definition {
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = "${groupId}",
 			vocabularyName = "${vocabularyName}");
-		
+
 		var categoriesIds = JSONCategoryAPI._getVocabularyCategoriesIds(vocabularyId = "${vocabularyId}");
 
 		for (var categoryId : list "${categoriesIds}") {

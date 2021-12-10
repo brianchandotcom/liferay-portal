@@ -236,8 +236,8 @@ definition {
 
 		task ("Delete audience category") {
 			JSONCategory.deleteCategory(
-				groupName = "Global",
 				categoryName = "Audience 1",
+				groupName = "Global",
 				vocabularyName = "Audience");
 		}
 
@@ -325,8 +325,8 @@ definition {
 
 		task ("Delete Stage category") {
 			JSONCategory.deleteCategory(
-				groupName = "Global",
 				categoryName = "Stage 1",
+				groupName = "Global",
 				vocabularyName = "Stage");
 		}
 
@@ -548,7 +548,6 @@ definition {
 				value1 = "WC Title",
 				xAxisCtegoryName = "Category 1");
 		}
-
 	}
 
 	@description = "LPS-128990 Given the graphs configuration panel

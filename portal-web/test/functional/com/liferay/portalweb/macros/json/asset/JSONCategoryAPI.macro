@@ -120,8 +120,8 @@ definition {
 		var categoriesId = JSONCurlUtil.post("${curl}", "$..['categoryId']");
 
 		echo("categoriesId: ${categoriesId}");
-		
-		return "${categoriesId}"; 
+
+		return "${categoriesId}";
 	}
 
 	@summary = "Get the categoryId from any categoryby using groupId and vocabularyName"
@@ -163,4 +163,5 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
+
 }

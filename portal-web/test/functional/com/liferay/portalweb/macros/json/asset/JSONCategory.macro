@@ -128,6 +128,19 @@ definition {
 		JSONCategoryAPI._deleteCategory(categoryId = "${categoryId}");
 	}
 
+	@summary = "Delete a vocabulary"
+	macro deleteVocabulary{
+		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
+
+		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+
+		var vocabularyId = JSONCategorySetter.setVocabularyId(
+			groupId = "${groupId}",
+			vocabularyName = "${vocabularyName}");
+
+		JSONCategoryAPI._deleteVocabulary(vocabularyId = "${vocabularyId}");
+	}
+
 	@summary = "Get the categoryId from any category by using categoryName, groupId, and vocabularyId"
 	macro getCategoryId {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
@@ -148,6 +161,7 @@ definition {
 		return "${categoryId}";
 	}
 
+	@summary = "Delete all categories from a vocabulary"
 	macro tearDownCategories {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
@@ -156,7 +170,7 @@ definition {
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = "${groupId}",
 			vocabularyName = "${vocabularyName}");
-
+		
 		var categoriesIds = JSONCategoryAPI._getVocabularyCategoriesIds(vocabularyId = "${vocabularyId}");
 
 		for (var categoryId : list "${categoriesIds}") {

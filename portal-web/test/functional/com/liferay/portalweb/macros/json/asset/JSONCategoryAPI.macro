@@ -59,6 +59,21 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Directly calls the JSON WS API to delete vocabulary"
+	macro _deleteVocabulary {
+		Variables.assertDefined(parameterList = "${vocabularyId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetvocabulary/delete-vocabulary \
+				-u test@liferay.com:test \
+				-d vocabularyId=${vocabularyId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Directly calls the JSON WS API to get categoryId"
 	macro _getCategoryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
@@ -105,8 +120,8 @@ definition {
 		var categoriesId = JSONCurlUtil.post("${curl}", "$..['categoryId']");
 
 		echo("categoriesId: ${categoriesId}");
-
-		return "${categoriesId}";
+		
+		return "${categoriesId}"; 
 	}
 
 	@summary = "Get the categoryId from any categoryby using groupId and vocabularyName"
@@ -148,5 +163,4 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
-
 }

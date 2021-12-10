@@ -5,17 +5,17 @@
 	<div class="container position-relative">
 		<div class="business-home-cover-box bg-neutral-0 rounded shadow-lg
 mb-0 px-5 py-6">
-			<div class="business-home-cover-box-title">
-			<span class="text-brand-primary" data-lfr-editable-id="business-home-cover-title" data-lfr-editable-type="text">More than Insurance.</span>
+			<div class="display-4  mb-6">
+			<span class="text-brand-primary" data-lfr-editable-id="business-home-cover-title" data-lfr-editable-type="text">More than Insurance.</span><br />
 			<span class="text-brand-primary-darken-5" data-lfr-editable-id="business-home-cover-title2" data-lfr-editable-type="text">We partner with your business.</span>
 			</div>
 
 			<div class="d-flex">
 				<div class="d-none" id="new-quote">
-					<div class="business-email-delivered d-none">
-						<h2>Welcome Back, {name}!</h2>
+					<div class="d-none" id="business-email-delivered">
+						<h2 class="h2 font-weight-bold">Welcome Back, {name}!</h2>
 
-						<p>
+						<p class="text-neutral-8 text-paragraph">
 							We just sent a link to <strong>{email}</strong> to
 							continue your quote.
 						</p>
@@ -23,12 +23,12 @@ mb-0 px-5 py-6">
 
 					<div class="d-flex new-quote-form">
 						<div class="d-flex flex-column form-group position-relative" id="email-container">
-							<input class="form-control" id="email" name="email" type="text" />
+							<input class="font-weight-bold form-control text-paragraph" id="email" name="email" type="text" />
 
 							<label for="email" class="position-absolute bg-white px-1 text-paragraph-sm">Email Address</label>
 
 							<div class="form-feedback-group">
-									<span class="form-feedback-item"></span>
+									<span class="form-feedback-item px-2 py-1"></span>
 							</div>
 						</div>
 
@@ -45,7 +45,7 @@ mb-0 px-5 py-6">
 					</div>
 
 					<p class="mt-5">
-					<span class="business-home-cover-link mr-2" data-lfr-editable-id="business-home-cover-link01" data-lfr-editable-type="text">First time here?
+					<span class="font-weight-bold mr-2 text-neutral-8" data-lfr-editable-id="business-home-cover-link01" data-lfr-editable-type="text">First time here?
 						</span>
 
 						<a href="#" id="new-quote-button">
@@ -56,13 +56,13 @@ mb-0 px-5 py-6">
 
 				<div class="position-relative" id="retrieve-quote">
 					<form class="align-items-start d-flex" id="get-quote-form">
-						<div class="filled form-condensed form-group" id="zip-container">
-							<input class="form-control" id="zip" maxlength="5" name="zip" placeholder="Zip" type="text" />
+						<div class="filled form-condensed form-group mr-4" id="zip-container">
+							<input class="font-weight-bold form-control text-paragraph" id="zip" maxlength="5" name="zip" placeholder="Zip" type="text" />
 
 							<label for="zip" class="bg-neutral-0 position-absolute px-1 text-paragraph-sm">Zip</label>
 
 							<div class="form-feedback-group">
-								<span class="form-feedback-item"></span>
+								<span class="form-feedback-item px-2 py-1"></span>
 							</div>
 						</div>
 
@@ -71,12 +71,12 @@ mb-0 px-5 py-6">
 								<use xlink:href="${clayIconSVG}#caret-bottom" />
 							</svg>
 
-							<select class="form-control" id="product" name="product" />
+							<select class="font-weight-bold form-control pr-6 text-paragraph" id="product" name="product" />
 
 							<label for="product" class="bg-neutral-0 position-absolute px-1 text-paragraph-sm ">Product</label>
 
 							<div class="form-feedback-group">
-								<span class="form-feedback-item"></span>
+								<span class="form-feedback-item px-2 py-1"></span>
 							</div>
 						</div>
 

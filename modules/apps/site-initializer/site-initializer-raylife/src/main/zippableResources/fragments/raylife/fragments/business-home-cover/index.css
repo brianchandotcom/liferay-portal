@@ -27,14 +27,11 @@ select {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
-	font-size: var(--font-size-base);
-	font-weight: var(--font-weight-bolder);
 	height: 48px;
 	width: 265px;
 }
 
 .business-home-cover .business-home-cover-box #zip-container {
-	margin-right: 21px;
 	width: 119px;
 }
 
@@ -42,13 +39,6 @@ select {
 	pointer-events: none;
 	right: 20px;
 	top: 17px;
-}
-
-.business-home-cover .business-home-cover-box .business-home-cover-box-title {
-	font-size: var(--displaycolor4-1-size, 2.313rem);
-	font-weight: var(--display3-weight);
-	line-height: var(--display-line-height);
-	margin-bottom: var(--spacer-6-1, 2.5rem);
 }
 
 .business-home-cover
@@ -73,21 +63,6 @@ select {
 	top: 5.5rem;
 }
 
-.business-home-cover .business-email-delivered h2 {
-	font-size: var(--h4-font-size);
-	font-weight: var(--font-weight-bold);
-}
-
-.business-home-cover .business-email-delivered p {
-	color: var(--color-neutral-8);
-	font-size: var(--font-size-base);
-}
-
-.business-home-cover .business-home-cover-link {
-	color: var(--color-neutral-8);
-	font-weight: var(--font-weight-bold);
-}
-
 .business-home-cover #email-container {
 	width: 265px;
 }
@@ -110,8 +85,6 @@ select {
 
 .business-home-cover #product-container select.form-control {
 	background-image: none;
-	font-weight: var(--font-weight-bold);
-	padding-right: 3em;
 }
 
 #zip-container .form-control:focus + label,
@@ -126,8 +99,4 @@ select {
 
 span.form-feedback-indicator {
     margin-top: 2px;
-}
-
-.form-group .form-feedback-group .form-feedback-item {
-	padding: 5px 10px;
 }

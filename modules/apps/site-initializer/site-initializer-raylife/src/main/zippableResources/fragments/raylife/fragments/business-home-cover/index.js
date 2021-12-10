@@ -28,7 +28,7 @@ const fetchHeadless = async (url, options) => {
 };
 
 const businessEmailDeliveredContainer = fragmentElement.querySelector(
-	'.business-email-delivered'
+	'#business-email-delivered'
 );
 const continueQuoteButton = fragmentElement.querySelector('#continue-quote');
 const emailInput = fragmentElement.querySelector('#email');

@@ -20,12 +20,12 @@
 ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT);
 %>
 
-<clay:headless-data-set-display
+<frontend-data-set:headless-display
 	apiURL="<%= viewSXPElementsDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= viewSXPElementsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= viewSXPElementsDisplayContext.getCreationMenu() %>"
+	fdsActionDropdownItems="<%= viewSXPElementsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
-	id="<%= SXPBlueprintAdminClayDataSetDisplayNames.SXP_ELEMENTS %>"
+	id="<%= SXPBlueprintAdminFDSNames.SXP_ELEMENTS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

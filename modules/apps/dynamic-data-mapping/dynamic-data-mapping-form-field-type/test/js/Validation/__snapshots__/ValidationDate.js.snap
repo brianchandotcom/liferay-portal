@@ -3,46 +3,48 @@
 exports[`ValidationDate shows date range validation 1`] = `
 <div>
   <div
-    class="ddm__validation-date-accepted-date"
+    class="ddm-form-field-type__validation-date-accepted-date"
   >
-    <label>
-      accepted-date
-    </label>
-    <div
-      class="dropdown"
+    <label
+      class="lfr-ddm__validation-date-select"
     >
+      accepted-date
       <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+        class="dropdown"
       >
         <div
-          class="form-control results-chosen select-field-trigger"
+          class="dropdown-toggle form-builder-select-field input-group-container"
+          style=""
         >
           <div
-            class="option-selected"
+            class="form-control results-chosen select-field-trigger"
           >
-            Range
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="dateRange"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
+            <div
+              class="option-selected"
             >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
+              Range
+            </div>
+            <input
+              name="selectedValidation"
+              type="hidden"
+              value="dateRange"
+            />
+            <a
+              class="select-arrow-down-container"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-caret-double"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-double"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </label>
   </div>
   <label>
     START-DATE
@@ -59,19 +61,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       <label>
         starts-from
       </label>
-      <div
-        data-tooltip-align="top"
-        title="starts-from-tooltip"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
-          role="presentation"
-        >
-          <use
-            xlink:href="#question-circle-full"
-          />
-        </svg>
-      </div>
     </div>
     <div
       class="dropdown"
@@ -146,9 +135,11 @@ exports[`ValidationDate shows date range validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="lfr-ddm__custom-date"
   >
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       operation
       <div
         class="dropdown"
@@ -189,7 +180,7 @@ exports[`ValidationDate shows date range validation 1`] = `
     <label>
       quantity
       <input
-        class="form-control ddm-field-text"
+        class="form-control"
         max="999"
         min="1"
         name="inputedQuantity_startsFrom"
@@ -197,7 +188,9 @@ exports[`ValidationDate shows date range validation 1`] = `
         value="1"
       />
     </label>
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       unit
       <div
         class="dropdown"
@@ -251,19 +244,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       <label>
         ends-on
       </label>
-      <div
-        data-tooltip-align="top"
-        title="ends-on-tooltip"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
-          role="presentation"
-        >
-          <use
-            xlink:href="#question-circle-full"
-          />
-        </svg>
-      </div>
     </div>
     <div
       class="dropdown"
@@ -338,9 +318,11 @@ exports[`ValidationDate shows date range validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="lfr-ddm__custom-date"
   >
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       operation
       <div
         class="dropdown"
@@ -381,7 +363,7 @@ exports[`ValidationDate shows date range validation 1`] = `
     <label>
       quantity
       <input
-        class="form-control ddm-field-text"
+        class="form-control"
         max="999"
         min="1"
         name="inputedQuantity_endsOn"
@@ -389,7 +371,9 @@ exports[`ValidationDate shows date range validation 1`] = `
         value="1"
       />
     </label>
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       unit
       <div
         class="dropdown"
@@ -447,46 +431,48 @@ exports[`ValidationDate shows date range validation 1`] = `
 exports[`ValidationDate shows future dates validation 1`] = `
 <div>
   <div
-    class="ddm__validation-date-accepted-date"
+    class="ddm-form-field-type__validation-date-accepted-date"
   >
-    <label>
-      accepted-date
-    </label>
-    <div
-      class="dropdown"
+    <label
+      class="lfr-ddm__validation-date-select"
     >
+      accepted-date
       <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+        class="dropdown"
       >
         <div
-          class="form-control results-chosen select-field-trigger"
+          class="dropdown-toggle form-builder-select-field input-group-container"
+          style=""
         >
           <div
-            class="option-selected"
+            class="form-control results-chosen select-field-trigger"
           >
-            Future Dates
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="futureDates"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
+            <div
+              class="option-selected"
             >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
+              Future Dates
+            </div>
+            <input
+              name="selectedValidation"
+              type="hidden"
+              value="futureDates"
+            />
+            <a
+              class="select-arrow-down-container"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-caret-double"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-double"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </label>
   </div>
   <div
     class="ddm__validation-date-start-end"
@@ -497,19 +483,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
       <label>
         starts-from
       </label>
-      <div
-        data-tooltip-align="top"
-        title="starts-from-tooltip"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
-          role="presentation"
-        >
-          <use
-            xlink:href="#question-circle-full"
-          />
-        </svg>
-      </div>
     </div>
     <div
       class="dropdown"
@@ -584,9 +557,11 @@ exports[`ValidationDate shows future dates validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="lfr-ddm__custom-date"
   >
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       operation
       <div
         class="dropdown"
@@ -627,7 +602,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
     <label>
       quantity
       <input
-        class="form-control ddm-field-text"
+        class="form-control"
         max="999"
         min="1"
         name="inputedQuantity_startsFrom"
@@ -635,7 +610,9 @@ exports[`ValidationDate shows future dates validation 1`] = `
         value="1"
       />
     </label>
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       unit
       <div
         class="dropdown"
@@ -693,46 +670,48 @@ exports[`ValidationDate shows future dates validation 1`] = `
 exports[`ValidationDate shows past dates validation 1`] = `
 <div>
   <div
-    class="ddm__validation-date-accepted-date"
+    class="ddm-form-field-type__validation-date-accepted-date"
   >
-    <label>
-      accepted-date
-    </label>
-    <div
-      class="dropdown"
+    <label
+      class="lfr-ddm__validation-date-select"
     >
+      accepted-date
       <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+        class="dropdown"
       >
         <div
-          class="form-control results-chosen select-field-trigger"
+          class="dropdown-toggle form-builder-select-field input-group-container"
+          style=""
         >
           <div
-            class="option-selected"
+            class="form-control results-chosen select-field-trigger"
           >
-            Past Dates
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="pastDates"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
+            <div
+              class="option-selected"
             >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
+              Past Dates
+            </div>
+            <input
+              name="selectedValidation"
+              type="hidden"
+              value="pastDates"
+            />
+            <a
+              class="select-arrow-down-container"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-caret-double"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-double"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </label>
   </div>
   <div
     class="ddm__validation-date-start-end"
@@ -743,19 +722,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
       <label>
         ends-on
       </label>
-      <div
-        data-tooltip-align="top"
-        title="ends-on-tooltip"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-question-circle-full ddm__validation-date-start-end-icon"
-          role="presentation"
-        >
-          <use
-            xlink:href="#question-circle-full"
-          />
-        </svg>
-      </div>
     </div>
     <div
       class="dropdown"
@@ -830,9 +796,11 @@ exports[`ValidationDate shows past dates validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="lfr-ddm__custom-date"
   >
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       operation
       <div
         class="dropdown"
@@ -873,7 +841,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
     <label>
       quantity
       <input
-        class="form-control ddm-field-text"
+        class="form-control"
         max="999"
         min="1"
         name="inputedQuantity_endsOn"
@@ -881,7 +849,9 @@ exports[`ValidationDate shows past dates validation 1`] = `
         value="1"
       />
     </label>
-    <label>
+    <label
+      class="lfr_ddm__custom-date-select"
+    >
       unit
       <div
         class="dropdown"

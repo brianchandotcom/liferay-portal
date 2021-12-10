@@ -33,8 +33,8 @@ const generateValue = (parameter = null) => ({
 	},
 });
 
-const ValidationWithProvider = ({builderPages, validations, ...props}) => (
-	<FormProvider initialState={{builderPages, validations}}>
+const ValidationWithProvider = ({formBuilder, validations, ...props}) => (
+	<FormProvider initialState={{formBuilder, validations}}>
 		<Validation {...props} />
 	</FormProvider>
 );
@@ -187,11 +187,11 @@ describe('Validation', () => {
 
 		const {container} = render(
 			<ValidationWithProvider
-				builderPages={[]}
 				dataType="date"
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				expression={{}}
+				formBuilder={{pages: []}}
 				label="Validator"
 				name="validation"
 				onChange={onChange}

@@ -71,8 +71,16 @@ const parameters = generateParameter();
 
 const localizedValue = jest.fn(() => parameters['en_US']);
 
-const ValidationDateProvider = ({builderPages = [], state, ...props}) => (
-	<FormProvider initialState={{builderPages}} value={state}>
+const ValidationDateProvider = ({
+	formBuilder = {},
+	dateFieldTypeValidationEnabled = false,
+	state,
+	...props
+}) => (
+	<FormProvider
+		initialState={{dateFieldTypeValidationEnabled, formBuilder}}
+		value={state}
+	>
 		<ValidationDate {...props} />
 	</FormProvider>
 );
@@ -139,9 +147,9 @@ describe('ValidationDate', () => {
 	it('shows date range validation', () => {
 		const {container} = render(
 			<ValidationDateProvider
-				builderPages={[]}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
+				formBuilder={{pages: []}}
 				localizedValue={localizedValue}
 				name="validationDate"
 				onChange={() => {}}
@@ -244,26 +252,28 @@ describe('ValidationDate', () => {
 	});
 
 	it('shows date field on dropdown', () => {
-		const builderPages = [
-			{
-				rows: [
-					{
-						columns: [
-							{
-								fields: [
-									{
-										fieldName: 'Date12345678',
-										label: 'Date A',
-										type: 'date',
-									},
-								],
-								size: 12,
-							},
-						],
-					},
-				],
-			},
-		];
+		const formBuilder = {
+			pages: [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [
+										{
+											fieldName: 'Date12345678',
+											label: 'Date A',
+											type: 'date',
+										},
+									],
+									size: 12,
+								},
+							],
+						},
+					],
+				},
+			],
+		};
 
 		const parameter = {
 			en_US: {
@@ -280,9 +290,10 @@ describe('ValidationDate', () => {
 
 		const {getAllByRole} = render(
 			<ValidationDateProvider
-				builderPages={builderPages}
+				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
+				formBuilder={formBuilder}
 				localizedValue={localizedValue}
 				name="validationDate"
 				onChange={() => {}}
@@ -304,27 +315,29 @@ describe('ValidationDate', () => {
 	});
 
 	it("doesn't show date field on dropdown when date field is repeatable", () => {
-		const builderPages = [
-			{
-				rows: [
-					{
-						columns: [
-							{
-								fields: [
-									{
-										fieldName: 'Date12345678',
-										label: 'Date A',
-										repeatable: true,
-										type: 'date',
-									},
-								],
-								size: 12,
-							},
-						],
-					},
-				],
-			},
-		];
+		const formBuilder = {
+			pages: [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [
+										{
+											fieldName: 'Date12345678',
+											label: 'Date A',
+											repeatable: true,
+											type: 'date',
+										},
+									],
+									size: 12,
+								},
+							],
+						},
+					],
+				},
+			],
+		};
 
 		const parameter = {
 			en_US: {
@@ -341,9 +354,9 @@ describe('ValidationDate', () => {
 
 		const {getAllByRole} = render(
 			<ValidationDateProvider
-				builderPages={builderPages}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
+				formBuilder={formBuilder}
 				localizedValue={localizedValue}
 				name="validationDate"
 				onChange={() => {}}
@@ -365,26 +378,28 @@ describe('ValidationDate', () => {
 	});
 
 	it('shows date fields inside custom date fields for Past dates and operation minus when quantity is negative', () => {
-		const builderPages = [
-			{
-				rows: [
-					{
-						columns: [
-							{
-								fields: [
-									{
-										fieldName: 'Date12345678',
-										label: 'Date A',
-										type: 'date',
-									},
-								],
-								size: 12,
-							},
-						],
-					},
-				],
-			},
-		];
+		const formBuilder = {
+			pages: [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [
+										{
+											fieldName: 'Date12345678',
+											label: 'Date A',
+											type: 'date',
+										},
+									],
+									size: 12,
+								},
+							],
+						},
+					],
+				},
+			],
+		};
 
 		const parameter = {
 			en_US: {
@@ -400,9 +415,10 @@ describe('ValidationDate', () => {
 		const localizedValue = jest.fn(() => parameter['en_US']);
 		const {getAllByRole} = render(
 			<ValidationDateProvider
-				builderPages={builderPages}
+				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
+				formBuilder={formBuilder}
 				localizedValue={localizedValue}
 				name="validationDate"
 				onChange={() => {}}

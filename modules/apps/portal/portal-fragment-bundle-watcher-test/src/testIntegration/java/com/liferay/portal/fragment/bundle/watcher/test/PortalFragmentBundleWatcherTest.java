@@ -30,9 +30,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -74,10 +76,9 @@ public class PortalFragmentBundleWatcherTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_refreshCountBundleListener = new RefreshCountBundleListener(
-			_HOST_SYMBOLIC_NAME);
+		_testFragmentBundleListener = new TestFragmentBundleListener();
 
-		_bundleContext.addBundleListener(_refreshCountBundleListener);
+		_bundleContext.addBundleListener(_testFragmentBundleListener);
 
 		_installedBundles = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
@@ -85,7 +86,7 @@ public class PortalFragmentBundleWatcherTest {
 
 	@After
 	public void tearDown() throws BundleException {
-		_bundleContext.removeBundleListener(_refreshCountBundleListener);
+		_bundleContext.removeBundleListener(_testFragmentBundleListener);
 
 		for (Bundle bundle : _installedBundles) {
 			bundle.uninstall();
@@ -111,13 +112,15 @@ public class PortalFragmentBundleWatcherTest {
 	public void testDeployTwoFragmentsAndUnrelatedBundlesSimultaneously()
 		throws Exception {
 
+		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
+
+		hostBundle.start();
+
+		_testFragmentBundleListener.waitForHostStarted();
+
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
-
-			hostBundle.start();
-
 			//Install unrelated bundles
 			Bundle unrelatedABundle = _installBundle(
 				_PACKAGE_NAME.concat(".unrelated.a"), null, null);
@@ -134,11 +137,9 @@ public class PortalFragmentBundleWatcherTest {
 
 			//Create callables to install fragments and start unrelated bundles
 			Callable<Bundle> installFragmentACallable = () -> _installBundle(
-				_HOST_SYMBOLIC_NAME.concat(".fragment.a"), _HOST_SYMBOLIC_NAME,
-				null);
+				_FRAGMENT_A_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
 			Callable<Bundle> installFragmentBCallable = () -> _installBundle(
-				_HOST_SYMBOLIC_NAME.concat(".fragment.b"), _HOST_SYMBOLIC_NAME,
-				null);
+				_FRAGMENT_B_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
 			Callable<Bundle> startUnrelatedBundleACallable = () -> _startBundle(
 				unrelatedABundle);
 			Callable<Bundle> startUnrelatedBundleBCallable = () -> _startBundle(
@@ -166,8 +167,10 @@ public class PortalFragmentBundleWatcherTest {
 				future.get();
 			}
 
-			//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-			Thread.sleep(200);
+			Assert.assertTrue(
+				_testFragmentBundleListener.waitForFragmentAResolved());
+			Assert.assertTrue(
+				_testFragmentBundleListener.waitForFragmentBResolved());
 
 			int expectedMaxHostRefreshCount = 2;
 
@@ -175,9 +178,9 @@ public class PortalFragmentBundleWatcherTest {
 				StringBundler.concat(
 					"Expected host to refresh at most ",
 					expectedMaxHostRefreshCount, " times, but was refreshed ",
-					_refreshCountBundleListener.getRefreshCount(),
+					_testFragmentBundleListener.getHostRefreshedCount(),
 					" times instead."),
-				_refreshCountBundleListener.getRefreshCount() <=
+				_testFragmentBundleListener.getHostRefreshedCount() <=
 					expectedMaxHostRefreshCount);
 		}
 		finally {
@@ -285,44 +288,43 @@ public class PortalFragmentBundleWatcherTest {
 
 		hostBundle.start();
 
+		_testFragmentBundleListener.waitForHostStarted();
+
 		if (hasDependency && !missingDependency) {
 			Bundle dependencyBundle = _installBundle(
-				_DEPENDENCY_SYMBOLIC_NAME, null, null);
+				_DEPENDENCY_A_SYMBOLIC_NAME, null, null);
 
 			dependencyBundle.start();
-		}
 
-		Bundle fragmentBundle = null;
+			_testFragmentBundleListener.waitForDependencyAStarted();
+		}
 
 		if (hasDependency) {
-			fragmentBundle = _installBundle(
-				_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
-				_DEPENDENCY_SYMBOLIC_NAME);
+			_installBundle(
+				_FRAGMENT_A_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
+				_DEPENDENCY_A_SYMBOLIC_NAME);
 		}
 		else {
-			fragmentBundle = _installBundle(
-				_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
+			_installBundle(
+				_FRAGMENT_A_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
 		}
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
 
 		if (missingDependency) {
-			Assert.assertEquals(
-				0, _refreshCountBundleListener.getRefreshCount());
-
-			Assert.assertNotEquals(
-				"Fragment is in the resolved state, but should actually be " +
+			Assert.assertFalse(
+				"Fragment A is in the resolved state, but should actually be " +
 					"in the installed state, since it has a missing dependency",
-				fragmentBundle.getState(), Bundle.RESOLVED);
+				_testFragmentBundleListener.waitForFragmentAResolved());
+
+			Assert.assertEquals(
+				0, _testFragmentBundleListener.getHostRefreshedCount());
 		}
 		else {
-			Assert.assertEquals(
-				1, _refreshCountBundleListener.getRefreshCount());
+			Assert.assertTrue(
+				"Fragment A should be in resolved state",
+				_testFragmentBundleListener.waitForFragmentAResolved());
 
 			Assert.assertEquals(
-				"Fragment should be in resolved state",
-				fragmentBundle.getState(), Bundle.RESOLVED);
+				1, _testFragmentBundleListener.getHostRefreshedCount());
 		}
 	}
 
@@ -330,72 +332,77 @@ public class PortalFragmentBundleWatcherTest {
 			boolean missingDependency)
 		throws Exception {
 
-		String dependencyASymbolicName = _PACKAGE_NAME.concat(".dependency.a");
-		String dependencyBSymbolicName = _PACKAGE_NAME.concat(".dependency.b");
-
 		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 		hostBundle.start();
 
+		_testFragmentBundleListener.waitForHostStarted();
+
 		Bundle dependencyBundleA = _installBundle(
-			dependencyASymbolicName, null, null);
+			_DEPENDENCY_A_SYMBOLIC_NAME, null, null);
 
 		dependencyBundleA.start();
 
-		Bundle fragmentBundleA = _installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment.a"), _HOST_SYMBOLIC_NAME,
-			dependencyASymbolicName);
+		_testFragmentBundleListener.waitForDependencyAStarted();
+
+		_installBundle(
+			_FRAGMENT_A_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
+			_DEPENDENCY_A_SYMBOLIC_NAME);
 
 		if (!missingDependency) {
 			Bundle dependencyBundleB = _installBundle(
-				dependencyBSymbolicName, null, null);
+				_DEPENDENCY_B_SYMBOLIC_NAME, null, null);
 
 			dependencyBundleB.start();
+
+			_testFragmentBundleListener.waitForDependencyBStarted();
 		}
 
-		Bundle fragmentBundleB = _installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment.b"), _HOST_SYMBOLIC_NAME,
-			dependencyBSymbolicName);
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
+		_installBundle(
+			_FRAGMENT_B_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
+			_DEPENDENCY_B_SYMBOLIC_NAME);
 
 		if (missingDependency) {
-			Assert.assertEquals(
-				1, _refreshCountBundleListener.getRefreshCount());
-
-			Assert.assertEquals(
+			Assert.assertTrue(
 				"Fragment A should be in resolved state",
-				fragmentBundleA.getState(), Bundle.RESOLVED);
-			Assert.assertNotEquals(
+				_testFragmentBundleListener.waitForFragmentAResolved());
+
+			Assert.assertFalse(
 				"Fragment B is in the resolved state, but should actually be " +
 					"in the installed state, since it has a missing dependency",
-				fragmentBundleB.getState(), Bundle.RESOLVED);
+				_testFragmentBundleListener.waitForFragmentBResolved());
+
+			Assert.assertEquals(
+				1, _testFragmentBundleListener.getHostRefreshedCount());
 		}
 		else {
+			Assert.assertTrue(
+				"Fragment A should be in resolved state",
+				_testFragmentBundleListener.waitForFragmentAResolved());
+			Assert.assertTrue(
+				"Fragment B should be in resolved state",
+				_testFragmentBundleListener.waitForFragmentBResolved());
+
 			int expectedMaxHostRefreshCount = 2;
 
 			Assert.assertTrue(
 				StringBundler.concat(
 					"Expected host to refresh at most ",
 					expectedMaxHostRefreshCount, " times, but was refreshed ",
-					_refreshCountBundleListener.getRefreshCount(),
+					_testFragmentBundleListener.getHostRefreshedCount(),
 					" times instead."),
-				_refreshCountBundleListener.getRefreshCount() <=
+				_testFragmentBundleListener.getHostRefreshedCount() <=
 					expectedMaxHostRefreshCount);
-
-			Assert.assertEquals(
-				"Fragment A should be in resolved state",
-				fragmentBundleA.getState(), Bundle.RESOLVED);
-			Assert.assertEquals(
-				"Fragment B should be in resolved state",
-				fragmentBundleB.getState(), Bundle.RESOLVED);
 		}
 	}
 
-	private static final String _DEPENDENCY_SYMBOLIC_NAME;
+	private static final String _DEPENDENCY_A_SYMBOLIC_NAME;
 
-	private static final String _FRAGMENT_SYMBOLIC_NAME;
+	private static final String _DEPENDENCY_B_SYMBOLIC_NAME;
+
+	private static final String _FRAGMENT_A_SYMBOLIC_NAME;
+
+	private static final String _FRAGMENT_B_SYMBOLIC_NAME;
 
 	private static final String _HOST_SYMBOLIC_NAME;
 
@@ -406,44 +413,97 @@ public class PortalFragmentBundleWatcherTest {
 
 		_PACKAGE_NAME = pkg.getName();
 
-		_DEPENDENCY_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".dependency");
+		_DEPENDENCY_A_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".dependency.a");
+		_DEPENDENCY_B_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".dependency.b");
 
 		_HOST_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".host");
 
-		_FRAGMENT_SYMBOLIC_NAME = _HOST_SYMBOLIC_NAME.concat(".fragment");
+		_FRAGMENT_A_SYMBOLIC_NAME = _HOST_SYMBOLIC_NAME.concat(".fragment.a");
+		_FRAGMENT_B_SYMBOLIC_NAME = _HOST_SYMBOLIC_NAME.concat(".fragment.b");
 	}
 
 	private BundleContext _bundleContext;
 	private Set<Bundle> _installedBundles;
-	private RefreshCountBundleListener _refreshCountBundleListener;
+	private TestFragmentBundleListener _testFragmentBundleListener;
 
-	private class RefreshCountBundleListener implements BundleListener {
+	private class TestFragmentBundleListener implements BundleListener {
 
 		@Override
 		public void bundleChanged(BundleEvent bundleEvent) {
 			Bundle bundle = bundleEvent.getBundle();
 
-			String symbolicName = bundle.getSymbolicName();
+			if (Objects.equals(
+					bundle.getSymbolicName(), _DEPENDENCY_A_SYMBOLIC_NAME) &&
+				(bundleEvent.getType() == BundleEvent.STARTED)) {
 
-			int type = bundleEvent.getType();
+				_dependencyAStartedCountDownLatch.countDown();
+			}
+			else if (Objects.equals(
+						bundle.getSymbolicName(),
+						_DEPENDENCY_B_SYMBOLIC_NAME) &&
+					 (bundleEvent.getType() == BundleEvent.STARTED)) {
 
-			if (Objects.equals(symbolicName, _symbolicName) &&
-				(type == BundleEvent.STOPPED)) {
+				_dependencyBStartedCountDownLatch.countDown();
+			}
+			else if (Objects.equals(
+						bundle.getSymbolicName(), _FRAGMENT_A_SYMBOLIC_NAME) &&
+					 (bundleEvent.getType() == BundleEvent.RESOLVED)) {
 
-				_refreshCount.incrementAndGet();
+				_fragmentAResolvedCountDownLatch.countDown();
+			}
+			else if (Objects.equals(
+						bundle.getSymbolicName(), _FRAGMENT_B_SYMBOLIC_NAME) &&
+					 (bundleEvent.getType() == BundleEvent.RESOLVED)) {
+
+				_fragmentBResolvedCountDownLatch.countDown();
+			}
+			else if (Objects.equals(
+						bundle.getSymbolicName(), _HOST_SYMBOLIC_NAME)) {
+
+				if (bundleEvent.getType() == BundleEvent.STARTED) {
+					_hostStartedCountDownLatch.countDown();
+				}
+				else if (bundleEvent.getType() == BundleEvent.STOPPED) {
+					_hostRefreshCount.incrementAndGet();
+				}
 			}
 		}
 
-		public int getRefreshCount() {
-			return _refreshCount.get();
+		public int getHostRefreshedCount() {
+			return _hostRefreshCount.get();
 		}
 
-		private RefreshCountBundleListener(String symbolicName) {
-			_symbolicName = symbolicName;
+		public void waitForDependencyAStarted() throws Exception {
+			_dependencyAStartedCountDownLatch.await();
 		}
 
-		private final AtomicInteger _refreshCount = new AtomicInteger();
-		private final String _symbolicName;
+		public void waitForDependencyBStarted() throws Exception {
+			_dependencyBStartedCountDownLatch.await();
+		}
+
+		public boolean waitForFragmentAResolved() throws Exception {
+			return _fragmentAResolvedCountDownLatch.await(1, TimeUnit.SECONDS);
+		}
+
+		public boolean waitForFragmentBResolved() throws Exception {
+			return _fragmentBResolvedCountDownLatch.await(1, TimeUnit.SECONDS);
+		}
+
+		public void waitForHostStarted() throws Exception {
+			_hostStartedCountDownLatch.await();
+		}
+
+		private final CountDownLatch _dependencyAStartedCountDownLatch =
+			new CountDownLatch(1);
+		private final CountDownLatch _dependencyBStartedCountDownLatch =
+			new CountDownLatch(1);
+		private final CountDownLatch _fragmentAResolvedCountDownLatch =
+			new CountDownLatch(1);
+		private final CountDownLatch _fragmentBResolvedCountDownLatch =
+			new CountDownLatch(1);
+		private final AtomicInteger _hostRefreshCount = new AtomicInteger();
+		private final CountDownLatch _hostStartedCountDownLatch =
+			new CountDownLatch(1);
 
 	}
 

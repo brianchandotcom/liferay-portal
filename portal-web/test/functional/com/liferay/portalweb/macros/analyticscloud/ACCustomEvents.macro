@@ -143,4 +143,16 @@ definition {
 
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 	}
+
+	macro blockAllCustomEvents {
+		var key_actionButton = "Block";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "Block Events");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
 }

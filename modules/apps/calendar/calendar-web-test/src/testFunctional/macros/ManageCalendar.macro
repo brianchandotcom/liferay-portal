@@ -36,85 +36,92 @@ definition {
 			locator1 = "ManageCalendar#NAME_BY_COLUMN");
 	}
 
-    macro addCalendar {
+	macro addCalendar {
 		Click(locator1 = "ManageCalendar#ADD_CALENDAR");
 
 		Calendar._editName(calendarName = "${calendarName}");
 
-        if (isSet(description)) {
-            PortletEntry.inputDescription(description = "${description}");
-        }
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
 
-        if (isSet(timeZone)) {
-            PortalSettings.configureTimeZone(timeZone = "${timeZone}");
-        }
+		if (isSet(timeZone)) {
+			PortalSettings.configureTimeZone(timeZone = "${timeZone}");
+		}
 
-        if (isSet(calendarColor)) {
-            Click(
-                key_calendarColor = "${calendarColor}",
-                locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
-        }
+		if (isSet(calendarColor)) {
+			Click(
+				key_calendarColor = "${calendarColor}",
+				locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
+		}
 
-        if ("${defaultCalendarOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
-        }
+		if ("${defaultCalendarOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
+		}
 
-        if ("${enableCommentsOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
-        }
+		if ("${enableCommentsOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
+		}
 
-        if ("${enableRatingsOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
-        }
+		if ("${enableRatingsOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
+		}
 
-        PortletEntry.save();
+		PortletEntry.save();
 
 		Navigator.gotoBack();
 	}
 
-    macro editCalendar {
-        Click(
-            key_calendarName = "${calendarCurrentName}",
+	macro editCalendar {
+		Click(
+			key_calendarName = "${calendarCurrentName}",
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
 
-        MenuItem.click(menuItem = "Edit");
+		MenuItem.click(menuItem = "Edit");
 
-        if (isSet(newName)) {
-            Calendar._editName(calendarName = "${newName}");
-        }
+		if (isSet(newName)) {
+			Calendar._editName(calendarName = "${newName}");
+		}
 
-        if (isSet(newDescription)) {
-            PortletEntry.inputDescription(description = "${newDescription}");
-        }
+		if (isSet(newDescription)) {
+			PortletEntry.inputDescription(description = "${newDescription}");
+		}
 
-        if (isSet(timeZone)) {
-            PortalSettings.configureTimeZone(timeZone = "${timeZone}");
-        }
+		if (isSet(timeZone)) {
+			PortalSettings.configureTimeZone(timeZone = "${timeZone}");
+		}
 
-        if (isSet(calendarColor)) {
-            Click(
-                key_calendarColor = "${calendarColor}",
-                locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
-        }
+		if (isSet(calendarColor)) {
+			Click(
+				key_calendarColor = "${calendarColor}",
+				locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
+		}
 
-        if ("${defaultCalendarOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
-        }
+		if ("${defaultCalendarOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
+		}
 
-        if ("${enableCommentsOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
-        }
+		if ("${enableCommentsOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
+		}
 
-        if ("${enableRatingsOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
-        }
+		if ("${enableRatingsOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
+		}
 
-        PortletEntry.save();
+		PortletEntry.save();
 
 		Navigator.gotoBack();
-    }
+	}
 
-    macro viewMenuItemNotPresent {
+	macro viewDefaultOptionOfCalendar {
+		AssertElementPresent(
+			key_calendarName = "${calendarName}",
+			key_optionDefault = "${defaultOption}",
+			locator1 = "ManageCalendar#DEFAULT_OPTION_BY_NAME");
+	}
+
+	macro viewMenuItemNotPresent {
 		Click(
 			key_calendarName = "${calendarName}",
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -123,10 +130,10 @@ definition {
 			key_menuItem = "${menuItem}",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
-        Refresh();
+		Refresh();
 	}
 
-    macro viewMenuItemPresent {
+	macro viewMenuItemPresent {
 		Click(
 			key_calendarName = "${calendarName}",
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -135,14 +142,7 @@ definition {
 			key_menuItem = "${menuItem}",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
-        Refresh();
+		Refresh();
 	}
-
-    macro viewDefaultOptionOfCalendar {
-        AssertElementPresent(
-			key_calendarName = "${calendarName}",
-            key_optionDefault = "${defaultOption}",
-			locator1 = "ManageCalendar#DEFAULT_OPTION_BY_NAME");
-    }
 
 }

@@ -77,8 +77,7 @@ definition {
 			calendarName = "Test Test",
 			menuItem = "Delete");
 
-		ManageCalendar.addCalendar(
-			calendarName = "Test Calendar");
+		ManageCalendar.addCalendar(calendarName = "Test Calendar");
 
 		ManageCalendar.viewDefaultOptionOfCalendar(
 			calendarName = "Test Calendar",

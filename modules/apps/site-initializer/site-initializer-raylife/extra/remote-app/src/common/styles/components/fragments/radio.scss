@@ -1,84 +1,22 @@
 .radio-card {
 	border: 1px solid rgba($color: #000, $alpha: 0.1);
-	border-radius: 0.5rem;
 	cursor: pointer !important;
-	display: flex;
 	gap: 0.75rem;
-	padding: 1rem;
 	width: 37rem;
 
-	& > .content {
-		display: flex;
-		flex: 1 1;
-		flex-direction: column;
-
-		> .content-header {
-			align-items: center;
-			display: flex;
-			justify-content: space-between;
-
+	& > div {
+		> div {
 			label {
 				cursor: pointer;
-				font-size: 1.125rem;
-				font-weight: bold;
-
-				small {
-					font-size: 1.125rem;
-					font-weight: normal;
-					margin-left: none;
-				}
 			}
 		}
-
-		p {
-			color: $color-neutral-8;
-			font-size: 0.813rem;
-			font-weight: 500;
-		}
 	}
-
-	&.selected {
-		background: #295ccc19;
-		border: 1px solid $color-action-primary-default;
-
-		label {
-			color: $color-action-primary-default;
-		}
-	}
-}
-
-.radio {
-	-webkit-appearance: none;
-	appearance: none;
-	background: none;
-	border: none;
-	cursor: pointer;
-	flex: 0 1;
-	min-height: 0;
-	outline: none;
-	padding: 0;
-	padding-top: 0.313rem;
-	width: -moz-fit-content;
-	width: fit-content;
-
-	&::before {
-		border: 1px solid $color-action-primary-default;
-		border-radius: 1rem;
-		content: '';
-		cursor: pointer;
-		display: block;
-		height: 0.875rem;
-		position: relative;
-		transition: all 200ms ease-out;
-		width: 0.875rem;
-	}
-
-	&:checked {
+	.custom-control-label {
 		&::before {
-			border-width: 4px;
-			height: calc(1rem - 8px);
-			transition: all 200ms ease-out;
-			width: calc(1rem - 8px);
+			top: 0.3rem;
+		}
+		&::after {
+			top: 0.3rem;
 		}
 	}
 }

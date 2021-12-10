@@ -39,14 +39,13 @@ export function BusinessTypeRadioGroup({
 				'basics.properties.segment',
 				categoryProperties.find(({key}) => key === 'Segment')?.value
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			console.warn(error);
 		}
 	};
 
 	return (
-		<fieldset className="content-column" id="businessType">
+		<fieldset id="businessType">
 			<Controller
 				control={control}
 				defaultValue=""

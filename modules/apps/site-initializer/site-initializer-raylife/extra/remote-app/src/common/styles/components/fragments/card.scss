@@ -35,12 +35,5 @@
 			margin-bottom: $spacer-1;
 			margin-top: $spacer-2;
 		}
-
-		.content-column {
-			display: flex;
-			flex: 1;
-			flex-direction: column;
-			gap: $spacer-3;
-		}
 	}
 }

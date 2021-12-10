@@ -1,3 +1,5 @@
+import ClayCard from '@clayui/card';
+import {ClayRadio} from '@clayui/form';
 import React from 'react';
 
 export function Radio({
@@ -11,8 +13,12 @@ export function Radio({
 	...props
 }) {
 	return (
-		<div
-			className={`radio-card ${selected && 'selected'}`}
+		<ClayCard
+			className={`align-items-baseline flex-row d-flex mb-3 pb-3 pr-3 pl-3
+			pt-3 radio-card rounded user-select-auto  ${
+				selected &&
+				'bg-brand-primary-lighten-5 border border-primary text-brand-primary'
+			}`}
 			onClick={() =>
 				props.onChange({
 					target: {
@@ -20,11 +26,12 @@ export function Radio({
 					},
 				})
 			}
+			selected={selected}
 		>
-			<input
+			<ClayRadio
 				{...props}
 				checked={selected}
-				className="radio"
+				inline={true}
 				name={name}
 				onChange={() =>
 					props.onChange({
@@ -33,23 +40,31 @@ export function Radio({
 						},
 					})
 				}
-				type="radio"
 				value={value}
 			/>
 
-			<div className="content">
-				<div className="content-header">
-					<label htmlFor={name}>
+			<div className="content d-flex flex-column flex-grow-1 flex-shrink-1">
+				<div className="align-items-center d-flex justify-content-between">
+					<label
+						className={`font-weight-bolder text-paragraph-lg ${
+							selected && 'text-brand-primary'
+						}`}
+						htmlFor={name}
+					>
 						{label}
 
-						<small>{sideLabel}</small>
+						<small className="font-weight-normal ml-0 text-paragraph-lg">
+							{sideLabel}
+						</small>
 					</label>
 
 					{renderActions}
 				</div>
 
-				<p>{description}</p>
+				<p className="text-neutral-8 text-paragraph-sm">
+					{description}
+				</p>
 			</div>
-		</div>
+		</ClayCard>
 	);
 }

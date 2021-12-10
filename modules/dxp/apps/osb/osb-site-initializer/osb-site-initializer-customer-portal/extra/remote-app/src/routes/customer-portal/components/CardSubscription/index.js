@@ -1,5 +1,6 @@
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
+import dateToLocalFormat from '../../utils/dateToLocalFormat';
 import ModalCardSubscription from '../ModalCardSubscription';
 
 const CardSubscription = ({cardSubscriptionData}) => {
@@ -15,15 +16,6 @@ const CardSubscription = ({cardSubscriptionData}) => {
 	const accountSubscriptionERC = `${
 		cardSubscriptionData.accountSubscriptionGroupERC
 	}_${parseAccountSubscriptionTerms(cardSubscriptionData.name)}`;
-
-	const parseDate = (rawDate) => {
-		const date = new Date(rawDate);
-		const month = date.toLocaleDateString('default', {month: 'short'});
-		const day = date.getDate();
-		const year = date.getFullYear();
-
-		return `${month} ${day}, ${year}`;
-	};
 
 	return (
 		<>
@@ -61,9 +53,9 @@ const CardSubscription = ({cardSubscriptionData}) => {
 						className="card-date d-flex justify-content-center mb-4 row"
 						type="text"
 					>
-						{`${parseDate(
+						{`${dateToLocalFormat(
 							cardSubscriptionData?.startDate
-						)} - ${parseDate(cardSubscriptionData?.endDate)}`}
+						)} - ${dateToLocalFormat(cardSubscriptionData?.endDate)}`}
 					</div>
 
 					<div className="badge-card-subscription d-flex justify-content-center">

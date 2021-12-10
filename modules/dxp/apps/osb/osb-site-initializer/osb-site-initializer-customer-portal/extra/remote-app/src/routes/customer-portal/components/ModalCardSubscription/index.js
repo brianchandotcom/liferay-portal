@@ -6,22 +6,12 @@ import React, {useMemo, useState} from 'react';
 import Table from '../../../../common/components/Table';
 import {getAccountSubscriptionsTerms} from '../../../../common/services/liferay/graphql/queries';
 import {status} from '../../utils/constants';
+import dateToLocalFormat from '../../utils/dateToLocalFormat';
 import StatusTag from '../StatusTag';
 
 const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 	const [activePage, setActivePage] = useState(1);
 	const MAX_ITEMS_PER_PAGE = 5;
-
-	const parseDate = (rawDate) => {
-		const date = new Date(rawDate);
-		const month = date.getMonth() + 1;
-		const day = date.getDate();
-		const year = date.getFullYear();
-
-		return !rawDate
-			? ''
-			: `${day}/${month < 10 ? `0${month}` : month}/${year}`;
-	};
 
 	const {data: subscriptionsTerms} = useQuery(getAccountSubscriptionsTerms, {
 		variables: {
@@ -41,9 +31,9 @@ const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 			{
 				Cell: (props) => {
 					return (
-						<>{`${parseDate(props.startDate)} - ${parseDate(
-							props.endDate
-						)}`}</>
+						<>{`${dateToLocalFormat(
+							props.startDate
+						)} - ${dateToLocalFormat(props.endDate)}`}</>
 					);
 				},
 				Header: 'Start-End Date',

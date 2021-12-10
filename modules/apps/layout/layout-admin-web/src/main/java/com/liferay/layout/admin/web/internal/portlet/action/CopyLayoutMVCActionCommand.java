@@ -128,7 +128,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			if (draftLayout != null) {
 				targetLayout = _layoutCopyHelper.copyLayout(
-					sourceLayout, draftLayout);
+					targetLayout, draftLayout);
 			}
 
 			targetLayout.setNameMap(nameMap);

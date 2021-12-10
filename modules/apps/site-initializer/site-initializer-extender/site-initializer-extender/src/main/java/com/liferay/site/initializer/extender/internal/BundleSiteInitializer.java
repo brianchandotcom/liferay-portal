@@ -1698,11 +1698,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingObjectDefinition.getId(), objectDefinition);
 			}
 
-			Long objectDefinitionId = objectDefinition.getId();
-
 			objectDefinitionsStringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
-				objectDefinitionId.toString());
+				String.valueOf(objectDefinition.getId()));
 
 			String objectEntriesJSON = _read(
 				StringUtil.replaceLast(

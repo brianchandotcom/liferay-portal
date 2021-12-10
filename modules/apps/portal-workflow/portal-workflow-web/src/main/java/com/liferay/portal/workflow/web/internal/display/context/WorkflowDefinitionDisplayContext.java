@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -327,15 +328,29 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_workflowDefinitionRequestHelper.getRequest(), "orderByCol",
-			"last-modified");
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_workflowDefinitionRequestHelper.getRequest(),
+			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			"definition-order-by-col", "last-modified");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			_workflowDefinitionRequestHelper.getRequest(), "orderByType",
-			"asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_workflowDefinitionRequestHelper.getRequest(),
+			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			"definition-link-order-by-type", "asc");
+
+		return _orderByType;
 	}
 
 	public SearchContainer<WorkflowDefinition> getSearch(
@@ -431,8 +446,7 @@ public class WorkflowDefinitionDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = ParamUtil.getString(
-					httpServletRequest, "orderByType", "asc");
+				String orderByType = getOrderByType();
 
 				if (Objects.equals(orderByType, "asc")) {
 					return "desc";
@@ -707,6 +721,8 @@ public class WorkflowDefinitionDisplayContext {
 		"<a class='alert-link' href='[$RENDER_URL$]'>[$MESSAGE$]</a>";
 
 	private boolean _companyAdministratorCanPublish;
+	private String _orderByCol;
+	private String _orderByType;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionRequestHelper

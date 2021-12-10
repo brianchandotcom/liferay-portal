@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Kevin Tan
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = "javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_OPTIONS,
 	service = PortletSharedSearchContributor.class
 )

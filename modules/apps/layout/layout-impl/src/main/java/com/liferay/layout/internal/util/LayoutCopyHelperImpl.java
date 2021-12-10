@@ -693,6 +693,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		Map<Long, Long> segmentsExperienceIdsMap = new HashMap<>();
 
+		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
+			for (long segmentsExperienceId : segmentsExperiencesIds) {
+				segmentsExperienceIdsMap.put(
+					segmentsExperienceId, segmentsExperienceId);
+			}
+
+			return segmentsExperienceIdsMap;
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -707,38 +716,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				continue;
 			}
 
-			if (sourceLayout.isDraftLayout() &&
-				(sourceLayout.getClassPK() == targetLayout.getPlid())) {
-
-				segmentsExperienceIdsMap.put(
-					segmentsExperienceId, segmentsExperienceId);
-
-				continue;
-			}
-
-			long plid = targetLayout.getPlid();
-
-			if (targetLayout.isDraftLayout()) {
-				plid = targetLayout.getClassPK();
-			}
-
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId);
-
-			SegmentsExperience existingSegmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					segmentsExperience.getGroupId(),
-					_portal.getClassNameId(Layout.class), plid,
-					segmentsExperience.getPriority());
-
-			if (existingSegmentsExperience != null) {
-				segmentsExperienceIdsMap.put(
-					segmentsExperience.getSegmentsExperienceId(),
-					existingSegmentsExperience.getSegmentsExperienceId());
-
-				continue;
-			}
 
 			SegmentsExperience newSegmentsExperience =
 				(SegmentsExperience)segmentsExperience.clone();
@@ -756,7 +736,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				String.valueOf(_counterLocalService.increment()));
 			newSegmentsExperience.setClassNameId(
 				_portal.getClassNameId(Layout.class));
-			newSegmentsExperience.setClassPK(plid);
+			newSegmentsExperience.setClassPK(targetLayout.getPlid());
 
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				newSegmentsExperience);

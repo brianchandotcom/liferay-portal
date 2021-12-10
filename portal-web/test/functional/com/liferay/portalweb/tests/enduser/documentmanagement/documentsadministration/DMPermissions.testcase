@@ -1252,7 +1252,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.goToPermissionOnInfoPanel();
+		DMDocument.gotoMenuItemViaInfoPanel(menuItem = "Permissions");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX",

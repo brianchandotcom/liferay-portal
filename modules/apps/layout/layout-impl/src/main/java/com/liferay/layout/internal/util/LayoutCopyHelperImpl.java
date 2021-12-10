@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -108,10 +109,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						_portal.getClassNameId(Layout.class),
 						sourceLayout.getPlid());
 
+				List<Long> segmentsExperiencesIds = ListUtil.toList(
+					segmentsExperiences,
+					SegmentsExperience.SEGMENTS_EXPERIENCE_ID_ACCESSOR);
+
+				segmentsExperiencesIds.add(
+					0, SegmentsExperienceConstants.ID_DEFAULT);
+
 				_copyLayoutPageTemplateStructure(
-					ListUtil.toLongArray(
-						segmentsExperiences,
-						SegmentsExperience.SEGMENTS_EXPERIENCE_ID_ACCESSOR),
+					ArrayUtil.toLongArray(segmentsExperiencesIds),
 					sourceLayout, processedTargetLayout);
 			}
 			catch (Exception exception) {
@@ -662,6 +668,16 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			ServiceContextThreadLocal.getServiceContext();
 
 		for (long segmentsExperienceId : segmentsExperiencesIds) {
+			if (segmentsExperienceId ==
+					SegmentsExperienceConstants.ID_DEFAULT) {
+
+				segmentsExperienceIdsMap.put(
+					SegmentsExperienceConstants.ID_DEFAULT,
+					SegmentsExperienceConstants.ID_DEFAULT);
+
+				continue;
+			}
+
 			if (sourceLayout.isDraftLayout() &&
 				(sourceLayout.getClassPK() == targetLayout.getPlid())) {
 
@@ -720,10 +736,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				segmentsExperience.getSegmentsExperienceId(),
 				newSegmentsExperience.getSegmentsExperienceId());
 		}
-
-		segmentsExperienceIdsMap.put(
-			SegmentsExperienceConstants.ID_DEFAULT,
-			SegmentsExperienceConstants.ID_DEFAULT);
 
 		return segmentsExperienceIdsMap;
 	}

@@ -85,11 +85,11 @@ definition {
 	}
 
 	macro _getVocabularyCategoriesIds {
-        Variables.assertDefined(parameterList = "${vocabularyId}");
+		Variables.assertDefined(parameterList = "${vocabularyId}");
 
-        var portalURL = JSONCompany.getPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
-        var curl = '''
+		var curl = '''
             ${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
                 -u test@liferay.com:test \
                 -d vocabularyId=${vocabularyId} \
@@ -98,16 +98,16 @@ definition {
                 -d -orderByComparator=
         ''';
 
-        echo("# Get Categories IDs");
+		echo("# Get Categories IDs");
 
-        echo("curl: ${curl}");
+		echo("curl: ${curl}");
 
-        var categoriesId = JSONCurlUtil.post("${curl}", "$..['categoryId']");
-		
-        echo("categoriesId: ${categoriesId}");
+		var categoriesId = JSONCurlUtil.post("${curl}", "$..['categoryId']");
 
-        return "${categoriesId}";
-    }
+		echo("categoriesId: ${categoriesId}");
+
+		return "${categoriesId}";
+	}
 
 	@summary = "Get the categoryId from any categoryby using groupId and vocabularyName"
 	macro _getVocabularyIdByName {

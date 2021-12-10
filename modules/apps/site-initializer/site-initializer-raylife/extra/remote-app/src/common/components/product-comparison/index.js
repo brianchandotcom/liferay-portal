@@ -1,4 +1,5 @@
 /* eslint-disable @liferay/empty-line-between-elements */
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
@@ -15,9 +16,9 @@ const formatValue = (value) => {
 };
 
 const getClassName = (value) =>
-	classNames({
-		checkIcon: !!value,
-		timesIcon: !value,
+	classNames('d-flex align-items-center', {
+		'checkIcon': !!value,
+		'text-neutral-8 timesIcon': !value,
 	});
 
 const ListItems = ({
@@ -51,18 +52,36 @@ const ListItems = ({
 	];
 
 	return (
-		<ul>
+		<ul className="m-0 p-0">
 			{values.map(({title, value}, index) => {
 				const formattedValue = formatValue(value);
 
 				return (
-					<li key={index}>
+					<li
+						className="d-flex font-weight-normal justify-content-between text-neutral-8 text-paragraph-sm"
+						key={index}
+					>
 						<div className={getClassName(formattedValue)}>
-							<div>
-								<ClayIcon
-									symbol={formattedValue ? 'check' : 'times'}
-									width={50}
-								/>
+							<div className="inline-item inline-item-before">
+								<div
+									className={classNames(
+										'align-items-center d-flex icon justify-content-center',
+										{
+											'border border-primary rounded-circle': !!value,
+										}
+									)}
+								>
+									<ClayIcon
+										className={classNames({
+											'text-brand-primary ': !!value,
+											'text-neutral-8': !value,
+										})}
+										symbol={
+											formattedValue ? 'check' : 'times'
+										}
+										width={50}
+									/>
+								</div>
 							</div>
 
 							<span>{title}</span>
@@ -87,31 +106,42 @@ const ProductComparison = ({
 
 	return (
 		<div
-			className={classNames({
-				'no-most-popular': !mostPopular,
+			className={classNames('ml-auto rounded bg-neutral-0', {
+				'mt-4': !mostPopular,
 			})}
 			id="quote-comparison"
 		>
 			<div
-				className={classNames({
-					'most-popular': mostPopular,
-					'no-most-popular': !mostPopular,
+				className={classNames('header-size rounded-top', {
+					'bg-brand-secondary ': mostPopular,
+					'bg-neutral-0': !mostPopular,
 				})}
 			>
-				{mostPopular && highlightMostPopularText}
+				{mostPopular && (
+					<p className="font-weight-bold text-center text-paragraph text-small-caps text-white">
+						{highlightMostPopularText}
+					</p>
+				)}
 			</div>
 
-			<div className="quote-content">
-				<div className="quote-header">
-					<div className="title">{category}</div>
+			<div className="d-flex flex-column justify-content-between pb-5 pt-4 px-4 quote-content">
+				<div className="quote-header text-center">
+					<h4 className="font-weight-bolder text-brand-primary text-capitalize">
+						{category}
+					</h4>
 
-					<div className="value">
+					<div className="d-flex display-3 flex-row font-weight-bolder justify-content-center text-neutral-10 value">
 						&#36;{Number(price).toLocaleString('en-US')}
-						<div>/yr</div>
+						<div className="font-weight-light text-neutral-9">
+							/yr
+						</div>
 					</div>
 
-					<div className="subtitle">
-						Get covered for <span>&#36;{promo} today</span>
+					<div className="font-weight-normal subtitle text-neutral-8 text-paragraph-xs">
+						Get covered for{' '}
+						<span className="text-brand-primary">
+							&#36;{promo} today
+						</span>
 					</div>
 				</div>
 
@@ -119,31 +149,32 @@ const ProductComparison = ({
 					<ListItems {...productDetails} />
 				</div>
 
-				<div className="quote-footer">
+				<div className="border-0 p-0">
 					{purchasable && (
-						<div className="d-flex justify-content-center">
-							<button
-								className={classNames({
-									'most-popular': mostPopular,
-									'no-most-popular': !mostPopular,
+						<div className="bg-transparent d-flex justify-content-center">
+							<ClayButton
+								className={classNames('btn px-4 py-3', {
+									'btn-outline-primary': !mostPopular,
+									'btn-primary': mostPopular,
 								})}
+								displayType={null}
 								id="purchase"
 								onClick={() => onClickPurchase(product)}
-								type="button"
 							>
 								PURCHASE THIS POLICY
-							</button>
+							</ClayButton>
 						</div>
 					)}
 
 					<div className="d-flex justify-content-center">
-						<button
+						<ClayButton
+							className="bg-transparent border-0 font-weight-normal mt-3 p-0 text-capitalize text-neutral-8"
+							displayType="unstyled"
 							id="details"
 							onClick={onClickPolicyDetails}
-							type="button"
 						>
-							Policy Details
-						</button>
+							<u>Policy Details</u>
+						</ClayButton>
 					</div>
 				</div>
 			</div>

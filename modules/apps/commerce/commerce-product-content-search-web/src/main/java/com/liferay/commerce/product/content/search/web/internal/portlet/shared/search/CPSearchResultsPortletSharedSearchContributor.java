@@ -24,7 +24,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -52,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -77,8 +77,8 @@ public class CPSearchResultsPortletSharedSearchContributor
 			searchRequestBuilder.paginationStartParameterName(
 				paginationStartParameterNameOptional.get());
 		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -133,7 +133,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 	private void _contribute(
 			PortletSharedSearchSettings portletSharedSearchSettings)
-		throws PortalException {
+		throws Exception {
 
 		RenderRequest renderRequest =
 			portletSharedSearchSettings.getRenderRequest();
@@ -186,7 +186,9 @@ public class CPSearchResultsPortletSharedSearchContributor
 					commerceChannel.getGroupId(),
 					_portal.getHttpServletRequest(renderRequest));
 
-			if (commerceAccount != null) {
+			if ((commerceAccount != null) &&
+				!_portal.isCompanyAdmin(themeDisplay.getUser())) {
+
 				long[] commerceAccountGroupIds =
 					_commerceAccountHelper.getCommerceAccountGroupIds(
 						commerceAccount.getCommerceAccountId());

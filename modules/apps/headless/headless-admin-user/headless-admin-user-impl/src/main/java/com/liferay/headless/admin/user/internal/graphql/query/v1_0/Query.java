@@ -1012,7 +1012,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userGroup(userGroupId: ___){actions, description, id, name, usersCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userGroup(userGroupId: ___){actions, description, externalReferenceCode, id, name, usersCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public UserGroup userGroup(@GraphQLName("userGroupId") Long userGroupId)

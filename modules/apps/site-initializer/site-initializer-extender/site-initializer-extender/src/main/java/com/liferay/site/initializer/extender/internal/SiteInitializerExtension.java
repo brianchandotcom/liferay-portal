@@ -16,6 +16,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -76,6 +78,8 @@ public class SiteInitializerExtension {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DispatchFileRepository dispatchFileRepository,
+		DispatchTriggerLocalService dispatchTriggerLocalService,
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
@@ -122,7 +126,8 @@ public class SiteInitializerExtension {
 				assetCategoryLocalService, assetListEntryLocalService, bundle,
 				bundleContext, commerceReferencesHolder,
 				ddmStructureLocalService, ddmTemplateLocalService,
-				defaultDDMStructureHelper, dlURLHelper,
+				defaultDDMStructureHelper, dispatchFileRepository,
+				dispatchTriggerLocalService, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory, layoutCopyHelper,

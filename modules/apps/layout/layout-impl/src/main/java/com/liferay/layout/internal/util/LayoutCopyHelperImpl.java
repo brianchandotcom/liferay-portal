@@ -380,8 +380,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				sourceLayout.getGroupId(), sourceLayout.getPlid());
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					sourceLayout.getGroupId(), segmentsExperienceId,
+					sourceLayout.getPlid());
 
 		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 

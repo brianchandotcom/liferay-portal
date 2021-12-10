@@ -372,7 +372,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(
 				() -> _addObjectRelationships(
-					objectDefinitionIdsStringUtilReplaceValues, serviceContext));
+					objectDefinitionIdsStringUtilReplaceValues,
+					serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -1758,7 +1759,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (objectRelationship == null) {
 				_log.error(
-					"Unable to transform object relationship from JSON: " + json);
+					"Unable to transform object relationship from JSON: " +
+						json);
 
 				continue;
 			}

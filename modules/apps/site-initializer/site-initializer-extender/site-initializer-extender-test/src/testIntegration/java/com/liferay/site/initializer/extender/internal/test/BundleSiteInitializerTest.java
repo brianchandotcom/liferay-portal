@@ -640,8 +640,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(page1);
 
-		ObjectRelationship existingRelationship1 =
-			page1.fetchFirstItem();
+		ObjectRelationship existingRelationship1 = page1.fetchFirstItem();
 
 		Assert.assertEquals(
 			"TestObjectDefinition1",
@@ -662,8 +661,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(page2);
 
-		ObjectRelationship existingRelationship2 =
-			page2.fetchFirstItem();
+		ObjectRelationship existingRelationship2 = page2.fetchFirstItem();
 
 		Assert.assertEquals(
 			"TestObjectDefinition2",

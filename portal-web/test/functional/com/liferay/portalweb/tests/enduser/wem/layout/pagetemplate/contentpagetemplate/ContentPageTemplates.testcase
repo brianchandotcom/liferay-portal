@@ -37,6 +37,8 @@ definition {
 	@description = "This is a test for LPS-91552."
 	@priority = "5"
 	test CanViewPaginationContentViaAP {
+		property portal.acceptance = "true";
+
 		task ("Add 3 basic web content articles") {
 			for (var count : list "1,2,3") {
 				JSONWebcontent.addWebContent(

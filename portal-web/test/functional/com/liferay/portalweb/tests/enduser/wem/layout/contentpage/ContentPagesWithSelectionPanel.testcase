@@ -454,6 +454,8 @@ definition {
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on the asset displayed in Content Display via General panel."
 	@priority = "5"
 	test PerformActionsOnDisplayedAssetInContentDisplayViaGeneralPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -586,6 +588,8 @@ definition {
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on collection displayed in Collection Display via General panel."
 	@priority = "5"
 	test PerformActionsOnDisplayedCollectionInCollectionDisplayViaGeneralPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -804,6 +808,8 @@ definition {
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on mapped asset via Mapping panel."
 	@priority = "5"
 	test PerformActionsOnMappedAssetViaMappingPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -1128,6 +1134,8 @@ definition {
 	@description = "This is a test for LPS-122396. The details of mapped assets are shown in Mapping panel."
 	@priority = "5"
 	test ViewDetailsOfMappedAssetsInMappingPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

@@ -38,6 +38,8 @@ definition {
 	@description = "This is a test for LPS-122204. The Page Creater can access to edit the collection items via Page Content panel."
 	@priority = "5"
 	test EditCollectionItems {
+		property portal.acceptance = "true";
+
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -190,6 +192,8 @@ definition {
 	@description = "This is a test for LPS-122204. The Page Creater can access to edit the document via Page Content panel."
 	@priority = "5"
 	test EditDisplayedDocument {
+		property portal.acceptance = "true";
+
 		task ("Add an Image fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -350,6 +354,8 @@ definition {
 	@description = "This is a test for LPS-122204. The Page Creater can access to edit the inline text via Page Content panel."
 	@priority = "5"
 	test EditInlineText {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -417,6 +423,8 @@ definition {
 	@description = "This is a test for LPS-122148. Filter the displayed assets by category in Page Content panel."
 	@priority = "5"
 	test FilterDisplayedAssetsByCategory {
+		property portal.acceptance = "true";
+
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -643,6 +651,8 @@ definition {
 	@description = "This is a test for LPS-133933. The user can resize the displayed image via image editor on Page Content panel."
 	@priority = "5"
 	test ResizeDisplayedImageViaImageEditor {
+		property portal.acceptance = "true";
+
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -739,6 +749,8 @@ definition {
 	@description = "This is a test for LPS-133933. The user can rotate the displayed image via image editor on Page Content panel."
 	@priority = "5"
 	test RotateDisplayedImageViaImageEditor {
+		property portal.acceptance = "true";
+
 		task ("Add a Banner Center fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -818,6 +830,8 @@ definition {
 	@description = "This is a test for LPS-122148. Search displayed assets by keyword in Page Content panel."
 	@priority = "5"
 	test SearchDisplayedAssetsByKeyword {
+		property portal.acceptance = "true";
+
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -1122,6 +1136,8 @@ definition {
 	@description = "This is a test for LPS-122396 and LPS-106776. The outline of editable field should be dashed when hover on inline text item in Page Content panel."
 	@priority = "5"
 	test ViewDashedOutlineOfEditableFieldWhenHoverOnInlineTextItems {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -1223,6 +1239,8 @@ definition {
 	@description = "This is a test for LPS-122396. The outline of editable field should be dashed when hover on mapped assets in Page Content panel."
 	@priority = "5"
 	test ViewDashedOutlineOfMappedEditableFieldWhenHoverOnAssets {
+		property portal.acceptance = "true";
+
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -1351,6 +1369,8 @@ definition {
 	@description = "This is a test for LPS-122396. The details of displayed assets are shown in Page Content panel."
 	@priority = "5"
 	test ViewDetailsOfDisplayedAssets {
+		property portal.acceptance = "true";
+
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

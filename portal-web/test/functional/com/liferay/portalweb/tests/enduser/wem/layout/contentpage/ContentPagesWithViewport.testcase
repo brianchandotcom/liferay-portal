@@ -172,6 +172,8 @@ definition {
 	@description = "This is a test for LPS-141278. The page editor could define Text Align for fragment per viewport."
 	@priority = "5"
 	test CustomizeTextAlignInEachViewport {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

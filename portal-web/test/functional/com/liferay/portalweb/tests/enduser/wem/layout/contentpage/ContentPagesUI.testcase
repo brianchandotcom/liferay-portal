@@ -74,6 +74,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test ViewOrderOfColorSamplesInColorPicker {
+		property portal.acceptance = "true";
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

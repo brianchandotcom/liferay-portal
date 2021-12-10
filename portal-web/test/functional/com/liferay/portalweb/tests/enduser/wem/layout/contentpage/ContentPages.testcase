@@ -133,6 +133,8 @@ definition {
 	@description = "This is a test for LPS-125985. The Page Creater can configure configuration template of widget in page editor."
 	@priority = "5"
 	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {
+		property portal.acceptance = "true";
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

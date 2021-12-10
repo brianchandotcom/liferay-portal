@@ -16,9 +16,12 @@ package com.liferay.layout.util;
 
 import com.liferay.portal.kernel.model.Layout;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Pavel Savinov
  */
+@ProviderType
 public interface LayoutCopyHelper {
 
 	public Layout copyLayout(Layout sourceLayout, Layout targetLayout)

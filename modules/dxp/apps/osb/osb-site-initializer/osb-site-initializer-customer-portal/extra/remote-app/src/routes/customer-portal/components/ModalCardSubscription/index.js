@@ -11,13 +11,12 @@ import StatusTag from '../StatusTag';
 
 const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 	const [activePage, setActivePage] = useState(1);
-	const MAX_ITEMS_PER_PAGE = 5;
 
 	const {data: subscriptionsTerms} = useQuery(getAccountSubscriptionsTerms, {
 		variables: {
 			filter: `accountSubscriptionERC eq '${accountSubscriptionERC}'`,
 			page: activePage,
-			pageSize: MAX_ITEMS_PER_PAGE,
+			pageSize: 5,
 		},
 	});
 
@@ -119,7 +118,7 @@ const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 							columns={columns}
 							data={accountSubscriptionTermsItems}
 							hasPagination={totalCount >= 5}
-							itemsPerPage={MAX_ITEMS_PER_PAGE}
+							itemsPerPage={5}
 							setActivePage={setActivePage}
 							tableVerticalAlignment="middle"
 							totalCount={totalCount}

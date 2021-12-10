@@ -364,7 +364,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
 				_invoke(() -> _addListTypeDefinitions(serviceContext));
 
-			Map<String, String> objectDefinitionsIdsStringUtilReplaceValues =
+			Map<String, String> objectDefinitionsStringUtilReplaceValues =
 				_invoke(
 					() -> _addObjectDefinitions(
 						listTypeDefinitionsStringUtilReplaceValues,
@@ -372,8 +372,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(
 				() -> _addObjectRelationships(
-					objectDefinitionsIdsStringUtilReplaceValues,
-					serviceContext));
+					objectDefinitionsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -1640,10 +1639,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
 
-		Map<String, String> objectDefinitionMap = new HashMap<>();
+		Map<String, String> objectDefinitionsStringUtilReplaceValues =
+			new HashMap<>();
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return objectDefinitionMap;
+			return objectDefinitionsStringUtilReplaceValues;
 		}
 
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
@@ -1700,7 +1700,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Long objectDefinitionId = objectDefinition.getId();
 
-			objectDefinitionMap.put(
+			objectDefinitionsStringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				objectDefinitionId.toString());
 
@@ -1726,11 +1726,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		return objectDefinitionMap;
+		return objectDefinitionsStringUtilReplaceValues;
 	}
 
 	private void _addObjectRelationships(
-			Map<String, String> objectDefinitionsIdsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1753,7 +1753,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = _read(resourcePath);
 
 			json = StringUtil.replace(
-				json, "[$", "$]", objectDefinitionsIdsStringUtilReplaceValues);
+				json, "[$", "$]", objectDefinitionsStringUtilReplaceValues);
 
 			ObjectRelationship objectRelationship1 = ObjectRelationship.toDTO(
 				json);

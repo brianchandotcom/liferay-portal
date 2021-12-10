@@ -16,6 +16,8 @@ package com.liferay.portal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -23,11 +25,14 @@ public interface UpgradeStepRegistrator {
 
 	public void register(Registry registry);
 
+	@ProviderType
 	public interface Registry {
 
 		public void register(
 			String fromSchemaVersionString, String toSchemaVersionString,
 			UpgradeStep... upgradeSteps);
+
+		public void registerInitialUpgradeSteps(UpgradeStep... upgradeSteps);
 
 	}
 

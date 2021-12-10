@@ -155,4 +155,8 @@ definition {
 
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 	}
+	macro openBlockCustomEventList {
+		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
+	}
+
 }

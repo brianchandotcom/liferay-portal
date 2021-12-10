@@ -90,11 +90,10 @@ public class WorkflowInstanceViewDisplayContext
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(
 			workflowInstance);
 
-		long classPK = getWorkflowContextEntryClassPK(
-			workflowInstance.getWorkflowContext());
-
 		String title = workflowHandler.getTitle(
-			classPK, workflowInstanceRequestHelper.getLocale());
+			getWorkflowContextEntryClassPK(
+				workflowInstance.getWorkflowContext()),
+			workflowInstanceRequestHelper.getLocale());
 
 		if (title != null) {
 			return HtmlUtil.escape(title);
@@ -265,11 +264,10 @@ public class WorkflowInstanceViewDisplayContext
 			return _searchContainer;
 		}
 
-		PortletURL portletURL = PortletURLUtil.getCurrent(
-			liferayPortletRequest, liferayPortletResponse);
-
 		_searchContainer = new WorkflowInstanceSearch(
-			liferayPortletRequest, portletURL);
+			liferayPortletRequest,
+			PortletURLUtil.getCurrent(
+				liferayPortletRequest, liferayPortletResponse));
 
 		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
 			getWorkflowModelSearchResult(
@@ -325,9 +323,7 @@ public class WorkflowInstanceViewDisplayContext
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = getOrderByType();
-
-				if (Objects.equals(orderByType, "asc")) {
+				if (Objects.equals(getOrderByType(), "asc")) {
 					return "desc";
 				}
 
@@ -461,10 +457,9 @@ public class WorkflowInstanceViewDisplayContext
 	protected WorkflowHandler<?> getWorkflowHandler(
 		WorkflowInstance workflowInstance) {
 
-		String className = getWorkflowContextEntryClassName(
-			workflowInstance.getWorkflowContext());
-
-		return WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
+		return WorkflowHandlerRegistryUtil.getWorkflowHandler(
+			getWorkflowContextEntryClassName(
+				workflowInstance.getWorkflowContext()));
 	}
 
 	protected WorkflowModelSearchResult<WorkflowInstance>

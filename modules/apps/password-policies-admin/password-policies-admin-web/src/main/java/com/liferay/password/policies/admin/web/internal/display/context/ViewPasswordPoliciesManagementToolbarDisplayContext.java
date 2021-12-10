@@ -178,8 +178,6 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 			_renderRequest, getPortletURL());
 
 		passwordPolicySearch.setId("passwordPolicy");
-		passwordPolicySearch.setRowChecker(
-			new PasswordPolicyChecker(_renderResponse));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -188,16 +186,17 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 		PasswordPolicyDisplayTerms searchTerms =
 			(PasswordPolicyDisplayTerms)passwordPolicySearch.getSearchTerms();
 
-		List<PasswordPolicy> results = PasswordPolicyServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			passwordPolicySearch.getStart(), passwordPolicySearch.getEnd(),
-			passwordPolicySearch.getOrderByComparator());
+		passwordPolicySearch.setResults(
+			PasswordPolicyServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				passwordPolicySearch.getStart(), passwordPolicySearch.getEnd(),
+				passwordPolicySearch.getOrderByComparator()));
 
-		int total = PasswordPolicyServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords());
-
-		passwordPolicySearch.setResults(results);
-		passwordPolicySearch.setTotal(total);
+		passwordPolicySearch.setRowChecker(
+			new PasswordPolicyChecker(_renderResponse));
+		passwordPolicySearch.setTotal(
+			PasswordPolicyServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords()));
 
 		_passwordPolicySearch = passwordPolicySearch;
 

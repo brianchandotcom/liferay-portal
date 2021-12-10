@@ -209,10 +209,10 @@ public class MBEntriesManagementToolbarDisplayContext {
 	public CreationMenu getCreationMenu() throws PortalException {
 		CreationMenu creationMenu = null;
 
-		MBCategory category = (MBCategory)_httpServletRequest.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_httpServletRequest, category);
+		long categoryId = MBUtil.getCategoryId(
+			_httpServletRequest,
+			(MBCategory)_httpServletRequest.getAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -332,10 +332,10 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		MBCategory category = (MBCategory)_httpServletRequest.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_httpServletRequest, category);
+		long categoryId = MBUtil.getCategoryId(
+			_httpServletRequest,
+			(MBCategory)_httpServletRequest.getAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY));
 
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -371,10 +371,10 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		MBCategory category = (MBCategory)_httpServletRequest.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_httpServletRequest, category);
+		long categoryId = MBUtil.getCategoryId(
+			_httpServletRequest,
+			(MBCategory)_httpServletRequest.getAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY));
 
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -403,11 +403,11 @@ public class MBEntriesManagementToolbarDisplayContext {
 
 		String orderByCol = getOrderByCol();
 
+		searchContainer.setOrderByCol(orderByCol);
+
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -435,19 +435,18 @@ public class MBEntriesManagementToolbarDisplayContext {
 			}
 		}
 
-		searchContainer.setOrderByCol(orderByCol);
 		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByType(getOrderByType());
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
 		PortletURL sortingURL = PortletURLUtil.clone(
 			_currentURLObj, _liferayPortletResponse);
 
-		MBCategory category = (MBCategory)_httpServletRequest.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_httpServletRequest, category);
+		long categoryId = MBUtil.getCategoryId(
+			_httpServletRequest,
+			(MBCategory)_httpServletRequest.getAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY));
 
 		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 			sortingURL.setParameter(

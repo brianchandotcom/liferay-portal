@@ -228,12 +228,6 @@ public class SelectUsersDisplayContext {
 				"usersGroups", Long.valueOf(group.getParentGroupId()));
 		}
 
-		int usersCount = UserLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams);
-
-		userSearch.setTotal(usersCount);
-
 		List<User> users = UserLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			searchTerms.getStatus(), userParams, userSearch.getStart(),
@@ -259,6 +253,10 @@ public class SelectUsersDisplayContext {
 			});
 
 		userSearch.setResults(users);
+		userSearch.setTotal(
+			UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams));
 
 		_userSearch = userSearch;
 

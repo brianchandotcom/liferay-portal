@@ -153,9 +153,7 @@ public class WorkflowDefinitionDisplayContext {
 		List<WorkflowDefinition> workflowDefinitions = getWorkflowDefinitions(
 			workflowDefinition.getName());
 
-		WorkflowDefinition firstWorkflowDefinition = workflowDefinitions.get(0);
-
-		return getUserName(firstWorkflowDefinition);
+		return getUserName(workflowDefinitions.get(0));
 	}
 
 	public String getDescription(WorkflowDefinition workflowDefinition) {
@@ -446,9 +444,7 @@ public class WorkflowDefinitionDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = getOrderByType();
-
-				if (Objects.equals(orderByType, "asc")) {
+				if (Objects.equals(getOrderByType(), "asc")) {
 					return "desc";
 				}
 
@@ -615,14 +611,12 @@ public class WorkflowDefinitionDisplayContext {
 	protected OrderByComparator<WorkflowDefinition>
 		getWorkflowDefinitionOrderByComparator() {
 
-		String orderByCol = ParamUtil.getString(
-			_workflowDefinitionRequestHelper.getRequest(), "orderByCol",
-			"name");
-
 		return WorkflowDefinitionPortletUtil.
 			getWorkflowDefitionOrderByComparator(
-				orderByCol, getOrderByType(),
-				_workflowDefinitionRequestHelper.getLocale());
+				ParamUtil.getString(
+					_workflowDefinitionRequestHelper.getRequest(), "orderByCol",
+					"name"),
+				getOrderByType(), _workflowDefinitionRequestHelper.getLocale());
 	}
 
 	protected PortletURL getWorkflowInstancesPortletURL() {

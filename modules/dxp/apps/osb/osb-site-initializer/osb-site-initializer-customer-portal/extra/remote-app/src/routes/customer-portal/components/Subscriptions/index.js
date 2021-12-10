@@ -14,7 +14,7 @@ const Subscriptions = ({accountKey}) => {
 
 	const {
 		data: subscriptionsByTag,
-		loading: isSubscriptionsByTagLoading,
+		loading: loadingAccountSubscriptions,
 	} = useQuery(getAccountSubscriptions, {
 		variables: {
 			filter: `accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
@@ -41,7 +41,7 @@ const Subscriptions = ({accountKey}) => {
 			/>
 
 			<div className="d-flex flex-wrap">
-				{!isSubscriptionsByTagLoading &&
+				{!loadingAccountSubscriptions &&
 					subscriptionsByTagItems.map((item, index) => (
 						<CardSubscription
 							cardSubscriptionData={item}

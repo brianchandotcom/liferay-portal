@@ -552,8 +552,8 @@ definition {
 				alertMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.",
 				alertType = "warning");
 
-			PageEditor.viewElementOutsideModule(
-				elementNotPresent = "Asset Publisher",
+			PageEditor.viewElementNotPresentInsideModule(
+				elementName = "Asset Publisher",
 				moduleNumber = "1");
 
 			PageEditor.clickPublish();
@@ -776,8 +776,8 @@ definition {
 			var i = "1";
 
 			for (var widgetName : list "Asset Publisher,Profile") {
-				PageEditor.viewElementOutsideModule(
-					elementNotPresent = "${widgetName}",
+				PageEditor.viewElementNotPresentInsideModule(
+					elementName = "${widgetName}",
 					moduleNumber = "${i}");
 
 				var i = ${i} + 1;
@@ -794,8 +794,8 @@ definition {
 			var i = "1";
 
 			for (var widgetName : list "Asset Publisher,Profile") {
-				PageEditor.viewElementOutsideModule(
-					elementNotPresent = "${widgetName}",
+				PageEditor.viewElementNotPresentInsideModule(
+					elementName = "${widgetName}",
 					moduleNumber = "${i}");
 
 				var i = ${i} + 1;
@@ -905,8 +905,8 @@ definition {
 		}
 
 		task ("View Nested Applications is not shown in conversion") {
-			PageEditor.viewElementOutsideModule(
-				elementNotPresent = "Nested Applications",
+			PageEditor.viewElementNotPresentInsideModule(
+				elementName = "Nested Applications",
 				moduleNumber = "1");
 		}
 
@@ -941,8 +941,8 @@ definition {
 		}
 
 		task ("View Nested Applications is not shown at edit mode") {
-			PageEditor.viewElementOutsideModule(
-				elementNotPresent = "Nested Applications",
+			PageEditor.viewElementNotPresentInsideModule(
+				elementName = "Nested Applications",
 				moduleNumber = "1");
 		}
 	}
@@ -1256,8 +1256,8 @@ definition {
 		task ("Remove Asset Publisher then view it is not shwon") {
 			PageEditor.removeFragment(fragmentName = "Asset Publisher");
 
-			PageEditor.viewElementOutsideModule(
-				elementNotPresent = "Asset Publisher",
+			PageEditor.viewElementNotPresentInsideModule(
+				elementName = "Asset Publisher",
 				moduleNumber = "1");
 		}
 

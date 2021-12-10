@@ -155,6 +155,24 @@ definition {
 
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 	}
+
+	macro hideCustomEvent {
+		var key_actionButton = "Hide";
+
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
 	macro openBlockCustomEventList {
 		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
 	}

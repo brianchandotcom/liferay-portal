@@ -79,17 +79,12 @@ definition {
 			siteURLKey = "guest",
 			source = "true",
 			threadBody = '''<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>''',
-			threadSubject = "MB Thread Message Subject");
+			threadSubject = "MB Thread Message HTML Subject");
 
-		MockMock.viewMail(
-			asset = "MB Thread Message Subject",
-			content = "Welcome to LIFERAY",
-			recipient = "userfn userln",
-			sender = "Test Test",
-			subject = "MB Thread Message Subject");
+		MockMock.openMockMock();
 
 		MockMock.clickBodyLink(
-			asset = "MB Thread Message Subject",
+			asset = "MB Thread Message HTML Subject",
 			bodyLink = "Welcome to LIFERAY",
 			recipient = "userfn userln");
 

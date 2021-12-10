@@ -623,9 +623,9 @@ definition {
 		task ("Delete the data source and check if it has been deleted") {
 			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
 
-			AssertElementNotPresent(
-				itemName = "${dataSource}",
-				locator1 = "ACSettings#ITEM_ON_LIST");
+			TestUtils.hardRefresh();
+
+			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
 		}
 	}
 

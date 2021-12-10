@@ -212,6 +212,10 @@ definition {
 		Navigator.openSpecificURL(url = "${bodyURL}");
 	}
 
+	macro openMockMock {
+		MockMock._gotoMail();
+	}
+
 	macro viewMail {
 		MockMock._gotoMail();
 

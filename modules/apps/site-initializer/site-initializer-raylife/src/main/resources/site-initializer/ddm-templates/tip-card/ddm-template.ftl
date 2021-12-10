@@ -1,24 +1,17 @@
 <style>
 	.back-to-edit-info {
 		background-color: transparent;
-		border-radius: 4px;
 		border: 1px solid #7D7E85;
 		box-sizing: border-box;
 		color: #7D7E85;
 		font-size: 14px;
 		font-style: normal;
-		font-weight: bold;
 		letter-spacing: 0.03em;
 		line-height: 24px;
-		margin-bottom: 8px;
-		padding: 10px;
-		text-transform: uppercase;
+		padding: 10px
 	}
 
 	#tip {
-		background-color: #F9F9F9;
-		border-radius: 8px;
-		padding: 24px;
 		width: 368px;
 	}
 
@@ -107,7 +100,7 @@
 	}
 </script>
 
-<div id="tip">
+<div class="bg-neutral-1 p-4 rounded" id="tip">
 	<#if (title.getData())??>
 		<h4 class="title font-weight-bolder">${title.getData()}</h4>
 	</#if>
@@ -135,7 +128,7 @@
 	</#if>
 
 	<#if pageOptions.getData()?contains("showBacktoEdit")>
-		<button class="back-to-edit-info" onclick="${applicationNameSpace}backToEdit()">
+		<button class="back-to-edit-info btn btn-ghost btn-variant-neutral font-weight-bold mb-1 p-2 text-uppercase" onclick="${applicationNameSpace}backToEdit()">
 		<#if (backIcon.getData())??>
 			<img src="${backIcon.getData()}" />
 		</#if>

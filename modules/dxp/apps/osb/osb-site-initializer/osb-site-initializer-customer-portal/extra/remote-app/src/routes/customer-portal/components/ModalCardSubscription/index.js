@@ -9,7 +9,7 @@ import {status} from '../../utils/constants';
 import dateToLocalFormat from '../../utils/dateToLocalFormat';
 import StatusTag from '../StatusTag';
 
-const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
+const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose, subscriptionGroup, subscriptionName}) => {
 	const [activePage, setActivePage] = useState(1);
 
 	const {data: subscriptionsTerms} = useQuery(getAccountSubscriptionsTerms, {
@@ -99,7 +99,7 @@ const ModalCardSubscription = ({accountSubscriptionERC, observer, onClose}) => {
 								SUBSCRIPTION TERMS
 							</h6>
 
-							<h2 className="text-neutral-10">DXP Production</h2>
+							<h2 className="text-neutral-10">{`${subscriptionGroup} ${subscriptionName}`}</h2>
 						</div>
 
 						<ClayButton

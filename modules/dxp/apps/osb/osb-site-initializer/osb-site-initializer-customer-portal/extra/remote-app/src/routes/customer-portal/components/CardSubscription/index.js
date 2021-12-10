@@ -3,14 +3,14 @@ import {useState} from 'react';
 import dateToLocalFormat from '../../utils/dateToLocalFormat';
 import ModalCardSubscription from '../ModalCardSubscription';
 
-const CardSubscription = ({cardSubscriptionData}) => {
+const CardSubscription = ({cardSubscriptionData, selectedSubscriptionGroup}) => {
 	const [visible, setVisible] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
 
-	const parseAccountSubscriptionTerms = (tagName) => {
-		return tagName.toLowerCase().replace(' ', '-');
+	const parseAccountSubscriptionTerms = (subscriptionName) => {
+		return subscriptionName.toLowerCase().replace(' ', '-');
 	};
 
 	const accountSubscriptionERC = `${
@@ -24,6 +24,8 @@ const CardSubscription = ({cardSubscriptionData}) => {
 					accountSubscriptionERC={accountSubscriptionERC}
 					observer={observer}
 					onClose={onClose}
+					subscriptionGroup={selectedSubscriptionGroup}
+					subscriptionName={cardSubscriptionData.name}
 				/>
 			)}
 			<div

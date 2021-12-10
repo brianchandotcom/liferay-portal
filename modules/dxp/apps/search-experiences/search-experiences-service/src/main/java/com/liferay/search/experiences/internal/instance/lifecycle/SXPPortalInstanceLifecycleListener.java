@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.internal.instance.lifecycle;
 
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
@@ -29,16 +31,18 @@ import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
 
 /**
  * @author André de Oliveira
@@ -52,17 +56,24 @@ public class SXPPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	public SXPPortalInstanceLifecycleListener() throws IOException {
-		Reflections reflections = new Reflections(
-			"com.liferay.search.experiences.internal.instance.lifecycle." +
-				"dependencies",
-			Scanners.Resources);
+		Class<?> clazz = getClass();
 
-		for (String resourceName : reflections.getResources(".*\\.json")) {
-			Class<?> clazz = getClass();
+		Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+		Package pkg = clazz.getPackage();
+
+		String path = StringUtil.replace(
+			pkg.getName(), CharPool.PERIOD, CharPool.SLASH);
+
+		Enumeration<URL> enumeration = bundle.findEntries(
+			path.concat("/dependencies"), "*.json", false);
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
 
 			sxpElements.add(
 				SXPElementUtil.toSXPElement(
-					StringUtil.read(clazz.getClassLoader(), resourceName)));
+					StreamUtil.toString(url.openStream())));
 		}
 	}
 

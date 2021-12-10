@@ -13,7 +13,7 @@ const Subscriptions = ({accountKey}) => {
 	};
 
 	const {
-		data: subscriptionsByTag,
+		data: dataAccountSubscriptions,
 		loading: loadingAccountSubscriptions,
 	} = useQuery(getAccountSubscriptions, {
 		variables: {
@@ -28,7 +28,7 @@ const Subscriptions = ({accountKey}) => {
 	});
 
 	const accountSubscriptions =
-		subscriptionsByTag?.c?.accountSubscriptions?.items || [];
+		dataAccountSubscriptions?.c?.accountSubscriptions?.items || [];
 
 	return (
 		<div className="d-flex flex-column mx-4">

@@ -26,7 +26,6 @@ definition {
 
 	@description = "This is a use case for LRQA-5029. Verify guest users cannot configure blogs."
 	@priority = "5"
-	@uitest
 	test CannotConfigureBlogsPortletAsGuestPG {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -59,7 +58,6 @@ definition {
 
 	@description = "This is a use case for LRQA-42712. Verify guest users cannot configure public pages."
 	@priority = "4"
-	@uitest
 	test CannotConfigurePublicPageAsGuest {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.assert.javascript.errors = "false";

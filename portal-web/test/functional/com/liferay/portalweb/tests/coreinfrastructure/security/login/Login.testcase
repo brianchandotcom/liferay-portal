@@ -130,7 +130,6 @@ definition {
 
 	@description = "This is a use case for LPS-105151. Enabled system level OpenID Connect Provider is also enabled in instance."
 	@priority = "4"
-	@uitest
 	test EnabledOpenIDConnectOnSystemLevel {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#EnabledOpenIDConnectOnSystemLevel";
@@ -191,7 +190,6 @@ definition {
 
 	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile."
 	@priority = "4"
-	@uitest
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
@@ -235,7 +233,6 @@ definition {
 
 	@description = "This is a use case for LPS-72398. Users could login to Portal when the default langauge is not English."
 	@priority = "5"
-	@uitest
 	test LoginWithSpanishOnlyEnabledLocale {
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
 
@@ -273,7 +270,6 @@ definition {
 
 	@description = "Users could login through the UI."
 	@priority = "5"
-	@uitest
 	test LoginWithUI {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -295,7 +291,6 @@ definition {
 
 	@description = "This is a use case for LPS-105151. Users could login with instance-level configured OpenID Connect provider."
 	@priority = "4"
-	@uitest
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#OpenIDConnectOnInstanceLevelSmoke";
@@ -364,7 +359,6 @@ definition {
 
 	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
 	@priority = "4"
-	@uitest
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#OpenIDConnectSmoke";
@@ -488,7 +482,6 @@ definition {
 
 	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
 	@priority = "5"
-	@uitest
 	test RedirectToDefaultPortalLandingPageOnLogin {
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
 
@@ -525,7 +518,6 @@ definition {
 
 	@description = "This is a use case for LRQA-27622. Users could login using Token Based SSO."
 	@priority = "5"
-	@uitest
 	test TokenBasedSSOSmoke {
 		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
 

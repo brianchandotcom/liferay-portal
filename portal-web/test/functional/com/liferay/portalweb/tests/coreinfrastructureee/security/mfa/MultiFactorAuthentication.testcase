@@ -29,7 +29,6 @@ definition {
 
 	@description = "This is a use case for LPS-118204. Verify the messages and labels on the End User's MFA configuration pages more obvious and consistent."
 	@priority = "4"
-	@uitest
 	test AssertDescriptionsOnTOTPConfigurationPage {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
@@ -79,7 +78,6 @@ definition {
 
 	@description = "This is a use case for LPS-102467 and LPS-110444. Configure e-mail template for Email One Time Password verification step."
 	@priority = "5"
-	@uitest
 	test AssertEditedEmailTemplate {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertEditedEmailTemplate";
@@ -766,7 +764,6 @@ definition {
 
 	@description = "LPS-101746 TC-1: Able to configure the IP based verifier on instance level and see successful/unsuccessful login attempts."
 	@priority = "5"
-	@uitest
 	test LoginWithIPBasedVerifierEnabled {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
@@ -863,7 +860,6 @@ definition {
 
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled."
 	@priority = "5"
-	@uitest
 	test LoginWithOTPEnabled {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";

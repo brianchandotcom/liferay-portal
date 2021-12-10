@@ -98,7 +98,6 @@ definition {
 
 	@description = "LRQA-42763 TC-1: Javascript injected into Web Content Display page should be sanitized by AntiSamy"
 	@priority = "4"
-	@uitest
 	test ScriptInWebContentDisplayPortletShouldBeSanitized {
 		task ("Add public widget page") {
 			JSONLayout.addPublicLayout(
@@ -136,7 +135,6 @@ definition {
 
 	@description = "LRQA-4988 TC-1: Javascript injected into Wiki portlet should be sanitized by AntiSamy"
 	@priority = "4"
-	@uitest
 	test ScriptInWikiPortletShouldBeSanitized {
 		task ("Add public widget page") {
 			JSONLayout.addPublicLayout(

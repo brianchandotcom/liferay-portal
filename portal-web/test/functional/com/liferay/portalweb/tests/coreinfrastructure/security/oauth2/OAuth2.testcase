@@ -82,7 +82,6 @@ definition {
 
 	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed."
 	@priority = "5"
-	@uitest
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorizedAndRememberDeviceShouldBeEnabled";
 
@@ -857,7 +856,6 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-47381. User can authorize external applications."
-	@uitest
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorized";
@@ -884,7 +882,6 @@ definition {
 
 	@description = "This is a use case for LPS-126596. User can authorize trusted external applications."
 	@priority = "3"
-	@uitest
 	test ExternalApplicationCanBeTrustedAndAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeTrustedAndAuthorized";
@@ -1165,7 +1162,6 @@ definition {
 
 	@description = "This is a use case for LRQA-57134. Refresh token can expire and can be renewed."
 	@priority = "4"
-	@uitest
 	test RefreshTokenTimeCanBeSetExpiredAndRenewed {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
@@ -1202,7 +1198,6 @@ definition {
 
 	@description = "This is a use case for LPS-129395. Remember device option should be visible in OAuth 2 admin page if it was set in the application settings."
 	@priority = "5"
-	@uitest
 	test RememberDeviceExternalPropertyShouldBeVisible {
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceExternalPropertyShouldBeVisible";
 

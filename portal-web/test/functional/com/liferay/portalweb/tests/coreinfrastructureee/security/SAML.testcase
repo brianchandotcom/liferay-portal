@@ -18,7 +18,6 @@ definition {
 
 	@description = "This is a use case for LPS-32577. Add user inherited roles as SAML attribute statements."
 	@priority = "5"
-	@uitest
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
 		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
 
@@ -117,7 +116,6 @@ definition {
 
 	@description = "This is a use case for LRQA-57574 TC-1: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled with a synced user on SP."
 	@priority = "4"
-	@uitest
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
 		property app.server.bundles.size = "1";
 		property minimum.slave.ram = "24";
@@ -348,7 +346,6 @@ definition {
 
 	@description = "LPS-123218 TC-6: Assertion for: empty attribute mapping cannot be used for user matching."
 	@priority = "4"
-	@uitest
 	test AssertEmptyMappingCannotBeUsedForUserMatching {
 		property app.server.bundles.size = "0";
 		property portal.upstream = "true";
@@ -377,7 +374,6 @@ definition {
 
 	@description = "LPS-123218 TC-2 Assertion for: first name cannot be used for user matching even if LDAP import is enabled."
 	@priority = "4"
-	@uitest
 	test AssertFirstNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled {
 		property apacheds.enabled = "true";
 		property app.server.bundles.size = "0";
@@ -418,7 +414,6 @@ definition {
 
 	@description = "This is a use case for LPS-105165. Assert instance admin cannot configure IdP when disable IdP role."
 	@priority = "5"
-	@uitest
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
 		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
 
@@ -698,7 +693,6 @@ definition {
 
 	@description = "This is a use case for LRQA-47412. Assert signed SAML metadata."
 	@priority = "4"
-	@uitest
 	test AssertSignedSAMLMetadata {
 		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
 
@@ -774,7 +768,6 @@ definition {
 
 	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes predence over IdP session time out."
 	@priority = "4"
-	@uitest
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property custom.properties = "session.timeout=2${line.separator}javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "SAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
@@ -976,7 +969,6 @@ definition {
 
 	@description = "This is a use case for LPS-88924 - Using virtual instances. Assert SSO with encryption and decryption."
 	@priority = "4"
-	@uitest
 	test AssertSSOWithEncryptionAndDecryption {
 		property app.server.bundles.size = "0";
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithEncryptionAndDecryption";
@@ -1241,7 +1233,6 @@ definition {
 
 	@description = "This is a use case for LPS-105170 TC-5: Verification for portal User Attributes when they are duplicated in the mapping  when saving the SAML configuration - Using virtual instances."
 	@priority = "3"
-	@uitest
 	test AssertVerificationForDuplicatedUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
 		property portal.upstream = "true";
@@ -1325,7 +1316,6 @@ definition {
 
 	@description = "This is a use case for LPS-105170 TC-4: Verification for portal User Attributes when they are without SAML attribute value in the mapping when saving the SAML configuration - Using virtual instances."
 	@priority = "3"
-	@uitest
 	test AssertVerificationForEmptyUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
 		property portal.upstream = "true";
@@ -1908,7 +1898,6 @@ definition {
 
 	@description = "This is a use case for LPS-105170 TC-8: Verifying that deleting a User will sync with the SP site - Using virtual instances."
 	@priority = "3"
-	@uitest
 	test DeleteUserAfterSAMLSetupAndVerify {
 		property app.server.bundles.size = "0";
 		property portal.upstream = "true";
@@ -2042,7 +2031,6 @@ definition {
 
 	@description = "This is a use case for LPS-108077. Import encryption certificate from PKCS12 keystore file."
 	@priority = "5"
-	@uitest
 	test ImportEncryptionCertificateFromPKCS12KeystoreFile {
 		property test.name.skip.portal.instance = "SAML#ImportEncryptionCertificateFromPKCS12KeystoreFile";
 
@@ -2160,7 +2148,6 @@ definition {
 
 	@description = "LPS-105169 TC-3: SP initiated login should not sync IdP&SP user attributes if not part of attribute mapping - Using virtual instances."
 	@priority = "4"
-	@uitest
 	test SPInitiatedSSODoesNotSyncAttributesIfNotMapped {
 		property app.server.bundles.size = "0";
 		property portal.upstream = "quarantine";
@@ -2993,7 +2980,6 @@ definition {
 
 	@description = "This is a use case for LRQA-31886. View single logout and force auth with multiple SPs."
 	@priority = "4"
-	@uitest
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
 
@@ -3263,7 +3249,6 @@ definition {
 
 	@description = "This is a use case for LPS-88089. View SP initiated SSO with multiple IdPs and assert render login portlet without IdPs matched."
 	@priority = "4"
-	@uitest
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
 

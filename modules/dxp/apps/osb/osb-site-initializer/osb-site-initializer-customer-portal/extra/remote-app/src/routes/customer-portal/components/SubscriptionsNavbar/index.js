@@ -20,19 +20,18 @@ const SubscriptionsNavbar = ({
 	});
 
 	useEffect(() => {
-		if (!isAccountSubscriptionsLoading && accountSubscriptions) {
+		if (accountSubscriptions) {
 			const accountSubsciptionsItems =
 				accountSubscriptions?.c?.accountSubscriptionGroups?.items || [];
-			setSubscriptionsTags(accountSubsciptionsItems);
-		}
 
-		setSelectedTag(subscriptionsTags[0]?.name || '');
-	}, [
-		accountSubscriptions,
-		isAccountSubscriptionsLoading,
-		setSelectedTag,
-		subscriptionsTags,
-	]);
+			setSubscriptionsTags(accountSubsciptionsItems);
+
+			if (accountSubsciptionsItems.length) {
+				setSelectedTag(accountSubsciptionsItems[0]?.name);
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [accountSubscriptions, subscriptionsTags]);
 
 	return (
 		<div className="rounded-pill">
@@ -44,7 +43,9 @@ const SubscriptionsNavbar = ({
 								<button
 									className="mr-2"
 									key={tag.name}
-									onClick={(event) => setSelectedTag(event.target.value)}
+									onClick={(event) =>
+										setSelectedTag(event.target.value)
+									}
 									value={tag.name}
 								>
 									{tag.name}

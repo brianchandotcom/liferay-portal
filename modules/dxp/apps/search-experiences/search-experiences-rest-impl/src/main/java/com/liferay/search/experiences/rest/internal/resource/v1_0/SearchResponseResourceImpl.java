@@ -86,6 +86,10 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 						queryString
 					).size(
 						pagination.getPageSize()
+					).withSearchContext(
+						searchContext -> searchContext.setAttribute(
+							"search.experiences.ipaddress",
+							contextHttpServletRequest.getRemoteAddr())
 					).withSearchRequestBuilder(
 						searchRequestBuilder -> {
 							if (sxpBlueprint != null) {

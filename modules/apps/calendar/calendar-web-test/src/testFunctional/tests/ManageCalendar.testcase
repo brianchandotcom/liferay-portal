@@ -57,12 +57,15 @@ definition {
 	}
 
 	@description = "LRQA-71360 - Verify that the user can add a new calendar on the Manage Calendar Page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddCalendarOnManageCalendarPage {
+		CalendarNavigator.gotoMyCalendarsManage();
 
-		// TODO LRQA-71553 CanAddCalendarOnManageCalendarPage pending implementation
+		ManageCalendar.addCalendar(calendarName = "test");
 
+		ManageCalendar.viewCalendarNameByColumn(
+			rowName = "test",
+			rowNumber = "1");
 	}
 
 	@description = "LRQA-71360 - Verify that the user can not delete a Default Calendar"

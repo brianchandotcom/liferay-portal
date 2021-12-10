@@ -330,7 +330,11 @@ public class SourceFormatterUtil {
 
 		List<String> fileNames = scanForFiles(
 			dirName, new String[0],
-			new String[] {"**/*.dtd", "**/*.java", "**/*.tld"},
+			new String[] {
+				"**/*.dtd", "**/*.java", "**/resources/META-INF/*.tld",
+				"**/resources/META-INF/**/*.tld", "**/src/META-INF/*.tld",
+				"**/src/META-INF/**/*.tld",
+			},
 			sourceFormatterExcludes, true);
 
 		for (String fileName : fileNames) {

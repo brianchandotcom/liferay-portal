@@ -229,4 +229,130 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
+	@priority = "3"
+	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Login as an non-admin user and switch the property in AC") {
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+        task ("Assert block event icon is not present") {
+			var key_nameList = "${customEventName}";
+
+			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+				ACUtils.searchBar(searchItem = "${customEventName}");
+			}
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementNotPresent(
+				key_actionButton = "Block",
+				locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+
+			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
+		}
+
+		task ("Logout AC and login as an owner user") {
+			ACNavigation.exitSettings();
+
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "test@liferay.com",
+				password = "test");
+			
+			ACWorkspace.openWorkspace();
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Block custom event") {
+			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Logout AC and login as an non-admin user") {
+			ACNavigation.exitSettings();
+
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+
+			ACWorkspace.openWorkspace();
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Navigation to block custom event list") {
+			ACCustomEvents.openBlockCustomEventList();
+		}
+
+		task ("Assert block event icon is not present") {
+			var key_nameList = "${customEventName}";
+
+			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+				ACUtils.searchBar(searchItem = "${customEventName}");
+			}
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementNotPresent(
+				key_actionButton = "Unblock Event",
+				locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+
+			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
+		}
+	}
+
 }

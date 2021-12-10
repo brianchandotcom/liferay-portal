@@ -1753,12 +1753,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			json = StringUtil.replace(
 				json, "[$", "$]", objectDefinitionsStringUtilReplaceValues);
 
-			ObjectRelationship objectRelationship1 = ObjectRelationship.toDTO(
+			ObjectRelationship objectRelationship = ObjectRelationship.toDTO(
 				json);
 
-			if (objectRelationship1 == null) {
+			if (objectRelationship == null) {
 				_log.error(
-					"Unable to transform object definition from JSON: " + json);
+					"Unable to transform object relationship from JSON: " + json);
 
 				continue;
 			}
@@ -1766,10 +1766,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Page<ObjectRelationship> objectRelationshipsPage =
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
-						objectRelationship1.getObjectDefinitionId1(), null,
+						objectRelationship.getObjectDefinitionId1(), null,
 						objectRelationshipResource.toFilter(
 							StringBundler.concat(
-								"name eq '", objectRelationship1.getName(),
+								"name eq '", objectRelationship.getName(),
 								"'")),
 						null);
 
@@ -1779,12 +1779,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (existingRelationships == null) {
 				objectRelationshipResource.
 					postObjectDefinitionObjectRelationship(
-						objectRelationship1.getObjectDefinitionId1(),
-						objectRelationship1);
+						objectRelationship.getObjectDefinitionId1(),
+						objectRelationship);
 			}
 			else {
 				objectRelationshipResource.putObjectRelationship(
-					existingRelationships.getId(), objectRelationship1);
+					existingRelationships.getId(), objectRelationship);
 			}
 		}
 	}

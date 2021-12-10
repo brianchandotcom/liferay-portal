@@ -305,8 +305,8 @@ definition {
 				siteName = "Test Site Name");
 
 			WidgetPages.viewPageLayout(
-				pageColAndIdList = "4-1,8-2",
-				pageLayout = "2 Column (30/70)");
+				pageColumnNumberList = "1,2",
+				spanList = "4,8");
 		}
 
 		task ("Change the layout template then view the layout is applied to page") {

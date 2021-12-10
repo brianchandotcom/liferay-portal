@@ -18,8 +18,6 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {DEFAULT_ERROR} from '../utils/constants';
-
 const VALID_EXTENSIONS = '.json';
 
 const ImportSXPBlueprintModal = ({redirectURL}) => {
@@ -33,7 +31,12 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 	};
 
 	const _handleFormError = (error) => {
-		setErrorMessage(error || DEFAULT_ERROR);
+		setErrorMessage(
+			error ||
+				Liferay.Language.get(
+					'an-unexpected-error-occurred-while-importing-your-file'
+				)
+		);
 
 		setLoadingResponse(false);
 	};
@@ -48,7 +51,9 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 		const importText = await new Response(importFile).text();
 
 		try {
-			const fetchURL = JSON.parse(importText).elementDefinition
+			const isElement = !!JSON.parse(importText).elementDefinition;
+
+			const fetchURL = isElement
 				? '/o/search-experiences-rest/v1.0/sxp-elements'
 				: '/o/search-experiences-rest/v1.0/sxp-blueprints';
 
@@ -67,7 +72,19 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 				})
 				.then(({ok, responseContent}) => {
 					if (!ok) {
-						_handleFormError(responseContent.title);
+						_handleFormError(
+							isElement
+								? Liferay.Language.get(
+										'unable-to-import-because-the-element-configuration-is-invalid'
+								  )
+								: Liferay.Language.get(
+										'unable-to-import-because-the-blueprint-configuration-is-invalid'
+								  )
+						);
+
+						if (process.env.NODE_ENV === 'development') {
+							console.error(responseContent.title);
+						}
 					}
 
 					setLoadingResponse(false);
@@ -76,12 +93,12 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 						_handleClose({redirect: redirectURL});
 					}
 				})
-				.catch((error) => {
-					_handleFormError(error);
+				.catch(() => {
+					_handleFormError();
 				});
 		}
-		catch (error) {
-			_handleFormError(error.toString());
+		catch {
+			_handleFormError();
 		}
 	};
 

@@ -1359,6 +1359,18 @@ public class LayoutLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<Layout> getPublishedLayouts(
+		long groupId, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return getService().getPublishedLayouts(
+			groupId, start, end, orderByComparator);
+	}
+
+	public static int getPublishedLayoutsCount(long groupId) {
+		return getService().getPublishedLayoutsCount(groupId);
+	}
+
 	public static List<Layout> getScopeGroupLayouts(long parentGroupId)
 		throws PortalException {
 

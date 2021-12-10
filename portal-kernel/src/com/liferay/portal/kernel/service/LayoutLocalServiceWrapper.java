@@ -1474,6 +1474,21 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Layout> getPublishedLayouts(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator) {
+
+		return _layoutLocalService.getPublishedLayouts(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getPublishedLayoutsCount(long groupId) {
+		return _layoutLocalService.getPublishedLayoutsCount(groupId);
+	}
+
+	@Override
 	public java.util.List<Layout> getScopeGroupLayouts(long parentGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

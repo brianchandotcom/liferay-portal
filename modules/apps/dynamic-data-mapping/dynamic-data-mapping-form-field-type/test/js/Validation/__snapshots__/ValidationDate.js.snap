@@ -3,43 +3,45 @@
 exports[`ValidationDate shows date range validation 1`] = `
 <div>
   <div
-    class="ddm__validation-date-accepted-date"
+    class="ddm-form-field-type__validation-date-accepted-date"
   >
-    <label>
-      accepted-date
-    </label>
-    <div
-      class="dropdown"
-    >
+    <div>
+      <label>
+        accepted-date
+      </label>
       <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+        class="dropdown"
       >
         <div
-          class="form-control results-chosen select-field-trigger"
+          class="dropdown-toggle form-builder-select-field input-group-container"
+          style=""
         >
           <div
-            class="option-selected"
+            class="form-control results-chosen select-field-trigger"
           >
-            Range
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="dateRange"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
+            <div
+              class="option-selected"
             >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
+              Range
+            </div>
+            <input
+              name="selectedValidation"
+              type="hidden"
+              value="dateRange"
+            />
+            <a
+              class="select-arrow-down-container"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-caret-double"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-double"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -146,10 +148,12 @@ exports[`ValidationDate shows date range validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="ddm__custom-date"
   >
-    <label>
-      operation
+    <div>
+      <label>
+        operation
+      </label>
       <div
         class="dropdown"
       >
@@ -185,9 +189,11 @@ exports[`ValidationDate shows date range validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
-    <label>
-      quantity
+    </div>
+    <div>
+      <label>
+        quantity
+      </label>
       <input
         class="form-control ddm-field-text"
         max="999"
@@ -196,9 +202,11 @@ exports[`ValidationDate shows date range validation 1`] = `
         type="number"
         value="1"
       />
-    </label>
-    <label>
-      unit
+    </div>
+    <div>
+      <label>
+        unit
+      </label>
       <div
         class="dropdown"
       >
@@ -234,7 +242,7 @@ exports[`ValidationDate shows date range validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
+    </div>
   </div>
   <label>
     END-DATE
@@ -338,10 +346,12 @@ exports[`ValidationDate shows date range validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="ddm__custom-date"
   >
-    <label>
-      operation
+    <div>
+      <label>
+        operation
+      </label>
       <div
         class="dropdown"
       >
@@ -377,9 +387,11 @@ exports[`ValidationDate shows date range validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
-    <label>
-      quantity
+    </div>
+    <div>
+      <label>
+        quantity
+      </label>
       <input
         class="form-control ddm-field-text"
         max="999"
@@ -388,9 +400,11 @@ exports[`ValidationDate shows date range validation 1`] = `
         type="number"
         value="1"
       />
-    </label>
-    <label>
-      unit
+    </div>
+    <div>
+      <label>
+        unit
+      </label>
       <div
         class="dropdown"
       >
@@ -426,7 +440,7 @@ exports[`ValidationDate shows date range validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
+    </div>
   </div>
   <label
     for="validationDate_errorMessage"
@@ -447,43 +461,45 @@ exports[`ValidationDate shows date range validation 1`] = `
 exports[`ValidationDate shows future dates validation 1`] = `
 <div>
   <div
-    class="ddm__validation-date-accepted-date"
+    class="ddm-form-field-type__validation-date-accepted-date"
   >
-    <label>
-      accepted-date
-    </label>
-    <div
-      class="dropdown"
-    >
+    <div>
+      <label>
+        accepted-date
+      </label>
       <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+        class="dropdown"
       >
         <div
-          class="form-control results-chosen select-field-trigger"
+          class="dropdown-toggle form-builder-select-field input-group-container"
+          style=""
         >
           <div
-            class="option-selected"
+            class="form-control results-chosen select-field-trigger"
           >
-            Future Dates
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="futureDates"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
+            <div
+              class="option-selected"
             >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
+              Future Dates
+            </div>
+            <input
+              name="selectedValidation"
+              type="hidden"
+              value="futureDates"
+            />
+            <a
+              class="select-arrow-down-container"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-caret-double"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-double"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -584,10 +600,12 @@ exports[`ValidationDate shows future dates validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="ddm__custom-date"
   >
-    <label>
-      operation
+    <div>
+      <label>
+        operation
+      </label>
       <div
         class="dropdown"
       >
@@ -623,9 +641,11 @@ exports[`ValidationDate shows future dates validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
-    <label>
-      quantity
+    </div>
+    <div>
+      <label>
+        quantity
+      </label>
       <input
         class="form-control ddm-field-text"
         max="999"
@@ -634,9 +654,11 @@ exports[`ValidationDate shows future dates validation 1`] = `
         type="number"
         value="1"
       />
-    </label>
-    <label>
-      unit
+    </div>
+    <div>
+      <label>
+        unit
+      </label>
       <div
         class="dropdown"
       >
@@ -672,7 +694,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
+    </div>
   </div>
   <label
     for="validationDate_errorMessage"
@@ -693,43 +715,45 @@ exports[`ValidationDate shows future dates validation 1`] = `
 exports[`ValidationDate shows past dates validation 1`] = `
 <div>
   <div
-    class="ddm__validation-date-accepted-date"
+    class="ddm-form-field-type__validation-date-accepted-date"
   >
-    <label>
-      accepted-date
-    </label>
-    <div
-      class="dropdown"
-    >
+    <div>
+      <label>
+        accepted-date
+      </label>
       <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+        class="dropdown"
       >
         <div
-          class="form-control results-chosen select-field-trigger"
+          class="dropdown-toggle form-builder-select-field input-group-container"
+          style=""
         >
           <div
-            class="option-selected"
+            class="form-control results-chosen select-field-trigger"
           >
-            Past Dates
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="pastDates"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
+            <div
+              class="option-selected"
             >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
+              Past Dates
+            </div>
+            <input
+              name="selectedValidation"
+              type="hidden"
+              value="pastDates"
+            />
+            <a
+              class="select-arrow-down-container"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-caret-double"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-double"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -830,10 +854,12 @@ exports[`ValidationDate shows past dates validation 1`] = `
     </div>
   </div>
   <div
-    class="ddm-custom-date"
+    class="ddm__custom-date"
   >
-    <label>
-      operation
+    <div>
+      <label>
+        operation
+      </label>
       <div
         class="dropdown"
       >
@@ -869,9 +895,11 @@ exports[`ValidationDate shows past dates validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
-    <label>
-      quantity
+    </div>
+    <div>
+      <label>
+        quantity
+      </label>
       <input
         class="form-control ddm-field-text"
         max="999"
@@ -880,9 +908,11 @@ exports[`ValidationDate shows past dates validation 1`] = `
         type="number"
         value="1"
       />
-    </label>
-    <label>
-      unit
+    </div>
+    <div>
+      <label>
+        unit
+      </label>
       <div
         class="dropdown"
       >
@@ -918,7 +948,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
           </div>
         </div>
       </div>
-    </label>
+    </div>
   </div>
   <label
     for="validationDate_errorMessage"

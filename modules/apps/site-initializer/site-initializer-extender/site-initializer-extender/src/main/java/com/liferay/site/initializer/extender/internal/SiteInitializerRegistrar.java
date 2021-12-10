@@ -16,6 +16,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -74,6 +76,8 @@ public class SiteInitializerRegistrar {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DispatchFileRepository dispatchFileRepository,
+		DispatchTriggerLocalService dispatchTriggerLocalService,
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
@@ -118,6 +122,8 @@ public class SiteInitializerRegistrar {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_dispatchFileRepository = dispatchFileRepository;
+		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
@@ -171,6 +177,7 @@ public class SiteInitializerRegistrar {
 				_assetCategoryLocalService, _assetListEntryLocalService,
 				_bundle, _commerceReferencesHolder, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dispatchFileRepository, _dispatchTriggerLocalService,
 				_dlURLHelper, _documentFolderResourceFactory,
 				_documentResourceFactory, _fragmentsImporter,
 				_groupLocalService, _journalArticleLocalService, _jsonFactory,
@@ -208,6 +215,8 @@ public class SiteInitializerRegistrar {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DispatchFileRepository _dispatchFileRepository;
+	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;

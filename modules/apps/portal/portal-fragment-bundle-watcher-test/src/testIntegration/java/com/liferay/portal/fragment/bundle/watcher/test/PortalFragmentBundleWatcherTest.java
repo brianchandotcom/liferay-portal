@@ -187,78 +187,14 @@ public class PortalFragmentBundleWatcherTest {
 
 	@Test
 	public void testDeployTwoFragmentsWithDependencies() throws Exception {
-		String dependencyASymbolicName = _PACKAGE_NAME.concat(".dependency.a");
-		String dependencyBSymbolicName = _PACKAGE_NAME.concat(".dependency.b");
-
-		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
-
-		hostBundle.start();
-
-		Bundle dependencyBundleA = _installBundle(
-			dependencyASymbolicName, null, null);
-
-		dependencyBundleA.start();
-
-		_installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment.a"), _HOST_SYMBOLIC_NAME,
-			dependencyASymbolicName);
-
-		Bundle dependencyBundleB = _installBundle(
-			dependencyBSymbolicName, null, null);
-
-		dependencyBundleB.start();
-
-		_installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment.b"), _HOST_SYMBOLIC_NAME,
-			dependencyBSymbolicName);
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
-
-		int expectedMaxHostRefreshCount = 2;
-
-		Assert.assertTrue(
-			StringBundler.concat(
-				"Expected host to refresh at most ",
-				expectedMaxHostRefreshCount, " times, but was refreshed ",
-				_refreshCountBundleListener.getRefreshCount(),
-				" times instead."),
-			_refreshCountBundleListener.getRefreshCount() <=
-				expectedMaxHostRefreshCount);
+		_testDeployTwoFragmentsWithDependencies(false);
 	}
 
 	@Test
 	public void testDeployTwoFragmentsWithDependenciesWhereOneIsMissing()
 		throws Exception {
 
-		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
-
-		hostBundle.start();
-
-		String dependencyASymbolicName = _PACKAGE_NAME.concat(".dependency.a");
-
-		Bundle dependencyBundleA = _installBundle(
-			dependencyASymbolicName, null, null);
-
-		dependencyBundleA.start();
-
-		_installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment.a"), _HOST_SYMBOLIC_NAME,
-			dependencyASymbolicName);
-
-		Bundle fragmentBundleB = _installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment.b"), _HOST_SYMBOLIC_NAME,
-			_PACKAGE_NAME.concat(".dependency.b"));
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
-
-		Assert.assertEquals(1, _refreshCountBundleListener.getRefreshCount());
-
-		Assert.assertNotEquals(
-			"Fragment B is in the resolved state, but should actually be in " +
-				"the installed state, since it has a missing dependency",
-			fragmentBundleB.getState(), Bundle.RESOLVED);
+		_testDeployTwoFragmentsWithDependencies(true);
 	}
 
 	private InputStream _createBundle(
@@ -387,6 +323,73 @@ public class PortalFragmentBundleWatcherTest {
 			Assert.assertEquals(
 				"Fragment should be in resolved state",
 				fragmentBundle.getState(), Bundle.RESOLVED);
+		}
+	}
+
+	private void _testDeployTwoFragmentsWithDependencies(
+			boolean missingDependency)
+		throws Exception {
+
+		String dependencyASymbolicName = _PACKAGE_NAME.concat(".dependency.a");
+		String dependencyBSymbolicName = _PACKAGE_NAME.concat(".dependency.b");
+
+		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
+
+		hostBundle.start();
+
+		Bundle dependencyBundleA = _installBundle(
+			dependencyASymbolicName, null, null);
+
+		dependencyBundleA.start();
+
+		Bundle fragmentBundleA = _installBundle(
+			_HOST_SYMBOLIC_NAME.concat(".fragment.a"), _HOST_SYMBOLIC_NAME,
+			dependencyASymbolicName);
+
+		if (!missingDependency) {
+			Bundle dependencyBundleB = _installBundle(
+				dependencyBSymbolicName, null, null);
+
+			dependencyBundleB.start();
+		}
+
+		Bundle fragmentBundleB = _installBundle(
+			_HOST_SYMBOLIC_NAME.concat(".fragment.b"), _HOST_SYMBOLIC_NAME,
+			dependencyBSymbolicName);
+
+		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
+		Thread.sleep(200);
+
+		if (missingDependency) {
+			Assert.assertEquals(
+				1, _refreshCountBundleListener.getRefreshCount());
+
+			Assert.assertEquals(
+				"Fragment A should be in resolved state",
+				fragmentBundleA.getState(), Bundle.RESOLVED);
+			Assert.assertNotEquals(
+				"Fragment B is in the resolved state, but should actually be " +
+					"in the installed state, since it has a missing dependency",
+				fragmentBundleB.getState(), Bundle.RESOLVED);
+		}
+		else {
+			int expectedMaxHostRefreshCount = 2;
+
+			Assert.assertTrue(
+				StringBundler.concat(
+					"Expected host to refresh at most ",
+					expectedMaxHostRefreshCount, " times, but was refreshed ",
+					_refreshCountBundleListener.getRefreshCount(),
+					" times instead."),
+				_refreshCountBundleListener.getRefreshCount() <=
+					expectedMaxHostRefreshCount);
+
+			Assert.assertEquals(
+				"Fragment A should be in resolved state",
+				fragmentBundleA.getState(), Bundle.RESOLVED);
+			Assert.assertEquals(
+				"Fragment B should be in resolved state",
+				fragmentBundleB.getState(), Bundle.RESOLVED);
 		}
 	}
 

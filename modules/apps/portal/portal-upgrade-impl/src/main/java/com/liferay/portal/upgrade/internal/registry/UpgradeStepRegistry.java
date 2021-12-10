@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,10 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
 	public UpgradeStepRegistry(int buildNumber) {
 		_buildNumber = buildNumber;
+	}
+
+	public List<UpgradeStep> getInitialUpgradeSteps() {
+		return _initialUpgradeSteps;
 	}
 
 	public List<UpgradeInfo> getUpgradeInfos() {
@@ -42,6 +47,11 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		_createUpgradeInfos(
 			fromSchemaVersionString, toSchemaVersionString, _buildNumber,
 			upgradeSteps);
+	}
+
+	@Override
+	public void registerInitialUpgradeSteps(UpgradeStep... upgradeSteps) {
+		Collections.addAll(_initialUpgradeSteps, upgradeSteps);
 	}
 
 	private void _createUpgradeInfos(
@@ -78,6 +88,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	}
 
 	private final int _buildNumber;
+	private final List<UpgradeStep> _initialUpgradeSteps = new ArrayList<>();
 	private final List<UpgradeInfo> _upgradeInfos = new ArrayList<>();
 
 }

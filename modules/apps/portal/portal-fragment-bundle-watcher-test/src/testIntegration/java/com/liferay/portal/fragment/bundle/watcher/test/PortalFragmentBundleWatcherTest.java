@@ -65,7 +65,7 @@ public class PortalFragmentBundleWatcherTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			PortalFragmentBundleWatcherTest.class);
 
@@ -78,7 +78,7 @@ public class PortalFragmentBundleWatcherTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		_bundleContext.removeBundleListener(_refreshCountBundleListener);
 	}
 
@@ -97,11 +97,8 @@ public class PortalFragmentBundleWatcherTest {
 			//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 			Thread.sleep(200);
 
-			int expectedHostRefreshCount = 1;
-
 			Assert.assertEquals(
-				expectedHostRefreshCount,
-				_refreshCountBundleListener.getRefreshCount());
+				1, _refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertEquals(
 				"Fragment should be in resolved state",
@@ -135,11 +132,8 @@ public class PortalFragmentBundleWatcherTest {
 			//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 			Thread.sleep(200);
 
-			int expectedHostRefreshCount = 1;
-
 			Assert.assertEquals(
-				expectedHostRefreshCount,
-				_refreshCountBundleListener.getRefreshCount());
+				1, _refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertEquals(
 				"Fragment should be in resolved state",
@@ -169,11 +163,8 @@ public class PortalFragmentBundleWatcherTest {
 			//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 			Thread.sleep(200);
 
-			int expectedHostRefreshCount = 0;
-
 			Assert.assertEquals(
-				expectedHostRefreshCount,
-				_refreshCountBundleListener.getRefreshCount());
+				0, _refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertNotEquals(
 				"Fragment is in the resolved state, but should actually be " +
@@ -366,11 +357,8 @@ public class PortalFragmentBundleWatcherTest {
 			//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 			Thread.sleep(200);
 
-			int expectedHostRefreshCount = 1;
-
 			Assert.assertEquals(
-				expectedHostRefreshCount,
-				_refreshCountBundleListener.getRefreshCount());
+				1, _refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertNotEquals(
 				"Fragment B is in the resolved state, but should actually be " +

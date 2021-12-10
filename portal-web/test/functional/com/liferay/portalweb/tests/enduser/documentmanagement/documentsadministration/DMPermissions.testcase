@@ -863,13 +863,9 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.expandInfo();
+		DMDocument.gotoMenuItemViaInfoPanel();
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		AssertElementNotPresent(
-			key_menuItem = "Edit",
-			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		MenuItem.viewNotPresent(menuItem = "Edit");
 	}
 
 	@description = "This is a test for LPS-136838. It checks that a guest cannot view a folder without permissions."

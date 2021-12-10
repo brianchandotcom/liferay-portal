@@ -85,11 +85,41 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteRateIntoAEvent {
 
-		// TODO LRQA-71911 CanDeleteRateIntoAEvent pending implementation
+		Calendar.LiferayDXPCalendar();
+
+		Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+        CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
+
+        PortletEntry.save();
+
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+        CalendarNavigator.gotoAddEvent();
+
+        CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+        CalendarEvent.publish();
+
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+        CalendarEvent.viewDetails(
+            calendarName = "Liferay DXP",
+            eventTitle = "Calendar Event Title",
+            eventType = "Regular");
+
+		Ratings.rateStar(ratingStarCount = "3");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "3.0",
+			ratingStarCount = "3");
+
+		Ratings.revokeStarsRating();
 
 	}
 

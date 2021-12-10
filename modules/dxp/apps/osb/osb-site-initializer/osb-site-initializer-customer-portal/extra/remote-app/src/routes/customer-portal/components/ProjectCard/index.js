@@ -1,24 +1,20 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
-import { status as statusProject } from '../../utils/constants';
+import {status as statusProject} from '../../utils/constants';
 import StatusTag from '../StatusTag';
 import ProjectCardSkeleton from './Skeleton';
 
 const getCurrentEndDate = (currentEndDate) => {
 	const date = new Date(currentEndDate);
-	const month = date.toLocaleDateString('default', { month: 'short' });
+	const month = date.toLocaleDateString('default', {month: 'short'});
 	const day = date.getDate();
 	const year = date.getFullYear();
 
 	return `${month} ${day}, ${year}`;
 };
 
-const ProjectCard = ({ code, isSmall, onClick, region, sla, status, title }) => {
+const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 	const getStatusMessage = (currentStatus) => {
-
-		// eslint-disable-next-line no-console
-		console.log(statusProject, currentStatus);
-
 		if (currentStatus === statusProject.active) {
 			return 'Ends on ';
 		}

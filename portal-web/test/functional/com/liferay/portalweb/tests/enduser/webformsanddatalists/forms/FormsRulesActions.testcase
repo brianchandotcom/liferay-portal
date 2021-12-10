@@ -992,101 +992,102 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanUtilizeDataProvidersInAutofillRule";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Go to Content > Forms and add a Data Provider") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
-		Navigator.openURL();
+			Navigator.gotoNavItem(navItem = "Data Providers");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+			FormsAdminNavigator.gotoAddDataProvider();
 
-		Navigator.gotoNavItem(navItem = "Data Providers");
+			FormsAdmin.editDataProvider(
+				inputParameterLabel = "zipcode",
+				inputParameterName = "zipcode",
+				inputParameterType = "Text",
+				name = "zipcloud",
+				outputParameterLabel = "prefecture",
+				outputParameterPath = "$.results[0].address1",
+				outputParameterType = "Text",
+				timeout = "3000",
+				url = "http://zipcloud.ibsnet.co.jp/api/search?zipcode={zipcode}");
 
-		FormsAdminNavigator.gotoAddDataProvider();
+			FormsAdmin.saveDataProvider();
+		}
 
-		FormsAdmin.editDataProvider(
-			inputParameterLabel = "zipcode",
-			inputParameterName = "zipcode",
-			inputParameterType = "Text",
-			name = "zipcloud",
-			outputParameterLabel = "prefecture",
-			outputParameterPath = "$.results[0].address1",
-			outputParameterType = "Text",
-			url = "http://zipcloud.ibsnet.co.jp/api/search?zipcode={zipcode}");
+		task ("Add a form with two text fields: Address and Postal Code") {
+			FormsAdmin.addForm();
 
-		FormsAdmin.saveDataProvider();
+			Form.editName(formName = "Address");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+			Form.addTextField(fieldPositionNumber = "0");
 
-		FormsAdminNavigator.gotoAddForm();
+			var fieldNameTextField = FormFields.getFieldName();
 
-		Form.editName(formName = "Address");
+			FormFields.enableSwitch(fieldName = "Required");
 
-		Form.editDescription();
+			Form.editFieldLabelMetal(fieldValue = "Postal code");
 
-		Form.addTextField(fieldPositionNumber = "0");
+			Form.closeSidebar();
 
-		var fieldNameTextField = FormFields.getFieldName();
+			Form.addTextField(fieldPositionNumber = "1");
 
-		Form.editFieldLabelMetal(fieldValue = "Postal code");
+			var fieldNameTextField2 = FormFields.getFieldName();
 
-		FormFields.enableSwitch(fieldName = "Required");
+			FormFields.enableSwitch(fieldName = "Required");
 
-		Form.closeSidebar();
+			Form.editFieldLabelMetal(fieldValue = "Prefectures");
 
-		Form.addTextField(fieldPositionNumber = "1");
+			Form.closeSidebar();
+		}
 
-		var fieldNameTextField2 = FormFields.getFieldName();
+		task ("Add a Rule to the form (If Field Postal Code is not empty, Autofill Prefectures from Data Provider zipcloud") {
+			FormsAdminNavigator.gotoRules();
 
-		Form.editFieldLabelMetal(fieldValue = "Prefectures");
+			FormRules.addRule();
 
-		FormFields.enableSwitch(fieldName = "Required");
+			FormRules.configureConditionOptions(
+				conditionField = "Postal code",
+				conditionOperator = "Is Not Empty",
+				conditionRowNumber = "1");
 
-		Form.closeSidebar();
+			FormRules.configureActionOptions(
+				action = "Autofill",
+				actionRowNumber = "1",
+				actionTarget = "zipcloud");
 
-		FormsAdminNavigator.gotoRules();
+			FormRules.selectAutofillFromDataProvider(
+				dataProviderOption = "Postal code",
+				dataProviderParameterName = "zipcode");
 
-		FormRules.addRule();
+			ScrollBy(value1 = "0, 200");
 
-		FormRules.configureConditionOptions(
-			conditionField = "Postal code",
-			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			FormRules.selectAutofillFromDataProvider(
+				dataProviderOption = "Prefectures",
+				dataProviderParameterName = "prefecture");
 
-		FormRules.configureActionOptions(
-			action = "Autofill",
-			actionRowNumber = "1",
-			actionTarget = "zipcloud");
+			FormRules.save();
+		}
 
-		FormRules.selectAutofillFromDataProvider(
-			dataProviderOption = "Postal code",
-			dataProviderParameterName = "zipcode");
+		task ("Publish the form") {
+			FormsAdminNavigator.gotoFormBuilder();
 
-		ScrollBy(value1 = "0, 200");
+			Form.publishForm();
+		}
 
-		FormRules.selectAutofillFromDataProvider(
-			dataProviderOption = "Prefectures",
-			dataProviderParameterName = "prefecture");
+		task ("Go to the published, fill the Postal code with 1500000") {
+			FormsAdminNavigator.gotoPublishedForm();
 
-		FormRules.save();
+			FormFields.editText(
+				fieldName = "${fieldNameTextField}",
+				fieldValue = "1500000");
+		}
 
-		FormsAdminNavigator.gotoFormBuilder();
+		task ("Assert that the Prefectures field was filled by the Data Provider and the form can be submited") {
+			FormFields.viewTextValue(
+				fieldName = "${fieldNameTextField2}",
+				fieldValue = "東京都");
 
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.editText(
-			fieldName = "${fieldNameTextField}",
-			fieldValue = "1500000");
-
-		FormFields.viewTextValue(
-			fieldName = "${fieldNameTextField2}",
-			fieldValue = "東京都");
-
-		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+			FormPortlet.submitSuccessfullyAndViewSuccessPage();
+		}
 	}
 
 	@description = "LPS-70446 - Verify that a Rule with 'Autofill' action can be created with Data Providers"

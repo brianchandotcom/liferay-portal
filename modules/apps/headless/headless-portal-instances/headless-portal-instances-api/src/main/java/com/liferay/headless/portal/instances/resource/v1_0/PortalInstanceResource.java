@@ -61,6 +61,11 @@ public interface PortalInstanceResource {
 	public PortalInstance postPortalInstance(PortalInstance portalInstance)
 		throws Exception;
 
+	public PortalInstance postPortalInstanceWithAdminInfo(
+			String adminEmailAddress, String adminFirstName,
+			String adminLastName, PortalInstance portalInstance)
+		throws Exception;
+
 	public void deletePortalInstance(String portalInstanceId) throws Exception;
 
 	public PortalInstance getPortalInstance(String portalInstanceId)

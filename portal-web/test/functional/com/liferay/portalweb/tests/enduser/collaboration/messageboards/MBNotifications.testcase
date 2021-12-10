@@ -148,15 +148,15 @@ definition {
 			groupName = "Guest",
 			layoutName = "message-boards-page",
 			siteURLKey = "guest",
-			threadBody = "MB Body",
-			threadSubject = "MB Thread Message Subject");
+			threadBody = "MB Localized Template Body",
+			threadSubject = "MB Localized Template Subject");
 
-		MockMock.viewMail(
-			asset = "MB Thread Message Subject",
-			content = "MB Body este es un campo de tablero de mensajes",
+		MockMock.viewUnformattedHTMLText(
+			asset = "MB Localized Template Subject",
 			recipient = "userfn userln",
 			sender = "Test Test",
-			subject = "MB Thread Message Subject");
+			subject = "MB Localized Template Subject",
+			unFormattedContent = "MB Localized Template Body este es un campo de tablero de mensajes");
 	}
 
 	@priority = "4"

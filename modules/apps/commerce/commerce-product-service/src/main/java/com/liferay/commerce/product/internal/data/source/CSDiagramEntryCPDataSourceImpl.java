@@ -15,27 +15,18 @@
 package com.liferay.commerce.product.internal.data.source;
 
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.permission.CommerceCatalogPermission;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -49,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
@@ -101,14 +93,11 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 				cpCatalogEntry.getCPDefinitionId());
 
 		for (CSDiagramEntry csDiagramEntry : csDiagramEntries) {
-			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.getCPDefinition(
-					csDiagramEntry.getCPDefinitionId());
-
-			if (_isCommerceAccountEnabled(commerceAccountId, cpDefinition) &&
-				_commerceCatalogPermission.contains(
+			if (_commerceProductViewPermission.contains(
 					PermissionThreadLocal.getPermissionChecker(),
-					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW)) {
+					commerceAccountId,
+					commerceContext.getCommerceChannelGroupId(),
+					csDiagramEntry.getCPDefinitionId())) {
 
 				cpCatalogEntries.add(
 					_cpDefinitionHelper.getCPCatalogEntry(
@@ -127,54 +116,11 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 			cpCatalogEntries, cpCatalogEntries.size());
 	}
 
-	private boolean _isCommerceAccountEnabled(
-			long commerceAccountId, CPDefinition cpDefinition)
-		throws Exception {
-
-		if (!cpDefinition.isAccountGroupFilterEnabled()) {
-			return true;
-		}
-
-		List<CommerceAccountGroupRel> commerceAccountGroupRels =
-			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId);
-
-		for (CommerceAccountGroupRel commerceAccountGroupRel :
-				commerceAccountGroupRels) {
-
-			if (ArrayUtil.contains(
-					commerceAccountGroupIds,
-					commerceAccountGroupRel.getCommerceAccountGroupId())) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
-
-	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
-
-	@Reference
-	private CommerceCatalogPermission _commerceCatalogPermission;
-
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;

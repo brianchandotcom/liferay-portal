@@ -94,67 +94,17 @@ public class PortalFragmentBundleWatcherTest {
 
 	@Test
 	public void testDeployFragment() throws Exception {
-		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
-
-		hostBundle.start();
-
-		Bundle fragmentBundle = _installBundle(
-			_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
-
-		Assert.assertEquals(1, _refreshCountBundleListener.getRefreshCount());
-
-		Assert.assertEquals(
-			"Fragment should be in resolved state", fragmentBundle.getState(),
-			Bundle.RESOLVED);
+		_testDeployFragment(false, false);
 	}
 
 	@Test
 	public void testDeployFragmentWithDependency() throws Exception {
-		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
-
-		hostBundle.start();
-
-		Bundle dependencyBundle = _installBundle(
-			_DEPENDENCY_SYMBOLIC_NAME, null, null);
-
-		dependencyBundle.start();
-
-		Bundle fragmentBundle = _installBundle(
-			_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
-			_DEPENDENCY_SYMBOLIC_NAME);
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
-
-		Assert.assertEquals(1, _refreshCountBundleListener.getRefreshCount());
-
-		Assert.assertEquals(
-			"Fragment should be in resolved state", fragmentBundle.getState(),
-			Bundle.RESOLVED);
+		_testDeployFragment(true, false);
 	}
 
 	@Test
 	public void testDeployFragmentWithMissingDependency() throws Exception {
-		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
-
-		hostBundle.start();
-
-		Bundle fragmentBundle = _installBundle(
-			_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
-			_DEPENDENCY_SYMBOLIC_NAME);
-
-		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
-		Thread.sleep(200);
-
-		Assert.assertEquals(0, _refreshCountBundleListener.getRefreshCount());
-
-		Assert.assertNotEquals(
-			"Fragment is in the resolved state, but should actually be in " +
-				"the installed state, since it has a missing dependency",
-			fragmentBundle.getState(), Bundle.RESOLVED);
+		_testDeployFragment(true, true);
 	}
 
 	@Test
@@ -389,6 +339,55 @@ public class PortalFragmentBundleWatcherTest {
 		bundle.start();
 
 		return bundle;
+	}
+
+	private void _testDeployFragment(
+			boolean hasDependency, boolean missingDependency)
+		throws Exception {
+
+		Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
+
+		hostBundle.start();
+
+		if (hasDependency && !missingDependency) {
+			Bundle dependencyBundle = _installBundle(
+				_DEPENDENCY_SYMBOLIC_NAME, null, null);
+
+			dependencyBundle.start();
+		}
+
+		Bundle fragmentBundle = null;
+
+		if (hasDependency) {
+			fragmentBundle = _installBundle(
+				_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
+				_DEPENDENCY_SYMBOLIC_NAME);
+		}
+		else {
+			fragmentBundle = _installBundle(
+				_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
+		}
+
+		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
+		Thread.sleep(200);
+
+		if (missingDependency) {
+			Assert.assertEquals(
+				0, _refreshCountBundleListener.getRefreshCount());
+
+			Assert.assertNotEquals(
+				"Fragment is in the resolved state, but should actually be " +
+					"in the installed state, since it has a missing dependency",
+				fragmentBundle.getState(), Bundle.RESOLVED);
+		}
+		else {
+			Assert.assertEquals(
+				1, _refreshCountBundleListener.getRefreshCount());
+
+			Assert.assertEquals(
+				"Fragment should be in resolved state",
+				fragmentBundle.getState(), Bundle.RESOLVED);
+		}
 	}
 
 	private static final String _DEPENDENCY_SYMBOLIC_NAME;

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Testray Cases And Components"
+	},
+	"name": "casesComponents",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TestrayCase$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestrayComponent$]",
+	"objectDefinitionName2": "TestrayComponent",
+	"type": "manyToMany"
+}

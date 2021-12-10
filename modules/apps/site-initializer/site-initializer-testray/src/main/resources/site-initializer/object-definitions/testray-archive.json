@@ -23,6 +23,16 @@
 			"name": "classPK",
 			"required": false,
 			"type": "Long"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Data Id"
+			},
+			"name": "dataId",
+			"required": false,
+			"type": "Long"
 		}
 	],
 	"panelAppOrder": "100",

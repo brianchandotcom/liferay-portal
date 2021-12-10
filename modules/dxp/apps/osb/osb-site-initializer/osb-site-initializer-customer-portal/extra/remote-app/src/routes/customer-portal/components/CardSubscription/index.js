@@ -55,7 +55,9 @@ const CardSubscription = ({cardSubscriptionData}) => {
 					>
 						{`${dateToLocalFormat(
 							cardSubscriptionData?.startDate
-						)} - ${dateToLocalFormat(cardSubscriptionData?.endDate)}`}
+						)} - ${dateToLocalFormat(
+							cardSubscriptionData?.endDate
+						)}`}
 					</div>
 
 					<div className="badge-card-subscription d-flex justify-content-center">

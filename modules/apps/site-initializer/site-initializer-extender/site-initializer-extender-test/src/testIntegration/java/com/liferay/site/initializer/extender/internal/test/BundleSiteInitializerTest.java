@@ -630,7 +630,7 @@ public class BundleSiteInitializerTest {
 				serviceContext.fetchUser()
 			).build();
 
-		Page<ObjectRelationship> objectRelationshipsPage1 =
+		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
@@ -638,10 +638,10 @@ public class BundleSiteInitializerTest {
 						"name eq 'testOR1'"),
 					null);
 
-		Assert.assertNotNull(objectRelationshipsPage1);
+		Assert.assertNotNull(page1);
 
 		ObjectRelationship existingRelationship1 =
-			objectRelationshipsPage1.fetchFirstItem();
+			page1.fetchFirstItem();
 
 		Assert.assertEquals(
 			"TestObjectDefinition1",
@@ -652,7 +652,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals("oneToMany", objectRelationshipType1.toString());
 
-		Page<ObjectRelationship> objectRelationshipsPage2 =
+		Page<ObjectRelationship> page2 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
@@ -660,10 +660,10 @@ public class BundleSiteInitializerTest {
 						"name eq 'testOR2'"),
 					null);
 
-		Assert.assertNotNull(objectRelationshipsPage2);
+		Assert.assertNotNull(page2);
 
 		ObjectRelationship existingRelationship2 =
-			objectRelationshipsPage2.fetchFirstItem();
+			page2.fetchFirstItem();
 
 		Assert.assertEquals(
 			"TestObjectDefinition2",

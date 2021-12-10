@@ -550,9 +550,7 @@ export default function ChangeTrackingChangesView({
 		: !!showHideableFromURL;
 
 	const [ascendingState, setAscendingState] = useState(
-		orderByTypeFromURL === ORDER_BY_TYPE_DESC
-			? ORDER_BY_TYPE_DESC
-			: ORDER_BY_TYPE_ASC
+		orderByTypeFromURL !== ORDER_BY_TYPE_DESC
 	);
 	const [columnState, setColumnState] = useState(
 		columnFromURL ? columnFromURL : COLUMN_TITLE

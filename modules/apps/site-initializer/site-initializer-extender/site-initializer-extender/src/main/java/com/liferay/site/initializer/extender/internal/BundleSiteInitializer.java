@@ -361,18 +361,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues, serviceContext));
 
-			Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
+			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues =
 				_invoke(() -> _addListTypeDefinitions(serviceContext));
 
-			Map<String, String> objectDefinitionsStringUtilReplaceValues =
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addObjectDefinitions(
-						listTypeDefinitionsStringUtilReplaceValues,
+						listTypeDefinitionIdsStringUtilReplaceValues,
 						serviceContext));
 
 			_invoke(
 				() -> _addObjectRelationships(
-					objectDefinitionsStringUtilReplaceValues, serviceContext));
+					objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
@@ -1494,11 +1494,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/list-type-definitions");
 
-		Map<String, String> listTypeDefinitionsStringUtilReplaceValues =
+		Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues =
 			new HashMap<>();
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return listTypeDefinitionsStringUtilReplaceValues;
+			return listTypeDefinitionIdsStringUtilReplaceValues;
 		}
 
 		ListTypeDefinitionResource.Builder listTypeDefinitionResourceBuilder =
@@ -1549,7 +1549,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingListTypeDefinition.getId(), listTypeDefinition);
 			}
 
-			listTypeDefinitionsStringUtilReplaceValues.put(
+			listTypeDefinitionIdsStringUtilReplaceValues.put(
 				"LIST_TYPE_DEFINITION_ID:" + listTypeDefinition.getName(),
 				String.valueOf(listTypeDefinition.getId()));
 
@@ -1599,7 +1599,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		return listTypeDefinitionsStringUtilReplaceValues;
+		return listTypeDefinitionIdsStringUtilReplaceValues;
 	}
 
 	private void _addModelResourcePermissions(
@@ -1632,18 +1632,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addObjectDefinitions(
-			Map<String, String> listTypeDefinitionsStringUtilReplaceValues,
+			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
 
-		Map<String, String> objectDefinitionsStringUtilReplaceValues =
+		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 			new HashMap<>();
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return objectDefinitionsStringUtilReplaceValues;
+			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
@@ -1662,7 +1662,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = _read(resourcePath);
 
 			json = StringUtil.replace(
-				json, "[$", "$]", listTypeDefinitionsStringUtilReplaceValues);
+				json, "[$", "$]", listTypeDefinitionIdsStringUtilReplaceValues);
 
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
 
@@ -1698,7 +1698,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingObjectDefinition.getId(), objectDefinition);
 			}
 
-			objectDefinitionsStringUtilReplaceValues.put(
+			objectDefinitionIdsStringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getId()));
 
@@ -1724,11 +1724,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		return objectDefinitionsStringUtilReplaceValues;
+		return objectDefinitionIdsStringUtilReplaceValues;
 	}
 
 	private void _addObjectRelationships(
-			Map<String, String> objectDefinitionsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1751,7 +1751,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = _read(resourcePath);
 
 			json = StringUtil.replace(
-				json, "[$", "$]", objectDefinitionsStringUtilReplaceValues);
+				json, "[$", "$]", objectDefinitionIdsStringUtilReplaceValues);
 
 			ObjectRelationship objectRelationship = ObjectRelationship.toDTO(
 				json);

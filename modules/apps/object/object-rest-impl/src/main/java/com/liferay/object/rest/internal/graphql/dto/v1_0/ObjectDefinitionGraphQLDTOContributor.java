@@ -30,6 +30,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
+import com.liferay.portal.vulcan.list.type.ListEntry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -64,8 +65,13 @@ public class ObjectDefinitionGraphQLDTOContributor
 				objectDefinition.getPKObjectFieldName(), Long.class));
 
 		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(
-					objectField.getRelationshipType(), "oneToMany")) {
+			if (objectField.getListTypeDefinitionId() != 0) {
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(
+						objectField.getName(), ListEntry.class));
+			}
+			else if (Objects.equals(
+						objectField.getRelationshipType(), "oneToMany")) {
 
 				String objectFieldName = objectField.getName();
 

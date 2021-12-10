@@ -373,10 +373,6 @@ public class PortalFragmentBundleWatcherTest {
 		}
 	}
 
-	private InputStream _createBundle(String symbolicName) throws Exception {
-		return _createBundle(symbolicName, symbolicName, null, null);
-	}
-
 	private InputStream _createBundle(
 			String symbolicName, String exports, String imports,
 			String fragmentHost)
@@ -425,34 +421,10 @@ public class PortalFragmentBundleWatcherTest {
 		}
 	}
 
-	private InputStream _createDependencyBundle(String dependencySymbolicName)
-		throws Exception {
-
-		return _createBundle(
-			dependencySymbolicName, dependencySymbolicName, null, null);
-	}
-
-	private InputStream _createFragmentBundle(
-			String fragmentSymbolicName, String hostSymbolicName)
-		throws Exception {
-
-		return _createBundle(
-			fragmentSymbolicName, null, null, hostSymbolicName);
-	}
-
-	private InputStream _createFragmentBundleWithDependency(
-			String fragmentSymbolicName, String hostSymbolicName,
-			String dependencySymbolicName)
-		throws Exception {
-
-		return _createBundle(
-			fragmentSymbolicName, null, dependencySymbolicName,
-			hostSymbolicName);
-	}
-
 	private Bundle _installBundle(String bundleSymbolicName) throws Exception {
 		return _bundleContext.installBundle(
-			bundleSymbolicName, _createBundle(bundleSymbolicName));
+			bundleSymbolicName,
+			_createBundle(bundleSymbolicName, bundleSymbolicName, null, null));
 	}
 
 	private Bundle _installDependencyBundle(String dependencyBundleSymbolicName)
@@ -460,7 +432,9 @@ public class PortalFragmentBundleWatcherTest {
 
 		return _bundleContext.installBundle(
 			dependencyBundleSymbolicName,
-			_createDependencyBundle(dependencyBundleSymbolicName));
+			_createBundle(
+				dependencyBundleSymbolicName, dependencyBundleSymbolicName,
+				null, null));
 	}
 
 	private Bundle _installFragmentBundle(
@@ -469,7 +443,7 @@ public class PortalFragmentBundleWatcherTest {
 
 		return _bundleContext.installBundle(
 			fragmentSymbolicName,
-			_createFragmentBundle(fragmentSymbolicName, hostSymbolicName));
+			_createBundle(fragmentSymbolicName, null, null, hostSymbolicName));
 	}
 
 	private Bundle _installFragmentBundleWithDependency(
@@ -479,9 +453,9 @@ public class PortalFragmentBundleWatcherTest {
 
 		return _bundleContext.installBundle(
 			fragmentSymbolicName,
-			_createFragmentBundleWithDependency(
-				fragmentSymbolicName, hostSymbolicName,
-				dependencySymbolicName));
+			_createBundle(
+				fragmentSymbolicName, null, dependencySymbolicName,
+				hostSymbolicName));
 	}
 
 	private Bundle _startBundle(Bundle bundle) throws Exception {

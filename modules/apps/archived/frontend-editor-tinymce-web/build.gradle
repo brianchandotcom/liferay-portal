@@ -7,7 +7,7 @@ configurations {
 
 task buildTinyMCE(type: Copy)
 
-String tinyMCEVersion = "5.1.6"
+String tinyMCEVersion = "5.10.2"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
@@ -34,6 +34,7 @@ buildTinyMCE {
 		exclude "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/tinymce.jquery.min.js"
 
 		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/*.min.js"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/icons/**/*.min.js"
 		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/license.txt"
 		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.css"
 		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.gif"

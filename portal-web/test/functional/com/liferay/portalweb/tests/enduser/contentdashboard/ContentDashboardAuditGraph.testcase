@@ -14,12 +14,12 @@ definition {
 
 		Navigator.openURL();
 
-		var categoryId1 = JSONCategory.addCategory(
+		var audienceId1 = JSONCategory.addCategory(
 			groupName = "Global",
 			title = "Audience 1",
 			vocabularyName = "Audience");
 
-		var categoryId2 = JSONCategory.addCategory(
+		var stageId1 = JSONCategory.addCategory(
 			groupName = "Global",
 			title = "Stage 1",
 			vocabularyName = "Stage");
@@ -33,16 +33,12 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
 
-			JSONCategory.deleteCategory(
-				categoryName = "Audience 1",
+		for (var vocabulary : list "Audience,Stage") {
+			JSONCategory.tearDownCategories(
 				groupName = "Global",
-				vocabularyName = "Audience");
-
-			JSONCategory.deleteCategory(
-				categoryName = "Stage 1",
-				groupName = "Global",
-				vocabularyName = "Stage");
+				vocabularyName = "${vocabulary}");
 		}
 	}
 
@@ -51,90 +47,69 @@ definition {
 	test AuditGraphClickOnBar {
 		property portal.acceptance = "true";
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 2",
-			vocabularyName = "Audience");
+		task ("Add two more categories") {
+			var audienceId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 2",
+				vocabularyName = "Audience");
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 2",
-			vocabularyName = "Stage");
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 2",
+				vocabularyName = "Stage");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a first Web Content using categories1 via JSON") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Add a second Web Content using categories2 via JSON") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId2},${stageId2}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Click on first bar and assert elements") {
+			ContentDashboard.clickOnFirstBar();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE",
+				value1 = "Press escape to remove the bar's category filters.");
 
-		WebContent.selectCategory(
-			categoryName = "Stage 1",
-			vocabularyName = "Stage");
+			AssertTextPresent(
+				categoryName = "Audience 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
+				value1 = "Category:Audience 1");
 
-		PortletEntry.publish();
+			AssertTextPresent(
+				categoryName = "Stage 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
+				value1 = "Category:Stage 1");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Clear filters") {
+			ContentDashboard.clearFilters();
 
-		WebContentNavigator.gotoAddCP();
+			AssertElementNotPresent(
+				categoryName = "Audience 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 2",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title 2");
+			AssertElementNotPresent(
+				categoryName = "Stage 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 2");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 2",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.clickOnFirstBar();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE",
-			value1 = "Press escape to remove the bar's category filters.");
-
-		AssertTextPresent(
-			categoryName = "Audience 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Audience 1");
-
-		AssertTextPresent(
-			categoryName = "Stage 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Stage 1");
-
-		ContentDashboard.clearFilters();
-
-		AssertElementNotPresent(
-			categoryName = "Audience 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
-
-		AssertElementNotPresent(
-			categoryName = "Stage 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
-
-		AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
+			AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
+		}
 	}
 
 	@description = "When a user clicks on one of the colored bars of the audit graph, the filters corresponding to the categories in that bar are applied, they are shown as filter labels in the management tool bar and the list of contents is filtered by them"
@@ -142,91 +117,70 @@ definition {
 	test AuditGraphClickOnBarDeleteOneFilter {
 		property portal.acceptance = "true";
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 2",
-			vocabularyName = "Audience");
+		task ("Add two more categories") {
+			var audienceId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 2",
+				vocabularyName = "Audience");
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 2",
-			vocabularyName = "Stage");
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 2",
+				vocabularyName = "Stage");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a first Web Content using categories1 via JSON") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Add a second Web Content using categories2 via JSON") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId2},${stageId2}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+		task ("Navigate Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Click on first bar and assert elements") {
+			ContentDashboard.clickOnFirstBar();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE",
+				value1 = "Press escape to remove the bar's category filters.");
 
-		WebContent.selectCategory(
-			categoryName = "Stage 1",
-			vocabularyName = "Stage");
+			AssertTextPresent(
+				categoryName = "Audience 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
+				value1 = "Category:Audience 1");
 
-		PortletEntry.publish();
+			AssertTextPresent(
+				categoryName = "Stage 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
+				value1 = "Category:Stage 1");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Let only one filter active and assert elements") {
+			ContentDashboard.deleteSecondCategoryFilter();
 
-		WebContentNavigator.gotoAddCP();
+			AssertTextPresent(
+				categoryName = "Audience 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
+				value1 = "Category:Audience 1");
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 2",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title 2");
+			AssertElementNotPresent(
+				categoryName = "Stage 1",
+				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 2");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 2",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.clickOnFirstBar();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE",
-			value1 = "Press escape to remove the bar's category filters.");
-
-		AssertTextPresent(
-			categoryName = "Audience 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Audience 1");
-
-		AssertTextPresent(
-			categoryName = "Stage 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Stage 1");
-
-		ContentDashboard.deleteSecondCategoryFilter();
-
-		AssertTextPresent(
-			categoryName = "Audience 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Audience 1");
-
-		AssertElementNotPresent(
-			categoryName = "Stage 1",
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
-
-		AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
+			AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
+		}
 	}
 
 	@description = "When the user clicks on the Flip axes button, the vocabularies will be exchanged, the vocabulary represented in the X (the first in the list in the "In use" box) is sent to the Y, and the other way around"
@@ -234,45 +188,31 @@ definition {
 	test AuditGraphFlipAxes {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a Web Content using categories via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+		task ("Check axes flip behavior") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCtegoryName = "Stage 1");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			ContentDashboard.flipAxesButtonClick();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 1",
-			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title",
-			xAxisCtegoryName = "Stage 1");
-
-		ContentDashboard.flipAxesButtonClick();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title",
-			xAxisCtegoryName = "Audience 1");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCtegoryName = "Audience 1");
+		}
 	}
 
 	@description = "When there are not web content associated to the categories, the Flip axes button will be disabled"
@@ -280,12 +220,13 @@ definition {
 	test AuditGraphFlipAxesDisabled {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		AssertElementPresent(locator1 = "ContentDashboard#FLIP_AXES_BUTTON_DISABLED");
+		task ("Check if flip axes button is disabaled") {
+			AssertElementPresent(locator1 = "ContentDashboard#FLIP_AXES_BUTTON_DISABLED");
+		}
 	}
 
 	@description = "When there are not contents with Audience's categories, the X axis will show just one bar per each one of Stage's categories representing the total number of contents labeled with those categories"
@@ -293,46 +234,50 @@ definition {
 	test AuditGraphNoContentsForAudience {
 		property portal.acceptance = "true";
 
-		Category.openCategoriesAdmin(siteURLKey = "global");
+		task ("Delete audience category") {
+			JSONCategory.deleteCategory(
+				groupName = "Global",
+				categoryName = "Audience 1",
+				vocabularyName = "Audience");
+		}
 
-		Category.deleteCategoriesCP(vocabularyName = "Audience");
+		task ("Add a Web Content using stage category via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Check graph without filters applied") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Stage 1");
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Stage 1",
-			vocabularyName = "Stage",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+			AssertTextPresent(
+				auditGraphTitle = "Content per Stage",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+				value1 = "Content per Stage");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Prioritize stage vocabulary") {
+			ContentDashboard.stageFirstVocabularyConfiguration();
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title",
-			xAxisCategoryName = "Stage 1");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Stage 1");
 
-		AssertTextPresent(
-			auditGraphTitle = "Content per Stage",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
-			value1 = "Content per Stage");
-
-		ContentDashboard.stageFirstVocabularyConfiguration();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title",
-			xAxisCategoryName = "Stage 1");
-
-		AssertTextPresent(
-			auditGraphTitle = "Content per Stage",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
-			value1 = "Content per Stage");
+			AssertTextPresent(
+				auditGraphTitle = "Content per Stage",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+				value1 = "Content per Stage");
+		}
 	}
 
 	@description = "When one or more web contents have not an assigned category in the Vocab1 or in the Vocab2, but they have at least one assigned category in one of them, these contents are represented by a "No [VocabularyName] Category" label in the X axis (assets with no category in the Vocab2), or a "No [VocabularyName] Category" checkbox above the chart (assets with no category in the Vocab1)"
@@ -340,48 +285,37 @@ definition {
 	test AuditGraphNoContentsForEachCategory {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a first Web Content using audience category via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Add a second Web Content using stage category via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Check gray bar when category hasn't an asset associated") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "No Audience",
+				xAxisCategoryName = "No Audience");
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Stage 1",
-			vocabularyName = "Stage",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title 2");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "No Audience",
-			xAxisCategoryName = "No Audience");
-
-		AssertTextPresent(
-			auditGraphCheckboxName = "No Stage Specified",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
-			value1 = "No Stage Specified");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title 2");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title 2");
+			AssertTextPresent(
+				auditGraphCheckboxName = "No Stage Specified",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
+				value1 = "No Stage Specified");
+		}
 	}
 
 	@description = "When there are not contents with Stage's categories, the X axis will show just one bar per each one of Audience's categories representing the total number of contents labeled with those categories"
@@ -389,46 +323,50 @@ definition {
 	test AuditGraphNoContentsForStage {
 		property portal.acceptance = "true";
 
-		Category.openCategoriesAdmin(siteURLKey = "global");
+		task ("Delete Stage category") {
+			JSONCategory.deleteCategory(
+				groupName = "Global",
+				categoryName = "Stage 1",
+				vocabularyName = "Stage");
+		}
 
-		Category.deleteCategoriesCP(vocabularyName = "Stage");
+		task ("Add a Web Content using audience category via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Check graph without filters applied") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Audience 1");
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+			AssertTextPresent(
+				auditGraphTitle = "Content per Audience",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+				value1 = "Content per Audience");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Prioritize stage vocabulary") {
+			ContentDashboard.stageFirstVocabularyConfiguration();
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title",
-			xAxisCategoryName = "Audience 1");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Audience 1");
 
-		AssertTextPresent(
-			auditGraphTitle = "Content per Audience",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
-			value1 = "Content per Audience");
-
-		ContentDashboard.stageFirstVocabularyConfiguration();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title",
-			xAxisCategoryName = "Audience 1");
-
-		AssertTextPresent(
-			auditGraphTitle = "Content per Audience",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
-			value1 = "Content per Audience");
+			AssertTextPresent(
+				auditGraphTitle = "Content per Audience",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+				value1 = "Content per Audience");
+		}
 	}
 
 	@description = "Validate if the filters are saved after swapping vocabularies"
@@ -436,41 +374,31 @@ definition {
 	test AuditGraphSaveFiltersAfterSwapping {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a Web Content using categories via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+		task ("Apply filter") {
+			ContentDashboard.filterByAuthorTable(filterOption = "Author");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Swap vocabularies") {
+			ContentDashboard.swapVocabularies();
+		}
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 1",
-			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.filterByAuthorTable(filterOption = "Author");
-
-		ContentDashboard.swapVocabularies();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FILTER_TEXT",
-			value1 = "Author:Test Test");
+		task ("Assert that filter is still aplied") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Author:Test Test");
+		}
 	}
 
 	@description = "When an asset has S1 and S2 (Stage) assigned categories, but no "Audience" (Vocab2) categories, it will be represented in two different bars in the No Audience Category"
@@ -478,82 +406,57 @@ definition {
 	test AuditGraphTwoBarsForNoSpecifiedCategory {
 		property portal.acceptance = "true";
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 2",
-			vocabularyName = "Audience");
+		task ("Add two more categories") {
+			var audienceId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience 2",
+				vocabularyName = "Audience");
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 2",
-			vocabularyName = "Stage");
+			var stageId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Stage 2",
+				vocabularyName = "Stage");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a first Web Content using categories1 via JSON") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${audienceId2}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC A1 A2");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Add a second Web Content using categories2 via JSON") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${stageId1},${stageId2}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC S1 S2");
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC A1 A2");
+		task ("Navigate Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Check bars display") {
+			AssertElementPresent(
+				fillColor = "4B9FFF",
+				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC A1 A2");
+			AssertElementPresent(
+				fillColor = "FFB46E",
+				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
-		WebContent.selectCategory(
-			categoryName = "Audience 2",
-			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "Audience");
+			ContentDashboard.flipAxesButtonClick();
 
-		PortletEntry.publish();
+			AssertElementPresent(
+				fillColor = "4B9FFF",
+				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithCategoryCP(
-			categoryName = "Stage 1",
-			vocabularyName = "Stage",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC S1 S2");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC S1 S2");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 2",
-			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		AssertElementPresent(
-			fillColor = "4B9FFF",
-			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-
-		AssertElementPresent(
-			fillColor = "FFB46E",
-			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-
-		ContentDashboard.flipAxesButtonClick();
-
-		AssertElementPresent(
-			fillColor = "4B9FFF",
-			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-
-		AssertElementPresent(
-			fillColor = "FFB46E",
-			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			AssertElementPresent(
+				fillColor = "FFB46E",
+				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+		}
 	}
 
 	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."
@@ -561,34 +464,25 @@ definition {
 	test AuditGraphUncheckCheckbox {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a Web Content using categories via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
-		WebContent.addWithCategoryCP(
-			categoryName = "Audience 1",
-			vocabularyName = "Audience",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC Title");
+		task ("Uncheck categories checkboxes and assert message") {
+			ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-		WebContent.selectCategory(
-			categoryName = "Stage 1",
-			userSegmentDetailTitle = "${userSegmentDetailTitle}",
-			vocabularyName = "Stage");
-
-		PortletEntry.publish();
-
-		ContentDashboard.goToContentDashboard();
-
-		ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
-			value1 = "There are no categories selected");
+			AssertTextPresent(
+				locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
+				value1 = "There are no categories selected");
+		}
 	}
 
 	@description = "LPS-128990 Given the graphs configuration panel
@@ -655,12 +549,6 @@ definition {
 				xAxisCtegoryName = "Category 1");
 		}
 
-		task ("Delete Stage 2 category") {
-			JSONCategory.deleteCategory(
-				categoryName = "Audience 1",
-				groupName = "Global",
-				vocabularyName = "Audience");
-		}
 	}
 
 	@description = "LPS-128990 Given the graphs configuration panel
@@ -700,7 +588,7 @@ definition {
 				title = "WC Title");
 		}
 
-		task ("Go to Content Dashboard") {
+		task ("Navigate to Content Dashboard") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Content",
 				panel = "Applications",
@@ -765,6 +653,14 @@ definition {
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
 				vocabularyName = "Vocabulary Name 2");
 		}
+
+		task ("Delete the vocabularies created") {
+			for (var vocabularyNumber : list "1,2") {
+				JSONCategory.deleteVocabulary(
+					groupName = "Global",
+					vocabularyName = "Vocabulary Name ${vocabularyNumber}");
+			}
+		}
 	}
 
 	@description = "LPS-134606 When there's a vocabulary in the "In use" box is in the second position of the list and user clicks on Save, the graph will feature that vocabulary in the checkbox legend above"
@@ -772,33 +668,16 @@ definition {
 	test CheckSecondPositionVocabularyCheckbox {
 		property portal.acceptance = "true";
 
-		task ("Create a Web Content with Audience and Stage categories") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithCategoryCP(
-				categoryName = "Audience 1",
-				vocabularyName = "Audience",
-				webContentContent = "Web Content Content",
-				webContentTitle = "WC Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-			WebContent.selectCategory(
-				categoryName = "Stage 1",
-				vocabularyName = "Stage");
-
-			PortletEntry.publish();
+		task ("Add a Web Content using categories via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
 		}
 
-		task ("Go to Content Dashboard > Audic Graph configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Navigate to Content Dashboard > Audic Graph configuration") {
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Check which vocabulary is displayed in x-axis") {
@@ -823,33 +702,16 @@ definition {
 	test CheckTopPositionVocabularyXAxis {
 		property portal.acceptance = "true";
 
-		task ("Create a Web Content with Audience and Stage categories") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithCategoryCP(
-				categoryName = "Audience 1",
-				vocabularyName = "Audience",
-				webContentContent = "Web Content Content",
-				webContentTitle = "WC Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-			WebContent.selectCategory(
-				categoryName = "Stage 1",
-				vocabularyName = "Stage");
-
-			PortletEntry.publish();
+		task ("Add a Web Content using categories via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
 		}
 
-		task ("Go to Content Dashboard > Audic Graph configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Navigate to Content Dashboard > Audic Graph configuration") {
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Check which vocabulary is displayed in x-axis") {
@@ -869,6 +731,7 @@ definition {
 		}
 	}
 
+	@description = "LPS-119966 Given a document with no categories in any of the vocabularies featured in the graph then the document is NOT counted as an asset in the graph"
 	@priority = "4"
 	test DocumentWithNoCategories {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -882,7 +745,7 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		task ("Go to Content Dashboard") {
+		task ("Navigate Content Dashboard") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Content",
 				panel = "Applications",
@@ -896,6 +759,7 @@ definition {
 		}
 	}
 
+	@description = "LPS-119966 Given a document with at least one category in one of the vocabularies featured in the graph then the document is counted as an asset in the graph"
 	@priority = "4"
 	test DocumentWithOneCategory {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -904,32 +768,14 @@ definition {
 
 		task ("Create a new Document") {
 			JSONDocument.addFile(
+				assetCategoryIds = "${audienceId1}",
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "DM Document Title",
 				groupName = "Test Site Name");
 		}
 
-		task ("Add public and internal categories to Document") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "DM Document Title");
-
-			DMDocument.addCategories(
-				categoryNameList = "Audience 1",
-				vocabularyName = "Audience");
-
-			Button.clickSubmitButton();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Navigate Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert the document is counted as an asset") {
@@ -943,7 +789,7 @@ definition {
 	@description = "LPS-133797 When clicks on the left or right arrows within Configuration and selects one or more vocabularies, the vocabularies go from Available to In use and vice versa"
 	@priority = "3"
 	test MoveVocabulariesAcrossConfiguration {
-		task ("Go to Content Dashboard > Audic Graph configuration") {
+		task ("Navigate Content Dashboard > Audic Graph configuration") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Content",
 				panel = "Applications",
@@ -962,33 +808,16 @@ definition {
 	@description = "LPS-134606 When the user has removed all vocabularies from the In Use box and clicks on Save , a warning message will show: Select at least one vocabulary to show on the chart "
 	@priority = "3"
 	test ShowWarningMessageNoVocabulariesInUse {
-		task ("Create a Web Content with Audience and Stage categories") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithCategoryCP(
-				categoryName = "Audience 1",
-				vocabularyName = "Audience",
-				webContentContent = "Web Content Content",
-				webContentTitle = "WC Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-			WebContent.selectCategory(
-				categoryName = "Stage 1",
-				vocabularyName = "Stage");
-
-			PortletEntry.publish();
+		task ("Add a Web Content using categories via JSONWS") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${audienceId1},${stageId1}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
 		}
 
-		task ("Go to Content Dashboard > Audic Graph configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Move all vocabularies from In Use and check warning message") {

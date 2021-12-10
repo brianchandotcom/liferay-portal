@@ -44,7 +44,9 @@ const SubscriptionsNavbar = ({
 									className="mr-2"
 									key={tag.name}
 									onClick={(event) =>
-										setSelectedSubscriptionGroup(event.target.value)
+										setSelectedSubscriptionGroup(
+											event.target.value
+										)
 									}
 									value={tag.name}
 								>

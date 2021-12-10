@@ -3,7 +3,10 @@ import {useState} from 'react';
 import dateToLocalFormat from '../../utils/dateToLocalFormat';
 import ModalCardSubscription from '../ModalCardSubscription';
 
-const CardSubscription = ({cardSubscriptionData, selectedSubscriptionGroup}) => {
+const CardSubscription = ({
+	cardSubscriptionData,
+	selectedSubscriptionGroup,
+}) => {
 	const [visible, setVisible] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),

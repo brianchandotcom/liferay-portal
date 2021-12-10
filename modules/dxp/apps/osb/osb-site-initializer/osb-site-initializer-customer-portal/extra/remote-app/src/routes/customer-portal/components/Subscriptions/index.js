@@ -5,7 +5,9 @@ import CardSubscription from '../CardSubscription';
 import SubscriptionsNavbar from '../SubscriptionsNavbar';
 
 const Subscriptions = ({accountKey}) => {
-	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState('');
+	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
+		''
+	);
 	const [selectedStatus, setSelectedStatus] = useState('');
 
 	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
@@ -46,7 +48,9 @@ const Subscriptions = ({accountKey}) => {
 						<CardSubscription
 							cardSubscriptionData={item}
 							key={index}
-							selectedSubscriptionGroup={selectedSubscriptionGroup}
+							selectedSubscriptionGroup={
+								selectedSubscriptionGroup
+							}
 						/>
 					))}
 			</div>

@@ -175,6 +175,9 @@ public class PublishLayoutMVCActionCommand
 					"layoutPrototypeUuid", layoutPrototypeUuid);
 			}
 
+			typeSettingsUnicodeProperties.put(
+				"published", Boolean.TRUE.toString());
+
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			_layoutLocalService.updateLayout(draftLayout);

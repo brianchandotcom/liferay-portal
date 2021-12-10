@@ -5,11 +5,11 @@ import CardSubscription from '../CardSubscription';
 import SubscriptionsNavbar from '../SubscriptionsNavbar';
 
 const Subscriptions = ({accountKey}) => {
-	const [selectedTag, setSelectedTag] = useState('');
+	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState('');
 	const [selectedStatus, setSelectedStatus] = useState('');
 
-	const parseAccountSubscriptionGroupERC = (tagName) => {
-		return tagName.toLowerCase().replace(' ', '-');
+	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
+		return subscriptionName.toLowerCase().replace(' ', '-');
 	};
 
 	const {
@@ -18,7 +18,7 @@ const Subscriptions = ({accountKey}) => {
 	} = useQuery(getAccountSubscriptions, {
 		variables: {
 			filter: `accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
-				selectedTag
+				selectedSubscriptionGroup
 			)}'${
 				selectedStatus === 'All'
 					? ''
@@ -37,7 +37,7 @@ const Subscriptions = ({accountKey}) => {
 			<SubscriptionsNavbar
 				accountKey={accountKey}
 				setSelectedStatus={setSelectedStatus}
-				setSelectedTag={setSelectedTag}
+				setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}
 			/>
 
 			<div className="d-flex flex-wrap">
@@ -46,6 +46,7 @@ const Subscriptions = ({accountKey}) => {
 						<CardSubscription
 							cardSubscriptionData={item}
 							key={index}
+							selectedSubscriptionGroup={selectedSubscriptionGroup}
 						/>
 					))}
 			</div>

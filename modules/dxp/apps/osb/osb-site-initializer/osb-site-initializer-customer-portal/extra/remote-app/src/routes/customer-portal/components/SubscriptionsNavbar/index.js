@@ -6,7 +6,7 @@ import SubscriptionsFilterByStatus from '../SubscriptionsFilterByStatus';
 const SubscriptionsNavbar = ({
 	accountKey,
 	setSelectedStatus,
-	setSelectedTag,
+	setSelectedSubscriptionGroup,
 }) => {
 	const [subscriptionsTags, setSubscriptionsTags] = useState([]);
 
@@ -27,7 +27,7 @@ const SubscriptionsNavbar = ({
 			setSubscriptionsTags(accountSubsciptionsItems);
 
 			if (accountSubsciptionsItems.length) {
-				setSelectedTag(accountSubsciptionsItems[0]?.name);
+				setSelectedSubscriptionGroup(accountSubsciptionsItems[0]?.name);
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +44,7 @@ const SubscriptionsNavbar = ({
 									className="mr-2"
 									key={tag.name}
 									onClick={(event) =>
-										setSelectedTag(event.target.value)
+										setSelectedSubscriptionGroup(event.target.value)
 									}
 									value={tag.name}
 								>

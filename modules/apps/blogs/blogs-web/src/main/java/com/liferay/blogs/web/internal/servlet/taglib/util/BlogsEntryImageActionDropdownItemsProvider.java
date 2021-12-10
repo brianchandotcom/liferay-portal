@@ -56,7 +56,7 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 		if ((_fileEntry.getUserId() != _themeDisplay.getUserId()) &&
 			!BlogsPermission.contains(
 				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), ActionKeys.UPDATE)) {
+				_themeDisplay.getScopeGroupId(), ActionKeys.DELETE)) {
 
 			return null;
 		}

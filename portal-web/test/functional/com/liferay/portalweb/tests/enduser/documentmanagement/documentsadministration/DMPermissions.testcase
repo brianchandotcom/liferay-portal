@@ -1503,7 +1503,11 @@ definition {
 			card = "DM Document Title",
 			item = "Permissions");
 
-		DMDocument.viewDocumentToolbarCmdAsGuestPG(dmDocumentTitle = "DM Document Title");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
+
+		AssertElementNotPresent(locator1 = "Button#PERMISSIONS");
 	}
 
 	@description = "This is a test for LPS-136850. It checks that a site member cannot update a folder without permissions."

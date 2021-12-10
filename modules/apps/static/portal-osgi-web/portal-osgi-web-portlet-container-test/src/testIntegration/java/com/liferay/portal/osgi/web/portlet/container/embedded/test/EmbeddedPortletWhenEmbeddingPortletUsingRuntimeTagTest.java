@@ -150,7 +150,9 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 			String body = response.getBody();
 
-			Assert.assertTrue(body.contains(errorMessage));
+			Assert.assertTrue(
+				"Page body should contain error message : " + errorMessage,
+				body.contains(errorMessage));
 
 			Assert.assertEquals(200, response.getCode());
 

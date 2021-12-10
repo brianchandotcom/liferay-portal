@@ -18,6 +18,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.dto.v1_0.util.CreatorUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -195,17 +195,16 @@ public class ObjectEntryDTOConverter
 
 				map.put(
 					objectFieldName,
-					HashMapBuilder.<String, Object>put(
-						"key", listTypeEntry.getKey()
-					).put(
-						"name",
-						listTypeEntry.getName(dtoConverterContext.getLocale())
-					).put(
-						"name_i18n",
-						LocalizedMapUtil.getI18nMap(
-							dtoConverterContext.isAcceptAllLanguages(),
-							listTypeEntry.getNameMap())
-					).build());
+					new ListEntry() {
+						{
+							key = listTypeEntry.getKey();
+							name = listTypeEntry.getName(
+								dtoConverterContext.getLocale());
+							name_i18n = LocalizedMapUtil.getI18nMap(
+								dtoConverterContext.isAcceptAllLanguages(),
+								listTypeEntry.getNameMap());
+						}
+					});
 			}
 			else if (Objects.equals(
 						objectField.getRelationshipType(), "oneToMany")) {

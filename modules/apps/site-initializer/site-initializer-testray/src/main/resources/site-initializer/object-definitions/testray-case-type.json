@@ -1,0 +1,24 @@
+{
+	"label": {
+		"en_US": "Testray Case Type"
+	},
+	"name": "TestrayCaseType",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Testray Cases Types"
+	},
+	"scope": "site"
+}

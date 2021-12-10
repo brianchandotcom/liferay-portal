@@ -1,0 +1,94 @@
+{
+	"label": {
+		"en_US": "Testray Run"
+	},
+	"name": "TestrayRun",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Build Id"
+			},
+			"name": "testrayBuildId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference PK"
+			},
+			"name": "externalReferencePK",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Type"
+			},
+			"name": "externalReferenceType",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Jenkins Job Key"
+			},
+			"name": "jenkinsJobKey",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Number"
+			},
+			"name": "number",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Environment Hash"
+			},
+			"name": "environmentHash",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Testray Runs"
+	},
+	"scope": "site"
+}

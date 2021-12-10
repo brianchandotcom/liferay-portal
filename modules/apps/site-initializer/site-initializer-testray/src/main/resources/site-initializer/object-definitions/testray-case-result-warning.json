@@ -1,0 +1,34 @@
+{
+	"label": {
+		"en_US": "Testray Case Result Warting"
+	},
+	"name": "TestrayCaseResultWarning",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Case Result Id"
+			},
+			"name": "testrayCaseResultId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Content"
+			},
+			"name": "content",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Testray Cases Results Wartings"
+	},
+	"scope": "site"
+}

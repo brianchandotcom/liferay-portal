@@ -1,0 +1,124 @@
+{
+	"label": {
+		"en_US": "Testray Case Result"
+	},
+	"name": "TestrayCaseResult",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Comment MB Message Id"
+			},
+			"name": "commentMBMessageId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Build Id"
+			},
+			"name": "testrayBuildId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Case Id"
+			},
+			"name": "testrayCaseId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Component Id"
+			},
+			"name": "testrayComponentId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Run Id"
+			},
+			"name": "testrayRunId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Assigned User Id"
+			},
+			"name": "assignedUserId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Closed Date"
+			},
+			"name": "closedDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Attachments"
+			},
+			"name": "attachments",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Errors"
+			},
+			"name": "errors",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "dueStatus",
+			"required": true,
+			"type": "Integer"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Testray Cases Results"
+	},
+	"scope": "site"
+}

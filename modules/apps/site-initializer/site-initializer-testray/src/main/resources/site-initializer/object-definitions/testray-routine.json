@@ -1,0 +1,44 @@
+{
+	"label": {
+		"en_US": "Testray Routine"
+	},
+	"name": "TestrayRoutine",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Testray Project Id"
+			},
+			"name": "testrayProjectId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Autoanalyze"
+			},
+			"name": "autoanalyze",
+			"required": false,
+			"type": "Boolean"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Testray Routines"
+	},
+	"scope": "site"
+}

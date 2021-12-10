@@ -87,12 +87,12 @@ public class PortalFragmentBundleWatcherTest {
 		String fragmentSymbolicName = _HOST_SYMBOLIC_NAME.concat(".fragment");
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME);
+			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 			hostBundle.start();
 
-			Bundle fragmentBundle = _installFragmentBundle(
-				fragmentSymbolicName, _HOST_SYMBOLIC_NAME);
+			Bundle fragmentBundle = _installBundle(
+				fragmentSymbolicName, _HOST_SYMBOLIC_NAME, null);
 
 			//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 			Thread.sleep(200);
@@ -116,15 +116,16 @@ public class PortalFragmentBundleWatcherTest {
 		String dependencySymbolicName = _PACKAGE_NAME.concat(".dependency");
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME);
+			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 			hostBundle.start();
 
-			Bundle dependencyBundle = _installBundle(dependencySymbolicName);
+			Bundle dependencyBundle = _installBundle(
+				dependencySymbolicName, null, null);
 
 			dependencyBundle.start();
 
-			Bundle fragmentBundle = _installFragmentBundleWithDependency(
+			Bundle fragmentBundle = _installBundle(
 				fragmentSymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencySymbolicName);
 
@@ -151,11 +152,11 @@ public class PortalFragmentBundleWatcherTest {
 		String dependencySymbolicName = _PACKAGE_NAME.concat(".dependency");
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME);
+			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 			hostBundle.start();
 
-			Bundle fragmentBundle = _installFragmentBundleWithDependency(
+			Bundle fragmentBundle = _installBundle(
 				fragmentSymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencySymbolicName);
 
@@ -194,25 +195,29 @@ public class PortalFragmentBundleWatcherTest {
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME);
+			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 			hostBundle.start();
 
 			//Install unrelated bundles
-			Bundle unrelatedABundle = _installBundle(unrelatedASymbolicName);
-			Bundle unrelatedBBundle = _installBundle(unrelatedBSymbolicName);
-			Bundle unrelatedCBundle = _installBundle(unrelatedCSymbolicName);
-			Bundle unrelatedDBundle = _installBundle(unrelatedDSymbolicName);
-			Bundle unrelatedEBundle = _installBundle(unrelatedESymbolicName);
-			Bundle unrelatedFBundle = _installBundle(unrelatedFSymbolicName);
+			Bundle unrelatedABundle = _installBundle(
+				unrelatedASymbolicName, null, null);
+			Bundle unrelatedBBundle = _installBundle(
+				unrelatedBSymbolicName, null, null);
+			Bundle unrelatedCBundle = _installBundle(
+				unrelatedCSymbolicName, null, null);
+			Bundle unrelatedDBundle = _installBundle(
+				unrelatedDSymbolicName, null, null);
+			Bundle unrelatedEBundle = _installBundle(
+				unrelatedESymbolicName, null, null);
+			Bundle unrelatedFBundle = _installBundle(
+				unrelatedFSymbolicName, null, null);
 
 			//Create callables to install fragments and start unrelated bundles
-			Callable<Bundle> installFragmentACallable =
-				() -> _installFragmentBundle(
-					fragmentASymbolicName, _HOST_SYMBOLIC_NAME);
-			Callable<Bundle> installFragmentBCallable =
-				() -> _installFragmentBundle(
-					fragmentBSymbolicName, _HOST_SYMBOLIC_NAME);
+			Callable<Bundle> installFragmentACallable = () -> _installBundle(
+				fragmentASymbolicName, _HOST_SYMBOLIC_NAME, null);
+			Callable<Bundle> installFragmentBCallable = () -> _installBundle(
+				fragmentBSymbolicName, _HOST_SYMBOLIC_NAME, null);
 			Callable<Bundle> startUnrelatedBundleACallable = () -> _startBundle(
 				unrelatedABundle);
 			Callable<Bundle> startUnrelatedBundleBCallable = () -> _startBundle(
@@ -279,23 +284,25 @@ public class PortalFragmentBundleWatcherTest {
 			".fragment.b");
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME);
+			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 			hostBundle.start();
 
-			Bundle dependencyBundleA = _installBundle(dependencyASymbolicName);
+			Bundle dependencyBundleA = _installBundle(
+				dependencyASymbolicName, null, null);
 
 			dependencyBundleA.start();
 
-			_installFragmentBundleWithDependency(
+			_installBundle(
 				fragmentASymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencyASymbolicName);
 
-			Bundle dependencyBundleB = _installBundle(dependencyBSymbolicName);
+			Bundle dependencyBundleB = _installBundle(
+				dependencyBSymbolicName, null, null);
 
 			dependencyBundleB.start();
 
-			_installFragmentBundleWithDependency(
+			_installBundle(
 				fragmentBSymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencyBSymbolicName);
 
@@ -334,19 +341,20 @@ public class PortalFragmentBundleWatcherTest {
 			".fragment.b");
 
 		try {
-			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME);
+			Bundle hostBundle = _installBundle(_HOST_SYMBOLIC_NAME, null, null);
 
 			hostBundle.start();
 
-			Bundle dependencyBundleA = _installBundle(dependencyASymbolicName);
+			Bundle dependencyBundleA = _installBundle(
+				dependencyASymbolicName, null, null);
 
 			dependencyBundleA.start();
 
-			_installFragmentBundleWithDependency(
+			_installBundle(
 				fragmentASymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencyASymbolicName);
 
-			Bundle fragmentBundleB = _installFragmentBundleWithDependency(
+			Bundle fragmentBundleB = _installBundle(
 				fragmentBSymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencyBSymbolicName);
 
@@ -417,30 +425,22 @@ public class PortalFragmentBundleWatcherTest {
 		}
 	}
 
-	private Bundle _installBundle(String bundleSymbolicName) throws Exception {
-		return _bundleContext.installBundle(
-			bundleSymbolicName,
-			_createBundle(bundleSymbolicName, bundleSymbolicName, null, null));
-	}
-
-	private Bundle _installFragmentBundle(
-			String fragmentSymbolicName, String hostSymbolicName)
-		throws Exception {
-
-		return _bundleContext.installBundle(
-			fragmentSymbolicName,
-			_createBundle(fragmentSymbolicName, null, null, hostSymbolicName));
-	}
-
-	private Bundle _installFragmentBundleWithDependency(
-			String fragmentSymbolicName, String hostSymbolicName,
+	private Bundle _installBundle(
+			String bundleSymbolicName, String hostSymbolicName,
 			String dependencySymbolicName)
 		throws Exception {
 
+		if (hostSymbolicName == null) {
+			return _bundleContext.installBundle(
+				bundleSymbolicName,
+				_createBundle(
+					bundleSymbolicName, bundleSymbolicName, null, null));
+		}
+
 		return _bundleContext.installBundle(
-			fragmentSymbolicName,
+			bundleSymbolicName,
 			_createBundle(
-				fragmentSymbolicName, null, dependencySymbolicName,
+				bundleSymbolicName, null, dependencySymbolicName,
 				hostSymbolicName));
 	}
 

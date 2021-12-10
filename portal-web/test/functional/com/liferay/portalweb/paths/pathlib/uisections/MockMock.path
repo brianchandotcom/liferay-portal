@@ -75,6 +75,11 @@
 	<td>//div[@name='bodyHTML_Formatted']//a[contains(.,'${key_bodyLink}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MOCKMOCK_HTML_BODY_UNFORMATTED_FIELD</td>
+	<td>//div[@name='bodyHTML_Unformatted']//div[contains(@class,'well')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

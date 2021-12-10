@@ -71,13 +71,15 @@ public class PortalFragmentBundleWatcherTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_actualHostRefreshCount.set(0);
-		_bundleContext.addBundleListener(_hostRefreshCountBundleListener);
+		_refreshCountBundleListener = new RefreshCountBundleListener(
+			_HOST_SYMBOLIC_NAME);
+
+		_bundleContext.addBundleListener(_refreshCountBundleListener);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_bundleContext.removeBundleListener(_hostRefreshCountBundleListener);
+		_bundleContext.removeBundleListener(_refreshCountBundleListener);
 	}
 
 	@Test
@@ -98,7 +100,8 @@ public class PortalFragmentBundleWatcherTest {
 			int expectedHostRefreshCount = 1;
 
 			Assert.assertEquals(
-				expectedHostRefreshCount, _actualHostRefreshCount.intValue());
+				expectedHostRefreshCount,
+				_refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertEquals(
 				"Fragment should be in resolved state",
@@ -135,7 +138,8 @@ public class PortalFragmentBundleWatcherTest {
 			int expectedHostRefreshCount = 1;
 
 			Assert.assertEquals(
-				expectedHostRefreshCount, _actualHostRefreshCount.intValue());
+				expectedHostRefreshCount,
+				_refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertEquals(
 				"Fragment should be in resolved state",
@@ -168,7 +172,8 @@ public class PortalFragmentBundleWatcherTest {
 			int expectedHostRefreshCount = 0;
 
 			Assert.assertEquals(
-				expectedHostRefreshCount, _actualHostRefreshCount.intValue());
+				expectedHostRefreshCount,
+				_refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertNotEquals(
 				"Fragment is in the resolved state, but should actually be " +
@@ -254,8 +259,9 @@ public class PortalFragmentBundleWatcherTest {
 				StringBundler.concat(
 					"Expected host to refresh at most ",
 					expectedMaxHostRefreshCount, " times, but was refreshed ",
-					_actualHostRefreshCount.intValue(), " times instead."),
-				_actualHostRefreshCount.intValue() <=
+					_refreshCountBundleListener.getRefreshCount(),
+					" times instead."),
+				_refreshCountBundleListener.getRefreshCount() <=
 					expectedMaxHostRefreshCount);
 		}
 		finally {
@@ -314,8 +320,9 @@ public class PortalFragmentBundleWatcherTest {
 				StringBundler.concat(
 					"Expected host to refresh at most ",
 					expectedMaxHostRefreshCount, " times, but was refreshed ",
-					_actualHostRefreshCount.intValue(), " times instead."),
-				_actualHostRefreshCount.intValue() <=
+					_refreshCountBundleListener.getRefreshCount(),
+					" times instead."),
+				_refreshCountBundleListener.getRefreshCount() <=
 					expectedMaxHostRefreshCount);
 		}
 		finally {
@@ -362,7 +369,8 @@ public class PortalFragmentBundleWatcherTest {
 			int expectedHostRefreshCount = 1;
 
 			Assert.assertEquals(
-				expectedHostRefreshCount, _actualHostRefreshCount.intValue());
+				expectedHostRefreshCount,
+				_refreshCountBundleListener.getRefreshCount());
 
 			Assert.assertNotEquals(
 				"Fragment B is in the resolved state, but should actually be " +
@@ -516,22 +524,37 @@ public class PortalFragmentBundleWatcherTest {
 		_HOST_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".host");
 	}
 
-	private final AtomicInteger _actualHostRefreshCount = new AtomicInteger();
 	private BundleContext _bundleContext;
+	private RefreshCountBundleListener _refreshCountBundleListener;
 
-	private final BundleListener _hostRefreshCountBundleListener =
-		bundleEvent -> {
+	private class RefreshCountBundleListener implements BundleListener {
+
+		@Override
+		public void bundleChanged(BundleEvent bundleEvent) {
 			Bundle bundle = bundleEvent.getBundle();
 
 			String symbolicName = bundle.getSymbolicName();
 
 			int type = bundleEvent.getType();
 
-			if (Objects.equals(symbolicName, _HOST_SYMBOLIC_NAME) &&
+			if (Objects.equals(symbolicName, _symbolicName) &&
 				(type == BundleEvent.STOPPED)) {
 
-				_actualHostRefreshCount.incrementAndGet();
+				_refreshCount.incrementAndGet();
 			}
-		};
+		}
+
+		public int getRefreshCount() {
+			return _refreshCount.get();
+		}
+
+		private RefreshCountBundleListener(String symbolicName) {
+			_symbolicName = symbolicName;
+		}
+
+		private final AtomicInteger _refreshCount = new AtomicInteger();
+		private final String _symbolicName;
+
+	}
 
 }

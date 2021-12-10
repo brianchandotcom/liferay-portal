@@ -1525,6 +1525,10 @@ definition {
 
 				LexiconCard.clickCard(card = "${infoListProviderName}");
 
+				Refresh();
+
+				Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
+
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Collection",
 					text = "${infoListProviderName}");

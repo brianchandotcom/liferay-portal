@@ -660,12 +660,88 @@ definition {
 	}
 
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ObjectMappedURL {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137103 ObjectMappedURL pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+		
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry 1");
+
+		VisualizeObjectDisplayPage.createObjectPageTemplate(
+			pageTemplateName = "Blank Display Page",
+			contentType = "Custom Object");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Blank Display Page");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects");
+
+		Refresh();
+
+		PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
+
+		Navigator.gotoNavTab(navTab = "Link");
+
+		Select(
+			key_fieldLabel = "Link",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Mapped URL");
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Display Page URL");
+
+		PageEditor.clickPublish();
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		Click(
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY",
+			key_entry = "Entry 1");
+
+		AssertElementPresent(
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY",
+			key_entry = "Entry 1");
 
 	}
 

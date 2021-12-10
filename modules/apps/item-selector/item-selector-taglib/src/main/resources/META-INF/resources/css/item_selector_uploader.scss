@@ -36,26 +36,15 @@
 		outline: 1px solid $primary;
 	}
 
-	.has-error & {
-		animation: has-error 5s;
+	&-error {
+		animation: dropzone-error-in-out 1s;
 	}
 
-	@keyframes has-error {
-		0% {
-			background: $primary-l3;
-			outline-color: $secondary-l2;
-		}
-		5% {
+	@keyframes dropzone-error-in-out {
+		5%,
+		80% {
 			background: $danger-l2;
 			outline-color: $danger-l1;
-		}
-		95% {
-			background: $danger-l2;
-			outline-color: $danger-l1;
-		}
-		100% {
-			background: $light;
-			outline-color: $secondary-l2;
 		}
 	}
 }

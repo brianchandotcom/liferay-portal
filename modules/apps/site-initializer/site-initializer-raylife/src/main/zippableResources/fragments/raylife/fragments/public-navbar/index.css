@@ -19,7 +19,6 @@
 	padding: var(--spacer-2) 0 var(--spacer-2);
 }
 
-
 .public-site-navbar .portlet .nav-item .nav-link:hover {
 	color: var(--color-neutral-9);
 }
@@ -41,7 +40,7 @@
 .public-site-navbar .switch .slider {
 	cursor: pointer;
 	height: 36px;
-	padding: 0  14px;
+	padding: 0 14px;
 	user-select: none;
 	width: 162px;
 }
@@ -66,14 +65,12 @@
 	transition: 0.2s;
 	user-select: none;
 	width: 80px;
-	
 }
 
 .public-site-navbar .switch input:checked + .slider:before {
 	-webkit-transform: translateX(78px);
 	-ms-transform: translateX(78px);
 	transform: translateX(78px);
-
 }
 
 #navbarSupportedContent .btn.btn-ghost {

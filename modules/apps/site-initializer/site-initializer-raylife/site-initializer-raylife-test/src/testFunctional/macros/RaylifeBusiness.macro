@@ -68,4 +68,5 @@ definition {
 			locator1 = "Raylife#FORMS_VALUE",
 			value = "3%");
 	}
+
 }

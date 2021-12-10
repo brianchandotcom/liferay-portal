@@ -308,7 +308,7 @@ definition {
 			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
-	@description = "This test covers LPS-119836. It ensures the localized URL with special characters can be escaped correctly."
+	@description = "This test covers LPS-119836. It ensures the localized URL with special characters can be escaped correctly and viewed in friendly URL history."
 	@priority = "4"
 	test ViewFriendlyURLWithSpecialCharacters {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -321,7 +321,7 @@ definition {
 			friendlyUrlLocalized = "es-ES",
 			localizedFriendlyURL = "/^_^");
 
-		PortletEntry.inputName(name = "Pagina de prueba");
+		PortletEntry.inputName(name = "Página de prueba");
 
 		Button.clickSave();
 
@@ -330,6 +330,36 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name/test-source-page");
 
 		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/%5E_%5E");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "en/web/test-site-name/test-source-page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es-ES",
+			localizedFriendlyURL = "/página-de-prueba");
+
+		Button.clickSave();
+
+		Page.gotoFriendlyURLHistory();
+
+		PortletEntry.changeLocale(
+			friendlyURLHistory = "true",
+			localizedFriendlyURL = "es-ES");
+
+		Page.viewActiveURL(activeURL = "/página-de-prueba");
+
+		Page.viewOldFriendlyURL(oldFriendlyURL = "/^_^");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name/test-source-page");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/p%C3%A1gina-de-prueba");
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found");
 	}

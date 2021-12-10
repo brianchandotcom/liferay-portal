@@ -3565,6 +3565,18 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#EMPTY_MESSAGE");
 	}
 
+	macro viewElementInsideModule {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		AssertElementPresent(
+			key_columnNumber = "${moduleNumber}",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'${elementName}')]",
+			key_position = "${position}",
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+	}
+
 	macro viewExperienceActive {
 		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
 			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");

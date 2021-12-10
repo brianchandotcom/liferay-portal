@@ -374,6 +374,11 @@ public class UpgradeAssetDisplayPageEntryTest {
 					}
 				}
 
+				@Override
+				public void registerInitialUpgradeSteps(
+					UpgradeStep... upgradeSteps) {
+				}
+
 			});
 	}
 

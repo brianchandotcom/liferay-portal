@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = "javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_OPTIONS,
 	service = ConfigurationAction.class
 )

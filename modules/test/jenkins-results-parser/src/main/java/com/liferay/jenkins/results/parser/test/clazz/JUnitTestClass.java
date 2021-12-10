@@ -220,13 +220,7 @@ public class JUnitTestClass extends BaseTestClass {
 		for (TestClassMethod testClassMethod :
 				parentTestClass.getTestClassMethods()) {
 
-			if (_classIgnored) {
-				addTestClassMethod(_classIgnored, testClassMethod.getName());
-
-				continue;
-			}
-
-			addTestClassMethod(testClassMethod);
+			addTestClassMethod(_classIgnored, testClassMethod.getName());
 		}
 	}
 

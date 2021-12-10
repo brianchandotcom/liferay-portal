@@ -333,7 +333,7 @@ public class SourceFormatterUtil {
 			new String[] {
 				"**/*.dtd", "**/*.java", "**/resources/META-INF/*.tld",
 				"**/resources/META-INF/**/*.tld", "**/src/META-INF/*.tld",
-				"**/src/META-INF/**/*.tld",
+				"**/src/META-INF/**/*.tld"
 			},
 			sourceFormatterExcludes, true);
 
@@ -373,13 +373,8 @@ public class SourceFormatterUtil {
 
 		for (Future<Tuple> future : futures) {
 			try {
-				Tuple tuple = future.get(1, TimeUnit.MINUTES);
-
-				if (tuple != null) {
-					javaClassesJSONObject.put(
-						(String)tuple.getObject(0),
-						(JSONObject)tuple.getObject(1));
-				}
+				javaClassesJSONObject = _addJavaClassJSONObject(
+					javaClassesJSONObject, future.get(1, TimeUnit.MINUTES));
 			}
 			catch (Exception exception) {
 				future.cancel(true);
@@ -399,7 +394,14 @@ public class SourceFormatterUtil {
 		);
 	}
 
-	public static JSONObject getPortalJSONObjectByVersion(String version) {
+	public static JSONObject getPortalJSONObjectByVersion(String version)
+		throws Exception {
+
+		File file = new File("/Users/hugohuijser/JSON/" + version + ".json");
+
+		if (file.exists()) {
+			return new JSONObjectImpl(FileUtil.read(file));
+		}
 
 		// TODO: Grab from URL (need to figure out what that URL is first)
 
@@ -513,6 +515,27 @@ public class SourceFormatterUtil {
 		}
 
 		return elementJSONArray;
+	}
+
+	private static synchronized JSONObject _addJavaClassJSONObject(
+		JSONObject javaClassesJSONObject, Tuple tuple) {
+
+		String className = (String)tuple.getObject(0);
+
+		JSONObject classJSONObject = (JSONObject)tuple.getObject(1);
+
+		if (!javaClassesJSONObject.has(className)) {
+			javaClassesJSONObject.put(className, classJSONObject);
+		}
+		else {
+			javaClassesJSONObject.put(
+				className,
+				_mergeClassJSONObjects(
+					classJSONObject,
+					javaClassesJSONObject.getJSONObject(className)));
+		}
+
+		return javaClassesJSONObject;
 	}
 
 	private static JSONObject _addTaglib(
@@ -1087,6 +1110,55 @@ public class SourceFormatterUtil {
 		}
 
 		return variablesJSONArray;
+	}
+
+	private static JSONObject _mergeClassJSONObjects(
+		JSONObject classJSONObject1, JSONObject classJSONObject2) {
+
+		JSONObject mergedJSONObject = _mergeJSONArrays(
+			new JSONObjectImpl(), "constructors", classJSONObject1,
+			classJSONObject2);
+
+		if (classJSONObject1.has("deprecated") ||
+			classJSONObject2.has("deprecated")) {
+
+			mergedJSONObject.put("deprecated", true);
+		}
+
+		mergedJSONObject = _mergeJSONArrays(
+			mergedJSONObject, "extendedClassNames", classJSONObject1,
+			classJSONObject2);
+		mergedJSONObject = _mergeJSONArrays(
+			mergedJSONObject, "implementedClassNames", classJSONObject1,
+			classJSONObject2);
+		mergedJSONObject = _mergeJSONArrays(
+			mergedJSONObject, "methods", classJSONObject1, classJSONObject2);
+		mergedJSONObject = _mergeJSONArrays(
+			mergedJSONObject, "variables", classJSONObject1, classJSONObject2);
+
+		return mergedJSONObject;
+	}
+
+	private static JSONObject _mergeJSONArrays(
+		JSONObject mergedJSONObject, String name, JSONObject classJSONObject1,
+		JSONObject classJSONObject2) {
+
+		JSONArray jsonArray1 = classJSONObject1.getJSONArray(name);
+		JSONArray jsonArray2 = classJSONObject2.getJSONArray(name);
+
+		if ((jsonArray1 == null) && (jsonArray2 == null)) {
+			return mergedJSONObject;
+		}
+
+		if ((jsonArray1 == null) || (jsonArray2 == null)) {
+			return mergedJSONObject.put(name, jsonArray2);
+		}
+
+		for (int i = 0; i < jsonArray2.length(); i++) {
+			jsonArray1.put(jsonArray2.get(i));
+		}
+
+		return mergedJSONObject.put(name, jsonArray1);
 	}
 
 	private static List<String> _scanForFiles(

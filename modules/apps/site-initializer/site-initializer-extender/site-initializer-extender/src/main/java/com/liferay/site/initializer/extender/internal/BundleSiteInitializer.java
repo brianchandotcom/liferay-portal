@@ -337,6 +337,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addPermissions(serviceContext));
 
+			_invoke(() -> _addDispatchTrigger(serviceContext));
 			_invoke(() -> _addDDMStructures(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
@@ -889,6 +890,133 @@ public class BundleSiteInitializer implements SiteInitializer {
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL, _read("ddm-template.ftl", url),
 				false, false, null, null, serviceContext);
+		}
+	}
+
+	private void _addDispatchTrigger(ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/job-schedulers");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			String json = _read(resourcePath + "job-scheduler.json");
+
+			if (Validator.isNull(json)) {
+				return;
+			}
+
+			JSONObject jobSchedulerJSONObject =
+				JSONFactoryUtil.createJSONObject(json);
+
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+				new UnicodeProperties();
+
+			JSONObject propertiesJSONObject =
+				jobSchedulerJSONObject.getJSONObject("properties");
+
+			for (String key : propertiesJSONObject.keySet()) {
+				dispatchTaskSettingsUnicodeProperties.put(
+					key, propertiesJSONObject.getString(key));
+			}
+
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					serviceContext.getCompanyId(),
+					jobSchedulerJSONObject.getString("name"));
+
+			if (dispatchTrigger != null) {
+				if (jobSchedulerJSONObject.getBoolean("unique")) {
+					continue;
+				}
+
+				_dispatchTriggerLocalService.deleteDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId());
+			}
+
+			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+				serviceContext.getUserId(),
+				jobSchedulerJSONObject.getString("dispatchTaskExecutorType"),
+				dispatchTaskSettingsUnicodeProperties,
+				jobSchedulerJSONObject.getString("name"),
+				jobSchedulerJSONObject.getBoolean("system"));
+
+			URL url = _bundle.getEntry(resourcePath + "job-scheduler.zip");
+
+			if (url == null) {
+				return;
+			}
+
+			_updateDispatchTaskSettings(dispatchTrigger, url.openStream());
+
+			File file = FileUtil.createTempFile(url.openStream());
+
+			_dispatchFileRepository.addFileEntry(
+				dispatchTrigger.getUserId(),
+				dispatchTrigger.getDispatchTriggerId(),
+				FileUtil.getShortFileName(url.getPath()), file.length(),
+				MimeTypesUtil.getContentType(file), new FileInputStream(file));
+
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				serviceContext.getTimeZone());
+
+			if (jobSchedulerJSONObject.getInt("startDateDay") != 0) {
+				_dispatchTriggerLocalService.updateDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId(),
+					jobSchedulerJSONObject.getBoolean("active"),
+					jobSchedulerJSONObject.getString("cronExpression"),
+					DispatchTaskClusterMode.valueOf(
+						jobSchedulerJSONObject.getInt(
+							"dispatchTaskClusterMode")),
+					calendar.get(jobSchedulerJSONObject.getInt("endDateMonth")),
+					calendar.get(jobSchedulerJSONObject.getInt("endDateDay")),
+					calendar.get(jobSchedulerJSONObject.getInt("endDateYear")),
+					calendar.get(jobSchedulerJSONObject.getInt("endDateHour")),
+					calendar.get(
+						jobSchedulerJSONObject.getInt("endDateMinute")),
+					jobSchedulerJSONObject.getBoolean("neverEnd"),
+					jobSchedulerJSONObject.getBoolean("overlapAllowed"),
+					calendar.get(
+						jobSchedulerJSONObject.getInt("startDateMonth")),
+					calendar.get(jobSchedulerJSONObject.getInt("startDateDay")),
+					calendar.get(
+						jobSchedulerJSONObject.getInt("startDateYear")),
+					calendar.get(
+						jobSchedulerJSONObject.getInt("startDateHour")),
+					calendar.get(
+						jobSchedulerJSONObject.getInt("startDateMinute")));
+			}
+			else {
+				int actualMonth = calendar.get(Calendar.MONTH);
+				int actualDay = calendar.get(Calendar.DAY_OF_MONTH);
+				int actualYear = calendar.get(Calendar.YEAR);
+				int actualHour = calendar.get(Calendar.HOUR_OF_DAY);
+				int actualMinute = calendar.get(Calendar.MINUTE);
+
+				calendar.add(Calendar.MINUTE, 5);
+
+				_dispatchTriggerLocalService.updateDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId(),
+					jobSchedulerJSONObject.getBoolean("active"),
+					StringBundler.concat(
+						"0 ", calendar.get(Calendar.MINUTE), " * ? * * *"),
+					DispatchTaskClusterMode.valueOf(
+						jobSchedulerJSONObject.getInt(
+							"dispatchTaskClusterMode")),
+					calendar.get(Calendar.MONTH),
+					calendar.get(Calendar.DAY_OF_MONTH),
+					calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.HOUR_OF_DAY),
+					calendar.get(Calendar.MINUTE),
+					jobSchedulerJSONObject.getBoolean("neverEnd"),
+					jobSchedulerJSONObject.getBoolean("overlapAllowed"),
+					actualMonth, actualDay, actualYear, actualHour,
+					actualMinute);
+			}
 		}
 	}
 
@@ -2424,6 +2552,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return map;
+	}
+
+	private void _updateDispatchTaskSettings(
+			DispatchTrigger dispatchTrigger, InputStream jobArchiveInputStream)
+		throws Exception {
+
+		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		TalendArchiveParserUtil.updateUnicodeProperties(
+			jobArchiveInputStream, dispatchTaskSettingsUnicodeProperties);
+
+		_dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId(),
+			dispatchTaskSettingsUnicodeProperties, dispatchTrigger.getName());
 	}
 
 	private Layout _updateDraftLayout(

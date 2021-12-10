@@ -5,8 +5,8 @@ import CardSubscription from '../CardSubscription';
 import SubscriptionsNavbar from '../SubscriptionsNavbar';
 
 const Subscriptions = ({accountKey}) => {
-	const [selectedTag, setSelectedTag] = useState(() => '');
-	const [selectedStatus, setSelectedStatus] = useState(() => '');
+	const [selectedTag, setSelectedTag] = useState('');
+	const [selectedStatus, setSelectedStatus] = useState('');
 
 	const parseAccountSubscriptionGroupERC = (tagName) => {
 		return tagName.toLowerCase().replace(' ', '-');

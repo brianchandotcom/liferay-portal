@@ -1,5 +1,25 @@
 components:
     schemas:
+        ListEntry:
+            properties:
+                key:
+                    # @review
+                    description:
+                        List entry's key. Independent from localization
+                    type: string
+                name:
+                    # @review
+                    description:
+                        Localized list entry's name
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized list entry's names.
+                    readOnly: true
+                    type: object
         ObjectEntry:
             properties:
                 actions:

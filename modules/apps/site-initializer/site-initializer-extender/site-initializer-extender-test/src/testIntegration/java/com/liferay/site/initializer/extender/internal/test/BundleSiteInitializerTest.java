@@ -635,7 +635,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter(
-						"name eq 'relationship1'"),
+						"name eq 'testOR1'"),
 					null);
 
 		Assert.assertNotNull(objectRelationshipsPage1);
@@ -657,7 +657,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter(
-						"name eq 'relationship2'"),
+						"name eq 'testOR2'"),
 					null);
 
 		Assert.assertNotNull(objectRelationshipsPage2);

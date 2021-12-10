@@ -3,6 +3,7 @@
 		"@clayui/alert": "3.40.0",
 		"@clayui/button": "3.40.0",
 		"@clayui/card": "3.43.0",
+		"@clayui/data-provider": "3.40.0",
 		"@clayui/drop-down": "3.43.0",
 		"@clayui/empty-state": "3.40.0",
 		"@clayui/form": "3.42.0",

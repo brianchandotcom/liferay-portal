@@ -372,7 +372,7 @@
 </tr>
 <tr>
 	<td>PAGE_COLUMN_LAYOUT</td>
-	<td>//div[contains(@id,'main-content')]//div[contains(@class,'col-md-${key_colNumber}') and contains(@id,'column-${key_idNumber}')]</td>
+	<td>//div[contains(@id,'main-content')]//div[contains(@class,'col-md-${key_span}') and contains(@id,'column-${key_pageColumnId}')]</td>
 	<td></td>
 </tr>
 <tr>

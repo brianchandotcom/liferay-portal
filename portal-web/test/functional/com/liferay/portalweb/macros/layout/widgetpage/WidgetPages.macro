@@ -7,16 +7,22 @@ definition {
 	}
 
 	macro viewPageLayout {
-		if (isSet(pageLayout)) {
-			for (var pageColAndId : list "${pageColAndIdList}") {
-				var colNumber = StringUtil.extractFirst("${pageColAndId}", "-");
-				var idNumber = StringUtil.extractLast("${pageColAndId}", "-");
+		var list1 = ListUtil.newListFromString("${pageColumnNumberList}");
+		var list2 = ListUtil.newListFromString("${spanList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
 
-				AssertVisible(
-					key_colNumber = "${colNumber}",
-					key_idNumber = "${idNumber}",
-					locator1 = "Home#PAGE_COLUMN_LAYOUT");
-			}
+		while ("${i}" != "${size}") {
+			var pageColumnNumber = ListUtil.get("${list1}", "${i}");
+			var span = ListUtil.get("${list2}", "${i}");
+
+			AssertVisible(
+				key_pageColumnId = "${pageColumnNumber}",
+				key_span = "${span}",
+				locator1 = "Home#PAGE_COLUMN_LAYOUT");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
 		}
 	}
 

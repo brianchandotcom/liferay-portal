@@ -76,6 +76,12 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -120,23 +126,23 @@ definition {
 			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName1}");
 		}
 
-        task ("Search for the name of the custom event that was blocked in custom event list") {
+		task ("Search for the name of the custom event that was blocked in custom event list") {
 			ACUtils.searchBar(searchItem = "${customEventName1}");
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 		}
 
-        task ("Navigation to block custom event list") {
+		task ("Navigation to block custom event list") {
 			ACCustomEvents.openBlockCustomEventList();
 		}
 
-        task ("Search for the name of the custom event that was blocked in block list") {
+		task ("Search for the name of the custom event that was blocked in block list") {
 			ACUtils.searchBar(searchItem = "${customEventName1}");
 
 			ACUtils.viewNameList(nameList = "${customEventName1}");
 		}
 
-        task ("Navigation to custom events tab") {
+		task ("Navigation to custom events tab") {
 			ACNavigation.backNavigation(pageName = "Events");
 
 			ACNavigation.openItem(itemName = "Custom Events");
@@ -206,13 +212,7 @@ definition {
 			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
 		}
 
-        task ("Search for the name of the custom event that was blocked in custom event list") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
-		}
-
-        task ("Navigation to segments") {
+		task ("Navigation to segments") {
 			ACNavigation.exitSettings();
 
 			ACNavigation.goToSegments();
@@ -254,7 +254,7 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		task ("Login as an non-admin user and switch the property in AC") {
+		task ("Login as a non-admin user and switch the property in AC") {
 			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -270,7 +270,7 @@ definition {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
-        task ("Assert block event icon is not present") {
+		task ("Assert block event icon is not present") {
 			var key_nameList = "${customEventName}";
 
 			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
@@ -294,7 +294,7 @@ definition {
 			ACLogin.loginAs(
 				emailAddress = "test@liferay.com",
 				password = "test");
-			
+
 			ACWorkspace.openWorkspace();
 		}
 
@@ -312,7 +312,7 @@ definition {
 			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
 		}
 
-		task ("Logout AC and login as an non-admin user") {
+		task ("Logout AC and Login as a non-admin user") {
 			ACNavigation.exitSettings();
 
 			ACWorkspace.signOut();

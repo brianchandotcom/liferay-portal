@@ -1,5 +1,34 @@
 definition {
 
+	macro blockAllCustomEvents {
+		var key_actionButton = "Block";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "Block Events");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
+	macro blockCustomEvent {
+		var key_actionButton = "Block";
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
 	macro changeAttributeDataType {
 		Select(
 			locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
@@ -88,6 +117,39 @@ definition {
 		return "${customEventName}";
 	}
 
+	macro hideAllCustomEvents {
+		var key_actionButton = "Block";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
+	macro hideCustomEvent {
+		var key_actionButton = "Hide";
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
+	macro openBlockCustomEventList {
+		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
+	}
+
 	macro viewDataAttribute {
 		for (var attributeValue : list "${attributeValueList}") {
 			AssertElementPresent(
@@ -124,70 +186,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro blockCustomEvent {
-		var key_actionButton = "Block";
-
-		var key_nameList = "${customEventName}";
-
-		WaitForPageLoad();
-
-		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-		}
-
-		MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-	}
-
-	macro blockAllCustomEvents {
-		var key_actionButton = "Block";
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
-
-		ACUtils.clickAnyButton(button = "Block Events");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-	}
-
-	macro hideCustomEvent {
-		var key_actionButton = "Hide";
-
-		var key_nameList = "${customEventName}";
-
-		WaitForPageLoad();
-
-		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-		}
-
-		MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-	}
-
-	macro hideAllCustomEvents {
-		var key_actionButton = "Block";
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-	}
-
-	macro openBlockCustomEventList {
-		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
 	}
 
 }

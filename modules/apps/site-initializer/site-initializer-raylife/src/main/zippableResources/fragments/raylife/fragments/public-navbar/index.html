@@ -3,7 +3,7 @@ themeDisplay.getSiteGroup().getFriendlyURL() publicFriendlyURL =
 themeDisplay.getPathFriendlyURLPublic() +
 themeDisplay.getSiteGroup().getFriendlyURL() /]
 
-<nav class="navbar navbar-expand-lg navbar-light public-site-navbar">
+<nav class="navbar navbar-expand-lg navbar-light pb-3 pt-2 public-site-navbar">
 	<div class="container d-block">
 		<div class="align-items-center d-flex">
 			<div class="align-items-center d-flex flex-grow-1">
@@ -18,31 +18,31 @@ themeDisplay.getSiteGroup().getFriendlyURL() /]
 				<a class="d-flex" href="#">
 				<img alt="" class="mx-1" loading="lazy" src="[resources:phone-android.svg]" />
 
-				<span class="public-site-navbar-phone" data-lfr-editable-id="public-site-navbar-phone" data-lfr-editable-type="text">800-554-2642</span>
+				<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-phone" data-lfr-editable-type="text">800-554-2642</span>
 				</a>
 
 				<div class="public-site-navbar-divider"></div>
 
-				<a class="public-site-navbar-link" href="#">
-				<span class="public-site-navbar-link" data-lfr-editable-id="public-site-navbar-link" data-lfr-editable-type="text">Producer Portal</span>
+				<a class="text-brand-primary" href="#">
+				<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-link" data-lfr-editable-type="text">Producer Portal</span>
 				</a>
 			</div>
 
 			<div>
-			<img alt="" class="icon-search" loading="lazy" src="[resources:icon-search.svg]" />
+			<img alt="" class="icon-search mr-4" loading="lazy" src="[resources:icon-search.svg]" />
 
-				<label class="switch">
+				<label class="switch text-brand-primary">
 					<input id="togBtn" type="checkbox" />
 
-					<div class="slider">
-					<span class="off" data-lfr-editable-id="public-site-navbar-off" data-lfr-editable-type="text">Business</span>
-					<span class="on" data-lfr-editable-id="public-site-navbar-on" data-lfr-editable-type="text">Personal</span>
+					<div class="align-items-center bg-brand-primary-lighten-6 d-flex justify-content-between rounded slider text-brand-primary text-link-sm">
+					<span class="off text-brand-primary rounded bg-brand-primary-lighten-6" data-lfr-editable-id="public-site-navbar-off" data-lfr-editable-type="text">Business</span>
+					<span class="on text-brand-primary rounded bg-brand-primary-lighten-6" data-lfr-editable-id="public-site-navbar-on" data-lfr-editable-type="text">Personal</span>
 					</div>
 				</label>
 			</div>
 		</div>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div class="collapse navbar-collapse rounded-sm" id="navbarSupportedContent">
 			<lfr-widget-nav id="nav"></lfr-widget-nav>
 		<a class="btn btn-ghost btn-variant-primary" href="${publicFriendlyURL}/sign-in" role="button">Sign In</a>
 		</div>

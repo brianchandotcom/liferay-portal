@@ -1,16 +1,3 @@
-.public-site-navbar {
-	padding-bottom: var(--spacer-3);
-	padding-top: var(--spacer-2);
-}
-
-.public-site-navbar .public-site-navbar-phone {
-	color: var(--color-action-primary-default);
-}
-
-.public-site-navbar .public-site-navbar-link {
-	color: var(--color-action-primary-default);
-}
-
 .public-site-navbar-divider::before {
 	border: 1px solid var(--color-neutral-3);
 	content: '';
@@ -24,7 +11,6 @@
 
 .public-site-navbar .icon-search {
 	cursor: pointer;
-	margin-right: 20px;
 }
 
 .public-site-navbar .portlet .nav-item .nav-link {
@@ -32,6 +18,7 @@
 	color: var(--color-action-neutral-default);
 	padding: var(--spacer-2) 0 var(--spacer-2);
 }
+
 
 .public-site-navbar .portlet .nav-item .nav-link:hover {
 	color: var(--color-neutral-9);
@@ -52,16 +39,10 @@
 }
 
 .public-site-navbar .switch .slider {
-	align-items: center;
-	background-color: var(--color-brand-primary-lighten-6);
-	border-radius: 8px;
-	color: var(--color-action-primary-default);
 	cursor: pointer;
-	display: flex;
-	font-size: 14px;
 	height: 36px;
-	justify-content: space-between;
-	padding: 0 14px;
+	padding: 0  14px;
+	user-select: none;
 	width: 162px;
 }
 
@@ -72,8 +53,8 @@
 .public-site-navbar .switch .slider:before {
 	-webkit-transition: 0.2s;
 	align-items: center;
-	background-color: var(--color-action-primary-default);
-	border-radius: 8px;
+	background-color: var(--primary);
+	border-radius: var(--border-radius);
 	bottom: 2px;
 	color: var(--color-action-primary-inverted);
 	content: attr(data-content);
@@ -83,16 +64,18 @@
 	left: 2px;
 	position: absolute;
 	transition: 0.2s;
+	user-select: none;
 	width: 80px;
+	
 }
 
 .public-site-navbar .switch input:checked + .slider:before {
 	-webkit-transform: translateX(78px);
 	-ms-transform: translateX(78px);
 	transform: translateX(78px);
+
 }
 
 #navbarSupportedContent .btn.btn-ghost {
-	border-radius: 4px;
 	text-transform: uppercase;
 }

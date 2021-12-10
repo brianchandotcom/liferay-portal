@@ -15,40 +15,21 @@
 package com.liferay.headless.admin.workflow.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.Node;
-import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowDefinitionResourceImpl;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Feliphe Marinho
  */
 public class NodeUtil {
 
-	public static Node toNode(
-		Language language, Locale locale, WorkflowNode workflowNode) {
-
+	public static Node toNode(Locale locale, WorkflowNode workflowNode) {
 		Node node = new Node();
 
 		node.setLabel(
-			() -> {
-				Map<Locale, String> labelMap = workflowNode.getLabelMap();
-
-				if (MapUtil.isNotEmpty(labelMap) &&
-					(labelMap.get(locale) != null)) {
-
-					return labelMap.get(locale);
-				}
-
-				return language.get(
-					ResourceBundleUtil.getModuleAndPortalResourceBundle(
-						locale, WorkflowDefinitionResourceImpl.class),
-					workflowNode.getName());
-			});
+			LabelUtil.getLabel(
+				workflowNode.getName(), workflowNode.getLabelMap(), locale));
 		node.setName(workflowNode.getName());
 		node.setType(
 			() -> {

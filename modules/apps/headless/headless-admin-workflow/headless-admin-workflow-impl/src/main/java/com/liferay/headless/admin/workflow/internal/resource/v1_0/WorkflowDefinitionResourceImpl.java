@@ -179,7 +179,7 @@ public class WorkflowDefinitionResourceImpl
 				nodes = transformToArray(
 					workflowDefinition.getWorkflowNodes(),
 					workflowNode -> NodeUtil.toNode(
-						_language, contextAcceptLanguage.getPreferredLocale(),
+						contextAcceptLanguage.getPreferredLocale(),
 						workflowNode),
 					Node.class);
 				title = titleMap.get(

@@ -13,3 +13,43 @@
  *
  */
 --%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
+page import="com.liferay.search.experiences.exception.NoSuchSXPBlueprintException" %><%@
+page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
+page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %>
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />
+
+<%
+long sxpBlueprintId = PrefsParamUtil.getLong(portletPreferences, request, "sxpBlueprintId");
+
+SXPBlueprint sxpBlueprint = null;
+
+try {
+	sxpBlueprint = SXPBlueprintLocalServiceUtil.getSXPBlueprint(sxpBlueprintId);
+}
+catch (NoSuchSXPBlueprintException noSuchSXPBlueprintException) {
+}
+%>
+
+<div class="alert alert-info text-center">
+	<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
+		<liferay-ui:message key="configure-blueprint-options-in-this-page" />
+
+		<c:if test="<%= sxpBlueprint != null %>">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(sxpBlueprint.getTitle(locale)) %>" key="blueprint-x" />
+		</c:if>
+	</aui:a>
+</div>

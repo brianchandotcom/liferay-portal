@@ -1,26 +1,15 @@
 .step-list {
-	display: flex;
-	flex-direction: column;
 	gap: 2rem;
-	margin-right: 3rem;
-	margin-top: 7rem;
 
 	.step-item {
-		align-items: center;
 		color: $color-neutral-6;
-		display: flex;
-		font-family: $font-family;
-		font-size: 1.15rem;
-		font-weight: bold;
 		gap: 0.875rem;
 		height: 1rem;
 
 		& > i {
-			align-items: center;
 			border-radius: 1rem;
 			display: flex;
 			height: 1rem;
-			justify-content: center;
 			width: 1rem;
 		}
 
@@ -35,7 +24,6 @@
 		}
 
 		&.partially {
-			color: $color-action-primary-default;
 			cursor: pointer;
 			opacity: 0.7;
 			overflow: visible;
@@ -50,7 +38,6 @@
 			.progress-ring {
 				opacity: 0.7;
 				overflow: visible;
-				position: absolute;
 				z-index: 1;
 			}
 		}
@@ -61,13 +48,8 @@
 			}
 
 			> div {
-				align-items: center;
-				background-color: var(--primary);
 				border-radius: 8px;
-				display: flex;
-				fill: white;
 				height: 16px;
-				justify-content: center;
 				width: 16px;
 			}
 
@@ -77,7 +59,6 @@
 		}
 
 		&.selected {
-			color: $color-action-primary-default;
 			opacity: 1;
 
 			i::after {

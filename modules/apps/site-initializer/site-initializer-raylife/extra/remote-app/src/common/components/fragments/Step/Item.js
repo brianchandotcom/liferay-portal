@@ -15,17 +15,21 @@ export function StepItem({
 
 	return (
 		<div
-			className={classNames('step-item', {
-				completed,
-				partially,
-				selected,
-			})}
+			className={classNames(
+				'align-items-center d-flex font-weight-bolder step-item text-paragraph-lg',
+				{
+					completed,
+					partially,
+					selected,
+					'text-brand-primary': selected || partially,
+				}
+			)}
 			onClick={partially ? onClick : undefined}
 		>
-			<i>
+			<i className="align-items-center justify-content-center">
 				{partially && (
 					<ProgressRing
-						className="progress-ring"
+						className="position-absolute progress-ring"
 						diameter={32}
 						percent={percentage}
 						strokeWidth={3}
@@ -34,8 +38,8 @@ export function StepItem({
 			</i>
 
 			{completed && (
-				<div>
-					<ClayIcon symbol="check" />
+				<div className="align-items-center bg-brand-primary d-flex justify-content-center">
+					<ClayIcon className="m-0 text-neutral-0" symbol="check" />
 				</div>
 			)}
 

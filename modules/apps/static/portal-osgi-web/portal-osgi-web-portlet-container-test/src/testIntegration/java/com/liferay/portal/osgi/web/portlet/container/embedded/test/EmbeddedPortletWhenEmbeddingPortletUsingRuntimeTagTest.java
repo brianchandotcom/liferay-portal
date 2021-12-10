@@ -16,10 +16,13 @@ package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -32,6 +35,7 @@ import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerT
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.portletext.RuntimeTag;
@@ -137,6 +141,17 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 				"The application cannot include itself: " + TEST_PORTLET_ID,
 				logEntry.getMessage());
 
+			User defaultUser = _userLocalService.getDefaultUser(
+				group.getCompanyId());
+
+			String errorMessage = _language.get(
+				defaultUser.getLocale(),
+				"the-application-cannot-include-itself");
+
+			String body = response.getBody();
+
+			Assert.assertTrue(body.contains(errorMessage));
+
 			Assert.assertEquals(200, response.getCode());
 
 			Assert.assertTrue(testPortlet.isCalledRender());
@@ -201,5 +216,11 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 	private static String[] _layoutStaticPortletsAll;
 	private static LayoutTypePortlet _layoutTypePortlet;
+
+	@Inject
+	private Language _language;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

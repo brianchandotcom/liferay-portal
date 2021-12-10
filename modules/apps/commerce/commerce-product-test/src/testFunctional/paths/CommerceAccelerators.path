@@ -171,6 +171,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED</td>
+	<td>//p[@title='${key_productName}']//..//..//input[contains(@class,"quantity-selector") and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD</td>
 	<td>//p[@title='${key_productName}']//..//..//input[contains(@class,"quantity-selector")]</td>
 	<td></td>

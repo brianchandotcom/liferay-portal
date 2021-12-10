@@ -91,6 +91,11 @@ public class UpgradeCTSchemaVersionTest {
 					}
 				}
 
+				@Override
+				public void registerInitialUpgradeSteps(
+					UpgradeStep... upgradeSteps) {
+				}
+
 			});
 	}
 

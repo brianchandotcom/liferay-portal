@@ -742,6 +742,11 @@ public class ContentTargetingUpgradeProcessTest {
 					}
 				}
 
+				@Override
+				public void registerInitialUpgradeSteps(
+					UpgradeStep... upgradeSteps) {
+				}
+
 			});
 	}
 

@@ -19,11 +19,6 @@ const SubscriptionsNavbar = ({
 		},
 	});
 
-	const handleClick = (event) => {
-		event.preventDefault();
-		setSelectedTag(event.target.value);
-	};
-
 	useEffect(() => {
 		if (!isAccountSubscriptionsLoading && accountSubscriptions) {
 			const accountSubsciptionsItems =
@@ -49,7 +44,7 @@ const SubscriptionsNavbar = ({
 								<button
 									className="mr-2"
 									key={tag.name}
-									onClick={handleClick}
+									onClick={(event) => setSelectedTag(event.target.value)}
 									value={tag.name}
 								>
 									{tag.name}

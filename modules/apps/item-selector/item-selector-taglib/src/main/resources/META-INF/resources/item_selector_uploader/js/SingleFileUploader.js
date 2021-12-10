@@ -35,6 +35,7 @@ function SingleFileUploader({
 	validExtensions,
 }) {
 	const [abort, setAbort] = useState(null);
+	const [errorAnimation, setErrorAnimation] = useState(false);
 	const [file, setFile] = useState();
 	const [itemServerData, setItemServerData] = useState(null);
 	const [progress, setProgess] = useState(null);
@@ -75,11 +76,24 @@ function SingleFileUploader({
 		),
 	};
 
+	const errorCode = fileRejections?.[0]?.errors?.[0]?.code;
+	const errorMessage = ERRORS[errorCode] || '';
+
 	function clear() {
 		setFile(null);
 		setAbort(null);
 		setProgess(null);
 	}
+
+	const handleAnimationErrorEnd = () => {
+		if (isMounted()) {
+			setErrorAnimation(false);
+		}
+	};
+
+	useEffect(() => {
+		setErrorAnimation(Boolean(errorMessage));
+	}, [errorMessage]);
 
 	useEffect(() => {
 		if (file) {
@@ -102,23 +116,18 @@ function SingleFileUploader({
 		}
 	}, [file, isMounted, uploadItemURL]);
 
-	const errorCode = fileRejections?.[0]?.errors?.[0]?.code;
-	const errorMessage = ERRORS[errorCode] || '';
-
 	return (
 		<>
-			<div
-				className={classNames({
-					'has-error': errorMessage,
-				})}
-			>
+			<div>
 				<div
 					{...getRootProps({
 						className: classNames('dropzone', {
 							'dropzone-drag-active': isDragActive,
+							'dropzone-error': errorAnimation,
 							'dropzone-uploading': progress,
 						}),
 					})}
+					onAnimationEnd={handleAnimationErrorEnd}
 				>
 					<input disabled={progress} {...getInputProps()} />
 
@@ -156,7 +165,7 @@ function SingleFileUploader({
 				</div>
 
 				{errorMessage && (
-					<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackGroup className="has-error">
 						<ClayForm.FeedbackItem>
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 

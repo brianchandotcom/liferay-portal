@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>BUTTON_MORE_INFO_FORMS</td>
-	<td>//span[contains(., '${title}')]/parent::label//span[contains(@class,'btn-more-info')]</td>
+	<td>//h6[contains(., '${title}')]/parent::label//span[contains(@class,'btn-more-info')]</td>
 	<td></td>
 </tr>
 <tr>

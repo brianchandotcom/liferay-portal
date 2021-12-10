@@ -6,16 +6,15 @@ definition {
 			value = "3");
 
 		Click(
-			field = "business.hasStoredCustomerInformation",
+			field = "Do you store personally identifiable information about your customers?",
 			locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		Click(
-			field = "business.hasAutoPolicy",
+			field = "Do you have a Raylife Auto policy?",
 			locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		Select(
-			label = "business.legalEntity",
-			locator1 = "Raylife#FORMS_FIELDS",
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
 			value1 = "Association");
 
 		RaylifeBusiness.typeBusinessInfoFields(
@@ -23,7 +22,7 @@ definition {
 			value = "3%");
 
 		Click(
-			field = "business.hasSellProductsUnderOwnBrand",
+			field = "Do you sell products under your own brand or label?",
 			locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		RaylifeBusiness.typeBusinessInfoFields(
@@ -37,4 +36,36 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro viewBusinessInfo {
+		AssertElementPresent(
+			label = "business.yearsOfExperience",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "3");
+
+		AssertElementPresent(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		AssertElementPresent(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		AssertElementPresent(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
+
+		AssertElementPresent(
+			label = "business.salesMerchandise",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "3%");
+
+		AssertElementPresent(
+			field = "Do you sell products under your own brand or label?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		AssertElementPresent(
+			label = "business.overallSales",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "3%");
+	}
 }

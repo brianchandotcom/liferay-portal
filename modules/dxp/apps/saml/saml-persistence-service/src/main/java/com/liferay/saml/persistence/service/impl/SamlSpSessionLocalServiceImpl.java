@@ -28,7 +28,6 @@ import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseIm
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -71,20 +70,10 @@ public class SamlSpSessionLocalServiceImpl
 		}
 
 		if (samlPeerBinding == null) {
-			samlPeerBinding =
-				samlPeerBindingPersistence.fetchByC_U_D_SNIF_SNINQ_SPEI_First(
+			_deleteSamlPeerBindings(
+				samlPeerBindingPersistence.findByC_U_D_SNIF_SNINQ_SPEI(
 					user.getCompanyId(), user.getUserId(), false, nameIdFormat,
-					nameIdNameQualifier, samlIdpEntityId, null);
-
-			if ((samlPeerBinding != null) &&
-				!Objects.equals(
-					nameIdValue, samlPeerBinding.getSamlNameIdValue())) {
-
-				samlPeerBinding.setDeleted(true);
-
-				samlPeerBinding = samlPeerBindingPersistence.update(
-					samlPeerBinding);
-			}
+					nameIdNameQualifier, samlIdpEntityId));
 
 			samlPeerBinding = _samlPeerBindingLocalService.addSamlPeerBinding(
 				user.getUserId(), nameIdFormat, nameIdNameQualifier,
@@ -248,6 +237,16 @@ public class SamlSpSessionLocalServiceImpl
 		samlSpSession.setSessionIndex(sessionIndex);
 
 		return samlSpSessionPersistence.update(samlSpSession);
+	}
+
+	private void _deleteSamlPeerBindings(
+		List<SamlPeerBinding> samlPeerBindings) {
+
+		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
+			samlPeerBinding.setDeleted(true);
+
+			samlPeerBindingPersistence.update(samlPeerBinding);
+		}
 	}
 
 	@Reference

@@ -142,6 +142,27 @@ definition {
 		DMPortlet.viewDefaultConfigurationDisplaySettingsPG();
 	}
 
+	@description = "This is a use case for LPS-95662. Selecting an asset from the second does not invoke the management toolbar on the first."
+	@priority = "4"
+	test SelectAssetFromSecondWidgetInvokesSecondManagementToolbar {
+		property test.assert.javascript.errors = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(
+			pageName = "Documents and Media Page",
+			portletName = "Documents and Media");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder");
+
+		PortletEntry.LastSelectAll();
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
+	}
+
 	@description = "This test covers LPS-91595. It ensures that the document selection persists when navigating through the pagination in the DM widget."
 	@priority = "4"
 	@refactordone

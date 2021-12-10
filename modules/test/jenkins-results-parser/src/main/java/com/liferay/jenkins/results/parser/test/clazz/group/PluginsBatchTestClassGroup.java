@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PluginsGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
@@ -41,24 +44,6 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
-	}
-
-	public static class PluginsBatchTestClass extends BaseTestClass {
-
-		protected static PluginsBatchTestClass getInstance(
-			String batchName, File pluginDir) {
-
-			return new PluginsBatchTestClass(
-				batchName,
-				new File(JenkinsResultsParserUtil.getCanonicalPath(pluginDir)));
-		}
-
-		protected PluginsBatchTestClass(String batchName, File testClassFile) {
-			super(testClassFile);
-
-			addTestClassMethod(batchName);
-		}
-
 	}
 
 	protected PluginsBatchTestClassGroup(
@@ -106,6 +91,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		File workingDirectory =
 			_pluginsGitWorkingDirectory.getWorkingDirectory();
 
+		final List<File> pluginsDirs = new ArrayList<>();
+
 		try {
 			Files.walkFileTree(
 				workingDirectory.toPath(),
@@ -138,9 +125,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 							File file = filePath.toFile();
 
-							testClasses.add(
-								PluginsBatchTestClass.getInstance(
-									batchName, file.getParentFile()));
+							pluginsDirs.add(file.getParentFile());
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -153,6 +138,10 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 				"Unable to search for test file names in " +
 					workingDirectory.getPath(),
 				ioException);
+		}
+
+		for (File pluginsDir : pluginsDirs) {
+			testClasses.add(TestClassFactory.newTestClass(this, pluginsDir));
 		}
 
 		Collections.sort(testClasses);

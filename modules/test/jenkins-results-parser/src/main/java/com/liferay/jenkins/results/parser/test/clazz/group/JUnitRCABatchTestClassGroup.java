@@ -18,6 +18,9 @@ import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,13 +74,13 @@ public class JUnitRCABatchTestClassGroup extends RCABatchTestClassGroup {
 
 		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
 
-		for (List<TestClassGroup.TestClass> axisTestClasses :
+		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup =
 				TestClassGroupFactory.newAxisTestClassGroup(this);
 
-			for (TestClassGroup.TestClass axisTestClass : axisTestClasses) {
+			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
@@ -113,6 +116,8 @@ public class JUnitRCABatchTestClassGroup extends RCABatchTestClassGroup {
 	}
 
 	private void _setTestClasses() {
+		final BatchTestClassGroup batchTestClassGroup = this;
+
 		File portalWorkingDirectory =
 			portalGitWorkingDirectory.getWorkingDirectory();
 
@@ -150,7 +155,7 @@ public class JUnitRCABatchTestClassGroup extends RCABatchTestClassGroup {
 							TestClass testClass = _getPackagePathClassFile(
 								filePath);
 
-							List<TestClass.TestClassMethod> testClassMethods =
+							List<TestClassMethod> testClassMethods =
 								testClass.getTestClassMethods();
 
 							if (!testClassMethods.isEmpty()) {
@@ -161,11 +166,9 @@ public class JUnitRCABatchTestClassGroup extends RCABatchTestClassGroup {
 						return FileVisitResult.CONTINUE;
 					}
 
-					private BaseTestClass _getPackagePathClassFile(Path path) {
-						return JUnitBatchTestClassGroup.JunitBatchTestClass.
-							getInstance(
-								path.toFile(), portalGitWorkingDirectory,
-								path.toFile());
+					private TestClass _getPackagePathClassFile(Path path) {
+						return TestClassFactory.newTestClass(
+							batchTestClassGroup, path.toFile());
 					}
 
 				});

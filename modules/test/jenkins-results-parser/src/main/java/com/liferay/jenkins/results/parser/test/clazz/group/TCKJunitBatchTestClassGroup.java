@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
@@ -40,24 +43,6 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
-	}
-
-	public static class TCKBatchTestClass extends BaseTestClass {
-
-		protected static TCKBatchTestClass getInstance(
-			String batchName, File warFile) {
-
-			return new TCKBatchTestClass(
-				batchName,
-				new File(JenkinsResultsParserUtil.getCanonicalPath(warFile)));
-		}
-
-		protected TCKBatchTestClass(String batchName, File testClassFile) {
-			super(testClassFile);
-
-			addTestClassMethod(batchName);
-		}
-
 	}
 
 	protected TCKJunitBatchTestClassGroup(
@@ -101,6 +86,8 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
+		final List<File> tckTestFiles = new ArrayList<>();
+
 		try {
 			Files.walkFileTree(
 				_tckHomeDir.toPath(),
@@ -122,9 +109,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 								excludesPathMatchers, includesPathMatchers,
 								filePath.toFile())) {
 
-							testClasses.add(
-								TCKBatchTestClass.getInstance(
-									batchName, filePath.toFile()));
+							tckTestFiles.add(filePath.toFile());
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -137,6 +122,10 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 				"Unable to search for test file names in " +
 					_tckHomeDir.getPath(),
 				ioException);
+		}
+
+		for (File tckTestFile : tckTestFiles) {
+			testClasses.add(TestClassFactory.newTestClass(this, tckTestFile));
 		}
 
 		Collections.sort(testClasses);

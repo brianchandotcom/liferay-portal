@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
@@ -22,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,28 +35,6 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
-	}
-
-	public static class ModulesBatchTestClass extends BaseTestClass {
-
-		protected ModulesBatchTestClass(File moduleBaseDir) {
-			super(moduleBaseDir);
-		}
-
-		protected void initTestClassMethods(
-			List<File> modulesProjectDirs, File modulesDir, String taskName) {
-
-			for (File modulesProjectDir : modulesProjectDirs) {
-				String path = JenkinsResultsParserUtil.getPathRelativeTo(
-					modulesProjectDir, modulesDir);
-
-				String moduleTaskCall = JenkinsResultsParserUtil.combine(
-					":", path.replaceAll("/", ":"), ":", taskName);
-
-				addTestClassMethod(moduleTaskCall);
-			}
-		}
-
 	}
 
 	protected ModulesBatchTestClassGroup(

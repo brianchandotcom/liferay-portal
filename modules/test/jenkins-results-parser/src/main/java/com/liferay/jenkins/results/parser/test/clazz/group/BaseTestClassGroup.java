@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
 
@@ -30,7 +31,7 @@ import java.util.Properties;
 public abstract class BaseTestClassGroup implements TestClassGroup {
 
 	@Override
-	public List<TestClassGroup.TestClass> getTestClasses() {
+	public List<TestClass> getTestClasses() {
 		return testClasses;
 	}
 
@@ -38,70 +39,14 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	public List<File> getTestClassFiles() {
 		List<File> testClassFiles = new ArrayList<>();
 
-		for (TestClassGroup.TestClass testClass : testClasses) {
+		for (TestClass testClass : testClasses) {
 			testClassFiles.add(testClass.getTestClassFile());
 		}
 
 		return testClassFiles;
 	}
 
-	public abstract static class BaseTestClass
-		implements TestClassGroup.TestClass {
-
-		@Override
-		public int compareTo(TestClassGroup.TestClass testClass) {
-			if (testClass == null) {
-				throw new NullPointerException("Test class is null");
-			}
-
-			return _testClassFile.compareTo(testClass.getTestClassFile());
-		}
-
-		@Override
-		public File getTestClassFile() {
-			return _testClassFile;
-		}
-
-		@Override
-		public List<TestClassGroup.TestClass.TestClassMethod>
-			getTestClassMethods() {
-
-			return _testClassMethods;
-		}
-
-		@Override
-		public boolean isIgnored() {
-			return false;
-		}
-
-		protected BaseTestClass(File testClassFile) {
-			_testClassFile = testClassFile;
-		}
-
-		protected void addTestClassMethod(
-			boolean methodIgnored, String methodName) {
-
-			addTestClassMethod(
-				new TestClassMethod(methodIgnored, methodName, this));
-		}
-
-		protected void addTestClassMethod(String methodName) {
-			addTestClassMethod(false, methodName);
-		}
-
-		protected void addTestClassMethod(
-			TestClassGroup.TestClass.TestClassMethod testClassMethod) {
-
-			_testClassMethods.add(testClassMethod);
-		}
-
-		private final File _testClassFile;
-		private final List<TestClassMethod> _testClassMethods =
-			new ArrayList<>();
-
-	}
-
-	protected void addTestClass(TestClassGroup.TestClass testClass) {
+	protected void addTestClass(TestClass testClass) {
 		testClasses.add(testClass);
 	}
 
@@ -119,7 +64,6 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		return null;
 	}
 
-	protected final List<TestClassGroup.TestClass> testClasses =
-		new ArrayList<>();
+	protected final List<TestClass> testClasses = new ArrayList<>();
 
 }

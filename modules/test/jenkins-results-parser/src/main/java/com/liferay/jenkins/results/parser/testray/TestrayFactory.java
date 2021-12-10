@@ -17,10 +17,10 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.net.URL;
 
@@ -94,8 +94,7 @@ public class TestrayFactory {
 
 	public static TestrayCaseResult newTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
-		AxisTestClassGroup axisTestClassGroup,
-		TestClassGroup.TestClass testClass) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		if (testrayBuild == null) {
 			throw new RuntimeException("Please set a Testray build");

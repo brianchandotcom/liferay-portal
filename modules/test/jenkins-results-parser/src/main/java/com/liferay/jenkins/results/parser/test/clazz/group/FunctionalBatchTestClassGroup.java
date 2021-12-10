@@ -21,6 +21,8 @@ import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.util.PropsUtil;
 
@@ -81,67 +83,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testClasses;
-	}
-
-	public static class FunctionalTestClass extends BaseTestClass {
-
-		public Properties getPoshiProperties() {
-			return _poshiProperties;
-		}
-
-		public String getTestClassMethodName() {
-			return _testClassMethodName;
-		}
-
-		protected static FunctionalTestClass getInstance(
-			String testClassMethodName) {
-
-			return new FunctionalTestClass(testClassMethodName);
-		}
-
-		protected FunctionalTestClass(String testClassMethodName) {
-			super(_getTestClassFile(testClassMethodName));
-
-			addTestClassMethod(testClassMethodName);
-
-			_testClassMethodName = testClassMethodName;
-
-			_poshiProperties =
-				PoshiContext.getNamespacedClassCommandNameProperties(
-					getTestClassMethodName());
-		}
-
-		private static File _getTestClassFile(String testClassMethodName) {
-			Matcher matcher = _poshiTestCasePattern.matcher(
-				testClassMethodName);
-
-			if (!matcher.find()) {
-				throw new RuntimeException(
-					"Invalid test class method name " + testClassMethodName);
-			}
-
-			String className = matcher.group("className");
-			String namespace = matcher.group("namespace");
-
-			File testClassFile = null;
-
-			try {
-				testClassFile = new File(
-					PoshiContext.getFilePathFromFileName(
-						className + ".testcase", namespace));
-			}
-			catch (Exception exception) {
-				testClassFile = new File(
-					PoshiContext.getFilePathFromFileName(
-						className + ".prose", namespace));
-			}
-
-			return testClassFile;
-		}
-
-		private final Properties _poshiProperties;
-		private final String _testClassMethodName;
-
 	}
 
 	protected FunctionalBatchTestClassGroup(
@@ -274,7 +215,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					}
 
 					axisTestClassGroup.addTestClass(
-						FunctionalTestClass.getInstance(testClassMethodName));
+						TestClassFactory.newTestClass(
+							this, testClassMethodName));
 				}
 
 				axisTestClassGroups.add(axisTestClassGroup);

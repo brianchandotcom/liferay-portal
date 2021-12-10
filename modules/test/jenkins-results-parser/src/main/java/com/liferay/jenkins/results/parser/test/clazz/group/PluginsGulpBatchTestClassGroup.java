@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.PluginsGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 
@@ -46,16 +47,6 @@ public class PluginsGulpBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testBaseDirNames;
-	}
-
-	public static class PluginsGulpBatchTestClass extends BaseTestClass {
-
-		protected PluginsGulpBatchTestClass(File testBaseDirName) {
-			super(testBaseDirName);
-
-			addTestClassMethod("gulpfile.js");
-		}
-
 	}
 
 	protected PluginsGulpBatchTestClassGroup(
@@ -90,7 +81,8 @@ public class PluginsGulpBatchTestClassGroup extends BatchTestClassGroup {
 
 	private void _setTestClasses() {
 		for (File testBaseDirName : getTestBaseDirNames()) {
-			testClasses.add(new PluginsGulpBatchTestClass(testBaseDirName));
+			testClasses.add(
+				TestClassFactory.newTestClass(this, testBaseDirName));
 		}
 
 		Collections.sort(testClasses);

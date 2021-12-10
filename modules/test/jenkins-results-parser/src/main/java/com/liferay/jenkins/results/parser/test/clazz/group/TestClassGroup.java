@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
 
@@ -30,44 +31,5 @@ public interface TestClassGroup {
 	public List<TestClass> getTestClasses();
 
 	public List<File> getTestClassFiles();
-
-	public interface TestClass extends Comparable<TestClass> {
-
-		public File getTestClassFile();
-
-		public List<TestClassMethod> getTestClassMethods();
-
-		public boolean isIgnored();
-
-		public static class TestClassMethod {
-
-			public String getName() {
-				return _name;
-			}
-
-			public TestClassGroup.TestClass getTestClass() {
-				return _testClass;
-			}
-
-			public boolean isIgnored() {
-				return _ignored;
-			}
-
-			protected TestClassMethod(
-				boolean ignored, String name,
-				BaseTestClassGroup.BaseTestClass testClass) {
-
-				_ignored = ignored;
-				_name = name;
-				_testClass = testClass;
-			}
-
-			private final boolean _ignored;
-			private final String _name;
-			private final TestClassGroup.TestClass _testClass;
-
-		}
-
-	}
 
 }

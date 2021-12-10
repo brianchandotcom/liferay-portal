@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
 
@@ -120,8 +121,8 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	@Override
-	public List<TestClassGroup.TestClass> getTestClasses() {
-		List<TestClassGroup.TestClass> testClasses = new ArrayList<>();
+	public List<TestClass> getTestClasses() {
+		List<TestClass> testClasses = new ArrayList<>();
 
 		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
 			testClasses.addAll(axisTestClassGroup.getTestClasses());

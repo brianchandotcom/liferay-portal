@@ -17,22 +17,15 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -40,23 +33,18 @@ import org.json.JSONObject;
 public class JSUnitModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
-	public static class JSUnitModulesBatchTestClass
-		extends ModulesBatchTestClass {
+	public boolean testGitrepoJSUnit() {
+		String testGitrepoJSUnit = JenkinsResultsParserUtil.getProperty(
+			portalTestClassJob.getJobProperties(), "test.gitrepo.js.unit",
+			portalTestClassJob.getJobName(), getTestSuiteName());
 
-		protected JSUnitModulesBatchTestClass(
-			File projectDir, File modulesDir) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testGitrepoJSUnit) &&
+			testGitrepoJSUnit.equals("true")) {
 
-			super(projectDir);
-
-			String path = JenkinsResultsParserUtil.getPathRelativeTo(
-				projectDir, modulesDir);
-
-			String moduleTaskCall = JenkinsResultsParserUtil.combine(
-				":", path.replaceAll("/", ":"), ":packageRunTest");
-
-			addTestClassMethod(moduleTaskCall);
+			return true;
 		}
 
+		return false;
 	}
 
 	protected JSUnitModulesBatchTestClassGroup(
@@ -83,100 +71,22 @@ public class JSUnitModulesBatchTestClassGroup
 					excludesPathMatchers, includesPathMatchers));
 		}
 
-		final List<File> projectDirs = new ArrayList<>();
-		final File modulesDir = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
-
-		final boolean testGitrepoJSUnit = _testGitrepoJSUnit();
-
 		for (File moduleDir : moduleDirs) {
-			Path moduleDirPath = moduleDir.toPath();
+			TestClass testClass = TestClassFactory.newTestClass(
+				this, moduleDir);
 
-			Files.walkFileTree(
-				moduleDirPath,
-				new SimpleFileVisitor<Path>() {
+			if (!testClass.hasTestClassMethods()) {
+				continue;
+			}
 
-					@Override
-					public FileVisitResult preVisitDirectory(
-						Path filePath,
-						BasicFileAttributes basicFileAttributes) {
-
-						if (filePath.equals(modulesDir.toPath())) {
-							return FileVisitResult.CONTINUE;
-						}
-
-						File file = filePath.toFile();
-
-						File currentDirectory = new File(
-							JenkinsResultsParserUtil.getCanonicalPath(file));
-
-						if (!testGitrepoJSUnit) {
-							File gitrepoFile = new File(
-								currentDirectory, ".gitrepo");
-
-							if (gitrepoFile.exists()) {
-								return FileVisitResult.SKIP_SUBTREE;
-							}
-						}
-
-						File buildGradleFile = new File(
-							currentDirectory, "build.gradle");
-						File packageJSONFile = new File(
-							currentDirectory, "package.json");
-
-						if (!buildGradleFile.exists() ||
-							!packageJSONFile.exists()) {
-
-							return FileVisitResult.CONTINUE;
-						}
-
-						try {
-							JSONObject packageJSONObject = new JSONObject(
-								JenkinsResultsParserUtil.read(packageJSONFile));
-
-							if (!packageJSONObject.has("scripts")) {
-								return FileVisitResult.CONTINUE;
-							}
-
-							JSONObject scriptsJSONObject =
-								packageJSONObject.getJSONObject("scripts");
-
-							if (!scriptsJSONObject.has("test")) {
-								return FileVisitResult.CONTINUE;
-							}
-
-							projectDirs.add(currentDirectory);
-
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-						catch (IOException | JSONException exception) {
-							return FileVisitResult.CONTINUE;
-						}
-					}
-
-				});
-		}
-
-		for (File projectDir : projectDirs) {
-			testClasses.add(
-				new JSUnitModulesBatchTestClass(projectDir, modulesDir));
+			testClasses.add(testClass);
 		}
 
 		Collections.sort(testClasses);
-	}
 
-	private boolean _testGitrepoJSUnit() {
-		String testGitrepoJSUnit = JenkinsResultsParserUtil.getProperty(
-			portalTestClassJob.getJobProperties(), "test.gitrepo.js.unit",
-			portalTestClassJob.getJobName(), getTestSuiteName());
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(testGitrepoJSUnit) &&
-			testGitrepoJSUnit.equals("true")) {
-
-			return true;
+		for (TestClass testClass : testClasses) {
+			System.out.println(testClass.getTestClassFile());
 		}
-
-		return false;
 	}
 
 }

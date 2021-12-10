@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +44,7 @@ public class JSUnitModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
 				axisIndex);
 
-			List<TestClass.TestClassMethod> testClassMethods =
-				new ArrayList<>();
+			List<TestClassMethod> testClassMethods = new ArrayList<>();
 
 			for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
 				testClassMethods.addAll(testClass.getTestClassMethods());
@@ -53,7 +54,7 @@ public class JSUnitModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 			sb.append(axisIndex);
 			sb.append("=");
 
-			for (TestClass.TestClassMethod testClassMethod : testClassMethods) {
+			for (TestClassMethod testClassMethod : testClassMethods) {
 				sb.append(testClassMethod.getName());
 				sb.append(",");
 			}

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+
 import java.io.File;
 
 import java.util.List;

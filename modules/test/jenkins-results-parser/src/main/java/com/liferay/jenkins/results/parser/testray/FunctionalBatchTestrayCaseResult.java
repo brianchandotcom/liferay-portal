@@ -22,9 +22,9 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,20 +45,16 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 	public FunctionalBatchTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
-		AxisTestClassGroup axisTestClassGroup,
-		TestClassGroup.TestClass testClass) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
-		if (!(testClass instanceof
-				FunctionalBatchTestClassGroup.FunctionalTestClass)) {
-
+		if (!(testClass instanceof FunctionalTestClass)) {
 			throw new RuntimeException(
 				"Test class is not a functional test class");
 		}
 
-		_functionalTestClass =
-			(FunctionalBatchTestClassGroup.FunctionalTestClass)testClass;
+		_functionalTestClass = (FunctionalTestClass)testClass;
 	}
 
 	@Override
@@ -457,7 +453,6 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		return testrayAttachment;
 	}
 
-	private final FunctionalBatchTestClassGroup.FunctionalTestClass
-		_functionalTestClass;
+	private final FunctionalTestClass _functionalTestClass;
 
 }

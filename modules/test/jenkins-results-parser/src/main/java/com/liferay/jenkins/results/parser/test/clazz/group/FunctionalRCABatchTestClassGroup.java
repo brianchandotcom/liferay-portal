@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 
@@ -74,7 +75,8 @@ public class FunctionalRCABatchTestClassGroup extends RCABatchTestClassGroup {
 				this, _getTestBaseDir());
 
 		axisTestClassGroup.addTestClass(
-			FunctionalBatchTestClassGroup.FunctionalTestClass.getInstance(
+			TestClassFactory.newTestClass(
+				this,
 				JenkinsResultsParserUtil.combine(
 					namespace, ".", classMethodName)));
 

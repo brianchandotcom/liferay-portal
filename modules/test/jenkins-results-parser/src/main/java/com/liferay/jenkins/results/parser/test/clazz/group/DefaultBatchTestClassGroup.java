@@ -15,6 +15,9 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
+
+import java.io.File;
 
 /**
  * @author Yi-Chen Tsai
@@ -35,8 +38,11 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
-		addTestClass(
-			BatchTestClass.getInstance(batchName, portalGitWorkingDirectory));
+		File buildTestBatchFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"build-test-batch.xml");
+
+		addTestClass(TestClassFactory.newTestClass(this, buildTestBatchFile));
 
 		setAxisTestClassGroups();
 

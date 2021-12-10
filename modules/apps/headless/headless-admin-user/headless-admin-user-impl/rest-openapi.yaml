@@ -973,6 +973,8 @@ components:
                     type: object
                 description:
                     type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

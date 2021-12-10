@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_YOU_HAVE_RATED</td>
+	<td>//div[@class='entry-ratings']//button[@data-restore-title='${title}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

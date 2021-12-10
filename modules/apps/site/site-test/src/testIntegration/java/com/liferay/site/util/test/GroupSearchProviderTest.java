@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -110,39 +111,50 @@ public class GroupSearchProviderTest {
 			new long[] {user.getUserId()}, childGroup1.getGroupId(),
 			role.getRoleId());
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(parentGroup, user));
-		mockLiferayPortletActionRequest.setParameter(
-			"groupId", String.valueOf(parentGroup.getGroupId()));
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				new MockLiferayPortletActionRequest();
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
-			new String[] {"com.liferay.portal.kernel.model.User"});
+			mockLiferayPortletActionRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, _getThemeDisplay(parentGroup, user));
+			mockLiferayPortletActionRequest.setParameter(
+				"groupId", String.valueOf(parentGroup.getGroupId()));
 
-		GroupSearch groupSearch = _groupSearchProvider.getGroupSearch(
-			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
+				new String[] {"com.liferay.portal.kernel.model.User"});
 
-		_assertGroupSearch(childGroup1, groupSearch);
+			GroupSearch groupSearch = _groupSearchProvider.getGroupSearch(
+				mockLiferayPortletActionRequest, new MockLiferayPortletURL());
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
-			new String[] {
-				"com.liferay.portal.kernel.model.User",
-				"com.liferay.portal.kernel.model.Organization",
-				"com.liferay.portal.kernel.model.UserGroup",
-				"com.liferay.portal.kernel.model.Company"
-			});
+			_assertGroupSearch(childGroup1, groupSearch);
 
-		GroupSearch complexSQLGroupSearch = _groupSearchProvider.getGroupSearch(
-			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
+				new String[] {
+					"com.liferay.portal.kernel.model.User",
+					"com.liferay.portal.kernel.model.Organization",
+					"com.liferay.portal.kernel.model.UserGroup",
+					"com.liferay.portal.kernel.model.Company"
+				});
 
-		_assertGroupSearch(childGroup1, complexSQLGroupSearch);
+			GroupSearch complexSQLGroupSearch =
+				_groupSearchProvider.getGroupSearch(
+					mockLiferayPortletActionRequest,
+					new MockLiferayPortletURL());
+
+			_assertGroupSearch(childGroup1, complexSQLGroupSearch);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	private void _assertGroupSearch(

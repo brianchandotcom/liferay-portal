@@ -868,8 +868,6 @@ public class SourceFormatterUtil {
 			classJSONObject.put("extendedClassNames", extendedClassesJSONArray);
 		}
 
-		classJSONObject.put("fileName", fileName);
-
 		JSONArray implementedClassesJSONArray = _getImplementedClassesJSONArray(
 			javaClass);
 

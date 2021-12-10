@@ -27,7 +27,7 @@ const Subscriptions = ({accountKey}) => {
 		},
 	});
 
-	const subscriptionsByTagItems =
+	const accountSubscriptions =
 		subscriptionsByTag?.c?.accountSubscriptions?.items || [];
 
 	return (
@@ -42,7 +42,7 @@ const Subscriptions = ({accountKey}) => {
 
 			<div className="d-flex flex-wrap">
 				{!loadingAccountSubscriptions &&
-					subscriptionsByTagItems.map((item, index) => (
+					accountSubscriptions.map((item, index) => (
 						<CardSubscription
 							cardSubscriptionData={item}
 							key={index}

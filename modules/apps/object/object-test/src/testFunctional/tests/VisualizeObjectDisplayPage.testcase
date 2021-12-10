@@ -670,12 +670,12 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject");
-		
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -684,8 +684,8 @@ definition {
 			value = "Entry 1");
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			pageTemplateName = "Blank Display Page",
-			contentType = "Custom Object");
+			contentType = "Custom Object",
+			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -712,9 +712,9 @@ definition {
 		Refresh();
 
 		PageEditor.addFragmentToCollectionDisplay(
-				collectionName = "Basic Components",
-				entryTitle = "",
-				fragmentName = "Heading");
+			collectionName = "Basic Components",
+			entryTitle = "",
+			fragmentName = "Heading");
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
@@ -736,13 +736,12 @@ definition {
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		Click(
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY",
-			key_entry = "Entry 1");
+			key_entry = "Entry 1",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		AssertElementPresent(
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY",
-			key_entry = "Entry 1");
-
+			key_entry = "Entry 1",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"

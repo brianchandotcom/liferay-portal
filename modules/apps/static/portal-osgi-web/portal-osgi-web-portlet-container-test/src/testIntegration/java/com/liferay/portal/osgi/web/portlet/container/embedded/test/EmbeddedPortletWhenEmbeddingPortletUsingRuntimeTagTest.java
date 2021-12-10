@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -124,7 +124,7 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(
 					PortletURLBuilder.create(
-						PortletURLFactoryUtil.create(
+						_portletURLFactory.create(
 							PortletContainerTestUtil.getHttpServletRequest(
 								group, layout),
 							TEST_PORTLET_ID, layout.getPlid(),
@@ -185,7 +185,7 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID, false);
 
-		PortletPreferencesLocalServiceUtil.addPortletPreferences(
+		_portletPreferencesLocalService.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			TEST_PORTLET_ID, null, null);
@@ -199,7 +199,7 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 		PortletContainerTestUtil.Response response =
 			PortletContainerTestUtil.request(
 				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
+					_portletURLFactory.create(
 						PortletContainerTestUtil.getHttpServletRequest(
 							group, layout),
 						TEST_PORTLET_ID, layout.getPlid(),
@@ -219,6 +219,12 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private PortletURLFactory _portletURLFactory;
 
 	@Inject
 	private UserLocalService _userLocalService;

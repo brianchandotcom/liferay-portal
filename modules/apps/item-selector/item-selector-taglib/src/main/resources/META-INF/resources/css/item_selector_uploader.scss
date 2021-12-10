@@ -19,16 +19,16 @@
 	}
 
 	&:focus,
-	&.drag-active {
+	&-drag-active {
 		background-color: $primary-l3;
 		outline-color: $primary;
 	}
 
-	&.disabled {
+	&-disabled {
 		opacity: 0.6;
 	}
 
-	&.uploading {
+	&-uploading {
 		background-color: $primary-l3;
 		font-size: 0.875rem;
 		outline: 1px solid $primary;

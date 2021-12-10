@@ -25,8 +25,6 @@ import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPrev
 import getPreviewProps from './getPreviewProps';
 import {sendFile} from './utils';
 
-import '../css/main.scss';
-
 function SingleFileUploader({
 	closeCaption,
 	editImageURL,
@@ -117,8 +115,8 @@ function SingleFileUploader({
 				<div
 					{...getRootProps({
 						className: classNames('dropzone', {
-							'drag-active': isDragActive,
-							'uploading': progress,
+							'dropzone-drag-active': isDragActive,
+							'dropzone-uploading': progress,
 						}),
 					})}
 				>

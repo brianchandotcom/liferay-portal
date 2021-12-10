@@ -1569,11 +1569,11 @@ definition {
 			card = "DM Folder Name",
 			item = "Permissions");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.expandInfo();
-
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		DMDocument.gotoMenuItemViaInfoPanel();
 
 		MenuItem.viewNotPresent(menuItem = "Permissions");
 	}

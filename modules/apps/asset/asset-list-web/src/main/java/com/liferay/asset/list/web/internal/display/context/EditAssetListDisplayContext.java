@@ -606,21 +606,14 @@ public class EditAssetListDisplayContext {
 			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
 		).put(
 			"createNewSegmentURL",
-			() -> {
-				PortletURL segmentsPortletURL =
-					PortalUtil.getControlPanelPortletURL(
-						_httpServletRequest, _themeDisplay.getScopeGroup(),
-						SegmentsPortletKeys.SEGMENTS, 0, 0,
-						PortletRequest.RENDER_PHASE);
-
-				return PortletURLBuilder.create(
-					segmentsPortletURL
-				).setMVCRenderCommandName(
-					"/segments/edit_segments_entry", false
-				).setParameter(
-					"type", User.class.getName()
-				).buildString();
-			}
+			() -> PortletURLBuilder.createRenderURL(
+				PortalUtil.getLiferayPortletResponse(_portletResponse),
+				SegmentsPortletKeys.SEGMENTS
+			).setMVCRenderCommandName(
+				"/segments/edit_segments_entry", false
+			).setParameter(
+				"type", User.class.getName()
+			).buildString()
 		).put(
 			"openSelectSegmentsEntryDialogMethod",
 			() -> {

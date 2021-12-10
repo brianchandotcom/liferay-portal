@@ -96,7 +96,7 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 				themeDisplay.getPermissionChecker(),
 				accountRoleDisplay.getAccountRoleId(), ActionKeys.DELETE)) {
 
-			Collections.<String>singletonList("deleteAccountRoles");
+			return Collections.<String>singletonList("deleteAccountRoles");
 		}
 
 		return Collections.<String>emptyList();

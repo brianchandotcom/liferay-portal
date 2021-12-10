@@ -35,37 +35,36 @@ definition {
 
 		Calendar._editName(calendarName = "${calendarName}");
 
-        if (isSet(description)) {
-            PortletEntry.inputDescription(description = "${description}");
-        }
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
 
-        if (isSet(timeZone)) {
-            PortalSettings.configureTimeZone(timeZone = "${timeZone}");
-        }
+		if (isSet(timeZone)) {
+			PortalSettings.configureTimeZone(timeZone = "${timeZone}");
+		}
 
-        if (isSet(calendarColor)) {
-            Click(
-                key_calendarColor = "${calendarColor}",
-                locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
-        }
+		if (isSet(calendarColor)) {
+			Click(
+				key_calendarColor = "${calendarColor}",
+				locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
+		}
 
-        if ("${defaultCalendarOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
-        }
+		if ("${defaultCalendarOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Default Calendar");
+		}
 
-        if ("${enableCommentsOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
-        }
+		if ("${enableCommentsOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Enable Comments");
+		}
 
-        if ("${enableRatingsOption}" == "check") {
-		    CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
-        }
+		if ("${enableRatingsOption}" == "check") {
+			CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
+		}
 
-        PortletEntry.save();
+		PortletEntry.save();
 
 		Navigator.gotoBack();
 	}
-
 
 	macro viewCalendarNameByColumn {
 		AssertElementPresent(

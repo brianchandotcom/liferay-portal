@@ -25,6 +25,11 @@
 	<td>//tr[${key_rowNumber}]//td[contains(@class,'lfr-name-column') and contains(.,'${key_rowName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CALENDAR_MENULIST_COLOR_PICKER</td>
+	<td>//div[contains(@class,'simple-color-picker-content')]//div[contains(@style,'${key_calendarColor}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

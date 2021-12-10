@@ -69,12 +69,36 @@ definition {
 	}
 
 	@description = "LRQA-71360 - Verify that the user can not delete a Default Calendar"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanNotDeleteDefaultCalendar {
+		CalendarNavigator.gotoMyCalendarsManage();
 
-		// TODO LRQA-71883 CanNotDeleteDefaultCalendar pending implementation
+		ManageCalendar.viewMenuItemNotPresent(
+			calendarName = "Test Test",
+			menuItem = "Delete");
 
+		ManageCalendar.addCalendar(
+			calendarName = "Test Calendar");
+
+		ManageCalendar.viewDefaultOptionOfCalendar(
+			calendarName = "Test Calendar",
+			defaultOption = "No");
+
+		ManageCalendar.viewMenuItemPresent(
+			calendarName = "Test Calendar",
+			menuItem = "Delete");
+
+		ManageCalendar.editCalendar(
+			calendarCurrentName = "Test Calendar",
+			defaultCalendarOption = "check");
+
+		ManageCalendar.viewDefaultOptionOfCalendar(
+			calendarName = "Test Test",
+			defaultOption = "No");
+
+		ManageCalendar.viewMenuItemNotPresent(
+			calendarName = "Test Calendar",
+			menuItem = "Delete");
 	}
 
 	@priority = "3"

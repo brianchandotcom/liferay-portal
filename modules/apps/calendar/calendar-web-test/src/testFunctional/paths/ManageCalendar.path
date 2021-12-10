@@ -23,6 +23,13 @@
 <tr>
 	<td>NAME_BY_COLUMN</td>
 	<td>//tr[${key_rowNumber}]//td[contains(@class,'lfr-name-column') and contains(.,'${key_rowName}')]</td>
+	<td>VERTICAL_ELLIPSIS_BY_NAME</td>
+	<td>//tr[contains(.,'${key_calendarName}')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_OPTION_BY_NAME</td>
+	<td>//tr[contains(.,'${key_calendarName}')]//td[contains(@class, 'lfr-default-column')][contains(text(),'${key_optionDefault}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -24,6 +24,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -142,8 +143,13 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 				return infoItemCapabilitiesProvider;
 			}
 
-			String className = GenericUtil.getGenericClassName(
-				infoItemCapabilitiesProvider);
+			String className = GetterUtil.getString(
+				serviceReference.getProperty("item.class.name"));
+
+			if (Validator.isNull(className)) {
+				className = GenericUtil.getGenericClassName(
+					infoItemCapabilitiesProvider);
+			}
 
 			if (Validator.isNull(className)) {
 				return infoItemCapabilitiesProvider;

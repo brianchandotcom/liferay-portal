@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>BASICS_NAME_MAX_NUMBER</td>
-	<td>//div[contains(., '${label}')]/input[contains(@maxlength, '256')]</td>
+	<td>//div[contains(@class, 'input-area')]/input[contains(@name, '${name}') and contains(@maxlength, '256')]</td>
 	<td></td>
 </tr>
 <tr>

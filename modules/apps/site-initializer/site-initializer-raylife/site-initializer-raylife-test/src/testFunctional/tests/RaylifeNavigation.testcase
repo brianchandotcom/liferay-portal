@@ -91,7 +91,9 @@ definition {
 			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
 			section = "Basics");
 
-		Click(locator1 = "RaylifeNavigation#SECTION_COMPLETED");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}

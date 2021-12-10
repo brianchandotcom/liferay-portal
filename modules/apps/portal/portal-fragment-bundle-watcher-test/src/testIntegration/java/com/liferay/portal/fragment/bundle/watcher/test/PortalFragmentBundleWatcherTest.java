@@ -99,7 +99,7 @@ public class PortalFragmentBundleWatcherTest {
 		hostBundle.start();
 
 		Bundle fragmentBundle = _installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment"), _HOST_SYMBOLIC_NAME, null);
+			_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME, null);
 
 		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 		Thread.sleep(200);
@@ -117,16 +117,14 @@ public class PortalFragmentBundleWatcherTest {
 
 		hostBundle.start();
 
-		String dependencySymbolicName = _PACKAGE_NAME.concat(".dependency");
-
 		Bundle dependencyBundle = _installBundle(
-			dependencySymbolicName, null, null);
+			_DEPENDENCY_SYMBOLIC_NAME, null, null);
 
 		dependencyBundle.start();
 
 		Bundle fragmentBundle = _installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment"), _HOST_SYMBOLIC_NAME,
-			dependencySymbolicName);
+			_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
+			_DEPENDENCY_SYMBOLIC_NAME);
 
 		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 		Thread.sleep(200);
@@ -145,8 +143,8 @@ public class PortalFragmentBundleWatcherTest {
 		hostBundle.start();
 
 		Bundle fragmentBundle = _installBundle(
-			_HOST_SYMBOLIC_NAME.concat(".fragment"), _HOST_SYMBOLIC_NAME,
-			_PACKAGE_NAME.concat(".dependency"));
+			_FRAGMENT_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
+			_DEPENDENCY_SYMBOLIC_NAME);
 
 		//Add delay to wait for PortalFragmentBundleWatcher bundle refreshes
 		Thread.sleep(200);
@@ -393,6 +391,10 @@ public class PortalFragmentBundleWatcherTest {
 		return bundle;
 	}
 
+	private static final String _DEPENDENCY_SYMBOLIC_NAME;
+
+	private static final String _FRAGMENT_SYMBOLIC_NAME;
+
 	private static final String _HOST_SYMBOLIC_NAME;
 
 	private static final String _PACKAGE_NAME;
@@ -402,7 +404,11 @@ public class PortalFragmentBundleWatcherTest {
 
 		_PACKAGE_NAME = pkg.getName();
 
+		_DEPENDENCY_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".dependency");
+
 		_HOST_SYMBOLIC_NAME = _PACKAGE_NAME.concat(".host");
+
+		_FRAGMENT_SYMBOLIC_NAME = _HOST_SYMBOLIC_NAME.concat(".fragment");
 	}
 
 	private BundleContext _bundleContext;

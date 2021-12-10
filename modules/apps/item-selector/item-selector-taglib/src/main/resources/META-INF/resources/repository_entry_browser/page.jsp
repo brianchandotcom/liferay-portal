@@ -130,7 +130,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	</c:if>
 
 	<div>
-		<div class="dropzone"></div>
+		<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
 		<react:component
 			data='<%=

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -168,9 +169,8 @@ public class AssetTagsDisplayContext {
 
 	public long getFullTagsCount(AssetTag tag) {
 		Hits hits = AssetEntryLocalServiceUtil.search(
-			tag.getCompanyId(), new long[] {_themeDisplay.getScopeGroupId()},
-			_themeDisplay.getUserId(), null, 0, null, null, null, null,
-			tag.getName(), true,
+			tag.getCompanyId(), _getGroupIds(), _themeDisplay.getUserId(), null,
+			0, null, null, null, null, tag.getName(), true,
 			new int[] {
 				WorkflowConstants.STATUS_APPROVED,
 				WorkflowConstants.STATUS_PENDING,
@@ -378,6 +378,25 @@ public class AssetTagsDisplayContext {
 		_showTagsActions = showTagsActions;
 
 		return _showTagsActions;
+	}
+
+	private long[] _getGroupIds() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		List<Group> groups = ListUtil.concat(
+			group.getDescendants(false), group.getDescendants(true));
+
+		groups.add(group);
+
+		long[] groupIds = new long[groups.size()];
+
+		for (int i = 0; i < groups.size(); i++) {
+			Group curGroup = groups.get(i);
+
+			groupIds[i] = curGroup.getGroupId();
+		}
+
+		return groupIds;
 	}
 
 	private String _displayStyle;

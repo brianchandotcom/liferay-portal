@@ -87,31 +87,30 @@ definition {
 	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
 	@priority = "3"
 	test CanDeleteRateIntoAEvent {
-
 		Calendar.LiferayDXPCalendar();
 
 		Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-        CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
+		CalendarMyCalendars.checkboxOption(checkboxName = "Enable Ratings");
 
-        PortletEntry.save();
+		PortletEntry.save();
 
-        Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-        CalendarNavigator.gotoAddEvent();
+		CalendarNavigator.gotoAddEvent();
 
-        CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
-        CalendarEvent.publish();
+		CalendarEvent.publish();
 
-        Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-        CalendarEvent.viewDetails(
-            calendarName = "Liferay DXP",
-            eventTitle = "Calendar Event Title",
-            eventType = "Regular");
+		CalendarEvent.viewDetails(
+			calendarName = "Liferay DXP",
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular");
 
 		Ratings.rateStar(ratingStarCount = "3");
 
@@ -120,7 +119,6 @@ definition {
 			ratingStarCount = "3");
 
 		Ratings.revokeStarsRating();
-
 	}
 
 	@description = "LRQA-71888 - Verify that the user can edit event details via Scheduler"

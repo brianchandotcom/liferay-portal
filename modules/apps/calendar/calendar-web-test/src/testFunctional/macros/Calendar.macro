@@ -865,11 +865,4 @@ definition {
 			value1 = "${weekStartDay}");
 	}
 
-	macro LiferayDXPCalendar {
-		Click(
-			key_calendarName = "Liferay DXP",
-			key_site = "Liferay DXP",
-			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
-	}
-
 }

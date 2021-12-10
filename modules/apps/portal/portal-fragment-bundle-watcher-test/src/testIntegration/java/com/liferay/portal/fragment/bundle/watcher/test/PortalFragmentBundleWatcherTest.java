@@ -120,8 +120,7 @@ public class PortalFragmentBundleWatcherTest {
 
 			hostBundle.start();
 
-			Bundle dependencyBundle = _installDependencyBundle(
-				dependencySymbolicName);
+			Bundle dependencyBundle = _installBundle(dependencySymbolicName);
 
 			dependencyBundle.start();
 
@@ -284,8 +283,7 @@ public class PortalFragmentBundleWatcherTest {
 
 			hostBundle.start();
 
-			Bundle dependencyBundleA = _installDependencyBundle(
-				dependencyASymbolicName);
+			Bundle dependencyBundleA = _installBundle(dependencyASymbolicName);
 
 			dependencyBundleA.start();
 
@@ -293,8 +291,7 @@ public class PortalFragmentBundleWatcherTest {
 				fragmentASymbolicName, _HOST_SYMBOLIC_NAME,
 				dependencyASymbolicName);
 
-			Bundle dependencyBundleB = _installDependencyBundle(
-				dependencyBSymbolicName);
+			Bundle dependencyBundleB = _installBundle(dependencyBSymbolicName);
 
 			dependencyBundleB.start();
 
@@ -341,8 +338,7 @@ public class PortalFragmentBundleWatcherTest {
 
 			hostBundle.start();
 
-			Bundle dependencyBundleA = _installDependencyBundle(
-				dependencyASymbolicName);
+			Bundle dependencyBundleA = _installBundle(dependencyASymbolicName);
 
 			dependencyBundleA.start();
 
@@ -425,16 +421,6 @@ public class PortalFragmentBundleWatcherTest {
 		return _bundleContext.installBundle(
 			bundleSymbolicName,
 			_createBundle(bundleSymbolicName, bundleSymbolicName, null, null));
-	}
-
-	private Bundle _installDependencyBundle(String dependencyBundleSymbolicName)
-		throws Exception {
-
-		return _bundleContext.installBundle(
-			dependencyBundleSymbolicName,
-			_createBundle(
-				dependencyBundleSymbolicName, dependencyBundleSymbolicName,
-				null, null));
 	}
 
 	private Bundle _installFragmentBundle(

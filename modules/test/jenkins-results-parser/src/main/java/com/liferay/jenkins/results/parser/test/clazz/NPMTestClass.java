@@ -22,9 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,10 +30,6 @@ import java.util.regex.Pattern;
  * @author Michael Hashimoto
  */
 public class NPMTestClass extends BaseTestClass {
-
-	public static Map<File, NPMTestClass> getNPMTestClasses() {
-		return _npmTestBatchTestClasses;
-	}
 
 	public List<TestClassMethod> getJSTestClassMethods() {
 		return _jsTestClassMethods;
@@ -104,8 +98,6 @@ public class NPMTestClass extends BaseTestClass {
 
 	private static final Pattern _itPattern = Pattern.compile(
 		"\\s+(?<xit>x)?it\\s*\\(\\s*\\'(?<description>[\\s\\S]*?)\\'");
-	private static final Map<File, NPMTestClass> _npmTestBatchTestClasses =
-		new HashMap<>();
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final List<TestClassMethod> _jsTestClassMethods = new ArrayList<>();

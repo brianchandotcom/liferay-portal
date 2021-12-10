@@ -21,8 +21,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,10 +28,6 @@ import java.util.regex.Pattern;
  * @author Michael Hashimoto
  */
 public class JUnitTestClass extends BaseTestClass {
-
-	public static Map<File, JUnitTestClass> getJunitTestClasses() {
-		return _junitTestClasses;
-	}
 
 	@Override
 	public boolean isIgnored() {
@@ -240,8 +234,6 @@ public class JUnitTestClass extends BaseTestClass {
 		JenkinsResultsParserUtil.combine(
 			"\\*/(?<annotations>[^/]*)public\\s+class\\s+",
 			"(?<className>[^\\(\\s]+)"));
-	private static final Map<File, JUnitTestClass> _junitTestClasses =
-		new HashMap<>();
 	private static final Pattern _methodHeaderPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\t(?<annotations>(@[\\s\\S]+?))public\\s+void\\s+",

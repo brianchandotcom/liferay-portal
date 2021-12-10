@@ -30,13 +30,19 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TCKJunitBatchTestClas
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Michael Hashimoto
  */
 public class TestClassFactory {
+
+	public static List<TestClass> getTestClasses() {
+		return new ArrayList<>(_testClasses.values());
+	}
 
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {

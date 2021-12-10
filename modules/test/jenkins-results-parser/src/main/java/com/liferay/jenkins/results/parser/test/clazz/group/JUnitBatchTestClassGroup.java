@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Yi-Chen Tsai
@@ -59,8 +58,18 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return axisCount;
 	}
 
-	public Map<File, JUnitTestClass> getJunitTestClasses() {
-		return JUnitTestClass.getJunitTestClasses();
+	public List<JUnitTestClass> getJUnitTestClasses() {
+		List<JUnitTestClass> junitTestClasses = new ArrayList<>();
+
+		for (TestClass testClass : TestClassFactory.getTestClasses()) {
+			if (!(testClass instanceof JUnitTestClass)) {
+				continue;
+			}
+
+			junitTestClasses.add((JUnitTestClass)testClass);
+		}
+
+		return junitTestClasses;
 	}
 
 	public void writeTestCSVReportFile() throws Exception {
@@ -68,9 +77,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			new CSVReport.Row(
 				"Class Name", "Method Name", "Ignored", "File Path"));
 
-		Map<File, JUnitTestClass> junitTestClasses = getJunitTestClasses();
-
-		for (JUnitTestClass jUnitTestClass : junitTestClasses.values()) {
+		for (JUnitTestClass jUnitTestClass : getJUnitTestClasses()) {
 			File testClassFile = jUnitTestClass.getTestClassFile();
 
 			String testClassFileRelativePath = _getRelativePath(

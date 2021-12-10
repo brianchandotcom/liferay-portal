@@ -26,9 +26,9 @@ import java.io.IOException;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -61,8 +61,18 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		return TestClassGroupFactory.newAxisTestClassGroup(this);
 	}
 
-	public Map<File, NPMTestClass> getNPMTestClasses() {
-		return NPMTestClass.getNPMTestClasses();
+	public List<NPMTestClass> getNPMTestClasses() {
+		List<NPMTestClass> npmTestClasses = new ArrayList<>();
+
+		for (TestClass testClass : TestClassFactory.getTestClasses()) {
+			if (!(testClass instanceof NPMTestClass)) {
+				continue;
+			}
+
+			npmTestClasses.add((NPMTestClass)testClass);
+		}
+
+		return npmTestClasses;
 	}
 
 	public void writeTestCSVReportFile() throws Exception {
@@ -71,9 +81,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 				"Module Name", "Class Name", "Method Name", "Ignored",
 				"File Path"));
 
-		Map<File, NPMTestClass> npmTestClasses = getNPMTestClasses();
-
-		for (NPMTestClass npmTestClass : npmTestClasses.values()) {
+		for (NPMTestClass npmTestClass : getNPMTestClasses()) {
 			File moduleTestClassFile = npmTestClass.getTestClassFile();
 
 			String moduleName = moduleTestClassFile.getName();

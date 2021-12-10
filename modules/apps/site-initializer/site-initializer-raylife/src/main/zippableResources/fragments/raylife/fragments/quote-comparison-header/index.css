@@ -1,19 +1,11 @@
 .quote-comparison H1 {
-	color: var(--color-neutral-black);
-	font-size: 37px;
-	font-weight: 800;
 	line-height: 40px;
-	text-align: center;
 }
 
 .quote-comparison H1 span:first-of-type {
 	color: var(--color-brand-primary);
 }
 
-.quote-comparison p { 
-	color: var(--color-neutral-8);
-	font-size: 16px;
-	font-weight: 500;
+.quote-comparison p {
 	line-height: 24px;
-	text-align: center;
 }

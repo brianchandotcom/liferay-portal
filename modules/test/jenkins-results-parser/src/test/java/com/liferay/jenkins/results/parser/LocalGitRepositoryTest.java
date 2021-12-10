@@ -37,7 +37,7 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 
 				errorCollector.addError(
 					new Throwable(
-						"The repository directorydirectory should be " +
+						"The repository directory should be " +
 							FILE_PATH_REPOSITORY));
 			}
 		}

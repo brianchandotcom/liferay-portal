@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>BLOCK_HIDE_BUTTON</td>
-	<td>//td[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'${key_actionButton}')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'${key_actionButton}')]</td>
 	<td></td>
 </tr>
 </tbody>

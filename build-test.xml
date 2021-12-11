@@ -341,6 +341,98 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="export-database-mysql-compact">
+		<attribute default="mysql" name="database.file.prefix" />
+
+		<sequential>
+			<if>
+				<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+				<then>
+					<local name="export.dmp.file.path" />
+
+					<property location="export.sh" name="export.sh.file.path" />
+					<property name="docker.src.file.path" value="/tmp/export.sql" />
+					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}.sql" />
+
+					<echo file="${export.sh.file.path}">
+						<![CDATA[
+							#!/bin/bash
+
+							mysqldump \
+								--compact \
+								--no-data \
+								--order-by-primary \
+								--password=${database.mysql.password} \
+								--skip-comments \
+								--skip-extended-insert \
+								--user=${database.mysql.username} \
+								${database.mysql.schema} > \
+								${docker.src.file.path}
+
+							sed -i "s/Warning: Using a password on the command line interface can be insecure.//g" ${docker.src.file.path}
+						]]>
+					</echo>
+
+					<execute>
+						<![CDATA[
+							docker cp ${export.sh.file.path} ${database.host}:/tmp/export.sh
+
+							docker exec ${database.host} /bin/bash /tmp/export.sh
+						]]>
+					</execute>
+
+					<execute>
+						<![CDATA[
+							docker cp ${database.host}:${docker.src.file.path} ${export.dmp.file.path}
+						]]>
+					</execute>
+				</then>
+				<else>
+					<exec executable="mysqldump" output="@{database.file.prefix}.sql">
+						<arg value="--compact" />
+						<arg value="--no-data" />
+						<arg value="--order-by-primary" />
+						<arg value="--password=${database.mysql.password}" />
+						<arg value="--skip-comments" />
+						<arg value="--skip-extended-insert" />
+						<arg value="--user=${database.mysql.username}" />
+						<arg value="${database.mysql.schema}" />
+					</exec>
+
+					<replaceregexp
+						file="@{database.file.prefix}.sql"
+						match=".*Using a password on the command line interface can be insecure.*\n"
+						replace=""
+					/>
+				</else>
+			</if>
+
+			<echo file="sortSQL.sh">
+				<![CDATA[
+					#!/bin/bash
+
+					gawk '/CREATE/ {f=1; delete a}
+						/ENGINE/ {f=0; n=asort(a); print a[length(a)]; for (i=1;i<n;i++) print a[i]}
+						!f
+						f{a[$0]=$0}' ${1} |
+					sed 's=/[^/]*$==;s/\,$//'
+				]]>
+			</echo>
+
+			<execute>
+				sortSQL.sh @{database.file.prefix}.sql > @{database.file.prefix}-sorted.sql
+			</execute>
+
+			<delete file="@{database.file.prefix}.sql" />
+			<delete file="sortSQL.sh" />
+
+			<move
+				file="@{database.file.prefix}-sorted.sql"
+				tofile="@{database.file.prefix}.sql"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-gulp-user-config-json">
 		<attribute name="portlet.name" />
 
@@ -7596,6 +7688,10 @@ virtualHostname="localhost"
 		<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" src="${mysql.input.file}" url="${database.mysql.url}" userid="${database.mysql.username}" />
 	</target>
 
+	<target name="export-database-schema">
+		<export-database-mysql-compact database.file.prefix="${database.file.prefix}" />
+	</target>
+
 	<target name="generate-changelog">
 		<record-git-commit-portal />
 
@@ -14048,6 +14144,46 @@ url=${short.hostname}:8080</echo>
 
 			<print-file file.name="${liferay.home}/validateoutput.txt" />
 		</sequential>
+	</target>
+
+	<target name="validate-db-upgrade-schemas">
+		<echo file="printDiff.sh">
+diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgraded.sql fresh.sql || true
+		</echo>
+
+		<chmod
+			file="printDiff.sh"
+			perm="a+x"
+		/>
+
+		<exec executable="./printDiff.sh" outputproperty="database.changes.master" />
+
+		<if>
+			<not>
+				<equals arg1="${database.changes.master}" arg2="" />
+			</not>
+			<then>
+				<echo file="db-changes.txt">
+Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
+
+diff:${line.separator}upgraded.sql > fresh.sql
+				</echo>
+
+				<echo file="printDiff.sh">
+diff -y -B -W250 upgraded.sql fresh.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
+				</echo>
+
+				<chmod
+					file="printDiff.sh"
+					perm="a+x"
+				/>
+
+				<exec append="true" executable="./printDiff.sh" output="db-changes.txt" />
+			</then>
+			<else>
+				<echo file="db-changes.txt">Database schemas match</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="wait-for-license-activation">

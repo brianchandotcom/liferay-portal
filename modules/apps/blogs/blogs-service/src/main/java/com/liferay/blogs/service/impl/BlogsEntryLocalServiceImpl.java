@@ -603,6 +603,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			serviceContext.setScopeGroupId(entry.getGroupId());
 
+			serviceContext.setAttribute(
+				WorkflowConstants.SCHEDULER_INVOCATION, Boolean.TRUE);
+
 			blogsEntryLocalService.updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
@@ -1904,10 +1907,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		boolean sendEmailEntryUpdated = GetterUtil.getBoolean(
 			serviceContext.getAttribute("sendEmailEntryUpdated"));
 
+		boolean schedulerInvocation = GetterUtil.getBoolean(
+			serviceContext.getAttribute(
+				WorkflowConstants.SCHEDULER_INVOCATION));
+
 		if (serviceContext.isCommandAdd() &&
 			blogsGroupServiceSettings.isEmailEntryAddedEnabled()) {
 		}
-		else if (sendEmailEntryUpdated && serviceContext.isCommandUpdate() &&
+		else if ((sendEmailEntryUpdated || schedulerInvocation) &&
+				 serviceContext.isCommandUpdate() &&
 				 blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) {
 		}
 		else {

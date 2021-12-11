@@ -2010,6 +2010,84 @@ export default function ChangeTrackingChangesView({
 		);
 	};
 
+	const renderPaginationBar = () => {
+		if (renderState.changes.length <= 5) {
+			return '';
+		}
+
+		return (
+			<ClayPaginationBarWithBasicItems
+				activeDelta={renderState.delta}
+				activePage={renderState.page}
+				deltas={[4, 8, 20, 40, 60].map((size) => ({
+					label: size,
+				}))}
+				ellipsisBuffer={3}
+				onDeltaChange={(delta) => {
+					if (delta === renderState.delta) {
+						return;
+					}
+
+					const page = calculatePage(
+						delta,
+						renderState.page,
+						renderState.changes.length
+					);
+
+					pushState(
+						getPath(
+							ascendingState,
+							columnState,
+							delta,
+							getEntryParam(renderState.node),
+							filtersState,
+							resultsKeywords,
+							page,
+							renderState.showHideable
+						)
+					);
+
+					setRenderState({
+						changes: renderState.changes,
+						children: renderState.children,
+						delta,
+						id: renderState.id,
+						node: renderState.node,
+						page,
+						parents: renderState.parents,
+						showHideable: renderState.showHideable,
+					});
+				}}
+				onPageChange={(page) => {
+					pushState(
+						getPath(
+							ascendingState,
+							columnState,
+							renderState.delta,
+							getEntryParam(renderState.node),
+							filtersState,
+							resultsKeywords,
+							page,
+							renderState.showHideable
+						)
+					);
+
+					setRenderState({
+						changes: renderState.changes,
+						children: renderState.children,
+						delta: renderState.delta,
+						id: renderState.id,
+						node: renderState.node,
+						page,
+						parents: renderState.parents,
+						showHideable: renderState.showHideable,
+					});
+				}}
+				totalItems={renderState.changes.length}
+			/>
+		);
+	};
+
 	const renderResultsBar = () => {
 		if (renderState.id > 0) {
 			return '';
@@ -2255,77 +2333,7 @@ export default function ChangeTrackingChangesView({
 						{getTableRows(filterDisplayNodes(renderState.changes))}
 					</ClayTable.Body>
 				</ClayTable>
-				{renderState.changes.length > 5 && (
-					<ClayPaginationBarWithBasicItems
-						activeDelta={renderState.delta}
-						activePage={renderState.page}
-						deltas={[4, 8, 20, 40, 60].map((size) => ({
-							label: size,
-						}))}
-						ellipsisBuffer={3}
-						onDeltaChange={(delta) => {
-							if (delta === renderState.delta) {
-								return;
-							}
-
-							const page = calculatePage(
-								delta,
-								renderState.page,
-								renderState.changes.length
-							);
-
-							pushState(
-								getPath(
-									ascendingState,
-									columnState,
-									delta,
-									getEntryParam(renderState.node),
-									filtersState,
-									resultsKeywords,
-									page,
-									renderState.showHideable
-								)
-							);
-
-							setRenderState({
-								changes: renderState.changes,
-								children: renderState.children,
-								delta,
-								id: renderState.id,
-								node: renderState.node,
-								page,
-								parents: renderState.parents,
-								showHideable: renderState.showHideable,
-							});
-						}}
-						onPageChange={(page) => {
-							pushState(
-								getPath(
-									ascendingState,
-									columnState,
-									renderState.delta,
-									getEntryParam(renderState.node),
-									filtersState,
-									resultsKeywords,
-									page,
-									renderState.showHideable
-								)
-							);
-
-							setRenderState({
-								changes: renderState.changes,
-								children: renderState.children,
-								delta: renderState.delta,
-								id: renderState.id,
-								node: renderState.node,
-								page,
-								parents: renderState.parents,
-								showHideable: renderState.showHideable,
-							});
-						}}
-						totalItems={renderState.changes.length}
-					/>
-				)}
+				{renderPaginationBar()}
 			</>
 		);
 	};

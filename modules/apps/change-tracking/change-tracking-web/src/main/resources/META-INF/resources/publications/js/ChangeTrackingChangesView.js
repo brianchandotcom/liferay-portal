@@ -2018,7 +2018,11 @@ export default function ChangeTrackingChangesView({
 		return (
 			<ClayPaginationBarWithBasicItems
 				activeDelta={renderState.delta}
-				activePage={renderState.page}
+				activePage={calculatePage(
+					renderState.delta,
+					renderState.page,
+					renderState.changes.length
+				)}
 				deltas={[4, 8, 20, 40, 60].map((size) => ({
 					label: size,
 				}))}

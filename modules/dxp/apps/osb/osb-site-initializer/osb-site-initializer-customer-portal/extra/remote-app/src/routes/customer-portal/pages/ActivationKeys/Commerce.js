@@ -1,9 +1,19 @@
 import {useQuery} from '@apollo/client';
+import {useEffect, useState} from 'react';
 import Table from '../../../../common/components/Table';
+import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
 import ActivationKeysLayout from '../../components/ActivationKeysLayout';
 
 const Commerce = ({accountKey}) => {
+	const [
+		ActivationInstructionsData,
+		setActivationInstructionsData,
+	] = useState([]);
+	const [
+		isLoadingActivationInstructions,
+		setIsLoadingActivationInstructions,
+	] = useState(false);
 	const {data, loading} = useQuery(getKoroneikiAccounts, {
 		variables: {
 			filter: `accountKey eq '${accountKey}'`,
@@ -12,28 +22,63 @@ const Commerce = ({accountKey}) => {
 
 	const dxpVersion = data?.c?.koroneikiAccounts?.items[0]?.dxpVersion;
 
-	const instructionsData = [
-		{
-			instructions: 'All Commerce modules are enabled by default.',
-			version: 'DXP 7.4 GA1+',
-		},
-		{
-			instructions: [
-				'Commerce is activated using a portal property.',
-				'More details: ',
-				'Activating Liferay Commerce.',
-			],
-			version: 'DXP 7.3 FP3/SP2+',
-		},
-		{
-			instructions: [
-				'Commerce is activated usinzg a portal property.',
-				'To request a new or replacement activation key, please ',
-				'open a support ticket.',
-			],
-			version: 'DXP 7.3 FP3/SP2+',
-		},
-	];
+	const fetchCommerceActivationsKeysInstructions = async () => {
+		const templateName = 'COMMERCE ACTIVATION INSTRUCTIONS';
+
+		const siteGroupId = Liferay.ThemeDisplay.getSiteGroupId();
+
+		const structuredContentFolders = await fetchHeadless({
+			url: `/sites/${siteGroupId}/structured-content-folders`,
+		});
+
+		const {id: commerceActivationInstructionsFolderID} =
+			structuredContentFolders.items.find(
+				({name}) => name === templateName
+			) || {};
+
+		const contentTemplates = await fetchHeadless({
+			url: `/sites/${siteGroupId}/content-templates`,
+		});
+
+		const contentTemplate = contentTemplates.items.find(
+			(template) => template.name === templateName
+		);
+
+		const structuredContents = await fetchHeadless({
+			url: `/structured-content-folders/${commerceActivationInstructionsFolderID}/structured-contents`,
+		});
+
+		const renderedInstructionsData = await structuredContents.items.reduce(
+			async (structuredContentList, structuredContent) => {
+				const promiseStructuredContentList = await structuredContentList;
+
+				const dxpVersion =
+					structuredContent.contentFields.find(
+						({label}) => label === 'DXP Version'
+					) || {};
+
+				const structuredComponent = await fetchHeadless({
+					resolveAsJson: false,
+					url: `/structured-contents/${structuredContent?.id}/rendered-content/${contentTemplate?.id}`,
+				});
+				promiseStructuredContentList.push({
+					instructions: await structuredComponent.text(),
+					version: dxpVersion?.contentFieldValue?.data || '',
+				});
+
+				return structuredContentList;
+			},
+			Promise.resolve([])
+		);
+
+		setActivationInstructionsData(renderedInstructionsData);
+		setIsLoadingActivationInstructions(false);
+	};
+
+	useEffect(() => {
+		setIsLoadingActivationInstructions(true);
+		fetchCommerceActivationsKeysInstructions();
+	}, []);
 
 	const columns = [
 		{
@@ -70,32 +115,21 @@ const Commerce = ({accountKey}) => {
 					) : (
 						<Table
 							columns={columns}
-							data={instructionsData.map(
+							data={ActivationInstructionsData.map(
 								({instructions, version}) => ({
-									instructions: Array.isArray(
-										instructions
-									) ? (
-										<div>
-											<p className="mb-0 text-neutral-9 text-paragraph">
-												{instructions[0]}
-											</p>
-
-											<p className="mb-0 text-neutral-7 text-paragraph-sm">
-												{instructions[1]}
-
-												<a className="text-neutral-7">
-													<u>{instructions[2]} </u>
-												</a>
-											</p>
-										</div>
-									) : (
-										<p className="mb-0 text-neutral-9 text-paragraph">
-											{instructions}
-										</p>
+									instructions: (
+										<div
+											dangerouslySetInnerHTML={{
+												__html: instructions,
+											}}
+											key={version}
+										></div>
 									),
 									version,
 								})
 							)}
+							isLoading={isLoadingActivationInstructions}
+							itemsPerPage={3}
 						/>
 					)}
 				</ActivationKeysLayout>

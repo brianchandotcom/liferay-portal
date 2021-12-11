@@ -1,12 +1,14 @@
 import ClayTable from '@clayui/table';
 import React from 'react';
 import TablePagination from './Pagination';
+import TableSkeleton from './Skeleton';
 
 const Table = ({
 	activePage = 1,
 	columns,
 	data,
 	hasPagination,
+	isLoading = false,
 	itemsPerPage = 5,
 	setActivePage,
 	...props
@@ -33,22 +35,29 @@ const Table = ({
 					</ClayTable.Row>
 				</ClayTable.Head>
 
-				<ClayTable.Body>
-					{data.map((item, index) => (
-						<ClayTable.Row key={index}>
-							{columns.map((column) => (
-								<ClayTable.Cell
-									align={column.align}
-									className={column.bodyClass}
-									headingTitle={column.headingTitle}
-									key={item[column.accessor]}
-								>
-									{item[column.accessor]}
-								</ClayTable.Cell>
-							))}
-						</ClayTable.Row>
-					))}
-				</ClayTable.Body>
+				{!isLoading ? (
+					<ClayTable.Body>
+						{data.map((item, index) => (
+							<ClayTable.Row key={index}>
+								{columns.map((column) => (
+									<ClayTable.Cell
+										align={column.align}
+										className={column.bodyClass}
+										headingTitle={column.headingTitle}
+										key={item[column.accessor]}
+									>
+										{item[column.accessor]}
+									</ClayTable.Cell>
+								))}
+							</ClayTable.Row>
+						))}
+					</ClayTable.Body>
+				) : (
+					<TableSkeleton
+						totalColumns={columns.length}
+						totalItems={itemsPerPage}
+					/>
+				)}
 			</ClayTable>
 			{hasPagination && (
 				<TablePagination

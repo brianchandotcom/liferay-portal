@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.search.experiences.blueprint.parameter.BooleanSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
@@ -39,12 +38,10 @@ import java.util.Set;
 public class ContextSXPParameterContributor implements SXPParameterContributor {
 
 	public ContextSXPParameterContributor(
-		GroupLocalService groupLocalService, Language language,
-		LayoutLocalService layoutLocalService) {
+		GroupLocalService groupLocalService, Language language) {
 
 		_groupLocalService = groupLocalService;
 		_language = language;
-		_layoutLocalService = layoutLocalService;
 	}
 
 	@Override
@@ -67,8 +64,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 				"context.language", true, locale.getLanguage()));
 		sxpParameters.add(
 			new StringSXPParameter(
-				"context.language_id", true,
-				"_" + _language.getLanguageId(locale)));
+				"context.language_id", true, _language.getLanguageId(locale)));
 
 		Layout layout = searchContext.getLayout();
 
@@ -134,6 +130,5 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 
 	private final GroupLocalService _groupLocalService;
 	private final Language _language;
-	private final LayoutLocalService _layoutLocalService;
 
 }

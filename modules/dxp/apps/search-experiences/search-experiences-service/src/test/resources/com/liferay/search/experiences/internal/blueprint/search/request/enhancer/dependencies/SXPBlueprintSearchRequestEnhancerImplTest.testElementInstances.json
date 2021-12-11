@@ -165,41 +165,100 @@
 		},
 		{
 			"sxpElement": {
-				"description_i18n": {
-					"en_US": "Sort by any field in descending order."
-				},
 				"elementDefinition": {
-					"category": "sort",
 					"configuration": {
 						"sortConfiguration": {
 							"sorts": [
 								{
-									"${configuration.field}": "desc"
+									"${configuration.field_asc}": "asc"
+								},
+								{
+									"${configuration.field_desc}": "desc"
 								}
 							]
 						}
 					},
-					"icon": "sort",
 					"uiConfiguration": {
 						"fieldSets": [
 							{
 								"fields": [
 									{
 										"label": "Field",
-										"name": "field",
-										"type": "text"
+										"name": "field_desc",
+										"type": "fieldMapping"
+									},
+									{
+										"label": "Field",
+										"name": "field_asc",
+										"type": "fieldMapping"
 									}
 								]
 							}
 						]
 					}
-				},
-				"title_i18n": {
-					"en_US": "Sort Descending"
 				}
 			},
 			"uiConfigurationValues": {
-				"field": "lastName"
+				"field_asc": {
+					"field": "jobTitle",
+					"locale": "ja_JP"
+				},
+				"field_desc": {
+					"field": "lastName",
+					"locale": ""
+				}
+			}
+		},
+		{
+			"sxpElement": {
+				"elementDefinition": {
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "should",
+											"query": {
+												"multi_match": {
+													"fields": "${configuration.fields}"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"label": "Field",
+										"name": "fields",
+										"type": "fieldMappingList"
+									}
+								]
+							}
+						]
+					}
+				}
+			},
+			"uiConfigurationValues": {
+				"fields": [
+					{
+						"boost": 2,
+						"field": "localized_title",
+						"locale": "${context.language_id}"
+					},
+					{
+						"boost": 1,
+						"field": "content",
+						"locale": "fi_FI"
+					}
+				]
 			}
 		}
 	]

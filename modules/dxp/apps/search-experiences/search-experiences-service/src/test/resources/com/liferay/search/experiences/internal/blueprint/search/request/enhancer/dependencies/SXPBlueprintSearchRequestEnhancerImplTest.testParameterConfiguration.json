@@ -1,0 +1,28 @@
+{
+	"configuration": {
+		"parameterConfiguration": {
+			"parameters": {
+				"version.number": {
+					"type": "String"
+				}
+			}
+		},
+		"queryConfiguration": {
+			"queryEntries": [
+				{
+					"clauses": [
+						{
+							"query": {
+								"term": {
+									"version": {
+										"value": "${version.number}"
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+}

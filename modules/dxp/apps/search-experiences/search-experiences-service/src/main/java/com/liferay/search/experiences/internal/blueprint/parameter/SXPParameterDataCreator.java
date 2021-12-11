@@ -128,8 +128,7 @@ public class SXPParameterDataCreator
 	@Activate
 	protected void activate() {
 		_sxpParameterContributors = new SXPParameterContributor[] {
-			new ContextSXPParameterContributor(
-				_groupLocalService, _language, _layoutLocalService),
+			new ContextSXPParameterContributor(_groupLocalService, _language),
 			new IpstackSXPParameterContributor(_configurationProvider),
 			new OpenWeatherMapSXPParameterContributor(_configurationProvider),
 			new TimeSXPParameterContributor(),

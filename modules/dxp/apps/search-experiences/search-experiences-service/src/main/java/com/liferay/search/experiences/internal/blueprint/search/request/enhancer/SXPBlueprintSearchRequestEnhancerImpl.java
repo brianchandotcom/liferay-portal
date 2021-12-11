@@ -15,8 +15,12 @@
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,6 +62,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -292,7 +297,47 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return null;
 	}
 
+	private String _toFieldMappingString(JSONObject jsonObject) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(jsonObject.get("field"));
+
+		String locale = jsonObject.getString("locale");
+
+		if (Validator.isNotNull(locale)) {
+			sb.append(CharPool.UNDERLINE);
+			sb.append(locale);
+		}
+
+		Object boost = jsonObject.get("boost");
+
+		if (boost != null) {
+			sb.append(CharPool.CARET);
+			sb.append(boost);
+		}
+
+		return sb.toString();
+	}
+
 	private Object _unpack(Object value, String type) {
+		if ((value instanceof JSONObject) &&
+			Objects.equals(type, "fieldMapping")) {
+
+			return _toFieldMappingString((JSONObject)value);
+		}
+
+		if ((value instanceof JSONArray) &&
+			Objects.equals(type, "fieldMappingList")) {
+
+			List<String> fields = new ArrayList<>();
+
+			for (Object item : (JSONArray)value) {
+				fields.add(_toFieldMappingString((JSONObject)item));
+			}
+
+			return JSONFactoryUtil.createJSONArray(fields);
+		}
+
 		if ((value instanceof String) && Objects.equals(type, "json")) {
 			try {
 				return JSONFactoryUtil.createJSONObject((String)value);

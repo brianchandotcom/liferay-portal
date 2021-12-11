@@ -842,16 +842,22 @@ export default function ChangeTrackingChangesView({
 	);
 
 	const pushState = (path) => {
-		Liferay.SPA.app.updateHistory_(
-			document.title,
-			path,
-			{
-				form: false,
+		if (Liferay.SPA && Liferay.SPA.app) {
+			Liferay.SPA.app.updateHistory_(
+				document.title,
 				path,
-				senna: true,
-			},
-			false
-		);
+				{
+					form: false,
+					path,
+					senna: true,
+				},
+				false
+			);
+
+			return;
+		}
+
+		window.history.pushState({path}, document.title, path);
 	};
 
 	const handleNavigationUpdate = useCallback(

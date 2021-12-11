@@ -1,0 +1,22 @@
+definition {
+
+	macro validateSchemas {
+		var projectDir = PropsUtil.get("project.dir");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "validate-db-upgrade-schemas");
+
+		var result = FileUtil.read("${projectDir}/db-changes.txt");
+
+		if (!(contains("${result}", "Database schemas match"))) {
+			echo("${result}");
+
+			fail("Failed to validate DB schemas.");
+		}
+		else {
+			echo("Database schemas match between fresh database and upgraded database.");
+		}
+	}
+
+}

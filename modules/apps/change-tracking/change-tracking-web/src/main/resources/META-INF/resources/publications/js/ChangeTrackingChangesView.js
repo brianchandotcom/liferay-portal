@@ -196,24 +196,6 @@ export default function ChangeTrackingChangesView({
 
 	const params = new URLSearchParams(search);
 
-	const initializedRef = useRef(false);
-
-	if (!initializedRef.current) {
-		if (
-			isWithinApp(params) &&
-			(!window.history.state || !window.history.state.senna)
-		) {
-			const state = {
-				path: pathname + search,
-				senna: true,
-			};
-
-			window.history.replaceState(state, document.title);
-		}
-
-		initializedRef.current = true;
-	}
-
 	params.delete(PARAM_CHANGE_TYPES);
 	params.delete(PARAM_COLUMN);
 	params.delete(PARAM_DELTA);
@@ -859,29 +841,37 @@ export default function ChangeTrackingChangesView({
 		]
 	);
 
+	const pushState = (path) => {
+		Liferay.SPA.app.updateHistory_(
+			document.title,
+			path,
+			{
+				form: false,
+				path,
+				senna: true,
+			},
+			false
+		);
+	};
+
 	const handleNavigationUpdate = useCallback(
 		(nodeId, resetPage) => {
 			const node = getNode(nodeId);
 
 			const page = resetPage ? 1 : renderState.page;
 
-			const path = getPath(
-				ascendingState,
-				columnState,
-				renderState.delta,
-				getEntryParam(node),
-				filtersState,
-				resultsKeywords,
-				page,
-				renderState.showHideable
+			pushState(
+				getPath(
+					ascendingState,
+					columnState,
+					renderState.delta,
+					getEntryParam(node),
+					filtersState,
+					resultsKeywords,
+					page,
+					renderState.showHideable
+				)
 			);
-
-			const state = {
-				path,
-				senna: true,
-			};
-
-			window.history.pushState(state, document.title, path);
 
 			setRenderState({
 				changes: filterNodes(
@@ -1292,46 +1282,36 @@ export default function ChangeTrackingChangesView({
 				displayType="unstyled"
 				onClick={() => {
 					if (columnState === column) {
-						const path = getPath(
-							!ascendingState,
-							columnState,
-							renderState.delta,
-							getEntryParam(renderState.node),
-							filtersState,
-							resultsKeywords,
-							renderState.page,
-							renderState.showHideable
+						pushState(
+							getPath(
+								!ascendingState,
+								columnState,
+								renderState.delta,
+								getEntryParam(renderState.node),
+								filtersState,
+								resultsKeywords,
+								renderState.page,
+								renderState.showHideable
+							)
 						);
-
-						const state = {
-							path,
-							senna: true,
-						};
-
-						window.history.pushState(state, document.title, path);
 
 						setAscendingState(!ascendingState);
 
 						return;
 					}
 
-					const path = getPath(
-						ascendingState,
-						column,
-						renderState.delta,
-						getEntryParam(renderState.node),
-						filtersState,
-						resultsKeywords,
-						renderState.page,
-						renderState.showHideable
+					pushState(
+						getPath(
+							ascendingState,
+							column,
+							renderState.delta,
+							getEntryParam(renderState.node),
+							filtersState,
+							resultsKeywords,
+							renderState.page,
+							renderState.showHideable
+						)
 					);
-
-					const state = {
-						path,
-						senna: true,
-					};
-
-					window.history.pushState(state, document.title, path);
 
 					setColumnState(column);
 				}}
@@ -1725,23 +1705,18 @@ export default function ChangeTrackingChangesView({
 			nodes.length
 		);
 
-		const path = getPath(
-			ascendingState,
-			columnState,
-			renderState.delta,
-			getEntryParam(renderState.node),
-			filters,
-			keywords,
-			page,
-			renderState.showHideable
+		pushState(
+			getPath(
+				ascendingState,
+				columnState,
+				renderState.delta,
+				getEntryParam(renderState.node),
+				filters,
+				keywords,
+				page,
+				renderState.showHideable
+			)
 		);
-
-		const state = {
-			path,
-			senna: true,
-		};
-
-		window.history.pushState(state, document.title, path);
 
 		setFiltersState(filters);
 		setResultsKeywords(keywords);
@@ -1780,23 +1755,18 @@ export default function ChangeTrackingChangesView({
 			nodes.length
 		);
 
-		const path = getPath(
-			ascendingState,
-			columnState,
-			renderState.delta,
-			getEntryParam(renderState.node),
-			filters,
-			resultsKeywords,
-			page,
-			showHideable
+		pushState(
+			getPath(
+				ascendingState,
+				columnState,
+				renderState.delta,
+				getEntryParam(renderState.node),
+				filters,
+				resultsKeywords,
+				page,
+				showHideable
+			)
 		);
-
-		const state = {
-			path,
-			senna: true,
-		};
-
-		window.history.pushState(state, document.title, path);
 
 		setFiltersState(filters);
 		setRenderState({
@@ -2290,36 +2260,27 @@ export default function ChangeTrackingChangesView({
 						}))}
 						ellipsisBuffer={3}
 						onDeltaChange={(delta) => {
+							if (delta === renderState.delta) {
+								return;
+							}
+
 							const page = calculatePage(
 								delta,
 								renderState.page,
 								renderState.changes.length
 							);
 
-							const path = getPath(
-								ascendingState,
-								columnState,
-								delta,
-								getEntryParam(renderState.node),
-								filtersState,
-								resultsKeywords,
-								page,
-								renderState.showHideable
-							);
-
-							if (delta === renderState.delta) {
-								return;
-							}
-
-							const state = {
-								path,
-								senna: true,
-							};
-
-							window.history.pushState(
-								state,
-								document.title,
-								path
+							pushState(
+								getPath(
+									ascendingState,
+									columnState,
+									delta,
+									getEntryParam(renderState.node),
+									filtersState,
+									resultsKeywords,
+									page,
+									renderState.showHideable
+								)
 							);
 
 							setRenderState({
@@ -2334,26 +2295,17 @@ export default function ChangeTrackingChangesView({
 							});
 						}}
 						onPageChange={(page) => {
-							const path = getPath(
-								ascendingState,
-								columnState,
-								renderState.delta,
-								getEntryParam(renderState.node),
-								filtersState,
-								resultsKeywords,
-								page,
-								renderState.showHideable
-							);
-
-							const state = {
-								path,
-								senna: true,
-							};
-
-							window.history.pushState(
-								state,
-								document.title,
-								path
+							pushState(
+								getPath(
+									ascendingState,
+									columnState,
+									renderState.delta,
+									getEntryParam(renderState.node),
+									filtersState,
+									resultsKeywords,
+									page,
+									renderState.showHideable
+								)
 							);
 
 							setRenderState({

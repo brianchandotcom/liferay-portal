@@ -70,7 +70,8 @@ public class PortalFragmentBundleWatcher {
 
 		Bundle systemBundle = _bundleContext.getBundle(0);
 
-		_frameworkWiring = systemBundle.adapt(FrameworkWiring.class);
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
 
 		_resolvedBundleListener = bundleEvent -> {
 			Map<Bundle, String> installedFragmentBundles =
@@ -92,7 +93,7 @@ public class PortalFragmentBundleWatcher {
 				!Objects.equals(
 					originBundle.getSymbolicName(),
 					"com.liferay.portal.file.install.impl") &&
-				!_hasMissingRequirements(bundleEventBundle)) {
+				!_hasMissingRequirements(frameworkWiring, bundleEventBundle)) {
 
 				String hostBundleSymbolicName = installedFragmentBundles.remove(
 					bundleEventBundle);
@@ -142,7 +143,8 @@ public class PortalFragmentBundleWatcher {
 						for (Bundle fragmentBundle : fragmantBundles) {
 							if ((fragmentBundle.getState() ==
 									Bundle.INSTALLED) &&
-								!_hasMissingRequirements(fragmentBundle)) {
+								!_hasMissingRequirements(
+									frameworkWiring, fragmentBundle)) {
 
 								needRefresh = true;
 
@@ -162,7 +164,7 @@ public class PortalFragmentBundleWatcher {
 			}
 
 			if (!hostBundles.isEmpty()) {
-				_frameworkWiring.refreshBundles(hostBundles);
+				frameworkWiring.refreshBundles(hostBundles);
 			}
 		};
 
@@ -195,12 +197,14 @@ public class PortalFragmentBundleWatcher {
 		return fragmentHost;
 	}
 
-	private boolean _hasMissingRequirements(Bundle bundle) {
+	private boolean _hasMissingRequirements(
+		FrameworkWiring frameworkWiring, Bundle bundle) {
+
 		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
 
 		for (Requirement requirement : bundleRevision.getRequirements(null)) {
 			Collection<BundleCapability> providers =
-				_frameworkWiring.findProviders(requirement);
+				frameworkWiring.findProviders(requirement);
 
 			if (providers.isEmpty()) {
 				return true;
@@ -237,7 +241,6 @@ public class PortalFragmentBundleWatcher {
 	}
 
 	private BundleContext _bundleContext;
-	private FrameworkWiring _frameworkWiring;
 	private BundleTracker<String> _installedFragmentBundleTracker;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)

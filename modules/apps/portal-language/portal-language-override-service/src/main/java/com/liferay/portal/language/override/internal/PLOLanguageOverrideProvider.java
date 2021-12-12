@@ -58,7 +58,7 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 		}
 
 		Map<String, String> overrideMap = _getOverrideMap(
-			_getCompanyId(), locale);
+			CompanyThreadLocal.getCompanyId(), locale);
 
 		return overrideMap.get(key);
 	}
@@ -70,7 +70,7 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 		}
 
 		Map<String, String> overrideMap = _getOverrideMap(
-			_getCompanyId(), locale);
+			CompanyThreadLocal.getCompanyId(), locale);
 
 		return overrideMap.keySet();
 	}
@@ -91,10 +91,6 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	@Deactivate
 	protected void deactivate() {
 		_multiVMPool.removePortalCache(_CACHE_KEY);
-	}
-
-	private long _getCompanyId() {
-		return CompanyThreadLocal.getCompanyId();
 	}
 
 	private Map<String, String> _getOverrideMap(long companyId, Locale locale) {

@@ -51,7 +51,19 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
 
 		if (ploEntry == null) {
-			return addPLOEntry(companyId, userId, key, languageId, value);
+			ploEntry = createPLOEntry(counterLocalService.increment());
+
+			ploEntry.setCompanyId(companyId);
+
+			User user = _userLocalService.getUser(userId);
+
+			ploEntry.setUserId(user.getUserId());
+
+			ploEntry.setKey(key);
+			ploEntry.setLanguageId(languageId);
+			ploEntry.setValue(value);
+
+			return addPLOEntry(ploEntry);
 		}
 
 		if (Objects.equals(ploEntry.getValue(), value)) {
@@ -117,26 +129,6 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 				addOrUpdatePLOEntry(companyId, userId, key, languageId, value);
 			}
 		}
-	}
-
-	protected PLOEntry addPLOEntry(
-			long companyId, long userId, String key, String languageId,
-			String value)
-		throws PortalException {
-
-		PLOEntry ploEntry = createPLOEntry(counterLocalService.increment());
-
-		ploEntry.setCompanyId(companyId);
-
-		User user = _userLocalService.getUser(userId);
-
-		ploEntry.setUserId(user.getUserId());
-
-		ploEntry.setKey(key);
-		ploEntry.setLanguageId(languageId);
-		ploEntry.setValue(value);
-
-		return addPLOEntry(ploEntry);
 	}
 
 	@Reference

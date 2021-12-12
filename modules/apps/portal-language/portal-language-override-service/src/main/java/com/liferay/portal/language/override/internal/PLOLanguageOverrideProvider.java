@@ -99,20 +99,18 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 		HashMap<String, String> overrideMap = _portalCache.get(key);
 
-		if (overrideMap != null) {
-			return overrideMap;
+		if (overrideMap == null) {
+			overrideMap = new HashMap<>();
+
+			for (PLOEntry ploEntry :
+					_ploEntryLocalService.getPLOEntriesByLanguageId(
+						companyId, languageId)) {
+
+				overrideMap.put(ploEntry.getKey(), ploEntry.getValue());
+			}
+
+			_portalCache.put(key, overrideMap);
 		}
-
-		overrideMap = new HashMap<>();
-
-		for (PLOEntry ploEntry :
-				_ploEntryLocalService.getPLOEntriesByLanguageId(
-					companyId, languageId)) {
-
-			overrideMap.put(ploEntry.getKey(), ploEntry.getValue());
-		}
-
-		_portalCache.put(key, overrideMap);
 
 		return overrideMap;
 	}

@@ -60,7 +60,7 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 		Map<String, String> overrideMap = _getOverrideMap(
 			_getCompanyId(), locale);
 
-		return overrideMap.getOrDefault(key, null);
+		return overrideMap.get(key);
 	}
 
 	@Override

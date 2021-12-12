@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.override.provider.PLOOriginalTranslationProvider;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.language.override.service.PLOEntryService;
 import com.liferay.portal.language.override.web.internal.constants.PortalLanguageOverridePortletKeys;
 import com.liferay.portal.language.override.web.internal.display.EditDisplayContextFactory;
@@ -33,6 +36,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -89,6 +93,14 @@ public class PortalLanguageOverridePortlet extends MVCPortlet {
 			LocalizationUtil.getLocalizationMap(actionRequest, "value"));
 	}
 
+	@Activate
+	protected void activate() {
+		_editDisplayContextFactory = new EditDisplayContextFactory(
+			_ploEntryLocalService, _ploOriginalTranslationProvider, _portal);
+		_viewDisplayContextFactory = new ViewDisplayContextFactory(
+			_ploEntryLocalService, _portal);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -127,13 +139,20 @@ public class PortalLanguageOverridePortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference
 	private EditDisplayContextFactory _editDisplayContextFactory;
+
+	@Reference
+	private PLOEntryLocalService _ploEntryLocalService;
 
 	@Reference
 	private PLOEntryService _ploEntryService;
 
 	@Reference
+	private PLOOriginalTranslationProvider _ploOriginalTranslationProvider;
+
+	@Reference
+	private Portal _portal;
+
 	private ViewDisplayContextFactory _viewDisplayContextFactory;
 
 }

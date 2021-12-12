@@ -30,14 +30,20 @@ import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Drew Brokke
  */
-@Component(service = EditDisplayContextFactory.class)
 public class EditDisplayContextFactory {
+
+	public EditDisplayContextFactory(
+		PLOEntryLocalService ploEntryLocalService,
+		PLOOriginalTranslationProvider ploOriginalTranslationProvider,
+		Portal portal) {
+
+		_ploEntryLocalService = ploEntryLocalService;
+		_ploOriginalTranslationProvider = ploOriginalTranslationProvider;
+		_portal = portal;
+	}
 
 	public EditDisplayContext create(RenderRequest renderRequest) {
 		EditDisplayContext editDisplayContext = new EditDisplayContext();
@@ -120,13 +126,9 @@ public class EditDisplayContextFactory {
 		}
 	}
 
-	@Reference
-	private PLOEntryLocalService _ploEntryLocalService;
-
-	@Reference
-	private PLOOriginalTranslationProvider _ploOriginalTranslationProvider;
-
-	@Reference
-	private Portal _portal;
+	private final PLOEntryLocalService _ploEntryLocalService;
+	private final PLOOriginalTranslationProvider
+		_ploOriginalTranslationProvider;
+	private final Portal _portal;
 
 }

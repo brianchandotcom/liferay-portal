@@ -27,12 +27,9 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -100,22 +97,22 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 		String key = _encodeKey(companyId, languageId);
 
-		Map<String, String> overrideMap = _portalCache.get(key);
+		HashMap<String, String> overrideMap = _portalCache.get(key);
 
 		if (overrideMap != null) {
 			return overrideMap;
 		}
 
-		List<PLOEntry> ploEntries =
-			_ploEntryLocalService.getPLOEntriesByLanguageId(
-				companyId, languageId);
+		overrideMap = new HashMap<>();
 
-		Stream<PLOEntry> ploEntryStream = ploEntries.stream();
+		for (PLOEntry ploEntry :
+				_ploEntryLocalService.getPLOEntriesByLanguageId(
+					companyId, languageId)) {
 
-		overrideMap = ploEntryStream.collect(
-			Collectors.toMap(PLOEntry::getKey, PLOEntry::getValue));
+			overrideMap.put(ploEntry.getKey(), ploEntry.getValue());
+		}
 
-		_portalCache.put(key, (HashMap<String, String>)overrideMap);
+		_portalCache.put(key, overrideMap);
 
 		return overrideMap;
 	}

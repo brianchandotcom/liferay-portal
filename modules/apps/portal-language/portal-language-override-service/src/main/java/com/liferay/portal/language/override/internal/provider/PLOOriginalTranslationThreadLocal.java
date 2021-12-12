@@ -37,11 +37,8 @@ public class PLOOriginalTranslationThreadLocal {
 	public static SafeCloseable setWithSafeCloseable(
 		Boolean useOriginalTranslation) {
 
-		boolean currentAllowEditAccountRole = _useOriginalTranslation.get();
-
-		_useOriginalTranslation.set(useOriginalTranslation);
-
-		return () -> _useOriginalTranslation.set(currentAllowEditAccountRole);
+		return _useOriginalTranslation.setWithSafeCloseable(
+			useOriginalTranslation);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

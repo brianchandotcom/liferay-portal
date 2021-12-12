@@ -55,8 +55,65 @@ const BUTTON_VARIANTS = [
 				displayType: 'primary',
 				size: 'lg',
 			},
+			{
+				displayType: 'ghost',
+				size: 'sm',
+				style: 'primary',
+			},
+			{
+				displayType: 'ghost',
+				style: 'primary',
+			},
+			{
+				displayType: 'ghost',
+				size: 'lg',
+				style: 'primary',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-sizes'),
+		inverted: false,
+	},
+	{
+		buttons: [
+			{
+				displayType: 'primary',
+				icon: 'before',
+				monospaced: true,
+				size: 'sm',
+			},
+			{
+				displayType: 'primary',
+				icon: 'before',
+				monospaced: true,
+			},
+			{
+				displayType: 'primary',
+				icon: 'before',
+				monospaced: true,
+				size: 'lg',
+			},
+			{
+				displayType: 'ghost',
+				icon: 'before',
+				monospaced: true,
+				size: 'sm',
+				style: 'primary',
+			},
+			{
+				displayType: 'ghost',
+				icon: 'before',
+				monospaced: true,
+				style: 'primary',
+			},
+			{
+				displayType: 'ghost',
+				icon: 'before',
+				monospaced: true,
+				size: 'lg',
+				style: 'primary',
+			},
+		],
+		categoryTitle: Liferay.Language.get('button-monospaced'),
 		inverted: false,
 	},
 	{
@@ -244,6 +301,7 @@ function getLabel(button, inverted) {
 		[button.displayType]: button.displayType,
 		inverted,
 		[button.size]: button.size,
+		[button.monospaced]: button.monospaced,
 		[button.style]: button.style,
 		[`icon ${button.icon}`]: button.icon,
 	});
@@ -274,15 +332,18 @@ const ButtonGuide = () => {
 									[`btn-style-${button.style}`]: button.style,
 								})}
 								displayType={button.displayType}
+								monospaced={button.monospaced}
 							>
 								{button.icon === 'before' && (
-									<span className="inline-item inline-item-before">
+									<span className={classNames('inline-item', {['inline-item-before']: !button.monospaced})}>
 										<ClayIcon symbol="angle-left" />
 									</span>
 								)}
-								Button
+
+								{!button.monospaced && 'Button'}
+
 								{button.icon === 'after' && (
-									<span className="inline-item inline-item-after">
+									<span className={classNames('inline-item', {['inline-item-after']: !button.monospaced})}>
 										<ClayIcon symbol="angle-right" />
 									</span>
 								)}

@@ -78,9 +78,8 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 				_multiVMPool.getPortalCache(_CACHE_KEY);
 	}
 
-	protected void clear(long companyId, Locale locale) {
-		_portalCache.remove(
-			_encodeKey(companyId, LanguageUtil.getLanguageId(locale)));
+	protected void clear(long companyId, String languageId) {
+		_portalCache.remove(_encodeKey(companyId, languageId));
 	}
 
 	@Deactivate

@@ -116,8 +116,6 @@ public class PortalFragmentBundleWatcherTest {
 
 		hostBundle.start();
 
-		_testFragmentBundleListener.waitForHostStarted();
-
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 		try {
@@ -288,15 +286,11 @@ public class PortalFragmentBundleWatcherTest {
 
 		hostBundle.start();
 
-		_testFragmentBundleListener.waitForHostStarted();
-
 		if (hasDependency && !missingDependency) {
 			Bundle dependencyBundle = _installBundle(
 				_DEPENDENCY_A_SYMBOLIC_NAME, null, null);
 
 			dependencyBundle.start();
-
-			_testFragmentBundleListener.waitForDependencyAStarted();
 		}
 
 		if (hasDependency) {
@@ -336,14 +330,10 @@ public class PortalFragmentBundleWatcherTest {
 
 		hostBundle.start();
 
-		_testFragmentBundleListener.waitForHostStarted();
-
 		Bundle dependencyBundleA = _installBundle(
 			_DEPENDENCY_A_SYMBOLIC_NAME, null, null);
 
 		dependencyBundleA.start();
-
-		_testFragmentBundleListener.waitForDependencyAStarted();
 
 		_installBundle(
 			_FRAGMENT_A_SYMBOLIC_NAME, _HOST_SYMBOLIC_NAME,
@@ -354,8 +344,6 @@ public class PortalFragmentBundleWatcherTest {
 				_DEPENDENCY_B_SYMBOLIC_NAME, null, null);
 
 			dependencyBundleB.start();
-
-			_testFragmentBundleListener.waitForDependencyBStarted();
 		}
 
 		_installBundle(
@@ -433,21 +421,8 @@ public class PortalFragmentBundleWatcherTest {
 			Bundle bundle = bundleEvent.getBundle();
 
 			if (Objects.equals(
-					bundle.getSymbolicName(), _DEPENDENCY_A_SYMBOLIC_NAME) &&
-				(bundleEvent.getType() == BundleEvent.STARTED)) {
-
-				_dependencyAStartedCountDownLatch.countDown();
-			}
-			else if (Objects.equals(
-						bundle.getSymbolicName(),
-						_DEPENDENCY_B_SYMBOLIC_NAME) &&
-					 (bundleEvent.getType() == BundleEvent.STARTED)) {
-
-				_dependencyBStartedCountDownLatch.countDown();
-			}
-			else if (Objects.equals(
-						bundle.getSymbolicName(), _FRAGMENT_A_SYMBOLIC_NAME) &&
-					 (bundleEvent.getType() == BundleEvent.RESOLVED)) {
+					bundle.getSymbolicName(), _FRAGMENT_A_SYMBOLIC_NAME) &&
+				(bundleEvent.getType() == BundleEvent.RESOLVED)) {
 
 				_fragmentAResolvedCountDownLatch.countDown();
 			}
@@ -458,27 +433,15 @@ public class PortalFragmentBundleWatcherTest {
 				_fragmentBResolvedCountDownLatch.countDown();
 			}
 			else if (Objects.equals(
-						bundle.getSymbolicName(), _HOST_SYMBOLIC_NAME)) {
+						bundle.getSymbolicName(), _HOST_SYMBOLIC_NAME) &&
+					 (bundleEvent.getType() == BundleEvent.STOPPED)) {
 
-				if (bundleEvent.getType() == BundleEvent.STARTED) {
-					_hostStartedCountDownLatch.countDown();
-				}
-				else if (bundleEvent.getType() == BundleEvent.STOPPED) {
-					_hostRefreshCount.incrementAndGet();
-				}
+				_hostRefreshCount.incrementAndGet();
 			}
 		}
 
 		public int getHostRefreshedCount() {
 			return _hostRefreshCount.get();
-		}
-
-		public void waitForDependencyAStarted() throws Exception {
-			_dependencyAStartedCountDownLatch.await();
-		}
-
-		public void waitForDependencyBStarted() throws Exception {
-			_dependencyBStartedCountDownLatch.await();
 		}
 
 		public boolean waitForFragmentAResolved() throws Exception {
@@ -489,21 +452,11 @@ public class PortalFragmentBundleWatcherTest {
 			return _fragmentBResolvedCountDownLatch.await(1, TimeUnit.SECONDS);
 		}
 
-		public void waitForHostStarted() throws Exception {
-			_hostStartedCountDownLatch.await();
-		}
-
-		private final CountDownLatch _dependencyAStartedCountDownLatch =
-			new CountDownLatch(1);
-		private final CountDownLatch _dependencyBStartedCountDownLatch =
-			new CountDownLatch(1);
 		private final CountDownLatch _fragmentAResolvedCountDownLatch =
 			new CountDownLatch(1);
 		private final CountDownLatch _fragmentBResolvedCountDownLatch =
 			new CountDownLatch(1);
 		private final AtomicInteger _hostRefreshCount = new AtomicInteger();
-		private final CountDownLatch _hostStartedCountDownLatch =
-			new CountDownLatch(1);
 
 	}
 

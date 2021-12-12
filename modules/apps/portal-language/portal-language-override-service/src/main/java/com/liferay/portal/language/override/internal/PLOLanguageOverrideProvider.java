@@ -14,7 +14,8 @@
 
 package com.liferay.portal.language.override.internal;
 
-import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -24,14 +25,11 @@ import com.liferay.portal.language.override.internal.provider.PLOOriginalTransla
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
-import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -79,13 +77,13 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	@SuppressWarnings("unchecked")
 	protected void activate() {
 		_portalCache =
-			(PortalCache<PLOCacheKey, HashMap<String, String>>)
+			(PortalCache<String, HashMap<String, String>>)
 				_multiVMPool.getPortalCache(_CACHE_KEY);
 	}
 
 	protected void clear(long companyId, Locale locale) {
 		_portalCache.remove(
-			new PLOCacheKey(companyId, LanguageUtil.getLanguageId(locale)));
+			_encodeKey(companyId, LanguageUtil.getLanguageId(locale)));
 	}
 
 	@Deactivate
@@ -93,11 +91,16 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 		_multiVMPool.removePortalCache(_CACHE_KEY);
 	}
 
-	private Map<String, String> _getOverrideMap(long companyId, Locale locale) {
-		PLOCacheKey ploCacheKey = new PLOCacheKey(
-			companyId, LanguageUtil.getLanguageId(locale));
+	private String _encodeKey(long companyId, String languageId) {
+		return StringBundler.concat(companyId, StringPool.POUND, languageId);
+	}
 
-		Map<String, String> overrideMap = _portalCache.get(ploCacheKey);
+	private Map<String, String> _getOverrideMap(long companyId, Locale locale) {
+		String languageId = LanguageUtil.getLanguageId(locale);
+
+		String key = _encodeKey(companyId, languageId);
+
+		Map<String, String> overrideMap = _portalCache.get(key);
 
 		if (overrideMap != null) {
 			return overrideMap;
@@ -105,14 +108,14 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 		List<PLOEntry> ploEntries =
 			_ploEntryLocalService.getPLOEntriesByLanguageId(
-				ploCacheKey.companyId, ploCacheKey.languageId);
+				companyId, languageId);
 
 		Stream<PLOEntry> ploEntryStream = ploEntries.stream();
 
 		overrideMap = ploEntryStream.collect(
 			Collectors.toMap(PLOEntry::getKey, PLOEntry::getValue));
 
-		_portalCache.put(ploCacheKey, (HashMap<String, String>)overrideMap);
+		_portalCache.put(key, (HashMap<String, String>)overrideMap);
 
 		return overrideMap;
 	}
@@ -125,40 +128,6 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	@Reference
 	private PLOEntryLocalService _ploEntryLocalService;
 
-	private PortalCache<PLOCacheKey, HashMap<String, String>> _portalCache;
-
-	private static class PLOCacheKey implements Serializable {
-
-		public PLOCacheKey(long companyId, String languageId) {
-			this.companyId = companyId;
-			this.languageId = languageId;
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			if (object instanceof PLOCacheKey) {
-				PLOCacheKey ploCacheKey = (PLOCacheKey)object;
-
-				if ((companyId == ploCacheKey.companyId) &&
-					Objects.equals(languageId, ploCacheKey.languageId)) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int localeHashCode = HashUtil.hash(0, languageId);
-
-			return HashUtil.hash(localeHashCode, companyId);
-		}
-
-		public final long companyId;
-		public final String languageId;
-
-	}
+	private PortalCache<String, HashMap<String, String>> _portalCache;
 
 }

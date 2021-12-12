@@ -199,11 +199,14 @@ public class LanguageResources {
 	}
 
 	private static String _getOverrideValue(String key, Locale locale) {
-		if (_languageOverrideProvider == null) {
+		LanguageOverrideProvider languageOverrideProvider =
+			_languageOverrideProvider;
+
+		if (languageOverrideProvider == null) {
 			return null;
 		}
 
-		String value = _languageOverrideProvider.get(key, locale);
+		String value = languageOverrideProvider.get(key, locale);
 
 		if (Validator.isNull(value)) {
 			return null;
@@ -215,11 +218,14 @@ public class LanguageResources {
 	private static Set<String> _getSetWithOverrideKeys(
 		Set<String> keySet, Locale locale) {
 
-		if (_languageOverrideProvider == null) {
+		LanguageOverrideProvider languageOverrideProvider =
+			_languageOverrideProvider;
+
+		if (languageOverrideProvider == null) {
 			return keySet;
 		}
 
-		Set<String> overrideKeySet = _languageOverrideProvider.keySet(locale);
+		Set<String> overrideKeySet = languageOverrideProvider.keySet(locale);
 
 		if (SetUtil.isEmpty(overrideKeySet)) {
 			return keySet;

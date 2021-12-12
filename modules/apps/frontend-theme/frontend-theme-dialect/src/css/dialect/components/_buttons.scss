@@ -1,51 +1,3 @@
-.btn {
-	border-width: 0;
-
-	&,
-	&:focus {
-		background-color: var(--btn-default-background-color);
-		border-color: var(--btn-default-border-color);
-		color: var(--btn-default-color);
-	}
-
-	&:hover {
-		background-color: var(
-			--btn-hover-background-color,
-			var(--btn-default-background-color)
-		);
-		border-color: var(
-			--btn-hover-border-color,
-			var(--btn-default-border-color)
-		);
-		color: var(--btn-hover-color, var(--btn-default-color));
-	}
-
-	&:active {
-		background-color: var(
-			--btn-active-background-color,
-			var(--btn-default-background-color)
-		);
-		border-color: var(
-			--btn-active-border-color,
-			var(--btn-default-border-color)
-		);
-		color: var(--btn-active-color);
-	}
-
-	&.disabled,
-	&:disabled {
-		background-color: var(
-			--btn-disabled-background-color,
-			var(--btn-default-background-color)
-		);
-		border-color: var(
-			--btn-disabled-border-color,
-			var(--btn-default-border-color)
-		);
-		color: var(--btn-disabled-color, var(--btn-default-color));
-	}
-}
-
 // Solid & Rounded
 
 .btn-rounded,
@@ -133,31 +85,6 @@
 			--btn-default-color: var(--color-action-neutral-default);
 			--btn-disabled-color: var(--color-action-neutral-disabled);
 			--btn-hover-color: var(--color-action-neutral-hover);
-		}
-	}
-}
-
-// Buttons with Borders
-
-.btn-borderless,
-.btn-ghost {
-	border-width: $btn-border-width;
-
-	&:not(.btn-monospaced) {
-		&.btn-sm {
-			padding: calc(#{$btn-padding-y-sm} - #{$btn-border-width})
-				calc(#{$btn-padding-x-sm} - #{$btn-border-width});
-		}
-
-		&.btn-nm,
-		&:not(.btn-sm):not(.btn-lg) {
-			padding: calc(#{$btn-padding-y} - #{$btn-border-width})
-				calc(#{$btn-padding-x} - #{$btn-border-width});
-		}
-
-		&.btn-lg {
-			padding: calc(#{$btn-padding-y-lg} - #{$btn-border-width})
-				calc(#{$btn-padding-x-lg} - #{$btn-border-width});
 		}
 	}
 }
@@ -383,30 +310,24 @@
 // Rounded
 
 .btn-rounded {
-	border-radius: $rounded-pill;
+	--border-radius-sm: #{$rounded-pill};
+	--border-radius: #{$rounded-pill};
+	--border-radius-xs: #{$rounded-pill};
 
 	&.btn-style-primary {
-		box-shadow: var(--elevation-tight-4)
+		--button-box-shadow: var(--elevation-tight-4)
 			var(--color-action-primary-disabled);
 	}
 
 	&.btn-style-secondary {
-		box-shadow: var(--elevation-tight-4)
+		--button-box-shadow: var(--elevation-tight-4)
 			var(--color-action-secondary-disabled);
 	}
 
 	&.btn-style-neutral {
-		box-shadow: var(--elevation-tight-4)
+		--button-box-shadow: var(--elevation-tight-4)
 			var(--color-action-neutral-disabled);
 	}
-}
-
-// Monospaced
-
-.btn-monospaced {
-	align-items: center;
-	display: flex;
-	justify-content: center;
 }
 
 // Unstyled

@@ -48,14 +48,17 @@ import java.util.stream.Stream;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Drew Brokke
  */
-@Component(service = ViewDisplayContextFactory.class)
 public class ViewDisplayContextFactory {
+
+	public ViewDisplayContextFactory(
+		PLOEntryLocalService ploEntryLocalService, Portal portal) {
+
+		_ploEntryLocalService = ploEntryLocalService;
+		_portal = portal;
+	}
 
 	public ViewDisplayContext create(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
@@ -243,10 +246,7 @@ public class ViewDisplayContextFactory {
 			ploItemDTOs.subList(startAndEnd[0], startAndEnd[1]));
 	}
 
-	@Reference
-	private PLOEntryLocalService _ploEntryLocalService;
-
-	@Reference
-	private Portal _portal;
+	private final PLOEntryLocalService _ploEntryLocalService;
+	private final Portal _portal;
 
 }

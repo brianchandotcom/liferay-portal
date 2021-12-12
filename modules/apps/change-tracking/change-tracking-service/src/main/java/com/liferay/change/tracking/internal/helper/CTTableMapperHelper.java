@@ -68,20 +68,18 @@ public class CTTableMapperHelper {
 	}
 
 	public CTMappingTableInfo getCTMappingTableInfo(long ctCollectionId) {
-		CTMappingTableInfo ctMappingTableInfo = null;
-
 		List<Map.Entry<Long, Long>> addedMappings = _getCTMappingChangeList(
 			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION);
 		List<Map.Entry<Long, Long>> removedMappings = _getCTMappingChangeList(
 			ctCollectionId, CTConstants.CT_CHANGE_TYPE_DELETION);
 
-		if (!addedMappings.isEmpty() || !removedMappings.isEmpty()) {
-			ctMappingTableInfo = new CTMappingTableInfoImpl(
-				_tableName, _leftColumnName, _rightColumnName, addedMappings,
-				removedMappings);
+		if (addedMappings.isEmpty() && removedMappings.isEmpty()) {
+			return null;
 		}
 
-		return ctMappingTableInfo;
+		return new CTMappingTableInfoImpl(
+			_tableName, _leftColumnName, _rightColumnName, addedMappings,
+			removedMappings);
 	}
 
 	public void publish(

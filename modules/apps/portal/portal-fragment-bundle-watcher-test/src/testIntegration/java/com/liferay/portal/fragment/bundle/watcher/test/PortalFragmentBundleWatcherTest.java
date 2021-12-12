@@ -25,7 +25,6 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -33,7 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.Attributes;
@@ -151,19 +149,16 @@ public class PortalFragmentBundleWatcherTest {
 			Callable<Bundle> startUnrelatedBundleFCallable = () -> _startBundle(
 				unrelatedFBundle);
 
-			List<Callable<Bundle>> callables = Arrays.asList(
-				installFragmentACallable, startUnrelatedBundleACallable,
-				startUnrelatedBundleBCallable, startUnrelatedBundleCCallable,
-				installFragmentBCallable, startUnrelatedBundleDCallable,
-				startUnrelatedBundleECallable, startUnrelatedBundleFCallable);
-
 			//Simulate multiple fragments and unrelated bundles being deployed
 			//together and starting at the same time
-			List<Future<Bundle>> futures = executorService.invokeAll(callables);
-
-			for (Future<Bundle> future : futures) {
-				future.get();
-			}
+			executorService.invokeAll(
+				Arrays.asList(
+					installFragmentACallable, startUnrelatedBundleACallable,
+					startUnrelatedBundleBCallable,
+					startUnrelatedBundleCCallable, installFragmentBCallable,
+					startUnrelatedBundleDCallable,
+					startUnrelatedBundleECallable,
+					startUnrelatedBundleFCallable));
 
 			Assert.assertTrue(
 				_testFragmentBundleListener.waitForFragmentAResolved());

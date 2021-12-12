@@ -29,24 +29,24 @@ import org.osgi.service.component.annotations.Reference;
 public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 
 	@Override
-	public void onAfterCreate(PLOEntry model) {
+	public void onAfterCreate(PLOEntry ploEntry) {
 		_ploLanguageOverrideProvider.clear(
-			model.getCompanyId(),
-			LocaleUtil.fromLanguageId(model.getLanguageId()));
+			ploEntry.getCompanyId(),
+			LocaleUtil.fromLanguageId(ploEntry.getLanguageId()));
 	}
 
 	@Override
-	public void onAfterRemove(PLOEntry model) {
+	public void onAfterRemove(PLOEntry ploEntry) {
 		_ploLanguageOverrideProvider.clear(
-			model.getCompanyId(),
-			LocaleUtil.fromLanguageId(model.getLanguageId()));
+			ploEntry.getCompanyId(),
+			LocaleUtil.fromLanguageId(ploEntry.getLanguageId()));
 	}
 
 	@Override
-	public void onAfterUpdate(PLOEntry originalModel, PLOEntry model) {
+	public void onAfterUpdate(PLOEntry originalPLOEntry, PLOEntry ploEntry) {
 		_ploLanguageOverrideProvider.clear(
-			model.getCompanyId(),
-			LocaleUtil.fromLanguageId(model.getLanguageId()));
+			ploEntry.getCompanyId(),
+			LocaleUtil.fromLanguageId(ploEntry.getLanguageId()));
 	}
 
 	@Reference

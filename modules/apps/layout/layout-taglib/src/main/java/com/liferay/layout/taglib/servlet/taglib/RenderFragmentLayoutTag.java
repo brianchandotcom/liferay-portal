@@ -166,7 +166,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 						layout.getGroupId(), layout.getPlid(), true);
 
 			String data = layoutPageTemplateStructure.getData(
-				_getSegmentsExperienceIds());
+				_getSegmentsExperienceId());
 
 			if (Validator.isNull(data)) {
 				return _layoutStructure;
@@ -231,20 +231,22 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return themeDisplay.getPlid();
 	}
 
-	private long[] _getSegmentsExperienceIds() {
+	private long _getSegmentsExperienceId() {
 		HttpServletRequest httpServletRequest = getRequest();
 
-		long[] selectedSegmentsExperienceIds = ParamUtil.getLongValues(
-			httpServletRequest, "segmentsExperienceId");
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
 
-		if (selectedSegmentsExperienceIds.length > 0) {
-			return selectedSegmentsExperienceIds;
+		if (selectedSegmentsExperienceId != -1) {
+			return selectedSegmentsExperienceId;
 		}
 
-		return GetterUtil.getLongValues(
+		long[] segmentsExperienceIds = GetterUtil.getLongValues(
 			httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+		return segmentsExperienceIds[0];
 	}
 
 	private LayoutStructure _mergeLayoutStructure(

@@ -112,11 +112,10 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 			if ((value == null) || value.equals(StringPool.BLANK)) {
 				deletePLOEntry(companyId, key, languageId);
-
-				continue;
 			}
-
-			addOrUpdatePLOEntry(companyId, userId, key, languageId, value);
+			else {
+				addOrUpdatePLOEntry(companyId, userId, key, languageId, value);
+			}
 		}
 	}
 

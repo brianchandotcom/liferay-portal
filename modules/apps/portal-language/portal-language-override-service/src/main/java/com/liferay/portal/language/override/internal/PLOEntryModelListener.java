@@ -16,7 +16,6 @@ package com.liferay.portal.language.override.internal;
 
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.language.override.model.PLOEntry;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,22 +30,19 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 	@Override
 	public void onAfterCreate(PLOEntry ploEntry) {
 		_ploLanguageOverrideProvider.clear(
-			ploEntry.getCompanyId(),
-			LocaleUtil.fromLanguageId(ploEntry.getLanguageId()));
+			ploEntry.getCompanyId(), ploEntry.getLanguageId());
 	}
 
 	@Override
 	public void onAfterRemove(PLOEntry ploEntry) {
 		_ploLanguageOverrideProvider.clear(
-			ploEntry.getCompanyId(),
-			LocaleUtil.fromLanguageId(ploEntry.getLanguageId()));
+			ploEntry.getCompanyId(), ploEntry.getLanguageId());
 	}
 
 	@Override
 	public void onAfterUpdate(PLOEntry originalPLOEntry, PLOEntry ploEntry) {
 		_ploLanguageOverrideProvider.clear(
-			ploEntry.getCompanyId(),
-			LocaleUtil.fromLanguageId(ploEntry.getLanguageId()));
+			ploEntry.getCompanyId(), ploEntry.getLanguageId());
 	}
 
 	@Reference

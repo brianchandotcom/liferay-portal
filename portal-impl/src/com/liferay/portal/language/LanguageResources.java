@@ -114,7 +114,7 @@ public class LanguageResources {
 
 		String overrideValue = _getOverrideValue(key, locale);
 
-		if (Validator.isNotNull(overrideValue)) {
+		if (overrideValue != null) {
 			return overrideValue;
 		}
 
@@ -208,7 +208,7 @@ public class LanguageResources {
 
 		String value = languageOverrideProvider.get(key, locale);
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			return null;
 		}
 
@@ -436,7 +436,7 @@ public class LanguageResources {
 		protected Object handleGetObject(String key) {
 			String overrideValue = _getOverrideValue(key, _locale);
 
-			if (Validator.isNotNull(overrideValue)) {
+			if (overrideValue != null) {
 				return overrideValue;
 			}
 

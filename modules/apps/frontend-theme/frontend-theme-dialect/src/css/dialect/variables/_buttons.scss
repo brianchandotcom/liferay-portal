@@ -29,6 +29,7 @@ $btn-disabled-opacity: 1;
 $inline-item-spacer-x: 0.25em; // 4px
 
 $btn: (
+	--btn-default-border-color: transparent,
 	active: (
 		background-color:
 			var(

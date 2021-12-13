@@ -1247,7 +1247,7 @@ information.
 			<trycatch>
 				<try>
 					<taskdef
-						classname="com.liferay.util.ant.ManifestHelperTask"
+						classname="com.liferay.ant.manifest.helper.ManifestHelperTask"
 						classpathref="project.classpath"
 						name="liferay-manifest-helper"
 					/>
@@ -1257,7 +1257,7 @@ information.
 					<ant dir="${project.dir}/util-java" inheritAll="false" target="compile" />
 
 					<taskdef
-						classname="com.liferay.util.ant.ManifestHelperTask"
+						classname="com.liferay.ant.manifest.helper.ManifestHelperTask"
 						classpathref="project.classpath"
 						name="liferay-manifest-helper"
 					/>

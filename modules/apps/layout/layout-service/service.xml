@@ -34,16 +34,16 @@
 		<finder name="Plid" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="plid" />
 		</finder>
-		<finder name="C_C" return-type="Collection" where="containerKey IS NOT NULL">
+		<finder name="CN_CPK" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="C_C_CT" return-type="Collection" where="containerKey IS NOT NULL">
+		<finder name="C_CN_CT" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="containerType" />
 		</finder>
-		<finder name="C_C_T" return-type="Collection" where="containerKey IS NOT NULL">
+		<finder name="CN_CPK_T" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="type" />
@@ -53,7 +53,7 @@
 			<finder-column name="containerType" />
 			<finder-column name="plid" />
 		</finder>
-		<finder name="C_C_CK_CT_P" return-type="LayoutClassedModelUsage" unique="true">
+		<finder name="CN_CPK_CK_CT_P" return-type="LayoutClassedModelUsage" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="containerKey" />

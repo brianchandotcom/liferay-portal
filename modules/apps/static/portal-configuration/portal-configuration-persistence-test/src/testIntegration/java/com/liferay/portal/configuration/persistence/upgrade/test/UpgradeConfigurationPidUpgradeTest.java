@@ -33,6 +33,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.nio.file.Files;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,9 +96,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 				_SERVICE_FACTORY_PID + separator + "default.config");
 
-			if (file.exists()) {
-				file.delete();
-			}
+			Files.deleteIfExists(file.toPath());
 		}
 	}
 
@@ -204,7 +204,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
 
 		if (!file.exists()) {
-			file.createNewFile();
+			Files.createFile(file.toPath());
 		}
 
 		_createConfiguration(

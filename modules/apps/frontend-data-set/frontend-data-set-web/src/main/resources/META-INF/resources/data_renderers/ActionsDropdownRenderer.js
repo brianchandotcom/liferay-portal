@@ -111,7 +111,7 @@ export function handleAction(
 
 		window.open(url);
 	}
-	else if (target === 'self') {
+	else if (target === 'download') {
 		event.preventDefault();
 
 		window.open(url, '_self');
@@ -416,7 +416,7 @@ ActionsDropdownRenderer.propTypes = {
 				'headless',
 				'inlineEdit',
 				'blank',
-				'self',
+				'download',
 			]),
 		})
 	),

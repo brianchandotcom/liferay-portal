@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.ant;
+package com.liferay.ant.get.file.set;
 
 import java.io.File;
 import java.io.IOException;

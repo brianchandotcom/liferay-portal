@@ -1,5 +1,6 @@
 import ClayButton from '@clayui/button';
 import {DropDown} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 import {POSSIBLE_STATUS_AMOUNT} from '../Subscriptions';
 
@@ -25,12 +26,12 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 
 	return (
 		<div className="d-flex mb-4">
-			<h5 className="mr-2 my-auto">Status:</h5>
+			<h6 className="mr-2 my-auto">Status:</h6>
 
 			<DropDown
 				active={active}
-				closeOnClickOutside={false}
-				onActiveChange={() => setActive((prevState) => !prevState)}
+				closeOnClickOutside={true}
+				onActiveChange={setActive}
 				trigger={
 					<ClayButton
 						className="font-weight-semi-bold shadow-none text-brand-primary"
@@ -43,7 +44,8 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 								? ' None '
 								: selectedStatus.join(', ')
 						}`}{' '}
-						&#8595;
+						
+						<ClayIcon symbol="caret-bottom" />
 					</ClayButton>
 				}
 			>

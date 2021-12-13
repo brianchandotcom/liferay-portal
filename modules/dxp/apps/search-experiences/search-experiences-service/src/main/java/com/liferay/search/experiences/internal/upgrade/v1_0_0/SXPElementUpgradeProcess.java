@@ -16,7 +16,7 @@ package com.liferay.search.experiences.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.search.experiences.internal.util.SXPElementDataUtil;
+import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
 /**
@@ -35,7 +35,7 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompany(
-			company -> SXPElementDataUtil.addSXPElements(
+			company -> CompanyModelListener.addSXPElements(
 				company, _sxpElementLocalService));
 	}
 

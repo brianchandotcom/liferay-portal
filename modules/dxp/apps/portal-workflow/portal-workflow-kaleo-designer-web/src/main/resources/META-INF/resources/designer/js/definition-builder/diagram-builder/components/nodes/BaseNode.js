@@ -11,11 +11,17 @@
 
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
+import {Handle} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import {singleEventObserver} from '../../../util/EventObserver';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
+import {sourceHandles, targetHandles} from './nodeHandles';
 import {nodeDescription} from './utils';
+
+let connectionNodeId = '';
+let handleConnect = false;
 
 export default function BaseNode({
 	className,
@@ -27,12 +33,47 @@ export default function BaseNode({
 	type,
 	...otherProps
 }) {
+	const sourcehandlesRef = useRef();
+	const targethandlesRef = useRef();
 	const {defaultLanguageId, selectedLanguageId} = useContext(
 		DefinitionBuilderContext
 	);
 	const {availableArea, selectedNode, setSelectedNode} = useContext(
 		DiagramBuilderContext
 	);
+
+	useEffect(() => {
+		if (sourcehandlesRef?.current && targethandlesRef?.current) {
+			const handleConnectEndSubscribe = singleEventObserver.subscribe(
+				'handle-connect-end',
+				() => {
+					connectionNodeId = '';
+					handleConnect = false;
+
+					sourcehandlesRef.current.style.zIndex = '-1';
+					targethandlesRef.current.style.zIndex = '-2';
+				}
+			);
+
+			const handleConnectStartSubscribe = singleEventObserver.subscribe(
+				'handle-connect-start',
+				(nodeId) => {
+					connectionNodeId = nodeId;
+					handleConnect = true;
+
+					if (id !== nodeId) {
+						sourcehandlesRef.current.style.zIndex = '-2';
+						targethandlesRef.current.style.zIndex = '-1';
+					}
+				}
+			);
+
+			return () => {
+				singleEventObserver.unsubscribe(handleConnectEndSubscribe);
+				singleEventObserver.unsubscribe(handleConnectStartSubscribe);
+			};
+		}
+	});
 
 	const borderAreaColor = availableArea ? 'blue' : 'red';
 	const displayBorderArea = !descriptionSidebar && availableArea !== null;
@@ -63,10 +104,63 @@ export default function BaseNode({
 		nodeLabel = label[defaultLanguageId];
 	}
 
+	const displaySourceHandles = (display) => () => {
+		if (sourcehandlesRef?.current && targethandlesRef?.current) {
+			const handleRef = handleConnect
+				? targethandlesRef
+				: sourcehandlesRef;
+
+			if (display && connectionNodeId !== id) {
+				handleRef.current.style.opacity = '1';
+			}
+			else {
+				targethandlesRef.current.style.opacity = '0';
+				sourcehandlesRef.current.style.opacity = '0';
+			}
+		}
+	};
+
 	return (
 		<div className="base-node">
 			{displayBorderArea && (
 				<div className={`node-border-area ${borderAreaColor}`} />
+			)}
+
+			{!descriptionSidebar && (
+				<div
+					className="node-handle-area"
+					onMouseEnter={displaySourceHandles(true)}
+					onMouseLeave={displaySourceHandles(false)}
+				>
+					<div
+						className="handles handles-default"
+						ref={sourcehandlesRef}
+					>
+						{type !== 'end' &&
+							sourceHandles.map((handle) => (
+								<Handle
+									id={handle.id}
+									key={handle.id}
+									position={handle.position}
+									style={handle.style}
+									type={handle.type}
+								/>
+							))}
+					</div>
+
+					<div className="handles" ref={targethandlesRef}>
+						{type !== 'start' &&
+							targetHandles.map((handle) => (
+								<Handle
+									id={handle.id}
+									key={handle.id}
+									position={handle.position}
+									style={handle.style}
+									type={handle.type}
+								/>
+							))}
+					</div>
+				</div>
 			)}
 
 			<div

@@ -76,3 +76,24 @@
 .node.selected {
 	border: 2px solid #80acff;
 }
+
+.node-handle-area {
+	height: 110px;
+	left: -18px;
+	position: absolute;
+	top: -18px;
+	width: 290px;
+	z-index: -1;
+
+	.handles {
+		height: 110px;
+		opacity: 0;
+		position: absolute;
+		width: 290px;
+		z-index: -2;
+
+		&-default {
+			z-index: -1;
+		}
+	}
+}

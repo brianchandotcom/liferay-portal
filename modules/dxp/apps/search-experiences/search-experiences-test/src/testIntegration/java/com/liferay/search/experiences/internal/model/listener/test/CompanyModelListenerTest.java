@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.instance.util.test;
+package com.liferay.search.experiences.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -30,14 +30,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
 /**
  * @author André de Oliveira
  */
 @RunWith(Arquillian.class)
-public class SXPElementDataUtilTest {
+public class CompanyModelListenerTest {
 
 	@ClassRule
 	@Rule
@@ -46,13 +43,8 @@ public class SXPElementDataUtilTest {
 
 	@Test
 	public void testSXPElements() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(_modelListener.getClass());
-
-		Class<?> clazz = bundle.loadClass(
-			"com.liferay.search.experiences.internal.util.SXPElementDataUtil");
-
 		List<SXPElement> sxpElements = ReflectionTestUtil.getFieldValue(
-			clazz, "_sxpElements");
+			_modelListener, "_sxpElements");
 
 		Assert.assertNotEquals(0, sxpElements.size());
 

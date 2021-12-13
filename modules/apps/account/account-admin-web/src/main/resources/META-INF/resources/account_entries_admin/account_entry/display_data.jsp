@@ -22,8 +22,6 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_ALLOWED_TYPES), AccountConstants.ACCOUNT_ENTRY_TYPES);
 %>
 
-<aui:model-context bean="<%= accountEntryDisplay.getAccountEntry() %>" model="<%= AccountEntry.class %>" />
-
 <clay:sheet-section>
 	<h3 class="sheet-subtitle">
 		<%= LanguageUtil.get(request, "account-display-data") %>
@@ -33,7 +31,7 @@ String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.
 		<clay:col
 			md="6"
 		>
-			<aui:input label="account-name" name="name" />
+			<aui:input bean="<%= accountEntryDisplay.getAccountEntry() %>" label="account-name" model="<%= AccountEntry.class %>" name="name" />
 
 			<c:choose>
 				<c:when test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">

@@ -147,9 +147,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 			dictionary.get("service.pid"));
 	}
 
-	private void _createFileConfiguration(Character separator)
-		throws Exception {
-
+	private void _createFileConfiguration(char separator) throws Exception {
 		String fileName = _SERVICE_FACTORY_PID + separator + "default.config";
 
 		File file = new File(

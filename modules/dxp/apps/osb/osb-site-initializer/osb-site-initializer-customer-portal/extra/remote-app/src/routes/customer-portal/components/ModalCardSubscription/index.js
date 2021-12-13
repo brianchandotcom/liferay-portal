@@ -37,40 +37,40 @@ const ModalCardSubscription = ({
 			expanded: true,
 			header: {
 				name: 'Start-End Date',
-			}
+			},
 		},
 		{
 			accessor: 'provisioned',
 			align: 'center',
 			header: {
 				name: 'Provisioned',
-			}
+			},
 		},
 		{
 			accessor: 'quantity',
 			align: 'center',
 			header: {
 				name: 'Purchased',
-			}
+			},
 		},
 		{
 			accessor: 'instance-size',
 			align: 'center',
 			header: {
 				name: 'Instance Size',
-			}
+			},
 		},
 		{
 			accessor: 'subscription-term-status',
 			align: 'center',
 			header: {
 				name: 'Status',
-			}
+			},
 		},
 	];
 
 	return (
-		<ClayModal center={true} observer={observer} size="lg">
+		<ClayModal center observer={observer} size="lg">
 			<div className="pt-4 px-4">
 				<div className="d-flex justify-content-between mb-4">
 					<div className="flex-row mb-1">
@@ -96,24 +96,34 @@ const ModalCardSubscription = ({
 						columns={columns}
 						hasPagination={totalCount >= 5}
 						itemsPerPage={5}
-						rows={accountSubscriptionTermsItems.map(({endDate, instanceSize, provisioned, quantity, startDate, subscriptionTermStatus}) => ({
-							'instance-size': instanceSize || '-',
-							'provisioned': provisioned || '-',
-							'quantity': quantity || '-',
-							'start-end-date': `${dateToLocalFormat(
-								startDate
-							)} - ${dateToLocalFormat(endDate)}`,
-							'subscription-term-status': (subscriptionTermStatus && (
-								<StatusTag
-									currentStatus={
-										status[
-											`${subscriptionTermStatus.toLowerCase()}`
-										]
-									}
-								/>
-							)) ||
-								'-'
-						}))}
+						rows={accountSubscriptionTermsItems.map(
+							({
+								endDate,
+								instanceSize,
+								provisioned,
+								quantity,
+								startDate,
+								subscriptionTermStatus,
+							}) => ({
+								'instance-size': instanceSize || '-',
+								'provisioned': provisioned || '-',
+								'quantity': quantity || '-',
+								'start-end-date': `${dateToLocalFormat(
+									startDate
+								)} - ${dateToLocalFormat(endDate)}`,
+								'subscription-term-status':
+									(subscriptionTermStatus && (
+										<StatusTag
+											currentStatus={
+												status[
+													`${subscriptionTermStatus.toLowerCase()}`
+												]
+											}
+										/>
+									)) ||
+									'-',
+							})
+						)}
 						setActivePage={setActivePage}
 						tableVerticalAlignment="middle"
 						totalCount={totalCount}

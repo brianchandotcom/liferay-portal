@@ -210,7 +210,6 @@ definition {
 		}
 	}
 
-
 	macro viewOrderTable {
         var rowNumber = "1";
 
@@ -223,7 +222,6 @@ definition {
             var rowNumber = MathUtil.sum("${rowNumber}", "1");
         }
     }
-
 
 	macro viewTrackWorkflowStructure {
 		SelectFrame(
@@ -245,8 +243,19 @@ definition {
 		AssertElementPresent(
 			key_nodeStructure = "${taskNode}",
 			locator1 = "WorkflowSubmissions#TRACK_WORKFLOW_STRUCTURE");
+	}
 
+	macro viewVersionOnDetails {
+		AssertElementPresent(
+			locator1 = "KaleoFormsAdmin#WORKFLOW_VERSION",
+			value1 = "${workflowVersion}");
+	}
 
+	macro viewWorkflowInProcessMessage {
+		AssertTextEquals(
+			key_errorMessage = "${errorMessage}",
+			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
+			value1 = "${errorMessage}");
 	}
 
 }

@@ -374,14 +374,13 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		KaleoFormsNewSubmissions.viewEllipsisMenu(menuItem = "Track Workflow");		
+		KaleoFormsNewSubmissions.viewEllipsisMenu(menuItem = "Track Workflow");
 
 		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(
-			startState = "Created",
-			endState = "Approved",
 			currentTask = "Review",
+			endState = "Approved",
+			startState = "Created",
 			taskNode = "Update");
-
 	}
 
 	@description = "Verify that the user can view the column values on the page after submit the process."

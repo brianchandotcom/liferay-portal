@@ -61,11 +61,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_SHORTCUT_CHECKBOX</td>
+	<td>//div[contains(@class,'card') and descendant::span[contains(@class, 'state-icon')]] [contains(.,'${key_card}')] //input[@type='checkbox']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>CARD_SHORTCUT_ELLIPSIS</td>
 	<td>//div[contains(@class,'card') and descendant::span[contains(@class, 'state-icon')]] [contains(.,'${key_card}')] //div[contains(@class, 'dropdown')]</td>
 	<td></td>
 </tr>
+<tr>
 	<td>CARD_STICKER</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'sticker-overlay')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_icon}')]</td>
 	<td></td>

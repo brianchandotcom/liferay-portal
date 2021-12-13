@@ -308,8 +308,10 @@ definition {
 	}
 
 	macro editSegment {
-		if (!(IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "SEGMENT"))) {
-			ACSegments.searchSegment(findSegment = "${searchTerm}");
+		var key_segmentName = "${segmentName}";
+
+		if (IsElementNotPresent(locator1 = "ACSegments#SELECT_SEGMENT", value1 = "${segmentName}")) {
+			ACSegments.searchSegment(findSegment = "${segmentName}");
 
 			ACUtils.clickKebab();
 		}

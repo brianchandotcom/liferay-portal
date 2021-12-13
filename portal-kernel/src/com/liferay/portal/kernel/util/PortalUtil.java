@@ -949,14 +949,6 @@ public class PortalUtil {
 		return _portal.getFullName(firstName, middleName, lastName);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getGlobalLibDir() {
-		return _portal.getGlobalLibDir();
-	}
-
 	public static String getGoogleGadgetURL(
 			Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException {

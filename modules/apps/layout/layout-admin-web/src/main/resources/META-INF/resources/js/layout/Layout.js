@@ -17,7 +17,6 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
 import MillerColumns from '../miller_columns/MillerColumns';
-import actionHandlers from './actionHandlers';
 
 const Layout = ({
 	getItemChildrenURL,
@@ -172,7 +171,6 @@ const Layout = ({
 			<Breadcrumbs entries={breadcrumbEntries} />
 
 			<MillerColumns
-				actionHandlers={actionHandlers}
 				initialColumns={layoutColumns}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}

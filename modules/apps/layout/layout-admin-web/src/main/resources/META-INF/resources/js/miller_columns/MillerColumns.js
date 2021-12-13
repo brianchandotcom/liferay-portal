@@ -69,7 +69,6 @@ const getItemsMap = (columns, oldItems = new Map()) => {
 const noop = () => {};
 
 const MillerColumns = ({
-	actionHandlers,
 	initialColumns = [],
 	namespace,
 	onColumnsChange = noop,
@@ -266,7 +265,6 @@ const MillerColumns = ({
 			<div className="bg-white miller-columns-row" ref={ref}>
 				{columns.map((column, index) => (
 					<MillerColumnsColumn
-						actionHandlers={actionHandlers}
 						columnItems={column.items}
 						columnsContainer={ref}
 						items={items}

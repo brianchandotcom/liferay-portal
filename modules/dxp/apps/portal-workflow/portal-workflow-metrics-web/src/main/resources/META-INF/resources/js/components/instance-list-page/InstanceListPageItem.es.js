@@ -195,7 +195,6 @@ function Item({totalCount, ...instance}) {
 
 function QuickActionMenu({disabled, instance, setShowInstanceTrackerModal}) {
 	const {openModal, setSingleTransition} = useContext(ModalContext);
-	const {workflowInstanceTrackerEnabled} = useContext(AppContext);
 	const {setSelectedItems} = useContext(InstanceListContext);
 	const {transitions = [], taskNames = []} = instance;
 
@@ -211,24 +210,18 @@ function QuickActionMenu({disabled, instance, setShowInstanceTrackerModal}) {
 		onClick: () => handleClick('bulkUpdateDueDate', 'updateDueDate'),
 	};
 
-	let kebabItems = [
+	const kebabItems = [
 		{
 			icon: 'change',
 			label: Liferay.Language.get('reassign-task'),
 			onClick: () => handleClick('bulkReassign', 'singleReassign'),
 		},
 		updateDueDateItem,
+		{
+			label: Liferay.Language.get('track-workflow'),
+			onClick: setShowInstanceTrackerModal,
+		},
 	];
-
-	if (workflowInstanceTrackerEnabled) {
-		kebabItems = [
-			...kebabItems,
-			{
-				label: Liferay.Language.get('track-workflow'),
-				onClick: setShowInstanceTrackerModal,
-			},
-		];
-	}
 
 	if (transitions.length > 0) {
 		const transitionItems = [

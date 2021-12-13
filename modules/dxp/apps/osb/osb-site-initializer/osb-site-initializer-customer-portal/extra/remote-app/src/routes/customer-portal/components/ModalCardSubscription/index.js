@@ -106,7 +106,13 @@ const ModalCardSubscription = ({
 						<h2 className="text-neutral-10">{`${subscriptionGroup} ${subscriptionName}`}</h2>
 					</div>
 
-					<BaseButton appendIcon='times' aria-label="close" className="align-self-start" displayType="unstyled" onClick={onClose} />
+					<BaseButton
+						appendIcon="times"
+						aria-label="close"
+						className="align-self-start"
+						displayType="unstyled"
+						onClick={onClose}
+					/>
 				</div>
 
 				<div>

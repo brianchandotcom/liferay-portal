@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -69,6 +70,9 @@ public class GroupSearchProviderTest {
 	public void setUpClass() {
 		_originalGroupsComplexSQLClassNames =
 			PropsValues.GROUPS_COMPLEX_SQL_CLASS_NAMES;
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@AfterClass
@@ -76,6 +80,8 @@ public class GroupSearchProviderTest {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
 			_originalGroupsComplexSQLClassNames);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -183,5 +189,6 @@ public class GroupSearchProviderTest {
 	private GroupSearchProvider _groupSearchProvider;
 
 	private String[] _originalGroupsComplexSQLClassNames;
+	private PermissionChecker _originalPermissionChecker;
 
 }

@@ -1,91 +1,54 @@
-.entry-category {
-	color: var(--gray-400);
-	font-family: var(--font-family-monospace);
-	z-index: 1;
-}
-
-.entry-header {
-	color: var(--white);
-	padding-top: 10rem;
-	position: relative;
-}
-
 .entry-header::before {
 	background-color: var(--brand-color-1);
 	content: '';
-	height: calc(100% - 340px);
+	height: calc(100% - 30%);
 	position: absolute;
 	right: 0;
 	top: 0;
 	width: 100%;
 }
 
-.entry-header-content-box {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-}
-
-.entry-image {
-	box-shadow: var(--box-shadow-lg);
-}
-
-.entry-subtitle {
+.entry-header .entry-subtitle {
 	font-size: var(--font-size-lg);
 	max-width: 100%;
-	opacity: 90%;
-	width: 450px;
+	width: 420px;
 }
 
-.entry-title {
-	font-size: var(--display3-size);
-	font-weight: var(--display3-weight);
+.entry-header .entry-title {
+	font-size: var(--display4-size);
+	font-weight: var(--display4-weight);
 	line-height: var(--display-line-height);
 	max-width: 100%;
-	width: 720px;
-	z-index: 1;
+	width: 700px;
 }
 
-.image-author {
-	color: var(--gray-700);
-	font-family: var(--font-family-monospace);
+.entry-header .image-author {
+	color: var(--gray-900);
 	font-size: var(--font-size-sm);
 }
 
-.title-highlight {
-	color: var(--brand-color-4);
-}
-
 @media (min-width: 1280px) {
+	.entry-header .container-fluid,
+	.entry-header .container-fluid-max-xl {
+		padding: 0;
+	}
 }
 
-@media (max-width: 768px) {
-	.entry-header {
-		padding-top: var(--spacer-8);
-	}
-	.entry-header::before {
-		height: calc(100% - 240px);
-	}
-
-	.entry-title {
-		font-size: var(--display4-size);
-		width: 100%;
+@media (max-width: 1280px) {
+	.entry-header .image-author {
+		bottom: -48px;
+		color: var(--gray-900);
+		left: 0;
+		transform: none;
 	}
 }
 
 @media (max-width: 576px) {
-	.entry-header {
-		padding-top: var(--spacer-7);
+	.entry-header .entry-subtitle {
+		font-size: 18px;
 	}
-	.entry-header::before {
-		height: calc(100% - 150px);
-	}
-	.entry-subtitle {
-		font-size: var(--font-size-base);
-	}
-	.entry-title {
+
+	.entry-header .entry-title {
 		font-size: 32px;
-		width: 100%;
 	}
 }

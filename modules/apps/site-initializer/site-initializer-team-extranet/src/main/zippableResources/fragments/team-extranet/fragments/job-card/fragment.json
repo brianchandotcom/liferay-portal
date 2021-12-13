@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Position Card",
+	"name": "Job Card",
 	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

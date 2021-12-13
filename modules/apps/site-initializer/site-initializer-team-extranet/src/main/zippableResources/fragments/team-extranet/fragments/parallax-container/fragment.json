@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Parallax",
+	"name": "Parallax Container",
 	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Subscribe Section",
+	"name": "Blog Header",
 	"thumbnailPath": "thumbnail.png",
-	"type": "component"
+	"type": "section"
 }

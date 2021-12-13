@@ -35,7 +35,7 @@
 }
 
 .team-extranet-footer-social {
-	transform: translateX(-8px);
+	transform: translateX(-6px);
 }
 
 .team-extranet-footer-social a:not(:first-child) {
@@ -46,13 +46,19 @@
 	width: 20px;
 }
 
-@media (max-width: 992px) {
-	.team-extranet-footer .navbar-nav {
-		flex-direction: column;
+@media (max-width: 1280px) {
+	.team-extranet-footer .language-selector {
+		transform: translateX(0);
 	}
+}
 
+@media (max-width: 992px) {
 	.team-extranet-footer .language-selector {
 		font-weight: var(--font-weight-bold);
 		transform: none;
+	}
+
+	.team-extranet-footer .navbar-nav {
+		flex-direction: column;
 	}
 }

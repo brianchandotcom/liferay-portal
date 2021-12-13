@@ -1,7 +1,7 @@
 .member-header {
 	color: var(--white);
-	padding-top: 12rem;
-	position: relative;
+	padding-left: var(--spacer-2);
+	padding-right: var(--spacer-2);
 }
 
 .member-header::before {
@@ -14,24 +14,11 @@
 	width: 100%;
 }
 
-.member-image {
-	box-shadow: var(--box-shadow-lg);
-	width: 480px;
-}
-
-@media (min-width: 1280px) {
-}
-
-@media (max-width: 768px) {
-	.member-header {
-		padding-top: var(--spacer-8);
-	}
+.member-header .member-image {
+	width: 420px;
 }
 
 @media (max-width: 576px) {
-	.member-header {
-		padding-top: var(--spacer-7);
-	}
 	.member-header::before {
 		height: calc(100% - 150px);
 	}

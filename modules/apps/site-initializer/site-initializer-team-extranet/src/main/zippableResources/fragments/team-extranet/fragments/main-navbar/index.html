@@ -1,24 +1,22 @@
 [#assign publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() +
 themeDisplay.getSiteGroup().getFriendlyURL() /]
 
-<nav class="main-navbar navbar navbar-expand-lg">
-	<div class="container-fluid container-fluid-max-xl">
-		<a class="d-inline-flex site-logo" href="${publicFriendlyURL}">
-		<img alt="" class="navbar-logo" data-lfr-editable-id="imageLogo" data-lfr-editable-type="image" src="[resources:site_logo.svg]" />
-		</a>
+<nav class="main-navbar navbar navbar-expand-lg p-lg-0 px-0 py-2">
+	<a class="d-inline-flex site-logo" href="${publicFriendlyURL}">
+	<img alt="" class="navbar-logo" data-lfr-editable-id="imageLogo" data-lfr-editable-type="image" src="[resources:site_logo_i.svg]" />
+	</a>
 
-	<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="border-0 navbar-toggler rounded-0" data-target="#navbarSupportedContent" type="button">
-		<img alt="" class="btn btn-menu btn-monospaced" src="[resources:icon_menu.svg]" />
+<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="border-0 navbar-toggler rounded-0" data-target="#navbarSupportedContent" type="button">
+	<img alt="" class="btn btn-menu btn-monospaced" src="[resources:icon_menu.svg]" />
 
-		<img alt="" class="btn btn-close btn-monospaced" src="[resources:icon_close.svg]" />
+	<img alt="" class="btn btn-close btn-monospaced" src="[resources:icon_close.svg]" />
+	</button>
+
+	<div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
+		<lfr-widget-nav id="nav"></lfr-widget-nav>
+
+	<button class="btn btn-borderless btn-monospaced btn-search mt-1 mt-lg-0" type="submit">
+			<img alt="" src="[resources:icon_search.svg]" width="18" />
 		</button>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<lfr-widget-nav id="nav"></lfr-widget-nav>
-
-		<button class="btn btn-borderless btn-monospaced ml-2" type="submit">
-				<img alt="" src="[resources:icon_search.svg]" />
-			</button>
-		</div>
 	</div>
 </nav>

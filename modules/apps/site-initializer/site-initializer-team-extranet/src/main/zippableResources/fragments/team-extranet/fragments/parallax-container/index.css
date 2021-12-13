@@ -1,0 +1,6 @@
+.parallax-container {
+	background-attachment: fixed;
+	background-image: url([resources:parallax_2.png]);
+	background-repeat: no-repeat;
+	background-size: cover;
+}

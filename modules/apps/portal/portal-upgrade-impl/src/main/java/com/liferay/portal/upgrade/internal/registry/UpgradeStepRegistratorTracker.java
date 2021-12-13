@@ -126,12 +126,12 @@ public class UpgradeStepRegistratorTracker {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Release> serviceReference, Void tracked) {
+			ServiceReference<Release> serviceReference, Void v) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Release> serviceReference, Void tracked) {
+			ServiceReference<Release> serviceReference, Void v) {
 		}
 
 		private InitialReleaseServiceTrackerCustomizer(

@@ -128,7 +128,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public String getCartPaymentURL(Long cartId) throws Exception {
+	public String getCartPaymentURL(Long cartId, String callbackURL)
+		throws Exception {
+
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
@@ -159,9 +161,15 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		}
 
 		sb.append("nextStep=");
-		sb.append(
-			URLCodec.encodeURL(
-				_getOrderConfirmationCheckoutStepURL(commerceOrder)));
+
+		if (Validator.isNotNull(callbackURL)) {
+			sb.append(callbackURL);
+		}
+		else {
+			sb.append(
+				URLCodec.encodeURL(
+					_getOrderConfirmationCheckoutStepURL(commerceOrder)));
+		}
 
 		return sb.toString();
 	}

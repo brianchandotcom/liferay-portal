@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -58,6 +59,17 @@ public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 
 		if (mbDiscussion == null) {
 			return;
+		}
+
+		if (stagedModel instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)stagedModel;
+
+			if ((groupedModel.getGroupId() !=
+					portletDataContext.getGroupId()) ||
+				(groupedModel.getGroupId() != mbDiscussion.getGroupId())) {
+
+				return;
+			}
 		}
 
 		Group group = GroupLocalServiceUtil.fetchGroup(

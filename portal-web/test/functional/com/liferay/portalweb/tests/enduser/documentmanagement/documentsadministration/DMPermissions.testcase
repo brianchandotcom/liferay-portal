@@ -1326,13 +1326,65 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136846. It checks that a site member cannot delete a shortcut without permissions."
-	@ignore = "true"
 	@priority = "3"
 	test SiteMemberCannotDeleteShortcut {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-136846 SiteMemberCannotDeleteShortcut pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		DMDocument.addDMShortcutPG(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "${siteName}");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconCard.viewMenuItemNotPresentOnCardShortcut(
+			card = "DM Document Title",
+			item = "Move to Recycle Bin");
+
+		LexiconCard.checkCardShortcutCheckbox(card = "DM Document Title");
+
+		ManagementBar.viewItemsDisabled(textList = "trash");
 	}
 
 	@description = "This is a test for LPS-136847. It checks that a site member cannot override a checkout process without permissions."

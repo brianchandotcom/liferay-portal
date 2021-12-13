@@ -35,6 +35,8 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -159,6 +161,7 @@ public class BundleSiteInitializerTest {
 			_assertCPDefinition(group);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
+			_assertDispatchTrigger(group);
 			_assertDLFileEntry(group);
 			_assertFragmentEntries(group);
 			_assertJournalArticles(group);
@@ -440,6 +443,28 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+	}
+
+	private void _assertDispatchTrigger(Group group) throws Exception {
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.fetchDispatchTrigger(
+				group.getCompanyId(), "Test Job Scheduler");
+
+		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			"true",
+			dispatchTaskSettingsUnicodeProperties.getProperty("statistics"));
+
+		Assert.assertFalse(dispatchTrigger.isSystem());
+
+		Assert.assertTrue(dispatchTrigger.isActive());
+
+		Assert.assertEquals(0, dispatchTrigger.getDispatchTaskClusterMode());
+
+		Assert.assertEquals(
+			"talend", dispatchTrigger.getDispatchTaskExecutorType());
 	}
 
 	private void _assertDLFileEntry(Group group) throws Exception {
@@ -834,6 +859,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Inject
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

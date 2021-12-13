@@ -1,0 +1,13 @@
+{
+	"active": true,
+	"dispatchTaskClusterMode": 0,
+	"dispatchTaskExecutorType": "talend",
+	"name": "Test Job Scheduler",
+	"neverEnd": false,
+	"overlapAllowed": false,
+	"properties": {
+		"statistics": "true"
+	},
+	"system": false,
+	"unique": true
+}

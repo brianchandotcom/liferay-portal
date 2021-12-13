@@ -63,8 +63,7 @@ definition {
 
 		ManageCalendar.addCalendar(calendarName = "test");
 
-		ManageCalendar.viewCalendarNameByColumn(
-			nameList = "test");
+		ManageCalendar.viewCalendarNameByColumn(nameList = "test");
 	}
 
 	@description = "LRQA-71360 - Verify that the user can not delete a Default Calendar"

@@ -1,55 +1,5 @@
 definition {
 
-	macro viewColorByColumn {
-		if (isSet(colorList)) {
-			var rowNumber = "1";
-
-			for (var color : list "${colorList}") {
-				AssertElementPresent(
-					key_color = "${color}",
-					key_rowNumber = "${rowNumber}",
-					locator1 = "ManageCalendar#COLOR_BY_COLUMN");
-
-				var rowNumber = MathUtil.sum("${rowNumber}", "1");
-			}
-		}
-		else {
-			AssertElementPresent(
-				key_color = "${color}",
-				key_rowNumber = "${rowNumber}",
-				locator1 = "ManageCalendar#COLOR_BY_COLUMN");
-		}
-	}
-
-	macro viewTableDisplaysColumns {
-		for (var tableHeader : list "Name,Description,Color,Default") {
-			AssertElementPresent(
-				key_tableHeader = "${tableHeader}",
-				locator1 = "LexiconTable#TABLE_HEADER");
-		}
-	}
-
-	macro viewCalendarNameByColumn {
-		if (isSet(nameList)) {
-			var rowNumber = "1";
-
-			for (var name : list "${nameList}") {
-				AssertElementPresent(
-					key_name = "${name}",
-					key_rowNumber = "${rowNumber}",
-					locator1 = "ManageCalendar#NAME_BY_COLUMN");
-
-				var rowNumber = MathUtil.sum("${rowNumber}", "1");
-			}
-		}
-		else {
-			AssertElementPresent(
-				key_name = "${name}",
-				key_rowNumber = "${rowNumber}",
-				locator1 = "ManageCalendar#NAME_BY_COLUMN");
-		}
-	}
-
 	macro addCalendar {
 		Click(locator1 = "ManageCalendar#ADD_CALENDAR");
 
@@ -128,6 +78,48 @@ definition {
 		Navigator.gotoBack();
 	}
 
+	macro viewCalendarNameByColumn {
+		if (isSet(nameList)) {
+			var rowNumber = "1";
+
+			for (var name : list "${nameList}") {
+				AssertElementPresent(
+					key_name = "${name}",
+					key_rowNumber = "${rowNumber}",
+					locator1 = "ManageCalendar#NAME_BY_COLUMN");
+
+				var rowNumber = ${rowNumber} + 1;
+			}
+		}
+		else {
+			AssertElementPresent(
+				key_name = "${name}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "ManageCalendar#NAME_BY_COLUMN");
+		}
+	}
+
+	macro viewColorByColumn {
+		if (isSet(colorList)) {
+			var rowNumber = "1";
+
+			for (var color : list "${colorList}") {
+				AssertElementPresent(
+					key_color = "${color}",
+					key_rowNumber = "${rowNumber}",
+					locator1 = "ManageCalendar#COLOR_BY_COLUMN");
+
+				var rowNumber = ${rowNumber} + 1;
+			}
+		}
+		else {
+			AssertElementPresent(
+				key_color = "${color}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "ManageCalendar#COLOR_BY_COLUMN");
+		}
+	}
+
 	macro viewDefaultOptionOfCalendar {
 		AssertElementPresent(
 			key_calendarName = "${calendarName}",
@@ -157,6 +149,14 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		Refresh();
+	}
+
+	macro viewTableDisplaysColumns {
+		for (var tableHeader : list "Name,Description,Color,Default") {
+			AssertElementPresent(
+				key_tableHeader = "${tableHeader}",
+				locator1 = "LexiconTable#TABLE_HEADER");
+		}
 	}
 
 }

@@ -603,7 +603,10 @@ public class EditAssetListDisplayContext {
 			_getAssetListEntrySegmentsEntryRelJSONArray()
 		).put(
 			"assetListEntryValid",
-			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
+			() -> {
+				AssetListEntry assetListEntry = getAssetListEntry();
+				return Validator.isNotNull(assetListEntry.getAssetEntryType());
+			}
 		).put(
 			"createNewSegmentURL",
 			() -> PortletURLBuilder.createRenderURL(
@@ -1234,11 +1237,11 @@ public class EditAssetListDisplayContext {
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
 		List<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelList =
+			assetListEntrySegmentsEntryRels =
 				getAssetListEntrySegmentsEntryRels();
 
 		Stream<AssetListEntrySegmentsEntryRel> stream =
-			assetListEntrySegmentsEntryRelList.stream();
+			assetListEntrySegmentsEntryRels.stream();
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);

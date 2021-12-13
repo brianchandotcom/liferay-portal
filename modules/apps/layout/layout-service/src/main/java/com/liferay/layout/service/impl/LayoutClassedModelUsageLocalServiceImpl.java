@@ -94,7 +94,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public void deleteLayoutClassedModelUsages(long classNameId, long classPK) {
-		layoutClassedModelUsagePersistence.removeByC_C(classNameId, classPK);
+		layoutClassedModelUsagePersistence.removeByCN_CPK(classNameId, classPK);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 		long classNameId, long classPK, String containerKey, long containerType,
 		long plid) {
 
-		return layoutClassedModelUsagePersistence.fetchByC_C_CK_CT_P(
+		return layoutClassedModelUsagePersistence.fetchByCN_CPK_CK_CT_P(
 			classNameId, classPK, containerKey, containerType, plid);
 	}
 
@@ -123,7 +123,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	public List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
 		long classNameId, long classPK) {
 
-		return layoutClassedModelUsagePersistence.findByC_C(
+		return layoutClassedModelUsagePersistence.findByCN_CPK(
 			classNameId, classPK);
 	}
 
@@ -132,7 +132,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 		long classNameId, long classPK, int type, int start, int end,
 		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
-		return layoutClassedModelUsagePersistence.findByC_C_T(
+		return layoutClassedModelUsagePersistence.findByCN_CPK_T(
 			classNameId, classPK, type, start, end, orderByComparator);
 	}
 
@@ -141,7 +141,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
-		return layoutClassedModelUsagePersistence.findByC_C(
+		return layoutClassedModelUsagePersistence.findByCN_CPK(
 			classNameId, classPK, start, end, orderByComparator);
 	}
 
@@ -164,7 +164,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	public int getLayoutClassedModelUsagesCount(
 		long classNameId, long classPK) {
 
-		return layoutClassedModelUsagePersistence.countByC_C(
+		return layoutClassedModelUsagePersistence.countByCN_CPK(
 			classNameId, classPK);
 	}
 
@@ -172,7 +172,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	public int getLayoutClassedModelUsagesCount(
 		long classNameId, long classPK, int type) {
 
-		return layoutClassedModelUsagePersistence.countByC_C_T(
+		return layoutClassedModelUsagePersistence.countByCN_CPK_T(
 			classNameId, classPK, type);
 	}
 

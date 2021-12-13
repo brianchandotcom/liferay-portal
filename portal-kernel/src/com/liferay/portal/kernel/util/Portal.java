@@ -683,12 +683,6 @@ public interface Portal {
 	public String getFullName(
 		String firstName, String middleName, String lastName);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getGlobalLibDir();
-
 	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException;
 

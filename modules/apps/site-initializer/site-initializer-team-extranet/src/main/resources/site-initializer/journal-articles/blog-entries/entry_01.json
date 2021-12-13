@@ -1,7 +1,7 @@
 {
 	"articleId": "ENTRY-01",
 	"assetCategoryERCs": [
-		"DEPCAT0001"
+		"ROLCAT0001"
 	],
 	"ddmStructureKey": "ENTRY",
 	"ddmTemplateKey": "ENTRY",

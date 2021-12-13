@@ -1,11 +1,11 @@
 {
-	"articleId": "POSITION-04",
+	"articleId": "POSITION-09",
 	"assetCategoryERCs": [
-		"ROLCAT0003",
+		"ROLCAT0002",
 		"REGCAT0004"
 	],
 	"ddmStructureKey": "POSITION",
 	"ddmTemplateKey": "POSITION",
 	"folder": "Job Positions",
-	"name": "Associate Test Engineer"
+	"name": "Junior Front End Developer"
 }

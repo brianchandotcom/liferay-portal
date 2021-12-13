@@ -1,7 +1,8 @@
 {
 	"articleId": "MEMBER-01",
 	"assetCategoryERCs": [
-		"DEPCAT0001"
+		"ROLCAT0001",
+		"REGCAT0001"
 	],
 	"ddmStructureKey": "MEMBER",
 	"ddmTemplateKey": "MEMBER",

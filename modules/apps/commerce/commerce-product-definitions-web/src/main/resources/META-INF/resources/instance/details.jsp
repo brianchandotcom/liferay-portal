@@ -165,6 +165,36 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 		<aui:input bean="<%= cpInstance %>" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" model="<%= CPInstance.class %>" name="expirationDate" />
 	</commerce-ui:panel>
 
+	<commerce-ui:panel
+		title='<%= LanguageUtil.get(request, "end-of-life") %>'
+	>
+		<div class="row">
+			<div class="align-items-start col-auto d-flex">
+				<aui:input checked="<%= (cpInstance == null) ? false : cpInstance.isDiscontinued() %>" name="discontinued" type="toggle-switch" />
+			</div>
+
+			<div class="col">
+				<aui:input bean="<%= cpInstance %>" label="end-of-production-date" model="<%= CPInstance.class %>" name="discontinuedDate" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<label class="control-label" for="skuId"><%= LanguageUtil.get(request, "replacement") %></label>
+
+				<div id="autocomplete-root"></div>
+			</div>
+
+			<div class="align-items-end col-auto d-flex">
+				<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= liferayPortletResponse.getNamespace() + "removeSku();" %>" type="button">
+					<clay:icon
+						symbol="trash"
+					/>
+				</button>
+			</div>
+		</div>
+	</commerce-ui:panel>
+
 	<c:if test="<%= cpInstanceDisplayContext.hasCustomAttributesAvailable() %>">
 		<commerce-ui:panel
 			title='<%= LanguageUtil.get(request, "custom-attribute") %>'
@@ -304,4 +334,28 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 			workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 		}
 	});
+</aui:script>
+
+<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
+	var deleteButton = document.getElementById('remove-sku-button');
+
+	autocomplete.default('autocomplete', 'autocomplete-root', {
+	apiUrl:
+		'/o/headless-commerce-admin-catalog/v1.0/skus',
+	initialLabel: '<%= StringPool.BLANK %>',
+	initialValue: '<%= cpInstanceId %>',
+	inputId: 'skuId',
+	inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
+	itemsKey: 'id',
+	itemsLabel: 'sku',
+	onValueUpdated: function (value) {
+		if (value) {
+			deleteButton.disabled = false;
+		}
+		else {
+			deleteButton.disabled = true;
+		}
+		},
+	});
+
 </aui:script>

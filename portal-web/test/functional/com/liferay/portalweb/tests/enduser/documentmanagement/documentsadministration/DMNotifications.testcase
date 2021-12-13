@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136816. It checks that custom fields can be rendered properly when a DM notification email is sent."
-	@priority = "4"
+	@priority = "3"
 	test CanViewCustomFieldsInEmail {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";

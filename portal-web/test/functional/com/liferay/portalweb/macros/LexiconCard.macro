@@ -127,4 +127,14 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	macro viewMenuItemNotPresentOnCardShortcut {
+		Click(
+			key_card = "${card}",
+			locator1 = "Card#CARD_SHORTCUT_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "${item}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 }

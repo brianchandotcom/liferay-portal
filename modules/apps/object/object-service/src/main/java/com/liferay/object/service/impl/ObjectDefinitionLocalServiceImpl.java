@@ -811,16 +811,11 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getClassName()),
 				_portal.getClassNameId(FragmentEntryLink.class));
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getScopeGroupId());
-
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
 				layoutClassedModelUsages) {
+
+			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+				layoutClassedModelUsage.getGroupId());
 
 			for (Locale locale : availableLocales) {
 				StringBundler sb = new StringBundler(5);

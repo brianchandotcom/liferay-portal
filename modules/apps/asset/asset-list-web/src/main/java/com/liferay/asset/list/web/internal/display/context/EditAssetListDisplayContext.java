@@ -611,6 +611,8 @@ public class EditAssetListDisplayContext {
 				SegmentsPortletKeys.SEGMENTS
 			).setMVCRenderCommandName(
 				"/segments/edit_segments_entry", false
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
 			).setParameter(
 				"type", User.class.getName()
 			).buildString()

@@ -78,7 +78,6 @@ public class CPInstanceServiceSoap {
 				boolean discontinued, String replacementCPInstanceUuid,
 				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
-				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -94,8 +93,7 @@ public class CPInstanceServiceSoap {
 					expirationDateMinute, neverExpire, unspsc, discontinued,
 					replacementCPInstanceUuid, replacementCProductId,
 					discontinuedDateMonth, discontinuedDateDay,
-					discontinuedDateYear, discontinuedDateHour,
-					discontinuedDateMinute, serviceContext);
+					discontinuedDateYear, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.
 				toSoapModel(returnValue);
@@ -310,6 +308,10 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPInstanceSoap
 			updateCPInstance(
 				long cpInstanceId, String sku, String gtin,
@@ -354,7 +356,6 @@ public class CPInstanceServiceSoap {
 				boolean discontinued, String replacementCPInstanceUuid,
 				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
-				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -368,9 +369,7 @@ public class CPInstanceServiceSoap {
 					expirationDateHour, expirationDateMinute, neverExpire,
 					unspsc, discontinued, replacementCPInstanceUuid,
 					replacementCProductId, discontinuedDateMonth,
-					discontinuedDateDay, discontinuedDateYear,
-					discontinuedDateHour, discontinuedDateMinute,
-					serviceContext);
+					discontinuedDateDay, discontinuedDateYear, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.
 				toSoapModel(returnValue);
@@ -382,6 +381,10 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPInstanceSoap
 			updateCPInstance(
 				long cpInstanceId, String sku, String gtin,

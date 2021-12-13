@@ -112,10 +112,13 @@ public interface CPInstanceLocalService
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
 			String sku, String gtin, String manufacturerPartNumber,
@@ -139,6 +142,10 @@ public interface CPInstanceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
 			String sku, String gtin, String manufacturerPartNumber,
@@ -158,6 +165,10 @@ public interface CPInstanceLocalService
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
 			String sku, String gtin, String manufacturerPartNumber,
@@ -178,6 +189,10 @@ public interface CPInstanceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
 			String sku, String gtin, String manufacturerPartNumber,
@@ -204,10 +219,13 @@ public interface CPInstanceLocalService
 			boolean neverExpire, String unspsc, boolean discontinued,
 			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, int discontinuedDateHour,
-			int discontinuedDateMinute, ServiceContext serviceContext)
+			int discontinuedDateYear, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
 			String sku, String gtin, String manufacturerPartNumber,
@@ -617,6 +635,10 @@ public interface CPInstanceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateCPInstance(CPInstance cpInstance);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -628,6 +650,10 @@ public interface CPInstanceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -639,6 +665,10 @@ public interface CPInstanceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -665,10 +695,13 @@ public interface CPInstanceLocalService
 			boolean neverExpire, String unspsc, boolean discontinued,
 			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, int discontinuedDateHour,
-			int discontinuedDateMinute, ServiceContext serviceContext)
+			int discontinuedDateYear, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, double width,

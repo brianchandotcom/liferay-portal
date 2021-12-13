@@ -80,7 +80,6 @@ public class CPInstanceLocalServiceWrapper
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -100,9 +99,13 @@ public class CPInstanceLocalServiceWrapper
 			deliveryMaxSubscriptionCycles, unspsc, discontinued,
 			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, serviceContext);
+			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -146,6 +149,10 @@ public class CPInstanceLocalServiceWrapper
 			deliveryMaxSubscriptionCycles, unspsc, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -182,6 +189,10 @@ public class CPInstanceLocalServiceWrapper
 			maxSubscriptionCycles, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -218,6 +229,10 @@ public class CPInstanceLocalServiceWrapper
 			maxSubscriptionCycles, unspsc, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -258,7 +273,6 @@ public class CPInstanceLocalServiceWrapper
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -271,9 +285,13 @@ public class CPInstanceLocalServiceWrapper
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
 			discontinued, replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, serviceContext);
+			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -941,6 +959,10 @@ public class CPInstanceLocalServiceWrapper
 		return _cpInstanceLocalService.updateCPInstance(cpInstance);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -961,6 +983,10 @@ public class CPInstanceLocalServiceWrapper
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -981,6 +1007,10 @@ public class CPInstanceLocalServiceWrapper
 			expirationDateMinute, neverExpire, unspsc, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -1019,8 +1049,7 @@ public class CPInstanceLocalServiceWrapper
 			boolean neverExpire, String unspsc, boolean discontinued,
 			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, int discontinuedDateHour,
-			int discontinuedDateMinute,
+			int discontinuedDateYear,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1032,10 +1061,13 @@ public class CPInstanceLocalServiceWrapper
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, unspsc, discontinued, replacementCPInstanceUuid,
 			replacementCProductId, discontinuedDateMonth, discontinuedDateDay,
-			discontinuedDateYear, discontinuedDateHour, discontinuedDateMinute,
-			serviceContext);
+			discontinuedDateYear, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,

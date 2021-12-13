@@ -67,6 +67,11 @@ public interface CPInstanceService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPInstanceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp instance remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPInstanceServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -90,6 +95,9 @@ public interface CPInstanceService extends BaseService {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, String unspsc,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
+			int discontinuedDateDay, int discontinuedDateYear,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -106,8 +114,7 @@ public interface CPInstanceService extends BaseService {
 			boolean neverExpire, String unspsc, boolean discontinued,
 			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, int discontinuedDateHour,
-			int discontinuedDateMinute, ServiceContext serviceContext)
+			int discontinuedDateYear, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void buildCPInstances(
@@ -188,6 +195,10 @@ public interface CPInstanceService extends BaseService {
 			Sort sort)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -210,10 +221,13 @@ public interface CPInstanceService extends BaseService {
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,

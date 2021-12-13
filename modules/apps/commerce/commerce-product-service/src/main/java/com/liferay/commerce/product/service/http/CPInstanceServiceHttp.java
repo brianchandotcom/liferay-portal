@@ -118,6 +118,9 @@ public class CPInstanceServiceHttp {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, String unspsc,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
+			int discontinuedDateDay, int discontinuedDateYear,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -133,7 +136,10 @@ public class CPInstanceServiceHttp {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, unspsc, serviceContext);
+				expirationDateMinute, neverExpire, unspsc, discontinued,
+				replacementCPInstanceUuid, replacementCProductId,
+				discontinuedDateMonth, discontinuedDateDay,
+				discontinuedDateYear, serviceContext);
 
 			Object returnObj = null;
 
@@ -179,7 +185,6 @@ public class CPInstanceServiceHttp {
 				boolean discontinued, String replacementCPInstanceUuid,
 				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
-				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -198,8 +203,7 @@ public class CPInstanceServiceHttp {
 				expirationDateMinute, neverExpire, unspsc, discontinued,
 				replacementCPInstanceUuid, replacementCProductId,
 				discontinuedDateMonth, discontinuedDateDay,
-				discontinuedDateYear, discontinuedDateHour,
-				discontinuedDateMinute, serviceContext);
+				discontinuedDateYear, serviceContext);
 
 			Object returnObj = null;
 
@@ -926,7 +930,6 @@ public class CPInstanceServiceHttp {
 				boolean discontinued, String replacementCPInstanceUuid,
 				long replacementCProductId, int discontinuedDateMonth,
 				int discontinuedDateDay, int discontinuedDateYear,
-				int discontinuedDateHour, int discontinuedDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -943,8 +946,7 @@ public class CPInstanceServiceHttp {
 				expirationDateHour, expirationDateMinute, neverExpire, unspsc,
 				discontinued, replacementCPInstanceUuid, replacementCProductId,
 				discontinuedDateMonth, discontinuedDateDay,
-				discontinuedDateYear, discontinuedDateHour,
-				discontinuedDateMinute, serviceContext);
+				discontinuedDateYear, serviceContext);
 
 			Object returnObj = null;
 
@@ -1189,7 +1191,8 @@ public class CPInstanceServiceHttp {
 			boolean.class, java.util.Map.class, boolean.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			boolean.class, String.class, long.class, int.class, int.class,
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCPInstanceParameterTypes2 =
 		new Class[] {
@@ -1201,7 +1204,6 @@ public class CPInstanceServiceHttp {
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class, String.class, boolean.class,
 			String.class, long.class, int.class, int.class, int.class,
-			int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _buildCPInstancesParameterTypes3 =
@@ -1272,7 +1274,7 @@ public class CPInstanceServiceHttp {
 			boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			boolean.class, String.class, boolean.class, String.class,
-			long.class, int.class, int.class, int.class, int.class, int.class,
+			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPInstanceParameterTypes20 =

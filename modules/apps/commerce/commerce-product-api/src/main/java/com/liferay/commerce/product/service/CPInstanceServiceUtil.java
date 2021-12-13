@@ -40,6 +40,11 @@ public class CPInstanceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPInstanceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static CPInstance addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -72,6 +77,9 @@ public class CPInstanceServiceUtil {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, String unspsc,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
+			int discontinuedDateDay, int discontinuedDateYear,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -81,7 +89,10 @@ public class CPInstanceServiceUtil {
 			published, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, unspsc, serviceContext);
+			expirationDateMinute, neverExpire, unspsc, discontinued,
+			replacementCPInstanceUuid, replacementCProductId,
+			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
+			serviceContext);
 	}
 
 	public static CPInstance addOrUpdateCPInstance(
@@ -98,7 +109,6 @@ public class CPInstanceServiceUtil {
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -111,7 +121,7 @@ public class CPInstanceServiceUtil {
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
 			discontinued, replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, serviceContext);
+			serviceContext);
 	}
 
 	public static void buildCPInstances(
@@ -244,6 +254,10 @@ public class CPInstanceServiceUtil {
 			companyId, keywords, status, start, end, sort);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -274,7 +288,6 @@ public class CPInstanceServiceUtil {
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -286,9 +299,13 @@ public class CPInstanceServiceUtil {
 			expirationDateMinute, neverExpire, unspsc, discontinued,
 			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, serviceContext);
+			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,

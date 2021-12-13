@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -114,19 +113,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			throw new PortalException(exception);
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			draftLayout.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.setProperty("published", "true");
-
-		draftLayout = _layoutLocalService.updateLayout(
-			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
-
-		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		_layoutLocalService.updateLayout(draftLayout);
+		_layoutLocalService.updateStatus(
+			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		return _layoutLocalService.updateStatus(
 			userId, classPK, status, serviceContext);

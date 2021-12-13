@@ -371,13 +371,11 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 			classNameId, classPK, start, end, orderByComparator);
 	}
 
-	public static List<LayoutClassedModelUsage>
-		getLayoutClassedModelUsagesByCompanyIdAndClassNameId(
-			long companyId, long classNameId) {
+	public static List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long companyId, long classNameId, long containerType) {
 
-		return getService().
-			getLayoutClassedModelUsagesByCompanyIdAndClassNameId(
-				companyId, classNameId);
+		return getService().getLayoutClassedModelUsages(
+			companyId, classNameId, containerType);
 	}
 
 	public static List<LayoutClassedModelUsage>

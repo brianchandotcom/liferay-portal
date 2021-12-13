@@ -128,16 +128,6 @@ public class ManifestHelperTask extends Task {
 			return execute("git rev-parse HEAD");
 		}
 
-		File svnDir = new File(projectDir, ".svn");
-
-		if (svnDir.exists()) {
-			if (OSDetector.isWindows()) {
-				return execute("cmd /c svnversion .");
-			}
-
-			return execute("svnversion .");
-		}
-
 		return StringPool.BLANK;
 	}
 

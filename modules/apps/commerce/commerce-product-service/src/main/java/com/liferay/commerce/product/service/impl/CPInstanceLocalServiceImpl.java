@@ -112,7 +112,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean discontinued, String replacementCPInstanceUuid,
 			long replacementCProductId, int discontinuedDateMonth,
 			int discontinuedDateDay, int discontinuedDateYear,
-			int discontinuedDateHour, int discontinuedDateMinute,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -265,6 +264,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstance;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -302,10 +305,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, unspsc, false, null, 0, 0, 0, 0, 0,
-			0, serviceContext);
+			deliveryMaxSubscriptionCycles, unspsc, false, null, 0, 0, 0, 0,
+			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -339,6 +346,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			maxSubscriptionCycles, null, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance addCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -374,6 +385,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -412,8 +427,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, String unspsc, boolean discontinued,
 			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, int discontinuedDateHour,
-			int discontinuedDateMinute, ServiceContext serviceContext)
+			int discontinuedDateYear, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -424,7 +438,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				serviceContext.getCompanyId(), externalReferenceCode);
 
 			if (cpInstance != null) {
-				return updateCPInstance(
+				return cpInstanceLocalService.updateCPInstance(
 					cpInstance.getCPInstanceId(), sku, gtin,
 					manufacturerPartNumber, purchasable, width, height, depth,
 					weight, price, promoPrice, cost, published,
@@ -434,8 +448,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					expirationDateMinute, neverExpire, unspsc, discontinued,
 					replacementCPInstanceUuid, replacementCProductId,
 					discontinuedDateMonth, discontinuedDateDay,
-					discontinuedDateYear, discontinuedDateHour,
-					discontinuedDateMinute, serviceContext);
+					discontinuedDateYear, serviceContext);
 			}
 		}
 
@@ -453,9 +466,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			StringPool.BLANK, null, 0, unspsc, discontinued,
 			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateMonth, discontinuedDateDay, discontinuedDateYear,
-			discontinuedDateHour, discontinuedDateMinute, serviceContext);
+			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -470,14 +487,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, String unspsc, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addOrUpdateCPInstance(
+		return cpInstanceLocalService.addOrUpdateCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable, json, width, height, depth,
 			weight, price, promoPrice, cost, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			false, null, 0, 0, 0, 0, 0, 0, serviceContext);
+			false, null, 0, 0, 0, 0, serviceContext);
 	}
 
 	@Override
@@ -922,6 +939,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			"Unable to fix the search index after 10 attempts");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -934,7 +955,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateCPInstance(
+		return cpInstanceLocalService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
 			published, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -942,6 +963,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			expirationDateMinute, neverExpire, null, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -957,6 +982,23 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
+		int discontinuedDateMonth = 0;
+		int discontinuedDateDay = 0;
+		int discontinuedDateYear = 0;
+
+		Date discontinuedDate = cpInstance.getDiscontinuedDate();
+
+		if (discontinuedDate != null) {
+			Calendar discontinuedDateCalendar = CalendarFactoryUtil.getCalendar(
+				discontinuedDate.getTime(), serviceContext.getTimeZone());
+
+			discontinuedDateMonth = discontinuedDateCalendar.get(
+				Calendar.MONTH);
+			discontinuedDateDay = discontinuedDateCalendar.get(
+				Calendar.DAY_OF_MONTH);
+			discontinuedDateYear = discontinuedDateCalendar.get(Calendar.YEAR);
+		}
+
 		return cpInstanceLocalService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
 			cpInstance.getWidth(), cpInstance.getHeight(),
@@ -966,9 +1008,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			serviceContext);
+			cpInstance.isDiscontinued(), cpInstance.getCPInstanceUuid(),
+			cpInstance.getReplacementCProductId(), discontinuedDateMonth,
+			discontinuedDateDay, discontinuedDateYear, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance updateCPInstance(
@@ -1006,8 +1054,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, String unspsc, boolean discontinued,
 			String replacementCPInstanceUuid, long replacementCProductId,
 			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, int discontinuedDateHour,
-			int discontinuedDateMinute, ServiceContext serviceContext)
+			int discontinuedDateYear, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product instance
@@ -1118,6 +1165,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstance;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
@@ -1137,12 +1188,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		int discontinuedDateMonth = 0;
 		int discontinuedDateDay = 0;
 		int discontinuedDateYear = 0;
-		int discontinuedDateHour = 0;
-		int discontinuedDateMinute = 0;
 
-		if (cpInstance.isDiscontinued()) {
-			Date discontinuedDate = cpInstance.getDiscontinuedDate();
+		Date discontinuedDate = cpInstance.getDiscontinuedDate();
 
+		if (discontinuedDate != null) {
 			Calendar discontinuedDateCalendar = CalendarFactoryUtil.getCalendar(
 				discontinuedDate.getTime(), serviceContext.getTimeZone());
 
@@ -1151,9 +1200,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			discontinuedDateDay = discontinuedDateCalendar.get(
 				Calendar.DAY_OF_MONTH);
 			discontinuedDateYear = discontinuedDateCalendar.get(Calendar.YEAR);
-			discontinuedDateHour = discontinuedDateCalendar.get(Calendar.HOUR);
-			discontinuedDateMinute = discontinuedDateCalendar.get(
-				Calendar.MINUTE);
 		}
 
 		return cpInstanceLocalService.updateCPInstance(
@@ -1165,8 +1211,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			neverExpire, unspsc, cpInstance.isDiscontinued(),
 			cpInstance.getCPInstanceUuid(),
 			cpInstance.getReplacementCProductId(), discontinuedDateMonth,
-			discontinuedDateDay, discontinuedDateYear, discontinuedDateHour,
-			discontinuedDateMinute, serviceContext);
+			discontinuedDateDay, discontinuedDateYear, serviceContext);
 	}
 
 	@Override

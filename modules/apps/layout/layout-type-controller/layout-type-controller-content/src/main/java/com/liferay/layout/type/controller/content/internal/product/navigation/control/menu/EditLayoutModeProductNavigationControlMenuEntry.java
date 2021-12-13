@@ -134,21 +134,8 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				redirect = _portal.getLayoutFullURL(draftLayout, themeDisplay);
 			}
 
-			redirect = _http.setParameter(
-				redirect, "p_l_back_url",
-				_portal.getLayoutFullURL(
-					themeDisplay.getLayout(), themeDisplay));
-			redirect = _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
-
-			long segmentsExperienceId = ParamUtil.getLong(
-				httpServletRequest, "segmentsExperienceId", -1);
-
-			if (segmentsExperienceId != -1) {
-				redirect = _http.setParameter(
-					redirect, "segmentsExperienceId", segmentsExperienceId);
-			}
-
-			return redirect;
+			return _getRedirect(
+				httpServletRequest, redirect, layout, themeDisplay);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -229,6 +216,28 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 		}
 
 		return false;
+	}
+
+	private String _getRedirect(
+			HttpServletRequest httpServletRequest, String fullLayoutURL,
+			Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String redirect = _http.setParameter(
+			fullLayoutURL, "p_l_back_url",
+			_portal.getLayoutFullURL(layout, themeDisplay));
+
+		redirect = _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if (segmentsExperienceId != -1) {
+			redirect = _http.setParameter(
+				redirect, "segmentsExperienceId", segmentsExperienceId);
+		}
+
+		return redirect;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

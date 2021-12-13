@@ -44,6 +44,7 @@ import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,6 +60,23 @@ public class UpgradeConfigurationPidUpgradeTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		_upgradeStepRegistrator.register(
+			(fromSchemaVersionString, toSchemaVersionString, upgradeSteps) -> {
+				for (UpgradeStep upgradeStep : upgradeSteps) {
+					Class<?> clazz = upgradeStep.getClass();
+
+					String className = clazz.getName();
+
+					if (className.contains(_CLASS_NAME)) {
+						_upgradeConfigurationPidUpgradeProcess =
+							(UpgradeProcess)upgradeStep;
+					}
+				}
+			});
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -196,30 +214,6 @@ public class UpgradeConfigurationPidUpgradeTest {
 				dictionaryString.getBytes(StringPool.UTF8)));
 	}
 
-	private void _setUpUpgradeConfigurationPid() {
-		_upgradeStepRegistrator.register(
-			new UpgradeStepRegistrator.Registry() {
-
-				@Override
-				public void register(
-					String fromSchemaVersionString,
-					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
-
-					for (UpgradeStep upgradeStep : upgradeSteps) {
-						Class<?> clazz = upgradeStep.getClass();
-
-						String className = clazz.getName();
-
-						if (className.contains(_CLASS_NAME)) {
-							_upgradeConfigurationPidUpgradeProcess =
-								(UpgradeProcess)upgradeStep;
-						}
-					}
-				}
-
-			});
-	}
-
 	private void _updateDatabase(Dictionary<String, String> dictionary)
 		throws Exception {
 
@@ -241,8 +235,6 @@ public class UpgradeConfigurationPidUpgradeTest {
 			preparedStatement.execute();
 		}
 
-		_setUpUpgradeConfigurationPid();
-
 		_upgradeConfigurationPidUpgradeProcess.upgrade();
 	}
 
@@ -255,11 +247,11 @@ public class UpgradeConfigurationPidUpgradeTest {
 
 	private static final String _SERVICE_FACTORY_PID = "test.configuration";
 
+	private static UpgradeProcess _upgradeConfigurationPidUpgradeProcess;
+
 	@Inject(
 		filter = "(&(objectClass=com.liferay.portal.configuration.persistence.internal.upgrade.ConfigurationPersistenceUpgrade))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private UpgradeProcess _upgradeConfigurationPidUpgradeProcess;
 
 }

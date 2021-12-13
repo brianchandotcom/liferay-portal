@@ -151,13 +151,15 @@
 				>
 					<clay:content-col>
 						<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, (repliesCount == 1) ? "x-reply" : "x-replies", repliesCount, false) %>">
-							<%= repliesCount %> <clay:icon symbol="message" />
+							<%= repliesCount %>
+							<span class="inline-item inline-item-after"><clay:icon symbol="message" /></span>
 						</span>
 					</clay:content-col>
 
 					<clay:content-col>
 						<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, (viewCount == 1) ? "x-view" : "x-views", viewCount, false) %>">
-							<%= viewCount %> <clay:icon symbol="view" />
+							<%= viewCount %>
+							<span class="inline-item inline-item-after"><clay:icon symbol="view" /></span>
 						</span>
 					</clay:content-col>
 				</clay:content-row>

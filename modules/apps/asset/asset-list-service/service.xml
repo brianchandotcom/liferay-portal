@@ -149,6 +149,9 @@
 		<column name="segmentsEntryId" type="long" />
 		<column name="typeSettings" type="String" />
 		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
 		<order by="asc">
 			<order-column name="priority" />
 		</order>

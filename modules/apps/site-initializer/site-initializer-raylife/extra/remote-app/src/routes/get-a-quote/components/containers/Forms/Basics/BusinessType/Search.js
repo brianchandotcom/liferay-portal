@@ -23,12 +23,7 @@ import {BusinessTypeRadioGroup} from './RadioGroup';
 const MAX_LENGTH_TO_TRUNCATE = 28;
 
 export function BusinessTypeSearch({form, setNewSelectedProduct}) {
-	const {
-		// formState: {errors},
-
-		register,
-		setValue,
-	} = useFormContext();
+	const {register, setValue} = useFormContext();
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
 
 	const {selectedStep, setPercentage} = useStepWizard();
@@ -123,11 +118,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 		}
 
 		if (isError) {
-			return (
-				<>
-					<WarningBadge>{isError}</WarningBadge>
-				</>
-			);
+			return <WarningBadge>{isError}</WarningBadge>;
 		}
 
 		if (businessTypes.length) {

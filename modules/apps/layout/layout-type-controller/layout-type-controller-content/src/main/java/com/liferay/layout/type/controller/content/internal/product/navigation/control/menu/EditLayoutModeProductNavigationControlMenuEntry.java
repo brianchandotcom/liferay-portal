@@ -93,49 +93,49 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			String redirect = themeDisplay.getURLCurrent();
-
 			Layout layout = themeDisplay.getLayout();
 
 			if (layout.isDraftLayout()) {
-				redirect = _portal.getLayoutFullURL(
+				String layoutFullURL = _portal.getLayoutFullURL(
 					_layoutLocalService.getLayout(layout.getClassPK()),
 					themeDisplay);
+
+				return _getRedirect(
+					httpServletRequest, layoutFullURL, layout, themeDisplay);
 			}
-			else {
-				Layout draftLayout = layout.fetchDraftLayout();
 
-				if (draftLayout == null) {
-					UnicodeProperties unicodeProperties =
-						layout.getTypeSettingsProperties();
+			Layout draftLayout = layout.fetchDraftLayout();
 
-					ServiceContext serviceContext =
-						ServiceContextFactory.getInstance(httpServletRequest);
+			if (draftLayout == null) {
+				UnicodeProperties unicodeProperties =
+					layout.getTypeSettingsProperties();
 
-					draftLayout = _layoutLocalService.addLayout(
-						layout.getUserId(), layout.getGroupId(),
-						layout.isPrivateLayout(), layout.getParentLayoutId(),
-						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						layout.getNameMap(), layout.getTitleMap(),
-						layout.getDescriptionMap(), layout.getKeywordsMap(),
-						layout.getRobotsMap(), layout.getType(),
-						unicodeProperties.toString(), true, true,
-						Collections.emptyMap(), layout.getMasterLayoutPlid(),
-						serviceContext);
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(httpServletRequest);
 
-					draftLayout = _layoutCopyHelper.copyLayout(
-						layout, draftLayout);
+				draftLayout = _layoutLocalService.addLayout(
+					layout.getUserId(), layout.getGroupId(),
+					layout.isPrivateLayout(), layout.getParentLayoutId(),
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					layout.getNameMap(), layout.getTitleMap(),
+					layout.getDescriptionMap(), layout.getKeywordsMap(),
+					layout.getRobotsMap(), layout.getType(),
+					unicodeProperties.toString(), true, true,
+					Collections.emptyMap(), layout.getMasterLayoutPlid(),
+					serviceContext);
 
-					_layoutLocalService.updateStatus(
-						draftLayout.getUserId(), draftLayout.getPlid(),
-						WorkflowConstants.STATUS_APPROVED, serviceContext);
-				}
+				draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
 
-				redirect = _portal.getLayoutFullURL(draftLayout, themeDisplay);
+				_layoutLocalService.updateStatus(
+					draftLayout.getUserId(), draftLayout.getPlid(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
 			}
+
+			String layoutFullURL = _portal.getLayoutFullURL(
+				draftLayout, themeDisplay);
 
 			return _getRedirect(
-				httpServletRequest, redirect, layout, themeDisplay);
+				httpServletRequest, layoutFullURL, layout, themeDisplay);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

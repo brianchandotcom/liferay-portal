@@ -112,13 +112,13 @@ const ProductComparison = ({
 			id="quote-comparison"
 		>
 			<div
-				className={classNames('header-size rounded-top', {
+				className={classNames('align-items-center d-flex header-size justify-content-center rounded-top', {
 					'bg-brand-secondary ': mostPopular,
 					'bg-neutral-0': !mostPopular,
 				})}
 			>
 				{mostPopular && (
-					<p className="font-weight-bold text-center text-paragraph text-small-caps text-white">
+					<p className="font-weight-bold text-paragraph text-small-caps text-white">
 						{highlightMostPopularText}
 					</p>
 				)}

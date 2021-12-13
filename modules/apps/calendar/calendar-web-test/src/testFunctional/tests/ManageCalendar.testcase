@@ -64,8 +64,7 @@ definition {
 		ManageCalendar.addCalendar(calendarName = "test");
 
 		ManageCalendar.viewCalendarNameByColumn(
-			rowName = "test",
-			rowNumber = "1");
+			nameList = "test");
 	}
 
 	@description = "LRQA-71360 - Verify that the user can not delete a Default Calendar"
@@ -249,14 +248,9 @@ definition {
 
 		ManageCalendar.viewColorByColumn(colorList = "D96666");
 
-		Navigator.gotoBack();
-
-		Calendar.changeColor(
-			calendarType = "My Calendars",
-			myCalendarColor = "E67399",
-			user = "Test Test");
-
-		CalendarNavigator.gotoMyCalendarsManage();
+		ManageCalendar.editCalendar(
+			calendarCurrentName = "Test Test",
+			newColor = "E67399");
 
 		ManageCalendar.viewColorByColumn(colorList = "E67399");
 	}

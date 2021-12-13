@@ -11,7 +11,7 @@
 
 <tbody>
 <tr>
-	<td>MY_CALENDARS_CALENDAR_COLOR_BY_COLUMN</td>
+	<td>COLOR_BY_COLUMN</td>
 	<td>//tr[${key_rowNumber}]//td[contains(@class, 'lfr-color-column')]//*[contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>	
@@ -22,7 +22,10 @@
 </tr>
 <tr>
 	<td>NAME_BY_COLUMN</td>
-	<td>//tr[${key_rowNumber}]//td[contains(@class,'lfr-name-column') and contains(.,'${key_rowName}')]</td>
+	<td>//tr[${key_rowNumber}]//td[contains(@class,'lfr-name-column') and contains(.,'${key_name}')]</td>
+	<td></td>
+</tr>	
+<tr>	
 	<td>VERTICAL_ELLIPSIS_BY_NAME</td>
 	<td>//tr[contains(.,'${key_calendarName}')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 	<td></td>

@@ -8,7 +8,7 @@ definition {
 				AssertElementPresent(
 					key_color = "${color}",
 					key_rowNumber = "${rowNumber}",
-					locator1 = "ManageCalendar#MY_CALENDARS_CALENDAR_COLOR_BY_COLUMN");
+					locator1 = "ManageCalendar#COLOR_BY_COLUMN");
 
 				var rowNumber = MathUtil.sum("${rowNumber}", "1");
 			}
@@ -17,7 +17,7 @@ definition {
 			AssertElementPresent(
 				key_color = "${color}",
 				key_rowNumber = "${rowNumber}",
-				locator1 = "ManageCalendar#MY_CALENDARS_CALENDAR_COLOR_BY_COLUMN");
+				locator1 = "ManageCalendar#COLOR_BY_COLUMN");
 		}
 	}
 
@@ -30,10 +30,24 @@ definition {
 	}
 
 	macro viewCalendarNameByColumn {
-		AssertElementPresent(
-			key_rowName = "${rowName}",
-			key_rowNumber = "${rowNumber}",
-			locator1 = "ManageCalendar#NAME_BY_COLUMN");
+		if (isSet(nameList)) {
+			var rowNumber = "1";
+
+			for (var name : list "${nameList}") {
+				AssertElementPresent(
+					key_name = "${name}",
+					key_rowNumber = "${rowNumber}",
+					locator1 = "ManageCalendar#NAME_BY_COLUMN");
+
+				var rowNumber = MathUtil.sum("${rowNumber}", "1");
+			}
+		}
+		else {
+			AssertElementPresent(
+				key_name = "${name}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "ManageCalendar#NAME_BY_COLUMN");
+		}
 	}
 
 	macro addCalendar {
@@ -49,9 +63,9 @@ definition {
 			PortalSettings.configureTimeZone(timeZone = "${timeZone}");
 		}
 
-		if (isSet(calendarColor)) {
+		if (isSet(color)) {
 			Click(
-				key_calendarColor = "${calendarColor}",
+				key_calendarColor = "${color}",
 				locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
 		}
 
@@ -79,21 +93,21 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		if (isSet(newName)) {
-			Calendar._editName(calendarName = "${newName}");
+		if (isSet(newCalendarName)) {
+			Calendar._editName(calendarName = "${newCalendarName}");
 		}
 
 		if (isSet(newDescription)) {
 			PortletEntry.inputDescription(description = "${newDescription}");
 		}
 
-		if (isSet(timeZone)) {
-			PortalSettings.configureTimeZone(timeZone = "${timeZone}");
+		if (isSet(newTimeZone)) {
+			PortalSettings.configureTimeZone(timeZone = "${newTimeZone}");
 		}
 
-		if (isSet(calendarColor)) {
+		if (isSet(newColor)) {
 			Click(
-				key_calendarColor = "${calendarColor}",
+				key_calendarColor = "${newColor}",
 				locator1 = "ManageCalendar#CALENDAR_MENULIST_COLOR_PICKER");
 		}
 

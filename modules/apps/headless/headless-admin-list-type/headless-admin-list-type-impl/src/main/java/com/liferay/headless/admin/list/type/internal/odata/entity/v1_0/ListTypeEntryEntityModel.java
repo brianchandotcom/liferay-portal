@@ -41,7 +41,7 @@ public class ListTypeEntryEntityModel implements EntityModel {
 			new IntegerEntityField("userId", locale -> Field.USER_ID),
 			new StringEntityField("key", locale -> "key"),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)));
+				"name", locale -> Field.getLocalizedName(locale, Field.NAME)));
 	}
 
 	@Override

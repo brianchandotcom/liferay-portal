@@ -14,13 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper;
 
+import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -35,17 +38,20 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
 
@@ -235,6 +241,20 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		Assert.assertTrue(_ddmFormField.isRequired());
 	}
 
+	@Test(expected = FormInstanceExpiredException.class)
+	public void testValidateExpirationStatus() throws Exception {
+		ThemeDisplay themeDisplay = _mockThemeDisplay();
+
+		when(
+			_actionRequest.getAttribute(Matchers.eq(WebKeys.THEME_DISPLAY))
+		).thenReturn(
+			themeDisplay
+		);
+
+		_addRecordMVCCommandHelper.validateExpirationStatus(
+			_mockDDMFormInstance(), _actionRequest);
+	}
+
 	protected Value getFieldValue(String fieldName) {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			_ddmFormValues.getDDMFormFieldValuesMap(true);
@@ -365,6 +385,18 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_addRecordMVCCommandHelper, _ddmStructureLocalService
 		);
 
+		FFSubmissionsSettingsConfigurationActivator
+			ffSubmissionsSettingsConfigurationActivator =
+				_mockFFSubmissionsSettingsConfigurationActivator();
+
+		field(
+			AddFormInstanceRecordMVCCommandHelper.class,
+			"_ffSubmissionsSettingsConfigurationActivator"
+		).set(
+			_addRecordMVCCommandHelper,
+			ffSubmissionsSettingsConfigurationActivator
+		);
+
 		field(
 			AddFormInstanceRecordMVCCommandHelper.class, "_portal"
 		).set(
@@ -394,6 +426,62 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
+	}
+
+	private DDMFormInstance _mockDDMFormInstance() throws Exception {
+		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			_mockDDMFormInstanceSettings();
+
+		when(
+			ddmFormInstance.getSettingsModel()
+		).thenReturn(
+			ddmFormInstanceSettings
+		);
+
+		return ddmFormInstance;
+	}
+
+	private DDMFormInstanceSettings _mockDDMFormInstanceSettings() {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		when(
+			ddmFormInstanceSettings.expirationDate()
+		).thenReturn(
+			"1987-09-22"
+		);
+
+		return ddmFormInstanceSettings;
+	}
+
+	private FFSubmissionsSettingsConfigurationActivator
+		_mockFFSubmissionsSettingsConfigurationActivator() {
+
+		FFSubmissionsSettingsConfigurationActivator
+			ffSubmissionsSettingsConfigurationActivator = mock(
+				FFSubmissionsSettingsConfigurationActivator.class);
+
+		when(
+			ffSubmissionsSettingsConfigurationActivator.expirationDateEnabled()
+		).thenReturn(
+			true
+		);
+
+		return ffSubmissionsSettingsConfigurationActivator;
+	}
+
+	private ThemeDisplay _mockThemeDisplay() {
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			themeDisplay.getTimeZone()
+		).thenReturn(
+			TimeZone.getDefault()
+		);
+
+		return themeDisplay;
 	}
 
 	private static final String _FIELD_NAME = "field0";

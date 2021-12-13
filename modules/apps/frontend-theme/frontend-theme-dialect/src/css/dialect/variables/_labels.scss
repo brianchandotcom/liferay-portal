@@ -205,9 +205,9 @@ $label-dark: (
 	),
 );
 
-// Label Solid
+// Label Inverse
 
-$label-solid-primary: (
+$label-inverse-primary: (
 	background-color: var(--color-action-primary-default),
 	border-color: var(--color-action-primary-default),
 	close: (
@@ -228,7 +228,7 @@ $label-solid-primary: (
 	),
 );
 
-$label-solid-secondary: (
+$label-inverse-secondary: (
 	background-color: var(--color-action-secondary-default),
 	border-color: var(--color-action-secondary-default),
 	color: var(--color-action-secondary-inverted),
@@ -249,7 +249,7 @@ $label-solid-secondary: (
 	),
 );
 
-$label-solid-success: (
+$label-inverse-success: (
 	background-color: $success,
 	border-color: $success,
 	close: (
@@ -270,7 +270,7 @@ $label-solid-success: (
 	),
 );
 
-$label-solid-info: (
+$label-inverse-info: (
 	background-color: $info,
 	border-color: $info,
 	color: $white,
@@ -291,7 +291,7 @@ $label-solid-info: (
 	),
 );
 
-$label-solid-warning: (
+$label-inverse-warning: (
 	background-color: $warning,
 	border-color: $warning,
 	close: (
@@ -312,7 +312,7 @@ $label-solid-warning: (
 	),
 );
 
-$label-solid-danger: (
+$label-inverse-danger: (
 	background-color: $danger,
 	border-color: $danger,
 	close: (
@@ -333,7 +333,7 @@ $label-solid-danger: (
 	),
 );
 
-$label-solid-light: (
+$label-inverse-light: (
 	background-color: var(--color-neutral-1),
 	border-color: var(--color-neutral-1),
 	close: (
@@ -354,7 +354,7 @@ $label-solid-light: (
 	),
 );
 
-$label-solid-dark: (
+$label-inverse-dark: (
 	background-color: var(--color-neutral-6),
 	border-color: var(--color-neutral-6),
 	close: (
@@ -375,9 +375,9 @@ $label-solid-dark: (
 	),
 );
 
-// Label Inverse
+// Label Tonal
 
-$label-inverse-primary: (
+$label-tonal-primary: (
 	background-color: var(--color-action-primary-hover-lighten),
 	border-color: transparent,
 	close: (
@@ -398,7 +398,7 @@ $label-inverse-primary: (
 	),
 );
 
-$label-inverse-secondary: (
+$label-tonal-secondary: (
 	background-color: var(--color-action-secondary-hover-lighten),
 	border-color: transparent,
 	close: (
@@ -419,7 +419,7 @@ $label-inverse-secondary: (
 	),
 );
 
-$label-inverse-success: (
+$label-tonal-success: (
 	background-color: $success-l2,
 	border-color: transparent,
 	close: (
@@ -440,7 +440,7 @@ $label-inverse-success: (
 	),
 );
 
-$label-inverse-info: (
+$label-tonal-info: (
 	background-color: $info-l2,
 	border-color: transparent,
 	color: $info,
@@ -461,7 +461,7 @@ $label-inverse-info: (
 	),
 );
 
-$label-inverse-warning: (
+$label-tonal-warning: (
 	background-color: $warning-l2,
 	border-color: transparent,
 	close: (
@@ -482,7 +482,7 @@ $label-inverse-warning: (
 	),
 );
 
-$label-inverse-danger: (
+$label-tonal-danger: (
 	background-color: $danger-l2,
 	border-color: transparent,
 	close: (
@@ -503,7 +503,7 @@ $label-inverse-danger: (
 	),
 );
 
-$label-inverse-light: (
+$label-tonal-light: (
 	background-color: var(--color-neutral-6),
 	border-color: transparent,
 	close: (
@@ -524,7 +524,7 @@ $label-inverse-light: (
 	),
 );
 
-$label-inverse-dark: (
+$label-tonal-dark: (
 	background-color: var(--color-neutral-1),
 	border-color: transparent,
 	close: (
@@ -708,14 +708,14 @@ $label-borderless-dark: (
 );
 
 $label-palette: (
-	solid-primary: $label-solid-primary,
-	solid-secondary: $label-solid-secondary,
-	solid-success: $label-solid-success,
-	solid-info: $label-solid-info,
-	solid-warning: $label-solid-warning,
-	solid-danger: $label-solid-danger,
-	solid-light: $label-solid-light,
-	solid-dark: $label-solid-dark,
+	tonal-primary: $label-tonal-primary,
+	tonal-secondary: $label-tonal-secondary,
+	tonal-success: $label-tonal-success,
+	tonal-info: $label-tonal-info,
+	tonal-warning: $label-tonal-warning,
+	tonal-danger: $label-tonal-danger,
+	tonal-light: $label-tonal-light,
+	tonal-dark: $label-tonal-dark,
 	borderless-primary: $label-borderless-primary,
 	borderless-secondary: $label-borderless-secondary,
 	borderless-success: $label-borderless-success,

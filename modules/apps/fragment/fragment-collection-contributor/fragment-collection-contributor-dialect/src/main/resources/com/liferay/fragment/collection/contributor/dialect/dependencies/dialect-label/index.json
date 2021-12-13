@@ -19,8 +19,8 @@
 								"value": "-inverse"
 							},
 							{
-								"label": "solid",
-								"value": "-solid"
+								"label": "tonal",
+								"value": "-tonal"
 							},
 							{
 								"label": "borderless",

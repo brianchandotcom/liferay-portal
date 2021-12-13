@@ -55,7 +55,7 @@ const TOKEN_GROUPS = [
 	},
 ];
 
-const LABEL_TYPES = ['', 'inverse-', 'solid-', 'borderless-'];
+const LABEL_TYPES = ['', 'inverse-', 'tonal-', 'borderless-'];
 
 const LABEL_VARIANTS = [
 	'primary',

@@ -1703,6 +1703,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getId()));
 
+			if (Objects.equals(objectDefinition.getScope(), "company") &&
+				(existingObjectDefinition != null)) {
+
+				continue;
+			}
+
 			String objectEntriesJSON = _read(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".object-entries.json"));

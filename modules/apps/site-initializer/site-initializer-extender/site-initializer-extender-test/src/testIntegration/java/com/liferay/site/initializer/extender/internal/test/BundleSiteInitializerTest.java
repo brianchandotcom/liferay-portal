@@ -634,8 +634,7 @@ public class BundleSiteInitializerTest {
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
-					objectRelationshipResource.toFilter(
-						"name eq 'testOR1'"),
+					objectRelationshipResource.toFilter("name eq 'testOR1'"),
 					null);
 
 		Assert.assertNotNull(page1);
@@ -655,8 +654,7 @@ public class BundleSiteInitializerTest {
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
-					objectRelationshipResource.toFilter(
-						"name eq 'testOR2'"),
+					objectRelationshipResource.toFilter("name eq 'testOR2'"),
 					null);
 
 		Assert.assertNotNull(page2);
@@ -729,7 +727,7 @@ public class BundleSiteInitializerTest {
 				siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
-			siteNavigationMenuItems.toString(), 3,
+			siteNavigationMenuItems.toString(), 4,
 			siteNavigationMenuItems.size());
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =

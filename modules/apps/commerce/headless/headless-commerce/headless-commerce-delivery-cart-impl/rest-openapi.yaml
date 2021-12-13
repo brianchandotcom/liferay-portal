@@ -1669,6 +1669,11 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: callbackURL
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

@@ -116,8 +116,7 @@ public class TalendArchiveParserUtil {
 
 				unicodeProperties.put(
 					propertyName,
-					contextProperties.getProperty(propertyName) +
-						" (Automatic Copy)");
+					contextProperties.getProperty(propertyName));
 			}
 		}
 		finally {
@@ -201,12 +200,11 @@ public class TalendArchiveParserUtil {
 		String jobName, Path jobDirectoryPath, String jobVersion) {
 
 		String jarName = StringBundler.concat(
-			jobName, StringPool.SLASH, jobName, StringPool.UNDERLINE,
+			jobName, StringPool.SLASH, StringUtil.toLowerCase(jobName), StringPool.UNDERLINE,
 			StringUtil.replace(jobVersion, CharPool.PERIOD, CharPool.UNDERLINE),
 			".jar");
 
-		Path jobJarPath = jobDirectoryPath.resolve(
-			StringUtil.toLowerCase(jarName));
+		Path jobJarPath = jobDirectoryPath.resolve(jarName);
 
 		if (jobJarPath != null) {
 			return jobJarPath;

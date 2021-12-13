@@ -1,6 +1,6 @@
 import {useQuery} from '@apollo/client';
 import ClayModal from '@clayui/modal';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import Table from '../../../../common/components/Table';
 import {getAccountSubscriptionsTerms} from '../../../../common/services/liferay/graphql/queries';
@@ -30,69 +30,44 @@ const ModalCardSubscription = ({
 	const totalCount =
 		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
 
-	const columns = useMemo(
-		() => [
-			{
-				Cell: (props) => {
-					return (
-						<>{`${dateToLocalFormat(
-							props.startDate
-						)} - ${dateToLocalFormat(props.endDate)}`}</>
-					);
-				},
-				Header: 'Start-End Date',
-				accessor: 'start-end-date',
-				align: 'center',
-				expanded: true,
-			},
-			{
-				Cell: (props) => {
-					return <>{props?.provisioned || '-'}</>;
-				},
-				Header: 'Provisioned',
-				accessor: 'provisioned',
-				align: 'center',
-			},
-			{
-				Cell: (props) => {
-					return <>{props?.quantity || '-'}</>;
-				},
-				Header: 'Purchased',
-				accessor: 'quantity',
-				align: 'center',
-			},
-			{
-				Cell: (props) => {
-					return <>{props?.instanceSize || '-'}</>;
-				},
-				Header: 'Instance Size',
-				accessor: 'instanceSize',
-				align: 'center',
-			},
-			{
-				Cell: (props) => {
-					return (
-						<>
-							{(props?.subscriptionTermStatus && (
-								<StatusTag
-									currentStatus={
-										status[
-											`${props.subscriptionTermStatus.toLowerCase()}`
-										]
-									}
-								/>
-							)) ||
-								'-'}
-						</>
-					);
-				},
-				Header: 'Status',
-				accessor: 'subscriptionTermStatus',
-				align: 'center',
-			},
-		],
-		[]
-	);
+	const columns = [
+		{
+			accessor: 'start-end-date',
+			align: 'center',
+			expanded: true,
+			header: {
+				name: 'Start-End Date',
+			}
+		},
+		{
+			accessor: 'provisioned',
+			align: 'center',
+			header: {
+				name: 'Provisioned',
+			}
+		},
+		{
+			accessor: 'quantity',
+			align: 'center',
+			header: {
+				name: 'Purchased',
+			}
+		},
+		{
+			accessor: 'instance-size',
+			align: 'center',
+			header: {
+				name: 'Instance Size',
+			}
+		},
+		{
+			accessor: 'subscription-term-status',
+			align: 'center',
+			header: {
+				name: 'Status',
+			}
+		},
+	];
 
 	return (
 		<ClayModal center={true} observer={observer} size="lg">
@@ -119,9 +94,26 @@ const ModalCardSubscription = ({
 					<Table
 						activePage={activePage}
 						columns={columns}
-						data={accountSubscriptionTermsItems}
 						hasPagination={totalCount >= 5}
 						itemsPerPage={5}
+						rows={accountSubscriptionTermsItems.map(({endDate, instanceSize, provisioned, quantity, startDate, subscriptionTermStatus}) => ({
+							'instance-size': instanceSize || '-',
+							'provisioned': provisioned || '-',
+							'quantity': quantity || '-',
+							'start-end-date': `${dateToLocalFormat(
+								startDate
+							)} - ${dateToLocalFormat(endDate)}`,
+							'subscription-term-status': (subscriptionTermStatus && (
+								<StatusTag
+									currentStatus={
+										status[
+											`${subscriptionTermStatus.toLowerCase()}`
+										]
+									}
+								/>
+							)) ||
+								'-'
+						}))}
 						setActivePage={setActivePage}
 						tableVerticalAlignment="middle"
 						totalCount={totalCount}

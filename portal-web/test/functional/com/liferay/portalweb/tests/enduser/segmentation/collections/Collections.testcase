@@ -656,7 +656,6 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, only the content matching the criteria of the assigned segment must be shown in asset publisher	"
-	@ignore = "true"
 	@priority = "4"
 	test ContentMatchesSegmentCriteria {
 		task ("Create a public page") {
@@ -1097,7 +1096,6 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, can have only one variation per segment"
-	@ignore = "true"
 	@priority = "3"
 	test NumberOfVariationsBySegments {
 		task ("Create a segment") {
@@ -1267,7 +1265,6 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, when selecting a segment it is possible to filter and order, sorting and search	"
-	@ignore = "true"
 	@priority = "4"
 	test SearchingSegments {
 		task ("Create Segments") {
@@ -1613,7 +1610,6 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, the name of the variation is provided by the name of the segment	"
-	@ignore = "true"
 	@priority = "3"
 	test VariationNameIsShown {
 		task ("Create a segment") {
@@ -1801,7 +1797,6 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
-	@ignore = "true"
 	@priority = "4"
 	test ViewContentOfAVariant {
 		task ("Create categories") {

@@ -101,6 +101,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -815,13 +816,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getScopeGroupId());
+
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
 				layoutClassedModelUsages) {
 
-			for (Locale locale :
-					LanguageUtil.getAvailableLocales(
-						themeDisplay.getScopeGroupId())) {
-
+			for (Locale locale : availableLocales) {
 				StringBundler sb = new StringBundler(5);
 
 				sb.append(layoutClassedModelUsage.getContainerKey());

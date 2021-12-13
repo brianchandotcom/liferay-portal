@@ -33,7 +33,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				onActiveChange={() => setActive((prevState) => !prevState)}
 				trigger={
 					<ClayButton
-						className="font-weight-semi-bold text-brand-primary"
+						className="font-weight-semi-bold shadow-none text-brand-primary"
 						displayType="unstyled"
 					>
 						{`${

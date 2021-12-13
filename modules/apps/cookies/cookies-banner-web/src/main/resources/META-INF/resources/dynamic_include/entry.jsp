@@ -16,7 +16,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<div class="staging-top">
+<div class="cookies-banner cookies-banner-bottom">
 	<liferay-portlet:runtime
 		portletName="<%= CookiesBannerPortletKeys.COOKIES_BANNER %>"
 	/>

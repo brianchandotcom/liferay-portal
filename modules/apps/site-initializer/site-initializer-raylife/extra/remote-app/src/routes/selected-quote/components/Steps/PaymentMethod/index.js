@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {useContext, useEffect, useState} from 'react';
 import {LiferayService} from '../../../../../common/services/liferay';
 import {SelectedQuoteContext} from '../../../context/SelectedQuoteContextProvider';
-import {getPaymentMethods} from '../../../services/Cart';
+import {getPaymentMethodURL, getPaymentMethods} from '../../../services/Cart';
 import {updateOrderPaymentMethod} from '../../../services/Order';
 
 import RadioButton from './RadioButton';
@@ -84,10 +84,15 @@ const PaymentMethod = () => {
 		);
 	};
 
-	const onPayNow = async (method) => {
+	const onClickPayNow = async (method) => {
 		await updateOrderPaymentMethod(method.value, product.price, orderId);
 
-		window.location.href = `${origin}${LiferayService.getLiferaySiteName()}/congrats`;
+		const {data: paymentMethodURL} = await getPaymentMethodURL(
+			orderId,
+			`${origin}${LiferayService.getLiferaySiteName()}/congrats`
+		);
+
+		window.location.href = paymentMethodURL;
 	};
 
 	const showOptions = (method) =>
@@ -169,7 +174,9 @@ const PaymentMethod = () => {
 									<button
 										className="btn btn-secondary"
 										disabled={!agree}
-										onClick={() => onPayNow(checkedMethod)}
+										onClick={() =>
+											onClickPayNow(checkedMethod)
+										}
 									>
 										Pay Now
 									</button>

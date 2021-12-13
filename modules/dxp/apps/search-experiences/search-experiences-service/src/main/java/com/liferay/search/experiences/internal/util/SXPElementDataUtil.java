@@ -47,7 +47,7 @@ import org.osgi.framework.FrameworkUtil;
 public class SXPElementDataUtil {
 
 	public static void addSXPElements(
-			SXPElementLocalService sxpElementLocalService, Company company)
+			Company company, SXPElementLocalService sxpElementLocalService)
 		throws PortalException {
 
 		Set<String> titles = new HashSet<>();

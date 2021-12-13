@@ -36,7 +36,7 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompany(
 			company -> SXPElementDataUtil.addSXPElements(
-				_sxpElementLocalService, company));
+				company, _sxpElementLocalService));
 	}
 
 	private final CompanyLocalService _companyLocalService;

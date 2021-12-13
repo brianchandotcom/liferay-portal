@@ -40,7 +40,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			() -> {
 				try {
 					SXPElementDataUtil.addSXPElements(
-						_sxpElementLocalService, company);
+						company, _sxpElementLocalService);
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException, portalException);

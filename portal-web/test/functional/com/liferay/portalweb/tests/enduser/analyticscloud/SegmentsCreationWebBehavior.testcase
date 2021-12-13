@@ -186,7 +186,7 @@ definition {
 
 		ACNavigation.goToSegments();
 
-		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+		ACSegments.editSegment(segmentName = "Dynamic Segment Test");
 
 		ACSegments.editWebBehaviorCriterion(
 			atLeastMost = "at most",

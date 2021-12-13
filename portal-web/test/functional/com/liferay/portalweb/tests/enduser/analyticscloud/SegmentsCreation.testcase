@@ -956,7 +956,7 @@ definition {
 		task ("Edit the segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+			ACSegments.editSegment(segmentName = "Dynamic Segment Test");
 		}
 
 		task ("View preview number") {

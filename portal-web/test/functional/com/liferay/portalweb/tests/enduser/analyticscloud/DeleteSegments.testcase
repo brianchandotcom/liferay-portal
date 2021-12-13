@@ -85,7 +85,7 @@ definition {
 		task ("Go to Segment and edit it") {
 			ACNavigation.goToSegments();
 
-			ACSegments.editSegment(searchTerm = "New Segment Test");
+			ACSegments.editSegment(segmentName = "New Segment Test");
 		}
 
 		task ("Delete the criteria") {

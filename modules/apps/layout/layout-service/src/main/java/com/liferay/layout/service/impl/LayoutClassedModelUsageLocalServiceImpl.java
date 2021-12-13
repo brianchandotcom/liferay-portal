@@ -146,12 +146,11 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	}
 
 	@Override
-	public List<LayoutClassedModelUsage>
-		getLayoutClassedModelUsagesByCompanyIdAndClassNameId(
-			long companyId, long classNameId) {
+	public List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long companyId, long classNameId, long containerType) {
 
-		return layoutClassedModelUsagePersistence.findByCO_C(
-			companyId, classNameId);
+		return layoutClassedModelUsagePersistence.findByC_CN_CT(
+			companyId, classNameId, containerType);
 	}
 
 	@Override

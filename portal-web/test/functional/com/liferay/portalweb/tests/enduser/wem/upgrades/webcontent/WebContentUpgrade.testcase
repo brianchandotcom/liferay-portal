@@ -917,6 +917,39 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test PublishDraftWebContentAfterUpgrade625 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
+
+		Upgrade.addWCStructureAndTemplate();
+
+		Upgrade.publishWCDraft();
+	}
+
+	@priority = "5"
+	test PublishDraftWebContentAfterUpgrade621015 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.15";
+
+		Upgrade.addWCStructureAndTemplate();
+
+		Upgrade.publishWCDraft();
+	}
+
+	@priority = "5"
+	test PublishDraftWebContentAfterUpgrade621021 {
+		property data.archive.type = "data-archive-web-content-draft";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+		Upgrade.addWCStructureAndTemplate();
+
+		Upgrade.publishWCDraft();
+	}
+
 	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = "5"
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher704 {
@@ -1027,39 +1060,6 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
-	}
-
-	@priority = "5"
-	test ViewWebContentArchive625 {
-		property data.archive.type = "data-archive-web-content-draft";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.2.5";
-
-		Upgrade.addWCStructureAndTemplate();
-
-		Upgrade.publishWCDraft();
-	}
-
-	@priority = "5"
-	test ViewWebContentArchive621015 {
-		property data.archive.type = "data-archive-web-content-draft";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.version = "6.2.10.15";
-
-		Upgrade.addWCStructureAndTemplate();
-
-		Upgrade.publishWCDraft();
-	}
-
-	@priority = "5"
-	test ViewWebContentArchive621021 {
-		property data.archive.type = "data-archive-web-content-draft";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.version = "6.2.10.21";
-
-		Upgrade.addWCStructureAndTemplate();
-
-		Upgrade.publishWCDraft();
 	}
 
 	@description = "This is a use case for LRQA-62720. View web content with all fields and value after upgrade from 6.2."

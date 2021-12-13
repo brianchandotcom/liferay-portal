@@ -103,18 +103,13 @@
 				}
 			}
 
-			.panel-right-icon {
-				align-items: center;
-				background-color: #d2d2d3;
-				border-radius: 50%;
-				display: flex;
-				fill: $background;
+			.icon {
 				height: 32px;
-				justify-content: center;
 				width: 32px;
 
-				&.step-checked {
-					background-color: $color-state-success;
+				svg {
+					height: 23px !important;
+					width: 23px !important;
 				}
 			}
 		}

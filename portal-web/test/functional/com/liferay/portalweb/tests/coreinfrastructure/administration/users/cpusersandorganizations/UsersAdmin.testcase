@@ -915,6 +915,27 @@ definition {
 			listEntrySubtitle = "usersn1");
 	}
 
+	@description = "This is a use case for LPS-79937. Portlet options are visible from Control Panel when direct.servlet.context.enabled=false."
+	@priority = "4"
+	test CanExportUsersWithDirectServletContextDisabled {
+		property custom.properties = "direct.servlet.context.enabled=false";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		AssertVisible(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Export Users");
+
+		AssertConfirm(value1 = "Warning: This CSV file contains user supplied inputs. Opening a CSV file in a spreadsheet program may be dangerous.");
+
+		AssertConsoleTextNotPresent(value1 = "javax.servlet.ServletException");
+	}
+
 	@priority = "4"
 	test CannotViewSiteSettingsInUserPersonalSite {
 		Navigator.gotoPersonalSite();

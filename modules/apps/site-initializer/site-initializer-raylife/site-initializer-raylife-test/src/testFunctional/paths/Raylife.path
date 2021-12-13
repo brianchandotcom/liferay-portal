@@ -126,14 +126,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>APPLICATION_ID</td>
-    <td>//h4[@id='content-agent-text-your-application']</td>
-    <td></td>
+	<td>APPLICATION_ID</td>
+	<td>//h4[@id='content-agent-text-your-application']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CONTEXTUAL_MESSAGE</td>
-    <td>//h1[contains(text(),"Let's get in touch.")]/parent::div//p[contains(text(),'${contextualMessage}')]</td>
-    <td></td>
+	<td>CONTEXTUAL_MESSAGE</td>
+	<td>//h1[contains(text(),"Let's get in touch.")]/parent::div//p[contains(text(),'${contextualMessage}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

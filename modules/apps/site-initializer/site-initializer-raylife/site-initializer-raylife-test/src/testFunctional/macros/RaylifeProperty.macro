@@ -1,67 +1,65 @@
 definition {
 
-    macro typePropertyInfoFields {
-        Type(
-            locator1 = "Raylife#FORMS_FIELDS",
-            value1 = "${value}");   
-    }
-
-    macro typeAllPropertyInfoFields {
-
+	macro typeAllPropertyInfoFields {
 		Click(
-			locator1 = "Raylife#BUTTON_YES_OPTION",
-			field = "Do you own the building");
-			
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "11");
-
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.buildingSquareFeetOccupied",
-            value = "11 ft²");
-			
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.totalBuildingSquareFeet",
-            value = "11 ft²");
-
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.yearBuilding",
-            value = "2000");
-
-		Click(
-			locator1 = "Raylife#BUTTON_NO_OPTION",
-			field = "Is this the primary location where you conduct business?");   
-    }
-
-    macro viewPropertyInfo {
-
-		AssertElementPresent(
-            locator1 = "Raylife#BUTTON_YES_OPTION",
-            field = "Do you own the building");
-
-		AssertElementPresent(
-			locator1 = "Raylife#FORMS_VALUE",
+		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
 			value = "11");
 
-		AssertElementPresent(
-			locator1 = "Raylife#FORMS_VALUE",
+		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
 			value = "11 ft²");
 
-		AssertElementPresent(
-			locator1 = "Raylife#FORMS_VALUE",
+		RaylifeProperty.typePropertyInfoFields(
 			label = "property.totalBuildingSquareFeet",
 			value = "11 ft²");
 
-		AssertElementPresent(
-			locator1 = "Raylife#FORMS_VALUE",
+		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
 			value = "2000");
 
-		AssertElementPresent(
-            locator1 = "Raylife#BUTTON_NO_OPTION",
-            field = "Is this the primary location where you conduct business?");
+		Click(
+			field = "Is this the primary location where you conduct business?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 	}
+
+	macro typePropertyInfoFields {
+		Type(
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "${value}");
+	}
+
+	macro viewPropertyInfo {
+		AssertElementPresent(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		AssertElementPresent(
+			label = "property.stories",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "11");
+
+		AssertElementPresent(
+			label = "property.buildingSquareFeetOccupied",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "11 ft²");
+
+		AssertElementPresent(
+			label = "property.totalBuildingSquareFeet",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "11 ft²");
+
+		AssertElementPresent(
+			label = "property.yearBuilding",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "2000");
+
+		AssertElementPresent(
+			field = "Is this the primary location where you conduct business?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+	}
+
 }

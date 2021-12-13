@@ -1,0 +1,38 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-130223. The user can edit a inline text of an OOTB Card fragment after Upgrade."
+	@priority = "4"
+	test EditInlineTextOfCardAfterUpgrade730 {
+		property data.archive.type = "data-archive-card-fragment";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewEditableCardFragment();
+	}
+
+	@description = "This is a use case for LPS-130223. The user can edit a inline text of an OOTB Card fragment after Upgrade."
+	@priority = "4"
+	test EditInlineTextOfCardAfterUpgrade73101 {
+		property data.archive.type = "data-archive-card-fragment";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewEditableCardFragment();
+	}
+
+}

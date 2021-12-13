@@ -241,12 +241,7 @@ public class SourceFormatBuild
 			"https://github.com/", senderUsername, "/",
 			gitHubRemoteGitRepositoryName, "/tree/", senderBranchName);
 
-		Workspace workspace = getWorkspace();
-
-		WorkspaceGitRepository primaryWorkspaceGitRepository =
-			workspace.getPrimaryWorkspaceGitRepository();
-
-		String senderSHA = primaryWorkspaceGitRepository.getSenderBranchSHA();
+		String senderSHA = pullRequest.getSenderSHA();
 
 		String senderCommitURL = JenkinsResultsParserUtil.combine(
 			"https://github.com/", senderUsername, "/",

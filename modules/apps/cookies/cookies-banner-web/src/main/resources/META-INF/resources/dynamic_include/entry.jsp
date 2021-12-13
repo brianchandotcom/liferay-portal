@@ -21,3 +21,67 @@
 		portletName="<%= CookiesBannerPortletKeys.COOKIES_BANNER %>"
 	/>
 </div>
+
+<script>
+	const buttonAccept = document.querySelector('.cookies-banner-button-accept');
+	const buttonConfiguration = document.querySelector(
+		'.cookies-banner-button-configuration'
+	);
+	const buttonDecline = document.querySelector('.cookies-banner-button-decline');
+	const cookieBanner = document.querySelector('.cookies-banner');
+
+	const editMode = document.body.classList.contains('has-edit-mode-menu');
+
+	function handleButtonClickAccept() {
+		hideBanner();
+
+		localStorage.setItem('liferay.cookie.consent', 'accepted2');
+	}
+
+	function handleButtonClickDecline() {
+		hideBanner();
+
+		localStorage.setItem('liferay.cookie.consent', 'decline2');
+	}
+
+	function handleButtonClickConfiguration() {
+		Liferay.Util.openModal({
+			title: 'Cookie Configuration',
+			url:
+				'<%=
+					PortletURLBuilder.createRenderURL(
+						renderResponse
+					).setMVCPath(
+						"configuration.jsp"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildPortletURL()
+				%>',
+		});
+	}
+
+	function hideBanner() {
+		cookieBanner.style.display = 'none';
+	}
+
+	export default function main() {
+		if (!editMode) {
+			if (
+				localStorage.getItem('liferay.cookie.consent') === 'accepted' ||
+				localStorage.getItem('liferay.cookie.consent') === 'decline'
+			) {
+				hideBanner();
+			}
+			else {
+				buttonAccept.addEventListener('click', handleButtonClickAccept);
+				buttonConfiguration.addEventListener(
+					'click',
+					handleButtonClickConfiguration
+				);
+				buttonDecline.addEventListener('click', handleButtonClickDecline);
+			}
+		}
+	}
+
+	main();
+</script>

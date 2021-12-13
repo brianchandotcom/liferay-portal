@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -803,11 +804,11 @@ public class ObjectDefinitionLocalServiceImpl
 				FragmentEntryLink.class.getName());
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			_layoutClassedModelUsageLocalService.
-				getLayoutClassedModelUsagesByCompanyIdAndClassNameId(
-					objectDefinition.getCompanyId(),
-					_classNameLocalService.getClassNameId(
-						objectDefinition.getClassName()));
+			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
+				objectDefinition.getCompanyId(),
+				_classNameLocalService.getClassNameId(
+					objectDefinition.getClassName()),
+				_portal.getClassNameId(FragmentEntryLink.class));
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1181,6 +1182,9 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

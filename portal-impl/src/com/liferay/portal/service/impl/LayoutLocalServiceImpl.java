@@ -3284,6 +3284,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setStatusDate(serviceContext.getModifiedDate(new Date()));
 
+		if (layout.isDraftLayout()) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.put(
+				"published", Boolean.TRUE.toString());
+		}
+
 		layout = layoutPersistence.update(layout);
 
 		// Asset

@@ -373,6 +373,8 @@ module.framework.properties.osgi.console=11312</echo>
 						]]>
 					</echo>
 
+					<get-database-property property.name="database.host" />
+
 					<execute>
 						<![CDATA[
 							docker cp ${export.sh.file.path} ${database.host}:/tmp/export.sh

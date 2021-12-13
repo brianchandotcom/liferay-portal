@@ -34,6 +34,10 @@
 		<finder name="Plid" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="plid" />
 		</finder>
+		<finder name="CO_C" return-type="Collection" where="containerKey IS NOT NULL">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="C_C" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

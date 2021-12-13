@@ -2101,8 +2101,8 @@ rerun your task.
 			<isset property="class.names" />
 			<then>
 				<taskdef
-					classname="com.liferay.util.ant.GetFileSetTask"
-					classpath="${project.dir}/util-java/util-java.jar"
+					classname="com.liferay.ant.get.file.set.GetFileSetTask"
+					classpathref="project.classpath"
 					name="get-file-set"
 				/>
 

@@ -14,6 +14,9 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
@@ -46,6 +49,8 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -53,6 +58,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -64,12 +70,16 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -521,6 +531,8 @@ public class ObjectDefinitionLocalServiceImpl
 				}
 			}
 		}
+
+		_invalidateDisplayPagesCaches(objectDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -781,6 +793,45 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _invalidateDisplayPagesCaches(
+		ObjectDefinition objectDefinition) {
+
+		PortalCache<String, String> portalCache =
+			(PortalCache<String, String>)_multiVMPool.getPortalCache(
+				FragmentEntryLink.class.getName());
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByCompanyIdAndClassNameId(
+					objectDefinition.getCompanyId(),
+					_classNameLocalService.getClassNameId(
+						objectDefinition.getClassName()));
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			for (Locale locale :
+					LanguageUtil.getAvailableLocales(
+						themeDisplay.getScopeGroupId())) {
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(layoutClassedModelUsage.getContainerKey());
+				sb.append(StringPool.DASH);
+				sb.append(locale);
+				sb.append(StringPool.DASH);
+				sb.append(0);
+
+				portalCache.remove(sb.toString());
+			}
+		}
 	}
 
 	private void _registerTransactionCallbackForCluster(
@@ -1087,14 +1138,24 @@ public class ObjectDefinitionLocalServiceImpl
 	private BundleContext _bundleContext;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
 
 	private ServiceTracker<ObjectDefinitionDeployer, ObjectDefinitionDeployer>
 		_objectDefinitionDeployerServiceTracker;

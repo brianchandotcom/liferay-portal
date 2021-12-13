@@ -14,8 +14,6 @@
 
 package com.liferay.talend.properties.connection;
 
-import com.liferay.talend.ui.UIKeys;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +24,9 @@ import org.talend.daikon.properties.property.PropertyFactory;
 
 /**
  * @author Igor Beslic
+ * @deprecated As of Cavanaugh (7.4.x), will be removed without adequate replacement
  */
+@Deprecated
 public class OAuthAuthorizationProperties extends PropertiesImpl {
 
 	public OAuthAuthorizationProperties(String name) {
@@ -39,7 +39,7 @@ public class OAuthAuthorizationProperties extends PropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		Form referenceForm = new Form(this, UIKeys.FORM_OAUTH_AUTHORIZATION);
+		Form referenceForm = new Form(this, Form.MAIN);
 
 		referenceForm.addRow(oauthClientId);
 		referenceForm.addRow(oauthClientSecret);

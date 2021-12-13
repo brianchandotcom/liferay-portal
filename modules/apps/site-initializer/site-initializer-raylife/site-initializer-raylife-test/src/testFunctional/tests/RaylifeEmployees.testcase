@@ -5,148 +5,656 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
 	@description = "LPS-142450 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all employees over the next 12 months?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AnnualPayrollForEmployeesIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142450 AnnualPayrollForEmployeesIsRequired pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142449 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AnnualPayrollForOwnerIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142449 AnnualPayrollForOwnerIsRequired pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForOwner",
+			value = "$111.00");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForOwner",
+			value = "");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142422 - Verify if Continue Button is only enabled when all required fields have been filled in."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanContinueOnEmployeeInfoWithAllFilled {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142422 CanContinueOnEmployeeInfoWithAllFilled pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142541 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Federal Employer Identification Number (FEIN)')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissFEINInfoPanel {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142541 CanDismissFEINInfoPanel pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "Federal Employer Identification Number (FEIN)");
+
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+		AssertElementPresent(
+			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			value1 = "Federal Employer Identification Number (FEIN)");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142546 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many full or part time employees do you have?')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissPartTimeEmployeesInfoPanel {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142546 CanDismissPartTimeEmployeesInfoPanel pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "How many full or part time employees do you have?");
+
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+		AssertElementPresent(
+			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			value1 = "Full or Part Time Employees");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142423 - Verify if clicking on Previous returns to Previous Screen (Business Info/'Let's get to know your business!') and all information is maintained in the Employee Info page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanGoBackOnEmployeeInfoKeepingAllData {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142423 CanGoBackOnEmployeeInfoKeepingAllData pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.viewEmployeesInfo();
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142454 - Verify clicking 'More Info' in the 'Federal Employer Identification Number (FEIN)' field opens an Information Panel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewFEINInfoPanel {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142454 CanViewFEINInfoPanel pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "Federal Employer Identification Number (FEIN)");
+
+		AssertElementPresent(
+			locator1 = "Raylife#TIP_INFO_PANEL",
+			value1 = "Federal Employer Identification Number (FEIN)");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142542 - Verify clicking 'More Info' in the 'How many full or part time employees do you have?' field opens an Information Panel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewPartTimeEmployeesInfoPanel {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142542 CanViewPartTimeEmployeesInfoPanel pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "How many full or part time employees do you have?");
+
+		AssertElementPresent(
+			locator1 = "Raylife#TIP_INFO_PANEL",
+			value1 = "Full or Part Time Employees");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142424 - Verify if 'Does your business have a Federal Employer Identification Number (FEIN)?' = 'Yes', then field 'Federal Employer Identification Number (FEIN)' is shown"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DoesFEINInputFieldShowsUp {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142424 DoesFEINInputFieldShowsUp pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		AssertElementPresent(
+			locator1 = "Raylife#FORMS_FIELDS",
+			label = "employees.fein");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142447 - Verify error message 'This field is required' in the 'What is your estimated annual gross revenue for the next 12 months?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test EstimatedAnnualGrossRevenueIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142447 EstimatedAnnualGrossRevenueIsRequired pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142426 - Verify error message 'FEIN is required.' in the 'Federal Employer Identification Number (FEIN)' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FEINIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142426 FEINIsRequired pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "FEIN is required.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142427 - Verify error message 'Please enter a valid FEIN.' in the 'Federal Employer Identification Number (FEIN)' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FEINIsValid {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142427 FEINIsValid pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "0");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "Please enter a valid FEIN.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142444 - Verify error message 'This field is required' in the 'How many full or part time employees do you have?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PartTimeEmployeeIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142444 PartTimeEmployeeIsRequired pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142446 - Verify error message 'You must have at least one employee.' in the 'How many full or part time employees do you have?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PartTimeEmployeeNotBelowOne {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142446 PartTimeEmployeeNotBelowOne pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "0");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "You must have at least one employee.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142435 - Verify error message 'You cannot enter a future year.' in the 'What year did you start your business?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StartBusinessYearIsNotFuture {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142435 StartBusinessYearIsNotFuture pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2030");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "You cannot enter a future year.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142433 - Verify error message 'This field is required' in the 'What year did you start your business?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StartBusinessYearIsRequired {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142433 StartBusinessYearIsRequired pending implementation
+		RaylifeHomePage.getAQuote();
 
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
+
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 }

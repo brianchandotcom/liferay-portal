@@ -66,6 +66,41 @@ public class CompanyServiceSoap {
 	/**
 	 * Adds a company.
 	 *
+	 * @param companyId the primary key of the company (optionally <code>null</code> or
+	 *         <code>0</code> to generate a key automatically)
+	 * @param webId the company's web domain
+	 * @param virtualHost the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param system whether the company is the very first company (i.e., the
+	 * @param maxUsers the max number of company users (optionally
+	 <code>0</code>)
+	 * @param active whether the company is active
+	 * @return the company
+	 */
+	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
+			long companyId, String webId, String virtualHost, String mx,
+			boolean system, int maxUsers, boolean active)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Company returnValue =
+				CompanyServiceUtil.addCompany(
+					companyId, webId, virtualHost, mx, system, maxUsers,
+					active);
+
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param webId the company's web domain
 	 * @param virtualHost the company's virtual host name
 	 * @param mx the company's mail domain
@@ -121,6 +156,22 @@ public class CompanyServiceSoap {
 	public static void deleteLogo(long companyId) throws RemoteException {
 		try {
 			CompanyServiceUtil.deleteLogo(companyId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void forEachCompany(
+			com.liferay.petra.function.UnsafeConsumer
+				<com.liferay.portal.kernel.model.Company, Exception>
+					unsafeConsumer)
+		throws RemoteException {
+
+		try {
+			CompanyServiceUtil.forEachCompany(unsafeConsumer);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

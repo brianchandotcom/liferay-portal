@@ -44,6 +44,29 @@ public class CompanyServiceUtil {
 	/**
 	 * Adds a company.
 	 *
+	 * @param companyId the primary key of the company (optionally <code>null</code> or
+	 <code>0</code> to generate a key automatically)
+	 * @param webId the company's web domain
+	 * @param virtualHost the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param system whether the company is the very first company (i.e., the
+	 * @param maxUsers the max number of company users (optionally
+	 <code>0</code>)
+	 * @param active whether the company is active
+	 * @return the company
+	 */
+	public static Company addCompany(
+			long companyId, String webId, String virtualHost, String mx,
+			boolean system, int maxUsers, boolean active)
+		throws PortalException {
+
+		return getService().addCompany(
+			companyId, webId, virtualHost, mx, system, maxUsers, active);
+	}
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param webId the company's web domain
 	 * @param virtualHost the company's virtual host name
 	 * @param mx the company's mail domain
@@ -73,6 +96,14 @@ public class CompanyServiceUtil {
 	 */
 	public static void deleteLogo(long companyId) throws PortalException {
 		getService().deleteLogo(companyId);
+	}
+
+	public static void forEachCompany(
+			com.liferay.petra.function.UnsafeConsumer<Company, Exception>
+				unsafeConsumer)
+		throws Exception {
+
+		getService().forEachCompany(unsafeConsumer);
 	}
 
 	/**

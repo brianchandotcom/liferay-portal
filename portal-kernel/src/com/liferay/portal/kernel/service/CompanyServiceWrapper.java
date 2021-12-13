@@ -35,6 +35,31 @@ public class CompanyServiceWrapper
 	/**
 	 * Adds a company.
 	 *
+	 * @param companyId the primary key of the company (optionally <code>null</code> or
+	 <code>0</code> to generate a key automatically)
+	 * @param webId the company's web domain
+	 * @param virtualHost the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param system whether the company is the very first company (i.e., the
+	 * @param maxUsers the max number of company users (optionally
+	 <code>0</code>)
+	 * @param active whether the company is active
+	 * @return the company
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			long companyId, java.lang.String webId,
+			java.lang.String virtualHost, java.lang.String mx, boolean system,
+			int maxUsers, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyService.addCompany(
+			companyId, webId, virtualHost, mx, system, maxUsers, active);
+	}
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param webId the company's web domain
 	 * @param virtualHost the company's virtual host name
 	 * @param mx the company's mail domain
@@ -71,6 +96,16 @@ public class CompanyServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_companyService.deleteLogo(companyId);
+	}
+
+	@Override
+	public void forEachCompany(
+			com.liferay.petra.function.UnsafeConsumer
+				<com.liferay.portal.kernel.model.Company, java.lang.Exception>
+					unsafeConsumer)
+		throws java.lang.Exception {
+
+		_companyService.forEachCompany(unsafeConsumer);
 	}
 
 	/**

@@ -1,4 +1,5 @@
 import {useQuery} from '@apollo/client';
+import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
 import Table from '../../../../common/components/Table';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
@@ -56,11 +57,11 @@ const Commerce = ({accountKey}) => {
 					structuredContent.contentFields.find(
 						({label}) => label === 'DXP Version'
 					) || {};
-
 				const structuredComponent = await fetchHeadless({
 					resolveAsJson: false,
 					url: `/structured-contents/${structuredContent?.id}/rendered-content/${contentTemplate?.id}`,
 				});
+
 				promiseStructuredContentList.push({
 					instructions: await structuredComponent.text(),
 					version: dxpVersion?.contentFieldValue?.data || '',
@@ -102,41 +103,42 @@ const Commerce = ({accountKey}) => {
 		},
 	];
 
+	if (loading) {
+		return <ActivationKeysLayout.Skeleton />;
+	}
+
 	return (
-		<>
-			{!loading ? (
-				<ActivationKeysLayout>
-					{dxpVersion && dxpVersion !== '7.3' ? (
-						<ActivationKeysLayout.Inputs
-							accountKey={accountKey}
-							productKey="commerce"
-							productTitle="Commerce"
-						/>
-					) : (
-						<Table
-							columns={columns}
-							data={ActivationInstructionsData.map(
-								({instructions, version}) => ({
-									instructions: (
-										<div
-											dangerouslySetInnerHTML={{
-												__html: instructions,
-											}}
-											key={version}
-										></div>
-									),
-									version,
-								})
-							)}
-							isLoading={isLoadingActivationInstructions}
-							itemsPerPage={3}
-						/>
-					)}
-				</ActivationKeysLayout>
+		<ActivationKeysLayout>
+			{dxpVersion && dxpVersion !== '7.3' ? (
+				<ActivationKeysLayout.Inputs
+					accountKey={accountKey}
+					productKey="commerce"
+					productTitle="Commerce"
+				/>
 			) : (
-				<ActivationKeysLayout.Skeleton />
+				<Table
+					columns={columns}
+					isLoading={isLoadingActivationInstructions}
+					itemsPerPage={3}
+					rows={ActivationInstructionsData.map(
+						({instructions, version}) => ({
+							instructions: (
+								<div
+									dangerouslySetInnerHTML={{
+										__html: DOMPurify.sanitize(
+											instructions,
+											{USE_PROFILES: {html: true}}
+										),
+									}}
+									key={version}
+								></div>
+							),
+							version,
+						})
+					)}
+				/>
 			)}
-		</>
+		</ActivationKeysLayout>
 	);
 };
 

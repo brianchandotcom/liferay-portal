@@ -24,10 +24,10 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverterContext;
@@ -60,7 +60,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -83,12 +83,12 @@ public class PinResourceImpl extends BasePinResourceImpl {
 		return Page.of(
 			_toPins(
 				commerceContext,
-				_csDiagramPinService.getCSDiagramPins(
+				_csDiagramPinLocalService.getCSDiagramPins(
 					cpDefinition.getCPDefinitionId(),
 					pagination.getStartPosition(),
 					pagination.getEndPosition())),
 			pagination,
-			_csDiagramPinService.getCSDiagramPinsCount(
+			_csDiagramPinLocalService.getCSDiagramPinsCount(
 				cpDefinition.getCPDefinitionId()));
 	}
 
@@ -159,10 +159,10 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CSDiagramPinService _csDiagramPinService;
+	private CSDiagramPinLocalService _csDiagramPinLocalService;
 
 	@Reference
 	private PinDTOConverter _pinDTOConverter;

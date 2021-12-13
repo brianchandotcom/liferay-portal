@@ -29,13 +29,13 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.MappedProduct;
@@ -90,13 +90,13 @@ public class MappedProductDTOConverter
 			mappedProductDTOConverterContext.getCommerceContext();
 
 		CSDiagramEntry csDiagramEntry =
-			_csDiagramEntryService.getCSDiagramEntry(
+			_csDiagramEntryLocalService.getCSDiagramEntry(
 				(Long)mappedProductDTOConverterContext.getId());
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
 				csDiagramEntry.getCProductId());
-		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			GetterUtil.getLong(csDiagramEntry.getCPInstanceId()));
 
 		return new MappedProduct() {
@@ -218,7 +218,7 @@ public class MappedProductDTOConverter
 						}
 
 						return LanguageUtils.getLanguageIdMap(
-							_cpDefinitionService.getUrlTitleMap(
+							_cpDefinitionLocalService.getUrlTitleMap(
 								cpDefinition.getCPDefinitionId()));
 					});
 			}
@@ -421,20 +421,20 @@ public class MappedProductDTOConverter
 	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;
 
 	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
-	private CSDiagramEntryService _csDiagramEntryService;
+	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

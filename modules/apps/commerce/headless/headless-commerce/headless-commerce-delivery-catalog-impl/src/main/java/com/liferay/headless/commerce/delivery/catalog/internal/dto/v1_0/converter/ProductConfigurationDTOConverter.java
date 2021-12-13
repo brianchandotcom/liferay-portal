@@ -15,7 +15,8 @@
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.service.CPDefinitionInventoryService;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -45,7 +46,7 @@ public class ProductConfigurationDTOConverter
 		throws Exception {
 
 		CPDefinitionInventory cpDefinitionInventory =
-			_cpDefinitionInventoryService.
+			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
 					(Long)dtoConverterContext.getId());
 
@@ -69,6 +70,10 @@ public class ProductConfigurationDTOConverter
 	}
 
 	@Reference
-	private CPDefinitionInventoryService _cpDefinitionInventoryService;
+	private CommerceProductViewPermission _commerceProductViewPermission;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 }

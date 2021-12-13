@@ -20,7 +20,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
+import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -172,9 +172,8 @@ public class OrganizationExpandoColumnModelListener
 
 		String encodedName = _encodeName(expandoColumn);
 
-		String encodedIndexedFieldName =
-			ExpandoBridgeIndexerUtil.encodeFieldName(
-				expandoColumn.getName(), indexType);
+		String encodedIndexedFieldName = _expandoBridgeIndexer.encodeFieldName(
+			expandoColumn.getName(), indexType);
 
 		EntityField entityField = null;
 
@@ -337,6 +336,9 @@ public class OrganizationExpandoColumnModelListener
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

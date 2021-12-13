@@ -15,13 +15,14 @@
 package com.liferay.mail.reader.internal.search.spi.model.index.contributor;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
+import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -43,7 +44,10 @@ public class AccountModelDocumentContributor
 		document.addKeyword("accountId", account.getAccountId());
 		document.addText(Field.NAME, account.getAddress());
 
-		ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
+		_expandoBridgeIndexer.addAttributes(document, expandoBridge);
 	}
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 }

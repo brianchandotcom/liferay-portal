@@ -80,6 +80,12 @@
 	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text') and contains(.,'${key_emptyMessaage}')]</td>
 	<td></td>
 </tr>
+<!--TRACK_WORKFLOW-->
+<tr>
+	<td>TRACK_WORKFLOW_STRUCTURE</td>
+	<td>//div[contains(@class, 'portlet-boundary')]//span[contains(@class, 'truncate-container') and contains (text(), '${key_nodeStructure}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -356,11 +356,31 @@ definition {
 	}
 
 	@description = "Verify that the user is able to track the workflow through the Kebab Menu."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewTrackApprovalThroughKebabMenu {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70645 CanViewTrackApprovalThroughKebabMenu pending implementation
+		KaleoFormsNewSubmissions.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "userfn@liferay.com",
+			ddlFirstName = "Userfn",
+			ddlInstantMessegerService = "Google Hangouts",
+			ddlJobTitle = "QA Engineer",
+			ddlLastName = "Userln",
+			ddlnotes = "Notes",
+			ddlPhoneMobile = "(123) 9999-9999",
+			ddlPhoneOffice = "(123) 1111-2222",
+			ddlUserName = "testliferay");
+
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsNewSubmissions.viewEllipsisMenu(menuItem = "Track Workflow");		
+
+		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(
+			startState = "Created",
+			endState = "Approved",
+			currentTask = "Review",
+			taskNode = "Update");
 
 	}
 

@@ -225,4 +225,28 @@ definition {
     }
 
 
+	macro viewTrackWorkflowStructure {
+		SelectFrame(
+			key_title = "Track Workflow",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertElementPresent(
+			key_nodeStructure = "${startState}",
+			locator1 = "WorkflowSubmissions#TRACK_WORKFLOW_STRUCTURE");
+
+		AssertElementPresent(
+			key_nodeStructure = "${endState}",
+			locator1 = "WorkflowSubmissions#TRACK_WORKFLOW_STRUCTURE");
+
+		AssertElementPresent(
+			key_nodeStructure = "${currentTask}",
+			locator1 = "WorkflowSubmissions#TRACK_WORKFLOW_STRUCTURE");
+
+		AssertElementPresent(
+			key_nodeStructure = "${taskNode}",
+			locator1 = "WorkflowSubmissions#TRACK_WORKFLOW_STRUCTURE");
+
+
+	}
+
 }

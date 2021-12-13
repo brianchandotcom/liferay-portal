@@ -37,6 +37,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
@@ -67,14 +68,13 @@ public class UpgradeConfigurationPidUpgradeTest {
 			"delete from Configuration_ where configurationId like '" +
 				_SERVICE_FACTORY_PID + "%'");
 
-		char[] separators = {'~', '-', '_'};
-
-		for (char separator : separators) {
-			String fileName =
-				_SERVICE_FACTORY_PID + separator + "default.config";
+		for (char separator :
+				Arrays.asList(
+					CharPool.TILDE, CharPool.DASH, CharPool.UNDERLINE)) {
 
 			File file = new File(
-				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+				_SERVICE_FACTORY_PID + separator + "default.config");
 
 			if (file.exists()) {
 				file.delete();

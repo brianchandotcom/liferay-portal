@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -114,10 +115,13 @@ public class ExportObjectDefinitionMVCResourceCommand
 					return null;
 				}
 
-				objectLayoutColumnJSONObject.put(
-					"objectFieldName", objectField.getName());
-
-				return objectLayoutColumnJSONObject;
+				return JSONUtil.put(
+					"objectFieldName", objectField.getName()
+				).put(
+					"priority", objectLayoutColumnJSONObject.get("priority")
+				).put(
+					"size", objectLayoutColumnJSONObject.get("size")
+				);
 			});
 
 		_sanitizeJSON(

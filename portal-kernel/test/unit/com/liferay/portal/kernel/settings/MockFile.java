@@ -159,11 +159,6 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public String[] find(String directory, String includes, String excludes) {
-		return new String[0];
-	}
-
-	@Override
 	public String getAbsolutePath(File file) {
 		return null;
 	}

@@ -48,6 +48,8 @@ definition {
 		task ("Delete the data source and check if it has been deleted") {
 			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
 
+			TestUtils.hardRefresh();
+
 			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
 		}
 	}

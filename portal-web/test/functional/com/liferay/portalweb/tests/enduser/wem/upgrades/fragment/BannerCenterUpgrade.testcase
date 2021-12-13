@@ -1,0 +1,161 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Fragments,Upgrades WEM";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-123098 and LPS-135373. View existing Banner Center fragment on page after upgrade from 7.2."
+	@priority = "4"
+	test ViewEditedInlineContentOfBannerCenterAfterUpgrade721 {
+		property data.archive.type = "data-archive-banner-center";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		task ("View the edited inline content at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+
+		task ("View the edited inline content at edit mode") {
+			ContentPages.gotoPageEditor();
+
+			var n = "1";
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "banner",
+					position = "${n}",
+					text = "${text}");
+
+				var n = ${n} + 1;
+			}
+
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+		}
+	}
+
+	@description = "This is a use case for LPS-135373. View existing Banner Center fragment on page after upgrade from 7.3."
+	@priority = "4"
+	test ViewEditedInlineContentOfBannerCenterAfterUpgrade735 {
+		property data.archive.type = "data-archive-banner-center";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.5";
+
+		task ("View the edited inline content at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+
+		task ("View the edited inline content at edit mode") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.viewFragment(fragmentName = "Element");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+	}
+
+	@description = "This is a use case for LPS-123098 and LPS-135373. View existing Banner Center fragment on page after upgrade from 7.2."
+	@priority = "4"
+	test ViewEditedInlineContentOfBannerCenterAfterUpgrade72101 {
+		property data.archive.type = "data-archive-banner-center";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.2.10.1";
+
+		task ("View the edited inline content at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+
+		task ("View the edited inline content at edit mode") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.viewFragment(fragmentName = "Element");
+
+			var n = "1";
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "banner",
+					position = "${n}",
+					text = "${text}");
+
+				var n = ${n} + 1;
+			}
+
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+		}
+	}
+
+	@description = "This is a use case for LPS-135373. View existing Banner Center fragment on page after upgrade from 7.3."
+	@priority = "4"
+	test ViewEditedInlineContentOfBannerCenterAfterUpgrade73101 {
+		property data.archive.type = "data-archive-banner-center";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10.1";
+
+		task ("View the edited inline content at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+
+		task ("View the edited inline content at edit mode") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.viewFragment(fragmentName = "Element");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+	}
+
+}

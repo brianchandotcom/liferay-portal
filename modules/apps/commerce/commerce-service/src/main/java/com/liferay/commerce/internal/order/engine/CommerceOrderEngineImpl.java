@@ -495,6 +495,16 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			throw new CommerceOrderStatusException();
 		}
 
+		if ((commerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED) &&
+			commerceOrderStatus.isTransitionCriteriaMet(commerceOrder)) {
+
+			_sendOrderStatusMessage(
+				commerceOrder, commerceOrderStatus.getKey());
+
+			return commerceOrderStatus.doTransition(commerceOrder, userId);
+		}
+
 		CommerceOrderStatus currentCommerceOrderStatus =
 			_commerceOrderStatusRegistry.getCommerceOrderStatus(
 				commerceOrder.getOrderStatus());

@@ -1,0 +1,168 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "latest.release"
+		classpath group: "gradle.plugin.com.github.erdi.webdriver-binaries", name: "webdriver-binaries-gradle-plugin", version: "2.4"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.github.erdi.webdriver-binaries"
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "java"
+
+webdriverBinaries {
+	chromedriver "86.0.4240.22"
+}
+
+defaultTasks 'help'
+
+task checkPoshiRunnerExtPropertyFileNames
+task executePQLQuery (type: JavaExec)
+task expandPoshiRunner (type: Copy)
+task runPoshi(type: Test)
+task validatePoshi (type: JavaExec)
+task writePoshiProperties (type: JavaExec)
+
+configurations {
+	poshiRunner
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+dependencies {
+	poshiRunner group: "com.liferay", name: "com.liferay.poshi.runner", version: "${poshiRunnerVersion}"
+	poshiRunner group: "com.liferay", name: "com.liferay.poshi.runner.resources", version: "1.0.11"
+}
+
+checkPoshiRunnerExtPropertyFileNames {
+	description = 'Displays poshi runner ext property file names.'
+	group = 'Poshi'
+
+	if (!project.hasProperty("poshiRunnerExtPropertyFileNames")) {
+		println "No poshi runner ext property file names provided, defaulting to null"
+
+		project.ext.poshiRunnerExtPropertyFileNames = null
+	}
+}
+
+executePQLQuery {
+	description = 'Execute PQL query.'
+	group = 'Poshi'
+
+	args('executePQLQuery')
+	classpath = configurations.poshiRunner
+	main = "com.liferay.poshi.runner.PoshiRunnerCommandExecutor"
+	systemProperties getPoshiRunnerExtProperties(poshiRunnerExtPropertyFileNames)
+	workingDir = "."
+}
+
+expandPoshiRunner {
+	group = 'Poshi'
+
+	dependsOn clean
+
+	File poshiRunnerJar = findPoshiRunnerJar()
+
+	if (poshiRunnerJar == null) {
+		throw new Exception("The Poshi Runner jar cannot be found from dependencies")
+	}
+
+	from zipTree(poshiRunnerJar)
+	into "$buildDir/poshi-runner"
+}
+
+runPoshi {
+	description = 'Executes a Poshi test.'
+	group = 'Poshi'
+
+	dependsOn expandPoshiRunner
+
+	testLogging.showStandardStreams = true
+
+	classpath = configurations.poshiRunner
+	include 'com/liferay/poshi/runner/PoshiRunner.class'
+	scanForTestClasses = false
+	systemProperties getPoshiRunnerExtProperties(poshiRunnerExtPropertyFileNames)
+	testClassesDirs = files("$buildDir/poshi-runner")
+}
+
+validatePoshi {
+	description = 'Validates the Poshi file syntax.'
+	group = 'Poshi'
+
+	args('validatePoshi')
+	classpath = configurations.poshiRunner
+	main = "com.liferay.poshi.runner.PoshiRunnerCommandExecutor"
+	systemProperties getPoshiRunnerExtProperties(poshiRunnerExtPropertyFileNames)
+	workingDir = "."
+}
+
+writePoshiProperties {
+	description = 'Generates properties using meta data from Poshi files in the project.'
+	group = 'Poshi'
+
+	args('writePoshiProperties')
+	classpath = configurations.poshiRunner
+	main = "com.liferay.poshi.runner.PoshiRunnerCommandExecutor"
+	systemProperties getPoshiRunnerExtProperties(poshiRunnerExtPropertyFileNames)
+	workingDir = "."
+}
+
+def findPoshiRunnerJar() {
+	Iterator<File> iterator = configurations.poshiRunner.iterator();
+
+	while (iterator.hasNext()) {
+		File file = iterator.next()
+
+		String fileName = file.getName()
+
+		if (fileName.startsWith("com.liferay.poshi.runner-")) {
+			return file
+		}
+	}
+
+	return null
+}
+
+def getPoshiRunnerExtProperties(poshiRunnerExtPropertyFileNames) {
+	Properties poshiRunnerExtProperties = new Properties()
+
+	if (poshiRunnerExtPropertyFileNames != null) {
+		for (String poshiRunnerExtPropertyFileName : poshiRunnerExtPropertyFileNames.split(",")) {
+			File poshiRunnerExtPropertyFile = file(poshiRunnerExtPropertyFileName)
+
+			if (!poshiRunnerExtPropertyFile.exists()) {
+				continue
+			}
+
+			try {
+				InputStream inputStream = new FileInputStream(
+					poshiRunnerExtPropertyFileName)
+
+				poshiRunnerExtProperties.load(inputStream)
+			}
+			catch (Exception e) {
+				e.printStackTrace()
+
+				throw e
+			}
+		}
+	}
+
+	poshiRunnerExtProperties.putAll(System.getProperties())
+
+	return poshiRunnerExtProperties
+}

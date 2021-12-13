@@ -1,0 +1,12 @@
+definition {
+
+	setUp {
+		Default.Open(locator1 = "https://www.liferay.com");
+	}
+
+	@priority = "5"
+	test Smoke {
+		Default.Open(locator1 = "https://www.liferay.com");
+	}
+
+}

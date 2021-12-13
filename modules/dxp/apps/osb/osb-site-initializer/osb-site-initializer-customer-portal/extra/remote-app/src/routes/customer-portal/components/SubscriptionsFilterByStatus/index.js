@@ -1,61 +1,89 @@
 import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import React, {useEffect} from 'react';
+import {DropDown} from '@clayui/core';
+import React, {useState} from 'react';
+import {POSSIBLE_STATUS_AMOUNT} from '../Subscriptions';
 
-const SubscriptionsFilterByStatus = ({setSelectedStatus}) => {
-	const items = [
-		{
-			items: [
-				{
-					checked: true,
-					label: 'All',
-					onChange: () => alert('All'),
-					type: 'checkbox',
-				},
-				{
-					checked: false,
-					label: 'Active',
-					onChange: () => alert('Active'),
-					type: 'checkbox',
-				},
-				{
-					checked: false,
-					label: 'Future',
-					onChange: () => alert('Future'),
-					type: 'checkbox',
-				},
-				{
-					checked: false,
-					label: 'Expired',
-					onChange: () => alert('Expired'),
-					type: 'checkbox',
-				},
-			],
-			type: 'group',
-		},
-	];
+const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
+	const [active, setActive] = useState(false);
 
-	// const handleFilterChange = (event) => {
-	// 	setSelectedStatus(event.target.value);
-	// };
-
-	useEffect(() => {
-		setSelectedStatus('All');
-	}, [setSelectedStatus]);
+	const handleChange = (status) => {
+		if (status === 'All') {
+			setSelectedStatus(
+				selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+					? []
+					: ['Active', 'Expired', 'Future']
+			);
+		} else {
+			setSelectedStatus(
+				selectedStatus.includes(status)
+					? selectedStatus.filter((value) => status !== value)
+					: [...selectedStatus, status]
+			);
+		}
+	};
 
 	return (
-		<ClayDropDownWithItems
-			className="mb-5"
-			items={items}
-			trigger={
-				<ClayButton
-					className="font-weight-semi-bold text-brand-primary"
-					displayType="unstyled"
+		<div className="d-flex mb-4">
+			<h5 className="mr-2 my-auto">Status:</h5>
+
+			<DropDown
+				active={active}
+				closeOnClickOutside={false}
+				onActiveChange={() => setActive((prevState) => !prevState)}
+				trigger={
+					<ClayButton
+						className="font-weight-semi-bold text-brand-primary"
+						displayType="unstyled"
+					>
+						{`${
+							selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+								? 'All'
+								: (selectedStatus.length === 0
+								? ' None '
+								: selectedStatus.join(', '))
+						}`}{' '}&#8595;
+					</ClayButton>
+				}
+			>
+				<DropDown.Item
+					onClick={() => handleChange('All')}
+					symbolRight={
+						selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+							? 'check'
+							: ''
+					}
 				>
-					Filter &#8595;
-				</ClayButton>
-			}
-		/>
+					All
+				</DropDown.Item>
+
+				<DropDown.Item
+					onClick={() => handleChange('Active')}
+					symbolRight={
+						selectedStatus.includes('Active') ? 'check' : ''
+					}
+				>
+					Active
+				</DropDown.Item>
+
+				<DropDown.Item
+					onClick={() => handleChange('Expired')}
+					symbolRight={
+						selectedStatus.includes('Expired') ? 'check' : ''
+					}
+				>
+					Expired
+				</DropDown.Item>
+
+				<DropDown.Item
+					onClick={() => handleChange('Future')}
+					symbolRight={
+						selectedStatus.includes('Future') ? 'check' : ''
+					}
+				>
+					Future
+				</DropDown.Item>
+			</DropDown>
+		</div>
 	);
 };
 

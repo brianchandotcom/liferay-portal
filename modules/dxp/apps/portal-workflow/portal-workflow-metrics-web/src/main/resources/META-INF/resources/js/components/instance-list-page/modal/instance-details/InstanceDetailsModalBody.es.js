@@ -16,13 +16,12 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayModal, {useModal} from '@clayui/modal';
 import WorkflowInstanceTracker from '@liferay/portal-workflow-instance-tracker-web/js/components/WorkflowInstanceTracker';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import ContentView from '../../../../shared/components/content-view/ContentView.es';
 import RetryButton from '../../../../shared/components/list/RetryButton.es';
 import {remainingTimeFormat} from '../../../../shared/util/duration.es';
 import moment from '../../../../shared/util/moment.es';
-import {AppContext} from '../../../AppContext.es';
 
 function Body({
 	assetTitle,
@@ -37,7 +36,6 @@ function Body({
 	slaResults = [],
 	taskNames = [],
 }) {
-	const {workflowInstanceTrackerEnabled} = useContext(AppContext);
 	const SLAs = {notStarted: [], open: [], resolved: []};
 
 	slaResults.forEach((result) => {
@@ -149,18 +147,14 @@ function Body({
 									? Liferay.Language.get('completed')
 									: Liferay.Language.get('pending')}
 
-								{workflowInstanceTrackerEnabled && (
-									<ClayLink
-										className="ml-1"
-										onClick={() =>
-											setShowInstanceTrackerModal(true)
-										}
-									>
-										(
-										{Liferay.Language.get('track-workflow')}
-										)
-									</ClayLink>
-								)}
+								<ClayLink
+									className="ml-1"
+									onClick={() =>
+										setShowInstanceTrackerModal(true)
+									}
+								>
+									({Liferay.Language.get('track-workflow')})
+								</ClayLink>
 							</>
 						}
 					/>

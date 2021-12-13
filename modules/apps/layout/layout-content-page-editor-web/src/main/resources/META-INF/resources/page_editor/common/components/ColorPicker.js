@@ -230,10 +230,10 @@ const Wrapper = ({
 	const focusableItemsRef = useRef(null);
 
 	useLayoutEffect(() => {
-		focusableItemsRef.current = dropdownContainerRef.current.querySelectorAll(
+		focusableItemsRef.current = dropdownContainerRef.current?.querySelectorAll(
 			'button, input'
 		);
-		focusableItemsRef.current[0].focus();
+		focusableItemsRef.current?.[0].focus();
 	}, [dropdownContainerRef]);
 
 	return (

@@ -26,11 +26,11 @@
 		"react": "16.12.0",
 		"react-transition-group": "4.4.1"
 	},
-	"name": "cookies-banner-web",
+	"name": "@liferay/cookies-banner-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.34"
+	"version": "1.0.0"
 }

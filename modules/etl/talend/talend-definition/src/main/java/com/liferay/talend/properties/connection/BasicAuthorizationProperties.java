@@ -14,8 +14,6 @@
 
 package com.liferay.talend.properties.connection;
 
-import com.liferay.talend.ui.UIKeys;
-
 import java.util.EnumSet;
 
 import org.slf4j.Logger;
@@ -28,7 +26,9 @@ import org.talend.daikon.properties.property.PropertyFactory;
 
 /**
  * @author Igor Beslic
+ * @deprecated As of Cavanaugh (7.4.x), use #org.talend.components.common.UserPasswordProperties instead
  */
+@Deprecated
 public class BasicAuthorizationProperties extends PropertiesImpl {
 
 	public BasicAuthorizationProperties(String name) {
@@ -49,7 +49,7 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		Form referenceForm = new Form(this, UIKeys.FORM_BASIC_AUTHORIZATION);
+		Form referenceForm = new Form(this, Form.MAIN);
 
 		referenceForm.addRow(userId);
 
@@ -63,7 +63,7 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 	@Override
 	public void setupProperties() {
 		password.setValue("");
-		userId.setValue(UIKeys.LIFERAY_DEFAULT_USER_ID);
+		userId.setValue("");
 
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Properties set " + System.identityHashCode(this));

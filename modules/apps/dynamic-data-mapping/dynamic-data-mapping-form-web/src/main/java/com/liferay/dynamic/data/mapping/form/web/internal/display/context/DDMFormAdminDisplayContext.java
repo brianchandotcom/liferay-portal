@@ -1255,7 +1255,7 @@ public class DDMFormAdminDisplayContext {
 
 		TimeZone timeZone = themeDisplay.getTimeZone();
 
-		return localDate.isBefore(LocalDate.now(ZoneId.of(timeZone.getID())));
+		return !localDate.isAfter(LocalDate.now(ZoneId.of(timeZone.getID())));
 	}
 
 	public boolean isFormPublished() throws PortalException {

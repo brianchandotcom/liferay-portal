@@ -150,7 +150,7 @@ public interface DDMFormInstanceSettings {
 		validationErrorMessage = "%please-enter-a-valid-expiration-date-only-future-dates-are-accepted",
 		validationExpression = "futureDates(expirationDate, \"{parameter}\")",
 		validationExpressionName = "futureDates",
-		validationParameter = "{\"startsFrom\": {\"type\": \"responseDate\"}}"
+		validationParameter = "{\"startsFrom\": {\"date\": \"responseDate\", \"quantity\": 1, \"type\": \"customDate\", \"unit\": \"days\"}}"
 	)
 	public String expirationDate();
 

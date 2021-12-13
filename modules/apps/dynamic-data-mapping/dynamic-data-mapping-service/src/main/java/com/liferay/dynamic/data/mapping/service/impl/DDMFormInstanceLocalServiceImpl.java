@@ -68,6 +68,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.mail.internet.InternetAddress;
 
@@ -93,9 +94,11 @@ public class DDMFormInstanceLocalServiceImpl
 
 		Locale defaultLocale = getDDMFormDefaultLocale(ddmStructureId);
 
-		validate(ddmStructureId, nameMap, settingsDDMFormValues, defaultLocale);
-
 		User user = _userLocalService.getUser(userId);
+
+		validate(
+			ddmStructureId, defaultLocale, nameMap, settingsDDMFormValues,
+			user.getTimeZone());
 
 		long ddmFormInstanceId = counterLocalService.increment();
 
@@ -401,7 +404,7 @@ public class DDMFormInstanceLocalServiceImpl
 
 		Date date = new Date();
 
-		validateFormInstanceSettings(settingsDDMFormValues);
+		validateFormInstanceSettings(settingsDDMFormValues, null);
 
 		DDMFormInstance formInstance =
 			ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
@@ -495,9 +498,11 @@ public class DDMFormInstanceLocalServiceImpl
 
 		Locale defaultLocale = getDDMFormDefaultLocale(ddmStructureId);
 
-		validate(ddmStructureId, nameMap, settingsDDMFormValues, defaultLocale);
-
 		User user = _userLocalService.getUser(userId);
+
+		validate(
+			ddmStructureId, defaultLocale, nameMap, settingsDDMFormValues,
+			user.getTimeZone());
 
 		DDMFormInstanceVersion latestDDMFormInstanceVersion =
 			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
@@ -707,22 +712,23 @@ public class DDMFormInstanceLocalServiceImpl
 	}
 
 	protected void validate(
-			long ddmStructureId, Map<Locale, String> nameMap,
-			DDMFormValues settingsDDMFormValues, Locale defaultLocale)
+			long ddmStructureId, Locale defaultLocale,
+			Map<Locale, String> nameMap, DDMFormValues settingsDDMFormValues,
+			TimeZone timeZone)
 		throws PortalException {
 
 		validateStructureId(ddmStructureId);
 
 		validateName(nameMap, defaultLocale);
 
-		validateFormInstanceSettings(settingsDDMFormValues);
+		validateFormInstanceSettings(settingsDDMFormValues, timeZone.getID());
 	}
 
 	protected void validateFormInstanceSettings(
-			DDMFormValues settingsDDMFormValues)
+			DDMFormValues settingsDDMFormValues, String timeZoneId)
 		throws PortalException {
 
-		_ddmFormValuesValidator.validate(settingsDDMFormValues);
+		_ddmFormValuesValidator.validate(settingsDDMFormValues, timeZoneId);
 	}
 
 	protected void validateName(

@@ -62,25 +62,34 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 		</liferay-portlet:resourceURL>
 
 		<%
+		DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
+
+		boolean expired = false;
+
+		if (ddmFormDisplayContext.isExpirationDateEnabled()) {
+			expired = DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstance, timeZone);
+		}
+
+		boolean preview = ddmFormDisplayContext.isPreview();
+		boolean showSuccessPage = ddmFormDisplayContext.isShowSuccessPage();
+
 		String languageId = ddmFormDisplayContext.getDefaultLanguageId();
 
 		Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
-
-		DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
-
-		boolean showSuccessPage = ddmFormDisplayContext.isShowSuccessPage();
-
-		boolean preview = ddmFormDisplayContext.isPreview();
 		%>
 
 		<c:choose>
-			<c:when test="<%= showSuccessPage || (ddmFormDisplayContext.hasSubmittedAnEntry() && !preview) %>">
+			<c:when test="<%= !preview && (expired || showSuccessPage || ddmFormDisplayContext.hasSubmittedAnEntry()) %>">
 
 				<%
 				String pageDescription;
 				String pageTitle;
 
-				if (showSuccessPage) {
+				if (expired) {
+					pageDescription = LanguageUtil.get(request, "this-form-has-an-expiration-date");
+					pageTitle = LanguageUtil.get(request, "this-form-is-no-longer-available");
+				}
+				else if (showSuccessPage) {
 					pageDescription = ddmFormDisplayContext.getSuccessPageDescription(displayLocale);
 					pageTitle = ddmFormDisplayContext.getSuccessPageTitle(displayLocale);
 				}

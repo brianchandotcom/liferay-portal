@@ -21,8 +21,10 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.DDMFormInstanceFieldSettingsValidator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -31,6 +33,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -54,6 +58,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -364,6 +371,48 @@ public class SaveFormInstanceMVCCommandHelper {
 		}
 	}
 
+	private void _validateExpirationDate(DDMFormValues ddmFormValues)
+		throws Exception {
+
+		if (!_ffSubmissionsSettingsConfigurationActivator.
+				expirationDateEnabled()) {
+
+			return;
+		}
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(false);
+
+		if (!GetterUtil.getBoolean(
+				_getPropertyValue(
+					ddmFormFieldValuesMap, LocaleUtil.ROOT, "neverExpire"),
+				true)) {
+
+			try {
+				LocalDate.parse(
+					_getPropertyValue(
+						ddmFormFieldValuesMap, LocaleUtil.ROOT,
+						"expirationDate"));
+			}
+			catch (DateTimeParseException dateTimeParseException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(dateTimeParseException, dateTimeParseException);
+				}
+
+				DDMForm ddmForm = ddmFormValues.getDDMForm();
+
+				Map<String, DDMFormField> ddmFormFieldsMap =
+					ddmForm.getDDMFormFieldsMap(false);
+
+				DDMFormField ddmFormField = ddmFormFieldsMap.get(
+					"expirationDate");
+
+				throw new DDMFormValuesValidationException.MustSetValidValue(
+					ddmFormField.getLabel(), ddmFormField.getName());
+			}
+		}
+	}
+
 	private void _validateRedirectURL(
 			DDMFormValues settingsDDMFormValues,
 			HttpServletRequest httpServletRequest)
@@ -454,6 +503,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			HttpServletRequest httpServletRequest, Locale locale)
 		throws Exception {
 
+		_validateExpirationDate(settingsDDMFormValues);
 		_validateRedirectURL(settingsDDMFormValues, httpServletRequest);
 		_validateStorageType(settingsDDMFormValues, httpServletRequest, locale);
 	}
@@ -486,6 +536,10 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SaveFormInstanceMVCCommandHelper.class);
+
+	@Reference
+	private FFSubmissionsSettingsConfigurationActivator
+		_ffSubmissionsSettingsConfigurationActivator;
 
 	@Reference
 	private Portal _portal;

@@ -14,10 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper;
 
+import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceExpirationStatusUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -52,6 +55,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,6 +97,28 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		}
 
 		removeRequiredProperty(invisibleFields, requiredFields);
+	}
+
+	public void validateExpirationStatus(
+			DDMFormInstance ddmFormInstance, PortletRequest portletRequest)
+		throws Exception {
+
+		if (!_ffSubmissionsSettingsConfigurationActivator.
+				expirationDateEnabled()) {
+
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (DDMFormInstanceExpirationStatusUtil.isFormExpired(
+				ddmFormInstance, themeDisplay.getTimeZone())) {
+
+			throw new FormInstanceExpiredException(
+				"Form instance " + ddmFormInstance.getFormInstanceId() +
+					" is expired");
+		}
 	}
 
 	protected DDMFormEvaluatorEvaluateResponse evaluate(
@@ -307,6 +333,10 @@ public class AddFormInstanceRecordMVCCommandHelper {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private FFSubmissionsSettingsConfigurationActivator
+		_ffSubmissionsSettingsConfigurationActivator;
 
 	@Reference
 	private Portal _portal;

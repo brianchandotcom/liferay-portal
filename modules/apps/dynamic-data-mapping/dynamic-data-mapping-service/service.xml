@@ -801,6 +801,7 @@
 		<exception>DataProviderInstanceName</exception>
 		<exception>DataProviderInstanceURL</exception>
 		<exception>DuplicateDataProviderInstanceInputParameterName</exception>
+		<exception>FormInstanceExpired</exception>
 		<exception>FormInstanceName</exception>
 		<exception>FormInstanceNotPublished</exception>
 		<exception>FormInstanceRecordExporter</exception>

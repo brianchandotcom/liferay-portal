@@ -98,6 +98,9 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
+		_addFormInstanceMVCCommandHelper.validateExpirationStatus(
+			ddmFormInstance, actionRequest);
+
 		_validatePublishStatus(actionRequest, ddmFormInstance);
 
 		validateCaptcha(actionRequest, ddmFormInstance);

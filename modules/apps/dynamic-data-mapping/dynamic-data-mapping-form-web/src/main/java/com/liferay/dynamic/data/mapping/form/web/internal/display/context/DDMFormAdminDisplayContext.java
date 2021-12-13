@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
-import com.liferay.dynamic.data.mapping.form.validation.util.DateParameterUtil;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
@@ -123,9 +122,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -135,7 +131,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1231,31 +1226,6 @@ public class DDMFormAdminDisplayContext {
 	public boolean isExpirationDateEnabled() {
 		return _ffSubmissionsSettingsConfigurationActivator.
 			expirationDateEnabled();
-	}
-
-	public boolean isFormExpired(DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		if (ddmFormInstance == null) {
-			return false;
-		}
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		if (ddmFormInstanceSettings.neverExpire()) {
-			return false;
-		}
-
-		LocalDate localDate = DateParameterUtil.getLocalDate(
-			ddmFormInstanceSettings.expirationDate());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		TimeZone timeZone = themeDisplay.getTimeZone();
-
-		return !localDate.isAfter(LocalDate.now(ZoneId.of(timeZone.getID())));
 	}
 
 	public boolean isFormPublished() throws PortalException {

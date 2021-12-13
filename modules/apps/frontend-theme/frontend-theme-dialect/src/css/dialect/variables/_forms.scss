@@ -39,10 +39,7 @@ $input-placeholder-disabled-color: var(--form-input-placeholder-disabled-color);
 $input-placeholder-focus-color: var(--form-input-placeholder-focus-color);
 
 $input-danger-bg: var(--form-input-error-bg, #{danger-l2});
-$input-danger-border-color: var(
-	--form-input-error-border-color,
-	#{$danger}
-);
+$input-danger-border-color: var(--form-input-error-border-color, #{$danger});
 $input-danger-checkbox-label-color: $input-label-color;
 $input-danger-focus-bg: #{$form-white-color};
 $input-danger-focus-border-color: #{$form-input-focus-color};

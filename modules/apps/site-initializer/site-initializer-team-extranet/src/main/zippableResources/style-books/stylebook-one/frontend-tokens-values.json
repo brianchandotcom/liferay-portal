@@ -21,23 +21,23 @@
 	},
 	"borderRadius": {
 		"cssVariableMapping": "border-radius",
-		"value": "0.5rem"
+		"value": "0.5em"
 	},
 	"borderRadiusLg": {
 		"cssVariableMapping": "border-radius-lg",
-		"value": "0.75rem"
+		"value": "0.75em"
 	},
 	"borderRadiusSm": {
 		"cssVariableMapping": "border-radius-sm",
-		"value": "0.25rem"
+		"value": "0.375em"
 	},
 	"boxShadow": {
 		"cssVariableMapping": "box-shadow",
-		"value": "0 .5rem 1rem rgba(0,0,0,0.1)"
+		"value": "0 .25rem 1rem rgba(0,0,0,0.08)"
 	},
 	"boxShadowLg": {
 		"cssVariableMapping": "box-shadow-lg",
-		"value": "0 1rem 2.25rem rgba(0,0,0,0.1)"
+		"value": "0 .5rem 1.5rem rgba(0,0,0,0.06)"
 	},
 	"boxShadowSm": {
 		"cssVariableMapping": "box-shadow-sm",
@@ -45,19 +45,19 @@
 	},
 	"brandColor1": {
 		"cssVariableMapping": "brand-color-1",
-		"value": "#243289"
+		"value": "#172949"
 	},
 	"brandColor2": {
 		"cssVariableMapping": "brand-color-2",
-		"value": "#b5c2f2"
+		"value": "#A9BEE5"
 	},
 	"brandColor3": {
 		"cssVariableMapping": "brand-color-3",
-		"value": "#4cd4af"
+		"value": "#40BF9F"
 	},
 	"brandColor4": {
 		"cssVariableMapping": "brand-color-4",
-		"value": "#A4EAD7"
+		"value": "#8CD9C6"
 	},
 	"btnLinkColor": {
 		"cssVariableMapping": "btn-link-color",
@@ -155,17 +155,21 @@
 		"cssVariableMapping": "btn-secondary-hover-color",
 		"value": "var(--white)"
 	},
+	"containerMaxXl": {
+		"cssVariableMapping": "container-max-xl",
+		"value": "1200px"
+	},
 	"darkColor": {
 		"cssVariableMapping": "dark",
 		"value": "var(--gray-900)"
 	},
 	"display1Size": {
 		"cssVariableMapping": "display1-size",
-		"value": "4.75rem"
+		"value": "4.5rem"
 	},
 	"display1Weight": {
 		"cssVariableMapping": "display1-weight",
-		"value": "600"
+		"value": "var(--font-weight-normal)"
 	},
 	"display2Size": {
 		"cssVariableMapping": "display2-size",
@@ -173,7 +177,7 @@
 	},
 	"display2Weight": {
 		"cssVariableMapping": "display2-weight",
-		"value": "600"
+		"value": "var(--font-weight-normal)"
 	},
 	"display3Size": {
 		"cssVariableMapping": "display3-size",
@@ -181,7 +185,7 @@
 	},
 	"display3Weight": {
 		"cssVariableMapping": "display3-weight",
-		"value": "600"
+		"value": "var(--font-weight-normal)"
 	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",
@@ -189,11 +193,11 @@
 	},
 	"display4Weight": {
 		"cssVariableMapping": "display4-weight",
-		"value": "600"
+		"value": "var(--font-weight-normal)"
 	},
 	"displayLineHeight": {
 		"cssVariableMapping": "display-line-height",
-		"value": "1.1"
+		"value": "1.215"
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
@@ -237,39 +241,39 @@
 	},
 	"gray100Color": {
 		"cssVariableMapping": "gray-100",
-		"value": "#f8f8fc"
+		"value": "#F9F9FB"
 	},
 	"gray200Color": {
 		"cssVariableMapping": "gray-200",
-		"value": "#f1f2f9"
+		"value": "#F3F4F7"
 	},
 	"gray300Color": {
 		"cssVariableMapping": "gray-300",
-		"value": "#e3e5f2"
+		"value": "#D8DCE4"
 	},
 	"gray400Color": {
 		"cssVariableMapping": "gray-400",
-		"value": "#c8cce4"
+		"value": "#ABB4C5"
 	},
 	"gray500Color": {
 		"cssVariableMapping": "gray-500",
-		"value": "#a5aac9"
+		"value": "#7E8DA5"
 	},
 	"gray600Color": {
 		"cssVariableMapping": "gray-600",
-		"value": "#7b80a3"
+		"value": "#697891"
 	},
 	"gray700Color": {
 		"cssVariableMapping": "gray-700",
-		"value": "#4f5064"
+		"value": "#455063"
 	},
 	"gray800Color": {
 		"cssVariableMapping": "gray-800",
-		"value": "#3a3a4b"
+		"value": "#343C4B"
 	},
 	"gray900Color": {
 		"cssVariableMapping": "gray-900",
-		"value": "#1d2234"
+		"value": "#232934"
 	},
 	"grayDarkColor": {
 		"cssVariableMapping": "gray-dark",
@@ -332,8 +336,8 @@
 		"value": "0.5rem"
 	},
 	"spacer10": {
-		"cssVariableMapping": "spacer-9",
-		"value": "10rem"
+		"cssVariableMapping": "spacer-10",
+		"value": "9rem"
 	},
 	"spacer2": {
 		"cssVariableMapping": "spacer-2",
@@ -365,7 +369,7 @@
 	},
 	"spacer9": {
 		"cssVariableMapping": "spacer-9",
-		"value": "8.5rem"
+		"value": "8rem"
 	},
 	"successColor": {
 		"cssVariableMapping": "success",

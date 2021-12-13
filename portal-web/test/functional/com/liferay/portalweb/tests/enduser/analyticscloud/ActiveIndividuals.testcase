@@ -336,8 +336,8 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePage(
-			actionType = "View DM",
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
+			actionType = "Download DM",
+			documentTitleList = "DM AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

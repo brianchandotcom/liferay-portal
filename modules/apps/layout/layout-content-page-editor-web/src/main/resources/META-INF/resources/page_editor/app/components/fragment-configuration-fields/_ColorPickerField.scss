@@ -28,6 +28,10 @@ html#{$cadmin-selector} {
 				}
 			}
 
+			&.hovered .page-editor__color-picker__selector {
+				background-color: $cadmin-gray-100;
+			}
+
 			&:not(:hover):not(:focus-within):not(.hovered) {
 				.page-editor__color-picker-field__action-button {
 					opacity: 0;

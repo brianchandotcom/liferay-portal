@@ -49,20 +49,7 @@ public class UpdateVariationsPriorityMVCActionCommand
 		long[] variationsPriority = ParamUtil.getLongValues(
 			actionRequest, "variationsPriority");
 
-		for (int priority = 0; priority < variationsPriority.length;
-			 priority++) {
-
-			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-				_assetListEntrySegmentsEntryRelLocalService.
-					getAssetListEntrySegmentsEntryRel(
-						variationsPriority[priority]);
-
-			assetListEntrySegmentsEntryRel.setPriority(priority);
-
-			_assetListEntrySegmentsEntryRelLocalService.
-				updateAssetListEntrySegmentsEntryRel(
-					assetListEntrySegmentsEntryRel);
-		}
+		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(variationsPriority);
 	}
 
 	@Reference

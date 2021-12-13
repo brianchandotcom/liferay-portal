@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -77,6 +78,27 @@ public class OnHoldCommerceOrderStatusImpl implements CommerceOrderStatus {
 		return PRIORITY;
 	}
 
+	@Override
+	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		CommerceOrderStatus currentCommerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(
+				commerceOrder.getOrderStatus());
+
+		if ((currentCommerceOrderStatus.getKey() !=
+				CommerceOrderConstants.ORDER_STATUS_OPEN) &&
+			(currentCommerceOrderStatus.getKey() !=
+				CommerceOrderConstants.ORDER_STATUS_COMPLETED) &&
+			(currentCommerceOrderStatus.getKey() !=
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;
 
@@ -85,5 +107,8 @@ public class OnHoldCommerceOrderStatusImpl implements CommerceOrderStatus {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 }

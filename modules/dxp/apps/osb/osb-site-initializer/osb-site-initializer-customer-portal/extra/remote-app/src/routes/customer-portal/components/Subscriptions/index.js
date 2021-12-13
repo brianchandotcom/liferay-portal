@@ -4,14 +4,33 @@ import {getAccountSubscriptions} from '../../../../common/services/liferay/graph
 import CardSubscription from '../CardSubscription';
 import SubscriptionsNavbar from '../SubscriptionsNavbar';
 
+export const POSSIBLE_STATUS_AMOUNT = 3;
+
 const Subscriptions = ({accountKey}) => {
 	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
-		''
+		() => ''
 	);
-	const [selectedStatus, setSelectedStatus] = useState('');
-
+	const [selectedStatus, setSelectedStatus] = useState(() => [
+		'Active',
+		'Expired',
+		'Future',
+	]);
+	
 	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
 		return subscriptionName.toLowerCase().replace(' ', '-');
+	};
+
+	const mountQueryString = (acc, cv, index, array) => {
+		if (index === array.length - 1) {
+			return acc + ` subscriptionStatus eq '${cv}'`;
+		}
+
+		return (
+			acc +
+			` subscriptionStatus eq '${cv}' or accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
+				selectedSubscriptionGroup
+			)}' and`
+		);
 	};
 
 	const {
@@ -22,9 +41,9 @@ const Subscriptions = ({accountKey}) => {
 			filter: `accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
 				selectedSubscriptionGroup
 			)}'${
-				selectedStatus === 'All'
+				selectedStatus.length === POSSIBLE_STATUS_AMOUNT
 					? ''
-					: ` and subscriptionStatus eq '${selectedStatus}'`
+					: `${selectedStatus.reduce(mountQueryString, ' and')}`
 			}`,
 		},
 	});
@@ -38,6 +57,8 @@ const Subscriptions = ({accountKey}) => {
 
 			<SubscriptionsNavbar
 				accountKey={accountKey}
+				possibleStatusAmount={POSSIBLE_STATUS_AMOUNT}
+				selectedStatus={selectedStatus}
 				setSelectedStatus={setSelectedStatus}
 				setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}
 			/>

@@ -12,54 +12,55 @@
  * details.
  */
 
-AUI.add(
-	'liferay-staging',
-	() => {
-		var StagingBar = {
-			init(config) {
-				var instance = this;
-
-				var namespace = config.namespace;
-
-				instance.markAsReadyForPublicationURL =
-					config.markAsReadyForPublicationURL;
-
-				instance.layoutRevisionStatusURL =
-					config.layoutRevisionStatusURL;
-
-				instance._namespace = namespace;
-
-				instance.viewHistoryURL = config.viewHistoryURL;
-
-				Liferay.publish({
-					fireOnce: true,
-				});
-
-				Liferay.after('initStagingBar', () => {
-					const body = document.body;
-
-					if (body.classList.contains('has-staging-bar')) {
-						const stagingLevel3 = document.querySelector(
-							'.staging-bar-level-3-message'
-						);
-
-						if (!stagingLevel3) {
-							body.classList.add('staging-ready');
-						}
-						else {
-							body.classList.add('staging-ready-level-3');
-						}
-					}
-				});
-
-				Liferay.fire('initStagingBar', config);
-			},
-		};
-
-		Liferay.StagingBar = StagingBar;
-	},
-	'',
-	{
-		requires: ['aui-io-plugin-deprecated', 'aui-modal'],
-	}
+const buttonAccept = document.querySelector('.cookies-banner-button-accept');
+const buttonConfiguration = document.querySelector(
+	'.cookies-banner-button-configuration'
 );
+const buttonDecline = document.querySelector('.cookies-banner-button-decline');
+const cookieBanner = document.querySelector('.cookies-banner');
+
+const editMode = document.body.classList.contains('has-edit-mode-menu');
+
+function handleButtonClickAccept() {
+	hideBanner();
+
+	localStorage.setItem('liferay.cookie.consent', 'accepted2');
+}
+
+function handleButtonClickDecline() {
+	hideBanner();
+
+	localStorage.setItem('liferay.cookie.consent', 'decline2');
+}
+
+function handleButtonClickConfiguration() {
+	Liferay.Util.openModal({
+		title: 'Cookie Configuration',
+		url: 'configuration.jsp',
+	});
+}
+
+function hideBanner() {
+	cookieBanner.style.display = 'none';
+}
+
+export default function main() {
+	if (!editMode) {
+		if (
+			localStorage.getItem('liferay.cookie.consent') === 'accepted' ||
+			localStorage.getItem('liferay.cookie.consent') === 'decline'
+		) {
+			hideBanner();
+		}
+		else {
+			buttonAccept.addEventListener('click', handleButtonClickAccept);
+			buttonConfiguration.addEventListener(
+				'click',
+				handleButtonClickConfiguration
+			);
+			buttonDecline.addEventListener('click', handleButtonClickDecline);
+		}
+	}
+}
+
+main();

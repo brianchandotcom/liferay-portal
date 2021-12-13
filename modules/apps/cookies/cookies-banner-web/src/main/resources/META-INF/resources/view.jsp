@@ -19,26 +19,43 @@
 <clay:container-fluid
 	cssClass="container-view"
 >
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
-	/>
-
 	<clay:row>
-		<clay:col
-			lg="3"
+		<clay:content-row
+			noGutters="true"
+			verticalAlign="center"
 		>
-			<clay:content-row
-				cssClass="mb-4"
-				verticalAlign="center"
+			<clay:content-col
+				expand="<%= true %>"
 			>
-				<clay:content-col
-					expand="<%= true %>"
-				>
-					<strong class="text-uppercase">
-						<h4>Cookies!!!</h4>
-					</strong>
-				</clay:content-col>
-			</clay:content-row>
-		</clay:col>
+				<span>We use cookies to deliver personalized content, analyze trends, administer the site, track user movements on the site, and collect demographic information about our user base as a whole. Accept all cookies for the best possible experience on our website or manage your preferences. Visit our Privacy Policy.</span>
+			</clay:content-col>
+
+			<clay:content-col>
+				<clay:button
+					cssClass="cookies-banner-button-configuration"
+					displayType="link"
+					label="Configuration"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
+
+			<clay:content-col>
+				<clay:button
+					cssClass="cookies-banner-button-accept"
+					displayType="secondary"
+					label="Accept all"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
+
+			<clay:content-col>
+				<clay:button
+					cssClass="cookies-banner-button-decline"
+					displayType="primary"
+					label="Decline All"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
+		</clay:content-row>
 	</clay:row>
 </clay:container-fluid>

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -112,22 +113,27 @@ public class SelectOrganizationsDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_renderRequest, "orderByCol", "name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest,
+			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+			"order-by-col-organizations", "name");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest,
+			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+			"order-by-type-organizations", "asc");
 
 		return _orderByType;
 	}

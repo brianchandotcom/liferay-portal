@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -271,8 +272,8 @@ public class SiteBrowserDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, SiteBrowserPortletKeys.SITE_BROWSER, "asc");
 
 		return _orderByType;
 	}
@@ -531,8 +532,8 @@ public class SiteBrowserDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, SiteBrowserPortletKeys.SITE_BROWSER, "name");
 
 		return _orderByCol;
 	}

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -51,6 +52,7 @@ import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
+import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemTracker;
 import com.liferay.sharing.web.internal.item.selector.SharedAssetsFilterItemItemSelectorCriterion;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
@@ -176,6 +178,18 @@ public class ViewSharedAssetsDisplayContext {
 		).build();
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, SharingPortletKeys.SHARED_ASSETS,
+			"modified-date");
+
+		return _orderByCol;
+	}
+
 	public PortletURL getSelectAssetTypeURL() {
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
@@ -247,7 +261,14 @@ public class ViewSharedAssetsDisplayContext {
 	}
 
 	public String getSortingOrder() {
-		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, SharingPortletKeys.SHARED_ASSETS, "asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
@@ -412,8 +433,7 @@ public class ViewSharedAssetsDisplayContext {
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				String orderByCol = ParamUtil.getString(
-					_httpServletRequest, "orderByCol", "sharedDate");
+				String orderByCol = getOrderByCol();
 
 				dropdownItem.setActive(
 					Objects.equals(orderByCol, "sharedDate"));
@@ -478,6 +498,8 @@ public class ViewSharedAssetsDisplayContext {
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
 	private final SharedAssetsFilterItemTracker _sharedAssetsFilterItemTracker;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
 	private final Function<SharingEntry, SharingEntryInterpreter>

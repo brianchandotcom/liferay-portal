@@ -10,6 +10,16 @@ definition {
 			locator1 = "Card#CARD_CHECKBOX");
 	}
 
+	macro checkCardShortcutCheckbox {
+		Click.clickNoWaitForVisible(
+			key_card = "${card}",
+			locator1 = "Card#CARD_SHORTCUT_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_card = "${card}",
+			locator1 = "Card#CARD_SHORTCUT_CHECKBOX");
+	}
+
 	macro clickCard {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

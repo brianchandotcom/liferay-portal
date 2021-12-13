@@ -6,10 +6,10 @@ import TableSkeleton from './Skeleton';
 const Table = ({
 	activePage = 1,
 	columns,
-	data,
 	hasPagination,
 	isLoading = false,
 	itemsPerPage = 5,
+	rows,
 	setActivePage,
 	...props
 }) => {
@@ -37,16 +37,16 @@ const Table = ({
 
 				{!isLoading ? (
 					<ClayTable.Body>
-						{data.map((item, index) => (
+						{rows.map((row, index) => (
 							<ClayTable.Row key={index}>
 								{columns.map((column) => (
 									<ClayTable.Cell
 										align={column.align}
 										className={column.bodyClass}
 										headingTitle={column.headingTitle}
-										key={item[column.accessor]}
+										key={row[column.accessor]}
 									>
-										{item[column.accessor]}
+										{row[column.accessor]}
 									</ClayTable.Cell>
 								))}
 							</ClayTable.Row>
@@ -59,12 +59,13 @@ const Table = ({
 					/>
 				)}
 			</ClayTable>
+
 			{hasPagination && (
 				<TablePagination
 					activePage={activePage}
 					itemsPerPage={itemsPerPage}
 					setActivePage={setActivePage}
-					totalItems={data.length}
+					totalItems={rows.length}
 				/>
 			)}
 		</>

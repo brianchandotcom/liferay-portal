@@ -238,6 +238,7 @@ export const getUserAccount = gql`
 		}
 	}
 `;
+
 export const getAccountSubscriptionsGroups = gql`
 	query getAccountSubscriptionGroups($accountSubscriptionGroupERC: String) {
 		c {

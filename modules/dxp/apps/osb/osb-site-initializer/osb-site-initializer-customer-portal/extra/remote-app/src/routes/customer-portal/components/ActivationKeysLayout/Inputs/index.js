@@ -36,13 +36,17 @@ const ActivationKeysInputs = ({accountKey, productKey, productTitle}) => {
 				[];
 
 			if (accountSubscriptionGroups.length) {
+				const accountSubscriptionGroupName =
+					accountSubscriptionGroups[0].name;
+
 				setSelectedAccountSubscriptionGroupName(
-					accountSubscriptionGroups[0].name
+					accountSubscriptionGroupName
 				);
+				const filterAccountSubscriptionERC = `accountSubscriptionERC eq '${accountKey}_${productKey}_${accountSubscriptionGroupName.toLowerCase()}'`;
 
 				fetchAccountSubscriptionsTerms({
 					variables: {
-						accountSubscriptionERC: `accountSubscriptionERC eq '${accountKey}_${productKey}_${accountSubscriptionGroups[0].name.toLowerCase()}'`,
+						accountSubscriptionERC: filterAccountSubscriptionERC,
 					},
 				});
 			}
@@ -72,9 +76,11 @@ const ActivationKeysInputs = ({accountKey, productKey, productTitle}) => {
 	const updateSelectedAccountSubscriptionGroupName = (name) => {
 		setSelectedAccountSubscriptionGroupName(name);
 
+		const filterAccountSubscriptionERC = `accountSubscriptionERC eq '${accountKey}_${productKey}_${name.toLowerCase()}'`;
+
 		fetchAccountSubscriptionsTerms({
 			variables: {
-				accountSubscriptionERC: `accountSubscriptionERC eq '${accountKey}_${productKey}_${name.toLowerCase()}'`,
+				accountSubscriptionERC: filterAccountSubscriptionERC,
 			},
 		});
 	};

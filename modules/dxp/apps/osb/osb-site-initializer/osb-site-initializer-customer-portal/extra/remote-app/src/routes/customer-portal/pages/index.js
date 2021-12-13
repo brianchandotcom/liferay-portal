@@ -1,5 +1,6 @@
 import {useContext} from 'react';
 import {AppContext} from '../context';
+import {pages} from '../utils/constants';
 import ActivationKeys from './ActivationKeys';
 import Home from './Home';
 import Overview from './Overview';
@@ -7,7 +8,7 @@ import Overview from './Overview';
 const Pages = () => {
 	const [{page, project, userAccount}] = useContext(AppContext);
 
-	if (page === 'overview') {
+	if (page === pages.OVERVIEW) {
 		if (userAccount) {
 			return <Overview userAccount={userAccount} />;
 		}
@@ -15,7 +16,7 @@ const Pages = () => {
 		return <ActivationKeys.Skeleton />;
 	}
 
-	if (page === 'enterprise_search') {
+	if (page === pages.ENTERPRISE_SEARCH) {
 		if (project) {
 			return (
 				<ActivationKeys.EnterpriseSearch
@@ -27,7 +28,7 @@ const Pages = () => {
 		return <ActivationKeys.Skeleton />;
 	}
 
-	if (page === 'commerce') {
+	if (page === pages.COMMERCE) {
 		if (userAccount) {
 			return <ActivationKeys.Commerce accountKey={project.accountKey} />;
 		}

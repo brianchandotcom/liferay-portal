@@ -1,4 +1,3 @@
-/* eslint-disable @liferay/imports-first */
 import ActivationKeysSkeleton from '../../components/ActivationKeysLayout/Skeleton';
 import Commerce from './Commerce';
 import EnterpriseSearch from './EnterpriseSearch';

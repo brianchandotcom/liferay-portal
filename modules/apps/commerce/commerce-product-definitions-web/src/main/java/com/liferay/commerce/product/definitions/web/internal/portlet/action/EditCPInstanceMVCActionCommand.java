@@ -245,10 +245,40 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		String unspsc = ParamUtil.getString(actionRequest, "unspsc");
 
+		boolean discontinued = ParamUtil.getBoolean(
+			actionRequest, "discontinued");
+
+		int discontinuedDateMonth = ParamUtil.getInteger(
+			actionRequest, "discontinuedDateMonth");
+		int discontinuedDateDay = ParamUtil.getInteger(
+			actionRequest, "discontinuedDateDay");
+		int discontinuedDateYear = ParamUtil.getInteger(
+			actionRequest, "discontinuedDateYear");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
 		CPInstance cpInstance = null;
+
+		String replacementCPInstanceUuid = null;
+		long replacementCProductId = 0;
+
+		long skuId = ParamUtil.getLong(actionRequest, "skuId");
+
+		if (skuId > 0) {
+			CPInstance replacementCPInstance =
+				_cpInstanceService.fetchCPInstance(skuId);
+
+			if (replacementCPInstance != null) {
+				replacementCPInstanceUuid =
+					replacementCPInstance.getCPInstanceUuid();
+
+				CPDefinition replacementCPDefinition =
+					replacementCPInstance.getCPDefinition();
+
+				replacementCProductId = replacementCPDefinition.getCProductId();
+			}
+		}
 
 		if (cpInstanceId > 0) {
 			cpInstance = _cpInstanceService.updateCPInstance(
@@ -256,7 +286,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, unspsc, serviceContext);
+				expirationDateMinute, neverExpire, unspsc, discontinued,
+				replacementCPInstanceUuid, replacementCProductId,
+				discontinuedDateMonth, discontinuedDateDay,
+				discontinuedDateYear, serviceContext);
 		}
 		else {
 			long cpDefinitionId = ParamUtil.getLong(
@@ -275,7 +308,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, unspsc, serviceContext);
+				expirationDateMinute, neverExpire, unspsc, discontinued,
+				replacementCPInstanceUuid, replacementCProductId,
+				discontinuedDateMonth, discontinuedDateDay,
+				discontinuedDateYear, serviceContext);
 		}
 
 		// Update pricing info

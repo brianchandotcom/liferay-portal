@@ -134,8 +134,7 @@ public class SkuUtil {
 			GetterUtil.get(sku.getDiscontinued(), false),
 			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateConfig.getMonth(), discontinuedDateConfig.getDay(),
-			discontinuedDateConfig.getYear(), discontinuedDateConfig.getHour(),
-			discontinuedDateConfig.getMinute(), serviceContext);
+			discontinuedDateConfig.getYear(), serviceContext);
 	}
 
 	private static String _getOptions(Sku sku) {

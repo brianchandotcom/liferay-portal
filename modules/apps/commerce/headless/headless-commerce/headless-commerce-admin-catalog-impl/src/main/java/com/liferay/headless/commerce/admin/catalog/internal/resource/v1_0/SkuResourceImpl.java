@@ -342,8 +342,7 @@ public class SkuResourceImpl
 			sku.getUnspsc(), sku.getDiscontinued(), replacementCPInstanceUuid,
 			replacementCProductId, discontinuedDateConfig.getMonth(),
 			discontinuedDateConfig.getDay(), discontinuedDateConfig.getYear(),
-			discontinuedDateConfig.getHour(),
-			discontinuedDateConfig.getMinute(), serviceContext);
+			serviceContext);
 
 		return _toSku(cpInstance.getCPInstanceId());
 	}

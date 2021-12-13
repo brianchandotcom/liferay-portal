@@ -31,6 +31,9 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 			<DropDown
 				active={active}
 				closeOnClickOutside={true}
+				menuElementAttrs={{
+					className: 'subscription-status-filter',
+				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton

@@ -5,7 +5,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
-	property testray.component.names = "Document Management";
+	property testray.component.names = "Knowledge Base";
 	property testray.main.component.name = "Upgrades Collaboration";
 
 	setUp {

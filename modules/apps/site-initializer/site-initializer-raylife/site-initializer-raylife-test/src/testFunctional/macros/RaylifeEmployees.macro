@@ -2,7 +2,7 @@ definition {
 
 	macro typeAllEmployeesInfoFields {
 		Click(
-			field = "employees.hasFein",
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 
 		RaylifeEmployees.typeEmployeesInfoFields(
@@ -14,7 +14,7 @@ definition {
 			value = "2000");
 
 		Click(
-			field = "employees.businessOperatesYearRound",
+			field = "Does your business operate year round?",
 			locator1 = "Raylife#BUTTON_NO_OPTION");
 
 		RaylifeEmployees.typeEmployeesInfoFields(

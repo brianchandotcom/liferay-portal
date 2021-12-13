@@ -129,43 +129,6 @@ boolean showMissingAttributeMessage = false;
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-users-were-found"
-	iteratorURL='<%=
-		PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/portal_settings_authentication_ldap/test_ldap_users"
-		).setParameter(
-			"baseDN", baseDN
-		).setParameter(
-			"baseProviderURL", baseProviderURL
-		).setParameter(
-			"credentials", credentials
-		).setParameter(
-			"importUserSearchFilter", userFilter
-		).setParameter(
-			"ldapServerId", ldapServerId
-		).setParameter(
-			"principal", principal
-		).setParameter(
-			"userMappingEmailAddress", ParamUtil.getString(request, "userMappingEmailAddress")
-		).setParameter(
-			"userMappingFirstName", ParamUtil.getString(request, "userMappingFirstName")
-		).setParameter(
-			"userMappingFullName", ParamUtil.getString(request, "userMappingFullName")
-		).setParameter(
-			"userMappingGroup", ParamUtil.getString(request, "userMappingGroup")
-		).setParameter(
-			"userMappingJobTitle", ParamUtil.getString(request, "userMappingJobTitle")
-		).setParameter(
-			"userMappingLastName", ParamUtil.getString(request, "userMappingLastName")
-		).setParameter(
-			"userMappingPassword", ParamUtil.getString(request, "userMappingPassword")
-		).setParameter(
-			"userMappingScreenName", ParamUtil.getString(request, "userMappingScreenName")
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildPortletURL()
-	%>'
 	total="<%= searchResults.size() %>"
 >
 	<liferay-ui:search-container-results
@@ -223,7 +186,9 @@ boolean showMissingAttributeMessage = false;
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator
+		paginate="<%= false %>"
+	/>
 </liferay-ui:search-container>
 
 <c:if test="<%= showMissingAttributeMessage %>">

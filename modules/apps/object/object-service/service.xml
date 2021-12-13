@@ -157,6 +157,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>
+		<finder name="G_ODI_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -67,6 +68,7 @@ import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
 import com.liferay.segments.model.SegmentsEntry;
@@ -250,19 +252,25 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "name");
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
 		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
+			"edit-role-order-by-col", "name");
 
 		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		if (Validator.isNull(_orderByType)) {
-			_orderByType = ParamUtil.getString(
-				_httpServletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
 		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
+			"edit-role-order-by-type", "asc");
 
 		return _orderByType;
 	}

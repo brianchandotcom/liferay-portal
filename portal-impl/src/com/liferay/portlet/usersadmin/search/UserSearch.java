@@ -18,14 +18,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -119,29 +116,11 @@ public class UserSearch extends SearchContainer<User> {
 			String.valueOf(displayTerms.getUserGroupId()));
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				portletRequest, portletId, "users-order-by-col", "last-name");
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
-
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
-
-				preferences.setValue(
-					portletId, "users-order-by-col", orderByCol);
-				preferences.setValue(
-					portletId, "users-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					portletId, "users-order-by-col", "last-name");
-				orderByType = preferences.getValue(
-					portletId, "users-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				portletRequest, portletId, "users-order-by-type", "asc");
 
 			OrderByComparator<User> orderByComparator =
 				UsersAdminUtil.getUserOrderByComparator(

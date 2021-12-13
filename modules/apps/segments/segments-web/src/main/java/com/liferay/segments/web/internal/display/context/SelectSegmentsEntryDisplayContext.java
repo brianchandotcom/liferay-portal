@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -129,12 +130,13 @@ public class SelectSegmentsEntryDisplayContext {
 	}
 
 	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
+		if (_orderByType != null) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, SegmentsPortletKeys.SEGMENTS,
+			"entry-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -260,8 +262,9 @@ public class SelectSegmentsEntryDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, SegmentsPortletKeys.SEGMENTS,
+			"entry-order-by-col", "modified-date");
 
 		return _orderByCol;
 	}

@@ -309,6 +309,11 @@ public interface LayoutClassedModelUsageLocalService
 		OrderByComparator<LayoutClassedModelUsage> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutClassedModelUsage>
+		getLayoutClassedModelUsagesByCompanyIdAndClassNameId(
+			long companyId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutClassedModelUsage> getLayoutClassedModelUsagesByPlid(
 		long plid);
 

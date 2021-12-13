@@ -13,7 +13,8 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 					? []
 					: ['Active', 'Expired', 'Future']
 			);
-		} else {
+		}
+		else {
 			setSelectedStatus(
 				selectedStatus.includes(status)
 					? selectedStatus.filter((value) => status !== value)
@@ -38,10 +39,11 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 						{`${
 							selectedStatus.length === POSSIBLE_STATUS_AMOUNT
 								? 'All'
-								: (selectedStatus.length === 0
+								: selectedStatus.length === 0
 								? ' None '
-								: selectedStatus.join(', '))
-						}`}{' '}&#8595;
+								: selectedStatus.join(', ')
+						}`}{' '}
+						&#8595;
 					</ClayButton>
 				}
 			>

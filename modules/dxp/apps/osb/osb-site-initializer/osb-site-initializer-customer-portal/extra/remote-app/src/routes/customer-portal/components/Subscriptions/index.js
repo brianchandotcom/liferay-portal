@@ -15,7 +15,7 @@ const Subscriptions = ({accountKey}) => {
 		'Expired',
 		'Future',
 	]);
-	
+
 	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
 		return subscriptionName.toLowerCase().replace(' ', '-');
 	};

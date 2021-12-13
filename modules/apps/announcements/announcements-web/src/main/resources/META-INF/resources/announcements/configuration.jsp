@@ -100,19 +100,15 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 								<%
 								List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
-								for (Group curGroup : groups) {
-									if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
-										leftList.add(new KeyValuePair(String.valueOf(curGroup.getGroupId()), GroupNameUtil.getGroupNameWithType(curGroup, locale)));
-									}
-								}
-
 								List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 								for (Group curGroup : groups) {
 									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(curGroup.getGroupId()), GroupNameUtil.getGroupNameWithType(curGroup, locale));
 
-									if (!leftList.contains(tempKeyValuePair)) {
+									if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
+										leftList.add(tempKeyValuePair);
+									}
+									else {
 										rightList.add(tempKeyValuePair);
 									}
 								}

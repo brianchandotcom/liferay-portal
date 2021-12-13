@@ -113,8 +113,6 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					UnicodeProperties unicodeProperties =
 						layout.getTypeSettingsProperties();
 
-					unicodeProperties.put("published", "true");
-
 					ServiceContext serviceContext =
 						ServiceContextFactory.getInstance(httpServletRequest);
 

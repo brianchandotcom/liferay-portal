@@ -2,15 +2,16 @@ import {useQuery} from '@apollo/client';
 import React, {useState} from 'react';
 import {getAccountSubscriptions} from '../../../../common/services/liferay/graphql/queries';
 import CardSubscription from '../CardSubscription';
+import SubscriptionsFilterByStatus from '../SubscriptionsFilterByStatus';
 import SubscriptionsNavbar from '../SubscriptionsNavbar';
 
 export const POSSIBLE_STATUS_AMOUNT = 3;
 
 const Subscriptions = ({accountKey}) => {
 	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
-		() => ''
+		''
 	);
-	const [selectedStatus, setSelectedStatus] = useState(() => [
+	const [selectedStatus, setSelectedStatus] = useState([
 		'Active',
 		'Expired',
 		'Future',
@@ -61,6 +62,11 @@ const Subscriptions = ({accountKey}) => {
 				selectedStatus={selectedStatus}
 				setSelectedStatus={setSelectedStatus}
 				setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}
+			/>
+
+			<SubscriptionsFilterByStatus
+				selectedStatus={selectedStatus}
+				setSelectedStatus={setSelectedStatus}
 			/>
 
 			<div className="d-flex flex-wrap">

@@ -88,9 +88,11 @@ public interface CartResource {
 			Long cartId, CouponCode couponCode)
 		throws Exception;
 
-	public String getCartPaymentURL(Long cartId) throws Exception;
+	public String getCartPaymentURL(Long cartId, String callbackURL)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getCartPaymentURLHttpResponse(Long cartId)
+	public HttpInvoker.HttpResponse getCartPaymentURLHttpResponse(
+			Long cartId, String callbackURL)
 		throws Exception;
 
 	public Page<Cart> getChannelCartsPage(
@@ -796,9 +798,11 @@ public interface CartResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getCartPaymentURL(Long cartId) throws Exception {
+		public String getCartPaymentURL(Long cartId, String callbackURL)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getCartPaymentURLHttpResponse(cartId);
+				getCartPaymentURLHttpResponse(cartId, callbackURL);
 
 			String content = httpResponse.getContent();
 
@@ -838,7 +842,7 @@ public interface CartResource {
 		}
 
 		public HttpInvoker.HttpResponse getCartPaymentURLHttpResponse(
-				Long cartId)
+				Long cartId, String callbackURL)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -861,6 +865,11 @@ public interface CartResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

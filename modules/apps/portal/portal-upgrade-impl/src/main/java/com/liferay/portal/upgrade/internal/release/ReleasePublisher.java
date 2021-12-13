@@ -53,8 +53,8 @@ public class ReleasePublisher {
 
 		properties.put(
 			"release.bundle.symbolic.name", release.getBundleSymbolicName());
-		properties.put("release.state", release.getState());
 		properties.put("release.initial", initialRelease);
+		properties.put("release.state", release.getState());
 
 		try {
 			if (Validator.isNotNull(release.getSchemaVersion())) {

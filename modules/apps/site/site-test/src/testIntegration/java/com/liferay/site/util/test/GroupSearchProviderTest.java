@@ -66,13 +66,13 @@ public class GroupSearchProviderTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
-	public static void setUpClass() {
+	public void setUpClass() {
 		_originalGroupsComplexSQLClassNames =
 			PropsValues.GROUPS_COMPLEX_SQL_CLASS_NAMES;
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
 			_originalGroupsComplexSQLClassNames);
@@ -173,8 +173,6 @@ public class GroupSearchProviderTest {
 		return themeDisplay;
 	}
 
-	private static String[] _originalGroupsComplexSQLClassNames;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -183,5 +181,7 @@ public class GroupSearchProviderTest {
 
 	@Inject
 	private GroupSearchProvider _groupSearchProvider;
+
+	private String[] _originalGroupsComplexSQLClassNames;
 
 }

@@ -8,6 +8,7 @@ flows which demonstrate the basic usage of Liferay Connector.
 * Running Liferay instance with initialized Commerce site
 
 ## How to Run
+
 1. Import demo project into the Anypoint studio
 	* In Anypoint studio navigate to File > Import > Anypoint Studio >
 	Anypoint Studio project from File System

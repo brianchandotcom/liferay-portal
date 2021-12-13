@@ -3,16 +3,19 @@
 ## Table of Contents
 
 1. [Class Descriptions](#class-descriptions)
+
 2. [Class Javadoc Tags](#class-javadoc-tags)
     - [@author tags](#author-tags)
     - [@param tags](#param-tags)
     - [@see tags](#see-tags)
     - [@since tags](#since-tags)
     - [@deprecated tags](#deprecated-tags)
+
 3. [Method Descriptions](#method-descriptions)
     - [Initial Method Descriptions](#initial-method-descriptions)
     - [Detailed Method Descriptions](#detailed-method-descriptions)
     - [More on Method Descriptions](#more-on-method-descriptions)
+
 4. [Method Javadoc Tags](#method-javadoc-tags)
     - [@param tags](#param-tags)
     - [@return tags](#return-tags)
@@ -20,8 +23,11 @@
     - [@see tags for methods](#see-tags-for-methods)
     - [@since tags for methods](#since-tags-for-methods)
     - [@deprecated tags for methods](#deprecated-tags-for-methods)
+
 5. [Javadoc Linking](#javadoc-linking)
+
 6. [Formatting Tags](#formatting-tags)
+
 7. [Examples](#examples)
     - [Class: Initial and detailed description](#class-initial-and-detailed-description)
     - [Constructor: with parameters](#constructor-with-parameters)

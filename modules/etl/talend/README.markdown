@@ -203,6 +203,7 @@ registration:
 OSX and Linux users may use these 2 scripts to automatize process:
 
 1. install component: https://gist.github.com/igorbeslic/1bc7aeb76445e8d72908157ff40a466a
+
 2. redeploy component: https://gist.github.com/igorbeslic/6ddccd61c7fbc20c3fd65b303c46caa7
 
 ## Running Talend studio in OS with multiple java versions

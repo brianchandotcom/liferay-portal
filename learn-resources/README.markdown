@@ -9,6 +9,7 @@ Users can click on `liferay-learn:message` tag generated links, like the one abo
 The links have two parts:
 
 1. A JSON file that specifies the resource you're linking to.
+
 1. A `liferay-learn:message` tag that references the JSON file and one of its resources.
 
 Specifying resources in a JSON file separate from the JSP facilitates adding locale translations and updating link labels and URLs.

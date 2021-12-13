@@ -7,15 +7,23 @@ Liferay's JSDoc tools. Refer to the table of contents below for easier
 navigation.
 
 1. [Class Comments](#class-comments)
+
 2. [Method Comments](#method-comments)
+
 3. [Top Tips](#top-tips)
+
 4. [JSDoc Linking](#jsdoc-linking)
     - [@see Tags](#see-tags)
     - [@link Tags](#link-tags)
+
 5. [Formatting Tags](#formatting-tags)
+
 6. [State Object Comments](#state-object-comments)
+
 7. [State Properties](#state-properties)
+
 8. [Formatting and Building JSDoc](#formatting-and-building-jsdoc)
+
 9. [Submitting JSDoc](#submitting-jsdoc)
 
 ## Class Comments
@@ -162,20 +170,27 @@ spawnWorker_(message) {
 
 1.  If you're new to JSDoc, familiarize yourself with the
     [official JSDOC guide](http://usejsdoc.org/index.html).
+
 2.  Starting with an *action word*, describe what each [class](#class-comments)
     and [method](#method-comments) does.
+
 3.  Avoid just restating the class or method name (e.g., avoid
     *updateLocalization(...)* &rarr; *Updates the localization* **OR** *@param
     {string} key the key*).
+
 4.  Describe the most important details in the first sentence.
+
 5.  Include all relevant tags
     ([@param](http://usejsdoc.org/tags-param.html),
     [@return](http://usejsdoc.org/tags-returns.html), etc.) for
     each method; without them, the method JSDoc is incomplete.
+
 6.  Start a method description with *Returns*, if the method returns a value.
+
 7.  Avoid referring explicitly to parameters by name; instead, refer to them in
     general terms (e.g., *class name ID* instead of
     *&lt;code>classNameId&lt;/code>*).
+
 8. Begin boolean parameter descriptions with *whether*. See example below:
 
     ```JS
@@ -186,17 +201,22 @@ spawnWorker_(message) {
 
 9. Punctuate every class and method description (sentence or phrase) with a
     period.
+
 10. Punctuate all tag descriptions (sentence or phrase) (e.g.,
     [@param](http://usejsdoc.org/tags-param.html),
     [@return](http://usejsdoc.org/tags-returns.html), and
     [@throws](http://usejsdoc.org/tags-throws.html)) with a period. Write
     follow-up text in complete sentences.
+
 11. Capitalize the first world for all tag descriptions.
+
 12. Describe exceptions (i.e.,
 	  [@throws](http://usejsdoc.org/tags-throws.html)) in past
     tense.
+
 13. Don't wrap the first paragraph of a JSDoc comment with paragraph tags. Do
     wrap subsequent paragraphs with paragraph tags.
+
 14. Wrap JSDoc at 80 columns.
 
 Terrific! You're off to a great start to writing JSDoc.

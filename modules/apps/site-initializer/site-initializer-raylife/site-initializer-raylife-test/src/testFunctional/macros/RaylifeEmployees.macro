@@ -41,44 +41,43 @@ definition {
 	}
 
 	macro viewEmployeesInfo {
+		AssertElementPresent(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        AssertElementPresent(
-            locator1 = "Raylife#BUTTON_YES_OPTION",
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?");
+		AssertElementPresent(
+			label = "employees.fein",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "12-3456789");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "employees.fein",
-            value = "12-3456789");
-
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_FIELDS",
+		AssertElementPresent(
 			label = "employees.startBusinessAtYear",
+			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "2000");
 
-        AssertElementPresent(
-            locator1 = "Raylife#BUTTON_NO_OPTION",
-            field = "Does your business operate year round?");
+		AssertElementPresent(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "employees.partTimeEmployees",
-            value = "200");
+		AssertElementPresent(
+			label = "employees.partTimeEmployees",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "200");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "employees.estimatedAnnualGrossRevenue",
-            value = "$111.00");
+		AssertElementPresent(
+			label = "employees.estimatedAnnualGrossRevenue",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "$111.00");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "employees.annualPayrollForOwner",
-            value = "$111.00");
+		AssertElementPresent(
+			label = "employees.annualPayrollForOwner",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "$111.00");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_VALUE",
-            label = "employees.annualPayrollForEmployees",
-            value = "$111.00");
+		AssertElementPresent(
+			label = "employees.annualPayrollForEmployees",
+			locator1 = "Raylife#FORMS_VALUE",
+			value = "$111.00");
+	}
 
-    }
 }

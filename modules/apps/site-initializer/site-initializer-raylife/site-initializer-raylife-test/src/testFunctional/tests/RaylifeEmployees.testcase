@@ -138,7 +138,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142541 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Federal Employer Identification Number (FEIN)')"
@@ -181,7 +180,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142546 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many full or part time employees do you have?')"
@@ -220,7 +218,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142423 - Verify if clicking on Previous returns to Previous Screen (Business Info/'Let's get to know your business!') and all information is maintained in the Employee Info page"
@@ -257,7 +254,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142454 - Verify clicking 'More Info' in the 'Federal Employer Identification Number (FEIN)' field opens an Information Panel"
@@ -298,7 +294,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142542 - Verify clicking 'More Info' in the 'How many full or part time employees do you have?' field opens an Information Panel"
@@ -335,7 +330,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142424 - Verify if 'Does your business have a Federal Employer Identification Number (FEIN)?' = 'Yes', then field 'Federal Employer Identification Number (FEIN)' is shown"
@@ -364,15 +358,14 @@ definition {
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 
 		AssertElementPresent(
-			locator1 = "Raylife#FORMS_FIELDS",
-			label = "employees.fein");
+			label = "employees.fein",
+			locator1 = "Raylife#FORMS_FIELDS");
 
 		Click(
 			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142447 - Verify error message 'This field is required' in the 'What is your estimated annual gross revenue for the next 12 months?' field"
@@ -413,7 +406,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142426 - Verify error message 'FEIN is required.' in the 'Federal Employer Identification Number (FEIN)' field"
@@ -458,7 +450,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142427 - Verify error message 'Please enter a valid FEIN.' in the 'Federal Employer Identification Number (FEIN)' field"
@@ -499,7 +490,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142444 - Verify error message 'This field is required' in the 'How many full or part time employees do you have?' field"
@@ -540,7 +530,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142446 - Verify error message 'You must have at least one employee.' in the 'How many full or part time employees do you have?' field"
@@ -577,7 +566,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142435 - Verify error message 'You cannot enter a future year.' in the 'What year did you start your business?' field"
@@ -614,7 +602,6 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 	}
 
 	@description = "LPS-142433 - Verify error message 'This field is required' in the 'What year did you start your business?' field"

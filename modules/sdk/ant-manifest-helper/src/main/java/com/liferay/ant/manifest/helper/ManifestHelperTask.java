@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.ant;
+package com.liferay.ant.manifest.helper;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;

@@ -23,7 +23,7 @@ public class MarkdownEmptyLinesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return content.replaceAll("(?<!\n)(\n\\d+\\. )", "\n$1");
+		return content.replaceAll("(?<!\n)(\n *\\d+\\. )", "\n$1");
 	}
 
 }

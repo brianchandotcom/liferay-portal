@@ -410,6 +410,31 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testPatchUserAccount() throws Exception {
+		super.testPatchUserAccount();
+
+		User user = UserTestUtil.addUser();
+
+		long portraitId = RandomTestUtil.randomLong();
+
+		user.setPortraitId(portraitId);
+
+		user = _userLocalService.updateUser(user);
+
+		UserAccount userAccount = new UserAccount();
+
+		userAccount.setJobTitle(RandomTestUtil.randomString());
+
+		userAccount = userAccountResource.patchUserAccount(
+			user.getUserId(), userAccount);
+
+		user = _userLocalService.getUser(userAccount.getId());
+
+		Assert.assertEquals(portraitId, user.getPortraitId());
+	}
+
+	@Override
+	@Test
 	public void testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 

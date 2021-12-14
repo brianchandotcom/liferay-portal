@@ -5,166 +5,1001 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+		setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
 	@description = "LPS-142556 - Verify error message 'This field is required' in the 'How many square feet of the building does your business occupy?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test BuildingSquareFeetOccupiedIsRequired {
 
-		// TODO LPS-142556 BuildingSquareFeetOccupiedIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1");
+
+		Type(
+			label = "property.buildingSquareFeetOccupied",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "\BACK_SPACE");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142548 - Verify if Continue Button is only enabled when all required fields have been filled in."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanContinueOnPropertyInfoWithAllFilled {
 
-		// TODO LPS-142548 CanContinueOnPropertyInfoWithAllFilled pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
 
 	}
 
 	@description = "LPS-142573 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many square feet of the building does your business occupy?')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissBuildingSquareFeetOccupiedInfoPanel {
 
-		// TODO LPS-142573 CanDismissBuildingSquareFeetOccupiedInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "How many");
+
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+		AssertElementPresent(locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142577 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Is this the primary location you conduct business?')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissPrimaryBusinessLocationInfoPanel {
+	
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		// TODO LPS-142577 CanDismissPrimaryBusinessLocationInfoPanel pending implementation
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.yearBuilding",
+            value = "2015");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "primary location");
+
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+		AssertElementPresent(locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142575 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'What year was the building constructed?')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissYearBuildingInfoPanel {
 
-		// TODO LPS-142575 CanDismissYearBuildingInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "building constructed?");
+
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+		AssertElementPresent(locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142550 - Verify if clicking on Previous returns to Previous Screen (Employee Info/'Tell us about your employees!') and all information is maintained in the Property Info page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanGoBackOnPropertyInfoKeepingAllData {
 
-		// TODO LPS-142550 CanGoBackOnPropertyInfoKeepingAllData pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.viewPropertyInfo();
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-135202 - Verify that the street address entered by the user on the “Just the business basics!” page is also on 'Do you own the building at <Business Street Address>?'"
-	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewAdressInDoOwnBuildingAtAddress {
+	test CanViewAddressInDoOwnBuildingAtAddress {
 
-		// TODO LPS-135202 CanViewAdressInDoOwnBuildingAtAddress pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeProperty#MORE_ABOUT_FIELD_ADDRESS");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
 
 	}
 
 	@description = "LPS-135202 - Verify that the street address entered by the user on the “Just the business basics!” page is also on the page's title (On Property's page's title: More about <Address>)."
-	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewAdressInTitle {
+	test CanViewAddressInTitle {
 
-		// TODO LPS-135202 CanViewAdressInTitle pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeProperty#MORE_ABOUT_TITLE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142572 - Verify clicking 'More Info' in the 'How many square feet of the building does your business occupy?' field opens an Information Panel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewBuildingSquareFeetOccupiedInfoPanel {
 
-		// TODO LPS-142572 CanViewBuildingSquareFeetOccupiedInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "How many");
+
+		AssertElementPresent(locator1 = "Raylife#MORE_INFO_PANEL");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142576 - Verify clicking 'More Info' in the 'Is this the primary location you conduct business?' field opens an Information Panel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewPrimaryBusinessLocationInfoPanel {
 
-		// TODO LPS-142576 CanViewPrimaryBusinessLocationInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.yearBuilding",
+            value = "2015");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "primary location");
+
+		AssertElementPresent(locator1 = "Raylife#MORE_INFO_PANEL");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142565 - Verify 'Are there diving boards or slides?' only shows if Segment = Habitational (you can Search for Residential in the first page of Basics and select any of those)"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DoesIsThereDivingBoardsShowUp {
 
-		// TODO LPS-142565 DoesIsThereDivingBoardsShowUp pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		Type(
+			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "Residential");
+
+		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFieldsResidential();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(
+			field = "primary location",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		Click(
+			field = "Are there swimming pool(s) on the premises?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+
+		AssertElementPresent(
+			label = "property.isThereDivingBoards",
+			locator1 = "Raylife#FORMS_FIELDS");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142564 - Verify 'Are there swimming pool(s) on the premises?' only shows if Segment = Habitational (you can Search for Residential in the first page of Basics and select any of those)"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DoesIsThereSwimmingShowUp {
 
-		// TODO LPS-142564 DoesIsThereSwimmingShowUp pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		Type(
+			label = "basics.businessSearch",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "Residential");
+
+		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFieldsResidential();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		AssertElementPresent(
+			label = "property.isPrimaryBusinessLocation",
+			locator1 = "Raylife#FORMS_FIELDS");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142551 - Verify error message 'This field is required' in the 'How many stories is this building?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StoriesIsRequired {
 
-		// TODO LPS-142551 StoriesIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		Type(
+			label = "property.stories",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "\BACK_SPACE");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "ZIP is required.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142554 - Verify error message 'Must be equal or greater than 0.' in the 'How many stories is this building?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StoriesNotBelowZero {
 
-		// TODO LPS-142554 StoriesNotBelowZero pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "-1");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "Must be equal or greater than 0.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142559 - Verify error message 'This field is required' in the 'How many total square feet is the building?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TotalBuildingSquareFeetIsRequired {
 
-		// TODO LPS-142559 TotalBuildingSquareFeetIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address??",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+		
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "8");
+
+		Type(
+			label = "property.totalBuildingSquareFeet",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "\BACK_SPACE");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142563 - Verify error message 'You cannot enter a future year.' in the 'What year was the building constructed?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test YearBuildingIsNotFuture {
 
-		// TODO LPS-142563 YearBuildingIsNotFuture pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+		
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.yearBuilding",
+            value = "3000");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "You cannot enter a future year.");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142561 - Verify error message 'This field is required' in the 'What year was the building constructed?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test YearBuildingIsRequired {
 
-		// TODO LPS-142561 YearBuildingIsRequired pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+		
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.yearBuilding",
+            value = "2");
+
+		Type(
+			label = "property.stories",
+			locator1 = "Raylife#FORMS_FIELDS",
+			value1 = "\BACK_SPACE");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "This field is required");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
 
 	}
 
 	@description = "LPS-142562 - Verify error message 'Must be a valid year.' in the 'What year was the building constructed?' field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test YearBuildingIsValid {
 
-		// TODO LPS-142562 YearBuildingIsValid pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+		
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.yearBuilding",
+            value = "12");
+
+		AssertTextEquals(
+			locator1 = "Raylife#ERROR_MESSAGE",
+			value1 = "Must be a valid year.");
+		
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
+	@description = "LPS-142574 -  Verify clicking 'More Info' in the 'What year was the building constructed?' field opens an Information Panel."
+	@priority = "3"
+	test CanViewYearBuildingInfoPanel {
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			field = "Do you own the building at Address?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.stories",
+            value = "3");
+
+		RaylifeProperty.typePropertyInfoFields(
+            label = "property.buildingSquareFeetOccupied",
+            value = "1,000 ft²");
+
+        RaylifeProperty.typePropertyInfoFields(
+            label = "property.totalBuildingSquareFeet",
+            value = "800 ft²");
+
+		Click(
+			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
+			title = "building constructed?");
+
+		AssertElementPresent(locator1 = "Raylife#MORE_INFO_PANEL");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
 }

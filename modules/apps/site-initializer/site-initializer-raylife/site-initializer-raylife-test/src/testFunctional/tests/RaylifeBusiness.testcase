@@ -80,7 +80,7 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
 		AssertElementPresent(
-			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
 			value1 = "Percent of sales from used merchandise");
 
 		Click(
@@ -114,7 +114,7 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
 		AssertElementPresent(
-			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
 			value1 = "Years of industry experience");
 
 		Click(

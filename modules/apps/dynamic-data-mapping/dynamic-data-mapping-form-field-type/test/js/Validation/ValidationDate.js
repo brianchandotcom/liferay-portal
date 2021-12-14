@@ -191,14 +191,17 @@ describe('ValidationDate', () => {
 				visible={true}
 			/>
 		);
-		const [acceptedDate, operation, quantity, unit] = [
-			...getAllByRole('textbox'),
+
+		const [selectedValidaiton, selectedOperation, selectedUnit] = [
+			...getAllByRole('combobox'),
 		];
 
-		expect(acceptedDate).toHaveValue('futureDates');
-		expect(operation).toHaveValue('plus');
-		expect(unit).toHaveValue('days');
-		expect(quantity).toHaveValue(1);
+		const startQuantity = getAllByRole('textbox');
+
+		expect(selectedValidaiton).toHaveValue('futureDates');
+		expect(selectedOperation).toHaveValue('plus');
+		expect(selectedUnit).toHaveValue('days');
+		expect(startQuantity[0]).toHaveValue(1);
 	});
 
 	it('shows custom date fields for Past dates and operation minus when quantity is negative', () => {
@@ -233,9 +236,9 @@ describe('ValidationDate', () => {
 			/>
 		);
 
-		const [acceptedDate, operation, quantity, unit] = [
-			...getAllByRole('textbox'),
-		];
+		const [acceptedDate, operation, unit] = [...getAllByRole('listbox')];
+
+		const [quantity] = [...getAllByRole('textbox')];
 
 		expect(acceptedDate).toHaveValue('pastDates');
 		expect(operation).toHaveValue('minus');

@@ -94,7 +94,7 @@ const SelectDateType: React.FC<IProps> = ({
 				)}
 			</div>
 
-			<ClayDropDownWithItems items={items} trigger={select} />
+			<DDMSelect options={items} />
 		</div>
 	);
 };

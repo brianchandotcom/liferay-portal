@@ -8,41 +8,35 @@ exports[`ValidationDate shows date range validation 1`] = `
     <label>
       accepted-date
     </label>
-    <div
-      class="dropdown"
+    <select
+      class="form-control"
+      name="selectedValidation"
     >
-      <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+      <option
+        name="futureDates"
+        parametermessage=""
+        template="futureDates({name}, \\"{parameter}\\")"
+        value="futureDates"
       >
-        <div
-          class="form-control results-chosen select-field-trigger"
-        >
-          <div
-            class="option-selected"
-          >
-            Range
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="dateRange"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
-            >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
+        Future Dates
+      </option>
+      <option
+        name="pastDates"
+        parametermessage=""
+        template="pastDates({name}, \\"{parameter}\\")"
+        value="pastDates"
+      >
+        Past Dates
+      </option>
+      <option
+        name="dateRange"
+        parametermessage=""
+        template="dateRange({name}, \\"{parameter}\\")"
+        value="dateRange"
+      >
+        Range
+      </option>
+    </select>
   </div>
   <label>
     START-DATE
@@ -150,41 +144,21 @@ exports[`ValidationDate shows date range validation 1`] = `
   >
     <label>
       operation
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedOperation_startsFrom"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="plus"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              plus
-            </div>
-            <input
-              name="selectedOperation_startsFrom"
-              type="hidden"
-              value="plus"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
     </label>
     <label>
       quantity
@@ -199,41 +173,26 @@ exports[`ValidationDate shows date range validation 1`] = `
     </label>
     <label>
       unit
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedUnit_startsFrom"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="days"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              days
-            </div>
-            <input
-              name="selectedUnit_startsFrom"
-              type="hidden"
-              value="days"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
     </label>
   </div>
   <label>
@@ -342,41 +301,21 @@ exports[`ValidationDate shows date range validation 1`] = `
   >
     <label>
       operation
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedOperation_endsOn"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="plus"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              plus
-            </div>
-            <input
-              name="selectedOperation_endsOn"
-              type="hidden"
-              value="plus"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
     </label>
     <label>
       quantity
@@ -391,41 +330,26 @@ exports[`ValidationDate shows date range validation 1`] = `
     </label>
     <label>
       unit
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedUnit_endsOn"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="days"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              days
-            </div>
-            <input
-              name="selectedUnit_endsOn"
-              type="hidden"
-              value="days"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
     </label>
   </div>
   <label
@@ -452,41 +376,35 @@ exports[`ValidationDate shows future dates validation 1`] = `
     <label>
       accepted-date
     </label>
-    <div
-      class="dropdown"
+    <select
+      class="form-control"
+      name="selectedValidation"
     >
-      <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+      <option
+        name="futureDates"
+        parametermessage=""
+        template="futureDates({name}, \\"{parameter}\\")"
+        value="futureDates"
       >
-        <div
-          class="form-control results-chosen select-field-trigger"
-        >
-          <div
-            class="option-selected"
-          >
-            Future Dates
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="futureDates"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
-            >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
+        Future Dates
+      </option>
+      <option
+        name="pastDates"
+        parametermessage=""
+        template="pastDates({name}, \\"{parameter}\\")"
+        value="pastDates"
+      >
+        Past Dates
+      </option>
+      <option
+        name="dateRange"
+        parametermessage=""
+        template="dateRange({name}, \\"{parameter}\\")"
+        value="dateRange"
+      >
+        Range
+      </option>
+    </select>
   </div>
   <div
     class="ddm__validation-date-start-end"
@@ -588,41 +506,21 @@ exports[`ValidationDate shows future dates validation 1`] = `
   >
     <label>
       operation
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedOperation_startsFrom"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="plus"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              plus
-            </div>
-            <input
-              name="selectedOperation_startsFrom"
-              type="hidden"
-              value="plus"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
     </label>
     <label>
       quantity
@@ -637,41 +535,26 @@ exports[`ValidationDate shows future dates validation 1`] = `
     </label>
     <label>
       unit
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedUnit_startsFrom"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="days"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              days
-            </div>
-            <input
-              name="selectedUnit_startsFrom"
-              type="hidden"
-              value="days"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
     </label>
   </div>
   <label
@@ -698,41 +581,35 @@ exports[`ValidationDate shows past dates validation 1`] = `
     <label>
       accepted-date
     </label>
-    <div
-      class="dropdown"
+    <select
+      class="form-control"
+      name="selectedValidation"
     >
-      <div
-        class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
+      <option
+        name="futureDates"
+        parametermessage=""
+        template="futureDates({name}, \\"{parameter}\\")"
+        value="futureDates"
       >
-        <div
-          class="form-control results-chosen select-field-trigger"
-        >
-          <div
-            class="option-selected"
-          >
-            Past Dates
-          </div>
-          <input
-            name="selectedValidation"
-            type="hidden"
-            value="pastDates"
-          />
-          <a
-            class="select-arrow-down-container"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-double"
-              role="presentation"
-            >
-              <use
-                xlink:href="#caret-double"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
+        Future Dates
+      </option>
+      <option
+        name="pastDates"
+        parametermessage=""
+        template="pastDates({name}, \\"{parameter}\\")"
+        value="pastDates"
+      >
+        Past Dates
+      </option>
+      <option
+        name="dateRange"
+        parametermessage=""
+        template="dateRange({name}, \\"{parameter}\\")"
+        value="dateRange"
+      >
+        Range
+      </option>
+    </select>
   </div>
   <div
     class="ddm__validation-date-start-end"
@@ -834,41 +711,21 @@ exports[`ValidationDate shows past dates validation 1`] = `
   >
     <label>
       operation
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedOperation_endsOn"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="plus"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              plus
-            </div>
-            <input
-              name="selectedOperation_endsOn"
-              type="hidden"
-              value="plus"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          plus
+        </option>
+        <option
+          value="minus"
+        >
+          minus
+        </option>
+      </select>
     </label>
     <label>
       quantity
@@ -883,41 +740,26 @@ exports[`ValidationDate shows past dates validation 1`] = `
     </label>
     <label>
       unit
-      <div
-        class="dropdown"
+      <select
+        class="form-control"
+        name="selectedUnit_endsOn"
       >
-        <div
-          class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
+        <option
+          value="days"
         >
-          <div
-            class="form-control results-chosen select-field-trigger"
-          >
-            <div
-              class="option-selected"
-            >
-              days
-            </div>
-            <input
-              name="selectedUnit_endsOn"
-              type="hidden"
-              value="days"
-            />
-            <a
-              class="select-arrow-down-container"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#caret-double"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+          days
+        </option>
+        <option
+          value="months"
+        >
+          months
+        </option>
+        <option
+          value="years"
+        >
+          years
+        </option>
+      </select>
     </label>
   </div>
   <label

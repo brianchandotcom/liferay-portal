@@ -4,6 +4,7 @@
 	<model name="com.liferay.remote.app.model.RemoteAppEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="remoteAppEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

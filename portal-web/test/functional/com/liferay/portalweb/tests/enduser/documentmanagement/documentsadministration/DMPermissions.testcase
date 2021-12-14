@@ -1378,11 +1378,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		LexiconCard.viewMenuItemNotPresentOnCardShortcut(
+		LexiconCard.viewMenuItemNotPresent(
 			card = "DM Document Title",
 			item = "Move to Recycle Bin");
 
-		LexiconCard.checkCardShortcutCheckbox(card = "DM Document Title");
+		LexiconCard.checkCardCheckbox(card = "DM Document Title");
 
 		ManagementBar.viewItemsDisabled(textList = "trash");
 	}

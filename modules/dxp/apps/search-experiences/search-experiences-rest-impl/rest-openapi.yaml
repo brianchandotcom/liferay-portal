@@ -204,6 +204,10 @@ components:
                                 type: object
                             type: array
                     type: object
+                searchContextAttributes:
+                    additionalProperties:
+                        type: object
+                    type: object
                 sortConfiguration:
                     properties:
                         sorts:

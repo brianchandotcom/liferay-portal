@@ -95,23 +95,25 @@ public class MappedProductDTOConverter
 
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-				csDiagramEntry.getCProductId());
+				GetterUtil.getLong(
+					mappedProductDTOConverterContext.getReplacementCProductId(),
+					csDiagramEntry.getCProductId()));
+
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-			GetterUtil.getLong(csDiagramEntry.getCPInstanceId()));
+			GetterUtil.getLong(
+				mappedProductDTOConverterContext.getReplacementCPInstanceId(),
+				csDiagramEntry.getCPInstanceId()));
 
 		return new MappedProduct() {
 			{
-				actions = dtoConverterContext.getActions();
+				actions = mappedProductDTOConverterContext.getActions();
 				id = csDiagramEntry.getCSDiagramEntryId();
 				options = _getOptions(cpInstance);
 				price = _getPrice(
 					commerceContext, cpInstance,
 					mappedProductDTOConverterContext.getLocale(), 1);
-				productId = csDiagramEntry.getCProductId();
 				quantity = csDiagramEntry.getQuantity();
 				sequence = csDiagramEntry.getSequence();
-				sku = csDiagramEntry.getSku();
-				skuId = GetterUtil.getLong(csDiagramEntry.getCPInstanceId());
 
 				setAvailability(
 					() -> {
@@ -136,7 +138,8 @@ public class MappedProductDTOConverter
 							new DefaultDTOConverterContext(
 								_dtoConverterRegistry,
 								cpDefinition.getCPDefinitionId(),
-								dtoConverterContext.getLocale(), null, null));
+								mappedProductDTOConverterContext.getLocale(),
+								null, null));
 					});
 				setProductExternalReferenceCode(
 					() -> {
@@ -147,6 +150,14 @@ public class MappedProductDTOConverter
 						CProduct cProduct = cpDefinition.getCProduct();
 
 						return cProduct.getExternalReferenceCode();
+					});
+				setProductId(
+					() -> {
+						if (cpDefinition == null) {
+							return null;
+						}
+
+						return cpDefinition.getCProductId();
 					});
 				setProductName(
 					() -> {
@@ -175,10 +186,72 @@ public class MappedProductDTOConverter
 									new DefaultDTOConverterContext(
 										cpDefinitionOptionRel.
 											getCPDefinitionOptionRelId(),
-										dtoConverterContext.getLocale())));
+										mappedProductDTOConverterContext.
+											getLocale())));
 						}
 
 						return productOptions.toArray(new ProductOption[0]);
+					});
+				setReplacementMappedProduct(
+					() -> {
+						MappedProduct replacementMappedProduct = null;
+
+						if ((cpInstance != null) &&
+							cpInstance.isDiscontinued()) {
+
+							CPInstance replacementCPInstance =
+								_cpInstanceLocalService.fetchCProductInstance(
+									cpInstance.getReplacementCProductId(),
+									cpInstance.getReplacementCPInstanceUuid());
+
+							if (replacementCPInstance == null) {
+								return null;
+							}
+
+							mappedProductDTOConverterContext.
+								setReplacementCPInstanceId(
+									replacementCPInstance.getCPInstanceId());
+
+							mappedProductDTOConverterContext.
+								setReplacementCProductId(
+									cpInstance.getReplacementCProductId());
+
+							replacementMappedProduct =
+								MappedProductDTOConverter.this.toDTO(
+									mappedProductDTOConverterContext);
+						}
+
+						mappedProductDTOConverterContext.
+							setReplacementCPInstanceId(null);
+						mappedProductDTOConverterContext.
+							setReplacementCProductId(null);
+
+						return replacementMappedProduct;
+					});
+				setReplacementMessage(
+					() -> {
+						if ((cpInstance != null) &&
+							cpInstance.isDiscontinued() &&
+							(cpInstance.getCPInstanceId() ==
+								csDiagramEntry.getCPInstanceId())) {
+
+							return LanguageUtil.format(
+								mappedProductDTOConverterContext.getLocale(),
+								"x-has-been-replaced-by-x",
+								new String[] {
+									csDiagramEntry.getSku(), StringPool.BLANK
+								});
+						}
+
+						return null;
+					});
+				setSku(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getSku();
 					});
 				setSkuExternalReferenceCode(
 					() -> {
@@ -187,6 +260,14 @@ public class MappedProductDTOConverter
 						}
 
 						return cpInstance.getExternalReferenceCode();
+					});
+				setSkuId(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getCPInstanceId();
 					});
 				setThumbnail(
 					() -> {

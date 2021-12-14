@@ -25,4 +25,11 @@ definition {
 			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
 		}
 	}
+
+    macro searchEventAnalyse {
+		Type(
+			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
+			value1 = "${searchItem}");
+	}
+
 }

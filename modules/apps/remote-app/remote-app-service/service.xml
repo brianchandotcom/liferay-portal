@@ -37,6 +37,7 @@
 		<column name="statusDate" type="Date" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateRemoteAppEntryExternalReferenceCode</exception>
 		<exception>RemoteAppEntryCustomElementCSSURLs</exception>
 		<exception>RemoteAppEntryCustomElementHTMLElementName</exception>
 		<exception>RemoteAppEntryCustomElementURLs</exception>

@@ -118,7 +118,8 @@ public class NavItemUtil {
 						siteNavigationMenuItem.getType());
 
 			try {
-				if (!siteNavigationMenuItemType.hasPermission(
+				if ((siteNavigationMenuItemType == null) ||
+					!siteNavigationMenuItemType.hasPermission(
 						themeDisplay.getPermissionChecker(),
 						siteNavigationMenuItem)) {
 

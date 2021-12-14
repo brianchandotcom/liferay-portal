@@ -129,10 +129,6 @@ public class SourceFormatter {
 					ArgumentsUtil.getString(
 						arguments, "source.check.names", null),
 					StringPool.COMMA));
-			sourceFormatterArgs.setCheckstyleSingleBatch(
-				ArgumentsUtil.getBoolean(
-					arguments, "checkstyle.single.batch",
-					SourceFormatterArgs.CHECKSTYLE_SINGLE_BATCH));
 			sourceFormatterArgs.setFailOnAutoFix(
 				ArgumentsUtil.getBoolean(
 					arguments, "source.fail.on.auto.fix",

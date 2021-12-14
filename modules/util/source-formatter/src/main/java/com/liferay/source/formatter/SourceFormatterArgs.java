@@ -31,8 +31,6 @@ public class SourceFormatterArgs {
 
 	public static final String BASE_DIR_NAME = "./";
 
-	public static final boolean CHECKSTYLE_SINGLE_BATCH = false;
-
 	public static final int COMMIT_COUNT = 0;
 
 	public static final boolean FAIL_ON_AUTO_FIX = false;
@@ -145,10 +143,6 @@ public class SourceFormatterArgs {
 		return _autoFix;
 	}
 
-	public boolean isCheckstyleSingleBatch() {
-		return _checkstyleSingleBatch;
-	}
-
 	public boolean isFailOnAutoFix() {
 		return _failOnAutoFix;
 	}
@@ -219,10 +213,6 @@ public class SourceFormatterArgs {
 
 	public void setCheckNames(List<String> checkNames) {
 		_checkNames = checkNames;
-	}
-
-	public void setCheckstyleSingleBatch(boolean checkstyleSingleBatch) {
-		_checkstyleSingleBatch = checkstyleSingleBatch;
 	}
 
 	public void setCommitCount(int commitCount) {
@@ -328,7 +318,6 @@ public class SourceFormatterArgs {
 	private String _baseDirName = BASE_DIR_NAME;
 	private List<String> _checkCategoryNames = new ArrayList<>();
 	private List<String> _checkNames = new ArrayList<>();
-	private boolean _checkstyleSingleBatch = CHECKSTYLE_SINGLE_BATCH;
 	private int _commitCount = COMMIT_COUNT;
 	private boolean _failOnAutoFix = FAIL_ON_AUTO_FIX;
 	private boolean _failOnHasWarning = FAIL_ON_HAS_WARNING;

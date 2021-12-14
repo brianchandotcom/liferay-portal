@@ -571,7 +571,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source-deprecated-api">
 		<antcall target="format-source-files">
-			<param name="checkstyle.single.batch" value="true" />
 			<param name="source.check.names" value="DeprecatedAPICheck" />
 		</antcall>
 	</target>
@@ -699,7 +698,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<jvmarg value="-Xss2048k" />
 					<jvmarg value="-Dsource.formatter.check.registry.in.test.classes=${source.formatter.check.registry.in.test.classes}" />
 					<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
-					<arg value="checkstyle.single.batch=${checkstyle.single.batch}" />
 					<arg value="commit.count=${source.formatter.commit.count}" />
 					<arg value="format.current.branch=${format.current.branch}" />
 					<arg value="format.latest.author=${format.latest.author}" />

@@ -51,5 +51,5 @@ AccountGroupDisplay accountGroupDisplay = (AccountGroupDisplay)row.getObject();
 		<liferay-ui:icon-delete
 			url="<%= deleteAccountGroupURL %>"
 		/>
-	<</c:if>
+	</c:if>
 </liferay-ui:icon-menu>

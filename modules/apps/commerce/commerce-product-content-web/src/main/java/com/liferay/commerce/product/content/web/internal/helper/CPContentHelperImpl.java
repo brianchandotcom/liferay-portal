@@ -51,6 +51,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -508,6 +509,22 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
+	public String getReplacementCommerceProductFriendlyURL(
+			long cProductId, String cpIntanceUuid, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			cProductId, cpIntanceUuid);
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return _cpDefinitionHelper.getFriendlyURL(
+			cpInstance.getCPDefinitionId(), themeDisplay);
+	}
+
+	@Override
 	public String getStockQuantity(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -809,6 +826,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference(
 		target = "(commerce.inventory.checker.target=CPInstanceOptionValueRel)"

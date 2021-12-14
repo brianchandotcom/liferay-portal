@@ -27,10 +27,12 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 String hideCssClass = "hide";
 long skuId = 0;
+long stockQuantity = 0;
 
 if (cpSku != null) {
 	hideCssClass = StringPool.BLANK;
 	skuId = cpSku.getCPInstanceId();
+	stockQuantity = Integer.valueOf(cpContentHelper.getStockQuantity(request));
 }
 %>
 
@@ -56,11 +58,24 @@ if (cpSku != null) {
 					<div class="col stock-quantity text-truncate-inline <%= hideCssClass %>">
 						<span class="text-truncate" data-text-cp-instance-stock-quantity>
 							<c:if test="<%= cpSku != null %>">
+								<c:if test="<%= cpSku.isDiscontinued() %>">
+									<span class="text-danger">
+										<%= LanguageUtil.get(request, "discontinued") %>
+									</span>
+									-
+								</c:if>
+
 								<%= LanguageUtil.format(request, "x-in-stock", cpContentHelper.getStockQuantity(request)) %>
 							</c:if>
 						</span>
 					</div>
 				</div>
+
+				<c:if test="<%= (cpSku != null) && cpSku.isDiscontinued() && (stockQuantity <= 0) %>">
+					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
+
+					<aui:button cssClass="btn btn-primary btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku.getReplacementCProductId(), cpSku.getReplacementCPInstanceUuid(), themeDisplay) %>" value="replacement-product" />
+				</c:if>
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-sku>
 					<span class="font-weight-semi-bold">

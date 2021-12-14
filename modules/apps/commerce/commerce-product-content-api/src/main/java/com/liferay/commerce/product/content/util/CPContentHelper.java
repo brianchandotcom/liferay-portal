@@ -123,6 +123,10 @@ public interface CPContentHelper {
 	public String getImageURL(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception;
 
+	public String getReplacementCommerceProductFriendlyURL(
+			long cProductId, String cpIntanceUuid, ThemeDisplay themeDisplay)
+		throws PortalException;
+
 	public String getStockQuantity(HttpServletRequest httpServletRequest)
 		throws Exception;
 

@@ -35,7 +35,13 @@ public interface CPSku {
 
 	public BigDecimal getPromoPrice();
 
+	public String getReplacementCPInstanceUuid();
+
+	public long getReplacementCProductId();
+
 	public String getSku();
+
+	public boolean isDiscontinued();
 
 	public boolean isPublished();
 

@@ -1,5 +1,55 @@
 definition {
 
+	macro assertDiagramSettingsType {
+		AssertElementPresent(
+			key_selectedType = "${settingsType}",
+			locator1 = "CommerceDiagrams#DIAGRAM_SETTINGS_SELECTED_TYPE");
+	}
+
+	macro assertPinToolTipInfo {
+		AssertElementPresent(
+			key_positionValue = "${positionNumber}",
+			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_POSITION");
+
+		AssertElementPresent(
+			key_linkedType = "${pinType}",
+			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_LINKED_TYPE");
+
+		AssertElementPresent(
+			key_quantity = "${quantity}",
+			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_QUANTITY");
+
+		if (isSet(inputItem)) {
+			AssertElementPresent(
+				key_inputItem = "${inputItem}",
+				locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_INPUT_GROUP_ITEM");
+		}
+	}
+
+	macro assertPinToolTipNotOpen {
+		AssertElementNotPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
+	}
+
+	macro assertPinToolTipOpens {
+		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
+
+		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
+
+		Click(
+			key_text = "Cancel",
+			locator1 = "Button#ANY_SECONDARY");
+	}
+
+	macro changeSettingsType {
+		SelectField.select(
+			selectFieldLabel = "Type",
+			selectFieldValue = "${settingsType}");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro useDragOnBackground {
 
 		// Verify the postion after mouse drag
@@ -91,6 +141,14 @@ definition {
 		else {
 			fail("The reset zoom position is not correct: ${actual_position} expected position: translate(0,0) scale(1) OR translate(0, 0) scale(1,1))");
 		}
+	}
+
+	macro viewPin {
+		Click(
+			key_pinNumber = "${pinNumber}",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+
+		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
 	}
 
 }

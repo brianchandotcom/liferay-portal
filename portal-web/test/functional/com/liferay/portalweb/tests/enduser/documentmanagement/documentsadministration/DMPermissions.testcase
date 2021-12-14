@@ -1430,9 +1430,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		LexiconCard.clickEllipsisItem(
-			card = "DM Document Title",
-			item = "Checkout");
+		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

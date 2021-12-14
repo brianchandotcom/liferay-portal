@@ -158,44 +158,6 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		return cpInstance.getCPInstanceId();
 	}
 
-	public long getCPInstanceReplacementId() throws PortalException {
-		CPInstance cpInstance = getCPInstance();
-
-		if (cpInstance == null) {
-			return 0;
-		}
-
-		CPInstance cpInstanceReplacement =
-			_cpInstanceHelper.fetchCPInstanceReplacement(
-				cpInstance.getReplacementCProductId(),
-				cpInstance.getReplacementCPInstanceUuid());
-
-		if (cpInstanceReplacement == null) {
-			return 0;
-		}
-
-		return cpInstanceReplacement.getCPInstanceId();
-	}
-
-	public String getCPInstanceReplacementLabel() throws PortalException {
-		CPInstance cpInstance = getCPInstance();
-
-		if (cpInstance == null) {
-			return StringPool.BLANK;
-		}
-
-		CPInstance cpInstanceReplacement =
-			_cpInstanceHelper.fetchCPInstanceReplacement(
-				cpInstance.getReplacementCProductId(),
-				cpInstance.getReplacementCPInstanceUuid());
-
-		if (cpInstanceReplacement == null) {
-			return StringPool.BLANK;
-		}
-
-		return cpInstanceReplacement.getSku();
-	}
-
 	public String getCPMeasurementUnitName(int type) {
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitLocalService.fetchPrimaryCPMeasurementUnit(
@@ -281,6 +243,44 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 				cpInstance.getCPInstanceId(), getCommerceCurrency());
 
 		return round(commerceMoney.getPrice());
+	}
+
+	public long getReplacementCPInstanceId() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		if (cpInstance == null) {
+			return 0;
+		}
+
+		CPInstance replacementCPInstance =
+			_cpInstanceHelper.fetchReplacementCPInstance(
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid());
+
+		if (replacementCPInstance == null) {
+			return 0;
+		}
+
+		return replacementCPInstance.getCPInstanceId();
+	}
+
+	public String getReplacementCPInstanceLabel() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		CPInstance replacementCPInstance =
+			_cpInstanceHelper.fetchReplacementCPInstance(
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid());
+
+		if (replacementCPInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return replacementCPInstance.getSku();
 	}
 
 	@Override

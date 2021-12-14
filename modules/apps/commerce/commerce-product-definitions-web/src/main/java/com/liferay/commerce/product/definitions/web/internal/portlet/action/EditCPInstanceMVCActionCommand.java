@@ -263,12 +263,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String replacementCPInstanceUuid = null;
 		long replacementCProductId = 0;
 
-		long cpInstanceReplacementId = ParamUtil.getLong(
-			actionRequest, "cpInstanceReplacementId");
+		long replacementCPInstanceId = ParamUtil.getLong(
+			actionRequest, "replacementCPInstanceId");
 
-		if (cpInstanceReplacementId > 0) {
+		if (replacementCPInstanceId > 0) {
 			CPInstance replacementCPInstance =
-				_cpInstanceService.fetchCPInstance(cpInstanceReplacementId);
+				_cpInstanceService.fetchCPInstance(replacementCPInstanceId);
 
 			if (replacementCPInstance != null) {
 				replacementCPInstanceUuid =

@@ -178,7 +178,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 
 			<div class="col">
 				<div class="form-group input-date-wrapper">
-					<label for="discontinuedDate"><liferay-ui:message key="requested-delivery-date" /></label>
+					<label for="discontinuedDate"><liferay-ui:message key="end-of-production-date" /></label>
 
 					<%
 					Date discontinuedDate = cpInstance.getDiscontinuedDate();
@@ -222,7 +222,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 
 		<div class="<%= replacementAutocompleteWrapperCssClasses %>" id="<portlet:namespace />replacementAutocompleteWrapper">
 			<div class="col">
-				<label class="control-label" for="cpInstanceReplacementId"><%= LanguageUtil.get(request, "replacement") %></label>
+				<label class="control-label" for="replacementCPInstanceId"><%= LanguageUtil.get(request, "replacement") %></label>
 
 				<div id="autocomplete-root"></div>
 			</div>
@@ -374,12 +374,12 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 	autocomplete.default('autocomplete', 'autocomplete-root', {
 		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
 		initialLabel:
-			'<%= cpInstanceDisplayContext.getCPInstanceReplacementLabel() %>',
+			'<%= cpInstanceDisplayContext.getReplacementCPInstanceLabel() %>',
 		initialValue:
-			'<%= cpInstanceDisplayContext.getCPInstanceReplacementId() %>',
+			'<%= cpInstanceDisplayContext.getReplacementCPInstanceId() %>',
 		inputId: 'replacementId',
 		inputName:
-			'<%= liferayPortletResponse.getNamespace() %>cpInstanceReplacementId',
+			'<%= liferayPortletResponse.getNamespace() %>replacementCPInstanceId',
 		itemsKey: 'id',
 		itemsLabel: 'sku',
 	});
@@ -390,7 +390,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 	const discontinuedDateInput = document.getElementById(
 		'<%= liferayPortletResponse.getNamespace() %>discontinuedDate'
 	);
-	const replacementIdWrapper = document.getElementById(
+	const replacementAutocompleteWrapper = document.getElementById(
 		'<%= liferayPortletResponse.getNamespace() %>replacementAutocompleteWrapper'
 	);
 
@@ -398,12 +398,12 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		if (event.target.checked) {
 			discontinuedDateInput.disabled = false;
 			discontinuedDateInput.classList.remove('disabled');
-			replacementIdWrapper.classList.remove('d-none');
+			replacementAutocompleteWrapper.classList.remove('d-none');
 		}
 		else {
 			discontinuedDateInput.disabled = true;
 			discontinuedDateInput.classList.add('disabled');
-			replacementIdWrapper.classList.add('d-none');
+			replacementAutocompleteWrapper.classList.add('d-none');
 		}
 	});
 </aui:script>

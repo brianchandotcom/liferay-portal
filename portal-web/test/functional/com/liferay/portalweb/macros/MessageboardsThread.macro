@@ -1235,6 +1235,12 @@ definition {
 			value1 = "${threadBody}");
 	}
 
+	macro viewBannedUserAuthenticationMessage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "You have been banned by the moderator.");
+	}
+
 	macro viewBBCodeNoXSS {
 		var key_threadBody = "${threadBody}";
 		var key_threadSubject = "${threadSubject}";

@@ -144,7 +144,9 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 					infoItemCapabilitiesProvider);
 			}
 
-			if (Validator.isNull(className)) {
+			if (Validator.isNull(className) ||
+				_serviceRegistrations.containsKey(className)) {
+
 				return infoItemCapabilitiesProvider;
 			}
 

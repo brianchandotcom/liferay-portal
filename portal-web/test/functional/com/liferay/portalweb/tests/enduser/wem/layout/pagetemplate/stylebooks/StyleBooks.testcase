@@ -781,4 +781,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140834. The user could select style book in master page when use public pages theme."
+	@priority = "4"
+	test SelectStyleBookInMasterPageWhenUsePublicPagesTheme {
+		property portal.release = "false";
+
+		task ("Add a public page and change it's theme to Minium") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "home");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Site.changeCurrentTheme(
+				pageName = "Public Pages",
+				themeName = "Minium");
+		}
+
+		task ("Add a private page and change it's theme to Speedwell") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "test");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Site.changeCurrentTheme(
+				pageName = "Private Pages",
+				themeName = "Speedwell");
+		}
+
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Change master page's theme to Minium") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Theme.configureLookAndFeelSpecificLook();
+
+			Theme.changeCurrentTheme(themeName = "Minium");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+		}
+
+		task ("Select style book via Page Design Options panel") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+		}
+	}
+
 }

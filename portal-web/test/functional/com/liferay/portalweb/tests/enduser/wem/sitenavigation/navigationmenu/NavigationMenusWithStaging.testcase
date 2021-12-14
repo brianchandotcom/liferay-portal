@@ -194,23 +194,19 @@ definition {
 		task ("Add the Display Page items to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				assetTitle = "Web Content Title",
-				item = "Display Page",
-				navItem = "Web Content");
+				item = "Web Content Article");
 
 			NavigationMenusAdmin.addItem(
 				assetTitle = "Blogs Entry Title",
-				item = "Display Page",
-				navItem = "Blogs");
+				item = "Blogs Entry");
 
 			NavigationMenusAdmin.addItem(
 				assetTitle = "Document Title",
-				item = "Display Page",
-				navItem = "Documents and Media");
+				item = "Document");
 
 			NavigationMenusAdmin.addItem(
 				assetTitle = "Category Name",
-				item = "Display Page",
-				navItem = "Categories");
+				item = "Category");
 		}
 
 		task ("View the Display Page items") {

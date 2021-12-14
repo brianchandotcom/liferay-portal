@@ -122,6 +122,14 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 						poshiProperties = GUtil.loadProperties(
 							poshiPropertiesFile);
+
+						File poshiExtPropertiesFile =
+							_getPoshiExtPropertiesFile(poshiPropertiesFile);
+
+						if (poshiExtPropertiesFile.exists()) {
+							poshiProperties.putAll(
+								GUtil.loadProperties(poshiExtPropertiesFile));
+						}
 					}
 
 					_configureTaskExecutePQLQuery(
@@ -463,6 +471,26 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	private File _getExpandedPoshiRunnerDir(Project project) {
 		return new File(project.getBuildDir(), "poshi-runner");
+	}
+
+	private File _getPoshiExtPropertiesFile(File poshiPropertiesFile) {
+		String fileName = poshiPropertiesFile.getName();
+
+		int pos = fileName.lastIndexOf('.');
+
+		if (pos <= 0) {
+			return new File(
+				poshiPropertiesFile.getParentFile(), fileName + "-ext");
+		}
+
+		String extension = fileName.substring(pos + 1);
+
+		String shortFileName = fileName.substring(
+			0, fileName.length() - extension.length() - 1);
+
+		return new File(
+			poshiPropertiesFile.getParentFile(),
+			shortFileName + "-ext." + extension);
 	}
 
 	private FileCollection _getPoshiRunnerClasspath(Project project) {

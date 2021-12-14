@@ -14,17 +14,24 @@ import React, {useState} from 'react';
 import '../../css/definition-builder/main.scss';
 import {DefinitionBuilderContextProvider} from './DefinitionBuilderContext';
 import DiagramBuilder from './diagram-builder/DiagramBuilder';
+import {defaultNodes} from './diagram-builder/components/nodes/utils';
 import UpperToolbar from './shared/components/toolbar/UpperToolbar';
 import SourceBuilder from './source-builder/SourceBuilder';
 
 export default function (props) {
+	const [elements, setElements] = useState(defaultNodes);
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [sourceView, setSourceView] = useState(false);
+	const [definitionTitle, setDefinitionTitle] = useState(props.title);
 	const defaultLanguageId = themeDisplay.getLanguageId();
 
 	const contextProps = {
 		defaultLanguageId,
+		definitionTitle,
+		elements,
 		selectedLanguageId,
+		setDefinitionTitle,
+		setElements,
 		setSelectedLanguageId,
 		setSourceView,
 		sourceView,
@@ -36,7 +43,7 @@ export default function (props) {
 				<UpperToolbar {...props} />
 
 				{sourceView ? (
-					<SourceBuilder />
+					<SourceBuilder version={props.version} />
 				) : (
 					<DiagramBuilder version={props.version} />
 				)}

@@ -18,6 +18,10 @@ apply plugin: "com.liferay.poshi.runner"
 apply plugin: "com.liferay.poshi.runner.resources.defaults"
 apply plugin: "com.liferay.source.formatter"
 
+dependencies {
+	poshiRunnerResources group: "com.liferay", name: "com.liferay.poshi.runner.resources", version: "1.0.11"
+}
+
 poshiRunner {
 	if (project.hasProperty("baseDir")) {
 		baseDir = project.getProperty("baseDir")
@@ -36,10 +40,6 @@ poshiRunnerResources {
 	baseName "default"
 }
 
-webdriverBinaries {
-	chromedriver "86.0.4240.22"
-}
-
 repositories {
 	mavenLocal()
 
@@ -48,6 +48,6 @@ repositories {
 	}
 }
 
-dependencies {
-	poshiRunnerResources group: "com.liferay", name: "com.liferay.poshi.runner.resources", version: "1.0.11"
+webdriverBinaries {
+	chromedriver "86.0.4240.22"
 }

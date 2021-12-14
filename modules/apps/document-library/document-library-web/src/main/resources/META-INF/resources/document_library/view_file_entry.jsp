@@ -179,6 +179,7 @@ FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelector
 
 folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
 folderItemSelectorCriterion.setFolderId(fileEntry.getFolderId());
+folderItemSelectorCriterion.setRepositoryId(fileEntry.getRepositoryId());
 folderItemSelectorCriterion.setSelectedFolderId(fileEntry.getFolderId());
 folderItemSelectorCriterion.setSelectedRepositoryId(fileEntry.getRepositoryId());
 

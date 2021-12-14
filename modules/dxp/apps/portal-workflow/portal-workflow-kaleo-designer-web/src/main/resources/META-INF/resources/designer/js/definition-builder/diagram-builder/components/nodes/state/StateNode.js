@@ -16,7 +16,7 @@ import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import BaseNode from '../BaseNode';
 
 export default function StateNode({
-	data: {description, label} = {},
+	data: {description, label, newNode} = {},
 	descriptionSidebar,
 	id,
 	...otherProps
@@ -39,6 +39,7 @@ export default function StateNode({
 			icon="circle"
 			id={id}
 			label={label}
+			newNode={newNode}
 			type="state"
 			{...otherProps}
 		/>

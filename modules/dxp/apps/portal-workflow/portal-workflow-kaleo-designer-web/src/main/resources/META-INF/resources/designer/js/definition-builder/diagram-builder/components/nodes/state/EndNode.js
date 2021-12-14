@@ -16,7 +16,7 @@ import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import BaseNode from '../BaseNode';
 
 export default function EndNode({
-	data: {description, label} = {},
+	data: {description, label, newNode} = {},
 	descriptionSidebar,
 	id,
 	...otherProps
@@ -39,6 +39,7 @@ export default function EndNode({
 			icon="flag-full"
 			id={id}
 			label={label}
+			newNode={newNode}
 			type="end"
 			{...otherProps}
 		/>

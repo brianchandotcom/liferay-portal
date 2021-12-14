@@ -24,6 +24,7 @@ export default function BaseNode({
 	icon,
 	id,
 	label,
+	newNode,
 	type,
 	...otherProps
 }) {
@@ -63,6 +64,18 @@ export default function BaseNode({
 		nodeLabel = label[defaultLanguageId];
 	}
 
+	if (newNode) {
+		setSelectedNode({
+			data: {
+				description,
+				label,
+				newNode: false,
+			},
+			id,
+			type,
+		});
+	}
+
 	return (
 		<div className="base-node">
 			{displayBorderArea && (
@@ -97,16 +110,12 @@ export default function BaseNode({
 				</div>
 
 				<div className="node-info">
-					<span
-						className="node-label truncate-container"
-						title={nodeLabel}
-					>
+					<span className="node-label truncate-container">
 						{nodeLabel}
 					</span>
 
 					<span
 						className={`node-description truncate-container ${descriptionColor}`}
-						title={descriptionSidebar ?? description}
 					>
 						{descriptionSidebar ?? description}
 					</span>

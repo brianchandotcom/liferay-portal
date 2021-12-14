@@ -1543,7 +1543,7 @@
   resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-4.3.1.tgz#35cde6128f6e2795b7e45378e8f115f596b6cdda"
   integrity sha512-95i+LRK3gPTiBc75lJsr9OwRNFdzaamSe3B5x+kHLHYr78qS/4WD5mkDJ+WYv3CY0jFFnROTNLl3x6zCRuDMxw==
 
-"@liferay/eslint-plugin@1.1.0", "@liferay/eslint-plugin@1.2.0":
+"@liferay/eslint-plugin@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@liferay/eslint-plugin/-/eslint-plugin-1.2.0.tgz#e82c7777e4761e6684fb1e6acd162748267459b7"
   integrity sha512-Y/aw2TrNDLSn/wG65mwlLrrf0G5NIyDYZi5XdGhUImMGIALwzVzwb2Y7h9L/Kd9icui5pYIG6I6fL8K8s+u99A==
@@ -1614,10 +1614,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@46.5.0":
-  version "46.5.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-46.5.0.tgz#1776dbc45d960da0f27e97445953896332056c30"
-  integrity sha512-fzgD8laZ7cj5baq4JWVQanNMdzqhsfZ8esE1B5eCG6Yl1iHQ2sJ4S+SaPLwNQ8AeIbz6dZUD3xvaghbs0rsVGA==
+"@liferay/npm-scripts@46.7.0":
+  version "46.7.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-46.7.0.tgz#6b344df5da7b56c1f3935e756d8e51935b88694e"
+  integrity sha512-nd+c1R+P4MXVvpiqsy4qfHCbAjbHhuBdATf0WKDW3zxY5Z2u+MsmZnWEUGbcTAi06JqAF56RJcLtXSCDsfXBVQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1629,7 +1629,7 @@
     "@babel/preset-env" "^7.4.2"
     "@babel/preset-react" "^7.8.3"
     "@babel/preset-typescript" "^7.10.4"
-    "@liferay/eslint-plugin" "1.1.0"
+    "@liferay/eslint-plugin" "1.2.0"
     "@liferay/jest-junit-reporter" "1.2.0"
     "@liferay/js-toolkit-core" "3.0.1"
     "@testing-library/dom" "^5.6.1"
@@ -1672,7 +1672,7 @@
     liferay-npm-bundler-plugin-namespace-packages "2.24.2"
     liferay-npm-bundler-plugin-replace-browser-modules "2.24.2"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.24.2"
-    liferay-theme-tasks "11.0.0"
+    liferay-theme-tasks "11.2.0"
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.11.2"
     minimist "^1.2.0"
@@ -9688,10 +9688,10 @@ liferay-npm-bundler@2.24.2:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-theme-tasks@11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-11.0.0.tgz#77d7b3965acd4fa5d239c2c1f503a8c1aee74a22"
-  integrity sha512-O/o5A69yBy7Ota42qA7x6gvArxEq24TYvnr7yzdKlvVWl6Ke/E8NZcKgsVScDfsfwKDNoUyc7eGfmn8f5a/9FQ==
+liferay-theme-tasks@11.2.0:
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-11.2.0.tgz#ad0acbe921efe09e1c0249ba63b72bef5d198d2e"
+  integrity sha512-qsQNLlb+bitDWAA7QnWhMHngVMJUt+4C/NLq1HoDpc+sutWUHmh7RXsD6W7XE4PZ399YthZsYAx8YRNw3gc4vA==
   dependencies:
     ansi-colors "^4.1.1"
     async "^2.6.1"

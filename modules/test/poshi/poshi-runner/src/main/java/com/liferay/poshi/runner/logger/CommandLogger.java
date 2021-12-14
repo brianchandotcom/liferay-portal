@@ -69,7 +69,7 @@ public final class CommandLogger {
 	}
 
 	public int getDetailsLinkId() {
-		return _detailsLinkId - 1;
+		return _detailsLinkId;
 	}
 
 	public void logExternalMethodCommand(

@@ -34,6 +34,7 @@ export default function ({
 		});
 
 		openSelectionModal({
+			iframeBodyCssClass: '',
 			onSelect: (selectedItem) => {
 				const data = {};
 

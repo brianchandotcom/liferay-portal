@@ -375,8 +375,6 @@ definition {
 			fieldList = "Custom Field,Custom Object",
 			tabName = "Field Tab");
 
-		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
-
 		ObjectAdmin.addTabRelationshipsOnLayout(
 			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
@@ -399,9 +397,7 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
-		CreateObject.assertEntryInCustomObject(entryCustomObject = "Entry A");
-
-		
+		CreateObject.assertEntrySelectedOnRelationshipField(entry = "Entry A");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"

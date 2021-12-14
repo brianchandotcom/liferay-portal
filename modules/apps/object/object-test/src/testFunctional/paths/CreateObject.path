@@ -146,8 +146,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>VIEW_CUSTOM_OBJECT_IN_FIELD_TAB</td>
-		<td>//input[contains(@name,'r_relationship_c_customObjectId') and contains(@value,'${key_entryCustomObject}')]</td>
+		<td>VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD</td>
+		<td>//input[contains(@name,'r_relationship_c_customObjectId') and contains(@value,'${key_entry}')]</td>
 		<td></td>
 	</tr>
 </tbody>

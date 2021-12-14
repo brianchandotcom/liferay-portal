@@ -1055,7 +1055,12 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${assetTitle}");
 
-		AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetTitle}");
+		if ("${displayTemplate}" == "Full Content") {
+			Click(locator1 = "AP#ASSET_DETAILS_LINK");
+		}
+		else {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetTitle}");
+		}
 
 		if ("${assetType}" == "Web Content Folder") {
 			AssertTextEquals.assertPartialText(

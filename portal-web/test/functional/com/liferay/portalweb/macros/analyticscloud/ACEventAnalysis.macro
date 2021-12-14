@@ -3,4 +3,18 @@ definition {
 	macro clickToAddEventButton {
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
+
+    macro viewEventAnalyseList {
+		for (var name : list "${eventList}") {
+			var key_buttonName = "${name}";
+
+            while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
+				ACEventAnalysis.searchEventAnalyse(searchItem = "${name}");
+			}
+
+			AssertTextEquals(
+				locator1 = "ACUtils#GENERIC_BUTTON",
+				value1 = "${name}");
+		}
+	}
 }

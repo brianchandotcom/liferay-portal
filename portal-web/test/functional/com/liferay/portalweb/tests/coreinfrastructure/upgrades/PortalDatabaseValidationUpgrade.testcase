@@ -7,10 +7,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades Core Infrastructure";
 
-	setUp {
-		SignIn.signIn();
-	}
-
 	@priority = "4"
 	test CompareUpgradedAndFreshDatabaseSchemas7310 {
 		property data.archive.type = "data-archive-portal";
@@ -27,8 +23,6 @@ definition {
 			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
-
-		User.firstLoginPG();
 
 		Portlet.shutdownServer();
 

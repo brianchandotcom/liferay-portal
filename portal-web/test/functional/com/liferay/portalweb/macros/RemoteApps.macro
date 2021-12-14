@@ -34,13 +34,6 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro assertTableEntryNameNotPresent {
-		AssertElementNotPresent(
-			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
-			value1 = "${entryName}");
-	}
-
 	macro addCustomElementAllFields {
 		LexiconEntry.gotoAdd();
 
@@ -157,24 +150,6 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro deleteRemoteApp {
-		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
-
-		Click(locator1 = "RemoteApps#REMOTE_TABLE_DELETE");
-	}
-
-	macro deleteRemoteAppAPI {
-		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
-
-		var remoteAppNameToBeRemoved = RemoteApps.getRemoteAppEntryName();
-
-		RemoteApps._deleteRemoteAppAPI();
-
-		RemoteApps.goToRemoteAppsPortlet();
-
-		RemoteApps.assertTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
-	}
-
 	macro getRemoteAppEntryName {
 		WaitForSPARefresh();
 
@@ -238,4 +213,5 @@ definition {
 			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE",
 			value1 = "${entryURL}");
 	}
+
 }

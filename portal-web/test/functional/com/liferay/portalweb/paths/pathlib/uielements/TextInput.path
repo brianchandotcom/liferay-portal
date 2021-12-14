@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>ANY_DISABLED</td>
-	<td>//div[contains(@class,'input-text-wrapper')][2]/label[contains(.,'${key_selectFieldLabel}')]//following-sibling::input[contains(@class,'disabled')]</td>
+	<td>//div[contains(@class,'input-text-wrapper')]/label[contains(.,'${key_selectFieldLabel}')]//following-sibling::input[contains(@class,'disabled')]</td>
 	<td></td>
 </tr>
 <tr>

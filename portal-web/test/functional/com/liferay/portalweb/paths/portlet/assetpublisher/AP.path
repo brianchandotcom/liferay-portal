@@ -126,6 +126,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_DETAILS_LINK</td>
+	<td>//div[contains(@class,'items')][.//span[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']]//following-sibling::div[contains(@class,'asset-details')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

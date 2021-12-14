@@ -34,7 +34,7 @@ export function FormBasicProductQuote({form}) {
 					</label>
 
 					<fieldset
-						className="d-flex flex-column spacer-3"
+						className="d-flex flex-column mb-4 spacer-3"
 						id="productQuote"
 					>
 						<Controller

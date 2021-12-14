@@ -23,9 +23,9 @@ export function ControlledInputWithMask({
 			name={name}
 			render={({field, fieldState}) => (
 				<InputWithMask
-					className={classNames({
+					className={`${classNames({
 						'd-none': !renderInput,
-					})}
+					})} mb-5`}
 					error={fieldState.error}
 					label={label}
 					renderActions={

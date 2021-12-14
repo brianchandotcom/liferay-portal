@@ -7,6 +7,7 @@ export function SquareFeatControlledInput({inputProps = {}, ...props}) {
 		<ControlledInputWithMask
 			{...props}
 			inputProps={{
+				className: 'mb-5',
 				suffix: ' ft²',
 				thousandSeparator: true,
 				...inputProps,

@@ -93,7 +93,7 @@ export function FormBusiness({form}) {
 
 				<LegalEntityControlledSelect
 					control={control}
-					inputProps={{className: 'mb-4'}}
+					inputProps={{className: 'mb-5'}}
 					label="Legal Entity"
 					name={setFormPath('legalEntity')}
 					rules={{

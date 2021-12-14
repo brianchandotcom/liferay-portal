@@ -57,7 +57,7 @@ export function BusinessInformationAddress() {
 				/>
 			</div>
 
-			<div className="d-flex flex-row justify-content-between mt-5">
+			<div className="d-flex flex-row justify-content-between my-5">
 				<div className="d-flex flex-grow-1">
 					<ControlledInput
 						control={control}

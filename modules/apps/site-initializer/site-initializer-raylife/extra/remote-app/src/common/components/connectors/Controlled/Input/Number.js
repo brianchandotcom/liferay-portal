@@ -7,7 +7,7 @@ export function NumberControlledInput({...props}) {
 		<ControlledInput
 			{...props}
 			inputProps={{
-				className: 'mb-4',
+				className: 'mb-5',
 				onWheel: (event) => event.target.blur(),
 				type: 'number',
 			}}

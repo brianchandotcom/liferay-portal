@@ -17,6 +17,8 @@ package com.liferay.site.navigation.admin.web.internal.util;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -28,6 +30,7 @@ import com.liferay.site.navigation.util.comparator.SiteNavigationMenuCreateDateC
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Pavel Savinov
@@ -92,16 +95,44 @@ public class SiteNavigationMenuPortletUtil {
 					"siteNavigationMenuItemId", siteNavigationMenuItemId
 				).put(
 					"title",
-					siteNavigationMenuItemType.getTitle(
-						siteNavigationMenuItem, themeDisplay.getLocale())
+					() -> {
+						if (siteNavigationMenuItemType != null) {
+							return siteNavigationMenuItemType.getTitle(
+								siteNavigationMenuItem,
+								themeDisplay.getLocale());
+						}
+
+						return siteNavigationMenuItem.getName();
+					}
 				).put(
 					"type",
-					siteNavigationMenuItemType.getSubtitle(
-						siteNavigationMenuItem, themeDisplay.getLocale())
+					() -> {
+						if (siteNavigationMenuItemType != null) {
+							return siteNavigationMenuItemType.getSubtitle(
+								siteNavigationMenuItem,
+								themeDisplay.getLocale());
+						}
+
+						return _getDefaultTypeLabel(
+							themeDisplay.getLocale(),
+							siteNavigationMenuItem.getType());
+					}
 				));
 		}
 
 		return siteNavigationMenuItemsJSONArray;
+	}
+
+	private static String _getDefaultTypeLabel(Locale locale, String type) {
+		String typeLabel = ResourceActionsUtil.getModelResource(locale, type);
+
+		if (typeLabel.startsWith(
+				ResourceActionsUtil.getModelResourceNamePrefix())) {
+
+			return LanguageUtil.get(locale, type);
+		}
+
+		return typeLabel;
 	}
 
 }

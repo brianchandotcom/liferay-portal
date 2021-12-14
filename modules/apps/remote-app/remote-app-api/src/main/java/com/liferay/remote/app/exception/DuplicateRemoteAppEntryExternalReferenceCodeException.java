@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.remote.app.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateRemoteAppEntryExternalReferenceCodeException extends PortalException {
+public class DuplicateRemoteAppEntryExternalReferenceCodeException
+	extends PortalException {
 
 	public DuplicateRemoteAppEntryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateRemoteAppEntryExternalReferenceCodeException extends Porta
 		super(msg);
 	}
 
-	public DuplicateRemoteAppEntryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateRemoteAppEntryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateRemoteAppEntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateRemoteAppEntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

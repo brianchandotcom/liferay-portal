@@ -44,10 +44,10 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, String description, String externalReferenceCode,
-			String friendlyURLMapping, boolean instanceable,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			String customElementURLs, String description,
+			String externalReferenceCode, String friendlyURLMapping,
+			boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -55,8 +55,9 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 
 		return remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			getUserId(), customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, description, externalReferenceCode, friendlyURLMapping, instanceable,
-			nameMap, portletCategoryName, properties, sourceCodeURL);
+			customElementURLs, description, externalReferenceCode,
+			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+			properties, sourceCodeURL);
 	}
 
 	@Override

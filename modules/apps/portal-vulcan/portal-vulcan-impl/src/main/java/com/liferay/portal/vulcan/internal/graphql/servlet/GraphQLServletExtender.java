@@ -72,6 +72,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextPr
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
+import com.liferay.portal.vulcan.list.type.ListEntry;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -790,6 +791,19 @@ public class GraphQLServletExtender {
 		return graphQLArgumentBuilder.build();
 	}
 
+	private GraphQLInputObjectField _addInputField(
+		GraphQLInputType type, String name) {
+
+		GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
+			GraphQLInputObjectField.newInputObjectField();
+
+		return graphQLInputObjectFieldBuilder.name(
+			name
+		).type(
+			type
+		).build();
+	}
+
 	private void _collectObjectFields(
 		Function<ServletData, Object> function,
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
@@ -1135,6 +1149,7 @@ public class GraphQLServletExtender {
 			GraphQLSchema.Builder graphQLSchemaBuilder =
 				GraphQLSchema.newSchema();
 
+			_registerCommonTypes(processingElementsContainer);
 			_registerGraphQLDTOContributors(
 				companyId, graphQLSchemaBuilder, processingElementsContainer,
 				mutationGraphQLObjectTypeBuilder,
@@ -1565,7 +1580,8 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
-		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
+		GraphQLDTOContributor<?, ?> graphQLDTOContributor,
+		Map<String, GraphQLType> graphQLTypes) {
 
 		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
 			new GraphQLInputObjectType.Builder();
@@ -1576,22 +1592,29 @@ public class GraphQLServletExtender {
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-			GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
-				GraphQLInputObjectField.newInputObjectField();
+			GraphQLInputType graphQLInputType;
+
+			if (Objects.equals(
+					ListEntry.class, graphQLDTOProperty.getTypeClass())) {
+
+				graphQLInputType = (GraphQLInputType)graphQLTypes.get(
+					"InputListEntry");
+			}
+			else {
+				graphQLInputType = _toGraphQLScalarType(
+					graphQLDTOProperty.getTypeClass());
+			}
 
 			graphQLInputObjectTypeBuilder.field(
-				graphQLInputObjectFieldBuilder.name(
-					graphQLDTOProperty.getName()
-				).type(
-					_toGraphQLScalarType(graphQLDTOProperty.getTypeClass())
-				).build());
+				_addInputField(graphQLInputType, graphQLDTOProperty.getName()));
 		}
 
 		return graphQLInputObjectTypeBuilder.build();
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
-		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
+		GraphQLDTOContributor<?, ?> graphQLDTOContributor,
+		Map<String, GraphQLType> graphQLTypes) {
 
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
 			new GraphQLObjectType.Builder();
@@ -1603,10 +1626,21 @@ public class GraphQLServletExtender {
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
+			GraphQLOutputType graphQLOutputType;
+
+			if (Objects.equals(
+					ListEntry.class, graphQLDTOProperty.getTypeClass())) {
+
+				graphQLOutputType = (GraphQLOutputType)graphQLTypes.get(
+					ListEntry.class.getSimpleName());
+			}
+			else {
+				graphQLOutputType = _toGraphQLScalarType(
+					graphQLDTOProperty.getTypeClass());
+			}
+
 			graphQLObjectTypeBuilder.field(
-				_addField(
-					_toGraphQLScalarType(graphQLDTOProperty.getTypeClass()),
-					graphQLDTOProperty.getName()));
+				_addField(graphQLOutputType, graphQLDTOProperty.getName()));
 		}
 
 		return graphQLObjectTypeBuilder.build();
@@ -1727,6 +1761,43 @@ public class GraphQLServletExtender {
 		return Boolean.TRUE.equals(_getGraphQLFieldValue(method));
 	}
 
+	private void _registerCommonTypes(
+		ProcessingElementsContainer processingElementsContainer) {
+
+		Map<String, GraphQLType> typeRegistry =
+			processingElementsContainer.getTypeRegistry();
+
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+			new GraphQLObjectType.Builder();
+
+		typeRegistry.put(
+			"ListEntry",
+			graphQLObjectTypeBuilder.name(
+				"ListEntry"
+			).field(
+				_addField(Scalars.GraphQLString, "key")
+			).field(
+				_addField(Scalars.GraphQLString, "name")
+			).field(
+				_addField(_mapGraphQLScalarType, "name_i18n")
+			).build());
+
+		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
+			new GraphQLInputObjectType.Builder();
+
+		typeRegistry.put(
+			"InputListEntry",
+			graphQLInputObjectTypeBuilder.name(
+				"InputListEntry"
+			).field(
+				_addInputField(Scalars.GraphQLString, "key")
+			).field(
+				_addInputField(Scalars.GraphQLString, "name")
+			).field(
+				_addInputField(_mapGraphQLScalarType, "name_i18n")
+			).build());
+	}
+
 	private void _registerGraphQLDTOContributor(
 		GraphQLDTOContributor graphQLDTOContributor,
 		GraphQLSchema.Builder graphQLSchemaBuilder,
@@ -1737,8 +1808,11 @@ public class GraphQLServletExtender {
 
 		// Create
 
+		Map<String, GraphQLType> graphQLTypes =
+			processingElementsContainer.getTypeRegistry();
+
 		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
-			graphQLDTOContributor);
+			graphQLDTOContributor, graphQLTypes);
 
 		String resourceName = graphQLDTOContributor.getResourceName();
 
@@ -1747,7 +1821,7 @@ public class GraphQLServletExtender {
 		List<GraphQLArgument> graphQLArguments = new ArrayList<>();
 
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
-			graphQLDTOContributor);
+			graphQLDTOContributor, graphQLTypes);
 
 		graphQLArguments.add(
 			_addGraphQLArgument(graphQLInputType, resourceName));
@@ -1818,8 +1892,6 @@ public class GraphQLServletExtender {
 
 		// List
 
-		Map<String, GraphQLType> graphQLTypes =
-			processingElementsContainer.getTypeRegistry();
 		String listName = StringUtil.lowerCaseFirstLetter(
 			TextFormatter.formatPlural(resourceName));
 

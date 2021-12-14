@@ -1,32 +1,30 @@
 definition {
 
 	macro typeAllPropertyInfoFields {
-
-        Click(
+		Click(
 			field = "Do you own the building at Address?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "3");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.buildingSquareFeetOccupied",
-            value = "1,000 ft²");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "1,000 ft²");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.totalBuildingSquareFeet",
-            value = "800 ft²");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.totalBuildingSquareFeet",
+			value = "800 ft²");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.yearBuilding",
-            value = "2015");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.yearBuilding",
+			value = "2015");
 
-        Click(
+		Click(
 			field = "Is this the primary location where you conduct business?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-    }
+	}
 
 	macro typePropertyInfoFields {
 		Type(
@@ -35,35 +33,33 @@ definition {
 	}
 
 	macro viewPropertyInfo {
-
-        AssertElementPresent(
-            field = "Do you own the building at Address?",
+		AssertElementPresent(
+			field = "Do you own the building at Address?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			label = "property.stories",
 			locator1 = "Raylife#FORMS_VALUE",
 			value = "3");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			label = "property.buildingSquareFeetOccupied",
 			locator1 = "Raylife#FORMS_VALUE",
 			value = "1,000 ft²");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			label = "property.totalBuildingSquareFeet",
 			locator1 = "Raylife#FORMS_VALUE",
 			value = "800 ft²");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			label = "property.yearBuilding",
 			locator1 = "Raylife#FORMS_VALUE",
 			value = "2015");
 
-        AssertElementPresent(
-            field = "Is this the primary location where you conduct business?",
+		AssertElementPresent(
+			field = "Is this the primary location where you conduct business?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-    }
+	}
 
 }

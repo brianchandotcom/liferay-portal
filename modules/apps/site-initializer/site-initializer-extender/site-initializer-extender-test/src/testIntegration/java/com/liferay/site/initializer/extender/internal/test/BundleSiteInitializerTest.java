@@ -53,6 +53,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -196,6 +197,15 @@ public class BundleSiteInitializerTest {
 			if (objectDefinition2 != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					objectDefinition2.getObjectDefinitionId());
+			}
+
+			ObjectDefinition objectDefinition3 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_TestObjectDefinition3");
+
+			if (objectDefinition3 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition3.getObjectDefinitionId());
 			}
 
 			bundle.uninstall();
@@ -596,26 +606,41 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectEntries(group, objectDefinition1);
+		_assertObjectEntries(0, group.getGroupId(), objectDefinition1);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				group.getCompanyId(), "C_TestObjectDefinition2");
 
+		Assert.assertEquals(objectDefinition2.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition2.isSystem(), false);
+
+		_assertObjectEntries(0, group.getGroupId(), objectDefinition2);
+
+		ObjectDefinition objectDefinition3 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				group.getCompanyId(), "C_TestObjectDefinition3");
+
+		Assert.assertEquals(objectDefinition3.isSystem(), false);
+		Assert.assertEquals(
+			objectDefinition3.getScope(),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		Assert.assertEquals(
+			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
+
+		_assertObjectEntries(5, 0, objectDefinition3);
 	}
 
 	private void _assertObjectEntries(
-			Group group, ObjectDefinition objectDefinition)
+			int expected, long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		Assert.assertEquals(
-			0,
+			expected,
 			_objectEntryLocalService.getObjectEntriesCount(
-				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
+				groupId, objectDefinition.getObjectDefinitionId()));
 	}
 
 	private void _assertObjectRelationships(

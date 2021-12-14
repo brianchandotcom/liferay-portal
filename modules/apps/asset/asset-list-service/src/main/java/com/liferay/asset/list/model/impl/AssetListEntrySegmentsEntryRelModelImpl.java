@@ -111,10 +111,10 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		"drop table AssetListEntrySegmentsEntryRel";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY assetListEntrySegmentsEntryRel.priority ASC";
+		" ORDER BY assetListEntrySegmentsEntryRel.assetListEntrySegmentsEntryRelId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY AssetListEntrySegmentsEntryRel.priority ASC";
+		" ORDER BY AssetListEntrySegmentsEntryRel.alEntrySegmentsEntryRelId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -157,7 +157,8 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long ASSETLISTENTRYSEGMENTSENTRYRELID_COLUMN_BITMASK =
+		32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -841,23 +842,17 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 	public int compareTo(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
 
-		int value = 0;
+		long primaryKey = assetListEntrySegmentsEntryRel.getPrimaryKey();
 
-		if (getPriority() < assetListEntrySegmentsEntryRel.getPriority()) {
-			value = -1;
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
 		}
-		else if (getPriority() > assetListEntrySegmentsEntryRel.getPriority()) {
-			value = 1;
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
 		}
 		else {
-			value = 0;
+			return 0;
 		}
-
-		if (value != 0) {
-			return value;
-		}
-
-		return 0;
 	}
 
 	@Override

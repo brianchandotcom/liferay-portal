@@ -509,7 +509,6 @@ definition {
 			vocabularyName = "Stage");
 
 		static var audienceId1 = "${audienceCategory}";
-
 		static var stageId1 = "${stageCategory}";
 
 		return "${audienceId1}";

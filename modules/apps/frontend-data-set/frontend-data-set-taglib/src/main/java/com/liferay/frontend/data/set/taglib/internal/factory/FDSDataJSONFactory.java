@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.internal;
+package com.liferay.frontend.data.set.taglib.internal.factory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import com.liferay.frontend.data.set.FDSDataJSONFactory;
+import com.liferay.frontend.data.set.model.FDSDataRow;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.data.set.provider.FDSActionProviderRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -36,9 +36,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(service = FDSDataJSONFactory.class)
-public class FDSDataJSONFactoryImpl implements FDSDataJSONFactory {
+public class FDSDataJSONFactory {
 
-	@Override
 	public String create(
 			long groupId, String tableName, List<Object> items,
 			HttpServletRequest httpServletRequest)
@@ -50,7 +49,6 @@ public class FDSDataJSONFactoryImpl implements FDSDataJSONFactory {
 		return _objectMapper.writeValueAsString(fdsDataRows);
 	}
 
-	@Override
 	public String create(
 			long groupId, String tableName, List<Object> items, int itemsCount,
 			HttpServletRequest httpServletRequest)

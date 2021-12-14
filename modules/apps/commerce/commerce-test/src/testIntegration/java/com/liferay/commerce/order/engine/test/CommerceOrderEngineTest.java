@@ -1072,6 +1072,9 @@ public class CommerceOrderEngineTest {
 				"should be processing"
 		);
 
+		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			_commerceOrder, _user.getUserId());
+
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_ON_HOLD,
 			_user.getUserId());

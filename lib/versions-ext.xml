@@ -3277,18 +3277,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/xuggle-xuggler-noarch.jar</file-name>
-				<version>5.4</version>
-				<project-name>Xuggler</project-name>
-				<project-url>http://www.xuggle.com</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/xz.jar</file-name>
 				<version>1.8</version>
 				<project-name>XZ</project-name>

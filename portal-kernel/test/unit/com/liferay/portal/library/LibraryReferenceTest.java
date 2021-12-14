@@ -139,6 +139,10 @@ public class LibraryReferenceTest {
 	@Test
 	public void testLibDependencyJarsInVersionsExt() {
 		for (String jar : _libDependencyJars) {
+			if (_excludeJars.contains(jar)) {
+				continue;
+			}
+
 			Assert.assertTrue(
 				_VERSIONS_EXT_FILE_NAME + " is missing a reference to " + jar,
 				_versionsExtJars.contains(jar));

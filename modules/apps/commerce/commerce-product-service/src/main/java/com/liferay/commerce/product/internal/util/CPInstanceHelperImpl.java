@@ -100,6 +100,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
+	public CPInstance fetchCPInstanceReplacement(
+			long cProductId, String cpInstanceUUID)
+		throws PortalException {
+
+		return _cpInstanceLocalService.fetchCProductInstance(
+			cProductId, cpInstanceUUID);
+	}
+
+	@Override
 	public List<CPDefinitionOptionValueRel> filterCPDefinitionOptionValueRels(
 			long cpDefinitionOptionRelId,
 			List<Long> skuCombinationCPDefinitionOptionValueRelIds)

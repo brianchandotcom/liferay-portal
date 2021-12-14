@@ -43,6 +43,10 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, String serializedDDMFormValues)
 		throws PortalException;
 
+	public CPInstance fetchCPInstanceReplacement(
+			long cProductId, String cpInstanceUUID)
+		throws PortalException;
+
 	public List<CPDefinitionOptionValueRel> filterCPDefinitionOptionValueRels(
 			long cpDefinitionOptionRelId,
 			List<Long> skuCombinationCPDefinitionOptionValueRelIds)

@@ -22,6 +22,7 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
+long cpInstanceReplacementId = cpInstanceDisplayContext.getCPInstanceReplacementId();
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
 String commerceCurrencyCode = cpInstanceDisplayContext.getCommerceCurrencyCode();
 
@@ -166,7 +167,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	</commerce-ui:panel>
 
 	<commerce-ui:panel
-		elementClasses="mb-3"
+		elementClasses="pb-5"
 		title='<%= LanguageUtil.get(request, "end-of-life") %>'
 	>
 		<div class="row">
@@ -181,7 +182,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 		<div class="row">
 			<div class="col">
-				<label class="control-label" for="skuId"><%= LanguageUtil.get(request, "replacement") %></label>
+				<label class="control-label" for="cpInstanceReplacementId"><%= LanguageUtil.get(request, "replacement") %></label>
 
 				<div id="autocomplete-root"></div>
 			</div>
@@ -343,9 +344,9 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	autocomplete.default('autocomplete', 'autocomplete-root', {
 		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
 		initialLabel: '<%= StringPool.BLANK %>',
-		initialValue: '<%= cpInstanceId %>',
-		inputId: 'skuId',
-		inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
+		initialValue: '<%= cpInstanceReplacementId %>',
+		inputId: 'replacementId',
+		inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceReplacementId',
 		itemsKey: 'id',
 		itemsLabel: 'sku',
 		onValueUpdated: function (value) {

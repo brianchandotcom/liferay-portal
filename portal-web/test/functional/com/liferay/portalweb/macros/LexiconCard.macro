@@ -10,16 +10,6 @@ definition {
 			locator1 = "Card#CARD_CHECKBOX");
 	}
 
-	macro checkCardShortcutCheckbox {
-		Click.clickNoWaitForVisible(
-			key_card = "${card}",
-			locator1 = "Card#CARD_SHORTCUT_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			key_card = "${card}",
-			locator1 = "Card#CARD_SHORTCUT_CHECKBOX");
-	}
-
 	macro clickCard {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -121,16 +111,6 @@ definition {
 		Click(
 			key_card = "${card}",
 			locator1 = "Card#CARD_ELLIPSIS");
-
-		AssertElementNotPresent(
-			key_menuItem = "${item}",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-	}
-
-	macro viewMenuItemNotPresentOnCardShortcut {
-		Click(
-			key_card = "${card}",
-			locator1 = "Card#CARD_SHORTCUT_ELLIPSIS");
 
 		AssertElementNotPresent(
 			key_menuItem = "${item}",

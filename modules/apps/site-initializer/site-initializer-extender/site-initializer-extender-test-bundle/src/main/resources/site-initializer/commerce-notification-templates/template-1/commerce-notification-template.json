@@ -1,5 +1,4 @@
 {
-	"action": "create",
 	"description": "This is a description for Test Commerce Notification Template.",
 	"enabled": true,
 	"from": "test-integration@liferay.com",
@@ -7,9 +6,9 @@
 		"en-US": "Test Integration"
 	},
 	"name": "Test Commerce Notification Template",
-	"objectDefinitionName": "C_TestBundleSiteInitializer",
 	"subject": {
 		"en-US": "This is a subject for Test Commerce Notification Template"
 	},
-	"to": "test@liferay.com"
+	"to": "test@liferay.com",
+	"type": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]#create"
 }

@@ -1148,8 +1148,12 @@ public class SourceFormatterUtil {
 			return mergedJSONObject;
 		}
 
-		if ((jsonArray1 == null) || (jsonArray2 == null)) {
+		if (jsonArray1 == null) {
 			return mergedJSONObject.put(name, jsonArray2);
+		}
+
+		if (jsonArray2 == null) {
+			return mergedJSONObject.put(name, jsonArray1);
 		}
 
 		for (int i = 0; i < jsonArray2.length(); i++) {

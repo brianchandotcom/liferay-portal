@@ -17,7 +17,7 @@ import ClayLayout from '@clayui/layout';
 import ClayToolbar from '@clayui/toolbar';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {getAvailableLocalesObject} from '../../../util/availableLocales';
@@ -25,20 +25,19 @@ import {getAvailableLocalesObject} from '../../../util/availableLocales';
 export default function UpperToolbar({
 	displayNames,
 	languageIds,
-	title,
 	translations,
 	version,
 }) {
 	const {
 		defaultLanguageId,
+		definitionTitle,
 		selectedLanguageId,
+		setDefinitionTitle,
 		setSelectedLanguageId,
 		setSourceView,
 		sourceView,
 	} = useContext(DefinitionBuilderContext);
 	const inputRef = useRef(null);
-
-	const [definitionTitle, setDefinitionTitle] = useState(title);
 
 	const availableLocales = getAvailableLocalesObject(
 		displayNames,
@@ -49,7 +48,6 @@ export default function UpperToolbar({
 		if (id) {
 			setSelectedLanguageId(id);
 		}
-		inputRef?.current.focus();
 	};
 
 	const onInputBlur = () => {

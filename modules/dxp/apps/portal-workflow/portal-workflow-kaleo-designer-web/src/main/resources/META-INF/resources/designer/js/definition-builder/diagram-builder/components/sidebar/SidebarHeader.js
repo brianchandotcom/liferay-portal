@@ -14,13 +14,13 @@ import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import {getModalInfo} from './utils';
 
 export default function SidebarHeader({backButtonFunction = () => {}, title}) {
-	const {selectedNode, setElements, setSelectedNode} = useContext(
-		DiagramBuilderContext
-	);
+	const {setElements} = useContext(DefinitionBuilderContext);
+	const {selectedNode, setSelectedNode} = useContext(DiagramBuilderContext);
 	const [
 		showDeleteConfirmationModal,
 		setShowDeleteConfirmationModal,

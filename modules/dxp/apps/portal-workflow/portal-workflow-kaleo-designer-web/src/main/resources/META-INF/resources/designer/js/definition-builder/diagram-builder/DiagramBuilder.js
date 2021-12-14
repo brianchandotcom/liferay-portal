@@ -26,7 +26,7 @@ import ReactFlow, {
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
-import {defaultNodes, nodeTypes} from './components/nodes/utils';
+import {nodeTypes} from './components/nodes/utils';
 import Sidebar from './components/sidebar/Sidebar';
 import {isIdDuplicated} from './components/sidebar/utils';
 
@@ -60,12 +60,14 @@ const isPositionAvailable = (elements, newElementPosition) => {
 };
 
 export default function DiagramBuilder({version}) {
-	const {defaultLanguageId, selectedLanguageId} = useContext(
-		DefinitionBuilderContext
-	);
+	const {
+		defaultLanguageId,
+		elements,
+		selectedLanguageId,
+		setElements,
+	} = useContext(DefinitionBuilderContext);
 	const reactFlowWrapperRef = useRef(null);
 	const [availableArea, setAvailableArea] = useState(null);
-	const [elements, setElements] = useState(defaultNodes);
 	const [reactFlowInstance, setReactFlowInstance] = useState(null);
 	const [selectedNode, setSelectedNode] = useState(null);
 	const [selectedNodeNewId, setSelectedNodeNewId] = useState(null);
@@ -117,7 +119,7 @@ export default function DiagramBuilder({version}) {
 
 			setAvailableArea(null);
 		},
-		[elements, reactFlowInstance]
+		[elements, reactFlowInstance, setElements]
 	);
 
 	const onLoad = (reactFlowInstance) => {

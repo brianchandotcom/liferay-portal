@@ -13,15 +13,39 @@
 import ClayLayout from '@clayui/layout';
 import ClayToolbar from '@clayui/toolbar';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {isNode} from 'react-flow-renderer';
+
+import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
+import {xmlNamespace} from './constants';
+import {serializeDefinition} from './serializeUtil';
 
 const config = {
 	tabSpaces: 4,
 	toolbar: [['Source']],
 };
 
-export default function SourceBuilder() {
+export default function SourceBuilder({version}) {
+	const {definitionTitle, elements} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
+	const [currentEditor, setCurrentEditor] = useState(null);
+
+	useEffect(() => {
+		if (elements) {
+			const metada = {
+				description: '',
+				name: definitionTitle,
+				version,
+			};
+			const nodes = elements.filter(isNode);
+
+			const xmlContent = serializeDefinition(xmlNamespace, metada, nodes);
+
+			if (xmlContent && currentEditor) {
+				currentEditor.setData(xmlContent);
+			}
+		}
+	}, [currentEditor, definitionTitle, elements, version]);
 
 	return (
 		<>
@@ -37,7 +61,11 @@ export default function SourceBuilder() {
 
 			<Editor
 				config={config}
-				onInstanceReady={({editor}) => editor.setMode('source')}
+				onInstanceReady={({editor}) => {
+					setCurrentEditor(editor);
+
+					editor.setMode('source');
+				}}
 				ref={editorRef}
 			/>
 		</>

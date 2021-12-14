@@ -150,52 +150,6 @@ a {
 	padding-top: calc(var(--spacer-1) * 2);
 }
 
-/*Card Link*/
-
-.card-link {
-	color: var(--body-color);
-	font-weight: inherit;
-}
-.card-link:hover {
-	text-decoration: none !important;
-}
-.card-link:hover .product-card {
-	box-shadow: var(--box-shadow);
-	color: var(--gray-900);
-}
-
-/*Card*/
-
-.product-card {
-	background-color: var(--white);
-	border-radius: 8px;
-	box-shadow: var(--box-shadow-sm);
-	font-size: var(--font-size-base);
-	padding: 0 var(--spacer-4) var(--spacer-4);
-}
-.product-card .product-reference {
-	color: var(--gray-600);
-	margin-bottom: var(--spacer-1);
-}
-.product-card .product-card-label {
-	font-weight: var(--font-weight-bold);
-}
-.product-card .product-card-status {
-	font-weight: var(--font-weight-bold);
-	margin-top: var(--spacer-3);
-}
-.product-card .product-card-status img {
-	margin-right: var(--spacer-2);
-	transform: translateY(-1.5px);
-}
-.product-card:before {
-	background-color: var(--primary);
-	content: '';
-	display: block;
-	height: 8px;
-	margin-bottom: calc(var(--spacer-1) * 6);
-	width: 64px;
-}
 /*Icon List*/
 
 .icon-list li {

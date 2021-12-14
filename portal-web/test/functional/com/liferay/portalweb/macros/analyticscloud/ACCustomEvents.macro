@@ -201,4 +201,13 @@ definition {
 			locator1 = "Button#ANY_DISABLED");
 	}
 
+	macro unblockAllCustomEvents {
+		var key_actionButton = "Unblock";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "Unblock Events");
+	}
 }

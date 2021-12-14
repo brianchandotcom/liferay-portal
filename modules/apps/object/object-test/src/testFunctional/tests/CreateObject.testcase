@@ -3625,12 +3625,45 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141614 CanViewObjectEntryTitleDoubleOnRelationshipField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Double",
+			fieldName = "customObjectField",
+			fieldType = "Double",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "Double");
+
+		Button.clickSave();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "12.34");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "12.34");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Integer type is displayed on the Relationship field when adding an entry"

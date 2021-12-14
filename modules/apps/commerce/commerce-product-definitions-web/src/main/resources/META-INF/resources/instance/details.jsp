@@ -166,6 +166,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	</commerce-ui:panel>
 
 	<commerce-ui:panel
+		elementClasses="mb-3"
 		title='<%= LanguageUtil.get(request, "end-of-life") %>'
 	>
 		<div class="row">
@@ -340,22 +341,20 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	var deleteButton = document.getElementById('remove-sku-button');
 
 	autocomplete.default('autocomplete', 'autocomplete-root', {
-	apiUrl:
-		'/o/headless-commerce-admin-catalog/v1.0/skus',
-	initialLabel: '<%= StringPool.BLANK %>',
-	initialValue: '<%= cpInstanceId %>',
-	inputId: 'skuId',
-	inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
-	itemsKey: 'id',
-	itemsLabel: 'sku',
-	onValueUpdated: function (value) {
-		if (value) {
-			deleteButton.disabled = false;
-		}
-		else {
-			deleteButton.disabled = true;
-		}
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
+		initialLabel: '<%= StringPool.BLANK %>',
+		initialValue: '<%= cpInstanceId %>',
+		inputId: 'skuId',
+		inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
+		itemsKey: 'id',
+		itemsLabel: 'sku',
+		onValueUpdated: function (value) {
+			if (value) {
+				deleteButton.disabled = false;
+			}
+			else {
+				deleteButton.disabled = true;
+			}
 		},
 	});
-
 </aui:script>

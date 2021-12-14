@@ -336,7 +336,7 @@ public class BundleSiteInitializerTest {
 		// TODO Fix and enable test
 
 		if (false) {
-			_assertCommerceNotificationTemplate(commerceChannel, group);
+			_assertCommerceNotificationTemplate(commerceChannel);
 		}
 	}
 
@@ -352,18 +352,16 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCommerceNotificationTemplate(
-			CommerceChannel commerceChannel, Group group)
+			CommerceChannel commerceChannel)
 		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				group.getCompanyId(), "C_TestBundleSiteInitializer");
 
 		List<CommerceNotificationTemplate> commerceNotificationTemplates =
 			_commerceNotificationTemplateLocalService.
 				getCommerceNotificationTemplates(
 					commerceChannel.getGroupId(),
-					objectDefinition.getClassName() + "#create", true);
+					"com.liferay.object.model.ObjectDefinition#" +
+						"[$OBJECT_DEFINITION_ID:TestObjectDefinition1]#create",
+					true);
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
 			commerceNotificationTemplates.get(0);

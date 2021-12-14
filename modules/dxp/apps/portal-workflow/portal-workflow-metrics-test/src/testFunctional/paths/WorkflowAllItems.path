@@ -372,7 +372,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_FILTER_TAB_NAME</td>
-	<td>//li[contains(@class,'tbar-item')]//*[contains(text(),'${key_value}')]</td>
+	<td>//div[contains(@class,'label-section')]//*[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

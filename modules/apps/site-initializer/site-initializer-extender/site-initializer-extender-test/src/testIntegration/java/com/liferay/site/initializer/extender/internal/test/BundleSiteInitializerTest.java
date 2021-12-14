@@ -165,7 +165,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
 			_assertLayoutSets(group);
-			_assertObjectDefinition(group, serviceContext);
+			_assertObjectDefinitions(group, serviceContext);
 			_assertPermissions(group);
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
@@ -594,7 +594,7 @@ public class BundleSiteInitializerTest {
 					"lfr-theme:regular:show-header")));
 	}
 
-	private void _assertObjectDefinition(
+	private void _assertObjectDefinitions(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 

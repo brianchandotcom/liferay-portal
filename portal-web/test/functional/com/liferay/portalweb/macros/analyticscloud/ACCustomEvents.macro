@@ -89,6 +89,10 @@ definition {
 		Click(locator1 = "ACCustomEvents#INPUT_BUTTON");
 	}
 
+	macro createNCustomEvents {
+		Click(locator1 = "ACCustomEvents#SEND_CUSTOM_EVENTS");
+	}
+
 	macro createWCWithCustomEventAndAddToPage {
 		if (!(isSet(webContentTitle))) {
 			var webContentTitle = "Custom Event AC Title";

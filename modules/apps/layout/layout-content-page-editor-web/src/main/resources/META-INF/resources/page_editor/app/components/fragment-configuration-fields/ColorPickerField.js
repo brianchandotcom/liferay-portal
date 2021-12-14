@@ -51,7 +51,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	const [customColors, setCustomColors] = useState([value || '']);
 	const [error, setError] = useState(false);
 	const [isHexadecimal, setIsHexadecimal] = useState(false);
-	const [isToken, setIsToken] = useState(!value || !!tokenValues[value]);
+	const [tokenLabel, setTokenLabel] = useControlledState(
+		value ? tokenValues[value]?.label : Liferay.Language.get('default')
+	);
 
 	const tokenColorValues = Object.values(tokenValues).filter(
 		(token) => token.editorType === 'ColorPicker'
@@ -108,20 +110,17 @@ export function ColorPickerField({field, onValueSelect, value}) {
 				})}
 			>
 				{config.tokenReuseEnabled ? (
-					isToken ? (
+					tokenLabel ? (
 						<ClayInput.GroupItem>
 							<ColorPicker
 								active={activeColorPicker}
 								colors={colors}
-								label={
-									value
-										? tokenValues[value]?.label || ''
-										: Liferay.Language.get('default')
-								}
+								label={tokenLabel}
 								onSetActive={setActiveColorPicker}
-								onValueChange={({name, value}) => {
+								onValueChange={({label, name, value}) => {
 									onValueSelect(field.name, name);
 									setColor(value);
+									setTokenLabel(label);
 								}}
 								value={color}
 							/>
@@ -186,8 +185,10 @@ export function ColorPickerField({field, onValueSelect, value}) {
 															token?.name ||
 															nextValue;
 
-														setIsToken(
+														setTokenLabel(
 															!isHexadecimal
+																? token.label
+																: null
 														);
 														onValueSelect(
 															field.name,
@@ -248,8 +249,8 @@ export function ColorPickerField({field, onValueSelect, value}) {
 																setColor(
 																	token.value
 																);
-																setIsToken(
-																	true
+																setTokenLabel(
+																	token.label
 																);
 																onValueSelect(
 																	field.name,
@@ -308,18 +309,18 @@ export function ColorPickerField({field, onValueSelect, value}) {
 								className="page-editor__color-picker-field__action-button"
 								shrink
 							>
-								{isToken ? (
+								{tokenLabel ? (
 									<ClayButtonWithIcon
 										className="border-0"
 										displayType="secondary"
 										onClick={() => {
 											setColor(tokenValues[value].value);
+											setTokenLabel(null);
 											setCustomColors([
 												tokenValues[
 													value
 												].value.replace('#', ''),
 											]);
-											setIsToken(false);
 											onValueSelect(
 												field.name,
 												tokenValues[value].value
@@ -336,13 +337,17 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										active={activeColorPicker}
 										colors={colors}
 										onSetActive={setActiveColorPicker}
-										onValueChange={({name, value}) => {
+										onValueChange={({
+											label,
+											name,
+											value,
+										}) => {
 											if (error) {
 												setError(false);
 											}
 
 											setColor(value);
-											setIsToken(true);
+											setTokenLabel(label);
 											onValueSelect(field.name, name);
 										}}
 										showSelector={false}
@@ -370,7 +375,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 									}
 
 									setColor('');
-									setIsToken(true);
+									setTokenLabel(
+										Liferay.Language.get('default')
+									);
 									onValueSelect(field.name, '');
 								}}
 								small

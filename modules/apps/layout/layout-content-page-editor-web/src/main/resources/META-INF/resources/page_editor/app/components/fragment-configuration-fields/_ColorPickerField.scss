@@ -1,6 +1,8 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__color-picker-field {
+			min-height: 32px;
+
 			.input-group
 				> .input-group-item
 				> .form-control.page-editor__color-picker-field__autocomplete__input {

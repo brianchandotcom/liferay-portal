@@ -62,6 +62,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -83,6 +85,14 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SXPBlueprintSearchRequestEnhancerImpl
 	implements SXPBlueprintSearchRequestEnhancer {
+
+	public static boolean isNullOrEmptyMap(Map<?, ?> map) {
+		if ((map == null) || map.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public void enhance(
@@ -200,6 +210,19 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			ArrayUtil.isEmpty(sxpBlueprint.getElementInstances())) {
 
 			return;
+		}
+
+		Configuration sxpBlueprintConfiguration =
+			sxpBlueprint.getConfiguration();
+
+		Map<String, Object> searchContextAttributes =
+			sxpBlueprintConfiguration.getSearchContextAttributes();
+
+		if (!isNullOrEmptyMap(searchContextAttributes)) {
+			searchContextAttributes.forEach(
+				(key, value) -> searchRequestBuilder.withSearchContext(
+					searchContext -> searchContext.setAttribute(
+						key, (Serializable)value)));
 		}
 
 		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(

@@ -347,10 +347,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addDocuments(serviceContext));
 
 			_invoke(
-				() -> _addCPDefinitions(
-					documentsStringUtilReplaceValues, serviceContext));
-
-			_invoke(
 				() -> _addDDMTemplates(
 					_ddmStructureLocalService, serviceContext));
 			_invoke(
@@ -370,6 +366,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 					() -> _addObjectDefinitions(
 						listTypeDefinitionIdsStringUtilReplaceValues,
 						serviceContext));
+
+			_invoke(
+				() -> _addCPDefinitions(
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsStringUtilReplaceValues,
+					serviceContext));
 
 			_invoke(
 				() -> _addObjectRelationships(
@@ -665,6 +667,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCommerceNotificationTemplate(
 			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -722,9 +725,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				commerceNotificationTemplateJSONObject.getString("to"),
 				commerceNotificationTemplateJSONObject.getString("cc"),
 				commerceNotificationTemplateJSONObject.getString("bcc"),
-				StringBundler.concat(
-					objectDefinition.getClassName(), "#",
-					commerceNotificationTemplateJSONObject.getString("action")),
+				StringUtil.replace(
+					commerceNotificationTemplateJSONObject.getString("type"),
+					"[$", "$]", objectDefinitionIdsStringUtilReplaceValues),
 				commerceNotificationTemplateJSONObject.getBoolean("enabled"),
 				_toMap(
 					commerceNotificationTemplateJSONObject.getString(
@@ -735,6 +738,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCommerceNotificationTemplates(
 			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -748,12 +752,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
 				commerceChannelId, documentsStringUtilReplaceValues,
-				resourcePath, serviceContext);
+				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
+				serviceContext);
 		}
 	}
 
 	private void _addCPDefinitions(
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -774,7 +780,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
 		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues, serviceContext);
+			channel.getId(), documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
 	}
 
 	private void _addCPDefinitions(

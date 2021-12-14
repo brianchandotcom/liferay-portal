@@ -140,12 +140,11 @@ public class IGConfigurationDisplayContext {
 		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FolderItemSelectorReturnType());
 
-		if (!isRootFolderInTrash()) {
-			folderItemSelectorCriterion.setFolderId(getRootFolderId());
-		}
-
+		folderItemSelectorCriterion.setFolderId(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		folderItemSelectorCriterion.setIgnoreRootFolder(true);
 		folderItemSelectorCriterion.setSelectedFolderId(getRootFolderId());
+		folderItemSelectorCriterion.setRepositoryId(0);
 		folderItemSelectorCriterion.setSelectedRepositoryId(
 			getSelectedRepositoryId());
 		folderItemSelectorCriterion.setShowGroupSelector(true);

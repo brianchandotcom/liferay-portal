@@ -66,7 +66,7 @@ public class EditFragmentEntryLinkMVCActionCommand
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.updateFragmentEntryLink(
-				fragmentEntryLinkId, editableValues, true);
+				fragmentEntryLinkId, editableValues);
 
 		List<ContentPageEditorListener> contentPageEditorListeners =
 			_contentPageEditorListenerTracker.getContentPageEditorListeners();

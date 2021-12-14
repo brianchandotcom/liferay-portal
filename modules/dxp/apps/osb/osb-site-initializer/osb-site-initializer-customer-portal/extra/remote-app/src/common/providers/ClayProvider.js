@@ -1,7 +1,7 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 
-const getIconSpriteMap = () => {
+export function getIconSpriteMap() {
 	try {
 		// eslint-disable-next-line no-undef
 		if (!Liferay.ThemeDisplay) {
@@ -17,7 +17,7 @@ const getIconSpriteMap = () => {
 		// eslint-disable-next-line no-undef
 		return require('@clayui/css/lib/images/icons/icons.svg').default;
 	}
-};
+}
 
 const ClayProvider = ({children}) => {
 	return (

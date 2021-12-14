@@ -1,7 +1,7 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {status as statusProject} from '../../utils/constants';
-import dateToCustomFormat from '../../utils/dateToCustomFormat';
+import getDateCustomFormat from '../../utils/dateCustomFormat';
 import StatusTag from '../StatusTag';
 import ProjectCardSkeleton from './Skeleton';
 
@@ -73,7 +73,11 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 							{getStatusMessage(status)}
 
 							<span className="font-weight-bold text-paragraph">
-								{dateToCustomFormat(sla.currentEndDate)}
+								{getDateCustomFormat(sla.currentEndDate, {
+									day: '2-digit',
+									month: 'short',
+									year: 'numeric',
+								})}
 							</span>
 						</div>
 

@@ -1,7 +1,7 @@
 import {useQuery} from '@apollo/client';
 import {useEffect, useState} from 'react';
 import {LiferayTheme} from '../services/liferay';
-import {pageGuard} from '../services/liferay/graphql/queries';
+import {getAccountRolesAndAccountFlags} from '../services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../services/liferay/search-params';
 import {API_BASE_URL} from '../utils';
 
@@ -34,7 +34,7 @@ const getOverviewLocation = (externalReferenceCode) => {
 const usePageGuard = (userAccount, externalReferenceCode, pageKey) => {
 	const [loading, setLoading] = useState(true);
 
-	const {data} = useQuery(pageGuard, {
+	const {data} = useQuery(getAccountRolesAndAccountFlags, {
 		variables: {
 			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq 'onboarding' and userUuid eq '${userAccount.externalReferenceCode}' and value eq 1`,
 			accountId: userAccount.id,
@@ -67,12 +67,10 @@ const usePageGuard = (userAccount, externalReferenceCode, pageKey) => {
 								? externalReferenceCode
 								: userAccount.accountBriefs[0]
 						);
-					}
-					else {
+					} else {
 						window.location.href = getHomeLocation();
 					}
-				}
-				else {
+				} else {
 					setLoading(false);
 				}
 			}
@@ -80,13 +78,11 @@ const usePageGuard = (userAccount, externalReferenceCode, pageKey) => {
 			if (pageKey === 'overview') {
 				if (!isValidExternalReferenceCode) {
 					window.location.href = getHomeLocation();
-				}
-				else if (!hasAccountFlags) {
+				} else if (!hasAccountFlags) {
 					window.location.href = getOnboardingLocation(
 						externalReferenceCode
 					);
-				}
-				else {
+				} else {
 					setLoading(false);
 				}
 			}

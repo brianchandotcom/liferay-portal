@@ -1,7 +1,13 @@
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import dateToLocalFormat from '../../utils/dateToLocalFormat';
+import getDateCustomFormat from '../../utils/dateCustomFormat';
 import ModalCardSubscription from '../ModalCardSubscription';
+
+const dateFormat = {
+	day: '2-digit',
+	month: '2-digit',
+	year: 'numeric',
+};
 
 const CardSubscription = ({
 	cardSubscriptionData,
@@ -12,9 +18,8 @@ const CardSubscription = ({
 		onClose: () => setVisible(false),
 	});
 
-	const parseAccountSubscriptionTerms = (subscriptionName) => {
-		return subscriptionName.toLowerCase().replace(' ', '-');
-	};
+	const parseAccountSubscriptionTerms = (subscriptionName) =>
+		subscriptionName.toLowerCase().replace(' ', '-');
 
 	const accountSubscriptionERC = `${
 		cardSubscriptionData.accountSubscriptionGroupERC
@@ -33,9 +38,7 @@ const CardSubscription = ({
 			)}
 			<div
 				className="card-subscription mr-4"
-				onClick={() => {
-					setVisible(true);
-				}}
+				onClick={() => setVisible(true)}
 			>
 				<div className="card-body">
 					<div
@@ -58,10 +61,12 @@ const CardSubscription = ({
 						className="card-date d-flex justify-content-center mb-4 row"
 						type="text"
 					>
-						{`${dateToLocalFormat(
-							cardSubscriptionData?.startDate
-						)} - ${dateToLocalFormat(
-							cardSubscriptionData?.endDate
+						{`${getDateCustomFormat(
+							cardSubscriptionData?.startDate,
+							dateFormat
+						)} - ${getDateCustomFormat(
+							cardSubscriptionData?.endDate,
+							dateFormat
 						)}`}
 					</div>
 

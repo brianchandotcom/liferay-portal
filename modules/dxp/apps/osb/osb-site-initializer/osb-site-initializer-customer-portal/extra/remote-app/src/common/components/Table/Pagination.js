@@ -1,4 +1,5 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {getIconSpriteMap} from '../../providers/ClayProvider';
 
 const TablePagination = ({
 	activeDelta = 5,
@@ -18,7 +19,7 @@ const TablePagination = ({
 					ellipsisBuffer={ellipsisBuffer}
 					onPageChange={(page) => setActivePage(page)}
 					showDeltasDropDown={showDeltasDropDown}
-					spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`}
+					spritemap={getIconSpriteMap()}
 					totalItems={totalItems}
 				/>
 			</div>

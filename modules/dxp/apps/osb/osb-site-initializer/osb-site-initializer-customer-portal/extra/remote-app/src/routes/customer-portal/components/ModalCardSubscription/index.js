@@ -5,8 +5,53 @@ import BaseButton from '../../../../common/components/BaseButton';
 import Table from '../../../../common/components/Table';
 import {getAccountSubscriptionsTerms} from '../../../../common/services/liferay/graphql/queries';
 import {status} from '../../utils/constants';
-import dateToLocalFormat from '../../utils/dateToLocalFormat';
+import getDateCustomFormat from '../../utils/dateCustomFormat';
 import StatusTag from '../StatusTag';
+
+const dateFormat = {
+	day: '2-digit',
+	month: '2-digit',
+	year: 'numeric',
+};
+
+const columns = [
+	{
+		accessor: 'start-end-date',
+		align: 'center',
+		expanded: true,
+		header: {
+			name: 'Start-End Date',
+		},
+	},
+	{
+		accessor: 'provisioned',
+		align: 'center',
+		header: {
+			name: 'Provisioned',
+		},
+	},
+	{
+		accessor: 'quantity',
+		align: 'center',
+		header: {
+			name: 'Purchased',
+		},
+	},
+	{
+		accessor: 'instance-size',
+		align: 'center',
+		header: {
+			name: 'Instance Size',
+		},
+	},
+	{
+		accessor: 'subscription-term-status',
+		align: 'center',
+		header: {
+			name: 'Status',
+		},
+	},
+];
 
 const ModalCardSubscription = ({
 	accountSubscriptionERC,
@@ -27,47 +72,9 @@ const ModalCardSubscription = ({
 
 	const accountSubscriptionTermsItems =
 		subscriptionsTerms?.c?.accountSubscriptionTerms?.items;
+
 	const totalCount =
 		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
-
-	const columns = [
-		{
-			accessor: 'start-end-date',
-			align: 'center',
-			expanded: true,
-			header: {
-				name: 'Start-End Date',
-			},
-		},
-		{
-			accessor: 'provisioned',
-			align: 'center',
-			header: {
-				name: 'Provisioned',
-			},
-		},
-		{
-			accessor: 'quantity',
-			align: 'center',
-			header: {
-				name: 'Purchased',
-			},
-		},
-		{
-			accessor: 'instance-size',
-			align: 'center',
-			header: {
-				name: 'Instance Size',
-			},
-		},
-		{
-			accessor: 'subscription-term-status',
-			align: 'center',
-			header: {
-				name: 'Status',
-			},
-		},
-	];
 
 	return (
 		<ClayModal center observer={observer} size="lg">
@@ -108,9 +115,13 @@ const ModalCardSubscription = ({
 								'instance-size': instanceSize || '-',
 								'provisioned': provisioned || '-',
 								'quantity': quantity || '-',
-								'start-end-date': `${dateToLocalFormat(
-									startDate
-								)} - ${dateToLocalFormat(endDate)}`,
+								'start-end-date': `${getDateCustomFormat(
+									startDate,
+									dateFormat
+								)} - ${getDateCustomFormat(
+									endDate,
+									dateFormat
+								)}`,
 								'subscription-term-status':
 									(subscriptionTermStatus && (
 										<StatusTag

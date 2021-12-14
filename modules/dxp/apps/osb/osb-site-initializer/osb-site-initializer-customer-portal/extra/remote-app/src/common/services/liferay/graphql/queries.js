@@ -6,18 +6,18 @@ export const getSetupDXPCloudInfo = gql`
 		$koroneikiAccountsFilter: String
 	) {
 		c {
+			accountSubscriptions(filter: $accountSubscriptionsFilter) {
+				items {
+					accountKey
+					hasDisasterDataCenterRegion
+					name
+				}
+			}
 			dXPCDataCenterRegions {
 				items {
 					dxpcDataCenterRegionId
 					name
 					value
-				}
-			}
-			accountSubscriptions(filter: $accountSubscriptionsFilter) {
-				items {
-					accountKey
-					name
-					hasDisasterDataCenterRegion
 				}
 			}
 			koroneikiAccounts(filter: $koroneikiAccountsFilter) {
@@ -51,7 +51,6 @@ export const getAccountSubscriptionsTerms = gql`
 				page: $page
 				pageSize: $pageSize
 			) {
-				totalCount
 				items {
 					accountKey
 					accountSubscriptionERC
@@ -65,6 +64,7 @@ export const getAccountSubscriptionsTerms = gql`
 					startDate
 					subscriptionTermStatus
 				}
+				totalCount
 			}
 		}
 	}
@@ -76,14 +76,14 @@ export const getAccountSubscriptions = gql`
 			accountSubscriptions(filter: $filter) {
 				items {
 					accountKey
+					accountSubscriptionGroupERC
 					accountSubscriptionId
 					c_accountSubscriptionId
 					endDate
 					instanceSize
+					name
 					quantity
 					startDate
-					name
-					accountSubscriptionGroupERC
 					subscriptionStatus
 				}
 			}
@@ -145,13 +145,13 @@ export const getBannedEmailDomains = gql`
 
 export const addSetupDXPCloud = gql`
 	mutation addSetupDXPCloud(
-		$SetupDXPCloud: InputC_SetupDXPCloud!
 		$scopeKey: String
+		$SetupDXPCloud: InputC_SetupDXPCloud!
 	) {
 		c {
 			createSetupDXPCloud(
-				SetupDXPCloud: $SetupDXPCloud
 				scopeKey: $scopeKey
+				SetupDXPCloud: $SetupDXPCloud
 			) {
 				admins
 				dataCenterRegion
@@ -164,8 +164,8 @@ export const addSetupDXPCloud = gql`
 
 export const getAccountRolesAndAccountFlags = gql`
 	query getAccountRolesAndAccountFlags(
-		$accountId: Long!
 		$accountFlagsFilter: String
+		$accountId: Long!
 	) {
 		accountAccountRoles(accountId: $accountId) {
 			items {
@@ -238,12 +238,12 @@ export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
 		userAccount(userAccountId: $id) {
 			accountBriefs {
-				id
 				externalReferenceCode
+				id
 				name
 			}
-			id
 			externalReferenceCode
+			id
 			image
 			name
 		}

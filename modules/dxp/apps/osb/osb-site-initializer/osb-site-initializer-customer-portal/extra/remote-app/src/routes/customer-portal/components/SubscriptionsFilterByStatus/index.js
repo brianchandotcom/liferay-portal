@@ -1,35 +1,32 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
+
+const options = [
+	{
+		label: 'All',
+		value: 'All',
+	},
+	{
+		label: 'Active',
+		value: 'Active',
+	},
+	{
+		label: 'Expired',
+		value: 'Expired',
+	},
+	{
+		label: 'Future',
+		value: 'Future',
+	},
+];
 
 const SubscriptionsFilterByStatus = ({setSelectedStatus}) => {
-	const options = useMemo(
-		() => [
-			{
-				label: 'All',
-				value: 'All',
-			},
-			{
-				label: 'Active',
-				value: 'Active',
-			},
-			{
-				label: 'Expired',
-				value: 'Expired',
-			},
-			{
-				label: 'Future',
-				value: 'Future',
-			},
-		],
-		[]
-	);
-
 	const handleFilterChange = (event) => {
 		setSelectedStatus(event.target.value);
 	};
 
 	useEffect(() => {
 		setSelectedStatus(options[0].value);
-	}, [options, setSelectedStatus]);
+	}, [setSelectedStatus]);
 
 	return (
 		<select

@@ -1,6 +1,6 @@
 import {useQuery} from '@apollo/client';
 import React, {useEffect, useState} from 'react';
-import {getAccountSubscriptionGroupsByFilter} from '../../../../common/services/liferay/graphql/queries';
+import {getAccountSubscriptionGroups} from '../../../../common/services/liferay/graphql/queries';
 import SubscriptionsFilterByStatus from '../SubscriptionsFilterByStatus';
 
 const SubscriptionsNavbar = ({
@@ -13,7 +13,7 @@ const SubscriptionsNavbar = ({
 	const {
 		data: accountSubscriptions,
 		loading: isAccountSubscriptionsLoading,
-	} = useQuery(getAccountSubscriptionGroupsByFilter, {
+	} = useQuery(getAccountSubscriptionGroups, {
 		variables: {
 			filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
 		},

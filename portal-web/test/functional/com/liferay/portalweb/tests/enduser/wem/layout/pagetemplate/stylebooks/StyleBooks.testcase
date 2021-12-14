@@ -789,7 +789,7 @@ definition {
 		task ("Add a public page and change it's theme to Minium") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "home");
+				layoutName = "Test Public Page");
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -801,7 +801,7 @@ definition {
 		task ("Add a private page and change it's theme to Speedwell") {
 			JSONLayout.addPrivateLayout(
 				groupName = "Test Site Name",
-				layoutName = "test");
+				layoutName = "Test Private Page");
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

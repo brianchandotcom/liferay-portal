@@ -114,25 +114,22 @@ definition {
 	test CanDeleteAllSubmissions {
 		for (var contactNumber : list "1,2,3") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
-			
-			KaleoFormsNewSubmissions.addNewContacts(		
+
+			KaleoFormsNewSubmissions.addNewContacts(
 				ddlEmail = "userfn@liferay.com",
-				ddlFirstName = "Userfn ${contactNumber}",			
-				ddlLastName = "Userln ${contactNumber}",			
-				ddlPhoneMobile = "(123) 9999-9999",			
+				ddlFirstName = "Userfn ${contactNumber}",
+				ddlLastName = "Userln ${contactNumber}",
+				ddlPhoneMobile = "(123) 9999-9999",
 				ddlUserName = "testliferay ${contactNumber}");
 
 			KaleoFormsAdmin.saveProcessRecord();
 
 			Navigator.gotoBack();
-
 		}
 
-			KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
 
-			KaleoFormsNewSubmissions.deleteAllSubmissions();
-			
-
+		KaleoFormsNewSubmissions.deleteAllSubmissions();
 	}
 
 	@description = "Verify that the user can filter by Create Date."

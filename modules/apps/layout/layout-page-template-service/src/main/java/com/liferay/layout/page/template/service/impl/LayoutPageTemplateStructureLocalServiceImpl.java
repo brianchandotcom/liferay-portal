@@ -111,7 +111,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 				groupId, plid);
 
 		if (count > 0) {
-			_fragmentEntryLinkLocalService.updateClassedModel(plid);
+			_updateLayoutStatus(userId, plid);
 		}
 
 		// Layout page template structure rel

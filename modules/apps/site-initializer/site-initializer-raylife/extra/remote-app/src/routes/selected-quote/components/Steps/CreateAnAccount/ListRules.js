@@ -2,8 +2,8 @@ import {RuleIcon} from '../CreateAnAccount/RuleIcon';
 
 export function ListRules({objValidate}) {
 	return (
-		<div className="create-account__list-rules">
-			<ul>
+		<div className="mt-3">
+			<ul className="list-unstyled">
 				<li>
 					<RuleIcon
 						label={

@@ -346,7 +346,8 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 		initialLabel: '<%= StringPool.BLANK %>',
 		initialValue: '<%= cpInstanceReplacementId %>',
 		inputId: 'replacementId',
-		inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceReplacementId',
+		inputName:
+			'<%= liferayPortletResponse.getNamespace() %>cpInstanceReplacementId',
 		itemsKey: 'id',
 		itemsLabel: 'sku',
 		onValueUpdated: function (value) {

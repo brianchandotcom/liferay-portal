@@ -165,16 +165,17 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 			return 0;
 		}
 
-		CPInstance cpInstanceReplacement = _cpInstanceHelper.fetchCPInstanceReplacement(cpInstance.getReplacementCProductId(), cpInstance.getReplacementCPInstanceUuid());
+		CPInstance cpInstanceReplacement =
+			_cpInstanceHelper.fetchCPInstanceReplacement(
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid());
 
-		if(cpInstanceReplacement == null){
+		if (cpInstanceReplacement == null) {
 			return 0;
 		}
 
-
 		return cpInstanceReplacement.getCPInstanceId();
 	}
-
 
 	public String getCPMeasurementUnitName(int type) {
 		CPMeasurementUnit cpMeasurementUnit =

@@ -347,8 +347,6 @@ definition {
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
 
-	
-
 		Navigator.openURL();
 
 		User.logoutAndLoginPG(
@@ -364,9 +362,6 @@ definition {
 		ObjectAdmin.saveCustomObject();
 
 		CreateObject.assertCustomObject(labelName = "Custom Object");
-
-
-		
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
@@ -1501,9 +1496,6 @@ definition {
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
 
-		
-
-
 		Navigator.openURL();
 
 		User.logoutAndLoginPG(
@@ -1515,9 +1507,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.assertDisabledPublishObjectButton();
-
-
-
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"

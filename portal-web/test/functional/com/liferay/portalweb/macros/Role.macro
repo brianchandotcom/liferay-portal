@@ -597,7 +597,6 @@ definition {
 		else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_OBJECTS_PERMISSIONS")) {
 			var permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS";
 			var permissionNavigationValue = "Objects";
-			
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";

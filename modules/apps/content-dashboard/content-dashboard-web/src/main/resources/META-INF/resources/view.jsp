@@ -244,18 +244,21 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 							<c:if test="<%= assetCategories.size() > 1 %>">
 
 								<%
-								String assetCategoriesSummary = StringUtil.merge(assetCategories.subList(1, assetCategories.size()), "\n");
+								List<String> restOfAssetCategories = assetCategories.subList(1, assetCategories.size());
 								%>
 
-								<span class="lfr-portal-tooltip" title="<%= assetCategoriesSummary %>">
-									<clay:label
-										aria-title="<%= assetCategoriesSummary %>"
-										displayType="secondary"
-										large="<%= true %>"
-									>
-										<span>...</span>
-									</clay:label>
-								</span>
+								<div class="">
+									<react:component
+										module="js/components/CategoriesPopover"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"categories", restOfAssetCategories
+											).put(
+												"vocabulary", assetVocabulary.getTitle(locale)
+											).build()
+										%>'
+									/>
+								</div>
 							</c:if>
 						</liferay-ui:search-container-column-text>
 

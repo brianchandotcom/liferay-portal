@@ -473,6 +473,20 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro changeCurrentTheme {
+		SitePages.togglePrivacy(privacy = "${privacy}");
+
+		Click(
+			key_pageName = "${pageName}",
+			locator1 = "Icon#COG_PAGE");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		Theme.changeCurrentTheme(themeName = "${themeName}");
+
+		PortletEntry.save();
+	}
+
 	macro changeSiteLogo {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

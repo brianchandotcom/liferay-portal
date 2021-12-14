@@ -57,7 +57,7 @@ public class DLBreadcrumbUtil {
 			portletURL,
 			_getRepositoryId(folder, httpServletRequest, repositoryId),
 			_getRootFolderName(
-				httpServletRequest,
+				folder, httpServletRequest,
 				_getRepositoryId(folder, httpServletRequest, repositoryId),
 				showGroupSelector));
 
@@ -112,12 +112,12 @@ public class DLBreadcrumbUtil {
 		Folder folder, HttpServletRequest httpServletRequest,
 		long repositoryId) {
 
-		if (repositoryId != 0) {
-			return repositoryId;
-		}
-
 		if (folder != null) {
 			return folder.getRepositoryId();
+		}
+
+		if (repositoryId != 0) {
+			return repositoryId;
 		}
 
 		ThemeDisplay themeDisplay =
@@ -128,8 +128,8 @@ public class DLBreadcrumbUtil {
 	}
 
 	private static String _getRootFolderName(
-			HttpServletRequest httpServletRequest, long repositoryId,
-			boolean showGroupSelector)
+			Folder folder, HttpServletRequest httpServletRequest,
+			long repositoryId, boolean showGroupSelector)
 		throws Exception {
 
 		if (!showGroupSelector) {
@@ -144,6 +144,9 @@ public class DLBreadcrumbUtil {
 
 		if (repositoryId != 0) {
 			group = GroupServiceUtil.getGroup(repositoryId);
+		}
+		else if (folder != null) {
+			group = GroupServiceUtil.getGroup(folder.getGroupId());
 		}
 
 		return group.getDescriptiveName(themeDisplay.getLocale());

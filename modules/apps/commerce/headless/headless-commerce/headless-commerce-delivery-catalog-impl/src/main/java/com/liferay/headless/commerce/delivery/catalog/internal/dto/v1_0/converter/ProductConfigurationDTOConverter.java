@@ -15,7 +15,6 @@
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -68,9 +67,6 @@ public class ProductConfigurationDTOConverter
 			}
 		};
 	}
-
-	@Reference
-	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

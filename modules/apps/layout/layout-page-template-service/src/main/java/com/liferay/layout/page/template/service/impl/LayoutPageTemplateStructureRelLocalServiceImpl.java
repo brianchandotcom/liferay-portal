@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -149,6 +150,31 @@ public class LayoutPageTemplateStructureRelLocalServiceImpl
 
 		layoutPageTemplateStructureRel.setModifiedDate(new Date());
 		layoutPageTemplateStructureRel.setData(data);
+
+		return layoutPageTemplateStructureRelPersistence.update(
+			layoutPageTemplateStructureRel);
+	}
+
+	@Override
+	public LayoutPageTemplateStructureRel updateStatus(
+			long userId, long layoutPageTemplateStructureId,
+			long segmentsExperienceId, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			layoutPageTemplateStructureRelPersistence.findByL_S(
+				layoutPageTemplateStructureId, segmentsExperienceId);
+
+		layoutPageTemplateStructureRel.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		layoutPageTemplateStructureRel.setStatusByUserId(user.getUserId());
+		layoutPageTemplateStructureRel.setStatusByUserName(user.getFullName());
+
+		layoutPageTemplateStructureRel.setStatusDate(
+			serviceContext.getModifiedDate(new Date()));
 
 		return layoutPageTemplateStructureRelPersistence.update(
 			layoutPageTemplateStructureRel);

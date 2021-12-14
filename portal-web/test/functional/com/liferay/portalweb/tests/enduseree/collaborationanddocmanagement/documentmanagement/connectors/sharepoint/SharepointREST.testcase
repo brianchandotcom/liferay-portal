@@ -129,6 +129,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136821. It checks that a repository can be published."
+	@priority = "3"
+	test CanPublishRepository {
+		property test.name.skip.portal.instance = "SharepointREST#CanPublishRepository";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONStaging.enableLocalStaging(groupName = "Guest");
+
+		Navigator.gotoStagedSitePage(
+			defaultSite = "true",
+			pageName = "Documents and Media Page");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoRepository(dmRepositoryName = "Collaboration Test Application");
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test CheckinDocument {

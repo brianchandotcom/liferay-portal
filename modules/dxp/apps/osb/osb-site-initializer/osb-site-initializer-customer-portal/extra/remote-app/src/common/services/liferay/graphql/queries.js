@@ -101,17 +101,6 @@ export const getBannedEmailDomains = gql`
 				items {
 					bannedEmailDomainId
 					domain
-					accountKey
-					code
-					dxpVersion
-					slaCurrent
-					slaExpired
-					slaFuture
-					slaCurrentEndDate
-					region
-					liferayContactName
-					liferayContactRole
-					liferayContactEmailAddress
 				}
 			}
 		}

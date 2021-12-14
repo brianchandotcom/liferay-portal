@@ -26,8 +26,8 @@ export const SearchInput = React.forwardRef(
 						</Label>
 					</div>
 				)}
-				<div className="row">
-					<InputAreaWithError error={error}>
+				<div className="d-flex flex-row">
+					<InputAreaWithError className="col pl-0" error={error}>
 						<ClayInput
 							{...props}
 							maxLength={255}

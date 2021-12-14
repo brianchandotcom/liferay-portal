@@ -8,7 +8,7 @@ export function ZIPControlledInput({rules = {}, inputProps = {}, ...props}) {
 		<ControlledInputWithMask
 			{...props}
 			inputProps={{
-				className: 'col',
+				className: 'zip',
 				format: '#####',
 				mask: '_',
 				...inputProps,

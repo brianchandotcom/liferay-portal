@@ -89,13 +89,13 @@ export function FormBasicBusinessInformation({form}) {
 
 	return (
 		<FormCard>
-			<div className="container pr-0">
-				<div className="mb-5 row">
+			<div className="container p-0">
+				<div className="d-flex justify-content-between mb-5">
 					<ControlledInput
 						control={control}
 						inputProps={{
 							autoFocus: true,
-							className: 'col p-0 mr-4',
+							className: 'flex-grow-1 p-0 mr-4',
 							maxLength: 256,
 							onBlur: onFirstNameSettled,
 						}}
@@ -109,7 +109,7 @@ export function FormBasicBusinessInformation({form}) {
 					<ControlledInput
 						control={control}
 						inputProps={{
-							className: 'col p-0 mr-3',
+							className: 'flex-grow-1 p-0 ',
 							maxLength: 256,
 						}}
 						label="Last Name"

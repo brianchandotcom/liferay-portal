@@ -7,6 +7,7 @@ export function PercentageControlledInput({inputProps = {}, ...props}) {
 		<ControlledInputWithMask
 			{...props}
 			inputProps={{
+				className: 'mb-4',
 				decimalScale: 2,
 				mask: '_',
 				placeholder: '%',

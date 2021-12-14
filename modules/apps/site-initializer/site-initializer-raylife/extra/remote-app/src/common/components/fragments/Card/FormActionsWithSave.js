@@ -76,7 +76,7 @@ export function CardFormActionsWithSave({
 							onClick={onNext}
 						>
 							Continue
-							<span className="inline-item inline-item-before">
+							<span className="inline-item inline-item-before ml-1">
 								<ClayIcon symbol="angle-right" />
 							</span>
 						</ClayButton>

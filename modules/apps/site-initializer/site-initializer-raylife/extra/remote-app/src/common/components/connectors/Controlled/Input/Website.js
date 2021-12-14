@@ -8,7 +8,7 @@ export function WebsiteControlledInput({rules, ...props}) {
 		<ControlledInput
 			{...props}
 			inputProps={{
-				className: 'mb-5 mr-0 row',
+				className: 'd-flex mb-5 mr-0',
 			}}
 			rules={{
 				pattern: {

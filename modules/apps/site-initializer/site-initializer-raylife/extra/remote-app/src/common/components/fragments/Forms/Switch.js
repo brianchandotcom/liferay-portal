@@ -27,11 +27,12 @@ export const Switch = React.forwardRef(
 					</Label>
 				)}
 
-				<div className="align-items-center d-flex flex-row justify-content-start">
+				<div className="align-items-center d-flex flex-row justify-content-start mb-4">
 					<ClayButton
-						className={classNames('btn btn-ghost btn-variant-primary mr-2 pl-5 pr-5 rounded-pill switch',
+						className={classNames(
+							'btn btn-ghost btn-variant-primary mr-2 pl-5 pr-5 rounded-pill switch',
 							{
-								'selected': value === 'true',
+								selected: value === 'true',
 							}
 						)}
 						displayType={null}
@@ -42,9 +43,10 @@ export const Switch = React.forwardRef(
 					</ClayButton>
 
 					<ClayButton
-						className={classNames('btn btn-ghost btn-variant-primary pl-5 pr-5 rounded-pill switch',
+						className={classNames(
+							'btn btn-ghost btn-variant-primary pl-5 pr-5 rounded-pill switch',
 							{
-								'selected': value === 'false',
+								selected: value === 'false',
 							}
 						)}
 						displayType={null}

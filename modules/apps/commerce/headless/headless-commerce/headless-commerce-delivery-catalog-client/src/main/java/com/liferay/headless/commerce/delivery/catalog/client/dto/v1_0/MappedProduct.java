@@ -97,6 +97,31 @@ public class MappedProduct implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public MappedProduct getLastReplacementMappedProduct() {
+		return lastReplacementMappedProduct;
+	}
+
+	public void setLastReplacementMappedProduct(
+		MappedProduct lastReplacementMappedProduct) {
+
+		this.lastReplacementMappedProduct = lastReplacementMappedProduct;
+	}
+
+	public void setLastReplacementMappedProduct(
+		UnsafeSupplier<MappedProduct, Exception>
+			lastReplacementMappedProductUnsafeSupplier) {
+
+		try {
+			lastReplacementMappedProduct =
+				lastReplacementMappedProductUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MappedProduct lastReplacementMappedProduct;
+
 	public Map<String, String> getOptions() {
 		return options;
 	}
@@ -271,6 +296,52 @@ public class MappedProduct implements Cloneable, Serializable {
 	}
 
 	protected Integer quantity;
+
+	public MappedProduct getReplacementMappedProduct() {
+		return replacementMappedProduct;
+	}
+
+	public void setReplacementMappedProduct(
+		MappedProduct replacementMappedProduct) {
+
+		this.replacementMappedProduct = replacementMappedProduct;
+	}
+
+	public void setReplacementMappedProduct(
+		UnsafeSupplier<MappedProduct, Exception>
+			replacementMappedProductUnsafeSupplier) {
+
+		try {
+			replacementMappedProduct =
+				replacementMappedProductUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MappedProduct replacementMappedProduct;
+
+	public String getReplacementMessage() {
+		return replacementMessage;
+	}
+
+	public void setReplacementMessage(String replacementMessage) {
+		this.replacementMessage = replacementMessage;
+	}
+
+	public void setReplacementMessage(
+		UnsafeSupplier<String, Exception> replacementMessageUnsafeSupplier) {
+
+		try {
+			replacementMessage = replacementMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String replacementMessage;
 
 	public String getSequence() {
 		return sequence;

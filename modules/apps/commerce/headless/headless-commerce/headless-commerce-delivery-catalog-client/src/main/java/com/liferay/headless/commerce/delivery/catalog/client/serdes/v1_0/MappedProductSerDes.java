@@ -87,6 +87,18 @@ public class MappedProductSerDes {
 			sb.append(mappedProduct.getId());
 		}
 
+		if (mappedProduct.getLastReplacementMappedProduct() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastReplacementMappedProduct\": ");
+
+			sb.append(
+				String.valueOf(
+					mappedProduct.getLastReplacementMappedProduct()));
+		}
+
 		if (mappedProduct.getOptions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,6 +191,31 @@ public class MappedProductSerDes {
 			sb.append("\"quantity\": ");
 
 			sb.append(mappedProduct.getQuantity());
+		}
+
+		if (mappedProduct.getReplacementMappedProduct() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacementMappedProduct\": ");
+
+			sb.append(
+				String.valueOf(mappedProduct.getReplacementMappedProduct()));
+		}
+
+		if (mappedProduct.getReplacementMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacementMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(mappedProduct.getReplacementMessage()));
+
+			sb.append("\"");
 		}
 
 		if (mappedProduct.getSequence() != null) {
@@ -313,6 +350,16 @@ public class MappedProductSerDes {
 			map.put("id", String.valueOf(mappedProduct.getId()));
 		}
 
+		if (mappedProduct.getLastReplacementMappedProduct() == null) {
+			map.put("lastReplacementMappedProduct", null);
+		}
+		else {
+			map.put(
+				"lastReplacementMappedProduct",
+				String.valueOf(
+					mappedProduct.getLastReplacementMappedProduct()));
+		}
+
 		if (mappedProduct.getOptions() == null) {
 			map.put("options", null);
 		}
@@ -375,6 +422,24 @@ public class MappedProductSerDes {
 		}
 		else {
 			map.put("quantity", String.valueOf(mappedProduct.getQuantity()));
+		}
+
+		if (mappedProduct.getReplacementMappedProduct() == null) {
+			map.put("replacementMappedProduct", null);
+		}
+		else {
+			map.put(
+				"replacementMappedProduct",
+				String.valueOf(mappedProduct.getReplacementMappedProduct()));
+		}
+
+		if (mappedProduct.getReplacementMessage() == null) {
+			map.put("replacementMessage", null);
+		}
+		else {
+			map.put(
+				"replacementMessage",
+				String.valueOf(mappedProduct.getReplacementMessage()));
 		}
 
 		if (mappedProduct.getSequence() == null) {
@@ -468,6 +533,15 @@ public class MappedProductSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "lastReplacementMappedProduct")) {
+
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setLastReplacementMappedProduct(
+						MappedProductSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "options")) {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setOptions(
@@ -527,6 +601,23 @@ public class MappedProductSerDes {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setQuantity(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "replacementMappedProduct")) {
+
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setReplacementMappedProduct(
+						MappedProductSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "replacementMessage")) {
+
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setReplacementMessage(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sequence")) {

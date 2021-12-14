@@ -87,17 +87,29 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
+		long objectDefinitionId2 = objectRelationship.getObjectDefinitionId2();
+
 		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId2());
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
 
 		if (Objects.equals(
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
+			long objectDefinitionId1 =
+				objectRelationship.getObjectDefinitionId1();
+
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
+					objectDefinitionId1);
+
+			if (objectDefinitionId1 == objectDefinitionId2) {
+				String objectFieldDBColumnName =
+					objectDefinition2.getPKObjectFieldDBColumnName();
+
+				objectDefinition2.setPKObjectFieldDBColumnName(
+					objectFieldDBColumnName + "2");
+			}
 
 			runSQL(
 				StringBundler.concat(
@@ -222,12 +234,26 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
+			long objectDefinitionId1 =
+				objectRelationship.getObjectDefinitionId1();
+			long objectDefinitionId2 =
+				objectRelationship.getObjectDefinitionId2();
+
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
+					objectDefinitionId1);
+
 			ObjectDefinition objectDefinition2 =
 				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId2());
+					objectDefinitionId2);
+
+			if (objectDefinitionId1 == objectDefinitionId2) {
+				String pKObjectFieldDBColumnName =
+					objectDefinition2.getPKObjectFieldDBColumnName();
+
+				objectDefinition2.setPKObjectFieldDBColumnName(
+					pKObjectFieldDBColumnName + "2");
+			}
 
 			runSQL(
 				StringBundler.concat(
@@ -392,9 +418,18 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectDefinitionId1);
+
 			ObjectDefinition objectDefinition2 =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectDefinitionId2);
+
+			if (objectDefinitionId1 == objectDefinitionId2) {
+				String objectFieldDBColumnName =
+					objectDefinition2.getPKObjectFieldDBColumnName();
+
+				objectDefinition2.setPKObjectFieldDBColumnName(
+					objectFieldDBColumnName + "2");
+			}
 
 			objectRelationship.setDBTableName(
 				StringBundler.concat(

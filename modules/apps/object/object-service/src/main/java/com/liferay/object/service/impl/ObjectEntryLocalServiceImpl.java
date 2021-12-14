@@ -827,8 +827,17 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
+
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId2);
+
+		if (objectDefinitionId1 == objectDefinitionId2) {
+			String pKObjectFieldDBColumnName =
+				objectDefinition2.getPKObjectFieldDBColumnName();
+
+			objectDefinition2.setPKObjectFieldDBColumnName(
+				pKObjectFieldDBColumnName + "2");
+		}
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =

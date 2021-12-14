@@ -87,6 +87,16 @@ public class DXPCloudClientTestrayImporter {
 		}
 	}
 
+	private static String _getEnvVar(String varName) {
+		String varValue = System.getenv(varName);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(varValue)) {
+			varValue = System.getProperty(varName);
+		}
+
+		return varValue;
+	}
+
 	private static Element _getPropertiesElement(Properties properties) {
 		Element element = Dom4JUtil.getNewElement("properties");
 
@@ -333,26 +343,26 @@ public class DXPCloudClientTestrayImporter {
 	}
 
 	private static void _initEnvironmentVariables() {
-		String projectDirPath = System.getenv("projectDir");
+		String projectDirPath = _getEnvVar("projectDir");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(projectDirPath)) {
 			throw new RuntimeException("Please set 'projectDir'");
 		}
 
-		_projectDir = new File(System.getenv("projectDir"));
+		_projectDir = new File(projectDirPath);
 
 		if (!_projectDir.exists()) {
 			throw new RuntimeException(
 				"Could not find '" + projectDirPath + "'");
 		}
 
-		String environmentBrowserName = System.getenv("environmentBrowserName");
+		String environmentBrowserName = _getEnvVar("environmentBrowserName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(environmentBrowserName)) {
 			_environmentBrowserName = environmentBrowserName;
 		}
 
-		String environmentOperatingSystemName = System.getenv(
+		String environmentOperatingSystemName = _getEnvVar(
 			"environmentOperatingSystemName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(
@@ -361,13 +371,13 @@ public class DXPCloudClientTestrayImporter {
 			_environmentOperatingSystemName = environmentOperatingSystemName;
 		}
 
-		String testrayBuildName = System.getenv("testrayBuildName");
+		String testrayBuildName = _getEnvVar("testrayBuildName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 			_testrayBuildName = testrayBuildName;
 		}
 
-		String testrayCasePriority = System.getenv("testrayCasePriority");
+		String testrayCasePriority = _getEnvVar("testrayCasePriority");
 
 		if ((testrayCasePriority != null) &&
 			testrayCasePriority.matches("\\d+")) {
@@ -375,43 +385,43 @@ public class DXPCloudClientTestrayImporter {
 			_testrayCasePriority = Integer.valueOf(testrayCasePriority);
 		}
 
-		String testrayComponentName = System.getenv("testrayComponentName");
+		String testrayComponentName = _getEnvVar("testrayComponentName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayComponentName)) {
 			_testrayComponentName = testrayComponentName;
 		}
 
-		String testrayLogsURLPath = System.getenv("testrayLogsURLPath");
+		String testrayLogsURLPath = _getEnvVar("testrayLogsURLPath");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayLogsURLPath)) {
 			_testrayLogsURLPath = testrayLogsURLPath;
 		}
 
-		String testrayProductVersion = System.getenv("testrayProductVersion");
+		String testrayProductVersion = _getEnvVar("testrayProductVersion");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayProductVersion)) {
 			_testrayProductVersion = testrayProductVersion;
 		}
 
-		String testrayProjectName = System.getenv("testrayProjectName");
+		String testrayProjectName = _getEnvVar("testrayProjectName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
 			_testrayProjectName = testrayProjectName;
 		}
 
-		String testrayRoutineName = System.getenv("testrayRoutineName");
+		String testrayRoutineName = _getEnvVar("testrayRoutineName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 			_testrayRoutineName = testrayRoutineName;
 		}
 
-		String testrayServerURL = System.getenv("testrayServerURL");
+		String testrayServerURL = _getEnvVar("testrayServerURL");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayServerURL)) {
 			_testrayServerURL = testrayServerURL;
 		}
 
-		String testrayTeamName = System.getenv("testrayTeamName");
+		String testrayTeamName = _getEnvVar("testrayTeamName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayTeamName)) {
 			_testrayTeamName = testrayTeamName;

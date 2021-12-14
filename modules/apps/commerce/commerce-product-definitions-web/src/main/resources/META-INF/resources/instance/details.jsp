@@ -22,7 +22,6 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
-long cpInstanceReplacementId = cpInstanceDisplayContext.getCPInstanceReplacementId();
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
 String commerceCurrencyCode = cpInstanceDisplayContext.getCommerceCurrencyCode();
 
@@ -31,6 +30,8 @@ boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	neverExpire = false;
 }
+
+boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinued", false);
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_instance" var="editProductInstanceActionURL" />
@@ -172,27 +173,58 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	>
 		<div class="row">
 			<div class="align-items-start col-auto d-flex">
-				<aui:input checked="<%= (cpInstance == null) ? false : cpInstance.isDiscontinued() %>" name="discontinued" type="toggle-switch" />
+				<aui:input checked="<%= discontinued %>" name="discontinued" type="toggle-switch" />
 			</div>
 
 			<div class="col">
-				<aui:input bean="<%= cpInstance %>" label="end-of-production-date" model="<%= CPInstance.class %>" name="discontinuedDate" />
+				<div class="form-group input-date-wrapper">
+					<label for="discontinuedDate"><liferay-ui:message key="requested-delivery-date" /></label>
+
+					<%
+					Date discontinuedDate = cpInstance.getDiscontinuedDate();
+
+					int discontinuedDateDay = 0;
+					int discontinuedDateMonth = -1;
+					int discontinuedDateYear = 0;
+
+					if (discontinuedDate != null) {
+						Calendar calendar = CalendarFactoryUtil.getCalendar(discontinuedDate.getTime());
+
+						discontinuedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+						discontinuedDateMonth = calendar.get(Calendar.MONTH);
+						discontinuedDateYear = calendar.get(Calendar.YEAR);
+					}
+					%>
+
+					<liferay-ui:input-date
+						dayParam="discontinuedDateDay"
+						dayValue="<%= discontinuedDateDay %>"
+						disabled="<%= !discontinued %>"
+						monthParam="discontinuedDateMonth"
+						monthValue="<%= discontinuedDateMonth %>"
+						name="discontinuedDate"
+						nullable="<%= true %>"
+						showDisableCheckbox="<%= false %>"
+						yearParam="discontinuedDateYear"
+						yearValue="<%= discontinuedDateYear %>"
+					/>
+				</div>
 			</div>
 		</div>
 
-		<div class="row">
+		<%
+		String replacementAutocompleteWrapperCssClasses = "row";
+
+		if (!discontinued) {
+			replacementAutocompleteWrapperCssClasses += " d-none";
+		}
+		%>
+
+		<div class="<%= replacementAutocompleteWrapperCssClasses %>" id="<portlet:namespace />replacementAutocompleteWrapper">
 			<div class="col">
 				<label class="control-label" for="cpInstanceReplacementId"><%= LanguageUtil.get(request, "replacement") %></label>
 
 				<div id="autocomplete-root"></div>
-			</div>
-
-			<div class="align-items-end col-auto d-flex">
-				<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= liferayPortletResponse.getNamespace() + "removeSku();" %>" type="button">
-					<clay:icon
-						symbol="trash"
-					/>
-				</button>
 			</div>
 		</div>
 	</commerce-ui:panel>
@@ -339,24 +371,39 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 </aui:script>
 
 <aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
-	var deleteButton = document.getElementById('remove-sku-button');
-
 	autocomplete.default('autocomplete', 'autocomplete-root', {
 		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
-		initialLabel: '<%= StringPool.BLANK %>',
-		initialValue: '<%= cpInstanceReplacementId %>',
+		initialLabel:
+			'<%= cpInstanceDisplayContext.getCPInstanceReplacementLabel() %>',
+		initialValue:
+			'<%= cpInstanceDisplayContext.getCPInstanceReplacementId() %>',
 		inputId: 'replacementId',
 		inputName:
 			'<%= liferayPortletResponse.getNamespace() %>cpInstanceReplacementId',
 		itemsKey: 'id',
 		itemsLabel: 'sku',
-		onValueUpdated: function (value) {
-			if (value) {
-				deleteButton.disabled = false;
-			}
-			else {
-				deleteButton.disabled = true;
-			}
-		},
+	});
+
+	const discontinuedInput = document.getElementById(
+		'<%= liferayPortletResponse.getNamespace() %>discontinued'
+	);
+	const discontinuedDateInput = document.getElementById(
+		'<%= liferayPortletResponse.getNamespace() %>discontinuedDate'
+	);
+	const replacementIdWrapper = document.getElementById(
+		'<%= liferayPortletResponse.getNamespace() %>replacementAutocompleteWrapper'
+	);
+
+	discontinuedInput.addEventListener('change', (event) => {
+		if (event.target.checked) {
+			discontinuedDateInput.disabled = false;
+			discontinuedDateInput.classList.remove('disabled');
+			replacementIdWrapper.classList.remove('d-none');
+		}
+		else {
+			discontinuedDateInput.disabled = true;
+			discontinuedDateInput.classList.add('disabled');
+			replacementIdWrapper.classList.add('d-none');
+		}
 	});
 </aui:script>

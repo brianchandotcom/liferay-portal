@@ -177,6 +177,25 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		return cpInstanceReplacement.getCPInstanceId();
 	}
 
+	public String getCPInstanceReplacementLabel() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		CPInstance cpInstanceReplacement =
+			_cpInstanceHelper.fetchCPInstanceReplacement(
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid());
+
+		if (cpInstanceReplacement == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpInstanceReplacement.getSku();
+	}
+
 	public String getCPMeasurementUnitName(int type) {
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitLocalService.fetchPrimaryCPMeasurementUnit(

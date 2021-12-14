@@ -27,8 +27,8 @@ export function FormBasicProductQuote({form}) {
 		<FormCard>
 			<div className="card-content d-flex">
 				<div className="content-column">
-					<label>
-						<h6 className="font-weight-bolder">
+					<label className="mb-3">
+						<h6 className="font-weight-bolder text-paragraph">
 							Select a product to quote.
 						</h6>
 					</label>

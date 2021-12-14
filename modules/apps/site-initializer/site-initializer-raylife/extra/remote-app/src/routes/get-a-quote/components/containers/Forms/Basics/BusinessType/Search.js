@@ -89,7 +89,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 
 	const infoPanelButton = () => (
 		<ClayLabel
-			className={classNames('label-inverse-primary btn-info-panel mb-2', {
+			className={classNames('label-inverse-primary btn-info-panel mt-3', {
 				'label-solid-info': selectedTrigger,
 			})}
 			onClick={showInfoPanel}
@@ -152,9 +152,9 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 
 	return (
 		<>
-			<div>
+			<div className="mb-5">
 				<SearchInput
-					className="bg-neutral-1 d-flex px-4 py-0 search"
+					className="bg-neutral-1 font-weight-bold px-4 py-0 search text-neutral-10 text-paragraph-lg"
 					defaultValue=""
 					label="Search for your primary industry and then select it from the list."
 					placeholder="Begin typing to show options..."
@@ -174,7 +174,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 					</ClayButton>
 				</SearchInput>
 
-				<p className="paragraph">
+				<p className="mt-1 paragraph">
 					i.e. Coffee shop, Plumber, Drop Shipping, Landscape, etc
 				</p>
 			</div>

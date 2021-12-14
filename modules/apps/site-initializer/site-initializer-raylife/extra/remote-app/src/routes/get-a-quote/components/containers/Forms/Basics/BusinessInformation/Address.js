@@ -35,12 +35,12 @@ export function BusinessInformationAddress() {
 	};
 
 	return (
-		<>
-			<div className="row">
+		<div className="d-flex flex-column">
+			<div className="d-flex justify-content-between">
 				<ControlledInput
 					control={control}
 					inputProps={{
-						className: 'col mr-4 p-0',
+						className: 'flex-grow-1 mr-4 p-0',
 						placeholder: 'Street address',
 						ref,
 					}}
@@ -51,44 +51,48 @@ export function BusinessInformationAddress() {
 
 				<Input
 					{...register(setFormPath('addressApt'))}
-					className="col-sm-4 mr-3 p-0"
+					className="apt p-0"
 					label="&nbsp;"
 					placeholder="Apt/Suite (optional)"
 				/>
 			</div>
 
-			<div className="mt-5 row">
-				<ControlledInput
-					control={control}
-					inputProps={{
-						className: 'col-lg-5 p-0',
-					}}
-					label="City"
-					name={setFormPath('city')}
-					rules={{required: 'City is required.'}}
-				/>
+			<div className="d-flex flex-row justify-content-between mt-5">
+				<div className="d-flex flex-grow-1">
+					<ControlledInput
+						control={control}
+						inputProps={{
+							className: ' flex-grow-1 p-0',
+						}}
+						label="City"
+						name={setFormPath('city')}
+						rules={{required: 'City is required.'}}
+					/>
 
-				<StatesControlledSelect
-					control={control}
-					inputProps={{
-						className: 'col p-0 ml-4 mr-2',
-					}}
-					label="State"
-					name={setFormPath('state')}
-					rules={{
-						required: 'This field is required.',
-					}}
-				/>
+					<StatesControlledSelect
+						control={control}
+						inputProps={{
+							className: 'flex-grow-1 p-0 mx-4',
+						}}
+						label="State"
+						name={setFormPath('state')}
+						rules={{
+							required: 'This field is required.',
+						}}
+					/>
+				</div>
 
-				<ZIPControlledInput
-					control={control}
-					label="ZIP"
-					name={setFormPath('zip')}
-					rules={{
-						required: 'ZIP is required.',
-					}}
-				/>
+				<div className="d-flex">
+					<ZIPControlledInput
+						control={control}
+						label="ZIP"
+						name={setFormPath('zip')}
+						rules={{
+							required: 'ZIP is required.',
+						}}
+					/>
+				</div>
 			</div>
-		</>
+		</div>
 	);
 }

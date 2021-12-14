@@ -118,7 +118,6 @@ const Validation = ({
 					name={name}
 					onBlur={onBlur}
 					parameter={parameter}
-					parentFieldName={validation.fieldName}
 					readOnly={readOnly}
 					selectedValidation={selectedValidation}
 					transformSelectedValidation={transformSelectedValidation}

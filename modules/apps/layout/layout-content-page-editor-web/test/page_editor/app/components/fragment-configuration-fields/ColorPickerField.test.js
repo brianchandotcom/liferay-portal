@@ -13,8 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import {ColorPickerField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-configuration-fields/ColorPickerField';
@@ -26,167 +25,224 @@ jest.mock(
 	() => ({
 		config: {
 			frontendTokens: {
-				color1: {
+				blue: {
 					editorType: 'ColorPicker',
-					label: 'Color 1',
-					name: 'color1',
-					tokenCategoryLabel: 'Category 1',
-					tokenSetLabel: 'TokenSet 1',
-					value: '#fff',
-				},
-				color2: {
-					editorType: 'ColorPicker',
-					label: 'Color 2',
-					name: 'color2',
+					label: 'Blue',
+					name: 'blue',
 					tokenCategoryLabel: 'Category1',
-					tokenSetLabel: 'TokenSet 2',
-					value: '#000',
+					tokenSetLabel: 'TokenSet 1',
+					value: '#4b9fff',
 				},
-				color3: {
+				green: {
 					editorType: 'ColorPicker',
-					label: 'Color 3',
-					name: 'color3',
+					label: 'Green',
+					name: 'green',
 					tokenCategoryLabel: 'Category 2',
-					tokenSetLabel: 'TokenSet 3',
-					value: '#ff0',
+					tokenSetLabel: 'TokenSet 1',
+					value: '#9be169',
+				},
+				orange: {
+					editorType: 'ColorPicker',
+					label: 'Orange',
+					name: 'orange',
+					tokenCategoryLabel: 'Category 1',
+					tokenSetLabel: 'TokenSet 2',
+					value: '#ffb46e',
 				},
 			},
 			styleBookEntryId: 0,
+			tokenReuseEnabled: true,
 		},
 	})
 );
 
 const INPUT_NAME = 'Color Picker';
+const COLOR_PICKER_FIELD_CLASS = '.page-editor__color-picker-field';
 
-const renderColorPickerField = (onValueSelect = () => {}) =>
+const renderColorPickerField = ({onValueSelect = () => {}, value = 'white'}) =>
 	render(
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
 			<StyleBookContextProvider>
 				<ColorPickerField
 					field={{label: INPUT_NAME, name: INPUT_NAME}}
 					onValueSelect={onValueSelect}
-					value=""
+					value={value}
 				/>
 			</StyleBookContextProvider>
 		</StoreContextProvider>
 	);
 
-const openDropdown = () => {
-	const dropdownButton = document.querySelector('.clay-color-picker button');
-
-	userEvent.click(dropdownButton);
-};
-
 describe('ColorPickerField', () => {
 	afterEach(() => {
 		cleanup();
-		jest.useFakeTimers();
 	});
 
-	it('renders the colorPickerField', async () => {
-		const {getByText, getByTitle} = renderColorPickerField();
+	it('renders the ColorPickerField', () => {
+		const {baseElement} = renderColorPickerField({});
 
-		openDropdown();
-
-		const palette = [
-			getByText('Category 1'),
-			getByText('Category 2'),
-			getByText('TokenSet 1'),
-			getByText('TokenSet 2'),
-			getByText('TokenSet 3'),
-			getByTitle('Color 1'),
-			getByTitle('Color 2'),
-			getByTitle('Color 3'),
-		];
-
-		palette.forEach((item) => expect(item).toBeInTheDocument());
+		expect(
+			baseElement.querySelector(
+				`${COLOR_PICKER_FIELD_CLASS}__color-picker`
+			)
+		).toBeInTheDocument();
 	});
 
-	it('filters by category', () => {
-		const {getByLabelText, queryByText} = renderColorPickerField();
-
-		openDropdown();
-
-		const searchForm = getByLabelText('search-form');
-
-		act(() => {
-			fireEvent.change(searchForm, {
-				target: {value: 'Category 1'},
-			});
-			jest.runAllTimers();
+	it('clears the value', async () => {
+		const {getByLabelText, getByTitle} = renderColorPickerField({
+			value: 'green',
 		});
 
-		expect(queryByText('Category 1')).toBeInTheDocument();
-		expect(queryByText('Category 2')).not.toBeInTheDocument();
+		fireEvent.click(getByTitle('clear-selection'));
+
+		await wait(() => {
+			expect(getByLabelText('default')).toBeInTheDocument();
+		});
 	});
 
-	it('filters by tokenSet', () => {
-		const {getByLabelText, queryByText} = renderColorPickerField();
-
-		openDropdown();
-
-		const searchForm = getByLabelText('search-form');
-
-		act(() => {
-			fireEvent.change(searchForm, {
-				target: {value: 'TokenSet 1'},
+	describe('When the value is an existing token', () => {
+		it('renders the stylebook color picker', () => {
+			const {getByLabelText, getByTitle} = renderColorPickerField({
+				value: 'orange',
 			});
-			jest.runAllTimers();
+
+			expect(getByTitle('detach-token')).toBeInTheDocument();
+			expect(getByLabelText('Orange')).toBeInTheDocument();
 		});
 
-		[queryByText('Category 1'), queryByText('TokenSet 1')].forEach((item) =>
-			expect(item).toBeInTheDocument()
-		);
-		[queryByText('Category 2'), queryByText('TokenSet 2')].forEach((item) =>
-			expect(item).not.toBeInTheDocument()
-		);
+		it('shows action buttons when the color picker is clicked', async () => {
+			const {baseElement, getByLabelText} = renderColorPickerField({
+				value: 'orange',
+			});
+
+			fireEvent.click(getByLabelText('Orange'));
+
+			await wait(() => {
+				expect(
+					baseElement.querySelector(COLOR_PICKER_FIELD_CLASS)
+				).toHaveClass('hovered');
+			});
+		});
+
+		it('change to autocomplete color picker when detach token button is clicked', async () => {
+			const {baseElement, getByRole, getByTitle} = renderColorPickerField(
+				{
+					value: 'orange',
+				}
+			);
+
+			fireEvent.click(getByTitle('detach-token'));
+
+			await wait(() => {
+				expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
+				expect(getByRole('combobox').value).toBe('#ffb46e');
+				expect(
+					baseElement.querySelector('.clay-color-picker')
+				).toBeInTheDocument();
+			});
+		});
+
+		it('does not show the action buttons when the value is default', () => {
+			const {queryByTitle} = renderColorPickerField({
+				value: null,
+			});
+
+			expect(queryByTitle('detach-token')).not.toBeInTheDocument();
+			expect(
+				queryByTitle('value-from-stylebook')
+			).not.toBeInTheDocument();
+		});
 	});
 
-	it('filters by color', () => {
-		const {
-			getByLabelText,
-			getByTitle,
-			queryByText,
-			queryByTitle,
-		} = renderColorPickerField();
+	describe('When the value is an hexadecimal', () => {
+		it('renders the autocomplete color picker', () => {
+			const {baseElement, getByRole, getByTitle} = renderColorPickerField(
+				{
+					value: '#ffb46e',
+				}
+			);
 
-		openDropdown();
-
-		const searchForm = getByLabelText('search-form');
-
-		act(() => {
-			fireEvent.change(searchForm, {
-				target: {value: 'Color 1'},
-			});
-			jest.runAllTimers();
+			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
+			expect(getByRole('combobox').value).toBe('#ffb46e');
+			expect(
+				baseElement.querySelector('.clay-color-picker')
+			).toBeInTheDocument();
 		});
 
-		[
-			queryByText('Category 1'),
-			queryByText('TokenSet 1'),
-			getByTitle('Color 1'),
-		].forEach((item) => expect(item).toBeInTheDocument());
-		[
-			queryByText('Category 2'),
-			queryByTitle('Color 2'),
-			queryByTitle('Color 3'),
-		].forEach((item) => expect(item).not.toBeInTheDocument());
-	});
-
-	it('shows empty results', () => {
-		const {getByLabelText, queryByText} = renderColorPickerField();
-
-		openDropdown();
-
-		const searchForm = getByLabelText('search-form');
-
-		act(() => {
-			fireEvent.change(searchForm, {
-				target: {value: 'Color 123'},
+		it('change to stylebook color picker when value from stylebook button is clicked', async () => {
+			const {getByLabelText, getByTitle} = renderColorPickerField({
+				value: '#fff',
 			});
-			jest.runAllTimers();
+
+			fireEvent.click(getByTitle('value-from-stylebook'));
+			fireEvent.click(getByTitle('Blue'));
+
+			await wait(() => {
+				expect(getByTitle('detach-token')).toBeInTheDocument();
+				expect(getByLabelText('Blue')).toBeInTheDocument();
+			});
 		});
 
-		expect(queryByText('no-results-found')).toBeInTheDocument();
+		it('renders an error when the written token is wrong', async () => {
+			const {getByRole, getByText} = renderColorPickerField({
+				value: '#fff',
+			});
+
+			const input = getByRole('combobox');
+
+			fireEvent.change(input, {
+				target: {value: 'prim'},
+			});
+
+			fireEvent.blur(input);
+
+			await wait(() => {
+				expect(
+					getByText('this-token-does-not-exist')
+				).toBeInTheDocument();
+			});
+		});
+
+		it('sets a token if the written value is an existing token', async () => {
+			const {
+				getByLabelText,
+				getByRole,
+				getByTitle,
+			} = renderColorPickerField({
+				value: '#fff',
+			});
+
+			const input = getByRole('combobox');
+
+			fireEvent.change(input, {
+				target: {value: 'green'},
+			});
+
+			fireEvent.blur(input);
+
+			await wait(() => {
+				expect(getByTitle('detach-token')).toBeInTheDocument();
+				expect(getByLabelText('Green')).toBeInTheDocument();
+			});
+		});
+
+		it('sets a token when the value is selected from the autocomplete dropdown', async () => {
+			const {
+				getByLabelText,
+				getByRole,
+				getByTitle,
+			} = renderColorPickerField({
+				value: '#fff',
+			});
+
+			fireEvent.change(getByRole('combobox'), {
+				target: {value: 'gre'},
+			});
+			fireEvent.click(getByRole('option'));
+
+			await wait(() => {
+				expect(getByTitle('detach-token')).toBeInTheDocument();
+				expect(getByLabelText('Green')).toBeInTheDocument();
+			});
+		});
 	});
 });

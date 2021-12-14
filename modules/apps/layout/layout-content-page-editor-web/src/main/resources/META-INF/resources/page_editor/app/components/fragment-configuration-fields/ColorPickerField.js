@@ -228,6 +228,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 													value.startsWith('#')
 												);
 											}}
+											role="combobox"
 											value={color}
 										/>
 
@@ -239,7 +240,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 											closeOnClickOutside={true}
 											onSetActive={setActiveAutocomplete}
 										>
-											<ClayDropDown.ItemList>
+											<ClayDropDown.ItemList role="listbox">
 												{filteredTokenColorValues.map(
 													(token) => (
 														<ClayAutocomplete.Item
@@ -262,6 +263,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 															) =>
 																event.preventDefault()
 															}
+															role="option"
 															value={token.label}
 														/>
 													)

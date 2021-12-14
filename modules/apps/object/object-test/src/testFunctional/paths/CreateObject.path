@@ -111,6 +111,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DISABLED_PUBLISH_OBJECT_BUTTON</td>
+		<td>//button[contains(@disabled,'') and contains(@id,'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_publish')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DISABLED_TAB_TYPE_RELATIONSHIPS</td>
 		<td>//div[@class = 'layout-tab__tab-types disabled']//h4[@class = 'layout-tab__tab-types__title' and contains(text(),'Relationships')]</td>
 		<td></td>

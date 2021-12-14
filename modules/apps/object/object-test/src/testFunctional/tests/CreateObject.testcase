@@ -300,12 +300,73 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddObjectWithAddPermission {
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
 
-		// TODO LPS-141600 CanAddObjectWithAddPermission pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
 
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_ADD_OBJECT_DEFINITION",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+	
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.saveCustomObject();
+
+		CreateObject.assertCustomObject(labelName = "Custom Object");
+
+
+		
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
@@ -1388,11 +1449,74 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotPublishObjectWithouPublishPermission {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141601 CannotPublishObjectWithouPublishPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_VIEW_OBJECT_DEFINITION_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		
+
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.assertDisabledPublishObjectButton();
+
+
 
 	}
 

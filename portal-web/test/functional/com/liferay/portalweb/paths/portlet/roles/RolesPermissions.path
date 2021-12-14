@@ -135,6 +135,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_ADD_OBJECT_DEFINITION</td>
+	<td>//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rowIds') and contains(@value,'ADD_OBJECT_DEFINITION')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_VIEW_OBJECT_DEFINITION_CHECKBOX</td>
+	<td>xpath=(//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rowIds') and contains(@value,'VIEW')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

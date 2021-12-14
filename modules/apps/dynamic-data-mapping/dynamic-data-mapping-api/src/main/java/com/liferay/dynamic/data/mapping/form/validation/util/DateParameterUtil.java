@@ -160,8 +160,8 @@ public class DateParameterUtil {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormFieldValuesMap.get(dateFieldName);
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			dateFieldName);
 
 		if (ListUtil.isNotEmpty(ddmFormFieldValues)) {
 			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);

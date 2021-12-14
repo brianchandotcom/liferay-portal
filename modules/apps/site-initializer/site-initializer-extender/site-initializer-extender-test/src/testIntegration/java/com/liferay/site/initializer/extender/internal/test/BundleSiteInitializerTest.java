@@ -333,11 +333,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
 
-		// TODO Fix and enable test
-
-		if (false) {
-			_assertCommerceNotificationTemplate(commerceChannel, group);
-		}
+		_assertCommerceNotificationTemplate(commerceChannel, group);
 	}
 
 	private void _assertCommerceInventoryWarehouse(Group group) {
@@ -357,13 +353,17 @@ public class BundleSiteInitializerTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				group.getCompanyId(), "C_TestBundleSiteInitializer");
+				group.getCompanyId(), "C_TestObjectDefinition1");
+
+		Assert.assertNotNull(objectDefinition);
 
 		List<CommerceNotificationTemplate> commerceNotificationTemplates =
 			_commerceNotificationTemplateLocalService.
 				getCommerceNotificationTemplates(
 					commerceChannel.getGroupId(),
-					objectDefinition.getClassName() + "#create", true);
+					"com.liferay.object.model.ObjectDefinition#" +
+						objectDefinition.getObjectDefinitionId() + "#create",
+					true);
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
 			commerceNotificationTemplates.get(0);

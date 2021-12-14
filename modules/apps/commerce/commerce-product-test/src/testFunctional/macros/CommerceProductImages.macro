@@ -71,7 +71,12 @@ definition {
 				var image = "${imageTitle}";
 			}
 
-			var uploadFileName = "Commerce_${image}.jpg";
+			if ("${imageType}" == "svg") {
+				var uploadFileName = "Commerce_${image}.svg";
+			}
+			else {
+				var uploadFileName = "Commerce_${image}.jpg";
+			}
 
 			Refresh();
 

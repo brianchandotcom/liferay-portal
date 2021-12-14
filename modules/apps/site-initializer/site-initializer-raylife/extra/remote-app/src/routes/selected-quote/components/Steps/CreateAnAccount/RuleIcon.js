@@ -18,7 +18,7 @@ export function RuleIcon({label, status}) {
 		>
 			<ClayIcon
 				className={classNames(
-					'create-account__rule__icon',
+					'create-account__rule__icon mr-1 rounded',
 					ruleConfig.className
 				)}
 				symbol={ruleConfig.symbol}

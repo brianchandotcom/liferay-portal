@@ -17,4 +17,12 @@ definition {
 				value1 = "${name}");
 		}
 	}
+
+    macro viewEventAnalyseListNotPresent {
+		for (var name : list "${eventList}") {
+			var key_buttonName = "${name}";
+
+			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
+		}
+	}
 }

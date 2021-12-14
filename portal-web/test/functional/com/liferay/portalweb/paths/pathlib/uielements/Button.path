@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_SECONDARY</td>
+	<td>//*[not(self::div)][contains(@class,'btn-secondary')][normalize-space()='${key_text}'][not(contains(@class,'navbar'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_TITLE</td>
 	<td>//button[@title='${key_title}']</td>
 	<td></td>

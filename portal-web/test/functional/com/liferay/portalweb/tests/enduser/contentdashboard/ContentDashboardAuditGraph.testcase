@@ -14,15 +14,7 @@ definition {
 
 		Navigator.openURL();
 
-		var audienceId1 = JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 1",
-			vocabularyName = "Audience");
-
-		var stageId1 = JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 1",
-			vocabularyName = "Stage");
+		ContentDashboard.setUpGlobalCategories();
 	}
 
 	tearDown {

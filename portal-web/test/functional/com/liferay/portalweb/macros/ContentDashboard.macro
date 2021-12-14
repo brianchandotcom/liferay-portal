@@ -497,6 +497,26 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro setUpGlobalCategories {
+		var audienceCategory = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Audience 1",
+			vocabularyName = "Audience");
+
+		var stageCategory = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Stage 1",
+			vocabularyName = "Stage");
+
+		static var audienceId1 = "${audienceCategory}";
+
+		static var stageId1 = "${stageCategory}";
+
+		return "${audienceId1}";
+
+		return "${stageId1}";
+	}
+
 	macro setVocabularyInUseSecondPosition {
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
 

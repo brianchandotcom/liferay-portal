@@ -69,6 +69,11 @@ public class LayoutPageTemplateStructureRelLocalServiceImpl
 		layoutPageTemplateStructureRel.setSegmentsExperienceId(
 			segmentsExperienceId);
 		layoutPageTemplateStructureRel.setData(data);
+		layoutPageTemplateStructureRel.setStatus(
+			WorkflowConstants.STATUS_APPROVED);
+		layoutPageTemplateStructureRel.setStatusByUserId(userId);
+		layoutPageTemplateStructureRel.setStatusByUserName(user.getFullName());
+		layoutPageTemplateStructureRel.setStatusDate(new Date());
 
 		return layoutPageTemplateStructureRelPersistence.update(
 			layoutPageTemplateStructureRel);

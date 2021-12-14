@@ -39,6 +39,12 @@ public interface StagingConfiguration {
 	public boolean publishParentLayoutsByDefault();
 
 	@Meta.AD(
+		deflt = "true", description = "publish-displayed-content-help",
+		name = "publish-displayed-content", required = false
+	)
+	public boolean publishDisplayedContent();
+
+	@Meta.AD(
 		deflt = "true", description = "staging-delete-temp-lar-on-failure-help",
 		name = "staging-delete-temp-lar-on-failure", required = false
 	)

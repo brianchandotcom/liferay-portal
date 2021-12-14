@@ -162,6 +162,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 	openDialog_(url) {
 		Liferay.Util.openWindow({
 			dialog: {
+				destroyOnHide: true,
 				height: 400,
 				modal: true,
 				resizable: false,

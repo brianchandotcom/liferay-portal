@@ -1330,6 +1330,8 @@ definition {
 	test SiteMemberCannotDeleteShortcut {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1358,7 +1360,7 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
@@ -1366,11 +1368,9 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		DMDocument.addDMShortcutPG(
 			dmDocumentTitle = "DM Document Title",
-			siteName = "${siteName}");
+			siteName = "Site Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

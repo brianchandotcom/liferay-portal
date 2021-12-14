@@ -159,12 +159,13 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 			if (segmentsExperienceId ==
 					SegmentsExperienceConstants.ID_DEFAULT) {
 
-				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+				fragmentEntryLink.setEditableValues(
 					EditableValuesTransformerUtil.getEditableValues(
 						fragmentEntryLink.getEditableValues(),
-						segmentsExperienceId),
-					false);
+						segmentsExperienceId));
+
+				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+					fragmentEntryLink);
 
 				continue;
 			}

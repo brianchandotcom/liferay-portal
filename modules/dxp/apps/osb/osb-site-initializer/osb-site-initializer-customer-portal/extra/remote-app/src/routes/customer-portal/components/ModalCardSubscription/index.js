@@ -70,8 +70,8 @@ const ModalCardSubscription = ({
 		},
 	});
 
-	const accountSubscriptionTermsItems =
-		subscriptionsTerms?.c?.accountSubscriptionTerms?.items;
+	const dataAccountSubscriptionTerms =
+		subscriptionsTerms?.c?.accountSubscriptionTerms?.items || [];
 
 	const totalCount =
 		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
@@ -103,7 +103,7 @@ const ModalCardSubscription = ({
 						columns={columns}
 						hasPagination={totalCount >= 5}
 						itemsPerPage={5}
-						rows={accountSubscriptionTermsItems.map(
+						rows={dataAccountSubscriptionTerms.map(
 							({
 								endDate,
 								instanceSize,

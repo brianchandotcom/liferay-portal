@@ -794,7 +794,7 @@ definition {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Site.changeCurrentTheme(
-				pageName = "Public Pages",
+				privacy = "Public Pages",
 				themeName = "Minium");
 		}
 
@@ -806,7 +806,7 @@ definition {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Site.changeCurrentTheme(
-				pageName = "Private Pages",
+				privacy = "Private Pages",
 				themeName = "Speedwell");
 		}
 

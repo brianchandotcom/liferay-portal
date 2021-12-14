@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.low.level.search.options.portlet.
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences.LowLevelSearchOptionsPortletPreferences;
@@ -28,7 +29,10 @@ import java.io.Serializable;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -77,8 +81,18 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 			SearchStringUtil.splitAndUnquote(
 				lowLevelSearchOptionsPortletPreferences.getIndexesOptional())
 		).withSearchContext(
-			searchContext -> applyAttributes(
-				lowLevelSearchOptionsPortletPreferences, searchContext)
+			searchContext -> {
+				applyAttributes(
+					lowLevelSearchOptionsPortletPreferences, searchContext);
+
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(
+						portletSharedSearchSettings.getRenderRequest());
+
+				searchContext.setAttribute(
+					"search.experiences.ipaddress",
+					httpServletRequest.getRemoteAddr());
+			}
 		);
 	}
 
@@ -98,5 +112,8 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 				(Serializable)jsonObject.get("value"));
 		}
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

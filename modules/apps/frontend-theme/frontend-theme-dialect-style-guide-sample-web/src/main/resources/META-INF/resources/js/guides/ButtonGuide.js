@@ -12,6 +12,8 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -21,88 +23,231 @@ import TokenItem from '../components/TokenItem';
 const BUTTON_VARIANTS = [
 	{
 		buttons: [
-			'btn btn-primary',
-			'btn btn-secondary',
-			'btn btn-outline-primary',
-			'btn btn-outline-secondary',
-			'btn btn-link',
+			{
+				displayType: 'primary',
+			},
+			{
+				displayType: 'secondary',
+			},
+			{
+				displayType: 'outline-primary',
+			},
+			{
+				displayType: 'outline-secondary',
+			},
+			{
+				displayType: 'link',
+			},
 		],
 		categoryTitle: Liferay.Language.get('buttons'),
 		inverted: false,
 	},
 	{
 		buttons: [
-			'btn btn-primary btn-sm',
-			'btn btn-primary',
-			'btn btn-primary btn-lg',
+			{
+				displayType: 'primary',
+				size: 'sm',
+			},
+			{
+				displayType: 'primary',
+			},
+			{
+				displayType: 'primary',
+				size: 'lg',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-sizes'),
 		inverted: false,
 	},
 	{
 		buttons: [
-			'btn btn-solid btn-variant-primary',
-			'btn btn-solid btn-variant-secondary',
-			'btn btn-solid btn-variant-neutral',
+			{
+				displayType: 'primary',
+				icon: 'before',
+				size: 'sm',
+			},
+			{
+				displayType: 'primary',
+				icon: 'before',
+			},
+			{
+				displayType: 'primary',
+				icon: 'before',
+				size: 'lg',
+			},
+			{
+				displayType: 'primary',
+				icon: 'after',
+				size: 'sm',
+			},
+			{
+				displayType: 'primary',
+				icon: 'after',
+			},
+			{
+				displayType: 'primary',
+				icon: 'after',
+				size: 'lg',
+			},
+		],
+		categoryTitle: Liferay.Language.get('button-with-icons'),
+		inverted: false,
+	},
+	{
+		buttons: [
+			{
+				displayType: 'solid',
+				variant: 'primary',
+			},
+			{
+				displayType: 'solid',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'solid',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-solid'),
 		inverted: false,
 	},
 	{
 		buttons: [
-			'btn btn-ghost btn-variant-primary',
-			'btn btn-ghost btn-variant-secondary',
-			'btn btn-ghost btn-variant-neutral',
+			{
+				displayType: 'solid',
+				variant: 'primary',
+			},
+			{
+				displayType: 'solid',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'solid',
+				variant: 'neutral',
+			},
+		],
+		categoryTitle: Liferay.Language.get('button-solid-inverted'),
+		inverted: true,
+	},
+	{
+		buttons: [
+			{
+				displayType: 'ghost',
+				variant: 'primary',
+			},
+			{
+				displayType: 'ghost',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'ghost',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-ghost'),
 		inverted: false,
 	},
 	{
 		buttons: [
-			'btn btn-ghost btn-inverted btn-variant-primary',
-			'btn btn-ghost btn-inverted btn-variant-secondary',
-			'btn btn-ghost btn-inverted btn-variant-neutral',
+			{
+				displayType: 'ghost',
+				variant: 'primary',
+			},
+			{
+				displayType: 'ghost',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'ghost',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-ghost-inverted'),
 		inverted: true,
 	},
 	{
 		buttons: [
-			'btn btn-borderless btn-variant-primary',
-			'btn btn-borderless btn-variant-secondary',
-			'btn btn-borderless btn-variant-neutral',
+			{
+				displayType: 'borderless',
+				variant: 'primary',
+			},
+			{
+				displayType: 'borderless',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'borderless',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-borderless'),
 		inverted: false,
 	},
 	{
 		buttons: [
-			'btn btn-borderless btn-inverted btn-variant-primary',
-			'btn btn-borderless btn-inverted btn-variant-secondary',
-			'btn btn-borderless btn-inverted btn-variant-neutral',
+			{
+				displayType: 'borderless',
+				variant: 'primary',
+			},
+			{
+				displayType: 'borderless',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'borderless',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-borderless-inverted'),
 		inverted: true,
 	},
 	{
 		buttons: [
-			'btn btn-rounded btn-variant-primary',
-			'btn btn-rounded btn-variant-secondary',
-			'btn btn-rounded btn-variant-neutral',
+			{
+				displayType: 'rounded',
+				variant: 'primary',
+			},
+			{
+				displayType: 'rounded',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'rounded',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-rounded'),
 		inverted: false,
 	},
 	{
 		buttons: [
-			'btn btn-rounded btn-inverted btn-variant-primary',
-			'btn btn-rounded btn-inverted btn-variant-secondary',
-			'btn btn-rounded btn-inverted btn-variant-neutral',
+			{
+				displayType: 'rounded',
+				variant: 'primary',
+			},
+			{
+				displayType: 'rounded',
+				variant: 'secondary',
+			},
+			{
+				displayType: 'rounded',
+				variant: 'neutral',
+			},
 		],
 		categoryTitle: Liferay.Language.get('button-rounded-inverted'),
 		inverted: true,
 	},
 ];
+
+function getLabel(button, inverted) {
+	return classNames({
+		[button.displayType]: button.displayType,
+		inverted,
+		[button.size]: button.size,
+		[button.variant]: button.variant,
+		[`icon ${button.icon}`]: button.icon,
+	});
+}
 
 const ButtonGuide = () => {
 	return (
@@ -110,15 +255,38 @@ const ButtonGuide = () => {
 			{BUTTON_VARIANTS.map((item, key) => (
 				<TokenGroup
 					className={classNames({
-						['bg-neutral-7 px-2']: item.inverted,
+						['bg-neutral-3 px-2']: item.inverted,
 					})}
 					group="buttons"
 					key={key}
 					title={item.categoryTitle}
 				>
 					{item.buttons.map((button) => (
-						<TokenItem key={button} label={button} size="medium">
-							<button className={button}>Button</button>
+						<TokenItem
+							key={getLabel(button, item.inverted)}
+							label={getLabel(button, item.inverted)}
+							size="medium"
+						>
+							<ClayButton
+								className={classNames({
+									'btn-inverted': item.inverted,
+									[`btn-${button.size}`]: button.size,
+									[`btn-variant-${button.variant}`]: button.variant,
+								})}
+								displayType={button.displayType}
+							>
+								{button.icon === 'before' && (
+									<span className="inline-item inline-item-before">
+										<ClayIcon symbol="angle-left" />
+									</span>
+								)}
+								Button
+								{button.icon === 'after' && (
+									<span className="inline-item inline-item-after">
+										<ClayIcon symbol="angle-right" />
+									</span>
+								)}
+							</ClayButton>
 						</TokenItem>
 					))}
 				</TokenGroup>

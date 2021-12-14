@@ -35,6 +35,7 @@ page import="com.liferay.object.exception.ObjectDefinitionNameException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionPluralLabelException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionScopeException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionStatusException" %><%@
+page import="com.liferay.object.exception.RequiredObjectFieldException" %><%@
 page import="com.liferay.object.model.ObjectAction" %><%@
 page import="com.liferay.object.model.ObjectDefinition" %><%@
 page import="com.liferay.object.model.ObjectEntry" %><%@

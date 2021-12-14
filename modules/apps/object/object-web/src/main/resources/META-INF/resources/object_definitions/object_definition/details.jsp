@@ -51,6 +51,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		<liferay-ui:error exception="<%= ObjectDefinitionPluralLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionScopeException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionStatusException.class %>" />
+		<liferay-ui:error exception="<%= RequiredObjectFieldException.class %>" message="it-is-not-possible-to-publish-an-object-without-any-field" />
 
 		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
 

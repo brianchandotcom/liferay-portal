@@ -21,6 +21,7 @@ import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
+import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -96,7 +97,8 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				exception instanceof ObjectDefinitionNameException ||
 				exception instanceof ObjectDefinitionPluralLabelException ||
 				exception instanceof ObjectDefinitionScopeException ||
-				exception instanceof ObjectDefinitionStatusException) {
+				exception instanceof ObjectDefinitionStatusException ||
+				exception instanceof RequiredObjectFieldException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 

@@ -63,13 +63,29 @@ describe('List', () => {
 		);
 	});
 
-	it('renders dates according to the language', () => {
-		const data = ['12-20-2020'];
+	it('renders dates in the english US format', () => {
+		const originalThemeDisplay = themeDisplay;
+		themeDisplay = {getLanguageId: () => 'en_US'};
 
-		const type = 'date';
-
-		const {getByText} = render(<List {...props} data={data} type={type} />);
+		const {getByText} = render(
+			<List {...props} data={['2020-12-20']} type="date" />
+		);
 
 		expect(getByText('12/20/2020')).toBeTruthy();
+
+		themeDisplay = originalThemeDisplay;
+	});
+
+	it('renders dates in the portuguese BR format', () => {
+		const originalThemeDisplay = themeDisplay;
+		themeDisplay = {getLanguageId: () => 'pt_BR'};
+
+		const {getByText} = render(
+			<List {...props} data={['2020-12-20']} type="date" />
+		);
+
+		expect(getByText('20/12/2020')).toBeTruthy();
+
+		themeDisplay = originalThemeDisplay;
 	});
 });

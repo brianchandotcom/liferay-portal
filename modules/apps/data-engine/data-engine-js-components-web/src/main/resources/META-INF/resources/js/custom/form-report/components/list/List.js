@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 import React, {useContext} from 'react';
 
 import {removeEmptyValues} from '../../utils/data';

@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.ConfigurationSerDe
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -176,6 +177,31 @@ public class Configuration implements Cloneable, Serializable {
 	}
 
 	protected QueryConfiguration queryConfiguration;
+
+	public Map<String, Object> getSearchContextAttributes() {
+		return searchContextAttributes;
+	}
+
+	public void setSearchContextAttributes(
+		Map<String, Object> searchContextAttributes) {
+
+		this.searchContextAttributes = searchContextAttributes;
+	}
+
+	public void setSearchContextAttributes(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			searchContextAttributesUnsafeSupplier) {
+
+		try {
+			searchContextAttributes =
+				searchContextAttributesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> searchContextAttributes;
 
 	public SortConfiguration getSortConfiguration() {
 		return sortConfiguration;

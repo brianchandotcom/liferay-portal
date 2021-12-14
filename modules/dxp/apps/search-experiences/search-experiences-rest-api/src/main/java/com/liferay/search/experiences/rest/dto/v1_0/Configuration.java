@@ -251,6 +251,39 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
+	public Map<String, Object> getSearchContextAttributes() {
+		return searchContextAttributes;
+	}
+
+	public void setSearchContextAttributes(
+		Map<String, Object> searchContextAttributes) {
+
+		this.searchContextAttributes = searchContextAttributes;
+	}
+
+	@JsonIgnore
+	public void setSearchContextAttributes(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			searchContextAttributesUnsafeSupplier) {
+
+		try {
+			searchContextAttributes =
+				searchContextAttributesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> searchContextAttributes;
+
+	@Schema
+	@Valid
 	public SortConfiguration getSortConfiguration() {
 		return sortConfiguration;
 	}
@@ -364,6 +397,16 @@ public class Configuration implements Serializable {
 			sb.append("\"queryConfiguration\": ");
 
 			sb.append(String.valueOf(queryConfiguration));
+		}
+
+		if (searchContextAttributes != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"searchContextAttributes\": ");
+
+			sb.append(_toJSON(searchContextAttributes));
 		}
 
 		if (sortConfiguration != null) {

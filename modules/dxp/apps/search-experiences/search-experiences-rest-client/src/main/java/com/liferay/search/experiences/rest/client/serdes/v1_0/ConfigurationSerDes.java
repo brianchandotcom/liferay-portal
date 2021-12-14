@@ -118,6 +118,16 @@ public class ConfigurationSerDes {
 			sb.append(String.valueOf(configuration.getQueryConfiguration()));
 		}
 
+		if (configuration.getSearchContextAttributes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"searchContextAttributes\": ");
+
+			sb.append(_toJSON(configuration.getSearchContextAttributes()));
+		}
+
 		if (configuration.getSortConfiguration() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -201,6 +211,15 @@ public class ConfigurationSerDes {
 				String.valueOf(configuration.getQueryConfiguration()));
 		}
 
+		if (configuration.getSearchContextAttributes() == null) {
+			map.put("searchContextAttributes", null);
+		}
+		else {
+			map.put(
+				"searchContextAttributes",
+				String.valueOf(configuration.getSearchContextAttributes()));
+		}
+
 		if (configuration.getSortConfiguration() == null) {
 			map.put("sortConfiguration", null);
 		}
@@ -280,6 +299,15 @@ public class ConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					configuration.setQueryConfiguration(
 						QueryConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "searchContextAttributes")) {
+
+				if (jsonParserFieldValue != null) {
+					configuration.setSearchContextAttributes(
+						(Map)ConfigurationSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

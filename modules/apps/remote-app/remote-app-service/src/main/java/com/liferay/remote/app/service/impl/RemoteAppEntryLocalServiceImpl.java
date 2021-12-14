@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
+import com.liferay.remote.app.exception.DuplicateRemoteAppEntryExternalReferenceCodeException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
@@ -90,7 +91,8 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			String description, String friendlyURLMapping, boolean instanceable,
+			String description, String externalReferenceCode,
+			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
@@ -109,7 +111,15 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			counterLocalService.increment());
 
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(
+				remoteAppEntry.getRemoteAppEntryId());
+		}
+
 		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
 
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
@@ -567,6 +577,24 @@ public class RemoteAppEntryLocalServiceImpl
 				throw new RemoteAppEntryCustomElementURLsException(
 					"Invalid custom element URL " + customElementURL);
 			}
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws DuplicateRemoteAppEntryExternalReferenceCodeException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryLocalService.
+				fetchRemoteAppEntryByExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+		if (remoteAppEntry != null) {
+			throw new DuplicateRemoteAppEntryExternalReferenceCodeException();
 		}
 	}
 

@@ -26,17 +26,17 @@ public interface DDMBeanTranslator {
 	public DDMForm translate(
 		com.liferay.dynamic.data.mapping.kernel.DDMForm ddmForm);
 
-	public DDMFormField translate(
-		com.liferay.dynamic.data.mapping.kernel.DDMFormField ddmFormField);
-
-	public DDMFormValues translate(
-		com.liferay.dynamic.data.mapping.kernel.DDMFormValues ddmFormValues);
-
 	public com.liferay.dynamic.data.mapping.kernel.DDMForm translate(
 		DDMForm ddmForm);
 
+	public DDMFormField translate(
+		com.liferay.dynamic.data.mapping.kernel.DDMFormField ddmFormField);
+
 	public com.liferay.dynamic.data.mapping.kernel.DDMFormField translate(
 		DDMFormField ddmFormField);
+
+	public DDMFormValues translate(
+		com.liferay.dynamic.data.mapping.kernel.DDMFormValues ddmFormValues);
 
 	public com.liferay.dynamic.data.mapping.kernel.DDMFormValues translate(
 		DDMFormValues ddmFormValues);

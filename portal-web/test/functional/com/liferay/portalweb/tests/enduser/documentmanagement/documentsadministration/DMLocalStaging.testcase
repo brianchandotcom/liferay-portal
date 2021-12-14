@@ -296,16 +296,6 @@ definition {
 			relatedAssetsTitle = "Web Content Title");
 	}
 
-	@description = "This is a test for LPS-136821. It checks that a repository can be published."
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanPublishRepository {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136821 CanPublishRepository pending implementation
-
-	}
-
 	@description = "This is a test for LPS-136826. It checks that a shortcut can be published using the normal publication process."
 	@priority = "3"
 	test CanPublishShortcut {

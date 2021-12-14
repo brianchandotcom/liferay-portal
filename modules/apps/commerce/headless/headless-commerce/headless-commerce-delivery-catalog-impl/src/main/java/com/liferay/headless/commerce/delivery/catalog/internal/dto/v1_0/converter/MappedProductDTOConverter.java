@@ -96,23 +96,31 @@ public class MappedProductDTOConverter
 
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-				csDiagramEntry.getCProductId());
+				GetterUtil.getLong(
+					mappedProductDTOConverterContext.getReplacementCProductId(),
+					csDiagramEntry.getCProductId()));
+
+		long cpInstanceId = GetterUtil.getLong(
+			mappedProductDTOConverterContext.getReplacementCPInstanceId(),
+			csDiagramEntry.getCPInstanceId());
+
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-			GetterUtil.getLong(csDiagramEntry.getCPInstanceId()));
+			cpInstanceId);
+
+		CPInstance firstAvailableReplacementCPInstance =
+			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+				commerceContext.getCommerceChannelGroupId(), cpInstanceId);
 
 		return new MappedProduct() {
 			{
-				actions = dtoConverterContext.getActions();
+				actions = mappedProductDTOConverterContext.getActions();
 				id = csDiagramEntry.getCSDiagramEntryId();
 				options = _getOptions(cpInstance);
 				price = _getPrice(
 					commerceContext, cpInstance,
 					mappedProductDTOConverterContext.getLocale(), 1);
-				productId = csDiagramEntry.getCProductId();
 				quantity = csDiagramEntry.getQuantity();
 				sequence = csDiagramEntry.getSequence();
-				sku = csDiagramEntry.getSku();
-				skuId = GetterUtil.getLong(csDiagramEntry.getCPInstanceId());
 
 				setAvailability(
 					() -> {
@@ -137,7 +145,8 @@ public class MappedProductDTOConverter
 							new DefaultDTOConverterContext(
 								_dtoConverterRegistry,
 								cpDefinition.getCPDefinitionId(),
-								dtoConverterContext.getLocale(), null, null));
+								mappedProductDTOConverterContext.getLocale(),
+								null, null));
 					});
 				setProductExternalReferenceCode(
 					() -> {
@@ -148,6 +157,14 @@ public class MappedProductDTOConverter
 						CProduct cProduct = cpDefinition.getCProduct();
 
 						return cProduct.getExternalReferenceCode();
+					});
+				setProductId(
+					() -> {
+						if (cpDefinition == null) {
+							return null;
+						}
+
+						return cpDefinition.getCProductId();
 					});
 				setProductName(
 					() -> {
@@ -176,10 +193,41 @@ public class MappedProductDTOConverter
 									new DefaultDTOConverterContext(
 										cpDefinitionOptionRel.
 											getCPDefinitionOptionRelId(),
-										dtoConverterContext.getLocale())));
+										mappedProductDTOConverterContext.
+											getLocale())));
 						}
 
 						return productOptions.toArray(new ProductOption[0]);
+					});
+				setFirstAvailableReplacementMappedProduct(
+					() -> {
+						MappedProduct firstAvailableReplacementMappedProduct =
+							null;
+
+						if ((cpInstance != null) &&
+							cpInstance.isDiscontinued() &&
+							(firstAvailableReplacementCPInstance != null)) {
+
+							mappedProductDTOConverterContext.
+								setReplacementCPInstanceId(
+									firstAvailableReplacementCPInstance.
+										getCPInstanceId());
+
+							mappedProductDTOConverterContext.
+								setReplacementCProductId(
+									cpInstance.getReplacementCProductId());
+
+							firstAvailableReplacementMappedProduct =
+								MappedProductDTOConverter.this.toDTO(
+									mappedProductDTOConverterContext);
+						}
+
+						mappedProductDTOConverterContext.
+							setReplacementCPInstanceId(null);
+						mappedProductDTOConverterContext.
+							setReplacementCProductId(null);
+
+						return firstAvailableReplacementMappedProduct;
 					});
 				setPurchasable(
 					() -> {
@@ -189,6 +237,69 @@ public class MappedProductDTOConverter
 
 						return cpInstance.isPurchasable();
 					});
+				setReplacementMappedProduct(
+					() -> {
+						MappedProduct replacementMappedProduct = null;
+
+						if ((cpInstance != null) &&
+							cpInstance.isDiscontinued()) {
+
+							CPInstance replacementCPInstance =
+								_cpInstanceHelper.fetchReplacementCPInstance(
+									cpInstance.getReplacementCProductId(),
+									cpInstance.getReplacementCPInstanceUuid());
+
+							if (replacementCPInstance == null) {
+								return null;
+							}
+
+							mappedProductDTOConverterContext.
+								setReplacementCPInstanceId(
+									replacementCPInstance.getCPInstanceId());
+
+							mappedProductDTOConverterContext.
+								setReplacementCProductId(
+									cpInstance.getReplacementCProductId());
+
+							replacementMappedProduct =
+								MappedProductDTOConverter.this.toDTO(
+									mappedProductDTOConverterContext);
+						}
+
+						mappedProductDTOConverterContext.
+							setReplacementCPInstanceId(null);
+						mappedProductDTOConverterContext.
+							setReplacementCProductId(null);
+
+						return replacementMappedProduct;
+					});
+				setReplacementMessage(
+					() -> {
+						if ((cpInstance != null) &&
+							cpInstance.isDiscontinued() &&
+							(firstAvailableReplacementCPInstance != null) &&
+							(cpInstance.getCPInstanceId() ==
+								csDiagramEntry.getCPInstanceId())) {
+
+							return LanguageUtil.format(
+								mappedProductDTOConverterContext.getLocale(),
+								"x-has-been-replaced-by-x",
+								new String[] {
+									csDiagramEntry.getSku(),
+									firstAvailableReplacementCPInstance.getSku()
+								});
+						}
+
+						return null;
+					});
+				setSku(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getSku();
+					});
 				setSkuExternalReferenceCode(
 					() -> {
 						if (cpInstance == null) {
@@ -196,6 +307,14 @@ public class MappedProductDTOConverter
 						}
 
 						return cpInstance.getExternalReferenceCode();
+					});
+				setSkuId(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getCPInstanceId();
 					});
 				setThumbnail(
 					() -> {

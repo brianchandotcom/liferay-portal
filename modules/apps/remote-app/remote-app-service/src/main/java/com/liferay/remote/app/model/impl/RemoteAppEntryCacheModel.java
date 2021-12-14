@@ -77,12 +77,14 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", remoteAppEntryId=");
 		sb.append(remoteAppEntryId);
 		sb.append(", companyId=");
@@ -143,6 +145,13 @@ public class RemoteAppEntryCacheModel
 		}
 		else {
 			remoteAppEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			remoteAppEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			remoteAppEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		remoteAppEntryImpl.setRemoteAppEntryId(remoteAppEntryId);
@@ -278,6 +287,7 @@ public class RemoteAppEntryCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		remoteAppEntryId = objectInput.readLong();
 
@@ -317,6 +327,13 @@ public class RemoteAppEntryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(remoteAppEntryId);
@@ -430,6 +447,7 @@ public class RemoteAppEntryCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long remoteAppEntryId;
 	public long companyId;
 	public long userId;

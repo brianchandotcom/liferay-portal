@@ -42,8 +42,8 @@ public class RemoteAppEntryLocalServiceWrapper
 			addCustomElementRemoteAppEntry(
 				long userId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
-				boolean instanceable,
+				String description, String externalReferenceCode,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -51,8 +51,9 @@ public class RemoteAppEntryLocalServiceWrapper
 
 		return _remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, description, friendlyURLMapping, instanceable,
-			nameMap, portletCategoryName, properties, sourceCodeURL);
+			customElementURLs, description, externalReferenceCode,
+			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+			properties, sourceCodeURL);
 	}
 
 	@Override
@@ -66,6 +67,26 @@ public class RemoteAppEntryLocalServiceWrapper
 		return _remoteAppEntryLocalService.addIFrameRemoteAppEntry(
 			userId, description, friendlyURLMapping, iFrameURL, instanceable,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
+	}
+
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry
+			addOrUpdateCustomElementRemoteAppEntry(
+				long userId, String customElementCSSURLs,
+				String customElementHTMLElementName, String customElementURLs,
+				String description, String externalReferenceCode,
+				String friendlyURLMapping, boolean instanceable,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String portletCategoryName, String properties,
+				String sourceCodeURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.
+			addOrUpdateCustomElementRemoteAppEntry(
+				userId, customElementCSSURLs, customElementHTMLElementName,
+				customElementURLs, description, externalReferenceCode,
+				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+				properties, sourceCodeURL);
 	}
 
 	/**
@@ -279,6 +300,36 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
+	 */
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry
+		fetchRemoteAppEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _remoteAppEntryLocalService.
+			fetchRemoteAppEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchRemoteAppEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry
+		fetchRemoteAppEntryByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _remoteAppEntryLocalService.fetchRemoteAppEntryByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the remote app entry with the matching UUID and company.
 	 *
 	 * @param uuid the remote app entry's UUID
@@ -379,6 +430,25 @@ public class RemoteAppEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.getRemoteAppEntry(remoteAppEntryId);
+	}
+
+	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry
+			getRemoteAppEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.
+			getRemoteAppEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

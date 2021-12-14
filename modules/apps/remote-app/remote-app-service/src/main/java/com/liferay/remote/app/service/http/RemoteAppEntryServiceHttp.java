@@ -55,8 +55,8 @@ public class RemoteAppEntryServiceHttp {
 			addCustomElementRemoteAppEntry(
 				HttpPrincipal httpPrincipal, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String friendlyURLMapping,
-				boolean instanceable,
+				String description, String externalReferenceCode,
+				String friendlyURLMapping, boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -70,9 +70,9 @@ public class RemoteAppEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, customElementCSSURLs, customElementHTMLElementName,
-				customElementURLs, description, friendlyURLMapping,
-				instanceable, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+				customElementURLs, description, externalReferenceCode,
+				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+				properties, sourceCodeURL);
 
 			Object returnObj = null;
 
@@ -335,8 +335,8 @@ public class RemoteAppEntryServiceHttp {
 	private static final Class<?>[]
 		_addCustomElementRemoteAppEntryParameterTypes0 = new Class[] {
 			String.class, String.class, String.class, String.class,
-			String.class, boolean.class, java.util.Map.class, String.class,
-			String.class, String.class
+			String.class, String.class, boolean.class, java.util.Map.class,
+			String.class, String.class, String.class
 		};
 	private static final Class<?>[] _addIFrameRemoteAppEntryParameterTypes1 =
 		new Class[] {

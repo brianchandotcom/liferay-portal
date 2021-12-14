@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>ACEventAnalysis</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACEventAnalysis</td></tr>
+</thead>
+
+<tbody>
+<!-- ADD_BUTTON_TO_ANALYSE -->
+<tr>
+	<td>ADD_EVENT_BUTTON</td>
+	<td>//button[contains(@class,'add-event-button')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

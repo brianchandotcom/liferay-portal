@@ -171,4 +171,112 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10195 | Test Summary: Unblock single custom event and unblock custom events in bulk"
+	@priority = "5"
+	test CanUnblockCustomEvent {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+        task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create 3 custom events") {
+			var customEventName1 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName1}",
+				timeToSendCustomEvent = "1");
+
+			var customEventName2 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName2}",
+				timeToSendCustomEvent = "1");
+
+			var customEventName3 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName3}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Block all custom events") {
+			ACCustomEvents.blockAllCustomEvents();
+		}
+
+		task ("Navigation to block custom event list") {
+			ACCustomEvents.openBlockCustomEventList();
+		}
+
+		task ("Unblock custom event") {
+			ACCustomEvents.unblockCustomEvent(customEventName = "${customEventName1}");
+		}
+
+		task ("Search for the name of the custom event that was unblocked in block list") {
+			ACUtils.searchBar(searchItem = "${customEventName1}");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.backNavigation(pageName = "Events");
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Search for the name of the custom event that was unblocked in custom event list") {
+			ACUtils.searchBar(searchItem = "${customEventName1}");
+
+			ACUtils.viewNameList(nameList = "${customEventName1}");
+		}
+
+		task ("Navigation to block custom event list") {
+			ACCustomEvents.openBlockCustomEventList();
+		}
+
+		task ("Unblock all custom events") {
+			ACCustomEvents.unblockAllCustomEvents();
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no views on the selected period.");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.backNavigation(pageName = "Events");
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Search for the name of the custom event that was unblocked in custom event list") {
+			for (var customEventName : list "${customEventName2},${customEventName3}") {
+				ACUtils.searchBar(searchItem = "${customEventName}");
+
+				ACUtils.viewNameList(nameList = "${customEventName}");
+			}
+		}
+	}
+
 }

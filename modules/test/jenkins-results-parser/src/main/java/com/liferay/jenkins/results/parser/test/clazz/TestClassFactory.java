@@ -63,7 +63,7 @@ public class TestClassFactory {
 			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testClassFile));
 		}
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(testClassMethodName)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testClassMethodName)) {
 			sb.append("_");
 			sb.append(testClassMethodName);
 		}

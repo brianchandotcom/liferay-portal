@@ -460,6 +460,11 @@
 	<td>//span[contains(text(),'${key_columnName}')]/../../../../..//tr[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHECKBOX_CUSTOM_CONTROL</td>
+	<td>//input[@class='custom-control-input']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

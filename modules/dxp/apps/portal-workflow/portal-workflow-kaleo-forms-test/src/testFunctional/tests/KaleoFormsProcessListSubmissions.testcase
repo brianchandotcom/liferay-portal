@@ -110,11 +110,28 @@ definition {
 	}
 
 	@description = "Verify that user can delete all submissions in the page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteAllSubmissions {
+		for (var contactNumber : list "1,2,3") {
+			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
+			
+			KaleoFormsNewSubmissions.addNewContacts(		
+				ddlEmail = "userfn@liferay.com",
+				ddlFirstName = "Userfn ${contactNumber}",			
+				ddlLastName = "Userln ${contactNumber}",			
+				ddlPhoneMobile = "(123) 9999-9999",			
+				ddlUserName = "testliferay ${contactNumber}");
 
-		// TODO LRQA-70698 CanDeleteAllSubmissions pending implementation
+			KaleoFormsAdmin.saveProcessRecord();
+
+			Navigator.gotoBack();
+
+		}
+
+			KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
+			KaleoFormsNewSubmissions.deleteAllSubmissions();
+			
 
 	}
 

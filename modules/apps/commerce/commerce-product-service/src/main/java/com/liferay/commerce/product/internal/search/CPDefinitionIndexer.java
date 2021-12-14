@@ -802,7 +802,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 						firstCPInstance.getCPInstanceUuid(),
 						CommercePriceListConstants.TYPE_PRICE_LIST);
 
-			BigDecimal lowestPrice = commercePriceEntry.getPrice();
+			BigDecimal lowestPrice = BigDecimal.ZERO;
+
+			if (commercePriceEntry != null) {
+				lowestPrice = commercePriceEntry.getPrice();
+			}
 
 			for (CPInstance cpInstance : cpInstances) {
 				commercePriceEntry =
@@ -811,7 +815,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 							cpInstance.getCPInstanceUuid(),
 							CommercePriceListConstants.TYPE_PRICE_LIST);
 
-				BigDecimal price = commercePriceEntry.getPrice();
+				BigDecimal price = BigDecimal.ZERO;
+
+				if (commercePriceEntry != null) {
+					price = commercePriceEntry.getPrice();
+				}
 
 				BigDecimal promoPrice = cpInstance.getPromoPrice();
 

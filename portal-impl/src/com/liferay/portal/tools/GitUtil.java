@@ -174,6 +174,10 @@ public class GitUtil {
 		return fileNames;
 	}
 
+	public static String getLatestCommitId() throws Exception {
+		return _getLatestCommitId("HEAD");
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
@@ -348,7 +352,7 @@ public class GitUtil {
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			StringBundler.concat(
 				"git diff --diff-filter=RD --name-status ", commitId, " ",
-				_getLatestCommitId()));
+				getLatestCommitId()));
 
 		String line = null;
 
@@ -428,7 +432,7 @@ public class GitUtil {
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			StringBundler.concat(
 				"git diff --diff-filter=AMR --name-only ", commitId, " ",
-				_getLatestCommitId()));
+				getLatestCommitId()));
 
 		String line = null;
 
@@ -563,10 +567,6 @@ public class GitUtil {
 				return null;
 			}
 		}
-	}
-
-	private static String _getLatestCommitId() throws Exception {
-		return _getLatestCommitId("HEAD");
 	}
 
 	private static String _getLatestCommitId(String... branchNames)

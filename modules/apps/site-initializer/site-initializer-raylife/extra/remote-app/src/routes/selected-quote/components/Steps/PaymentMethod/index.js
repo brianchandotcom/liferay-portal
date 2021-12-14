@@ -1,11 +1,11 @@
+import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
-
 import {useContext, useEffect, useState} from 'react';
 import {LiferayService} from '../../../../../common/services/liferay';
 import {SelectedQuoteContext} from '../../../context/SelectedQuoteContextProvider';
 import {getPaymentMethodURL, getPaymentMethods} from '../../../services/Cart';
 import {updateOrderPaymentMethod} from '../../../services/Order';
-
 import RadioButton from './RadioButton';
 
 const PaymentMethod = () => {
@@ -98,18 +98,30 @@ const PaymentMethod = () => {
 	const showOptions = (method) =>
 		method.options.map((option, index) => (
 			<div
-				className={classNames('payment-method-option', {
-					selected: option.checked,
-				})}
+				className={classNames(
+					'align-items-center c-mr-3 c-px-5 c-py-3 d-flex d-flex flex-column justify-content-center rounded-sm',
+					{
+						'border': !option.checked,
+						'selected': option.checked,
+						'shadow-lg': option.checked,
+						'type-payment-card-solid': option.checked,
+					}
+				)}
 				key={index}
 				onClick={() => onSelectedOption(option.id)}
 			>
-				<div className="card-container">
-					<div className="card-content">
-						<p className="card-title">{option.title}</p>
+				<div>
+					<p className="text-center text-link-md">{option.title}</p>
 
-						<p className="card-description">{option.description}</p>
-					</div>
+					<p
+						className={classNames('text-center', {
+							'font-weight-bold text-accent-5 text-paragraph-xs':
+								option.checked,
+							'text-paragraph-xs': !option.checked,
+						})}
+					>
+						{option.description}
+					</p>
 				</div>
 			</div>
 		));
@@ -117,21 +129,27 @@ const PaymentMethod = () => {
 	const checkedMethod = methods.find(({checked}) => checked);
 
 	return (
-		<div className="payment-method-container">
-			<div className="payment-method-row">
-				<h3>Payment Method</h3>
+		<div className="c-mb-4 c-mt-5">
+			<div className="c-mb-3 c-mt-5 d-flex flex-column">
+				<h3 className="mb-3">Payment Method</h3>
 
 				{methods.map((method, index) => (
-					<div className="payment-method" key={index}>
+					<div
+						className="align-items-center c-mb-3 d-flex flex-row payment-method"
+						key={index}
+					>
 						<RadioButton
 							onSelected={onSelectedMethod}
 							selected={method.checked}
 							value={method.value}
 						>
 							<>
-								<div className="image">
+								<div className="align-items-center d-flex justify-content-center">
 									<div>
-										<img src={method.image} />
+										<img
+											className="bg-neutral-0 border c-p-1 card-outlined pay-card-image rounded-sm"
+											src={method.image}
+										/>
 									</div>
 								</div>
 
@@ -142,19 +160,20 @@ const PaymentMethod = () => {
 				))}
 			</div>
 
-			<div className="payment-method-row">
+			<div className="c-mb-5 d-flex flex-column">
 				{checkedMethod && (
 					<>
-						<h3>Billing Options</h3>
+						<h3 className="c-mb-3">Billing Options</h3>
 
 						{checkedMethod.options.length ? (
 							<>
-								<div className="payment-method-options">
+								<div className="c-mb-3 d-flex flex-row">
 									{showOptions(checkedMethod)}
 								</div>
-								<div className="agree-check">
-									<div className="check">
-										<input
+								<div className="d-flex flex-row">
+									<div className="agree-check c-mr-2">
+										<ClayCheckbox
+											checked={agree}
 											name="agree-check"
 											onChange={() => setAgree(!agree)}
 											type="checkbox"
@@ -162,27 +181,26 @@ const PaymentMethod = () => {
 										/>
 									</div>
 
-									<p>
-										{'I have read and agree to the '}
-
+									<p className="align-items-center c-mb-6 d-flex justify-content-center">
+										I have read and agree to the&nbsp;
 										<strong>
 											Raylife Terms and Conditions
 										</strong>
 									</p>
 								</div>
-								<div className="payment-button">
-									<button
-										className="btn btn-secondary"
+								<div className="c-mb-2 c-mt-10 d-flex justify-content-end payment-button">
+									<ClayButton
+										className="btn btn-solid btn-variant-secondary c-px-5 display-4 text-link-md text-uppercase"
 										disabled={!agree}
 										onClick={() =>
 											onClickPayNow(checkedMethod)
 										}
 									>
 										Pay Now
-									</button>
+									</ClayButton>
 								</div>
 								{checkedMethod.value === 'paypal' && (
-									<p className="option-message">
+									<p className="d-flex justify-content-end option-message">
 										You will be redirected to PayPal to
 										complete payment
 									</p>

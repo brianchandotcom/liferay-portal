@@ -59,13 +59,14 @@ public class DLSelectFolderDisplayContext {
 	public DLSelectFolderDisplayContext(
 		DLAppService dlAppService, Folder folder,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		long selectedFolderId, long selectedRepositoryId,
+		long repositoryId, long selectedFolderId, long selectedRepositoryId,
 		boolean showGroupSelector) {
 
 		_dlAppService = dlAppService;
 		_folder = folder;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
+		_repositoryId = repositoryId;
 		_selectedFolderId = selectedFolderId;
 		_selectedRepositoryId = selectedRepositoryId;
 		_showGroupSelector = showGroupSelector;
@@ -166,6 +167,10 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public long getRepositoryId() {
+		if (_repositoryId != 0) {
+			return _repositoryId;
+		}
+
 		if (_folder != null) {
 			return _folder.getRepositoryId();
 		}
@@ -317,6 +322,7 @@ public class DLSelectFolderDisplayContext {
 	private final Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
+	private final long _repositoryId;
 	private final long _selectedFolderId;
 	private final long _selectedRepositoryId;
 	private final boolean _showGroupSelector;

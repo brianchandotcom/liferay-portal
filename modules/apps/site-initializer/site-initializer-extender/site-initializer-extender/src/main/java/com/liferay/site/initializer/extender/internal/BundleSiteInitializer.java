@@ -65,6 +65,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -1703,10 +1704,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getId()));
 
-			if (Objects.equals(objectDefinition.getScope(), "company") &&
-				(existingObjectDefinition != null)) {
+			long groupId = serviceContext.getScopeGroupId();
 
-				continue;
+			if (Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+				groupId = 0;
+
+				if (existingObjectDefinition != null) {
+					continue;
+				}
 			}
 
 			String objectEntriesJSON = _read(
@@ -1722,8 +1730,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				_objectEntryLocalService.addObjectEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), objectDefinition.getId(),
+					serviceContext.getUserId(), groupId,
+					objectDefinition.getId(),
 					ObjectMapperUtil.readValue(
 						Serializable.class,
 						String.valueOf(jsonArray.getJSONObject(i))),

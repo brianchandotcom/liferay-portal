@@ -21,13 +21,16 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
@@ -98,6 +101,17 @@ public class SourceFormatterUtil {
 	public static final String UPGRADE_FROM_VERSION = "upgrade.from.version";
 
 	public static final String UPGRADE_TO_VERSION = "upgrade.to.version";
+
+	public static void deleteTempPortalJSONObjectFile() throws Exception {
+		File tempPortalJSONObjectFile = new File(
+			StringBundler.concat(
+				SystemProperties.get(SystemProperties.TMP_DIR), File.separator,
+				GitUtil.getLatestCommitId(), ".json"));
+
+		if (tempPortalJSONObjectFile.exists()) {
+			tempPortalJSONObjectFile.delete();
+		}
+	}
 
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
@@ -321,6 +335,15 @@ public class SourceFormatterUtil {
 			int maxLineLength)
 		throws Exception {
 
+		File tempPortalJSONObjectFile = new File(
+			StringBundler.concat(
+				SystemProperties.get(SystemProperties.TMP_DIR), File.separator,
+				GitUtil.getLatestCommitId(), ".json"));
+
+		if (tempPortalJSONObjectFile.exists()) {
+			return new JSONObjectImpl(FileUtil.read(tempPortalJSONObjectFile));
+		}
+
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
 		List<Future<Tuple>> futures = new ArrayList<>();
@@ -385,13 +408,18 @@ public class SourceFormatterUtil {
 
 		JSONObject portalJSONObject = new JSONObjectImpl();
 
-		return portalJSONObject.put(
+		portalJSONObject.put(
 			"javaClasses", javaClassesJSONObject
 		).put(
 			"taglibs", taglibsJSONObject
 		).put(
 			"xmlDefinitions", xmlDefinitionsJSONObject
 		);
+
+		FileUtil.write(
+			tempPortalJSONObjectFile, JSONUtil.toString(portalJSONObject));
+
+		return portalJSONObject;
 	}
 
 	public static JSONObject getPortalJSONObjectByVersion(String version)

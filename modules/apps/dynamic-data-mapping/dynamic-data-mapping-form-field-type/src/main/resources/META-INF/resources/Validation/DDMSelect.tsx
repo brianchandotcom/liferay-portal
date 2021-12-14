@@ -55,18 +55,16 @@ function DDMSelect({
 		</div>
 	);
 
-	const displaySelect = disabled ? (
-		select
-	) : (
-		<ClayDropDownWithItems items={items} trigger={select} />
-	);
-
 	return (
-		<div>
-			<label>{label}</label>
+		<label>
+			{label}
 
-			{displaySelect}
-		</div>
+			{disabled ? (
+				select
+			) : (
+				<ClayDropDownWithItems items={items} trigger={select} />
+			)}
+		</label>
 	);
 }
 
@@ -74,11 +72,11 @@ export default DDMSelect;
 
 interface IProps {
 	disabled?: boolean;
-	label: string;
-	name: string;
+	label: string | undefined;
+	name: string | undefined;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
 	options: IOption[];
-	value: string;
+	value: string | undefined;
 }
 
 interface IOption {

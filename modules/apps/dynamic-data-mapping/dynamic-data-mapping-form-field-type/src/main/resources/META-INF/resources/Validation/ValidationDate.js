@@ -112,7 +112,6 @@ const ValidationDate = ({
 
 	const fields = useMemo(() => {
 		const fields = [];
-
 		if (dateFieldTypeValidationEnabled) {
 			const visitor = new PagesVisitor(builderPages);
 
@@ -137,10 +136,11 @@ const ValidationDate = ({
 
 	return (
 		<>
-			<div className="ddm-form-field-type__validation-date-accepted-date">
+			<div className="ddm__validation-date-accepted-date">
+				<label>{Liferay.Language.get('accepted-date')}</label>
+
 				<DDMSelect
 					disabled={readOnly || localizationMode}
-					label={Liferay.Language.get('accepted-date')}
 					name="selectedValidation"
 					onChange={({target: {value}}) => {
 						dispatch({

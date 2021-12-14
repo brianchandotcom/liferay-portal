@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {screen, cleanup, render, within} from '@testing-library/react';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -72,64 +72,68 @@ const SelectDateTypeProvider = ({builderPages = [], state, ...props}) => (
 );
 
 describe('SelectDateType', () => {
+
 	afterEach(cleanup);
 
-	it('checks options and date field options', () => {
-		const parameter = {
-			en_US: {
-				endsOn: {
-					date: 'responseDate',
-					quantity: -1,
-					type: 'customDate',
-					unit: 'days',
-				},
-			},
-		};
+    it('checks options and date field options', () => {
+        
+        const parameter = {
+            en_US: {
+                endsOn: {
+                    date: 'responseDate',
+                    quantity: -1,
+                    type: 'customDate',
+                    unit: 'days',
+                },
+            },
+        };
 
-		const options = [
-			{
-				checked: false,
-				label: 'response-date',
-				name: 'responseDate',
-				value: 'responseDate',
-			},
-		];
+        const options = [
+            {
+                checked:false,
+                label:"response-date",
+                name:"responseDate",
+                value:"responseDate"
+            }
+        ]
 
-		const dateFieldOptions = [
-			{
-				checked: false,
-				label: 'Date A',
-				name: 'Date12345678',
-				value: 'Date12345678',
-			},
-		];
+        const dateFieldOptions = [
+            {
+                checked:false,
+                label:"Date A",
+                name:"Date12345678",
+                value:"Date12345678"
+            }
+        ]
 
-		const localizedValue = jest.fn(() => parameter['en_US']);
+        const localizedValue = jest.fn(() => parameter['en_US']);
 
-		const {getAllByRole} = render(
-			<SelectDateTypeProvider
-				dateFieldOptions={dateFieldOptions}
-				defaultLanguageId="en_US"
-				editingLanguageId="en_US"
-				localizedValue={localizedValue}
-				name="validationDate"
-				onChange={() => {}}
-				options={options}
-				parameters={parameters}
-				selectedValidation={{
-					label: '',
-					name: 'pastDates',
-					parameterMessage: '',
-					template: 'pastDates({name}, "{parameter}")',
-				}}
-				validations={validations}
-				visible={true}
-			/>
-		);
+        const {getAllByRole} = render(
+            <SelectDateTypeProvider
+                dateFieldOptions={dateFieldOptions}
+                defaultLanguageId="en_US"
+                editingLanguageId="en_US"
+                localizedValue={localizedValue}
+                name="validationDate"
+                onChange={() => {}}
+                options={options}
+                parameters={parameters}
+                selectedValidation={{
+                    label: '',
+                    name: 'pastDates',
+                    parameterMessage: '',
+                    template: 'pastDates({name}, "{parameter}")',
+                }}
+                validations={validations}
+                visible={true}
+            />
+        );
 
-		const [responseDate, dateField] = [...getAllByRole('button')];
+        const [responseDate, dateField] = [
+            ...getAllByRole('button'),
+        ];
 
-		expect(responseDate).toHaveValue('responseDate');
-		expect(dateField).toHaveValue('Date12345678');
-	});
+        expect(responseDate).toHaveValue('responseDate');
+        expect(dateField).toHaveValue('Date12345678');
+    });
 });

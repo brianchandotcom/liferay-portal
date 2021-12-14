@@ -152,6 +152,9 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                lastReplacementMappedProduct:
+                    $ref: "#/components/schemas/MappedProduct"
+                    readOnly: true
                 options:
                     additionalProperties:
                         type: string
@@ -190,6 +193,13 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
+                replacementMappedProduct:
+                    $ref: "#/components/schemas/MappedProduct"
+                    readOnly: true
+                replacementMessage:
+                    example: MIN3123 has been replaced by MIN1289
+                    readOnly: true
+                    type: string
                 sequence:
                     example: 1
                     type: string

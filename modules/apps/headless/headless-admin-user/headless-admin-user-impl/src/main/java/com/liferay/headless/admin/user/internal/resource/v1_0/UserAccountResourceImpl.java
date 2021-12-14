@@ -651,7 +651,7 @@ public class UserAccountResourceImpl
 			_userService.updateUser(
 				userAccountId, null, null, null, false, null, null,
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
-				false, null, user.getLanguageId(), user.getTimeZoneId(),
+				true, null, user.getLanguageId(), user.getTimeZoneId(),
 				user.getGreeting(), user.getComments(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(userAccount),

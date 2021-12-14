@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.list.web.internal.configuration;
+package com.liferay.asset.list.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+
+import java.util.Map;
 
 /**
  * @author Yurena Cabrera

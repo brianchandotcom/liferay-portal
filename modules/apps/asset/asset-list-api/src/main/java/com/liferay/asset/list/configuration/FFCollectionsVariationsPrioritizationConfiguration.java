@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.list.web.internal.configuration;
+package com.liferay.asset.list.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**

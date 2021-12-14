@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -119,6 +120,10 @@ public class IGConfigurationDisplayContext {
 	public String getRootFolderName() throws PortalException {
 		_initFolder();
 
+		if (Objects.equals(_folderName, StringPool.BLANK)) {
+			_getFolderName();
+		}
+
 		return _folderName;
 	}
 
@@ -177,6 +182,26 @@ public class IGConfigurationDisplayContext {
 		}
 	}
 
+	private void _getFolderName() {
+		if ((_folderId == null) ||
+			(_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			return;
+		}
+
+		Folder folder = _getFolder();
+
+		if (folder == null) {
+			return;
+		}
+
+		_folderName = folder.getName();
+
+		if (_folderInTrash) {
+			_folderName = _trashHelper.getOriginalTitle(_folder.getName());
+		}
+	}
+
 	private PortletPreferences _getPortletPreferences() {
 		if (_portletPreferences != null) {
 			return _portletPreferences;
@@ -220,9 +245,7 @@ public class IGConfigurationDisplayContext {
 
 		Folder folder = _getFolder();
 
-		if ((folder == null) ||
-			(folder.getGroupId() != _themeDisplay.getScopeGroupId())) {
-
+		if (folder == null) {
 			return;
 		}
 

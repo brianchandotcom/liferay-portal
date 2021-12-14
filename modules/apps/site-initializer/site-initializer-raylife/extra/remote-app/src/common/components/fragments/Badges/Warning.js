@@ -4,13 +4,18 @@ import React from 'react';
 
 export function WarningBadge({children}) {
 	return (
-		<ClayLabel className="label-inverse-danger rounded">
-			<div className="align-items-center badge d-flex ml-2 warning">
+		<ClayLabel className="label-inverse-danger p-0 rounded w-100">
+			<div className="align-items-center badge d-flex m-0 warning">
 				<span className="inline-item inline-item-before">
-					<ClayIcon symbol="exclamation-full" />
+					<ClayIcon
+						className="c-ml-4 c-mr-2"
+						symbol="exclamation-full"
+					/>
 				</span>
 
-				<span className="text-paragraph-sm">{children}</span>
+				<span className="font-weight-normal text-paragraph">
+					{children}
+				</span>
 			</div>
 		</ClayLabel>
 	);

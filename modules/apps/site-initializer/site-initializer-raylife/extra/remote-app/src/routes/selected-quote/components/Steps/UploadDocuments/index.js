@@ -1,6 +1,7 @@
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {useContext, useState} from 'react';
 import {WarningBadge} from '../../../../../common/components/fragments/Badges/Warning';
-
 import {ApplicationPropertiesContext} from '../../../../../common/context/ApplicationPropertiesProvider';
 import {getItem} from '../../../../../common/services/liferay/storage';
 import {smoothScroll} from '../../../../../common/utils/scroll';
@@ -156,8 +157,7 @@ const UploadDocuments = () => {
 					);
 
 					setFilePropertyValue(fileEntry.id, 'documentId', data.id);
-				}
-				catch (error) {
+				} catch (error) {
 					console.error(error);
 				}
 			}
@@ -186,26 +186,36 @@ const UploadDocuments = () => {
 	};
 
 	return (
-		<div className="upload-container">
+		<div className="d-flex flex-column flex-wrap upload-container">
 			{sections.map((section, index) => (
-				<div className="upload-section" key={index}>
-					<div className="header">
-						<h3 className="title">
+				<section
+					className="c-pl-4 c-pr-0 c-pt-6 upload-section"
+					key={index}
+				>
+					<header className="c-mb-3 header">
+						<h5 className="c-mb-1 font-weight-bolder h5 upload-title">
 							{section.title}
 
 							{section.required ? (
-								<span className="required">*</span>
+								<span className="reference-mark">
+									<ClayIcon
+										className="text-warning upload-asterisk"
+										symbol="asterisk"
+									/>
+								</span>
 							) : (
-								<span className="optional">
+								<span className="text-neutral-8">
 									{` (optional)`}
 								</span>
 							)}
-						</h3>
+						</h5>
 
-						<span className="subtitle">{section.subtitle}</span>
-					</div>
+						<span className="font-weight-normal text-neutral-8 text-paragraph">
+							{section.subtitle}
+						</span>
+					</header>
 
-					<div className="upload-content">
+					<div className="d-flex flex-column upload-content">
 						<UploadFiles
 							dropAreaProps={{
 								...dropAreaProps,
@@ -218,7 +228,7 @@ const UploadDocuments = () => {
 					</div>
 
 					{section.error && (
-						<div className="upload-alert">
+						<div className="c-mt-3 upload-alert">
 							<WarningBadge>
 								<div className="alert-content">
 									<div className="alert-description">
@@ -228,17 +238,17 @@ const UploadDocuments = () => {
 							</WarningBadge>
 						</div>
 					)}
-				</div>
+				</section>
 			))}
 
-			<div className="upload-footer">
-				<button
-					className="btn btn-lg btn-primary"
+			<div className="d-flex justify-content-end mt-6">
+				<ClayButton
+					className="btn btn-primary font-weight-bolder rounded-sm text-neutral-0 text-paragraph"
 					disabled={loading}
 					onClick={onClickConfirmUpload}
 				>
 					CONFIRM UPLOADS
-				</button>
+				</ClayButton>
 			</div>
 		</div>
 	);

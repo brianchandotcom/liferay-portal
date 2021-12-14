@@ -21,6 +21,7 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -72,8 +73,9 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			FragmentEntry fragmentEntry =
 				_fragmentEntryService.addFragmentEntry(
 					serviceContext.getScopeGroupId(), fragmentCollectionId,
-					null, name, 0, type, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					null, name, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, false, StringPool.BLANK, null, 0, type,
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			fragmentEntry.setCss(
 				StringBundler.concat(

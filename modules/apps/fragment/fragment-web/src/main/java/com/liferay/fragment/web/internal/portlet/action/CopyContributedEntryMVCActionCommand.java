@@ -175,7 +175,8 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 				LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"),
 				StringPool.CLOSE_PARENTHESIS),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
+			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			previewFileEntryId, fragmentEntry.getType(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}

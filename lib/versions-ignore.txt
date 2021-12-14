@@ -1,3 +1,5 @@
+lib/development/ant-get-file-set.jar
+lib/development/ant-manifest-helper.jar
 lib/development/com.liferay.ant.beanshell.jar
 lib/development/com.liferay.ant.build.logger.jar
 lib/development/com.liferay.ant.heap.dump.jar

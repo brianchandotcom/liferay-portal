@@ -46,7 +46,7 @@ export function CardFormActionsWithSave({
 					{errors?.continueButton?.message || errorModal}
 				</WarningBadge>
 			)}
-			<div className="d-flex justify-content-between mt-7">
+			<div className="d-flex justify-content-between mt-5">
 				{onPrevious && (
 					<ClayButton
 						className="btn btn-borderless btn-variant-neutral font-weight-bolder previous text-paragraph text-small-caps"

@@ -7,7 +7,12 @@ export function YearControlledInput({rules = {}, inputProps = {}, ...props}) {
 	return (
 		<ControlledInputWithMask
 			{...props}
-			inputProps={{format: '####', mask: '_', ...inputProps}}
+			inputProps={{
+				className: 'mb-5',
+				format: '####',
+				mask: '_',
+				...inputProps,
+			}}
 			rules={{
 				max: {
 					message: 'You cannot enter a future year.',

@@ -175,8 +175,8 @@ definition {
 			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \
 				-u test@liferay.com:test \
 				-d passwordPolicyId=${passwordPolicyId} \
-				-d name='Default Password Policy' \
-				-d description='Default Password Policy' \
+				-d name="Default Password Policy" \
+				-d description="Default Password Policy" \
 				-d changeable=true \
 				-d changeRequired=false \
 				-d minAge=0 \

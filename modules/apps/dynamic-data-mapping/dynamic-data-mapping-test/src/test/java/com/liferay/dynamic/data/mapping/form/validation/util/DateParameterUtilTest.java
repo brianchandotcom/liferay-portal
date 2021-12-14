@@ -76,16 +76,6 @@ public class DateParameterUtilTest {
 	}
 
 	@Test
-	public void testGetParameterBlankWithDateField() {
-		String parameter = _getParameter(
-			"dateField", "Date12345678", "endsOn", "1", "dateField", "days");
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			DateParameterUtil.getParameter(null, "endsOn", parameter, null));
-	}
-
-	@Test
 	public void testGetParameterCustomDate() {
 		String dateFieldName = "Date";
 

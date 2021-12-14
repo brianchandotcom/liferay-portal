@@ -195,6 +195,46 @@ public class RemoteAppEntryLocalServiceImpl
 		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
+			long userId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			String description, String externalReferenceCode,
+			String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			RemoteAppEntry remoteAppEntry =
+				remoteAppEntryLocalService.
+					fetchRemoteAppEntryByExternalReferenceCode(
+						user.getCompanyId(), externalReferenceCode);
+
+			if (remoteAppEntry != null) {
+				return remoteAppEntryLocalService.
+					updateCustomElementRemoteAppEntry(
+						remoteAppEntry.getRemoteAppEntryId(),
+						customElementCSSURLs, customElementHTMLElementName,
+						customElementURLs, description, friendlyURLMapping,
+						nameMap, portletCategoryName, properties,
+						sourceCodeURL);
+			}
+		}
+
+		return addCustomElementRemoteAppEntry(
+			userId, customElementCSSURLs, customElementHTMLElementName,
+			customElementURLs, externalReferenceCode, description,
+			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
+			properties, sourceCodeURL);
+	}
+
 	@Override
 	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {

@@ -10,7 +10,54 @@
 </thead>
 
 <tbody>
-
+<!--DIAGRAM_ADMIN_TOOLTIP-->
+<tr>
+	<td>DIAGRAM_ADMIN_TOOLTIP</td>
+	<td>//form[contains(@class,'diagram-admin-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_ADMIN_TOOLTIP_POSITION</td>
+	<td>//form[contains(@class,'diagram-admin-tooltip')]//input[contains(@id,'sequenceInput') and contains (@value,'${key_positionValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_ADMIN_TOOLTIP_LINKED_TYPE</td>
+	<td>//form[contains(@class,'diagram-admin-tooltip')]//label[contains(@for,'linkedProductInput') and text()='${key_linkedType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_ADMIN_TOOLTIP_QUANTITY</td>
+	<td>//form[contains(@class,'diagram-admin-tooltip')]//input[contains(@id,'quantityInput') and contains (@value,'${key_quantity}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_ADMIN_TOOLTIP_INPUT_GROUP_ITEM</td>
+	<td>//form[contains(@class,'diagram-admin-tooltip')]//div[contains(@class,'input-group-item')]//input[contains(@value,'${key_inputItem}')]</td>
+	<td></td>
+</tr>
+<!--DIAGRAM_MAPPING-->
+<tr>
+	<td>DIAGRAM_IMAGE</td>
+	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PIN</td>
+	<td>//div[contains(@class,'view-wrapper')]//*[contains(@class,'pin') and text()='${key_pinNumber}']</td>
+	<td></td>
+</tr>
+<!--DIAGRAM_SETTINGS-->
+<tr>
+	<td>DIAGRAM_SETTINGS_TYPE_OPTION</td>
+	<td>//select[contains(@id,'type')]//option[contains(text(),'${key_settingOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_SETTINGS_SELECTED_TYPE</td>
+	<td>//select[contains(@id,'type')]//option[@selected and contains(.,'${key_selectedType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

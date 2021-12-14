@@ -1,3 +1,5 @@
+$custom-checkbox-indicator-icon-checked: clay-icon(check-small, #fff);
+
 $custom-control-indicator-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-border-color: var(--custom-control-border-color);
 $custom-control-indicator-border-width: 0.0625rem; // 1px
@@ -35,6 +37,8 @@ $custom-checkbox-indicator-indeterminate-box-shadow: none;
 $custom-control-indicator-indeterminate-border-color: var(
 	--custom-control-border-color
 );
+
+$custom-radio-indicator-icon-checked: clay-icon(circle, #fff);
 
 $custom-radio-indicator-icon-checked-bg-size: 0.5rem;
 

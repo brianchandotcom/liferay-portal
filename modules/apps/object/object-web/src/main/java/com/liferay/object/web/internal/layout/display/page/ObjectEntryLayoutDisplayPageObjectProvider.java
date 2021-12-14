@@ -18,6 +18,9 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -72,13 +75,25 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _objectDefinition.getLabel(locale);
+		try {
+			return _objectEntry.getTitleValue();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getURLTitle(Locale locale) {
 		return String.valueOf(_objectEntry.getObjectEntryId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryLayoutDisplayPageObjectProvider.class);
 
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntry _objectEntry;

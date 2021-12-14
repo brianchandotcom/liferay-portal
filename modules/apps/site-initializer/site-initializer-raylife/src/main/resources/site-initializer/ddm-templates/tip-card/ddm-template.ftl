@@ -88,8 +88,8 @@
 		let siteName = '';
 
 		try {
-			const {pathName} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-			const urlPaths = pathName.split('/').filter(Boolean);
+			const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+			const urlPaths = pathname.split('/').filter(Boolean);
 			siteName = '/' + urlPaths.slice(0, urlPaths.length - 1).join('/');
 		} catch (error) {
 			console.warn(error);

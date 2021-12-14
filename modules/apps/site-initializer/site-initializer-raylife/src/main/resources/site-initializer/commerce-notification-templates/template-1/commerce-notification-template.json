@@ -1,5 +1,4 @@
 {
-	"action": "create",
 	"bcc": "",
 	"cc": "",
 	"description": "",
@@ -9,9 +8,9 @@
 		"en-US": "Raylife"
 	},
 	"name": "Quote retrieve notification template",
-	"objectDefinitionName": "C_QuoteRetrieve",
 	"subject": {
 		"en-US": "Continue your Raylife [%PRODUCTNAME%] quote"
 	},
-	"to": "[%RETRIEVEEMAIL%]"
+	"to": "[%RETRIEVEEMAIL%]",
+	"type": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:QuoteRetrieve$]#create"
 }

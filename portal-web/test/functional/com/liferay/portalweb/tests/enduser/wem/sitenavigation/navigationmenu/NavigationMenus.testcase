@@ -39,6 +39,245 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141351. The site admin could find display page type items in dropdown menu."
+	@priority = "5"
+	test AddDisplayPageTypeNavigationMenuItems {
+		task ("Add the first display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Display Page Content fragment to the first display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the first display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Web Content DPT");
+		}
+
+		task ("Add the second display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Blogs Entry DPT",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Display Page Content fragment to the second display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the second display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Blogs Entry DPT");
+		}
+
+		task ("Add the third display page template for Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Document DPT",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+		}
+
+		task ("Add a Display Page Content fragment to the third display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the third display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document DPT");
+		}
+
+		task ("Add the fourth display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Category DPT",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Display Page Content fragment to the fourth display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the fourth display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Category DPT");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Add a document with an image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add the Display Page type items in navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Navigation Menu Name");
+		}
+
+		task ("Add the Display Page items to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Web Content Title",
+				item = "Web Content Article");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Blogs Entry Title",
+				item = "Blogs Entry");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Document Title",
+				item = "Document");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Category Name",
+				item = "Category");
+		}
+
+		task ("View the Display Page items") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
+				NavigationMenusAdmin.viewItem(itemName = "${itemName}");
+			}
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Select the navigation menu in Navigation Menu widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the items shown in Navigation Menu widget") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
+				AssertVisible(
+					key_pageName = "${itemName}",
+					locator1 = "Home#PAGE");
+			}
+		}
+
+		task ("Navigate to associated display page template via Navigation Menu widget") {
+			Click(
+				key_pageName = "Web Content Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content DPT");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+
+			Click(
+				key_pageName = "Blogs Entry Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry DPT");
+
+			AssertVisible(
+				key_entryContent = "Blogs Entry Content",
+				locator1 = "BlogsEntry#CONTENT");
+
+			Click(
+				key_pageName = "Document Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+
+			Click(
+				key_pageName = "Category Name",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "Content Display",
+				text = "Category Name");
+		}
+	}
+
 	@description = "This is a test case for LPS-77912. The user could add page, submenu, and URL items to a navigation menu."
 	@priority = "5"
 	@uitest

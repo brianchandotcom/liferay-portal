@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.internal;
+package com.liferay.frontend.data.set.model;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 

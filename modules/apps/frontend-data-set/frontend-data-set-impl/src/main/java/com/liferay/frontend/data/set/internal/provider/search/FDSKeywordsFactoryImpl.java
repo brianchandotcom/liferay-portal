@@ -12,25 +12,28 @@
  * details.
  */
 
-package com.liferay.frontend.data.set;
+package com.liferay.frontend.data.set.internal.provider.search;
 
-import java.util.List;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSKeywordsFactory;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
  */
-public interface FDSDataJSONFactory {
+public class FDSKeywordsFactoryImpl implements FDSKeywordsFactory {
 
-	public String create(
-			long groupId, String tableName, List<Object> items,
-			HttpServletRequest httpServletRequest)
-		throws Exception;
+	@Override
+	public FDSKeywords create(HttpServletRequest httpServletRequest) {
+		DefaultFDSKeywordsImpl defaultFDSKeywordsImpl =
+			new DefaultFDSKeywordsImpl();
 
-	public String create(
-			long groupId, String tableName, List<Object> items, int itemsCount,
-			HttpServletRequest httpServletRequest)
-		throws Exception;
+		defaultFDSKeywordsImpl.setKeywords(
+			ParamUtil.getString(httpServletRequest, "search"));
+
+		return defaultFDSKeywordsImpl;
+	}
 
 }

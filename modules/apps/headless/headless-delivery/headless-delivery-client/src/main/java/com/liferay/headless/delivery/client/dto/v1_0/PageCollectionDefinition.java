@@ -234,6 +234,27 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	protected PaginationType paginationType;
 
+	public Boolean getShowAllItems() {
+		return showAllItems;
+	}
+
+	public void setShowAllItems(Boolean showAllItems) {
+		this.showAllItems = showAllItems;
+	}
+
+	public void setShowAllItems(
+		UnsafeSupplier<Boolean, Exception> showAllItemsUnsafeSupplier) {
+
+		try {
+			showAllItems = showAllItemsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean showAllItems;
+
 	public String getTemplateKey() {
 		return templateKey;
 	}

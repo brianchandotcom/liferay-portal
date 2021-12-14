@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -151,7 +152,10 @@ public class RecentGroupManager {
 		for (long groupId : groupIds) {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
-			if (!_groupLocalService.isLiveGroupActive(group)) {
+			if (!GroupPermissionUtil.contains(
+					permissionChecker, group.getGroupId(), ActionKeys.VIEW) ||
+				!_groupLocalService.isLiveGroupActive(group)) {
+
 				continue;
 			}
 

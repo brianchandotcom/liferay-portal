@@ -1662,7 +1662,7 @@ definition {
 			portletName = "Documents and Media",
 			portletOption = "Configuration");
 
-		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
 
 		AssertElementPresent.pauseAssertVisible(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 

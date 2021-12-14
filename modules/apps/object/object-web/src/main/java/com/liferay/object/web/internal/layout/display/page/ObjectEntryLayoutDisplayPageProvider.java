@@ -50,7 +50,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 			InfoItemReference infoItemReference) {
 
 		try {
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 				infoItemReference.getClassPK());
 
 			if ((objectEntry == null) || objectEntry.isDraft()) {

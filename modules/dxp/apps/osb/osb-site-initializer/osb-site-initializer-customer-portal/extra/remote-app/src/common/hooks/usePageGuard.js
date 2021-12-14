@@ -67,10 +67,12 @@ const usePageGuard = (userAccount, externalReferenceCode, pageKey) => {
 								? externalReferenceCode
 								: userAccount.accountBriefs[0]
 						);
-					} else {
+					}
+					else {
 						window.location.href = getHomeLocation();
 					}
-				} else {
+				}
+				else {
 					setLoading(false);
 				}
 			}
@@ -78,11 +80,13 @@ const usePageGuard = (userAccount, externalReferenceCode, pageKey) => {
 			if (pageKey === 'overview') {
 				if (!isValidExternalReferenceCode) {
 					window.location.href = getHomeLocation();
-				} else if (!hasAccountFlags) {
+				}
+				else if (!hasAccountFlags) {
 					window.location.href = getOnboardingLocation(
 						externalReferenceCode
 					);
-				} else {
+				}
+				else {
 					setLoading(false);
 				}
 			}

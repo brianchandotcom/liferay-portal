@@ -350,7 +350,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 					segmentsExperienceId, data);
 		}
 
-		_updateLayoutStatus(plid);
+		_updateLayoutStatus(PrincipalThreadLocal.getUserId(), plid);
 
 		return layoutPageTemplateStructure;
 	}
@@ -390,12 +390,12 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
 	}
 
-	private void _updateLayoutStatus(long plid) throws PortalException {
-		Layout layout = _layoutLocalService.getLayout(plid);
+	private void _updateLayoutStatus(long userId, long plid)
+		throws PortalException {
 
-		layout.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		_layoutLocalService.updateLayout(layout);
+		_layoutLocalService.updateStatus(
+			userId, plid, WorkflowConstants.STATUS_DRAFT,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Reference

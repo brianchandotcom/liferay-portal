@@ -183,19 +183,6 @@ public class FragmentEntryConfigurationParserImpl
 		return configurationDefaultValuesJSONObject;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getContextObjects(JSONObject, String, long[])}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Object> getContextObjects(
-		JSONObject configurationValuesJSONObject, String configuration) {
-
-		return getContextObjects(
-			configurationValuesJSONObject, configuration, new long[] {0});
-	}
-
 	@Override
 	public Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration,

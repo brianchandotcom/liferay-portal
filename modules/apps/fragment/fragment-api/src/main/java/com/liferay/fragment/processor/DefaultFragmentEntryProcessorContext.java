@@ -100,15 +100,6 @@ public class DefaultFragmentEntryProcessorContext
 		return _segmentsEntryIds;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public long[] getSegmentsExperienceIds() {
-		return _segmentsExperienceIds;
-	}
-
 	public void setDisplayObject(Object object) {
 		_displayObject = object;
 	}
@@ -141,14 +132,6 @@ public class DefaultFragmentEntryProcessorContext
 		_segmentsEntryIds = segmentsEntryIds;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSegmentsExperienceIds(long[] segmentsExperienceIds) {
-		_segmentsExperienceIds = segmentsExperienceIds;
-	}
-
 	private Object _displayObject;
 	private Map<String, Object> _fieldValues;
 	private String _fragmentElementId;
@@ -161,6 +144,5 @@ public class DefaultFragmentEntryProcessorContext
 	private int _previewType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 	private String _previewVersion = InfoItemIdentifier.VERSION_LATEST_APPROVED;
 	private long[] _segmentsEntryIds = new long[0];
-	private long[] _segmentsExperienceIds = new long[0];
 
 }

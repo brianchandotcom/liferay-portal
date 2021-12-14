@@ -17,15 +17,15 @@ import './StartEndDate.scss';
 declare const StartEndDate: React.FC<IProps>;
 export default StartEndDate;
 interface IProps {
-	dateFieldOptions: IDateFieldOption[];
 	eventType: EventType;
 	label: string;
 	name: string;
-	onChange: (eventType: EventType, parameters: IParameters) => void;
 	options: IOptions[];
+	onChange: (eventType: EventType, parameters: IParameters) => void;
+	tooltip: string;
 	parameters: IParameters;
 	readOnly?: boolean;
-	tooltip: string;
+	dateFieldOptions: IDateFieldOption[];
 	visible: boolean;
 }
 interface IDateFieldOption {

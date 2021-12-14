@@ -12,21 +12,17 @@
  * details.
  */
 
-import {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import React, {ChangeEvent, useEffect, useState} from 'react';
-
+import { ClayInput, ClaySelectWithOption } from '@clayui/form';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 // @ts-ignore
-
-import {limitValue} from '../util/numericalOperations';
-
+import { limitValue } from '../util/numericalOperations';
 import './CustomDate.scss';
 import SelectDateType from './SelectDateType';
 
 const MAX_QUANTITY = 999;
 const MIN_QUANTITY = 1;
-const PLUS_VALUE = 'plus';
-const MINUS_VALUE = 'minus';
-const CUSTOM_DATE = 'customDate';
+const PLUS_VALUE = 'plus'
+const MINUS_VALUE = 'minus'
 
 const operationsOptions: ISelectOptions[] = [
 	{
@@ -41,7 +37,7 @@ const operationsOptions: ISelectOptions[] = [
 
 const unitOptions = [
 	{
-		label: Liferay.Language.get('days'),
+		label:  Liferay.Language.get('days'),
 		value: 'days',
 	},
 	{
@@ -54,125 +50,116 @@ const unitOptions = [
 	},
 ];
 
-const CustomDate: React.FC<IProps> = ({
-	dateFieldOptions,
-	eventType,
+const CustomDate:React.FC<IProps> = ({
 	onChange,
 	options,
+	dateFieldOptions,
 	parameters: parametersInit,
+	eventType,
 	readOnly,
 }) => {
+
 	const [parameters, setParameters] = useState<IParameters>(parametersInit);
 
 	useEffect(() => {
 		setParameters(parametersInit);
-	}, [parametersInit]);
+	},[parametersInit]);
 
-	const handleQuantityChange: (
-		event: ChangeEvent<HTMLInputElement>
-	) => void = ({target: {value}}) => {
+	const handleQuantityChange:(event: ChangeEvent<HTMLInputElement>) => void = ({target: {value}}) => {
 		const limit = limitValue({
 			defaultValue: MIN_QUANTITY,
 			max: MAX_QUANTITY,
 			min: MIN_QUANTITY,
-			value: parseInt(value, 10),
+			value: parseInt(value,10),
 		});
 
 		const quantity = parameters.quantity < 0 ? limit * -1 : limit;
 
-		updateParameter({
-			dateFieldName: parameters.dateFieldName,
-			quantity,
-		});
-	};
+		const onChange = parameterAttUpdater('quantity');
 
-	function updateParameter(properties: IParametersProperties) {
-		const isChanged = Object.entries(properties).some(
-			([key, value]) => parameters[key as keyof IParameters] !== value
-		);
+		onChange(quantity);
+	}
 
-		if (isChanged) {
+	function parameterAttUpdater(key: keyof IParameters) {
+
+		return (value: string | number, dateFieldName?: string) => {
+
+		if(value !== parameters[key] || dateFieldName !== parameters.dateFieldName) {
+	
 			setParameters((parameters) => ({
 				...parameters,
-				...properties,
+				dateFieldName,
+				[key]: value
 			}));
 
-			onChange(properties);
+			onChange(key, value, dateFieldName);
 		}
-	}
+	}}
 
 	return (
 		<>
-			<SelectDateType
+			<SelectDateType 
+				type={parameters.date}
 				dateFieldName={parameters.dateFieldName}
 				dateFieldOptions={dateFieldOptions}
+				options={options.filter(({name}) => name !== 'customDate') }
+				onChange={(value, options) => {
+					const onChange = parameterAttUpdater('date');
+
+					onChange(value, options);
+				}}
 				label={Liferay.Language.get('date')}
-				onChange={(value, dateFieldName) =>
-					updateParameter({date: value, dateFieldName})
-				}
-				options={options.filter(({name}) => name !== CUSTOM_DATE)}
-				type={parameters.date}
 			/>
 			<div className="ddm__custom-date">
-				<label>
-					{Liferay.Language.get('operation')}
+					<label>
+						{Liferay.Language.get('operation')}
+						<ClaySelectWithOption
+							disabled={readOnly}
+							name={`selectedOperation_${eventType}`}
+							onChange={({target: {value}}) => {
+								
+								const currentOperation = parameters.quantity < 0  ? MINUS_VALUE : PLUS_VALUE
+								
+								if(value !== currentOperation) {
+									const quantity = parameters.quantity * -1
 
-					<ClaySelectWithOption
-						disabled={readOnly}
-						name={`selectedOperation_${eventType}`}
-						onChange={({target: {value}}) => {
-							const currentOperation =
-								parameters.quantity < 0
-									? MINUS_VALUE
-									: PLUS_VALUE;
+									const onChange = parameterAttUpdater('quantity');
+									onChange(quantity);
+								}
+							}}
+							options={operationsOptions}
+							value={parameters.quantity < 0  ? MINUS_VALUE : PLUS_VALUE}					
+						/>
+					</label>
 
-							if (value !== currentOperation) {
-								const quantity = parameters.quantity * -1;
+					<label>
+						{Liferay.Language.get('quantity')}
+						<ClayInput
+							className="ddm-field-text"
+							disabled={readOnly}
+							max={MAX_QUANTITY}
+							min={MIN_QUANTITY}
+							name={`inputedQuantity_${eventType}`}
+							onChange={handleQuantityChange}
+							type="number"
+							value={Math.abs(parameters.quantity)}
+						/>
+					</label>
 
-								updateParameter({
-									dateFieldName: parameters.dateFieldName,
-									quantity,
-								});
-							}
-						}}
-						options={operationsOptions}
-						value={
-							parameters.quantity < 0 ? MINUS_VALUE : PLUS_VALUE
-						}
-					/>
-				</label>
+					<label>
+						{Liferay.Language.get('unit')}
+						<ClaySelectWithOption
+							disabled={readOnly}
+							name={`selectedUnit_${eventType}`}
+							onChange={({target: {value}}) => {
+								const onChange = parameterAttUpdater('unit');
+								onChange(value);
+							}}
+							options={unitOptions}
+							value={parameters.unit}
+						/>
+					</label>
 
-				<label>
-					{Liferay.Language.get('quantity')}
-
-					<ClayInput
-						className="ddm-field-text"
-						disabled={readOnly}
-						max={MAX_QUANTITY}
-						min={MIN_QUANTITY}
-						name={`inputedQuantity_${eventType}`}
-						onChange={handleQuantityChange}
-						type="number"
-						value={Math.abs(parameters.quantity)}
-					/>
-				</label>
-
-				<label>
-					{Liferay.Language.get('unit')}
-
-					<ClaySelectWithOption
-						disabled={readOnly}
-						name={`selectedUnit_${eventType}`}
-						onChange={({target: {value}}) =>
-							updateParameter({
-								dateFieldName: parameters.dateFieldName,
-								unit: value as Unit,
-							})
-						}
-						options={unitOptions}
-						value={parameters.unit}
-					/>
-				</label>
 			</div>
 		</>
 	);
@@ -181,13 +168,15 @@ const CustomDate: React.FC<IProps> = ({
 export default CustomDate;
 
 interface IProps {
-	dateFieldOptions: IDateFieldOption[];
-	eventType: 'startsFrom' | 'endsOn';
+    eventType: 'startsFrom' | 'endsOn';
+    readOnly?: boolean;
+// 	label: string;
 	name: string;
-	onChange: (properties: IParametersProperties) => void;
 	options: IOptions[];
+	onChange: (key: string, value: string | number, dateFieldName?: string) => void;
+// 	tooltip: string;
 	parameters: IParameters;
-	readOnly?: boolean;
+	dateFieldOptions: IDateFieldOption[];
 	visible: boolean;
 }
 
@@ -196,7 +185,9 @@ interface IDateFieldOption {
 	name: string;
 }
 
-type Unit = 'days' | 'months' | 'years';
+
+
+type Unit = 'days' | 'months' | 'years'
 interface IOptions {
 	label: string;
 	name: 'customDate' | 'responseDate';
@@ -207,3 +198,5 @@ interface ISelectOptions {
 	label: string;
 	value: 'minus' | 'plus';
 }
+
+// type DateType = 'customDate' | 'responseDate' | 'dateFieldName';

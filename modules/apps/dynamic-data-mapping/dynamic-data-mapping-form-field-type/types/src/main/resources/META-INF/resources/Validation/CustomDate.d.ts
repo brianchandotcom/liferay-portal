@@ -17,13 +17,17 @@ import './CustomDate.scss';
 declare const CustomDate: React.FC<IProps>;
 export default CustomDate;
 interface IProps {
-	dateFieldOptions: IDateFieldOption[];
 	eventType: 'startsFrom' | 'endsOn';
-	name: string;
-	onChange: (properties: IParametersProperties) => void;
-	options: IOptions[];
-	parameters: IParameters;
 	readOnly?: boolean;
+	name: string;
+	options: IOptions[];
+	onChange: (
+		key: string,
+		value: string | number,
+		dateFieldName?: string
+	) => void;
+	parameters: IParameters;
+	dateFieldOptions: IDateFieldOption[];
 	visible: boolean;
 }
 interface IDateFieldOption {

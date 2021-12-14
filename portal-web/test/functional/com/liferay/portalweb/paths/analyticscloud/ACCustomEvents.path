@@ -10,6 +10,12 @@
 </thead>
 
 <tbody>
+<!-- BUTTON_TO_SEND_MANY_CUSTOM_EVENTS -->
+<tr>
+	<td>SEND_CUSTOM_EVENTS</td>
+	<td>//button[@onclick]</td>
+	<td></td>
+</tr>
 <!-- DISPLAY_NAME_OR_DESCRIPTION -->
 <tr>
 	<td>DISPLAY_NAME_OR_DESCRIPTION_LIST</td>

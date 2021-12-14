@@ -172,7 +172,7 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
 		AssertElementPresent(
-			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
 			value1 = "Federal Employer Identification Number (FEIN)");
 
 		Click(
@@ -210,7 +210,7 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
 		AssertElementPresent(
-			locator1 = "Raylife#HIDE_DISMISS_BUTTON",
+			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
 			value1 = "Full or Part Time Employees");
 
 		Click(

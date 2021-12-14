@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -79,7 +80,10 @@ public class LayoutPageTemplateStructureRelModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"layoutPageTemplateStructureId", Types.BIGINT},
-		{"segmentsExperienceId", Types.BIGINT}, {"data_", Types.CLOB}
+		{"segmentsExperienceId", Types.BIGINT}, {"data_", Types.CLOB},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,10 +103,15 @@ public class LayoutPageTemplateStructureRelModelImpl
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateStructureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("segmentsExperienceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateStructureRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,lPageTemplateStructureRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateStructureId LONG,segmentsExperienceId LONG,data_ TEXT null,primary key (lPageTemplateStructureRelId, ctCollectionId))";
+		"create table LayoutPageTemplateStructureRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,lPageTemplateStructureRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateStructureId LONG,segmentsExperienceId LONG,data_ TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (lPageTemplateStructureRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateStructureRel";
@@ -389,6 +398,39 @@ public class LayoutPageTemplateStructureRelModelImpl
 			"data",
 			(BiConsumer<LayoutPageTemplateStructureRel, String>)
 				LayoutPageTemplateStructureRel::setData);
+		attributeGetterFunctions.put(
+			"lastPublishDate",
+			LayoutPageTemplateStructureRel::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<LayoutPageTemplateStructureRel, Date>)
+				LayoutPageTemplateStructureRel::setLastPublishDate);
+		attributeGetterFunctions.put(
+			"status", LayoutPageTemplateStructureRel::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<LayoutPageTemplateStructureRel, Integer>)
+				LayoutPageTemplateStructureRel::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId",
+			LayoutPageTemplateStructureRel::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<LayoutPageTemplateStructureRel, Long>)
+				LayoutPageTemplateStructureRel::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName",
+			LayoutPageTemplateStructureRel::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<LayoutPageTemplateStructureRel, String>)
+				LayoutPageTemplateStructureRel::setStatusByUserName);
+		attributeGetterFunctions.put(
+			"statusDate", LayoutPageTemplateStructureRel::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<LayoutPageTemplateStructureRel, Date>)
+				LayoutPageTemplateStructureRel::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -668,10 +710,181 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(
 				LayoutPageTemplateStructureRel.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -749,6 +962,14 @@ public class LayoutPageTemplateStructureRelModelImpl
 		layoutPageTemplateStructureRelImpl.setSegmentsExperienceId(
 			getSegmentsExperienceId());
 		layoutPageTemplateStructureRelImpl.setData(getData());
+		layoutPageTemplateStructureRelImpl.setLastPublishDate(
+			getLastPublishDate());
+		layoutPageTemplateStructureRelImpl.setStatus(getStatus());
+		layoutPageTemplateStructureRelImpl.setStatusByUserId(
+			getStatusByUserId());
+		layoutPageTemplateStructureRelImpl.setStatusByUserName(
+			getStatusByUserName());
+		layoutPageTemplateStructureRelImpl.setStatusDate(getStatusDate());
 
 		layoutPageTemplateStructureRelImpl.resetOriginalValues();
 
@@ -786,6 +1007,16 @@ public class LayoutPageTemplateStructureRelModelImpl
 			this.<Long>getColumnOriginalValue("segmentsExperienceId"));
 		layoutPageTemplateStructureRelImpl.setData(
 			this.<String>getColumnOriginalValue("data_"));
+		layoutPageTemplateStructureRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		layoutPageTemplateStructureRelImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		layoutPageTemplateStructureRelImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		layoutPageTemplateStructureRelImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		layoutPageTemplateStructureRelImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
 
 		return layoutPageTemplateStructureRelImpl;
 	}
@@ -935,6 +1166,43 @@ public class LayoutPageTemplateStructureRelModelImpl
 			layoutPageTemplateStructureRelCacheModel.data = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			layoutPageTemplateStructureRelCacheModel.lastPublishDate =
+				lastPublishDate.getTime();
+		}
+		else {
+			layoutPageTemplateStructureRelCacheModel.lastPublishDate =
+				Long.MIN_VALUE;
+		}
+
+		layoutPageTemplateStructureRelCacheModel.status = getStatus();
+
+		layoutPageTemplateStructureRelCacheModel.statusByUserId =
+			getStatusByUserId();
+
+		layoutPageTemplateStructureRelCacheModel.statusByUserName =
+			getStatusByUserName();
+
+		String statusByUserName =
+			layoutPageTemplateStructureRelCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			layoutPageTemplateStructureRelCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			layoutPageTemplateStructureRelCacheModel.statusDate =
+				statusDate.getTime();
+		}
+		else {
+			layoutPageTemplateStructureRelCacheModel.statusDate =
+				Long.MIN_VALUE;
+		}
+
 		return layoutPageTemplateStructureRelCacheModel;
 	}
 
@@ -1044,6 +1312,11 @@ public class LayoutPageTemplateStructureRelModelImpl
 	private long _layoutPageTemplateStructureId;
 	private long _segmentsExperienceId;
 	private String _data;
+	private Date _lastPublishDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1090,6 +1363,11 @@ public class LayoutPageTemplateStructureRelModelImpl
 		_columnOriginalValues.put(
 			"segmentsExperienceId", _segmentsExperienceId);
 		_columnOriginalValues.put("data_", _data);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1141,6 +1419,16 @@ public class LayoutPageTemplateStructureRelModelImpl
 		columnBitmasks.put("segmentsExperienceId", 2048L);
 
 		columnBitmasks.put("data_", 4096L);
+
+		columnBitmasks.put("lastPublishDate", 8192L);
+
+		columnBitmasks.put("status", 16384L);
+
+		columnBitmasks.put("statusByUserId", 32768L);
+
+		columnBitmasks.put("statusByUserName", 65536L);
+
+		columnBitmasks.put("statusDate", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

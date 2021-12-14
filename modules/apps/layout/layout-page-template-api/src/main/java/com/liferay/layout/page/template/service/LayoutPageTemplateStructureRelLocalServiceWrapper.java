@@ -521,6 +521,18 @@ public class LayoutPageTemplateStructureRelLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateStructureRel updateStatus(
+			long userId, long layoutPageTemplateStructureId,
+			long segmentsExperienceId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureRelLocalService.updateStatus(
+			userId, layoutPageTemplateStructureId, segmentsExperienceId, status,
+			serviceContext);
+	}
+
+	@Override
 	public CTPersistence<LayoutPageTemplateStructureRel> getCTPersistence() {
 		return _layoutPageTemplateStructureRelLocalService.getCTPersistence();
 	}

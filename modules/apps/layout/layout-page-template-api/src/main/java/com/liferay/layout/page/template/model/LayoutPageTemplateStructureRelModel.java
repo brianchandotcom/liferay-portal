@@ -16,10 +16,10 @@ package com.liferay.layout.page.template.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
@@ -40,8 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutPageTemplateStructureRelModel
 	extends BaseModel<LayoutPageTemplateStructureRel>,
-			CTModel<LayoutPageTemplateStructureRel>, GroupedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+			CTModel<LayoutPageTemplateStructureRel>, MVCCModel, ShardedModel,
+			StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -285,6 +285,167 @@ public interface LayoutPageTemplateStructureRelModel
 	 * @param data the data of this layout page template structure rel
 	 */
 	public void setData(String data);
+
+	/**
+	 * Returns the last publish date of this layout page template structure rel.
+	 *
+	 * @return the last publish date of this layout page template structure rel
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this layout page template structure rel.
+	 *
+	 * @param lastPublishDate the last publish date of this layout page template structure rel
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the status of this layout page template structure rel.
+	 *
+	 * @return the status of this layout page template structure rel
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this layout page template structure rel.
+	 *
+	 * @param status the status of this layout page template structure rel
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this layout page template structure rel.
+	 *
+	 * @return the status by user ID of this layout page template structure rel
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this layout page template structure rel.
+	 *
+	 * @param statusByUserId the status by user ID of this layout page template structure rel
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this layout page template structure rel.
+	 *
+	 * @return the status by user uuid of this layout page template structure rel
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this layout page template structure rel.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this layout page template structure rel
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this layout page template structure rel.
+	 *
+	 * @return the status by user name of this layout page template structure rel
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this layout page template structure rel.
+	 *
+	 * @param statusByUserName the status by user name of this layout page template structure rel
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this layout page template structure rel.
+	 *
+	 * @return the status date of this layout page template structure rel
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this layout page template structure rel.
+	 *
+	 * @param statusDate the status date of this layout page template structure rel
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is approved.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is denied.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is a draft.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is expired.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is inactive.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is incomplete.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is pending.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this layout page template structure rel is scheduled.
+	 *
+	 * @return <code>true</code> if this layout page template structure rel is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public LayoutPageTemplateStructureRel cloneWithOriginalValues();

@@ -75,5 +75,10 @@ create table LayoutPageTemplateStructureRel (
 	layoutPageTemplateStructureId LONG,
 	segmentsExperienceId LONG,
 	data_ TEXT null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
 	primary key (lPageTemplateStructureRelId, ctCollectionId)
 );

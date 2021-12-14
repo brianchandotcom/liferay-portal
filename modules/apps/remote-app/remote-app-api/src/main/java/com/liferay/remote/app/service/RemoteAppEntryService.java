@@ -55,9 +55,9 @@ public interface RemoteAppEntryService extends BaseService {
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
 			String customElementURLs, String description,
-			String friendlyURLMapping, boolean instanceable,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			String externalReferenceCode, String friendlyURLMapping,
+			boolean instanceable, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
 	public RemoteAppEntry addIFrameRemoteAppEntry(

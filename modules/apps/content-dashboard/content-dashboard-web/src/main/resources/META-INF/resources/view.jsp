@@ -197,28 +197,6 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						value="<%= HtmlUtil.escape(contentDashboardItem.getScopeName(locale)) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="text-nowrap"
-						name="status"
-					>
-
-						<%
-						List<ContentDashboardItem.Version> versions = contentDashboardItem.getVersions(locale);
-
-						for (ContentDashboardItem.Version version : versions) {
-						%>
-
-							<clay:label
-								displayType="<%= version.getStyle() %>"
-								label="<%= version.getLabel() %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</liferay-ui:search-container-column-text>
-
 					<%
 					for (AssetVocabulary assetVocabulary : contentDashboardAdminDisplayContext.getAssetVocabularies()) {
 					%>
@@ -265,6 +243,28 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					<%
 					}
 					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="text-nowrap"
+						name="status"
+					>
+
+						<%
+						List<ContentDashboardItem.Version> versions = contentDashboardItem.getVersions(locale);
+
+						for (ContentDashboardItem.Version version : versions) {
+						%>
+
+							<clay:label
+								displayType="<%= version.getStyle() %>"
+								label="<%= version.getLabel() %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-date
 						name="modified-date"

@@ -111,6 +111,7 @@ definition {
 				timesCustom.forEach((_) => { Analytics.track(eventName, attributesList); console.log("fired!"); }); console.log(attributesList); } </script></div> </br\>''',
 				webContentTitle = "${webContentTitle}");
 		}
+
 		if (isSet(customEventsNumber)) {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -163,6 +164,31 @@ definition {
 		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
 	}
 
+	macro unblockAllCustomEvents {
+		var key_actionButton = "Unblock";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "Unblock Events");
+	}
+
+	macro unblockCustomEvent {
+		var key_actionButton = "Unblock";
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+	}
+
 	macro viewDataAttribute {
 		for (var attributeValue : list "${attributeValueList}") {
 			AssertElementPresent(
@@ -199,31 +225,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro unblockAllCustomEvents {
-		var key_actionButton = "Unblock";
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
-
-		ACUtils.clickAnyButton(button = "Unblock Events");
-	}
-
-	macro unblockCustomEvent {
-		var key_actionButton = "Unblock";
-		var key_nameList = "${customEventName}";
-
-		WaitForPageLoad();
-
-		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-		}
-
-		MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
 	}
 
 }

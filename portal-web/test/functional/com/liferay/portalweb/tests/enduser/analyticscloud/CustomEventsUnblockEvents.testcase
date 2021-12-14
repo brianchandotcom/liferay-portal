@@ -69,108 +69,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10194 | Test Summary: Blocked event is hidden in the Event Analysis events lists and Unblocked event is visible in the Event Analysis events lists"
-	@priority = "4"
-	test ViewEventIsVisibleOrNotInEventAnalysisWhenBlockedOrUnblocked {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
-        task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Click to add the custom event and check if it is present") {
-			ACEventAnalysis.clickToAddEventButton();
-
-			ACEventAnalysis.searchEventAnalyse(searchItem = "${customEventName}");
-
-			ACEventAnalysis.viewEventAnalyseList(eventList = "${customEventName}");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Block custom event") {
-			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Navigation to segments") {
-			ACNavigation.exitSettings();
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Click to add the custom event and check if it is not present") {
-			ACEventAnalysis.clickToAddEventButton();
-
-			ACEventAnalysis.searchEventAnalyse(searchItem = "${customEventName}");
-
-			ACEventAnalysis.viewEventAnalyseListNotPresent(eventList = "${customEventName}");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Navigation to block custom event list") {
-			ACCustomEvents.openBlockCustomEventList();
-		}
-
-		task ("Unblock custom event") {
-			ACCustomEvents.unblockCustomEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Navigation to event analysis") {
-			ACNavigation.exitSettings();
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Click to add the custom event and check if it is present") {
-			ACEventAnalysis.clickToAddEventButton();
-
-			ACEventAnalysis.searchEventAnalyse(searchItem = "${customEventName}");
-
-			ACEventAnalysis.viewEventAnalyseList(eventList = "${customEventName}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10195 | Test Summary: Unblock single custom event and unblock custom events in bulk"
 	@priority = "5"
 	test CanUnblockCustomEvent {
@@ -178,7 +76,7 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-        task ("View the site page") {
+		task ("View the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -276,6 +174,108 @@ definition {
 
 				ACUtils.viewNameList(nameList = "${customEventName}");
 			}
+		}
+	}
+
+	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10194 | Test Summary: Blocked event is hidden in the Event Analysis events lists and Unblocked event is visible in the Event Analysis events lists"
+	@priority = "4"
+	test ViewEventIsVisibleOrNotInEventAnalysisWhenBlockedOrUnblocked {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add the custom event and check if it is present") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Block custom event") {
+			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Navigation to segments") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add the custom event and check if it is not present") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Navigation to block custom event list") {
+			ACCustomEvents.openBlockCustomEventList();
+		}
+
+		task ("Unblock custom event") {
+			ACCustomEvents.unblockCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Navigation to event analysis") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add the custom event and check if it is present") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
 		}
 	}
 

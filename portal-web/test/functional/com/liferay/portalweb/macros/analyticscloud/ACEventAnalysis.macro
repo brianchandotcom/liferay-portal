@@ -4,12 +4,18 @@ definition {
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 
-    macro viewEventAnalyseList {
+	macro searchEventAnalysis {
+		Type(
+			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
+			value1 = "${searchItem}");
+	}
+
+	macro viewEventAnalysisList {
 		for (var name : list "${eventList}") {
 			var key_buttonName = "${name}";
 
-            while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
-				ACEventAnalysis.searchEventAnalyse(searchItem = "${name}");
+			while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
+				ACEventAnalysis.searchEventAnalysis(searchItem = "${name}");
 			}
 
 			AssertTextEquals(
@@ -18,18 +24,12 @@ definition {
 		}
 	}
 
-    macro viewEventAnalyseListNotPresent {
+	macro viewEventAnalysisListNotPresent {
 		for (var name : list "${eventList}") {
 			var key_buttonName = "${name}";
 
 			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
 		}
-	}
-
-    macro searchEventAnalyse {
-		Type(
-			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
-			value1 = "${searchItem}");
 	}
 
 }

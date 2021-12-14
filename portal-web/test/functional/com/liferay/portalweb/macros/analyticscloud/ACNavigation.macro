@@ -46,6 +46,10 @@ definition {
 		ACNavigation.goToSidebarOption(sidebarOption = "assets");
 	}
 
+	macro goToEventAnalysis {
+		ACNavigation.goToSidebarOption(sidebarOption = "event-analysis");
+	}
+
 	macro goToIndividuals {
 		ACNavigation.goToSidebarOption(sidebarOption = "individuals");
 	}
@@ -56,10 +60,6 @@ definition {
 
 	macro goToSettings {
 		ACNavigation.goToSidebarOption(sidebarOption = "settings");
-	}
-
-	macro goToEventAnalysis {
-		ACNavigation.goToSidebarOption(sidebarOption = "event-analysis");
 	}
 
 	macro goToSidebarOption {

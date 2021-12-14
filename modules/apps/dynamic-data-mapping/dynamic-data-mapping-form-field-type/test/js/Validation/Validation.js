@@ -21,20 +21,16 @@ import Validation from '../../../src/main/resources/META-INF/resources/Validatio
 
 const globalLanguageDirection = Liferay.Language.direction;
 
-const generateValue = (parameter = null) => ({
-	errorMessage: {
-		en_US: null,
-	},
-	expression: {
-		en_US: null,
-	},
-	parameter: {
-		en_US: parameter,
-	},
-});
+const spritemap = 'icons.svg';
 
-const ValidationWithProvider = ({builderPages, validations, ...props}) => (
-	<FormProvider initialState={{builderPages, validations}}>
+const defaultValue = {
+	errorMessage: {},
+	expression: {},
+	parameter: {},
+};
+
+const ValidationWithProvider = ({validations, ...props}) => (
+	<FormProvider initialState={{validations}}>
 		<Validation {...props} />
 	</FormProvider>
 );
@@ -59,6 +55,7 @@ describe('Validation', () => {
 				label="Validator"
 				name="validation"
 				onChange={() => {}}
+				spritemap={spritemap}
 				validations={{
 					string: [
 						{
@@ -69,7 +66,7 @@ describe('Validation', () => {
 						},
 					],
 				}}
-				value={generateValue()}
+				value={defaultValue}
 			/>
 		);
 
@@ -88,6 +85,7 @@ describe('Validation', () => {
 				label="Validator"
 				name="validation"
 				onChange={onChange}
+				spritemap={spritemap}
 				validation={{
 					dataType: 'string',
 					fieldName: 'textfield',
@@ -102,7 +100,7 @@ describe('Validation', () => {
 						},
 					],
 				}}
-				value={generateValue()}
+				value={defaultValue}
 			/>
 		);
 
@@ -115,14 +113,14 @@ describe('Validation', () => {
 				value: {
 					enableValidation: true,
 					errorMessage: {
-						en_US: null,
+						en_US: undefined,
 					},
 					expression: {
 						name: 'contains',
 						value: 'contains(textfield, "{parameter}")',
 					},
 					parameter: {
-						en_US: null,
+						en_US: undefined,
 					},
 				},
 			},
@@ -141,6 +139,7 @@ describe('Validation', () => {
 				label="Validator"
 				name="validation"
 				onChange={onChange}
+				spritemap={spritemap}
 				validation={{
 					dataType: 'integer',
 					fieldName: 'numericfield',
@@ -155,7 +154,7 @@ describe('Validation', () => {
 						},
 					],
 				}}
-				value={generateValue()}
+				value={defaultValue}
 			/>
 		);
 
@@ -168,14 +167,14 @@ describe('Validation', () => {
 				value: {
 					enableValidation: true,
 					errorMessage: {
-						en_US: null,
+						en_US: undefined,
 					},
 					expression: {
 						name: 'eq',
 						value: 'numericfield=={parameter}',
 					},
 					parameter: {
-						en_US: null,
+						en_US: undefined,
 					},
 				},
 			},
@@ -187,7 +186,6 @@ describe('Validation', () => {
 
 		const {container} = render(
 			<ValidationWithProvider
-				builderPages={[]}
 				dataType="date"
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
@@ -195,6 +193,7 @@ describe('Validation', () => {
 				label="Validator"
 				name="validation"
 				onChange={onChange}
+				spritemap={spritemap}
 				validation={{
 					dataType: 'date',
 					fieldName: 'dateField',
@@ -209,7 +208,7 @@ describe('Validation', () => {
 						},
 					],
 				}}
-				value={generateValue({startsFrom: {}})}
+				value={defaultValue}
 			/>
 		);
 
@@ -222,16 +221,14 @@ describe('Validation', () => {
 				value: {
 					enableValidation: true,
 					errorMessage: {
-						en_US: null,
+						en_US: undefined,
 					},
 					expression: {
 						name: 'futureDates',
 						value: 'futureDates(dateField, "{parameter}")',
 					},
 					parameter: {
-						en_US: {
-							startsFrom: {},
-						},
+						en_US: undefined,
 					},
 				},
 			},

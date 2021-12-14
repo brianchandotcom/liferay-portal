@@ -164,6 +164,7 @@ const ValidationWrapper = ({
 			onChange={(value) => onChange({target: {value}})}
 			readOnly={readOnly}
 			validation={validation}
+			value={value}
 			visible={visible}
 		/>
 	);

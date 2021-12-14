@@ -112,6 +112,7 @@ const ValidationDate = ({
 		localizedValue(parameter),
 		'endsOn',
 	);
+
 	const selectedParameter = parameters[selectedValidation.name];
 	
 	const handleChangeParameters = (typeName, parameters) => {

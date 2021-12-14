@@ -1,0 +1,6 @@
+definition {
+
+	macro clickToAddEventButton {
+		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
+	}
+}

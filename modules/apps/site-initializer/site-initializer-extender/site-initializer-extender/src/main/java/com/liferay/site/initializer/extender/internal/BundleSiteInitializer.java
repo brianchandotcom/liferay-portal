@@ -1846,28 +1846,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			RemoteAppEntry remoteAppEntry =
-				_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
-					serviceContext.getUserId(),
-					StringUtil.replace(
-						StringUtil.merge(
-							JSONUtil.toStringArray(
-								jsonObject.getJSONArray("cssURLs")),
-							StringPool.NEW_LINE),
-						"[$", "$]", documentsStringUtilReplaceValues),
-					jsonObject.getString("htmlElementName"),
-					StringUtil.replace(
-						StringUtil.merge(
-							JSONUtil.toStringArray(
-								jsonObject.getJSONArray("elementURLs")),
-							StringPool.NEW_LINE),
-						"[$", "$]", documentsStringUtilReplaceValues),
-					StringPool.BLANK, StringPool.BLANK,
-					jsonObject.getBoolean("instanceable"),
-					_toMap(
-						group.getName(LocaleUtil.getSiteDefault()) + ": ",
-						jsonObject.getString("name_i18n")),
-					jsonObject.getString("portletCategoryName"), sb.toString(),
-					StringPool.BLANK);
+				_remoteAppEntryLocalService.
+					addOrUpdateCustomElementRemoteAppEntry(
+						serviceContext.getUserId(),
+						StringUtil.replace(
+							StringUtil.merge(
+								JSONUtil.toStringArray(
+									jsonObject.getJSONArray("cssURLs")),
+								StringPool.NEW_LINE),
+							"[$", "$]", documentsStringUtilReplaceValues),
+						jsonObject.getString("htmlElementName"),
+						StringUtil.replace(
+							StringUtil.merge(
+								JSONUtil.toStringArray(
+									jsonObject.getJSONArray("elementURLs")),
+								StringPool.NEW_LINE),
+							"[$", "$]", documentsStringUtilReplaceValues),
+						StringPool.BLANK,
+						jsonObject.getString("externalReferenceCode"),
+						StringPool.BLANK, jsonObject.getBoolean("instanceable"),
+						_toMap(
+							group.getName(LocaleUtil.getSiteDefault()) + ": ",
+							jsonObject.getString("name_i18n")),
+						jsonObject.getString("portletCategoryName"),
+						sb.toString(), StringPool.BLANK);
 
 			remoteAppEntryIdsStringUtilReplaceValues.put(
 				"REMOTE_APP_ENTRY_ID:" +

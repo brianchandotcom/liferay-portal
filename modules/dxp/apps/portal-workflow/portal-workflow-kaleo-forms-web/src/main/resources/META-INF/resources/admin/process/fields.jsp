@@ -197,6 +197,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		let redirectOnClose = false;
 
 		Liferay.Util.openModal({
+			iframeBodyCssClass: '',
 			onClose: () => {
 				if (redirectOnClose) {
 					Liferay.Util.navigate(closeRedirectURL);

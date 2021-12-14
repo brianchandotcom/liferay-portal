@@ -40,7 +40,9 @@ definition {
 			-d css= \
 			-d <CURL_DATA[html=${html}]CURL_DATA> \
 			-d js= \
+			-d cacheable=false \
 			-d configuration=${configuration} \
+			-d icon= \
 			-d previewFileEntryId=0 \
 			-d type=${type} \
 			-d status=${status}

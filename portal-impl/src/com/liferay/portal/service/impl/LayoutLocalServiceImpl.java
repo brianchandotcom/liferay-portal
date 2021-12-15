@@ -3316,7 +3316,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setStatusByUserId(user.getUserId());
 		layout.setStatusByUserName(user.getFullName());
 
-		layout.setStatusDate(serviceContext.getModifiedDate(new Date()));
+		Date statusDate = new Date();
+
+		if (serviceContext != null) {
+			statusDate = serviceContext.getModifiedDate(statusDate);
+		}
+
+		layout.setStatusDate(statusDate);
 
 		if (layout.isDraftLayout()) {
 			UnicodeProperties typeSettingsUnicodeProperties =

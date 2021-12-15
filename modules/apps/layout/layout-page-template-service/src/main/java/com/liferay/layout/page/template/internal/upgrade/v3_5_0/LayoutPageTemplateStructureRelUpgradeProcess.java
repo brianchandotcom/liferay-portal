@@ -26,6 +26,15 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn(
+				LayoutPageTemplateStructureRelTable.TABLE_NAME,
+				"lastPublishDate")) {
+
+			alter(
+				LayoutPageTemplateStructureRelTable.class,
+				new AlterTableAddColumn("lastPublishDate", "DATE"));
+		}
+
+		if (!hasColumn(
 				LayoutPageTemplateStructureRelTable.TABLE_NAME, "status")) {
 
 			alter(

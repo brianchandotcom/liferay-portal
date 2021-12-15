@@ -41,7 +41,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that an internal video can be selected via item selector when creating Blog with enabling Xuggler."
+	@description = "This test ensures that an internal video can be selected via item selector when creating Blog."
 	@priority = "5"
 	@refactorneeded
 	test AddBlogEntryWithEmbeddedVideo {
@@ -70,7 +70,7 @@ definition {
 			videoName = "Document_1.mp4");
 	}
 
-	@description = "This test ensures that an internal video can be selected via item selector when creating KB article with enabling Xuggler."
+	@description = "This test ensures that an internal video can be selected via item selector when creating KB article."
 	@priority = "5"
 	@refactorneeded
 	test AddKBArticleWithEmbeddedVideo {
@@ -97,7 +97,7 @@ definition {
 			videoName = "Document_1.mp4");
 	}
 
-	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content with enabling Xuggler."
+	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content."
 	@priority = "5"
 	@refactorneeded
 	test AddWCWithEmbeddedVideo {
@@ -178,7 +178,7 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
-	@description = "This test ensures that no internal video is not listed via item selector after disabling Xuggler."
+	@description = "This test ensures that no internal video is not listed via item selector after disabling FFMPEG."
 	@priority = "3"
 	@refactorneeded
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {

@@ -450,6 +450,11 @@ public class BundleSiteInitializerTest {
 			_dispatchTriggerLocalService.fetchDispatchTrigger(
 				group.getCompanyId(), "Test Dispatch Trigger");
 
+		Assert.assertTrue(dispatchTrigger.isActive());
+		Assert.assertEquals(0, dispatchTrigger.getDispatchTaskClusterMode());
+		Assert.assertEquals(
+			"talend", dispatchTrigger.getDispatchTaskExecutorType());
+
 		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
@@ -458,13 +463,6 @@ public class BundleSiteInitializerTest {
 			dispatchTaskSettingsUnicodeProperties.getProperty("statistics"));
 
 		Assert.assertFalse(dispatchTrigger.isSystem());
-
-		Assert.assertTrue(dispatchTrigger.isActive());
-
-		Assert.assertEquals(0, dispatchTrigger.getDispatchTaskClusterMode());
-
-		Assert.assertEquals(
-			"talend", dispatchTrigger.getDispatchTaskExecutorType());
 	}
 
 	private void _assertDLFileEntry(Group group) throws Exception {

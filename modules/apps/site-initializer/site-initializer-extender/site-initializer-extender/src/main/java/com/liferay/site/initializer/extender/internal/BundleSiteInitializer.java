@@ -923,11 +923,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject propertiesJSONObject =
 				dispatchTriggerJSONObject.getJSONObject("properties");
 
-			UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+			UnicodeProperties unicodeProperties =
 				new UnicodeProperties();
 
 			for (String key : propertiesJSONObject.keySet()) {
-				dispatchTaskSettingsUnicodeProperties.put(
+				unicodeProperties.put(
 					key, propertiesJSONObject.getString(key));
 			}
 
@@ -949,13 +949,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (url != null) {
 				TalendArchiveParserUtil.updateUnicodeProperties(
-					url.openStream(), dispatchTaskSettingsUnicodeProperties);
+					url.openStream(), unicodeProperties);
 			}
 
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
 				serviceContext.getUserId(),
 				dispatchTriggerJSONObject.getString("dispatchTaskExecutorType"),
-				dispatchTaskSettingsUnicodeProperties,
+				unicodeProperties,
 				dispatchTriggerJSONObject.getString("name"),
 				dispatchTriggerJSONObject.getBoolean("system"));
 

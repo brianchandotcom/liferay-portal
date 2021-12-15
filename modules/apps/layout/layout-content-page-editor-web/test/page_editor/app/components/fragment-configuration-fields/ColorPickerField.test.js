@@ -244,5 +244,23 @@ describe('ColorPickerField', () => {
 				expect(getByLabelText('Green')).toBeInTheDocument();
 			});
 		});
+
+		it('sets the previous value when the input value is removed', async () => {
+			const {getByRole} = renderColorPickerField({
+				value: '#444444',
+			});
+
+			const input = getByRole('combobox');
+
+			fireEvent.change(input, {
+				target: {value: ''},
+			});
+
+			fireEvent.blur(input);
+
+			await wait(() => {
+				expect(getByRole('combobox').value).toBe('#444444');
+			});
+		});
 	});
 });

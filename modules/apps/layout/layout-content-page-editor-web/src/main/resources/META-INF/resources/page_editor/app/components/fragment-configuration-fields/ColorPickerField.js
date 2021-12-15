@@ -170,7 +170,14 @@ export function ColorPickerField({field, onValueSelect, value}) {
 													  )
 													: target.value;
 
-												if (nextValue !== value) {
+												if (!nextValue) {
+													setColor(value);
+
+													return;
+												}
+												else if (
+													nextValue !== value
+												) {
 													const token = tokenColorValues.find(
 														(token) =>
 															token.label.toLowerCase() ===

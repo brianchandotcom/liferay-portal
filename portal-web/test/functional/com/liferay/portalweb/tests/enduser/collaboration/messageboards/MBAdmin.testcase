@@ -98,7 +98,7 @@ definition {
 	@description = "This is a test for LPS-136921. It checks that the ban length and expiration of a user can be changed."
 	@priority = "3"
 	test CanChangeBanLengthAndExpiration {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.expire.ban.interval=0";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.expire.ban.interval=0${line.separator}company.default.time.zone=America/Los_Angeles";
 
 		MessageboardsThread.updateCheckInterval(fieldValue = "1");
 

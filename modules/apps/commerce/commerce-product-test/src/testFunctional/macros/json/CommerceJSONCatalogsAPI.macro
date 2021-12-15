@@ -25,6 +25,36 @@ definition {
 		}
 	}
 
+	macro _getCommerceCatalogIdByName {
+		Variables.assertDefined(parameterList = "${catalogName}");
+
+		var baseURL = "${baseURL}";
+		var masterCatalogName = "Master";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(catalogCount)) {
+			var catalogsCount = "${catalogCount}";
+		}
+		else {
+			var catalogsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		if (isSet(catalogName)) {
+			var catalogIds = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${catalogName}')].['id']");
+		}
+
+		return "${catalogIds}";
+	}
+
 	macro _getCommerceNoSystemCatalogIds {
 		var baseURL = "${baseURL}";
 		var masterCatalogName = "Master";

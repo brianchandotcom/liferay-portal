@@ -377,7 +377,7 @@ definition {
 		task ("Delete the first widget page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.deletePage(pageName = "Test Page Name 1");
+			PagesAdmin.deletePage(pageName = "Test Page Name 1");
 		}
 
 		task ("View first widget page is not shown") {

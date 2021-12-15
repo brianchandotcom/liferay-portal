@@ -387,7 +387,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		SitePages.deletePage(pageName = "${pageName}");
+		PagesAdmin.deletePage(pageName = "${pageName}");
 	}
 
 	@description = "This is a use case for LPS-58754"

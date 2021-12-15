@@ -98,7 +98,7 @@ definition {
 		task ("Delete the Search page in Liferay instance") {
 			SitePages.openPagesAdmin(siteURLKey = "guest");
 
-			SitePages.deletePage(pageName = "Search");
+			PagesAdmin.deletePage(pageName = "Search");
 		}
 
 		task ("View the last public page can not be deleted") {

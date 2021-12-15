@@ -531,7 +531,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.deletePage(pageName = "Delete Live Page");
+		PagesAdmin.deletePage(pageName = "Delete Live Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",

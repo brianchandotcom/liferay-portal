@@ -55,7 +55,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
-		SitePages.deletePage(pageName = "Test Page");
+		PagesAdmin.deletePage(pageName = "Test Page");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

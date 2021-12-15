@@ -770,7 +770,7 @@ definition {
 	test ViewSearchResult {
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
-		SitePages.deletePage(pageName = "Documents and Media");
+		PagesAdmin.deletePage(pageName = "Documents and Media");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

@@ -1,5 +1,40 @@
 definition {
 
+	macro deletePage {
+		WaitForPageLoad();
+
+		Click(
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		if (isSet(hasChildren)) {
+			AssertConfirm(value1 = "This page has child pages that will also be removed. Are you sure you want to delete this page?");
+		}
+		else {
+			AssertConfirm(value1 = "Are you sure you want to delete this page?");
+		}
+
+		if (isSet(failure)) {
+			if (IsElementPresent(locator1 = "Message#ERROR_2")) {
+				Alert.viewRequestFailedToComplete();
+
+				AssertTextEquals(
+					locator1 = "Message#ERROR_2",
+					value1 = "${failure}");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "Message#ERROR",
+					value1 = "${failure}");
+			}
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro expandPageTree {
 		if (!(isSet(depth))) {
 			var depth = "1";

@@ -191,12 +191,12 @@ definition {
 			portlet = "Pages");
 
 		if (isSet(hasChildren)) {
-			SitePages.deletePage(
+			PagesAdmin.deletePage(
 				hasChildren = "true",
 				pageName = "${pageName}");
 		}
 		else {
-			SitePages.deletePage(pageName = "${pageName}");
+			PagesAdmin.deletePage(pageName = "${pageName}");
 		}
 	}
 

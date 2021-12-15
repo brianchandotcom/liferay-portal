@@ -169,7 +169,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		SitePages.deletePage(pageName = "Test Page Name");
+		PagesAdmin.deletePage(pageName = "Test Page Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

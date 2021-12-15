@@ -1001,7 +1001,7 @@ definition {
 		}
 
 		task ("Delete the third page from the live site") {
-			SitePages.deletePage(pageName = "Test Page Name 3");
+			PagesAdmin.deletePage(pageName = "Test Page Name 3");
 		}
 
 		task ("Publish to live without the third page") {
@@ -1226,7 +1226,7 @@ definition {
 		}
 
 		task ("Delete the third page from the live site") {
-			SitePages.deletePage(pageName = "Test Page Name 3");
+			PagesAdmin.deletePage(pageName = "Test Page Name 3");
 		}
 
 		task ("Publish to live without the third page") {

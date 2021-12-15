@@ -33,6 +33,11 @@
 	<td>//button[contains(@class,'btn-secondary')]//*</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EDIT_PENCIL</td>
+	<td>//button[contains(@class,'btn-secondary')]//*[contains(@class,'pencil')]</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 </tbody>

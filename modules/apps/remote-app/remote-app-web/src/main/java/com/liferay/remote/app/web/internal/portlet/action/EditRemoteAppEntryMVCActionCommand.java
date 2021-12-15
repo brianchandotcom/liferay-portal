@@ -105,6 +105,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			_remoteAppEntryService.addCustomElementRemoteAppEntry(
+				StringPool.BLANK,
 				StringUtil.merge(
 					ParamUtil.getStringValues(
 						actionRequest, "customElementCSSURLs"),
@@ -115,8 +116,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
-				description, StringPool.BLANK, friendlyURLMapping, instanceable,
-				nameMap, portletCategoryName, properties, sourceCodeURL);
+				description, friendlyURLMapping, instanceable, nameMap,
+				portletCategoryName, properties, sourceCodeURL);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryService.addIFrameRemoteAppEntry(

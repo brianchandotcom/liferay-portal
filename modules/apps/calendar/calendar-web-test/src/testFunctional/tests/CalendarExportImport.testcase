@@ -200,12 +200,21 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new imported process status in the Current and Previous tab"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewProcessStatusImported {
+		CalendarExportImport.gotoPortletExportImport();
 
-		// TODO LRQA-71612 CanViewProcessStatusImported pending implementation
+		CalendarExportImport.selectConfigurationIFrame();
 
+		CalendarExportImport.gotoImportTab(subTab = "Current and Previous");
+
+		CalendarExportImport.viewNoProcessesOnCurrentAndPreviousTab();
+
+		CalendarExportImport.gotoImportTab(subTab = "New Import Process");
+
+		CalendarExportImport.importCalendarFile(calendarFile = "Calendar-202111251634.portlet.lar");
+
+		CalendarExportImport.viewSuccessStatusOnCurrentAndPreviousTab();
 	}
 
 }

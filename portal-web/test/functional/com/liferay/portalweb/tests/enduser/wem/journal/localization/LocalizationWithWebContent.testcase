@@ -254,10 +254,26 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for 119020. Can add web content when the portal change the default language."
 	@priority = "4"
 	test ViewChangedDefaultPortalLanguageViaWebContent {
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";
 		property testray.component.names = "Localization";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content 1",
+			webContentTitle = "Web Content Title 1");
+
+		PortletEntry.publish();
+
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:Web Content Content 2,es_ES:Contenido de contenido web 2",
+			groupName = "Test Site Name",
+			titleMap = "en_US:Web Content Title 2,es_ES:Título del contenido web 2");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -273,6 +289,12 @@ definition {
 		PortletEntry.viewLocale(
 			locale = "es-ES",
 			portletName = "Web Content");
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content 3",
+			webContentTitle = "Web Content Title 3");
+
+		PortletEntry.publish();
 	}
 
 	@description = "This is a use case for LPS-110938. The localized Friendly URL of WC is shown in WCD when select template with Friendly URL field and it is displayed in DPT."

@@ -28,6 +28,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -280,6 +281,16 @@ public class AccountRoleLocalServiceImpl
 			params = new LinkedHashMap<>();
 		}
 
+		int total = accountRoleLocalService.dslQueryCount(
+			_getGroupByStep(
+				accountEntryIds, companyId,
+				DSLQueryFactoryUtil.countDistinct(
+					AccountRoleTable.INSTANCE.roleId),
+				keywords, params));
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			start, end, total);
+
 		return new BaseModelSearchResult<>(
 			accountRoleLocalService.dslQuery(
 				_getGroupByStep(
@@ -289,14 +300,9 @@ public class AccountRoleLocalServiceImpl
 				).orderBy(
 					RoleTable.INSTANCE, orderByComparator
 				).limit(
-					start, end
+					startAndEnd[0], startAndEnd[1]
 				)),
-			accountRoleLocalService.dslQueryCount(
-				_getGroupByStep(
-					accountEntryIds, companyId,
-					DSLQueryFactoryUtil.countDistinct(
-						AccountRoleTable.INSTANCE.roleId),
-					keywords, params)));
+			total);
 	}
 
 	@Override

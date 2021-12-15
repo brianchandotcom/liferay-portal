@@ -141,15 +141,15 @@ const ProductComparison = ({
 						</div>
 					</div>
 
-					<div className="font-weight-normal subtitle text-neutral-8 text-paragraph-xs">
-						Get covered for{' '}
+					<div className="font-weight-normal m-auto mt-1 quote-subtitle text-neutral-8 text-paragraph-xs">
+						Minimum payment of{' '}
 						<span className="text-brand-primary">
 							&#36;
 							{promoPrice % 1 === 0
 								? promoPrice
 								: promoPrice.toFixed(2)}{' '}
-							today
-						</span>
+						</span>{' '}
+						to get coverage today
 					</div>
 				</div>
 

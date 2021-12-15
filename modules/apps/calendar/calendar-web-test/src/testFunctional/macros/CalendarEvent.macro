@@ -1496,6 +1496,24 @@ definition {
 		CalendarEvent.viewTitleViaDetails(eventTitle = "${eventTitle}");
 	}
 
+	macro viewDetailsFields {
+		AssertElementPresent(
+			key_tab = "Status",
+			locator1 = "CalendarViewEventDetails#STATUS");
+
+		AssertElementPresent(
+			key_tab = "Starts",
+			locator1 = "CalendarViewEventDetails#START_DATE_FIELD");
+
+		AssertElementPresent(
+			key_tab = "Ends",
+			locator1 = "CalendarViewEventDetails#END_DATE_FIELD");
+
+		AssertElementPresent(
+			key_tab = "Resources",
+			locator1 = "CalendarViewEventDetails#RESOURCES_FIELD");
+	}
+
 	macro viewDetailsInPortlet {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",

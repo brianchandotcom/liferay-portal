@@ -101,12 +101,22 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the user can view the fields Title, Starts, Ends, Rresources in event details page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewValuesInEventDetailsPage {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71904 CanViewValuesInEventDetailsPage pending implementation
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		CalendarEvent.viewDetailsFields();
 	}
 
 	@priority = "5"

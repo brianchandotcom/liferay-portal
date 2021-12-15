@@ -57,12 +57,71 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can export a file at import Export/Import navigation menu"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanExportAFile {
+		CalendarNavigator.gotoConfiguration();
 
-		// TODO LRQA-71614 CanExportAFile pending implementation
+		CalendarConfiguration.selectTimeFormat(timeFormat = "24 Hour");
 
+		CalendarConfiguration.selectDefaultDuration(defaultDuration = "15 Minutes");
+
+		CalendarConfiguration.selectDefaultView(defaultView = "Agenda");
+
+		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");
+
+		CalendarConfiguration.save();
+
+		CalendarExportImport.closeFrame();
+
+		CalendarExportImport.gotoPortletExportImport();
+
+		CalendarExportImport.selectConfigurationIFrame();
+
+		CalendarExportImport.gotoExportTab(subTab = "New Export Process");
+
+		CalendarExportImport.exportAndDownloadACalendarFile();
+
+		CalendarExportImport.closeFrame();
+
+		CalendarExportImport.removeWidgetCalendar();
+
+		Refresh();
+
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
+
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.viewSelectTimeFormat(timeFormat = "Locale");
+
+		CalendarConfiguration.viewSelectDefaultDuration(defaultDuration = "60 Minutes");
+
+		CalendarConfiguration.viewSelectDefaultView(defaultView = "Week");
+
+		CalendarConfiguration.viewSelectWeekStartsOn(weekStartDay = "Sunday");
+
+		CalendarExportImport.closeFrame();
+
+		CalendarExportImport.gotoPortletExportImport();
+
+		CalendarExportImport.selectConfigurationIFrame();
+
+		CalendarExportImport.gotoImportTab(subTab = "New Import Process");
+
+		CalendarExportImport.importCalendarFile(calendarFile = "Calendar-202111251634.portlet.lar");
+
+		CalendarExportImport.closeFrame();
+
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.viewSelectTimeFormat(timeFormat = "24 Hour");
+
+		CalendarConfiguration.viewSelectDefaultDuration(defaultDuration = "15 Minutes");
+
+		CalendarConfiguration.viewSelectDefaultView(defaultView = "Agenda");
+
+		CalendarConfiguration.viewSelectWeekStartsOn(weekStartDay = "Saturday");
 	}
 
 	@description = "This is a use case for LPS-57992."

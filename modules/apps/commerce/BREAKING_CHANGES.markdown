@@ -73,7 +73,7 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### Concurrency Management for Inventory
+### Move Commerce administration from the Control Panel to the new 7.3 Global App menu
 - **Date:** 2020-Sep-3
 - **JIRA Ticket:** [COMMERCE-4565](https://issues.liferay.com/browse/COMMERCE-4565)
 
@@ -439,5 +439,28 @@ not need to create products with the Diagram product type.
 
 This change was introduced to fix BOM issues and to better fullfill spare parts
 use cases.
+
+---------------------------------------
+
+### Remove the Accounts widget so it is no longer a module in Liferay Commerce
+- **Date:** 2021-Nov-21
+- **JIRA Ticket:** [COMMERCE-7288](https://issues.liferay.com/browse/COMMERCE-7288)
+
+#### What changed?
+
+Commerce Account widget is replaced by Account widget.
+All instances on a previously running system are updated.
+
+#### Who is affected?
+
+Developers who have customized the Commerce Account widget and/or used it with
+site initializers.
+
+End users (Account managers) that will use a different widget to manage accounts.
+
+#### Why was this change made?
+
+This change was introduced to be compliant with Commerce Account migration to
+Account.
 
 ---------------------------------------

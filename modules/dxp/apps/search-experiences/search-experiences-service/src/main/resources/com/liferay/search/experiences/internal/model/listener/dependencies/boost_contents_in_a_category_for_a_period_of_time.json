@@ -25,7 +25,7 @@
 						"condition": {
 							"range": {
 								"format": "yyyyMMdd",
-								"parameterName": "${time.current_date}",
+								"parameterName": "time.current_date",
 								"values": [
 									"${configuration.start_date}",
 									"${configuration.end_date}"

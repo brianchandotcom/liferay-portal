@@ -24,7 +24,7 @@
 						],
 						"condition": {
 							"equals": {
-								"parameterName": "${time.time_of_day}",
+								"parameterName": "time.time_of_day",
 								"value": "${configuration.time_of_day}"
 							}
 						}

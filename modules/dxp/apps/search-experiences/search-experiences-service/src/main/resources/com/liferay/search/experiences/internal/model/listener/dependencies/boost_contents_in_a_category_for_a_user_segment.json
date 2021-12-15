@@ -24,7 +24,7 @@
 						],
 						"condition": {
 							"contains": {
-								"parameterName": "${user.active_segment_entry_ids}",
+								"parameterName": "user.active_segment_entry_ids",
 								"value": "${configuration.user_segment_ids}"
 							}
 						}

@@ -22,7 +22,7 @@
 						],
 						"condition": {
 							"contains": {
-								"parameterName": "${keywords}",
+								"parameterName": "keywords",
 								"value": "${configuration.values}"
 							}
 						}

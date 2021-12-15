@@ -25,7 +25,7 @@
 						"condition": {
 							"range": {
 								"format": "yyyyMMdd",
-								"parameterName": "${user.create_date}",
+								"parameterName": "user.create_date",
 								"values": [
 									"${time.current_date|modifier=-${configuration.time_range},dateFormat=yyyyMMdd}",
 									"${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}"

@@ -44,7 +44,7 @@
 						],
 						"condition": {
 							"equals": {
-								"parameterName": "${context.is_staging_group}",
+								"parameterName": "context.is_staging_group",
 								"value": false
 							}
 						}

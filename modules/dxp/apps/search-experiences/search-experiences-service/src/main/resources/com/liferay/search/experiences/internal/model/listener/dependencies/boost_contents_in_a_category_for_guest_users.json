@@ -24,7 +24,7 @@
 						],
 						"condition": {
 							"equals": {
-								"parameterName": "${user.is_signed_in}",
+								"parameterName": "user.is_signed_in",
 								"value": false
 							}
 						}

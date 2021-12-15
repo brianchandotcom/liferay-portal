@@ -360,6 +360,25 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 	}
 
 	@Test
+	public void testSearchContextAttributes() throws Exception {
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
+
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
+
+		List<ComplexQueryPart> complexQueryParts =
+			searchRequest.getComplexQueryParts();
+
+		ComplexQueryPart complexQueryPart = complexQueryParts.get(0);
+
+		TermQuery termQuery = (TermQuery)complexQueryPart.getQuery();
+
+		Assert.assertEquals("version", termQuery.getField());
+		Assert.assertEquals("7.4", termQuery.getValue());
+
+		_assert(sxpBlueprint);
+	}
+
+	@Test
 	public void testSortConfiguration() throws Exception {
 		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
 

@@ -946,7 +946,17 @@ public class JenkinsResultsParserUtil {
 			url = new URL(urlString);
 		}
 		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
+			try {
+				urlString = URLEncoder.encode(
+					urlString, StandardCharsets.UTF_8.name());
+
+				urlString = urlString.replaceAll("\\+", "%20");
+
+				return urlString;
+			}
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				throw new RuntimeException(unsupportedEncodingException);
+			}
 		}
 
 		if (!urlString.contains("?")) {
@@ -5453,7 +5463,7 @@ public class JenkinsResultsParserUtil {
 			"(?<masterNumber>[\\d]{1,2}).*(?:|\\.liferay\\.com)\\/+job\\/+" +
 				"(?<jobName>[\\w\\W]*?)\\/+(?<buildNumber>[0-9]*)");
 	private static final Pattern _urlQueryStringPattern = Pattern.compile(
-		"\\&??(\\w++)=([^\\?]*)");
+		"\\&??(\\w++)=([^\\&]*)");
 	private static final File _userHomeDir = new File(
 		System.getProperty("user.home"));
 

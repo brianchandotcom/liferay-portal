@@ -274,6 +274,7 @@
 		<column name="layoutPageTemplateStructureId" type="long" />
 		<column name="segmentsExperienceId" type="long" />
 		<column change-tracking-resolution-type="merge" name="data" type="String" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

@@ -191,12 +191,21 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new exported process status in the Current and Previous tab"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewProcessStatusExported {
+		CalendarExportImport.gotoPortletExportImport();
 
-		// TODO LRQA-71613 CanViewProcessStatusExported pending implementation
+		CalendarExportImport.selectConfigurationIFrame();
 
+		CalendarExportImport.gotoExportTab(subTab = "New Export Process");
+
+		CalendarExportImport.exportCalendarFile();
+
+		CalendarExportImport.gotoExportTab(subTab = "New Export Process");
+
+		CalendarExportImport.viewExportedCalendarFileName();
+
+		CalendarExportImport.viewSuccessStatusOnCurrentAndPreviousTab();
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new imported process status in the Current and Previous tab"

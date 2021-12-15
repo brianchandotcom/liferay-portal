@@ -1190,7 +1190,7 @@ definition {
 		task ("Add a widget page and select a required category") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicPage(
+			PagesAdmin.addPublicPage(
 				categoryName = "Category Name",
 				pageName = "Test Widget Page Name",
 				vocabularyName = "Vocabulary Name");

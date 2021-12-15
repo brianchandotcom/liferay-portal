@@ -481,7 +481,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
-			SitePages.addPublicPage(
+			PagesAdmin.addPublicPage(
 				pageName = "Blog Page Template",
 				pageTemplateName = "Blog");
 		}

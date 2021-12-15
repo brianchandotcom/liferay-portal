@@ -67,7 +67,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.addPublicPage(pageName = "Second Test Page");
+		PagesAdmin.addPublicPage(pageName = "Second Test Page");
 
 		JSONGroup.deleteGroupByName(
 			groupName = "Remote Site",

@@ -81,7 +81,7 @@ definition {
 		task ("Add a child page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicChildPage(
+			PagesAdmin.addPublicChildPage(
 				childPageName = "Test Child Page",
 				parentPageName = "Test Page Name");
 		}
@@ -100,7 +100,7 @@ definition {
 	test AddMultiplePages {
 		task ("Add three widget pages") {
 			for (var i : list "1,2,3") {
-				SitePages.addPublicPage(pageName = "Test Page Name ${i}");
+				PagesAdmin.addPublicPage(pageName = "Test Page Name ${i}");
 			}
 		}
 
@@ -118,7 +118,7 @@ definition {
 	@uitest
 	test AddPrivatePage {
 		task ("Add a private page") {
-			SitePages.addPrivatePage(pageName = "Test Private Page");
+			PagesAdmin.addPrivatePage(pageName = "Test Private Page");
 		}
 
 		task ("View private page in Pages admin") {

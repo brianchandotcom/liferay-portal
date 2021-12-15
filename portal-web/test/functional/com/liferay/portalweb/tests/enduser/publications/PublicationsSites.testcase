@@ -54,7 +54,7 @@ definition {
 			portlet = "Pages",
 			site = "Child Site Name");
 
-		SitePages.addPublicPage(pageName = "Child Site Page");
+		PagesAdmin.addPublicPage(pageName = "Child Site Page");
 
 		PublicationsNavigator.gotoReviewChanges();
 

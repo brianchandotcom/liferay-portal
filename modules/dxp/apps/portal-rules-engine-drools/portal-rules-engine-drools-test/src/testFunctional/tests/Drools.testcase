@@ -68,7 +68,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Drools Page");
+		PagesAdmin.addPublicPage(pageName = "Drools Page");
 
 		Navigator.gotoPage(pageName = "Drools Page");
 

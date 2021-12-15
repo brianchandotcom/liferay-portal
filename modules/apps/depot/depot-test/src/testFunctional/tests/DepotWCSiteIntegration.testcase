@@ -275,7 +275,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			collectionName = "Page Template Collection",
 			pageName = "Page Name",
 			pageTemplateName = "Page Template Name");

@@ -290,7 +290,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.addPublicPage(pageName = "Test Site Page");
+			PagesAdmin.addPublicPage(pageName = "Test Site Page");
 
 			Navigator.gotoSpecificURLPage(
 				pageName = "Test Site Page",

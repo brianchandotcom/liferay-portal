@@ -495,7 +495,7 @@ definition {
 	@priority = "3"
 	test CheckABTestPanelAtWidgetPages {
 		task ("Create Widget Page") {
-			SitePages.addPublicPage(
+			PagesAdmin.addPublicPage(
 				pageName = "Widget Page Name",
 				sitePageType = "Widget Page");
 		}

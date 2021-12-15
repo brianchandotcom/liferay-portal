@@ -860,7 +860,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.addPublicPage(
+			PagesAdmin.addPublicPage(
 				pageName = "2B New Site",
 				sitePageType = "Widget Page");
 

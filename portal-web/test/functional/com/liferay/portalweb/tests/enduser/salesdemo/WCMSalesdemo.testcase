@@ -34,7 +34,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "IFrame Page");
+		PagesAdmin.addPublicPage(pageName = "IFrame Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",

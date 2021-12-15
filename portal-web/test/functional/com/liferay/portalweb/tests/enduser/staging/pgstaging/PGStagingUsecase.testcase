@@ -54,7 +54,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
-		SitePages.addPublicPage(pageName = "Staging Test Page");
+		PagesAdmin.addPublicPage(pageName = "Staging Test Page");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

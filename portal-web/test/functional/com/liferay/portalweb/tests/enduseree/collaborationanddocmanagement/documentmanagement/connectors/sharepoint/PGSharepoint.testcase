@@ -47,7 +47,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Documents and Media Page",
 			sitePageType = "Widget Page");
 

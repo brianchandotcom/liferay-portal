@@ -1315,7 +1315,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.addPublicPage(pageName = "Marketplace Calendar Testing");
+			PagesAdmin.addPublicPage(pageName = "Marketplace Calendar Testing");
 
 			Navigator.gotoPage(pageName = "Marketplace Calendar Testing");
 
@@ -1342,7 +1342,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.addPublicPage(pageName = "Marketplace Calendar Testing");
+			PagesAdmin.addPublicPage(pageName = "Marketplace Calendar Testing");
 
 			Navigator.gotoPage(pageName = "Marketplace Calendar Testing");
 

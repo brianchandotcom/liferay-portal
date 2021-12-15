@@ -20,7 +20,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Test Dependency Page");
+		PagesAdmin.addPublicPage(pageName = "Test Dependency Page");
 
 		Navigator.gotoPage(pageName = "Test Dependency Page");
 

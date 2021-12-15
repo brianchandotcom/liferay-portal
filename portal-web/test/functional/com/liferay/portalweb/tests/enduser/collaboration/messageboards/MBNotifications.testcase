@@ -496,7 +496,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Message Boards Page",
 			sitePageType = "Widget Page");
 

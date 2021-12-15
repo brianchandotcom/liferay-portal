@@ -500,7 +500,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "search",
 			pageTemplateName = "Search");
 

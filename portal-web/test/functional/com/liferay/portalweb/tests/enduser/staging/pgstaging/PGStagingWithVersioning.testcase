@@ -95,7 +95,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		SitePages.addPublicPage(pageName = "Staging Page Versioning");
+		PagesAdmin.addPublicPage(pageName = "Staging Page Versioning");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Page Versioning",
@@ -148,7 +148,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		SitePages.addPublicChildPage(
+		PagesAdmin.addPublicChildPage(
 			childPageName = "Child Page",
 			parentPageName = "Staging Test Page");
 

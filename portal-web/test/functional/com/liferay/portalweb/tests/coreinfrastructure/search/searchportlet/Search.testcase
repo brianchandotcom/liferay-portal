@@ -598,7 +598,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		PagesAdmin.addPublicPage(pageName = "Search Page");
 
 		var browserType = PropsUtil.get("browser.type");
 
@@ -695,7 +695,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		PagesAdmin.addPublicPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -1372,9 +1372,9 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Site 3 Home Page");
+		PagesAdmin.addPublicPage(pageName = "Site 3 Home Page");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "Search Page",
 			pageTemplateName = "Search");
@@ -1612,9 +1612,9 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Home");
+		PagesAdmin.addPublicPage(pageName = "Home");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "Search Global Template Page",
 			pageTemplateName = "Search");
@@ -1993,7 +1993,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Wiki Test Page");
+		PagesAdmin.addPublicPage(pageName = "Wiki Test Page");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -2486,7 +2486,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		PagesAdmin.addPublicPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2628,7 +2628,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "${searchPage}");
+		PagesAdmin.addPublicPage(pageName = "${searchPage}");
 
 		Navigator.gotoPage(pageName = "${searchPage}");
 
@@ -2976,7 +2976,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "search",
 			pageTemplateName = "Search");

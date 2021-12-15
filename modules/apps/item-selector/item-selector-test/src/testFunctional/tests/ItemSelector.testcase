@@ -1312,7 +1312,7 @@ definition {
 
 		User.gotoAddPage(userName = "userfn userln");
 
-		SitePages.addPrivatePage(pageName = "Private Test Page");
+		PagesAdmin.addPrivatePage(pageName = "Private Test Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Private Test Page",

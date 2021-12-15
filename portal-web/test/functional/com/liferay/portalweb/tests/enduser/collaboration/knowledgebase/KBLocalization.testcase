@@ -48,7 +48,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		SitePages.addPublicChildPage(
+		PagesAdmin.addPublicChildPage(
 			childPageName = "Knowledge Base Display Page",
 			parentPageName = "Home");
 

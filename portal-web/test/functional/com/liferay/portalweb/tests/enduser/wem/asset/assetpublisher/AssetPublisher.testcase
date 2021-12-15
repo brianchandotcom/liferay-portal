@@ -1021,7 +1021,7 @@ definition {
 		task ("Assert the Web Content Article Structures selector appear.") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-			SitePages.addPublicPage(pageName = "Test AP Page");
+			PagesAdmin.addPublicPage(pageName = "Test AP Page");
 
 			Navigator.gotoSitePage(
 				pageName = "Test AP Page",

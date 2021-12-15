@@ -29,7 +29,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			columnName = "1 Column",
 			pageName = "Web Proxy Page");
 

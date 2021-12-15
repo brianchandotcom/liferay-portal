@@ -197,7 +197,7 @@ definition {
 		task ("Add the second page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.addPublicPage(pageName = "Test Page Name 2");
+			PagesAdmin.addPublicPage(pageName = "Test Page Name 2");
 		}
 
 		task ("Rename the second page") {

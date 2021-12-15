@@ -39,7 +39,7 @@ definition {
 		task ("Add a page based in global blog template") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicPage(
+			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name",
 				pageTemplateName = "Blog");
 		}
@@ -65,7 +65,7 @@ definition {
 		task ("Add a page based in global wiki template") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicPage(
+			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name",
 				pageTemplateName = "Wiki");
 		}
@@ -87,7 +87,7 @@ definition {
 		task ("Add a page with escape characters name") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicPage(pageName = "Test's Page Name");
+			PagesAdmin.addPublicPage(pageName = "Test's Page Name");
 		}
 
 		task ("View the alert not shown") {

@@ -30,7 +30,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Message Boards Page",
 			sitePageType = "Widget Page");
 

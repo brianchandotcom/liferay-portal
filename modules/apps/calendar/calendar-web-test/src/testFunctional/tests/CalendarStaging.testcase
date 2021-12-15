@@ -25,7 +25,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Staging Test Page",
 			sitePageType = "Widget Page");
 

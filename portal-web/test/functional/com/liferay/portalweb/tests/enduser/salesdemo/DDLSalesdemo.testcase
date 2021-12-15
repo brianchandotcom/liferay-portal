@@ -36,7 +36,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Company Picnic");
+		PagesAdmin.addPublicPage(pageName = "Company Picnic");
 
 		SitePages.configurePage(
 			columnName = "1 Column",

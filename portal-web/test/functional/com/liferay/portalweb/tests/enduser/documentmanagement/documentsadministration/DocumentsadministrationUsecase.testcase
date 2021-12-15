@@ -407,7 +407,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPrivatePage(
+		PagesAdmin.addPrivatePage(
 			pageName = "DM Site Page Name - Global",
 			siteTemplate = "true");
 

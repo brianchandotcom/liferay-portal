@@ -271,7 +271,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 
@@ -318,7 +318,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 

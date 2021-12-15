@@ -325,7 +325,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPublicPage(
 			pageName = "Sign In Page",
 			sitePageType = "Widget Page");
 

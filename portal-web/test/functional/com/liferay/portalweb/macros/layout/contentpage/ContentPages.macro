@@ -112,7 +112,7 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
-		SitePages._addPageToNavigationMenu(
+		PagesAdmin._addPageToNavigationMenu(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			navigationMenus = "${navigationMenus}");
 

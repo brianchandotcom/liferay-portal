@@ -248,7 +248,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		SitePages.addPublicPage(pageName = "Web Content Page");
+		PagesAdmin.addPublicPage(pageName = "Web Content Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",

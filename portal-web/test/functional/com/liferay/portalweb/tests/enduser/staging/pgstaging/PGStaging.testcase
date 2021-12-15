@@ -573,7 +573,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPrivatePage(pageName = "Private Staging Page");
+		PagesAdmin.addPrivatePage(pageName = "Private Staging Page");
 
 		Navigator.gotoPrivateStagedSitePage(
 			pageName = "Private Staging Page",
@@ -803,7 +803,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Test Variation Page");
+		PagesAdmin.addPublicPage(pageName = "Test Variation Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Variation Page",

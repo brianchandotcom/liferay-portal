@@ -1,14 +1,14 @@
 definition {
 
 	macro _addPage {
-		SitePages._selectPageType(
+		PagesAdmin._selectPageType(
 			collectionName = "${collectionName}",
 			pageTemplateName = "${pageTemplateName}",
 			sitePageType = "${sitePageType}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		SitePages._addPageToNavigationMenu(
+		PagesAdmin._addPageToNavigationMenu(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			navigationMenus = "${navigationMenus}");
 
@@ -45,7 +45,7 @@ definition {
 		AssertVisible(locator1 = "TextInput#NAME");
 
 		if (isSet(openGraph)) {
-			SitePages._configureOpenGraph(
+			PagesAdmin._configureOpenGraph(
 				customDescription = "${customDescription}",
 				customTitle = "${customTitle}");
 		}

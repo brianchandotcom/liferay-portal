@@ -37,7 +37,7 @@ definition {
 		task ("Add a widget page with XSS page name") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.addPublicPage(pageName = "${pageName}");
+			PagesAdmin.addPublicPage(pageName = "${pageName}");
 		}
 
 		task ("Navigate to the widget page") {

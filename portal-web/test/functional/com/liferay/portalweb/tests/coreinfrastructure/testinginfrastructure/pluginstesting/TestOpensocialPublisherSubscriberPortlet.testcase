@@ -20,7 +20,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Test Publisher Subscriber Page");
+		PagesAdmin.addPublicPage(pageName = "Test Publisher Subscriber Page");
 
 		Navigator.gotoPage(pageName = "Test Publisher Subscriber Page");
 

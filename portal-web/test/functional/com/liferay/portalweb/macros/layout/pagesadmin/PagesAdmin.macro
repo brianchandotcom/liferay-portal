@@ -1,9 +1,283 @@
 definition {
 
+	macro _addPage {
+		PagesAdmin._selectPageType(
+			collectionName = "${collectionName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PagesAdmin._addPageToNavigationMenu(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		Alert.viewSuccessMessage();
+
+		if ("${sitePageType}" == "Embedded") {
+			Page._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
+		}
+		else if ("${sitePageType}" == "Full Page Application") {
+			if (isSet(portlet)) {
+				Page._addPageTypeFullPageApplication(portlet = "${portlet}");
+			}
+		}
+		else if ("${sitePageType}" == "Link to a Page of This Site") {
+			if (isSet(linkPageName)) {
+				Click(locator1 = "SitePagesEditPage#LINK_TO_PAGE_SELECT_BUTTON");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Pause(locator1 = "3000");
+
+				AssertClick.assertPartialTextClickAt(
+					key_nodeName = "${linkPageName}",
+					locator1 = "Treeview#NODE_UNSELECTED",
+					value1 = "${linkPageName}");
+
+				SelectFrameTop();
+			}
+		}
+		else if ("${sitePageType}" == "Link to URL") {
+			Type(
+				locator1 = "TextInput#URL",
+				value1 = "${pageTypeURL}");
+		}
+		else if ("${sitePageType}" == "Panel") {
+			if (isSet(componentName)) {
+				Page._addPageTypePanel(componentName = "${componentName}");
+			}
+		}
+
+		if (isSet(inheritChanges)) {
+			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+		}
+
+		AssertVisible(locator1 = "TextInput#NAME");
+
+		if (isSet(openGraph)) {
+			PagesAdmin._configureOpenGraph(
+				customDescription = "${customDescription}",
+				customTitle = "${customTitle}");
+		}
+
+		Button.click(button = "Save");
+	}
+
+	@summary = "Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing."
+	macro _addPageToNavigationMenu {
+		if (isSet(navigationMenus)) {
+			Pause(locator1 = "5000");
+
+			for (var navigationMenu : list "${navigationMenus}") {
+				if ("${assertCheckboxMissing}" == "true") {
+					AssertElementNotPresent(
+						checkboxName = "${navigationMenu}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
+				else {
+					Check(
+						checkboxName = "${navigationMenu}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+
+					AssertChecked(
+						checkboxName = "${navigationMenu}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
+			}
+		}
+	}
+
+	@summary = "Configures openGraph for a site page. This should be moved outside of _addPage for stability."
+	macro _configureOpenGraph {
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		var checkboxName = "Use Custom Title";
+
+		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Type(
+			locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE",
+			value1 = "${customTitle}");
+
+		var checkboxName = "Use Custom Description";
+
+		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Type(
+			key_text = "openGraphDescription",
+			locator1 = "TextArea#ANY",
+			value1 = "${customDescription}");
+	}
+
+	macro _selectPageType {
+		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
+			var sitePageType = "${pageTemplateName}";
+
+			if (isSet(collectionName)) {
+				Navigator.gotoNavNested(navNested = "${collectionName}");
+			}
+			else {
+				Navigator.gotoNavNested(navNested = "Global Templates");
+			}
+		}
+		else if (isSet(sitePageType)) {
+			var sitePageType = "${sitePageType}";
+		}
+		else {
+			var sitePageType = "Widget Page";
+		}
+
+		LexiconCard.viewCardPresent(card = "${sitePageType}");
+
+		Pause(locator1 = "3000");
+
+		LexiconCard.clickCard(card = "${sitePageType}");
+	}
+
+	macro addChildPage {
+		MouseOver(
+			key_itemName = "${parentPageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
+
+		Click(
+			key_pageName = "${parentPageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+
+		DropdownMenuItem.click(menuItem = "Add Page");
+
+		PagesAdmin._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}",
+			pageName = "${childPageName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+	}
+
+	macro addPrivateChildPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		PagesAdmin.togglePrivacy(privacy = "Private Pages");
+
+		PagesAdmin.addChildPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			childPageName = "${childPageName}",
+			navigationMenus = "${navigationMenus}",
+			pageTemplateName = "${pageTemplateName}",
+			parentPageName = "${parentPageName}",
+			sitePageType = "${sitePageType}");
+	}
+
+	macro addPrivatePage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		if ("${siteTemplate}" == "true") {
+			LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
+		}
+		else if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			PagesAdmin.gotoAddFirstPage(pageType = "Private Page");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Pages",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Pages");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Private Page");
+		}
+
+		PagesAdmin._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}",
+			pageName = "${pageName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+	}
+
+	macro addPublicChildPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		PagesAdmin.togglePrivacy(privacy = "Public Pages");
+
+		PagesAdmin.addChildPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			childPageName = "${childPageName}",
+			navigationMenus = "${navigationMenus}",
+			pageTemplateName = "${pageTemplateName}",
+			parentPageName = "${parentPageName}",
+			sitePageType = "${sitePageType}");
+	}
+
+	macro addPublicPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			PagesAdmin.gotoAddFirstPage(pageType = "Public Page");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Pages",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
+				value1 = "Pages");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+		}
+
+		PagesAdmin._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			categoryName = "${categoryName}",
+			collectionName = "${collectionName}",
+			componentName = "${componentName}",
+			customDescription = "${customDescription}",
+			customTitle = "${customTitle}",
+			inheritChanges = "${inheritChanges}",
+			linkPageName = "${linkPageName}",
+			navigationMenus = "${navigationMenus}",
+			openGraph = "${openGraph}",
+			pageName = "${pageName}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			portlet = "${portlet}",
+			sitePageType = "${sitePageType}",
+			vocabularyName = "${vocabularyName}");
+	}
+
 	macro addPublicPageUnderSitePagesVariation {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
-		SitePages._selectPageType(
+		PagesAdmin._selectPageType(
 			collectionName = "${collectionName}",
 			pageTemplateName = "${pageTemplateName}",
 			sitePageType = "${sitePageType}");

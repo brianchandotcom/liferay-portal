@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.role.type.contributor;
 
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -179,12 +180,17 @@ public interface RoleTypeContributor {
 				"classNameId", PortalUtil.getClassNameId(getClassName()));
 		}
 
+		int total = RoleServiceUtil.searchCount(
+			companyId, keywords, new Integer[] {getType()}, params);
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			start, end, total);
+
 		return new BaseModelSearchResult<>(
 			RoleServiceUtil.search(
-				companyId, keywords, new Integer[] {getType()}, params, start,
-				end, orderByComparator),
-			RoleServiceUtil.searchCount(
-				companyId, keywords, new Integer[] {getType()}, params));
+				companyId, keywords, new Integer[] {getType()}, params,
+				startAndEnd[0], startAndEnd[1], orderByComparator),
+			total);
 	}
 
 }

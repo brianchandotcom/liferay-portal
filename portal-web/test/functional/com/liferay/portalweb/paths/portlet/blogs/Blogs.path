@@ -129,17 +129,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RECENT_BLOGGER-->
-<tr>
-	<td>RECENT_BLOGGER_USER_NAME</td>
-	<td>//span[contains(@class,'user-name') and contains(.,'${key_entryAuthor}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECENT_BLOGGER_POSTS</td>
-	<td>//div[@class='blogger-post-count']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

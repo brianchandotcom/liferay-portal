@@ -67,4 +67,24 @@ definition {
 
 		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
+
+	macro changeAttributeDataType {
+		var key_buttonName = "${attributeName}";
+
+		MouseOver(locator1 = "ACUtils#GENERIC_BUTTON");
+
+		if ("${editOption}" == "Description") {
+			Click(locator1 = "ACEventAnalysis#EDIT_PENCIL");
+
+			ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
+		}
+
+		if ("${editOption}" == "Filter") {
+			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
+
+			Click(locator1 = "ACEventAnalysis#EDIT_PENCIL");
+
+			ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
+		}
+	}
 }

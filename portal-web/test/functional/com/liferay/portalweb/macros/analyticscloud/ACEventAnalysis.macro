@@ -15,6 +15,13 @@ definition {
 
 		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
 	}
+
+	macro clickToAddFilterButton {
+		var key_sectionType = "filter";
+
+		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+	}
+
 	macro searchEventAnalysis {
 		Type(
 			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",

@@ -22,7 +22,7 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
+import com.liferay.source.formatter.util.PortalJSONObjectUtil;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -171,7 +171,7 @@ public class JavaMissingOverrideCheck extends BaseJavaTermCheck {
 			return _javaClassesJSONObject;
 		}
 
-		JSONObject portalJSONObject = SourceFormatterUtil.getPortalJSONObject(
+		JSONObject portalJSONObject = PortalJSONObjectUtil.getPortalJSONObject(
 			getBaseDirName(), getSourceFormatterExcludes(), getMaxLineLength());
 
 		_javaClassesJSONObject = portalJSONObject.getJSONObject("javaClasses");

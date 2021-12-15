@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.source.formatter.util.PortalJSONObjectUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.ArrayList;
@@ -218,7 +219,7 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 		}
 
 		JSONObject portalJSONObject =
-			SourceFormatterUtil.getPortalJSONObjectByVersion(version);
+			PortalJSONObjectUtil.getPortalJSONObjectByVersion(version);
 
 		if (portalJSONObject.has("taglibs")) {
 			taglibsJSONObject = portalJSONObject.getJSONObject("taglibs");

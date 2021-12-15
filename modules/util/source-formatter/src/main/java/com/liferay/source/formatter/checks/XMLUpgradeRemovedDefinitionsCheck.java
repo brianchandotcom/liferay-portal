@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.PortalJSONObjectUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.ArrayList;
@@ -217,7 +218,7 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 		}
 
 		JSONObject portalJSONObject =
-			SourceFormatterUtil.getPortalJSONObjectByVersion(version);
+			PortalJSONObjectUtil.getPortalJSONObjectByVersion(version);
 
 		if (portalJSONObject.has("xmlDefinitions")) {
 			xmlDefinitionsJSONObject = portalJSONObject.getJSONObject(

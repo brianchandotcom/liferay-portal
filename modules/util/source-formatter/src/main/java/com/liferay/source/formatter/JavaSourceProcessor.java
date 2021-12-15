@@ -20,7 +20,7 @@ import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.DebugUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
+import com.liferay.source.formatter.util.PortalJSONObjectUtil;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
@@ -115,7 +115,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			printError(fileName, sourceFormatterMessage.toString());
 		}
 
-		SourceFormatterUtil.deleteTempPortalJSONObjectFile();
+		PortalJSONObjectUtil.deleteTempPortalJSONObjectFile();
 	}
 
 	@Override

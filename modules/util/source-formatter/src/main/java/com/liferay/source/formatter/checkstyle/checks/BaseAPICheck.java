@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
+import com.liferay.source.formatter.util.PortalJSONObjectUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -170,11 +170,12 @@ public abstract class BaseAPICheck extends BaseCheck {
 		JSONObject portalJSONObject = null;
 
 		if (version.equals(getBaseDirName())) {
-			portalJSONObject = SourceFormatterUtil.getPortalJSONObject(version);
+			portalJSONObject = PortalJSONObjectUtil.getPortalJSONObject(
+				version);
 		}
 		else {
-			portalJSONObject = SourceFormatterUtil.getPortalJSONObjectByVersion(
-				version);
+			portalJSONObject =
+				PortalJSONObjectUtil.getPortalJSONObjectByVersion(version);
 		}
 
 		if (portalJSONObject.has("javaClasses")) {

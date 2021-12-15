@@ -597,4 +597,25 @@ definition {
 			value1 = "${weekStartDay}");
 	}
 
+	macro changeNameTitleAndCalendarRecorder {
+        Type(
+            locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+            value1 = "${eventTitle}");  
+
+        Select(
+            locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR",
+           	value1 = "${calendarRecorder}");
+	}
+
+	macro viewNameCalendarAndUser {
+        AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+			value1 = "${eventTitle}");
+			
+		AssertTextEquals(
+			locator1 = "Calendar#SCHEDULER_EVENT_CARD_VIEW_USER_VALUE",
+			value1 = "${usersName}");
+	}
+
+	
 }

@@ -94,11 +94,29 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the user can edit event details via Scheduler"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanEditEventViaScheduler {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71908 CanEditEventViaScheduler pending implementation
+        CalendarEvent.add(
+            eventTitle = "Calendar Event Title",
+            eventType = "Regular",
+            pageName = "Calendar Page");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.changeNameTitleAndCalendarRecorder(  
+            eventTitle = "Calendar Event Title Edited",
+            calendarRecorder = "Test Test");
+
+		CalendarScheduler.saveEvent();
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title Edited");
+
+		CalendarScheduler.viewNameCalendarAndUser(
+			eventTitle = "Calendar Event Title Edited",
+			usersName = "Test Test");
+			
 
 	}
 

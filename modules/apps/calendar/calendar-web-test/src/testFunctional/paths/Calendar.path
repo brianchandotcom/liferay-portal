@@ -692,6 +692,11 @@
 	<td>//td[not(contains(@class,'scheduler-today')) and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']/../../div</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCHEDULER_EVENT_CARD_VIEW_USER_VALUE</td>
+	<td>//tr[@id='_com_liferay_calendar_web_portlet_CalendarPortlet_INSTANCE_a11buRveGqoI_eventRecorderUsers'] | //label[text()='Test Test']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

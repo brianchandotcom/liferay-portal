@@ -71,6 +71,7 @@ const Subscriptions = ({accountKey}) => {
 
 			<div className="d-flex flex-wrap">
 				{!loadingAccountSubscriptions &&
+				accountSubscriptions.length > 0 ? (
 					accountSubscriptions.map((item, index) => (
 						<CardSubscription
 							cardSubscriptionData={item}
@@ -79,7 +80,12 @@ const Subscriptions = ({accountKey}) => {
 								selectedSubscriptionGroup
 							}
 						/>
-					))}
+					))
+				) : (
+					<p className="mx-auto pt-5">
+						No subscriptions match these criteria.
+					</p>
+				)}
 			</div>
 		</div>
 	);

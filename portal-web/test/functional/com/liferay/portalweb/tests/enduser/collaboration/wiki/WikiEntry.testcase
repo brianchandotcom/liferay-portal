@@ -49,13 +49,39 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136987. It checks that related assets can be added to a page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddRelatedAssets {
-		property portal.acceptance = "false";
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			title = "Web Content Title");
 
-		// TODO LPS-136987 CanAddRelatedAssets pending implementation
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
+		WikiNavigator.openToEditPage(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Web Content Title",
+			assetType = "Basic Web Content");
+
+		Button.clickPublish();
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewRelatedAsset(relatedAssetTitle = "Web Content Title");
 	}
 
 	@description = "This is a test for LPS-136985. It checks that a summary can be added to a page."

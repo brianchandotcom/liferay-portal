@@ -532,6 +532,17 @@ definition {
 		if (isSet(saveAsDraft)) {
 			WikiEntry.saveAsDraft();
 		}
+		else if ("${wikiPageTitleVariation}" == "Invalid") {
+			AssertClick(
+				locator1 = "Button#PUBLISH",
+				value1 = "Publish");
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_ENTER_A_VALID_TITLE",
+				value1 = "Please enter a valid title.");
+		}
 		else {
 			AssertClick(
 				locator1 = "Button#PUBLISH",

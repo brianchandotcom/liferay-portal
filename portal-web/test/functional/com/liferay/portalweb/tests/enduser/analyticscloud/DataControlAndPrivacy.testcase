@@ -1,24 +1,25 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		task ("Sign in AC") {
+		task ("Copy the token from AC") {
 			ACUtils.launchAC();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
+		task ("Set up instance and sign in DXP") {
 			TestCase.setUpPortalInstance();
 		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
 	}
 
 	tearDown {
@@ -29,6 +30,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -66,10 +72,30 @@ definition {
 	test CanCreateAccessRequest {
 		property portal.upstream = "quarantine";
 
+		var userEmail = "dcp1@liferay.com";
+		var userName = "dcp1";
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmail}",
+			userFirstName = "${userName}",
+			userLastName = "${userName}",
+			userScreenName = "${userName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmail}");
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
+
 		task ("Create Access Request") {
 			ACNavigation.goToSettings();
 
-			var email = ACSettings.createRequestLogByEmail(jobType = "Access");
+			ACSettings.createRequestLogByEmail(
+				email = "${userEmail}",
+				jobType = "Access");
 		}
 
 		task ("Assert that Access Request was created and is on the list") {
@@ -81,7 +107,7 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Access",
-				key_emailAdress = "${email}");
+				key_emailAdress = "${userEmail}");
 		}
 	}
 
@@ -89,6 +115,24 @@ definition {
 	@priority = "5"
 	test CanCreateDeleteRequest {
 		property portal.upstream = "quarantine";
+
+		var userEmail = "dcp2@liferay.com";
+		var userName = "dcp2";
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmail}",
+			userFirstName = "${userName}",
+			userLastName = "${userName}",
+			userScreenName = "${userName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmail}");
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
 
 		task ("Create Delete Request") {
 			ACNavigation.goToSettings();
@@ -113,6 +157,24 @@ definition {
 	@priority = "5"
 	test CanCreateSuppressRequest {
 		property portal.upstream = "quarantine";
+
+		var userEmail = "dcp3@liferay.com";
+		var userName = "dcp3";
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmail}",
+			userFirstName = "${userName}",
+			userLastName = "${userName}",
+			userScreenName = "${userName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmail}");
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
 
 		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
@@ -141,6 +203,24 @@ definition {
 
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9439
+
+		var userEmail = "dcp4@liferay.com";
+		var userName = "dcp4";
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmail}",
+			userFirstName = "${userName}",
+			userLastName = "${userName}",
+			userScreenName = "${userName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmail}");
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
 
 		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
@@ -193,6 +273,24 @@ definition {
 
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9438
+
+		var userEmail = "dcp5@liferay.com";
+		var userName = "dcp5";
+
+		JSONUser.addUser(
+			userEmailAddress = "${userEmail}",
+			userFirstName = "${userName}",
+			userLastName = "${userName}",
+			userScreenName = "${userName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmail}");
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
 
 		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();

@@ -342,7 +342,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addPermissions(serviceContext));
 
-			_invoke(() -> _addDispatchTrigger(serviceContext));
+			_invoke(() -> _addDispatchTriggers(serviceContext));
 			_invoke(() -> _addDDMStructures(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
@@ -900,7 +900,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDispatchTrigger(ServiceContext serviceContext)
+	private void _addDispatchTriggers(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(

@@ -68,6 +68,16 @@ definition {
 		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
+	macro addBreakdownToAnalysis {
+		var key_buttonName = "${attributeName}";
+
+		ACEventAnalysis.clickToAddBreakdownButton();
+
+		ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
+
+		Click(locator1 = "ACUtils#GENERIC_BUTTON");
+	}
+
 	macro changeAttributeDataType {
 		var key_buttonName = "${attributeName}";
 

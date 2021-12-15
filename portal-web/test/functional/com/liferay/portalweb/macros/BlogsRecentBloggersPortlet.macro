@@ -15,13 +15,13 @@ definition {
 			locator1 = "BlogsRecentBloggers#NUMBER_OF_RATINGS",
 			value1 = "Number of Ratings: ${numberOfRatings}");
 
-		var postDate = DateUtil.getFormattedCurrentDate("MM/d/yy");
+		var postYear = DateUtil.getFormattedCurrentDate("yy");
 
-		echo("## * postDate: ${postDate}");
+		echo("## * postYear: ${postYear}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsRecentBloggers#POST_DATE",
-			value1 = "Date: ${postDate}");
+			value1 = "${postYear}");
 	}
 
 }

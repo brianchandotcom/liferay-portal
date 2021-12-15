@@ -92,6 +92,8 @@ public class SXPBlueprintResourceImpl
 			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId);
 
 		return Response.ok(
+		).encoding(
+			"UTF-8"
 		).entity(
 			JSONUtil.put(
 				"configuration",
@@ -118,8 +120,6 @@ public class SXPBlueprintResourceImpl
 				sxpBlueprint.getTitle(
 					contextAcceptLanguage.getPreferredLocale(), true),
 				".json\"")
-		).header(
-			"Content-Type", "application/json"
 		).build();
 	}
 

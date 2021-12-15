@@ -88,6 +88,8 @@ public class SXPElementResourceImpl
 			_sxpElementService.getSXPElement(sxpElementId);
 
 		return Response.ok(
+		).encoding(
+			"UTF-8"
 		).entity(
 			JSONUtil.put(
 				"description_i18n",
@@ -111,8 +113,6 @@ public class SXPElementResourceImpl
 				sxpElement.getTitle(
 					contextAcceptLanguage.getPreferredLocale(), true),
 				".json\"")
-		).header(
-			"Content-Type", "application/json"
 		).build();
 	}
 

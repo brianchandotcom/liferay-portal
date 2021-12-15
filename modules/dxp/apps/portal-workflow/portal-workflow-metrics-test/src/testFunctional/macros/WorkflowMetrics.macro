@@ -933,12 +933,6 @@ definition {
 		Click(locator1 = "WorkflowMetrics#PERFORMANCE_COMPLETED_ITEMS_BY_STATUS");
 	}
 
-	macro gotoWorkflowMetricsCards {
-		Click(
-			key_assigneeName = "${cardName}",
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
-	}
-
 	macro goToWorkflowProcessMetrics {
 		var key_workflowProcessName = "${workflowProcessName}";
 

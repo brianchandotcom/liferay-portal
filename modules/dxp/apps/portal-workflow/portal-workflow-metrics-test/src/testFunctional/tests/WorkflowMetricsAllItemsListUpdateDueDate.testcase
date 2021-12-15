@@ -1,4 +1,4 @@
-@component-name = "portal-workflow"
+@component-name = "portal-workflow-ee"
 definition {
 
 	property portal.release = "true";
@@ -207,9 +207,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Process");
-
-		WorkflowMetrics.gotoWorkflowMetricsCards(cardName = "Total Pending");
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver Process");
 
 		WorkflowMetrics.viewButtonUpdateDueDateIsNotAvailable();
 
@@ -219,9 +220,10 @@ definition {
 			userLoginEmailAddress = "user@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Process");
-
-		WorkflowMetrics.gotoWorkflowMetricsCards(cardName = "Total Pending");
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver Process");
 
 		WorkflowMetrics.viewButtonUpdateDueDateIsAvailable();
 

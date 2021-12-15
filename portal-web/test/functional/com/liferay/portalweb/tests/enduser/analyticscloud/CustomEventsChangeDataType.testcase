@@ -279,4 +279,70 @@ definition {
 		}
 	}
 
+    @description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10206 | Test Summary: Undefined for results cannot be interpreted"
+	@priority = "3"
+	test ViewUndefinedResultsIsDisplayedWhenChangeDataTypeThatCannotBeInterpreted {
+		var attributeName = "company";
+		var attributeValue = "liferay";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributeName}",
+				attributesValue = "${attributeValue}",
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+		}
+
+        task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdownToAnalysis(attributeName = "${attributeName}");
+		}
+
+        task ("Check that the attribute's value appears in the analysis") {
+            ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${attributeValue}");
+		}
+
+        task ("Remove the attribute from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${attributeName}");
+		}
+
+		task ("Change the type of the attribute to number") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+			ACEventAnalysis.changeAttributeDataType(
+				attributeName = "${attributeName}",
+				editOption = "Description",
+				newDataType = "Number");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdownToAnalysis(attributeName = "${attributeName}");
+		}
+
+        task ("Check that the attribute value does not appear in the analysis when it has a different data type") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "undefined");
+		}
+	}
+
 }

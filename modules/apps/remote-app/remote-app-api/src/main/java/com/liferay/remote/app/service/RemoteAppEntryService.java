@@ -53,11 +53,11 @@ public interface RemoteAppEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteAppEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, String description,
-			String externalReferenceCode, String friendlyURLMapping,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties, String sourceCodeURL)
+			String externalReferenceCode, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			String description, String friendlyURLMapping, boolean instanceable,
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException;
 
 	public RemoteAppEntry addIFrameRemoteAppEntry(

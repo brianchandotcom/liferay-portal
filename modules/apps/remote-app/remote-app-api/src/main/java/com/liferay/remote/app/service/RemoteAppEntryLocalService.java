@@ -71,9 +71,9 @@ public interface RemoteAppEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
-			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName, String customElementURLs,
-			String description, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
@@ -88,9 +88,9 @@ public interface RemoteAppEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
-			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName, String customElementURLs,
-			String description, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)

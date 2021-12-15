@@ -10,6 +10,11 @@ definition {
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 
+	macro clickToAddBreakdownButton {
+		var key_sectionType = "breakdown";
+
+		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+	}
 	macro searchEventAnalysis {
 		Type(
 			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",

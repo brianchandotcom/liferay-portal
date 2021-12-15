@@ -10,10 +10,15 @@
 </thead>
 
 <tbody>
-<!-- ADD_BUTTON_TO_ANALYSE -->
+<!-- ADD_EVENT_AND_ATTRIBUTE_TO_ANALYSE -->
 <tr>
 	<td>ADD_EVENT_BUTTON</td>
 	<td>//button[contains(@class,'add-event-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ATTRIBUTE_BUTTON</td>
+	<td>//div[contains(@class,'attribute-${key_sectionType}-section-root')]//button</td>
 	<td></td>
 </tr>
 <!-- SEARCH_EVENT_ANALYSE -->

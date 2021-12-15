@@ -4,6 +4,8 @@
 /development/ant-apache-bsf.jar
 /development/ant-compress.jar
 /development/appium.jar
+/development/aspectj-rt.jar
+/development/aspectj-weaver.jar
 /development/bnd-repository.jar
 /development/catalina.jar
 /development/com.liferay.jenkins.results.parser.jar
@@ -92,8 +94,6 @@
 /portal/asm-tree.jar
 /portal/asm-util.jar
 /portal/asm.jar
-/portal/aspectj-rt.jar
-/portal/aspectj-weaver.jar
 /portal/axis-ant.jar
 /portal/axis.jar
 /portal/boilerpipe.jar

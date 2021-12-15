@@ -88,7 +88,10 @@ const ImagePicker = ({
 	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
+		onFocus(event);
+
 		Liferay.Util.openSelectionModal({
+			onClose: () => onBlur(event),
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectDocumentLibrary`,
 			title: Liferay.Util.sub(
@@ -119,9 +122,7 @@ const ImagePicker = ({
 							disabled={readOnly}
 							id={id}
 							lang={editingLanguageId}
-							onBlur={onBlur}
 							onClick={handleItemSelectorTriggerClick}
-							onFocus={onFocus}
 							type="text"
 							value={imageValues.title || ''}
 						/>

@@ -84,9 +84,9 @@ const Subscriptions = ({accountKey}) => {
 			<div className="d-flex flex-wrap">
 				{!loadingAccountSubscriptions &&
 				accountSubscriptions.length > 0 ? (
-					accountSubscriptions.map((item, index) => (
+					accountSubscriptions.map((accountSubscription, index) => (
 						<CardSubscription
-							cardSubscriptionData={item}
+							cardSubscriptionData={accountSubscription}
 							key={index}
 							selectedSubscriptionGroup={
 								selectedSubscriptionGroup

@@ -85,11 +85,7 @@ public class BuildDatabaseUtil {
 				buildDatabaseFile, distNodes, distPath);
 		}
 
-		if (buildDatabaseFile.exists()) {
-			return;
-		}
-
-		if (build == null) {
+		if (buildDatabaseFile.exists() || (build == null)) {
 			return;
 		}
 

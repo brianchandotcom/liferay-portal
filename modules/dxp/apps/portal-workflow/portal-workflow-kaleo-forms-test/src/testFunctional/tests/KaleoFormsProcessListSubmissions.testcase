@@ -374,8 +374,7 @@ definition {
 	test CanViewTrackApprovalThroughKebabMenu {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsNewSubmissions.addNewContacts(
-			ddlCompany = "Liferay");
+		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Liferay");
 
 		KaleoFormsAdmin.saveProcessRecord();
 

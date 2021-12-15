@@ -466,17 +466,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TRACK_APPROVAL_PANEL</td>  
+	<td>TRACK_APPROVAL_PANEL</td>
 	<td>//div[contains(@class,'workflow-instance-tracker')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TRACK_APPROVAL_CURRENT_NODE</td>  
+	<td>TRACK_APPROVAL_CURRENT_NODE</td>
 	<td>//div[contains(@class,'current-node')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TRACK_APPROVAL_REACT_CONTROLS</td>  
+	<td>TRACK_APPROVAL_REACT_CONTROLS</td>
 	<td>//div[contains(@class,'react-flow__controls')]</td>
 	<td></td>
 </tr>

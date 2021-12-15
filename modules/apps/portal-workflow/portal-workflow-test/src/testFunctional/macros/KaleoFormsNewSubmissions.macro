@@ -71,6 +71,10 @@ definition {
 		}
 	}
 
+	macro clearSearchResults {
+		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
+	}
+
 	macro deleteAllSubmissions {
 		Click.clickAtNotVisible(locator1 = "WorkflowAllItems#CHECKBOX_CUSTOM_CONTROL");
 
@@ -83,10 +87,6 @@ definition {
 		AssertElementPresent(
 			key_emptyMessaage = "No Kaleo Forms Process records were found",
 			locator1 = "WorkflowSubmissions#EMPTY_MESSAGE");
-	}
-
-	macro clearSearchResults {
-		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 	}
 
 	macro editDLLRecordContacts {
@@ -183,6 +183,27 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "${menuItem}");
 	}
 
+	macro viewOrderTable {
+		var rowNumber = "1";
+
+		for (var fieldName : list "${fieldNameList}") {
+			AssertElementPresent(
+				key_fieldName = "${fieldName}",
+				key_rowNumber = "${rowNumber}",
+				locator1 = "KaleoFormsAdmin#TABLE_ORDER_SUBMISSIONS");
+
+			var rowNumber = ${rowNumber} + 1;
+		}
+	}
+
+	macro viewPaginationNumber {
+		for (var pageNumber : list "${pageNumberList}") {
+			var key_pageNumber = "${pageNumber}";
+
+			AssertElementPresent(locator1 = "KaleoFormsNewSubmissions#PAGINATION_NUMBER");
+		}
+	}
+
 	macro viewStatusDDL {
 		AssertElementPresent(
 			key_status = "${status}",
@@ -193,6 +214,24 @@ definition {
 		AssertElementPresent(
 			key_status = "${lbstatus}",
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
+	}
+
+	macro viewTrackWorkflowStructure {
+		SelectFrame(
+			key_title = "Track Workflow",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_TITLE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_PANEL");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_NODE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_CURRENT_NODE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_REACT_CONTROLS");
 	}
 
 	macro viewVersionOnDetails {
@@ -206,45 +245,6 @@ definition {
 			key_errorMessage = "${errorMessage}",
 			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
 			value1 = "${errorMessage}");
-	}
-	
-	macro viewPaginationNumber {
-		for (var pageNumber : list "${pageNumberList}") {
-			var key_pageNumber = "${pageNumber}";
-
-			AssertElementPresent(locator1 = "KaleoFormsNewSubmissions#PAGINATION_NUMBER");
-		}
-	}
-
-	macro viewOrderTable {
-        var rowNumber = "1";
-
-        for (var fieldName : list "${fieldNameList}") {
-            AssertElementPresent(
-                key_rowNumber = "${rowNumber}",
-                key_fieldName = "${fieldName}",
-               	locator1 = "KaleoFormsAdmin#TABLE_ORDER_SUBMISSIONS");
-
-            var rowNumber = MathUtil.sum("${rowNumber}", "1");
-        }
-    }
-
-	macro viewTrackWorkflowStructure {
-		SelectFrame(
-			key_title = "Track Workflow",
-			locator1 = "IFrame#MODAL_ANY");
-		
-		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_TITLE");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_PANEL");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_NODE");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_CURRENT_NODE");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_REACT_CONTROLS");
 	}
 
 }

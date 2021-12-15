@@ -43,6 +43,14 @@ definition {
 		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
 	}
 
+	macro openProductsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet");
+
+		WaitForVisible(locator1 = "Button#PLUS");
+	}
+
 	macro searchProduct {
 		Type(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",

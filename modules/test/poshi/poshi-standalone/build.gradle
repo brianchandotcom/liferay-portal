@@ -47,5 +47,7 @@ repositories {
 }
 
 webdriverBinaries {
-	chromedriver "86.0.4240.22"
+	if (project.hasProperty("chromeDriverVersion")) {
+		chromedriver = project.getProperty("chromeDriverVersion")
+	}
 }

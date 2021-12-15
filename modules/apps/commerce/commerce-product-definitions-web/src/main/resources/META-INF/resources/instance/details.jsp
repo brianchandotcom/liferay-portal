@@ -180,33 +180,17 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 				<div class="form-group input-date-wrapper">
 					<label for="discontinuedDate"><liferay-ui:message key="end-of-production-date" /></label>
 
-					<%
-					Date discontinuedDate = cpInstance.getDiscontinuedDate();
-
-					int discontinuedDateDay = 0;
-					int discontinuedDateMonth = -1;
-					int discontinuedDateYear = 0;
-
-					if (discontinuedDate != null) {
-						Calendar calendar = CalendarFactoryUtil.getCalendar(discontinuedDate.getTime());
-
-						discontinuedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-						discontinuedDateMonth = calendar.get(Calendar.MONTH);
-						discontinuedDateYear = calendar.get(Calendar.YEAR);
-					}
-					%>
-
 					<liferay-ui:input-date
 						dayParam="discontinuedDateDay"
-						dayValue="<%= discontinuedDateDay %>"
+						dayValue="<%= cpInstanceDisplayContext.getDiscontinuedDateField(Calendar.DAY_OF_MONTH) %>"
 						disabled="<%= !discontinued %>"
 						monthParam="discontinuedDateMonth"
-						monthValue="<%= discontinuedDateMonth %>"
+						monthValue="<%= cpInstanceDisplayContext.getDiscontinuedDateField(Calendar.MONTH) %>"
 						name="discontinuedDate"
 						nullable="<%= true %>"
 						showDisableCheckbox="<%= false %>"
 						yearParam="discontinuedDateYear"
-						yearValue="<%= discontinuedDateYear %>"
+						yearValue="<%= cpInstanceDisplayContext.getDiscontinuedDateField(Calendar.YEAR) %>"
 					/>
 				</div>
 			</div>

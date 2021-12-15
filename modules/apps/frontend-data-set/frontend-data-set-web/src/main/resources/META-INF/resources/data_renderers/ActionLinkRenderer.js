@@ -14,12 +14,12 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {openToast} from 'frontend-js-web';
+import {navigate, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import DataSetContext from '../DataSetContext';
-import {formatActionURL, liferayNavigate} from '../utils/index';
+import {formatActionURL} from '../utils/index';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
@@ -129,19 +129,16 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 					isNotALink()
 						? handleClickOnLink
 						: (event) => {
-								event.preventDefault();
+								const confirmMessage =
+									currentAction.data?.confirmationMessage;
 
-								if (
-									currentAction.data &&
-									currentAction.data.confirmationMessage &&
-									!confirm(
-										currentAction.data.confirmationMessage
-									)
-								) {
-									return;
+								if (confirmMessage) {
+									event.preventDefault();
+
+									if (confirm(confirmMessage)) {
+										navigate(formattedHref);
+									}
 								}
-
-								liferayNavigate(formattedHref);
 						  }
 				}
 			>

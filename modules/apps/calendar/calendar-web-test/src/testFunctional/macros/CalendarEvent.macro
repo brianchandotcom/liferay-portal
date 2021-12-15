@@ -543,16 +543,16 @@ definition {
 	}
 
 	macro clickDeclineButton {
-        AssertClick(
-            locator1 = "CalendarViewEventDetails#DECLINE_BUTTON",
-            value1 = "Decline");
-    }
+		AssertClick(
+			locator1 = "CalendarViewEventDetails#DECLINE_BUTTON",
+			value1 = "Decline");
+	}
 
 	macro clickMaybeButton {
-        AssertClick(
-            locator1 = "CalendarViewEventDetails#MAYBE_BUTTON",
-            value1 = "Maybe");
-    }
+		AssertClick(
+			locator1 = "CalendarViewEventDetails#MAYBE_BUTTON",
+			value1 = "Maybe");
+	}
 
 	macro clickPublish {
 		AssertClick(

@@ -65,12 +65,23 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the user can decline an event via Scheduler"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeclineEventViaScheduler {
+		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
-		// TODO LRQA-71909 CanDeclineEventViaScheduler pending implementation
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
+		CalendarEvent.publish();
+
+		IFrame.closeFrame();
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		CalendarEvent.clickDeclineButton();
+
+		CalendarEvent.viewStatusViaDetails(status = "DENIED");
 	}
 
 	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
@@ -683,18 +694,18 @@ definition {
 	test EventStatusIsAnyWhenUserMaybeAttend {
 		CalendarNavigator.gotoAddEvent();
 
-        CalendarEvent.add(
-            eventTitle = "Calendar Event Title",
-            eventType = "Regular",
-            pageName = "Calendar Page");
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
-        Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-        CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
 
-        CalendarEvent.clickMaybeButton();
+		CalendarEvent.clickMaybeButton();
 
-        CalendarEvent.viewStatusViaDetails(status = "ANY");
+		CalendarEvent.viewStatusViaDetails(status = "ANY");
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is -Approved- when the Calendar has no workflow assigned"
@@ -717,23 +728,22 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is Denied when the user declines an event"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EventStatusIsDeniedWhenUserDeclines {
 		CalendarNavigator.gotoAddEvent();
 
-        CalendarEvent.add(
-            eventTitle = "Calendar Event Title",
-            eventType = "Regular",
-            pageName = "Calendar Page");
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
-        Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-        CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
 
-        CalendarEvent.clickDeclineButton();
+		CalendarEvent.clickDeclineButton();
 
-        CalendarEvent.viewStatusViaDetails(status = "DENIED");
+		CalendarEvent.viewStatusViaDetails(status = "DENIED");
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is -Pending- when the Calendar has the Single Approver assigned"
@@ -741,29 +751,29 @@ definition {
 	test EventStatusIsPendingWhenWorkflowIsAssigned {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
-        Workflow.configureWorkflow(
-            workflowDefinition = "Single Approver",
-            workflowResourceValue = "Calendar Event");
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
 
-        Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-        CalendarNavigator.gotoAddEvent();
+		CalendarNavigator.gotoAddEvent();
 
-        CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
-        CalendarEvent.setDatesToday();
+		CalendarEvent.setDatesToday();
 
-        CalendarEvent.setTimes(
-            endDateTime = "08:00 PM",
-            startDateTime = "07:00 PM");
+		CalendarEvent.setTimes(
+			endDateTime = "08:00 PM",
+			startDateTime = "07:00 PM");
 
-        Button.clickSubmitForPublication();
+		Button.clickSubmitForPublication();
 
-        Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-        CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
 
-        CalendarEvent.viewStatusViaDetails(status = "PENDING");
+		CalendarEvent.viewStatusViaDetails(status = "PENDING");
 	}
 
 	@description = "LRQA-71888 - Verify that the buttons Maybe and Decline are displayed"

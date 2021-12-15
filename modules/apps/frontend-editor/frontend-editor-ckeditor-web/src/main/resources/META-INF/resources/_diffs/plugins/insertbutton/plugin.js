@@ -315,7 +315,8 @@
 					if (
 						type === CKEDITOR.SELECTION_TEXT &&
 						selection.getSelectedText() === '' &&
-						startElement.getText() === '\n'
+						startElement.getText() === '\n' &&
+						startElement.getName() !== 'td'
 					) {
 						this._positionButton({button, editor});
 

@@ -46,7 +46,7 @@ definition {
 
 		Staging.viewSitePagesVariationActiveCP(sitePagesVariationName = "Summer");
 
-		SitePages.addPublicPageUnderSitePagesVariation(pageName = "Test Page Name");
+		PagesAdmin.addPublicPageUnderSitePagesVariation(pageName = "Test Page Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 

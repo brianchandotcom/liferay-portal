@@ -2940,19 +2940,16 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldLabel = "Custom Field A",
-			fieldColumnNumber = "0");
-		
-		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldLabel = "Custom Field B",
-			fieldColumnNumber = "1");
-		
-		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldLabel = "Custom Field C",
-			fieldColumnNumber = "2");
+			fieldColumnNumber = "0",
+			fieldLabel = "Custom Field A");
 
-			
+		ObjectPortlet.assertFieldAtSpecificColumn(
+			fieldColumnNumber = "1",
+			fieldLabel = "Custom Field B");
 
+		ObjectPortlet.assertFieldAtSpecificColumn(
+			fieldColumnNumber = "2",
+			fieldLabel = "Custom Field C");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with two columns"

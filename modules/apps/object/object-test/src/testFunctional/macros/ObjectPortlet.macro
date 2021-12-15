@@ -71,6 +71,13 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
+	macro assertFieldAtSpecificColumn {
+		AssertElementPresent(
+			key_fieldColumnNumber = "${fieldColumnNumber}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
+	}
+
 	macro assertFieldEntryColumnIsDisplayed {
 		AssertElementPresent(
 			key_fieldLabelName = "${fieldLabelName}",
@@ -82,13 +89,6 @@ definition {
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "${key_fieldLabelName}");
-	}
-
-	macro assertFieldAtSpecificColumn {
-		AssertElementPresent(
-			key_fieldColumnNumber = "${fieldColumnNumber}",
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 	}
 
 	macro assertFilterResultsSpecificOrder {

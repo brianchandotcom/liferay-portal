@@ -148,7 +148,7 @@
 		</not>
 	</condition>
 
-	<property name="aspectj.agent" value="-javaagent:${project.dir}/lib/portal/aspectj-weaver.jar" />
+	<property name="aspectj.agent" value="-javaagent:${project.dir}/lib/development/aspectj-weaver.jar" />
 	<property name="aspectj.configuration" value="com/liferay/aspectj/aop.xml" />
 	<property name="definitions.dir" value="${project.dir}/definitions" />
 	<property name="doc.dir" value="${project.dir}/api" />

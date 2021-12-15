@@ -720,9 +720,20 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test EventStatusIsDeniedWhenUserDeclines {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71906 EventStatusIsDeniedWhenUserDeclines pending implementation
+        CalendarEvent.add(
+            eventTitle = "Calendar Event Title",
+            eventType = "Regular",
+            pageName = "Calendar Page");
 
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+        CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+        CalendarEvent.clickDeclineButton();
+
+        CalendarEvent.viewStatusViaDetails(status = "DENIED");
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is -Pending- when the Calendar has the Single Approver assigned"

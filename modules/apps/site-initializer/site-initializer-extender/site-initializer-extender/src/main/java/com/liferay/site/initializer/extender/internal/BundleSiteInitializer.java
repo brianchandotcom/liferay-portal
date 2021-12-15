@@ -917,11 +917,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				return;
 			}
 
-			JSONObject jobSchedulerJSONObject =
+			JSONObject dispatchTriggerJSONObject =
 				JSONFactoryUtil.createJSONObject(json);
 
 			JSONObject propertiesJSONObject =
-				jobSchedulerJSONObject.getJSONObject("properties");
+				dispatchTriggerJSONObject.getJSONObject("properties");
 
 			UnicodeProperties dispatchTaskSettingsUnicodeProperties =
 				new UnicodeProperties();
@@ -934,10 +934,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					serviceContext.getCompanyId(),
-					jobSchedulerJSONObject.getString("name"));
+					dispatchTriggerJSONObject.getString("name"));
 
 			if (dispatchTrigger != null) {
-				if (jobSchedulerJSONObject.getBoolean("unique")) {
+				if (dispatchTriggerJSONObject.getBoolean("unique")) {
 					continue;
 				}
 
@@ -954,10 +954,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
 				serviceContext.getUserId(),
-				jobSchedulerJSONObject.getString("dispatchTaskExecutorType"),
+				dispatchTriggerJSONObject.getString("dispatchTaskExecutorType"),
 				dispatchTaskSettingsUnicodeProperties,
-				jobSchedulerJSONObject.getString("name"),
-				jobSchedulerJSONObject.getBoolean("system"));
+				dispatchTriggerJSONObject.getString("name"),
+				dispatchTriggerJSONObject.getBoolean("system"));
 
 			File file = FileUtil.createTempFile(url.openStream());
 
@@ -970,31 +970,31 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());
 
-			if (jobSchedulerJSONObject.getInt("startDateDay") != 0) {
+			if (dispatchTriggerJSONObject.getInt("startDateDay") != 0) {
 				_dispatchTriggerLocalService.updateDispatchTrigger(
 					dispatchTrigger.getDispatchTriggerId(),
-					jobSchedulerJSONObject.getBoolean("active"),
-					jobSchedulerJSONObject.getString("cronExpression"),
+					dispatchTriggerJSONObject.getBoolean("active"),
+					dispatchTriggerJSONObject.getString("cronExpression"),
 					DispatchTaskClusterMode.valueOf(
-						jobSchedulerJSONObject.getInt(
+						dispatchTriggerJSONObject.getInt(
 							"dispatchTaskClusterMode")),
-					calendar.get(jobSchedulerJSONObject.getInt("endDateMonth")),
-					calendar.get(jobSchedulerJSONObject.getInt("endDateDay")),
-					calendar.get(jobSchedulerJSONObject.getInt("endDateYear")),
-					calendar.get(jobSchedulerJSONObject.getInt("endDateHour")),
+					calendar.get(dispatchTriggerJSONObject.getInt("endDateMonth")),
+					calendar.get(dispatchTriggerJSONObject.getInt("endDateDay")),
+					calendar.get(dispatchTriggerJSONObject.getInt("endDateYear")),
+					calendar.get(dispatchTriggerJSONObject.getInt("endDateHour")),
 					calendar.get(
-						jobSchedulerJSONObject.getInt("endDateMinute")),
-					jobSchedulerJSONObject.getBoolean("neverEnd"),
-					jobSchedulerJSONObject.getBoolean("overlapAllowed"),
+						dispatchTriggerJSONObject.getInt("endDateMinute")),
+					dispatchTriggerJSONObject.getBoolean("neverEnd"),
+					dispatchTriggerJSONObject.getBoolean("overlapAllowed"),
 					calendar.get(
-						jobSchedulerJSONObject.getInt("startDateMonth")),
-					calendar.get(jobSchedulerJSONObject.getInt("startDateDay")),
+						dispatchTriggerJSONObject.getInt("startDateMonth")),
+					calendar.get(dispatchTriggerJSONObject.getInt("startDateDay")),
 					calendar.get(
-						jobSchedulerJSONObject.getInt("startDateYear")),
+						dispatchTriggerJSONObject.getInt("startDateYear")),
 					calendar.get(
-						jobSchedulerJSONObject.getInt("startDateHour")),
+						dispatchTriggerJSONObject.getInt("startDateHour")),
 					calendar.get(
-						jobSchedulerJSONObject.getInt("startDateMinute")));
+						dispatchTriggerJSONObject.getInt("startDateMinute")));
 			}
 			else {
 				int actualMonth = calendar.get(Calendar.MONTH);
@@ -1007,19 +1007,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				_dispatchTriggerLocalService.updateDispatchTrigger(
 					dispatchTrigger.getDispatchTriggerId(),
-					jobSchedulerJSONObject.getBoolean("active"),
+					dispatchTriggerJSONObject.getBoolean("active"),
 					StringBundler.concat(
 						"0 ", calendar.get(Calendar.MINUTE), " * ? * * *"),
 					DispatchTaskClusterMode.valueOf(
-						jobSchedulerJSONObject.getInt(
+						dispatchTriggerJSONObject.getInt(
 							"dispatchTaskClusterMode")),
 					calendar.get(Calendar.MONTH),
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
 					calendar.get(Calendar.MINUTE),
-					jobSchedulerJSONObject.getBoolean("neverEnd"),
-					jobSchedulerJSONObject.getBoolean("overlapAllowed"),
+					dispatchTriggerJSONObject.getBoolean("neverEnd"),
+					dispatchTriggerJSONObject.getBoolean("overlapAllowed"),
 					actualMonth, actualDay, actualYear, actualHour,
 					actualMinute);
 			}

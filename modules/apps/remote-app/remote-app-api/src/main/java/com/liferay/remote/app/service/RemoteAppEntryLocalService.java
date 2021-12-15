@@ -75,7 +75,7 @@ public interface RemoteAppEntryLocalService
 			String customElementHTMLElementName, String customElementURLs,
 			String description, String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			String properties, String sourceCodeURL, int status)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -286,6 +286,9 @@ public interface RemoteAppEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRemoteAppEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRemoteAppEntriesCount(long companyId) throws PortalException;
 
 	/**
 	 * Returns the remote app entry with the primary key.

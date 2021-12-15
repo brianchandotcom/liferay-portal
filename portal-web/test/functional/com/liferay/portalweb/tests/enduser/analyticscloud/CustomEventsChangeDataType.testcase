@@ -125,4 +125,56 @@ definition {
 		}
 	}
 
+    @description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10201 | Test Summary: Change data type from filter"
+	@priority = "5"
+	test CanChangeDataTypeFromFilter {
+        var attributeName = "animal";
+		var attributeValue = "dog";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributeName}",
+				attributesValue = "${attributeValue}",
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+		}
+
+        task ("Change the type of the attribute") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+            ACEventAnalysis.changeAttributeDataType(
+                editOption = "Filter",
+                attributeName = "${attributeName}",
+                newDataType = "Date");
+		}
+
+        task ("Check if the type has been changed") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+            ACEventAnalysis.viewChangedAttributeDataType(
+                attributeName = "${attributeName}",
+                newDataType = "DATE");
+
+            ACCustomEvents.viewDataType(typeValue = "DATE");
+		}
+	}
+
 }

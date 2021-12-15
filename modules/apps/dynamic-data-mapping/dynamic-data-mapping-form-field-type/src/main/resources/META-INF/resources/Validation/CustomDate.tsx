@@ -97,8 +97,9 @@ const CustomDate: React.FC<IProps> = ({
 				options={options.filter(({name}) => name !== CUSTOM_DATE)}
 				type={parameters.date}
 			/>
-			<div className="ddm__custom-date">
+			<div className="lfr-ddm__custom-date">
 				<DDMSelect
+					className="lfr_ddm__custom-date-select"
 					disabled={readOnly}
 					label={Liferay.Language.get('operation')}
 					name={`selectedOperation_${eventType}`}
@@ -128,6 +129,7 @@ const CustomDate: React.FC<IProps> = ({
 				/>
 
 				<DDMSelect
+					className="lfr_ddm__custom-date-select"
 					disabled={readOnly}
 					label={Liferay.Language.get('unit')}
 					name={`selectedUnit_${eventType}`}

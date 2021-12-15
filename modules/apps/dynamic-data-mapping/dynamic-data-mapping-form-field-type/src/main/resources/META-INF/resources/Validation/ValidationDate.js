@@ -416,37 +416,55 @@ const ValidationDate = ({
 							</>
 						)}
 
-						<Select
-							disableEmptyOption
-							key={`selectedParameter_${index}`}
-							label={element.label}
-							name="selectedParameter"
-							onChange={(event, value) => {
-								if (startSection) {
-									setStartsFrom(value[0]);
-									setStartOperation(
-										getOperation(initialStartQuantity)
-									);
-									setStartQuantity(initialStartQuantity);
-									setStartDate(initialStartDate);
-								}
-								else {
-									setEndsOn(value[0]);
-									setEndOperation(
-										getOperation(initialEndQuantity)
-									);
-									setEndQuantity(initialEndQuantity);
-									setEndDate(initialEndDate);
-								}
-								handleChangeParameters(
-									value[0],
-									element.name,
-									'type'
-								);
-							}}
-							options={selectedParameter[index].options}
-							placeholder={Liferay.Language.get(
-								'choose-an-option'
+	return (
+		<>
+			<div className="ddm-form-field-type__validation-date-accepted-date">
+				<DDMSelect
+					className="lfr-ddm__validation-date-select"
+					disabled={readOnly || localizationMode}
+					label={Liferay.Language.get('accepted-date')}
+					name="selectedValidation"
+					onChange={({target: {value}}) => {
+						dispatch({
+							payload: {
+								selectedValidation: transformSelectedValidation(
+									value
+								),
+							},
+							type: EVENT_TYPES.CHANGE_SELECTED_VALIDATION,
+						});
+					}}
+					options={validations}
+					value={selectedValidation.name}
+				/>
+			</div>
+
+			{selectedParameter.map(
+				({label, name: eventType, options}, index) => {
+					const {parameters, title, tooltip} =
+						eventType === 'startsFrom'
+							? {
+									parameters: startDate,
+									title: Liferay.Language.get('start-date'),
+									tooltip: Liferay.Language.get(
+										'starts-from-tooltip'
+									),
+							  }
+							: {
+									parameters: endDate,
+									title: Liferay.Language.get('end-date'),
+									tooltip: Liferay.Language.get(
+										'ends-on-tooltip'
+									),
+							  };
+
+					return (
+						<React.Fragment key={index}>
+							{selectedParameter.length > 1 && (
+								<>
+									<label>{title.toUpperCase()}</label>
+									<div className="separator" />
+								</>
 							)}
 							readOnly={localizationMode || readOnly}
 							showEmptyOption={false}

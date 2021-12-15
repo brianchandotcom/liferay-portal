@@ -6,3 +6,7 @@ Export-Package:\
 	com.liferay.portal.tools.service.builder.test.model,\
 	com.liferay.portal.tools.service.builder.test.service,\
 	com.liferay.portal.tools.service.builder.test.service.persistence
+Import-Package:\
+	org.hibernate.proxy,\
+	\
+	*

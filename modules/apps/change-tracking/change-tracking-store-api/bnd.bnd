@@ -6,3 +6,7 @@ Export-Package:\
 	com.liferay.change.tracking.store.model,\
 	com.liferay.change.tracking.store.service,\
 	com.liferay.change.tracking.store.service.persistence
+Import-Package:\
+	org.hibernate.proxy,\
+	\
+	*

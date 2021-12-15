@@ -7,3 +7,7 @@ Export-Package:\
 	com.liferay.document.library.content.service,\
 	com.liferay.document.library.content.service.persistence,\
 	com.liferay.document.library.content.util.comparator
+Import-Package:\
+	org.hibernate.proxy,\
+	\
+	*

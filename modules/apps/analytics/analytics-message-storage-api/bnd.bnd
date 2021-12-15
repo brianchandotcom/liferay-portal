@@ -6,3 +6,7 @@ Export-Package:\
 	com.liferay.analytics.message.storage.model,\
 	com.liferay.analytics.message.storage.service,\
 	com.liferay.analytics.message.storage.service.persistence
+Import-Package:\
+	org.hibernate.proxy,\
+	\
+	*

@@ -178,6 +178,7 @@ definition {
 	macro viewEllipsisMenu {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "${menuItem}");
 	}
+
 	macro viewStatusDDL {
 		AssertElementPresent(
 			key_status = "${status}",
@@ -257,18 +258,5 @@ definition {
 			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
 			value1 = "${errorMessage}");
 	}
-
-	macro viewOrderTable {
-        var rowNumber = "1";
-
-        for (var fieldName : list "${fieldNameList}") {
-            AssertElementPresent(
-                key_rowNumber = "${rowNumber}",
-                key_fieldName = "${fieldName}",
-               	locator1 = "KaleoFormsAdmin#TABLE_ORDER_SUBMISSIONS");
-
-            var rowNumber = MathUtil.sum("${rowNumber}", "1");
-        }
-    }
 
 }

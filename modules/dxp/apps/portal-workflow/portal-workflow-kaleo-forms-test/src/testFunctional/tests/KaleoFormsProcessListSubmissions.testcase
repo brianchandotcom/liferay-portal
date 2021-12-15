@@ -138,8 +138,7 @@ definition {
 		for (var processName : list "A,B") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-			KaleoFormsNewSubmissions.addNewContacts(	
-				ddlCompany = "Process ${processName}");
+			KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process ${processName}");
 
 			KaleoFormsAdmin.saveProcessRecord();
 
@@ -169,8 +168,6 @@ definition {
 		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
-		
-
 	}
 
 	@description = "Verify that the user can filter by Modified Date ."

@@ -1,5 +1,15 @@
 definition {
 
+	macro togglePrivacy {
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(key_breadcrumbName = "${privacy}", locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH")) {
+			Click(
+				key_itemName = "${privacy}",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+		}
+	}
+
 	macro viewPageType {
 		AssertElementPresent(
 			key_pageName = "${pageName}",

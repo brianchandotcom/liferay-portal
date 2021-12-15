@@ -817,7 +817,7 @@ definition {
 		}
 
 		task ("Preview the draft private content page") {
-			SitePages.togglePrivacy(privacy = "Private Pages");
+			PagesAdmin.togglePrivacy(privacy = "Private Pages");
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "Preview Draft",

@@ -306,7 +306,7 @@ definition {
 	}
 
 	macro gotoSitePageCP {
-		SitePages.togglePrivacy(privacy = "${privacy}");
+		PagesAdmin.togglePrivacy(privacy = "${privacy}");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

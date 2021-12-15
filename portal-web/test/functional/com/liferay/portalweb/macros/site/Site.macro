@@ -474,7 +474,7 @@ definition {
 	}
 
 	macro changeCurrentTheme {
-		SitePages.togglePrivacy(privacy = "${privacy}");
+		PagesAdmin.togglePrivacy(privacy = "${privacy}");
 
 		Click(
 			key_pageName = "${privacy}",
@@ -492,7 +492,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.togglePrivacy(privacy = "${pageName}");
+		PagesAdmin.togglePrivacy(privacy = "${pageName}");
 
 		Click(
 			key_pageName = "${pageName}",

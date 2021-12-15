@@ -679,7 +679,7 @@ definition {
 				portlet = "Pages");
 		}
 
-		SitePages.togglePrivacy(privacy = "${privacy}");
+		PagesAdmin.togglePrivacy(privacy = "${privacy}");
 
 		if (isSet(depth)) {
 			SitePages.expandPageTree(depth = "${depth}");
@@ -892,7 +892,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.togglePrivacy(privacy = "${privacy}");
+		PagesAdmin.togglePrivacy(privacy = "${privacy}");
 
 		AssertElementNotPresent(
 			key_pageName = "${pageName}",

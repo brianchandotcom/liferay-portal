@@ -1,7 +1,6 @@
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "7.0.237"
-		classpath group: "gradle.plugin.com.github.erdi.webdriver-binaries", name: "webdriver-binaries-gradle-plugin", version: "2.4"
 	}
 
 	repositories {
@@ -13,7 +12,6 @@ buildscript {
 	}
 }
 
-apply plugin: "com.github.erdi.webdriver-binaries"
 apply plugin: "com.liferay.poshi.runner"
 apply plugin: "com.liferay.poshi.runner.resources.defaults"
 apply plugin: "com.liferay.source.formatter"

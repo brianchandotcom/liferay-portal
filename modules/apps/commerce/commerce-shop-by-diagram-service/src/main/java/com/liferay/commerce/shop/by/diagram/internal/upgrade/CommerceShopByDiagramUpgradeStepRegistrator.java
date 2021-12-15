@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.internal.upgrade;
 
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -42,6 +43,11 @@ public class CommerceShopByDiagramUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new CTModelUpgradeProcess(
+				"CSDiagramEntry", "CSDiagramPin", "CSDiagramSetting"));
 	}
 
 }

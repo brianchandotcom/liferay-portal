@@ -89,9 +89,9 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
-			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName, String customElementURLs,
-			String description, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
@@ -198,9 +198,9 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
-			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName, String customElementURLs,
-			String description, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
@@ -229,8 +229,8 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 
 		return addCustomElementRemoteAppEntry(
-			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, externalReferenceCode, description,
+			externalReferenceCode, userId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
 			properties, sourceCodeURL);
 	}

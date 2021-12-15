@@ -90,6 +90,9 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 						searchContext -> searchContext.setAttribute(
 							"search.experiences.ipaddress",
 							contextHttpServletRequest.getRemoteAddr())
+					).withSearchContext(
+						searchContext -> searchContext.setUserId(
+							contextUser.getUserId())
 					).withSearchRequestBuilder(
 						searchRequestBuilder -> {
 							if (sxpBlueprint != null) {

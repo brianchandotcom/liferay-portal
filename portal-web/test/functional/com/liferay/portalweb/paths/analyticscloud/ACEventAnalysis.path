@@ -24,7 +24,9 @@
 <!-- SEARCH_EVENT_ANALYSE -->
 <tr>
 	<td>SEARCH_BAR_EVENT_ANALYSE</td>
-	<td>//div[contains(@class,'base-dropdown-menu-root')]/..//input[@type='text'and @placeholder='Search' and not(@disabled)]</td>
+	<td>//div[contains(@class,'show')]/..//input[@type='text'and @placeholder='Search' and not(@disabled)]</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 </tbody>

@@ -86,6 +86,7 @@ const handleSectionAdded = (props, state, event) => {
 					const updatedParentField = findFieldByFieldName(
 						handleFieldDeleted(props, state, {
 							fieldName,
+							removeEmptyRows: false,
 						}).pages,
 						parentFieldName
 					);

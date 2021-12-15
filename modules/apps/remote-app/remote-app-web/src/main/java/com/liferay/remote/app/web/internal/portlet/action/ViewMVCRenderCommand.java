@@ -14,11 +14,20 @@
 
 package com.liferay.remote.app.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.remote.app.service.RemoteAppEntryService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext;
+
+import java.util.Collections;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -45,6 +54,31 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		if (_remoteAppEntryLocalService.getRemoteAppEntriesCount() == 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			try {
+				_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
+					_userLocalService.getDefaultUserId(
+						themeDisplay.getCompanyId()),
+					StringPool.BLANK, "vanilla-counter",
+					"https://liferay.github.io/liferay-frontend-projects" +
+						"/vanilla-counter/index.js",
+					"See how a vanilla counter works as a remote app.",
+					"vanilla_counter", false,
+					Collections.singletonMap(
+						LocaleUtil.getDefault(), "Vanilla Counter"),
+					"category.remote-apps",
+					"friendly-url-mapping=vanilla_counter",
+					"https://liferay.github.io/liferay-frontend-projects",
+					WorkflowConstants.STATUS_APPROVED);
+			}
+			catch (PortalException portalException) {
+				throw new PortletException(portalException);
+			}
+		}
+
 		renderRequest.setAttribute(
 			RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
 			new RemoteAppAdminDisplayContext(renderRequest, renderResponse));
@@ -53,6 +87,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private RemoteAppEntryService _remoteAppEntryService;
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

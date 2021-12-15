@@ -111,25 +111,14 @@ definition {
 	@description = "This is a test for LPS-136984. It checks that Javascript will not be excuted from the page title."
 	@priority = "3"
 	test TitleWillNotExecuteXSS {
-		WikiNavigator.openToAddPage(
+		WikiPage.addPG(
 			groupName = "Guest",
 			layoutURLKey = "wiki-test-page",
 			siteURLKey = "guest",
-			wikiNodeName = "Main");
-
-		WikiEntry.addPageTitle(wikiPageTitle = '''<script>alert(123);</script>''');
-
-		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
-
-		Alert.viewRequestFailedToComplete();
-
-		Alert.viewErrorEnterValidTitle();
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = '''<script>alert(123);</script>''',
+			wikiPageTitleVariation = "Invalid");
 	}
 
 }

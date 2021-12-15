@@ -140,7 +140,6 @@
 	<classpathentry kind="lib" path="lib/portal/ccpp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ccpp-ri.jar"/>
 	<classpathentry kind="lib" path="lib/portal/cglib-nodep.jar"/>
-	<classpathentry kind="lib" path="lib/portal/chardet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/closure-compiler.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>

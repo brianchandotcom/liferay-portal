@@ -1729,6 +1729,13 @@ definition {
 			value1 = "${wikiPageRedirectLink}");
 	}
 
+	macro viewRelatedAsset {
+		AssertTextEquals(
+			key_relatedAssetTitle = "${relatedAssetTitle}",
+			locator1 = "AssetRelatedAssets#ASSET_TITLE",
+			value1 = "${relatedAssetTitle}");
+	}
+
 	macro viewRSS {
 		var wikiNodeName = "${wikiNodeName}";
 		var wikiPageContent = "${wikiPageContent}";

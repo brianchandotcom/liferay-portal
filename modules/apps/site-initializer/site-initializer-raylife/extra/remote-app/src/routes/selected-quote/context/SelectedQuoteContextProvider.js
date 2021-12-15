@@ -60,7 +60,7 @@ const initialState = {
 			files: [],
 			required: true,
 			sectionId: null,
-			subtitle: 'Upload 4 photos of your building interior.',
+			subtitle: 'Upload at least 1 photo of your building interior.',
 			title: 'Building Interior Photos',
 			type: 'image',
 		},

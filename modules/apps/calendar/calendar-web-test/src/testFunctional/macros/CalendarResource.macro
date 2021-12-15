@@ -160,4 +160,97 @@ definition {
 		AssertTextNotPresent(value1 = "${calendarResourceName}");
 	}
 
+	macro editResourceNameAndDescription {
+
+        CalendarNavigator.gotoAddResource();
+
+        CalendarResource.editResourceName(calendarResourceName = "${calendarResourceName}");
+
+        PortletEntry.inputDescription(description = "${calendarResourceDescription}");
+
+        CalendarResource.save();
+    }
+
+    macro searchInResourceList {
+
+        Click(locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH");
+
+        Type(
+            locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH",
+            value1 = "${searchTerm}");
+
+        Click(locator1 = "CalendarResources#RESOURCE_SEARCH_ICON");
+    }
+
+    macro viewResourceResults {
+
+        Click(locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH");
+
+        Type(
+            locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH",
+            value1 = "${searchTerm}");
+
+        Click(locator1 = "CalendarResources#RESOURCE_SEARCH_ICON");
+    }
+
+    macro viewSearchResult {
+
+        AssertTextEquals(
+            key_calendarResourceName = "${calendarResourceName}",
+            locator1 = "CalendarResources#RESOURCE_FIELD_RESULTS",
+            value1 = "${key_calendarResourceName}");
+    }
+
+    macro viewResourceCreatedInList {
+
+        AssertElementPresent(
+            key_calendarResourceName = "Resource Name",
+            locator1 = "CalendarResources#RESOURCE_TABLE_ACTIONS",
+            value1 = "${key_calendarResourceName}");
+    }
+
+    macro cleanSearchResult {
+
+        Click(locator1 = "CalendarResources#RESOURCE_SEARCH_CLEAR");
+    }
+
+    macro viewTableEmpty {
+
+        AssertElementPresent(locator1 = "CalendarResources#NO_RESOURCES_WERE_FOUND");
+    }
+
+	macro resourceFilterAndOrderOptions {
+		var filterOption = "${filterOption}";
+
+		Click(
+			locator1 = "CalendarResources#RESOURCE_FILTER_AND_ORDER_BUTTON_DROPDOWN",
+			value1 = "Filter and Order");
+
+		Click(locator1 = "CalendarResources#RESOURCE_FILTER_AND_ORDER_OPTIONS");
+	}
+
+	macro addInactiveResource{
+
+		CalendarNavigator.gotoAddResource();
+
+		CalendarResource.editResourceName(calendarResourceName = "${calendarResourceName}");
+
+		PortletEntry.inputDescription(description = "${calendarResourceDescription}");
+
+		Uncheck(locator1 = "Checkbox#ACTIVE");
+
+        CalendarResource.save();
+
+		Alert.viewSuccessMessage();
+		
+	}
+
+	macro resourceActiveOrInactiveInListView{
+
+		AssertTextEquals(
+			locator1 = "CalendarResources#VIEW_CREATED_RESOURCE_IS_ACTIVE",
+			value1 = "${key}");
+		
+	}
+
 }

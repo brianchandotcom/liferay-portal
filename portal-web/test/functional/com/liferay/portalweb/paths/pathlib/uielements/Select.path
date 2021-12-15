@@ -201,6 +201,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT</td>
+	<td>//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITES</td>
 	<td>//div[label[contains(.,'Sites')]]/select</td>
 	<td></td>

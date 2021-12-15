@@ -162,7 +162,7 @@ export default function Comments({
 			const data = Liferay.Util.ns(namespace, {
 				className,
 				classPK,
-				skipEditorLoading: true,
+				skipEditorLoading: false,
 			});
 
 			Liferay.Portlet.refresh(`#p_p_id_${portletDisplayId}_`, data, true);

@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_DETAILS_LINK</td>
+	<td>//div[contains(@class,'items')][.//span[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']]//following-sibling::div[contains(@class,'asset-details')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ELLIPSIS_ICON</td>
 	<td>//div[contains(@class,'asset')]//div[contains(.,'${key_assetTitle}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
@@ -123,11 +128,6 @@
 <tr>
 	<td>ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL</td>
 	<td>//div[contains(@class,'aspect-ratio') and contains(@style,'${key_thumbnailName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_DETAILS_LINK</td>
-	<td>//div[contains(@class,'items')][.//span[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']]//following-sibling::div[contains(@class,'asset-details')]//a</td>
 	<td></td>
 </tr>
 <tr>

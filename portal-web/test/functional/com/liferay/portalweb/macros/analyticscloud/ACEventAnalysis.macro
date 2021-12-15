@@ -1,6 +1,16 @@
 definition {
 
-	macro addEventToAnalysis {
+	macro addBreakdown {
+		var key_buttonName = "${attributeName}";
+
+		ACEventAnalysis.clickToAddBreakdownButton();
+
+		ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
+
+		Click(locator1 = "ACUtils#GENERIC_BUTTON");
+	}
+
+	macro addEvent {
 		var key_buttonName = "${customEventName}";
 
 		ACEventAnalysis.clickToAddEventButton();
@@ -14,16 +24,6 @@ definition {
 
 			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
 		}
-
-		Click(locator1 = "ACUtils#GENERIC_BUTTON");
-	}
-
-	macro addBreakdownToAnalysis {
-		var key_buttonName = "${attributeName}";
-
-		ACEventAnalysis.clickToAddBreakdownButton();
-
-		ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
 
 		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
@@ -58,22 +58,30 @@ definition {
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 
-	macro removeFromAnalysis {
-		var key_removeValue = "${removeValue}";
-
-		Click(locator1 = "ACEventAnalysis#REMOVE_BUTTON");
-	}
-
 	macro clickToAddFilterButton {
 		var key_sectionType = "filter";
 
 		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
 	}
 
+	macro removeFromAnalysis {
+		var key_removeValue = "${removeValue}";
+
+		Click(locator1 = "ACEventAnalysis#REMOVE_BUTTON");
+	}
+
 	macro searchEventAnalysis {
 		Type(
 			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
 			value1 = "${searchItem}");
+	}
+
+	macro viewAnalysisInformation {
+		for (var informationValue : list "${informationValueList}") {
+			var key_informationValue = "${informationValue}";
+
+			AssertElementPresent(locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION");
+		}
 	}
 
 	macro viewChangedAttributeDataType {
@@ -115,14 +123,6 @@ definition {
 			var key_buttonName = "${name}";
 
 			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
-		}
-	}
-
-	macro viewAnalysisInformation {
-		for (var informationValue : list "${informationValueList}") {
-			var key_informationValue = "${informationValue}";
-
-			AssertElementPresent(locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION");
 		}
 	}
 

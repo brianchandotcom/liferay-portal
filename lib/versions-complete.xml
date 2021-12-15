@@ -4534,6 +4534,31 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/aspectj-rt.jar</file-name>
+				<version>1.9.5</version>
+				<project-name>AspectJ</project-name>
+				<project-url>http://www.eclipse.org/aspectj</project-url>
+				<licenses>
+					<license>
+						<license-name>Eclipse Public License 1.0</license-name>
+						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/aspectj-weaver.jar</file-name>
+				<version>1.9.5</version>
+				<project-name>AspectJ</project-name>
+				<project-url>http://www.eclipse.org/aspectj</project-url>
+				<licenses>
+					<license>
+						<license-name>Eclipse Public License 1.0</license-name>
+						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+					</license>
+				</licenses>
+				<comments>Older versions required removing testdata.* because it conflicted with JBoss 5.1.</comments>
+			</library>
+			<library>
 				<file-name>lib/development/bnd-repository.jar</file-name>
 				<version>5.3.0</version>
 				<project-name>Bndtools</project-name>
@@ -5547,31 +5572,6 @@
 						<license-url>http://asm.ow2.org/license.html</license-url>
 					</license>
 				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/aspectj-rt.jar</file-name>
-				<version>1.9.5</version>
-				<project-name>AspectJ</project-name>
-				<project-url>http://www.eclipse.org/aspectj</project-url>
-				<licenses>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/aspectj-weaver.jar</file-name>
-				<version>1.9.5</version>
-				<project-name>AspectJ</project-name>
-				<project-url>http://www.eclipse.org/aspectj</project-url>
-				<licenses>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-				<comments>Older versions required removing testdata.* because it conflicted with JBoss 5.1.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/axis-ant.jar</file-name>

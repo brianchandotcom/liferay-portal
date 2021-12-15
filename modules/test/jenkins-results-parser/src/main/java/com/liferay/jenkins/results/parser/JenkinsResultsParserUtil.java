@@ -3720,19 +3720,21 @@ public class JenkinsResultsParserUtil {
 
 		String key = url.replace("//", "/");
 
-		if (checkCache && !url.startsWith("file:")) {
-			if (debug) {
-				System.out.println("Loading " + url);
-			}
-
-			File cachedFile = _getCacheFile(_PREFIX_TO_STRING_CACHE + key);
-
-			if ((cachedFile != null) && cachedFile.exists()) {
-				return new FileInputStream(cachedFile);
-			}
+		if (url.startsWith("file:")) {
+			url = fixFileURL(url);
 		}
 		else {
-			url = fixFileURL(url);
+			if (checkCache) {
+				if (debug) {
+					System.out.println("Loading " + url);
+				}
+
+				File cachedFile = _getCacheFile(_PREFIX_TO_STRING_CACHE + key);
+
+				if ((cachedFile != null) && cachedFile.exists()) {
+					return new FileInputStream(cachedFile);
+				}
+			}
 		}
 
 		int retryCount = 0;

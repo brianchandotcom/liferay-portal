@@ -87,4 +87,25 @@ definition {
 			ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
 		}
 	}
+
+	macro viewChangedAttributeDataType {
+		var key_buttonName = "${attributeName}";
+
+		MouseOver(locator1 = "ACUtils#GENERIC_BUTTON");
+
+		ACCustomEvents.viewDataType(typeValue = "${newDataType}");
+
+		if ("${newDataType}" != "STRING" && "${newDataType}" != "BOOLEAN") {
+			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
+		}
+
+		if ("${newDataType}" == "NUMBER" || "${newDataType}" == "DURATION") {
+			AssertElementPresent(locator1 = "ACEventAnalysis#INPUT_CONDITION");
+		}
+
+		if ("${newDataType}" == "DATE") {
+			AssertElementPresent(locator1 = "Select#SELECT");
+		}
+	}
+
 }

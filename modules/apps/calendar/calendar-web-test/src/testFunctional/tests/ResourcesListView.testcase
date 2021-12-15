@@ -33,7 +33,6 @@ definition {
 		Portlet.addPG(
 			pageName = "Calendar Page",
 			portletName = "Calendar");
-
 	}
 
 	tearDown {

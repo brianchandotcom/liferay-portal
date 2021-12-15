@@ -98,8 +98,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.xuggler.XugglerInstallException;
-import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
@@ -194,16 +192,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("gc")) {
 			gc();
-		}
-		else if (cmd.equals("installXuggler")) {
-			try {
-				installXuggler(actionRequest, actionResponse);
-			}
-			catch (XugglerInstallException xugglerInstallException) {
-				SessionErrors.add(
-					actionRequest, XugglerInstallException.class.getName(),
-					xugglerInstallException);
-			}
 		}
 		else if (cmd.equals("runScript")) {
 			runScript(actionRequest, actionResponse);
@@ -485,15 +473,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		runtime.gc();
 	}
 
-	protected void installXuggler(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String jarName = ParamUtil.getString(actionRequest, "jarName");
-
-		XugglerUtil.installNativeLibraries(jarName);
-	}
-
 	protected void runScript(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -583,15 +562,11 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "imageMagickEnabled");
 		String imageMagickPath = ParamUtil.getString(
 			actionRequest, "imageMagickPath");
-		boolean xugglerEnabled = ParamUtil.getBoolean(
-			actionRequest, "xugglerEnabled");
 
 		portletPreferences.setValue(
 			PropsKeys.IMAGEMAGICK_ENABLED, String.valueOf(imageMagickEnabled));
 		portletPreferences.setValue(
 			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, imageMagickPath);
-		portletPreferences.setValue(
-			PropsKeys.XUGGLER_ENABLED, String.valueOf(xugglerEnabled));
 
 		Enumeration<String> enumeration = actionRequest.getParameterNames();
 

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -173,7 +172,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['Table', 'ImageSelector', 'VideoSelector']")
 		).put(
 			() -> {
-				if (AudioProcessorUtil.isEnabled() || XugglerUtil.isEnabled()) {
+				if (AudioProcessorUtil.isEnabled()) {
 					return toJSONArray("['AudioSelector']");
 				}
 

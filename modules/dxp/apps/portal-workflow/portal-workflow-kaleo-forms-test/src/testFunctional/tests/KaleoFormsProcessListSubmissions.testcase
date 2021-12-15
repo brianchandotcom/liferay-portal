@@ -85,7 +85,7 @@ definition {
 
 		KaleoFormsAdmin.viewProcessNoRecords(kfProcessName = "Kaleo Forms Process");
 
-		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
+		KaleoFormsNewSubmissions.clearSearchResults();
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Liferay");
 	}
@@ -175,44 +175,39 @@ definition {
 	test CanFilterByModifiedDate {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");
 
 		KaleoFormsAdmin.saveProcessRecord();
-
 
 		LexiconEntry.gotoAdd();
 
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process B");
 
-
 		KaleoFormsAdmin.saveProcessRecord();
 
-		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
+		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
 
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process",
-			workflowAssetType = "${workflowAssetType}",
+			workflowAssetType = "Process",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process",
-			workflowAssetType = "${workflowAssetType}",
+			workflowAssetType = "Process",
 			workflowTask = "Review");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
 		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
-
-
-
 	}
 
 	@description = "Verify that the user can modify the quantity of items view per page."
@@ -236,8 +231,6 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		AssertElementPresent(locator1 = "Pagination#RESULTS");
-
 		Pagination.changePagination(itemsPerPage = "4");
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
@@ -246,9 +239,7 @@ definition {
 	@description = "Verify that user can nagivate through pages."
 	@priority = "3"
 	test CanNavigateThroughPages {
-
-		for (var kfProcessName : list "1,2,3,4"){
-
+		for (var kfProcessName : list "1,2,3,4") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 			KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Liferay");
@@ -268,16 +259,11 @@ definition {
 
 		Pagination.changePagination(itemsPerPage = "4");
 
-		
-
 		KaleoFormsAdmin.viewNextFieldSetPage();
 
 		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
 
 		KaleoFormsNewSubmissions.viewPaginationNumber(pageNumberList = "2");
-
-
-
 	}
 
 	@description = "Verify that the user can reverse the order of submissions."
@@ -286,24 +272,24 @@ definition {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");
-		
+
 		KaleoFormsAdmin.saveProcessRecord();
-		
 
 		LexiconEntry.gotoAdd();
 
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process B");
-		
 
 		KaleoFormsAdmin.saveProcessRecord();
 
+		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
 
-		Workflow.clickRevertSortDirection();	
-		
-		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
-	
+		Refresh();
 
+		Workflow.clickRevertSortDirection();
+
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
 	}
 
 	@description = "Verify that the user can Reject a submission."
@@ -311,11 +297,10 @@ definition {
 	test CanRejectASubmission {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsAdmin.addNewContactsRecord(
+		KaleoFormsNewSubmissions.addNewContacts(
 			ddlCompany = "Liferay",
 			ddlEmail = "qa@liferay.com",
 			ddlFirstName = "Test",
-			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
 			ddlPhoneMobile = "12345678",
@@ -341,7 +326,7 @@ definition {
 			workflowTask = "Review");
 
 		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
+			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
 		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
@@ -377,7 +362,7 @@ definition {
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Gazzing");
 
-		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
+		KaleoFormsNewSubmissions.clearSearchResults();
 
 		Search.searchCP(searchTerm = "hr@liferay.com");
 
@@ -390,26 +375,13 @@ definition {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsNewSubmissions.addNewContacts(
-			ddlCompany = "Liferay",
-			ddlEmail = "userfn@liferay.com",
-			ddlFirstName = "Userfn",
-			ddlInstantMessegerService = "Google Hangouts",
-			ddlJobTitle = "QA Engineer",
-			ddlLastName = "Userln",
-			ddlnotes = "Notes",
-			ddlPhoneMobile = "(123) 9999-9999",
-			ddlPhoneOffice = "(123) 1111-2222",
-			ddlUserName = "testliferay");
+			ddlCompany = "Liferay");
 
 		KaleoFormsAdmin.saveProcessRecord();
 
 		KaleoFormsNewSubmissions.viewEllipsisMenu(menuItem = "Track Workflow");
 
-		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(
-			currentTask = "Review",
-			endState = "Approved",
-			startState = "Created",
-			taskNode = "Update");
+		KaleoFormsNewSubmissions.viewTrackWorkflowStructure();
 	}
 
 	@description = "Verify that the user can view the column values on the page after submit the process."

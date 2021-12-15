@@ -50,12 +50,7 @@
 </tr>
 <tr>
 	<td>TABLE_ORDER_SUBMISSIONS</td>
-	<td>//tr[${key_order}]//span[contains(text(),"${key_fieldName}")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PROCESS_TABLE_NAME_BY_INDEX</td>
-	<td>//tr[contains(.,'${key_kfProcessName}')]/td[${key_itemPosition}]</td>
+	<td>//tr[${key_rowNumber}]//span[contains(text(),"${key_fieldName}")]</td>
 	<td></td>
 </tr>
 </tbody>

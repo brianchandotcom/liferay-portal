@@ -38,15 +38,21 @@ const Modal = ({
 
 	return (
 		<div
-			className={classNames('backdrop', {
-				show,
-			})}
+			className={classNames(
+				'h-100 w-100 overflow-auto position-fixed backdrop',
+				{
+					'd-block': show,
+					'd-none': !show,
+				}
+			)}
 			id={MODAL_BACKGROUND_ID}
 		>
-			<div className={`modal-content modal-${modalSize}`}>
-				<div className="modal-header">
+			<div
+				className={`bg-neutral-0 rounded m-auto p-3 position-absolute modal-content modal-${modalSize} px-3 py-4`}
+			>
+				<div className="align-items-center border-bottom-0 d-flex justify-content-flex-end modal-header p-0">
 					<div className="close" onClick={onClose}>
-						<ClayIcon symbol="times-small" />
+						<ClayIcon symbol="times" />
 					</div>
 				</div>
 

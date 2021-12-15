@@ -37,13 +37,16 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 	return (
 		<Modal
 			footer={
-				<div className="progress-saved-footer">
-					<button className="btn btn-link link" onClick={onClose}>
+				<div className="align-items-center d-flex flex-row justify-content-between ml-2 mr-1">
+					<button
+						className="btn btn-link link text-link-md text-neutral-7 text-small-caps"
+						onClick={onClose}
+					>
 						Continue Quote
 					</button>
 
 					<button
-						className="btn btn-primary"
+						className="btn btn-primary text-link-md text-small-caps"
 						onClick={onSendLinkAndExit}
 					>
 						Send Link &amp; Exit
@@ -53,20 +56,20 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 			onClose={onClose}
 			show={show}
 		>
-			<div className="progress-saved-content">
-				<div className="progress-saved-body">
-					<div className="progress-saved-icon">
+			<div className="align-items-center d-flex flex-column justify-content-between mb-9 mt-4 progress-saved-content">
+				<div className="align-items-center d-flex flex-column progress-saved-body">
+					<div className="align-items-center bg-success d-flex flex-shrink-0 justify-content-center progress-saved-icon rounded-circle">
 						<ClayIcon symbol="check" />
 					</div>
 
-					<div className="progress-saved-subtitle">
+					<h2 className="font-weight-bolder">
 						Your progress is saved
-					</div>
+					</h2>
 
-					<div className="progress-saved-description">
+					<div className="font-weight-normal pt-1 text-center text-neutral-8 text-paragraph">
 						We will send a link to
-						<b>{` ${email}`}</b>. Use the link to pick up where you
-						left off at any time.
+						<b>{` ${email}`}</b>. <br />
+						Use the link to pick up where you left off at any time.
 					</div>
 				</div>
 			</div>

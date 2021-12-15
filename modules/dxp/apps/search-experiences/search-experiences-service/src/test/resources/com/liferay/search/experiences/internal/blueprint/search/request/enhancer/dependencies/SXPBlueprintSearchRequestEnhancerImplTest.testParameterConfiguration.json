@@ -2,6 +2,9 @@
 	"configuration": {
 		"parameterConfiguration": {
 			"parameters": {
+				"product.code": {
+					"type": "String"
+				},
 				"version.number": {
 					"type": "String"
 				}
@@ -12,6 +15,7 @@
 				{
 					"clauses": [
 						{
+							"occur": "should",
 							"query": {
 								"term": {
 									"version": {
@@ -21,6 +25,48 @@
 							}
 						}
 					]
+				},
+				{
+					"clauses": [
+						{
+							"occur": "must",
+							"query": {
+								"term": {
+									"ranking": {
+										"value": 5
+									}
+								}
+							}
+						}
+					],
+					"condition": {
+						"equals": {
+							"parameterName": "product.code",
+							"value": "dxp"
+						}
+					}
+				},
+				{
+					"clauses": [
+						{
+							"occur": "must_not",
+							"query": {
+								"term": {
+									"ranking": {
+										"value": "1"
+									}
+								}
+							}
+						}
+					],
+					"condition": {
+						"not": {
+							"equals": {
+								"parameterName": "version.number",
+								"value": "${product.code}"
+							}
+						}
+					}
 				}
 			]
 		}

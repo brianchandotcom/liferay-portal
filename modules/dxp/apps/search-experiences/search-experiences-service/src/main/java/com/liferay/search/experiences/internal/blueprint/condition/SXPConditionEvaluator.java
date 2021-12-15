@@ -23,6 +23,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.Exists;
 import com.liferay.search.experiences.rest.dto.v1_0.In;
 import com.liferay.search.experiences.rest.dto.v1_0.Range;
 
+import java.util.Objects;
+
 /**
  * @author Petteri Karttunen
  */
@@ -112,13 +114,14 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		SXPParameter sxpParameter = _getSXPParameter(exists.getParameterName());
+		if (Objects.isNull(
+				_sxpParameterData.getSXPParameterByName(
+					exists.getParameterName()))) {
 
-		if (sxpParameter != null) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private boolean _evaluateIn(In in) {
@@ -161,7 +164,15 @@ public class SXPConditionEvaluator {
 	}
 
 	private SXPParameter _getSXPParameter(String name) {
-		return _sxpParameterData.getSXPParameterByName(name);
+		SXPParameter sxpParameter = _sxpParameterData.getSXPParameterByName(
+			name);
+
+		if (sxpParameter == null) {
+			throw new IllegalArgumentException(
+				"Invalid parameter name " + name);
+		}
+
+		return sxpParameter;
 	}
 
 	private final SXPParameterData _sxpParameterData;

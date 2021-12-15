@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
+package com.liferay.search.experiences.internal.blueprint.property;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -91,12 +91,6 @@ public class PropertyExpander {
 		sb.append(json);
 
 		return sb.toString();
-	}
-
-	public interface PropertyResolver {
-
-		public Object resolve(String name, Map<String, String> options);
-
 	}
 
 	private Map<String, String> _getOptions(String optionsString) {

@@ -51,10 +51,10 @@ import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
-import com.liferay.search.experiences.internal.blueprint.exception.UnresolvedTemplateVariableException;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.property.UnresolvedTemplateVariableException;
 import com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -264,36 +264,83 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		catch (RuntimeException runtimeException) {
 			Throwable throwable = runtimeException.getSuppressed()[0];
 
-			InvalidQueryEntryException invalidQueryEntryException =
+			InvalidQueryEntryException invalidQueryEntryException1 =
 				(InvalidQueryEntryException)throwable.getSuppressed()[0];
 
+			Assert.assertEquals(0, invalidQueryEntryException1.getIndex());
+
 			UnresolvedTemplateVariableException
-				unresolvedTemplateVariableException =
+				unresolvedTemplateVariableException1 =
 					(UnresolvedTemplateVariableException)
-						invalidQueryEntryException.getSuppressed()[0];
+						invalidQueryEntryException1.getSuppressed()[0];
 
 			Assert.assertEquals(
 				"[version.number]",
 				Arrays.toString(
-					unresolvedTemplateVariableException.
+					unresolvedTemplateVariableException1.
+						getTemplateVariables()));
+
+			InvalidQueryEntryException invalidQueryEntryException2 =
+				(InvalidQueryEntryException)throwable.getSuppressed()[1];
+
+			Assert.assertEquals(1, invalidQueryEntryException2.getIndex());
+
+			IllegalArgumentException illegalArgumentException =
+				(IllegalArgumentException)
+					invalidQueryEntryException2.getSuppressed()[0];
+
+			Assert.assertEquals(
+				"Invalid parameter name product.code",
+				illegalArgumentException.getMessage());
+
+			InvalidQueryEntryException invalidQueryEntryException3 =
+				(InvalidQueryEntryException)throwable.getSuppressed()[2];
+
+			Assert.assertEquals(2, invalidQueryEntryException3.getIndex());
+
+			UnresolvedTemplateVariableException
+				unresolvedTemplateVariableException2 =
+					(UnresolvedTemplateVariableException)
+						invalidQueryEntryException3.getSuppressed()[0];
+
+			Assert.assertEquals(
+				"[product.code]",
+				Arrays.toString(
+					unresolvedTemplateVariableException2.
 						getTemplateVariables()));
 		}
 
 		SearchRequest searchRequest = _toSearchRequest(
 			sxpBlueprint,
 			searchRequestBuilder -> searchRequestBuilder.withSearchContext(
-				searchContext -> searchContext.setAttribute(
-					"version.number", "7.4")));
+				searchContext -> {
+					searchContext.setAttribute("product.code", "dxp");
+					searchContext.setAttribute("version.number", "7.4");
+				}));
 
 		List<ComplexQueryPart> complexQueryParts =
 			searchRequest.getComplexQueryParts();
 
-		ComplexQueryPart complexQueryPart = complexQueryParts.get(0);
+		ComplexQueryPart complexQueryPart1 = complexQueryParts.get(0);
 
-		TermQuery termQuery = (TermQuery)complexQueryPart.getQuery();
+		TermQuery termQuery1 = (TermQuery)complexQueryPart1.getQuery();
 
-		Assert.assertEquals("version", termQuery.getField());
-		Assert.assertEquals("7.4", termQuery.getValue());
+		Assert.assertEquals("version", termQuery1.getField());
+		Assert.assertEquals("7.4", termQuery1.getValue());
+
+		ComplexQueryPart complexQueryPart2 = complexQueryParts.get(1);
+
+		TermQuery termQuery2 = (TermQuery)complexQueryPart2.getQuery();
+
+		Assert.assertEquals("ranking", termQuery2.getField());
+		Assert.assertEquals(5, termQuery2.getValue());
+
+		ComplexQueryPart complexQueryPart3 = complexQueryParts.get(2);
+
+		TermQuery termQuery3 = (TermQuery)complexQueryPart3.getQuery();
+
+		Assert.assertEquals("ranking", termQuery3.getField());
+		Assert.assertEquals("1", termQuery3.getValue());
 
 		_assert(sxpBlueprint);
 	}

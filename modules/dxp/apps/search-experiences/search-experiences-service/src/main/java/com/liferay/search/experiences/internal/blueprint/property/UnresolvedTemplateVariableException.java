@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.blueprint.exception;
+package com.liferay.search.experiences.internal.blueprint.property;
 
 import java.util.Arrays;
 

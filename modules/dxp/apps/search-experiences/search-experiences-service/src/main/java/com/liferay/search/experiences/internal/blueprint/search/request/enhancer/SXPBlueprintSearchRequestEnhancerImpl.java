@@ -42,6 +42,8 @@ import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBluep
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.internal.blueprint.property.PropertyExpander;
+import com.liferay.search.experiences.internal.blueprint.property.PropertyResolver;
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.AggsSXPSearchRequestBodyContributor;
@@ -162,8 +164,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private void _enhance(
-		ElementInstance elementInstance,
-		PropertyExpander.PropertyResolver propertyResolver,
+		ElementInstance elementInstance, PropertyResolver propertyResolver,
 		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
@@ -207,19 +208,16 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				searchContext -> searchContext),
 			sxpBlueprint);
 
-		PropertyExpander.PropertyResolver propertyResolver =
-			(name, options) -> {
-				SXPParameter sxpParameter =
-					sxpParameterData.getSXPParameterByName(name);
+		PropertyResolver propertyResolver = (name, options) -> {
+			SXPParameter sxpParameter = sxpParameterData.getSXPParameterByName(
+				name);
 
-				if ((sxpParameter == null) ||
-					!sxpParameter.isTemplateVariable()) {
+			if ((sxpParameter == null) || !sxpParameter.isTemplateVariable()) {
+				return null;
+			}
 
-					return null;
-				}
-
-				return sxpParameter.evaluateToString(options);
-			};
+			return sxpParameter.evaluateToString(options);
+		};
 
 		if (sxpBlueprint.getConfiguration() != null) {
 			_contributeSXPSearchRequestBodyContributors(
@@ -235,8 +233,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private Configuration _expand(
-		Configuration configuration,
-		PropertyExpander.PropertyResolver... propertyResolvers) {
+		Configuration configuration, PropertyResolver... propertyResolvers) {
 
 		PropertyExpander propertyExpander = new PropertyExpander(
 			propertyResolvers);

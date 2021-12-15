@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
+package com.liferay.search.experiences.internal.blueprint.property;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,42 +52,40 @@ public class PropertyExpanderTest {
 			"two", "beta"
 		).build();
 
-		PropertyExpander.PropertyResolver propertyResolver1 =
-			(name, options) -> values.get(name);
+		PropertyResolver propertyResolver1 = (name, options) -> values.get(
+			name);
 
 		_testExpand(
 			"alpha | beta = alpha | ${three|up} = ${three|len=4,up} | " +
 				"${four} = \"${five}\" | ${si",
 			string, propertyResolver1);
 
-		PropertyExpander.PropertyResolver propertyResolver2 =
-			(name, options) -> {
-				if (MapUtil.isEmpty(options)) {
-					return null;
-				}
-
-				String value = "gamma";
-
-				if (options.containsKey("len")) {
-					value = StringUtil.shorten(
-						value, GetterUtil.getInteger(options.get("len")));
-				}
-
-				if (options.containsKey("up")) {
-					value = StringUtil.toUpperCase(value);
-				}
-
-				return value;
-			};
-
-		PropertyExpander.PropertyResolver propertyResolver3 =
-			(name, options) -> {
-				if (name.equals("five")) {
-					return JSONFactoryUtil.createJSONObject();
-				}
-
+		PropertyResolver propertyResolver2 = (name, options) -> {
+			if (MapUtil.isEmpty(options)) {
 				return null;
-			};
+			}
+
+			String value = "gamma";
+
+			if (options.containsKey("len")) {
+				value = StringUtil.shorten(
+					value, GetterUtil.getInteger(options.get("len")));
+			}
+
+			if (options.containsKey("up")) {
+				value = StringUtil.toUpperCase(value);
+			}
+
+			return value;
+		};
+
+		PropertyResolver propertyResolver3 = (name, options) -> {
+			if (name.equals("five")) {
+				return JSONFactoryUtil.createJSONObject();
+			}
+
+			return null;
+		};
 
 		_testExpand(
 			"alpha | beta = alpha | GAMMA = G... | ${four} = {} | ${si", string,
@@ -95,8 +93,7 @@ public class PropertyExpanderTest {
 	}
 
 	private void _testExpand(
-		String expected, String string,
-		PropertyExpander.PropertyResolver... propertyResolvers) {
+		String expected, String string, PropertyResolver... propertyResolvers) {
 
 		PropertyExpander propertyExpander = new PropertyExpander(
 			propertyResolvers);

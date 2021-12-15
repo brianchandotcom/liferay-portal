@@ -23,6 +23,39 @@ definition {
 		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
 		}
+
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 	}
 
 	tearDown {
@@ -47,39 +80,6 @@ definition {
 	test CreateAttributeNameBeyond255Characters {
 		var attributeName = "category";
 
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -95,7 +95,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {
@@ -126,39 +126,6 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10011 | Test Summary: Attributes shown in AC"
 	@priority = "5"
 	test CustomEventAttributeIsShownInACSettings {
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -174,7 +141,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {
@@ -277,39 +244,6 @@ definition {
 	test RenameAttributeDisplayName {
 		var attributeName = "category";
 
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -325,7 +259,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {
@@ -368,39 +302,6 @@ definition {
 		var attributeNameList = "${attributeName1},${attributeName2},${attributeName3}";
 		var attributeValueList = "blue,red,black";
 
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -418,7 +319,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {
@@ -475,39 +376,6 @@ definition {
 	test SearchForAttribute {
 		var attributesNameList = "category,price,temp,birthdate,like";
 
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -524,7 +392,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {
@@ -558,39 +426,6 @@ definition {
 		var attributeName = "color";
 		var attributeValue = "blue";
 
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -608,7 +443,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {
@@ -649,39 +484,6 @@ definition {
 	test UpdateAttributeDescription {
 		var attributeName = "category";
 
-		task ("Add a Web Content Display to page and display the custom event") {
-			ACCustomEvents.createWCWithCustomEventAndAddToPage();
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -697,7 +499,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to attributes tab") {

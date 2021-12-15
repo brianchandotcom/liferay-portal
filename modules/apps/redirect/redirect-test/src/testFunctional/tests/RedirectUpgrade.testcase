@@ -27,6 +27,8 @@ definition {
 		Upgrade.viewAndAccessRedirects();
 
 		Upgrade.editAndDeleteRedirects();
+
+		Upgrade.ignore404URLs();
 	}
 
 }

@@ -45,9 +45,7 @@ definition {
 			Button.click(button = "Cancel");
 		}
 		else {
-			WaitForElementNotPresent(
-				key_text = "Save",
-				locator1 = "Button#ANY_DISABLED");
+			WaitForElementPresent(locator1 = "Button#SAVE");
 
 			Button.clickSave();
 		}

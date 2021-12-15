@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -102,9 +104,10 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 					constructorCall.getTypeName());
 
 			if (classJSONObject == null) {
-				log(
-					constructorCall.getLineNumber(), _MSG_CLASS_NOT_FOUND,
-					constructorCall.getTypeName(), upgradeToVersion);
+				_logRemovedClass(
+					constructorCall.getTypeName(),
+					constructorCall.getLineNumber(), upgradeToVersion,
+					upgradeToJavaClassesJSONObject);
 			}
 			else {
 				List<JSONObject> upgradeToConstructorJSONObjects =
@@ -143,9 +146,10 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 					methodCall.getVariableTypeName());
 
 			if (classJSONObject == null) {
-				log(
-					methodCall.getLineNumber(), _MSG_CLASS_NOT_FOUND,
-					methodCall.getVariableTypeName(), upgradeToVersion);
+				_logRemovedClass(
+					methodCall.getVariableTypeName(),
+					methodCall.getLineNumber(), upgradeToVersion,
+					upgradeToJavaClassesJSONObject);
 			}
 			else {
 				List<JSONObject> upgradeToMethodJSONObjects =
@@ -184,9 +188,9 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 				Set<Integer> lineNumbers = entry.getValue();
 
 				for (int lineNumber : lineNumbers) {
-					log(
-						lineNumber, _MSG_CLASS_NOT_FOUND, typeName,
-						upgradeToVersion);
+					_logRemovedClass(
+						typeName, lineNumber, upgradeToVersion,
+						upgradeToJavaClassesJSONObject);
 				}
 			}
 		}
@@ -213,9 +217,9 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 					variableCall.getTypeName());
 
 			if (classJSONObject == null) {
-				log(
-					variableCall.getLineNumber(), _MSG_CLASS_NOT_FOUND,
-					variableCall.getTypeName(), upgradeToVersion);
+				_logRemovedClass(
+					variableCall.getTypeName(), variableCall.getLineNumber(),
+					upgradeToVersion, upgradeToJavaClassesJSONObject);
 			}
 			else {
 				JSONObject upgradeToVariableJSONObject = getVariableJSONObject(
@@ -248,9 +252,9 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 			if ((upgradeFromClassJSONObject != null) &&
 				(upgradeToClassJSONObject == null)) {
 
-				log(
-					detailAST, _MSG_CLASS_NOT_FOUND, importName,
-					upgradeToVersion);
+				_logRemovedClass(
+					importName, detailAST.getLineNo(), upgradeToVersion,
+					upgradeToJavaClassesJSONObject);
 
 				removedImportNames.add(importName);
 			}
@@ -259,7 +263,42 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 		return removedImportNames;
 	}
 
-	private static final String _MSG_CLASS_NOT_FOUND = "class.not.found";
+	private void _logRemovedClass(
+		String typeName, int lineNumber, String upgradeToVersion,
+		JSONObject upgradeToJavaClassesJSONObject) {
+
+		int x = typeName.lastIndexOf(".");
+
+		String s = typeName.substring(x);
+
+		List<String> classNames = new ArrayList<>();
+
+		for (String className : upgradeToJavaClassesJSONObject.keySet()) {
+			if (className.endsWith(s)) {
+				classNames.add(className);
+			}
+		}
+
+		if (classNames.isEmpty()) {
+			log(lineNumber, _MSG_CLASS_NOT_FOUND_1, typeName, upgradeToVersion);
+		}
+		else if (classNames.size() == 1) {
+			log(
+				lineNumber, _MSG_CLASS_NOT_FOUND_2, typeName, upgradeToVersion,
+				classNames.get(0));
+		}
+		else {
+			log(
+				lineNumber, _MSG_CLASS_NOT_FOUND_3, typeName, upgradeToVersion,
+				StringUtil.merge(classNames, StringPool.COMMA_AND_SPACE));
+		}
+	}
+
+	private static final String _MSG_CLASS_NOT_FOUND_1 = "class.not.found.1";
+
+	private static final String _MSG_CLASS_NOT_FOUND_2 = "class.not.found.2";
+
+	private static final String _MSG_CLASS_NOT_FOUND_3 = "class.not.found.3";
 
 	private static final String _MSG_CONSTRUCTOR_NOT_FOUND =
 		"constructor.not.found";

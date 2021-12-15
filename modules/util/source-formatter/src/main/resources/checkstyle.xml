@@ -805,7 +805,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.UpgradeRemovedAPICheck">
 			<property name="category" value="Upgrade" />
 			<property name="description" value="Finds cases where calls are made to removed API after an upgrade." />
-			<message key="class.not.found" value="Class ''{0}'' no longer exists, or has been moved, in version ''{1}''" />
+			<message key="class.not.found.1" value="Class ''{0}'' no longer exists, or has been moved, in version ''{1}''" />
+			<message key="class.not.found.2" value="Class ''{0}'' no longer exists in version ''{1}'', possible changed to ''{2}''" />
+			<message key="class.not.found.3" value="Class ''{0}'' no longer exists in version ''{1}'', possible changed to one of the following: {2}" />
 			<message key="constructor.not.found" value="Constructor for ''{0}'' no longer exists, or the signature has changed, in version ''{1}''" />
 			<message key="method.not.found" value="Method ''{0}'' no longer exists, or the signature has changed, in class ''{1}'' for version ''{2}''" />
 			<message key="variable.not.found" value="Variable ''{0}'' no longer exists in class ''{1}'' for version ''{2}''" />

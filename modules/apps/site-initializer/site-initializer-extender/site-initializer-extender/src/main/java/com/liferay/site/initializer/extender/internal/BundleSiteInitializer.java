@@ -923,12 +923,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject propertiesJSONObject =
 				dispatchTriggerJSONObject.getJSONObject("properties");
 
-			UnicodeProperties unicodeProperties =
-				new UnicodeProperties();
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 			for (String key : propertiesJSONObject.keySet()) {
-				unicodeProperties.put(
-					key, propertiesJSONObject.getString(key));
+				unicodeProperties.put(key, propertiesJSONObject.getString(key));
 			}
 
 			DispatchTrigger dispatchTrigger =
@@ -955,8 +953,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
 				serviceContext.getUserId(),
 				dispatchTriggerJSONObject.getString("dispatchTaskExecutorType"),
-				unicodeProperties,
-				dispatchTriggerJSONObject.getString("name"),
+				unicodeProperties, dispatchTriggerJSONObject.getString("name"),
 				dispatchTriggerJSONObject.getBoolean("system"));
 
 			File file = FileUtil.createTempFile(url.openStream());
@@ -978,17 +975,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 					DispatchTaskClusterMode.valueOf(
 						dispatchTriggerJSONObject.getInt(
 							"dispatchTaskClusterMode")),
-					calendar.get(dispatchTriggerJSONObject.getInt("endDateMonth")),
-					calendar.get(dispatchTriggerJSONObject.getInt("endDateDay")),
-					calendar.get(dispatchTriggerJSONObject.getInt("endDateYear")),
-					calendar.get(dispatchTriggerJSONObject.getInt("endDateHour")),
+					calendar.get(
+						dispatchTriggerJSONObject.getInt("endDateMonth")),
+					calendar.get(
+						dispatchTriggerJSONObject.getInt("endDateDay")),
+					calendar.get(
+						dispatchTriggerJSONObject.getInt("endDateYear")),
+					calendar.get(
+						dispatchTriggerJSONObject.getInt("endDateHour")),
 					calendar.get(
 						dispatchTriggerJSONObject.getInt("endDateMinute")),
 					dispatchTriggerJSONObject.getBoolean("neverEnd"),
 					dispatchTriggerJSONObject.getBoolean("overlapAllowed"),
 					calendar.get(
 						dispatchTriggerJSONObject.getInt("startDateMonth")),
-					calendar.get(dispatchTriggerJSONObject.getInt("startDateDay")),
+					calendar.get(
+						dispatchTriggerJSONObject.getInt("startDateDay")),
 					calendar.get(
 						dispatchTriggerJSONObject.getInt("startDateYear")),
 					calendar.get(
@@ -2222,15 +2224,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layout);
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
-				UnicodeProperties unicodeProperties =
-					new UnicodeProperties();
+				UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 				unicodeProperties.setProperty(
 					"name", siteMenuItemJSONObject.getString("name"));
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
-				UnicodeProperties unicodeProperties =
-					new UnicodeProperties();
+				UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 				unicodeProperties.setProperty(
 					"name", siteMenuItemJSONObject.getString("name"));

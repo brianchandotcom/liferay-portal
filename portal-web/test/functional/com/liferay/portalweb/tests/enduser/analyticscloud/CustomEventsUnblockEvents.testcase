@@ -50,6 +50,12 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 	}
 
 	tearDown {
@@ -72,16 +78,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10195 | Test Summary: Unblock single custom event and unblock custom events in bulk"
 	@priority = "5"
 	test CanUnblockCustomEvent {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -109,7 +105,7 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -180,16 +176,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10194 | Test Summary: Blocked event is hidden in the Event Analysis events lists and Unblocked event is visible in the Event Analysis events lists"
 	@priority = "4"
 	test ViewEventIsVisibleOrNotInEventAnalysisWhenBlockedOrUnblocked {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -205,7 +191,7 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToEventAnalysis();
 		}

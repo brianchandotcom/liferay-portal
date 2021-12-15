@@ -19,7 +19,9 @@ definition {
 			locator1 = "ElasticsearchMonitoring#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
-		AssertElementPresent(locator1 = "ElasticsearchMonitoring#MONITORING_CLUSTER_OVERVIEW");
+		AssertElementPresent(
+			key_title = "Cluster overview",
+			locator1 = "Header#H1_TITLE");
 
 		AssertElementPresent(
 			key_title = "Elasticsearch",

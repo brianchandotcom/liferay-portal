@@ -3,7 +3,6 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="AppendCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
-		<suppress checks="CamelCaseNameCheck" files="portal-impl/src/com/liferay/portlet/documentlibrary/util/LiferayConverter\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Duration\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/servlet/filters/invoker/InvokerFilter\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/servlet/NonSerializableObjectRequestWrapper\.java" />

@@ -1852,7 +1852,17 @@ public class VerifyProperties extends VerifyProcess {
 		"verify.frequency", "verify.processes", "webdav.storage.class",
 		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
 		"webdav.storage.tokens", "wiki.email.page.added.signature",
-		"wiki.email.page.updated.signature", "xss.allow", "ym.login",
+		"wiki.email.page.updated.signature", "xss.allow", "xuggler.enabled",
+		"xuggler.jar.file", "xuggler.jar.url", "xuggler.jar.options",
+		"xuggler.ffpreset.8x8dct", "xuggler.ffpreset.bf",
+		"xuggler.f.ffpreset.cmp", "xuggler.f.ffpreset.coder",
+		"xuggler.f.ffpreset.flags", "xuggler.f.ffpreset.flags2",
+		"xuggler.f.ffpreset.i_qfactor", "xuggler.f.ffpreset.mbtree",
+		"xuggler.f.ffpreset.me_method", "xuggler.f.ffpreset.me_range",
+		"xuggler.f.ffpreset.qcomp", "xuggler.f.ffpreset.qdiff",
+		"xuggler.f.ffpreset.qmin", "xuggler.f.ffpreset.qmax",
+		"xuggler.f.ffpreset.sc_threshold", "xuggler.f.ffpreset.subq",
+		"xuggler.f.ffpreset.trellis", "xuggler.f.ffpreset.wpredp", "ym.login",
 		"ym.password"
 	};
 

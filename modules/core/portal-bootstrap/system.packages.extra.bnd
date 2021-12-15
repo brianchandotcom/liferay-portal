@@ -54,7 +54,6 @@ Export-Package:\
 	!com.liferay.portal.tools.sourceformatter,\
 	!com.liferay.portal.tools.sql,\
 	!com.liferay.portal.velocity,\
-	!com.liferay.portal.xuggler,\
 	!com.liferay.portlet.documentlibrary.sharepoint,\
 	!com.liferay.portlet.layoutsadmin.lar,\
 	!com.liferay.portlet.sitesadmin.lar,\

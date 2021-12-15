@@ -823,7 +823,4 @@ public interface WebKeys {
 
 	public static final String WORKFLOW_TASK = "WORKFLOW_TASK";
 
-	public static final String XUGGLER_INSTALL_STATUS =
-		"XUGGLER_INSTALL_STATUS";
-
 }

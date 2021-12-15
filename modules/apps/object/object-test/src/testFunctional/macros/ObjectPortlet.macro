@@ -84,6 +84,13 @@ definition {
 			value1 = "${key_fieldLabelName}");
 	}
 
+	macro assertFieldAtSpecificColumn {
+		AssertElementPresent(
+			key_fieldColumnNumber = "${fieldColumnNumber}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
+	}
+
 	macro assertFilterResultsSpecificOrder {
 		var resultOrder = "0";
 

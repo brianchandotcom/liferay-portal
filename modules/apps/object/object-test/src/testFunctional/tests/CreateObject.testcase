@@ -2889,11 +2889,69 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with three columns"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewEntryWithThreeColumns {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141513 CanViewEntryWithThreeColumns pending implementation
+		for (var letter : list "A,B,C") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+		}
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "3",
+			fieldList = "Custom Field A,Custom Field B,Custom Field C",
+			tabName = "Field Tab");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.assertFieldAtSpecificColumn(
+			fieldLabel = "Custom Field A",
+			fieldColumnNumber = "0");
+		
+		ObjectPortlet.assertFieldAtSpecificColumn(
+			fieldLabel = "Custom Field B",
+			fieldColumnNumber = "1");
+		
+		ObjectPortlet.assertFieldAtSpecificColumn(
+			fieldLabel = "Custom Field C",
+			fieldColumnNumber = "2");
+
+			
 
 	}
 

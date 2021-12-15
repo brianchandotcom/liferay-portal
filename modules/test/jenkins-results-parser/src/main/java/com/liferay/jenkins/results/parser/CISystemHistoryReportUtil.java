@@ -125,6 +125,19 @@ public class CISystemHistoryReportUtil {
 			content.replaceAll("\\t\\t<script-durations />\\n", sb.toString()));
 	}
 
+	private static int _getBuildPropertyInt(
+		String propertyName, int defaultValue) {
+
+		try {
+			return Integer.parseInt(
+				JenkinsResultsParserUtil.getProperty(
+					_buildProperties, propertyName));
+		}
+		catch (Exception exception) {
+			return defaultValue;
+		}
+	}
+
 	private static List<JSONObject> _getBuildResultJSONObjects(
 		String jobName, final String testSuiteName, String dateString) {
 
@@ -437,29 +450,11 @@ public class CISystemHistoryReportUtil {
 		_CI_SYSTEM_HISTORY_REPORT_DIR = new File(
 			_buildProperties.getProperty("ci.system.history.report.dir"));
 
-		int monthCount = 12;
+		_MONTH_COUNT = _getBuildPropertyInt(
+			"ci.system.history.report.month.count", 12);
 
-		String monthCountString = JenkinsResultsParserUtil.getProperty(
-			_buildProperties, "ci.system.history.report.month.count");
-
-		if ((monthCountString != null) && monthCountString.matches("\\d+")) {
-			monthCount = Integer.parseInt(monthCountString);
-		}
-
-		_MONTH_COUNT = monthCount;
-
-		int monthRecordCount = 2;
-
-		String monthRecordCountString = JenkinsResultsParserUtil.getProperty(
-			_buildProperties, "ci.system.history.report.month.record.count");
-
-		if ((monthRecordCountString != null) &&
-			monthRecordCountString.matches("\\d+")) {
-
-			monthRecordCount = Integer.parseInt(monthRecordCountString);
-		}
-
-		_MONTH_RECORD_COUNT = monthRecordCount;
+		_MONTH_RECORD_COUNT = _getBuildPropertyInt(
+			"ci.system.history.report.month.record.count", 2);
 
 		_dateStrings = new ArrayList() {
 			{

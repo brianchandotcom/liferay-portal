@@ -448,7 +448,7 @@ public class BundleSiteInitializerTest {
 	private void _assertDispatchTrigger(Group group) throws Exception {
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.fetchDispatchTrigger(
-				group.getCompanyId(), "Test Job Scheduler");
+				group.getCompanyId(), "Test Dispatch Trigger");
 
 		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();

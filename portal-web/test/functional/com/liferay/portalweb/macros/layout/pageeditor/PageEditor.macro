@@ -967,7 +967,7 @@ definition {
 	macro clickDiscardDraft {
 		WaitForPageLoad();
 
-		SitePages.clickPageMenu(pageName = "${pageName}");
+		PagesAdmin.openPageEllipsisMenu(pageName = "${pageName}");
 
 		MenuItem.clickNoError(menuItem = "Discard Draft");
 

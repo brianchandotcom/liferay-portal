@@ -10,7 +10,7 @@ definition {
 	}
 
 	macro goToTranslation {
-		SitePages.clickPageMenu(pageName = "${pageName}");
+		PagesAdmin.openPageEllipsisMenu(pageName = "${pageName}");
 
 		MenuItem.click(menuItem = "Translate");
 	}

@@ -66,12 +66,29 @@ definition {
 
 	@summary = "Go to the ellipsis menu item of a page. Parent pages hierarchy is required to navigate to child pages."
 	macro gotoPageEllipsisMenuItem {
-		SitePages.clickPageMenu(
+		PagesAdmin.openPageEllipsisMenu(
 			pageName = "${pageName}",
 			parentPage = "${parentPage}",
 			parentPagesHierarchy = "${parentPagesHierarchy}");
 
 		MenuItem.click(menuItem = "${menuItem}");
+	}
+
+	@summary = "Open the ellipsis menu of a page. Parent pages hierarchy is required to navigate to child pages."
+	macro openPageEllipsisMenu {
+		WaitForPageLoad();
+
+		if (isSet(parentPagesHierarchy)) {
+			for (var parentPage : list "${parentPagesHierarchy}") {
+				Click(
+					key_itemName = "${parentPage}",
+					locator1 = "SitePages#LIST_GROUP_ITEM");
+			}
+		}
+
+		Click(
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 	}
 
 	macro togglePrivacy {

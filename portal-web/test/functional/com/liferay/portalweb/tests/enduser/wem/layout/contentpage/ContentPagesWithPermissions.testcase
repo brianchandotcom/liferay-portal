@@ -285,7 +285,7 @@ definition {
 		task ("View the Preview and Discard Draft actions are invisible in Pages admin") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.clickPageMenu(pageName = "Test Content Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Content Page Name");
 
 			for (var itemName : list "Preview Draft,Discard Draft") {
 				MenuItem.viewNotPresent(menuItem = "${itemName}");

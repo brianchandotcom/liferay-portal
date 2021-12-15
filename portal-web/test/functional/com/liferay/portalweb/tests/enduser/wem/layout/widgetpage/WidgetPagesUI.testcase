@@ -140,7 +140,7 @@ definition {
 		task ("View order of the page actions") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewOrder(menuItemList = "View,-,Convert to content page...,-,Copy page,-,Configure,Permissions,-,Delete");
 		}

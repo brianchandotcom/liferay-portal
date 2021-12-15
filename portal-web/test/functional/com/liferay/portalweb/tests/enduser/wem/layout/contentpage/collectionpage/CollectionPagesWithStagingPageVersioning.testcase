@@ -138,7 +138,7 @@ definition {
 		task ("Assert View action of the third collection page is disabled in live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.clickPageMenu(pageName = "Third Collection Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Third Collection Page Name");
 
 			AssertVisible(
 				key_menuItem = "View",

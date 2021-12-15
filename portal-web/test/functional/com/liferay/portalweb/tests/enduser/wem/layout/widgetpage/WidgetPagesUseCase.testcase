@@ -102,7 +102,7 @@ definition {
 		}
 
 		task ("View the last public page can not be deleted") {
-			SitePages.clickPageMenu(pageName = "Home");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Home");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 		}

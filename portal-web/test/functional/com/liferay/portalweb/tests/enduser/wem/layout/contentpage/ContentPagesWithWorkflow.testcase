@@ -247,7 +247,7 @@ definition {
 		}
 
 		task ("View edit action is shown in Pages admin") {
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Edit");
 		}
@@ -269,7 +269,7 @@ definition {
 				pageName = "Test Page Name",
 				status = "Pending");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Preview");
 
@@ -300,7 +300,7 @@ definition {
 				pageName = "Test Page Name",
 				status = "Pending");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Preview");
 
@@ -338,7 +338,7 @@ definition {
 		}
 
 		task ("View preview action is not shown and edit is shown in Pages Admin") {
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Preview");
 
@@ -383,7 +383,7 @@ definition {
 				pageName = "Test Page Name",
 				status = "Pending");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Preview");
 
@@ -400,7 +400,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Edit");
 
@@ -418,7 +418,7 @@ definition {
 				pageName = "Test Page Name",
 				status = "Pending");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.click(menuItem = "Preview");
 
@@ -455,7 +455,7 @@ definition {
 				pageName = "Test Page Name",
 				status = "Pending");
 
-			SitePages.clickPageMenu(pageName = "Test Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}

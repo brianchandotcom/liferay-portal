@@ -95,9 +95,11 @@ public class SXPParameterDataCreator
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		_addSXPParameters(
-			configuration.getParameterConfiguration(), searchContext,
-			sxpParameters);
+		if (configuration != null) {
+			_addSXPParameters(
+				configuration.getParameterConfiguration(), searchContext,
+				sxpParameters);
+		}
 
 		_contribute(searchContext, sxpBlueprint, sxpParameters);
 

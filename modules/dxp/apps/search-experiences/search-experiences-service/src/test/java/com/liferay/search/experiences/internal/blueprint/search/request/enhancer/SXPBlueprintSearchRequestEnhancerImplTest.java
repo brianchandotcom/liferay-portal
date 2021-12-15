@@ -58,12 +58,15 @@ import com.liferay.search.experiences.internal.blueprint.parameter.contributor.S
 import com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.ParameterConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
@@ -104,6 +107,36 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 			aggregationsMap.toString(), 10, aggregationsMap.size());
 
 		_assert(sxpBlueprint);
+	}
+
+	@Test
+	public void testConfigurationEntry() throws Exception {
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
+
+		SearchRequest searchRequest = _toSearchRequest(
+			sxpBlueprint,
+			searchRequestBuilder -> searchRequestBuilder.queryString(
+				"search that"));
+
+		List<ComplexQueryPart> complexQueryParts =
+			searchRequest.getComplexQueryParts();
+
+		ComplexQueryPart complexQueryPart = complexQueryParts.get(0);
+
+		Assert.assertEquals("filter", complexQueryPart.getOccur());
+
+		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart.getQuery();
+
+		Assert.assertEquals(
+			_formatJSON(
+				JSONUtil.put(
+					"multi_match",
+					JSONUtil.put(
+						"fuzziness", "2"
+					).put(
+						"query", "search that"
+					))),
+			_formatJSON(new String(wrapperQuery.getSource())));
 	}
 
 	@Test
@@ -210,6 +243,37 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 	}
 
 	@Test
+	public void testEmptyElementInstances() throws Exception {
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		sxpBlueprint.setElementInstances(
+			new ElementInstance[] {
+				new ElementInstance(),
+				new ElementInstance() {
+					{
+						sxpElement = new SXPElement();
+					}
+				},
+				new ElementInstance() {
+					{
+						sxpElement = new SXPElement() {
+							{
+								elementDefinition = new ElementDefinition();
+							}
+						};
+					}
+				}
+			});
+
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(searchRequest.getComplexQueryParts()));
+
+		_assert(sxpBlueprint);
+	}
+
+	@Test
 	public void testHighlightConfiguration() throws Exception {
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
@@ -250,6 +314,42 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		Assert.assertArrayEquals(preTags, highlight.getPreTags());
 
 		_assert(sxpBlueprint);
+	}
+
+	@Test
+	public void testNullable() throws Exception {
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(_read());
+
+		try {
+			_toSearchRequest(sxpBlueprint);
+
+			Assert.fail();
+		}
+		catch (RuntimeException runtimeException) {
+
+			// TODO should remove whole key actually, like client side expansion
+
+			Throwable throwable = runtimeException.getSuppressed()[0];
+
+			InvalidQueryEntryException invalidQueryEntryException =
+				(InvalidQueryEntryException)throwable.getSuppressed()[0];
+
+			Assert.assertEquals(0, invalidQueryEntryException.getIndex());
+
+			UnresolvedTemplateVariableException
+				unresolvedTemplateVariableException =
+					(UnresolvedTemplateVariableException)
+						invalidQueryEntryException.getSuppressed()[0];
+
+			Assert.assertEquals(
+				"[configuration.fuzziness, " +
+					"configuration.minimum_should_match, configuration.slop]",
+				Arrays.toString(
+					unresolvedTemplateVariableException.
+						getTemplateVariables()));
+
+			_assert(sxpBlueprint);
+		}
 	}
 
 	@Test

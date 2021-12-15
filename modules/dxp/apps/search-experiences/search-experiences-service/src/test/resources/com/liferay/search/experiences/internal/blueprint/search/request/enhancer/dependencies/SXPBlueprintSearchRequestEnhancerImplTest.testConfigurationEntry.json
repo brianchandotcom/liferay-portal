@@ -1,0 +1,111 @@
+{
+	"elementInstances": [
+		{
+			"configurationEntry": {
+				"queryConfiguration": {
+					"queryEntries": [
+						{
+							"clauses": [
+								{
+									"context": "query",
+									"occur": "filter",
+									"query": {
+										"multi_match": {
+											"fuzziness": "2",
+											"query": "${keywords}"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"sxpElement": {
+				"elementDefinition": {
+					"configuration": {
+						"queryConfiguration": {
+							"queryEntries": [
+								{
+									"clauses": [
+										{
+											"context": "query",
+											"occur": "must",
+											"query": {
+												"multi_match": {
+													"fuzziness": "${configuration.fuzziness}",
+													"minimum_should_match": "${configuration.minimum_should_match}",
+													"slop": "${configuration.slop}"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					"uiConfiguration": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": "AUTO",
+										"name": "fuzziness",
+										"type": "select",
+										"typeOptions": {
+											"nullable": true,
+											"options": [
+												{
+													"label": "Auto",
+													"value": "AUTO"
+												},
+												{
+													"label": "0",
+													"value": "0"
+												},
+												{
+													"label": "1",
+													"value": "1"
+												},
+												{
+													"label": "2",
+													"value": "2"
+												}
+											]
+										}
+									},
+									{
+										"defaultValue": "0",
+										"label": "Minimum Should Match",
+										"name": "minimum_should_match",
+										"type": "text",
+										"typeOptions": {
+											"nullable": true
+										}
+									},
+									{
+										"defaultValue": "",
+										"helpText": "Only use slop with the following match types: phrase, phrase prefix.",
+										"label": "Slop",
+										"name": "slop",
+										"type": "number",
+										"typeOptions": {
+											"min": 0,
+											"nullable": true,
+											"step": 1
+										}
+									}
+								]
+							}
+						]
+					}
+				}
+			},
+			"uiConfigurationValues": {
+				"fuzziness": "",
+				"minimum_should_match": "",
+				"slop": ""
+			}
+		}
+	]
+}

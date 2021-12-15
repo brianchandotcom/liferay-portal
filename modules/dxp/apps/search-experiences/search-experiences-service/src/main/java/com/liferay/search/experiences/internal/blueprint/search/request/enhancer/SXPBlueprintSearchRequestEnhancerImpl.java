@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,6 +62,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.Field;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldSet;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.TypeOptions;
 import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
@@ -167,34 +169,19 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private void _enhance(
-		ElementInstance elementInstance, PropertyResolver propertyResolver,
+		ElementInstance elementInstance,
 		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
-		SXPElement sxpElement = elementInstance.getSxpElement();
+		Configuration configuration = _getConfiguration(
+			elementInstance, sxpParameterData);
 
-		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
+		if (configuration == null) {
+			return;
+		}
 
 		_contributeSXPSearchRequestBodyContributors(
-			_expand(
-				elementDefinition.getConfiguration(), propertyResolver,
-				(name, options) -> {
-					String shortName = StringUtils.substringAfter(
-						name, "configuration.");
-
-					if (Validator.isNull(shortName)) {
-						return null;
-					}
-
-					Map<String, Object> values =
-						elementInstance.getUiConfigurationValues();
-
-					return _unpack(
-						values.get(shortName),
-						_getFieldType(
-							shortName, elementDefinition.getUiConfiguration()));
-				}),
-			searchRequestBuilder, sxpParameterData);
+			configuration, searchRequestBuilder, sxpParameterData);
 	}
 
 	private void _enhance(
@@ -208,39 +195,32 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		MapUtil.isNotEmptyForEach(
-			configuration.getSearchContextAttributes(),
-			(key, value) -> searchRequestBuilder.withSearchContext(
-				searchContext -> searchContext.setAttribute(
-					key, (Serializable)value)));
+		if (configuration != null) {
+			MapUtil.isNotEmptyForEach(
+				configuration.getSearchContextAttributes(),
+				(key, value) -> searchRequestBuilder.withSearchContext(
+					searchContext -> searchContext.setAttribute(
+						key, (Serializable)value)));
+		}
 
 		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(
 			searchRequestBuilder.withSearchContextGet(
 				searchContext -> searchContext),
 			sxpBlueprint);
 
-		PropertyResolver propertyResolver = (name, options) -> {
-			SXPParameter sxpParameter = sxpParameterData.getSXPParameterByName(
-				name);
-
-			if ((sxpParameter == null) || !sxpParameter.isTemplateVariable()) {
-				return null;
-			}
-
-			return sxpParameter.evaluateToString(options);
-		};
-
-		if (sxpBlueprint.getConfiguration() != null) {
+		if (configuration != null) {
 			_contributeSXPSearchRequestBodyContributors(
-				_expand(sxpBlueprint.getConfiguration(), propertyResolver),
+				_expand(
+					configuration,
+					(name, options) -> _resolveProperty(
+						name, options, sxpParameterData)),
 				searchRequestBuilder, sxpParameterData);
 		}
 
 		ArrayUtil.isNotEmptyForEach(
 			sxpBlueprint.getElementInstances(),
 			elementInstance -> _enhance(
-				elementInstance, propertyResolver, searchRequestBuilder,
-				sxpParameterData));
+				elementInstance, searchRequestBuilder, sxpParameterData));
 	}
 
 	private Configuration _expand(
@@ -251,6 +231,65 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 		return ConfigurationUtil.toConfiguration(
 			propertyExpander.expand(String.valueOf(configuration)));
+	}
+
+	private Configuration _getConfiguration(
+		ElementInstance elementInstance, SXPParameterData sxpParameterData) {
+
+		if (elementInstance.getConfigurationEntry() != null) {
+			return _expand(
+				elementInstance.getConfigurationEntry(),
+				(name, options) -> _resolveProperty(
+					name, options, sxpParameterData));
+		}
+
+		SXPElement sxpElement = elementInstance.getSxpElement();
+
+		if (sxpElement == null) {
+			return null;
+		}
+
+		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
+
+		if (elementDefinition == null) {
+			return null;
+		}
+
+		Configuration configuration = elementDefinition.getConfiguration();
+
+		if (configuration == null) {
+			return null;
+		}
+
+		return _expand(
+			configuration,
+			(name, options) -> _resolveProperty(
+				name, options, sxpParameterData),
+			(name, options) -> {
+				String shortName = StringUtils.substringAfter(
+					name, "configuration.");
+
+				if (Validator.isNull(shortName)) {
+					return null;
+				}
+
+				UiConfiguration uiConfiguration =
+					elementDefinition.getUiConfiguration();
+
+				Map<String, Object> values =
+					elementInstance.getUiConfigurationValues();
+
+				if ((uiConfiguration == null) ||
+					(uiConfiguration.getFieldSets() == null) ||
+					(values == null)) {
+
+					return null;
+				}
+
+				return _unpack(
+					_getField(uiConfiguration.getFieldSets(), shortName),
+					values.get(shortName));
+			});
 	}
 
 	private DTOConverter
@@ -295,14 +334,40 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return null;
 	}
 
-	private String _getFieldType(String name, UiConfiguration uiConfiguration) {
-		Field field = _getField(uiConfiguration.getFieldSets(), name);
-
+	private String _getType(Field field) {
 		if (field != null) {
 			return field.getType();
 		}
 
 		return null;
+	}
+
+	private boolean _isNullable(Field field) {
+		if (field == null) {
+			return false;
+		}
+
+		TypeOptions typeOptions = field.getTypeOptions();
+
+		if (typeOptions == null) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(typeOptions.getNullable());
+	}
+
+	private Object _resolveProperty(
+		String name, Map<String, String> options,
+		SXPParameterData sxpParameterData) {
+
+		SXPParameter sxpParameter = sxpParameterData.getSXPParameterByName(
+			name);
+
+		if ((sxpParameter == null) || !sxpParameter.isTemplateVariable()) {
+			return null;
+		}
+
+		return sxpParameter.evaluateToString(options);
 	}
 
 	private String _toFieldMappingString(JSONObject jsonObject) {
@@ -327,7 +392,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return sb.toString();
 	}
 
-	private Object _unpack(Object value, String type) {
+	private Object _unpack(Field field, Object value) {
+		String type = _getType(field);
+
 		if ((value instanceof JSONObject) &&
 			Objects.equals(type, "fieldMapping")) {
 
@@ -353,6 +420,10 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			catch (JSONException jsonException) {
 				return ReflectionUtil.throwException(jsonException);
 			}
+		}
+
+		if (_isNullable(field) && Validator.isNull(value)) {
+			return null;
 		}
 
 		return value;

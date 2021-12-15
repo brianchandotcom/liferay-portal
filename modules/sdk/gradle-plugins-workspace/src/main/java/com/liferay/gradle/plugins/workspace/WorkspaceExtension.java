@@ -536,7 +536,7 @@ public class WorkspaceExtension {
 	private static final String _DOCKER_IMAGE_LIFERAY =
 		"liferay/portal:7.3.3-ga4";
 
-	private static final String _NODE_PACKAGE_MANAGER = "npm";
+	private static final String _NODE_PACKAGE_MANAGER = "yarn";
 
 	private static final String _PRODUCT_INFO_URL =
 		"https://releases.liferay.com/tools/workspace/.product_info.json";

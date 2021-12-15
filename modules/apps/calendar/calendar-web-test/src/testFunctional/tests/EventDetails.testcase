@@ -678,12 +678,22 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is -Approved- when the Calendar has no workflow assigned"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test EventStatusIsApprovedWhenNoWorkflowAssigned {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71903 EventStatusIsApprovedWhenNoWorkflowAssigned pending implementation
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		CalendarEvent.viewStatusViaDetails(status = "Approved");
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is Denied when the user declines an event"

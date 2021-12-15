@@ -27,6 +27,12 @@
 	<td>//div[contains(@class,'show')]/..//input[@type='text'and @placeholder='Search' and not(@disabled)]</td>
 	<td></td>
 </tr>
+<!-- EDIT_ATTRIBUTE -->
+<tr>
+	<td>CONDITION_BUTTON</td>
+	<td>//button[contains(@class,'btn-secondary')]//*</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 </tbody>

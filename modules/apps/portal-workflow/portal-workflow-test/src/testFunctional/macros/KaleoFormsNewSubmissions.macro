@@ -258,4 +258,17 @@ definition {
 			value1 = "${errorMessage}");
 	}
 
+	macro viewOrderTable {
+        var rowNumber = "1";
+
+        for (var fieldName : list "${fieldNameList}") {
+            AssertElementPresent(
+                key_rowNumber = "${rowNumber}",
+                key_fieldName = "${fieldName}",
+               	locator1 = "KaleoFormsAdmin#TABLE_ORDER_SUBMISSIONS");
+
+            var rowNumber = MathUtil.sum("${rowNumber}", "1");
+        }
+    }
+
 }

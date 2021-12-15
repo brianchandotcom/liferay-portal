@@ -133,11 +133,43 @@ definition {
 	}
 
 	@description = "Verify that the user can filter by Create Date."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByCreateDate {
+		for (var processName : list "A,B") {
+			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-70692 CanFilterByCreateDate pending implementation
+			KaleoFormsNewSubmissions.addNewContacts(	
+				ddlCompany = "Process ${processName}");
+
+			KaleoFormsAdmin.saveProcessRecord();
+
+			Navigator.gotoBack();
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "Process",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Kaleo Forms Process",
+			workflowAssetType = "Process",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+
+		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
+		
 
 	}
 

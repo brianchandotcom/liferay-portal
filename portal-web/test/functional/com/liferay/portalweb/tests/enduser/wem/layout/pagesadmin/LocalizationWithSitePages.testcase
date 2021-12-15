@@ -46,7 +46,7 @@ definition {
 		task ("Add a translation of page to es-ES") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Home");
 
@@ -83,7 +83,7 @@ definition {
 		task ("Add a translation of child page to es-ES") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Blog Page",
 				parentPagesHierarchy = "Home");

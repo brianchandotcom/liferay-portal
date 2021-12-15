@@ -332,7 +332,7 @@ definition {
 		task ("View friendly URL doesn't change") {
 			SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Site Page");
 

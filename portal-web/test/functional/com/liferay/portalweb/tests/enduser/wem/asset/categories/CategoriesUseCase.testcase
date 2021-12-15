@@ -1391,7 +1391,7 @@ definition {
 		task ("View the vocabulary not shown in page editor") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Page Name");
 

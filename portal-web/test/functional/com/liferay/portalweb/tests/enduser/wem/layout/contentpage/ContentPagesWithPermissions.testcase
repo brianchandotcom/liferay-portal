@@ -912,7 +912,7 @@ definition {
 		task ("Grant Update permission of specific content page to Site Member") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Permissions",
 				pageName = "Test Content Page Name");
 

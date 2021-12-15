@@ -600,7 +600,7 @@ definition {
 		}
 
 		task ("Preview draft via Page Tree") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name*");
 
@@ -634,7 +634,7 @@ definition {
 		}
 
 		task ("Preview draft via Page Tree") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name*");
 

@@ -823,7 +823,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "My Learning");
 		}
@@ -843,7 +843,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "My Learning");
 		}
@@ -863,7 +863,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "My Learning");
 		}
@@ -913,7 +913,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Sign In");
 		}
@@ -937,7 +937,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Sign In");
 		}
@@ -961,7 +961,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Sign In");
 		}

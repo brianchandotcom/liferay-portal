@@ -51,7 +51,7 @@ definition {
 		}
 
 		task ("Navigate to collection page at view mode") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Collection Page Name");
 		}

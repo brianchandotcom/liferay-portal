@@ -324,7 +324,7 @@ definition {
 			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
 				WaitForLiferayEvent.initializeLiferayEventLog();
 
-				SitePages.gotoPageMenuItem(
+				PagesAdmin.gotoPageEllipsisMenuItem(
 					menuItem = "View Collection Items",
 					pageName = "Test Collection Page Name");
 
@@ -416,7 +416,7 @@ definition {
 		}
 
 		task ("View child page via kebab menu action") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Child Page Name 1");
 
@@ -738,7 +738,7 @@ definition {
 		}
 
 		task ("Preview the draft collection page in a new tab") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name");
 
@@ -798,7 +798,7 @@ definition {
 		}
 
 		task ("Preview the draft public content page") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Public Page Name");
 
@@ -819,7 +819,7 @@ definition {
 		task ("Preview the draft private content page") {
 			PagesAdmin.togglePrivacy(privacy = "Private Pages");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Private Page Name");
 
@@ -954,7 +954,7 @@ definition {
 		}
 
 		task ("View child page via action menu") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Child Page Name");
 
@@ -1042,7 +1042,7 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View Collection Items",
 				pageName = "Dynamic Collection Page Name");
 
@@ -1094,7 +1094,7 @@ definition {
 		task ("View all web contents are shown in collection items") {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View Collection Items",
 				pageName = "Test Collection Page Name");
 
@@ -1208,7 +1208,7 @@ definition {
 			for (var i : list "1,2,3") {
 				WaitForLiferayEvent.initializeLiferayEventLog();
 
-				SitePages.gotoPageMenuItem(
+				PagesAdmin.gotoPageEllipsisMenuItem(
 					menuItem = "View Collection Items",
 					pageName = "Manual Collection Page Name");
 

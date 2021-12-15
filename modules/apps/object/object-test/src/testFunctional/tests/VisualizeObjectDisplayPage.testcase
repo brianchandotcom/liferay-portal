@@ -96,7 +96,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -286,7 +286,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -333,7 +333,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -380,7 +380,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -427,7 +427,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -474,7 +474,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -521,7 +521,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -570,7 +570,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
@@ -787,7 +787,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 

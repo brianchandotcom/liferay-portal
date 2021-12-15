@@ -87,7 +87,7 @@ definition {
 		task ("Convert the widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -186,7 +186,7 @@ definition {
 		task ("Convert the widget page to content page without publish") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 

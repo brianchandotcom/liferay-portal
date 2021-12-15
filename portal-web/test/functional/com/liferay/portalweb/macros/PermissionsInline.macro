@@ -280,7 +280,7 @@ definition {
 			portlet = "Pages",
 			site = "${site}");
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Permissions",
 			pageName = "${pageName}");
 
@@ -310,7 +310,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Permissions",
 			pageName = "${pageName}");
 
@@ -337,7 +337,7 @@ definition {
 			portlet = "Pages",
 			site = "${site}");
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Permissions",
 			pageName = "${page}");
 	}

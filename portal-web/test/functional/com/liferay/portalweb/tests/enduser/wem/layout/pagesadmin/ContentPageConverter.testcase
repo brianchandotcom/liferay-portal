@@ -65,7 +65,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -468,7 +468,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -540,7 +540,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -639,7 +639,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -759,7 +759,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -891,7 +891,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -1004,7 +1004,7 @@ definition {
 		task ("Convert the widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -1078,7 +1078,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 
@@ -1204,7 +1204,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 		}
@@ -1244,7 +1244,7 @@ definition {
 		task ("Add a Web Content Display to conversion draft page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit Conversion Draft",
 				pageName = "Test Page Name");
 
@@ -1264,7 +1264,7 @@ definition {
 		task ("Edit conversion page via Pages admin") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit Conversion Draft",
 				pageName = "Test Page Name");
 		}
@@ -1332,7 +1332,7 @@ definition {
 		task ("Convert widget page to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
 				pageName = "Test Page Name");
 

@@ -111,7 +111,7 @@ definition {
 		task ("View cannot prioritize, deprioritize, edit, duplicate, delete experiences on preview draft page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name");
 
@@ -273,7 +273,7 @@ definition {
 		task ("View the current experience is Default on preview draft page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
 				pageName = "Test Page Name");
 

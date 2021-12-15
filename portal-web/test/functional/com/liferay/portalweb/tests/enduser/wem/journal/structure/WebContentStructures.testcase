@@ -334,7 +334,7 @@ definition {
 		task ("Assert cancel edit a Link to URL type page will not redirect to the URL") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Test Link To URL");
 

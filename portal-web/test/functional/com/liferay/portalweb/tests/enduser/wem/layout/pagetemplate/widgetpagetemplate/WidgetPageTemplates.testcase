@@ -89,7 +89,7 @@ definition {
 		task ("Disable inherit changes") {
 			SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Site Page");
 

@@ -351,7 +351,7 @@ definition {
 				portlet = "Pages");
 		}
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "${pageName}",
 			parentPagesHierarchy = "${parentPagesHierarchy}");
@@ -376,7 +376,7 @@ definition {
 
 		PagesAdmin.togglePrivacy(privacy = "${privacy}");
 
-		SitePages.gotoPageMenuItem(
+		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "${pageName}");
 
@@ -468,25 +468,6 @@ definition {
 		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
 		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-	}
-
-	@summary = "Go to the pageMenuItem of a Site Page. Parent pages hierarchy is required to navigate to child pages."
-	macro gotoPageMenuItem {
-		WaitForPageLoad();
-
-		if (isSet(parentPagesHierarchy)) {
-			for (var parentPage : list "${parentPagesHierarchy}") {
-				Click(
-					key_itemName = "${parentPage}",
-					locator1 = "SitePages#LIST_GROUP_ITEM");
-			}
-		}
-
-		Click(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
-
-		MenuItem.click(menuItem = "${menuItem}");
 	}
 
 	macro movePageToPageUp {

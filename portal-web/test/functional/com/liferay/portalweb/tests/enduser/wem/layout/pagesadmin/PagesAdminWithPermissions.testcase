@@ -43,7 +43,7 @@ definition {
 		task ("Uncheck view permission for guest then verify checkbox in unchecked") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Permissions",
 				pageName = "Test Page Name");
 

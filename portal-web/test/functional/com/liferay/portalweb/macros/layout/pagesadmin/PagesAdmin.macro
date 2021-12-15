@@ -1,5 +1,15 @@
 definition {
 
+	@summary = "Go to the ellipsis menu item of a page. Parent pages hierarchy is required to navigate to child pages."
+	macro gotoPageEllipsisMenuItem {
+		SitePages.clickPageMenu(
+			pageName = "${pageName}",
+			parentPage = "${parentPage}",
+			parentPagesHierarchy = "${parentPagesHierarchy}");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro togglePrivacy {
 		WaitForPageLoad();
 

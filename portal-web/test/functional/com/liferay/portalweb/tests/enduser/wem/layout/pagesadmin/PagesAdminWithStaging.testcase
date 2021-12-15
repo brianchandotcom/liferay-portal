@@ -202,7 +202,7 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			SitePages.gotoPageMenuItem(
+			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View Collection Items",
 				pageName = "Dynamic Collection Page Name");
 

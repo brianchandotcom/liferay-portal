@@ -82,19 +82,17 @@ definition {
 	@description = "LRQA-71886 - Verify that is possible to create an Inactive Resource"
 	@priority = "3"
 	test CanAddInactiveResource {
-
 		CalendarResource.editResourceNameAndDescription(
-			calendarResourceName = "Resource Active",
-            calendarResourceDescription = "Resource Description");
+			calendarResourceDescription = "Resource Description",
+			calendarResourceName = "Resource Active");
 
 		CalendarResource.addInactiveResource(
-			calendarResourceName = "Resource Inactive",
-            calendarResourceDescription = "Resource Description");
+			calendarResourceDescription = "Resource Description",
+			calendarResourceName = "Resource Inactive");
 
 		CalendarResource.resourceFilterAndOrderOptions(filterOption = "No");
 
 		CalendarResource.resourceActiveOrInactiveInListView(key = "No");
-
 	}
 
 }

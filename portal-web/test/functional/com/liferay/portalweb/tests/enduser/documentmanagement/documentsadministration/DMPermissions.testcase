@@ -1838,14 +1838,87 @@ definition {
 		DMPortlet.viewDefaultPG();
 	}
 
-	@description = "This is a test for LPS-136840. It checks that a site member cannot access a folder without permissions."
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-136840. It checks that a site member can access an image in a folder through the URL with permissions."
 	@priority = "3"
 	test SiteMemberWithAccessToFolderCanAccessImageThroughURL {
-		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-136840 SiteMemberCannotAccessFolder pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		PermissionsInline.gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = "DM Folder Name");
+
+		for (var roleTitle : list "guest,site-member") {
+			Role.removePermissionPG(
+				permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "site-member");
+		}
+
+		for (var roleTitle : list "guest,site-member") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_ACCESS_CHECKBOX",
+				roleTitle = "site-member");
+		}
+
+		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name",
+			siteURLKey = "guest");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewDefault();
+
+		Navigator.openSpecificURL(url = "${dmDocumentURL}");
+
+		AssertElementPresent(
+			key_imageSourceURL = "Document_1",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@priority = "5"

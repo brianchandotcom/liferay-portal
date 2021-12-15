@@ -38,6 +38,9 @@
 	<td>//button[contains(@class,'btn-secondary')]//*[contains(@class,'pencil')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INPUT_CONDITION</td>
+	<td>//input[contains(@class,'input-root')]</td>
 	<td></td>
 </tr>
 </tbody>

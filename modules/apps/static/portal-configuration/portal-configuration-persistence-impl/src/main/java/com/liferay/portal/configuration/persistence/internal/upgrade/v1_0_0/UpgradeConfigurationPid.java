@@ -82,7 +82,9 @@ public class UpgradeConfigurationPid extends UpgradeProcess {
 
 						if (file.exists()) {
 							suffix = felixFileInstallFilename.substring(
-								serviceFactoryPidEndIndex + 1);
+								serviceFactoryPidEndIndex + 1,
+								felixFileInstallFilename.lastIndexOf(
+									CharPool.PERIOD));
 						}
 					}
 

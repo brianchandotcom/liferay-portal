@@ -449,6 +449,7 @@ public class CISystemHistoryReportUtil {
 
 		_CI_SYSTEM_HISTORY_REPORT_DIR = new File(
 			_buildProperties.getProperty("ci.system.history.report.dir"));
+
 		_MONTH_COUNT = _getBuildPropertyInt(
 			"ci.system.history.report.month.count", 12);
 		_MONTH_RECORD_COUNT = _getBuildPropertyInt(

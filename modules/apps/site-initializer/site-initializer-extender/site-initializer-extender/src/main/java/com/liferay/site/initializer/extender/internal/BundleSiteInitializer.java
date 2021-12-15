@@ -2222,24 +2222,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layout);
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
-				UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodeProperties unicodeProperties =
 					new UnicodeProperties();
 
-				typeSettingsUnicodeProperties.setProperty(
+				unicodeProperties.setProperty(
 					"name", siteMenuItemJSONObject.getString("name"));
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
-				UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodeProperties unicodeProperties =
 					new UnicodeProperties();
 
-				typeSettingsUnicodeProperties.setProperty(
+				unicodeProperties.setProperty(
 					"name", siteMenuItemJSONObject.getString("name"));
-				typeSettingsUnicodeProperties.setProperty(
+				unicodeProperties.setProperty(
 					"url", siteMenuItemJSONObject.getString("url"));
-				typeSettingsUnicodeProperties.setProperty(
+				unicodeProperties.setProperty(
 					"useNewTab", siteMenuItemJSONObject.getString("useNewTab"));
 
-				typeSettings = typeSettingsUnicodeProperties.toString();
+				typeSettings = unicodeProperties.toString();
 			}
 
 			SiteNavigationMenuItem siteNavigationMenuItem =

@@ -725,12 +725,22 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the buttons Maybe and Decline are displayed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MaybeAndDeclineButtonAreDisplayed {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71905 MaybeAndDeclineButtonAreDisplayed pending implementation
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		CalendarEvent.viewMaybeAndDeclineButtons();
 	}
 
 	@description = "This is a use case for LPS-54548."

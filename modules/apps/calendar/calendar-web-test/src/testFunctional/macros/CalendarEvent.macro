@@ -1650,6 +1650,16 @@ definition {
 		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
 	}
 
+	macro viewMaybeAndDeclineButtons {
+		AssertElementPresent(
+			key_tab = "Maybe",
+			locator1 = "CalendarViewEventDetails#MAYBE_BUTTON");
+
+		AssertElementPresent(
+			key_tab = "Decline",
+			locator1 = "CalendarViewEventDetails#DECLINE_BUTTON");
+	}
+
 	macro viewNoRepeating {
 		AssertNotVisible(locator1 = "CalendarEditEvent#REPEAT_SUMMARY");
 

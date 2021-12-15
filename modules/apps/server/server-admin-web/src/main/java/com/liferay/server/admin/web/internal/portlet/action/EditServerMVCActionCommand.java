@@ -26,6 +26,8 @@ import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -85,6 +87,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -101,6 +105,10 @@ import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -225,6 +233,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String priority = ParamUtil.getString(actionRequest, "priority");
 
 		Log4JUtil.setLevel(loggerName, priority, true);
+
+		_executeOnCluster(
+			_updateLogLevelsMethodKey,
+			Collections.singletonList(new LogLevel(loggerName, priority)));
 	}
 
 	private void _cacheDb() throws Exception {
@@ -509,6 +521,23 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		return null;
 	}
 
+	private void _executeOnCluster(MethodKey methodKey, Object... arguments) {
+		try {
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, arguments);
+
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(methodHandler, true);
+
+			clusterRequest.setFireAndForget(true);
+
+			ClusterExecutorUtil.execute(clusterRequest);
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to notify slave", throwable);
+		}
+	}
+
 	private void _gc() throws Exception {
 		Runtime runtime = Runtime.getRuntime();
 
@@ -635,6 +664,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Enumeration<String> enumeration = actionRequest.getParameterNames();
 
+		List<LogLevel> logLevels = new ArrayList<>();
+
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
 
@@ -645,7 +676,19 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, name, Level.INFO.toString());
 
 				Log4JUtil.setLevel(loggerName, priority, true);
+
+				logLevels.add(new LogLevel(loggerName, priority));
 			}
+		}
+
+		if (!logLevels.isEmpty()) {
+			_executeOnCluster(_updateLogLevelsMethodKey, logLevels);
+		}
+	}
+
+	private void _updateLogLevels(List<LogLevel> logLevels) {
+		for (LogLevel logLevel : logLevels) {
+			Log4JUtil.setLevel(logLevel._loggerName, logLevel._priority, true);
 		}
 	}
 
@@ -753,6 +796,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
 
+	private static final MethodKey _updateLogLevelsMethodKey = new MethodKey(
+		EditServerMVCActionCommand.class, "_updateLogLevels", List.class);
+
 	@Reference
 	private DirectServletRegistry _directServletRegistry;
 
@@ -810,5 +856,17 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private UserGroupMembershipPolicyFactory _userGroupMembershipPolicyFactory;
+
+	private static class LogLevel implements Serializable {
+
+		public LogLevel(String loggerName, String priority) {
+			_loggerName = loggerName;
+			_priority = priority;
+		}
+
+		private final String _loggerName;
+		private final String _priority;
+
+	}
 
 }

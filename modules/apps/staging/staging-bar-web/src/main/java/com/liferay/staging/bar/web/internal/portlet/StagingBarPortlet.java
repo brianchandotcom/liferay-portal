@@ -176,7 +176,15 @@ public class StagingBarPortlet extends MVCPortlet {
 		LayoutSetBranch layoutSetBranch = null;
 
 		if (layout != null) {
-			layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
+			Layout layoutRevisionLayout = layout;
+
+			if (layout.isDraftLayout()) {
+				layoutRevisionLayout = _layoutLocalService.fetchLayout(
+					layout.getClassPK());
+			}
+
+			layoutRevision = LayoutStagingUtil.getLayoutRevision(
+				layoutRevisionLayout);
 
 			if (layoutRevision != null) {
 				branchingEnabled = true;

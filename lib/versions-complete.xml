@@ -5660,19 +5660,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/chardet.jar</file-name>
-				<version>1.1</version>
-				<project-name>Mozilla Charset Detectors</project-name>
-				<project-url>http://jchardet.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>MPL 1.1</license-name>
-						<license-url>http://www.mozilla.org/MPL/1.1</license-url>
-					</license>
-				</licenses>
-				<comments>This was recompiled for compatibility with JDK 5.</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/closure-compiler.jar</file-name>
 				<version>v20131014</version>
 				<project-name>Closure Compiler</project-name>

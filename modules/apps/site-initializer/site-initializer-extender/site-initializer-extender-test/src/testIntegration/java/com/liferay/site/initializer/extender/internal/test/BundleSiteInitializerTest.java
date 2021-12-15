@@ -450,6 +450,7 @@ public class BundleSiteInitializerTest {
 			_dispatchTriggerLocalService.fetchDispatchTrigger(
 				group.getCompanyId(), "Test Dispatch Trigger");
 
+		Assert.assertNotNull(dispatchTrigger);
 		Assert.assertTrue(dispatchTrigger.isActive());
 		Assert.assertEquals(0, dispatchTrigger.getDispatchTaskClusterMode());
 		Assert.assertEquals(

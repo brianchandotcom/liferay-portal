@@ -456,7 +456,7 @@ public class CISystemHistoryReportUtil {
 		_MONTH_RECORD_COUNT = _getBuildPropertyInt(
 			"ci.system.history.report.month.record.count", 2);
 
-		_dateStrings = new ArrayList() {
+		_dateStrings = new ArrayList<String>() {
 			{
 				LocalDate currentLocalDate = LocalDate.now();
 

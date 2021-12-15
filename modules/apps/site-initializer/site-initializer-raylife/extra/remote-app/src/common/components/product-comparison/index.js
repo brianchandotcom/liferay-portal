@@ -103,6 +103,7 @@ const ProductComparison = ({
 	purchasable = true,
 }) => {
 	const {category, mostPopular, price, promo, ...productDetails} = product;
+	const promoPrice = Number(promo);
 
 	return (
 		<div
@@ -112,10 +113,13 @@ const ProductComparison = ({
 			id="quote-comparison"
 		>
 			<div
-				className={classNames('align-items-center d-flex header-size justify-content-center rounded-top', {
-					'bg-brand-secondary ': mostPopular,
-					'bg-neutral-0': !mostPopular,
-				})}
+				className={classNames(
+					'align-items-center d-flex header-size justify-content-center rounded-top',
+					{
+						'bg-brand-secondary ': mostPopular,
+						'bg-neutral-0': !mostPopular,
+					}
+				)}
 			>
 				{mostPopular && (
 					<p className="font-weight-bold text-paragraph text-small-caps text-white">
@@ -140,7 +144,11 @@ const ProductComparison = ({
 					<div className="font-weight-normal subtitle text-neutral-8 text-paragraph-xs">
 						Get covered for{' '}
 						<span className="text-brand-primary">
-							&#36;{promo} today
+							&#36;
+							{promoPrice % 1 === 0
+								? promoPrice
+								: promoPrice.toFixed(2)}{' '}
+							today
 						</span>
 					</div>
 				</div>

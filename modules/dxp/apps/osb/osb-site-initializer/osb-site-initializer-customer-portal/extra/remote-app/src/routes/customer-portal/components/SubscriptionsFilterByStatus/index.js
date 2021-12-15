@@ -2,26 +2,29 @@ import ClayButton from '@clayui/button';
 import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
-import {POSSIBLE_STATUS_AMOUNT} from '../Subscriptions';
+import {POSSIBLE_STATUS} from '../Subscriptions';
 
 const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	const [active, setActive] = useState(false);
 
 	const handleChange = (status) => {
 		if (status === 'All') {
-			setSelectedStatus(
-				selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+			return setSelectedStatus(
+				selectedStatus.length === Object.keys(POSSIBLE_STATUS).length
 					? []
-					: ['Active', 'Expired', 'Future']
+					: [
+							POSSIBLE_STATUS.active,
+							POSSIBLE_STATUS.expired,
+							POSSIBLE_STATUS.future,
+					  ]
 			);
 		}
-		else {
-			setSelectedStatus(
-				selectedStatus.includes(status)
-					? selectedStatus.filter((value) => status !== value)
-					: [...selectedStatus, status]
-			);
-		}
+
+		setSelectedStatus(
+			selectedStatus.includes(status)
+				? selectedStatus.filter((value) => status !== value)
+				: [...selectedStatus, status]
+		);
 	};
 
 	return (
@@ -30,7 +33,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 
 			<DropDown
 				active={active}
-				closeOnClickOutside={true}
+				closeOnClickOutside
 				menuElementAttrs={{
 					className: 'subscription-status-filter',
 				}}
@@ -41,10 +44,11 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 						displayType="unstyled"
 					>
 						{`${
-							selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+							selectedStatus.length ===
+							Object.keys(POSSIBLE_STATUS).length
 								? 'All'
 								: selectedStatus.length === 0
-								? ' None '
+								? 'None'
 								: selectedStatus.join(', ')
 						}`}{' '}
 						
@@ -55,7 +59,8 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				<DropDown.Item
 					onClick={() => handleChange('All')}
 					symbolRight={
-						selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+						selectedStatus.length ===
+						Object.keys(POSSIBLE_STATUS).length
 							? 'check'
 							: ''
 					}
@@ -64,30 +69,36 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() => handleChange('Active')}
+					onClick={() => handleChange(POSSIBLE_STATUS.active)}
 					symbolRight={
-						selectedStatus.includes('Active') ? 'check' : ''
+						selectedStatus.includes(POSSIBLE_STATUS.active)
+							? 'check'
+							: ''
 					}
 				>
-					Active
+					{POSSIBLE_STATUS.active}
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() => handleChange('Expired')}
+					onClick={() => handleChange(POSSIBLE_STATUS.expired)}
 					symbolRight={
-						selectedStatus.includes('Expired') ? 'check' : ''
+						selectedStatus.includes(POSSIBLE_STATUS.expired)
+							? 'check'
+							: ''
 					}
 				>
-					Expired
+					{POSSIBLE_STATUS.expired}
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() => handleChange('Future')}
+					onClick={() => handleChange(POSSIBLE_STATUS.future)}
 					symbolRight={
-						selectedStatus.includes('Future') ? 'check' : ''
+						selectedStatus.includes(POSSIBLE_STATUS.future)
+							? 'check'
+							: ''
 					}
 				>
-					Future
+					{POSSIBLE_STATUS.future}
 				</DropDown.Item>
 			</DropDown>
 		</div>

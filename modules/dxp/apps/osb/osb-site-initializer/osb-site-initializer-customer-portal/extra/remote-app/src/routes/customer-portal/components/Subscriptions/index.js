@@ -5,23 +5,32 @@ import CardSubscription from '../CardSubscription';
 import SubscriptionsFilterByStatus from '../SubscriptionsFilterByStatus';
 import SubscriptionsNavbar from '../SubscriptionsNavbar';
 
-export const POSSIBLE_STATUS_AMOUNT = 3;
+export const POSSIBLE_STATUS = {
+	active: 'Active',
+	expired: 'Expired',
+	future: 'Future',
+};
 
 const Subscriptions = ({accountKey}) => {
 	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
 		''
 	);
 	const [selectedStatus, setSelectedStatus] = useState([
-		'Active',
-		'Expired',
-		'Future',
+		POSSIBLE_STATUS.active,
+		POSSIBLE_STATUS.expired,
+		POSSIBLE_STATUS.future,
 	]);
 
 	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
 		return subscriptionName.toLowerCase().replace(' ', '-');
 	};
 
-	const getAccountSubscriptionFilterQueryString = (previousValue, currentValue, currentIndex, array) => {
+	const getAccountSubscriptionFilterQueryString = (
+		previousValue,
+		currentValue,
+		currentIndex,
+		array
+	) => {
 		if (currentIndex === array.length - 1) {
 			return previousValue + ` subscriptionStatus eq '${currentValue}'`;
 		}
@@ -42,9 +51,12 @@ const Subscriptions = ({accountKey}) => {
 			filter: `accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
 				selectedSubscriptionGroup
 			)}'${
-				selectedStatus.length === POSSIBLE_STATUS_AMOUNT
+				selectedStatus.length === Object.keys(POSSIBLE_STATUS).length
 					? ''
-					: `${selectedStatus.reduce(getAccountSubscriptionFilterQueryString, ' and')}`
+					: `${selectedStatus.reduce(
+							getAccountSubscriptionFilterQueryString,
+							' and'
+					  )}`
 			}`,
 		},
 	});
@@ -58,7 +70,7 @@ const Subscriptions = ({accountKey}) => {
 
 			<SubscriptionsNavbar
 				accountKey={accountKey}
-				possibleStatusAmount={POSSIBLE_STATUS_AMOUNT}
+				possibleStatusAmount={Object.keys(POSSIBLE_STATUS).length}
 				selectedStatus={selectedStatus}
 				setSelectedStatus={setSelectedStatus}
 				setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}

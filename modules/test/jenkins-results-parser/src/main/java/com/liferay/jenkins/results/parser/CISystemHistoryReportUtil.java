@@ -92,9 +92,11 @@ public class CISystemHistoryReportUtil {
 			String jobName, String testSuiteName)
 		throws IOException {
 
-		for (String dateString : _dateStrings) {
+		int size = _dateStrings.size();
+
+		for (int i = size - _MONTH_RECORD_COUNT; i < size; i++) {
 			writeDateDurationsJavaScriptFile(
-				jobName, testSuiteName, dateString);
+				jobName, testSuiteName, _dateStrings.get(i));
 		}
 	}
 
@@ -401,7 +403,9 @@ public class CISystemHistoryReportUtil {
 
 	private static final File _CI_SYSTEM_HISTORY_REPORT_DIR;
 
-	private static final int _MONTHS_PER_YEAR = 12;
+	private static final int _MONTH_COUNT;
+
+	private static final int _MONTH_RECORD_COUNT;
 
 	private static final long _START_TIME =
 		JenkinsResultsParserUtil.getCurrentTimeMillis();
@@ -433,11 +437,35 @@ public class CISystemHistoryReportUtil {
 		_CI_SYSTEM_HISTORY_REPORT_DIR = new File(
 			_buildProperties.getProperty("ci.system.history.report.dir"));
 
+		int monthCount = 12;
+
+		String monthCountString = JenkinsResultsParserUtil.getProperty(
+			_buildProperties, "ci.system.history.report.month.count");
+
+		if ((monthCountString != null) && monthCountString.matches("\\d+")) {
+			monthCount = Integer.parseInt(monthCountString);
+		}
+
+		_MONTH_COUNT = monthCount;
+
+		int monthRecordCount = 2;
+
+		String monthRecordCountString = JenkinsResultsParserUtil.getProperty(
+			_buildProperties, "ci.system.history.report.month.record.count");
+
+		if ((monthRecordCountString != null) &&
+			monthRecordCountString.matches("\\d+")) {
+
+			monthRecordCount = Integer.parseInt(monthRecordCountString);
+		}
+
+		_MONTH_RECORD_COUNT = monthRecordCount;
+
 		_dateStrings = new ArrayList() {
 			{
 				LocalDate currentLocalDate = LocalDate.now();
 
-				for (int i = _MONTHS_PER_YEAR - 1; i >= 0; i--) {
+				for (int i = _MONTH_COUNT - 1; i >= 0; i--) {
 					LocalDate localDate = currentLocalDate.minusMonths(i);
 
 					add(

@@ -599,7 +599,7 @@ definition {
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
 		while (IsElementPresent(key_pageName = "Home", locator1 = "SitePages#LIST_GROUP_ITEM_CHILD_INDICATOR")) {
-			SitePages.expandPageTree(depth = "2");
+			PagesAdmin.expandPageTree(depth = "2");
 
 			Click.waitForMenuToggleJSClick(
 				key_index = "4",
@@ -682,7 +682,7 @@ definition {
 		PagesAdmin.togglePrivacy(privacy = "${privacy}");
 
 		if (isSet(depth)) {
-			SitePages.expandPageTree(depth = "${depth}");
+			PagesAdmin.expandPageTree(depth = "${depth}");
 		}
 
 		AssertElementPresent(

@@ -1,5 +1,23 @@
 definition {
 
+	macro expandPageTree {
+		if (!(isSet(depth))) {
+			var depth = "1";
+		}
+
+		var count = "0";
+
+		while ("${count}" != "${depth}") {
+			var index = ${count} + 1;
+
+			Click(
+				key_depth = "${index}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_DEPTH");
+
+			var count = ${count} + 1;
+		}
+	}
+
 	@summary = "Go to the page creation form through the empty-result-message taglib"
 	macro gotoAddFirstPage {
 		var key_menuItem = "${pageType}";

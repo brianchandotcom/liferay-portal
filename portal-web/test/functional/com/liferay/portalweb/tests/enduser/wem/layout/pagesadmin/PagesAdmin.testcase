@@ -400,7 +400,7 @@ definition {
 		task ("Select the first page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.expandPageTree(depth = "2");
+			PagesAdmin.expandPageTree(depth = "2");
 
 			SitePages.checkPage(pageName = "Test Page Name 1");
 		}
@@ -944,7 +944,7 @@ definition {
 		task ("View the plus icon is shown after check the page in Pages admin") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.expandPageTree(depth = "2");
+			PagesAdmin.expandPageTree(depth = "2");
 
 			SitePages.checkPage(pageName = "Child Page Name");
 

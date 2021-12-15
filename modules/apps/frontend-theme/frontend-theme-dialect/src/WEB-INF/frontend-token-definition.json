@@ -2958,6 +2958,288 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "0.0625rem",
+							"label": "btn-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-border-width"
+								}
+							],
+							"name": "btnBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-semi-bold)",
+							"label": "btn-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-font-weight"
+								}
+							],
+							"name": "btnFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-1)",
+							"label": "btn-inline-item-spacer-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-inline-item-spacer-x"
+								}
+							],
+							"name": "btnInlineItemSpacerX",
+							"type": "String"
+						}
+					],
+					"label": "general",
+					"name": "buttonGeneral"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--border-radius-sm)",
+							"label": "btn-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-border-radius"
+								}
+							],
+							"name": "btnBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "btn-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-font-size"
+								}
+							],
+							"name": "btnFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--btn-font-size)",
+							"label": "btn-inline-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-inline-item-font-size"
+								}
+							],
+							"name": "btnInlineItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "24px",
+							"label": "btn-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-line-height"
+								}
+							],
+							"name": "btnLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "btn-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-padding-x"
+								}
+							],
+							"name": "btnPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.75rem",
+							"label": "btn-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-padding-y"
+								}
+							],
+							"name": "btnPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "button",
+					"name": "button"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--border-radius)",
+							"label": "btn-lg-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-lg-border-radius"
+								}
+							],
+							"name": "btnLgBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.125rem",
+							"label": "btn-lg-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-lg-font-size"
+								}
+							],
+							"name": "btnLgFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--btn-lg-font-size)",
+							"label": "btn-lg-inline-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-lg-inline-item-font-size"
+								}
+							],
+							"name": "btnLgInlineItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "28px",
+							"label": "btn-lg-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-lg-line-height"
+								}
+							],
+							"name": "btnLgLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.125rem",
+							"label": "btn-lg-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-lg-padding-x"
+								}
+							],
+							"name": "btnLgPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"label": "btn-lg-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-lg-padding-y"
+								}
+							],
+							"name": "btnLgPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "button-large",
+					"name": "buttonLarge"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--border-radius-xs)",
+							"label": "btn-sm-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-sm-border-radius"
+								}
+							],
+							"name": "btnSmBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"label": "btn-sm-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-sm-font-size"
+								}
+							],
+							"name": "btnSmFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--btn-sm-font-size)",
+							"label": "btn-sm-inline-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-sm-inline-item-font-size"
+								}
+							],
+							"name": "btnSmInlineItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "20px",
+							"label": "btn-sm-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-sm-line-height"
+								}
+							],
+							"name": "btnSmLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.75rem",
+							"label": "btn-sm-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-sm-padding-x"
+								}
+							],
+							"name": "btnSmPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.5rem",
+							"label": "btn-sm-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-sm-padding-y"
+								}
+							],
+							"name": "btnSmPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "button-small",
+					"name": "buttonSmall"
+				}
+			],
+			"label": "buttons",
+			"name": "buttons"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "var(--spacer-4)",
 							"label": "card-aspect-ratio-item-offset",
 							"mappings": [
@@ -2983,7 +3265,7 @@
 						}
 					],
 					"label": "general",
-					"name": "general"
+					"name": "cardGeneral"
 				},
 				{
 					"frontendTokens": [

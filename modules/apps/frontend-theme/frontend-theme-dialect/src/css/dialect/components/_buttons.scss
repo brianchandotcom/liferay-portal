@@ -295,22 +295,22 @@
 // Rounded
 
 .btn-rounded {
-	--border-radius-sm: #{$rounded-pill};
-	--border-radius: #{$rounded-pill};
-	--border-radius-xs: #{$rounded-pill};
+	--btn-border-radius: #{$rounded-pill};
+	--btn-lg-border-radius: #{$rounded-pill};
+	--btn-sm-border-radius: #{$rounded-pill};
 
 	&.btn-style-primary {
-		--button-box-shadow: var(--elevation-tight-4)
+		--btn-box-shadow: var(--elevation-tight-4)
 			var(--color-action-primary-disabled);
 	}
 
 	&.btn-style-secondary {
-		--button-box-shadow: var(--elevation-tight-4)
+		--btn-box-shadow: var(--elevation-tight-4)
 			var(--color-action-secondary-disabled);
 	}
 
 	&.btn-style-neutral {
-		--button-box-shadow: var(--elevation-tight-4)
+		--btn-box-shadow: var(--elevation-tight-4)
 			var(--color-action-neutral-disabled);
 	}
 }

@@ -25,13 +25,15 @@ definition {
 	macro uploadSingleFile {
 		var key_uploadFileName = "${uploadFileName}";
 
+		var filePath = TestCase.getDependenciesDirPath(fileName = "${uploadFileName}");
+
 		WaitForElementPresent(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+		UploadFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${uploadFileName}");
+			value1 = "${filePath}");
 
 		WaitForElementPresent(locator1 = "ItemSelector#ADD_BUTTON");
 

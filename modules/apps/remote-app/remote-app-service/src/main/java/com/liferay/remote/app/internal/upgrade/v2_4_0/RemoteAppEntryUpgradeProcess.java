@@ -43,10 +43,11 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void updateExternalReferenceCode() throws Exception {
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("update RemoteAppEntry set externalReferenceCode = ");
-		sb.append("remoteAppEntryId where externalReferenceCode is null ");
+		sb.append("CAST_TEXT(remoteAppEntryId) where externalReferenceCode ");
+		sb.append("is null");
 
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
 

@@ -216,10 +216,6 @@ public class FileUtil {
 		return _file.getShortFileName(fullFileName);
 	}
 
-	public static boolean isAscii(File file) throws IOException {
-		return _file.isAscii(file);
-	}
-
 	public static boolean isSameContent(File file, byte[] bytes, int length) {
 		return _file.isSameContent(file, bytes, length);
 	}

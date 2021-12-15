@@ -211,11 +211,6 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public boolean isAscii(File file) {
-		return false;
-	}
-
-	@Override
 	public boolean isSameContent(File file, byte[] bytes, int length) {
 		return false;
 	}

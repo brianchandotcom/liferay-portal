@@ -113,8 +113,6 @@ public interface File {
 
 	public String getShortFileName(String fullFileName);
 
-	public boolean isAscii(java.io.File file) throws IOException;
-
 	public boolean isSameContent(java.io.File file, byte[] bytes, int length);
 
 	public boolean isSameContent(java.io.File file, String s);

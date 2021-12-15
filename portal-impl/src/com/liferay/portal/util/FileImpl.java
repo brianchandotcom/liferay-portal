@@ -88,9 +88,6 @@ import org.apache.tika.parser.txt.UniversalEncodingDetector;
 import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.sax.WriteOutContentHandler;
 
-import org.mozilla.intl.chardet.nsDetector;
-import org.mozilla.intl.chardet.nsPSMDetector;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -610,33 +607,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		int y = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 
 		return fullFileName.substring(Math.max(x, y) + 1);
-	}
-
-	@Override
-	public boolean isAscii(File file) throws IOException {
-		boolean ascii = true;
-
-		nsDetector detector = new nsDetector(nsPSMDetector.ALL);
-
-		try (InputStream inputStream = new FileInputStream(file)) {
-			byte[] buffer = new byte[1024];
-
-			int len = 0;
-
-			while ((len = inputStream.read(buffer, 0, buffer.length)) != -1) {
-				if (ascii) {
-					ascii = detector.isAscii(buffer, len);
-
-					if (!ascii) {
-						break;
-					}
-				}
-			}
-
-			detector.DataEnd();
-		}
-
-		return ascii;
 	}
 
 	@Override

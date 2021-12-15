@@ -125,7 +125,7 @@ const ColorPicker = ({
 				>
 					<span className="c-inner" tabIndex="-1">
 						<span
-							className="mr-3 page-editor__color-picker__selector-splotch rounded-circle"
+							className="page-editor__color-picker__selector-splotch rounded-circle"
 							style={{
 								background: `${value}`,
 							}}

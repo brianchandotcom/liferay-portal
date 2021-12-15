@@ -258,10 +258,10 @@ const FriendlyURLHistoryModal = ({
 							</div>
 
 							<p className="active-url-text">
-								{
+								{decodeURIComponent(
 									friendlyURLEntryLocalizations[languageId]
 										?.current?.urlTitle
-								}
+								)}
 							</p>
 						</div>
 
@@ -287,7 +287,9 @@ const FriendlyURLHistoryModal = ({
 											>
 												<ClayList.ItemField expand>
 													<ClayList.ItemText className="text-truncate">
-														{urlTitle}
+														{decodeURIComponent(
+															urlTitle
+														)}
 													</ClayList.ItemText>
 												</ClayList.ItemField>
 

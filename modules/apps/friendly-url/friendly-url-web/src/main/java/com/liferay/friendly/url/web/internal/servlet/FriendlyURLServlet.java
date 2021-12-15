@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -243,8 +242,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			friendlyURLEntryLocalizationsJSONObject.put(
 				languageId,
 				JSONUtil.put(
-					"current",
-					JSONUtil.put("urlTitle", _http.decodeURL(mainUrlTitle))
+					"current", JSONUtil.put("urlTitle", mainUrlTitle)
 				).put(
 					"history",
 					_getJSONArray(
@@ -294,7 +292,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			Long.valueOf(
 				friendlyEntryLocalization.getFriendlyURLEntryLocalizationId())
 		).put(
-			"urlTitle", _http.decodeURL(friendlyEntryLocalization.getUrlTitle())
+			"urlTitle", friendlyEntryLocalization.getUrlTitle()
 		);
 	}
 
@@ -338,9 +336,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

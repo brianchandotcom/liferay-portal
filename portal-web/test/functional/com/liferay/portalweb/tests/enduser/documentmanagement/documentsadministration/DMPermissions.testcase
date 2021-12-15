@@ -895,13 +895,73 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136832. It checks that a guest can access an image in a folder through the URL when he has permissions."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test GuestWithAccessToFolderCanAccessImageThroughURL {
-		property portal.acceptance = "false";
+		var portalURL = PropsUtil.get("portal.url");
 
-		// TODO LPS-136832 GuestCannotAccessFolder pending implementation
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+			groupName = "Guest",
+			name = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		PermissionsInline.gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = "DM Folder Name");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_ACCESS_CHECKBOX",
+			roleTitle = "Guest");
+
+		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name",
+			siteURLKey = "guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewDefault();
+
+		Navigator.openSpecificURL(url = "${dmDocumentURL}");
+
+		var key_imageSourceURL = "${portalURL}/documents/${siteID}/${folderId}/Document_1";
+
+		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This test covers LPS-106905. It ensures that a site admin user is able to select an image from the global site in WCD."

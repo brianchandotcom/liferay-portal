@@ -1,5 +1,83 @@
 definition {
 
+	macro _addCommerceProduct {
+		Variables.assertDefined(parameterList = "${catalogName},${productName},${productType}");
+
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(productDescription))) {
+			var productDescription = "";
+		}
+
+		if (!(isSet(metaDescription))) {
+			var metaDescription = "";
+		}
+
+		if (!(isSet(metaKeyword))) {
+			var metaKeyword = "";
+		}
+
+		if (!(isSet(metaTitle))) {
+			var metaTitle = "";
+		}
+
+		if (!(isSet(shortDescription))) {
+			var shortDescription = "";
+		}
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+  			-H 'Content-Type: application/json' \
+  			-d '{
+					"active": true,
+					"catalogId": "${catalogId}",
+					"categories": [],
+					"customFields": [],
+					"description": {
+					  "en_US": "${productDescription}"
+					},
+					"expando": {},
+					"externalReferenceCode": "",
+					"metaDescription": {
+					  "en_US": "${metaDescription}"
+					},
+					"metaKeyword": {
+					  "en_US": "${metaKeyword}"
+					},
+					"metaTitle": {
+					  "en_US": "${metaTitle}"
+					},
+					"name": {
+					  "en_US": "${productName}"
+					},
+					"productAccountGroupFilter": false,
+					"productChannelFilter": false,
+					"productStatus": 0,
+					"productType": "${productType}",
+					"shortDescription": {
+					  "en_US": "${shortDescription}"
+					},
+					"skuFormatted": "default",
+					"tags": [],
+					"workflowStatusInfo": {
+					  "code": 0,
+					  "label": "approved",
+					  "label_i18n": "Approved"
+					}
+				}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceProducts {
 		var baseURL = "${baseURL}";
 

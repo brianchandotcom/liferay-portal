@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.internal.service;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -48,6 +49,9 @@ public class LayoutPageTemplateStructureRelFragmentEntryLinkLocalServiceWrapper
 
 		return fragmentEntryLink;
 	}
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

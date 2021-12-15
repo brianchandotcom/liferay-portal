@@ -268,12 +268,17 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that the user can view the message: -Failed to import empty file.- after import empty file."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewMessageAfterImportEmptyFile {
+		CalendarExportImport.gotoPortletExportImport();
 
-		// TODO LRQA-71616 CanViewMessageAfterImportEmptyFile pending implementation
+		CalendarExportImport.selectConfigurationIFrame();
 
+		CalendarExportImport.gotoImportTab(subTab = "New Import Process");
+
+		UploadDependencyFile.uploadFile(fileName = "Calendar-empty-file.portlet.lar.portlet.lar");
+
+		AssertElementPresent(locator1 = "CalendarExportImport#UPLOAD_ERROR_MESSAGE");
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new exported process status in the Current and Previous tab"

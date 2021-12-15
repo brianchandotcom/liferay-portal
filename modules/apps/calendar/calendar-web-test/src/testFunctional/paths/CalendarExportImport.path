@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>CalendarExportImport</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CalendarExportImport</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CALENDAR_TO_BE_EXPORTED</td>
+	<td>//div[contains(@class,'input-text-wrapper')]//input[contains(@class,'field')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORTED_CALENDAR_FILE_NAME</td>
+	<td>//td[contains(@class,'table-cell-expand')]//span[contains(@class,'taglib-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOAD_ERROR_MESSAGE</td>
+	<td>//div[@class='upload-list']//h4[@class='upload-error-message']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

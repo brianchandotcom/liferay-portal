@@ -168,4 +168,12 @@ definition {
 		}
 	}
 
+	macro viewAnalysisInformation {
+		for (var informationValue : list "${informationValueList}") {
+			var key_informationValue = "${informationValue}";
+
+			AssertElementPresent(locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION");
+		}
+	}
+
 }

@@ -24,6 +24,26 @@ definition {
 		}
 
 		ACUtils.tearDownAC();
+
+		task ("Navigate to Workspace Settings") {
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Change the timezone to Los Angeles of United States") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "UTC",
+				timezoneId = "UTC Coordinated Universal Time (UTC)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("Dismiss the information banner") {
+			Click(locator1 = "Icon#TIMES");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9134 | Test Summary: Cancel Unsaved Workspace Setting Changes"

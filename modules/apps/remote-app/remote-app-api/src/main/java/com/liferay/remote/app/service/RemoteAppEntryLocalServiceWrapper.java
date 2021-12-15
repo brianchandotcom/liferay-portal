@@ -40,18 +40,19 @@ public class RemoteAppEntryLocalServiceWrapper
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry
 			addCustomElementRemoteAppEntry(
-				long userId, String customElementCSSURLs,
+				String externalReferenceCode, long userId,
+				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String externalReferenceCode,
-				String friendlyURLMapping, boolean instanceable,
+				String description, String friendlyURLMapping,
+				boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
-			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, description, externalReferenceCode,
+			externalReferenceCode, userId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
 			properties, sourceCodeURL);
 	}
@@ -72,10 +73,11 @@ public class RemoteAppEntryLocalServiceWrapper
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry
 			addOrUpdateCustomElementRemoteAppEntry(
-				long userId, String customElementCSSURLs,
+				String externalReferenceCode, long userId,
+				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String externalReferenceCode,
-				String friendlyURLMapping, boolean instanceable,
+				String description, String friendlyURLMapping,
+				boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
@@ -83,8 +85,8 @@ public class RemoteAppEntryLocalServiceWrapper
 
 		return _remoteAppEntryLocalService.
 			addOrUpdateCustomElementRemoteAppEntry(
-				userId, customElementCSSURLs, customElementHTMLElementName,
-				customElementURLs, description, externalReferenceCode,
+				externalReferenceCode, userId, customElementCSSURLs,
+				customElementHTMLElementName, customElementURLs, description,
 				friendlyURLMapping, instanceable, nameMap, portletCategoryName,
 				properties, sourceCodeURL);
 	}

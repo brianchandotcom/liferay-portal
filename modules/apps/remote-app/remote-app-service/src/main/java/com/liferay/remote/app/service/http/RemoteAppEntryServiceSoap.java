@@ -69,13 +69,12 @@ public class RemoteAppEntryServiceSoap {
 
 	public static com.liferay.remote.app.model.RemoteAppEntrySoap
 			addCustomElementRemoteAppEntry(
-				String customElementCSSURLs,
+				String externalReferenceCode, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				String description, String externalReferenceCode,
-				String friendlyURLMapping, boolean instanceable,
-				String[] nameMapLanguageIds, String[] nameMapValues,
-				String portletCategoryName, String properties,
-				String sourceCodeURL)
+				String description, String friendlyURLMapping,
+				boolean instanceable, String[] nameMapLanguageIds,
+				String[] nameMapValues, String portletCategoryName,
+				String properties, String sourceCodeURL)
 		throws RemoteException {
 
 		try {
@@ -84,9 +83,9 @@ public class RemoteAppEntryServiceSoap {
 
 			com.liferay.remote.app.model.RemoteAppEntry returnValue =
 				RemoteAppEntryServiceUtil.addCustomElementRemoteAppEntry(
-					customElementCSSURLs, customElementHTMLElementName,
-					customElementURLs, description, externalReferenceCode,
-					friendlyURLMapping, instanceable, nameMap,
+					externalReferenceCode, customElementCSSURLs,
+					customElementHTMLElementName, customElementURLs,
+					description, friendlyURLMapping, instanceable, nameMap,
 					portletCategoryName, properties, sourceCodeURL);
 
 			return com.liferay.remote.app.model.RemoteAppEntrySoap.toSoapModel(

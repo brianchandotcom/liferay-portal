@@ -46,17 +46,17 @@ public class RemoteAppEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
-			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName, String customElementURLs,
-			String description, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().addCustomElementRemoteAppEntry(
-			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, description, externalReferenceCode,
+			externalReferenceCode, userId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
 			properties, sourceCodeURL);
 	}
@@ -74,17 +74,17 @@ public class RemoteAppEntryLocalServiceUtil {
 	}
 
 	public static RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
-			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName, String customElementURLs,
-			String description, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, String description,
 			String friendlyURLMapping, boolean instanceable,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().addOrUpdateCustomElementRemoteAppEntry(
-			userId, customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, description, externalReferenceCode,
+			externalReferenceCode, userId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, instanceable, nameMap, portletCategoryName,
 			properties, sourceCodeURL);
 	}

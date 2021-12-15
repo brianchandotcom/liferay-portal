@@ -225,18 +225,22 @@ public class ModulesStructureTest {
 							}
 						}
 
-						if (!liferaySpringBootDefaultsPlugin) {
+						if (!dirName.endsWith("-standalone") &&
+							!liferaySpringBootDefaultsPlugin) {
+
 							Assert.assertFalse(
 								"Forbidden " + gradlePropertiesPath,
 								Files.deleteIfExists(gradlePropertiesPath));
 						}
 
-						Path settingsGradlePath = dirPath.resolve(
-							"settings.gradle");
+						if (!dirName.endsWith("-standalone")) {
+							Path settingsGradlePath = dirPath.resolve(
+								"settings.gradle");
 
-						Assert.assertFalse(
-							"Forbidden " + settingsGradlePath,
-							Files.deleteIfExists(settingsGradlePath));
+							Assert.assertFalse(
+								"Forbidden " + settingsGradlePath,
+								Files.deleteIfExists(settingsGradlePath));
+						}
 
 						if (Files.exists(dirPath.resolve("app.bnd"))) {
 							_testEquals(buildGradlePath, _APP_BUILD_GRADLE);
@@ -974,9 +978,11 @@ public class ModulesStructureTest {
 			return false;
 		}
 
+		String dirName = String.valueOf(dirPath.getFileName());
 		String name = gradleDependency.getModuleName();
 
-		if (name.equals("com.liferay.ant.bnd") ||
+		if (dirName.endsWith("-standalone") ||
+			name.equals("com.liferay.ant.bnd") ||
 			name.equals("com.liferay.arquillian.extension.junit.bridge") ||
 			name.equals("com.liferay.gradle.plugins.defaults") ||
 			name.equals("com.liferay.portal.cache.test.util") ||

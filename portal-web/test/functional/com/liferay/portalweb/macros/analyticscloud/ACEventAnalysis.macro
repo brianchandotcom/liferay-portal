@@ -108,6 +108,12 @@ definition {
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 
+	macro removeFromAnalysis {
+		var key_removeValue = "${removeValue}";
+
+		Click(locator1 = "ACEventAnalysis#REMOVE_BUTTON");
+	}
+
 	macro clickToAddFilterButton {
 		var key_sectionType = "filter";
 

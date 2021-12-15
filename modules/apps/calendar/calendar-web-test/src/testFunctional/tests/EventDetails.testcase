@@ -679,12 +679,22 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is Any when the user Maybe attend the event"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EventStatusIsAnyWhenUserMaybeAttend {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71907 EventStatusIsAnyWhenUserMaybeAttend pending implementation
+        CalendarEvent.add(
+            eventTitle = "Calendar Event Title",
+            eventType = "Regular",
+            pageName = "Calendar Page");
 
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+        CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+        CalendarEvent.clickMaybeButton();
+
+        CalendarEvent.viewStatusViaDetails(status = "ANY");
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is -Approved- when the Calendar has no workflow assigned"

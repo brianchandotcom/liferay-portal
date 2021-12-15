@@ -542,6 +542,12 @@ definition {
 		AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON");
 	}
 
+	macro clickMaybeButton {
+        AssertClick(
+            locator1 = "CalendarViewEventDetails#MAYBE_BUTTON",
+            value1 = "Maybe");
+    }
+
 	macro clickPublish {
 		AssertClick(
 			locator1 = "Button#SUBMIT",

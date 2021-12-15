@@ -21,14 +21,14 @@ const Subscriptions = ({accountKey}) => {
 		return subscriptionName.toLowerCase().replace(' ', '-');
 	};
 
-	const mountQueryString = (acc, cv, index, array) => {
-		if (index === array.length - 1) {
-			return acc + ` subscriptionStatus eq '${cv}'`;
+	const getAccountSubscriptionFilterQueryString = (previousValue, currentValue, currentIndex, array) => {
+		if (currentIndex === array.length - 1) {
+			return previousValue + ` subscriptionStatus eq '${currentValue}'`;
 		}
 
 		return (
-			acc +
-			` subscriptionStatus eq '${cv}' or accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
+			previousValue +
+			` subscriptionStatus eq '${currentValue}' or accountSubscriptionGroupERC eq '${accountKey}_${parseAccountSubscriptionGroupERC(
 				selectedSubscriptionGroup
 			)}' and`
 		);
@@ -44,7 +44,7 @@ const Subscriptions = ({accountKey}) => {
 			)}'${
 				selectedStatus.length === POSSIBLE_STATUS_AMOUNT
 					? ''
-					: `${selectedStatus.reduce(mountQueryString, ' and')}`
+					: `${selectedStatus.reduce(getAccountSubscriptionFilterQueryString, ' and')}`
 			}`,
 		},
 	});

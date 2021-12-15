@@ -75,6 +75,56 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+    @description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10205 | Test Summary: Change data type to Boolean"
+	@priority = "4"
+	test CanChangeDataTypeToBoolean {
+        var attributeName = "animal";
+		var attributeValue = "dog";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributeName}",
+				attributesValue = "${attributeValue}",
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+		}
+
+        task ("Change the type of the attribute to boolean") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+            ACEventAnalysis.changeAttributeDataType(
+                editOption = "Description",
+                attributeName = "${attributeName}",
+                newDataType = "Boolean");
+		}
+
+        task ("Check if the type has been changed") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+
+            ACEventAnalysis.viewChangedAttributeDataType(
+                attributeName = "${attributeName}",
+                newDataType = "BOOLEAN");
+		}
+	}
+
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10200 | Test Summary: Change data type from description"
 	@priority = "5"
 	test CanChangeDataTypeFromDescription {

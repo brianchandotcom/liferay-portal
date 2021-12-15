@@ -716,12 +716,33 @@ definition {
 	}
 
 	@description = "LRQA-71888 - Verify that the event status is -Pending- when the Calendar has the Single Approver assigned"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test EventStatusIsPendingWhenWorkflowIsAssigned {
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
-		// TODO LRQA-71902 EventStatusIsPendingWhenWorkflowIsAssigned pending implementation
+        Workflow.configureWorkflow(
+            workflowDefinition = "Single Approver",
+            workflowResourceValue = "Calendar Event");
 
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+        CalendarNavigator.gotoAddEvent();
+
+        CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+        CalendarEvent.setDatesToday();
+
+        CalendarEvent.setTimes(
+            endDateTime = "08:00 PM",
+            startDateTime = "07:00 PM");
+
+        Button.clickSubmitForPublication();
+
+        Navigator.gotoPage(pageName = "Calendar Page");
+
+        CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+        CalendarEvent.viewStatusViaDetails(status = "PENDING");
 	}
 
 	@description = "LRQA-71888 - Verify that the buttons Maybe and Decline are displayed"

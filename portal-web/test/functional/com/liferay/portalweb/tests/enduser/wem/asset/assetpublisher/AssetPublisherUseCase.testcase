@@ -1423,7 +1423,9 @@ definition {
 				assetContent = "Web Content Content",
 				assetTitle = "Web Content Title");
 
-			AssertElementNotPresent(locator1 = "AP#ASSET_DETAILS_LINK");
+			AssertElementNotPresent(
+				key_assetTitle = "Web Content Title",
+				locator1 = "AP#ASSET_DETAILS_LINK");
 
 			Click(locator1 = "APAsset#ASSET_BACK_TO_ICON");
 		}
@@ -1444,7 +1446,9 @@ definition {
 				assetTitle = "Web Content Title",
 				displayTemplate = "Full Content");
 
-			AssertElementNotPresent(locator1 = "AP#ASSET_DETAILS_LINK");
+			AssertElementNotPresent(
+				key_assetTitle = "Web Content Title",
+				locator1 = "AP#ASSET_DETAILS_LINK");
 		}
 	}
 

@@ -56,6 +56,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VANILLA_COUNTER_PAGE_COLUMN_1</td>
+	<td>//div[contains(@id,'main-content')]//div[contains(@class, 'col')][1]//vanilla-counter</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VANILLA_COUNTER_PAGE_COLUMN_2</td>
+	<td>//div[contains(@id,'main-content')]//div[contains(@class, 'col')][2]//vanilla-counter</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VANILLA_COUNTER_REMOTE_APP</td>
 	<td>//vanilla-counter</td>
 	<td></td>

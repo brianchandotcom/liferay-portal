@@ -129,6 +129,70 @@ definition {
 		}
 	}
 
+	@description = "Verify that remote app of type Custom Element can be instanceable in a Content Page"
+	@priority = "3"
+	test CustomElementCanBeInstanceable {
+		property portal.acceptance = "true";
+
+		task ("Add a public page with JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+		}
+
+		task ("Create Vanilla Counter as a Custom Element") {
+			JSONRemoteApp.addCustomElementRemoteAppEntry(
+				customElementHTMLName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		}
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add Vanilla Counter in each module") {
+			for (var n : list "1,2") {
+				PageEditor.addElementToColumn(
+					columnNumber = "${n}",
+					navTab = "Widgets",
+					portletName = "Vanilla Counter");
+
+				AssertElementPresent(
+					key_columnNumber = "${n}",
+					key_position = "1",
+					locator1 = "PageEditor#GRID_COLUMN");
+			}
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert Vanilla Counter is instanceable") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_1");
+
+			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_2");
+		}
+	}
+
 	@description = "Verify an iframe remote app can be created"
 	@priority = "5"
 	test IFrameCanBeCreated {

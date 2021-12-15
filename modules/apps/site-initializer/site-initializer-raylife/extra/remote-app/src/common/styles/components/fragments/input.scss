@@ -72,15 +72,14 @@ input.form-control {
 }
 
 input.form-control.search {
-	min-height: 3.5rem;	
+	min-height: 3.5rem;
 
-	&::placeholder  {
-		color: var(--text-neutral-7) ;
+	&::placeholder {
+		color: var(--text-neutral-7);
 		font-size: 1.313rem;
 		font-weight: 700;
 	}
 }
-
 
 .input-area.zip,
 .input-area.zip > input,

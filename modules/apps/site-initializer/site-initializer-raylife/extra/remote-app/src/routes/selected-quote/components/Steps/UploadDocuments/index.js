@@ -157,7 +157,8 @@ const UploadDocuments = () => {
 					);
 
 					setFilePropertyValue(fileEntry.id, 'documentId', data.id);
-				} catch (error) {
+				}
+				catch (error) {
 					console.error(error);
 				}
 			}

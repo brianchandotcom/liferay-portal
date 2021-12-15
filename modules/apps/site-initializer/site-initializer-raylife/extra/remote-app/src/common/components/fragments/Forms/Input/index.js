@@ -5,9 +5,20 @@ import {InputAreaWithError} from '../InputArea/WithError';
 import {Label} from '../Label';
 
 export const Input = React.forwardRef(
-	({className, error, label, name, renderActions, required = false, ...props}, ref) => {
+	(
+		{
+			className,
+			error,
+			label,
+			name,
+			renderActions,
+			required = false,
+			...props
+		},
+		ref
+	) => {
 		return (
-			<InputAreaWithError className={className} error={error} >
+			<InputAreaWithError className={className} error={error}>
 				{label && (
 					<Label label={label} name={name} required={required}>
 						{renderActions}

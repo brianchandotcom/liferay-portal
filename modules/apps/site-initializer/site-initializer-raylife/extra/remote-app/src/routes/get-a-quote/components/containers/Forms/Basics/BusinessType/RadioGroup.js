@@ -39,7 +39,8 @@ export function BusinessTypeRadioGroup({
 				'basics.properties.segment',
 				categoryProperties.find(({key}) => key === 'Segment')?.value
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			console.warn(error);
 		}
 	};

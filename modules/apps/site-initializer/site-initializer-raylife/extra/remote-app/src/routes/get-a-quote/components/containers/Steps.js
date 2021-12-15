@@ -1,7 +1,10 @@
 import React from 'react';
 import {StepItem} from '../../../../common/components/fragments/Step/Item';
 import {StepList} from '../../../../common/components/fragments/Step/List';
-import {STORAGE_KEYS, Storage} from '../../../../common/services/liferay/storage';
+import {
+	STORAGE_KEYS,
+	Storage,
+} from '../../../../common/services/liferay/storage';
 import {useStepWizard} from '../../hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '../../utils/constants';
 

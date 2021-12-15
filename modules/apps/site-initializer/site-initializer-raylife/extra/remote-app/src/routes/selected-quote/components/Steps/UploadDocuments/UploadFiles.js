@@ -19,7 +19,8 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 			const filteredFiles = files.filter((file) => file.id !== id);
 
 			setFiles(filteredFiles);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};

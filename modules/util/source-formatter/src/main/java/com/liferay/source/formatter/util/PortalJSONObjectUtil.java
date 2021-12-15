@@ -116,11 +116,15 @@ public class PortalJSONObjectUtil {
 			if (normalizedFileName.endsWith(".dtd")) {
 				xmlDefinitionsJSONObject = _addXMLdefinition(
 					xmlDefinitionsJSONObject, normalizedFileName);
+
+				continue;
 			}
 
 			if (normalizedFileName.endsWith(".tld")) {
 				taglibsJSONObject = _addTaglib(
 					taglibsJSONObject, normalizedFileName);
+
+				continue;
 			}
 
 			if (!normalizedFileName.contains("/com/liferay/")) {

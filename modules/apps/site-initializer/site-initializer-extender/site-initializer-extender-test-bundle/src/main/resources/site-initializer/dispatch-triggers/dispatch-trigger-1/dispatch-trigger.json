@@ -2,7 +2,7 @@
 	"active": true,
 	"dispatchTaskClusterMode": 0,
 	"dispatchTaskExecutorType": "talend",
-	"name": "Test Job Scheduler",
+	"name": "Test Dispatch Trigger",
 	"neverEnd": false,
 	"overlapAllowed": false,
 	"properties": {

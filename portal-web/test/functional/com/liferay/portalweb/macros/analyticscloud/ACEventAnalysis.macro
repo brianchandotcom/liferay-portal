@@ -50,4 +50,21 @@ definition {
 		}
 	}
 
+	macro addEventToAnalysis {
+		var key_buttonName = "${customEventName}";
+
+		ACEventAnalysis.clickToAddEventButton();
+
+		ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+		}
+
+		Click(locator1 = "ACUtils#GENERIC_BUTTON");
+	}
 }

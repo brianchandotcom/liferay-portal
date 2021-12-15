@@ -110,7 +110,11 @@ const handleSectionAdded = (props, state, event) => {
 	else if (existingField.type === FIELD_TYPE_FIELDSET) {
 		newPages = addFieldToPage({
 			...props,
-			indexes,
+			indexes: {
+				columnIndex: 0,
+				pageIndex: 0,
+				rowIndex: existingField.rows.length,
+			},
 			newField,
 			pages,
 			parentFieldName: existingField.fieldName,

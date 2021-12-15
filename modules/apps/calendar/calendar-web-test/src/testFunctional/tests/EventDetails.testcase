@@ -98,16 +98,16 @@ definition {
 	test CanEditEventViaScheduler {
 		CalendarNavigator.gotoAddEvent();
 
-        CalendarEvent.add(
-            eventTitle = "Calendar Event Title",
-            eventType = "Regular",
-            pageName = "Calendar Page");
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		CalendarScheduler.changeNameTitleAndCalendarRecorder(  
-            eventTitle = "Calendar Event Title Edited",
-            calendarRecorder = "Test Test");
+		CalendarScheduler.changeNameTitleAndCalendarRecorder(
+			calendarRecorder = "Test Test",
+			eventTitle = "Calendar Event Title Edited");
 
 		CalendarScheduler.saveEvent();
 
@@ -116,8 +116,6 @@ definition {
 		CalendarScheduler.viewNameCalendarAndUser(
 			eventTitle = "Calendar Event Title Edited",
 			usersName = "Test Test");
-			
-
 	}
 
 	@description = "LRQA-71888 - Verify that the user can rate a event"

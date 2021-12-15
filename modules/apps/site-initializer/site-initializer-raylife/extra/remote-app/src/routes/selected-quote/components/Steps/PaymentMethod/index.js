@@ -129,9 +129,9 @@ const PaymentMethod = () => {
 	const checkedMethod = methods.find(({checked}) => checked);
 
 	return (
-		<div className="c-mb-4 c-mt-5">
+		<div className="c-mb-4 c-mt-5 ml-6">
 			<div className="c-mb-3 c-mt-5 d-flex flex-column">
-				<h3 className="mb-3">Payment Method</h3>
+				<h5 className="mb-3">Payment Method</h5>
 
 				{methods.map((method, index) => (
 					<div
@@ -163,7 +163,7 @@ const PaymentMethod = () => {
 			<div className="c-mb-5 d-flex flex-column">
 				{checkedMethod && (
 					<>
-						<h3 className="c-mb-3">Billing Options</h3>
+						<h5 className="c-mb-3">Billing Options</h5>
 
 						{checkedMethod.options.length ? (
 							<>

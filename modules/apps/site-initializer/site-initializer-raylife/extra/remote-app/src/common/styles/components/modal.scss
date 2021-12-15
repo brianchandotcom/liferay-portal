@@ -5,16 +5,16 @@
 		top: 0;
 		z-index: 1;
 
-		.modal-content {
+		.modal-content-body {
 			bottom: 0;
 			left: 0;
 			right: 0;
 			top: 0;
 
-			.modal-header {
+			.modal-head {
 				line-height: 20px;
 
-				.close {
+				.close-modal {
 					svg {
 						fill: $color-action-neutral-default;
 						height: 11px !important;
@@ -22,8 +22,8 @@
 					}
 				}
 
-				.close:hover,
-				.close:focus {
+				.close-modal:hover,
+				.close-modal:focus {
 					color: $color-neutral-black;
 					cursor: pointer;
 				}

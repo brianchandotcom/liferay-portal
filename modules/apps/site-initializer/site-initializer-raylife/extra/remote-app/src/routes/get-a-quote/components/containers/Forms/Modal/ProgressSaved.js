@@ -56,7 +56,7 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 			onClose={onClose}
 			show={show}
 		>
-			<div className="align-items-center d-flex flex-column justify-content-between mb-9 mt-4 progress-saved-content">
+			<div className="align-items-center d-flex flex-column justify-content-between mb-9 mt-5 progress-saved-content">
 				<div className="align-items-center d-flex flex-column progress-saved-body">
 					<div className="align-items-center bg-success d-flex flex-shrink-0 justify-content-center progress-saved-icon rounded-circle">
 						<ClayIcon symbol="check" />

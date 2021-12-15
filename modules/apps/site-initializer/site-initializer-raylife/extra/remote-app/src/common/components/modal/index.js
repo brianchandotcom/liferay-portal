@@ -48,10 +48,10 @@ const Modal = ({
 			id={MODAL_BACKGROUND_ID}
 		>
 			<div
-				className={`bg-neutral-0 rounded m-auto p-3 position-absolute modal-content modal-${modalSize} px-3 py-4`}
+				className={`bg-neutral-0 rounded m-auto position-absolute modal-content-body modal-${modalSize} px-3 pt-3`}
 			>
-				<div className="align-items-center border-bottom-0 d-flex justify-content-flex-end modal-header p-0">
-					<div className="close" onClick={onClose}>
+				<div className="align-items-center border-bottom-0 d-flex justify-content-end p-0">
+					<div className="close-modal" onClick={onClose}>
 						<ClayIcon symbol="times" />
 					</div>
 				</div>

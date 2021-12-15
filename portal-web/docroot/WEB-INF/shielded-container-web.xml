@@ -101,11 +101,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Display Chart</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.DisplayChartServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.webserver.DynamicResourceServlet</servlet-class>
 		<async-supported>true</async-supported>
@@ -253,10 +248,6 @@
 	<servlet-mapping>
 		<servlet-name>Combo Servlet</servlet-name>
 		<url-pattern>/combo/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Display Chart</servlet-name>
-		<url-pattern>/display_chart/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>

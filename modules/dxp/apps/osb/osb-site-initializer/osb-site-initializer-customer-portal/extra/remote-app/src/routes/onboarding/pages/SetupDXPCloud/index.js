@@ -27,7 +27,6 @@ const SetupDXPCloud = () => {
 	const {data} = useQuery(getSetupDXPCloudInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
-			koroneikiAccountsFilter: `accountKey eq '${project.accountKey}'`,
 		},
 	});
 
@@ -43,12 +42,10 @@ const SetupDXPCloud = () => {
 	);
 
 	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
-	const projectBrief = data?.c?.koroneikiAccounts?.items?.map(
-		({code, dxpVersion}) => ({
-			code,
-			dxpVersion,
-		})
-	)[0];
+	const projectBrief = {
+		code: project.code,
+		dxpVersion: project.dxpVersion,
+	};
 
 	useEffect(() => {
 		if (dXPCDataCenterRegions.length) {

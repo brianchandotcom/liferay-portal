@@ -1,10 +1,7 @@
 import {gql} from '@apollo/client';
 
 export const getSetupDXPCloudInfo = gql`
-	query getSetupDXPCloudInfo(
-		$accountSubscriptionsFilter: String
-		$koroneikiAccountsFilter: String
-	) {
+	query getSetupDXPCloudInfo($accountSubscriptionsFilter: String) {
 		c {
 			accountSubscriptions(filter: $accountSubscriptionsFilter) {
 				items {
@@ -18,21 +15,6 @@ export const getSetupDXPCloudInfo = gql`
 					dxpcDataCenterRegionId
 					name
 					value
-				}
-			}
-			koroneikiAccounts(filter: $koroneikiAccountsFilter) {
-				items {
-					accountKey
-					code
-					dxpVersion
-					liferayContactEmailAddress
-					liferayContactName
-					liferayContactRole
-					region
-					slaCurrent
-					slaCurrentEndDate
-					slaExpired
-					slaFuture
 				}
 			}
 		}
@@ -209,6 +191,8 @@ export const getKoroneikiAccounts = gql`
 					accountKey
 					code
 					dxpVersion
+					partner
+					maxRequestors
 					liferayContactEmailAddress
 					liferayContactName
 					liferayContactRole

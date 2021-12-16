@@ -255,7 +255,7 @@ public class DXPCloudClientTestrayImporter {
 			String content = JenkinsResultsParserUtil.read(
 				new File(
 					_projectDir,
-					"build/test-results/runPoshi" +
+					"test-results" +
 						"/TEST-com.liferay.poshi.runner.PoshiRunner.xml"));
 
 			int x = content.indexOf("<system-out>");

@@ -1,5 +1,18 @@
 definition {
 
+	macro addCustomElementRemoteAppAllFields {
+		Variables.assertDefined(parameterList = "${customElementCSSURL},${customElementHTMLName},${customElementName},${customElementProperties},${customElementURL}");
+
+		var response = JSONRemoteAppAPI._addCustomElementRemoteAppAllFields(
+			customElementCSSURL = "${customElementCSSURL}",
+			customElementHTMLName = "${customElementHTMLName}",
+			customElementName = "${customElementName}",
+			customElementProperties = "${customElementProperties}",
+			customElementURL = "${customElementURL}");
+
+		return "{response}";
+	}
+
 	macro addCustomElementRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHTMLName},${customElementURL}");
 

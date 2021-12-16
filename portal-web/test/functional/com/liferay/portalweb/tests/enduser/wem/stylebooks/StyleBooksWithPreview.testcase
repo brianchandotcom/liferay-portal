@@ -142,6 +142,298 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all display page templates."
+	@priority = "5"
+	test PreviewStyleBookOnDisplayPageTemplates {
+		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
+		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+
+		task ("Add a Heading fragment to the first display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT 1",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT 1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to Heading fragment then publish") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment to the second display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT 2",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT 2");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Display Page URL field to a Heading fragment then publish") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Display Page URL",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment to a display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Blogs Entry DPT",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Content field to a Heading fragment then publish") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment to a display page template for Document and Basic Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Document DPT",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Author Name field to a Heading fragment then publish") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Author Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Category DPT",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Name field to a Heading fragment then publish") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("View the Display Page Templates is shown in preview type selector") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			StyleBooks.viewCurrentPreviewType(previewType = "Display Page Templates");
+		}
+
+		task ("View the display page template for Category is shown in preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Category DPT");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			StyleBooks.selectForm(formName = "General");
+
+			StyleBooks.expandSection(sectionName = "Body");
+
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#227777");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the display page template for Category") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(34, 119, 119, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Change the preview item to display page template for Document and Basic Document") {
+			StyleBooks.selectPreviewItem(previewItem = "Document DPT");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#556622");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the display page template for Document and Basic Document") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(85, 102, 34, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Change the preview item to display page template for Blogs Entry") {
+			StyleBooks.selectPreviewItem(previewItem = "Blogs Entry DPT");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#995511");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the display page template for Blogs Entry") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(153, 85, 17, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Change the preview item to the second display page template for Web Content Article and Basic Web Content") {
+			StyleBooks.selectPreviewItem(previewItem = "Web Content DPT 2");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#666666");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the second display page template for Web Content Article and Basic Web Content") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(102, 102, 102, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("View the Showing 4 of 5 Items shown in dropdown menu of preview item selector then change the preview item to the first display page template") {
+			StyleBooks.selectPreviewItem(
+				caption = "Showing 4 of 5 Items",
+				previewItem = "Web Content DPT 1");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#005566");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the first display page template for Web Content Article and Basic Web Content") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(0, 85, 102, 1)");
+
+			SelectFrameTop();
+		}
+	}
+
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on master page."
 	@priority = "5"
 	test PreviewStyleBookOnMasterPage {

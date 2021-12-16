@@ -19,8 +19,13 @@ package com.liferay.source.formatter.util;
  */
 public class LegacyProperty {
 
-	public LegacyProperty(String name, String variableName) {
-		_name = name;
+	public LegacyProperty(
+		String legacyPropertyName, String moduleName, String newPropertyName,
+		String variableName) {
+
+		_legacyPropertyName = legacyPropertyName;
+		_moduleName = moduleName;
+		_newPropertyName = newPropertyName;
 		_variableName = variableName;
 
 		if (variableName.startsWith("_MIGRATED")) {
@@ -48,12 +53,20 @@ public class LegacyProperty {
 		return _legacyPropertyAction;
 	}
 
+	public String getLegacyPropertyName() {
+		return _legacyPropertyName;
+	}
+
 	public LegacyPropertyType getLegacyPropertyType() {
 		return _legacyPropertyType;
 	}
 
-	public String getName() {
-		return _name;
+	public String getModuleName() {
+		return _moduleName;
+	}
+
+	public String getNewPropertyName() {
+		return _newPropertyName;
 	}
 
 	public String getVariableName() {
@@ -61,8 +74,10 @@ public class LegacyProperty {
 	}
 
 	private final LegacyPropertyAction _legacyPropertyAction;
+	private final String _legacyPropertyName;
 	private final LegacyPropertyType _legacyPropertyType;
-	private final String _name;
+	private final String _moduleName;
+	private final String _newPropertyName;
 	private final String _variableName;
 
 }

@@ -65,7 +65,8 @@ public class PropertiesVerifyPropertiesCheck extends BaseFileCheck {
 			absolutePath);
 
 		for (LegacyProperty legacyProperty : legacyProperties) {
-			if (!properties.containsKey(legacyProperty.getName()) ||
+			if (!properties.containsKey(
+					legacyProperty.getLegacyPropertyName()) ||
 				!legacyPropertyType.equals(
 					legacyProperty.getLegacyPropertyType())) {
 
@@ -76,7 +77,7 @@ public class PropertiesVerifyPropertiesCheck extends BaseFileCheck {
 
 			sb.append(legacyPropertyType.getValue());
 			sb.append(" property '");
-			sb.append(legacyProperty.getName());
+			sb.append(legacyProperty.getLegacyPropertyName());
 
 			LegacyPropertyAction legacyActionType =
 				legacyProperty.getLegacyPropertyAction();

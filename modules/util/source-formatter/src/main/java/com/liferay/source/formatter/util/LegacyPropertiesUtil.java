@@ -95,6 +95,12 @@ public class LegacyPropertiesUtil {
 
 		String variableName = identDetailAST.getText();
 
+		if (!variableName.contains("_PORTAL_") &&
+			!variableName.contains("_SYSTEM_")) {
+
+			return legacyProperties;
+		}
+
 		List<DetailAST> arrayValueDetailASTList = _getArrayValueDetailASTList(
 			firstChildDetailAST);
 
@@ -122,11 +128,26 @@ public class LegacyPropertiesUtil {
 			return legacyProperties;
 		}
 
-		String name = _getStringValue(detailASTList.get(0));
+		String legacyPropertyName = _getStringValue(detailASTList.get(0));
 
-		if (name != null) {
-			legacyProperties.add(new LegacyProperty(name, variableName));
+		if (legacyPropertyName == null) {
+			return legacyProperties;
 		}
+
+		String moduleName = null;
+		String newPropertyName = null;
+
+		if (detailASTList.size() > 1) {
+			newPropertyName = _getStringValue(detailASTList.get(1));
+
+			if (detailASTList.size() > 2) {
+				moduleName = _getStringValue(detailASTList.get(2));
+			}
+		}
+
+		legacyProperties.add(
+			new LegacyProperty(
+				legacyPropertyName, moduleName, newPropertyName, variableName));
 
 		return legacyProperties;
 	}

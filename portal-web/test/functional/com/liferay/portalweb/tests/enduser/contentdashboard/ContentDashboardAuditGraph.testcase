@@ -46,6 +46,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-120676 When there are filters already applied and the user clicks in a bar, the new filters corresponding to the categories in that bar are applied, they are shown as filter labels in the management tool bar and the list of contents is filtered by them"
+	@ignore = "true"
+	@priority = "3"
+	test AuditGraphApplySecondFilter {
+
+		// TODO LPS-144034 AuditGraphApplySecondFilter pending implementation
+		
+	}
+
 	@description = "When a user clicks on one of the colored bars of the audit graph, the filters corresponding to the categories in that bar are applied, they are shown as filter labels in the management tool bar and the list of contents is filtered by them"
 	@priority = "5"
 	test AuditGraphClickOnBar {
@@ -227,6 +236,15 @@ definition {
 			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
 		AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
+	}
+
+	@description = "LPS-120676 When a user clicks on a gray bar of the audit graph, the filter corresponding to the category in that bar is applied, it is shown as a filter label in the management tool bar and the list of contents is filtered by it"
+	@ignore = "true"
+	@priority = "3"
+	test AuditGraphFilterByGrayBar {
+
+		// TODO LPS-144034 AuditGraphFilterByGrayBar pending implementation
+
 	}
 
 	@description = "When the user clicks on the Flip axes button, the vocabularies will be exchanged, the vocabulary represented in the X (the first in the list in the "In use" box) is sent to the Y, and the other way around"

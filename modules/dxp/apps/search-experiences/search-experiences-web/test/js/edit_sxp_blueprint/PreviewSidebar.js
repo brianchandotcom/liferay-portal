@@ -26,14 +26,15 @@ jest.mock(
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 
-const SEARCH_RESULTS = mockSearchResults().response.hits.hits;
+const SEARCH_RESULTS = mockSearchResults();
+
+const SEARCH_RESULTS_HITS = JSON.parse(SEARCH_RESULTS.responseString).hits.hits;
 
 function renderPreviewSidebar(props) {
 	return render(
 		<PreviewSidebar
 			loading={false}
 			onFetchResults={jest.fn()}
-			results={mockSearchResults()}
 			visible={true}
 			{...props}
 		/>
@@ -50,10 +51,7 @@ describe('PreviewSidebar', () => {
 	});
 
 	it('renders the introduction', () => {
-		const {getByText} = renderPreviewSidebar({
-			loading: false,
-			results: {},
-		});
+		const {getByText} = renderPreviewSidebar();
 
 		getByText('perform-a-search-to-preview-your-blueprints-search-results');
 	});
@@ -61,27 +59,34 @@ describe('PreviewSidebar', () => {
 	it('renders the loading icon', () => {
 		const {container} = renderPreviewSidebar({
 			loading: true,
-			results: {},
+			responseString: SEARCH_RESULTS.responseString,
+			totalHits: SEARCH_RESULTS.totalHits,
 		});
 
 		container.querySelector('.loading-animation');
 	});
 
 	it('renders the titles for the search results', () => {
-		const {getByText} = renderPreviewSidebar();
+		const {getByText} = renderPreviewSidebar({
+			responseString: SEARCH_RESULTS.responseString,
+			totalHits: SEARCH_RESULTS.totalHits,
+		});
 
-		SEARCH_RESULTS.map((result) => {
+		SEARCH_RESULTS_HITS.map((result) => {
 			getByText(result.fields.title_en_US[0]);
 		});
 	});
 
 	it('expands the result when clicked on', () => {
-		const {getAllByLabelText, queryAllByText} = renderPreviewSidebar();
+		const {getAllByLabelText, queryAllByText} = renderPreviewSidebar({
+			responseString: SEARCH_RESULTS.responseString,
+			totalHits: SEARCH_RESULTS.totalHits,
+		});
 
 		fireEvent.click(getAllByLabelText('expand')[0]);
 
-		Object.keys(SEARCH_RESULTS[0].fields).map((key) => {
-			queryAllByText(`${SEARCH_RESULTS[0].fields[key][0]}`);
+		Object.keys(SEARCH_RESULTS_HITS[0].fields).map((key) => {
+			queryAllByText(`${SEARCH_RESULTS_HITS[0].fields[key][0]}`);
 		});
 	});
 
@@ -98,10 +103,8 @@ describe('PreviewSidebar', () => {
 		];
 
 		const {getByText} = renderPreviewSidebar({
+			errors,
 			loading: false,
-			results: {
-				errors,
-			},
 		});
 
 		errors.map((error) => getByText(error.msg));

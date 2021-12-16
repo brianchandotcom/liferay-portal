@@ -698,12 +698,15 @@ function EditSXPBlueprintForm({
 			</PageToolbar>
 
 			<PreviewSidebar
+				errors={previewInfo.results.errors}
 				loading={previewInfo.loading}
 				onFetchResults={_handleFetchPreviewSearch}
 				onFocusSXPElement={_handleFocusSXPElement}
 				onToggle={setShowPreview}
-				results={previewInfo.results}
+				responseString={previewInfo.results.responseString}
+				totalHits={previewInfo.results.totalHits}
 				visible={showPreview}
+				warnings={previewInfo.results.warnings}
 			/>
 
 			<div

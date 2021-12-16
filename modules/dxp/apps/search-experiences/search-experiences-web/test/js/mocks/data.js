@@ -189,9 +189,8 @@ export function mockSearchResults(itemsPerPage = 10) {
 	return {
 		page: 0,
 		pageSize: itemsPerPage,
-		request: {},
 		requestString: '',
-		response: {
+		responseString: JSON.stringify({
 			hits: {
 				hits,
 				total: {
@@ -199,8 +198,7 @@ export function mockSearchResults(itemsPerPage = 10) {
 				},
 			},
 			timed_out: false,
-		},
-		responseString: '',
+		}),
 		totalHits: 1000,
 	};
 }

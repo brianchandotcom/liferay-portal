@@ -11,35 +11,31 @@
 			right: 0;
 			top: 0;
 
-			.modal-head {
-				line-height: 20px;
-
-				.close-modal {
-					svg {
-						fill: $color-action-neutral-default;
-						height: 11px !important;
-						width: 11px !important;
-					}
-				}
-
-				.close-modal:hover,
-				.close-modal:focus {
-					color: $color-neutral-black;
-					cursor: pointer;
+			.close-modal {
+				svg {
+					fill: $color-action-neutral-default;
+					height: 11px !important;
+					width: 11px !important;
 				}
 			}
 
-			&.modal-sm {
+			.close-modal:hover,
+			.close-modal:focus {
+				color: $color-neutral-black;
+				cursor: pointer;
+			}
+
+			&.modal-small {
 				height: 292px;
 				width: 500px;
 			}
 
-			&.modal-md {
+			&.modal-medium {
 				height: 392px;
 				width: 600px;
 			}
 
-			&.modal-lg {
+			&.modal-large {
 				height: 492px;
 				width: 700px;
 			}

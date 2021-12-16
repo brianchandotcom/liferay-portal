@@ -9,7 +9,7 @@ const Modal = ({
 	children,
 	footer,
 	onClose = () => {},
-	modalSize = 'md',
+	modalSize = 'medium',
 	show,
 }) => {
 	useImperativeDisableScroll({disabled: show, element: document.body});
@@ -48,7 +48,7 @@ const Modal = ({
 			id={MODAL_BACKGROUND_ID}
 		>
 			<div
-				className={`bg-neutral-0 rounded m-auto position-absolute modal-content-body modal-${modalSize} px-3 pt-3`}
+				className={`bg-neutral-0 rounded m-auto position-absolute modal-content-body modal-${modalSize} px-3 pt-3 pb-4 d-flex flex-column align-items-stretch`}
 			>
 				<div className="align-items-center border-bottom-0 d-flex justify-content-end p-0">
 					<div className="close-modal" onClick={onClose}>

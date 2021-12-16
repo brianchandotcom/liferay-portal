@@ -28,8 +28,7 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 			clearExitAlert();
 
 			window.location.href = liferaySiteName;
-		}
-		catch (error) {
+		} catch (error) {
 			setError('Unable to save your information. Please try again.');
 			onClose();
 		}
@@ -38,7 +37,7 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 	return (
 		<Modal
 			footer={
-				<div className="align-items-center d-flex flex-row justify-content-between ml-2 mr-1">
+				<div className="align-items-center d-flex flex-row justify-content-between ml-2 mr-1 mt-auto">
 					<button
 						className="btn btn-link link text-link-md text-neutral-7 text-small-caps"
 						onClick={onClose}
@@ -47,7 +46,7 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 					</button>
 
 					<button
-						className="btn btn-primary text-link-md text-small-caps"
+						className="btn btn-primary rounded text-link-md text-small-caps"
 						onClick={onSendLinkAndExit}
 					>
 						Send Link &amp; Exit
@@ -57,8 +56,8 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 			onClose={onClose}
 			show={show}
 		>
-			<div className="align-items-center d-flex flex-column justify-content-between mb-9 mt-5 progress-saved-content">
-				<div className="align-items-center d-flex flex-column progress-saved-body">
+			<div className="align-items-center d-flex flex-column justify-content-between mt-5 progress-saved-content">
+				<div className="align-items-center d-flex flex-column progress-saved-body w-100">
 					<div className="align-items-center bg-success d-flex flex-shrink-0 justify-content-center progress-saved-icon rounded-circle">
 						<ClayIcon symbol="check" />
 					</div>
@@ -68,9 +67,14 @@ const ProgressSaved = ({email, onClose, setError, show}) => {
 					</h2>
 
 					<div className="font-weight-normal pt-1 text-center text-neutral-8 text-paragraph">
-						We will send a link to
-						<b>{` ${email}`}</b>. <br />
-						Use the link to pick up where you left off at any time.
+						<p>
+							We will send a link to&nbsp;<b>{email}</b>.
+						</p>
+
+						<p>
+							Use the link to pick up where you left off at any
+							time.
+						</p>
 					</div>
 				</div>
 			</div>

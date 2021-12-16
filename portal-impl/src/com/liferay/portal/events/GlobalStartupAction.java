@@ -14,13 +14,11 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -121,13 +119,6 @@ public class GlobalStartupAction extends SimpleAction {
 		// Authentication
 
 		AuthPublicPathRegistry.register(PropsValues.AUTH_PUBLIC_PATHS);
-
-		// Javadoc
-
-		Thread currentThread = Thread.currentThread();
-
-		JavadocManagerUtil.load(
-			StringPool.BLANK, currentThread.getContextClassLoader());
 
 		// JSON web service
 

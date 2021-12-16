@@ -1231,9 +1231,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_ENABLED));
 
-	public static final boolean JAVADOC_MANAGER_ENABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.JAVADOC_MANAGER_ENABLED));
-
 	public static final boolean JAVASCRIPT_BAREBONE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JAVASCRIPT_BAREBONE_ENABLED));

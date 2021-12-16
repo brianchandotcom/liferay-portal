@@ -1473,9 +1473,6 @@ public interface PropsKeys {
 	public static final String INVOKER_FILTER_URI_MAX_LENGTH =
 		"invoker.filter.uri.max.length";
 
-	public static final String JAVADOC_MANAGER_ENABLED =
-		"javadoc.manager.enabled";
-
 	public static final String JAVASCRIPT_BAREBONE_ENABLED =
 		"javascript.barebone.enabled";
 

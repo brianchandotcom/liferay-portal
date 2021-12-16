@@ -897,12 +897,6 @@ definition {
 	@description = "This is a test for LPS-136832. It checks that a guest can access an image in a folder through the URL when he has permissions."
 	@priority = "3"
 	test GuestWithAccessToFolderCanAccessImageThroughURL {
-		var portalURL = PropsUtil.get("portal.url");
-
-		var siteID = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -917,10 +911,6 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
-
-		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-			groupName = "Guest",
-			name = "DM Folder Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -959,9 +949,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "${dmDocumentURL}");
 
-		var key_imageSourceURL = "${portalURL}/documents/${siteID}/${folderId}/Document_1";
-
-		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+		AssertVisible(
+			key_imageSourceURL = "Document_1",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This test covers LPS-106905. It ensures that a site admin user is able to select an image from the global site in WCD."

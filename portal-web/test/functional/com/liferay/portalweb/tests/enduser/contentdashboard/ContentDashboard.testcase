@@ -1328,7 +1328,7 @@ definition {
 	@priority = "3"
 	test CloseContentPerformancePanel {
 
-		// TODO LPS- xx pending implementation
+		// TODO LPS-144038 CloseContentPerformancePanel pending implementation
 
 	}
 
@@ -2008,7 +2008,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When the user selects one or more extensions and clicks on 'Select' button
 	Then the extensions selected appear as filter boxes above the Content table in the Content Dashboard, with the format 'Extension: [extension_name]' "
-	@ignore = "true"
 	@priority = "5"
 	test FilteringExtensionsOnTheDashboard {
 		task ("Add a text file") {
@@ -2268,7 +2267,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'audio'
 	Then the MIME type 'audio' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeAudio {
 		task ("Add an audio file") {
@@ -2297,7 +2295,6 @@ definition {
 	@description = "LPS-133354 Given The Extension filter modal
 	When there are file extensions for the MIME type 'code'
 	Then the MIME type 'code' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeCode {
 		task ("Add a document") {
@@ -2326,7 +2323,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'compressed'
 	Then the MIME type 'compressed' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeCompressed {
 		task ("Add a compressed file") {
@@ -2355,7 +2351,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'others'
 	Then the MIME type 'others' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeOthers {
 		task ("Add a vectorial file") {
@@ -2384,7 +2379,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'presentation'
 	Then the MIME type 'presentation' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypePresentation {
 		task ("Add a compressed file") {
@@ -2413,7 +2407,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'spreadSheet'
 	Then the MIME type 'spreadSheet' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeSpreadsheet {
 		task ("Add a spreadSheet file") {
@@ -2442,7 +2435,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'text'
 	Then the MIME type 'text' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeText {
 		task ("Add a text file") {
@@ -2471,7 +2463,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'vectorial'
 	Then the MIME type 'vectorial' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeVectorial {
 		task ("Add a vectorial file") {
@@ -2500,7 +2491,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When there are file extensions for the MIME type 'video'
 	Then the MIME type 'video' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@ignore = "true"
 	@priority = "4"
 	test MimeTypeVideo {
 		task ("Add a video file") {
@@ -2963,7 +2953,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When the user selects one or more extensions
 	Then the number of file extensions preselected will be shown as a text with the format '[number] Subtypes selected' "
-	@ignore = "true"
 	@priority = "3"
 	test SelectedExtensionNumbers {
 		task ("Add a text file") {
@@ -3016,7 +3005,6 @@ definition {
 	@description = "LPS-133354: Given The Extension filter modal
 	When the text input matches to one or more extensions from a MIME type and the user clicks on the MIME type parent
 	Then all the children that appear filtered will be selected"
-	@ignore = "true"
 	@priority = "3"
 	test SelectedParentAndChildExtensions {
 		task ("Add a text file") {

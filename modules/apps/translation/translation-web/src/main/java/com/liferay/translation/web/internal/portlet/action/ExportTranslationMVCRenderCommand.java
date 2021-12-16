@@ -30,6 +30,7 @@ import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 import com.liferay.translation.web.internal.display.context.ExportTranslationDisplayContext;
+import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.Locale;
 import java.util.Map;
@@ -66,10 +67,16 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-			long classPK = ParamUtil.getLong(renderRequest, "classPK");
-			long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
 			String className = _portal.getClassName(classNameId);
+
+			long groupId = ParamUtil.getLong(renderRequest, "groupId");
+
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, renderRequest);
+
+			long classPK = translationRequestHelper.getModelClassPK();
 
 			Object model = _getModel(className, classPK);
 

@@ -77,7 +77,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				resourceRequest, "segmentsExperienceIds");
 
 			TranslationRequestHelper translationRequestHelper =
-				new TranslationRequestHelper(resourceRequest);
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, resourceRequest);
 
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceIds);
@@ -91,15 +92,15 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-			for (long classPK : translationRequestHelper.getClassPKs(
-					segmentsExperienceIds)) {
+			for (long classPK :
+					translationRequestHelper.getClassPKs(
+						segmentsExperienceIds)) {
 
 				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
 					className.equals(SegmentsExperience.class.getName())) {
 
 					_addZipEntry(
-						zipWriter,
-						translationRequestHelper.getModelClassName(),
+						zipWriter, translationRequestHelper.getModelClassName(),
 						translationRequestHelper.getModelClassPK(),
 						exportMimeType, sourceLanguageId, targetLanguageIds,
 						_portal.getLocale(resourceRequest));

@@ -14,6 +14,11 @@
 
 package com.liferay.translation.web.internal.helper;
 
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.GroupKeyInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.translator.InfoItemIdentifierTranslator;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -27,12 +32,15 @@ import javax.portlet.PortletRequest;
  */
 public class TranslationRequestHelper {
 
-	public TranslationRequestHelper(PortletRequest portletRequest) {
+	public TranslationRequestHelper(
+		InfoItemServiceTracker infoItemServiceTracker,
+		PortletRequest portletRequest) {
+
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_portletRequest = portletRequest;
 	}
 
 	public String getClassName(long segmentsExperienceId) {
-
 		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			return SegmentsExperience.class.getName();
 		}
@@ -52,8 +60,7 @@ public class TranslationRequestHelper {
 		return SegmentsExperience.class.getName();
 	}
 
-	public long getClassPK(long segmentsExperienceId) {
-
+	public long getClassPK(long segmentsExperienceId) throws PortalException {
 		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			return segmentsExperienceId;
 		}
@@ -61,7 +68,8 @@ public class TranslationRequestHelper {
 		return getModelClassPK();
 	}
 
-	public long[] getClassPKs(long[] segmentsExperienceIds) {
+	public long[] getClassPKs(long[] segmentsExperienceIds)
+		throws PortalException {
 
 		if (ArrayUtil.isEmpty(segmentsExperienceIds) ||
 			((segmentsExperienceIds.length == 1) &&
@@ -79,10 +87,30 @@ public class TranslationRequestHelper {
 			ParamUtil.getLong(_portletRequest, "classNameId"));
 	}
 
-	public long getModelClassPK() {
-		return ParamUtil.getLong(_portletRequest, "classPK");
+	public long getModelClassPK() throws PortalException {
+		long classPK = ParamUtil.getLong(_portletRequest, "classPK");
+
+		if (classPK != 0) {
+			return classPK;
+		}
+
+		InfoItemIdentifierTranslator infoItemIdentifierTranslator =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemIdentifierTranslator.class, getModelClassName());
+
+		long groupId = ParamUtil.getLong(_portletRequest, "groupId");
+		String key = ParamUtil.getString(_portletRequest, "key");
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemIdentifierTranslator.translateInfoItemIdentifier(
+					new GroupKeyInfoItemIdentifier(groupId, key),
+					ClassPKInfoItemIdentifier.class);
+
+		return classPKInfoItemIdentifier.getClassPK();
 	}
 
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final PortletRequest _portletRequest;
 
 }

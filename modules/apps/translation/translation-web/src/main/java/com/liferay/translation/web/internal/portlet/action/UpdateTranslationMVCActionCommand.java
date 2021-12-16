@@ -78,7 +78,8 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				SegmentsExperienceConstants.ID_DEFAULT);
 
 			TranslationRequestHelper translationRequestHelper =
-				new TranslationRequestHelper(actionRequest);
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, actionRequest);
 
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceId);

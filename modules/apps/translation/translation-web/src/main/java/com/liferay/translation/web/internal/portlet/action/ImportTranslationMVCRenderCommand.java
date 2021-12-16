@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.web.internal.display.context.ImportTranslationDisplayContext;
+import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.Locale;
 
@@ -59,18 +60,21 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-			long classPK = ParamUtil.getLong(renderRequest, "classPK");
-			long groupId = ParamUtil.getLong(renderRequest, "groupId");
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, renderRequest);
 
-			String className = _portal.getClassName(classNameId);
+			String className = translationRequestHelper.getModelClassName();
+			long classPK = translationRequestHelper.getModelClassPK();
 
 			Object model = _getModel(className, classPK);
 
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
 				new ImportTranslationDisplayContext(
-					classNameId, classPK, themeDisplay.getCompanyId(), groupId,
+					ParamUtil.getLong(renderRequest, "classNameId"), classPK,
+					themeDisplay.getCompanyId(),
+					ParamUtil.getLong(renderRequest, "groupId"),
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_getTitle(className, model, themeDisplay.getLocale()),

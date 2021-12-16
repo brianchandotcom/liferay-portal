@@ -55,6 +55,7 @@ import com.liferay.translation.snapshot.TranslationSnapshot;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.translation.web.internal.display.context.ImportTranslationResultsDisplayContext;
+import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,12 +99,15 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-			long classPK = ParamUtil.getLong(actionRequest, "classPK");
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, actionRequest);
+
+			String className = translationRequestHelper.getModelClassName();
+			long classPK = translationRequestHelper.getModelClassPK();
+
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String title = ParamUtil.getString(actionRequest, "title");
-
-			String className = _portal.getClassName(classNameId);
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
@@ -141,6 +145,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				MultiSessionMessages.add(
 					actionRequest, portletResource + "requestProcessed");
 			}
+
+			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 
 			actionRequest.setAttribute(
 				WebKeys.REDIRECT,

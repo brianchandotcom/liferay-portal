@@ -97,7 +97,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				SegmentsExperienceConstants.ID_DEFAULT);
 
 			TranslationRequestHelper translationRequestHelper =
-				new TranslationRequestHelper(renderRequest);
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, renderRequest);
 
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceId);
@@ -239,8 +240,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _getErrorJSP(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		TranslationRequestHelper translationRequestHelper) {
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			TranslationRequestHelper translationRequestHelper)
+		throws PortalException {
 
 		renderRequest.setAttribute(
 			TranslateDisplayContext.class.getName(),

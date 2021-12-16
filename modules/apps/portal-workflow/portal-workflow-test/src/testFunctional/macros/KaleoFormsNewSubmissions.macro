@@ -221,10 +221,6 @@ definition {
 			key_title = "Track Workflow",
 			locator1 = "IFrame#MODAL_ANY");
 
-		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_TITLE");
-
 		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_PANEL");
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_NODE");

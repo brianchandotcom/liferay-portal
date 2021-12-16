@@ -722,6 +722,55 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a test for LPS-134566. doAsUserId parameter included in page URL when selecting page link from Page Selection menu"
+	@priority = "4"
+	test ViewDoAsUserIdNotShownInURLFieldAfterAddPageLinkToText {
+		task ("Add new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+		}
+
+		task ("Assign Administrator Role to the user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea1@liferay.com");
+		}
+
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Impersonate the user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.impersonateCP(userName = "userfn1");
+		}
+
+		task ("Add a Basic Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentContent = "Web Content Content");
+		}
+
+		task ("Add link to page and verify the URL is correct") {
+			CKEditor.addTextWithLink(
+				displayText = "link",
+				entryExternalURL = "/web/test-site-name/test-page-name",
+				fieldLabel = "content",
+				pageName = "Test Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-86845. A user can preview a draft or pending status Web Content article through the 'View Usages' screen."
 	@priority = "5"
 	test PreviewDraftWebContentInWCD {

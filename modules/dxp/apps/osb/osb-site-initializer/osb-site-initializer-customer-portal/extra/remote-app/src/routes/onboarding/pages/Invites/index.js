@@ -70,7 +70,8 @@ const Invites = () => {
 				payload: nextStep,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

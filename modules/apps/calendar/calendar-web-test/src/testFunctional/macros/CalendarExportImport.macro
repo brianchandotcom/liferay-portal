@@ -49,7 +49,7 @@ definition {
 	}
 
 	macro importCalendarFile {
-		UploadDependencyFile.uploadFile(fileName = "${calendarFile}");
+		UploadDependencyFile.uploadArchiveFile(fileName = "${calendarFile}");
 
 		if (isSet(importValidationErrorMessage)) {
 			AssertTextEquals.assertPartialText(

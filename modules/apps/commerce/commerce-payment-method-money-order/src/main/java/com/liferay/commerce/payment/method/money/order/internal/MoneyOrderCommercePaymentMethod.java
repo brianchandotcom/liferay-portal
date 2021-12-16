@@ -54,7 +54,8 @@ public class MoneyOrderCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return null;
+		return LanguageUtil.get(
+			_getResourceBundle(locale), "money-order-description");
 	}
 
 	@Override

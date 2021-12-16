@@ -107,7 +107,8 @@ public class AuthorizeNetCommercePaymentMethod
 
 	@Override
 	public String getDescription(Locale locale) {
-		return null;
+		return LanguageUtil.get(
+			_getResourceBundle(locale), "authorize-net-description");
 	}
 
 	@Override

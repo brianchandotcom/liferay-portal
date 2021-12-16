@@ -1,0 +1,25 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a style book entry"
+	macro _addStylebookEntry {
+		Variables.assertDefined(parameterList = "${groupId},${styleBookEntryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d name=${styleBookEntryName} \
+			  -d styleBookEntryKey=
+		''';
+		var styleBookEntryId = JSONCurlUtil.post("${curl}", "$.styleBookEntryId");
+
+		if ("${styleBookEntryId}" == "") {
+			fail("FAIL. Cannot add style book entry.");
+		}
+
+		return "${styleBookEntryId}";
+	}
+
+}

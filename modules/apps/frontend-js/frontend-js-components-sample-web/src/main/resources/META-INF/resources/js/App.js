@@ -13,9 +13,37 @@
  */
 
 import React from 'react';
+import {TranslationAdminSelector} from 'frontend-js-components-web';
 
-export default function App() {
+function getAvailableLocalesObject(displayNames, languageIds) {
+	return languageIds.map((id, index) => {
+		return {
+			displayName: displayNames[index],
+			id,
+			label: id,
+			symbol: id.toLowerCase().replace('_', '-'),
+		};
+	});
+}
+
+export default function App({displayNames, languageIds}) {
+	const availableLocales = getAvailableLocalesObject(
+		displayNames,
+		languageIds
+	);
+	const defaultLanguageId = 'en_US';
+
+	console.log(availableLocales);
+
 	return (
-		<i>React Samples</i>
+		<>
+			<i>React Samples</i>
+
+			<TranslationAdminSelector
+				adminMode
+				availableLocales={availableLocales}
+				defaultLanguageId={defaultLanguageId}
+			/>
+		</>
 	);
 }

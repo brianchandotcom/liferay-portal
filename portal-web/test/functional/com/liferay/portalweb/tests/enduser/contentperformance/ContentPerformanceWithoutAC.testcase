@@ -96,6 +96,33 @@ definition {
 
 	}
 
+	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is not shown in the bar above the blog display page in the view mode"
+	@ignore = "true"
+	@priority = "3"
+	test MetricsIconNotVisibleInBlogDisplayPage {
+
+		// TODO LPS-144030 MetricsIconNotVisibleInBlogDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is not shown in the bar above the document display page in the view mode"
+	@ignore = "true"
+	@priority = "3"
+	test MetricsIconNotVisibleInDocumentDisplayPage {
+
+		// TODO LPS-144030 MetricsIconNotVisibleInDocumentDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126047: When DXP is not connected to AC, the metrics icon is not shown in the bar above the widget page in the view mode"
+	@ignore = "true"
+	@priority = "3"
+	test MetricsIconNotVisibleInWidgetPage {
+
+		// TODO LPS-144029 MetricsIconNotVisibleInWidgetPage pending implementation
+
+	}
+
 	@description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"
 	@priority = "4"
 	test MetricsInContentDashboardACDisabled {

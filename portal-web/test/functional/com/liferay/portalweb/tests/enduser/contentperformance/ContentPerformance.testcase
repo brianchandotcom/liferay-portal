@@ -59,6 +59,69 @@ definition {
 		}
 	}
 
+	@description = "LPS-144031: When the user accesses to the content performance panel of a content page, the author's field is NOT shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test AuthorNotShowInContentPage {
+
+		// TODO LPS-128194 AuthorNotShowInContentPage pending implementation
+
+	}
+
+	@description = "LPS-144031: When the user accesses to the content performance panel of a widget page, the author's field is NOT shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test AuthorNotShowInWidgetPage {
+
+		// TODO LPS-128194 AuthorNotShowInWidgetPage pending implementation
+
+	}
+
+	@description = "LPS-144031: When the user accesses to the content performance panel of a document's display page, the author's field is NOT shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test AuthorNotShowInDocumentDisplayPage {
+
+		// TODO LPS-128194 AuthorNotShowInDocumentDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-144031: When the user accesses to the content performance panel of a blog's display page, the author's field is NOT shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test AuthorNotShowInBlogDisplayPage {
+
+		// TODO LPS-128194 AuthorNotShowInBlogDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126044: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
+	@ignore = "true"
+	@priority = "3"
+	test ChangeLanguageInBlogDisplayPage {
+
+		// TODO LPS-144030 ChangeLanguageInBlogDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126047: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
+	@ignore = "true"
+	@priority = "3"
+	test ChangeLanguageInWidgetPage {
+
+		// TODO LPS-144029 ChangeLanguageInWidgetPage pending implementation
+
+	}
+
+	@description = "LPS-126044: When the user changes the language using the flag selector in the panel and so the URL, the metrics corresponding the canonical URL that corresponds to the language selected are shown"
+	@ignore = "true"
+	@priority = "3"
+	test ChangeLanguageInDocumentDisplayPage {
+
+		// TODO LPS-144030 ChangeLanguageInDocumentDisplayPage pending implementation
+
+	}
+
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
 	@priority = "5"
 	test CheckAllInfoDisplayed {
@@ -98,6 +161,15 @@ definition {
 	}
 
 	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
+	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
+	@ignore = "true"
+	@priority = "3"
+	test DefaultLanguageOnTop {
+
+		// TODO LPS-144028 DefaultLanguageOnTop pending implementation
+
+	}
+
 	@ignore = "true"
 	@priority = "5"
 	test DefaultTimeRangeWeek {
@@ -167,6 +239,15 @@ definition {
 
 	}
 
+	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the date interval selector is shown in the content performance panel, with 7 days selected as default"
+	@ignore = "true"
+	@priority = "3"
+	test IntervalSelectorInBlogDisplayPage {
+
+		// TODO LPS-144030 IntervalSelectorInBlogDisplayPage pending implementation
+
+	}
+
 	@description = "LPS-110920: When the user selects a language in the switcher, the title, the URL and the metrics change accordingly"
 	@ignore = "true"
 	@priority = "5"
@@ -219,6 +300,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the languages are alphabetically ordered"
+	@ignore = "true"
+	@priority = "3"
+	test LanguagesAlphabeticallyOrdered {
+
+		// TODO LPS-144028 LanguagesAlphabeticallyOrdered pending implementation
+
+	}
+
+	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the Translated/Unstraslated label does not appear"
+	@ignore = "true"
+	@priority = "3"
+	test LanguagesLabel {
+
+		// TODO LPS-144028 LanguagesLabel pending implementation
+
+	}
+
 	@description = "LPS-110920: When the user selects a language in the switcher, it doesn't affect the user's language"
 	@ignore = "true"
 	@priority = "3"
@@ -248,6 +347,42 @@ definition {
 				locator1 = "PageAudit#PANEL_PAGE_URL",
 				value1 = "https://liferay.com.br");
 		}
+	}
+
+	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a blog display page, the content performance panel displays with the metrics of the content page"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsIconVisibleInBlogDisplayPage {
+
+		// TODO LPS-144030 MetricsIconVisibleInBlogDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-127220: When DXP is connected and synced to AC and the user clicks on the metrics icon in a content page, the content performance panel displays with the metrics of the content page"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsIconVisibleInContentPage {
+
+		// TODO LPS-144028 MetricsIconVisibleInContentPage pending implementation
+
+	}
+
+	@description = "LPS-126044: When DXP is connected and synced to AC and the user clicks on the metrics icon in a document display page, the content performance panel displays with the metrics of the content page"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsIconVisibleInDocumentDisplayPage {
+
+		// TODO LPS-144030 MetricsIconVisibleInDocumentDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126047: When DXP is connected and synced to AC and the user clicks on the metrics icon in a widget page, the content performance panel displays with the metrics of the content page"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsIconVisibleInWidgetPage {
+
+		// TODO LPS-144029 MetricsIconVisibleInWidgetPage pending implementation
+
 	}
 
 	@description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"
@@ -364,6 +499,42 @@ definition {
 
 	}
 
+	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the name, the URL of the page and the language selector are shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test PanelInformationInBlogDisplayPage {
+
+		// TODO LPS-144030 PanelInformationInBlogDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-127220: When the user accesses to the content performance panel of a content page, the name, the URL of the page and the language selector are shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test PanelInformationInContentPage {
+
+		// TODO LPS-144028 PanelInformationInContentPage pending implementation
+
+	}
+
+	@description = "LPS-126044: When the user accesses to the content performance panel of a document display page, the name, the URL of the page and the language selector are shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test PanelInformationInDocumentDisplayPage {
+
+		// TODO LPS-144030 PanelInformationInDocumentDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126047: When the user accesses to the content performance panel of a widget page, the name, the URL of the page and the language selector are shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test PanelInformationInWidgetPage {
+
+		// TODO LPS-144029 PanelInformationInWidgetPage pending implementation
+
+	}
+
 	@description = "LPS-109417: When the graphic shows the publication date, all previous dots will be 0"
 	@ignore = "true"
 	@priority = "5"
@@ -373,4 +544,21 @@ definition {
 
 	}
 
+	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the views graph is shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test ViewsGraphInBlogDisplayPage {
+
+		// TODO LPS-144030 ViewsGraphInBlogDisplayPage pending implementation
+
+	}
+
+	@description = "LPS-126044: When the user accesses to the content performance panel of a document display page, the views graph is shown in the content performance panel"
+	@ignore = "true"
+	@priority = "3"
+	test ViewsGraphInDocumentDisplayPage {
+
+		// TODO LPS-144030 ViewsGraphInDocumentDisplayPage pending implementation
+
+	}
 }

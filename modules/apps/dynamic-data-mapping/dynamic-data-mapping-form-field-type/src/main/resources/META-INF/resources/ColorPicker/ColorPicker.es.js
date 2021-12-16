@@ -86,23 +86,75 @@ const ColorPicker = ({
 	spritemap,
 	value,
 	...otherProps
-}) => (
-	<FieldBase
-		name={name}
-		readOnly={readOnly}
-		spritemap={spritemap}
-		{...otherProps}
-	>
-		<ClayColorPickerWithState
-			inputValue={value ? value : predefinedValue}
+}) => {
+	let colorDropDownClickEvent;
+	let previousShow = false;
+
+	const observer = new MutationObserver((mutationsList, observer) => {
+		for (const mutation of mutationsList) {
+			if (
+				mutation.type === 'attributes' &&
+				mutation.attributeName === 'class'
+			) {
+				const show = mutation.target.classList.contains('show');
+
+				if (show === previousShow) {
+					return;
+				}
+
+				if (show) {
+					onFocus(colorDropDownClickEvent);
+				}
+				else {
+					onBlur(colorDropDownClickEvent);
+
+					observer.disconnect();
+				}
+
+				previousShow = show;
+			}
+		}
+	});
+
+	// watch dropdown click for sending to Analytics
+
+	const handleColorDropDownClicked = (event) => {
+		if (!event.target.classList.contains('dropdown-toggle')) {
+			return;
+		}
+
+		const colorDropdownNode = document.querySelector(
+			'.clay-color-dropdown-menu'
+		);
+
+		if (!colorDropdownNode) {
+			return;
+		}
+
+		colorDropDownClickEvent = event;
+
+		observer.observe(colorDropdownNode, {attributes: true});
+	};
+
+	return (
+		<FieldBase
 			name={name}
-			onBlur={onBlur}
-			onFocus={onFocus}
-			onValueChange={(value) => onChange({}, value)}
+			onClick={handleColorDropDownClicked}
 			readOnly={readOnly}
 			spritemap={spritemap}
-		/>
-	</FieldBase>
-);
+			{...otherProps}
+		>
+			<ClayColorPickerWithState
+				inputValue={value ? value : predefinedValue}
+				name={name}
+				onBlur={onBlur}
+				onFocus={onFocus}
+				onValueChange={(value) => onChange({}, value)}
+				readOnly={readOnly}
+				spritemap={spritemap}
+			/>
+		</FieldBase>
+	);
+};
 
 export default ColorPicker;

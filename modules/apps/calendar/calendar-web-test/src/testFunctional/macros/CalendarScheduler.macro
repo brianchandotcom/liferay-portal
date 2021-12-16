@@ -101,22 +101,22 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
 	}
 
+	macro editTitle {
+		Type(
+			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
+			value1 = "${eventTitle}");
+	}
+
 	macro editTitleAndCalendar {
 		CalendarScheduler.selectSpecificEvent(eventTitle = "${currentEventTitle}");
-		
+
 		CalendarScheduler.editTitle(eventTitle = "${eventTitle}");
-		
+
 		Select(
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR",
 			value1 = "${calendarName}");
 
 		CalendarScheduler.saveEvent();
-	}
-
-	macro editTitle {
-		Type(
-			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
-			value1 = "${eventTitle}");
 	}
 
 	macro gotoAddViaDayView {

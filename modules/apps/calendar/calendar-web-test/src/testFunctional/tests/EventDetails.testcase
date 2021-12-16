@@ -133,9 +133,9 @@ definition {
 			pageName = "Calendar Page");
 
 		CalendarScheduler.editTitleAndCalendar(
+			calendarName = "Test Test",
 			currentEventTitle = "Calendar Event Title",
-			eventTitle = "Calendar Event Title Edited",
-			calendarName = "Test Test");
+			eventTitle = "Calendar Event Title Edited");
 
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title Edited");
 

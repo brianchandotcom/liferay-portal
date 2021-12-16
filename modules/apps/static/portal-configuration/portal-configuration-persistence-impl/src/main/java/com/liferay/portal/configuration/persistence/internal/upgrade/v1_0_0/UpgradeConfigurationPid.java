@@ -39,79 +39,80 @@ public class UpgradeConfigurationPid extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("Configuration_")) {
-			try (PreparedStatement preparedStatement1 =
-					connection.prepareStatement("select * from Configuration_");
-				PreparedStatement preparedStatement2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update Configuration_ set configurationId = ?, " +
-							"dictionary = ? where configurationId = ?");
-				ResultSet resultSet = preparedStatement1.executeQuery()) {
+		if (!hasTable("Configuration_")) {
+			return;
+		}
 
-				while (resultSet.next()) {
-					String dictionaryString = resultSet.getString("dictionary");
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select * from Configuration_");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update Configuration_ set configurationId = ?, " +
+						"dictionary = ? where configurationId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-					Dictionary<String, String> dictionary =
-						ConfigurationHandler.read(
-							new UnsyncByteArrayInputStream(
-								dictionaryString.getBytes(StringPool.UTF8)));
+			while (resultSet.next()) {
+				String dictionaryString = resultSet.getString("dictionary");
 
-					String serviceFactoryPid = dictionary.get(
-						"service.factoryPid");
+				Dictionary<String, String> dictionary =
+					ConfigurationHandler.read(
+						new UnsyncByteArrayInputStream(
+							dictionaryString.getBytes(StringPool.UTF8)));
 
-					if (serviceFactoryPid == null) {
-						continue;
-					}
+				String serviceFactoryPid = dictionary.get("service.factoryPid");
 
-					String currentConfigurationId = resultSet.getString(
-						"configurationId");
-
-					String felixFileInstallFilename = dictionary.get(
-						"felix.fileinstall.filename");
-
-					int serviceFactoryPidEndIndex = serviceFactoryPid.length();
-
-					String suffix = currentConfigurationId.substring(
-						serviceFactoryPidEndIndex + 1);
-
-					if (felixFileInstallFilename != null) {
-						File file = new File(
-							PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-							felixFileInstallFilename);
-
-						if (file.exists()) {
-							suffix = felixFileInstallFilename.substring(
-								serviceFactoryPidEndIndex + 1,
-								felixFileInstallFilename.lastIndexOf(
-									CharPool.PERIOD));
-						}
-						else {
-							dictionary.remove("felix.fileinstall.filename");
-						}
-					}
-
-					String updatedConfigurationId = StringBundler.concat(
-						serviceFactoryPid, CharPool.TILDE, suffix);
-
-					dictionary.put("service.pid", updatedConfigurationId);
-
-					UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-						new UnsyncByteArrayOutputStream();
-
-					ConfigurationHandler.write(
-						unsyncByteArrayOutputStream, dictionary);
-
-					preparedStatement2.setString(1, updatedConfigurationId);
-					preparedStatement2.setString(
-						2, unsyncByteArrayOutputStream.toString());
-					preparedStatement2.setString(3, currentConfigurationId);
-
-					preparedStatement2.addBatch();
+				if (serviceFactoryPid == null) {
+					continue;
 				}
 
-				preparedStatement2.executeBatch();
+				String currentConfigurationId = resultSet.getString(
+					"configurationId");
+
+				String felixFileInstallFilename = dictionary.get(
+					"felix.fileinstall.filename");
+
+				int serviceFactoryPidEndIndex = serviceFactoryPid.length();
+
+				String suffix = currentConfigurationId.substring(
+					serviceFactoryPidEndIndex + 1);
+
+				if (felixFileInstallFilename != null) {
+					File file = new File(
+						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+						felixFileInstallFilename);
+
+					if (file.exists()) {
+						suffix = felixFileInstallFilename.substring(
+							serviceFactoryPidEndIndex + 1,
+							felixFileInstallFilename.lastIndexOf(
+								CharPool.PERIOD));
+					}
+					else {
+						dictionary.remove("felix.fileinstall.filename");
+					}
+				}
+
+				String updatedConfigurationId = StringBundler.concat(
+					serviceFactoryPid, CharPool.TILDE, suffix);
+
+				dictionary.put("service.pid", updatedConfigurationId);
+
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+
+				ConfigurationHandler.write(
+					unsyncByteArrayOutputStream, dictionary);
+
+				preparedStatement2.setString(1, updatedConfigurationId);
+				preparedStatement2.setString(
+					2, unsyncByteArrayOutputStream.toString());
+				preparedStatement2.setString(3, currentConfigurationId);
+
+				preparedStatement2.addBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

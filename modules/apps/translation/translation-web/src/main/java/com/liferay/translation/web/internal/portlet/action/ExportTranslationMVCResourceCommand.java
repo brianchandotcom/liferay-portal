@@ -39,7 +39,7 @@ import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.web.internal.helper.InfoItemHelper;
-import com.liferay.translation.web.internal.util.TranslationRequestUtil;
+import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -76,8 +76,11 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			long[] segmentsExperienceIds = ParamUtil.getLongValues(
 				resourceRequest, "segmentsExperienceIds");
 
-			String className = TranslationRequestUtil.getClassName(
-				resourceRequest, segmentsExperienceIds);
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(resourceRequest);
+
+			String className = translationRequestHelper.getClassName(
+				segmentsExperienceIds);
 
 			String exportMimeType = ParamUtil.getString(
 				resourceRequest, "exportMimeType");
@@ -88,18 +91,16 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-			for (long classPK :
-					TranslationRequestUtil.getClassPKs(
-						resourceRequest, segmentsExperienceIds)) {
+			for (long classPK : translationRequestHelper.getClassPKs(
+					segmentsExperienceIds)) {
 
 				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
 					className.equals(SegmentsExperience.class.getName())) {
 
 					_addZipEntry(
 						zipWriter,
-						TranslationRequestUtil.getModelClassName(
-							resourceRequest),
-						TranslationRequestUtil.getModelClassPK(resourceRequest),
+						translationRequestHelper.getModelClassName(),
+						translationRequestHelper.getModelClassPK(),
 						exportMimeType, sourceLanguageId, targetLanguageIds,
 						_portal.getLocale(resourceRequest));
 				}
@@ -117,9 +118,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse,
 					_getZipFileName(
-						TranslationRequestUtil.getModelClassName(
-							resourceRequest),
-						TranslationRequestUtil.getModelClassPK(resourceRequest),
+						translationRequestHelper.getModelClassName(),
+						translationRequestHelper.getModelClassPK(),
 						sourceLanguageId, _portal.getLocale(resourceRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}

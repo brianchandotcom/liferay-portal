@@ -51,7 +51,7 @@ import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorRegistry;
 import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 import com.liferay.translation.web.internal.display.context.TranslateDisplayContext;
-import com.liferay.translation.web.internal.util.TranslationRequestUtil;
+import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -96,11 +96,14 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "segmentsExperienceId",
 				SegmentsExperienceConstants.ID_DEFAULT);
 
-			String className = TranslationRequestUtil.getClassName(
-				renderRequest, segmentsExperienceId);
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(renderRequest);
 
-			long classPK = TranslationRequestUtil.getClassPK(
-				renderRequest, segmentsExperienceId);
+			String className = translationRequestHelper.getClassName(
+				segmentsExperienceId);
+
+			long classPK = translationRequestHelper.getClassPK(
+				segmentsExperienceId);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -111,7 +114,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			Object object = _getInfoItem(className, classPK);
 
 			if (object == null) {
-				return _getErrorJSP(renderRequest, renderResponse);
+				return _getErrorJSP(
+					renderRequest, renderResponse, translationRequestHelper);
 			}
 
 			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
@@ -119,7 +123,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemLanguagesProvider.class, className);
 
 			if (infoItemLanguagesProvider == null) {
-				return _getErrorJSP(renderRequest, renderResponse);
+				return _getErrorJSP(
+					renderRequest, renderResponse, translationRequestHelper);
 			}
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
@@ -138,7 +143,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemFormProvider.class, className);
 
 			if (infoItemFormProvider == null) {
-				return _getErrorJSP(renderRequest, renderResponse);
+				return _getErrorJSP(
+					renderRequest, renderResponse, translationRequestHelper);
 			}
 
 			InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
@@ -147,7 +153,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_getSourceInfoItemFieldValues(className, object);
 
 			if (sourceInfoItemFieldValues == null) {
-				return _getErrorJSP(renderRequest, renderResponse);
+				return _getErrorJSP(
+					renderRequest, renderResponse, translationRequestHelper);
 			}
 
 			String targetLanguageId = ParamUtil.getString(
@@ -164,8 +171,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				new TranslateDisplayContext(
 					availableSourceLanguageIds, availableTargetLanguageIds,
 					() -> _translator != null,
-					TranslationRequestUtil.getModelClassName(renderRequest),
-					TranslationRequestUtil.getModelClassPK(renderRequest),
+					translationRequestHelper.getModelClassName(),
+					translationRequestHelper.getModelClassPK(),
 					_ffLayoutExperienceSelectorConfiguration, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
@@ -232,15 +239,16 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _getErrorJSP(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		TranslationRequestHelper translationRequestHelper) {
 
 		renderRequest.setAttribute(
 			TranslateDisplayContext.class.getName(),
 			new TranslateDisplayContext(
 				Collections.emptyList(), Collections.emptyList(),
 				() -> _translator != null,
-				TranslationRequestUtil.getModelClassName(renderRequest),
-				TranslationRequestUtil.getModelClassPK(renderRequest),
+				translationRequestHelper.getModelClassName(),
+				translationRequestHelper.getModelClassPK(),
 				_ffLayoutExperienceSelectorConfiguration, null,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse), null,

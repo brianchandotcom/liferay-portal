@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.util;
+package com.liferay.translation.web.internal.helper;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,63 +25,64 @@ import javax.portlet.PortletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class TranslationRequestUtil {
+public class TranslationRequestHelper {
 
-	public static String getClassName(
-		PortletRequest portletRequest, long segmentsExperienceId) {
+	public TranslationRequestHelper(PortletRequest portletRequest) {
+		_portletRequest = portletRequest;
+	}
+
+	public String getClassName(long segmentsExperienceId) {
 
 		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			return SegmentsExperience.class.getName();
 		}
 
-		return getModelClassName(portletRequest);
+		return getModelClassName();
 	}
 
-	public static String getClassName(
-		PortletRequest portletRequest, long[] segmentsExperienceIds) {
-
+	public String getClassName(long[] segmentsExperienceIds) {
 		if (ArrayUtil.isEmpty(segmentsExperienceIds) ||
 			((segmentsExperienceIds.length == 1) &&
 			 (segmentsExperienceIds[0] ==
 				 SegmentsExperienceConstants.ID_DEFAULT))) {
 
-			return getModelClassName(portletRequest);
+			return getModelClassName();
 		}
 
 		return SegmentsExperience.class.getName();
 	}
 
-	public static long getClassPK(
-		PortletRequest portletRequest, long segmentsExperienceId) {
+	public long getClassPK(long segmentsExperienceId) {
 
 		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			return segmentsExperienceId;
 		}
 
-		return getModelClassPK(portletRequest);
+		return getModelClassPK();
 	}
 
-	public static long[] getClassPKs(
-		PortletRequest portletRequest, long[] segmentsExperienceIds) {
+	public long[] getClassPKs(long[] segmentsExperienceIds) {
 
 		if (ArrayUtil.isEmpty(segmentsExperienceIds) ||
 			((segmentsExperienceIds.length == 1) &&
 			 (segmentsExperienceIds[0] ==
 				 SegmentsExperienceConstants.ID_DEFAULT))) {
 
-			return new long[] {getModelClassPK(portletRequest)};
+			return new long[] {getModelClassPK()};
 		}
 
 		return segmentsExperienceIds;
 	}
 
-	public static String getModelClassName(PortletRequest portletRequest) {
+	public String getModelClassName() {
 		return PortalUtil.getClassName(
-			ParamUtil.getLong(portletRequest, "classNameId"));
+			ParamUtil.getLong(_portletRequest, "classNameId"));
 	}
 
-	public static long getModelClassPK(PortletRequest portletRequest) {
-		return ParamUtil.getLong(portletRequest, "classPK");
+	public long getModelClassPK() {
+		return ParamUtil.getLong(_portletRequest, "classPK");
 	}
+
+	private final PortletRequest _portletRequest;
 
 }

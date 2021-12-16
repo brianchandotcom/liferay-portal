@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
-import com.liferay.translation.web.internal.util.TranslationRequestUtil;
+import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,10 +77,13 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "segmentsExperienceId",
 				SegmentsExperienceConstants.ID_DEFAULT);
 
-			String className = TranslationRequestUtil.getClassName(
-				actionRequest, segmentsExperienceId);
-			long classPK = TranslationRequestUtil.getClassPK(
-				actionRequest, segmentsExperienceId);
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(actionRequest);
+
+			String className = translationRequestHelper.getClassName(
+				segmentsExperienceId);
+			long classPK = translationRequestHelper.getClassPK(
+				segmentsExperienceId);
 
 			InfoItemReference infoItemReference = new InfoItemReference(
 				className, classPK);

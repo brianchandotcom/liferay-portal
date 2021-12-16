@@ -1,3 +1,7 @@
+.customer-portal-side-menu {
+	width: 216px;
+}
+
 .customer-portal-side-menu #customer-portal-products {
 	height: 0px;
 	transition: all 0.3s;

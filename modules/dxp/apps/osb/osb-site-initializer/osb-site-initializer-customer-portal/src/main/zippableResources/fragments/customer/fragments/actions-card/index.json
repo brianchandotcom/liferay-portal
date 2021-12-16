@@ -1,0 +1,19 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"description": "container-text",
+					"label": "Container ID",
+					"name": "containerId",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the name of Container"
+					}
+				}
+			]
+		}
+	]
+}

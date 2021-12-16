@@ -46,8 +46,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -264,30 +262,25 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
-			List<ObjectEntry> objectEntries =
-				_objectEntryLocalService.getObjectEntries(
-					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
-					WorkflowConstants.STATUS_APPROVED,
-					searchContainer.getStart(), searchContainer.getEnd());
-
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				_infoItemItemSelectorCriterion.
 					getDesiredItemSelectorReturnTypes();
 
-//			String keywords = ParamUtil.getString(
-//				_httpServletRequest, "keywords");
-//
-//			int status = isInfoItemItemSelectorReturnType ?
-//				WorkflowConstants.STATUS_APPROVED : WorkflowConstants.STATUS_ANY;
-//
-//			BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
-//				_objectEntryLocalService.searchObjectEntries(
-//					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
-//					keywords, searchContainer.getStart(),
-//					searchContainer.getEnd(), status);
-//
-//			List<ObjectEntry> objectEntries1 =
-//				baseModelSearchResult.getBaseModels();
+			List<ObjectEntry> objectEntries = null;
+
+			if (desiredItemSelectorReturnTypes.get(0) instanceof
+					InfoItemItemSelectorReturnType) {
+
+				objectEntries = _objectEntryLocalService.getObjectEntries(
+					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
+					WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd());
+			}
+			else {
+				objectEntries = _objectEntryLocalService.getObjectEntries(
+					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
+					searchContainer.getStart(), searchContainer.getEnd());
+			}
 
 			searchContainer.setResults(objectEntries);
 

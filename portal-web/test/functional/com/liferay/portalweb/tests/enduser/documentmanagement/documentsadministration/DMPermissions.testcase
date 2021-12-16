@@ -1861,7 +1861,9 @@ definition {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
+			groupName = "Guest",
+			groupPermissions = "false",
+			guestPermissions = "false");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1879,17 +1881,9 @@ definition {
 
 		PermissionsInline.gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = "DM Folder Name");
 
-		for (var roleTitle : list "guest,site-member") {
-			Role.removePermissionPG(
-				permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "site-member");
-		}
-
-		for (var roleTitle : list "guest,site-member") {
-			Role.definePermissionPG(
-				permissionDefinitionKey = "CONTENT_PERMISSIONS_ACCESS_CHECKBOX",
-				roleTitle = "site-member");
-		}
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_ACCESS_CHECKBOX",
+			roleTitle = "site-member");
 
 		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "DM Document Title",

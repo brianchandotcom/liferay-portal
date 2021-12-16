@@ -121,6 +121,12 @@ public class SXPElementResourceImpl
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		if (sorts == null) {
+			sorts = new Sort[] {
+				new Sort("modified_sortable", Sort.LONG_TYPE, true)
+			};
+		}
+
 		return SearchUtil.search(
 			Collections.emptyMap(),
 			booleanQuery -> SearchUtil.processSXPBooleanQuery(

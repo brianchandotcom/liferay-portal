@@ -6,6 +6,12 @@ definition {
 		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
 	}
 
+	macro publishMaster {
+		Button.click(button = "Publish Master");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro searchAllowedFragments {
 		Type(
 			locator1 = "TextInput#FRAGMENTS_SEARCH",

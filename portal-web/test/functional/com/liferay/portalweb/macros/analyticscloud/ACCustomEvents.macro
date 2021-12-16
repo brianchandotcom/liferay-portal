@@ -223,4 +223,11 @@ definition {
 			locator1 = "Button#ANY_DISABLED");
 	}
 
+	macro getSampleRawData {
+		var key_attributeName = "${attributeName}";
+		var sampleRawDataValue = selenium.getText("ACCustomEvents#SAMPLE_RAW_DATA_LIST");
+
+		return "${sampleRawDataValue}";
+	}
+
 }

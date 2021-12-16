@@ -18,10 +18,8 @@ import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
-import com.liferay.commerce.product.permission.CommerceCatalogPermission;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -42,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
@@ -89,17 +88,9 @@ public class CommerceProductViewPermissionImpl
 			long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
-
-		if (_viewCatalog(
-				permissionChecker, cpDefinition.getCommerceCatalog()) ||
-			_accountEnabled(commerceAccountId, cpDefinition)) {
-
-			return true;
-		}
-
-		return false;
+		return _accountEnabled(
+			commerceAccountId,
+			_cpDefinitionLocalService.getCPDefinition(cpDefinitionId));
 	}
 
 	@Override
@@ -115,14 +106,7 @@ public class CommerceProductViewPermissionImpl
 			return false;
 		}
 
-		if (_viewCatalog(
-				permissionChecker, cpDefinition.getCommerceCatalog()) ||
-			_accountEnabled(commerceAccountId, cpDefinition)) {
-
-			return true;
-		}
-
-		return false;
+		return _accountEnabled(commerceAccountId, cpDefinition);
 	}
 
 	private boolean _accountEnabled(
@@ -199,23 +183,11 @@ public class CommerceProductViewPermissionImpl
 		return 0;
 	}
 
-	private boolean _viewCatalog(
-			PermissionChecker permissionChecker,
-			CommerceCatalog commerceCatalog)
-		throws PortalException {
-
-		return _commerceCatalogPermission.contains(
-			permissionChecker, commerceCatalog, ActionKeys.VIEW);
-	}
-
 	@Reference
 	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
-
-	@Reference
-	private CommerceCatalogPermission _commerceCatalogPermission;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

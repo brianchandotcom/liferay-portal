@@ -624,7 +624,7 @@ public class OrderResourceImpl
 			DateConfig requestedDeliveryDate = new DateConfig(
 				requestedDeliveryDateCalendar);
 
-			_commerceOrderService.updateInfo(
+			commerceOrder = _commerceOrderService.updateInfo(
 				commerceOrder.getCommerceOrderId(),
 				GetterUtil.getString(
 					order.getPrintedNote(), commerceOrder.getPrintedNote()),
@@ -637,7 +637,7 @@ public class OrderResourceImpl
 
 			// Printed note
 
-			_commerceOrderService.updatePrintedNote(
+			commerceOrder = _commerceOrderService.updatePrintedNote(
 				commerceOrder.getCommerceOrderId(),
 				GetterUtil.getString(
 					order.getPrintedNote(), commerceOrder.getPrintedNote()));

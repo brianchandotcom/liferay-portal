@@ -230,7 +230,6 @@ export function CollectionGeneralPanel({item}) {
 		setShowAllItems(event.target.checked);
 
 		handleConfigurationChanged({
-			numberOfItems: totalNumberOfItems,
 			showAllItems: event.target.checked,
 		});
 	};

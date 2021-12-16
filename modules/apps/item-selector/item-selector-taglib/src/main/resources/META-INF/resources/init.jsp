@@ -32,6 +32,7 @@ page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" 
 page import="com.liferay.document.library.kernel.service.DLAppServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnTypeResolver" %><%@
+page import="com.liferay.item.selector.taglib.internal.configuration.util.FFItemSelectorSingleFileUploaderConfigurationUtil" %><%@
 page import="com.liferay.item.selector.taglib.internal.dao.search.RepositoryEntryResultRowSplitter" %><%@
 page import="com.liferay.item.selector.taglib.internal.display.context.GroupSelectorDisplayContext" %><%@
 page import="com.liferay.item.selector.taglib.internal.security.permission.resource.DLFolderPermission" %><%@

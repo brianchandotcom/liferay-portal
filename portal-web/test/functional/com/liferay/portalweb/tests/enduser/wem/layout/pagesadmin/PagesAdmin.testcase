@@ -434,6 +434,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106469. Reorder Child pages in the same level via drag and drop."
+	@priority = "4"
+	test MoveChildPageInSameLevel {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add three child pages then publish") {
+			for (var n : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Child Page Name ${n}",
+					parentLayoutName = "Test Page Name",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "Child Page Name ${n}");
+			}
+		}
+
+		task ("View child page is shown under parent page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			for (var n : list "1,2,3") {
+				Page.view(
+					depth = "3",
+					pageName = "Child Page Name ${n}",
+					privacy = "Public Pages");
+			}
+		}
+
+		task ("Change order of pages") {
+			SitePages.movePageToPageUp(
+				pageName = "Child Page Name 2",
+				pageNameTo = "Child Page Name 1");
+		}
+
+		task ("View new child pages order in Pages admin") {
+			for (var n : list "2,1,3") {
+				Page.view(
+					depth = "3",
+					pageName = "Child Page Name ${n}",
+					privacy = "Public Pages");
+			}
+		}
+
+		task ("Assert no error occurs in the console") {
+			AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: java.lang.NullPointerException");
+		}
+	}
+
 	@description = "This is a test for LPS-110108. Move child page to parent page level via drag and drop."
 	@priority = "4"
 	test MoveChildPageToParentLevel {

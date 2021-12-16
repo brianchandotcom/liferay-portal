@@ -122,26 +122,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-116078. Can not preview style book when there are no pages in site."
-	@priority = "4"
-	test CannotPreviewStyleBookWhenSiteWithoutPage {
-		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
-
-			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
-		}
-
-		task ("Assert can not preview style book") {
-			AssertElementNotPresent(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
-
-			AssertVisible(locator1 = "StyleBookEditor#NO_PAGE_MESSAGE");
-
-			AssertVisible(
-				key_text = "Publish",
-				locator1 = "Button#ANY");
-		}
-	}
-
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all display page templates."
 	@priority = "5"
 	test PreviewStyleBookOnDisplayPageTemplates {
@@ -1007,6 +987,30 @@ definition {
 
 		task ("Assert the new style book in Style Books admin") {
 			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
+		}
+	}
+
+	@description = "This is a test for LPS-116078 and LPS-137065. The user could view the empty state when no pages or page templates in the site."
+	@priority = "4"
+	test ViewEmptyStateWhenNoPagesAndPageTemplatesInSite {
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("View the empty state in style book editor") {
+			AssertElementNotPresent(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertVisible(locator1 = "StyleBookEditor#NO_PAGE_MESSAGE");
+
+			AssertElementNotPresent(
+				index = "1",
+				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
+
+			AssertVisible(
+				key_text = "Publish",
+				locator1 = "Button#ANY");
 		}
 	}
 

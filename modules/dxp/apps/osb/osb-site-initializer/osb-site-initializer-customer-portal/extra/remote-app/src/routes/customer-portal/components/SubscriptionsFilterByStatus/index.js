@@ -51,7 +51,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 								? 'None'
 								: selectedStatus.join(', ')
 						}`}{' '}
-						
+
 						<ClayIcon symbol="caret-bottom" />
 					</ClayButton>
 				}

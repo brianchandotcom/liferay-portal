@@ -31,6 +31,8 @@ import {config} from '../../config/index';
 import {useId} from '../../utils/useId';
 import {ColorPaletteField} from './ColorPaletteField';
 
+const MAX_HEX_LENGTH = 7;
+
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
 	300
@@ -62,6 +64,59 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	const filteredTokenColorValues = tokenColorValues.filter((token) =>
 		token.label.toLowerCase().includes(color)
 	);
+
+	const onSetValue = (label, name, value) => {
+		setColor(value);
+		setTokenLabel(label);
+		onValueSelect(field.name, name);
+	};
+
+	const onBlurAutocompleteInput = ({target}) => {
+		let nextValue = isHexadecimal
+			? target.value.substring(0, MAX_HEX_LENGTH)
+			: target.value;
+
+		if (!nextValue) {
+			setColor(value);
+
+			return;
+		}
+		else if (nextValue !== value) {
+			const token = tokenColorValues.find(
+				(token) => token.label.toLowerCase() === nextValue
+			);
+
+			if (token || isHexadecimal) {
+				nextValue = token?.name || nextValue;
+
+				setTokenLabel(!isHexadecimal ? token.label : null);
+				onValueSelect(field.name, nextValue);
+
+				if (isHexadecimal) {
+					setCustomColors([nextValue.replace('#', '')]);
+				}
+			}
+			else {
+				setError(true);
+			}
+		}
+
+		setColor(nextValue);
+	};
+
+	const onChangeAutocompleteInput = ({target: {value}}) => {
+		if (error) {
+			setError(false);
+		}
+
+		setActiveAutocomplete(true);
+		setColor(value);
+		setIsHexadecimal(value.startsWith('#'));
+	};
+
+	const onClickAutocompleteItem = ({label, name, value}) => {
+		onSetValue(label, name, value);
+	};
 
 	tokenColorValues.forEach(
 		({
@@ -118,9 +173,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 								label={tokenLabel}
 								onSetActive={setActiveColorPicker}
 								onValueChange={({label, name, value}) => {
-									onValueSelect(field.name, name);
-									setColor(value);
-									setTokenLabel(label);
+									onSetValue(label, name, value);
 								}}
 								value={color}
 							/>
@@ -162,79 +215,8 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										<ClayAutocomplete.Input
 											className="page-editor__color-picker-field__autocomplete__input"
 											id={id}
-											onBlur={({target}) => {
-												let nextValue = isHexadecimal
-													? target.value.substring(
-															0,
-															7
-													  )
-													: target.value;
-
-												if (!nextValue) {
-													setColor(value);
-
-													return;
-												}
-												else if (
-													nextValue !== value
-												) {
-													const token = tokenColorValues.find(
-														(token) =>
-															token.label.toLowerCase() ===
-															nextValue
-													);
-
-													if (
-														token ||
-														isHexadecimal
-													) {
-														nextValue =
-															token?.name ||
-															nextValue;
-
-														setTokenLabel(
-															!isHexadecimal
-																? token.label
-																: null
-														);
-														onValueSelect(
-															field.name,
-															nextValue
-														);
-
-														if (isHexadecimal) {
-															setCustomColors([
-																nextValue.replace(
-																	'#',
-																	''
-																),
-															]);
-														}
-													}
-													else {
-														setError(true);
-													}
-												}
-
-												setColor(nextValue);
-
-												if (activeAutocomplete) {
-													setActiveAutocomplete(
-														false
-													);
-												}
-											}}
-											onChange={({target: {value}}) => {
-												if (error) {
-													setError(false);
-												}
-
-												setActiveAutocomplete(true);
-												setColor(value);
-												setIsHexadecimal(
-													value.startsWith('#')
-												);
-											}}
+											onBlur={onBlurAutocompleteInput}
+											onChange={onChangeAutocompleteInput}
 											role="combobox"
 											value={color}
 										/>
@@ -253,18 +235,11 @@ export function ColorPickerField({field, onValueSelect, value}) {
 														<ClayAutocomplete.Item
 															key={token.name}
 															match={color}
-															onClick={() => {
-																setColor(
-																	token.value
-																);
-																setTokenLabel(
-																	token.label
-																);
-																onValueSelect(
-																	field.name,
-																	token.name
-																);
-															}}
+															onClick={() =>
+																onClickAutocompleteItem(
+																	token
+																)
+															}
 															onMouseDown={(
 																event
 															) =>
@@ -323,15 +298,15 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										className="border-0"
 										displayType="secondary"
 										onClick={() => {
-											setColor(tokenValues[value].value);
-											setTokenLabel(null);
 											setCustomColors([
 												tokenValues[
 													value
 												].value.replace('#', ''),
 											]);
-											onValueSelect(
-												field.name,
+
+											onSetValue(
+												null,
+												tokenValues[value].value,
 												tokenValues[value].value
 											);
 										}}
@@ -355,9 +330,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 												setError(false);
 											}
 
-											setColor(value);
-											setTokenLabel(label);
-											onValueSelect(field.name, name);
+											onSetValue(label, name, value);
 										}}
 										showSelector={false}
 										value={color}
@@ -383,11 +356,11 @@ export function ColorPickerField({field, onValueSelect, value}) {
 										setError(false);
 									}
 
-									setColor('');
-									setTokenLabel(
-										Liferay.Language.get('default')
+									onSetValue(
+										Liferay.Language.get('default'),
+										'',
+										''
 									);
-									onValueSelect(field.name, '');
 								}}
 								small
 								symbol="times-circle"

@@ -46,7 +46,9 @@ if (Validator.isNotNull(keywords)) {
 
 String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
 
-uploadURL.setParameter("returnType", returnType);
+if (uploadURL != null) {
+	uploadURL.setParameter("returnType", returnType);
+}
 %>
 
 <liferay-util:html-top>
@@ -109,57 +111,62 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	</c:if>
 
 	<c:if test="<%= showDragAndDropZone && !showSearchInfo && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
-		<liferay-util:buffer
-			var="selectFileHTML"
-		>
-			<input accept="<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>" class="input-file" id="<%= randomNamespace %>InputFile" type="file" />
+		<c:choose>
+			<c:when test="<%= FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>">
+				<div>
+					<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
-			<label class="btn btn-secondary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
-		</liferay-util:buffer>
+					<react:component
+						data='<%=
+							HashMapBuilder.<String, Object>put(
+								"closeCaption", LanguageUtil.get(request, tabName)
+							).put(
+								"editImageURL",
+								() -> {
+									if (editImageURL != null) {
+										return editImageURL.toString();
+									}
 
-		<div class="drop-enabled drop-zone">
-			<c:choose>
-				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-					<%= selectFileHTML %>
-				</c:when>
-				<c:otherwise>
-					<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
-				</c:otherwise>
-			</c:choose>
-		</div>
+									return null;
+								}
+							).put(
+								"itemSelectedEventName", itemSelectedEventName
+							).put(
+								"maxFileSize", maxFileSize
+							).put(
+								"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
+							).put(
+								"uploadItemURL", uploadURL.toString()
+							).put(
+								"validExtensions", StringUtil.merge(extensions)
+							).build()
+						%>'
+						module="item_selector_uploader/js/SingleFileUploader"
+					/>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<liferay-util:buffer
+					var="selectFileHTML"
+				>
+					<input accept="<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>" class="input-file" id="<%= randomNamespace %>InputFile" type="file" />
+
+					<label class="btn btn-secondary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
+				</liferay-util:buffer>
+
+				<div class="drop-enabled drop-zone">
+					<c:choose>
+						<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+							<%= selectFileHTML %>
+						</c:when>
+						<c:otherwise>
+							<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
-
-	<div>
-		<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
-
-		<react:component
-			data='<%=
-				HashMapBuilder.<String, Object>put(
-					"closeCaption", LanguageUtil.get(request, tabName)
-				).put(
-					"editImageURL",
-					() -> {
-						if (editImageURL != null) {
-							return editImageURL.toString();
-						}
-
-						return null;
-					}
-				).put(
-					"itemSelectedEventName", itemSelectedEventName
-				).put(
-					"maxFileSize", maxFileSize
-				).put(
-					"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
-				).put(
-					"uploadItemURL", uploadURL.toString()
-				).put(
-					"validExtensions", StringUtil.merge(extensions)
-				).build()
-			%>'
-			module="item_selector_uploader/js/SingleFileUploader"
-		/>
-	</div>
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
 		<liferay-ui:search-container
@@ -646,7 +653,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 		validExtensions:
 			'<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>',
 
-		<c:if test="<%= uploadURL != null %>">
+		<c:if test="<%= (uploadURL != null) && !FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>">
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
 			uploadItemURL: '<%= uploadURL.toString() %>',
 		</c:if>

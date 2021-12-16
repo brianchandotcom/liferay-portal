@@ -52,7 +52,7 @@ definition {
 	test AuditGraphApplySecondFilter {
 
 		// TODO LPS-144034 AuditGraphApplySecondFilter pending implementation
-		
+
 	}
 
 	@description = "When a user clicks on one of the colored bars of the audit graph, the filters corresponding to the categories in that bar are applied, they are shown as filter labels in the management tool bar and the list of contents is filtered by them"

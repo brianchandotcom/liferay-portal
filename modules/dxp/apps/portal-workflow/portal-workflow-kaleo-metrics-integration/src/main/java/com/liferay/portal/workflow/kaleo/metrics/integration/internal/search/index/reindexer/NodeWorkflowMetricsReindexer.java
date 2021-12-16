@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -79,12 +80,8 @@ public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 				}
 
 				_nodeWorkflowMetricsIndexer.addNode(
-					kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
-					kaleoNode.isInitial(), kaleoNode.getModifiedDate(),
-					kaleoNode.getName(), kaleoNode.getKaleoNodeId(),
-					kaleoNode.getKaleoDefinitionId(),
-					kaleoDefinitionVersion.getVersion(), kaleoNode.isTerminal(),
-					kaleoNode.getType());
+					_indexerHelper.createAddNodeRequest(
+						kaleoDefinitionVersion, kaleoNode));
 			});
 
 		actionableDynamicQuery.performActions();
@@ -120,12 +117,8 @@ public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 				}
 
 				_nodeWorkflowMetricsIndexer.addNode(
-					kaleoTask.getCompanyId(), kaleoTask.getCreateDate(), false,
-					kaleoTask.getModifiedDate(), kaleoTask.getName(),
-					kaleoTask.getKaleoTaskId(),
-					kaleoTask.getKaleoDefinitionId(),
-					kaleoDefinitionVersion.getVersion(), false,
-					NodeType.TASK.name());
+					_indexerHelper.createAddNodeRequest(
+						kaleoDefinitionVersion, kaleoTask));
 
 				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
 					atomicCounter.incrementAndGet(), total, "node");
@@ -133,6 +126,9 @@ public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	private IndexerHelper _indexerHelper;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

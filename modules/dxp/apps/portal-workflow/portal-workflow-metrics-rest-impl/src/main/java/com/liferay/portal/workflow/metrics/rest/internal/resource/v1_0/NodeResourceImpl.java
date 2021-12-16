@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.util.NodeUtil;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
@@ -57,12 +58,31 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 
 	@Override
 	public Node postProcessNode(Long processId, Node node) throws Exception {
+		AddNodeRequest.Builder builder = new AddNodeRequest.Builder();
+
 		return NodeUtil.toNode(
 			_nodeWorkflowMetricsIndexer.addNode(
-				contextCompany.getCompanyId(), node.getDateCreated(),
-				node.getInitial(), node.getDateModified(), node.getName(),
-				node.getId(), processId, node.getProcessVersion(),
-				node.getTerminal(), node.getType()),
+				builder.companyId(
+					contextCompany.getCompanyId()
+				).createDate(
+					node.getDateCreated()
+				).initial(
+					node.getInitial()
+				).modifiedDate(
+					node.getDateModified()
+				).name(
+					node.getName()
+				).nodeId(
+					node.getId()
+				).processId(
+					processId
+				).processVersion(
+					node.getProcessVersion()
+				).terminal(
+					node.getTerminal()
+				).type(
+					node.getType()
+				).build()),
 			_language,
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				contextAcceptLanguage.getPreferredLocale(),

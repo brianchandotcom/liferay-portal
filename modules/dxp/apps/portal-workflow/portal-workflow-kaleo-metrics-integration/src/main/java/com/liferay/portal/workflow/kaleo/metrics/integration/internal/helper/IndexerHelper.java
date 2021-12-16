@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -40,6 +41,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
@@ -65,6 +67,62 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = IndexerHelper.class)
 public class IndexerHelper {
+
+	public AddNodeRequest createAddNodeRequest(
+		KaleoDefinitionVersion kaleoDefinitionVersion, KaleoNode kaleoNode) {
+
+		AddNodeRequest.Builder builder = new AddNodeRequest.Builder();
+
+		return builder.companyId(
+			kaleoNode.getCompanyId()
+		).createDate(
+			kaleoNode.getCreateDate()
+		).initial(
+			kaleoNode.isInitial()
+		).modifiedDate(
+			kaleoNode.getModifiedDate()
+		).name(
+			kaleoNode.getName()
+		).nodeId(
+			kaleoNode.getKaleoNodeId()
+		).processId(
+			kaleoNode.getKaleoDefinitionId()
+		).processVersion(
+			kaleoDefinitionVersion.getVersion()
+		).terminal(
+			kaleoNode.isTerminal()
+		).type(
+			kaleoNode.getType()
+		).build();
+	}
+
+	public AddNodeRequest createAddNodeRequest(
+		KaleoDefinitionVersion kaleoDefinitionVersion, KaleoTask kaleoTask) {
+
+		AddNodeRequest.Builder builder = new AddNodeRequest.Builder();
+
+		return builder.companyId(
+			kaleoTask.getCompanyId()
+		).createDate(
+			kaleoTask.getCreateDate()
+		).initial(
+			false
+		).modifiedDate(
+			kaleoTask.getModifiedDate()
+		).name(
+			kaleoTask.getName()
+		).nodeId(
+			kaleoTask.getKaleoTaskId()
+		).processId(
+			kaleoTask.getKaleoDefinitionId()
+		).processVersion(
+			kaleoDefinitionVersion.getVersion()
+		).terminal(
+			false
+		).type(
+			NodeType.TASK.name()
+		).build();
+	}
 
 	public AddTaskRequest createAddTaskRequest(
 		KaleoInstance kaleoInstance,

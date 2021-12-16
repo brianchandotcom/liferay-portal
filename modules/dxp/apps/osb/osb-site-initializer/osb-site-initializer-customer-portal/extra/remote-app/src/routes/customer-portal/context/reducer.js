@@ -1,5 +1,6 @@
 export const actionTypes = {
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
+	UPDATE_SUBSCRIPTION_GROUPS: 'UPDATE_SUBSCRIPTION_GROUPS',
 	UPDATE_USER_ACCOUNT: 'UPDATE_USER_ACCOUNT',
 };
 
@@ -15,6 +16,12 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				project: action.payload,
+			};
+		}
+		case actionTypes.UPDATE_SUBSCRIPTION_GROUPS: {
+			return {
+				...state,
+				subscriptionGroups: action.payload,
 			};
 		}
 		default: {

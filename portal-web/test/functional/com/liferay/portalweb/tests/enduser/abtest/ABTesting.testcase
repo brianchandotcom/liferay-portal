@@ -1009,15 +1009,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-99421: The delete action shows in the test action menu when the test status allows it"
-	@ignore = "true"
-	@priority = "3"
-	test DeleteButtonShows {
-
-		// TODO LPS-144027 DeleteButtonShows pending implementation
-
-	}
-
 	@description = "LPS-99421: The test is removed when the delete action is clicked"
 	@ignore = "true"
 	@priority = "3"
@@ -1036,6 +1027,15 @@ definition {
 
 	}
 
+	@description = "LPS-99421: The test deletion in AC is reflected on DXP"
+	@ignore = "true"
+	@priority = "4"
+	test DeleteABTestInACViewInDXP {
+
+		// TODO LPS-144027 DeleteABTestInACViewInDXP pending implementation
+
+	}
+
 	@description = "LPS-99421: The test deletion in DXP is reflected on AC"
 	@ignore = "true"
 	@priority = "4"
@@ -1045,12 +1045,12 @@ definition {
 
 	}
 
-	@description = "LPS-99421: The test deletion in AC is reflected on DXP"
+	@description = "LPS-99421: The delete action shows in the test action menu when the test status allows it"
 	@ignore = "true"
-	@priority = "4"
-	test DeleteABTestInACViewInDXP {
+	@priority = "3"
+	test DeleteButtonShows {
 
-		// TODO LPS-144027 DeleteABTestInACViewInDXP pending implementation
+		// TODO LPS-144027 DeleteButtonShows pending implementation
 
 	}
 

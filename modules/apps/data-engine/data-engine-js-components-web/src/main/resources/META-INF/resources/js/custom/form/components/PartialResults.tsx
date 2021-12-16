@@ -110,7 +110,7 @@ interface IProps {
 }
 
 interface IReportDataResponse {
-	data: unknown;
+	data?: string;
 	fields: unknown[];
 	formReportRecordsFieldValuesURL: unknown;
 	lastModifiedDate: string;

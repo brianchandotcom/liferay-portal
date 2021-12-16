@@ -18,22 +18,8 @@ import React from 'react';
 import FormReport from '../../../../src/main/resources/META-INF/resources/js/custom/form-report';
 
 const props = {
-	data: {
-		field1: {
-			type: 'radio',
-			values: {
-				option1: 2,
-				option2: 1,
-			},
-		},
-		field2: {
-			type: 'radio',
-			values: {
-				option1: 2,
-				option2: 1,
-			},
-		},
-	},
+	data:
+		'{"field1":{"type":"radio","values":{"option1":2,"option2":1}},"field2":{"type":"radio","values":{"option1":2,"option2":1}}}',
 	fields: [
 		{
 			label: 'Field 1',

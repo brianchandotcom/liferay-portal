@@ -35,7 +35,7 @@ export default function FormReport({
 
 	const {data: newData, fields: newFields} = transformSearchLocationValues(
 		fields,
-		data
+		JSON.parse(data)
 	);
 
 	return (

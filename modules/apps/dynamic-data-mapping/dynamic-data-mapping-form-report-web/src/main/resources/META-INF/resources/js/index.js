@@ -13,8 +13,5 @@
  */
 
 import {FormReport} from 'data-engine-js-components-web';
-import React from 'react';
 
-export default function main({data, ...restProps}) {
-	return <FormReport {...restProps} data={data && JSON.parse(data)} />;
-}
+export default FormReport;

@@ -166,4 +166,58 @@ definition {
                 attributeValue = "AC Page - Site Name - ${dataSource}");
 		}
 	}
+
+    @description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10214 | Test Summary: Edit global attributes name"
+	@priority = "5"
+	test RenameGlobalAttribute {
+        var globalAttributeName = "pageTitle";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to global attributes tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACNavigation.openItem(itemName = "Global Attributes");
+		}
+
+		task ("Edit the global attribute") {
+			ACNavigation.openItem(itemName = "${globalAttributeName}");
+
+			ACUtils.clickAnyButton(button = "Edit");
+		}
+
+		task ("Change the display name of the global attribute") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${globalAttributeName} Display Name");
+		}
+
+		task ("Back to Event Attributes and Navigation to global attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Global Attributes");
+		}
+
+		task ("Check if the display name has been changed") {
+			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${globalAttributeName} Display Name");
+		}
+	}
 }

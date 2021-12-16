@@ -131,6 +131,13 @@ definition {
 		return "${customEventName}";
 	}
 
+	macro getSampleRawData {
+		var key_attributeName = "${attributeName}";
+		var sampleRawDataValue = selenium.getText("ACCustomEvents#SAMPLE_RAW_DATA_LIST");
+
+		return "${sampleRawDataValue}";
+	}
+
 	macro hideAllCustomEvents {
 		var key_actionButton = "Block";
 
@@ -233,13 +240,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro getSampleRawData {
-		var key_attributeName = "${attributeName}";
-		var sampleRawDataValue = selenium.getText("ACCustomEvents#SAMPLE_RAW_DATA_LIST");
-
-		return "${sampleRawDataValue}";
 	}
 
 }

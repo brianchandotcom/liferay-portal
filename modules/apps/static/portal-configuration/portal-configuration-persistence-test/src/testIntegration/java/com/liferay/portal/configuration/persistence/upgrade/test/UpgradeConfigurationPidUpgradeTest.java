@@ -31,20 +31,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
-
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.Objects;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -96,103 +95,41 @@ public class UpgradeConfigurationPidUpgradeTest {
 			});
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		db.runSQL(
-			"delete from Configuration_ where configurationId like '" +
-				_SERVICE_FACTORY_PID + "%'");
-
-		for (char separator :
-				Arrays.asList(
-					CharPool.TILDE, CharPool.DASH, CharPool.UNDERLINE)) {
-
-			File file = new File(
-				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-				_SERVICE_FACTORY_PID + separator + "default.config");
-
-			Files.deleteIfExists(file.toPath());
-		}
+	@Test
+	public void testUpgradeConfigurationWithFile() throws Exception {
+		_testUpgradeConfigurationWithFile(CharPool.DASH);
+		_testUpgradeConfigurationWithFile(CharPool.PERIOD);
+		_testUpgradeConfigurationWithFile(CharPool.UNDERLINE);
+		_testUpgradeConfigurationWithFile(CharPool.TILDE);
 	}
 
 	@Test
-	public void testUpgradeConfigurationPid() throws Exception {
-		_createUIConfiguration();
-
-		_upgradeConfigurationPidUpgradeProcess.upgrade();
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select configurationId from Configuration_ where ",
-					"configurationId like '", _SERVICE_FACTORY_PID, "%'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				Assert.assertEquals(
-					_SERVICE_FACTORY_PID + "~instance1",
-					resultSet.getString("configurationId"));
-			}
-		}
+	public void testUpgradeConfigurationWithoutFile() throws Exception {
+		_testUpgradeConfigurationWithoutFile(CharPool.DASH);
+		_testUpgradeConfigurationWithoutFile(CharPool.PERIOD);
+		_testUpgradeConfigurationWithoutFile(CharPool.UNDERLINE);
+		_testUpgradeConfigurationWithoutFile(CharPool.TILDE);
 	}
 
-	@Test
-	public void testUpgradeDashFileSeparator() throws Exception {
-		_createFileConfiguration(CharPool.DASH);
-
-		_upgradeConfigurationPidUpgradeProcess.upgrade();
-
-		Dictionary<String, String> dictionary = _getDictionary();
-
-		Assert.assertEquals(
-			_SERVICE_FACTORY_PID + "~default.config",
-			dictionary.get("service.pid"));
-	}
-
-	@Test
-	public void testUpgradeDictionary() throws Exception {
-		_createUIConfiguration();
-
-		_upgradeConfigurationPidUpgradeProcess.upgrade();
-
-		Dictionary<String, String> dictionary = _getDictionary();
-
-		Assert.assertEquals(
-			_SERVICE_FACTORY_PID, dictionary.get("service.factoryPid"));
-
-		Assert.assertEquals(
-			_SERVICE_FACTORY_PID + "~instance1", dictionary.get("service.pid"));
-	}
-
-	@Test
-	public void testUpgradeTildeFileSeparator() throws Exception {
-		_createFileConfiguration(CharPool.TILDE);
-
-		_upgradeConfigurationPidUpgradeProcess.upgrade();
-
-		Dictionary<String, String> dictionary = _getDictionary();
-
-		Assert.assertEquals(
-			_SERVICE_FACTORY_PID + "~default.config",
-			dictionary.get("service.pid"));
-	}
-
-	@Test
-	public void testUpgradeUnderlineFileSeparator() throws Exception {
-		_createFileConfiguration(CharPool.UNDERLINE);
-
-		_upgradeConfigurationPidUpgradeProcess.upgrade();
-
-		Dictionary<String, String> dictionary = _getDictionary();
-
-		Assert.assertEquals(
-			_SERVICE_FACTORY_PID + "~default.config",
-			dictionary.get("service.pid"));
-	}
-
-	private void _createConfiguration(Dictionary<String, String> dictionary)
+	private void _addConfiguration(
+			String serviceFactoryPid, String servicePid,
+			String fileinstallFileName)
 		throws Exception {
+
+		Dictionary<String, String> dictionary = HashMapDictionaryBuilder.put(
+			"felix.fileinstall.filename",
+			() -> {
+				if (fileinstallFileName != null) {
+					return fileinstallFileName;
+				}
+
+				return null;
+			}
+		).put(
+			"service.factoryPid", serviceFactoryPid
+		).put(
+			"service.pid", servicePid
+		).build();
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -204,7 +141,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 				"insert into Configuration_ (configurationId, dictionary) " +
 					"values(?, ?)")) {
 
-			preparedStatement.setString(1, _CONFIGURATION_PID);
+			preparedStatement.setString(1, servicePid);
 
 			preparedStatement.setString(
 				2, unsyncByteArrayOutputStream.toString());
@@ -213,57 +150,96 @@ public class UpgradeConfigurationPidUpgradeTest {
 		}
 	}
 
-	private void _createFileConfiguration(char separator) throws Exception {
-		String fileName = _SERVICE_FACTORY_PID + separator + "default.config";
-
-		File file = new File(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
-
-		if (!file.exists()) {
-			Files.createFile(file.toPath());
-		}
-
-		_createConfiguration(
-			HashMapDictionaryBuilder.put(
-				"felix.fileinstall.filename", fileName
-			).put(
-				"service.factoryPid", _SERVICE_FACTORY_PID
-			).put(
-				"service.pid", _CONFIGURATION_PID
-			).build());
-	}
-
-	private void _createUIConfiguration() throws Exception {
-		_createConfiguration(
-			HashMapDictionaryBuilder.put(
-				"service.factoryPid", _SERVICE_FACTORY_PID
-			).put(
-				"service.pid", _CONFIGURATION_PID
-			).build());
-	}
-
-	private Dictionary<String, String> _getDictionary() throws Exception {
-		String dictionaryString = null;
+	private void _assertConfiguration(
+			String serviceFactoryPid, String servicePid,
+			String fileinstallFileName)
+		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select dictionary from Configuration_ where ",
-					"configurationId like '", _SERVICE_FACTORY_PID, "%'"));
+					"configurationId = '", servicePid, "'"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				dictionaryString = resultSet.getString("dictionary");
+				String dictionaryString = resultSet.getString("dictionary");
+
+				Dictionary<String, String> dictionary =
+					ConfigurationHandler.read(
+						new UnsyncByteArrayInputStream(
+							dictionaryString.getBytes(StringPool.UTF8)));
+
+				Assert.assertEquals(
+					serviceFactoryPid, dictionary.get("service.factoryPid"));
+
+				Assert.assertEquals(servicePid, dictionary.get("service.pid"));
+
+				Assert.assertEquals(
+					fileinstallFileName,
+					dictionary.get("felix.fileinstall.filename"));
 			}
 		}
-
-		return ConfigurationHandler.read(
-			new UnsyncByteArrayInputStream(
-				dictionaryString.getBytes(StringPool.UTF8)));
 	}
 
-	private static final String _CONFIGURATION_PID =
-		"test.configuration.instance1";
+	private void _removeConfiguration(String serviceFactoryPid)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(
+			"delete from Configuration_ where configurationId like '" +
+				serviceFactoryPid + "%'");
+	}
+
+	private void _testUpgradeConfigurationWithFile(char separator)
+		throws Exception {
+
+		String fileName = _SERVICE_FACTORY_PID + separator + "default.config";
+
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+		if (!Files.exists(path)) {
+			Files.createFile(path);
+		}
+
+		try {
+			_addConfiguration(
+				_SERVICE_FACTORY_PID, _SERVICE_FACTORY_PID + ".instance1",
+				fileName);
+
+			_upgradeConfigurationPidUpgradeProcess.upgrade();
+
+			_assertConfiguration(
+				_SERVICE_FACTORY_PID, _SERVICE_FACTORY_PID + "~default",
+				fileName);
+		}
+		finally {
+			_removeConfiguration(_SERVICE_FACTORY_PID);
+
+			Files.delete(path);
+		}
+	}
+
+	private void _testUpgradeConfigurationWithoutFile(char separator)
+		throws Exception {
+
+		try {
+			_addConfiguration(
+				_SERVICE_FACTORY_PID,
+				_SERVICE_FACTORY_PID + separator + "instance1", null);
+
+			_upgradeConfigurationPidUpgradeProcess.upgrade();
+
+			_assertConfiguration(
+				_SERVICE_FACTORY_PID, _SERVICE_FACTORY_PID + "~instance1",
+				null);
+		}
+		finally {
+			_removeConfiguration(_SERVICE_FACTORY_PID);
+		}
+	}
 
 	private static final String _SERVICE_FACTORY_PID = "test.configuration";
 

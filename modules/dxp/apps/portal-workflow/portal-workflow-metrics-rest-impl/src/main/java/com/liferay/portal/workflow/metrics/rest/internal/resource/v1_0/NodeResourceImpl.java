@@ -21,6 +21,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.util.NodeUtil;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
@@ -45,8 +46,14 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 	public void deleteProcessNode(Long processId, Long nodeId)
 		throws Exception {
 
+		DeleteNodeRequest.Builder builder = new DeleteNodeRequest.Builder();
+
 		_nodeWorkflowMetricsIndexer.deleteNode(
-			contextCompany.getCompanyId(), nodeId);
+			builder.companyId(
+				contextCompany.getCompanyId()
+			).nodeId(
+				nodeId
+			).build());
 	}
 
 	@Override

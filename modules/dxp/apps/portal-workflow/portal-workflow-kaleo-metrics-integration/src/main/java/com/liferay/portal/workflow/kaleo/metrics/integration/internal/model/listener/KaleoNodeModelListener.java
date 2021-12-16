@@ -19,6 +19,7 @@ import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 
 import java.util.Objects;
@@ -56,8 +57,14 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 			return;
 		}
 
+		DeleteNodeRequest.Builder builder = new DeleteNodeRequest.Builder();
+
 		_nodeWorkflowMetricsIndexer.deleteNode(
-			kaleoNode.getCompanyId(), kaleoNode.getKaleoNodeId());
+			builder.companyId(
+				kaleoNode.getCompanyId()
+			).nodeId(
+				kaleoNode.getKaleoNodeId()
+			).build());
 	}
 
 	@Reference

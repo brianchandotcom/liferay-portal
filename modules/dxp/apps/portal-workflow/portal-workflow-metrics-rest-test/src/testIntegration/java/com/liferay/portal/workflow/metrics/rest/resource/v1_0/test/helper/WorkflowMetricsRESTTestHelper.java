@@ -50,6 +50,7 @@ import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
@@ -894,7 +895,14 @@ public class WorkflowMetricsRESTTestHelper {
 	public void deleteNode(long companyId, Node node, long processId)
 		throws Exception {
 
-		_nodeWorkflowMetricsIndexer.deleteNode(companyId, node.getId());
+		DeleteNodeRequest.Builder builder = new DeleteNodeRequest.Builder();
+
+		_nodeWorkflowMetricsIndexer.deleteNode(
+			builder.companyId(
+				companyId
+			).nodeId(
+				node.getId()
+			).build());
 
 		_assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId),

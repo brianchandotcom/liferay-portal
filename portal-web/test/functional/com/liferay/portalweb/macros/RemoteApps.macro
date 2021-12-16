@@ -111,36 +111,20 @@ definition {
 	}
 
 	macro editCustomElement {
-		TripleClick(
-			key_text = "Name",
-			locator1 = "TextInput#ANY");
-
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
 			value1 = "${entryName}");
-
-		TripleClick(
-			key_text = "HTML Element Name",
-			locator1 = "TextInput#ANY");
 
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
 			value1 = "${entryHTMLName}");
 
-		TripleClick(
-			key_text = "CSS URL",
-			locator1 = "TextInput#ANY");
-
 		Type(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
 			value1 = "${entryCSSURL}");
-
-		TripleClick(
-			key_text = "Properties",
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES");
 
 		Type(
 			key_text = "Properties",

@@ -55,6 +55,7 @@ export function Container({
 	const {
 		ffShowPartialResultsEnabled,
 		formReportDataURL,
+		hasDescription,
 		showSubmitButton,
 		submitLabel,
 	} = useConfig();
@@ -77,6 +78,7 @@ export function Container({
 		<>
 			{showReport ? (
 				<PartialResults
+					hasDescription={hasDescription}
 					onShow={() => setShowReport(false)}
 					reportDataURL={formReportDataURL}
 				/>

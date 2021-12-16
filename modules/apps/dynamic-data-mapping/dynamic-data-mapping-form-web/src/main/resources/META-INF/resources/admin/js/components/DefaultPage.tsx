@@ -39,6 +39,7 @@ const DefaultPage: React.FC<IProps> = ({
 
 			{showReport ? (
 				<PartialResults
+					hasDescription={!!formDescription}
 					onShow={() => setShowReport(false)}
 					reportDataURL={formReportDataURL as string}
 				/>

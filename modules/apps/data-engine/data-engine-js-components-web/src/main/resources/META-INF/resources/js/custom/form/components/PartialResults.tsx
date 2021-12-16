@@ -20,15 +20,15 @@ import React, {useEffect} from 'react';
 
 // @ts-ignore
 
-import {useConfig} from '../../../core/hooks/useConfig.es';
-
-// @ts-ignore
-
 import FormReport from '../../form-report/index';
 
 import './PartialResults.scss';
 
-const PartialResults: React.FC<IProps> = ({onShow, reportDataURL}) => {
+const PartialResults: React.FC<IProps> = ({
+	hasDescription,
+	onShow,
+	reportDataURL,
+}) => {
 	const {
 		data,
 		fields = [],
@@ -39,7 +39,6 @@ const PartialResults: React.FC<IProps> = ({onShow, reportDataURL}) => {
 	} =
 		(useResource({fetch, link: reportDataURL})
 			.resource as IReportDataResponse | null) ?? {};
-	const {hasDescription} = useConfig();
 
 	useEffect(() => {
 		const formsPortlet = document.querySelector('.portlet-forms');
@@ -105,6 +104,7 @@ const PartialResults: React.FC<IProps> = ({onShow, reportDataURL}) => {
 export default PartialResults;
 
 interface IProps {
+	hasDescription?: boolean;
 	onShow: () => void;
 	reportDataURL: string;
 }

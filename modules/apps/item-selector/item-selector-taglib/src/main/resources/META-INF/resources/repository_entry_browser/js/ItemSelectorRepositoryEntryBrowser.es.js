@@ -121,62 +121,70 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			)
 		);
 
-		const inputFileNode = this.one('input[type="file"]');
+		if (!this.ffItemSelectorSingleFileUploaderEnabled) {
+			const inputFileNode = this.one('input[type="file"]');
 
-		if (inputFileNode) {
-			this._eventHandler.add(
-				inputFileNode.addEventListener('change', (event) => {
-					this._validateFile(event.target.files[0]);
-				})
-			);
-		}
+			if (inputFileNode) {
+				this._eventHandler.add(
+					inputFileNode.addEventListener('change', (event) => {
+						this._validateFile(event.target.files[0]);
+					})
+				);
+			}
 
-		if (this.uploadItemURL) {
-			const itemSelectorUploader = this._itemSelectorUploader;
-			const rootNode = this.rootNode;
+			if (this.uploadItemURL) {
+				const itemSelectorUploader = this._itemSelectorUploader;
 
-			this._eventHandler.add(
-				itemSelectorUploader.after('itemUploadCancel', () => {
-					this.closeItemSelectorPreview();
-				}),
-				itemSelectorUploader.after('itemUploadComplete', (itemData) => {
-					const itemFile = itemData.file;
-					const itemFileUrl = itemFile.url;
-					let itemFileValue = itemFile.resolvedValue;
+				const rootNode = this.rootNode;
 
-					if (!itemFileValue) {
-						const imageValue = {
-							fileEntryId: itemFile.fileEntryId,
-							groupId: itemFile.groupId,
-							title: itemFile.title,
-							type: itemFile.type,
-							url: itemFileUrl,
-							uuid: itemFile.uuid,
-						};
+				this._eventHandler.add(
+					itemSelectorUploader.after('itemUploadCancel', () => {
+						this.closeItemSelectorPreview();
+					}),
+					itemSelectorUploader.after(
+						'itemUploadComplete',
+						(itemData) => {
+							const itemFile = itemData.file;
+							const itemFileUrl = itemFile.url;
+							let itemFileValue = itemFile.resolvedValue;
 
-						itemFileValue = JSON.stringify(imageValue);
-					}
+							if (!itemFileValue) {
+								const imageValue = {
+									fileEntryId: itemFile.fileEntryId,
+									groupId: itemFile.groupId,
+									title: itemFile.title,
+									type: itemFile.type,
+									url: itemFileUrl,
+									uuid: itemFile.uuid,
+								};
 
-					Liferay.componentReady('ItemSelectorPreview').then(() => {
-						Liferay.fire('updateCurrentItem', {
-							...itemFile,
-							value: itemFileValue,
-						});
-					});
-				}),
-				itemSelectorUploader.after('itemUploadError', (event) => {
-					this._onItemUploadError(event);
-				}),
-				rootNode.addEventListener(STR_DRAG_OVER, (event) =>
-					this._ddEventHandler(event)
-				),
-				rootNode.addEventListener(STR_DRAG_LEAVE, (event) =>
-					this._ddEventHandler(event)
-				),
-				rootNode.addEventListener(STR_DROP, (event) =>
-					this._ddEventHandler(event)
-				)
-			);
+								itemFileValue = JSON.stringify(imageValue);
+							}
+
+							Liferay.componentReady('ItemSelectorPreview').then(
+								() => {
+									Liferay.fire('updateCurrentItem', {
+										...itemFile,
+										value: itemFileValue,
+									});
+								}
+							);
+						}
+					),
+					itemSelectorUploader.after('itemUploadError', (event) => {
+						this._onItemUploadError(event);
+					}),
+					rootNode.addEventListener(STR_DRAG_OVER, (event) =>
+						this._ddEventHandler(event)
+					),
+					rootNode.addEventListener(STR_DRAG_LEAVE, (event) =>
+						this._ddEventHandler(event)
+					),
+					rootNode.addEventListener(STR_DROP, (event) =>
+						this._ddEventHandler(event)
+					)
+				);
+			}
 		}
 	}
 
@@ -529,6 +537,16 @@ ItemSelectorRepositoryEntryBrowser.STATE = {
 	 * @type {String}
 	 */
 	editImageURL: Config.string(),
+
+	/**
+	 * The SingleFileUploader is enabled outside of ItemSelectorRepository entry browser
+	 *
+	 * @instance
+	 * @memberof ItemSelectorRepositoryEntryBrowser
+	 * @type {boolean}
+	 * @default false
+	 */
+	ffItemSelectorSingleFileUploaderEnabled: Config.bool().value(false),
 
 	/**
 	 * Time to hide the alert messages.

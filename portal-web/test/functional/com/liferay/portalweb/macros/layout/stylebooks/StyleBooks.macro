@@ -75,6 +75,20 @@ definition {
 			locator1 = "Card#CARD_SELECTED");
 	}
 
+	macro viewCurrentPreviewItem {
+		AssertTextEquals(
+			index = "2",
+			locator1 = "StyleBookEditor#PREVIEW_SELECTOR",
+			value1 = "${previewItem}");
+	}
+
+	macro viewCurrentPreviewType {
+		AssertTextEquals(
+			index = "1",
+			locator1 = "StyleBookEditor#PREVIEW_SELECTOR",
+			value1 = "${previewType}");
+	}
+
 	macro waitForAutoSave {
 		Pause(locator1 = "1000");
 

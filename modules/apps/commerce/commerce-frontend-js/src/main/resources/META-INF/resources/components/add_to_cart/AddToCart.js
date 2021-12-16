@@ -27,17 +27,6 @@ import QuantitySelector from '../quantity_selector/QuantitySelector';
 import AddToCartButton from './AddToCartButton';
 import {ALL} from './constants';
 
-function getMinQuantity(settings) {
-	if (settings?.quantityDetails?.allowedQuantities?.length) {
-		return Math.min(...settings.quantityDetails.allowedQuantities);
-	}
-
-	return getProductMinQuantity(
-		settings?.quantityDetails?.minQuantity,
-		settings?.quantityDetails?.multipleQuantity
-	);
-}
-
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function AddToCart({
@@ -59,7 +48,12 @@ function AddToCart({
 	);
 	const [cpInstance, setCpInstance] = useState({
 		...initialCpInstance,
-		quantity: getMinQuantity(settings),
+		quantity: getProductMinQuantity({
+			allowedOrderQuantities:
+				settings.quantityDetails.allowedQuantities || [],
+			minOrderQuantity: settings.quantityDetails.minQuantity,
+			multipleOrderQuantity: settings.quantityDetails.multipleQuantity,
+		}),
 	});
 
 	const buttonDisabled = useMemo(() => {
@@ -78,7 +72,13 @@ function AddToCart({
 	useEffect(() => {
 		setCpInstance({
 			...initialCpInstance,
-			quantity: getMinQuantity(settings),
+			quantity: getProductMinQuantity({
+				allowedOrderQuantities:
+					settings.quantityDetails.allowedQuantities || [],
+				minOrderQuantity: settings.quantityDetails.minQuantity,
+				multipleOrderQuantity:
+					settings.quantityDetails.multipleQuantity,
+			}),
 		});
 	}, [initialCpInstance, settings]);
 

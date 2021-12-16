@@ -12,7 +12,7 @@
  * details.
  */
 
-export function getProductMinQuantity(minQuantity = 1, multipleQuantity = 1) {
+export function getMinQuantity(minQuantity = 1, multipleQuantity = 1) {
 	if (multipleQuantity <= 1) {
 		return minQuantity;
 	}
@@ -38,4 +38,21 @@ export function getProductMaxQuantity(maxQuantity, multipleQuantity = 1) {
 	const maxDifference = maxQuantity % multipleQuantity;
 
 	return maxQuantity - maxDifference;
+}
+
+export function getProductMinQuantity({
+	allowedOrderQuantities,
+	minOrderQuantity,
+	multipleOrderQuantity,
+}) {
+	let minQuantity;
+
+	if (allowedOrderQuantities.length) {
+		minQuantity = Math.min(...allowedOrderQuantities);
+	}
+	else {
+		minQuantity = getMinQuantity(minOrderQuantity, multipleOrderQuantity);
+	}
+
+	return minQuantity;
 }

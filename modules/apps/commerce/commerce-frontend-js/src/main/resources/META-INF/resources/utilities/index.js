@@ -15,6 +15,7 @@
 import {fetch} from 'frontend-js-web';
 
 import createOdataFilter from './odata';
+import {getProductMinQuantity} from './quantities';
 
 export const fetchHeaders = new Headers({
 	'Accept': 'application/json',
@@ -272,23 +273,6 @@ export function sortByKey(items, keyName) {
 	return sortedItems;
 }
 
-export function getMinQuantity({
-	allowedOrderQuantities,
-	minOrderQuantity,
-	multipleOrderQuantity,
-}) {
-	let minQuantity;
-
-	if (allowedOrderQuantities.length) {
-		minQuantity = Math.min(...allowedOrderQuantities);
-	}
-	else {
-		minQuantity = Math.max(minOrderQuantity, multipleOrderQuantity);
-	}
-
-	return minQuantity;
-}
-
 export function isProductPurchasable(
 	availability,
 	productConfiguration,
@@ -302,7 +286,9 @@ export function isProductPurchasable(
 		return true;
 	}
 
-	if (availability.stockQuantity > getMinQuantity(productConfiguration)) {
+	if (
+		availability.stockQuantity > getProductMinQuantity(productConfiguration)
+	) {
 		return true;
 	}
 

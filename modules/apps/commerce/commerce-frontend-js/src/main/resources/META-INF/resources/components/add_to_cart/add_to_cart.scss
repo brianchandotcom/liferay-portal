@@ -14,7 +14,6 @@
 	.cart-icon {
 		display: inline-block;
 		margin: 0 0.6rem;
-		opacity: 0.3;
 		position: relative;
 
 		.rtl & {
@@ -41,8 +40,6 @@
 
 	&.is-added {
 		.cart-icon {
-			opacity: 1;
-
 			&::after,
 			&::before {
 				background: $gray-100;

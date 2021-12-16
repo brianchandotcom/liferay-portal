@@ -9,10 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {
-	getMinQuantity,
-	isProductPurchasable,
-} from 'commerce-frontend-js/utilities/index';
+import {isProductPurchasable} from 'commerce-frontend-js/utilities/index';
+import {getProductMinQuantity} from 'commerce-frontend-js/utilities/quantities';
 
 import {DIAGRAM_LABELS_MAX_LENGTH, DRAG_AND_DROP_THRESHOLD} from './constants';
 
@@ -120,7 +118,7 @@ export function formatMappedProductForTable(mappedProducts, isAdmin) {
 			...mappedProduct,
 			initialQuantity: isAdmin
 				? 0
-				: getMinQuantity(mappedProduct.productConfiguration),
+				: getProductMinQuantity(mappedProduct.productConfiguration),
 			selectable: isAdmin
 				? false
 				: isProductPurchasable(

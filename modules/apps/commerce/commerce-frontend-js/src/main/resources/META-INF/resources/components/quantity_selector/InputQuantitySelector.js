@@ -17,8 +17,8 @@ import {debounce} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {
+	getMinQuantity,
 	getProductMaxQuantity,
-	getProductMinQuantity,
 } from '../../utilities/quantities';
 
 function InputQuantitySelector({
@@ -37,7 +37,7 @@ function InputQuantitySelector({
 	);
 
 	const inputMin = useMemo(
-		() => getProductMinQuantity(minQuantity, multipleQuantity),
+		() => getMinQuantity(minQuantity, multipleQuantity),
 		[multipleQuantity, minQuantity]
 	);
 

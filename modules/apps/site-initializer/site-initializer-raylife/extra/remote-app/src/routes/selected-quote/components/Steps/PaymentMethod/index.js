@@ -12,6 +12,8 @@ const PaymentMethod = () => {
 	const [agree, setAgree] = useState(false);
 	const [{orderId, product}] = useContext(SelectedQuoteContext);
 	const [methods, setMethods] = useState([]);
+	const productDiscounted = Number(product.price) * 0.95;
+	const productPromo = Number(product.price) * 0.05;
 
 	useEffect(() => {
 		if (orderId) {
@@ -34,13 +36,13 @@ const PaymentMethod = () => {
 					options: [
 						{
 							checked: true,
-							description: `Save $${Number(
-								product.promo
-							).toLocaleString('en-US')}`,
+							description: `Save $${productPromo.toLocaleString(
+								'en-US'
+							)}`,
 							id: 0,
-							title: `Pay in full – $${Number(
-								product.price
-							).toLocaleString('en-US')}`,
+							title: `Pay in full – $${productDiscounted.toLocaleString(
+								'en-US'
+							)}`,
 						},
 						{
 							checked: false,

@@ -480,21 +480,17 @@ definition {
 
 		Click(locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
 
-		Click(
-			key_fieldType = "Find by Email",
-			locator1 = "ACDataControlAndPrivacy#DATA_ID");
+		Type(
+			locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD",
+			value1 = "${email}");
 
 		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
 
 		Click(locator1 = "ACDataControlAndPrivacy#SELECT_USER");
 
-		var email = selenium.getText("ACDataControlAndPrivacy#SELECTED_USER");
-
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-
-		return "${email}";
 	}
 
 	@summary = "Deletes all data source"

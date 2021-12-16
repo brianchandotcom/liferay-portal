@@ -16,6 +16,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		assetsPath,
 		page,
 		project: {},
+		subscriptionGroups: [],
 		userAccount: undefined,
 	});
 

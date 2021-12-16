@@ -912,9 +912,72 @@
 	}
 
 	CKEDITOR.plugins.add(pluginName, {
-		getSelectedCells,
-		icons: 'add-row, add-column, add-cell',
+		_createToolbar({editor}) {
+			const toolbar = new CKEDITOR.ui.balloonToolbar(editor);
+
+			const buttons = editor.config.toolbarTable.split(',');
+
+			buttons.forEach((button) => {
+				toolbar.addItem(button, editor.ui.create(button));
+			});
+
+			return toolbar;
+		},
+
+		_getToolbar({editor}) {
+			const instance = this;
+
+			let toolbar = editor.liferayToolbars.tableToolbar;
+
+			if (toolbar) {
+				return toolbar;
+			}
+
+			toolbar = instance._createToolbar({editor});
+
+			editor.liferayToolbars.tableToolbar = toolbar;
+
+			return toolbar;
+		},
+
 		init(editor) {
+			editor.liferayToolbars = editor.liferayToolbars ?? {};
+
+			const eventListeners = [];
+
+			eventListeners.push(
+				editor.on('destroy', () => {
+					eventListeners.forEach((listener) => {
+						listener.removeListener();
+					});
+				}),
+
+				editor.on('hideToolbars', () => {
+					editor.liferayToolbars.tableToolbar?.hide();
+				}),
+
+				editor.on('selectionChange', () => {
+					const selection = editor.getSelection();
+
+					const type = selection.getType();
+
+					const startElement = selection.getStartElement();
+
+					if (
+						type === CKEDITOR.SELECTION_TEXT &&
+						!selection.getSelectedText().match(/\w/) &&
+						startElement.hasAscendant('table')
+					) {
+						const toolbar = this._getToolbar({editor});
+
+						toolbar.attach(startElement);
+					}
+					else {
+						editor.liferayToolbars.tableToolbar?.hide();
+					}
+				})
+			);
+
 			function createDef(def) {
 				return CKEDITOR.tools.extend(def || {}, {
 					contextSensitive: 1,

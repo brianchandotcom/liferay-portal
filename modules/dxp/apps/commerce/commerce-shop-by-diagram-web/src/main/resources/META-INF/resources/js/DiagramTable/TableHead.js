@@ -15,10 +15,21 @@ import React from 'react';
 
 export default function TableHead({
 	isAdmin,
-	selectableSkusId,
-	selectedSkusId,
-	setSelectedSkusId,
+	mappedProducts,
+	setMappedProducts,
 }) {
+	let selectedSkusIdCounter = 0;
+	let selectableSkusIdCounter = 0;
+
+	mappedProducts.forEach((product) => {
+		if (product.selectable) {
+			selectableSkusIdCounter++;
+		}
+		if (product.selected) {
+			selectedSkusIdCounter++;
+		}
+	});
+
 	return (
 		<ClayTable.Head>
 			<ClayTable.Row>
@@ -26,21 +37,23 @@ export default function TableHead({
 					<ClayTable.Cell headingCell>
 						<ClayCheckbox
 							checked={
-								!!selectedSkusId.length &&
-								selectedSkusId.length ===
-									selectableSkusId.length
+								!!selectedSkusIdCounter &&
+								selectedSkusIdCounter ===
+									selectableSkusIdCounter
 							}
-							disabled={!selectableSkusId.length}
+							disabled={!selectableSkusIdCounter}
 							indeterminate={
-								selectedSkusId.length > 0 &&
-								selectedSkusId.length < selectableSkusId.length
+								selectedSkusIdCounter > 0 &&
+								selectedSkusIdCounter < selectableSkusIdCounter
 							}
 							onChange={() => {
-								setSelectedSkusId(
-									selectedSkusId.length !==
-										selectableSkusId.length
-										? selectableSkusId
-										: []
+								setMappedProducts((products) =>
+									products.map((product) => {
+										return selectedSkusIdCounter !==
+											selectableSkusIdCounter
+											? {...product, selected: true}
+											: {...product, selected: false};
+									})
 								);
 							}}
 						/>

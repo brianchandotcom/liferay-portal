@@ -25,7 +25,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {DIAGRAM_EVENTS, DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
 import {deleteMappedProduct, getMappedProducts} from '../utilities/data';
 import {
-	formatInitialQuantities,
+	formatMappedProductForTable,
 	formatProductOptions,
 } from '../utilities/index';
 import ManagementBar from './ManagementBar';
@@ -34,22 +34,34 @@ import TableHead from './TableHead';
 
 const PAGE_SIZE = 15;
 
-function formatCpInstances(skusId, products, quantities) {
-	return skusId.map((skuId) => {
-		const product = products.find((product) => product.skuId === skuId);
+function formatCpInstances(cpInstances, quantities) {
+	const formattedCpInstances = cpInstances.reduce(
+		(selectedCpInstances, cpInstance) => {
+			if (!cpInstance.selected) {
+				return selectedCpInstances;
+			}
 
-		const options = formatProductOptions(
-			product.options,
-			product.productOptions
-		);
+			const options = formatProductOptions(
+				cpInstance.options,
+				cpInstance.productOptions
+			);
 
-		return {
-			inCart: false,
-			options,
-			quantity: quantities[skuId] || product.initialQuantity,
-			skuId,
-		};
-	});
+			return [
+				...selectedCpInstances,
+				{
+					inCart: false,
+					options,
+					quantity:
+						quantities[cpInstance.skuId] ||
+						cpInstance.initialQuantity,
+					skuId: cpInstance.skuId,
+				},
+			];
+		},
+		[]
+	);
+
+	return formattedCpInstances;
 }
 
 function DiagramTable({
@@ -69,7 +81,6 @@ function DiagramTable({
 	const [newQuantities, setNewQuantities] = useState({});
 	const [query, setQuery] = useState('');
 	const [refreshTrigger, setRefreshTrigger] = useState(false);
-	const [selectedSkusId, setSelectedSkusId] = useState([]);
 	const commerceAccount = useCommerceAccount({id: initialAccountId});
 	const commerceCart = useCommerceCart({id: initialCartId});
 	const wrapperRef = useRef();
@@ -107,7 +118,10 @@ function DiagramTable({
 		).then((data) => {
 			setLoaderActive(false);
 
-			const fetchedProducts = formatInitialQuantities(data.items);
+			const fetchedProducts = formatMappedProductForTable(
+				data.items,
+				isAdmin
+			);
 
 			setMappedProducts((mappedProducts) =>
 				mappedProducts && currentPage > 1
@@ -126,15 +140,6 @@ function DiagramTable({
 		refreshTrigger,
 		commerceAccount,
 	]);
-
-	const selectableSkusId = (mappedProducts || []).reduce(
-		(skusId, product) =>
-			product.type === 'sku' &&
-			product.availability?.label === 'available'
-				? [...skusId, product.skuId]
-				: skusId,
-		[]
-	);
 
 	function handleTitleClicked(product) {
 		Liferay.fire(DIAGRAM_TABLE_EVENTS.SELECT_PIN, {
@@ -190,9 +195,8 @@ function DiagramTable({
 				<ClayTable borderless>
 					<TableHead
 						isAdmin={isAdmin}
-						selectableSkusId={selectableSkusId}
-						selectedSkusId={selectedSkusId}
-						setSelectedSkusId={setSelectedSkusId}
+						mappedProducts={mappedProducts}
+						setMappedProducts={setMappedProducts}
 					/>
 
 					<ClayTable.Body>
@@ -210,14 +214,13 @@ function DiagramTable({
 										newQuantities[product.skuId] ||
 										product.initialQuantity
 									}
-									selectedSkusId={selectedSkusId}
+									setMappedProducts={setMappedProducts}
 									setNewQuantity={(newQuantity) => {
 										setNewQuantities({
 											...newQuantities,
 											[product.skuId]: newQuantity,
 										});
 									}}
-									setSelectedSkusId={setSelectedSkusId}
 								/>
 							))}
 					</ClayTable.Body>
@@ -225,6 +228,15 @@ function DiagramTable({
 			</InfiniteScroller>
 		);
 	}
+
+	const selectedProductsCounter =
+		!isAdmin && mappedProducts
+			? mappedProducts.reduce(
+					(counter, product) =>
+						product.selected ? counter + 1 : counter,
+					0
+			  )
+			: 0;
 
 	return (
 		<div className="shop-by-diagram-table" ref={wrapperRef}>
@@ -257,15 +269,14 @@ function DiagramTable({
 						id: channelId,
 					}}
 					cpInstances={formatCpInstances(
-						selectedSkusId,
-						mappedProducts,
+						mappedProducts || [],
 						newQuantities
 					)}
-					disabled={!commerceAccount.id || !selectedSkusId.length}
+					disabled={!commerceAccount.id || !selectedProductsCounter}
 					hideIcon={true}
 					onAdd={() => {
 						const message =
-							selectedSkusId.length === 1
+							selectedProductsCounter === 1
 								? Liferay.Language.get(
 										'the-product-was-successfully-added-to-the-cart'
 								  )
@@ -273,7 +284,7 @@ function DiagramTable({
 										Liferay.Language.get(
 											'x-products-were-successfully-added-to-the-cart'
 										),
-										selectedSkusId.length
+										selectedProductsCounter
 								  );
 
 						openToast({

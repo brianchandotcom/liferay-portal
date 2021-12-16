@@ -271,3 +271,40 @@ export function sortByKey(items, keyName) {
 
 	return sortedItems;
 }
+
+export function getMinQuantity({
+	allowedOrderQuantities,
+	minOrderQuantity,
+	multipleOrderQuantity,
+}) {
+	let minQuantity;
+
+	if (allowedOrderQuantities.length) {
+		minQuantity = Math.min(...allowedOrderQuantities);
+	}
+	else {
+		minQuantity = Math.max(minOrderQuantity, multipleOrderQuantity);
+	}
+
+	return minQuantity;
+}
+
+export function isProductPurchasable(
+	availability,
+	productConfiguration,
+	purchasable
+) {
+	if (purchasable === false) {
+		return false;
+	}
+
+	if (productConfiguration.allowBackOrder) {
+		return true;
+	}
+
+	if (availability.stockQuantity > getMinQuantity(productConfiguration)) {
+		return true;
+	}
+
+	return false;
+}

@@ -1,8 +1,15 @@
-.minium-frame .quantity-selector {
-	border-radius: $border-radius;
-
-	&.form-control-lg {
-		height: 3.75rem;
-		margin: 0;
+.minium-frame,
+.diagram-tooltip {
+	.quantity-selector {
+		border-radius: $border-radius;
+	
+		&.form-control-lg {
+			height: 3.75rem;
+			margin: 0;
+		}
+	
+		&.form-control-sm {
+			padding: 0.25rem 0.5rem;
+		}
 	}
 }

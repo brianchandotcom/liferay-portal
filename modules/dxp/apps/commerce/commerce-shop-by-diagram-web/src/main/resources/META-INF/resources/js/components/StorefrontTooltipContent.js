@@ -14,6 +14,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import AddToCart from 'commerce-frontend-js/components/add_to_cart/AddToCart';
+import {isProductPurchasable} from 'commerce-frontend-js/utilities/index';
 import React, {useEffect, useState} from 'react';
 
 import {getCartItems} from '../utilities/data';
@@ -69,6 +70,12 @@ function SkuContent({
 			});
 	}, [cartId, isMounted, skuId]);
 
+	const productPurchasable = isProductPurchasable(
+		product.availability,
+		product.productConfiguration,
+		product.purchasable
+	);
+
 	return (
 		<div className="row">
 			{product.thumbnail && (
@@ -84,17 +91,13 @@ function SkuContent({
 
 			<div className="col">
 				<div className="mb-1">
-					{product.availability && (
-						<ClayLabel
-							displayType={
-								product.availability.label === 'available'
-									? 'success'
-									: 'danger'
-							}
-						>
-							{product.availability.label_i18n}
-						</ClayLabel>
-					)}
+					<ClayLabel
+						displayType={productPurchasable ? 'success' : 'danger'}
+					>
+						{productPurchasable
+							? Liferay.Language.get('available')
+							: Liferay.Language.get('unavailable')}
+					</ClayLabel>
 				</div>
 
 				<h4 className="component-title mb-1">
@@ -131,7 +134,7 @@ function SkuContent({
 								quantity,
 								skuId: product.skuId,
 							}}
-							disabled={product.availability.stockQuantity < 1}
+							disabled={!productPurchasable}
 							settings={{
 								alignment: 'full-width',
 								iconOnly: true,

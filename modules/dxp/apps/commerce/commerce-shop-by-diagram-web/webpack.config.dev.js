@@ -129,6 +129,10 @@ module.exports = {
 				__dirname,
 				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/utilities/hooks.js'
 			),
+			'commerce-frontend-js/utilities/index': path.resolve(
+				__dirname,
+				'../../../../node_modules/commerce-frontend-js/src/main/resources/META-INF/resources/utilities/index.js'
+			),
 			'frontend-js-web': path.resolve(
 				__dirname,
 				'../../../../node_modules/frontend-js-web/src/main/resources/META-INF/resources/index.es.js'

@@ -26,12 +26,9 @@ export default function MappedProductRow({
 	onDelete,
 	product,
 	quantity,
-	selectedSkusId,
+	setMappedProducts,
 	setNewQuantity,
-	setSelectedSkusId,
 }) {
-	const available = product.availability?.label === 'available';
-
 	return (
 		<ClayTable.Row
 			key={product.id}
@@ -41,26 +38,21 @@ export default function MappedProductRow({
 			{!isAdmin && (
 				<ClayTable.Cell>
 					<ClayCheckbox
-						checked={selectedSkusId.includes(product.skuId)}
-						disabled={
-							product.type !== 'sku' ||
-							(product.type === 'sku' && !available)
-						}
+						checked={product.selected || false}
+						disabled={!product.selectable || false}
 						onChange={(event) => {
-							if (event.target.checked) {
-								setSelectedSkusId([
-									...selectedSkusId,
-									product.skuId,
-								]);
-							}
-							else {
-								setSelectedSkusId(
-									selectedSkusId.filter(
-										(selectedSkuId) =>
-											selectedSkuId !== product.skuId
-									)
-								);
-							}
+							const checked = event.target.checked;
+
+							setMappedProducts((mappedProducts) =>
+								mappedProducts.map((mappedProduct) =>
+									mappedProduct.skuId === product.skuId
+										? {
+												...mappedProduct,
+												selected: checked,
+										  }
+										: mappedProduct
+								)
+							);
 						}}
 					/>
 				</ClayTable.Cell>
@@ -90,8 +82,21 @@ export default function MappedProductRow({
 					product.productConfiguration &&
 					product.type === 'sku' && (
 						<QuantitySelector
-							{...product.productConfiguration}
-							disabled={!available}
+							allowedQuantities={
+								product.productConfiguration
+									.allowedOrderQuantities
+							}
+							disabled={!product.selectable}
+							maxQuantity={
+								product.productConfiguration.maxOrderQuantity
+							}
+							minQuantity={
+								product.productConfiguration.minOrderQuantity
+							}
+							multipleQuantity={
+								product.productConfiguration
+									.multipleOrderQuantity
+							}
 							onUpdate={setNewQuantity}
 							quantity={quantity}
 							size="sm"

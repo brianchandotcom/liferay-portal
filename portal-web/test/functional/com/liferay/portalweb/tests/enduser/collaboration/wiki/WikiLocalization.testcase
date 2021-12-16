@@ -39,13 +39,25 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136991. It checks that a wiki page can be viewed in Arabic."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewEntryInArabic {
-		property portal.acceptance = "false";
+		WikiPage.addPG(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "محتوى صفحة ويكي",
+			wikiPageTitle = "عنوان صفحة ويكي");
 
-		// TODO LPS-136991 CanViewEntryInArabic pending implementation
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "عنوان صفحة ويكي");
 
+		WikiPage.viewPG(
+			wikiPageContent = "محتوى صفحة ويكي",
+			wikiPageTitle = "عنوان صفحة ويكي");
 	}
 
 	@description = "This is a test for LPS-136990. It checks that a wiki page can be viewed in Japanese."

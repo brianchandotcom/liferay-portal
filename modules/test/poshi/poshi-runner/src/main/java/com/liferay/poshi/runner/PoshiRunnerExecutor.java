@@ -882,17 +882,16 @@ public class PoshiRunnerExecutor {
 						selenium.equals("waitForConsoleTextNotPresent") ||
 						selenium.equals("waitForConsoleTextPresent") ||
 						selenium.equals("waitForTextNotPresent") ||
-						selenium.equals("waitForTextPresent")) {
+						selenium.equals("waitForTextPresent") ||
+						selenium.equals("executeJavaScript") ||
+						selenium.equals("getJavaScriptResult") ||
+						selenium.equals("waitForJavaScript") ||
+						selenium.equals("assertJavaScript") ||
+						selenium.equals("waitForJavaScriptNoError") ||
+						selenium.equals("verifyJavaScript")) {
 
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
 							"value1");
-					}
-					else if (selenium.equals("executeJavaScript") ||
-							 selenium.equals("getJavaScriptResult") ||
-							 selenium.equals("waitForJavaScript")) {
-
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"javaScript");
 					}
 					else {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
@@ -907,13 +906,11 @@ public class PoshiRunnerExecutor {
 						argument = "";
 					}
 					else if (selenium.equals("executeJavaScript") ||
-							 selenium.equals("getJavaScriptResult")) {
+							 selenium.equals("getJavaScriptResult") ||
+							 selenium.equals("waitForJavaScript")) {
 
-						argument = null;
-					}
-					else if (selenium.equals("waitForJavaScript")) {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"message");
+							"value2");
 					}
 				}
 				else if (i == 2) {
@@ -923,9 +920,13 @@ public class PoshiRunnerExecutor {
 					}
 					else if (selenium.equals("executeJavaScript") ||
 							 selenium.equals("getJavaScriptResult") ||
-							 selenium.equals("waitForJavaScript")) {
+							 selenium.equals("waitForJavaScript") ||
+							 selenium.equals("assertJavaScript") ||
+							 selenium.equals("waitForJavaScriptNoError") ||
+							 selenium.equals("verifyJavaScript")) {
 
-						argument = null;
+						argument = PoshiVariablesUtil.getStringFromCommandMap(
+							"value3");
 					}
 					else {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(

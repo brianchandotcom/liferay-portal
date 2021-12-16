@@ -33,6 +33,7 @@ export default function ({namespace}) {
 	};
 
 	const handleDisable = (disable) => {
+		dropdownToggle.setAttribute('aria-expanded', 'false');
 		dropdown.classList.remove('show');
 		dropdownToggle.classList[disable ? 'add' : 'remove']('disabled');
 	};

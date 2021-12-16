@@ -646,6 +646,8 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			editImageURL: '<%= editImageURL.toString() %>',
 		</c:if>
 
+		ffItemSelectorSingleFileUploaderEnabled: <%= FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>,
+
 		maxFileSize: '<%= maxFileSize %>',
 
 		rootNode: '#<%= randomNamespace %>ItemSelectorContainer',

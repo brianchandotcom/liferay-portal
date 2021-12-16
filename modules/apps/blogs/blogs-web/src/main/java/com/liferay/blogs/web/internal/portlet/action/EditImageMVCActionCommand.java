@@ -84,7 +84,7 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 			if ((fileEntry.getUserId() == themeDisplay.getUserId()) ||
 				_portletResourcePermission.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup(), ActionKeys.UPDATE)) {
+					themeDisplay.getScopeGroup(), ActionKeys.ADD_ENTRY)) {
 
 				_portletFileRepository.deletePortletFileEntry(
 					deleteFileEntryId);

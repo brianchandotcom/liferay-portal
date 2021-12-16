@@ -38,7 +38,24 @@ definition {
 			index = "2",
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
-		MenuItem.click(menuItem = "${previewItem}");
+		if ((IsElementNotPresent(key_menuItem = "${previewItem}", locator1 = "MenuItem#ANY_MENU_ITEM")) && (IsElementPresent(key_text = "More", locator1 = "Button#ANY"))) {
+			AssertElementPresent(
+				key_caption = "${caption}",
+				locator1 = "Dropdown#CAPTION");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Button.clickMore();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconCard.clickCard(card = "${previewItem}");
+
+			SelectFrameTop();
+		}
+		else {
+			MenuItem.click(menuItem = "${previewItem}");
+		}
 	}
 
 	macro selectPreviewType {

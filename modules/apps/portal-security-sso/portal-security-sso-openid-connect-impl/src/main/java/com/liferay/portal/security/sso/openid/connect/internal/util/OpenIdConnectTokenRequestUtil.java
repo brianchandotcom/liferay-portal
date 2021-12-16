@@ -15,6 +15,8 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.internal.OpenIdConnectProviderImpl;
@@ -31,6 +33,8 @@ import com.nimbusds.oauth2.sdk.RefreshTokenGrant;
 import com.nimbusds.oauth2.sdk.TokenErrorResponse;
 import com.nimbusds.oauth2.sdk.TokenRequest;
 import com.nimbusds.oauth2.sdk.TokenResponse;
+import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
+import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
 import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
@@ -89,6 +93,34 @@ public class OpenIdConnectTokenRequestUtil {
 			refreshTokenGrant, null, openIdConnectProvider);
 	}
 
+	private static ClientAuthentication _getClientAuthentication(
+			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+				openIdConnectProvider)
+		throws OpenIdConnectServiceException.ProviderException {
+
+		try {
+			OpenIdConnectProviderImpl openIdConnectProviderImpl =
+				(OpenIdConnectProviderImpl)openIdConnectProvider;
+
+			return openIdConnectProviderImpl.getClientAuthentication();
+		}
+		catch (ClassCastException classCastException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Because a custom OpenIdConnectProvider may be used," +
+						"fallback to use default client authentication type");
+			}
+
+			return new ClientSecretBasic(
+				new ClientID(openIdConnectProvider.getClientId()),
+				new Secret(openIdConnectProvider.getClientSecret()));
+		}
+		catch (Exception exception) {
+			throw new OpenIdConnectServiceException.ProviderException(
+				exception.getMessage());
+		}
+	}
+
 	private static OIDCTokens _requestOIDCTokens(
 			AuthorizationGrant authorizationCodeGrant, Nonce nonce,
 			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
@@ -101,20 +133,9 @@ public class OpenIdConnectTokenRequestUtil {
 
 		URI uri = oidcProviderMetadata.getTokenEndpointURI();
 
-		OpenIdConnectProviderImpl openIdConnectProviderImpl =
-			(OpenIdConnectProviderImpl)openIdConnectProvider;
-
-		TokenRequest tokenRequest = null;
-
-		try {
-			tokenRequest = new TokenRequest(
-				uri, openIdConnectProviderImpl.getClientAuthentication(),
-				authorizationCodeGrant);
-		}
-		catch (Exception exception) {
-			throw new OpenIdConnectServiceException.ProviderException(
-				exception.getMessage());
-		}
+		TokenRequest tokenRequest = new TokenRequest(
+			uri, _getClientAuthentication(openIdConnectProvider),
+			authorizationCodeGrant);
 
 		HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
 
@@ -211,5 +232,8 @@ public class OpenIdConnectTokenRequestUtil {
 				exception);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenIdConnectTokenRequestUtil.class);
 
 }

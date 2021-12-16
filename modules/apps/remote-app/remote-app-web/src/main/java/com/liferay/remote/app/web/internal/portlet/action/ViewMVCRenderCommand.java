@@ -15,9 +15,13 @@
 package com.liferay.remote.app.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,11 +58,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		if (_remoteAppEntryLocalService.getRemoteAppEntriesCount() == 0) {
+		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			try {
+			long companyId = themeDisplay.getCompanyId();
+
+			Settings settings = _settingsFactory.getSettings(
+				new CompanyServiceSettingsLocator(
+					companyId, RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN));
+
+			TypedSettings typedSettings = new TypedSettings(settings);
+
+			if (typedSettings.getBooleanValue(
+					"createSampleCustomElement", true)) {
+
 				_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 					_userLocalService.getDefaultUserId(
 						themeDisplay.getCompanyId()),
@@ -73,10 +87,18 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					"friendly-url-mapping=vanilla_counter",
 					"https://liferay.github.io/liferay-frontend-projects",
 					WorkflowConstants.STATUS_APPROVED);
+
+				typedSettings.setBooleanValue(
+					"createSampleCustomElement", false);
+
+				ModifiableSettings modifiableSettings =
+					settings.getModifiableSettings();
+
+				modifiableSettings.store();
 			}
-			catch (PortalException portalException) {
-				throw new PortletException(portalException);
-			}
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		renderRequest.setAttribute(
@@ -88,6 +110,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

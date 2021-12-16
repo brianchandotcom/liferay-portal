@@ -61,13 +61,25 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136990. It checks that a wiki page can be viewed in Japanese."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewEntryInJapanese {
-		property portal.acceptance = "false";
+		WikiPage.addPG(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wikiページのコンテンツ",
+			wikiPageTitle = "Wikiページのタイトル");
 
-		// TODO LPS-136990 CanViewEntryInJapanese pending implementation
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wikiページのタイトル");
 
+		WikiPage.viewPG(
+			wikiPageContent = "Wikiページのコンテンツ",
+			wikiPageTitle = "Wikiページのタイトル");
 	}
 
 }

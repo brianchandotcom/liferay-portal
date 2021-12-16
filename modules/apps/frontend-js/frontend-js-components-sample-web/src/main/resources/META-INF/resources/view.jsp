@@ -28,6 +28,13 @@
 	<div>
 		<react:component
 			module="js/App"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"displayNames", LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale)
+				).put(
+					"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
+				).build()
+			%>'
 		/>
 	</div>
 </div>

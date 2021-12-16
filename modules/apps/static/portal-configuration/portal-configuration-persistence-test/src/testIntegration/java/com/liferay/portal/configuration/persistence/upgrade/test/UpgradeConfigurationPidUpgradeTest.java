@@ -96,19 +96,46 @@ public class UpgradeConfigurationPidUpgradeTest {
 	}
 
 	@Test
+	public void testUpgradeConfigurationWhenFileNotExisted() throws Exception {
+		String fileName = _SERVICE_FACTORY_PID + "-default.config";
+
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+		if (Files.exists(path)) {
+			Files.delete(path);
+		}
+
+		try {
+			_addConfiguration(
+				_SERVICE_FACTORY_PID, _SERVICE_FACTORY_PID + ".instance1",
+				fileName);
+
+			_upgradeConfigurationPidUpgradeProcess.upgrade();
+
+			_assertConfiguration(
+				_SERVICE_FACTORY_PID, _SERVICE_FACTORY_PID + "~instance1",
+				null);
+		}
+		finally {
+			_removeConfiguration(_SERVICE_FACTORY_PID);
+		}
+	}
+
+	@Test
 	public void testUpgradeConfigurationWithFile() throws Exception {
 		_testUpgradeConfigurationWithFile(CharPool.DASH);
 		_testUpgradeConfigurationWithFile(CharPool.PERIOD);
-		_testUpgradeConfigurationWithFile(CharPool.UNDERLINE);
 		_testUpgradeConfigurationWithFile(CharPool.TILDE);
+		_testUpgradeConfigurationWithFile(CharPool.UNDERLINE);
 	}
 
 	@Test
 	public void testUpgradeConfigurationWithoutFile() throws Exception {
 		_testUpgradeConfigurationWithoutFile(CharPool.DASH);
 		_testUpgradeConfigurationWithoutFile(CharPool.PERIOD);
-		_testUpgradeConfigurationWithoutFile(CharPool.UNDERLINE);
 		_testUpgradeConfigurationWithoutFile(CharPool.TILDE);
+		_testUpgradeConfigurationWithoutFile(CharPool.UNDERLINE);
 	}
 
 	private void _addConfiguration(

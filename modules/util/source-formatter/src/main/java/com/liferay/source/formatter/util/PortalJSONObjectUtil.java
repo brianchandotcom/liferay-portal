@@ -97,6 +97,7 @@ public class PortalJSONObjectUtil {
 
 		List<Future<Tuple>> futures = new ArrayList<>();
 
+		JSONObject portalJSONObject = new JSONObjectImpl();
 		JSONObject taglibsJSONObject = new JSONObjectImpl();
 		JSONObject xmlDefinitionsJSONObject = new JSONObjectImpl();
 
@@ -131,6 +132,12 @@ public class PortalJSONObjectUtil {
 				continue;
 			}
 
+			if (normalizedFileName.endsWith("/VerifyProperties.java")) {
+				portalJSONObject.put(
+					"legacyProperties",
+					_getLegacyPropertiesJSONObject(normalizedFileName));
+			}
+
 			Future<Tuple> future = executorService.submit(
 				new Callable<Tuple>() {
 
@@ -158,8 +165,6 @@ public class PortalJSONObjectUtil {
 		}
 
 		executorService.shutdown();
-
-		JSONObject portalJSONObject = new JSONObjectImpl();
 
 		portalJSONObject.put(
 			"javaClasses", javaClassesJSONObject
@@ -515,6 +520,34 @@ public class PortalJSONObjectUtil {
 		}
 
 		return implementedClassesJSONArray;
+	}
+
+	private static JSONObject _getLegacyPropertiesJSONObject(String fileName)
+		throws Exception {
+
+		JSONObject legacyPropertiesJSONObject = new JSONObjectImpl();
+
+		List<LegacyProperty> legacyProperties =
+			LegacyPropertiesUtil.getLegacyProperties(
+				fileName, FileUtil.read(new File(fileName)));
+
+		for (LegacyProperty legacyProperty : legacyProperties) {
+			JSONObject legacyPropertyJSONObject = new JSONObjectImpl();
+
+			legacyPropertyJSONObject.put(
+				"moduleName", legacyProperty.getModuleName()
+			).put(
+				"newPropertyName", legacyProperty.getNewPropertyName()
+			).put(
+				"variableName", legacyProperty.getVariableName()
+			);
+
+			legacyPropertiesJSONObject.put(
+				legacyProperty.getLegacyPropertyName(),
+				legacyPropertyJSONObject);
+		}
+
+		return legacyPropertiesJSONObject;
 	}
 
 	private static JSONArray _getMethodsJSONArray(JavaClass javaClass) {

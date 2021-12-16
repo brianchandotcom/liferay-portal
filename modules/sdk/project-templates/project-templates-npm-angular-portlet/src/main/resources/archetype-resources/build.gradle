@@ -11,3 +11,8 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
 #end
 }
+
+node{
+	nodeVersion = "10.15.1"
+	npmVersion = "6.4.1"
+}

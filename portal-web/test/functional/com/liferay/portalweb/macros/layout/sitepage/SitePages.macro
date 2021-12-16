@@ -221,7 +221,7 @@ definition {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 		}
 		else if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			SitePages.gotoAddFirstPage(pageType = "Private Page");
+			PagesAdmin.gotoAddFirstPage(pageType = "Private Page");
 		}
 		else {
 			AssertClick(
@@ -266,7 +266,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			SitePages.gotoAddFirstPage(pageType = "Public Page");
+			PagesAdmin.gotoAddFirstPage(pageType = "Public Page");
 		}
 		else {
 			AssertClick(
@@ -455,19 +455,6 @@ definition {
 		var friendlyURL = selenium.getElementValue("SitePages#FRIENDLY_URL");
 
 		return "${baseURL}/web/guest${friendlyURL}";
-	}
-
-	@summary = "Go to the page creation form through the empty-result-message taglib"
-	macro gotoAddFirstPage {
-		var key_menuItem = "${pageType}";
-
-		Refresh();
-
-		Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
-
-		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
 	macro movePageToPageUp {

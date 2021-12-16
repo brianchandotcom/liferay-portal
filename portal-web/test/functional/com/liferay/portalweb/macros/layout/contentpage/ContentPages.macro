@@ -79,7 +79,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			SitePages.gotoAddFirstPage(pageType = "Public Page");
+			PagesAdmin.gotoAddFirstPage(pageType = "Public Page");
 		}
 		else {
 			AssertClick(
@@ -131,7 +131,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			SitePages.gotoAddFirstPage(pageType = "Private Page");
+			PagesAdmin.gotoAddFirstPage(pageType = "Private Page");
 		}
 		else {
 			AssertClick(

@@ -1,5 +1,16 @@
 definition {
 
+	@summary = "Go to the page creation form through the empty-result-message taglib"
+	macro gotoAddFirstPage {
+		var key_menuItem = "${pageType}";
+
+		AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
+
+		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
 	@summary = "Go to the ellipsis menu item of a page. Parent pages hierarchy is required to navigate to child pages."
 	macro gotoPageEllipsisMenuItem {
 		SitePages.clickPageMenu(

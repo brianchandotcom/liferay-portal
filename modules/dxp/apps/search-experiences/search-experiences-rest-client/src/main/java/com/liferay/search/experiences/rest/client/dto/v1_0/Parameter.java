@@ -174,9 +174,10 @@ public class Parameter implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		DATE("Date"), DOUBLE("Double"), FLOAT("Float"), INTEGER("Integer"),
-		INTEGER_ARRAY("IntegerArray"), LONG("Long"), LONG_ARRAY("LongArray"),
-		STRING("String"), STRING_ARRAY("StringArray"), TIME_RANGE("TimeRange");
+		BOOLEAN("Boolean"), DATE("Date"), DOUBLE("Double"), FLOAT("Float"),
+		INTEGER("Integer"), INTEGER_ARRAY("IntegerArray"), LONG("Long"),
+		LONG_ARRAY("LongArray"), STRING("String"), STRING_ARRAY("StringArray"),
+		TIME_RANGE("TimeRange");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

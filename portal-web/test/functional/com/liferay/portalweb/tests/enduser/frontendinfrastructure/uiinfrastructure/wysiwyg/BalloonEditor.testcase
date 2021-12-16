@@ -225,10 +225,7 @@ definition {
 		}
 	}
 
-	// Ignored because of the ticket LPS-139334
-
 	@description = "Assert text edition enabled in the table"
-	@ignore = "true"
 	@priority = "4"
 	@refactordone
 	test CanEditTextInTable {

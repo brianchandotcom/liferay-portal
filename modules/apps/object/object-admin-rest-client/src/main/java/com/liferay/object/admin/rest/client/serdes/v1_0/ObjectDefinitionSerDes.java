@@ -329,6 +329,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getSystem());
 		}
 
+		if (objectDefinition.getTitleObjectFieldId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"titleObjectFieldId\": ");
+
+			sb.append(objectDefinition.getTitleObjectFieldId());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -497,6 +507,15 @@ public class ObjectDefinitionSerDes {
 			map.put("system", String.valueOf(objectDefinition.getSystem()));
 		}
 
+		if (objectDefinition.getTitleObjectFieldId() == null) {
+			map.put("titleObjectFieldId", null);
+		}
+		else {
+			map.put(
+				"titleObjectFieldId",
+				String.valueOf(objectDefinition.getTitleObjectFieldId()));
+		}
+
 		return map;
 	}
 
@@ -649,6 +668,14 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "system")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setSystem((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "titleObjectFieldId")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setTitleObjectFieldId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

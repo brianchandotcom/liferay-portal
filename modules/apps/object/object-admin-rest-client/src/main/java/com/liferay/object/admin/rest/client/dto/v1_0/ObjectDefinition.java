@@ -415,6 +415,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean system;
 
+	public Long getTitleObjectFieldId() {
+		return titleObjectFieldId;
+	}
+
+	public void setTitleObjectFieldId(Long titleObjectFieldId) {
+		this.titleObjectFieldId = titleObjectFieldId;
+	}
+
+	public void setTitleObjectFieldId(
+		UnsafeSupplier<Long, Exception> titleObjectFieldIdUnsafeSupplier) {
+
+		try {
+			titleObjectFieldId = titleObjectFieldIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long titleObjectFieldId;
+
 	@Override
 	public ObjectDefinition clone() throws CloneNotSupportedException {
 		return (ObjectDefinition)super.clone();

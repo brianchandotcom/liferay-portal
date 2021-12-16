@@ -33,6 +33,22 @@ definition {
 		MenuItem.click(menuItem = "${formName}");
 	}
 
+	macro selectPreviewItem {
+		Click(
+			index = "2",
+			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
+
+		MenuItem.click(menuItem = "${previewItem}");
+	}
+
+	macro selectPreviewType {
+		Click(
+			index = "1",
+			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
+
+		MenuItem.click(menuItem = "${previewType}");
+	}
+
 	macro selectStyleBook {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

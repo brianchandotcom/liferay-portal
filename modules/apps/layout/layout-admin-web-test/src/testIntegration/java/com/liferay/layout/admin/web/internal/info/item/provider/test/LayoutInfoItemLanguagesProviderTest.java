@@ -108,8 +108,8 @@ public class LayoutInfoItemLanguagesProviderTest {
 				InfoItemLanguagesProvider.class, Layout.class.getName());
 
 		Assert.assertArrayEquals(
-			infoItemLanguagesProvider.getAvailableLanguageIds(_layout),
-			_getAvailableLocalesLayoutTranslatedLanguages());
+			_getAvailableLocalesLayoutTranslatedLanguages(),
+			infoItemLanguagesProvider.getAvailableLanguageIds(_layout));
 	}
 
 	private String[] _getAvailableLocalesLayoutTranslatedLanguages()
@@ -119,7 +119,7 @@ public class LayoutInfoItemLanguagesProviderTest {
 			return _layout.getAvailableLanguageIds();
 		}
 
-		Set<Locale> availableLocales = new HashSet<>();
+		Set<String> availableLocales = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -140,6 +140,8 @@ public class LayoutInfoItemLanguagesProviderTest {
 						siteAvailableLocales));
 			}
 		}
+
+		availableLocales.add(_layout.getDefaultLanguageId());
 
 		return availableLocales.toArray(new String[0]);
 	}
@@ -187,10 +189,10 @@ public class LayoutInfoItemLanguagesProviderTest {
 		return themeDisplay;
 	}
 
-	private Set<Locale> _getTranslatableFragmentLocales(
+	private Set<String> _getTranslatableFragmentLocales(
 		JSONObject jsonObject, String key, Set<Locale> siteAvailableLocales) {
 
-		Set<Locale> availableLocales = new HashSet<>();
+		Set<String> availableLocales = new HashSet<>();
 
 		JSONObject editableFragmentJSONObject = jsonObject.getJSONObject(key);
 
@@ -223,7 +225,8 @@ public class LayoutInfoItemLanguagesProviderTest {
 					_language.getLanguageId(siteAvailableLocale));
 
 				if (valueObject != null) {
-					availableLocales.add(siteAvailableLocale);
+					availableLocales.add(
+						LocaleUtil.toLanguageId(siteAvailableLocale));
 				}
 			}
 		}

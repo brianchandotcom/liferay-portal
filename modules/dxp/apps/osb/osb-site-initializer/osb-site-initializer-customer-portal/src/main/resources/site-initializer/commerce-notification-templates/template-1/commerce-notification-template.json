@@ -1,5 +1,4 @@
 {
-	"action": "create",
 	"bcc": "",
 	"cc": "",
 	"description": "",
@@ -9,9 +8,10 @@
 		"en-US": "Customer Portal"
 	},
 	"name": "SetupDXP notification template",
-	"objectDefinitionName": "C_SetupDXP",
+	"objectDefinitionName": "C_SetupDXPCloud",
 	"subject": {
 		"en-US": "Customer Portal email"
 	},
-	"to": "provisioning@liferay.cloud"
+	"to": "provisioning@liferay.cloud",
+	"type": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SetupDXPCloud$]#create"
 }

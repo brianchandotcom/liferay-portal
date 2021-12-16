@@ -1767,67 +1767,45 @@ definition {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
 				if ("${listEntries}" == "4") {
-					Pagination.viewResults(results = "Showing 1 to 4 of 9 entries.");
+					Pagination.viewResults(results = "Showing 1 to 4 of 8 entries.");
 
-					for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center") {
+					for (var listedEntries : list "Announcements,Blogs,Contacts Center,Documents and Media") {
 						LexiconEntry.viewEntryName(rowEntry = "${listedEntries}");
 					}
 
-					for (var unlistedEntries : list "Documents and Media,Forms,Web Content,Message Boards,Wiki") {
+					for (var unlistedEntries : list "Forms,Web Content,Message Boards,Wiki") {
 						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
 					}
 
 					Click(locator1 = "Pagination#NEXT_LINK");
 
-					Pagination.viewResults(results = "Showing 5 to 8 of 9 entries.");
+					Pagination.viewResults(results = "Showing 5 to 8 of 8 entries.");
 
-					for (var listedEntries : list "Documents and Media,Forms,Web Content,Message Boards") {
+					for (var listedEntries : list "Forms,Web Content,Message Boards,Wiki") {
 						LexiconEntry.viewEntryName(rowEntry = "${listedEntries}");
 					}
 
-					for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Wiki") {
-						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
-					}
-
-					Click(locator1 = "Pagination#NEXT_LINK");
-
-					Pagination.viewResults(results = "Showing 9 to 9 of 9 entries.");
-
-					LexiconEntry.viewEntryName(rowEntry = "Wiki");
-
-					for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
+					for (var unlistedEntries : list "Announcements,Blogs,Contacts Center,Documents and Media") {
 						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
 					}
 				}
 				else if ("${listEntries}" == "8") {
 					if (!(
 
-					Pagination.viewResults(results = "Showing 1 to 8 of 9 entries.");)) {
+					Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");)) {
 						Click(locator1 = "Pagination#PREVIOUS_LINK");
 					}
 
-					Pagination.viewResults(results = "Showing 1 to 8 of 9 entries.");
+					Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");
 
-					for (var listedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
+					for (var listedEntries : list "Announcements,Blogs,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,Wiki") {
 						LexiconEntry.viewEntryName(rowEntry = "${listedEntries}");
-					}
-
-					LexiconEntry.viewNoEntry(rowEntry = "Wiki");
-
-					Click(locator1 = "Pagination#NEXT_LINK");
-
-					Pagination.viewResults(results = "Showing 9 to 9 of 9 entries.");
-
-					LexiconEntry.viewEntryName(rowEntry = "Wiki");
-
-					for (var unlistedEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards") {
-						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
 					}
 				}
 				else {
-					Pagination.viewResults(results = "Showing 1 to 9 of 9 entries.");
+					Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");
 
-					for (var allEntries : list "Announcements,Blogs,Bookmarks,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,Wiki") {
+					for (var allEntries : list "Announcements,Blogs,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,Wiki") {
 						LexiconEntry.viewEntryName(rowEntry = "${allEntries}");
 					}
 				}

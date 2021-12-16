@@ -97,12 +97,7 @@ const Grid = ({
 	const maxNumberOfItems =
 		Math.min(
 			collectionLength,
-			collectionConfig.paginationType
-				? Math.min(
-						collectionConfig.numberOfItems,
-						collectionConfig.numberOfItemsPerPage
-				  )
-				: collectionConfig.numberOfItems
+			getNumberOfItems(collection, collectionConfig)
 		) || 1;
 	const numberOfRows = Math.ceil(
 		maxNumberOfItems / collectionConfig.numberOfColumns

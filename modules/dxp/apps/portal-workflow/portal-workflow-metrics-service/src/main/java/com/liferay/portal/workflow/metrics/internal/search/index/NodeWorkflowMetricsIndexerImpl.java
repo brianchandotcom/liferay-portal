@@ -21,6 +21,7 @@ import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 
 import java.util.Objects;
@@ -73,6 +74,24 @@ public class NodeWorkflowMetricsIndexerImpl
 		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 
 		return document;
+	}
+
+	@Override
+	public void deleteNode(DeleteNodeRequest deleteNodeRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setLong(
+			"companyId", deleteNodeRequest.getCompanyId()
+		).setLong(
+			"nodeId", deleteNodeRequest.getNodeId()
+		).setString(
+			"uid",
+			digest(
+				deleteNodeRequest.getCompanyId(), deleteNodeRequest.getNodeId())
+		);
+
+		workflowMetricsPortalExecutor.execute(
+			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override

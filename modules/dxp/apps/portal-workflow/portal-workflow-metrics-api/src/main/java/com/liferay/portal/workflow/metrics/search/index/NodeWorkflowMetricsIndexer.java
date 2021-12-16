@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.search.index;
 
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 
 /**
  * @author Rafael Praxedes
@@ -23,6 +24,8 @@ import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 public interface NodeWorkflowMetricsIndexer {
 
 	public Document addNode(AddNodeRequest addNodeRequest);
+
+	public void deleteNode(DeleteNodeRequest deleteNodeRequest);
 
 	public void deleteNode(long companyId, long nodeId);
 

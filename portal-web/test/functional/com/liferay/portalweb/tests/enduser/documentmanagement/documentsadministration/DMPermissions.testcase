@@ -1900,7 +1900,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${dmDocumentURL}");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageSourceURL = "Document_1",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}

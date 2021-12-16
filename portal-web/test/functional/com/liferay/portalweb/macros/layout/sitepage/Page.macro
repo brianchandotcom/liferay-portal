@@ -42,28 +42,6 @@ definition {
 			value1 = "${localizedFriendlyURL}");
 	}
 
-	macro addJavaScript {
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "${pageName}");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		Panel.expandPanel(panel = "JavaScript");
-
-		AssertTextEquals(
-			locator1 = "SitePages#JAVASCRIPT_LABEL",
-			value1 = "Paste JavaScript code that is executed at the bottom of the page.");
-
-		Type(
-			locator1 = "SitePages#JAVASCRIPT_TEXTAREA",
-			value1 = "${javaScript}");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-	}
-
 	macro addPageTranslations {
 		PortletEntry.changeLocale(
 			fieldName = "Name",

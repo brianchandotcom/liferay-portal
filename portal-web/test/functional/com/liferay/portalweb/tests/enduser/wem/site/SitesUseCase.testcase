@@ -971,7 +971,7 @@ definition {
 		task ("Add alert js to Arenas page") {
 			SitePages.openPagesAdmin(siteURLKey = "russia2018");
 
-			Page.addJavaScript(
+			PagesAdmin.addJavaScript(
 				javaScript = "alert('Welcome to Russia.');",
 				pageName = "Arenas");
 		}
@@ -1021,7 +1021,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			Page.addJavaScript(
+			PagesAdmin.addJavaScript(
 				javaScript = " ",
 				pageName = "Arenas");
 		}

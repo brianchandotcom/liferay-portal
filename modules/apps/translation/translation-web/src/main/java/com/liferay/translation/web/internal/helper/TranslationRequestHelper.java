@@ -83,15 +83,25 @@ public class TranslationRequestHelper {
 	}
 
 	public String getModelClassName() {
-		return PortalUtil.getClassName(
+		if (_modelClassName != null) {
+			return _modelClassName;
+		}
+
+		_modelClassName = PortalUtil.getClassName(
 			ParamUtil.getLong(_portletRequest, "classNameId"));
+
+		return _modelClassName;
 	}
 
 	public long getModelClassPK() throws PortalException {
-		long classPK = ParamUtil.getLong(_portletRequest, "classPK");
+		if (_modelClassPK != null) {
+			return _modelClassPK;
+		}
 
-		if (classPK != 0) {
-			return classPK;
+		_modelClassPK = ParamUtil.getLong(_portletRequest, "classPK");
+
+		if (_modelClassPK != 0) {
+			return _modelClassPK;
 		}
 
 		InfoItemIdentifierTranslator infoItemIdentifierTranslator =
@@ -107,10 +117,14 @@ public class TranslationRequestHelper {
 					new GroupKeyInfoItemIdentifier(groupId, key),
 					ClassPKInfoItemIdentifier.class);
 
-		return classPKInfoItemIdentifier.getClassPK();
+		_modelClassPK = classPKInfoItemIdentifier.getClassPK();
+
+		return _modelClassPK;
 	}
 
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private String _modelClassName;
+	private Long _modelClassPK;
 	private final PortletRequest _portletRequest;
 
 }

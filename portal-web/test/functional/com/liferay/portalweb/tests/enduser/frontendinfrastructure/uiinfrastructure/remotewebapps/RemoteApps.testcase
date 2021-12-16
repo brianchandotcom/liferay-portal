@@ -18,6 +18,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			PortalInstances.tearDownCP();
+
 			RemoteApps.tearDown();
 		}
 	}
@@ -82,6 +84,37 @@ definition {
 
 		task ("Assert that Vanilla Counter has been deleted") {
 			RemoteApps.assertTableEntryNameNotPresent(entryName = "${customElementName}");
+		}
+	}
+
+	@description = "LPS-143552. Verify that remote app of type Custom Element can be displayed by portal instance"
+	@priority = "5"
+	test CustomElementCanBeDisplayedByInstance {
+		property portal.acceptance = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "RemoteApps#CustomElementCanBeDisplayedByInstance";
+
+		task ("Create virtual instance") {
+			SAML.addVirtualInstances(virtualHosts = "www.able.com");
+		}
+
+		task ("Navigate to virtual instance") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Assert custom remote app is present") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.viewTableEntries(
+				entryName = "Vanilla Counter",
+				entryType = "Custom Element");
+		}
+
+		task ("Navigate back to default instance") {
+			User.firstLoginPG();
 		}
 	}
 

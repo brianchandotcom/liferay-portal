@@ -18,6 +18,11 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
+<%@ page import="com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys" %><%@
+page import="com.liferay.cookies.banner.web.internal.display.context.CookiesBannerDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

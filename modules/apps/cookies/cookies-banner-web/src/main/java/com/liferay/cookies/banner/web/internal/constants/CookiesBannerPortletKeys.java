@@ -22,4 +22,8 @@ public class CookiesBannerPortletKeys {
 	public static final String COOKIES_BANNER =
 		"com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet";
 
+	public static final String COOKIES_BANNER_CONFIGURATION =
+		"com_liferay_cookies_banner_web_portlet_CookiesBannerConfiguration" +
+			"Portlet";
+
 }

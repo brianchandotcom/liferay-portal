@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+package com.liferay.cookies.banner.web.internal.display.context;
 
-<%@ page import="com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys" %>
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+/**
+ * @author Eduardo García
+ */
+public class CookiesBannerConfigurationDisplayContext {
+
+	public CookiesBannerConfigurationDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+	}
+
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
+
+}

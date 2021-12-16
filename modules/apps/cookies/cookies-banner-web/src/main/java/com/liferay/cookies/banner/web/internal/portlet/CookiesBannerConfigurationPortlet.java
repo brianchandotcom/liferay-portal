@@ -16,7 +16,7 @@ package com.liferay.cookies.banner.web.internal.portlet;
 
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
-import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerDisplayContext;
+import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerConfigurationDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-cookies-banner",
-		"com.liferay.portlet.header-portlet-css=/cookies_banner/css/main.css",
+		"com.liferay.portlet.css-class-wrapper=portlet-cookies-banner-configuration",
+		"com.liferay.portlet.header-portlet-css=/cookies_banner_configuration/css/main.css",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
@@ -47,26 +47,28 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Cookie Banner",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/cookies_banner/view.jsp",
-		"javax.portlet.name=" + CookiesBannerPortletKeys.COOKIES_BANNER,
+		"javax.portlet.init-param.view-template=/cookies_banner_configuration/view.jsp",
+		"javax.portlet.name=" + CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class CookiesBannerPortlet extends MVCPortlet {
+public class CookiesBannerConfigurationPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		CookiesBannerDisplayContext cookiesBannerDisplayContext =
-			new CookiesBannerDisplayContext(renderRequest, renderResponse);
+		CookiesBannerConfigurationDisplayContext
+			cookiesBannerConfigurationDisplayContext =
+				new CookiesBannerConfigurationDisplayContext(
+					renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
-			CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT,
-			cookiesBannerDisplayContext);
+			CookiesBannerWebKeys.COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT,
+			cookiesBannerConfigurationDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

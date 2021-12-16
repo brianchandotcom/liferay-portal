@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT);
+%>
+
 <clay:container-fluid
 	cssClass="container-view"
 >
@@ -59,3 +63,14 @@
 		</clay:content-row>
 	</clay:row>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"configurationTitle", LanguageUtil.get(request, "cookies-configuration")
+		).put(
+			"configurationUrl", cookiesBannerDisplayContext.getConfigurationURL()
+		).build()
+	%>'
+	module="cookies_banner/js/CookiesBanner"
+/>

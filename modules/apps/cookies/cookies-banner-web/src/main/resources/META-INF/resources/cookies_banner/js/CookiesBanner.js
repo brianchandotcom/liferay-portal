@@ -21,30 +21,11 @@ const cookieBanner = document.querySelector('.cookies-banner');
 
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 
-function handleButtonClickAccept() {
-	hideBanner();
-
-	localStorage.setItem('liferay.cookie.consent', 'accepted2');
-}
-
-function handleButtonClickDecline() {
-	hideBanner();
-
-	localStorage.setItem('liferay.cookie.consent', 'decline2');
-}
-
-function handleButtonClickConfiguration() {
-	Liferay.Util.openModal({
-		title: 'Cookie Configuration',
-		url: 'configuration.jsp',
-	});
-}
-
 function hideBanner() {
 	cookieBanner.style.display = 'none';
 }
 
-export default function main() {
+export default function ({configurationTitle, configurationUrl}) {
 	if (!editMode) {
 		if (
 			localStorage.getItem('liferay.cookie.consent') === 'accepted' ||
@@ -53,14 +34,31 @@ export default function main() {
 			hideBanner();
 		}
 		else {
-			buttonAccept.addEventListener('click', handleButtonClickAccept);
+			buttonAccept.addEventListener(
+				'click',
+				function handleButtonClickAccept() {
+					hideBanner();
+
+					localStorage.setItem('liferay.cookie.consent', 'accepted2');
+				}
+			);
 			buttonConfiguration.addEventListener(
 				'click',
-				handleButtonClickConfiguration
+				function handleButtonClickConfiguration() {
+					Liferay.Util.openModal({
+						title: configurationTitle,
+						url: configurationUrl,
+					});
+				}
 			);
-			buttonDecline.addEventListener('click', handleButtonClickDecline);
+			buttonDecline.addEventListener(
+				'click',
+				function handleButtonClickDecline() {
+					hideBanner();
+
+					localStorage.setItem('liferay.cookie.consent', 'decline2');
+				}
+			);
 		}
 	}
 }
-
-main();

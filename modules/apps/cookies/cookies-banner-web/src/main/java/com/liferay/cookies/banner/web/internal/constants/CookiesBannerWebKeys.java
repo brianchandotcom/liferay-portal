@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+package com.liferay.cookies.banner.web.internal.constants;
 
-<%@ page import="com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys" %>
+/**
+ * @author Eduardo García
+ */
+public class CookiesBannerWebKeys {
+
+	public static final String COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT =
+		"COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT";
+
+	public static final String COOKIES_BANNER_DISPLAY_CONTEXT =
+		"COOKIES_BANNER_DISPLAY_CONTEXT";
+
+}

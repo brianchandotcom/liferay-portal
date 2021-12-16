@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.redirect.exception,\
 	com.liferay.redirect.model,\
 	com.liferay.redirect.service,\
-	com.liferay.redirect.service.persistence
+	com.liferay.redirect.service.persistence,\
+	com.liferay.redirect.tracker

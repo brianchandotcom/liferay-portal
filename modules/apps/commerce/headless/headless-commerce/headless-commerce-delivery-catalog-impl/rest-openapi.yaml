@@ -185,6 +185,10 @@ components:
                     items:
                         $ref: "#/components/schemas/ProductOption"
                     type: array
+                purchasable:
+                    example: true
+                    readOnly: true
+                    type: boolean
                 quantity:
                     example: 1
                     format: int32

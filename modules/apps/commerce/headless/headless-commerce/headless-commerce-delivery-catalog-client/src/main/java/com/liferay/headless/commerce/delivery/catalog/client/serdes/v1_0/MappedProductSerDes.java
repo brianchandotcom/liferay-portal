@@ -171,6 +171,16 @@ public class MappedProductSerDes {
 			sb.append("]");
 		}
 
+		if (mappedProduct.getPurchasable() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"purchasable\": ");
+
+			sb.append(mappedProduct.getPurchasable());
+		}
+
 		if (mappedProduct.getQuantity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -370,6 +380,14 @@ public class MappedProductSerDes {
 				String.valueOf(mappedProduct.getProductOptions()));
 		}
 
+		if (mappedProduct.getPurchasable() == null) {
+			map.put("purchasable", null);
+		}
+		else {
+			map.put(
+				"purchasable", String.valueOf(mappedProduct.getPurchasable()));
+		}
+
 		if (mappedProduct.getQuantity() == null) {
 			map.put("quantity", null);
 		}
@@ -521,6 +539,11 @@ public class MappedProductSerDes {
 						).toArray(
 							size -> new ProductOption[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "purchasable")) {
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setPurchasable((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {

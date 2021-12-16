@@ -637,6 +637,14 @@ public abstract class BaseMappedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("purchasable", additionalAssertFieldName)) {
+				if (mappedProduct.getPurchasable() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("quantity", additionalAssertFieldName)) {
 				if (mappedProduct.getQuantity() == null) {
 					valid = false;
@@ -909,6 +917,17 @@ public abstract class BaseMappedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("purchasable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						mappedProduct1.getPurchasable(),
+						mappedProduct2.getPurchasable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("quantity", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						mappedProduct1.getQuantity(),
@@ -1148,6 +1167,11 @@ public abstract class BaseMappedProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("purchasable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("quantity")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1249,6 +1273,7 @@ public abstract class BaseMappedProductResourceTestCase {
 				productExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				productId = RandomTestUtil.randomLong();
+				purchasable = RandomTestUtil.randomBoolean();
 				quantity = RandomTestUtil.randomInt();
 				sequence = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

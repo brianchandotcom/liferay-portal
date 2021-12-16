@@ -180,6 +180,14 @@ public class MappedProductDTOConverter
 
 						return productOptions.toArray(new ProductOption[0]);
 					});
+				setPurchasable(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.isPurchasable();
+					});
 				setSkuExternalReferenceCode(
 					() -> {
 						if (cpInstance == null) {

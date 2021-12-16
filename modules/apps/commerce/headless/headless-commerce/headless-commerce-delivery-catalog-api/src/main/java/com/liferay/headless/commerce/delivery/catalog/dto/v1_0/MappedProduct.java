@@ -356,6 +356,34 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOption[] productOptions;
 
+	@Schema
+	public Boolean getPurchasable() {
+		return purchasable;
+	}
+
+	public void setPurchasable(Boolean purchasable) {
+		this.purchasable = purchasable;
+	}
+
+	@JsonIgnore
+	public void setPurchasable(
+		UnsafeSupplier<Boolean, Exception> purchasableUnsafeSupplier) {
+
+		try {
+			purchasable = purchasableUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean purchasable;
+
 	@DecimalMin("0")
 	@Schema
 	public Integer getQuantity() {
@@ -728,6 +756,16 @@ public class MappedProduct implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (purchasable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"purchasable\": ");
+
+			sb.append(purchasable);
 		}
 
 		if (quantity != null) {

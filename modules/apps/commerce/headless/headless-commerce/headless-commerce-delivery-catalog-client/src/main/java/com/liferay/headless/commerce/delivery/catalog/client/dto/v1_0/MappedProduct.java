@@ -251,6 +251,27 @@ public class MappedProduct implements Cloneable, Serializable {
 
 	protected ProductOption[] productOptions;
 
+	public Boolean getPurchasable() {
+		return purchasable;
+	}
+
+	public void setPurchasable(Boolean purchasable) {
+		this.purchasable = purchasable;
+	}
+
+	public void setPurchasable(
+		UnsafeSupplier<Boolean, Exception> purchasableUnsafeSupplier) {
+
+		try {
+			purchasable = purchasableUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean purchasable;
+
 	public Integer getQuantity() {
 		return quantity;
 	}

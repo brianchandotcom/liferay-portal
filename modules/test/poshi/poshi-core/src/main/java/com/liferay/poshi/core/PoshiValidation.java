@@ -519,7 +519,7 @@ public class PoshiValidation {
 		if (primaryAttributeName.equals("function")) {
 			List<String> possibleAttributeNames = Arrays.asList(
 				"function", "line-number", "locator1", "locator2", "value1",
-				"value2");
+				"value2", "value3");
 
 			validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);

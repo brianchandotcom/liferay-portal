@@ -11,9 +11,9 @@
 
 <tbody>
 <tr>
-    <td>CUSTOM_QUOTE_PAGE</td>
-    <td>//div[contains(@class, 'container mb-6 quote-comparison')]</td>
-    <td></td>
+	<td>CUSTOM_QUOTE_PAGE</td>
+	<td>//div[contains(@class, 'container mb-6 quote-comparison')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

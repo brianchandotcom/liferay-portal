@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import DiscardSelectedFiles from '../../../../get-a-quote/components/containers/Forms/Modal/DiscardSelectedFiles';
 import {
 	ACTIONS,
 	SelectedQuoteContext,
 } from '../../../context/SelectedQuoteContextProvider';
+import DiscardSelectedFiles from '../../DiscardChangesModal';
 import CheckButton from '../../Panel/CheckButton';
 
 const DiscardChanges = ({checked, expanded, hasError}) => {
@@ -79,9 +79,7 @@ const DiscardChanges = ({checked, expanded, hasError}) => {
 			/>
 
 			<DiscardSelectedFiles
-				onClose={() => {
-					setShowDiscardFilesModal(false);
-				}}
+				onClose={() => setShowDiscardFilesModal(false)}
 				onDiscardChanges={onDiscardChanges}
 				show={showDiscardFilesModal}
 			/>

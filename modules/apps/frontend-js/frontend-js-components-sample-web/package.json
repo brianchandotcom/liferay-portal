@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"@clayui/layout": "3.40.0",
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
+	},
+	"name": "frontend-js-components-sample-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

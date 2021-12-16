@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend JS Components Sample Web
+Bundle-SymbolicName: com.liferay.frontend.js.components.sample.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-js-components-sample-web

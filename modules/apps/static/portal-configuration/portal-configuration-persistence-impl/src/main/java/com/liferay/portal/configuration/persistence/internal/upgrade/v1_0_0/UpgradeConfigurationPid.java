@@ -86,6 +86,9 @@ public class UpgradeConfigurationPid extends UpgradeProcess {
 								felixFileInstallFilename.lastIndexOf(
 									CharPool.PERIOD));
 						}
+						else {
+							dictionary.remove("felix.fileinstall.filename");
+						}
 					}
 
 					String updatedConfigurationId = StringBundler.concat(

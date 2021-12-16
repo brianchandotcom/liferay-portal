@@ -76,7 +76,6 @@ apply from: "releng-pom.gradle"
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cleanReleng
-task cleanVersionOverride
 task deployReleng
 task portalArtifactsJar(type: ShadowJar)
 task portalJavadoc(type: Javadoc)
@@ -85,7 +84,6 @@ task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
 task prepareMajorIncrementAppProperties
 task syncAppProperties
-task syncPortalLanguageKeys
 task tagAppReleases
 
 buildFixPackChangeLog {
@@ -127,24 +125,6 @@ cleanReleng {
 
 				logger.lifecycle "Removed {}", relativePath(relengDir)
 			}
-		}
-	}
-
-	group = "releng"
-}
-
-cleanVersionOverride {
-	description = "Removes all version override files belonging to a particular subrepository. Required property: '-PgitRepoPath'."
-
-	doLast {
-		assert project.properties["gitRepoPath"] : "Please provide a value for the '-PgitRepoPath' property"
-
-		File gitRepoDir = file(gitRepoPath)
-
-		FileTree bndBndFileTree = fileTree(dir: gitRepoDir, include : "**/bnd.bnd")
-
-		delete bndBndFileTree.collect {
-			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
 		}
 	}
 
@@ -718,132 +698,6 @@ syncAppProperties {
 	}
 }
 
-syncPortalLanguageKeys {
-	doLast {
-		FileTree languagePropertiesFileTree = fileTree(dir: projectDir, excludes: ["apps/archived", "apps/portal-language"], includes: ["apps/**/src/main/resources/content/Language*.properties", "apps/**/src/WEB-INF/src/content/Language*.properties", "dxp/**/src/main/resources/content/Language*.properties", "dxp/**/src/WEB-INF/src/content/Language*.properties"])
-		FileTree portalLanguagePropertiesFileTree = fileTree(dir: projectDir, includes: ["apps/portal-language/portal-language-lang/src/main/resources/content/Language*.properties"])
-
-		Set<File> languagePropertiesFiles = languagePropertiesFileTree.getFiles().sort()
-		Set<File> portalLanguagePropertiesFiles = portalLanguagePropertiesFileTree.getFiles().sort()
-
-		Map<String, Set<String>> moduleMap = new TreeMap<String, Set<String>>()
-
-		Properties portalImplRootLanguageProperties = new Properties()
-
-		new InputStreamReader(new FileInputStream(new File(projectDir, "../portal-impl/src/content/Language.properties")), StandardCharsets.UTF_8).withReader {
-			portalImplRootLanguageProperties.load(it)
-		}
-
-		portalLanguagePropertiesFiles.each {
-			File portalLanguagePropertiesFile ->
-
-			Properties portalLanguageProperties = new Properties()
-
-			new InputStreamReader(new FileInputStream(portalLanguagePropertiesFile), StandardCharsets.UTF_8).withReader {
-				portalLanguageProperties.load(it)
-			}
-
-			boolean updatedPortalLanguageProperties = false
-
-			languagePropertiesFiles.each {
-				File languagePropertiesFile ->
-
-				if (languagePropertiesFile.name == portalLanguagePropertiesFile.name) {
-					Properties languageProperties = new Properties()
-
-					new InputStreamReader(new FileInputStream(languagePropertiesFile), StandardCharsets.UTF_8).withReader {
-						languageProperties.load(it)
-					}
-
-					Properties rootLanguageProperties = new Properties()
-
-					new InputStreamReader(new FileInputStream(new File(languagePropertiesFile.parentFile, "Language.properties")), StandardCharsets.UTF_8).withReader {
-						rootLanguageProperties.load(it)
-					}
-
-					List<String> languageKeys = []
-
-					languageProperties.each {
-						String key, String value ->
-
-						boolean conflictingKey = true
-
-						if (portalImplRootLanguageProperties.containsKey(key)) {
-							if (!rootLanguageProperties.containsKey(key) || (portalImplRootLanguageProperties.getProperty(key) == rootLanguageProperties.getProperty(key))) {
-								conflictingKey = false
-							}
-						}
-						else if (!portalLanguageProperties.containsKey(key)) {
-							conflictingKey = false
-
-							portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
-						}
-						else if (!rootLanguageProperties.containsKey(key)) {
-							conflictingKey = false
-
-							if (portalLanguageProperties.getProperty(key) != value) {
-								String portalLanguageValue = portalLanguageProperties.getProperty(key)
-
-								if (portalLanguageValue.endsWith("(Automatic Copy)") || portalLanguageValue.endsWith("(Automatic Translation)")) {
-									if ((!value.endsWith("(Automatic Copy)") && !value.endsWith("(Automatic Translation)")) || (portalLanguageValue.endsWith("(Automatic Copy)") && value.endsWith("(Automatic Translation)"))) {
-										portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
-									}
-								}
-							}
-						}
-						else if ((languagePropertiesFile.name == "Language.properties") && (portalLanguageProperties.getProperty(key) == value)) {
-							conflictingKey = false
-						}
-
-						if (conflictingKey) {
-							String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
-
-							moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
-
-							languageKeys.add(key + '=' + value.replace("\n", "\\n"))
-						}
-						else {
-							updatedPortalLanguageProperties = true
-						}
-					}
-
-					languagePropertiesFile.setText languageKeys.sort().join("\n"), "UTF-8"
-				}
-			}
-
-			if (updatedPortalLanguageProperties) {
-				List<String> portalLanguageKeys = []
-
-				for (String key : portalLanguageProperties.stringPropertyNames()) {
-					portalLanguageKeys.add(key + '=' + portalLanguageProperties.getProperty(key).replace("\n", "\\n"))
-				}
-
-				portalLanguagePropertiesFile.setText portalLanguageKeys.sort().join("\n"), "UTF-8"
-
-				logger.lifecycle "Updated {}", FileUtil.relativize(portalLanguagePropertiesFile, projectDir)
-			}
-		}
-
-		moduleMap.each {
-			logger.lifecycle "Conflicting keys in {}: {}", it.key, it.value.unique().sort().join(", ")
-		}
-
-		StartParameter startParameter = gradle.startParameter.newBuild()
-
-		startParameter.currentDir = new File(projectDir, "apps/portal-language/portal-language-lang")
-		startParameter.projectProperties = ["formatLocalChanges": "true"]
-		startParameter.taskNames = ["formatSource"]
-
-		_executeGradle(startParameter, true)
-	}
-
-	group = "releng"
-
-	outputs.upToDateWhen {
-		false
-	}
-}
-
 tagAppReleases {
 	description = "Gathers the Git IDs from all app change logs and tags them as 'marketplace-appName-appVersion'."
 
@@ -1109,9 +963,7 @@ private void _cherryPickPrepNext(Commit commit) {
 		StartParameter startParameter = gradle.startParameter.newBuild()
 
 		String baselineIgnoreFailures = _setSystemProperty("baseline.ignoreFailures", "true")
-		String syncRelease = _setSystemProperty("org.gradle.project.syncRelease", "true")
 
-		startParameter.projectProperties = ["syncRelease": "true"]
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
 
 		try {
@@ -1119,7 +971,6 @@ private void _cherryPickPrepNext(Commit commit) {
 		}
 		finally {
 			_setSystemProperty "baseline.ignoreFailures", baselineIgnoreFailures
-			_setSystemProperty "org.gradle.project.syncRelease", syncRelease
 		}
 	}
 }

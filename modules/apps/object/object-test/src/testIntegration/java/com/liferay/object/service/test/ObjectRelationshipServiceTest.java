@@ -18,12 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -76,7 +76,11 @@ public class ObjectRelationshipServiceTest {
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Collections.<ObjectField>emptyList());
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Baker", "baker", false, "String")));
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -89,7 +93,11 @@ public class ObjectRelationshipServiceTest {
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
 				LocalizedMapUtil.getLocalizedMap("Bakers"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Collections.<ObjectField>emptyList());
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Baker", "baker", false, "String")));
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

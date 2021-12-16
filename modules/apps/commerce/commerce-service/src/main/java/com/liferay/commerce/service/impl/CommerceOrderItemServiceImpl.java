@@ -84,7 +84,8 @@ public class CommerceOrderItemServiceImpl
 
 		commerceProductViewPermission.check(
 			getPermissionChecker(), commerceAccount.getCommerceAccountId(),
-			commerceOrder.getGroupId(), cpInstance.getCPDefinitionId());
+			commerceContext.getCommerceChannelGroupId(),
+			cpInstance.getCPDefinitionId());
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,

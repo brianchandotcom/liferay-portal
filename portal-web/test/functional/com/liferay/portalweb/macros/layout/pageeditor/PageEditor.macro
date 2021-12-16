@@ -1297,6 +1297,23 @@ definition {
 		}
 	}
 
+	macro createPageTemplate {
+		Click(
+			key_text = "page-template",
+			locator1 = "Icon#ANY");
+
+		PortletEntry.inputName(name = "${pageTemplateName}");
+
+		Select(
+			key_fieldLabel = "Page Template Collection",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${collectionName}");
+
+		Button.click(button = "Create");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteComment {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 

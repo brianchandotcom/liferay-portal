@@ -910,7 +910,8 @@ definition {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
+			groupName = "Guest",
+			guestPermissions = "false");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -927,10 +928,6 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		PermissionsInline.gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = "DM Folder Name");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_ACCESS_CHECKBOX",

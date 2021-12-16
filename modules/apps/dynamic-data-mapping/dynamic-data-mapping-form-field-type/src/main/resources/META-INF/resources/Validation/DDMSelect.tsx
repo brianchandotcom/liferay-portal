@@ -59,7 +59,11 @@ function DDMSelect({
 	const displaySelect = disabled ? (
 		select
 	) : (
-		<ClayDropDownWithItems items={items} trigger={select} />
+		<ClayDropDownWithItems
+			items={items}
+			menuElementAttrs={{className: 'ddm-select-dropdown'}}
+			trigger={select}
+		/>
 	);
 
 	return (

@@ -142,6 +142,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on master page."
+	@priority = "5"
+	test PreviewStyleBookOnMasterPage {
+		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
+		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+
+		task ("Add a master with a Header Dark fragment then publish") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("View the Masters is shown in preview type selector") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			StyleBooks.viewCurrentPreviewType(previewType = "Masters");
+		}
+
+		task ("View the master page is shown in preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Custom Masters Page Template");
+		}
+
+		task ("View the help information") {
+			Tooltip.viewHelpInformation(info = "Edit the style book using the sidebar form. You can preview the changes instantly.");
+		}
+
+		task ("Change Font Family Base to times in Typography form") {
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Font Family");
+
+			Type(
+				key_fieldLabel = "Font Family Base",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "times");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the master") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				locator1 = "//*[contains(@data-lfr-editable-id,'link')][normalize-space(text())='Sign In']",
+				locator2 = "font-family",
+				value1 = "times");
+
+			SelectFrameTop();
+		}
+	}
+
 	@description = "This is a test for LPS-116078 and LPS-119898. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewStyleBookWhenEditStyleBook {

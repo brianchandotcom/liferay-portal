@@ -11,8 +11,7 @@ import WelcomeSkeleton from './Skeleton';
 
 const Welcome = ({userAccount}) => {
 	const [{assetsPath, project}, dispatch] = useContext(AppContext);
-
-	const {loading: loadingPageGuard} = usePageGuard(
+	const {isLoading} = usePageGuard(
 		userAccount,
 		project.accountKey,
 		'onboarding'
@@ -24,7 +23,7 @@ const Welcome = ({userAccount}) => {
 	] = useMutation(addAccountFlag);
 
 	useEffect(() => {
-		if (!loadingPageGuard && !called) {
+		if (!isLoading && !called) {
 			createAccountFlag({
 				variables: {
 					accountFlag: {
@@ -37,9 +36,9 @@ const Welcome = ({userAccount}) => {
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [called, loadingPageGuard, project, userAccount]);
+	}, [called, isLoading, project, userAccount]);
 
-	if (loadingPageGuard || addAccountFlagLoading) {
+	if (isLoading || addAccountFlagLoading) {
 		return <WelcomeSkeleton />;
 	}
 

@@ -849,6 +849,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<then>
 					<start-elastic-trial authentication.type="PKI" />
 
+					<antcall target="stop-elasticsearch" />
+
+					<antcall target="start-elasticsearch-node" />
+
 					<check-elasticsearch-security authentication.type="PKI" />
 
 					<configure-portal-x-pack-pki-osgi-properties />

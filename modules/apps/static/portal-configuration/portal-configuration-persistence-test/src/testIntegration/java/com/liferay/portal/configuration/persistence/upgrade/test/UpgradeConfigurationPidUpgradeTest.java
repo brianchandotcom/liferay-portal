@@ -66,17 +66,33 @@ public class UpgradeConfigurationPidUpgradeTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_upgradeStepRegistrator.register(
-			(fromSchemaVersionString, toSchemaVersionString, upgradeSteps) -> {
-				for (UpgradeStep upgradeStep : upgradeSteps) {
-					Class<?> clazz = upgradeStep.getClass();
+			new UpgradeStepRegistrator.Registry() {
 
-					String className = clazz.getName();
+				@Override
+				public void register(
+					String fromSchemaVersionString,
+					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
 
-					if (className.contains(_CLASS_NAME)) {
-						_upgradeConfigurationPidUpgradeProcess =
-							(UpgradeProcess)upgradeStep;
+					for (UpgradeStep upgradeStep : upgradeSteps) {
+						Class<?> clazz = upgradeStep.getClass();
+
+						if (Objects.equals(
+								clazz.getName(),
+								"com.liferay.portal.configuration." +
+									"persistence.internal.upgrade.v1_0_0." +
+										"UpgradeConfigurationPid")) {
+
+							_upgradeConfigurationPidUpgradeProcess =
+								(UpgradeProcess)upgradeStep;
+						}
 					}
 				}
+
+				@Override
+				public void registerInitialUpgradeSteps(
+					UpgradeStep... upgradeSteps) {
+				}
+
 			});
 	}
 
@@ -245,10 +261,6 @@ public class UpgradeConfigurationPidUpgradeTest {
 			new UnsyncByteArrayInputStream(
 				dictionaryString.getBytes(StringPool.UTF8)));
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.portal.configuration.persistence.internal.upgrade." +
-			"v1_0_0.UpgradeConfigurationPid";
 
 	private static final String _CONFIGURATION_PID =
 		"test.configuration.instance1";

@@ -138,10 +138,16 @@ public class DXPCloudClientTestrayImporter {
 	private static Element _getTestCaseAttachmentsElement(
 		Element testCaseResultElement) {
 
+		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				System.getenv("GOOGLE_APPLICATION_CREDENTIALS"))) {
+
+			return attachmentsElement;
+		}
+
 		Matcher matcher = _pattern.matcher(
 			testCaseResultElement.attributeValue("name"));
-
-		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
 
 		if (!matcher.find()) {
 			return attachmentsElement;

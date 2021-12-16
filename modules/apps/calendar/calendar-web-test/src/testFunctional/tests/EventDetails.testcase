@@ -87,9 +87,10 @@ definition {
 	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
 	@priority = "3"
 	test CanDeleteRateIntoAEvent {
-		Calendar.LiferayDXPCalendar();
-
-		Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
+		Calendar.chooseSiteCalendarMenulistOption(
+			menuListOption = "Calendar Settings",
+			siteCalendarName = "Liferay DXP",
+			siteName = "Liferay DXP");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -101,16 +102,16 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
-
-		CalendarEvent.publish();
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.viewDetails(
-			calendarName = "Liferay DXP",
-			eventTitle = "Calendar Event Title",
-			eventType = "Regular");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		Ratings.rateStar(ratingStarCount = "3");
 
@@ -131,27 +132,25 @@ definition {
 			eventType = "Regular",
 			pageName = "Calendar Page");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
-
-		CalendarScheduler.changeNameTitleAndCalendarRecorder(
-			calendarRecorder = "Test Test",
-			eventTitle = "Calendar Event Title Edited");
-
-		CalendarScheduler.saveEvent();
+		CalendarScheduler.editTitleAndCalendar(
+			currentEventTitle = "Calendar Event Title",
+			eventTitle = "Calendar Event Title Edited",
+			calendarName = "Test Test");
 
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title Edited");
 
-		CalendarScheduler.viewNameCalendarAndUser(
-			eventTitle = "Calendar Event Title Edited",
-			usersName = "Test Test");
+		CalendarScheduler.viewEventTitleViaDialogBox(eventTitle = "Calendar Event Title Edited");
+
+		CalendarScheduler.viewEventUsersViaDialogBox(usersList = "Test Test");
 	}
 
 	@description = "LRQA-71888 - Verify that the user can rate a event"
 	@priority = "3"
 	test CanRateAEvent {
-		Calendar.LiferayDXPCalendar();
-
-		Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
+		Calendar.chooseSiteCalendarMenulistOption(
+			menuListOption = "Calendar Settings",
+			siteCalendarName = "Liferay DXP",
+			siteName = "Liferay DXP");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -163,16 +162,16 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
-
-		CalendarEvent.publish();
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Title",
+			eventType = "Regular",
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.viewDetails(
-			calendarName = "Liferay DXP",
-			eventTitle = "Calendar Event Title",
-			eventType = "Regular");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		Ratings.rateStar(ratingStarCount = "3");
 
@@ -185,8 +184,9 @@ definition {
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
 
 		AssertElementPresent(
-			locator1 = "Ratings#MESSAGE_YOU_HAVE_RATED",
-			title = "You have rated this 3 stars out of 5.");
+			key_message = "You have rated this 3 stars out of 5.",
+			locator1 = "Ratings#RATED_TOOLTIP_MESSAGE",
+			value1 = "${key_message}");
 	}
 
 	@description = "LRQA-71888 - Verify that the user can view the fields Title, Starts, Ends, Rresources in event details page"

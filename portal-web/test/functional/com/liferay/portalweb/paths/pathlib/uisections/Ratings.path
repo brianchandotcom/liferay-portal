@@ -26,8 +26,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MESSAGE_YOU_HAVE_RATED</td>
-	<td>//div[@class='entry-ratings']//button[@data-restore-title='${title}']</td>
+	<td>RATED_TOOLTIP_MESSAGE</td>
+	<td>//div[contains(@class,'entry-ratings')]//button[contains(@data-restore-title,'${key_message}')]</td>
 	<td></td>
 </tr>
 <tr>

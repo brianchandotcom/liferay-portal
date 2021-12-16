@@ -101,14 +101,16 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
 	}
 
-	macro changeNameTitleAndCalendarRecorder {
-		Type(
-			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
-			value1 = "${eventTitle}");
-
+	macro editTitleAndCalendar {
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${currentEventTitle}");
+		
+		CalendarScheduler.editTitle(eventTitle = "${eventTitle}");
+		
 		Select(
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR",
-			value1 = "${calendarRecorder}");
+			value1 = "${calendarName}");
+
+		CalendarScheduler.saveEvent();
 	}
 
 	macro editTitle {
@@ -463,16 +465,6 @@ definition {
 					value1 = "Close");
 			}
 		}
-	}
-
-	macro viewNameCalendarAndUser {
-		AssertTextEquals(
-			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
-			value1 = "${eventTitle}");
-
-		AssertTextEquals(
-			locator1 = "Calendar#SCHEDULER_EVENT_CARD_VIEW_USER_VALUE",
-			value1 = "${usersName}");
 	}
 
 	macro viewNoRSVP {

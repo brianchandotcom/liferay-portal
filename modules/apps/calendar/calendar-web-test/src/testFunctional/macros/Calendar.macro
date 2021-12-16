@@ -467,13 +467,6 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro LiferayDXPCalendar {
-		Click(
-			key_calendarName = "Liferay DXP",
-			key_site = "Liferay DXP",
-			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
-	}
-
 	macro removeViewPermissions {
 		CalendarNavigator.gotoView(viewType = "Week");
 

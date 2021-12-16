@@ -16,10 +16,11 @@ package com.liferay.commerce.shop.by.diagram.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Danny Situ
@@ -28,13 +29,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface CSDiagramCPTypeHelper {
 
 	public CSDiagramSetting getCSDiagramSetting(
-			long cpDefinitionId, CPRequestHelper cpRequestHelper)
+			CommerceAccount commerceAccount, long cpDefinitionId,
+			PermissionChecker permissionChecker)
 		throws PortalException;
 
 	public CSDiagramType getCSDiagramType(String type);
 
-	public String getImageURL(
-			long cpDefinitionId, CPRequestHelper cpRequestHelper)
+	public String getImageURL(CSDiagramSetting csDiagramSetting)
 		throws Exception;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.commerce.shop.by.diagram.admin.web.internal.util;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
-import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalService;
@@ -25,9 +24,8 @@ import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
 import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,26 +40,18 @@ public class CSDiagramCPTypeHelperImpl implements CSDiagramCPTypeHelper {
 
 	@Override
 	public CSDiagramSetting getCSDiagramSetting(
-			long cpDefinitionId, CPRequestHelper cpRequestHelper)
+			CommerceAccount commerceAccount, long cpDefinitionId,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		long commerceAccountId = 0;
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			cpRequestHelper.getRenderRequest());
-
-		CommerceAccount commerceAccount =
-			_commerceAccountHelper.getCurrentCommerceAccount(
-				cpRequestHelper.getCommerceChannelGroupId(),
-				httpServletRequest);
 
 		if (commerceAccount != null) {
 			commerceAccountId = commerceAccount.getCommerceAccountId();
 		}
 
 		_commerceProductViewPermission.check(
-			cpRequestHelper.getPermissionChecker(), commerceAccountId,
-			cpDefinitionId);
+			permissionChecker, commerceAccountId, cpDefinitionId);
 
 		return _csDiagramSettingLocalService.
 			fetchCSDiagramSettingByCPDefinitionId(cpDefinitionId);
@@ -73,12 +63,10 @@ public class CSDiagramCPTypeHelperImpl implements CSDiagramCPTypeHelper {
 	}
 
 	@Override
-	public String getImageURL(
-			long cpDefinitionId, CPRequestHelper cpRequestHelper)
+	public String getImageURL(CSDiagramSetting csDiagramSetting)
 		throws Exception {
 
-		return CSDiagramSettingUtil.getImageURL(
-			getCSDiagramSetting(cpDefinitionId, cpRequestHelper), _dlURLHelper);
+		return CSDiagramSettingUtil.getImageURL(csDiagramSetting, _dlURLHelper);
 	}
 
 	@Reference

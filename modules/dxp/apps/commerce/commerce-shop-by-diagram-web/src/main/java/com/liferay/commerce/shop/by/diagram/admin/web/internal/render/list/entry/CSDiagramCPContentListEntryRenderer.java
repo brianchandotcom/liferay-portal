@@ -16,7 +16,6 @@ package com.liferay.commerce.shop.by.diagram.admin.web.internal.render.list.entr
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CSDiagramCPTypeDisplayContext;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
 import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -72,9 +71,7 @@ public class CSDiagramCPContentListEntryRenderer
 		throws Exception {
 
 		httpServletRequest.setAttribute(
-			CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT,
-			new CSDiagramCPTypeDisplayContext(
-				_csDiagramCPTypeHelper, httpServletRequest));
+			CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_HELPER, _csDiagramCPTypeHelper);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

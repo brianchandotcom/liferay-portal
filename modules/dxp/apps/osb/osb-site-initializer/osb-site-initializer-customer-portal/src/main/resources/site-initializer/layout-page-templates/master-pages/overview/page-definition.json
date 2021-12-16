@@ -152,7 +152,7 @@
 												"paddingTop": "4",
 												"textAlign": "",
 												"textColor": "",
-												"width": "240px"
+												"width": "fit-content"
 											},
 											"layout": {
 												"borderWidth": 0,
@@ -199,6 +199,7 @@
 											},
 											"layout": {
 												"borderWidth": 0,
+												"contentDisplay": "FlexColumn",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
@@ -213,15 +214,13 @@
 										"pageElements": [
 											{
 												"definition": {
-													"fragmentStyle": {
-														"marginTop": "4"
-													},
 													"layout": {
 														"borderWidth": 0,
+														"contentDisplay": "FlexColumn",
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,
-														"marginTop": 2,
+														"marginTop": 0,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -233,106 +232,167 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"height": "163px"
+																"borderWidth": "0",
+																"marginTop": "4",
+																"maxWidth": "1234px",
+																"textAlign": ""
 															},
-															"gutters": true,
-															"modulesPerRow": 2,
-															"numberOfColumns": 2,
-															"reverseOrder": false,
-															"rowViewports": [
-																{
-																	"id": "landscapeMobile",
-																	"rowViewportDefinition": {
-																	}
-																},
-																{
-																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
-																},
-																{
-																	"id": "tablet",
-																	"rowViewportDefinition": {
-																	}
-																}
-															],
-															"verticalAlignment": "top"
+															"layout": {
+																"borderWidth": 0,
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 2,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
 														},
 														"pageElements": [
 															{
 																"definition": {
-																	"columnViewports": [
+																	"fragmentStyle": {
+																		"height": "163px",
+																		"textAlign": ""
+																	},
+																	"gutters": true,
+																	"modulesPerRow": 2,
+																	"numberOfColumns": 2,
+																	"reverseOrder": false,
+																	"rowViewports": [
 																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "landscapeMobile"
+																			"id": "landscapeMobile",
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
+																			"id": "portraitMobile",
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "tablet"
+																			"id": "tablet",
+																			"rowViewportDefinition": {
+																			}
 																		}
 																	],
-																	"size": 5
-																},
-																"type": "Column"
-															},
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 7
+																	"verticalAlignment": "top"
 																},
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragment": {
-																				"key": "liferay-contact"
-																			},
-																			"fragmentConfig": {
-																			},
-																			"fragmentFields": [
-																			]
+																			"columnViewports": [
+																				{
+																					"columnViewportDefinition": {
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"size": 5
 																		},
-																		"type": "Fragment"
+																		"type": "Column"
+																	},
+																	{
+																		"definition": {
+																			"columnViewports": [
+																				{
+																					"columnViewportDefinition": {
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"size": 7
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "liferay-contact"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					]
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Column"
 																	}
 																],
-																"type": "Column"
+																"type": "Row"
 															}
 														],
-														"type": "Row"
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentSettings": {
+																"unallowedFragments": [
+																]
+															}
+														},
+														"type": "DropZone"
 													}
 												],
 												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "4"
 											},
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 2,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
 											{
 												"definition": {
-													"fragmentSettings": {
-														"unallowedFragments": [
-														]
-													}
+													"fragment": {
+														"key": "actions-card"
+													},
+													"fragmentConfig": {
+														"containerId": "primary"
+													},
+													"fragmentFields": [
+													]
 												},
-												"type": "DropZone"
+												"type": "Fragment"
 											}
 										],
 										"type": "Section"

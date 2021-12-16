@@ -507,6 +507,254 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all pages."
+	@priority = "5"
+	test PreviewStyleBookOnPages {
+		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
+		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+
+		task ("Add the first widget page with a Blogs widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name 1",
+				widgetName = "Blogs");
+		}
+
+		task ("Add the second widget page with a My Sites widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name 2");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name 2",
+				widgetName = "My Sites");
+		}
+
+		task ("Add a Heading fragment to the first content page then publish") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name 1",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Button fragment to the second content page then publish") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Paragraph fragment to the third content page then publish") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name 3",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name 3",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("View the Pages is shown in preview type selector") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			StyleBooks.viewCurrentPreviewType(previewType = "Pages");
+		}
+
+		task ("View the third content page name is shown in preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Content Page Name 3");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			StyleBooks.selectForm(formName = "General");
+
+			StyleBooks.expandSection(sectionName = "Body");
+
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#227777");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the third content page") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "paragraph",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(34, 119, 119, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Change the preview item to the second content page") {
+			StyleBooks.selectPreviewItem(previewItem = "Content Page Name 2");
+		}
+
+		task ("Change Color of Button Primary in Buttons form") {
+			StyleBooks.selectForm(formName = "Buttons");
+
+			StyleBooks.expandSection(sectionName = "Button Primary");
+
+			Type(
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#880022");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the second content page") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(136, 0, 34, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Change the preview item to the first content page") {
+			StyleBooks.selectPreviewItem(previewItem = "Content Page Name 1");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			StyleBooks.selectForm(formName = "General");
+
+			StyleBooks.expandSection(sectionName = "Body");
+
+			Type(
+				key_fieldLabel = "Body Color",
+				key_groupLabel = "Body",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#995511");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the first content page") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(153, 85, 17, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Change the preview item to the second widget page") {
+			StyleBooks.selectPreviewItem(previewItem = "Widget Page Name 2");
+		}
+
+		task ("Change Font Family Base in Typography form") {
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Font Family");
+
+			Type(
+				key_fieldLabel = "Font Family Base",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "times");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the second widget page") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				key_navItem = "My Sites",
+				locator1 = "NavBar#NAV_ITEM_LINK",
+				locator2 = "font-family",
+				value1 = "times");
+
+			SelectFrameTop();
+		}
+
+		task ("View the Showing 4 of 5 Items shown in dropdown menu of preview item selector then change the preview item to the first widget page") {
+			StyleBooks.selectPreviewItem(
+				caption = "Showing 4 of 5 Items",
+				previewItem = "Widget Page Name 1");
+		}
+
+		task ("Change Body Color of Body in General form") {
+			Type(
+				key_fieldLabel = "Font Family Base",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "courier");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the first widget page") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				key_text = "New Entry",
+				locator1 = "Button#ANY",
+				locator2 = "font-family",
+				value1 = "courier");
+
+			SelectFrameTop();
+		}
+	}
+
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all page templates."
 	@priority = "5"
 	test PreviewStyleBookOnPageTemplates {

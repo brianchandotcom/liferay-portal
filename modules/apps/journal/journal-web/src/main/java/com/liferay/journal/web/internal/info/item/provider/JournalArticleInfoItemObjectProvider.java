@@ -53,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		"info.item.identifier=com.liferay.info.item.ClassPKInfoItemIdentifier",
 		"info.item.identifier=com.liferay.info.item.GroupKeyInfoItemIdentifier",
 		"info.item.identifier=com.liferay.info.item.GroupUrlTitleInfoItemIdentifier",
+		"item.class.name=com.liferay.journal.model.JournalArticle",
 		"service.ranking:Integer=100"
 	},
 	service = InfoItemObjectProvider.class

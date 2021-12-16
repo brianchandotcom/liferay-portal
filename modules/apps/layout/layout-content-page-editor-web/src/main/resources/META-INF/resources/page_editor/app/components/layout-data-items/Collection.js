@@ -123,7 +123,7 @@ const Grid = ({
 								<ColumnContext
 									collectionConfig={collectionConfig}
 									collectionId={collectionId}
-									collectionItem={collection[index]}
+									collectionItem={collection.items[index]}
 									customCollectionSelectorURL={
 										customCollectionSelectorURL
 									}
@@ -354,7 +354,7 @@ const Collection = React.memo(
 						)}
 						<Grid
 							child={child}
-							collection={collection.items}
+							collection={collection}
 							collectionConfig={collectionConfig}
 							collectionId={item.itemId}
 							collectionLength={collection.items.length}

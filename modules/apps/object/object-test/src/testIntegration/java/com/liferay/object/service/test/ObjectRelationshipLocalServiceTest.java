@@ -18,12 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -37,7 +37,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,7 +66,11 @@ public class ObjectRelationshipLocalServiceTest {
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Collections.<ObjectField>emptyList());
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Baker", "baker", false, "String")));
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -80,7 +84,11 @@ public class ObjectRelationshipLocalServiceTest {
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Collections.<ObjectField>emptyList());
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Baker", "baker", false, "String")));
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

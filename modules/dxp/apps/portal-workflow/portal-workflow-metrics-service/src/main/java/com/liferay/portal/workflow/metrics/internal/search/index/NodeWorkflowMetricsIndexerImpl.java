@@ -23,7 +23,6 @@ import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMe
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 
-import java.util.Date;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -70,51 +69,6 @@ public class NodeWorkflowMetricsIndexerImpl
 		).setString(
 			"version", addNodeRequest.getProcessVersion()
 		).build();
-
-		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
-
-		return document;
-	}
-
-	@Override
-	public Document addNode(
-		long companyId, Date createDate, boolean initial, Date modifiedDate,
-		String name, long nodeId, long processId, String processVersion,
-		boolean terminal, String type) {
-
-		if (searchEngineAdapter == null) {
-			return null;
-		}
-
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setDate(
-			"createDate", getDate(createDate)
-		).setValue(
-			"deleted", false
-		).setValue(
-			"initial", initial
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setString(
-			"name", name
-		).setLong(
-			"nodeId", nodeId
-		).setLong(
-			"processId", processId
-		).setValue(
-			"terminal", terminal
-		).setString(
-			"type", type
-		).setString(
-			"uid", digest(companyId, nodeId)
-		).setString(
-			"version", processVersion
-		);
-
-		Document document = documentBuilder.build();
 
 		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 

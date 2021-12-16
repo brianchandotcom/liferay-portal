@@ -1072,6 +1072,8 @@ definition {
 
 		// TODO Review
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -1082,7 +1084,7 @@ definition {
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		Open.openInTheNewTab(locator1 = "${portalURL}");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

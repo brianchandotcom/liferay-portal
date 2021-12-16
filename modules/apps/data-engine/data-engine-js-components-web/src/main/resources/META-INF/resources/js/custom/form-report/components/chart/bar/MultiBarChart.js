@@ -35,7 +35,8 @@ const {blueDark, gray} = NAMED_COLORS;
 const MAX_LABEL_SIZE = 44;
 
 export default function MultiBarChart({data, field, height, structure, width}) {
-	const [activeIndex, setActiveIndex] = useState(null);
+	const [focusBar, setFocusBar] = useState(null);
+	const [mouseLeave, setMouseLeave] = useState(true);
 
 	const getRowLabel = (row) => {
 		return field.rows[row] ? field.rows[row].value : undefined;
@@ -62,14 +63,6 @@ export default function MultiBarChart({data, field, height, structure, width}) {
 	const processedStructure = processStructure(structure);
 
 	const {columns} = processedStructure;
-
-	const handleOnMouseOut = () => {
-		setActiveIndex(null);
-	};
-
-	const handleOnMouseOver = (activeIndex) => {
-		setActiveIndex(activeIndex);
-	};
 
 	const processData = ({columns, rows}) => {
 		const processedData = [];
@@ -137,6 +130,16 @@ export default function MultiBarChart({data, field, height, structure, width}) {
 						right: 20,
 						top: 20,
 					}}
+					onMouseMove={({activeTooltipIndex, isTooltipActive}) => {
+						if (isTooltipActive) {
+							setFocusBar(activeTooltipIndex);
+							setMouseLeave(false);
+						}
+						else {
+							setFocusBar(null);
+							setMouseLeave(true);
+						}
+					}}
 				>
 					<XAxis
 						axisLine={{stroke: blueDark}}
@@ -160,7 +163,7 @@ export default function MultiBarChart({data, field, height, structure, width}) {
 						content={
 							<TooltipContent field={field} roundBullet={false} />
 						}
-						cursor={{fill: 'transparent'}}
+						cursor={false}
 					/>
 
 					{columns.map((row, index) => {
@@ -169,19 +172,13 @@ export default function MultiBarChart({data, field, height, structure, width}) {
 								dataKey={row}
 								fill={colors(index)}
 								key={`bar-${index}`}
-								onMouseOut={handleOnMouseOut}
-								onMouseOver={(_, index) =>
-									handleOnMouseOver(index)
-								}
 							>
 								{data.map((_, index) => (
 									<Cell
 										fillOpacity={
-											activeIndex !== null &&
-											activeIndex !== undefined &&
-											activeIndex !== index
-												? '.5'
-												: 1
+											focusBar === index || mouseLeave
+												? 1
+												: 0.5
 										}
 										key={`cell-${index}`}
 									/>

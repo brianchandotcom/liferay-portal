@@ -61,18 +61,21 @@ describe('Tooltip', () => {
 						dataKey: 'Col1',
 						fill: '#4b9bff',
 						name: 'Col 1',
+						payload: {Col1: 1, Col2: 2, Col3: 3},
 						value: 1,
 					},
 					{
 						dataKey: 'Col2',
 						fill: '#af78ff',
 						name: 'Col 2',
+						payload: {Col1: 1, Col2: 2, Col3: 3},
 						value: 2,
 					},
 					{
 						dataKey: 'Col3',
 						fill: '#50d2a0',
 						name: 'Col 3',
+						payload: {Col1: 1, Col2: 2, Col3: 3},
 						value: 3,
 					},
 				]}

@@ -49,10 +49,7 @@ export default function TooltipContent({
 							? payload.label
 							: getColumnLabel(dataKey, field);
 
-						fill =
-							fill === undefined || fill === null
-								? payload.fill
-								: null;
+						fill = payload.fill ?? fill;
 
 						return (
 							<li key={`tooltip-${index}`}>

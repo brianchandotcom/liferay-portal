@@ -4,6 +4,7 @@ import {useFormikContext} from 'formik';
 import {useContext, useEffect, useState} from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import WarningBadge from '../../../../common/components/WarningBadge';
+import {ApplicationPropertiesContext} from '../../../../common/context/ApplicationPropertiesProvider';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {
 	getAccountRolesAndAccountFlags,
@@ -23,6 +24,7 @@ const SLA_GOLD = 'Gold';
 const SLA_PLATINUM = 'Platinum';
 
 const Invites = () => {
+	const {supportLink} = useContext(ApplicationPropertiesContext);
 	const [{project}, dispatch] = useContext(AppContext);
 	const {errors, setFieldValue, setTouched, values} = useFormikContext();
 
@@ -273,7 +275,7 @@ const Invites = () => {
 
 						<a
 							className="font-weight-bold text-neutral-9"
-							href="https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support"
+							href={supportLink}
 							rel="noreferrer"
 							target="_blank"
 						>

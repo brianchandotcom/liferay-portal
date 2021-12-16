@@ -345,7 +345,7 @@ components:
                 min:
                     type: object
                 type:
-                    enum: [Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
+                    enum: [Boolean, Date, Double, Float, Integer, IntegerArray, Long, LongArray, String, StringArray, TimeRange]
                     type: string
             type: object
         QueryPrefilterContributor:

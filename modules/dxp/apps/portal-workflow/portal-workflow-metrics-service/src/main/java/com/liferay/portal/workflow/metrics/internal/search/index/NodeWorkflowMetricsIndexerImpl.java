@@ -20,6 +20,7 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
+import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 
 import java.util.Date;
@@ -34,6 +35,46 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
 public class NodeWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements NodeWorkflowMetricsIndexer {
+
+	@Override
+	public Document addNode(AddNodeRequest addNodeRequest) {
+		if (searchEngineAdapter == null) {
+			return null;
+		}
+
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		Document document = documentBuilder.setLong(
+			"companyId", addNodeRequest.getCompanyId()
+		).setDate(
+			"createDate", getDate(addNodeRequest.getCreateDate())
+		).setValue(
+			"deleted", false
+		).setValue(
+			"initial", addNodeRequest.getInitial()
+		).setDate(
+			"modifiedDate", getDate(addNodeRequest.getModifiedDate())
+		).setString(
+			"name", addNodeRequest.getName()
+		).setLong(
+			"nodeId", addNodeRequest.getNodeId()
+		).setLong(
+			"processId", addNodeRequest.getProcessId()
+		).setValue(
+			"terminal", addNodeRequest.getTerminal()
+		).setString(
+			"type", addNodeRequest.getType()
+		).setString(
+			"uid",
+			digest(addNodeRequest.getCompanyId(), addNodeRequest.getNodeId())
+		).setString(
+			"version", addNodeRequest.getProcessVersion()
+		).build();
+
+		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
+
+		return document;
+	}
 
 	@Override
 	public Document addNode(

@@ -276,9 +276,9 @@ definition {
 
 		CalendarExportImport.gotoImportTab(subTab = "New Import Process");
 
-		UploadDependencyFile.uploadFile(fileName = "Calendar-empty-file.portlet.lar.portlet.lar");
-
-		AssertElementPresent(locator1 = "CalendarExportImport#UPLOAD_ERROR_MESSAGE");
+		CalendarExportImport.importCalendarFile(
+			calendarFile = "Calendar-empty-file.portlet.lar.portlet.lar",
+			importValidationErrorMessage = "The file Calendar-empty-file.portlet.lar.portlet.lar cannot be imported.");
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new exported process status in the Current and Previous tab"

@@ -51,9 +51,17 @@ definition {
 	macro importCalendarFile {
 		UploadDependencyFile.uploadFile(fileName = "${calendarFile}");
 
-		Button.click(button = "Continue");
+		if (isSet(importValidationErrorMessage)) {
+			AssertTextEquals.assertPartialText(
+				importValidationErrorMessage = "${importValidationErrorMessage}",
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				value1 = "${importValidationErrorMessage}");
+		}
+		else {
+			Button.click(button = "Continue");
 
-		Button.click(button = "Import");
+			Button.click(button = "Import");
+		}
 	}
 
 	macro removeWidgetCalendar {

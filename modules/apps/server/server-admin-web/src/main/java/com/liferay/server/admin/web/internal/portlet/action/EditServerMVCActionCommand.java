@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -234,9 +235,15 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Log4JUtil.setLevel(loggerName, priority, true);
 
-		_executeOnCluster(
-			_updateLogLevelsMethodKey,
-			Collections.singletonList(new LogLevel(loggerName, priority)));
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			_notifySlaves(_updateLogLevelsMethodKey, _getLog4JLevelConfigs());
+		}
+		else {
+			_notifyMaster(
+				_updateLogLevelsMethodKey,
+				Collections.singletonList(
+					new Log4JLevelConfig(loggerName, priority, true)));
+		}
 	}
 
 	private void _cacheDb() throws Exception {
@@ -521,7 +528,38 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		return null;
 	}
 
-	private void _executeOnCluster(MethodKey methodKey, Object... arguments) {
+	private void _gc() throws Exception {
+		Runtime runtime = Runtime.getRuntime();
+
+		runtime.gc();
+	}
+
+	private List<Log4JLevelConfig> _getLog4JLevelConfigs() {
+		Map<String, String> priorities = Log4JUtil.getPriorities();
+		Map<String, String> customLogSettings =
+			Log4JUtil.getCustomLogSettings();
+
+		List<Log4JLevelConfig> log4JLevelConfigs = new ArrayList<>();
+
+		priorities.forEach(
+			(name, priority) -> log4JLevelConfigs.add(
+				new Log4JLevelConfig(
+					name, priority, customLogSettings.containsKey(name))));
+
+		return log4JLevelConfigs;
+	}
+
+	private void _notifyMaster(MethodKey methodKey, Object... arguments) {
+		try {
+			ClusterMasterExecutorUtil.executeOnMaster(
+				new MethodHandler(methodKey, arguments));
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to notify master", throwable);
+		}
+	}
+
+	private void _notifySlaves(MethodKey methodKey, Object... arguments) {
 		try {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, arguments);
@@ -536,12 +574,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable throwable) {
 			_log.error("Unable to notify slave", throwable);
 		}
-	}
-
-	private void _gc() throws Exception {
-		Runtime runtime = Runtime.getRuntime();
-
-		runtime.gc();
 	}
 
 	private void _runScript(
@@ -664,7 +696,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Enumeration<String> enumeration = actionRequest.getParameterNames();
 
-		List<LogLevel> logLevels = new ArrayList<>();
+		List<Log4JLevelConfig> log4JLevelConfigs = new ArrayList<>();
 
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
@@ -677,18 +709,28 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 				Log4JUtil.setLevel(loggerName, priority, true);
 
-				logLevels.add(new LogLevel(loggerName, priority));
+				log4JLevelConfigs.add(
+					new Log4JLevelConfig(loggerName, priority, true));
 			}
 		}
 
-		if (!logLevels.isEmpty()) {
-			_executeOnCluster(_updateLogLevelsMethodKey, logLevels);
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			_notifySlaves(_updateLogLevelsMethodKey, _getLog4JLevelConfigs());
+		}
+		else if (!log4JLevelConfigs.isEmpty()) {
+			_notifyMaster(_updateLogLevelsMethodKey, log4JLevelConfigs);
 		}
 	}
 
-	private void _updateLogLevels(List<LogLevel> logLevels) {
-		for (LogLevel logLevel : logLevels) {
-			Log4JUtil.setLevel(logLevel._loggerName, logLevel._priority, true);
+	private void _updateLogLevels(List<Log4JLevelConfig> log4JLevelConfigs) {
+		for (Log4JLevelConfig log4JLevelConfig : log4JLevelConfigs) {
+			Log4JUtil.setLevel(
+				log4JLevelConfig.getName(), log4JLevelConfig.getPriority(),
+				log4JLevelConfig.isCustom());
+		}
+
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			_notifySlaves(_updateLogLevelsMethodKey, _getLog4JLevelConfigs());
 		}
 	}
 
@@ -857,14 +899,28 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private UserGroupMembershipPolicyFactory _userGroupMembershipPolicyFactory;
 
-	private static class LogLevel implements Serializable {
+	private static class Log4JLevelConfig implements Serializable {
 
-		public LogLevel(String loggerName, String priority) {
-			_loggerName = loggerName;
+		public Log4JLevelConfig(String name, String priority, boolean custom) {
+			_name = name;
 			_priority = priority;
+			_custom = custom;
 		}
 
-		private final String _loggerName;
+		public String getName() {
+			return _name;
+		}
+
+		public String getPriority() {
+			return _priority;
+		}
+
+		public boolean isCustom() {
+			return _custom;
+		}
+
+		private final boolean _custom;
+		private final String _name;
 		private final String _priority;
 
 	}

@@ -28,7 +28,6 @@ import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -114,7 +113,11 @@ public class ObjectEntryLocalServiceTest {
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Collections.<ObjectField>emptyList());
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Baker", "baker", false, "String")));
 
 		_irrelevantObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1446,7 +1449,12 @@ public class ObjectEntryLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				scope, Collections.<ObjectField>emptyList());
+				scope,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Baker", "baker", false, "String")));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

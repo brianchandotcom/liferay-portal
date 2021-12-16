@@ -215,6 +215,123 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all page templates."
+	@priority = "5"
+	test PreviewStyleBookOnPageTemplates {
+		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
+		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template with a Blog widget") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Widget Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Widget Page Template Name");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+
+		task ("Add a content page template with a Button fragment then publish") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Content Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("View the Page Templates is shown in preview type selector") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			StyleBooks.viewCurrentPreviewType(previewType = "Page Templates");
+		}
+
+		task ("View the content page template is shown in preview item selector") {
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Content Page Template Name");
+		}
+
+		task ("Change Color of Button Primary in Buttons form") {
+			StyleBooks.selectForm(formName = "Buttons");
+
+			StyleBooks.expandSection(sectionName = "Button Primary");
+
+			Type(
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#880022");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Preview the effects on the content page template") {
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(136, 0, 34, 1)");
+
+			SelectFrameTop();
+		}
+
+		task ("Preview the effects on the widget page template") {
+			StyleBooks.selectPreviewItem(previewItem = "Widget Page Template Name");
+
+			StyleBooks.viewCurrentPreviewItem(previewItem = "Widget Page Template Name");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				key_text = "New Entry",
+				locator1 = "Button#ANY",
+				locator2 = "color",
+				value1 = "rgba(136, 0, 34, 1)");
+
+			SelectFrameTop();
+		}
+	}
+
 	@description = "This is a test for LPS-116078 and LPS-119898. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewStyleBookWhenEditStyleBook {

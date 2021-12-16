@@ -274,4 +274,78 @@ definition {
 			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${globalAttributeName} Description");
 		}
     }
+
+    @description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10216 | Test Summary: Edit global attribute name with a name already in use"
+	@priority = "4"
+	test RenameGlobalAttributeWithNameAlreadyInUse {
+		var globalAttributeName1 = "url";
+		var globalAttributeName2 = "referrer";
+		var globalAttributeName3 = "canonicalUrl";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to global attributes tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACNavigation.openItem(itemName = "Global Attributes");
+		}
+
+		task ("Edit the global attribute") {
+			ACNavigation.openItem(itemName = "${globalAttributeName1}");
+
+			ACUtils.clickAnyButton(button = "Edit");
+		}
+
+		task ("Change the display name of the global attribute") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${globalAttributeName1} Display Name");
+		}
+
+		task ("Back to Event Attributes and Navigation to global attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Global Attributes");
+		}
+
+		task ("Edit the global attribute") {
+			ACNavigation.openItem(itemName = "${globalAttributeName2}");
+
+			ACUtils.clickAnyButton(button = "Edit");
+		}
+
+		task ("Rename to an existing display name") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${globalAttributeName3}");
+		}
+
+		task ("Check that the display name cannot be renamed to an existing one") {
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An attribute already exists with that display name. Please enter a different display name.");
+		}
+
+		task ("Rename to an existing display name") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${globalAttributeName1} Display Name");
+		}
+
+		task ("Check that the display name cannot be renamed to an existing one") {
+			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An attribute already exists with that display name. Please enter a different display name.");
+		}
+	}
 }

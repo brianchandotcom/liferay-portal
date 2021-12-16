@@ -3990,7 +3990,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 					object = getWebElement(argument);
 				}
 				catch (ElementNotFoundPoshiRunnerException |
-					   InvalidSelectorException exception) {
+					   InvalidSelectorException | NullPointerException
+						   exception) {
 
 					object = argument;
 				}

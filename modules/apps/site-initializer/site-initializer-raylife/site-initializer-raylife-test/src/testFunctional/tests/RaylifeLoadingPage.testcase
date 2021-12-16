@@ -5,31 +5,154 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
 	@description = "LPS-142582 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Hang tight...' page)"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDismissLoadingPageInfoPanel {
 
-		// TODO LPS-142582 CanDismissLoadingPageInfoPanel pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_DISMISS");
+
+		AssertElementPresent(
+			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
+			value1 = "Did you know");
+
+		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142580 - Verify Loading Page is reachable after pressing Continue on Property page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanReachLoadingPageByPropertyPage {
 
-		// TODO LPS-142580 CanReachLoadingPageByPropertyPage pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
+
+		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
 
 	@description = "LPS-142581 - Verify Loading Page redirects automatically to Quote Profile Page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRedirectToQuotePage {
 
-		// TODO LPS-142581 CanRedirectToQuotePage pending implementation
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeQuoteProfile#CUSTOM_QUOTE_PAGE");
+
+		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 	}
-
 }

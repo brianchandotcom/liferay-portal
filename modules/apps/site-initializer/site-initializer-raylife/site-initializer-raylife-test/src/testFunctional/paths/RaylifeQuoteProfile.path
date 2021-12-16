@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>RaylifeQuoteProfile</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeQuoteProfile</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CUSTOM_QUOTE_PAGE</td>
+	<td>//div[contains(@class, 'container mb-6 quote-comparison')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

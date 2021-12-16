@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>RaylifeLoadingPage</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeLoadingPage</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>HANG_TIGHT_PAGE</td>
+	<td>//h1[contains(text(),'Hang tight...')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

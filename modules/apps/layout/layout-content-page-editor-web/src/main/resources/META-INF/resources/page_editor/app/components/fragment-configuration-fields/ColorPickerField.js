@@ -15,13 +15,13 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
-import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import ColorPicker from '../../../common/components/ColorPicker';
 import useControlledState from '../../../core/hooks/useControlledState';
@@ -45,6 +45,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 
 	const [activeAutocomplete, setActiveAutocomplete] = useState(false);
 	const [activeColorPicker, setActiveColorPicker] = useState(false);
+	const buttonsRef = useRef(null);
 	const [color, setColor] = useControlledState(
 		config.tokenReuseEnabled
 			? tokenValues[value]?.value || value
@@ -52,7 +53,9 @@ export function ColorPickerField({field, onValueSelect, value}) {
 	);
 	const [customColors, setCustomColors] = useState([value || '']);
 	const [error, setError] = useState(false);
+	const inputRef = useRef(null);
 	const [isHexadecimal, setIsHexadecimal] = useState(false);
+	const listboxRef = useRef(null);
 	const [tokenLabel, setTokenLabel] = useControlledState(
 		value ? tokenValues[value]?.label : Liferay.Language.get('default')
 	);
@@ -109,13 +112,46 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			setError(false);
 		}
 
-		setActiveAutocomplete(true);
+		setActiveAutocomplete(
+			value.length > 1 && filteredTokenColorValues.length
+		);
 		setColor(value);
 		setIsHexadecimal(value.startsWith('#'));
 	};
 
 	const onClickAutocompleteItem = ({label, name, value}) => {
 		onSetValue(label, name, value);
+	};
+
+	const onKeydownAutocompleteItem = (event) => {
+		if (event.key === 'Tab') {
+			event.preventDefault();
+			event.stopPropagation();
+
+			setActiveAutocomplete(false);
+			onBlurAutocompleteInput({target: inputRef.current});
+
+			if (event.shiftKey) {
+				inputRef.current.focus();
+			}
+			else {
+				buttonsRef.current.querySelector('button').focus();
+			}
+		}
+	};
+
+	const onKeydownAutocompleteInput = (event) => {
+		if (event.key === 'Tab') {
+			setActiveAutocomplete(false);
+			onBlurAutocompleteInput(event);
+
+			if (!event.shiftKey) {
+				event.preventDefault();
+				event.stopPropagation();
+
+				buttonsRef.current.querySelector('button').focus();
+			}
+		}
 	};
 
 	tokenColorValues.forEach(
@@ -161,7 +197,10 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			<ClayInput.Group
 				className={classNames('page-editor__color-picker-field', {
 					'has-warning': error,
-					'hovered': !config.tokenReuseEnabled || activeColorPicker,
+					'hovered':
+						!config.tokenReuseEnabled ||
+						activeColorPicker ||
+						activeAutocomplete,
 				})}
 			>
 				{config.tokenReuseEnabled ? (
@@ -211,48 +250,81 @@ export function ColorPickerField({field, onValueSelect, value}) {
 								</ClayInput.GroupItem>
 
 								<ClayInput.GroupItem append>
-									<ClayAutocomplete>
-										<ClayAutocomplete.Input
-											className="page-editor__color-picker-field__autocomplete__input"
-											id={id}
-											onBlur={onBlurAutocompleteInput}
-											onChange={onChangeAutocompleteInput}
-											role="combobox"
-											value={color}
-										/>
+									<FocusScope>
+										<ClayAutocomplete>
+											<ClayAutocomplete.Input
+												aria-expanded={
+													activeAutocomplete
+												}
+												aria-invalid={error}
+												aria-owns={`${id}_listbox`}
+												className="page-editor__color-picker-field__autocomplete__input"
+												id={id}
+												onBlur={(event) => {
+													if (!activeAutocomplete) {
+														onBlurAutocompleteInput(
+															event
+														);
+													}
+												}}
+												onChange={
+													onChangeAutocompleteInput
+												}
+												onKeyDown={
+													onKeydownAutocompleteInput
+												}
+												ref={inputRef}
+												role="combobox"
+												value={color}
+											/>
 
-										<ClayAutocomplete.DropDown
-											active={
-												activeAutocomplete &&
-												filteredTokenColorValues.length
-											}
-											closeOnClickOutside={true}
-											onSetActive={setActiveAutocomplete}
-										>
-											<ClayDropDown.ItemList role="listbox">
-												{filteredTokenColorValues.map(
-													(token) => (
-														<ClayAutocomplete.Item
-															key={token.name}
-															match={color}
-															onClick={() =>
-																onClickAutocompleteItem(
-																	token
-																)
-															}
-															onMouseDown={(
-																event
-															) =>
-																event.preventDefault()
-															}
-															role="option"
-															value={token.label}
-														/>
-													)
-												)}
-											</ClayDropDown.ItemList>
-										</ClayAutocomplete.DropDown>
-									</ClayAutocomplete>
+											<ClayAutocomplete.DropDown
+												active={
+													activeAutocomplete &&
+													filteredTokenColorValues.length
+												}
+												closeOnClickOutside={true}
+												onSetActive={
+													setActiveAutocomplete
+												}
+											>
+												<ul
+													className="list-unstyled"
+													id={`${id}_listbox`}
+													ref={listboxRef}
+													role="listbox"
+												>
+													{filteredTokenColorValues.map(
+														(token, index) => (
+															<ClayAutocomplete.Item
+																aria-posinset={
+																	index
+																}
+																key={token.name}
+																onClick={() =>
+																	onClickAutocompleteItem(
+																		token
+																	)
+																}
+																onKeyDown={
+																	onKeydownAutocompleteItem
+																}
+																onMouseDown={(
+																	event
+																) =>
+																	event.preventDefault()
+																}
+																role="option"
+																value={
+																	token.label
+																}
+															/>
+														)
+													)}
+												</ul>
+											</ClayAutocomplete.DropDown>
+										</ClayAutocomplete>
+									</FocusScope>
 								</ClayInput.GroupItem>
 							</ClayInput.Group>
 						</ClayInput.GroupItem>
@@ -291,6 +363,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 						{config.tokenReuseEnabled && (
 							<ClayInput.GroupItem
 								className="page-editor__color-picker-field__action-button"
+								ref={buttonsRef}
 								shrink
 							>
 								{tokenLabel ? (

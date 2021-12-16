@@ -53,6 +53,7 @@ const isInteractiveElement = (element) => {
 	return (
 		['INPUT', 'OPTION', 'SELECT', 'TEXTAREA'].includes(element.tagName) ||
 		!!element.closest('.cke_editable') ||
+		!!element.closest('.dropdown-menu') ||
 		!!element.closest('.alloy-editor-container')
 	);
 };

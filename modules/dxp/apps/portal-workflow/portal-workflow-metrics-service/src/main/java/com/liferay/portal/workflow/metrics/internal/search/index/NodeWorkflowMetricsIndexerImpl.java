@@ -95,22 +95,6 @@ public class NodeWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void deleteNode(long companyId, long nodeId) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setLong(
-			"nodeId", nodeId
-		).setString(
-			"uid", digest(companyId, nodeId)
-		);
-
-		workflowMetricsPortalExecutor.execute(
-			() -> deleteDocument(documentBuilder));
-	}
-
-	@Override
 	public String getIndexName(long companyId) {
 		return _nodeWorkflowMetricsIndex.getIndexName(companyId);
 	}

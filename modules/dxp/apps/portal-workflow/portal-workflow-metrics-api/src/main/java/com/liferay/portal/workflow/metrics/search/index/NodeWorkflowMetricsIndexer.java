@@ -27,6 +27,4 @@ public interface NodeWorkflowMetricsIndexer {
 
 	public void deleteNode(DeleteNodeRequest deleteNodeRequest);
 
-	public void deleteNode(long companyId, long nodeId);
-
 }

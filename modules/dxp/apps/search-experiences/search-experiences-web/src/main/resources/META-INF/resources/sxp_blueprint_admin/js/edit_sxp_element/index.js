@@ -16,6 +16,28 @@ import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
 import EditSXPElementForm from './EditSXPElementForm';
 
+/**
+ * Converts the GET sxp-elements response to match the format of the exported
+ * sxp element file. This is so an exported element can be copy/pasted into the
+ * element JSON editor.
+ * https://github.com/liferay/liferay-portal/blob/e9255c529cbb97d494f8331ec4527b271bc412ae/modules/dxp/apps/search-experiences/search-experiences-rest-impl/src/main/java/com/liferay/search/experiences/rest/internal/resource/v1_0/SXPElementResourceImpl.java#L94-L108
+ */
+const transformToSXPElementExportFormat = (
+	sxpElementResponseObject,
+	defaultLocale
+) => {
+	return {
+		description_i18n: sxpElementResponseObject.description_i18n || {
+			[defaultLocale]: sxpElementResponseObject.description,
+		},
+		elementDefinition: sxpElementResponseObject.elementDefinition,
+		title_i18n: sxpElementResponseObject.title_i18n || {
+			[defaultLocale]: sxpElementResponseObject.title,
+		},
+		type: sxpElementResponseObject.type,
+	};
+};
+
 export default function ({
 	defaultLocale,
 	namespace,
@@ -31,7 +53,13 @@ export default function ({
 			{
 				method: 'GET',
 			},
-			(responseContent) => setSXPElement(responseContent),
+			(responseContent) =>
+				setSXPElement(
+					transformToSXPElementExportFormat(
+						responseContent,
+						defaultLocale
+					)
+				),
 			() => setSXPElement({})
 		);
 
@@ -61,17 +89,9 @@ export default function ({
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm
-						initialDescription={
-							sxpElement.description_i18n || {
-								[defaultLocale]: sxpElement.description,
-							}
-						}
-						initialElementDefinition={sxpElement.elementDefinition}
-						initialTitle={
-							sxpElement.title_i18n || {
-								[defaultLocale]: sxpElement.title,
-							}
-						}
+						initialDescription={sxpElement.description_i18n}
+						initialSXPElementJSON={sxpElement}
+						initialTitle={sxpElement.title_i18n}
 						predefinedVariables={predefinedVariables}
 						readOnly={sxpElement.readOnly}
 						sxpElementId={sxpElementId}

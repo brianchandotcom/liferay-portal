@@ -75,12 +75,9 @@ apply plugin: "org.ajoberstar.grgit"
 apply from: "releng-pom.gradle"
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
-task cherryPickArtifacts
 task cleanReleng
 task cleanVersionOverride
 task deployReleng
-task lockDependencyVersion
-task lockPrivateDependencyVersions
 task portalArtifactsJar(type: ShadowJar)
 task portalJavadoc(type: Javadoc)
 task portalJavadocJar(type: Jar)
@@ -88,7 +85,6 @@ task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
 task prepareMajorIncrementAppProperties
 task syncAppProperties
-task syncGitRepoReleases
 task syncPortalLanguageKeys
 task tagAppReleases
 
@@ -109,34 +105,6 @@ buildFixPackChangeLog {
 	}
 
 	ticketIdPrefixes "LRQA"
-}
-
-cherryPickArtifacts {
-	description = "Cherry-picks 'apply' and 'prep next' artifact publishing commits from a release branch. Required properties: '-Psince', '-Puntil'."
-
-	doLast {
-		assert project.properties["since"] : "Please provide a Git commit hash for the '-Psince' property"
-		assert project.properties["until"] : "Please provide a Git commit hash for the '-Puntil' property"
-
-		Commit sinceParentCommit = JGitUtil.resolveCommit(grgit.repository, since)
-
-		List<Commit> commits = grgit.log {
-			range sinceParentCommit.parentIds.first(), until
-		}
-
-		commits.reverseEach {
-			Commit commit ->
-
-			if (commit.shortMessage.endsWith(" apply")) {
-				_cherryPickApply(commit)
-			}
-			else if (commit.shortMessage.contains("prep next")) {
-				_cherryPickPrepNext(commit)
-			}
-		}
-	}
-
-	group = "releng"
 }
 
 cleanReleng {
@@ -253,185 +221,6 @@ deployReleng {
 				}
 
 				FileUtil.get(project, artifactURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], new File(deployDir, jarFileName), false, true)
-			}
-		}
-	}
-
-	group = "releng"
-}
-
-lockDependencyVersion {
-	description = "Replaces 'default' or project dependencies in all 'apps' and 'core' modules with a specific version, if compilation completes successfully. Required properties: '-PdependencyName', '-PdependencyVersion'."
-
-	doLast {
-		assert project.properties["dependencyName"] : "Please provide a value for the '-PdependencyName' property"
-		assert project.properties["dependencyVersion"] : "Please provide a value for the '-PdependencyVersion' property"
-
-		assert dependencyName.startsWith("com.liferay.") : "Please provide a value for the '-PdependencyName' property which starts with 'com.liferay.'"
-
-		Path repositoryRootDirPath = grgit.repository.rootDir.parentFile.toPath()
-
-		Pattern dependencyPattern
-		String dependencyGroup = "com.liferay"
-
-		String dependencyProjectName = dependencyName.substring(12)
-
-		dependencyProjectName = dependencyProjectName.replace('.' as char, '-' as char)
-
-		if (dependencyName.startsWith("com.liferay.portal.") || dependencyName.startsWith("com.liferay.util.")) {
-			dependencyGroup = "com.liferay.portal"
-			dependencyPattern = ~/(compileOnly|provided)\s+group:\s*"${dependencyGroup}",\s*name:\s*"${dependencyName}",\s*version:\s*"default"/
-		}
-		else {
-			dependencyPattern = ~/(compileOnly|provided) project\(".+:${dependencyProjectName}"\)/
-		}
-
-		String dependencyReplacement = "\$1 group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
-
-		boolean commitChanges = false
-
-		List<String> buildGradleExcludes = ["**/build/", "**/classes/", "**/node_modules/"]
-
-		if (dependencyName in ["com.liferay.portal.impl", "com.liferay.portal.kernel"]) {
-			buildGradleExcludes = buildGradleExcludes + ["core/portal-bootstrap/"]
-		}
-
-		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: buildGradleExcludes, includes: ["apps/**/build.gradle", "core/**/build.gradle"])
-
-		buildGradleFileTree.each {
-			File buildGradleFile ->
-
-			File moduleDir = buildGradleFile.parentFile
-
-			if (moduleDir.name.endsWith("-test") || _isGitRepoReadOnly(moduleDir)) {
-				return
-			}
-
-			// Update build.gradle
-
-			String buildGradle = buildGradleFile.text
-
-			String newBuildGradle = buildGradle.replaceFirst(dependencyPattern, dependencyReplacement)
-
-			if (buildGradle == newBuildGradle) {
-				return
-			}
-
-			buildGradleFile.text = newBuildGradle
-
-			// Try to build module with the new dependency
-
-			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
-
-			buildGradleRelativePath = buildGradleRelativePath.replace(File.separatorChar, '/' as char)
-
-			if (!_executeGradle(moduleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
-				println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
-
-				_resetFileChanges buildGradleRelativePath
-
-				return
-			}
-
-			// Add build.gradle to Git index if build completed successfully
-
-			grgit.add patterns: [buildGradleRelativePath]
-
-			commitChanges = true
-
-			println "Dependency '${dependencyName}' version locked to ${dependencyVersion} in ${relativePath(moduleDir)}"
-		}
-
-		if (commitChanges) {
-			grgit.commit message: "${dependencyProjectName} ${dependencyVersion} apply"
-		}
-	}
-
-	group = "releng"
-}
-
-lockPrivateDependencyVersions {
-	description = "Replaces project dependencies in private modules with the first compatible module dependency."
-
-	doLast {
-		FileTree buildGradleFileTree = fileTree(dir: new File(projectDir, "private"), includes: ["apps/**/build.gradle", "core/**/build.gradle"])
-
-		buildGradleFileTree.each {
-			File buildGradleFile ->
-
-			File moduleDir = buildGradleFile.parentFile
-
-			if (_isGitRepoReadOnly(moduleDir)) {
-				return
-			}
-
-			// Replace one project dependency at a time
-
-			String buildGradle = buildGradleFile.text
-
-			List<String[]> buildGradleDependencies = buildGradle.findAll(/project\(":(.+)"\)/, {
-					String all, String dependencyPath ->
-
-					[all, dependencyPath]
-				})
-
-			for (String[] buildGradleDependency in buildGradleDependencies) {
-				String dependencyPath = buildGradleDependency[1]
-
-				// Exclude project dependencies to private modules, since those are already available in the build
-
-				if (dependencyPath.startsWith("private:")) {
-					continue
-				}
-
-				// Look for the public module pointed by the project dependency
-
-				File dependencyDir = new File(projectDir, dependencyPath.replace(':' as char, File.separatorChar))
-
-				File dependencyBndBndFile = new File(dependencyDir, "bnd.bnd")
-
-				if (!dependencyBndBndFile.exists()) {
-					println "Unable to lock dependency ':${dependencyPath}' in ${buildGradleFile}: ${dependencyBndBndFile} does not exist"
-
-					continue
-				}
-
-				Properties dependencyBndBndProperties = GUtil.loadProperties(dependencyBndBndFile)
-
-				String dependencyVersion = dependencyBndBndProperties.getProperty("Bundle-Version")
-
-				VersionNumber versionNumber = VersionNumber.parse(dependencyVersion)
-
-				if (versionNumber.micro == 0) {
-					println "Unable to lock dependency ':${dependencyPath}' in ${buildGradleFile}: ${dependencyDir} has not been published"
-
-					continue
-				}
-
-				String dependencyName = dependencyBndBndProperties.getProperty("Bundle-SymbolicName")
-
-				// Try to replace the project dependency with a module dependency having the lowest minor version possible, until compilation completes successfully
-
-				for (int i = 0; i <= versionNumber.minor; i++) {
-					VersionNumber dependencyVersionNumber = new VersionNumber(versionNumber.major, i, 0, null)
-
-					String newBuildGradle = buildGradle.replace(buildGradleDependency[0], "group: \"com.liferay\", name: \"${dependencyName}\", version: \"${dependencyVersionNumber}\"")
-
-					buildGradleFile.text = newBuildGradle
-
-					// Try to build the module with the new dependency, and revert the change if the compilation fails
-
-					if (!_executeGradle(moduleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
-						println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
-
-						buildGradleFile.text = buildGradle
-					}
-					else {
-						buildGradle = newBuildGradle
-
-						break
-					}
-				}
 			}
 		}
 	}
@@ -927,58 +716,6 @@ syncAppProperties {
 			}
 		}
 	}
-}
-
-syncGitRepoReleases {
-	description = "Runs 'gradlew baseline -PsyncRelease' on every read-only Git subrepository."
-
-	doLast {
-		FileTree gitRepoFileTree = fileTree(dir: projectDir, include: "**/.gitrepo")
-
-		gitRepoFileTree.each {
-			File gitRepoFile ->
-
-			if (!gitRepoFile.text.contains("mode = pull")) {
-				return
-			}
-
-			File moduleDir = gitRepoFile.parentFile
-
-			FileTree bndBndFileTree = fileTree(dir: moduleDir, include: "**/bnd.bnd")
-
-			if (bndBndFileTree.empty) {
-				return
-			}
-
-			println "Synchronizing ${relativePath(moduleDir)} with release branch"
-
-			File settingsGradleFile = new File(moduleDir, "settings.gradle")
-			File settingsGradleBackupFile = new File(moduleDir, "settings.gradle.backup")
-
-			String syncRelease
-
-			try {
-				assert settingsGradleFile.renameTo(settingsGradleBackupFile)
-
-				syncRelease = _setSystemProperty("org.gradle.project.syncRelease", "true")
-
-				StartParameter startParameter = gradle.startParameter.newBuild()
-
-				startParameter.currentDir = moduleDir
-				startParameter.projectProperties = ["syncRelease": "true"]
-				startParameter.taskNames = ["baseline"]
-
-				_executeGradle(startParameter, true)
-			}
-			finally {
-				assert settingsGradleBackupFile.renameTo(settingsGradleFile)
-
-				_setSystemProperty "org.gradle.project.syncRelease", syncRelease
-			}
-		}
-	}
-
-	group = "releng"
 }
 
 syncPortalLanguageKeys {

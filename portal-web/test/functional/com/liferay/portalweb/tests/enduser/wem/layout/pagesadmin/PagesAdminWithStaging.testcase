@@ -68,7 +68,7 @@ definition {
 		task ("View pages order in Staging site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("View Test Page Name 2 and 3 are moved to top of Test Page Name 1 in Staging site") {
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 2,Test Page Name 3,Test Page Name 1");
 		}
@@ -92,7 +92,7 @@ definition {
 		task ("View pages order in Live site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
@@ -110,7 +110,7 @@ definition {
 
 			Alert.closeMessage(messageType = "ERROR");
 
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}

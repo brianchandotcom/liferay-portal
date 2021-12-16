@@ -2173,7 +2173,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		Page.viewPagesOrder(
+		PagesAdmin.viewPagesOrder(
 			depth = "2",
 			pageNameList = "Staging Test Page,Test Page 1,Test Page 2");
 	}

@@ -981,20 +981,6 @@ definition {
 			value1 = "${metaTagsKeywords}");
 	}
 
-	macro viewPagesOrder {
-		var index = "1";
-
-		for (var pageName : list "${pageNameList}") {
-			AssertTextEquals(
-				key_depth = "${depth}",
-				key_index = "${index}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY",
-				value1 = "${pageName}");
-
-			var index = ${index} + 1;
-		}
-	}
-
 	macro viewPageTemplate {
 		Navigator.openSiteURL(siteName = "Site Name");
 

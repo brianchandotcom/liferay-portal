@@ -527,7 +527,7 @@ definition {
 		}
 
 		task ("View Test Page Name 2 and Child Child Page Name 1 are moved to the same level with Child Page Name 1") {
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "3",
 				pageNameList = "Test Page Name 2,Child Child Page Name 1,Child Page Name 1");
 		}
@@ -558,7 +558,7 @@ definition {
 		task ("View pages order in Pages admin") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
@@ -574,7 +574,7 @@ definition {
 		}
 
 		task ("View Test Page Name 2 and 3 are moved to top of Test Page Name 1") {
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 2,Test Page Name 3,Test Page Name 1");
 		}
@@ -619,7 +619,7 @@ definition {
 		}
 
 		task ("View Test Page Name 1 and 2 are moved to child level of Test Page Name 3") {
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "3",
 				pageNameList = "Test Page Name 1,Test Page Name 2");
 		}
@@ -646,7 +646,7 @@ definition {
 		task ("View pages order in Pages admin") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 1,Test Page Name 2");
 		}
@@ -658,7 +658,7 @@ definition {
 		}
 
 		task ("View new pages order in Pages admin") {
-			Page.viewPagesOrder(
+			PagesAdmin.viewPagesOrder(
 				depth = "2",
 				pageNameList = "Test Page Name 2,Test Page Name 1");
 		}

@@ -632,7 +632,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		Page.viewPagesOrder(
+		PagesAdmin.viewPagesOrder(
 			depth = "2",
 			pageNameList = "Home,1,2,Hello");
 	}

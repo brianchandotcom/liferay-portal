@@ -417,7 +417,7 @@ public class ExecutePoshiElement extends PoshiElement {
 			"\\w*\\s=\\s*[\\w\\.]*\\(.*?\\))[\\s]*$",
 		Pattern.DOTALL);
 	private static final List<String> _functionAttributeNames = Arrays.asList(
-		"locator1", "locator2", "value1", "value2");
+		"locator1", "locator2", "value1", "value2", "value3");
 	private static final Pattern _statementPattern = Pattern.compile(
 		"^" + INVOCATION_REGEX + STATEMENT_END_REGEX, Pattern.DOTALL);
 	private static final Pattern _utilityInvocationStatementPattern =

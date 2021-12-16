@@ -295,10 +295,14 @@
 
 				const selectedElement = selection.getSelectedElement();
 
-				if (!selectedElement && !selection.getSelectedText()) {
-					editor.balloonToolbars.hide();
+				if (!selectedElement) {
+					const selectedText = selection.getSelectedText();
 
-					return;
+					if (!selectedText?.match(/\w/)) {
+						editor.balloonToolbars.hide();
+
+						return;
+					}
 				}
 
 				originalContextManagerCheck.call(this, selection);

@@ -27,6 +27,12 @@
 	<td>//th/ancestor::table//a[text()='${key_attributeName}']/ancestor::tr//td[contains(@class,'table-cell-expand-smaller')]</td>
 	<td></td>
 </tr>
+<!-- SAMPLE_RAW_DATA_TABLE-->
+<tr>
+	<td>SAMPLE_RAW_DATA_IN_ORDER</td>
+	<td>xpath=(//td[contains(@class,'table-cell-expand-small')])[${index}]</td>
+	<td></td>
+</tr>
 <!-- DATA_TYPE -->
 <tr>
 	<td>DATA_TYPE_LIST</td>

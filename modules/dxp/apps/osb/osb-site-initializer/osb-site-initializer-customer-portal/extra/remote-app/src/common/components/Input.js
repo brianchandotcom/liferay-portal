@@ -5,7 +5,14 @@ import {useField} from 'formik';
 import {required, validate} from '../utils/validations.form';
 import WarningBadge from './WarningBadge';
 
-const Input = ({groupStyle, helper, label, validations, ...props}) => {
+const Input = ({
+	disableError,
+	groupStyle,
+	helper,
+	label,
+	validations,
+	...props
+}) => {
 	if (props.required) {
 		validations = validations
 			? [...validations, (value) => required(value)]
@@ -37,7 +44,7 @@ const Input = ({groupStyle, helper, label, validations, ...props}) => {
 				<ClayInput {...field} {...props} />
 			</label>
 
-			{meta.error && meta.touched ? (
+			{meta.error && meta.touched && !disableError ? (
 				<WarningBadge>
 					<span className="pl-1">{meta.error}</span>
 				</WarningBadge>

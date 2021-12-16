@@ -1,10 +1,17 @@
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useField} from 'formik';
 import {required, validate} from '../utils/validations.form';
 import WarningBadge from './WarningBadge';
 
-const Select = ({groupStyle, helper, label, validations, ...props}) => {
+const Select = ({
+	groupStyle,
+	helper,
+	label,
+	options,
+	validations,
+	...props
+}) => {
 	if (props.required) {
 		validations = validations
 			? [...validations, (value) => required(value)]
@@ -42,7 +49,16 @@ const Select = ({groupStyle, helper, label, validations, ...props}) => {
 				<div className="position-relative">
 					<ClayIcon className="select-icon" symbol="caret-bottom" />
 
-					<ClaySelectWithOption {...field} {...props} />
+					<ClaySelect {...field} {...props}>
+						{options.map(({disabled, label, value}) => (
+							<ClaySelect.Option
+								disabled={disabled}
+								key={value}
+								label={label}
+								value={value}
+							/>
+						))}
+					</ClaySelect>
 				</div>
 			</label>
 

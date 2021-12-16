@@ -231,11 +231,8 @@ public class DDMHelperImpl implements DDMHelper {
 		DDMForm ddmForm, long groupId, long commerceAccountId,
 		long cpDefinitionId, long companyId, long userId, Locale locale) {
 
-		String callFunctionStatement =
-			"call('getCPInstanceOptionsValues', concat(%s), '%s')";
-
 		return String.format(
-			callFunctionStatement,
+			"call('getCPInstanceOptionsValues', concat(%s), '%s')",
 			_createDDMFormRuleInputMapping(
 				ddmForm, groupId, commerceAccountId, cpDefinitionId, companyId,
 				userId, locale),
@@ -250,41 +247,33 @@ public class DDMHelperImpl implements DDMHelper {
 		// DDMDataProviderRequest class and it'll be accessible in the data
 		// provider implementation.
 
-		String inputMappingStatement = "'%s=', getValue('%s')";
-		String delimiter = ", ';',";
-
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
 
 		Stream<String> inputMappingStatementStream = stream.map(
 			field -> String.format(
-				inputMappingStatement, field.getName(), field.getName()));
+				"'%s=', getValue('%s')", field.getName(), field.getName()));
 
 		inputMappingStatementStream = Stream.concat(
-			Stream.of(
-				String.format("'companyId=%s'", String.valueOf(companyId))),
+			Stream.of(String.format("'companyId=%s'", companyId)),
+			inputMappingStatementStream);
+
+		inputMappingStatementStream = Stream.concat(
+			Stream.of(String.format("'cpDefinitionId=%s'", cpDefinitionId)),
+			inputMappingStatementStream);
+
+		inputMappingStatementStream = Stream.concat(
+			Stream.of(String.format("'groupId=%s'", groupId)),
 			inputMappingStatementStream);
 
 		inputMappingStatementStream = Stream.concat(
 			Stream.of(
-				String.format(
-					"'cpDefinitionId=%s'", String.valueOf(cpDefinitionId))),
+				String.format("'commerceAccountId=%s'", commerceAccountId)),
 			inputMappingStatementStream);
 
 		inputMappingStatementStream = Stream.concat(
-			Stream.of(String.format("'groupId=%s'", String.valueOf(groupId))),
-			inputMappingStatementStream);
-
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(
-				String.format(
-					"'commerceAccountId=%s'",
-					String.valueOf(commerceAccountId))),
-			inputMappingStatementStream);
-
-		inputMappingStatementStream = Stream.concat(
-			Stream.of(String.format("'userId=%s'", String.valueOf(userId))),
+			Stream.of(String.format("'userId=%s'", userId)),
 			inputMappingStatementStream);
 
 		inputMappingStatementStream = Stream.concat(
@@ -293,19 +282,16 @@ public class DDMHelperImpl implements DDMHelper {
 			inputMappingStatementStream);
 
 		return inputMappingStatementStream.collect(
-			Collectors.joining(delimiter));
+			Collectors.joining(", ';',"));
 	}
 
 	private String _createDDMFormRuleOutputMapping(DDMForm ddmForm) {
-		String outputMappingStatement = "%s=%s";
-
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
 
 		Stream<String> stringStream = stream.map(
-			field -> String.format(
-				outputMappingStatement, field.getName(), field.getName()));
+			field -> String.format("%s=%s", field.getName(), field.getName()));
 
 		return stringStream.collect(Collectors.joining(StringPool.SEMICOLON));
 	}

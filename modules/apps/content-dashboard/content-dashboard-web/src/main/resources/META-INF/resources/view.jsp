@@ -193,6 +193,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="text-truncate"
 						name="site-or-asset-library"
 						value="<%= HtmlUtil.escape(contentDashboardItem.getScopeName(locale)) %>"
 					/>
@@ -209,35 +210,37 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 							<%
 							List<String> assetCategories = contentDashboardAdminDisplayContext.getAssetCategoryTitles(contentDashboardItem, assetVocabulary.getVocabularyId());
 							%>
+							<div class="d-flex">
+								<c:if test="<%= !assetCategories.isEmpty() %>">
+									<clay:label
+										cssClass="text-truncate-inline"
+										displayType="secondary"
+										large="<%= true %>"
+									>
+										<clay:label-item-expand cssClass="text-truncate"><%= assetCategories.get(0) %></clay:label-item-expand>
+									</clay:label>
+								</c:if>
 
-							<c:if test="<%= !assetCategories.isEmpty() %>">
-								<clay:label
-									displayType="secondary"
-									large="<%= true %>"
-								>
-									<clay:label-item-expand><%= assetCategories.get(0) %></clay:label-item-expand>
-								</clay:label>
-							</c:if>
+								<c:if test="<%= assetCategories.size() > 1 %>">
 
-							<c:if test="<%= assetCategories.size() > 1 %>">
+									<%
+									List<String> restOfAssetCategories = assetCategories.subList(1, assetCategories.size());
+									%>
 
-								<%
-								List<String> restOfAssetCategories = assetCategories.subList(1, assetCategories.size());
-								%>
-
-								<div class="">
-									<react:component
-										module="js/components/CategoriesPopover"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"categories", restOfAssetCategories
-											).put(
-												"vocabulary", assetVocabulary.getTitle(locale)
-											).build()
-										%>'
-									/>
-								</div>
-							</c:if>
+									<div>
+										<react:component
+											module="js/components/CategoriesPopover"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"categories", restOfAssetCategories
+												).put(
+													"vocabulary", assetVocabulary.getTitle(locale)
+												).build()
+											%>'
+										/>
+									</div>
+								</c:if>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 					<%

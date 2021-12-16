@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.search.experiences.blueprint.parameter.BooleanSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
@@ -259,6 +260,31 @@ public class SXPParameterDataCreator
 		}
 
 		return value;
+	}
+
+	private Boolean _getBoolean(Boolean defaultValue, Object object) {
+		if (object != null) {
+			return GetterUtil.getBoolean(object);
+		}
+
+		if (defaultValue != null) {
+			return defaultValue;
+		}
+
+		return null;
+	}
+
+	private SXPParameter _getBooleanSXPParameter(
+		String name, Object object, Parameter parameter) {
+
+		Boolean value = _getBoolean(
+			(Boolean)parameter.getDefaultValue(), object);
+
+		if (value == null) {
+			return null;
+		}
+
+		return new BooleanSXPParameter(name, true, value);
 	}
 
 	private SXPParameter _getDateSXPParameter(
@@ -498,7 +524,10 @@ public class SXPParameterDataCreator
 
 		Parameter.Type type = parameter.getType();
 
-		if (type.equals(Parameter.Type.DATE)) {
+		if (type.equals(Parameter.Type.BOOLEAN)) {
+			return _getBooleanSXPParameter(name, object, parameter);
+		}
+		else if (type.equals(Parameter.Type.DATE)) {
 			return _getDateSXPParameter(
 				name, object, searchContext.getTimeZone(), parameter);
 		}

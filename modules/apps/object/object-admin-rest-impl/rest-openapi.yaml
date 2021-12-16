@@ -96,6 +96,9 @@ components:
                 system:
                     readOnly: true
                     type: boolean
+                titleObjectFieldId:
+                    format: int64
+                    type: integer
             type: object
         ObjectField:
             properties:

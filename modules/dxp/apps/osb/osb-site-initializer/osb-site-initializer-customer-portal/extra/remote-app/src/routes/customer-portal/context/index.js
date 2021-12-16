@@ -1,5 +1,6 @@
 import {useQuery} from '@apollo/client';
 import {createContext, useEffect, useReducer} from 'react';
+import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
 import {LiferayTheme} from '../../../common/services/liferay';
 import {getUserAccount} from '../../../common/services/liferay/graphql/queries';
 import {
@@ -12,6 +13,7 @@ import reducer, {actionTypes} from './reducer';
 const AppContext = createContext();
 
 const AppContextProvider = ({assetsPath, children, page}) => {
+	const dispatchEvent = useCustomEvent(CUSTOM_EVENTS.USER_ACCOUNT);
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
 		page,
@@ -46,14 +48,9 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
 
-			window.dispatchEvent(
-				new CustomEvent(CUSTOM_EVENTS.USER_ACCOUNT, {
-					bubbles: true,
-					composed: true,
-					detail: userAccount,
-				})
-			);
+			dispatchEvent(userAccount);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userAccount]);
 
 	return (

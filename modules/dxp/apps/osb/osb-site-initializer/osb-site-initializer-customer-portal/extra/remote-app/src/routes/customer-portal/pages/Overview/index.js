@@ -11,7 +11,7 @@ import Subscriptions from '../../components/Subscriptions';
 import {AppContext} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {CUSTOM_EVENTS} from '../../utils/constants';
-import {getWebContents} from '../../utils/getWebContents';
+import {getWebContents} from '../../utils/webContentsGenerator';
 
 const Overview = ({userAccount}) => {
 	const [{project}, dispatch] = useContext(AppContext);

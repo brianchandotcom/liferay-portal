@@ -16,10 +16,15 @@
 	<td>//button[@onclick]</td>
 	<td></td>
 </tr>
-<!-- DISPLAY_NAME_OR_DESCRIPTION -->
+<!-- EVENT_LIST_COLUMN-->
 <tr>
 	<td>DISPLAY_NAME_OR_DESCRIPTION_LIST</td>
 	<td>//td[contains(@class,'text-truncate')and text()='${key_nameValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAMPLE_RAW_DATA_LIST</td>
+	<td>//th/ancestor::table//a[text()='${key_attributeName}']/ancestor::tr//td[contains(@class,'table-cell-expand-smaller')]</td>
 	<td></td>
 </tr>
 <!-- DATA_TYPE -->

@@ -1,0 +1,13 @@
+definition {
+
+	macro viewHelpInformation {
+		MouseOver(
+			key_text = "question-circle",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(
+			key_content = "${info}",
+			locator1 = "Tooltip#POPOVER_BODY_CONTENT");
+	}
+
+}

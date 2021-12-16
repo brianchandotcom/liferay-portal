@@ -17,6 +17,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.commerce.checkout.web.internal.display.context.helper.CommerceCheckoutRequestHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.petra.string.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +51,7 @@ public class PaymentProcessCheckoutStepDisplayContext {
 		).build();
 
 		return cartResource.getCartPaymentURL(
-			_commerceOrder.getCommerceOrderId());
+			_commerceOrder.getCommerceOrderId(), StringPool.BLANK);
 	}
 
 	private final CartResource.Factory _cartResourceFactory;

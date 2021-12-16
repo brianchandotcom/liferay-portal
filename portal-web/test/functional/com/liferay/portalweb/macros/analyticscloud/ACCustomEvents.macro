@@ -185,6 +185,14 @@ definition {
 		}
 	}
 
+	macro viewDataAttributeInOrder {
+		var index = "${index}";
+
+		AssertTextEquals(
+			locator1 = "ACCustomEvents#SAMPLE_RAW_DATA_IN_ORDER",
+			value1 = "${attributeValue}");
+	}
+
 	macro viewDataType {
 		AssertTextEquals(
 			locator1 = "ACSegments#EDITOR_LABEL",

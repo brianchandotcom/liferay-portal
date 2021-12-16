@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLICKABLE_SEGMENT_NAME</td>
+	<td>//table[contains(@class, 'table-list')]//tr//a[contains(href,'') and contains(text(),'${key_segmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE_MODAL</td>
 	<td>//button[@aria-label='close']</td>
 	<td></td>

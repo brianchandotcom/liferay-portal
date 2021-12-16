@@ -344,6 +344,29 @@ definition {
 		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");
 	}
 
+	macro updateACSegmentSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Analytics Cloud",
+			configurationScope = "System Scope");
+
+		if (IsElementPresent(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC")) {
+			Click(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC");
+		}
+
+		AssertClick(
+			key_text = "Update",
+			locator1 = "Button#ANY",
+			value1 = "Update");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro viewEntryNotPresent {
 		LexiconEntry.viewNoEntry(rowEntry = "${segmentName}");
 	}

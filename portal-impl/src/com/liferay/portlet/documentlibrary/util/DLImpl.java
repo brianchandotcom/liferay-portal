@@ -873,6 +873,48 @@ public class DLImpl implements DL {
 		return getTitleWithExtension(uniqueFileTitle, extension);
 	}
 
+	@Override
+	public String getUniqueFileName(
+		long groupId, long folderId, String fileName,
+		boolean ignoreDuplicateTitle) {
+
+		String uniqueFileTitle = FileUtil.stripExtension(fileName);
+
+		String extension = FileUtil.getExtension(fileName);
+
+		for (int i = 1;; i++) {
+			if ((ignoreDuplicateTitle ||
+				 !_existsFileEntryByTitle(
+					 groupId, folderId, uniqueFileTitle)) &&
+				!_existsFileEntryByFileName(
+					groupId, extension, folderId, uniqueFileTitle)) {
+
+				break;
+			}
+
+			uniqueFileTitle = FileUtil.appendParentheticalSuffix(
+				FileUtil.stripExtension(fileName), String.valueOf(i));
+		}
+
+		return getTitleWithExtension(uniqueFileTitle, extension);
+	}
+
+	@Override
+	public String getUniqueTitle(long groupId, long folderId, String title) {
+		String uniqueFileTitle = title;
+
+		int i = 1;
+
+		while (_existsFileEntryByTitle(groupId, folderId, uniqueFileTitle)) {
+			uniqueFileTitle = FileUtil.appendParentheticalSuffix(
+				title, String.valueOf(i));
+
+			i++;
+		}
+
+		return uniqueFileTitle;
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getWebDavURL(

@@ -542,7 +542,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			!algorithm.equals(PasswordEncryptorUtil.TYPE_NONE)) {
 
 			try {
-				StringBundler sb = new StringBundler(4);
+				StringBundler sb = new StringBundler(1);
 
 				sb.append(
 					_passwordEncryptor.encrypt(algorithm, password, null));

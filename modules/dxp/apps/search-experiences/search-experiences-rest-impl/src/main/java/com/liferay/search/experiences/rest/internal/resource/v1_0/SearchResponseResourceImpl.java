@@ -60,6 +60,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 						contextCompany.getCompanyId()
 					).emptySearchEnabled(
 						true
+					).explain(
+						true
 					).includeResponseString(
 						true
 					).from(

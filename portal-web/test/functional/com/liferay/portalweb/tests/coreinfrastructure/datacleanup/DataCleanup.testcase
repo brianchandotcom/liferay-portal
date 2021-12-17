@@ -37,13 +37,10 @@ definition {
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "SELECT servletContextName FROM Release_;");
 
-		if (contains("${sqlResults}", "${expectedText}")) {
-			echo("Software catalog '${expectedText}' is found.");
-		}
-		else {
-			fail("Failed to find software catalog '${expectedText}.'");
-
+		if (!(contains("${sqlResults}", "${expectedText}"))) {
 			echo("${sqlResults}");
+
+			fail("Failed to find software catalog '${expectedText}' in Release_ table.");
 		}
 
 		ApplicationsMenu.gotoPortlet(
@@ -66,11 +63,10 @@ definition {
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "SELECT servletContextName FROM Release_;");
 
-		if (!(contains("${sqlResults}", "${expectedText}"))) {
-			echo("Software catalog '${expectedText}' is not found.");
-		}
-		else {
-			fail("Failed: Software catalog '${expectedText}' is found.");
+		if (contains("${sqlResults}", "${expectedText}")) {
+			echo("${sqlResults}");
+
+			fail("Failed: Software catalog data still present in Release_ table.");
 		}
 	}
 

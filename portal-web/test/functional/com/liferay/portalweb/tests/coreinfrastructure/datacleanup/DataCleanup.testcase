@@ -33,16 +33,32 @@ definition {
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
 
+		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.portlet.softwarecatalog%';";
+		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%com.liferay.softwarecatalog.service%';";
+		var resourceActionQuery = "SELECT * FROM ResourceAction WHERE name LIKE '%com.liferay.portlet.softwarecatalog%';";
+
 		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
 
-		var expectedText = "com.liferay.softwarecatalog.service";
+		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = "${classNameQuery}");
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "SELECT servletContextName FROM Release_;");
+		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
 
-		if (!(contains("${sqlResults}", "${expectedText}"))) {
-			echo("${sqlResults}");
+		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
 
-			fail("Failed to find software catalog '${expectedText}' in Release_ table.");
+		if (!(contains("${classNameTable}", "com.liferay.portlet.softwarecatalog"))) {
+			echo("${classNameTable}");
+
+			fail("Failed to find software catalog in ClassName_ table.");
+		}
+		else if (!(contains("${releaseTable}", "com.liferay.softwarecatalog.service"))) {
+			echo("${releaseTable}");
+
+			fail("Failed to find software catalog in Release_ table.");
+		}
+		else if (!(contains("${resourceActionTable}", "com.liferay.portlet.softwarecatalog"))) {
+			echo("${resourceActionTable}");
+
+			fail("Failed to find software catalog in ResourceAction table.");
 		}
 
 		ApplicationsMenu.gotoPortlet(
@@ -63,12 +79,26 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "SELECT servletContextName FROM Release_;");
+		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = "${classNameQuery}");
 
-		if (contains("${sqlResults}", "${expectedText}")) {
-			echo("${sqlResults}");
+		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
+
+		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
+
+		if (contains("${classNameTable}", "com.liferay.portlet.softwarecatalog")) {
+			echo("${classNameTable}");
+
+			fail("Failed: Software catalog data still present in ClassName_ table.");
+		}
+		else if (contains("${releaseTable}", "com.liferay.softwarecatalog.service")) {
+			echo("${releaseTable}");
 
 			fail("Failed: Software catalog data still present in Release_ table.");
+		}
+		else if (contains("${resourceActionTable}", "com.liferay.portlet.softwarecatalog")) {
+			echo("${resourceActionTable}");
+
+			fail("Failed: Software catalog data still present in ResourceAction table.");
 		}
 	}
 

@@ -24,12 +24,6 @@
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				match="image: liferay\/com-liferay-osb-faro\:latest"
-				replace="image: ${analytics.cloud.faro.image.name}"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.docker.test.yaml}"
 				match="\&quot;8080:8080\&quot;"
 				replace="&quot;${analytics.cloud.faro.dxp.port}:8080&quot;"
 			/>
@@ -223,12 +217,6 @@ networks:
 
 			<replaceregexp
 				file="${analytics.cloud.faro.dir}/build-ext.gradle"
-				match="def dockerImageId = \&quot;([^\&quot;]+)\&quot;"
-				replace="def dockerImageId = \&quot;${analytics.cloud.faro.image.name}\&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.dir}/build-ext.gradle"
 				match="network \&quot;([^\&quot;]+)\&quot;"
 				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
 			/>
@@ -267,8 +255,23 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 					<property location="${project.dir}/gradlew" name="portal.gradlew" />
 
+					<loadfile
+						property="analytics.cloud.docker.test.yaml.content"
+						srcfile="${analytics.cloud.docker.test.yaml}"
+					/>
+
+					<propertyregex
+						input="${analytics.cloud.docker.test.yaml.content}"
+						override="true"
+						property="analytics.cloud.faro.tag.name"
+						regexp="[\S\s]*image: (liferay\/com-liferay-osb-faro\:[^\s]+)[\S\s]*"
+						replace="\1"
+					/>
+
 					<execute dir="${analytics.cloud.faro.dir}">
 						${portal.gradlew} createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
+
+						docker tag ${analytics.cloud.faro.image.name} ${analytics.cloud.faro.tag.name}
 
 						docker rm ${analytics.cloud.faro.container.name}
 					</execute>

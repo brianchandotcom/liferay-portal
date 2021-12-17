@@ -39,13 +39,31 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136983. It checks that an external link can be accessed from a wiki page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAccessExternalLink {
-		property portal.acceptance = "false";
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
 
-		// TODO LPS-136983 CanAccessExternalLink pending implementation
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
+		WikiNode.addWikiPage(
+			wikiPageContent = "",
+			wikiPageTitle = "Wiki Page Name");
+
+		WikiEntry.addLinkInContent(link = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
+
+		PortletEntry.publish();
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Name");
+
+		Click(locator1 = "WikiEntry#BODY_LINK");
+
+		AssertVisible(
+			key_imageSourceURL = "Document_1",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This is a test for LPS-136987. It checks that related assets can be added to a page."

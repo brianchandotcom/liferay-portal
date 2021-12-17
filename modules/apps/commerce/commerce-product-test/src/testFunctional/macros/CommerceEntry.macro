@@ -537,6 +537,12 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro assertDefaultProductDisplayPage {
+		AssertElementPresent(
+			key_displayPage = "${pageName}",
+			locator1 = "CommerceEntry#DEFAULT_PRODUCT_DISPLAY_PAGE");
+	}
+
 	macro changePinColor {
 		Type(
 			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",

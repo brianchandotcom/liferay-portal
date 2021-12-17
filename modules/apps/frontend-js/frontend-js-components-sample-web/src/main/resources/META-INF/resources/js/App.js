@@ -12,8 +12,9 @@
  * details.
  */
 
-import React from 'react';
+import ClayLayout from '@clayui/layout';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
+import React from 'react';
 
 function getAvailableLocalesObject(displayNames, languageIds) {
 	return languageIds.map((id, index) => {
@@ -32,18 +33,81 @@ export default function App({displayNames, languageIds}) {
 		languageIds
 	);
 	const defaultLanguageId = 'en_US';
-
-	console.log(availableLocales);
+	const activeLanguageIds = [defaultLanguageId, 'es_ES', 'pt_BR'];
+	const translations = {es_ES: 'Lorem'};
 
 	return (
-		<>
-			<i>React Samples</i>
+		<ClayLayout.ContainerFluid>
+			<ClayLayout.Row>
+				<ClayLayout.Col>
+					<h3>Default</h3>
 
-			<TranslationAdminSelector
-				adminMode
-				availableLocales={availableLocales}
-				defaultLanguageId={defaultLanguageId}
-			/>
-		</>
+					<TranslationAdminSelector
+						activeLanguageIds={activeLanguageIds}
+						availableLocales={availableLocales}
+						defaultLanguageId={defaultLanguageId}
+						translations={translations}
+					/>
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Admin</h3>
+
+					<TranslationAdminSelector
+						activeLanguageIds={activeLanguageIds}
+						adminMode
+						availableLocales={availableLocales}
+						defaultLanguageId={defaultLanguageId}
+						translations={translations}
+					/>
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Small</h3>
+
+					<TranslationAdminSelector
+						activeLanguageIds={activeLanguageIds}
+						adminMode
+						availableLocales={availableLocales}
+						defaultLanguageId={defaultLanguageId}
+						small
+						translations={translations}
+					/>
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Only Flags</h3>
+
+					<TranslationAdminSelector
+						activeLanguageIds={activeLanguageIds}
+						adminMode
+						availableLocales={availableLocales}
+						defaultLanguageId={defaultLanguageId}
+						showOnlyFlags
+						translations={translations}
+					/>
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Functions</h3>
+
+					<TranslationAdminSelector
+						activeLanguageIds={activeLanguageIds}
+						adminMode
+						availableLocales={availableLocales}
+						defaultLanguageId={defaultLanguageId}
+						onActiveLanguageIdsChange={(e) => {
+							console.log('onActiveLanguageIdsChange');
+							console.log('event:', e);
+						}}
+						onSelectedLanguageIdChange={(e) => {
+							console.log('onSelectedLanguageIdChange');
+							console.log('event:', e);
+						}}
+						translations={translations}
+					/>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.ContainerFluid>
 	);
 }

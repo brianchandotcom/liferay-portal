@@ -208,24 +208,17 @@ public class RemoteAppEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
-			RemoteAppEntry remoteAppEntry =
-				remoteAppEntryLocalService.
-					fetchRemoteAppEntryByExternalReferenceCode(
-						user.getCompanyId(), externalReferenceCode);
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryLocalService.
+				fetchRemoteAppEntryByExternalReferenceCode(
+					user.getCompanyId(), externalReferenceCode);
 
-			if (remoteAppEntry != null) {
-				return remoteAppEntryLocalService.
-					updateCustomElementRemoteAppEntry(
-						remoteAppEntry.getRemoteAppEntryId(),
-						customElementCSSURLs, customElementHTMLElementName,
-						customElementURLs, description, friendlyURLMapping,
-						nameMap, portletCategoryName, properties,
-						sourceCodeURL);
-			}
+		if (remoteAppEntry != null) {
+			return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
+				remoteAppEntry.getRemoteAppEntryId(), customElementCSSURLs,
+				customElementHTMLElementName, customElementURLs, description,
+				friendlyURLMapping, nameMap, portletCategoryName, properties,
+				sourceCodeURL);
 		}
 
 		return addCustomElementRemoteAppEntry(

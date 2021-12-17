@@ -18,6 +18,7 @@ export function CardFormActionsWithSave({
 		setValue,
 	} = useFormContext();
 
+	const productQuote = getValues('basics.productQuoteName');
 	const email = getValues('basics.businessInformation.business.email');
 	const emailHasError = !!errors?.basics?.businessInformation?.business
 		?.email;
@@ -96,6 +97,7 @@ export function CardFormActionsWithSave({
 							}
 						);
 					}}
+					productQuote={productQuote}
 					setError={(message) => setErrorModal(message)}
 					show={showProgressModal}
 				/>

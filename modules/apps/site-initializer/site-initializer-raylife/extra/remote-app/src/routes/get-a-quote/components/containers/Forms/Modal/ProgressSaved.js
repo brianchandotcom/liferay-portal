@@ -10,17 +10,13 @@ import {createQuoteRetrieve} from '../../../../services/QuoteRetrieve';
 
 const liferaySiteName = LiferayService.getLiferaySiteName();
 
-const ProgressSaved = ({email, onClose, setError, show}) => {
+const ProgressSaved = ({email, onClose, productQuote, setError, show}) => {
 	const onSendLinkAndExit = async () => {
 		try {
 			const applicationId = Storage.getItem(STORAGE_KEYS.APPLICATION_ID);
 
-			const raylifeProductName = JSON.parse(
-				Storage.getItem(STORAGE_KEYS.PRODUCT)
-			).productName;
-
 			await createQuoteRetrieve({
-				productName: raylifeProductName,
+				productName: productQuote,
 				quoteRetrieveLink: `${origin}${liferaySiteName}/get-a-quote?applicationId=${applicationId}`,
 				retrieveEmail: email,
 			});

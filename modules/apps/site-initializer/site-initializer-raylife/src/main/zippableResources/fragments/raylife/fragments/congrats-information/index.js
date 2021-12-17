@@ -14,7 +14,9 @@
 
 const applicationId = localStorage.getItem('raylife-application-id');
 const productId = localStorage.getItem('raylife-product-id');
-const businessType = JSON.parse(localStorage.getItem('raylife-product'));
+const raylifeApplicationForm = JSON.parse(
+	localStorage.getItem('raylife-application-form')
+);
 
 const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -130,7 +132,7 @@ const main = async () => {
 
 	setValueToElement(
 		fragmentElement.querySelector('#congrats-info-title'),
-		businessType.productName
+		raylifeApplicationForm?.basics?.productQuoteName
 	);
 	setValueToElement(
 		fragmentElement.querySelector('#congrats-info-policy'),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {MoreInfoButton} from '../../../../../../common/components/fragments/Buttons/MoreInfo';
 import {CardFormActionsWithSave} from '../../../../../../common/components/fragments/Card/FormActionsWithSave';
@@ -18,7 +18,7 @@ import {useTriggerContext} from '../../../../hooks/useTriggerContext';
 import {AVAILABLE_STEPS} from '../../../../utils/constants';
 
 export function FormBasicProductQuote({form}) {
-	const {control} = useFormContext();
+	const {control, setValue} = useFormContext();
 	const {selectedStep} = useStepWizard();
 	const {productQuotes} = useProductQuotes();
 	const {onNext, onSave} = useFormActions(
@@ -26,6 +26,16 @@ export function FormBasicProductQuote({form}) {
 		null,
 		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE
 	);
+
+	useEffect(() => {
+		const productQuoteId = form?.basics?.productQuote;
+		if (productQuotes.length && productQuoteId) {
+			const productQuote = productQuotes.find(
+				({id}) => id === productQuoteId
+			);
+			setValue('basics.productQuoteName', productQuote.title);
+		}
+	}, [form?.basics?.productQuote, productQuotes]);
 
 	const goToPreviousPage = () => {
 		clearExitAlert();

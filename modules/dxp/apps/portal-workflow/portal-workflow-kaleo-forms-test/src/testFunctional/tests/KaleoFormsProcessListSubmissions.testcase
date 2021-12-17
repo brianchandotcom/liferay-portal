@@ -381,7 +381,7 @@ definition {
 
 		KaleoFormsNewSubmissions.viewEllipsisMenu(menuItem = "Track Workflow");
 
-		KaleoFormsNewSubmissions.viewTrackWorkflowStructure();
+		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(throughKebab = "true");
 	}
 
 	@description = "Verify that the user can view the column values on the page after submit the process."

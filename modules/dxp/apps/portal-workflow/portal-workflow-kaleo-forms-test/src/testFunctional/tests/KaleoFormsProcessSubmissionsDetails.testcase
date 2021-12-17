@@ -165,12 +165,21 @@ definition {
 	}
 
 	@description = "Verify that the basic structure of workflow track approval is available."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewTrackApprovalBasicStructure {
+		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		// TODO LRQA-71869 CanViewTrackApprovalBasicStructure pending implementation
+		KaleoFormsNewSubmissions.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlFirstName = "Userfn");
 
+		KaleoFormsAdmin.saveProcessRecord();
+
+		KaleoFormsNewSubmissions.viewEllipsisMenu(menuItem = "View");
+
+		KaleoFormsNewSubmissions.gotoStatusLabel(status = "Pending");
+
+		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(throughLabel = "true");		
 	}
 
 	@description = "Verify that the fields filled on submissions appears on the details page."

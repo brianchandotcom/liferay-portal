@@ -25,4 +25,36 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-7833. Verify user is redirected to the Product Detail page when they click on a product in the catalog if Default Product Display Page is not set"
+	@priority = "3"
+	test AssertOldLogicIsAppliedIfDefaultProductDisplayPageIsNotSet {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given no default product display page is set") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceEntry.assertDefaultProductDisplayPage(pageName = "None");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No Items were found.");
+		}
+
+		task ("When I click on a product in the catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+		}
+
+		task ("Then I should be redirected to the product detail page") {
+			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+		}
+	}
+
 }

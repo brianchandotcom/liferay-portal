@@ -133,13 +133,39 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136996. It checks that a minor change can be created for a page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanCreateMinorChange {
-		property portal.acceptance = "false";
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
 
-		// TODO LPS-136996 CanCreateMinorChange pending implementation
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
+
+		PortletEntry.publish();
+
+		WikiPortlet.goToWikiPageMenu(
+			menuItem = "Edit",
+			wikiTitle = "Wiki Page Name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		Check(locator1 = "Checkbox#THIS_IS_A_MINOR_EDIT");
+
+		PortletEntry.publish();
+
+		var key_wikiPageRevision = "1.1";
+		var key_wikiPageTitle = "Wiki Page Name";
+		var key_wikiVersionSummary = "1.1";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
+			value1 = "1.1 (Minor Edit)");
 	}
 
 	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."

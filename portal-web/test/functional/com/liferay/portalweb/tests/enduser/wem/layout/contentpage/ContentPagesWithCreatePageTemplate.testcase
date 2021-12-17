@@ -346,14 +346,12 @@ definition {
 	@description = "This is a test for LPS-140483. The user could create page template from an empty content page."
 	@priority = "4"
 	test CreatePageTemplateFromEmptyContentPage {
-		task ("Add a content page") {
+		task ("Create a content page template from the empty content page under page template collection") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				type = "content");
-		}
 
-		task ("Create a content page template from the empty content page under page template collection") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");

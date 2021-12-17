@@ -16,7 +16,9 @@ package com.liferay.portal.language.override.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
 
@@ -39,29 +41,40 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 	@Override
 	public void deletePLOEntries(String key) throws PortalException {
-		User user = getUser();
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		ploEntryLocalService.deletePLOEntries(user.getCompanyId(), key);
+		PortalPermissionUtil.check(
+			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		ploEntryLocalService.deletePLOEntries(
+			permissionChecker.getCompanyId(), key);
 	}
 
 	@Override
 	public PLOEntry deletePLOEntry(String key, String languageId)
 		throws PortalException {
 
-		User user = getUser();
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		PortalPermissionUtil.check(
+			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		return ploEntryLocalService.deletePLOEntry(
-			user.getCompanyId(), key, languageId);
+			permissionChecker.getCompanyId(), key, languageId);
 	}
 
 	@Override
 	public void setPLOEntries(String key, Map<Locale, String> localizationMap)
 		throws PortalException {
 
-		User user = getUser();
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		PortalPermissionUtil.check(
+			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		ploEntryLocalService.setPLOEntries(
-			user.getCompanyId(), user.getUserId(), key, localizationMap);
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			key, localizationMap);
 	}
 
 }

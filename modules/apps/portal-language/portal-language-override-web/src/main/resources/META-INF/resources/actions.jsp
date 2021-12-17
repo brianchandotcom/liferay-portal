@@ -32,8 +32,8 @@ LanguageItemDisplay rowObjectLanguageItemDisplay = (LanguageItemDisplay)row.getO
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= viewDisplayContext.isHasManageLanguageOverridesPermission() %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit.jsp" />
+		<portlet:renderURL var="editPLOEntryURL">
+			<portlet:param name="mvcPath" value="/edit_plo_entry.jsp" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
 			<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
@@ -42,7 +42,7 @@ LanguageItemDisplay rowObjectLanguageItemDisplay = (LanguageItemDisplay)row.getO
 		<liferay-ui:icon
 			markupView="lexicon"
 			message="edit"
-			url="<%= editURL %>"
+			url="<%= editPLOEntryURL %>"
 		/>
 
 		<c:if test="<%= rowObjectLanguageItemDisplay.isOverride() %>">

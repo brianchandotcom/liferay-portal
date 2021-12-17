@@ -44,8 +44,8 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 			keyProperty="key"
 			modelVar="languageItemDisplay"
 		>
-			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcPath" value="/edit.jsp" />
+			<portlet:renderURL var="editPLOEntryURL">
+				<portlet:param name="mvcPath" value="/edit_plo_entry.jsp" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="key" value="<%= languageItemDisplay.getKey() %>" />
 				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
@@ -53,7 +53,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 			<%
 			if (!viewDisplayContext.isHasManageLanguageOverridesPermission()) {
-				editURL = null;
+				editPLOEntryURL = null;
 			}
 			%>
 
@@ -61,7 +61,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 				<c:when test='<%= Objects.equals("descriptive", viewDisplayContext.getDisplayStyle()) %>'>
 					<liferay-ui:search-container-column-text
 						colspan="<%= 3 %>"
-						href="<%= editURL %>"
+						href="<%= editPLOEntryURL %>"
 					>
 						<h5>
 							<strong><%= languageItemDisplay.getKey() %></strong>
@@ -88,20 +88,20 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 				<c:when test='<%= Objects.equals("list", viewDisplayContext.getDisplayStyle()) %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-small"
-						href="<%= editURL %>"
+						href="<%= editPLOEntryURL %>"
 						name="key"
 						value="<%= languageItemDisplay.getKey() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-small"
-						href="<%= editURL %>"
+						href="<%= editPLOEntryURL %>"
 						name="current-value"
 						value="<%= HtmlUtil.escape(languageItemDisplay.getValue()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						href="<%= editURL %>"
+						href="<%= editPLOEntryURL %>"
 						name="languages-with-override"
 						value="<%= StringUtil.merge(languageItemDisplay.getOverrideLanguageIds(), StringPool.COMMA_AND_SPACE) %>"
 					/>

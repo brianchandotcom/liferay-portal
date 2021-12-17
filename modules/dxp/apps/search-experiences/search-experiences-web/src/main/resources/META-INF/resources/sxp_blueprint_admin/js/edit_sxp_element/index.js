@@ -23,18 +23,18 @@ import EditSXPElementForm from './EditSXPElementForm';
  * https://github.com/liferay/liferay-portal/blob/e9255c529cbb97d494f8331ec4527b271bc412ae/modules/dxp/apps/search-experiences/search-experiences-rest-impl/src/main/java/com/liferay/search/experiences/rest/internal/resource/v1_0/SXPElementResourceImpl.java#L94-L108
  */
 const transformToSXPElementExportFormat = (
-	sxpElementResponseObject,
+	sxpElementResponse,
 	defaultLocale
 ) => {
 	return {
-		description_i18n: sxpElementResponseObject.description_i18n || {
-			[defaultLocale]: sxpElementResponseObject.description,
+		description_i18n: sxpElementResponse.description_i18n || {
+			[defaultLocale]: sxpElementResponse.description,
 		},
-		elementDefinition: sxpElementResponseObject.elementDefinition,
-		title_i18n: sxpElementResponseObject.title_i18n || {
-			[defaultLocale]: sxpElementResponseObject.title,
+		elementDefinition: sxpElementResponse.elementDefinition,
+		title_i18n: sxpElementResponse.title_i18n || {
+			[defaultLocale]: sxpElementResponse.title,
 		},
-		type: sxpElementResponseObject.type,
+		type: sxpElementResponse.type,
 	};
 };
 
@@ -44,7 +44,7 @@ export default function ({
 	redirectURL,
 	sxpElementId,
 }) {
-	const [sxpElement, setSXPElement] = useState(null);
+	const [sxpElementResponse, setSXPElementResponse] = useState(null);
 	const [predefinedVariables, setPredefinedVariables] = useState(null);
 
 	useEffect(() => {
@@ -53,14 +53,8 @@ export default function ({
 			{
 				method: 'GET',
 			},
-			(responseContent) =>
-				setSXPElement(
-					transformToSXPElementExportFormat(
-						responseContent,
-						defaultLocale
-					)
-				),
-			() => setSXPElement({})
+			(responseContent) => setSXPElementResponse(responseContent),
+			() => setSXPElementResponse({})
 		);
 
 		fetchData(
@@ -73,7 +67,7 @@ export default function ({
 		);
 	}, []); //eslint-disable-line
 
-	if (!sxpElement || !predefinedVariables) {
+	if (!sxpElementResponse || !predefinedVariables) {
 		return null;
 	}
 
@@ -89,13 +83,24 @@ export default function ({
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm
-						initialDescription={sxpElement.description_i18n}
-						initialSXPElementJSON={sxpElement}
-						initialTitle={sxpElement.title_i18n}
+						initialDescription={
+							sxpElementResponse.description_i18n || {
+								[defaultLocale]: sxpElementResponse.description,
+							}
+						}
+						initialElementJSONEditorValue={transformToSXPElementExportFormat(
+							sxpElementResponse,
+							defaultLocale
+						)}
+						initialTitle={
+							sxpElementResponse.title_i18n || {
+								[defaultLocale]: sxpElementResponse.title,
+							}
+						}
 						predefinedVariables={predefinedVariables}
-						readOnly={sxpElement.readOnly}
+						readOnly={sxpElementResponse.readOnly}
 						sxpElementId={sxpElementId}
-						type={sxpElement.type}
+						type={sxpElementResponse.type}
 					/>
 				</ErrorBoundary>
 			</div>

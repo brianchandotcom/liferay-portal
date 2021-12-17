@@ -44,7 +44,7 @@ import SidebarPanel from './SidebarPanel';
 
 function EditSXPElementForm({
 	initialDescription = {},
-	initialSXPElementJSON = {},
+	initialElementJSONEditorValue = {},
 	initialTitle = {},
 	predefinedVariables = [],
 	readOnly,
@@ -54,15 +54,15 @@ function EditSXPElementForm({
 	const {defaultLocale, redirectURL} = useContext(ThemeContext);
 
 	const formRef = useRef();
-	const sxpElementJSONRef = useRef();
+	const elementJSONEditorRef = useRef();
 
 	const [errors, setErrors] = useState([]);
 	const [expandAllVariables, setExpandAllVariables] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showSidebar, setShowSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
-	const [sxpElementJSON, setSXPElementJSON] = useState(
-		JSON.stringify(initialSXPElementJSON, null, '\t')
+	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
+		JSON.stringify(initialElementJSONEditorValue, null, '\t')
 	);
 
 	const filteredCategories = {};
@@ -79,7 +79,7 @@ function EditSXPElementForm({
 	const [variables, setVariables] = useState(filteredCategories);
 
 	useEffect(() => {
-		// Workaround to force a re-render so `sxpElementJSONRef` will be
+		// Workaround to force a re-render so `elementJSONEditorRef` will be
 		// defined when calling `_handleVariableClick`
 
 		if (!readOnly) {
@@ -117,7 +117,7 @@ function EditSXPElementForm({
 
 		try {
 			sxpElementJSONObject = _parseJSONString(
-				sxpElementJSON,
+				elementJSONEditorValue,
 				Liferay.Language.get('element-source-json')
 			);
 
@@ -233,7 +233,7 @@ function EditSXPElementForm({
 	};
 
 	function _handleVariableClick(variable) {
-		const doc = sxpElementJSONRef.current.getDoc();
+		const doc = elementJSONEditorRef.current.getDoc();
 		const cursor = doc.getCursor();
 
 		doc.replaceRange(variable, cursor);
@@ -243,7 +243,7 @@ function EditSXPElementForm({
 		let previewSXPElementJSON = {};
 
 		try {
-			previewSXPElementJSON = JSON.parse(sxpElementJSON);
+			previewSXPElementJSON = JSON.parse(elementJSONEditorValue);
 		} catch (error) {
 			return (
 				<ClayEmptyState
@@ -549,11 +549,11 @@ function EditSXPElementForm({
 								>
 									<CodeMirrorEditor
 										onChange={(value) =>
-											setSXPElementJSON(value)
+											setElementJSONEditorValue(value)
 										}
 										readOnly={readOnly}
-										ref={sxpElementJSONRef}
-										value={sxpElementJSON}
+										ref={elementJSONEditorRef}
+										value={elementJSONEditorValue}
 									/>
 								</ClayLayout.Col>
 							</ClayLayout.Row>

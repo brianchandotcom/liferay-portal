@@ -21,7 +21,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new ViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewDisplayContext) %>"
+	managementToolbarDisplayContext="<%= new ViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewDisplayContext.getSearchContainer(), viewDisplayContext.getDisplayStyle(), viewDisplayContext.isHasManageLanguageOverridesPermission()) %>"
 />
 
 <clay:container-fluid
@@ -50,6 +50,12 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 				<portlet:param name="key" value="<%= languageItemDisplay.getKey() %>" />
 				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 			</portlet:renderURL>
+
+			<%
+			if (!viewDisplayContext.isHasManageLanguageOverridesPermission()) {
+				editURL = null;
+			}
+			%>
 
 			<c:choose>
 				<c:when test='<%= Objects.equals("descriptive", viewDisplayContext.getDisplayStyle()) %>'>
@@ -99,10 +105,6 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 						name="languages-with-override"
 						value="<%= StringUtil.merge(languageItemDisplay.getOverrideLanguageIds(), StringPool.COMMA_AND_SPACE) %>"
 					/>
-
-					<%
-					request.setAttribute("view.jsp-editURL", editURL);
-					%>
 
 					<liferay-ui:search-container-column-jsp
 						path="/actions.jsp"

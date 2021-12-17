@@ -16,6 +16,7 @@ package com.liferay.portal.language.override.web.internal.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -98,7 +99,7 @@ public class PLOPortlet extends MVCPortlet {
 		_editDisplayContextFactory = new EditDisplayContextFactory(
 			_ploEntryLocalService, _ploOriginalTranslationProvider, _portal);
 		_viewDisplayContextFactory = new ViewDisplayContextFactory(
-			_ploEntryLocalService, _portal);
+			_permissionCheckerFactory, _ploEntryLocalService, _portal);
 	}
 
 	@Override
@@ -140,6 +141,9 @@ public class PLOPortlet extends MVCPortlet {
 	}
 
 	private EditDisplayContextFactory _editDisplayContextFactory;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private PLOEntryLocalService _ploEntryLocalService;

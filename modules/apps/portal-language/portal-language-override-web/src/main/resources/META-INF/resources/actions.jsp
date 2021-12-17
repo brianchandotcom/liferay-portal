@@ -24,13 +24,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 LanguageItemDisplay rowObjectLanguageItemDisplay = (LanguageItemDisplay)row.getObject();
 %>
 
-<portlet:renderURL var="editURL">
-	<portlet:param name="mvcPath" value="/edit.jsp" />
-	<portlet:param name="backURL" value="<%= currentURL %>" />
-	<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
-	<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
-</portlet:renderURL>
-
 <liferay-ui:icon-menu
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
@@ -38,36 +31,45 @@ LanguageItemDisplay rowObjectLanguageItemDisplay = (LanguageItemDisplay)row.getO
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-ui:icon
-		markupView="lexicon"
-		message="edit"
-		url="<%= editURL %>"
-	/>
+	<c:if test="<%= viewDisplayContext.isHasManageLanguageOverridesPermission() %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/edit.jsp" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
+			<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
+		</portlet:renderURL>
 
-	<c:if test="<%= rowObjectLanguageItemDisplay.isOverride() %>">
-		<c:if test="<%= rowObjectLanguageItemDisplay.isOverrideSelectedLanguageId() %>">
-			<portlet:actionURL name="deletePLOEntry" var="deletePLOEntryURL">
+		<liferay-ui:icon
+			markupView="lexicon"
+			message="edit"
+			url="<%= editURL %>"
+		/>
+
+		<c:if test="<%= rowObjectLanguageItemDisplay.isOverride() %>">
+			<c:if test="<%= rowObjectLanguageItemDisplay.isOverrideSelectedLanguageId() %>">
+				<portlet:actionURL name="deletePLOEntry" var="deletePLOEntryURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
+					<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon-delete
+					confirmation='<%= LanguageUtil.format(request, "do-you-want-to-reset-the-translation-override-for-x", viewDisplayContext.getSelectedLanguageId()) %>'
+					message='<%= LanguageUtil.format(request, "remove-translation-override-for-x", viewDisplayContext.getSelectedLanguageId()) %>'
+					url="<%= deletePLOEntryURL %>"
+				/>
+			</c:if>
+
+			<portlet:actionURL name="deletePLOEntries" var="deletePLOEntriesURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
-				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete
-				confirmation='<%= LanguageUtil.format(request, "do-you-want-to-reset-the-translation-override-for-x", viewDisplayContext.getSelectedLanguageId()) %>'
-				message='<%= LanguageUtil.format(request, "remove-translation-override-for-x", viewDisplayContext.getSelectedLanguageId()) %>'
-				url="<%= deletePLOEntryURL %>"
+				confirmation="do-you-want-to-reset-all-translation-overrides"
+				message="remove-all-translation-overrides"
+				url="<%= deletePLOEntriesURL %>"
 			/>
 		</c:if>
-
-		<portlet:actionURL name="deletePLOEntries" var="deletePLOEntriesURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			confirmation="do-you-want-to-reset-all-translation-overrides"
-			message="remove-all-translation-overrides"
-			url="<%= deletePLOEntriesURL %>"
-		/>
 	</c:if>
 </liferay-ui:icon-menu>

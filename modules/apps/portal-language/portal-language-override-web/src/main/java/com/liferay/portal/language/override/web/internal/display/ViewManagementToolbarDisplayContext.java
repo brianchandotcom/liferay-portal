@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -40,13 +41,16 @@ public class ViewManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		ViewDisplayContext viewDisplayContext) {
+		SearchContainer<LanguageItemDisplay> searchContainer,
+		String displayStyle, boolean hasManageLanguageOverridesPermission) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			viewDisplayContext.getSearchContainer());
+			searchContainer);
 
-		_viewDisplayContext = viewDisplayContext;
+		_displayStyle = displayStyle;
+		_hasManageLanguageOverridesPermission =
+			hasManageLanguageOverridesPermission;
 	}
 
 	@Override
@@ -62,6 +66,10 @@ public class ViewManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		if (!_hasManageLanguageOverridesPermission) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
@@ -114,7 +122,7 @@ public class ViewManagementToolbarDisplayContext
 
 	@Override
 	protected String getDisplayStyle() {
-		return _viewDisplayContext.getDisplayStyle();
+		return _displayStyle;
 	}
 
 	@Override
@@ -127,6 +135,7 @@ public class ViewManagementToolbarDisplayContext
 		return new String[] {"override"};
 	}
 
-	private final ViewDisplayContext _viewDisplayContext;
+	private final String _displayStyle;
+	private final boolean _hasManageLanguageOverridesPermission;
 
 }

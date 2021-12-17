@@ -204,7 +204,72 @@ public class EditFileEntryMVCActionCommandTest {
 	}
 
 	@Test
-	public void testAddMultipleFileEntriesSeveralFilesWithSameTitle()
+	public void testAddMultipleFileEntriesSeveralFilesSameTitleDifferentExtension()
+		throws PortalException {
+
+		String tempFolderName =
+			"com.liferay.document.library.web.internal.portlet.action." +
+				"EditFileEntryMVCActionCommand";
+
+		List<String> selectedFileNames = new ArrayList<>();
+
+		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(), tempFolderName,
+			TempFileEntryUtil.getTempFileName("test.jpg"), _getInputStream(),
+			ContentTypes.IMAGE_JPEG);
+
+		selectedFileNames.add(tempFileEntry.getFileName());
+
+		tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(), tempFolderName,
+			TempFileEntryUtil.getTempFileName("test.gif"), _getInputStream(),
+			ContentTypes.IMAGE_GIF);
+
+		selectedFileNames.add(tempFileEntry.getFileName());
+
+		long folderId = tempFileEntry.getFolderId();
+
+		Map<String, String[]> parameters = Stream.of(
+			new AbstractMap.SimpleEntry<>(
+				Constants.CMD, new String[] {Constants.ADD_MULTIPLE}),
+			new AbstractMap.SimpleEntry<>(
+				"folderId", new String[] {String.valueOf(folderId)}),
+			new AbstractMap.SimpleEntry<>(
+				"repositoryId",
+				new String[] {String.valueOf(tempFileEntry.getRepositoryId())})
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
+
+		for (String selectedFileName : selectedFileNames) {
+			ReflectionTestUtil.invoke(
+				_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
+				new Class<?>[] {
+					PortletConfig.class, ActionRequest.class, String.class,
+					List.class, List.class, Date.class, Date.class,
+					ServiceContext.class
+				},
+				_getLiferayPortletConfig(),
+				_getMockLiferayPortletActionRequest(parameters),
+				selectedFileName, new ArrayList<>(), new ArrayList<>(), null,
+				null, ServiceContextTestUtil.getServiceContext());
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntryByFileName(
+			_group.getGroupId(), folderId, "test.jpg");
+
+		Assert.assertEquals("test.jpg", fileEntry.getFileName());
+		Assert.assertEquals("test", fileEntry.getTitle());
+
+		FileEntry actualFileEntry = _dlAppLocalService.getFileEntryByFileName(
+			_group.getGroupId(), folderId, "test.gif");
+
+		Assert.assertEquals("test.gif", actualFileEntry.getFileName());
+		Assert.assertEquals("test (1)", actualFileEntry.getTitle());
+	}
+
+	@Test
+	public void testAddMultipleFileEntriesSeveralFilesWithSameTitleAndExtension()
 		throws PortalException {
 
 		String tempFolderName =

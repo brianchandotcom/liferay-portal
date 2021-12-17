@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
+import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,9 +84,32 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 				"birthday", new UnlocalizedValue("2015-01-25"));
 
 		Assert.assertEquals(
+			"٢٥/٠١/٢٠١٥",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue,
+				new Locale.Builder().setLanguage(
+					"ar"
+				).setRegion(
+					"SA"
+				).setExtension(
+					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
+				).build()));
+		Assert.assertEquals(
 			"25/01/2015",
 			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"25/01/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, new Locale("ca", "ES")));
+		Assert.assertEquals(
+			"25.01.2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, new Locale("fi", "FI")));
+		Assert.assertEquals(
+			"25/01/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.FRANCE));
 		Assert.assertEquals(
 			"25.01.2015",
 			_dateDDMFormFieldValueRenderer.render(
@@ -97,6 +122,22 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 			"2015/01/25",
 			_dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.JAPAN));
+		Assert.assertEquals(
+			"25-01-2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.NETHERLANDS));
+		Assert.assertEquals(
+			"2015-01-25",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.SIMPLIFIED_CHINESE));
+		Assert.assertEquals(
+			"25/01/2015",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"2015-01-25",
+			_dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, new Locale("sv", "SE")));
 		Assert.assertEquals(
 			"01/25/2015",
 			_dateDDMFormFieldValueRenderer.render(

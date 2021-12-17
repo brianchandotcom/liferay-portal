@@ -1,5 +1,15 @@
 definition {
 
+	macro addLinkInContent {
+		Click(locator1 = "CKEditor#TOOLBAR_LINK_BUTTON_BALLOON");
+
+		Type(
+			locator1 = "CKEditor#WIKI_LINK",
+			value1 = "${link}");
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+	}
+
 	macro addPageContent {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

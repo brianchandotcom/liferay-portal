@@ -10,35 +10,141 @@
  */
 
 import ClayButton from '@clayui/button';
-import { ClayDropDownWithItems } from '@clayui/drop-down';
-import React, { useEffect, useState } from 'react';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import React, {useEffect, useState} from 'react';
 
-const spritemap = Liferay.ThemeDisplay.getCDNBaseURL() + "/o/admin-theme/images/clay/icons.svg";
+const spritemap =
+	Liferay.ThemeDisplay.getCDNBaseURL() +
+	'/o/admin-theme/images/clay/icons.svg';
+
+const getLiferaySiteName = () => {
+	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+	const pathSplit = pathname.split('/').filter(Boolean);
+	const siteName = `/${(pathSplit.length > 2
+		? pathSplit.slice(0, pathSplit.length - 1)
+		: pathSplit
+	).join('/')}`;
+
+	return siteName;
+};
+
+const handleClickHome = () => {
+	const urlHome = `${window.location.origin}${getLiferaySiteName()}`;
+	window.location.href = urlHome;
+};
+
+const MAX_ITEM = 10;
 
 export default function () {
-  const [items, setItems] = useState([]);
-  const [value, setValue] = useState('');
+	const [items, setItems] = useState([]);
+	const [value, setValue] = useState('');
+	const [
+		selectedExternalReferenceCode,
+		setSelectedExternalReferenceCode,
+	] = useState('');
 
-  const filteredItems = items.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
+	const filteredItems =
+		items?.filter((item) =>
+			item?.label?.toLowerCase().includes(value?.toLowerCase())
+		) || [];
 
-  useEffect(() => {
-    window.addEventListener('customer-portal-select-user-loading', ({ detail: {accountBriefs} }) => {
-      setItems(accountBriefs.map(({ externalReferenceCode, name }) => ({
-        label: name,
-        onClick: () => alert(externalReferenceCode)
-      })))
-    });
-  }, []);
+	const firstItems = items.filter((_, index) => index <= 19);
 
-  return (
-    <ClayDropDownWithItems
-      footerContent={<ClayButton>All Projects</ClayButton>}
-      items={filteredItems}
-      onSearchValueChange={setValue}
-      searchValue={value}
-      searchable={true}
-      spritemap={spritemap}
-      trigger={<ClayButton>Projects</ClayButton>}
-    />
-  );
+	useEffect(() => {
+		const liferaySearchParams = new URLSearchParams(window.location.search);
+
+		setSelectedExternalReferenceCode(liferaySearchParams.get('kor_id'));
+	}, []);
+
+	const itemName =
+		items.find((item) => item.name === selectedExternalReferenceCode)
+			?.label || '';
+
+	useEffect(() => {
+		const accountBriefs = JSON.parse(
+			sessionStorage.getItem('customer-portal-account-briefs')
+		);
+
+		if (accountBriefs) {
+			setItems(
+				accountBriefs.map(({externalReferenceCode, name}) => {
+					const urlLocation = `${
+						window.location.origin
+					}${getLiferaySiteName()}/overview?kor_id=${externalReferenceCode}`;
+
+					return {
+						className: `c-py-3 m-0 ${
+							selectedExternalReferenceCode ===
+							externalReferenceCode
+								? 'selected-item'
+								: 'unselect-item'
+						}`,
+						href: urlLocation,
+						label: name,
+						name: externalReferenceCode,
+						symbolRight:
+							selectedExternalReferenceCode ===
+							externalReferenceCode
+								? 'check'
+								: '',
+					};
+				})
+			);
+		}
+	}, [selectedExternalReferenceCode]);
+
+	return (
+		<ClayDropDownWithItems
+			alignmentPosition={['tl', 'br']}
+			footerContent={
+				<div className="all-projects c-py-2">
+					{!filteredItems.length && (
+						<p className="mb-4 px-1">
+							No projects match that name.
+						</p>
+					)}
+
+					<a
+						onClick={handleClickHome}
+					>
+						<p className="c-pl-4 my-0 py-2">
+							<ClayIcon
+								className="mr-2"
+								spritemap={spritemap}
+								symbol="order-arrow-left"
+							/>
+							All Projects
+						</p>
+					</a>
+				</div>
+			}
+			items={value ? filteredItems : firstItems}
+			menuElementAttrs={{
+				className: `custom-projects-dropdown ${
+					filteredItems.length > MAX_ITEM
+						? 'show-scroll'
+						: 'hide-scroll'
+				} c-p-0`,
+			}}
+			onSearchValueChange={setValue}
+			searchProps={{placeholder: 'Search'}}
+			searchValue={value}
+			searchable={items.length >= MAX_ITEM}
+			spritemap={spritemap}
+			trigger={
+				<ClayButton className="shadow-none" displayType="unstyled">
+					<h5 className="m-0">
+						{itemName}{' '}
+
+						<ClayIcon
+							className="arrow-down-item"
+							spritemap={spritemap}
+							symbol="caret-bottom"
+						/>
+					</h5>
+				</ClayButton>
+			}
+		/>
+	);
 }

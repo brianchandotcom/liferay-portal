@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_LINK</td>
+	<td>//input[contains(@class,'cke_dialog_ui_input_text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

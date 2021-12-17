@@ -23,7 +23,7 @@ export function FormBasicProductQuote({form}) {
 	const {productQuotes} = useProductQuotes();
 	const {onNext, onSave} = useFormActions(
 		form,
-		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE,
+		null,
 		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE
 	);
 

@@ -38,6 +38,14 @@ definition {
 		}
 	}
 
+	macro goToWikiPageMenu {
+		Click(
+			key_wikiPageTitle = "${wikiTitle}",
+			locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
 	macro subscribeToNodeCP {
 		var key_wikiNodeName = "${wikiNodeName}";
 

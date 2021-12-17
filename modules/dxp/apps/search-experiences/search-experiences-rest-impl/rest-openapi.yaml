@@ -214,12 +214,6 @@ components:
                             type: object
                     type: object
             type: object
-        DocumentField:
-            properties:
-                values:
-                    items:
-                        type: object
-                    type: array
         ElementDefinition:
             properties:
                 category:
@@ -427,44 +421,16 @@ components:
                 templateVariable:
                     type: string
             type: object
-        SearchRequest:
-            properties:
-                queryString:
-                    type: string
-            type: object
         SearchResponse:
             properties:
-                documents:
-                    items:
-                        properties:
-                            documentFields:
-                                additionalProperties:
-                                    $ref: "#/components/schemas/DocumentField"
-                                type: object
-                            explanation:
-                                type: string
-                            score:
-                                format: double
-                                type: number
-                        type: object
-                    type: array
-                maxScore:
-                    format: double
-                    type: number
                 page:
                     type: integer
                 pageSize:
                     type: integer
-                request:
-                    type: object
                 requestString:
                     type: string
-                response:
-                    type: object
                 responseString:
                     type: string
-                searchRequest:
-                    $ref: "#/components/schemas/SearchRequest"
                 totalHits:
                     type: integer
             type: object

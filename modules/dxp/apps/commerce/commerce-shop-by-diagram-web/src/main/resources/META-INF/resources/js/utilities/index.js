@@ -116,16 +116,18 @@ export function formatMappedProductForTable(mappedProducts, isAdmin) {
 	return mappedProducts.map((mappedProduct) => {
 		return {
 			...mappedProduct,
-			initialQuantity: isAdmin
-				? 0
-				: getProductMinQuantity(mappedProduct.productConfiguration),
-			selectable: isAdmin
-				? false
-				: isProductPurchasable(
-						mappedProduct.availability,
-						mappedProduct.productConfiguration,
-						mappedProduct.purchasable
-				  ),
+			initialQuantity:
+				isAdmin || mappedProduct.type !== 'sku'
+					? 0
+					: getProductMinQuantity(mappedProduct.productConfiguration),
+			selectable:
+				isAdmin || mappedProduct.type !== 'sku'
+					? false
+					: isProductPurchasable(
+							mappedProduct.availability,
+							mappedProduct.productConfiguration,
+							mappedProduct.purchasable
+					  ),
 		};
 	});
 }

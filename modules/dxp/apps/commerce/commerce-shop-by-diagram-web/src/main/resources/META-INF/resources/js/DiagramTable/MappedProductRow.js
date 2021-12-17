@@ -102,6 +102,8 @@ export default function MappedProductRow({
 							size="sm"
 						/>
 					)}
+
+				{!isAdmin && product.type === 'external' && product.quantity}
 			</ClayTable.Cell>
 
 			{isAdmin ? (

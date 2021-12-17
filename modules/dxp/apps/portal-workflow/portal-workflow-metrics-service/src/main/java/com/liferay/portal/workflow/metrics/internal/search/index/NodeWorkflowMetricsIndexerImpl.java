@@ -14,7 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -23,11 +25,10 @@ import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMe
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
-
-import java.util.Objects;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.Objects;
 
 /**
  * @author Inácio Nery
@@ -56,6 +57,9 @@ public class NodeWorkflowMetricsIndexerImpl
 			"modifiedDate", getDate(addNodeRequest.getModifiedDate())
 		).setString(
 			"name", addNodeRequest.getName()
+		).setString(
+			Field.getSortableFieldName("name"),
+			StringUtil.toLowerCase(addNodeRequest.getName())
 		).setLong(
 			"nodeId", addNodeRequest.getNodeId()
 		).setLong(

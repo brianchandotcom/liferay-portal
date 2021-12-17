@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -461,8 +460,10 @@ public class DBPartitionUtil {
 		return false;
 	}
 
-	private static boolean _isSkip(String tableName) throws SQLException {
-		try (Connection connection = DataAccess.getConnection()) {
+	private static boolean _isSkip(String tableName, Connection connection)
+		throws SQLException {
+
+		try {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			if (_isControlTable(dbInspector, tableName) &&
@@ -546,13 +547,13 @@ public class DBPartitionUtil {
 				String[] query = sql.split(StringPool.SPACE);
 
 				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
-					 _isSkip(query[2])) ||
+					 _isSkip(query[2], statement.getConnection())) ||
 					((StringUtil.startsWith(lowerCaseSQL, "create index") ||
 					  StringUtil.startsWith(lowerCaseSQL, "drop index")) &&
-					 _isSkip(query[4])) ||
+					 _isSkip(query[4], statement.getConnection())) ||
 					(StringUtil.startsWith(
 						lowerCaseSQL, "create unique index") &&
-					 _isSkip(query[5]))) {
+					 _isSkip(query[5], statement.getConnection()))) {
 
 					return 0;
 				}
@@ -563,7 +564,7 @@ public class DBPartitionUtil {
 					return returnValue;
 				}
 
-				try (Connection connection = DataAccess.getConnection()) {
+				try (Connection connection = statement.getConnection()) {
 					DBInspector dbInspector = new DBInspector(connection);
 					String tableName = query[2];
 

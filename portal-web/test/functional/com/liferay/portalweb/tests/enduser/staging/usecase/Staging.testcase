@@ -1425,7 +1425,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Staging Test Page",
 			privacy = "Public Pages",

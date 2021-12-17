@@ -400,7 +400,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Configure page") {
-			SitePages.configurePage(
+			PagesAdmin.configurePage(
 				columnName = "1 Column",
 				pageName = "Test Widget Page",
 				privacy = "Public Pages",

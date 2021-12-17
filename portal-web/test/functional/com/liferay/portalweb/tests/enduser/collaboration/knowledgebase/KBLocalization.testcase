@@ -56,7 +56,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configureChildPage(
+		PagesAdmin.configureChildPage(
 			columnName = "1 Column",
 			pageName = "Knowledge Base Display Page",
 			parentPagesHierarchy = "Home",

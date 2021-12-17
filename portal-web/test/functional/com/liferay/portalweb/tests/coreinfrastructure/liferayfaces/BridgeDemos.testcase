@@ -38,7 +38,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "alloy-applicant",
 			privacy = "Public Pages",
@@ -130,7 +130,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "bootsfaces-applicant",
 			privacy = "Public Pages",
@@ -226,7 +226,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "butterfaces-applicant",
 			privacy = "Public Pages",
@@ -322,7 +322,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-events",
 			privacy = "Public Pages",
@@ -379,7 +379,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-prp",
 			privacy = "Public Pages",
@@ -436,7 +436,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-applicant",
 			privacy = "Public Pages",
@@ -528,7 +528,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-cdi-applicant",
 			privacy = "Public Pages",
@@ -620,7 +620,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-pdf",
 			privacy = "Public Pages",
@@ -647,7 +647,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf flows",
 			privacy = "Public Pages",
@@ -732,7 +732,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-html5-applicant",
 			privacy = "Public Pages",
@@ -824,7 +824,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-jsp-applicant",
 			privacy = "Public Pages",
@@ -908,7 +908,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "jsf-spring-applicant",
 			privacy = "Public Pages",
@@ -1000,7 +1000,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "primefaces-applicant",
 			privacy = "Public Pages",
@@ -1099,7 +1099,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "richfaces-applicant",
 			privacy = "Public Pages",

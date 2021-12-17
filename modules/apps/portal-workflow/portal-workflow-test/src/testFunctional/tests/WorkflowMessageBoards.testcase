@@ -34,7 +34,7 @@ definition {
 			pageName = "Message Boards Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Message Boards Page",
 			privacy = "Public Pages",

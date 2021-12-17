@@ -126,7 +126,7 @@ definition {
 		}
 
 		task ("Change embedded type URL") {
-			SitePages.configurePage(
+			PagesAdmin.configurePage(
 				pageName = "Test Page Name 1",
 				pageTypeURL = "http://iscaliforniaonfire.com/",
 				privacy = "Public Pages",

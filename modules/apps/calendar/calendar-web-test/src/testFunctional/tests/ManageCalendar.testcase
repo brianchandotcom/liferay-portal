@@ -22,7 +22,7 @@ definition {
 			pageName = "Calendar Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
@@ -586,7 +586,7 @@ definition {
 			pageName = "Calendar Site Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Site Page",
 			privacy = "Public Pages",
@@ -691,7 +691,7 @@ definition {
 			pageName = "Site Page Name",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Site Page Name",
 			privacy = "Public Pages",

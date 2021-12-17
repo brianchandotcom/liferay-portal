@@ -343,7 +343,7 @@ definition {
 			for (var portletName : list "Blogs,Wiki,Media Gallery,Message Boards,RSS Publisher,Documents and Media,Form,Application Authorization Request") {
 				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-				SitePages.configurePage(
+				PagesAdmin.configurePage(
 					pageName = "Test Page Name",
 					portlet = "${portletName}",
 					privacy = "Public Pages",

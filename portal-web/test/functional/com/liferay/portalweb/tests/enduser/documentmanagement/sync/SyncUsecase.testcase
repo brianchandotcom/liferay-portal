@@ -32,7 +32,7 @@ definition {
 			pageName = "Sync Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Sync Page",
 			privacy = "Public Pages",

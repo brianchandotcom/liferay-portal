@@ -33,7 +33,7 @@ definition {
 			columnName = "1 Column",
 			pageName = "Web Proxy Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Web Proxy Page",
 			privacy = "Public Pages");

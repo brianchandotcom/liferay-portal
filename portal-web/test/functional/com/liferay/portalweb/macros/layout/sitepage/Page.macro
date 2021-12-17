@@ -26,6 +26,28 @@ definition {
 		AssertElementPresent(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
 	}
 
+	macro _configurePage {
+		if ("${sitePageType}" == "Embedded") {
+			Page._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
+		}
+		else if ("${sitePageType}" == "Panel") {
+			Page._addPageTypePanel(componentName = "${componentName}");
+		}
+		else if ("${sitePageType}" == "Widget Page") {
+			var key_columnName = "${columnName}";
+
+			Click(locator1 = "SitePagesEditPage#LAYOUT_CARD");
+		}
+		else if ("${sitePageType}" == "Content Page") {
+			Select(
+				locator1 = "SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT",
+				value1 = "${layoutPageTemplateName}");
+		}
+		else if ("${sitePageType}" == "Full Page Application") {
+			Page._addPageTypeFullPageApplication(portlet = "${portlet}");
+		}
+	}
+
 	macro addCategory {
 		AssetCategorization.addCategory(
 			categoryName = "${categoryName}",

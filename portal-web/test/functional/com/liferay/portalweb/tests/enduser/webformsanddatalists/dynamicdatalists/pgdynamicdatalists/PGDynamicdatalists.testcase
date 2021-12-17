@@ -712,7 +712,7 @@ definition {
 
 		PortletEntry.publish();
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Dynamic Data Lists Display Page",
 			privacy = "Public Pages",

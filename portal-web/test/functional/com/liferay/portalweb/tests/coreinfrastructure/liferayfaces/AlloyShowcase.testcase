@@ -19,7 +19,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Alloy Showcase",
 			privacy = "Public Pages",

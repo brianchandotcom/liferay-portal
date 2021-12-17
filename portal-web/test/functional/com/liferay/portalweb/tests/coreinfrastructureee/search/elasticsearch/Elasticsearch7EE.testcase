@@ -275,7 +275,7 @@ definition {
 			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Elasticsearch Monitoring Page",
 			privacy = "Public Pages",
@@ -322,7 +322,7 @@ definition {
 			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Elasticsearch Monitoring Page",
 			privacy = "Public Pages",

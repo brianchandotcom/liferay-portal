@@ -38,7 +38,7 @@ definition {
 
 		PagesAdmin.addPublicPage(pageName = "Company Picnic");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Company Picnic",
 			privacy = "Public Pages",

@@ -20,7 +20,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Contacts Center Page");
 
-		SitePages.configurePage(
+		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Contacts Center Page",
 			privacy = "Public Pages",

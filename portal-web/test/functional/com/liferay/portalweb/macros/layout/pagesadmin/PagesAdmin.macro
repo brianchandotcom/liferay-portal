@@ -299,6 +299,53 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro configureChildPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}",
+			parentPagesHierarchy = "${parentPagesHierarchy}");
+
+		Page._configurePage(
+			columnName = "${columnName}",
+			componentName = "${componentName}",
+			layoutPageTemplateName = "${layoutPageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			portlet = "${portlet}",
+			sitePageType = "${sitePageType}");
+
+		PortletEntry.save();
+	}
+
+	macro configurePage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		PagesAdmin.togglePrivacy(privacy = "${privacy}");
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
+
+		Page._configurePage(
+			columnName = "${columnName}",
+			componentName = "${componentName}",
+			layoutPageTemplateName = "${layoutPageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			portlet = "${portlet}",
+			sitePageType = "${sitePageType}");
+
+		PortletEntry.save();
+	}
+
 	macro deletePage {
 		WaitForPageLoad();
 

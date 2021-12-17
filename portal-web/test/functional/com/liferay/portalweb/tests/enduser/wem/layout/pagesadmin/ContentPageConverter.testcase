@@ -596,7 +596,7 @@ definition {
 		task ("Define the custom layout for widget page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.configurePage(
+			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
 				pageName = "Test Page Name",
 				privacy = "Public Pages",
@@ -708,7 +708,7 @@ definition {
 		task ("Define the custom layout for widget page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.configurePage(
+			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
 				pageName = "Test Page Name",
 				privacy = "Public Pages",
@@ -828,7 +828,7 @@ definition {
 		task ("Define the custom layout for widget page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.configurePage(
+			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
 				pageName = "Test Page Name",
 				privacy = "Public Pages",

@@ -40,6 +40,15 @@ const Overview = ({project, userAccount}) => {
 	});
 
 	useEffect(() => {
+		if (userAccount){
+			sessionStorage.setItem(
+				'customer-portal-account-briefs',
+				JSON.stringify(userAccount.accountBriefs)
+			);
+		}
+	}, [userAccount]);
+
+	useEffect(() => {
 		if (dataSubscriptionGroups) {
 			const subscriptionGroupsItems =
 				dataSubscriptionGroups.c?.accountSubscriptionGroups?.items;

@@ -58,7 +58,9 @@ function SelectAssetCategory({
 	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
 	const handleSelectionChange = (selectedNodeIds) => {
-		setSelectedItemsCount(selectedNodeIds.size);
+		if (categoriesMultipleSelectionEnabled && multiSelection) {
+			setSelectedItemsCount(selectedNodeIds.size);
+		}
 
 		if (!selectedNodeIds.size) {
 			return;

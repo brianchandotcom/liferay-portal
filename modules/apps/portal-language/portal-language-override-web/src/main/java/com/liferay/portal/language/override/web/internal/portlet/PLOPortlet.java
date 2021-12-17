@@ -64,7 +64,16 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PLOPortlet extends MVCPortlet {
 
-	public void deletePortalLanguageOverride(
+	public void deletePLOEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		for (String key : ParamUtil.getStringValues(actionRequest, "key")) {
+			_ploEntryService.deletePLOEntries(key);
+		}
+	}
+
+	public void deletePLOEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
@@ -75,16 +84,7 @@ public class PLOPortlet extends MVCPortlet {
 		_ploEntryService.deletePLOEntry(key, selectedLanguageId);
 	}
 
-	public void deletePortalLanguageOverrides(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		for (String key : ParamUtil.getStringValues(actionRequest, "key")) {
-			_ploEntryService.deletePLOEntries(key);
-		}
-	}
-
-	public void editPortalLanguageOverride(
+	public void editPLOEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 

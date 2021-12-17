@@ -123,6 +123,9 @@ public class TaskWorkflowMetricsIndexerImpl
 			"modifiedDate", getDate(addTaskRequest.getModifiedDate())
 		).setString(
 			"name", addTaskRequest.getName()
+		).setString(
+			Field.getSortableFieldName("name"),
+			StringUtil.toLowerCase(addTaskRequest.getName())
 		).setLong(
 			"nodeId", addTaskRequest.getNodeId()
 		).setLong(

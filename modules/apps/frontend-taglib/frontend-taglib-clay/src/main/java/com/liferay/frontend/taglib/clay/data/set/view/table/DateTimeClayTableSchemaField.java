@@ -21,7 +21,7 @@ public class DateTimeClayTableSchemaField extends BaseDateClayTableSchemaField {
 
 	@Override
 	public String getContentRenderer() {
-		return "datetime";
+		return "dateTime";
 	}
 
 }

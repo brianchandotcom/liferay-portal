@@ -34,7 +34,7 @@ const dataRenderers = {
 	actionsDropdown: ActionsDropdownRenderer,
 	boolean: BooleanRenderer,
 	date: DateRenderer,
-	datetime: DateTimeRenderer,
+	dateTime: DateTimeRenderer,
 	default: DefaultRenderer,
 	image: ImageRenderer,
 	label: LabelRenderer,

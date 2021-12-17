@@ -58,7 +58,7 @@ public class ObjectDefinitionsTableClayDataSetDisplayView
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"dateModified", "modified-date");
 
-		dateClayTableSchemaField.setContentRenderer("date");
+		dateClayTableSchemaField.setContentRenderer("dateTime");
 
 		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");

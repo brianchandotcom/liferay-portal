@@ -58,13 +58,13 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaBuilder.addFDSTableSchemaField(
 				"createDate", "created");
 
-		createDateFDSTableSchemaField.setContentRenderer("datetime");
+		createDateFDSTableSchemaField.setContentRenderer("dateTime");
 
 		FDSTableSchemaField modifiedDateFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField(
 				"modifiedDate", "modified");
 
-		modifiedDateFDSTableSchemaField.setContentRenderer("datetime");
+		modifiedDateFDSTableSchemaField.setContentRenderer("dateTime");
 
 		return fdsTableSchemaBuilder.build();
 	}

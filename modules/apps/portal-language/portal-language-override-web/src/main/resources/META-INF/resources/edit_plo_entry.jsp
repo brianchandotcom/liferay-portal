@@ -25,11 +25,11 @@ portletDisplay.setURLBack(editDisplayContext.getBackURL());
 renderResponse.setTitle(editDisplayContext.getPageTitle());
 %>
 
-<portlet:actionURL name="editPLOEntry" var="editURL" />
+<portlet:actionURL name="editPLOEntry" var="editPLOEntryURL" />
 
 <clay:container-fluid>
 	<liferay-frontend:edit-form
-		action="<%= editURL %>"
+		action="<%= editPLOEntryURL %>"
 		method="POST"
 		name="editPLOEntryFm"
 	>

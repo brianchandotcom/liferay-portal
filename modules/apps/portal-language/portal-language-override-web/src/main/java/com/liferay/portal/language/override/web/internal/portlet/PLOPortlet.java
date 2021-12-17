@@ -121,7 +121,7 @@ public class PLOPortlet extends MVCPortlet {
 			return _viewDisplayContextFactory.create(
 				renderRequest, renderResponse);
 		}
-		else if (path.equals("/edit.jsp")) {
+		else if (path.equals("/edit_plo_entry.jsp")) {
 			return _editDisplayContextFactory.create(renderRequest);
 		}
 

@@ -19,10 +19,15 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -32,6 +37,7 @@ import com.liferay.portal.kernel.util.StringParser;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
@@ -59,8 +65,10 @@ import javax.portlet.RenderResponse;
 public class ViewDisplayContextFactory {
 
 	public ViewDisplayContextFactory(
+		PermissionCheckerFactory permissionCheckerFactory,
 		PLOEntryLocalService ploEntryLocalService, Portal portal) {
 
+		_permissionCheckerFactory = permissionCheckerFactory;
 		_ploEntryLocalService = ploEntryLocalService;
 		_portal = portal;
 	}
@@ -79,6 +87,17 @@ public class ViewDisplayContextFactory {
 
 		viewDisplayContext.setDisplayStyle(
 			ParamUtil.getString(renderRequest, "displayStyle", "descriptive"));
+
+		try {
+			viewDisplayContext.setHasManageLanguageOverridesPermission(
+				PortalPermissionUtil.contains(
+					_permissionCheckerFactory.create(
+						_portal.getUser(renderRequest)),
+					PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
 
 		viewDisplayContext.setSearchContainer(
 			_createSearchContainer(renderRequest, renderResponse));
@@ -293,6 +312,10 @@ public class ViewDisplayContextFactory {
 			languageItemDisplays.subList(startAndEnd[0], startAndEnd[1]));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewDisplayContextFactory.class);
+
+	private final PermissionCheckerFactory _permissionCheckerFactory;
 	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
 

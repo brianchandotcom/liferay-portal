@@ -45,12 +45,23 @@ public class ViewDisplayContext {
 		return _translationLanguageDropdownItems;
 	}
 
+	public boolean isHasManageLanguageOverridesPermission() {
+		return _hasManageLanguageOverridesPermission;
+	}
+
 	public void setAvailableLocales(Locale[] availableLocales) {
 		_availableLocales = availableLocales;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setHasManageLanguageOverridesPermission(
+		boolean hasManageLanguageOverridesPermission) {
+
+		_hasManageLanguageOverridesPermission =
+			hasManageLanguageOverridesPermission;
 	}
 
 	public void setSearchContainer(
@@ -71,6 +82,7 @@ public class ViewDisplayContext {
 
 	private Locale[] _availableLocales;
 	private String _displayStyle;
+	private boolean _hasManageLanguageOverridesPermission;
 	private SearchContainer<LanguageItemDisplay> _searchContainer;
 	private String _selectedLanguageId;
 	private List<DropdownItem> _translationLanguageDropdownItems;

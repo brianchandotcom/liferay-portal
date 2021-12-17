@@ -112,6 +112,13 @@ definition {
 				value1 = "${pageName}");
 		}
 
+		if (isSet(entryExternalURL)) {
+			AssertTextEquals(
+				key_text = "URL",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryExternalURL}");
+		}
+
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 

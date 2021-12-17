@@ -18,14 +18,16 @@
 	<div class="ddm-form-web__exception-container ddm-form-web__exception-container--sidebar-open">
 		<%@ include file="/admin/error_model_listener_exception.jspf" %>
 
-		<react:component
-			module="admin/js/util/ShowPartialResultsAlert"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"showPartialResultsToRespondents", ddmFormAdminDisplayContext.isShowPartialResultsToRespondents(ddmFormAdminDisplayContext.getDDMFormInstance())
-				).build()
-			%>'
-		/>
+		<div>
+			<react:component
+				module="admin/js/util/ShowPartialResultsAlert"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"showPartialResultsToRespondents", ddmFormAdminDisplayContext.isShowPartialResultsToRespondents(ddmFormAdminDisplayContext.getDDMFormInstance())
+					).build()
+				%>'
+			/>
+		</div>
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 

@@ -42,14 +42,14 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 		searchContainer="<%= viewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.language.override.web.internal.dto.PLOItemDTO"
+			className="com.liferay.portal.language.override.web.internal.display.LanguageItemDisplay"
 			keyProperty="key"
-			modelVar="ploItemDTO"
+			modelVar="languageItemDisplay"
 		>
 			<portlet:renderURL var="editURL">
 				<portlet:param name="mvcPath" value="/edit.jsp" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="key" value="<%= ploItemDTO.getKey() %>" />
+				<portlet:param name="key" value="<%= languageItemDisplay.getKey() %>" />
 				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 			</portlet:renderURL>
 
@@ -60,14 +60,14 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 						href="<%= editURL %>"
 					>
 						<h5>
-							<strong><%= ploItemDTO.getKey() %></strong>
+							<strong><%= languageItemDisplay.getKey() %></strong>
 						</h5>
 
 						<h6 class="text-default">
-							<%= HtmlUtil.escape(ploItemDTO.getValue()) %>
+							<%= HtmlUtil.escape(languageItemDisplay.getValue()) %>
 						</h6>
 
-						<c:if test="<%= ploItemDTO.isOverride() %>">
+						<c:if test="<%= languageItemDisplay.isOverride() %>">
 							<h6>
 								<clay:label
 									displayType="info"
@@ -86,20 +86,20 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 						cssClass="table-cell-expand-small"
 						href="<%= editURL %>"
 						name="key"
-						value="<%= ploItemDTO.getKey() %>"
+						value="<%= languageItemDisplay.getKey() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-small"
 						href="<%= editURL %>"
 						name="current-value"
-						value="<%= HtmlUtil.escape(ploItemDTO.getValue()) %>"
+						value="<%= HtmlUtil.escape(languageItemDisplay.getValue()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						href="<%= editURL %>"
 						name="languages-with-override"
-						value="<%= StringUtil.merge(ploItemDTO.getOverrideLanguages(), StringPool.COMMA_AND_SPACE) %>"
+						value="<%= StringUtil.merge(languageItemDisplay.getOverrideLanguages(), StringPool.COMMA_AND_SPACE) %>"
 					/>
 
 					<%

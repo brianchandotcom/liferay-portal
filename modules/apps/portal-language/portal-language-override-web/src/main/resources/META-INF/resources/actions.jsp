@@ -21,13 +21,13 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-PLOItemDTO rowObjectPLOItemDTO = (PLOItemDTO)row.getObject();
+LanguageItemDisplay rowObjectLanguageItemDisplay = (LanguageItemDisplay)row.getObject();
 %>
 
 <portlet:renderURL var="editURL">
 	<portlet:param name="mvcPath" value="/edit.jsp" />
 	<portlet:param name="backURL" value="<%= currentURL %>" />
-	<portlet:param name="key" value="<%= rowObjectPLOItemDTO.getKey() %>" />
+	<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
 	<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 </portlet:renderURL>
 
@@ -44,11 +44,11 @@ PLOItemDTO rowObjectPLOItemDTO = (PLOItemDTO)row.getObject();
 		url="<%= editURL %>"
 	/>
 
-	<c:if test="<%= rowObjectPLOItemDTO.isOverride() %>">
-		<c:if test="<%= rowObjectPLOItemDTO.isOverrideSelectedLanguageId() %>">
+	<c:if test="<%= rowObjectLanguageItemDisplay.isOverride() %>">
+		<c:if test="<%= rowObjectLanguageItemDisplay.isOverrideSelectedLanguageId() %>">
 			<portlet:actionURL name="deletePortalLanguageOverride" var="deletePortalLanguageOverrideURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="key" value="<%= rowObjectPLOItemDTO.getKey() %>" />
+				<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
 				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 			</portlet:actionURL>
 
@@ -61,7 +61,7 @@ PLOItemDTO rowObjectPLOItemDTO = (PLOItemDTO)row.getObject();
 
 		<portlet:actionURL name="deletePortalLanguageOverrides" var="deletePortalLanguageOverridesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="key" value="<%= rowObjectPLOItemDTO.getKey() %>" />
+			<portlet:param name="key" value="<%= rowObjectLanguageItemDisplay.getKey() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

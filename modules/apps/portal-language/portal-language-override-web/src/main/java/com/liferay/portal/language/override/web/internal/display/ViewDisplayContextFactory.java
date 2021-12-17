@@ -80,9 +80,9 @@ public class ViewDisplayContextFactory {
 
 		viewDisplayContext.setSearchContainer(searchContainer);
 
-		viewDisplayContext.setSelectedLanguage(
+		viewDisplayContext.setSelectedLanguageId(
 			ParamUtil.getString(
-				renderRequest, "selectedLanguage",
+				renderRequest, "selectedLanguageId",
 				LanguageUtil.getLanguageId(_portal.getLocale(renderRequest))));
 
 		return viewDisplayContext;
@@ -152,10 +152,11 @@ public class ViewDisplayContextFactory {
 			valueMatchPredicate = valuePattern.asPredicate();
 		}
 
-		String selectedLanguage = ParamUtil.getString(
-			renderRequest, "selectedLanguage");
+		String selectedLanguageId = ParamUtil.getString(
+			renderRequest, "selectedLanguageId");
 
-		Locale locale = LocaleUtil.fromLanguageId(selectedLanguage, true, true);
+		Locale locale = LocaleUtil.fromLanguageId(
+			selectedLanguageId, true, true);
 
 		String filter = ParamUtil.getString(renderRequest, "navigation", "all");
 
@@ -179,9 +180,9 @@ public class ViewDisplayContextFactory {
 							ploEntry.getLanguageId());
 
 						if (Objects.equals(
-								selectedLanguage, ploEntry.getLanguageId())) {
+								selectedLanguageId, ploEntry.getLanguageId())) {
 
-							ploItemDTO.setOverrideSelectedLanguage(true);
+							ploItemDTO.setOverrideSelectedLanguageId(true);
 						}
 					}
 
@@ -210,10 +211,10 @@ public class ViewDisplayContextFactory {
 								ploEntry.getLanguageId());
 
 							if (Objects.equals(
-									selectedLanguage,
+									selectedLanguageId,
 									ploEntry.getLanguageId())) {
 
-								ploItemDTO.setOverrideSelectedLanguage(true);
+								ploItemDTO.setOverrideSelectedLanguageId(true);
 							}
 						}
 					}

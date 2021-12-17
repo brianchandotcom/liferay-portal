@@ -82,7 +82,7 @@ public class ViewManagementToolbarDisplayContext
 	public List<DropdownItem> getDropdownItems() {
 		DropdownItemList dropdownItemList = new DropdownItemList();
 
-		String selectedLanguage = _viewDisplayContext.getSelectedLanguage();
+		String selectedLanguageId = _viewDisplayContext.getSelectedLanguageId();
 
 		for (Locale locale : _viewDisplayContext.getAvailableLocales()) {
 			String languageId = LanguageUtil.getLanguageId(locale);
@@ -94,12 +94,12 @@ public class ViewManagementToolbarDisplayContext
 				dropdownItem -> {
 					dropdownItem.put("symbolLeft", icon);
 					dropdownItem.setActive(
-						Objects.equals(selectedLanguage, languageId));
+						Objects.equals(selectedLanguageId, languageId));
 					dropdownItem.setHref(
 						HttpUtil.setParameter(
 							String.valueOf(getPortletURL()),
 							liferayPortletResponse.getNamespace() +
-								"selectedLanguage",
+								"selectedLanguageId",
 							languageId));
 					dropdownItem.setIcon(icon);
 					dropdownItem.setLabel(

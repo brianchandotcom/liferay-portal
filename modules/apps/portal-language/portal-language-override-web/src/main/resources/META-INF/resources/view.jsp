@@ -32,8 +32,8 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 	<clay:dropdown-menu
 		displayType="secondary"
 		dropdownItems="<%= managementToolbarDisplayContext.getDropdownItems() %>"
-		icon="<%= StringUtil.toLowerCase(TextFormatter.format(viewDisplayContext.getSelectedLanguage(), TextFormatter.O)) %>"
-		label="<%= TextFormatter.format(viewDisplayContext.getSelectedLanguage(), TextFormatter.O) %>"
+		icon="<%= StringUtil.toLowerCase(TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O)) %>"
+		label="<%= TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O) %>"
 		small="<%= true %>"
 	/>
 
@@ -50,7 +50,7 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 				<portlet:param name="mvcPath" value="/edit.jsp" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="key" value="<%= ploItemDTO.getKey() %>" />
-				<portlet:param name="selectedLanguage" value="<%= viewDisplayContext.getSelectedLanguage() %>" />
+				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 			</portlet:renderURL>
 
 			<c:choose>

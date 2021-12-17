@@ -2765,6 +2765,12 @@ jdbc.default.password=${database.password}</echo>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
 include-and-override=portal-liferay-online.properties
 include-and-override=portal-liferay-online-limit.properties</echo>
+
+			<replace
+				file="portal-impl/src/portal-ext.properties"
+				token="${database.mysql.driver}"
+				value="${database.mariadb.driver}"
+			/>
 		</sequential>
 	</macrodef>
 

@@ -22,12 +22,6 @@ definition {
 		}
 	}
 
-	macro checkPage {
-		var key_pageName = "${pageName}";
-
-		Check.checkNotVisible(locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
-	}
-
 	macro configureChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

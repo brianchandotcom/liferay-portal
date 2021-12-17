@@ -75,7 +75,7 @@ definition {
 
 		task ("Move Test Page Name 2 and 3 to top of Test Page Name 1 in Staging site") {
 			for (var n : list "2,3") {
-				SitePages.checkPage(pageName = "Test Page Name ${n}");
+				PagesAdmin.selectPageItem(pageName = "Test Page Name ${n}");
 			}
 
 			PagesAdmin.movePageItemUp(
@@ -99,7 +99,7 @@ definition {
 
 		task ("View cannot move Test Page Name 2 and 3 to top of Test Page Name 1 in Live site") {
 			for (var n : list "2,3") {
-				SitePages.checkPage(pageName = "Test Page Name ${n}");
+				PagesAdmin.selectPageItem(pageName = "Test Page Name ${n}");
 			}
 
 			PagesAdmin.movePageItemUp(

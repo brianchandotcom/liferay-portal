@@ -402,7 +402,7 @@ definition {
 
 			PagesAdmin.expandPageTree(depth = "2");
 
-			SitePages.checkPage(pageName = "Test Page Name 1");
+			PagesAdmin.selectPageItem(pageName = "Test Page Name 1");
 		}
 
 		task ("View plus icon is shown when mouse over the page name") {
@@ -518,7 +518,7 @@ definition {
 			}
 
 			for (var pageName : list "Test Page Name 2,Child Child Page Name 1") {
-				SitePages.checkPage(pageName = "${pageName}");
+				PagesAdmin.selectPageItem(pageName = "${pageName}");
 			}
 
 			PagesAdmin.movePageItemUp(
@@ -565,7 +565,7 @@ definition {
 
 		task ("Move Test Page Name 2 and 3 to top of Test Page Name 1") {
 			for (var n : list "2,3") {
-				SitePages.checkPage(pageName = "Test Page Name ${n}");
+				PagesAdmin.selectPageItem(pageName = "Test Page Name ${n}");
 			}
 
 			PagesAdmin.movePageItemUp(
@@ -608,7 +608,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM");
 
 			for (var n : list "1,2") {
-				SitePages.checkPage(pageName = "Test Page Name ${n}");
+				PagesAdmin.selectPageItem(pageName = "Test Page Name ${n}");
 			}
 
 			DragAndDrop.javaScriptDragAndDropToUp(
@@ -946,7 +946,7 @@ definition {
 
 			PagesAdmin.expandPageTree(depth = "2");
 
-			SitePages.checkPage(pageName = "Child Page Name");
+			PagesAdmin.selectPageItem(pageName = "Child Page Name");
 
 			AssertVisible(
 				key_pageName = "Child Page Name",
@@ -1277,7 +1277,7 @@ definition {
 		task ("Select first page in Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.checkPage(pageName = "Test Page Name 1");
+			PagesAdmin.selectPageItem(pageName = "Test Page Name 1");
 		}
 
 		task ("View managment bar text is shown") {

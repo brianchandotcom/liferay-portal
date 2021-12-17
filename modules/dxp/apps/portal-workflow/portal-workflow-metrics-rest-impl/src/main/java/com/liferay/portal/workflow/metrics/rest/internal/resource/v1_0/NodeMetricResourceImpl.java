@@ -218,7 +218,9 @@ public class NodeMetricResourceImpl
 
 		if (Validator.isNotNull(key)) {
 			filterBooleanQuery.addMustQueryClauses(
-				_queries.wildcard("name", "*" + key + "*"));
+				_queries.wildcard(
+					Field.getSortableFieldName("name"),
+					"*" + StringUtil.toLowerCase(key) + "*"));
 		}
 
 		TermsQuery termsQuery = _queries.terms("name");

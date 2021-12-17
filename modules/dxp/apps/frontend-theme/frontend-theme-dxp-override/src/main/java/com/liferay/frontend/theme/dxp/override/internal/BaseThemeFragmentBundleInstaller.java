@@ -21,12 +21,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -41,11 +37,7 @@ import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
-import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Shuyang Zhou
@@ -53,66 +45,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public abstract class BaseThemeFragmentBundleInstaller {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) throws Exception {
+		Bundle fragmentBundle = _getOrCreateFragmentBundle(bundleContext);
+
 		Bundle systemBundle = bundleContext.getBundle(0);
-
-		FrameworkWiring frameworkWiring = systemBundle.adapt(
-			FrameworkWiring.class);
-
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.RESOLVED | Bundle.STARTING | Bundle.ACTIVE,
-			new BundleTrackerCustomizer<Bundle>() {
-
-				@Override
-				public Bundle addingBundle(Bundle bundle, BundleEvent event) {
-					String symbolicName = bundle.getSymbolicName();
-
-					if (!symbolicName.equals(getHostBundleSymbolicName())) {
-						return null;
-					}
-
-					String location =
-						"theme-fragment:" + bundle.getSymbolicName();
-
-					Bundle fragmentBundle = bundleContext.getBundle(location);
-
-					if (fragmentBundle != null) {
-						return fragmentBundle;
-					}
-
-					try {
-						fragmentBundle = bundleContext.installBundle(
-							location, _generateBundleContent());
-
-						frameworkWiring.resolveBundles(
-							Collections.singleton(fragmentBundle));
-
-						_trackedBundles.put(bundle, fragmentBundle);
-
-						return null;
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Unable to generate fragment bundle for " + bundle,
-							exception);
-					}
-
-					return null;
-				}
-
-				@Override
-				public void modifiedBundle(
-					Bundle bundle, BundleEvent event, Bundle fragmentBundle) {
-				}
-
-				@Override
-				public void removedBundle(
-					Bundle bundle, BundleEvent event, Bundle fragmentBundle) {
-				}
-
-			});
-
-		_bundleTracker.open();
 
 		BundleContext systemBundleContext = systemBundle.getBundleContext();
 
@@ -145,27 +81,16 @@ public abstract class BaseThemeFragmentBundleInstaller {
 						return;
 					}
 
-					for (Map.Entry<Bundle, Bundle> entry :
-							_trackedBundles.entrySet()) {
-
-						Bundle hostBundle = entry.getKey();
-
-						Bundle fragmentBundle = entry.getValue();
-
-						try {
-							fragmentBundle.uninstall();
-
-							frameworkWiring.refreshBundles(
-								Collections.singleton(hostBundle));
-						}
-						catch (BundleException bundleException) {
-							_log.error(
-								StringBundler.concat(
-									"Unable to uninstall fragment bundle ",
-									fragmentBundle, " for host bundle ",
-									hostBundle),
-								bundleException);
-						}
+					try {
+						fragmentBundle.uninstall();
+					}
+					catch (BundleException bundleException) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to uninstall fragment bundle ",
+								fragmentBundle, " for host bundle ",
+								getHostBundleSymbolicName()),
+							bundleException);
 					}
 
 					systemBundleContext.removeBundleListener(this);
@@ -174,16 +99,11 @@ public abstract class BaseThemeFragmentBundleInstaller {
 			});
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_bundleTracker.close();
-	}
-
 	protected abstract String getHostBundleSymbolicName();
 
 	protected abstract String[] getResources();
 
-	private InputStream _generateBundleContent() throws IOException {
+	private InputStream _generateBundleContent() throws Exception {
 		String hostBundleSymbolicName = getHostBundleSymbolicName();
 
 		Class<?> clazz = getClass();
@@ -237,10 +157,22 @@ public abstract class BaseThemeFragmentBundleInstaller {
 		}
 	}
 
+	private Bundle _getOrCreateFragmentBundle(BundleContext bundleContext)
+		throws Exception {
+
+		String location = "theme-fragment:" + getHostBundleSymbolicName();
+
+		Bundle fragmentBundle = bundleContext.getBundle(location);
+
+		if (fragmentBundle == null) {
+			fragmentBundle = bundleContext.installBundle(
+				location, _generateBundleContent());
+		}
+
+		return fragmentBundle;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseThemeFragmentBundleInstaller.class);
-
-	private BundleTracker<Bundle> _bundleTracker;
-	private final Map<Bundle, Bundle> _trackedBundles = new HashMap<>();
 
 }

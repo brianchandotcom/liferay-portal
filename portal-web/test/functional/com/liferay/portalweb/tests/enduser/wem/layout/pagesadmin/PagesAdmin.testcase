@@ -221,7 +221,7 @@ definition {
 		task ("View Draft label is shown") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				pageName = "Test Page Name",
 				status = "Draft");
 		}

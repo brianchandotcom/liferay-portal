@@ -198,7 +198,7 @@ definition {
 				pageName = "Test Page Name",
 				pageType = "Widget Page");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				pageName = "Test Page Name",
 				status = "Conversion Draft");
 		}
@@ -232,7 +232,7 @@ definition {
 				pageName = "Test Page Name",
 				pageType = "Widget Page");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				pageName = "Test Page Name",
 				status = "Conversion Draft");
 		}

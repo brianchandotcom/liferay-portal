@@ -124,7 +124,7 @@ definition {
 		task ("View pending status is shown") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");
@@ -240,7 +240,7 @@ definition {
 		task ("View pending status is shown") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");
@@ -264,7 +264,7 @@ definition {
 		task ("View page author can preview the modification") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");
@@ -295,7 +295,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");
@@ -378,7 +378,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");
@@ -413,7 +413,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");
@@ -450,7 +450,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "2",
 				pageName = "Test Page Name",
 				status = "Pending");

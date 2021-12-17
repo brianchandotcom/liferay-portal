@@ -1218,7 +1218,7 @@ definition {
 		task ("View page status in Pages admin") {
 			PageEditor.clickBack();
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				pageName = "Test Page Name",
 				status = "Conversion Draft");
 		}

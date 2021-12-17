@@ -376,7 +376,7 @@ definition {
 		task ("View the content page is still at draft status") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.viewPageStatus(
+			PagesAdmin.viewPageStatus(
 				index = "1",
 				pageName = "Test Page Name",
 				status = "Draft");

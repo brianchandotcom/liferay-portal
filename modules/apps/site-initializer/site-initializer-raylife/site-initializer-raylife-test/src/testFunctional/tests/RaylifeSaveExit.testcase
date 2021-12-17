@@ -26,224 +26,10 @@ definition {
 		}
 	}
 
-    @description = "LPS-143600 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
-	@priority = "5"
-	test IsSaveAndExitButtonEnabledOnContactInfo {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT_DISABLED");
-
-        RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.firstName",
-			value = "FirstName");
-
-		RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.lastName",
-			value = "LastName");
-
-		RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.business.email",
-			value = "test@liferay.com");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-    }
-
-    @description = "LPS-143601 - Check save and exit button is enabled in the Basics section - Product Selection page"
-	@priority = "4"
-    test IsSaveAndExitButtonEnabledOnProductSelection {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-    }
-
-    @description = "LPS-143604 -  Check save and exit button is enabled in the Business section"
-	@priority = "4"
-    test IsSaveAndExitButtonEnabledOnBusiness{
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-        
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-    }
-
-    @description = "LPS-143605 - Check save and exit button is enabled in the Employees section"
-	@priority = "4"
-    test IIsSaveAndExitButtonEnabledOnEmployees {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-        
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeBusiness.typeAllBusinessInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-    }
-
-    @description = "LPS-143607 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
-	@priority = "4"
-    test CanViewSavedProgressModal {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#MODAL_PROGRESS_SAVED");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-    }
-
-    @description = "LPS-143608 - Check that the email (from a 'Progress is Saved' modal) is equal to the Business Email from the Basics - Contact Info page"
-	@priority = "4"
-    test IsModalEmailEqualsToBusinessEmail {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.firstName",
-			value = "FirstName");
-
-		RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.lastName",
-			value = "LastName");
-
-		RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.business.email",
-			value = "test@liferay.com");
-
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-        AssertTextEquals(
-			locator1 = "RaylifeSaveExit#EMAIL_MODAL",
-			value1 = "test@liferay.com");
-
-        Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-    }
-
-    @description = "LPS-143609 - Verify if, by clicking the 'send link and exit' button on the modal, the user is taken to the Raylife home page in the Basic section"
-	@priority = "4"
-    test CanSendLinkAndExit {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-        Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
-
-        AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
-
-    }
-
-
-    @description = "LPS-143610 - Verify if, by clicking on the Continue Quote button on the modal, the user is taken back to the current quote in the Basic section"
+	@description = "LPS-143610 - Verify if, by clicking on the Continue Quote button on the modal, the user is taken back to the current quote in the Basic section"
 	@priority = "3"
 	test CanContinueQuoteAfterClickOnButton {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
 
@@ -251,9 +37,9 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT_DISABLED");
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT_DISABLED");
 
-        RaylifeContactInfo.typeBasicsInfoFields(
+		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.firstName",
 			value = "FirstName");
 
@@ -265,24 +51,23 @@ definition {
 			label = "basics.businessInformation.business.email",
 			value = "test@liferay.com");
 
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
 
-        Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
+		Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
 
-        AssertElementNotPresent(locator1 = "RaylifeSaveExit#MODAL_PROGRESS_SAVED");
+		AssertElementNotPresent(locator1 = "RaylifeSaveExit#MODAL_PROGRESS_SAVED");
 
 		Click(
 			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-    }
+	}
 
-    @description = "LPS-143610 - Verify if, by clicking on the "x" button on the modal, the user is taken back to the current quote in the Basic section"
+	@description = "LPS-143610 - Verify if, by clicking on the "x" button on the modal, the user is taken back to the current quote in the Basic section"
 	@priority = "3"
 	test CanContinueQuoteAfterClickOnX {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
 
@@ -290,9 +75,9 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT_DISABLED");
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT_DISABLED");
 
-        RaylifeContactInfo.typeBasicsInfoFields(
+		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.firstName",
 			value = "FirstName");
 
@@ -304,11 +89,11 @@ definition {
 			label = "basics.businessInformation.business.email",
 			value = "test@liferay.com");
 
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
 
-        Click(locator1 = "RaylifeSaveExit#MODAL_CLOSE_ICON");
+		Click(locator1 = "RaylifeSaveExit#MODAL_CLOSE_ICON");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			label = "basics.businessInformation.lastName",
 			locator1 = "Raylife#FORMS_FIELDS");
 
@@ -317,24 +102,283 @@ definition {
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-    }
+	}
 
-    @description = "LPS-143613 - Check if the error message is displayed 'Unable to save your information. Please try again' if the quote information is not saved successfully in the Basic section"
+	@description = "LPS-143609 - Verify if, by clicking the 'send link and exit' button on the modal, the user is taken to the Raylife home page in the Basic section"
+	@priority = "4"
+	test CanSendLinkAndExit {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+
+		AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+	}
+
+	@description = "LPS-143607 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
+	@priority = "4"
+	test CanViewSavedProgressModal {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#MODAL_PROGRESS_SAVED");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143605 - Check save and exit button is enabled in the Employees section"
+	@priority = "4"
+	test IIsSaveAndExitButtonEnabledOnEmployees {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143614 - Verify if, after filling in all the mandatory fields from Basics - Contact Info page, user can click on Save and Exit Button, close the Save and Exit modal and Continue button is enabled"
+	@priority = "2"
+	test IsContinueButtonEnabledAfterNotSavingAndExiting {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
+
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143608 - Check that the email (from a 'Progress is Saved' modal) is equal to the Business Email from the Basics - Contact Info page"
+	@priority = "4"
+	test IsModalEmailEqualsToBusinessEmail {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.firstName",
+			value = "FirstName");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.lastName",
+			value = "LastName");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.email",
+			value = "test@liferay.com");
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		AssertTextEquals(
+			locator1 = "RaylifeSaveExit#EMAIL_MODAL",
+			value1 = "test@liferay.com");
+
+		Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143604 -  Check save and exit button is enabled in the Business section"
+	@priority = "4"
+	test IsSaveAndExitButtonEnabledOnBusiness {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143600 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
+	@priority = "5"
+	test IsSaveAndExitButtonEnabledOnContactInfo {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT_DISABLED");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.firstName",
+			value = "FirstName");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.lastName",
+			value = "LastName");
+
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.email",
+			value = "test@liferay.com");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143601 - Check save and exit button is enabled in the Basics section - Product Selection page"
+	@priority = "4"
+	test IsSaveAndExitButtonEnabledOnProductSelection {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143606 - Check save and exit button is enabled in the Property section"
+	@priority = "4"
+	test IsSaveAndExitButtonEnabledOnProperty {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.getAQuote();
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+	}
+
+	@description = "LPS-143613 - Check if the error message is displayed 'Unable to save your information. Please try again' if the quote information is not saved successfully in the Basic section"
 	@priority = "4"
 	test UnableToSaveInformationErrorShowsUp {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
 			portlet = "Objects");
 
-        ObjectPortlet.selectCustomObject(label = "Raylife Application");
+		ObjectPortlet.selectCustomObject(label = "Raylife Application");
 
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
 
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
 
@@ -346,81 +390,17 @@ definition {
 			label = "basics.businessInformation.business.email",
 			value = "test@liferay.com");
 
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Unable to save your information. Please try again.");
 
-        Click(
-			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-    }
-
-    @description = "LPS-143614 - Verify if, after filling in all the mandatory fields from Basics - Contact Info page, user can click on Save and Exit Button, close the Save and Exit modal and Continue button is enabled"
-	@priority = "2"
-	test IsContinueButtonEnabledAfterNotSavingAndExiting {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-        Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
-
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        Click(
-			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
-    }
-
-    @description = "LPS-143606 - Check save and exit button is enabled in the Property section"
-	@priority = "4"
-    test IsSaveAndExitButtonEnabledOnProperty {
-
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeBusiness.typeAllBusinessInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        RaylifeEmployees.typeAllEmployeesInfoFields();
-
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-        AssertElementPresent(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
 		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
 			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-    }
+	}
 
 }

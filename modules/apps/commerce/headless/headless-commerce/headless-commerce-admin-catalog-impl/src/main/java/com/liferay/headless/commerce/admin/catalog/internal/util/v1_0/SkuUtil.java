@@ -48,7 +48,7 @@ public class SkuUtil {
 		long replacementCProductId = 0;
 		String replacementCPInstanceUuid = null;
 
-		if (sku.getDiscontinued()) {
+		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
 			CPInstance discontinuedCPInstance = null;
 
 			if (Validator.isNotNull(
@@ -60,11 +60,12 @@ public class SkuUtil {
 						cpDefinition.getCompanyId());
 			}
 
-			if ((discontinuedCPInstance == null) &&
-				(sku.getReplacementSkuId() > 0)) {
+			long replacementSkuId = GetterUtil.getLong(
+				sku.getReplacementSkuId());
 
+			if ((discontinuedCPInstance == null) && (replacementSkuId > 0)) {
 				discontinuedCPInstance = cpInstanceService.fetchCPInstance(
-					sku.getReplacementSkuId());
+					replacementSkuId);
 			}
 
 			if (discontinuedCPInstance != null) {

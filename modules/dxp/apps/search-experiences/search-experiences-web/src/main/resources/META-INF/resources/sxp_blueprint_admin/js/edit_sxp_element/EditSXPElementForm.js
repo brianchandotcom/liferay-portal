@@ -42,6 +42,73 @@ import {openErrorToast} from '../utils/toasts';
 import {getUIConfigurationValues} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
+/**
+ * Converts a JSON string to an object.
+ * @param {string} jsonString The JSON to parse.
+ * @param {string} fieldName The name of the field to specify where the error.
+ * 	ocurred.
+ * @returns {object}
+ */
+const parseJSONString = (jsonString, fieldName) => {
+	try {
+		return JSON.parse(jsonString);
+	} catch {
+		throw sub(Liferay.Language.get('x-is-invalid'), [fieldName]);
+	}
+};
+
+/**
+ * Checks if all `${configuration.___}` template strings are defined in the
+ * `uiConfiguration`.
+ * @param {object} configurationJSONObject The configuration object to check.
+ * @param {object} uiConfigurationJSONObject The definition of configuration
+ * 	variables.
+ */
+const validateConfigKeys = (
+	configurationJSONObject,
+	uiConfigurationJSONObject
+) => {
+	const regex = new RegExp(`\\$\\{${CONFIG_PREFIX}.([\\w\\d_]+)\\}`, 'g');
+
+	const elementKeys = [
+		...JSON.stringify(configurationJSONObject).matchAll(regex),
+	].map((item) => item[1]);
+
+	const uiConfigKeys = uiConfigurationJSONObject.fieldSets
+		? uiConfigurationJSONObject.fieldSets.reduce((acc, curr) => {
+				// Find names within each fields array
+
+				const configKeys = curr.fields
+					? curr.fields.map((item) => item.name)
+					: [];
+
+				return [...acc, ...configKeys];
+		  }, [])
+		: [];
+
+	const missingKeys = elementKeys.filter(
+		(item) => !uiConfigKeys.includes(item)
+	);
+
+	if (missingKeys.length === 1) {
+		throw sub(
+			Liferay.Language.get(
+				'the-following-configuration-key-is-missing-x'
+			),
+			[missingKeys[0]]
+		);
+	}
+
+	if (missingKeys.length > 1) {
+		throw sub(
+			Liferay.Language.get(
+				'the-following-configuration-keys-are-missing-x'
+			),
+			[missingKeys.join(', ')]
+		);
+	}
+};
+
 function EditSXPElementForm({
 	initialDescription = {},
 	initialElementJSONEditorValue = {},
@@ -116,12 +183,12 @@ function EditSXPElementForm({
 		let sxpElementJSONObject;
 
 		try {
-			sxpElementJSONObject = _parseJSONString(
+			sxpElementJSONObject = parseJSONString(
 				elementJSONEditorValue,
 				Liferay.Language.get('element-source-json')
 			);
 
-			_validateConfigKeys(
+			validateConfigKeys(
 				sxpElementJSONObject?.elementDefinition?.configuration,
 				sxpElementJSONObject?.elementDefinition?.uiConfiguration
 			);
@@ -270,50 +337,6 @@ function EditSXPElementForm({
 			</div>
 		);
 	}
-
-	const _validateConfigKeys = (
-		configurationJSONObject,
-		uiConfigurationJSONObject
-	) => {
-		const regex = new RegExp(`\\$\\{${CONFIG_PREFIX}.([\\w\\d_]+)\\}`, 'g');
-
-		const elementKeys = [
-			...JSON.stringify(configurationJSONObject).matchAll(regex),
-		].map((item) => item[1]);
-
-		const uiConfigKeys = uiConfigurationJSONObject.fieldSets
-			? uiConfigurationJSONObject.fieldSets.reduce((acc, curr) => {
-					// Find names within each fields array
-
-					const configKeys = curr.fields
-						? curr.fields.map((item) => item.name)
-						: [];
-
-					return [...acc, ...configKeys];
-			  }, [])
-			: [];
-
-		const missingKeys = elementKeys.filter(
-			(item) => !uiConfigKeys.includes(item)
-		);
-
-		if (missingKeys.length > 0) {
-			throw sub(
-				Liferay.Language.get(
-					'the-following-configuration-key-is-missing-x'
-				),
-				[missingKeys.join(', ')]
-			);
-		}
-	};
-
-	const _parseJSONString = (text, name) => {
-		try {
-			return JSON.parse(text);
-		} catch {
-			throw sub(Liferay.Language.get('x-is-invalid'), [name]);
-		}
-	};
 
 	return (
 		<>

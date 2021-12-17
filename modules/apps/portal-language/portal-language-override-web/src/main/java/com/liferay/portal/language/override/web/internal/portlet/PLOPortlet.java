@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.override.provider.PLOOriginalTranslationProvider;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.language.override.service.PLOEntryService;
-import com.liferay.portal.language.override.web.internal.constants.PortalLanguageOverridePortletKeys;
+import com.liferay.portal.language.override.web.internal.constants.PLOPortletKeys;
 import com.liferay.portal.language.override.web.internal.display.EditDisplayContextFactory;
 import com.liferay.portal.language.override.web.internal.display.ViewDisplayContextFactory;
 
@@ -56,13 +56,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortalLanguageOverridePortletKeys.PORTAL_LANGUAGE_OVERRIDE,
+		"javax.portlet.name=" + PLOPortletKeys.PORTAL_LANGUAGE_OVERRIDE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class PortalLanguageOverridePortlet extends MVCPortlet {
+public class PLOPortlet extends MVCPortlet {
 
 	public void deletePortalLanguageOverride(
 			ActionRequest actionRequest, ActionResponse actionResponse)

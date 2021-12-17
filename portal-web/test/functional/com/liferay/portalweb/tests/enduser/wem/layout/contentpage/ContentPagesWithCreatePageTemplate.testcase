@@ -116,6 +116,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on content page template."
+	@priority = "5"
+	test CreatePageTemplateFromContentPageBasedOnContentPageTemplate {
+		task ("Add a Heading fragment to a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Content Page Template Name 1",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Button fragment to a content page based on content page template") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Content Page Template Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Create a content page template from the content page under page template collection") {
+			PageEditor.createPageTemplate(
+				collectionName = "Page Template Collection",
+				pageTemplateName = "Content Page Template Name 2");
+		}
+
+		task ("View the content page template shown in Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name 2");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Content Page Template Name 2",
+				workflowStatus = "Draft");
+		}
+
+		task ("View the Heading and Button are shown in content page template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name 2");
+
+			for (var fragmentName : list "Heading,Button") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-140483. The user could create page template from an empty content page."
 	@priority = "4"
 	test CreatePageTemplateFromEmptyContentPage {

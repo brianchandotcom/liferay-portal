@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.portal.language.override">
-	<namespace>PortalLanguageOverride</namespace>
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.portal.language.override" short-no-such-exception-enabled="false">
+	<author>Drew Brokke</author>
+	<namespace>PLO</namespace>
 	<entity local-service="true" name="PLOEntry">
 
 		<!-- PK fields -->

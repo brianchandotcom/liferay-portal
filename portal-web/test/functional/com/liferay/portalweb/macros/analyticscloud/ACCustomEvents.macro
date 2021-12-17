@@ -161,7 +161,7 @@ definition {
 	}
 
 	macro hideAllCustomEvents {
-		var key_actionButton = "Block";
+		var key_actionButton = "Hide";
 
 		KeyPress(
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
@@ -170,6 +170,10 @@ definition {
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
 	}
 
 	macro hideCustomEvent {

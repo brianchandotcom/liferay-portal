@@ -83,9 +83,9 @@ public class EditDisplayContextFactory {
 					_portal.getLocale(renderRequest), "add-language-key"));
 		}
 
-		editDisplayContext.setSelectedLanguage(
+		editDisplayContext.setSelectedLanguageId(
 			ParamUtil.getString(
-				renderRequest, "selectedLanguage",
+				renderRequest, "selectedLanguageId",
 				LocaleUtil.toLanguageId(_portal.getLocale(renderRequest))));
 
 		if (MapUtil.isNotEmpty(originalValuesLocalizedValuesMap.getValues())) {

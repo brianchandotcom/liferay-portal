@@ -47,22 +47,24 @@ public class PLOItemDTO {
 		return _override;
 	}
 
-	public boolean isOverrideSelectedLanguage() {
-		return _overrideSelectedLanguage;
+	public boolean isOverrideSelectedLanguageId() {
+		return _overrideSelectedLanguageId;
 	}
 
 	public void setOverride(boolean override) {
 		_override = override;
 	}
 
-	public void setOverrideSelectedLanguage(boolean overrideSelectedLanguage) {
-		_overrideSelectedLanguage = overrideSelectedLanguage;
+	public void setOverrideSelectedLanguageId(
+		boolean overrideSelectedLanguageId) {
+
+		_overrideSelectedLanguageId = overrideSelectedLanguageId;
 	}
 
 	private final String _key;
 	private boolean _override;
 	private final List<String> _overrideLanguages = new ArrayList<>();
-	private boolean _overrideSelectedLanguage;
+	private boolean _overrideSelectedLanguageId;
 	private final String _value;
 
 }

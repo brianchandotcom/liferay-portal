@@ -69,10 +69,10 @@ public class PLOPortlet extends MVCPortlet {
 		throws PortalException {
 
 		String key = ParamUtil.getString(actionRequest, "key");
-		String selectedLanguage = ParamUtil.getString(
-			actionRequest, "selectedLanguage");
+		String selectedLanguageId = ParamUtil.getString(
+			actionRequest, "selectedLanguageId");
 
-		_ploEntryService.deletePLOEntry(key, selectedLanguage);
+		_ploEntryService.deletePLOEntry(key, selectedLanguageId);
 	}
 
 	public void deletePortalLanguageOverrides(

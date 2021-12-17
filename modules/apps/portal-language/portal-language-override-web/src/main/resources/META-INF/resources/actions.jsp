@@ -28,7 +28,7 @@ PLOItemDTO rowObjectPLOItemDTO = (PLOItemDTO)row.getObject();
 	<portlet:param name="mvcPath" value="/edit.jsp" />
 	<portlet:param name="backURL" value="<%= currentURL %>" />
 	<portlet:param name="key" value="<%= rowObjectPLOItemDTO.getKey() %>" />
-	<portlet:param name="selectedLanguage" value="<%= viewDisplayContext.getSelectedLanguage() %>" />
+	<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 </portlet:renderURL>
 
 <liferay-ui:icon-menu
@@ -45,16 +45,16 @@ PLOItemDTO rowObjectPLOItemDTO = (PLOItemDTO)row.getObject();
 	/>
 
 	<c:if test="<%= rowObjectPLOItemDTO.isOverride() %>">
-		<c:if test="<%= rowObjectPLOItemDTO.isOverrideSelectedLanguage() %>">
+		<c:if test="<%= rowObjectPLOItemDTO.isOverrideSelectedLanguageId() %>">
 			<portlet:actionURL name="deletePortalLanguageOverride" var="deletePortalLanguageOverrideURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="key" value="<%= rowObjectPLOItemDTO.getKey() %>" />
-				<portlet:param name="selectedLanguage" value="<%= viewDisplayContext.getSelectedLanguage() %>" />
+				<portlet:param name="selectedLanguageId" value="<%= viewDisplayContext.getSelectedLanguageId() %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete
-				confirmation='<%= LanguageUtil.format(request, "do-you-want-to-reset-the-translation-override-for-x", viewDisplayContext.getSelectedLanguage()) %>'
-				message='<%= LanguageUtil.format(request, "remove-translation-override-for-x", viewDisplayContext.getSelectedLanguage()) %>'
+				confirmation='<%= LanguageUtil.format(request, "do-you-want-to-reset-the-translation-override-for-x", viewDisplayContext.getSelectedLanguageId()) %>'
+				message='<%= LanguageUtil.format(request, "remove-translation-override-for-x", viewDisplayContext.getSelectedLanguageId()) %>'
 				url="<%= deletePortalLanguageOverrideURL %>"
 			/>
 		</c:if>

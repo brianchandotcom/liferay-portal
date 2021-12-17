@@ -44,8 +44,8 @@ public class EditDisplayContext {
 		return _pageTitle;
 	}
 
-	public String getSelectedLanguage() {
-		return _selectedLanguage;
+	public String getSelectedLanguageId() {
+		return _selectedLanguageId;
 	}
 
 	public LocalizedValuesMap getValuesLocalizedValuesMap() {
@@ -78,8 +78,8 @@ public class EditDisplayContext {
 		_pageTitle = pageTitle;
 	}
 
-	public void setSelectedLanguage(String selectedLanguage) {
-		_selectedLanguage = selectedLanguage;
+	public void setSelectedLanguageId(String selectedLanguageId) {
+		_selectedLanguageId = selectedLanguageId;
 	}
 
 	public void setShowOriginalValues(boolean showOriginalValues) {
@@ -97,7 +97,7 @@ public class EditDisplayContext {
 	private String _key;
 	private LocalizedValuesMap _originalValuesLocalizedValuesMap;
 	private String _pageTitle;
-	private String _selectedLanguage;
+	private String _selectedLanguageId;
 	private boolean _showOriginalValues;
 	private LocalizedValuesMap _valuesLocalizedValuesMap;
 

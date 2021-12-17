@@ -36,8 +36,8 @@ public class ViewDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSelectedLanguage() {
-		return _selectedLanguage;
+	public String getSelectedLanguageId() {
+		return _selectedLanguageId;
 	}
 
 	public void setAvailableLocales(Locale[] availableLocales) {
@@ -54,13 +54,13 @@ public class ViewDisplayContext {
 		_searchContainer = searchContainer;
 	}
 
-	public void setSelectedLanguage(String selectedLanguage) {
-		_selectedLanguage = selectedLanguage;
+	public void setSelectedLanguageId(String selectedLanguageId) {
+		_selectedLanguageId = selectedLanguageId;
 	}
 
 	private Locale[] _availableLocales;
 	private String _displayStyle;
 	private SearchContainer<PLOItemDTO> _searchContainer;
-	private String _selectedLanguage;
+	private String _selectedLanguageId;
 
 }

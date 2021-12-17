@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.image;
+package com.liferay.image.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Filter;

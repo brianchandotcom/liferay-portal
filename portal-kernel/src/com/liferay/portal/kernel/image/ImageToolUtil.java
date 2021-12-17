@@ -52,7 +52,7 @@ public class ImageToolUtil {
 	public static Future<RenderedImage> convertCMYKtoRGB(
 		byte[] bytes, String type) {
 
-		return _imageTool.convertCMYKtoRGB(bytes, type);
+		return _cmykImageTool.convertCMYKtoRGB(bytes, type);
 	}
 
 	/**
@@ -134,6 +134,10 @@ public class ImageToolUtil {
 		throws IOException {
 
 		return _imageTool.getBytes(renderedImage, contentType);
+	}
+
+	public static CMYKImageTool getCMYKImageTool() {
+		return _cmykImageTool;
 	}
 
 	public static Image getDefaultCompanyLogo() {
@@ -285,10 +289,15 @@ public class ImageToolUtil {
 		_imageTool.write(renderedImage, contentType, outputStream);
 	}
 
+	public void setCMYKImageTool(CMYKImageTool cmykImageTool) {
+		_cmykImageTool = cmykImageTool;
+	}
+
 	public void setImageTool(ImageTool imageTool) {
 		_imageTool = imageTool;
 	}
 
+	private static CMYKImageTool _cmykImageTool;
 	private static ImageTool _imageTool;
 
 }

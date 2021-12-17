@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.util.concurrent.Future;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -65,8 +63,6 @@ public interface ImageTool {
 	public static final String TYPE_PNG = "png";
 
 	public static final String TYPE_TIFF = "tiff";
-
-	public Future<RenderedImage> convertCMYKtoRGB(byte[] bytes, String type);
 
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 

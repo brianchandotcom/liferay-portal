@@ -64,8 +64,7 @@ public class SXPElementDTOConverter
 				description = sxpElement.getDescription(
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					sxpElement.getDescriptionMap());
+					true, sxpElement.getDescriptionMap());
 				elementDefinition = ElementDefinitionUtil.toElementDefinition(
 					sxpElement.getElementDefinitionJSON());
 				id = sxpElement.getSXPElementId();
@@ -73,8 +72,7 @@ public class SXPElementDTOConverter
 				readOnly = sxpElement.getReadOnly();
 				title = sxpElement.getTitle(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					sxpElement.getTitleMap());
+					true, sxpElement.getTitleMap());
 				type = sxpElement.getType();
 				userName = sxpElement.getUserName();
 			}

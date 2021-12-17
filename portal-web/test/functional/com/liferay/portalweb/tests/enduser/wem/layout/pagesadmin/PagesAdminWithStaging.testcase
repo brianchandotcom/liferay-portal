@@ -78,7 +78,7 @@ definition {
 				SitePages.checkPage(pageName = "Test Page Name ${n}");
 			}
 
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Test Page Name 1");
 		}
@@ -102,7 +102,7 @@ definition {
 				SitePages.checkPage(pageName = "Test Page Name ${n}");
 			}
 
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Test Page Name 1");
 

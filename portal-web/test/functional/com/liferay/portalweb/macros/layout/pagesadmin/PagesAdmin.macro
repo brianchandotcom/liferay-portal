@@ -373,6 +373,16 @@ definition {
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 
+	macro movePageItemUp {
+		var key_pageName = "${pageName}";
+		var key_pageNameTo = "${pageNameTo}";
+
+		DragAndDrop.javaScriptDragAndDropToUp(
+			locator1 = "SitePages#LIST_GROUP_ITEM_DRAG_HANDLER",
+			locator2 = "SitePages#LIST_GROUP_ITEM_DROP_TARGET",
+			value1 = "");
+	}
+
 	@summary = "Open the ellipsis menu of a page. Parent pages hierarchy is required to navigate to child pages."
 	macro openPageEllipsisMenu {
 		WaitForPageLoad();

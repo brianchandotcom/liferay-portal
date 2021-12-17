@@ -223,7 +223,7 @@ definition {
 		task ("Changes the order of pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2 Edit",
 				pageNameTo = "Test Page Name");
 		}

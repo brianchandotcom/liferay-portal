@@ -460,7 +460,7 @@ definition {
 		}
 
 		task ("Move child page to parent level") {
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Child Page Name",
 				pageNameTo = "Test Page Name");
 		}
@@ -521,7 +521,7 @@ definition {
 				SitePages.checkPage(pageName = "${pageName}");
 			}
 
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Child Page Name 1");
 		}
@@ -568,7 +568,7 @@ definition {
 				SitePages.checkPage(pageName = "Test Page Name ${n}");
 			}
 
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Test Page Name 1");
 		}
@@ -652,7 +652,7 @@ definition {
 		}
 
 		task ("Change order of pages") {
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Test Page Name 1");
 		}
@@ -702,7 +702,7 @@ definition {
 		}
 
 		task ("Move Test Page Name 2 to child level of Test Page Name 1") {
-			SitePages.movePageToPageUp(
+			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Child Page Name 1");
 		}

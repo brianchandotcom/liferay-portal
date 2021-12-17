@@ -75,7 +75,8 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	protected void activate() {
 		_portalCache =
 			(PortalCache<String, HashMap<String, String>>)
-				_multiVMPool.getPortalCache(_CACHE_KEY);
+				_multiVMPool.getPortalCache(
+					PLOLanguageOverrideProvider.class.getName());
 	}
 
 	protected void clear(long companyId, String languageId) {
@@ -84,7 +85,8 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 	@Deactivate
 	protected void deactivate() {
-		_multiVMPool.removePortalCache(_CACHE_KEY);
+		_multiVMPool.removePortalCache(
+			PLOLanguageOverrideProvider.class.getName());
 	}
 
 	private String _encodeKey(long companyId, String languageId) {
@@ -113,8 +115,6 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 		return overrideMap;
 	}
-
-	private static final String _CACHE_KEY = "PORTAL_LANGUAGE_OVERRIDE_CACHE";
 
 	@Reference
 	private MultiVMPool _multiVMPool;

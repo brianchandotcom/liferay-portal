@@ -7,7 +7,7 @@ export function Label({children, label, name, required = false}) {
 			<h6
 				className={classNames(
 					`align-items-center d-flex font-weight-bolder`,
-					required
+					{required}
 				)}
 			>
 				{label}

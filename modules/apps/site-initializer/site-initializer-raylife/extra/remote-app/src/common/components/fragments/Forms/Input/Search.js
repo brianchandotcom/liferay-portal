@@ -30,6 +30,7 @@ export const SearchInput = React.forwardRef(
 					<InputAreaWithError className="col pl-0" error={error}>
 						<ClayInput
 							{...props}
+							id={name}
 							maxLength={255}
 							name={name}
 							onKeyPress={(event) => {

@@ -28,6 +28,7 @@ export const Select = React.forwardRef(
 
 				<ClaySelect
 					{...props}
+					id={name}
 					name={name}
 					ref={ref}
 					required={required}

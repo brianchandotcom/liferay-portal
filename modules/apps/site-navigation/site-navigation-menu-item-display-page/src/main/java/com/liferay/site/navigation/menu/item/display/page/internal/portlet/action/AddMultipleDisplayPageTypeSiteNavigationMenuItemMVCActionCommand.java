@@ -14,11 +14,15 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +40,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -81,25 +88,47 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			try {
-				List<JSONObject> jsonObjects = JSONUtil.toList(
-					JSONFactoryUtil.createJSONArray(
-						ParamUtil.getString(actionRequest, "items")),
-					itemJSONObject -> {
-						if (!Objects.equals(
+				List<InfoItemReference> infoItemReferences = new ArrayList<>();
+				Map<Long, JSONObject> jsonObjectByClassPKMap = new HashMap<>();
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+					ParamUtil.getString(actionRequest, "items"));
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject itemJSONObject = jsonArray.getJSONObject(i);
+
+					if ((itemJSONObject != null) &&
+						Objects.equals(
+							itemJSONObject.getString("className"),
+							siteNavigationMenuItemType)) {
+
+						infoItemReferences.add(
+							new InfoItemReference(
 								itemJSONObject.getString("className"),
-								siteNavigationMenuItemType)) {
+								itemJSONObject.getLong("classPK")));
 
-							return null;
-						}
+						jsonObjectByClassPKMap.put(
+							itemJSONObject.getLong("classPK"), itemJSONObject);
+					}
+				}
 
-						return itemJSONObject;
-					});
+				LayoutDisplayPageMultiSelectionProvider<?>
+					layoutDisplayPageMultiSelectionProvider =
+						_layoutDisplayPageMultiSelectionProviderTracker.
+							getLayoutDisplayPageMultiSelectionProvider(
+								siteNavigationMenuItemType);
 
-				for (JSONObject itemJSONObject : jsonObjects) {
+				if (layoutDisplayPageMultiSelectionProvider != null) {
+					infoItemReferences =
+						layoutDisplayPageMultiSelectionProvider.process(
+							infoItemReferences);
+				}
+
+				for (InfoItemReference infoItemReference : infoItemReferences) {
 					_addSiteNavigationMenuItem(
-						themeDisplay.getScopeGroupId(), itemJSONObject,
-						serviceContext, siteNavigationMenuId,
-						siteNavigationMenuItemType);
+						themeDisplay.getScopeGroupId(), infoItemReference,
+						jsonObjectByClassPKMap, serviceContext,
+						siteNavigationMenuId, siteNavigationMenuItemType);
 				}
 			}
 			catch (PortalException portalException) {
@@ -135,9 +164,18 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 	}
 
 	private void _addSiteNavigationMenuItem(
-			long groupId, JSONObject jsonObject, ServiceContext serviceContext,
-			long siteNavigationMenuId, String siteNavigationMenuItemType)
+			long groupId, InfoItemReference infoItemReference,
+			Map<Long, JSONObject> jsonObjectByClassPKMap,
+			ServiceContext serviceContext, long siteNavigationMenuId,
+			String siteNavigationMenuItemType)
 		throws PortalException {
+
+		JSONObject jsonObject = jsonObjectByClassPKMap.get(
+			_getClassPK(infoItemReference));
+
+		if (jsonObject == null) {
+			return;
+		}
 
 		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
 			true);
@@ -160,8 +198,26 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
+	private long _getClassPK(InfoItemReference infoItemReference) {
+		if (infoItemReference.getInfoItemIdentifier() instanceof
+				ClassPKInfoItemIdentifier) {
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			return classPKInfoItemIdentifier.getClassPK();
+		}
+
+		return 0;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand.class);
+
+	@Reference
+	private LayoutDisplayPageMultiSelectionProviderTracker
+		_layoutDisplayPageMultiSelectionProviderTracker;
 
 	@Reference
 	private Portal _portal;

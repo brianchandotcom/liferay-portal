@@ -21,9 +21,14 @@ const CategoriesPopover = ({categories, vocabulary}) => {
 	return (
 		<ClayPopover
 			alignPosition="top"
+			className="categories-popover"
 			disableScroll={true}
 			header={`${categories.length} ${vocabulary} Categories`}
-			trigger={<ClayLabel large={true}>+{categories.length}</ClayLabel>}
+			trigger={
+				<ClayLabel className="category-label-see-more" large={true}>
+					{`+ ${categories.length}`}
+				</ClayLabel>
+			}
 		>
 			{categories.map((cat, index) => (
 				<ClayLabel key={index} large={true}>

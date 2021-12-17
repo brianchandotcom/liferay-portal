@@ -177,20 +177,26 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smaller text-truncate"
+						cssClass="lfr-small-column table-cell-expand-smaller"
 						name="type"
-						value="<%= HtmlUtil.escape(contentDashboardItem.getTypeLabel(locale)) %>"
-					/>
+					>
+						<span class="lfr-portal-tooltip text-truncate" title="<%= HtmlUtil.escape(contentDashboardItem.getTypeLabel(locale)) %>">
+							<%= HtmlUtil.escape(contentDashboardItem.getTypeLabel(locale)) %>
+						</span>
+					</liferay-ui:search-container-column-text>
 
 					<%
 					ContentDashboardItemSubtype contentDashboardItemSubtype = contentDashboardItem.getContentDashboardItemSubtype();
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smaller text-truncate"
+						cssClass="lfr-small-column table-cell-expand-smaller"
 						name="subtype"
-						value="<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>"
-					/>
+					>
+						<span class="lfr-portal-tooltip text-truncate" title="<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>">
+							<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>
+						</span>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						cssClass="text-truncate"
@@ -210,10 +216,11 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 							<%
 							List<String> assetCategories = contentDashboardAdminDisplayContext.getAssetCategoryTitles(contentDashboardItem, assetVocabulary.getVocabularyId());
 							%>
+
 							<div class="d-flex">
 								<c:if test="<%= !assetCategories.isEmpty() %>">
 									<clay:label
-										cssClass="text-truncate-inline"
+										cssClass="category-label text-truncate-inline"
 										displayType="secondary"
 										large="<%= true %>"
 									>

@@ -203,6 +203,7 @@ public class ObjectRelationshipServiceTest {
 		return _objectRelationshipLocalService.addObjectRelationship(
 			user.getUserId(), _objectDefinition1.getObjectDefinitionId(),
 			_objectDefinition2.getObjectDefinitionId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
@@ -225,6 +226,7 @@ public class ObjectRelationshipServiceTest {
 				_objectRelationshipService.addObjectRelationship(
 					_objectDefinition1.getObjectDefinitionId(),
 					_objectDefinition2.getObjectDefinitionId(),
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					StringUtil.randomId(),

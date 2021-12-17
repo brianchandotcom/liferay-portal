@@ -102,6 +102,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
@@ -133,6 +134,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -177,6 +179,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, type);
 

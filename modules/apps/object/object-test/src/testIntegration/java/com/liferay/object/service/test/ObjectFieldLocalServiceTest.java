@@ -590,6 +590,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition1.getObjectDefinitionId(),
 			objectDefinition2.getObjectDefinitionId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 

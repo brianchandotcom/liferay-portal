@@ -516,19 +516,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Map<String, Object> systemProperties, Properties poshiProperties,
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
-		if (poshiProperties != null) {
-			Enumeration<String> enumeration =
-				(Enumeration<String>)poshiProperties.propertyNames();
-
-			while (enumeration.hasMoreElements()) {
-				String key = enumeration.nextElement();
-
-				String value = poshiProperties.getProperty(key);
-
-				systemProperties.put(key, value);
-			}
-		}
-
 		systemProperties.putAll(poshiRunnerExtension.getPoshiProperties());
 
 		File baseDir = poshiRunnerExtension.getBaseDir();
@@ -569,6 +556,19 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				sb.setLength(sb.length() - 1);
 
 				systemProperties.put(sb.toString(), entry.getValue());
+			}
+		}
+
+		if (poshiProperties != null) {
+			Enumeration<String> enumeration =
+				(Enumeration<String>)poshiProperties.propertyNames();
+
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
+
+				String value = poshiProperties.getProperty(key);
+
+				systemProperties.put(key, value);
 			}
 		}
 	}

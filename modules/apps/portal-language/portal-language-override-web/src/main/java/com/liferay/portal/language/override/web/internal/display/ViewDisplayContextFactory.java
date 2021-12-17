@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringParser;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
-import com.liferay.portal.language.override.web.internal.dto.PLOItemDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,10 +74,8 @@ public class ViewDisplayContextFactory {
 		viewDisplayContext.setDisplayStyle(
 			ParamUtil.getString(renderRequest, "displayStyle", "descriptive"));
 
-		SearchContainer<PLOItemDTO> searchContainer = _createSearchContainer(
-			renderRequest, renderResponse);
-
-		viewDisplayContext.setSearchContainer(searchContainer);
+		viewDisplayContext.setSearchContainer(
+			_createSearchContainer(renderRequest, renderResponse));
 
 		viewDisplayContext.setSelectedLanguageId(
 			ParamUtil.getString(
@@ -88,7 +85,7 @@ public class ViewDisplayContextFactory {
 		return viewDisplayContext;
 	}
 
-	private SearchContainer<PLOItemDTO> _createSearchContainer(
+	private SearchContainer<LanguageItemDisplay> _createSearchContainer(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -96,11 +93,13 @@ public class ViewDisplayContextFactory {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(renderResponse);
 
-		SearchContainer<PLOItemDTO> searchContainer = new SearchContainer<>(
-			liferayPortletRequest,
-			PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse),
-			Arrays.asList("key", "value"), "no-language-entries-were-found");
+		SearchContainer<LanguageItemDisplay> searchContainer =
+			new SearchContainer<>(
+				liferayPortletRequest,
+				PortletURLUtil.getCurrent(
+					liferayPortletRequest, liferayPortletResponse),
+				Arrays.asList("key", "value"),
+				"no-language-entries-were-found");
 
 		searchContainer.setId("portalLanguageOverrideEntries");
 
@@ -121,9 +120,9 @@ public class ViewDisplayContextFactory {
 
 	private void _setResults(
 		RenderRequest renderRequest,
-		SearchContainer<PLOItemDTO> searchContainer) {
+		SearchContainer<LanguageItemDisplay> searchContainer) {
 
-		List<PLOItemDTO> ploItemDTOs = new ArrayList<>();
+		List<LanguageItemDisplay> languageItemDisplays = new ArrayList<>();
 
 		List<PLOEntry> ploEntries = _ploEntryLocalService.getPLOEntries(
 			_portal.getCompanyId(renderRequest));
@@ -171,22 +170,24 @@ public class ViewDisplayContextFactory {
 				if (keyMatchPredicate.test(key) ||
 					valueMatchPredicate.test(value)) {
 
-					PLOItemDTO ploItemDTO = new PLOItemDTO(key, value);
+					LanguageItemDisplay languageItemDisplay =
+						new LanguageItemDisplay(key, value);
 
-					ploItemDTO.setOverride(true);
+					languageItemDisplay.setOverride(true);
 
 					for (PLOEntry ploEntry : entry.getValue()) {
-						ploItemDTO.addOverrideLanguage(
+						languageItemDisplay.addOverrideLanguage(
 							ploEntry.getLanguageId());
 
 						if (Objects.equals(
 								selectedLanguageId, ploEntry.getLanguageId())) {
 
-							ploItemDTO.setOverrideSelectedLanguageId(true);
+							languageItemDisplay.setOverrideSelectedLanguageId(
+								true);
 						}
 					}
 
-					ploItemDTOs.add(ploItemDTO);
+					languageItemDisplays.add(languageItemDisplay);
 				}
 			}
 		}
@@ -201,41 +202,43 @@ public class ViewDisplayContextFactory {
 				if (keyMatchPredicate.test(key) ||
 					valueMatchPredicate.test(value)) {
 
-					PLOItemDTO ploItemDTO = new PLOItemDTO(key, value);
+					LanguageItemDisplay languageItemDisplay =
+						new LanguageItemDisplay(key, value);
 
 					if (ploEntryMap.containsKey(key)) {
-						ploItemDTO.setOverride(true);
+						languageItemDisplay.setOverride(true);
 
 						for (PLOEntry ploEntry : ploEntryMap.get(key)) {
-							ploItemDTO.addOverrideLanguage(
+							languageItemDisplay.addOverrideLanguage(
 								ploEntry.getLanguageId());
 
 							if (Objects.equals(
 									selectedLanguageId,
 									ploEntry.getLanguageId())) {
 
-								ploItemDTO.setOverrideSelectedLanguageId(true);
+								languageItemDisplay.
+									setOverrideSelectedLanguageId(true);
 							}
 						}
 					}
 
-					ploItemDTOs.add(ploItemDTO);
+					languageItemDisplays.add(languageItemDisplay);
 				}
 			}
 		}
 
-		searchContainer.setTotal(ploItemDTOs.size());
+		searchContainer.setTotal(languageItemDisplays.size());
 
 		// Sorting
 
-		Comparator<PLOItemDTO> comparator = Comparator.comparing(
-			PLOItemDTO::getKey);
+		Comparator<LanguageItemDisplay> comparator = Comparator.comparing(
+			LanguageItemDisplay::getKey);
 
 		if (Objects.equals(searchContainer.getOrderByType(), "desc")) {
 			comparator = comparator.reversed();
 		}
 
-		ploItemDTOs.sort(comparator);
+		languageItemDisplays.sort(comparator);
 
 		// Pagination
 
@@ -244,7 +247,7 @@ public class ViewDisplayContextFactory {
 			searchContainer.getTotal());
 
 		searchContainer.setResults(
-			ploItemDTOs.subList(startAndEnd[0], startAndEnd[1]));
+			languageItemDisplays.subList(startAndEnd[0], startAndEnd[1]));
 	}
 
 	private final PLOEntryLocalService _ploEntryLocalService;

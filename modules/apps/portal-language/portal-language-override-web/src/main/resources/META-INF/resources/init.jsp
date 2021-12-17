@@ -34,9 +34,9 @@ page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.language.override.web.internal.display.EditDisplayContext" %><%@
+page import="com.liferay.portal.language.override.web.internal.display.LanguageItemDisplay" %><%@
 page import="com.liferay.portal.language.override.web.internal.display.ViewDisplayContext" %><%@
 page import="com.liferay.portal.language.override.web.internal.display.ViewManagementToolbarDisplayContext" %><%@
-page import="com.liferay.portal.language.override.web.internal.dto.PLOItemDTO" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.Locale" %><%@

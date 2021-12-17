@@ -15,7 +15,6 @@
 package com.liferay.portal.language.override.web.internal.display;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.language.override.web.internal.dto.PLOItemDTO;
 
 import java.util.Locale;
 
@@ -32,7 +31,7 @@ public class ViewDisplayContext {
 		return _displayStyle;
 	}
 
-	public SearchContainer<PLOItemDTO> getSearchContainer() {
+	public SearchContainer<LanguageItemDisplay> getSearchContainer() {
 		return _searchContainer;
 	}
 
@@ -49,7 +48,7 @@ public class ViewDisplayContext {
 	}
 
 	public void setSearchContainer(
-		SearchContainer<PLOItemDTO> searchContainer) {
+		SearchContainer<LanguageItemDisplay> searchContainer) {
 
 		_searchContainer = searchContainer;
 	}
@@ -60,7 +59,7 @@ public class ViewDisplayContext {
 
 	private Locale[] _availableLocales;
 	private String _displayStyle;
-	private SearchContainer<PLOItemDTO> _searchContainer;
+	private SearchContainer<LanguageItemDisplay> _searchContainer;
 	private String _selectedLanguageId;
 
 }

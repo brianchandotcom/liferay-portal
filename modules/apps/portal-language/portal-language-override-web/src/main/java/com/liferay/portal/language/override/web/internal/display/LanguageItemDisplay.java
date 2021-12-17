@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language.override.web.internal.dto;
+package com.liferay.portal.language.override.web.internal.display;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * @author Drew Brokke
  */
-public class PLOItemDTO {
+public class LanguageItemDisplay {
 
-	public PLOItemDTO(String key, String value) {
+	public LanguageItemDisplay(String key, String value) {
 		_key = key;
 		_value = value;
 	}

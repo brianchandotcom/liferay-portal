@@ -95,6 +95,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140483. The site admin could create page template from content page with translation."
+	@priority = "4"
+	test CreatePageTemplateFromContentPageWithTranslation {
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a Heading fragment to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Add translation to inline text of Heading in es-ES") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Ejemplo de encabezado");
+		}
+
+		task ("Create a content page template from the content page under page template collection") {
+			PageEditor.createPageTemplate(
+				collectionName = "Page Template Collection",
+				pageTemplateName = "Content Page Template Name");
+		}
+
+		task ("View the content page template shown in Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Content Page Template Name",
+				workflowStatus = "Draft");
+		}
+
+		task ("View the default inline text shown in content page template in en-US") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View the translated inline text shown in content page template in es-US") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Ejemplo de encabezado",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+	}
+
 	@description = "This is a test for LPS-139064. Users can preview localized draft for a content page."
 	@priority = "3"
 	test PreviewLocalizedDraftContentPage {

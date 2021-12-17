@@ -35,6 +35,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140483. The user cannot create page templates with same names from content page in the same collection."
+	@priority = "4"
+	test CannotCreatePageTemplatesWithSameNameFromContentPageInTheSameCollection {
+		task ("Create a content page template from the content page under page template collection") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.createPageTemplate(
+				collectionName = "Page Template Collection",
+				pageTemplateName = "Content Page Template Name");
+		}
+
+		task ("View error message shown when create page template with same name from content page in the same collection") {
+			PageEditor.createPageTemplate(
+				alertMessage = "A page template entry with that name already exists.",
+				collectionName = "Page Template Collection",
+				pageTemplateName = "Content Page Template Name");
+		}
+	}
+
 	@description = "This is a test for LPS-140483. The user could create page template from a content page with elements."
 	@priority = "5"
 	test CreatePageTemplateFromContentPage {

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -214,7 +213,6 @@ public class UserGroupRolesDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		roleSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 		roleSearch.setOrderByCol(getOrderByCol());
 
 		boolean orderByAsc = false;
@@ -223,11 +221,7 @@ public class UserGroupRolesDisplayContext {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<Role> orderByComparator = new RoleNameComparator(
-			orderByAsc);
-
-		roleSearch.setOrderByComparator(orderByComparator);
-
+		roleSearch.setOrderByComparator(new RoleNameComparator(orderByAsc));
 		roleSearch.setOrderByType(getOrderByType());
 
 		int roleType = RoleConstants.TYPE_SITE;
@@ -241,7 +235,7 @@ public class UserGroupRolesDisplayContext {
 		List<Role> roles = RoleLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			new Integer[] {roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			orderByComparator);
+			roleSearch.getOrderByComparator());
 
 		List<Role> selectedRoles = _getSelectedRoles();
 
@@ -270,14 +264,11 @@ public class UserGroupRolesDisplayContext {
 				themeDisplay.getPermissionChecker(), getGroupId(), roles);
 		}
 
-		int rolesCount = roles.size();
-
-		roleSearch.setTotal(rolesCount);
-
-		roles = ListUtil.subList(
-			roles, roleSearch.getStart(), roleSearch.getEnd());
-
-		roleSearch.setResults(roles);
+		roleSearch.setTotal(roles.size());
+		roleSearch.setResults(
+			ListUtil.subList(
+				roles, roleSearch.getStart(), roleSearch.getEnd()));
+		roleSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 
 		_roleSearch = roleSearch;
 

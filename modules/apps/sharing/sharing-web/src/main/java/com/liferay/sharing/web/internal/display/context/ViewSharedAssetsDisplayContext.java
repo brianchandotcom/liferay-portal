@@ -233,13 +233,11 @@ public class ViewSharedAssetsDisplayContext {
 					_httpServletRequest));
 		}
 
-		boolean containsManageCollaboratorsPermission =
-			_sharingPermission.containsManageCollaboratorsPermission(
+		if (_sharingPermission.containsManageCollaboratorsPermission(
 				_themeDisplay.getPermissionChecker(),
 				sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
-				_themeDisplay.getScopeGroupId());
+				_themeDisplay.getScopeGroupId())) {
 
-		if (containsManageCollaboratorsPermission) {
 			menuItems.add(
 				_sharingMenuItemFactory.createManageCollaboratorsMenuItem(
 					sharingEntry.getClassName(), sharingEntry.getClassPK(),
@@ -277,9 +275,7 @@ public class ViewSharedAssetsDisplayContext {
 		).setParameter(
 			"orderByType",
 			() -> {
-				String orderByType = getSortingOrder();
-
-				if (Objects.equals(orderByType, "asc")) {
+				if (Objects.equals(getSortingOrder(), "asc")) {
 					return "desc";
 				}
 
@@ -331,35 +327,26 @@ public class ViewSharedAssetsDisplayContext {
 		}
 
 		if (_isIncoming()) {
-			int total = _sharingEntryLocalService.getToUserSharingEntriesCount(
-				_themeDisplay.getUserId(), classNameId);
-
-			searchContainer.setTotal(total);
-
-			List<SharingEntry> sharingEntries =
+			searchContainer.setTotal(
+				_sharingEntryLocalService.getToUserSharingEntriesCount(
+					_themeDisplay.getUserId(), classNameId));
+			searchContainer.setResults(
 				_sharingEntryLocalService.getToUserSharingEntries(
 					_themeDisplay.getUserId(), classNameId,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					new SharingEntryModifiedDateComparator(
-						Objects.equals(getSortingOrder(), "asc")));
-
-			searchContainer.setResults(sharingEntries);
+						Objects.equals(getSortingOrder(), "asc"))));
 		}
 		else {
-			int total =
+			searchContainer.setTotal(
 				_sharingEntryLocalService.getFromUserSharingEntriesCount(
-					_themeDisplay.getUserId(), classNameId);
-
-			searchContainer.setTotal(total);
-
-			List<SharingEntry> sharingEntries =
+					_themeDisplay.getUserId(), classNameId));
+			searchContainer.setResults(
 				_sharingEntryLocalService.getFromUserSharingEntries(
 					_themeDisplay.getUserId(), classNameId,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					new SharingEntryModifiedDateComparator(
-						Objects.equals(getSortingOrder(), "asc")));
-
-			searchContainer.setResults(sharingEntries);
+						Objects.equals(getSortingOrder(), "asc"))));
 		}
 	}
 
@@ -433,10 +420,8 @@ public class ViewSharedAssetsDisplayContext {
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				String orderByCol = getOrderByCol();
-
 				dropdownItem.setActive(
-					Objects.equals(orderByCol, "sharedDate"));
+					Objects.equals(getOrderByCol(), "sharedDate"));
 
 				dropdownItem.setHref(
 					_getCurrentSortingURL(), "orderByCol", "sharedDate");

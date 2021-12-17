@@ -207,12 +207,6 @@ public class RolesDisplayContext {
 
 		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
 
-		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
-
-		rowChecker.setRowIds("rowIdsRole");
-
-		roleSearch.setRowChecker(rowChecker);
-
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
@@ -232,13 +226,16 @@ public class RolesDisplayContext {
 				themeDisplay.getPermissionChecker(), getGroupId(), roles);
 		}
 
-		int rolesCount = roles.size();
-
-		roleSearch.setTotal(rolesCount);
-
+		roleSearch.setTotal(roles.size());
 		roleSearch.setResults(
 			ListUtil.subList(
 				roles, roleSearch.getStart(), roleSearch.getEnd()));
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
+
+		rowChecker.setRowIds("rowIdsRole");
+
+		roleSearch.setRowChecker(rowChecker);
 
 		_roleSearch = roleSearch;
 

@@ -38,18 +38,16 @@ public class RedirectEntrySearch extends SearchContainer<RedirectEntry> {
 
 		super(portletRequest, iteratorURL, null, _EMPTY_RESULTS_MESSAGE);
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, RedirectPortletKeys.REDIRECT,
-			"redirect-entries-order-by-col", "modified-date");
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			portletRequest, RedirectPortletKeys.REDIRECT,
-			"redirect-entries-order-by-type", "asc");
-
 		setId(searchContainerId);
 		setOrderableHeaders(_orderableHeaders);
-		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, RedirectPortletKeys.REDIRECT,
+				"redirect-entries-order-by-col", "modified-date"));
+		setOrderByType(
+			SearchOrderByUtil.getOrderByType(
+				portletRequest, RedirectPortletKeys.REDIRECT,
+				"redirect-entries-order-by-type", "asc"));
 		setRowChecker(new EmptyOnClickRowChecker(portletResponse));
 	}
 

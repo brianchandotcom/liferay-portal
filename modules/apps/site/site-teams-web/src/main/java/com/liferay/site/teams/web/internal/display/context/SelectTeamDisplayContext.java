@@ -30,7 +30,6 @@ import com.liferay.site.teams.web.internal.search.TeamDisplayTerms;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -177,19 +176,16 @@ public class SelectTeamDisplayContext {
 		TeamDisplayTerms searchTerms =
 			(TeamDisplayTerms)teamSearchContainer.getSearchTerms();
 
-		int teamsCount = TeamLocalServiceUtil.searchCount(
-			themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
-			searchTerms.getKeywords(), new LinkedHashMap<>());
-
-		teamSearchContainer.setTotal(teamsCount);
-
-		List<Team> teams = TeamLocalServiceUtil.search(
-			themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
-			searchTerms.getKeywords(), new LinkedHashMap<>(),
-			teamSearchContainer.getStart(), teamSearchContainer.getEnd(),
-			teamSearchContainer.getOrderByComparator());
-
-		teamSearchContainer.setResults(teams);
+		teamSearchContainer.setTotal(
+			TeamLocalServiceUtil.searchCount(
+				themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
+				searchTerms.getKeywords(), new LinkedHashMap<>()));
+		teamSearchContainer.setResults(
+			TeamLocalServiceUtil.search(
+				themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
+				searchTerms.getKeywords(), new LinkedHashMap<>(),
+				teamSearchContainer.getStart(), teamSearchContainer.getEnd(),
+				teamSearchContainer.getOrderByComparator()));
 
 		_teamSearchContainer = teamSearchContainer;
 

@@ -97,12 +97,11 @@ public class ViewRolesManagementToolbarDisplayContext {
 					"/edit_role.jsp", "redirect", getPortletURL(), "tabs1",
 					"details", "roleType",
 					String.valueOf(_currentRoleTypeContributor.getType()));
-
-				String label = _currentRoleTypeContributor.getTitle(
-					_renderRequest.getLocale());
-
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, label));
+					LanguageUtil.get(
+						_httpServletRequest,
+						_currentRoleTypeContributor.getTitle(
+							_renderRequest.getLocale())));
 			}
 		).build();
 	}
@@ -205,9 +204,6 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
 
-		roleSearch.setRowChecker(
-			new RoleChecker(_renderRequest, _renderResponse));
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -222,6 +218,9 @@ public class ViewRolesManagementToolbarDisplayContext {
 				roleSearch.getOrderByComparator());
 
 		roleSearch.setResults(baseModelSearchResult.getBaseModels());
+
+		roleSearch.setRowChecker(
+			new RoleChecker(_renderRequest, _renderResponse));
 		roleSearch.setTotal(baseModelSearchResult.getLength());
 
 		_roleSearch = roleSearch;

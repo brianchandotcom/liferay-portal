@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,7 +38,6 @@ import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -207,18 +205,13 @@ public class SelectUserGroupsDisplayContext {
 		SearchContainer<UserGroup> userGroupSearchContainer =
 			new UserGroupSearch(_renderRequest, getPortletURL());
 
-		OrderByComparator<UserGroup> orderByComparator =
-			UsersAdminUtil.getUserGroupOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		userGroupSearchContainer.setOrderByCol(getOrderByCol());
-		userGroupSearchContainer.setOrderByComparator(orderByComparator);
+		userGroupSearchContainer.setOrderByComparator(
+			UsersAdminUtil.getUserGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		userGroupSearchContainer.setOrderByType(getOrderByType());
 
 		Team team = getTeam();
-
-		userGroupSearchContainer.setRowChecker(
-			new UserGroupTeamChecker(_renderResponse, team));
 
 		UserGroupDisplayTerms searchTerms =
 			(UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
@@ -238,19 +231,19 @@ public class SelectUserGroupsDisplayContext {
 				}
 			).build();
 
-		int userGroupsCount = UserGroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			userGroupParams);
+		userGroupSearchContainer.setTotal(
+			UserGroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams));
+		userGroupSearchContainer.setResults(
+			UserGroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams, userGroupSearchContainer.getStart(),
+				userGroupSearchContainer.getEnd(),
+				userGroupSearchContainer.getOrderByComparator()));
 
-		userGroupSearchContainer.setTotal(userGroupsCount);
-
-		List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			userGroupParams, userGroupSearchContainer.getStart(),
-			userGroupSearchContainer.getEnd(),
-			userGroupSearchContainer.getOrderByComparator());
-
-		userGroupSearchContainer.setResults(userGroups);
+		userGroupSearchContainer.setRowChecker(
+			new UserGroupTeamChecker(_renderResponse, getTeam()));
 
 		_userGroupSearchContainer = userGroupSearchContainer;
 

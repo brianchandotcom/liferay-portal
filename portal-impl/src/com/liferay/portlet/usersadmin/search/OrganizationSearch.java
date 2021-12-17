@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -96,6 +95,8 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 			OrganizationDisplayTerms.ZIP, displayTerms.getZip());
 
 		try {
+			setOrderableHeaders(orderableHeaders);
+
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 
@@ -103,18 +104,16 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 				portletRequest, portletId, "organizations-order-by-col",
 				"name");
 
+			setOrderByCol(orderByCol);
+
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, portletId, "organizations-order-by-type",
 				"asc");
 
-			OrderByComparator<Organization> orderByComparator =
+			setOrderByComparator(
 				UsersAdminUtil.getOrganizationOrderByComparator(
-					orderByCol, orderByType);
-
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
+					orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize organization search", exception);

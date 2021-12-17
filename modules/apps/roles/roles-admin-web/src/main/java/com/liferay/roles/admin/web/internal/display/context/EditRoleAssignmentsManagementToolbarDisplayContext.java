@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -99,9 +98,8 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		_displayStyle = displayStyle;
 		_tabs3 = tabs3;
 
-		long roleId = ParamUtil.getLong(httpServletRequest, "roleId");
-
-		_role = RoleServiceUtil.fetchRole(roleId);
+		_role = RoleServiceUtil.fetchRole(
+			ParamUtil.getLong(httpServletRequest, "roleId"));
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -228,17 +226,15 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		GroupSearchTerms searchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
 
-		List<Group> results = GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(), groupParams,
-			groupSearch.getStart(), groupSearch.getEnd(),
-			groupSearch.getOrderByComparator());
-
-		int total = GroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			groupParams);
-
-		groupSearch.setResults(results);
-		groupSearch.setTotal(total);
+		groupSearch.setResults(
+			GroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				groupParams, groupSearch.getStart(), groupSearch.getEnd(),
+				groupSearch.getOrderByComparator()));
+		groupSearch.setTotal(
+			GroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				groupParams));
 
 		return groupSearch;
 	}
@@ -281,15 +277,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		OrganizationSearch organizationSearch = new OrganizationSearch(
 			_renderRequest, getPortletURL());
 
-		if (_tabs3.equals("available")) {
-			organizationSearch.setRowChecker(
-				new OrganizationRoleChecker(_renderResponse, _role));
-		}
-		else {
-			organizationSearch.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -319,27 +306,19 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 			organizationParams.put("expandoAttributes", getKeywords());
 
-			Sort sort = SortFactoryUtil.getSort(
-				Organization.class, organizationSearch.getOrderByCol(),
-				organizationSearch.getOrderByType());
-
 			BaseModelSearchResult<Organization> baseModelSearchResult =
 				OrganizationLocalServiceUtil.searchOrganizations(
 					themeDisplay.getCompanyId(), parentOrganizationId,
 					searchTerms.getKeywords(), organizationParams,
 					organizationSearch.getStart(), organizationSearch.getEnd(),
-					sort);
+					SortFactoryUtil.getSort(
+						Organization.class, organizationSearch.getOrderByCol(),
+						organizationSearch.getOrderByType()));
 
 			results = baseModelSearchResult.getBaseModels();
 			total = baseModelSearchResult.getLength();
 		}
 		else {
-			total = OrganizationLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), parentOrganizationId,
-				searchTerms.getKeywords(), searchTerms.getType(),
-				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-				organizationParams);
-
 			results = OrganizationLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), parentOrganizationId,
 				getKeywords(), searchTerms.getType(),
@@ -347,9 +326,24 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				organizationParams, organizationSearch.getStart(),
 				organizationSearch.getEnd(),
 				organizationSearch.getOrderByComparator());
+			total = OrganizationLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), parentOrganizationId,
+				searchTerms.getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams);
 		}
 
 		organizationSearch.setResults(results);
+
+		if (_tabs3.equals("available")) {
+			organizationSearch.setRowChecker(
+				new OrganizationRoleChecker(_renderResponse, _role));
+		}
+		else {
+			organizationSearch.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
+
 		organizationSearch.setTotal(total);
 
 		return organizationSearch;
@@ -453,15 +447,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		UserGroupSearch userGroupSearch = new UserGroupSearch(
 			_renderRequest, getPortletURL());
 
-		if (_tabs3.equals("available")) {
-			userGroupSearch.setRowChecker(
-				new UserGroupRoleChecker(_renderResponse, _role));
-		}
-		else {
-			userGroupSearch.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -483,31 +468,30 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			userGroupParams.put("expandoAttributes", keywords);
 		}
 
-		List<UserGroup> results = UserGroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), keywords, userGroupParams,
-			userGroupSearch.getStart(), userGroupSearch.getEnd(),
-			userGroupSearch.getOrderByComparator());
+		userGroupSearch.setResults(
+			UserGroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), keywords, userGroupParams,
+				userGroupSearch.getStart(), userGroupSearch.getEnd(),
+				userGroupSearch.getOrderByComparator()));
 
-		int total = UserGroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), keywords, userGroupParams);
+		if (_tabs3.equals("available")) {
+			userGroupSearch.setRowChecker(
+				new UserGroupRoleChecker(_renderResponse, _role));
+		}
+		else {
+			userGroupSearch.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
 
-		userGroupSearch.setResults(results);
-		userGroupSearch.setTotal(total);
+		userGroupSearch.setTotal(
+			UserGroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), keywords, userGroupParams));
 
 		return userGroupSearch;
 	}
 
 	public SearchContainer<User> getUserSearchContainer() {
 		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
-
-		if (_tabs3.equals("available")) {
-			userSearch.setRowChecker(
-				new SetUserRoleChecker(_renderResponse, _role));
-		}
-		else {
-			userSearch.setRowChecker(
-				new UnsetUserRoleChecker(_renderResponse, _role));
-		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -522,17 +506,25 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
-		List<User> results = UserLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams, userSearch.getStart(),
-			userSearch.getEnd(), userSearch.getOrderByComparator());
+		userSearch.setResults(
+			UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams, userSearch.getStart(),
+				userSearch.getEnd(), userSearch.getOrderByComparator()));
 
-		int total = UserLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams);
+		if (_tabs3.equals("available")) {
+			userSearch.setRowChecker(
+				new SetUserRoleChecker(_renderResponse, _role));
+		}
+		else {
+			userSearch.setRowChecker(
+				new UnsetUserRoleChecker(_renderResponse, _role));
+		}
 
-		userSearch.setResults(results);
-		userSearch.setTotal(total);
+		userSearch.setTotal(
+			UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams));
 
 		return userSearch;
 	}

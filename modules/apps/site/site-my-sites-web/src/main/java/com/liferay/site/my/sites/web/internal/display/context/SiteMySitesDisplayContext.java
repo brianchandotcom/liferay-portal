@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,12 +124,10 @@ public class SiteMySitesDisplayContext {
 		GroupSearch groupSearch = new GroupSearch(
 			_renderRequest, getPortletURL());
 
-		OrderByComparator<Group> orderByComparator =
-			UsersAdminUtil.getGroupOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		groupSearch.setOrderByCol(getOrderByCol());
-		groupSearch.setOrderByComparator(orderByComparator);
+		groupSearch.setOrderByComparator(
+			UsersAdminUtil.getGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		groupSearch.setOrderByType(getOrderByType());
 
 		GroupSearchTerms searchTerms =
@@ -156,18 +153,15 @@ public class SiteMySitesDisplayContext {
 			groupParams.put("active", Boolean.TRUE);
 		}
 
-		int groupsCount = GroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			groupParams);
-
-		groupSearch.setTotal(groupsCount);
-
-		List<Group> groups = GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(), groupParams,
-			groupSearch.getStart(), groupSearch.getEnd(),
-			groupSearch.getOrderByComparator());
-
-		groupSearch.setResults(groups);
+		groupSearch.setTotal(
+			GroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				groupParams));
+		groupSearch.setResults(
+			GroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				groupParams, groupSearch.getStart(), groupSearch.getEnd(),
+				groupSearch.getOrderByComparator()));
 
 		_groupSearch = groupSearch;
 
@@ -205,12 +199,10 @@ public class SiteMySitesDisplayContext {
 
 		GroupSearch groupSearch = getGroupSearchContainer();
 
-		long[] groupIds = ListUtil.toLongArray(
-			groupSearch.getResults(), Group.GROUP_ID_ACCESSOR);
-
 		_groupUsersCounts = UserLocalServiceUtil.searchCounts(
 			themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
-			groupIds);
+			ListUtil.toLongArray(
+				groupSearch.getResults(), Group.GROUP_ID_ACCESSOR));
 
 		return GetterUtil.getInteger(_groupUsersCounts.get(groupId));
 	}

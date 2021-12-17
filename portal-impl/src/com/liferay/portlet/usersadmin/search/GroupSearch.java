@@ -72,11 +72,15 @@ public class GroupSearch extends SearchContainer<Group> {
 			GroupDisplayTerms.NAME, displayTerms.getName());
 
 		try {
+			setOrderableHeaders(orderableHeaders);
+
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 
 			String orderByCol = SearchOrderByUtil.getOrderByCol(
 				portletRequest, portletId, "groups-order-by-col", "name");
+
+			setOrderByCol(orderByCol);
 
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, portletId, "groups-order-by-type", "asc");
@@ -91,13 +95,9 @@ public class GroupSearch extends SearchContainer<Group> {
 				locale = themeDisplay.getLocale();
 			}
 
-			OrderByComparator<Group> orderByComparator =
-				_getGroupOrderByComparator(orderByCol, orderByType, locale);
-
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
+			setOrderByComparator(
+				_getGroupOrderByComparator(orderByCol, orderByType, locale));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize group search", exception);

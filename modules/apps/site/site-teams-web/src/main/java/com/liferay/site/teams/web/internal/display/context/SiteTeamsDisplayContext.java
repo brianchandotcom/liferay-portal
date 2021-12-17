@@ -29,7 +29,6 @@ import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -102,25 +101,21 @@ public class SiteTeamsDisplayContext {
 			_renderRequest, getPortletURL());
 
 		searchContainer.setEmptyResultsMessage("there-are-no-teams");
-
 		searchContainer.setId("teams");
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
+		searchContainer.setTotal(
+			TeamServiceUtil.searchCount(
+				themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
+				new LinkedHashMap<>()));
+		searchContainer.setResults(
+			TeamServiceUtil.search(
+				themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
+				new LinkedHashMap<>(), searchContainer.getStart(),
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator()));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-
-		int total = TeamServiceUtil.searchCount(
-			themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
-			new LinkedHashMap<>());
-
-		searchContainer.setTotal(total);
-
-		List<Team> results = TeamServiceUtil.search(
-			themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
-			new LinkedHashMap<>(), searchContainer.getStart(),
-			searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(results);
 
 		return searchContainer;
 	}

@@ -128,11 +128,6 @@ public class UserRolesDisplayContext {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(_getGroupId());
 
-		roleSearch.setRowChecker(
-			new UserGroupRoleRoleChecker(
-				_renderResponse,
-				PortalUtil.getSelectedUser(_httpServletRequest, false), group));
-
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
@@ -150,14 +145,14 @@ public class UserRolesDisplayContext {
 				themeDisplay.getPermissionChecker(), _getGroupId(), roles);
 		}
 
-		int rolesCount = roles.size();
-
-		roleSearch.setTotal(rolesCount);
-
-		roles = ListUtil.subList(
-			roles, roleSearch.getStart(), roleSearch.getEnd());
-
-		roleSearch.setResults(roles);
+		roleSearch.setTotal(roles.size());
+		roleSearch.setResults(
+			ListUtil.subList(
+				roles, roleSearch.getStart(), roleSearch.getEnd()));
+		roleSearch.setRowChecker(
+			new UserGroupRoleRoleChecker(
+				_renderResponse,
+				PortalUtil.getSelectedUser(_httpServletRequest, false), group));
 
 		_roleSearch = roleSearch;
 

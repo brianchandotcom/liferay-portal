@@ -37,7 +37,6 @@ import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -254,9 +253,6 @@ public class UserGroupsDisplayContext {
 						_groupId, themeDisplay.getLocale())),
 				false));
 
-		userGroupSearch.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		UserGroupDisplayTerms searchTerms =
 			(UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
 
@@ -280,18 +276,19 @@ public class UserGroupsDisplayContext {
 				}
 			).build();
 
-		int userGroupsCount = UserGroupServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			userGroupParams);
+		userGroupSearch.setTotal(
+			UserGroupServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams));
+		userGroupSearch.setResults(
+			UserGroupServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams, userGroupSearch.getStart(),
+				userGroupSearch.getEnd(),
+				userGroupSearch.getOrderByComparator()));
 
-		userGroupSearch.setTotal(userGroupsCount);
-
-		List<UserGroup> userGroups = UserGroupServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			userGroupParams, userGroupSearch.getStart(),
-			userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
-
-		userGroupSearch.setResults(userGroups);
+		userGroupSearch.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		_userGroupSearch = userGroupSearch;
 

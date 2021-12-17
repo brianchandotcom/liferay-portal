@@ -262,10 +262,8 @@ public class UsersDisplayContext {
 					GroupUtil.getGroupTypeLabel(
 						_groupId, themeDisplay.getLocale())),
 				false));
-
 		userSearch.setOrderByCol(getOrderByCol());
 		userSearch.setOrderByType(getOrderByType());
-		userSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
@@ -301,7 +299,6 @@ public class UsersDisplayContext {
 			usersCount = UserLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams);
-
 			users = UserLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams, userSearch.getStart(),
@@ -309,6 +306,7 @@ public class UsersDisplayContext {
 		}
 
 		userSearch.setResults(users);
+		userSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 		userSearch.setTotal(usersCount);
 
 		_userSearch = userSearch;

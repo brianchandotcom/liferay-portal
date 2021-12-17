@@ -35,7 +35,6 @@ import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -143,9 +142,6 @@ public class OrganizationsDisplayContext {
 						_groupId, themeDisplay.getLocale())),
 				false));
 
-		organizationSearch.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		OrganizationSearchTerms searchTerms =
 			(OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
@@ -156,25 +152,25 @@ public class OrganizationsDisplayContext {
 				"organizationsGroups", Long.valueOf(getGroupId())
 			).build();
 
-		int organizationsCount = OrganizationLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-			searchTerms.getKeywords(), searchTerms.getType(),
-			searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-			organizationParams);
+		organizationSearch.setTotal(
+			OrganizationLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				searchTerms.getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams));
+		organizationSearch.setResults(
+			OrganizationLocalServiceUtil.search(
+				themeDisplay.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				searchTerms.getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams, organizationSearch.getStart(),
+				organizationSearch.getEnd(),
+				organizationSearch.getOrderByComparator()));
 
-		organizationSearch.setTotal(organizationsCount);
-
-		List<Organization> organizations = OrganizationLocalServiceUtil.search(
-			themeDisplay.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-			searchTerms.getKeywords(), searchTerms.getType(),
-			searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-			organizationParams, organizationSearch.getStart(),
-			organizationSearch.getEnd(),
-			organizationSearch.getOrderByComparator());
-
-		organizationSearch.setResults(organizations);
+		organizationSearch.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		_organizationSearch = organizationSearch;
 

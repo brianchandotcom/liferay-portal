@@ -722,7 +722,7 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This is a test for LPS-134566. doAsUserId parameter included in page URL when selecting page link from Page Selection menu"
+	@description = "This is a test for LPS-134566. View doAsUserId parameter not shown in URL field after add page link to text."
 	@priority = "4"
 	test ViewDoAsUserIdNotShownInURLFieldAfterAddPageLinkToText {
 		task ("Add new user") {

@@ -29,6 +29,8 @@ public class CommerceInventoryConstants {
 
 	public static final String AUDIT_TYPE_MOVE_QUANTITY = "move-quantity";
 
+	public static final String AUDIT_TYPE_RESTOCK_QUANTITY = "restock-quantity";
+
 	public static final String AUDIT_TYPE_RESTORE_QUANTITY = "restore-quantity";
 
 	public static final String AUDIT_TYPE_UPDATE_BOOKED_QUANTITY =

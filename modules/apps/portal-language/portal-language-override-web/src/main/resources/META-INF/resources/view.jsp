@@ -99,7 +99,7 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 					<liferay-ui:search-container-column-text
 						href="<%= editURL %>"
 						name="languages-with-override"
-						value="<%= StringUtil.merge(languageItemDisplay.getOverrideLanguages(), StringPool.COMMA_AND_SPACE) %>"
+						value="<%= StringUtil.merge(languageItemDisplay.getOverrideLanguageIds(), StringPool.COMMA_AND_SPACE) %>"
 					/>
 
 					<%

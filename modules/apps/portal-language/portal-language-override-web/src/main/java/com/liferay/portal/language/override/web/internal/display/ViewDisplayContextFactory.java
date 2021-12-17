@@ -176,7 +176,7 @@ public class ViewDisplayContextFactory {
 					languageItemDisplay.setOverride(true);
 
 					for (PLOEntry ploEntry : entry.getValue()) {
-						languageItemDisplay.addOverrideLanguage(
+						languageItemDisplay.addOverrideLanguageId(
 							ploEntry.getLanguageId());
 
 						if (Objects.equals(
@@ -209,7 +209,7 @@ public class ViewDisplayContextFactory {
 						languageItemDisplay.setOverride(true);
 
 						for (PLOEntry ploEntry : ploEntryMap.get(key)) {
-							languageItemDisplay.addOverrideLanguage(
+							languageItemDisplay.addOverrideLanguageId(
 								ploEntry.getLanguageId());
 
 							if (Objects.equals(

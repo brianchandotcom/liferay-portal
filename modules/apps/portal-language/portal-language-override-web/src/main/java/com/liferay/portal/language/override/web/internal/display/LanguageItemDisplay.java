@@ -27,16 +27,16 @@ public class LanguageItemDisplay {
 		_value = value;
 	}
 
-	public void addOverrideLanguage(String language) {
-		_overrideLanguages.add(language);
+	public void addOverrideLanguageId(String languageId) {
+		_overrideLanguageIds.add(languageId);
 	}
 
 	public String getKey() {
 		return _key;
 	}
 
-	public List<String> getOverrideLanguages() {
-		return _overrideLanguages;
+	public List<String> getOverrideLanguageIds() {
+		return _overrideLanguageIds;
 	}
 
 	public String getValue() {
@@ -63,7 +63,7 @@ public class LanguageItemDisplay {
 
 	private final String _key;
 	private boolean _override;
-	private final List<String> _overrideLanguages = new ArrayList<>();
+	private final List<String> _overrideLanguageIds = new ArrayList<>();
 	private boolean _overrideSelectedLanguageId;
 	private final String _value;
 

@@ -135,6 +135,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on non-default experience."
+	@priority = "4"
+	test CreatePageTemplateFromContentPageBasedOnNonDefaultExperience {
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a new experience for Anyone") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a Heading fragment to content page based on new experience") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("View the info shown in Create Page Template modal then create a content page template under page template collection") {
+			PageEditor.createPageTemplate(
+				collectionName = "Page Template Collection",
+				experienceName = "New Experience",
+				pageTemplateName = "Content Page Template Name");
+		}
+
+		task ("View the content page template shown in Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Content Page Template Name",
+				workflowStatus = "Draft");
+		}
+
+		task ("View the Heading is shown in content page template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
 	@description = "This is a test for LPS-142290. The user can switch experiences at view mode."
 	@priority = "4"
 	test SwitchExperienceAtViewMode {

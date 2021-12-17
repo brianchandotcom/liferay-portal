@@ -424,8 +424,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MINI_CART_ITEM_THUMBNAIL_STYLE</td>
-	<td>//div[@class='mini-cart-item-thumbnail' and contains(@style, '${key_imageName}')]</td>
+	<td>MINI_CART_ITEM_DEFAULT_THUMBNAIL</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../div[@class='mini-cart-item-thumbnail']//img[contains(@src, 'default')]</td>
 	<td></td>
 </tr>
 <tr>

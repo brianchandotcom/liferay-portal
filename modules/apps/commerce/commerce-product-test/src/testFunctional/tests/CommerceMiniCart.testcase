@@ -1041,8 +1041,8 @@ definition {
 			value1 = "70.00");
 
 		AssertElementPresent(
-			key_imageName = "default",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_THUMBNAIL_STYLE");
+			key_cartItemSKU = "BLACKSKU",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_DEFAULT_THUMBNAIL");
 	}
 
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"

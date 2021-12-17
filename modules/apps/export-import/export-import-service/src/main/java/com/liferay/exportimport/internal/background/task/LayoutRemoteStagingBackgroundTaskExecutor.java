@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.internal.background.task;
 
+import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
@@ -142,6 +143,10 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			missingReferences = StagingServiceHttp.publishStagingRequest(
 				httpPrincipal, stagingRequestId, exportImportConfiguration);
+
+			if (missingReferences != null) {
+				throw new MissingReferenceException(missingReferences);
+			}
 
 			deleteExportedChangesetEntries();
 

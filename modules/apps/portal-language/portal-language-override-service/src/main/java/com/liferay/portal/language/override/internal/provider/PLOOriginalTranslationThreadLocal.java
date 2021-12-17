@@ -28,7 +28,7 @@ public class PLOOriginalTranslationThreadLocal {
 		Boolean useOriginalTranslation = _useOriginalTranslation.get();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("useOriginalTranslation " + useOriginalTranslation);
+			_log.debug("use original translation: " + useOriginalTranslation);
 		}
 
 		return useOriginalTranslation;

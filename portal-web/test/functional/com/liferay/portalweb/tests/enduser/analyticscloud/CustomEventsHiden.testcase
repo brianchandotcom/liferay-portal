@@ -213,4 +213,78 @@ definition {
 			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${customEventName}");
 		}
 	}
+
+	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10233 | Test Summary: Unhide a default event and unhide a custom event"
+	@priority = "5"
+	test CanUnhideDefaultAndCustomEvent {
+		var defaultEventName = "assetDownloaded";
+        var defaultEventNameList = "${defaultEventName},assetClicked,assetSubmitted";
+
+        task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to default events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Default Events");
+		}
+
+		task ("Unhide default event") {
+			ACCustomEvents.unhideCustomEvent(customEventName = "${defaultEventName}");
+		}
+
+		task ("Check that the default event was hidden") {
+			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${defaultEventName}");
+		}
+
+		task ("Hide default event") {
+			ACCustomEvents.hideCustomEvent(customEventName = "${defaultEventName}");
+		}
+
+		task ("Unhide all default events") {
+			ACCustomEvents.unhideAllCustomEvents();
+		}
+
+		task ("Check that the all default events were hidden") {
+			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${defaultEventNameList}");
+		}
+
+        task ("Navigation to custom events tab") {
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Hide custom event") {
+			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+		}
+
+        task ("Unhide custom event") {
+            ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACCustomEvents.unhideCustomEvent(customEventName = "${customEventName}");
+		}
+
+        task ("Check that the custom event was unhide") {
+			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${customEventName}");
+		}
+	}
+
 }

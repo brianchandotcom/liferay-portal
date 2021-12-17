@@ -287,22 +287,6 @@ public abstract class BaseSearchResponseResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("documents", additionalAssertFieldName)) {
-				if (searchResponse.getDocuments() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("maxScore", additionalAssertFieldName)) {
-				if (searchResponse.getMaxScore() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("page", additionalAssertFieldName)) {
 				if (searchResponse.getPage() == null) {
 					valid = false;
@@ -319,14 +303,6 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("request", additionalAssertFieldName)) {
-				if (searchResponse.getRequest() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("requestString", additionalAssertFieldName)) {
 				if (searchResponse.getRequestString() == null) {
 					valid = false;
@@ -335,24 +311,8 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("response", additionalAssertFieldName)) {
-				if (searchResponse.getResponse() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("responseString", additionalAssertFieldName)) {
 				if (searchResponse.getResponseString() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("searchRequest", additionalAssertFieldName)) {
-				if (searchResponse.getSearchRequest() == null) {
 					valid = false;
 				}
 
@@ -460,28 +420,6 @@ public abstract class BaseSearchResponseResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("documents", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						searchResponse1.getDocuments(),
-						searchResponse2.getDocuments())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("maxScore", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						searchResponse1.getMaxScore(),
-						searchResponse2.getMaxScore())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("page", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						searchResponse1.getPage(), searchResponse2.getPage())) {
@@ -503,17 +441,6 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("request", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						searchResponse1.getRequest(),
-						searchResponse2.getRequest())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("requestString", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						searchResponse1.getRequestString(),
@@ -525,32 +452,10 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("response", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						searchResponse1.getResponse(),
-						searchResponse2.getResponse())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("responseString", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						searchResponse1.getResponseString(),
 						searchResponse2.getResponseString())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("searchRequest", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						searchResponse1.getSearchRequest(),
-						searchResponse2.getSearchRequest())) {
 
 					return false;
 				}
@@ -667,27 +572,12 @@ public abstract class BaseSearchResponseResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("documents")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("maxScore")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("page")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("pageSize")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("request")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -700,22 +590,12 @@ public abstract class BaseSearchResponseResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("response")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("responseString")) {
 			sb.append("'");
 			sb.append(String.valueOf(searchResponse.getResponseString()));
 			sb.append("'");
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("searchRequest")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("totalHits")) {
@@ -767,7 +647,6 @@ public abstract class BaseSearchResponseResourceTestCase {
 	protected SearchResponse randomSearchResponse() throws Exception {
 		return new SearchResponse() {
 			{
-				maxScore = RandomTestUtil.randomDouble();
 				page = RandomTestUtil.randomInt();
 				pageSize = RandomTestUtil.randomInt();
 				requestString = StringUtil.toLowerCase(

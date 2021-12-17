@@ -34,48 +34,6 @@ public class SearchResponse implements Cloneable, Serializable {
 		return SearchResponseSerDes.toDTO(json);
 	}
 
-	public Document[] getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Document[] documents) {
-		this.documents = documents;
-	}
-
-	public void setDocuments(
-		UnsafeSupplier<Document[], Exception> documentsUnsafeSupplier) {
-
-		try {
-			documents = documentsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Document[] documents;
-
-	public Double getMaxScore() {
-		return maxScore;
-	}
-
-	public void setMaxScore(Double maxScore) {
-		this.maxScore = maxScore;
-	}
-
-	public void setMaxScore(
-		UnsafeSupplier<Double, Exception> maxScoreUnsafeSupplier) {
-
-		try {
-			maxScore = maxScoreUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Double maxScore;
-
 	public Integer getPage() {
 		return page;
 	}
@@ -116,27 +74,6 @@ public class SearchResponse implements Cloneable, Serializable {
 
 	protected Integer pageSize;
 
-	public Object getRequest() {
-		return request;
-	}
-
-	public void setRequest(Object request) {
-		this.request = request;
-	}
-
-	public void setRequest(
-		UnsafeSupplier<Object, Exception> requestUnsafeSupplier) {
-
-		try {
-			request = requestUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object request;
-
 	public String getRequestString() {
 		return requestString;
 	}
@@ -158,27 +95,6 @@ public class SearchResponse implements Cloneable, Serializable {
 
 	protected String requestString;
 
-	public Object getResponse() {
-		return response;
-	}
-
-	public void setResponse(Object response) {
-		this.response = response;
-	}
-
-	public void setResponse(
-		UnsafeSupplier<Object, Exception> responseUnsafeSupplier) {
-
-		try {
-			response = responseUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object response;
-
 	public String getResponseString() {
 		return responseString;
 	}
@@ -199,27 +115,6 @@ public class SearchResponse implements Cloneable, Serializable {
 	}
 
 	protected String responseString;
-
-	public SearchRequest getSearchRequest() {
-		return searchRequest;
-	}
-
-	public void setSearchRequest(SearchRequest searchRequest) {
-		this.searchRequest = searchRequest;
-	}
-
-	public void setSearchRequest(
-		UnsafeSupplier<SearchRequest, Exception> searchRequestUnsafeSupplier) {
-
-		try {
-			searchRequest = searchRequestUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected SearchRequest searchRequest;
 
 	public Integer getTotalHits() {
 		return totalHits;

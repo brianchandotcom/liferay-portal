@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -317,7 +318,9 @@ public class NodeMetricResourceImpl
 
 		if (Validator.isNotNull(key)) {
 			filterBooleanQuery.addMustQueryClauses(
-				_queries.wildcard("name", "*" + key + "*"));
+				_queries.wildcard(
+					Field.getSortableFieldName("name"),
+					"*" + StringUtil.toLowerCase(key) + "*"));
 		}
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();

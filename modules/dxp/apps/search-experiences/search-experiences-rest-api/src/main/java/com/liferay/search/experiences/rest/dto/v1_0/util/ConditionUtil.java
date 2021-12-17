@@ -104,7 +104,7 @@ public class ConditionUtil {
 
 		Object value = supplier.get();
 
-		if (supplier.get() != null) {
+		if (value != null) {
 			consumer.accept(UnpackUtil.unpack(value));
 		}
 	}

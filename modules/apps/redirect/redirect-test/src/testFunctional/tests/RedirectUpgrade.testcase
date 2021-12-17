@@ -24,6 +24,12 @@ definition {
 		property data.archive.type = "data-archive-redirection";
 		property portal.version = "7.3.10.1";
 
+		Redirect.openToConfigInSystemSettings();
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		PortletEntry.save();
+
 		Upgrade.viewAndAccessRedirects();
 
 		Upgrade.editAndDeleteRedirects();

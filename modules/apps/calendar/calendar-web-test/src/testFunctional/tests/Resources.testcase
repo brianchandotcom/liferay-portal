@@ -101,8 +101,6 @@ definition {
 		CalendarResource.resourceSetFilterAndOrder(filterBy = "No");
 
 		CalendarResource.viewResourceName(calendarResourceName = "Resource Inactive");
-	
-	
 	}
 
 }

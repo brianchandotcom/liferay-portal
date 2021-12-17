@@ -143,8 +143,6 @@ definition {
 		CalendarResource.viewSearchSummaryResults(searchResults = "0 Results for Test Test");
 
 		CalendarResource.viewTableEmpty();
-	
-	
 	}
 
 	@priority = "4"

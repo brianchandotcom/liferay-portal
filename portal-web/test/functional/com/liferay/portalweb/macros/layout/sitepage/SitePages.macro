@@ -107,10 +107,4 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 	}
 
-	macro viewCheckboxChecked {
-		AssertChecked.assertCheckedNotVisible(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
-	}
-
 }

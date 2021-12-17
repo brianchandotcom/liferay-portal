@@ -1296,7 +1296,7 @@ definition {
 
 		task ("View both pages are selected") {
 			for (var i : list "1,2") {
-				SitePages.viewCheckboxChecked(pageName = "Test Page Name ${i}");
+				PagesAdmin.viewSelectedPageItem(pageName = "Test Page Name ${i}");
 			}
 		}
 	}

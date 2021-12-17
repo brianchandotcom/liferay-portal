@@ -181,6 +181,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on master page."
+	@priority = "5"
+	test CreatePageTemplateFromContentPageBasedOnMasterPage {
+		task ("Add a Header Dark fragment to the header of master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("Add a Button fragment to a content page based on content page template") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Create a content page template from the content page under page template collection") {
+			PageEditor.createPageTemplate(
+				collectionName = "Page Template Collection",
+				pageTemplateName = "Content Page Template Name");
+		}
+
+		task ("View the content page template shown in Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Content Page Template Name",
+				workflowStatus = "Draft");
+		}
+
+		task ("View the Header Dark and Button are shown in content page template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+
+		task ("View the content page template is based on master page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Master");
+
+			AssertElementPresent(
+				key_card = "Custom Masters Page Template",
+				locator1 = "Card#CARD_SELECTED");
+		}
+	}
+
 	@description = "This is a test for LPS-140483. The user could create page template from an empty content page."
 	@priority = "4"
 	test CreatePageTemplateFromEmptyContentPage {

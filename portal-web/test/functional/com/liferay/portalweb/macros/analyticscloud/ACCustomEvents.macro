@@ -189,6 +189,18 @@ definition {
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 	}
 
+	macro viewHideCustomEvent {
+		for (var customEventName : list "${customEventNameList}") {
+			var key_actionButton = "Show";
+			var key_nameList = "${customEventName}";
+
+			AssertElementPresent(locator1 = "ACCustomEvents#HIDE_BUTTON_ICON");
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementPresent(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+		}
+	}
 	macro openBlockCustomEventList {
 		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
 	}

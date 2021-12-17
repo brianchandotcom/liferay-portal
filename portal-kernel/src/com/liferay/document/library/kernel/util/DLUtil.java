@@ -330,6 +330,20 @@ public class DLUtil {
 		return _dl.getUniqueFileName(groupId, folderId, fileName);
 	}
 
+	public static String getUniqueFileName(
+		long groupId, long folderId, String fileName,
+		boolean ignoreDuplicateTitle) {
+
+		return _dl.getUniqueFileName(
+			groupId, folderId, fileName, ignoreDuplicateTitle);
+	}
+
+	public static String getUniqueTitle(
+		long groupId, long folderId, String title) {
+
+		return _dl.getUniqueTitle(groupId, folderId, title);
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getWebDavURL(

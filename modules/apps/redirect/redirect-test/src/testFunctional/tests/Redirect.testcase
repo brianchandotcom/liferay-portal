@@ -254,6 +254,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddExpiredEntryFromActive404 {
+		property test.name.skip.portal.instance = "Redirect#CanAddExpiredEntryFromActive404";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -295,6 +297,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddExpiredEntryFromIgnored404 {
+		property test.name.skip.portal.instance = "Redirect#CanAddExpiredEntryFromIgnored404";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -342,6 +346,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddPermanentEntryFromActive404 {
+		property test.name.skip.portal.instance = "Redirect#CanAddPermanentEntryFromActive404";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -382,6 +388,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddPermanentEntryFromIgnored404 {
+		property test.name.skip.portal.instance = "Redirect#CanAddPermanentEntryFromIgnored404";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -427,6 +435,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddTempEntryFromActive404 {
+		property test.name.skip.portal.instance = "Redirect#CanAddTempEntryFromActive404";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -466,6 +476,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddTempEntryFromIgnored404 {
+		property test.name.skip.portal.instance = "Redirect#CanAddTempEntryFromIgnored404";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -757,6 +769,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanIgnoreURLAfterReactivation {
+		property test.name.skip.portal.instance = "Redirect#CanIgnoreURLAfterReactivation";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -863,6 +877,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanOrder404URLsByRequests {
+		property test.name.skip.portal.instance = "Redirect#CanOrder404URLsByRequests";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -1071,6 +1087,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanView404URLsAfterReactivating {
+		property test.name.skip.portal.instance = "Redirect#CanView404URLsAfterReactivating";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();
@@ -1243,6 +1261,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewIgnoredURL {
+		property test.name.skip.portal.instance = "Redirect#CanViewIgnoredURL";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToConfigInSystemSettings();

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
+import com.liferay.search.experiences.rest.dto.v1_0.Condition;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Rescore;
@@ -63,6 +64,13 @@ public class ConfigurationUtil {
 						ConfigurationUtil::_unpack);
 					ArrayUtil.isNotEmptyForEach(
 						queryEntry.getRescores(), ConfigurationUtil::_unpack);
+
+					Condition condition = queryEntry.getCondition();
+
+					if (condition != null) {
+						queryEntry.setCondition(
+							ConditionUtil.unpack(condition));
+					}
 				});
 		}
 

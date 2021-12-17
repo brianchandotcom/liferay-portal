@@ -91,6 +91,10 @@ public class PoshiRunnerResourcesExtension {
 		return GradleUtil.toString(_rootDirName);
 	}
 
+	public String getVersion() {
+		return GradleUtil.toString(_version);
+	}
+
 	public void setArtifactAppendix(Object artifactAppendix) {
 		_artifactAppendix = artifactAppendix;
 	}
@@ -113,6 +117,10 @@ public class PoshiRunnerResourcesExtension {
 		_rootDirName = rootDirName;
 	}
 
+	public void setVersion(Object version) {
+		_version = version;
+	}
+
 	private static final GitRepositoryBuildAdapter _gitRepositoryBuildAdapter =
 		new GitRepositoryBuildAdapter();
 
@@ -122,5 +130,6 @@ public class PoshiRunnerResourcesExtension {
 	private final Set<Object> _dirs = new HashSet<>();
 	private final Project _project;
 	private Object _rootDirName;
+	private Object _version = "latest.release";
 
 }

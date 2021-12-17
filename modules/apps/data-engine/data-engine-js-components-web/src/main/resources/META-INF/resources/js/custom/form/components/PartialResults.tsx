@@ -43,12 +43,17 @@ const PartialResults: React.FC<IProps> = ({
 	useEffect(() => {
 		const formsPortlet = document.querySelector('.portlet-forms');
 
-		formsPortlet?.classList.add('lfr-de__partial-results--background');
+		const localeActions = document.querySelector('.locale-actions');
 
-		return () =>
+		formsPortlet?.classList.add('lfr-de__partial-results--background');
+		localeActions?.classList.add('hide');
+
+		return () => {
 			formsPortlet?.classList.remove(
 				'lfr-de__partial-results--background'
 			);
+			localeActions?.classList.remove('hide');
+		};
 	}, []);
 
 	return (

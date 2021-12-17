@@ -53,9 +53,9 @@ definition {
 			configurationName = "Data Cleanup",
 			configurationScope = "System Scope");
 
-		var key_settingFieldName = "Clean up software catalog module data.";
-
-		Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		Check.toggleSwitch(
+			key_settingFieldName = "Clean up software catalog module data.",
+			locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
 		SystemSettings.saveConfiguration();
 

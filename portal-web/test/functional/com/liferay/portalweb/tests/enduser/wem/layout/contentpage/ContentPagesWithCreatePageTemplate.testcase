@@ -253,6 +253,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on style book."
+	@priority = "5"
+	test CreatePageTemplateFromContentPageBasedOnStyleBook {
+		task ("Add a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("Change the Font Family Base to times") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBook(styleBookName = "Test Style Book Name");
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Font Family");
+
+			Type(
+				key_fieldLabel = "Font Family Base",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "times");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Add a Heading to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Apply the new style book to content page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Create a content page template from the content page under page template collection") {
+			PageEditor.createPageTemplate(
+				collectionName = "Page Template Collection",
+				pageTemplateName = "Content Page Template Name");
+		}
+
+		task ("View the content page template shown in Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Content Page Template Name");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Content Page Template Name",
+				workflowStatus = "Draft");
+		}
+
+		task ("View the font family of Heading is times in content page template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "font-family",
+				value1 = "times");
+		}
+
+		task ("View the style book applied to content page template") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			AssertElementPresent(
+				key_card = "Test Style Book Name",
+				locator1 = "Card#CARD_SELECTED");
+		}
+	}
+
 	@description = "This is a test for LPS-140483. The user could create page template from an empty content page."
 	@priority = "4"
 	test CreatePageTemplateFromEmptyContentPage {

@@ -1311,7 +1311,14 @@ definition {
 
 		Button.click(button = "Create");
 
-		Alert.viewSuccessMessage();
+		if (IsElementPresent(locator1 = "Message#ERROR_DISMISSIBLE")) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "${alertMessage}");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro deleteComment {

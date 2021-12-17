@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_CARD_IMAGE</td>
-	<td>//a[contains(@href,'${key_productName}')]//div[contains(@style,'image')]</td>
+	<td>//a[contains(@href,'${key_productName}')]//*[(contains(@style,'image')) or (contains(@class,'img'))]</td>
 	<td></td>
 </tr>
 </tbody>

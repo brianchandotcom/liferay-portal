@@ -182,8 +182,6 @@ public class SegmentsDisplayContext {
 		searchContainer.setOrderByCol(_getOrderByCol());
 		searchContainer.setOrderByComparator(_getOrderByComparator());
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		List<SegmentsEntry> segmentsEntries = null;
 
@@ -205,13 +203,14 @@ public class SegmentsDisplayContext {
 				_themeDisplay.getScopeGroupId(), true,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
-
 			segmentsEntriesCount =
 				_segmentsEntryService.getSegmentsEntriesCount(
 					_themeDisplay.getScopeGroupId(), true);
 		}
 
 		searchContainer.setResults(segmentsEntries);
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 		searchContainer.setTotal(segmentsEntriesCount);
 
 		_searchContainer = searchContainer;
@@ -279,10 +278,9 @@ public class SegmentsDisplayContext {
 	}
 
 	public boolean isAsahEnabled(long companyId) {
-		String asahFaroURL = PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsURL");
+		if (Validator.isNotNull(
+				PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL"))) {
 
-		if (Validator.isNotNull(asahFaroURL)) {
 			return true;
 		}
 
@@ -348,9 +346,7 @@ public class SegmentsDisplayContext {
 	private OrderByComparator<SegmentsEntry> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -417,9 +413,7 @@ public class SegmentsDisplayContext {
 	private Sort _getSort() {
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -428,10 +422,10 @@ public class SegmentsDisplayContext {
 		Sort sort = null;
 
 		if (orderByCol.equals("name")) {
-			String sortFieldName = Field.getSortableFieldName(
-				"localized_name_".concat(_themeDisplay.getLanguageId()));
-
-			sort = new Sort(sortFieldName, Sort.STRING_TYPE, !orderByAsc);
+			sort = new Sort(
+				Field.getSortableFieldName(
+					"localized_name_".concat(_themeDisplay.getLanguageId())),
+				Sort.STRING_TYPE, !orderByAsc);
 		}
 		else {
 			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);

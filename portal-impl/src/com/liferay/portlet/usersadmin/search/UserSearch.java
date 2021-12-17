@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -116,20 +115,20 @@ public class UserSearch extends SearchContainer<User> {
 			String.valueOf(displayTerms.getUserGroupId()));
 
 		try {
+			setOrderableHeaders(orderableHeaders);
+
 			String orderByCol = SearchOrderByUtil.getOrderByCol(
 				portletRequest, portletId, "users-order-by-col", "last-name");
+
+			setOrderByCol(orderByCol);
 
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, portletId, "users-order-by-type", "asc");
 
-			OrderByComparator<User> orderByComparator =
+			setOrderByComparator(
 				UsersAdminUtil.getUserOrderByComparator(
-					orderByCol, orderByType);
-
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
+					orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize user search", exception);

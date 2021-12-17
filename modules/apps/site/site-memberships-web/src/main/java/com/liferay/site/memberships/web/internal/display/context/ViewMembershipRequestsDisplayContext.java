@@ -211,30 +211,21 @@ public class ViewMembershipRequestsDisplayContext {
 
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
 		siteMembershipSearch.setOrderByComparator(
 			new MembershipRequestCreateDateComparator(orderByAsc));
-
-		siteMembershipSearch.setOrderByType(orderByType);
-
-		int membershipRequestCount =
-			MembershipRequestLocalServiceUtil.searchCount(
-				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId());
-
-		siteMembershipSearch.setTotal(membershipRequestCount);
-
-		List<MembershipRequest> results =
+		siteMembershipSearch.setOrderByType(getOrderByType());
+		siteMembershipSearch.setResults(
 			MembershipRequestLocalServiceUtil.search(
 				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId(),
 				siteMembershipSearch.getStart(), siteMembershipSearch.getEnd(),
-				siteMembershipSearch.getOrderByComparator());
-
-		siteMembershipSearch.setResults(results);
+				siteMembershipSearch.getOrderByComparator()));
+		siteMembershipSearch.setTotal(
+			MembershipRequestLocalServiceUtil.searchCount(
+				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId()));
 
 		_siteMembershipSearch = siteMembershipSearch;
 

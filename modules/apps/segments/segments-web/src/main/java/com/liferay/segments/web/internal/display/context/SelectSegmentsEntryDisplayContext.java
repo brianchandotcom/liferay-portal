@@ -272,9 +272,7 @@ public class SelectSegmentsEntryDisplayContext {
 	private OrderByComparator<SegmentsEntry> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -348,9 +346,7 @@ public class SelectSegmentsEntryDisplayContext {
 	private Sort _getSort() {
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
+		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
@@ -359,10 +355,10 @@ public class SelectSegmentsEntryDisplayContext {
 		Sort sort = null;
 
 		if (orderByCol.equals("name")) {
-			String sortFieldName = Field.getSortableFieldName(
-				"localized_name_".concat(_themeDisplay.getLanguageId()));
-
-			sort = new Sort(sortFieldName, Sort.STRING_TYPE, !orderByAsc);
+			sort = new Sort(
+				Field.getSortableFieldName(
+					"localized_name_".concat(_themeDisplay.getLanguageId())),
+				Sort.STRING_TYPE, !orderByAsc);
 		}
 		else {
 			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);

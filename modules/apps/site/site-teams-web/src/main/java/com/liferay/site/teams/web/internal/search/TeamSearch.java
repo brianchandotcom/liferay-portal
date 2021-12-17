@@ -56,15 +56,13 @@ public class TeamSearch extends SearchContainer<Team> {
 		String orderByCol = SearchOrderByUtil.getOrderByCol(
 			portletRequest, SiteTeamsPortletKeys.SITE_TEAMS, "name");
 
+		setOrderByCol(orderByCol);
+
 		String orderByType = SearchOrderByUtil.getOrderByType(
 			portletRequest, SiteTeamsPortletKeys.SITE_TEAMS, "asc");
 
-		OrderByComparator<Team> orderByComparator = getOrderByComparator(
-			orderByCol, orderByType);
-
-		setOrderByCol(orderByCol);
+		setOrderByComparator(getOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
 	}
 
 	protected static OrderByComparator<Team> getOrderByComparator(

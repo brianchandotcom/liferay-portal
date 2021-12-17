@@ -16,7 +16,6 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -152,11 +150,6 @@ public class SelectOrganizationsDisplayContext {
 		OrganizationSearch organizationSearch = new OrganizationSearch(
 			_renderRequest, getPortletURL());
 
-		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
-
-		organizationSearch.setRowChecker(
-			new OrganizationSiteMembershipChecker(_renderResponse, group));
-
 		OrganizationSearchTerms searchTerms =
 			(OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
@@ -175,29 +168,20 @@ public class SelectOrganizationsDisplayContext {
 			organizationParams.put(
 				"expandoAttributes", searchTerms.getKeywords());
 
-			Sort sort = SortFactoryUtil.getSort(
-				Organization.class, organizationSearch.getOrderByCol(),
-				organizationSearch.getOrderByType());
-
 			BaseModelSearchResult<Organization> baseModelSearchResult =
 				OrganizationLocalServiceUtil.searchOrganizations(
 					themeDisplay.getCompanyId(),
 					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 					searchTerms.getKeywords(), organizationParams,
 					organizationSearch.getStart(), organizationSearch.getEnd(),
-					sort);
+					SortFactoryUtil.getSort(
+						Organization.class, organizationSearch.getOrderByCol(),
+						organizationSearch.getOrderByType()));
 
 			results = baseModelSearchResult.getBaseModels();
 			total = baseModelSearchResult.getLength();
 		}
 		else {
-			total = OrganizationLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				searchTerms.getKeywords(), searchTerms.getType(),
-				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-				organizationParams);
-
 			results = OrganizationLocalServiceUtil.search(
 				themeDisplay.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
@@ -206,9 +190,19 @@ public class SelectOrganizationsDisplayContext {
 				organizationParams, organizationSearch.getStart(),
 				organizationSearch.getEnd(),
 				organizationSearch.getOrderByComparator());
+			total = OrganizationLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				searchTerms.getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams);
 		}
 
 		organizationSearch.setResults(results);
+		organizationSearch.setRowChecker(
+			new OrganizationSiteMembershipChecker(
+				_renderResponse,
+				GroupLocalServiceUtil.fetchGroup(getGroupId())));
 		organizationSearch.setTotal(total);
 
 		_organizationSearch = organizationSearch;

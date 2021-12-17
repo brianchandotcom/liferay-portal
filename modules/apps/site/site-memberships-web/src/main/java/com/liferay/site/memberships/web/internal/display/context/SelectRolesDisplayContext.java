@@ -224,13 +224,10 @@ public class SelectRolesDisplayContext {
 				themeDisplay.getPermissionChecker(), getGroupId(), roles);
 		}
 
-		int rolesCount = roles.size();
-
-		roleSearch.setTotal(rolesCount);
-
 		roleSearch.setResults(
 			ListUtil.subList(
 				roles, roleSearch.getStart(), roleSearch.getEnd()));
+		roleSearch.setTotal(roles.size());
 
 		_roleSearch = roleSearch;
 

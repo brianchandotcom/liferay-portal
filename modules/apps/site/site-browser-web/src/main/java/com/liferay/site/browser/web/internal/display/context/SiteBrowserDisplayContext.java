@@ -486,9 +486,9 @@ public class SiteBrowserDisplayContext {
 		).build();
 
 		if (Objects.equals(type, "child-sites")) {
-			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
-
-			_groupParams.put("groupsTree", ListUtil.fromArray(parentGroup));
+			_groupParams.put(
+				"groupsTree",
+				ListUtil.fromArray(GroupLocalServiceUtil.getGroup(groupId)));
 		}
 		else if (filterManageableGroups) {
 			if (Objects.equals(type, "sites-that-i-administer")) {

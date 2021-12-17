@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -70,23 +69,23 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 			UserGroupDisplayTerms.NAME, displayTerms.getName());
 
 		try {
+			setOrderableHeaders(orderableHeaders);
+
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 
 			String orderByCol = SearchOrderByUtil.getOrderByCol(
 				portletRequest, portletId, "user-groups-order-by-col", "name");
 
+			setOrderByCol(orderByCol);
+
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, portletId, "user-groups-order-by-type", "asc");
 
-			OrderByComparator<UserGroup> orderByComparator =
+			setOrderByComparator(
 				UsersAdminUtil.getUserGroupOrderByComparator(
-					orderByCol, orderByType);
-
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
+					orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize user group search", exception);

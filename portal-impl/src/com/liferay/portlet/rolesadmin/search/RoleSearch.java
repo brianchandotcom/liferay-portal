@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -89,23 +88,23 @@ public class RoleSearch extends SearchContainer<Role> {
 			RoleDisplayTerms.TYPE, String.valueOf(displayTerms.getType()));
 
 		try {
+			setOrderableHeaders(orderableHeaders);
+
 			String portletId = PortletProviderUtil.getPortletId(
 				Role.class.getName(), PortletProvider.Action.BROWSE);
 
 			String orderByCol = SearchOrderByUtil.getOrderByCol(
 				portletRequest, portletId, "roles-order-by-col", "title");
 
+			setOrderByCol(orderByCol);
+
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, portletId, "roles-order-by-type", "asc");
 
-			OrderByComparator<Role> orderByComparator =
+			setOrderByComparator(
 				UsersAdminUtil.getRoleOrderByComparator(
-					orderByCol, orderByType);
-
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
+					orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize role search", exception);

@@ -755,7 +755,11 @@ definition {
 		}
 
 		task ("Add a Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
 
 			WebContentNavigator.gotoAddCP();
 

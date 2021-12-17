@@ -28,6 +28,10 @@ else {
 	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 
+WorkflowInstance workflowInstance = (WorkflowInstance)renderRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE);
+
+long classPK = workflowInstanceViewDisplayContext.getWorkflowContextEntryClassPK(workflowInstance.getWorkflowContext());
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -144,8 +148,8 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 					>
 						<liferay-comment:discussion
 							className="<%= assetRenderer.getClassName() %>"
-							classPK="<%= assetRenderer.getClassPK() %>"
-							formName='<%= "fm" + assetRenderer.getClassPK() %>'
+							classPK="<%= classPK %>"
+							formName='<%= "fm" + classPK %>'
 							ratingsEnabled="<%= false %>"
 							redirect="<%= currentURL %>"
 							userId="<%= user.getUserId() %>"

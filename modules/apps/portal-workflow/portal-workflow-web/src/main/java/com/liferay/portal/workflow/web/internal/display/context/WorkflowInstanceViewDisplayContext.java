@@ -363,6 +363,21 @@ public class WorkflowInstanceViewDisplayContext
 		};
 	}
 
+	public String getWorkflowContextEntryClassName(
+		Map<String, Serializable> workflowContext) {
+
+		return (String)workflowContext.get(
+			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
+	}
+
+	public long getWorkflowContextEntryClassPK(
+		Map<String, Serializable> workflowContext) {
+
+		return GetterUtil.getLong(
+			(String)workflowContext.get(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+	}
+
 	public boolean isNavigationAll() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;
@@ -437,21 +452,6 @@ public class WorkflowInstanceViewDisplayContext
 		}
 
 		return workflowLogs.get(0);
-	}
-
-	protected String getWorkflowContextEntryClassName(
-		Map<String, Serializable> workflowContext) {
-
-		return (String)workflowContext.get(
-			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
-	}
-
-	protected long getWorkflowContextEntryClassPK(
-		Map<String, Serializable> workflowContext) {
-
-		return GetterUtil.getLong(
-			(String)workflowContext.get(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 	}
 
 	protected WorkflowHandler<?> getWorkflowHandler(

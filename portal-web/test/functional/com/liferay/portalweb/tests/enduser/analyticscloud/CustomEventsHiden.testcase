@@ -75,45 +75,10 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10222 | Test Summary: Check if some default events are set as hidden"
-	@priority = "5"
-	test ViewIfDefaultEventsAreHidden {
-        var defaultEventNameList = "assetDepthReached,blogDepthReached,fieldBlurred,fieldFocused,pageDepthReached,pageLoaded,pageUnloaded,posted,shared,tabBlurred,tabFocused,VOTE";
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigation to default events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Default Events");
-		}
-
-		task ("Change the pagination to "75"") {
-			ACUtils.changePagination(itemsPerPage = "75");
-		}
-
-		task ("Assert certain events hidden by default") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10223 | Test Summary: Able to access hidden event"
 	@priority = "4"
 	test CanAccessHiddenEvent {
-        var defaultEventName = "assetDepthReached";
-
+		var defaultEventName = "assetDepthReached";
 		var attributeList = "assetId,canonicalUrl,category,depth,pageDescription,pageKeywords,pageTitle,referrer,sessionId,title,url";
 
 		task ("Close sessions") {
@@ -152,10 +117,10 @@ definition {
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10232 | Test Summary: Hide a default event and hide a custom event"
 	@priority = "5"
 	test CanHidenDefaultAndCustomEvent {
-        var defaultEventName = "assetDownloaded";
-        var defaultEventNameList = "${defaultEventName},assetClicked,assetSubmitted";
+		var defaultEventName = "assetDownloaded";
+		var defaultEventNameList = "${defaultEventName},assetClicked,assetSubmitted";
 
-        task ("Fill fields and create custom event") {
+		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
@@ -199,17 +164,17 @@ definition {
 			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
 		}
 
-        task ("Navigation to custom events tab") {
+		task ("Navigation to custom events tab") {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
-        task ("Hide custom event") {
-            ACUtils.searchBar(searchItem = "${customEventName}");
+		task ("Hide custom event") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
 
 			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
 		}
 
-        task ("Check that the custom event was hidden") {
+		task ("Check that the custom event was hidden") {
 			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${customEventName}");
 		}
 	}
@@ -218,9 +183,9 @@ definition {
 	@priority = "5"
 	test CanUnhideDefaultAndCustomEvent {
 		var defaultEventName = "assetDownloaded";
-        var defaultEventNameList = "${defaultEventName},assetClicked,assetSubmitted";
+		var defaultEventNameList = "${defaultEventName},assetClicked,assetSubmitted";
 
-        task ("Fill fields and create custom event") {
+		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
@@ -268,7 +233,7 @@ definition {
 			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${defaultEventNameList}");
 		}
 
-        task ("Navigation to custom events tab") {
+		task ("Navigation to custom events tab") {
 			ACNavigation.openItem(itemName = "Custom Events");
 		}
 
@@ -276,14 +241,48 @@ definition {
 			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
 		}
 
-        task ("Unhide custom event") {
-            ACUtils.searchBar(searchItem = "${customEventName}");
+		task ("Unhide custom event") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
 
 			ACCustomEvents.unhideCustomEvent(customEventName = "${customEventName}");
 		}
 
-        task ("Check that the custom event was unhide") {
+		task ("Check that the custom event was unhide") {
 			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${customEventName}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10222 | Test Summary: Check if some default events are set as hidden"
+	@priority = "5"
+	test ViewIfDefaultEventsAreHidden {
+		var defaultEventNameList = "assetDepthReached,blogDepthReached,fieldBlurred,fieldFocused,pageDepthReached,pageLoaded,pageUnloaded,posted,shared,tabBlurred,tabFocused,VOTE";
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to default events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Default Events");
+		}
+
+		task ("Change the pagination to "75"") {
+			ACUtils.changePagination(itemsPerPage = "75");
+		}
+
+		task ("Assert certain events hidden by default") {
+			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
 		}
 	}
 

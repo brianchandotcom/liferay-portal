@@ -131,35 +131,6 @@ definition {
 		return "${customEventName}";
 	}
 
-	macro unhideAllCustomEvents {
-		var key_actionButton = "Show";
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
-	}
-
-	macro unhideCustomEvent {
-		var key_actionButton = "Show";
-		var key_nameList = "${customEventName}";
-
-		WaitForPageLoad();
-
-		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-		}
-
-		MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
-	}
-
 	macro hideAllCustomEvents {
 		var key_actionButton = "Hide";
 
@@ -193,32 +164,6 @@ definition {
 		ACUtils.clickAnyButton(button = "${key_actionButton}");
 	}
 
-	macro viewHideCustomEvent {
-		for (var customEventName : list "${customEventNameList}") {
-			var key_actionButton = "Show";
-			var key_nameList = "${customEventName}";
-
-			AssertElementPresent(locator1 = "ACCustomEvents#HIDE_BUTTON_ICON");
-
-			MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-			AssertElementPresent(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
-		}
-	}
-
-	macro viewUnhideCustomEvent {
-		for (var customEventName : list "${customEventNameList}") {
-			var key_actionButton = "Hide";
-			var key_nameList = "${customEventName}";
-
-			AssertElementNotPresent(locator1 = "ACCustomEvents#HIDE_BUTTON_ICON");
-
-			MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-			AssertElementPresent(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
-		}
-	}
-
 	macro openBlockCustomEventList {
 		Click(locator1 = "ACCustomEvents#BLOCK_CUSTOM_EVENT_LIST");
 	}
@@ -235,6 +180,35 @@ definition {
 
 	macro unblockCustomEvent {
 		var key_actionButton = "Unblock";
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+	}
+
+	macro unhideAllCustomEvents {
+		var key_actionButton = "Show";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+	}
+
+	macro unhideCustomEvent {
+		var key_actionButton = "Show";
 		var key_nameList = "${customEventName}";
 
 		WaitForPageLoad();
@@ -276,6 +250,19 @@ definition {
 		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION_LIST");
 	}
 
+	macro viewHideCustomEvent {
+		for (var customEventName : list "${customEventNameList}") {
+			var key_actionButton = "Show";
+			var key_nameList = "${customEventName}";
+
+			AssertElementPresent(locator1 = "ACCustomEvents#HIDE_BUTTON_ICON");
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementPresent(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+		}
+	}
+
 	macro viewInvalidCustomEventEdition {
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#INVALID_MESSAGE",
@@ -284,6 +271,19 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
+	}
+
+	macro viewUnhideCustomEvent {
+		for (var customEventName : list "${customEventNameList}") {
+			var key_actionButton = "Hide";
+			var key_nameList = "${customEventName}";
+
+			AssertElementNotPresent(locator1 = "ACCustomEvents#HIDE_BUTTON_ICON");
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementPresent(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+		}
 	}
 
 }

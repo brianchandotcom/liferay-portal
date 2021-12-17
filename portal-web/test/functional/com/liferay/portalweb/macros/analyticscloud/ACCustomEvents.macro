@@ -144,6 +144,22 @@ definition {
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
 			value1 = "\SPACE");
 	}
+
+	macro unhideCustomEvent {
+		var key_actionButton = "Show";
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+	}
+
 	macro hideAllCustomEvents {
 		var key_actionButton = "Block";
 

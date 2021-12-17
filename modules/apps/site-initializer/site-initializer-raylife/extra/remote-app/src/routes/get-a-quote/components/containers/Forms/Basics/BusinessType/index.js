@@ -2,12 +2,6 @@ import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
 import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
-import {LiferayService} from '../../../../../../../common/services/liferay';
-import {
-	STORAGE_KEYS,
-	Storage,
-} from '../../../../../../../common/services/liferay/storage';
-import {clearExitAlert} from '../../../../../../../common/utils/exitAlert';
 import {smoothScroll} from '../../../../../../../common/utils/scroll';
 import {AppContext} from '../../../../../context/AppContext';
 import {setSelectedProduct} from '../../../../../context/actions';
@@ -33,13 +27,9 @@ export function FormBasicBusinessType({form}) {
 	};
 
 	const goToPreviousPage = () => {
-		clearExitAlert();
+		setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 
-		window.location.href = LiferayService.getLiferaySiteName();
-
-		if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
-			Storage.removeItem(STORAGE_KEYS.BACK_TO_EDIT);
-		}
+		smoothScroll();
 	};
 
 	return (

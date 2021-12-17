@@ -4,7 +4,13 @@ import {MoreInfoButton} from '../../../../../../common/components/fragments/Butt
 import {CardFormActionsWithSave} from '../../../../../../common/components/fragments/Card/FormActionsWithSave';
 import FormCard from '../../../../../../common/components/fragments/Card/FormCard';
 import {Radio} from '../../../../../../common/components/fragments/Forms/Radio';
+import {LiferayService} from '../../../../../../common/services/liferay';
+import {
+	STORAGE_KEYS,
+	Storage,
+} from '../../../../../../common/services/liferay/storage';
 import {TIP_EVENT} from '../../../../../../common/utils/events';
+import {clearExitAlert} from '../../../../../../common/utils/exitAlert';
 import useFormActions from '../../../../hooks/useFormActions';
 import {useProductQuotes} from '../../../../hooks/useProductQuotes';
 import {useStepWizard} from '../../../../hooks/useStepWizard';
@@ -15,11 +21,21 @@ export function FormBasicProductQuote({form}) {
 	const {control} = useFormContext();
 	const {selectedStep} = useStepWizard();
 	const {productQuotes} = useProductQuotes();
-	const {onNext, onPrevious, onSave} = useFormActions(
+	const {onNext, onSave} = useFormActions(
 		form,
-		AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION,
-		AVAILABLE_STEPS.BUSINESS
+		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE,
+		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE
 	);
+
+	const goToPreviousPage = () => {
+		clearExitAlert();
+
+		window.location.href = LiferayService.getLiferaySiteName();
+
+		if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
+			Storage.removeItem(STORAGE_KEYS.BACK_TO_EDIT);
+		}
+	};
 
 	const {isSelected, updateState} = useTriggerContext();
 
@@ -70,7 +86,7 @@ export function FormBasicProductQuote({form}) {
 										}
 										selected={
 											quote.id ===
-											form.basics.productQuote
+											form?.basics?.productQuote
 										}
 										sideLabel={quote.period}
 										value={quote.id}
@@ -84,9 +100,9 @@ export function FormBasicProductQuote({form}) {
 			</div>
 
 			<CardFormActionsWithSave
-				isValid={!!form.basics.productQuote}
+				isValid={!!form?.basics?.productQuote}
 				onNext={onNext}
-				onPrevious={onPrevious}
+				onPrevious={goToPreviousPage}
 				onSave={onSave}
 			/>
 		</FormCard>

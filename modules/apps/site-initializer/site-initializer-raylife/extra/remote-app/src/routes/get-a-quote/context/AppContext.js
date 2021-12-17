@@ -15,8 +15,8 @@ const initialState = {
 			[AVAILABLE_STEPS.PROPERTY.section]: 0,
 		},
 		section: 'basics',
-		subsection: 'business-type',
-		title: "Welcome! Let's start.",
+		subsection: 'product-quote',
+		title: 'Welcome! Select a product.',
 	},
 	selectedTrigger: '',
 };

@@ -25,8 +25,7 @@ const setFormPath = (value) => `basics.businessInformation.${value}`;
 const getSelectedProductName = () => {
 	try {
 		return JSON.parse(Storage.getItem(STORAGE_KEYS.PRODUCT))?.productName;
-	}
-	catch (error) {
+	} catch (error) {
 		return '';
 	}
 };
@@ -38,7 +37,7 @@ export function FormBasicBusinessInformation({form}) {
 	const {onNext, onPrevious, onSave} = useFormActions(
 		form,
 		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE,
-		AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE,
+		AVAILABLE_STEPS.BUSINESS,
 		'Unable to save your information. Please try again.'
 	);
 

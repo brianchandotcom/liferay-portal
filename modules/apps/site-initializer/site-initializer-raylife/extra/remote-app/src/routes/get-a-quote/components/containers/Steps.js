@@ -16,16 +16,16 @@ export function Steps() {
 			<StepItem
 				onClick={() => {
 					Storage.setItem(STORAGE_KEYS.BASIC_STEP_CLICKED, true);
-					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
+					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}}
 				percentage={
 					selectedStep.percentage[
-						AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
+						AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE.section
 					]
 				}
 				selected={
 					selectedStep.section ===
-					AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
+					AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE.section
 				}
 			>
 				Basics

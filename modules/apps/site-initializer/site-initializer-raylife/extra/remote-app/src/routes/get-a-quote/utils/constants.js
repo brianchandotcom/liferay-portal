@@ -13,12 +13,12 @@ export const AVAILABLE_STEPS = {
 	BASICS_BUSINESS_TYPE: {
 		section: 'basics',
 		subsection: 'business-type',
-		title: "Welcome! Let's start.",
+		title: 'Select a primary industry.',
 	},
 	BASICS_PRODUCT_QUOTE: {
 		section: 'basics',
 		subsection: 'product-quote',
-		title: 'Select a product.',
+		title: 'Welcome! Select a product.',
 	},
 	BUSINESS: {
 		section: 'business',

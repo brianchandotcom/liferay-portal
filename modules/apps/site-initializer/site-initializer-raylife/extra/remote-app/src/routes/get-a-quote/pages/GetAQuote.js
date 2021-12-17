@@ -21,7 +21,7 @@ const QuoteApp = () => {
 
 		return (
 			<>
-				{selectedStep.title}
+				{selectedStep.title}{' '}
 				<span className="primary">
 					{form.basics.businessInformation.business.location.address}
 				</span>

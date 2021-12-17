@@ -14,6 +14,8 @@
 
 package com.liferay.portal.language.override.web.internal.display;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
@@ -21,17 +23,21 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringParser;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -77,10 +83,17 @@ public class ViewDisplayContextFactory {
 		viewDisplayContext.setSearchContainer(
 			_createSearchContainer(renderRequest, renderResponse));
 
-		viewDisplayContext.setSelectedLanguageId(
-			ParamUtil.getString(
-				renderRequest, "selectedLanguageId",
-				LanguageUtil.getLanguageId(_portal.getLocale(renderRequest))));
+		String selectedLanguageId = ParamUtil.getString(
+			renderRequest, "selectedLanguageId",
+			LanguageUtil.getLanguageId(_portal.getLocale(renderRequest)));
+
+		viewDisplayContext.setSelectedLanguageId(selectedLanguageId);
+
+		viewDisplayContext.setTranslationLanguageDropdownItems(
+			_getTranslationLanguageDropdownItems(
+				_portal.getCurrentURL(renderRequest),
+				renderResponse.getNamespace(), selectedLanguageId,
+				companyAvailableLocales));
 
 		return viewDisplayContext;
 	}
@@ -116,6 +129,36 @@ public class ViewDisplayContextFactory {
 		_setResults(renderRequest, searchContainer);
 
 		return searchContainer;
+	}
+
+	private List<DropdownItem> _getTranslationLanguageDropdownItems(
+		String currentURL, String namespace, String selectedLanguageId,
+		Collection<Locale> availableLocales) {
+
+		DropdownItemList dropdownItemList = new DropdownItemList();
+
+		for (Locale locale : availableLocales) {
+			String languageId = LanguageUtil.getLanguageId(locale);
+
+			String icon = StringUtil.toLowerCase(
+				TextFormatter.format(languageId, TextFormatter.O));
+
+			dropdownItemList.add(
+				dropdownItem -> {
+					dropdownItem.put("symbolLeft", icon);
+					dropdownItem.setActive(
+						Objects.equals(selectedLanguageId, languageId));
+					dropdownItem.setHref(
+						HttpUtil.setParameter(
+							currentURL, namespace + "selectedLanguageId",
+							languageId));
+					dropdownItem.setIcon(icon);
+					dropdownItem.setLabel(
+						TextFormatter.format(languageId, TextFormatter.O));
+				});
+		}
+
+		return dropdownItemList;
 	}
 
 	private void _setResults(

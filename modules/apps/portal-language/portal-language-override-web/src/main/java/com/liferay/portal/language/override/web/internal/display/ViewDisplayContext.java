@@ -14,8 +14,10 @@
 
 package com.liferay.portal.language.override.web.internal.display;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -39,6 +41,10 @@ public class ViewDisplayContext {
 		return _selectedLanguageId;
 	}
 
+	public List<DropdownItem> getTranslationLanguageDropdownItems() {
+		return _translationLanguageDropdownItems;
+	}
+
 	public void setAvailableLocales(Locale[] availableLocales) {
 		_availableLocales = availableLocales;
 	}
@@ -57,9 +63,16 @@ public class ViewDisplayContext {
 		_selectedLanguageId = selectedLanguageId;
 	}
 
+	public void setTranslationLanguageDropdownItems(
+		List<DropdownItem> translationLanguageDropdownItems) {
+
+		_translationLanguageDropdownItems = translationLanguageDropdownItems;
+	}
+
 	private Locale[] _availableLocales;
 	private String _displayStyle;
 	private SearchContainer<LanguageItemDisplay> _searchContainer;
 	private String _selectedLanguageId;
+	private List<DropdownItem> _translationLanguageDropdownItems;
 
 }

@@ -18,12 +18,10 @@
 
 <%
 ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewDisplayContext);
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= managementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= new ViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewDisplayContext) %>"
 />
 
 <clay:container-fluid
@@ -31,7 +29,7 @@ ViewManagementToolbarDisplayContext managementToolbarDisplayContext = new ViewMa
 >
 	<clay:dropdown-menu
 		displayType="secondary"
-		dropdownItems="<%= managementToolbarDisplayContext.getDropdownItems() %>"
+		dropdownItems="<%= viewDisplayContext.getTranslationLanguageDropdownItems() %>"
 		icon="<%= StringUtil.toLowerCase(TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O)) %>"
 		label="<%= TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O) %>"
 		small="<%= true %>"

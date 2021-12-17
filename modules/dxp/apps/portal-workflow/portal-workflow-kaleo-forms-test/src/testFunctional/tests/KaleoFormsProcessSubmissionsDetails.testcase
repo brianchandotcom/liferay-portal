@@ -179,7 +179,7 @@ definition {
 
 		KaleoFormsNewSubmissions.gotoStatusLabel(status = "Pending");
 
-		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(throughLabel = "true");		
+		KaleoFormsNewSubmissions.viewTrackWorkflowStructure(throughLabel = "true");
 	}
 
 	@description = "Verify that the fields filled on submissions appears on the details page."

@@ -107,6 +107,16 @@ definition {
 		}
 	}
 
+	macro gotoStatusLabel {
+		MouseOver(
+			key_status = "${status}",
+			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
+
+		Click(
+			key_status = "${status}",
+			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
+	}
+
 	macro viewColumnsOnDetails {
 		if (isSet(ddlCompany)) {
 			AssertTextEquals.assertPartialText(
@@ -219,13 +229,12 @@ definition {
 	macro viewTrackWorkflowStructure {
 		if (isSet(throughKebab)) {
 			SelectFrame(
-			key_title = "Track Workflow",
-			locator1 = "IFrame#MODAL_ANY");
+				key_title = "Track Workflow",
+				locator1 = "IFrame#MODAL_ANY");
 		}
 
 		if (isSet(throughLabel)) {
-			SelectFrame(
-			locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
+			SelectFrame(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
 		}
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_PANEL");
@@ -248,17 +257,6 @@ definition {
 			key_errorMessage = "${errorMessage}",
 			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
 			value1 = "${errorMessage}");
-	}
-
-	macro gotoStatusLabel {
-		MouseOver(
-			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL",
-			key_status = "${status}");
-
-		Click(
-			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL",
-			key_status = "${status}");
-
 	}
 
 }

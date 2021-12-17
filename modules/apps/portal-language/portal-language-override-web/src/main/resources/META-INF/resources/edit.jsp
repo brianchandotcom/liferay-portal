@@ -25,13 +25,13 @@ portletDisplay.setURLBack(editDisplayContext.getBackURL());
 renderResponse.setTitle(editDisplayContext.getPageTitle());
 %>
 
-<portlet:actionURL name="editPortalLanguageOverride" var="editURL" />
+<portlet:actionURL name="editPLOEntry" var="editURL" />
 
 <clay:container-fluid>
 	<liferay-frontend:edit-form
 		action="<%= editURL %>"
 		method="POST"
-		name="editPortalLanguageOverrideFm"
+		name="editPLOEntryFm"
 	>
 		<aui:input name="redirect" type="hidden" value="<%= editDisplayContext.getBackURL() %>" />
 
@@ -93,7 +93,7 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 					</clay:content-col>
 
 					<c:if test="<%= Validator.isNotNull(editDisplayContext.getKey()) %>">
-						<portlet:actionURL name="deletePortalLanguageOverrides" var="deletePortalLanguageOverridesURL">
+						<portlet:actionURL name="deletePLOEntries" var="deletePLOEntriesURL">
 							<portlet:param name="redirect" value="<%= editDisplayContext.getBackURL() %>" />
 							<portlet:param name="key" value="<%= editDisplayContext.getKey() %>" />
 						</portlet:actionURL>
@@ -105,7 +105,7 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 									label="<%= true %>"
 									linkCssClass="btn btn-secondary btn-sm"
 									message="clear-all-overrides"
-									url="<%= deletePortalLanguageOverridesURL %>"
+									url="<%= deletePLOEntriesURL %>"
 								/>
 							</span>
 						</clay:content-col>

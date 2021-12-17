@@ -17,10 +17,9 @@ package com.liferay.portal.language.override.web.internal.constants;
 /**
  * @author Drew Brokke
  */
-public class PortalLanguageOverridePortletKeys {
+public class PLOPortletKeys {
 
 	public static final String PORTAL_LANGUAGE_OVERRIDE =
-		"com_liferay_portal_language_override_web_internal_portlet_" +
-			"PortalLanguageOverridePortlet";
+		"com_liferay_portal_language_override_web_internal_portlet_PLOPortlet";
 
 }

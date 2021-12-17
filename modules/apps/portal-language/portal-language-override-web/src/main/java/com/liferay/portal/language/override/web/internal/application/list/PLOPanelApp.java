@@ -18,7 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.language.override.web.internal.constants.PortalLanguageOverridePortletKeys;
+import com.liferay.portal.language.override.web.internal.constants.PLOPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class PortalLanguageOverridePanelApp extends BasePanelApp {
+public class PLOPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortalLanguageOverridePortletKeys.PORTAL_LANGUAGE_OVERRIDE;
+		return PLOPortletKeys.PORTAL_LANGUAGE_OVERRIDE;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + PortalLanguageOverridePortletKeys.PORTAL_LANGUAGE_OVERRIDE + ")",
+		target = "(javax.portlet.name=" + PLOPortletKeys.PORTAL_LANGUAGE_OVERRIDE + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

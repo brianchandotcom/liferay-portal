@@ -61,14 +61,12 @@ public class PLOOriginalTranslationProviderTest {
 
 		Assert.assertEquals(
 			originalValue, _ploOriginalTranslationProvider.get(locale, key));
-	}
 
-	@Test
-	public void testGetNonexistentKey() throws Exception {
+		// Non-existent key
+
 		Assert.assertNull(
 			_ploOriginalTranslationProvider.get(
-				LocaleUtil.getDefault(),
-				"DOES_NOT_EXIST_" + RandomTestUtil.randomString()));
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()));
 	}
 
 	@Inject

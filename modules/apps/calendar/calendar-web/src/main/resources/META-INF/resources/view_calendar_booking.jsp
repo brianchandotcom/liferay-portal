@@ -159,18 +159,18 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 						/>
 					</div>
 				</c:if>
-			</aui:fieldset>
 
-			<c:if test="<%= calendar.isEnableComments() %>">
-				<liferay-comment:discussion
-					className="<%= CalendarBooking.class.getName() %>"
-					classPK="<%= calendarBooking.getCalendarBookingId() %>"
-					formName="fm2"
-					ratingsEnabled="<%= true %>"
-					redirect="<%= currentURL %>"
-					userId="<%= calendarBooking.getUserId() %>"
-				/>
-			</c:if>
+				<c:if test="<%= calendar.isEnableComments() %>">
+					<liferay-comment:discussion
+						className="<%= CalendarBooking.class.getName() %>"
+						classPK="<%= calendarBooking.getCalendarBookingId() %>"
+						formName="fm2"
+						ratingsEnabled="<%= true %>"
+						redirect="<%= currentURL %>"
+						userId="<%= calendarBooking.getUserId() %>"
+					/>
+				</c:if>
+			</aui:fieldset>
 
 			<portlet:actionURL name="invokeTransition" var="invokeTransitionURL" />
 

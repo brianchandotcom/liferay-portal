@@ -27,6 +27,8 @@ import Input from '../../form/Input';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
 import {TObjectRelationship} from '../types';
 
+import './ModalAddObjectLayoutTab.scss';
+
 type TTabTypes = {
 	[key: string]: {
 		active: boolean;
@@ -264,9 +266,12 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 										{label[defaultLanguageId] ?? name}
 									</div>
 
-									<div>
+									<div className="object-web-relationship-item-label">
 										<ClayLabel displayType="secondary">
-											{type}
+											{type.replace(
+												/([a-z])([A-Z])/g,
+												'$1 $2'
+											)}
 										</ClayLabel>
 									</div>
 								</div>

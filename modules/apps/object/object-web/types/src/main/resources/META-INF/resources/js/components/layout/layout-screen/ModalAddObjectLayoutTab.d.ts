@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+import './ModalAddObjectLayoutTab.scss';
 interface IModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {
 	observer: any;

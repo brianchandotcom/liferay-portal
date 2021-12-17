@@ -60,6 +60,16 @@ public class TranslationRequestHelper {
 		return SegmentsExperience.class.getName();
 	}
 
+	public long getClassNameId() {
+		if (_classNameId != null) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(_portletRequest, "classNameId");
+
+		return _classNameId;
+	}
+
 	public long getClassPK(long segmentsExperienceId) throws PortalException {
 		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			return segmentsExperienceId;
@@ -82,13 +92,22 @@ public class TranslationRequestHelper {
 		return segmentsExperienceIds;
 	}
 
+	public long getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getLong(_portletRequest, "groupId");
+
+		return _groupId;
+	}
+
 	public String getModelClassName() {
 		if (_modelClassName != null) {
 			return _modelClassName;
 		}
 
-		_modelClassName = PortalUtil.getClassName(
-			ParamUtil.getLong(_portletRequest, "classNameId"));
+		_modelClassName = PortalUtil.getClassName(getClassNameId());
 
 		return _modelClassName;
 	}
@@ -108,13 +127,12 @@ public class TranslationRequestHelper {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemIdentifierTranslator.class, getModelClassName());
 
-		long groupId = ParamUtil.getLong(_portletRequest, "groupId");
 		String key = ParamUtil.getString(_portletRequest, "key");
 
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)
 				infoItemIdentifierTranslator.translateInfoItemIdentifier(
-					new GroupKeyInfoItemIdentifier(groupId, key),
+					new GroupKeyInfoItemIdentifier(getGroupId(), key),
 					ClassPKInfoItemIdentifier.class);
 
 		_modelClassPK = classPKInfoItemIdentifier.getClassPK();
@@ -122,6 +140,8 @@ public class TranslationRequestHelper {
 		return _modelClassPK;
 	}
 
+	private Long _classNameId;
+	private Long _groupId;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private String _modelClassName;
 	private Long _modelClassPK;

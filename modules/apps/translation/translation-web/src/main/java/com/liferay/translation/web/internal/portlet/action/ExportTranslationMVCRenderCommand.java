@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationPortletKeys;
@@ -66,30 +65,28 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-
-			String className = _portal.getClassName(classNameId);
-
-			long groupId = ParamUtil.getLong(renderRequest, "groupId");
-
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
 					_infoItemServiceTracker, renderRequest);
 
-			long classPK = translationRequestHelper.getModelClassPK();
-
-			Object model = _getModel(className, classPK);
+			Object model = _getModel(
+				translationRequestHelper.getModelClassName(),
+				translationRequestHelper.getModelClassPK());
 
 			renderRequest.setAttribute(
 				ExportTranslationDisplayContext.class.getName(),
 				new ExportTranslationDisplayContext(
-					classNameId, classPK,
-					_ffLayoutExperienceSelectorConfiguration, groupId,
+					translationRequestHelper.getClassNameId(),
+					translationRequestHelper.getModelClassPK(),
+					_ffLayoutExperienceSelectorConfiguration,
+					translationRequestHelper.getGroupId(),
 					_portal.getHttpServletRequest(renderRequest),
 					_infoItemServiceTracker,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), model,
-					_getTitle(className, model, themeDisplay.getLocale()),
+					_getTitle(
+						translationRequestHelper.getModelClassName(), model,
+						themeDisplay.getLocale()),
 					_translationInfoItemFieldValuesExporterTracker));
 
 			return "/export_translation.jsp";

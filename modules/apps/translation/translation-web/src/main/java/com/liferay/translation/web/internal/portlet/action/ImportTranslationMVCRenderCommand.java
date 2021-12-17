@@ -64,20 +64,22 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 				new TranslationRequestHelper(
 					_infoItemServiceTracker, renderRequest);
 
-			String className = translationRequestHelper.getModelClassName();
-			long classPK = translationRequestHelper.getModelClassPK();
-
-			Object model = _getModel(className, classPK);
+			Object model = _getModel(
+				translationRequestHelper.getModelClassName(),
+				translationRequestHelper.getModelClassPK());
 
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
 				new ImportTranslationDisplayContext(
-					ParamUtil.getLong(renderRequest, "classNameId"), classPK,
+					ParamUtil.getLong(renderRequest, "classNameId"),
+					translationRequestHelper.getModelClassPK(),
 					themeDisplay.getCompanyId(),
 					ParamUtil.getLong(renderRequest, "groupId"),
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					_getTitle(className, model, themeDisplay.getLocale()),
+					_getTitle(
+						translationRequestHelper.getModelClassName(), model,
+						themeDisplay.getLocale()),
 					_translationEntryLocalService,
 					_workflowDefinitionLinkLocalService));
 

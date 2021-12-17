@@ -123,6 +123,10 @@ const FragmentContent = ({
 		}
 	}, [fragmentEntryLinkError]);
 
+	const isBeingEdited = editables.some((editable) =>
+		isProcessorEnabled(toControlsId(editable.itemId))
+	);
+
 	/**
 	 * fragmentElement keeps a copy of the fragment real HTML,
 	 * we perform editableValues replacements over this copy
@@ -134,10 +138,6 @@ const FragmentContent = ({
 	 */
 	useEffect(() => {
 		let fragmentElement = document.createElement('div');
-
-		const isBeingEdited = editables.some((editable) =>
-			isProcessorEnabled(toControlsId(editable.itemId))
-		);
 
 		if (!isBeingEdited) {
 			fragmentElement.innerHTML = defaultContent;
@@ -184,11 +184,11 @@ const FragmentContent = ({
 	}, [
 		defaultContent,
 		dispatch,
-		editables,
 		editableValues,
 		fragmentEntryLink,
 		fragmentEntryLinkId,
 		getFieldValue,
+		isBeingEdited,
 		isMounted,
 		isProcessorEnabled,
 		languageId,

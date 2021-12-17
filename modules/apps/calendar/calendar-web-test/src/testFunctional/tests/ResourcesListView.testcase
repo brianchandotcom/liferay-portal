@@ -21,7 +21,7 @@ definition {
 		PagesAdmin.addPublicPage(
 			pageName = "Calendar Page",
 			sitePageType = "Widget Page");
-		
+
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
@@ -122,23 +122,29 @@ definition {
 	@description = "LRQA-71885 - Verify that the user can search by Resource Description"
 	@priority = "4"
 	test CanSearchByResourceDescription {
-		CalendarResource.editResourceNameAndDescription(
-			calendarResourceDescription = "Resource Description",
-			calendarResourceName = "Resource Name");
+		CalendarNavigator.gotoAddResource();
 
-		CalendarResource.searchInResourceList(searchTerm = "Description");
+		CalendarResource.editResourceName(calendarResourceName = "Resource Name");
 
-		CalendarResource.viewSearchResult(calendarResourceName = "1 Results for Description");
+		CalendarResource.editResourceDescription(calendarResourceDescription = "Resource Description");
 
-		CalendarResource.viewResourceCreatedInList(calendarResourceName = "Resource Name");
+		CalendarResource.save();
 
-		CalendarResource.cleanSearchResult();
+		CalendarResource.search(searchTerm = "Description");
 
-		CalendarResource.searchInResourceList(searchTerm = "Test Test");
+		CalendarResource.viewSearchSummaryResults(searchResults = "1 Results for Description");
 
-		CalendarResource.viewSearchResult(calendarResourceName = "0 Results for Test Test");
+		CalendarResource.viewResourceName(calendarResourceName = "Resource Name");
+
+		CalendarResource.clearSearchResults();
+
+		CalendarResource.search(searchTerm = "Test Test");
+
+		CalendarResource.viewSearchSummaryResults(searchResults = "0 Results for Test Test");
 
 		CalendarResource.viewTableEmpty();
+	
+	
 	}
 
 	@priority = "4"

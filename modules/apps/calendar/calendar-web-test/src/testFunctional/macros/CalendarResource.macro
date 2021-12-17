@@ -18,25 +18,8 @@ definition {
 		CalendarResource.view(calendarResourceName = "${calendarResourceName}");
 	}
 
-<<<<<<< HEAD
-	macro addInactiveResource {
-		CalendarNavigator.gotoAddResource();
-
-		CalendarResource.editResourceName(calendarResourceName = "${calendarResourceName}");
-
-		PortletEntry.inputDescription(description = "${calendarResourceDescription}");
-
-		Uncheck(locator1 = "Checkbox#ACTIVE");
-
-		CalendarResource.save();
-
-		Alert.viewSuccessMessage();
-	}
-
-=======
->>>>>>> f9bb6b0 (LRQA-71919 Add CanSearchByResourceDescription test)
-	macro cleanSearchResult {
-		Click(locator1 = "CalendarResources#RESOURCE_SEARCH_CLEAR");
+	macro clearSearchResults {
+		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 	}
 
 	macro deactivate {
@@ -91,34 +74,18 @@ definition {
 		CalendarResource.view(calendarResourceName = "${calendarResourceNameEdit}");
 	}
 
+	macro editResourceDescription {
+		CalendarResource._expandDetailsPanel();
+
+		PortletEntry.inputDescription(description = "${calendarResourceDescription}");
+	}
+
 	macro editResourceName {
 		PortletEntry.inputName(name = "${calendarResourceName}");
 	}
 
-	macro editResourceNameAndDescription {
-		CalendarNavigator.gotoAddResource();
-
-		CalendarResource.editResourceName(calendarResourceName = "${calendarResourceName}");
-
-		PortletEntry.inputDescription(description = "${calendarResourceDescription}");
-
-		CalendarResource.save();
-	}
-
-	macro resourceActiveOrInactiveInListView {
-		AssertTextEquals(
-			locator1 = "CalendarResources#VIEW_CREATED_RESOURCE_IS_ACTIVE",
-			value1 = "${key}");
-	}
-
-	macro resourceFilterAndOrderOptions {
-		var filterOption = "${filterOption}";
-
-		Click(
-			locator1 = "CalendarResources#RESOURCE_FILTER_AND_ORDER_BUTTON_DROPDOWN",
-			value1 = "Filter and Order");
-
-		Click(locator1 = "CalendarResources#RESOURCE_FILTER_AND_ORDER_OPTIONS");
+	macro resourceSetFilterAndOrder {
+		ManagementBar.setFilterAndOrder(filterBy = "${filterBy}");
 	}
 
 	macro save {
@@ -129,14 +96,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro searchInResourceList {
-		Click(locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH");
-
-		Type(
-			locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH",
-			value1 = "${searchTerm}");
-
-		Click(locator1 = "CalendarResources#RESOURCE_SEARCH_ICON");
+	macro search {
+		Search.searchPG(
+			portletName = "Calendar",
+			searchTerm = "${searchTerm}");
 	}
 
 	macro tearDown {
@@ -168,7 +131,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CalendarResources#RESOURCE_TABLE_DESCRIPTION",
-			value1 = "${calendarResourceDescription}");
+			value1 = "");
 
 		AssertTextEquals(
 			locator1 = "CalendarResources#RESOURCE_TABLE_ACTIVE",
@@ -201,13 +164,6 @@ definition {
 			value1 = "${calendarResourceName}'s Calendars");
 	}
 
-	macro viewResourceCreatedInList {
-		AssertElementPresent(
-			key_calendarResourceName = "Resource Name",
-			locator1 = "CalendarResources#RESOURCE_TABLE_ACTIONS",
-			value1 = "${key_calendarResourceName}");
-	}
-
 	macro viewResourceName {
 		var key_calendarResourceName = "${calendarResourceName}";
 
@@ -224,25 +180,16 @@ definition {
 		AssertTextNotPresent(value1 = "${calendarResourceName}");
 	}
 
-	macro viewResourceResults {
-		Click(locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH");
-
-		Type(
-			locator1 = "CalendarResources#RESOURCE_FIELD_SEARCH",
-			value1 = "${searchTerm}");
-
-		Click(locator1 = "CalendarResources#RESOURCE_SEARCH_ICON");
-	}
-
-	macro viewSearchResult {
+	macro viewSearchSummaryResults {
 		AssertTextEquals(
-			key_calendarResourceName = "${calendarResourceName}",
-			locator1 = "CalendarResources#RESOURCE_FIELD_RESULTS",
-			value1 = "${key_calendarResourceName}");
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "${searchResults}");
 	}
 
 	macro viewTableEmpty {
-		AssertElementPresent(locator1 = "CalendarResources#NO_RESOURCES_WERE_FOUND");
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No resources were found.");
 	}
 
 }

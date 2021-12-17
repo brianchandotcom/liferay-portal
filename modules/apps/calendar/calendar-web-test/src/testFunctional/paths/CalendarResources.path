@@ -31,46 +31,6 @@
 	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>RESOURCE_FIELD_RESULTS</td>
-	<td>//span[contains(text(),'${key_calendarResourceName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_FIELD_SEARCH</td>
-	<td>//input[@placeholder='Search for']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_SEARCH_CLEAR</td>
-	<td>//a[contains(text(),'Clear')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_SEARCH_ICON</td>
-	<td>//span[contains(@class,'input-group-inset-item input-group-inset-item-after')]//button[2][contains(@class,'btn btn-monospaced btn-unstyled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NO_RESOURCES_WERE_FOUND</td>
-	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_FILTER_AND_ORDER_BUTTON_DROPDOWN</td>
-	<td>//button[contains(@class, "dropdown-toggle nav-link btn btn-unstyled")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_CREATED_RESOURCE_IS_ACTIVE</td>
-	<td>//td[contains(text(),'${key}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_FILTER_AND_ORDER_OPTIONS</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'${filterOption}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -1302,6 +1302,12 @@ definition {
 			key_text = "page-template",
 			locator1 = "Icon#ANY");
 
+		if (isSet(experienceName)) {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "The page template is based on the current experience.");
+		}
+
 		PortletEntry.inputName(name = "${pageTemplateName}");
 
 		Select(

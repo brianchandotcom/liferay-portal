@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-140483. The user cannot create page templates with same names from content page in the same collection."
+	@description = "This is a test for LPS-140483. The site admin cannot create page templates with same names from content page in the same collection."
 	@priority = "4"
 	test CannotCreatePageTemplatesWithSameNameFromContentPageInTheSameCollection {
 		task ("Create a content page template from the content page under page template collection") {
@@ -61,7 +61,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-140483. The user could create page template from a content page with elements."
+	@description = "This is a test for LPS-140483. The site admin could create page template from a content page with elements."
 	@priority = "5"
 	test CreatePageTemplateFromContentPage {
 		task ("Add a Heading fragment and an Asset Publisher widget to content page then publish") {
@@ -343,7 +343,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-140483. The user could create page template from an empty content page."
+	@description = "This is a test for LPS-140483. The site admin could create page template from an empty content page."
 	@priority = "4"
 	test CreatePageTemplateFromEmptyContentPage {
 		task ("Create a content page template from the empty content page under page template collection") {

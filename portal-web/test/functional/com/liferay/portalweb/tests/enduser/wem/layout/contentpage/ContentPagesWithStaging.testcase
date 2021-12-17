@@ -259,7 +259,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-140483. The user could create page template from a content page with elements in staging site."
+	@description = "This is a test for LPS-140483. The site admin could create page template from a content page with elements in staging site."
 	@priority = "4"
 	test CreatePageTemplateFromContentPageInStagingSite {
 		task ("Add a page template collection") {

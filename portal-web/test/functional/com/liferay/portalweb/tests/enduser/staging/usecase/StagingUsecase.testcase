@@ -529,7 +529,7 @@ definition {
 			pageName = "Delete Live Page",
 			siteName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.deletePage(pageName = "Delete Live Page");
 

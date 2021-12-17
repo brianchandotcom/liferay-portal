@@ -273,7 +273,7 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitle = "WC Depot WebContent");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.addPublicPage(
 			collectionName = "Page Template Collection",
@@ -379,7 +379,7 @@ definition {
 			depotName = "Test Fragment Depot Name",
 			groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -510,7 +510,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 

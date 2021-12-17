@@ -141,7 +141,7 @@ definition {
 		}
 
 		task ("Add a Button fragment to a content page based on content page template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -203,7 +203,7 @@ definition {
 		}
 
 		task ("Add a Button fragment to a content page based on content page template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -374,7 +374,7 @@ definition {
 		}
 
 		task ("View the content page is still at draft status") {
-			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "1",

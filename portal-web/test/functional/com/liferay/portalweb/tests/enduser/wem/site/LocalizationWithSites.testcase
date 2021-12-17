@@ -538,13 +538,13 @@ definition {
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
 			defaultSiteLanguage = "English (United States)");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.addPublicPage(pageName = "Dummy Page");
 
 		PagesAdmin.addPublicPage(pageName = "Language Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -645,7 +645,7 @@ definition {
 			defaultSiteLanguage = "English (United States)",
 			displaySettings = "Display Settings");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.addPublicPage(pageName = "Site Page Name");
 
@@ -683,7 +683,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.addPublicPage(pageName = "Language Page");
 
@@ -765,7 +765,7 @@ definition {
 			defaultSiteLanguage = "Spanish (Spain)",
 			displaySettings = "Display Settings");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.addPublicPage(pageName = "Site Page Name");
 

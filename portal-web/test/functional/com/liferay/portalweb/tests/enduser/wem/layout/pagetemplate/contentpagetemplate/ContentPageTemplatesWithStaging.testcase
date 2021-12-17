@@ -104,7 +104,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a content page that uses the page template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -175,7 +175,7 @@ definition {
 	@priority = "4"
 	test UndoChangesOfContentPageTemplateInStagingSite {
 		task ("View Undo button is disabled when no changes") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
 

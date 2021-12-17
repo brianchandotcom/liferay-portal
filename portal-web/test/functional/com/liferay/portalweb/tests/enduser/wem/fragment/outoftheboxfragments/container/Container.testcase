@@ -822,7 +822,7 @@ definition {
 		}
 
 		task ("Add a content page based on content page template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",

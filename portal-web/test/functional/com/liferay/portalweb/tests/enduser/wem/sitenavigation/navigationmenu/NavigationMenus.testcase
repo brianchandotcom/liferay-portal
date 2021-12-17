@@ -470,7 +470,7 @@ definition {
 		}
 
 		task ("Assert no checkbox for Add Page to Global navigation menu when creating a page in normal site") {
-			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
@@ -894,7 +894,7 @@ definition {
 		}
 
 		task ("Navigate to pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a page and automatically add it to both navigation menus") {
@@ -942,7 +942,7 @@ definition {
 		}
 
 		task ("Add a third page and assert that while adding the new page, the checkbox to add a new page to the first navigation menu is not present") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				assertCheckboxMissing = "true",

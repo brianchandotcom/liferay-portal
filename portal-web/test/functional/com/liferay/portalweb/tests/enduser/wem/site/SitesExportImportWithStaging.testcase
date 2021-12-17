@@ -50,7 +50,7 @@ definition {
 		}
 
 		task ("Add a content page from the page template to the first site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -63,7 +63,7 @@ definition {
 		}
 
 		task ("Add a content page with a Title fragment to the first site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
 
 			ContentPages.addPage(pageName = "Test Regular Content Page");
 

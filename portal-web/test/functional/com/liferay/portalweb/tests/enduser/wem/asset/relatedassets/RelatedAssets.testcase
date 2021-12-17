@@ -307,7 +307,7 @@ definition {
 		}
 
 		task ("Add a private page with an Asset Publisher that shows Web Content 1") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 			PagesAdmin.addPrivatePage(pageName = "Private Page Name");
 

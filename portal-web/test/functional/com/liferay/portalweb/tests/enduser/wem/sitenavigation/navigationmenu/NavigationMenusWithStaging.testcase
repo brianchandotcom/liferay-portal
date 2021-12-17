@@ -997,7 +997,7 @@ definition {
 		}
 
 		task ("Navigate to Pages admin in the live site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Delete the third page from the live site") {
@@ -1222,7 +1222,7 @@ definition {
 		}
 
 		task ("Navigate to pages admin in the live site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Delete the third page from the live site") {

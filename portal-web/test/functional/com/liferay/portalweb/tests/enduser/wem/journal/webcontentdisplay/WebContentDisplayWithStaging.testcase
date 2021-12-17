@@ -246,7 +246,7 @@ definition {
 
 		PortletEntry.publish();
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Web Content Page");
 

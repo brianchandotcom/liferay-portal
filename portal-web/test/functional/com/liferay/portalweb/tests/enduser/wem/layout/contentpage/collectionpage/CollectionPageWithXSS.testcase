@@ -40,7 +40,7 @@ definition {
 		}
 
 		task ("Add collection page based on manual collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "<script>alert(123)</script>",

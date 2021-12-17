@@ -283,7 +283,7 @@ definition {
 		}
 
 		task ("View the Preview and Discard Draft actions are invisible in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Content Page Name");
 
@@ -910,7 +910,7 @@ definition {
 	@priority = "4"
 	test EditSpecificContentPageAsSiteMemberWithUpdatePermission {
 		task ("Grant Update permission of specific content page to Site Member") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Permissions",
@@ -1129,7 +1129,7 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}

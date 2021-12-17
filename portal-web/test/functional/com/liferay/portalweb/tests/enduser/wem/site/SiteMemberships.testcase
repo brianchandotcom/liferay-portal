@@ -389,7 +389,7 @@ definition {
 		}
 
 		task ("Assign the user to organization site in memeberships") {
-			SitePages.openPagesAdmin(siteURLKey = "Organization Name 1");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name 1");
 
 			Site.openSiteMembershipsAdmin(siteURLKey = "organization-name-1");
 

@@ -690,7 +690,7 @@ definition {
 			groupName = "Guest",
 			title = "Similar Results WC Title 2");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPage(pageName = "Similar Results Page");
 

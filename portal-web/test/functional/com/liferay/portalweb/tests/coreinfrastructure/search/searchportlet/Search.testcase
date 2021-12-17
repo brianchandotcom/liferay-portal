@@ -1266,7 +1266,7 @@ definition {
 	test SearchContentPagesSmoke {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -1452,7 +1452,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Test Site");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Test Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2565,7 +2565,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "New Site");
 
-		SitePages.openPagesAdmin(siteURLKey = "New Site");
+		PagesAdmin.openPagesAdmin(siteURLKey = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2974,7 +2974,7 @@ definition {
 	test ViewStagedAndLiveContentInSearchResults {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		PagesAdmin.addPublicPage(
 			inheritChanges = "disable",

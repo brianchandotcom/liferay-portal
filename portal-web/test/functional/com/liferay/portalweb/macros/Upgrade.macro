@@ -211,7 +211,7 @@ definition {
 
 	macro addContentPage {
 		task ("Add a content page in Test Site Name site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
@@ -3164,7 +3164,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

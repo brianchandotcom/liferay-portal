@@ -98,13 +98,4 @@ definition {
 			value1 = "");
 	}
 
-	macro openPagesAdmin {
-		var siteURLKey = StringUtil.replace("${siteURLKey}", " ", "-");
-		var siteURLKey = StringUtil.lowerCase("${siteURLKey}");
-
-		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
-	}
-
 }

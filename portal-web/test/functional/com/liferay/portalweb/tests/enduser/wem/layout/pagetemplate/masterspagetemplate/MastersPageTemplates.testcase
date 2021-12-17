@@ -82,7 +82,7 @@ definition {
 		}
 
 		task ("Assert custom masters as an option when add a new page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -167,7 +167,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -311,7 +311,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -541,7 +541,7 @@ definition {
 
 			Alert.viewSuccessMessage();
 
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -760,7 +760,7 @@ definition {
 		}
 
 		task ("Assert can change master from Blank to custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -811,7 +811,7 @@ definition {
 		}
 
 		task ("Assert can change master from custom master to Blank") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -1148,7 +1148,7 @@ definition {
 		}
 
 		task ("Add a page based on the first custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1158,7 +1158,7 @@ definition {
 		}
 
 		task ("Add a page based on the second custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template 2",
@@ -1222,7 +1222,7 @@ definition {
 		}
 
 		task ("Add a page based on custom masters") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1266,7 +1266,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1313,7 +1313,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1414,7 +1414,7 @@ definition {
 		}
 
 		task ("Change master from Blank to custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(
 				key_pageName = "Test Page Name",
@@ -1476,7 +1476,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1571,7 +1571,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1651,7 +1651,7 @@ definition {
 		}
 
 		task ("Add a new content page and use created master page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1754,7 +1754,7 @@ definition {
 		}
 
 		task ("Assert elements inherited from custom masters are changeless") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
@@ -1850,7 +1850,7 @@ definition {
 		}
 
 		task ("Add a page based on custom masters") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",

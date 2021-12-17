@@ -172,7 +172,7 @@ definition {
 	@priority = "5"
 	test LanguageSelector {
 		task ("Add a translation for that page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

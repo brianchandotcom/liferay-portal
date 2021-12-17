@@ -155,7 +155,7 @@ definition {
 
 		Staging.assignStagingAdminToSite(siteName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
@@ -163,7 +163,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -175,7 +175,7 @@ definition {
 
 		Staging.undoStagingPageVersioningPG();
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -187,7 +187,7 @@ definition {
 
 		Staging.redoStagingPageVersioningPG();
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -201,7 +201,7 @@ definition {
 
 		Staging.publishToLive();
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -259,7 +259,7 @@ definition {
 			pageName = "Wiki",
 			privacy = "Public Pages");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Test Page Name");
 
@@ -292,7 +292,7 @@ definition {
 			pageName = "Test Page Name",
 			privacy = "Public Pages");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Staging Test Page");
 
@@ -336,7 +336,7 @@ definition {
 			copySitePagesVariationName = "None (Empty Site Pages Variation)",
 			sitePagesVariationName = "Empty Variation");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Empty Page Name");
 
@@ -418,7 +418,7 @@ definition {
 			copySitePagesVariationName = "Main Variation",
 			sitePagesVariationName = "New Variation");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Wiki");
 
@@ -443,7 +443,7 @@ definition {
 			AssertElementNotPresent(locator1 = "Home#PAGE_2");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "New Page Name");
 
@@ -893,7 +893,7 @@ definition {
 
 		Staging.markAsReadyForPublication();
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Wiki");
 

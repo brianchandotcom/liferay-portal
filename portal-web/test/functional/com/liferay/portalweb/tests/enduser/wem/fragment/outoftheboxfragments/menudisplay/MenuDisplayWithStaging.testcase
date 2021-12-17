@@ -66,7 +66,7 @@ definition {
 		}
 
 		task ("Add a widget page and add it to navigation menu") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				navigationMenus = "Navigation Menu Name",
@@ -92,7 +92,7 @@ definition {
 		}
 
 		task ("Add a content page and add it to navigation menu") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",

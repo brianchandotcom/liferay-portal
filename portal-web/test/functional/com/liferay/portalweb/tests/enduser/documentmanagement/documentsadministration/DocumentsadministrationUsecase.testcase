@@ -420,7 +420,7 @@ definition {
 			siteName = "DM Site Name",
 			siteTemplateName = "Site Template Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "DM Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "DM Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "DM Site Page Name - Global",

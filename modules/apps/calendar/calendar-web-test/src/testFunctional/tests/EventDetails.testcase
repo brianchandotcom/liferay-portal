@@ -1009,7 +1009,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

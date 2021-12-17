@@ -624,7 +624,7 @@ definition {
 		}
 
 		task ("Discard the draft in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PageEditor.clickDiscardDraft(pageName = "Test Page Name");
 		}

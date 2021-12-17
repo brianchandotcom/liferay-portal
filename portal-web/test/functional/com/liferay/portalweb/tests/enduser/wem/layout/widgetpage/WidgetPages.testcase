@@ -37,7 +37,7 @@ definition {
 	@uitest
 	test AddPageBasedOnGlobalBlogTemplate {
 		task ("Add a page based in global blog template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name",
@@ -63,7 +63,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a page based in global wiki template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Page Name",
@@ -85,7 +85,7 @@ definition {
 	@priority = "3"
 	test AddPageWithEscapeCharacter {
 		task ("Add a page with escape characters name") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(pageName = "Test's Page Name");
 		}
@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("View parent page is shown") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Page.view(
 				pageName = "Test Page Name",
@@ -147,7 +147,7 @@ definition {
 		}
 
 		task ("View child page is shown") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Page.view(
 				depth = "2",
@@ -341,7 +341,7 @@ definition {
 
 		task ("Configure the page with all available portlets then view the portlet is shown") {
 			for (var portletName : list "Blogs,Wiki,Media Gallery,Message Boards,RSS Publisher,Documents and Media,Form,Application Authorization Request") {
-				SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 				SitePages.configurePage(
 					pageName = "Test Page Name",
@@ -375,7 +375,7 @@ definition {
 		}
 
 		task ("Delete the first widget page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.deletePage(pageName = "Test Page Name 1");
 		}
@@ -402,7 +402,7 @@ definition {
 		}
 
 		task ("Edit the name of the first page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -453,7 +453,7 @@ definition {
 		}
 
 		task ("View default locale is shown") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

@@ -77,7 +77,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -151,7 +151,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -221,7 +221,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -286,7 +286,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -335,7 +335,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -388,7 +388,7 @@ definition {
 			experienceName = "Segment Email Experience",
 			segmentName = "Segment Email Address");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		WaitForPageLoad();
 

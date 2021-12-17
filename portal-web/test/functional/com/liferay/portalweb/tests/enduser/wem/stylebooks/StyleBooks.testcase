@@ -503,7 +503,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Public Page");
 
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Site.changeCurrentTheme(
 				privacy = "Public Pages",
@@ -515,7 +515,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Private Page");
 
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Site.changeCurrentTheme(
 				privacy = "Private Pages",

@@ -407,7 +407,7 @@ definition {
 		}
 
 		task ("Disable mobile device rules are inherited from public pages") {
-			SitePages.openPagesAdmin(siteURLKey = "guest");
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

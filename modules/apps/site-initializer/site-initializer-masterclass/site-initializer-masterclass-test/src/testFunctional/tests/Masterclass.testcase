@@ -1396,7 +1396,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassPages {
 		task ("Go to Masterclass Pages") {
-			SitePages.openPagesAdmin(siteURLKey = "test-masterclass-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-masterclass-name");
 		}
 
 		task ("Assert the Masterclass Pages are present") {

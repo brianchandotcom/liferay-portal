@@ -479,7 +479,7 @@ definition {
 		task ("Add a site team and a public page basing on Blog page template") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			SitePages.openPagesAdmin(siteURLKey = "Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Blog Page Template",

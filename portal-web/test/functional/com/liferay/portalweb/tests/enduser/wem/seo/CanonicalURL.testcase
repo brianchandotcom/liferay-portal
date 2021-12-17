@@ -32,7 +32,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Canonical URL Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -132,7 +132,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -174,7 +174,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Canonical URL Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

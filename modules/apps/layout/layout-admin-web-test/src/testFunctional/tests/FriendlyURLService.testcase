@@ -51,7 +51,7 @@ definition {
 	test RedirectToUpdatedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -73,7 +73,7 @@ definition {
 	test RedirectToUpdatedLocalizedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -111,7 +111,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -137,7 +137,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -167,7 +167,7 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -201,7 +201,7 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -223,7 +223,7 @@ definition {
 
 		Staging.publishToLive();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -259,7 +259,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -285,7 +285,7 @@ definition {
 	@description = "This test covers LPS-116068. It ensures that both the active URL and old friendlyURL can be viewed from the history of a default page."
 	@priority = "5"
 	test ViewFriendlyURLsViaDefaultPage {
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -311,7 +311,7 @@ definition {
 	@description = "This test covers LPS-119836. It ensures the localized URL with special characters can be escaped correctly and viewed in friendly URL history."
 	@priority = "4"
 	test ViewFriendlyURLWithSpecialCharacters {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -335,7 +335,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "en/web/test-site-name/test-source-page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -371,7 +371,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -419,7 +419,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -445,7 +445,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

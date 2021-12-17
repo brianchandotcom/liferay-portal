@@ -301,7 +301,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Site Member") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -341,7 +341,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Regular Role") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",

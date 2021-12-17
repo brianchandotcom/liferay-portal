@@ -768,7 +768,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewSearchResult {
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.deletePage(pageName = "Documents and Media");
 

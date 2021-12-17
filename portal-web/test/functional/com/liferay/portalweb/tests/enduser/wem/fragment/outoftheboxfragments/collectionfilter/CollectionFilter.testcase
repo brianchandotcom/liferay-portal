@@ -374,7 +374,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -1177,7 +1177,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1489,7 +1489,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1815,7 +1815,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -2068,7 +2068,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -2394,7 +2394,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -2722,7 +2722,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -2968,7 +2968,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -3461,7 +3461,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",

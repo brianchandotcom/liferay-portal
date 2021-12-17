@@ -1106,7 +1106,7 @@ definition {
 		}
 
 		task ("Select all categories in content page creation") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				categoryNameList = "Category Name 1,Category Name 2,Category Name 3",
@@ -1117,7 +1117,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Content Page Name",
@@ -1147,7 +1147,7 @@ definition {
 		}
 
 		task ("Add a content page and select a required category") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				categoryName = "Category Name",
@@ -1158,7 +1158,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Content Page Name",
@@ -1188,7 +1188,7 @@ definition {
 		}
 
 		task ("Add a widget page and select a required category") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				categoryName = "Category Name",
@@ -1199,7 +1199,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Widget Page Name",
@@ -1214,7 +1214,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Page Name 2",
@@ -1389,7 +1389,7 @@ definition {
 		}
 
 		task ("View the vocabulary not shown in page editor") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

@@ -342,7 +342,7 @@ definition {
 			fragmentName = "Title",
 			targetFragmentName = "Rich Text");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PageEditor.clickDiscardDraft(pageName = "Content Page Name");
 

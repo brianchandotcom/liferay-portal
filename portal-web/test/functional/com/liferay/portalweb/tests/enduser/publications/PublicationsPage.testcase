@@ -34,7 +34,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -53,11 +53,11 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.deletePage(pageName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Page.viewNoPG(pageName = "Test Page");
 
@@ -113,7 +113,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPrivatePage(pageName = "Test Page");
 
@@ -246,7 +246,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -268,7 +268,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -282,7 +282,7 @@ definition {
 
 		Publications.revertPublication(publicationName = "Publication Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

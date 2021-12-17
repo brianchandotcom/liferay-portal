@@ -264,7 +264,7 @@ definition {
 		}
 
 		task ("Add a page based on content page template") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",

@@ -495,7 +495,7 @@ definition {
 			userMiddleName = "${userMiddleName}",
 			userScreenName = "${userScreenName}");
 
-		SitePages.openPagesAdmin(siteURLKey = "${siteName}");
+		PagesAdmin.openPagesAdmin(siteURLKey = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

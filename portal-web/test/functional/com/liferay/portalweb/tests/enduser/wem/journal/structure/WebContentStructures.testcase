@@ -258,7 +258,7 @@ definition {
 		}
 
 		task ("Add a page based on Blank") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(pageName = "Test Content Page");
 
@@ -266,7 +266,7 @@ definition {
 		}
 
 		task ("Add a page based on Search") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				collectionName = "Global Templates",
@@ -275,7 +275,7 @@ definition {
 		}
 
 		task ("Add a page based on Full Page Application") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Full Page Application",
@@ -283,7 +283,7 @@ definition {
 		}
 
 		task ("Add a page based on Page Set") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Page Set",
@@ -296,7 +296,7 @@ definition {
 		}
 
 		task ("Add a page based on Embedded") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Embedded",
@@ -305,7 +305,7 @@ definition {
 		}
 
 		task ("Add a page based on Link to a Page of This Site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				linkPageName = "Test Content Page",
@@ -314,7 +314,7 @@ definition {
 		}
 
 		task ("Add a page based on Panel") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				componentName = "Collaboration",
@@ -323,7 +323,7 @@ definition {
 		}
 
 		task ("Add a page based on Link to URL") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Test Link To URL",
@@ -332,7 +332,7 @@ definition {
 		}
 
 		task ("Assert cancel edit a Link to URL type page will not redirect to the URL") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

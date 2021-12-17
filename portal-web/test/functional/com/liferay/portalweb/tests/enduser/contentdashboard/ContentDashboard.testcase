@@ -2472,7 +2472,7 @@ definition {
 		}
 
 		task ("Choose the site of interest") {
-			SitePages.openPagesAdmin(siteURLKey = "global");
+			PagesAdmin.openPagesAdmin(siteURLKey = "global");
 		}
 
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
@@ -2507,7 +2507,7 @@ definition {
 		}
 
 		task ("Choose the site of interest") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {

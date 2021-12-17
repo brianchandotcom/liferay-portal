@@ -65,7 +65,7 @@ definition {
 	test AssertValidationErrors {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertValidationErrors";
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.addPublicPage(pageName = "Second Test Page");
 

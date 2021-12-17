@@ -134,7 +134,7 @@ definition {
 		}
 
 		task ("The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin") {
-			SitePages.openPagesAdmin(siteURLKey = "guest");
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			WaitForPageLoad();
 

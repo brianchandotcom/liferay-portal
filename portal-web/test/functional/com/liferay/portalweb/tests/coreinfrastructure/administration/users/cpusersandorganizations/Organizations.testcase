@@ -313,7 +313,7 @@ definition {
 			siteName = "Organization Name",
 			siteType = "Private");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -352,7 +352,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -413,7 +413,7 @@ definition {
 			userName = "Test Test",
 			userScreenName = "test");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -421,7 +421,7 @@ definition {
 
 		PagesAdmin.addPublicPage(pageName = "Organization Public Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1140,7 +1140,7 @@ definition {
 			userName = "userfn userln",
 			userScreenName = "usersn");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -1148,7 +1148,7 @@ definition {
 
 		PagesAdmin.addPublicPage(pageName = "Public Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1938,7 +1938,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name 1");
 
-		SitePages.openPagesAdmin(siteURLKey = "Organization Name 1");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

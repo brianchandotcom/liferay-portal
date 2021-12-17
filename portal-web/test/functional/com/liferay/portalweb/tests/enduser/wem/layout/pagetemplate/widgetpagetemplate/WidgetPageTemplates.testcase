@@ -55,7 +55,7 @@ definition {
 		task ("Add a site and page basing on the created page template") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Site Page",
@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Disable inherit changes") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -190,7 +190,7 @@ definition {
 		}
 
 		task ("Add a page based on the widget page template") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PagesAdmin.addPublicPage(
 				collectionName = "Page Template Collection",
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("View inactive page template doesn't display") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
@@ -265,7 +265,7 @@ definition {
 		}
 
 		task ("View active page template displays") {
-			SitePages.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 

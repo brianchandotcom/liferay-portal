@@ -55,7 +55,8 @@ public interface ObjectRelationshipService extends BaseService {
 	 */
 	public ObjectRelationship addObjectRelationship(
 			long objectDefinitionId1, long objectDefinitionId2,
-			Map<Locale, String> labelMap, String name, String type)
+			String deletionType, Map<Locale, String> labelMap, String name,
+			String type)
 		throws PortalException;
 
 	public ObjectRelationship deleteObjectRelationship(

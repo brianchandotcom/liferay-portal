@@ -41,11 +41,13 @@ public class ObjectRelationshipServiceUtil {
 	 */
 	public static ObjectRelationship addObjectRelationship(
 			long objectDefinitionId1, long objectDefinitionId2,
-			Map<java.util.Locale, String> labelMap, String name, String type)
+			String deletionType, Map<java.util.Locale, String> labelMap,
+			String name, String type)
 		throws PortalException {
 
 		return getService().addObjectRelationship(
-			objectDefinitionId1, objectDefinitionId2, labelMap, name, type);
+			objectDefinitionId1, objectDefinitionId2, deletionType, labelMap,
+			name, type);
 	}
 
 	public static ObjectRelationship deleteObjectRelationship(

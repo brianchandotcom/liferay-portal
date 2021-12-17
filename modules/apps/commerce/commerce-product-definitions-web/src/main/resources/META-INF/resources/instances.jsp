@@ -36,6 +36,7 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= currentURLObj %>"
+				selectedItemsKey="cpinstanceId"
 				style="stacked"
 			/>
 		</aui:form>

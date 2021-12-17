@@ -51,7 +51,11 @@ export default function TableHead({
 									products.map((product) => {
 										return selectedSkusIdCounter !==
 											selectableSkusIdCounter
-											? {...product, selected: true}
+											? {
+													...product,
+													selected:
+														product.selectable,
+											  }
 											: {...product, selected: false};
 									})
 								);

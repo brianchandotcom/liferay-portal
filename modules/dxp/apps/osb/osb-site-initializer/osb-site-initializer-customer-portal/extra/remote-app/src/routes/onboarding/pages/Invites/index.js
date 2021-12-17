@@ -1,4 +1,4 @@
-import {useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {useFormikContext} from 'formik';
 import {useContext, useEffect, useState} from 'react';
@@ -7,6 +7,7 @@ import WarningBadge from '../../../../common/components/WarningBadge';
 import {ApplicationPropertiesContext} from '../../../../common/context/ApplicationPropertiesProvider';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {
+	addTeamMembersInvitation,
 	getAccountRolesAndAccountFlags,
 	getAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
@@ -27,6 +28,10 @@ const Invites = () => {
 	const {supportLink} = useContext(ApplicationPropertiesContext);
 	const [{project}, dispatch] = useContext(AppContext);
 	const {errors, setFieldValue, setTouched, values} = useFormikContext();
+
+	const [sendEmailData, {called, error}] = useMutation(
+		addTeamMembersInvitation
+	);
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState();
 	const [hasInitialError, setInitialError] = useState();
@@ -64,12 +69,31 @@ const Invites = () => {
 		}=${project.accountKey}`;
 	};
 
-	const handleSubmit = () => {
-		if (filledEmails) {
-			dispatch({
-				payload: nextStep,
-				type: actionTypes.CHANGE_STEP,
-			});
+	const handleSubmit = async () => {
+		const invites = values?.invites;
+
+		if (filledEmails && !called && invites) {
+			await Promise.all(
+				values.invites
+					.filter(({email}) => email)
+					.map(({email, roleId}) =>
+						sendEmailData({
+							variables: {
+								TeamMembersInvitation: {
+									email,
+									role: roleId,
+								},
+								scopeKey: LiferayTheme.getScopeGroupId(),
+							},
+						})
+					)
+			);
+			if (!error) {
+				dispatch({
+					payload: nextStep,
+					type: actionTypes.CHANGE_STEP,
+				});
+			}
 		}
 		else {
 			setInitialError(true);

@@ -133,6 +133,23 @@ export const addSetupDXPCloud = gql`
 	}
 `;
 
+export const addTeamMembersInvitation = gql`
+	mutation addTeamMembersInvitation(
+		$scopeKey: String
+		$TeamMembersInvitation: InputC_TeamMembersInvitation!
+	) {
+		c {
+			createTeamMembersInvitation(
+				scopeKey: $scopeKey
+				TeamMembersInvitation: $TeamMembersInvitation
+			) {
+				email
+				role
+			}
+		}
+	}
+`;
+
 export const getAccountRolesAndAccountFlags = gql`
 	query getAccountRolesAndAccountFlags(
 		$accountFlagsFilter: String

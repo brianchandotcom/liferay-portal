@@ -1,0 +1,43 @@
+{
+	"label": {
+		"en-US": "Team Members Invitation"
+	},
+	"name": "TeamMembersInvitation",
+	"objectFields": [
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Email"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "email",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Role"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "role",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Team Members Invitation"
+	},
+	"scope": "site",
+	"panelCategoryKey": "control_panel.object",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false
+}

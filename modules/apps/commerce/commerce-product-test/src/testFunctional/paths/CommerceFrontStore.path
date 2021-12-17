@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_CATALOG_IMAGE</td>
+	<td>//a[contains(@href,'${key_productName}')]//img[contains(@class,'card-picture')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_IMAGE</td>
 	<td>//a[contains(@href,'${key_productName}')]//div[contains(@style,'image')]</td>
 	<td></td>

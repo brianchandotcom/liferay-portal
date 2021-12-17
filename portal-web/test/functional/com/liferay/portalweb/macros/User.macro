@@ -2087,7 +2087,12 @@ definition {
 
 		MenuItem.click(menuItem = "Impersonate User");
 
-		SelectWindow(locator1 = "title=Home - ${siteName}");
+		if (isSet(siteName)) {
+			SelectWindow(locator1 = "title=Home - ${siteName}");
+		}
+		else {
+			SelectWindow.selectPopUp(locator1 = "null");
+		}
 
 		UserBar.gotoDropdown();
 	}

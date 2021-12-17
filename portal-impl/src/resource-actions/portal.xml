@@ -22,6 +22,7 @@
 				<action-key>EXPORT_USER</action-key>
 				<action-key>IMPERSONATE</action-key>
 				<action-key>MANAGE_COUNTRIES</action-key>
+				<action-key>MANAGE_LANGUAGE_OVERRIDES</action-key>
 				<action-key>UNLINK_LAYOUT_SET_PROTOTYPE</action-key>
 				<action-key>VIEW_CONTROL_PANEL</action-key>
 			</supports>

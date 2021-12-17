@@ -19,10 +19,6 @@
 <div className="frontend-js-components-sample-web">
 	<h1>Translation Manager</h1>
 
-	<h2>JSP Tag</h2>
-
-	<i>JSP Samples</i>
-
 	<h2>React Component</h2>
 
 	<div>
@@ -37,4 +33,8 @@
 			%>'
 		/>
 	</div>
+
+	<h2>JSP Tag</h2>
+
+	<i>JSP Samples</i>
 </div>

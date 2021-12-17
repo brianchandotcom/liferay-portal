@@ -59,6 +59,14 @@ definition {
 			portlet = "${portlet}");
 	}
 
+	macro gotoProductDetails {
+		var productName = StringUtil.lowerCase("${productName}");
+
+		Click(
+			key_productName = "${productName}",
+			locator1 = "CommerceFrontStore#PRODUCT_CARD_CATALOG_IMAGE");
+	}
+
 	macro gotoSpeedwellAccountDropdownItem {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
 

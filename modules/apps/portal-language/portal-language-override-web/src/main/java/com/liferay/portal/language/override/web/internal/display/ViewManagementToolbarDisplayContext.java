@@ -17,8 +17,6 @@ package com.liferay.portal.language.override.web.internal.display;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -26,12 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,37 +71,6 @@ public class ViewManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "add-language-key"));
 			}
 		).build();
-	}
-
-	public List<DropdownItem> getDropdownItems() {
-		DropdownItemList dropdownItemList = new DropdownItemList();
-
-		String selectedLanguageId = _viewDisplayContext.getSelectedLanguageId();
-
-		for (Locale locale : _viewDisplayContext.getAvailableLocales()) {
-			String languageId = LanguageUtil.getLanguageId(locale);
-
-			String icon = StringUtil.toLowerCase(
-				TextFormatter.format(languageId, TextFormatter.O));
-
-			dropdownItemList.add(
-				dropdownItem -> {
-					dropdownItem.put("symbolLeft", icon);
-					dropdownItem.setActive(
-						Objects.equals(selectedLanguageId, languageId));
-					dropdownItem.setHref(
-						HttpUtil.setParameter(
-							String.valueOf(getPortletURL()),
-							liferayPortletResponse.getNamespace() +
-								"selectedLanguageId",
-							languageId));
-					dropdownItem.setIcon(icon);
-					dropdownItem.setLabel(
-						TextFormatter.format(languageId, TextFormatter.O));
-				});
-		}
-
-		return dropdownItemList;
 	}
 
 	@Override

@@ -353,6 +353,16 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 			context);
 	}
 
+	public static CommerceInventoryBookedQuantity
+			restockCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				Map<String, String> context)
+		throws PortalException {
+
+		return getService().restockCommerceInventoryBookedQuantity(
+			userId, commerceInventoryBookedQuantityId, context);
+	}
+
 	/**
 	 * Updates the commerce inventory booked quantity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

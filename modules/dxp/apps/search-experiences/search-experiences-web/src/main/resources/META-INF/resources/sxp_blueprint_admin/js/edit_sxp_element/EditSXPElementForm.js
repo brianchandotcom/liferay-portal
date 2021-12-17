@@ -52,7 +52,8 @@ import SidebarPanel from './SidebarPanel';
 const parseJSONString = (jsonString, fieldName) => {
 	try {
 		return JSON.parse(jsonString);
-	} catch {
+	}
+	catch {
 		throw sub(Liferay.Language.get('x-is-invalid'), [fieldName]);
 	}
 };
@@ -76,6 +77,7 @@ const validateConfigKeys = (
 
 	const uiConfigKeys = uiConfigurationJSONObject.fieldSets
 		? uiConfigurationJSONObject.fieldSets.reduce((acc, curr) => {
+
 				// Find names within each fields array
 
 				const configKeys = curr.fields
@@ -145,10 +147,11 @@ function EditSXPElementForm({
 
 	const [variables, setVariables] = useState(filteredCategories);
 
+	/**
+	 * Workaround to force a re-render so `elementJSONEditorRef` will be
+	 * defined when calling `_handleVariableClick`
+	 */
 	useEffect(() => {
-		// Workaround to force a re-render so `elementJSONEditorRef` will be
-		// defined when calling `_handleVariableClick`
-
 		if (!readOnly) {
 			setShowSidebar(true);
 		}
@@ -203,7 +206,8 @@ function EditSXPElementForm({
 			if (!sxpElementJSONObject.title_i18n[defaultLocale]) {
 				throw Liferay.Language.get('error.default-locale-title-empty');
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			openErrorToast({
 				message: error,
 			});
@@ -220,6 +224,7 @@ function EditSXPElementForm({
 		} = sxpElementJSONObject;
 
 		try {
+
 			// If the warning modal is already open, assume the form was submitted
 			// using the "Continue To Save" action and should skip the schema
 			// validation step.
@@ -285,10 +290,12 @@ function EditSXPElementForm({
 				);
 
 				setIsSubmitting(false);
-			} else {
+			}
+			else {
 				navigate(redirectURL);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			openErrorToast();
 
 			setIsSubmitting(false);
@@ -311,7 +318,8 @@ function EditSXPElementForm({
 
 		try {
 			previewSXPElementJSON = JSON.parse(elementJSONEditorValue);
-		} catch (error) {
+		}
+		catch (error) {
 			return (
 				<ClayEmptyState
 					description={Liferay.Language.get(

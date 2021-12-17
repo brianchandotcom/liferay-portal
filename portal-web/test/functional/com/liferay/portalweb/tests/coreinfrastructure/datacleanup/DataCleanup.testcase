@@ -33,6 +33,8 @@ definition {
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
 
+		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
+
 		var expectedText = "com.liferay.softwarecatalog.service";
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "SELECT servletContextName FROM Release_;");

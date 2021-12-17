@@ -458,14 +458,19 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					tempFileEntry.getFileName());
 
 			String uniqueFileName = DLUtil.getUniqueFileName(
-				tempFileEntry.getGroupId(), folderId, originalSelectedFileName);
+				tempFileEntry.getGroupId(), folderId, originalSelectedFileName,
+				true);
+
+			String uniqueFileTitle = DLUtil.getUniqueTitle(
+				tempFileEntry.getGroupId(), folderId,
+				FileUtil.stripExtension(originalSelectedFileName));
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
-				tempFileEntry.getMimeType(),
-				FileUtil.stripExtension(uniqueFileName), description, changeLog,
-				tempFileEntry.getContentStream(), tempFileEntry.getSize(),
-				expirationDate, reviewDate, serviceContext);
+				tempFileEntry.getMimeType(), uniqueFileTitle, description,
+				changeLog, tempFileEntry.getContentStream(),
+				tempFileEntry.getSize(), expirationDate, reviewDate,
+				serviceContext);
 
 			_assetDisplayPageEntryFormProcessor.process(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),
@@ -1241,13 +1246,17 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				// Add file entry
 
 				String uniqueFileName = DLUtil.getUniqueFileName(
-					themeDisplay.getScopeGroupId(), folderId, sourceFileName);
+					themeDisplay.getScopeGroupId(), folderId, sourceFileName,
+					true);
+
+				String uniqueFileTitle = DLUtil.getUniqueTitle(
+					themeDisplay.getScopeGroupId(), folderId,
+					FileUtil.stripExtension(sourceFileName));
 
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, uniqueFileName, contentType,
-					FileUtil.stripExtension(uniqueFileName), description,
-					changeLog, inputStream, size, expirationDate, reviewDate,
-					serviceContext);
+					uniqueFileTitle, description, changeLog, inputStream, size,
+					expirationDate, reviewDate, serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(
 					"fileEntryId", fileEntry.getFileEntryId());

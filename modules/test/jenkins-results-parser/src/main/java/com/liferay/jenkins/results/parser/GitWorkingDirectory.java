@@ -1296,6 +1296,33 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
+	public String getMergeBaseCommitSHA(LocalGitBranch... localGitBranches) {
+		if (localGitBranches.length < 2) {
+			throw new IllegalArgumentException(
+				"Unable to perform merge-base with less than two branches");
+		}
+
+		StringBuilder sb = new StringBuilder("git merge-base");
+
+		for (LocalGitBranch localGitBranch : localGitBranches) {
+			sb.append(" ");
+			sb.append(localGitBranch.getName());
+		}
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT, sb.toString());
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get merge base commit SHA\n",
+					executionResult.getStandardError()));
+		}
+
+		return executionResult.getStandardOut();
+	}
+
 	public List<File> getModifiedDirsList(
 		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
 		List<PathMatcher> includesPathMatchers) {
@@ -1341,7 +1368,7 @@ public class GitWorkingDirectory {
 		sb.append("git diff --diff-filter=ADMR --name-only ");
 
 		sb.append(
-			_getMergeBaseCommitSHA(
+			getMergeBaseCommitSHA(
 				currentLocalGitBranch,
 				getLocalGitBranch(getUpstreamBranchName(), true)));
 
@@ -2553,33 +2580,6 @@ public class GitWorkingDirectory {
 		}
 
 		return sb.toString();
-	}
-
-	private String _getMergeBaseCommitSHA(LocalGitBranch... localGitBranches) {
-		if (localGitBranches.length < 2) {
-			throw new IllegalArgumentException(
-				"Unable to perform merge-base with less than two branches");
-		}
-
-		StringBuilder sb = new StringBuilder("git merge-base");
-
-		for (LocalGitBranch localGitBranch : localGitBranches) {
-			sb.append(" ");
-			sb.append(localGitBranch.getName());
-		}
-
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-			GitUtil.MILLIS_TIMEOUT, sb.toString());
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get merge base commit SHA\n",
-					executionResult.getStandardError()));
-		}
-
-		return executionResult.getStandardOut();
 	}
 
 	private String _getRemoteGitBranchesSHAReport(

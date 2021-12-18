@@ -876,6 +876,7 @@
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.staging.StagingUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.bean.BeanPropertiesUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.comment.CommentManagerUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.HttpUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.PortalUtil" />

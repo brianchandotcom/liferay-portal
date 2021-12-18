@@ -268,7 +268,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _numberOfItemsToDisplay;
 		}
 
-		_numberOfItemsToDisplay = getTotalNumberOfItems();
+		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
 		if (Validator.isNotNull(
 				_collectionStyledLayoutStructureItem.getPaginationType()) &&
@@ -276,10 +276,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				_collectionStyledLayoutStructureItem.getPaginationType(),
 				"none")) {
 
-			_numberOfItemsToDisplay = Math.min(
+			numberOfItemsToDisplay = Math.min(
 				_numberOfItemsToDisplay,
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
 		}
+
+		_numberOfItemsToDisplay = numberOfItemsToDisplay;
 
 		return _numberOfItemsToDisplay;
 	}

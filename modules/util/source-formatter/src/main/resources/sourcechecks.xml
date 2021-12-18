@@ -868,6 +868,7 @@
 		<check name="JavaOSGiReferenceCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@Component` annotation." />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil" />

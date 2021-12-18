@@ -452,6 +452,7 @@ public class CISystemHistoryReportUtil {
 
 		_MONTH_COUNT = _getBuildPropertyInt(
 			"ci.system.history.report.month.count", 12);
+
 		_MONTH_RECORD_COUNT = _getBuildPropertyInt(
 			"ci.system.history.report.month.record.count", 2);
 

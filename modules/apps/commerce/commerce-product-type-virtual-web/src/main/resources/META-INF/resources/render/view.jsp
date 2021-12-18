@@ -65,9 +65,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 					<div class="col-10 col-lg-10 col-md-9 full-image">
 
 						<%
-						long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT));
-
-						String defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(commerceAccountId, cpCatalogEntry.getCPDefinitionId());
+						String defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(CommerceUtil.getCommerceAccountId((CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT)), cpCatalogEntry.getCPDefinitionId());
 						%>
 
 						<c:if test="<%= Validator.isNotNull(defaultImageFileURL) %>">

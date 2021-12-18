@@ -31,6 +31,12 @@ if (accountGroupId > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));
 }
 
+long accountUserId = ParamUtil.getLong(request, "accountUserId");
+
+if (accountUserId > 0) {
+	accountEntryDisplaySearchContainer.setRowChecker(new AccountUserAccountEntryRowChecker(liferayPortletResponse, accountUserId));
+}
+
 SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementToolbarDisplayContext = new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 
 if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {

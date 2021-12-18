@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 
+import java.util.Objects;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -162,6 +164,11 @@ public class ImportObjectDefinitionMVCActionCommand
 				return objectLayoutColumnJSONObject;
 			});
 
+		String titleObjectFieldName = (String)objectDefinitionJSONObject.get(
+			"titleObjectFieldName");
+
+		objectDefinitionJSONObject.remove("titleObjectFieldName");
+
 		ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
 			objectDefinitionJSONObject.toString());
 
@@ -169,6 +176,19 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		ObjectDefinition postObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(objectDefinition);
+
+		for (ObjectField objectField : postObjectDefinition.getObjectFields()) {
+			if (Objects.equals(objectField.getName(), titleObjectFieldName)) {
+				postObjectDefinition.setTitleObjectFieldId(objectField.getId());
+
+				break;
+			}
+		}
+
+		postObjectDefinition.setPortlet(objectDefinition.getPortlet());
+
+		objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
 
 		_importObjectActions(
 			objectDefinition, postObjectDefinition, themeDisplay);

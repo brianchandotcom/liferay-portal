@@ -89,6 +89,18 @@ public class ExportObjectDefinitionMVCResourceCommand
 		JSONObject objectDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(objectDefinition.toString());
 
+		for (ObjectField objectField : objectDefinition.getObjectFields()) {
+			if (Objects.equals(
+					objectField.getId(),
+					objectDefinition.getTitleObjectFieldId())) {
+
+				objectDefinitionJSONObject.put(
+					"titleObjectFieldName", objectField.getName());
+
+				break;
+			}
+		}
+
 		ExportImportObjectDefinitiontUtil.apply(
 			objectDefinitionJSONObject,
 			objectLayoutColumnJSONObject -> {
@@ -128,7 +140,8 @@ public class ExportObjectDefinitionMVCResourceCommand
 			objectDefinitionJSONObject,
 			new String[] {
 				"dateCreated", "dateModified", "id", "listTypeDefinitionId",
-				"objectDefinitionId", "objectFieldId", "objectRelationshipId"
+				"objectDefinitionId", "objectFieldId", "objectRelationshipId",
+				"titleObjectFieldId"
 			});
 
 		String objectDefinitionJSON = objectDefinitionJSONObject.toString();

@@ -154,7 +154,8 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinitionId, 0, 0,
+				objectDefinitionId, 0,
+				GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
@@ -217,6 +218,7 @@ public class ObjectDefinitionResourceImpl
 							objectDefinition.getObjectDefinitionId());
 					}
 				).build();
+				active = objectDefinition.isActive();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();
@@ -241,6 +243,7 @@ public class ObjectDefinitionResourceImpl
 					objectLayout -> ObjectLayoutUtil.toObjectLayout(
 						null, objectLayout),
 					ObjectLayout.class);
+				panelCategoryKey = objectDefinition.getPanelCategoryKey();
 				pluralLabel = LocalizedMapUtil.getI18nMap(
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
@@ -258,6 +261,7 @@ public class ObjectDefinitionResourceImpl
 					}
 				};
 				system = objectDefinition.isSystem();
+				titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
 			}
 		};
 	}

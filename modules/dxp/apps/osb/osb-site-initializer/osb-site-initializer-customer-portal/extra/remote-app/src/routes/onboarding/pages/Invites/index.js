@@ -21,15 +21,18 @@ import {getInitialInvite, roles, steps} from '../../utils/constants';
 
 const ACCOUNT_SUBSCRIPTION_GROUP_NAME = 'DXP Cloud';
 const MAXIMUM_INVITES_COUNT = 10;
-const SLA_GOLD = 'Gold';
-const SLA_PLATINUM = 'Platinum';
+
+const SLA = {
+	gold: 'Gold',
+	platinum: 'Platinum',
+};
 
 const Invites = () => {
 	const {supportLink} = useContext(ApplicationPropertiesContext);
 	const [{project}, dispatch] = useContext(AppContext);
 	const {errors, setFieldValue, setTouched, values} = useFormikContext();
 
-	const [sendEmailData, {called, error}] = useMutation(
+	const [AddTeamMemberInvitation, {called, error}] = useMutation(
 		addTeamMembersInvitation
 	);
 
@@ -70,14 +73,14 @@ const Invites = () => {
 	};
 
 	const handleSubmit = async () => {
-		const invites = values?.invites;
+		const invites = values?.invites || [];
 
-		if (filledEmails && !called && invites) {
+		if (filledEmails && !called && invites.length) {
 			await Promise.all(
-				values.invites
+				invites
 					.filter(({email}) => email)
 					.map(({email, roleId}) =>
-						sendEmailData({
+						AddTeamMemberInvitation({
 							variables: {
 								TeamMembersInvitation: {
 									email,
@@ -128,7 +131,7 @@ const Invites = () => {
 				};
 			}
 
-			return [...prevAccountRoles];
+			return prevAccountRoles;
 		});
 	};
 
@@ -142,8 +145,8 @@ const Invites = () => {
 		const isPartner = project.partner;
 
 		if (
-			!SLA_CURRENT.includes(SLA_GOLD) &&
-			!SLA_CURRENT.includes(SLA_PLATINUM)
+			!SLA_CURRENT.includes(SLA.gold) &&
+			!SLA_CURRENT.includes(SLA.platinum)
 		) {
 			filterRoles = filterRoles.filter(
 				(label) => label !== roles.REQUESTOR
@@ -284,8 +287,8 @@ const Invites = () => {
 				<div className="mx-3 pt-3">
 					<h5 className="text-neutral-7">
 						{`${
-							project.slaCurrent.includes(SLA_GOLD) ||
-							project.slaCurrent.includes(SLA_PLATINUM)
+							project.slaCurrent.includes(SLA.gold) ||
+							project.slaCurrent.includes(SLA.platinum)
 								? roles.REQUESTOR
 								: roles.ADMIN
 						}	roles available: ${availableAdminsRoles} of ${

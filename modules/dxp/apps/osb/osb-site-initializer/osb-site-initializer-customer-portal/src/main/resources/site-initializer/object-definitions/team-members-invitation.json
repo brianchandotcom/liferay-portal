@@ -29,11 +29,11 @@
 			"type": "String"
 		}
 	],
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Team Members Invitation"
 	},
 	"scope": "site",
-	"panelCategoryKey": "control_panel.object",
 	"status": {
 		"code": 0,
 		"label": "approved",

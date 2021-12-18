@@ -61,6 +61,13 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 		>
 
 			<%
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"entityid", accountEntryDisplay.getAccountEntryId()
+				).put(
+					"entityname", accountEntryDisplay.getName()
+				).build());
+
 			String cssClass = "table-cell-expand";
 
 			Optional<User> userOptional = accountEntryDisplay.getPersonAccountEntryUserOptional();

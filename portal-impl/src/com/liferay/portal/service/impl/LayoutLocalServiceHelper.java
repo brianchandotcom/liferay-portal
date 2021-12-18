@@ -41,9 +41,12 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLValidator;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -73,10 +76,24 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Raymond Augé
  */
 public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
+
+	public void afterPropertiesSet() {
+		_serviceTracker = new ServiceTracker(
+			SystemBundleUtil.getBundleContext(),
+			LayoutFriendlyURLValidator.class, null);
+
+		_serviceTracker.open();
+	}
+
+	public void destroy() {
+		_serviceTracker.close();
+	}
 
 	public String getFriendlyURL(
 			long groupId, boolean privateLayout, long layoutId, String name,
@@ -107,13 +124,25 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				validateFriendlyURL(
 					groupId, privateLayout, layoutId, friendlyURL, languageId);
 
+				_layoutFriendlyURLValidator = _serviceTracker.getService();
+
+				if (_layoutFriendlyURLValidator != null) {
+					_layoutFriendlyURLValidator.validateFriendlyURLEntry(
+						groupId, privateLayout, layoutId, friendlyURL);
+				}
+
 				break;
 			}
 			catch (LayoutFriendlyURLException layoutFriendlyURLException) {
 				int type = layoutFriendlyURLException.getType();
 
 				if (type == LayoutFriendlyURLException.DUPLICATE) {
-					friendlyURL = originalFriendlyURL + i;
+					Layout layout = LayoutLocalServiceUtil.fetchLayout(
+						groupId, privateLayout, layoutId);
+
+					if (layout == null) {
+						friendlyURL = originalFriendlyURL + i;
+					}
 				}
 				else {
 					friendlyURL = StringPool.SLASH + layoutId;
@@ -715,5 +744,10 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	private static final Pattern _urlSeparatorPattern = Pattern.compile(
 		"/[A-Za-z]");
+
+	private LayoutFriendlyURLValidator _layoutFriendlyURLValidator;
+	private ServiceTracker
+		<LayoutFriendlyURLValidator, LayoutFriendlyURLValidator>
+			_serviceTracker;
 
 }

@@ -191,9 +191,9 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		typeSettingsUnicodeProperties.setProperty(
 			"classTypeId", jsonObject.getString("classTypeId"));
 		typeSettingsUnicodeProperties.setProperty(
-			"type", jsonObject.getString("type"));
-		typeSettingsUnicodeProperties.setProperty(
 			"title", jsonObject.getString("title"));
+		typeSettingsUnicodeProperties.setProperty(
+			"type", jsonObject.getString("type"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(

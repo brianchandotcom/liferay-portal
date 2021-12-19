@@ -149,8 +149,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to add multiple SiteNavigationMenuItem for ",
-						"siteNavigationMenuId ", siteNavigationMenuId,
+						"Unable to add multiple site navigation menu items ",
+						"for site navigation menu ID ", siteNavigationMenuId,
 						" and type ", siteNavigationMenuItemType));
 			}
 

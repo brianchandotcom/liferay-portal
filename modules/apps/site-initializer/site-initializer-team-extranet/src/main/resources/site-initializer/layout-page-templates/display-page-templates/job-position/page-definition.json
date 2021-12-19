@@ -69,13 +69,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"mapping": {
@@ -119,7 +121,8 @@
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"mapping": {
@@ -152,7 +155,8 @@
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"mapping": {
@@ -186,13 +190,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"mapping": {
@@ -258,11 +264,13 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -279,11 +287,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -341,7 +351,8 @@
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -373,7 +384,8 @@
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -403,13 +415,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -433,7 +447,8 @@
 													"fragment": {
 														"key": "social-links"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "socialTwitterLink",
@@ -444,7 +459,8 @@
 																			"value": "https://twitter.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -457,7 +473,8 @@
 																			"value": "https://www.linkedin.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -470,7 +487,8 @@
 																			"value": "https://www.facebook.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -483,7 +501,8 @@
 																			"value": "https://www.instagram.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														}
@@ -508,13 +527,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -541,11 +562,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -563,13 +586,15 @@
 											"fragment": {
 												"key": "text-block"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"mapping": {
@@ -679,11 +704,13 @@
 									"rowViewports": [
 										{
 											"id": "landscapeMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
@@ -699,11 +726,13 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -730,7 +759,8 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -761,11 +791,13 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -791,7 +823,8 @@
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -840,7 +873,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -848,13 +882,15 @@
 													"fragment": {
 														"key": "job-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "date",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -875,7 +911,8 @@
 																			"value": "https://twitter.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -888,7 +925,8 @@
 																			"value": "https://www.linkedin.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -896,7 +934,8 @@
 															"id": "shortDescription",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -922,7 +961,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -948,7 +988,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -969,7 +1010,8 @@
 																			"value": "https://www.facebook.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -982,7 +1024,8 @@
 																			"value": "https://www.instagram.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														}
@@ -1013,13 +1056,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {

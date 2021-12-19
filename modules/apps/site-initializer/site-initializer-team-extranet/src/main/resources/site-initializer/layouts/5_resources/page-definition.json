@@ -69,13 +69,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -108,7 +110,8 @@
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -141,13 +144,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {

@@ -69,13 +69,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -108,7 +110,8 @@
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -141,13 +144,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -181,7 +186,8 @@
 					"fragmentConfig": {
 						"classContainerName": "filter-bar"
 					},
-					"fragmentFields": [],
+					"fragmentFields": [
+					],
 					"fragmentStyle": {
 						"backgroundColor": "gray200Color",
 						"paddingBottom": "6",
@@ -264,11 +270,13 @@
 											"rowViewports": [
 												{
 													"id": "landscapeMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
@@ -284,11 +292,13 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
@@ -306,8 +316,10 @@
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": []
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															]
 														},
 														"type": "Fragment"
 													}
@@ -318,11 +330,13 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
@@ -340,8 +354,10 @@
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": []
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															]
 														},
 														"type": "Fragment"
 													}
@@ -352,11 +368,13 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
@@ -374,11 +392,13 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
@@ -396,8 +416,10 @@
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"marginTop": "4",
 																"textAlign": ""
@@ -499,7 +521,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -507,7 +530,8 @@
 													"fragment": {
 														"key": "job-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "date",
@@ -523,7 +547,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -544,7 +569,8 @@
 																			"value": "https://twitter.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -557,7 +583,8 @@
 																			"value": "https://www.linkedin.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -575,7 +602,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -601,7 +629,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -627,7 +656,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -648,7 +678,8 @@
 																			"value": "https://www.facebook.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -661,7 +692,8 @@
 																			"value": "https://www.instagram.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														}

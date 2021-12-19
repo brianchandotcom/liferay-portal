@@ -244,8 +244,9 @@ const UploadDocuments = () => {
 
 			<div className="d-flex justify-content-end mt-6">
 				<ClayButton
-					className="btn btn-primary font-weight-bolder rounded-sm text-neutral-0 text-paragraph"
+					className="font-weight-bolder rounded-sm text-neutral-0 text-paragraph"
 					disabled={loading}
+					displayType="primary"
 					onClick={onClickConfirmUpload}
 				>
 					CONFIRM UPLOADS

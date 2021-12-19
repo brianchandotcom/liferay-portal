@@ -89,8 +89,9 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 
 	const infoPanelButton = () => (
 		<ClayLabel
-			className={classNames('label-inverse-primary btn-info-panel mt-3', {
-				'label-solid-info': selectedTrigger,
+			className={classNames('btn-info-panel mt-3', {
+				'label-inverse-primary': selectedTrigger,
+				'label-tonal-primary': !selectedTrigger,
 			})}
 			onClick={showInfoPanel}
 		>
@@ -165,7 +166,8 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 					})}
 				>
 					<ClayButton
-						className="btn btn-primary font-weight-bolder ml-3 search text-paragraph text-small-caps"
+						className="font-weight-bolder ml-3 search text-paragraph text-small-caps"
+						displayType="primary"
 						onClick={() => {
 							onSearch(form?.basics?.businessSearch);
 						}}

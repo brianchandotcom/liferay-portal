@@ -17,12 +17,10 @@ export function MoreInfoButton({callback, event, selected, value}) {
 
 	return (
 		<ClayLabel
-			className={classNames(
-				'btn-more-info label-inverse-primary rounded-sm',
-				{
-					'label-solid-info': selected,
-				}
-			)}
+			className={classNames('btn-more-info rounded-sm', {
+				'label-inverse-primary': selected,
+				'label-tonal-primary': !selected,
+			})}
 			onClick={updateState}
 		>
 			<div className="align-items-center d-flex">

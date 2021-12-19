@@ -1,28 +1,30 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react';
 import {LiferayService} from '../../../common/services/liferay';
 
 export function useProductQuotes() {
-	const [data, setData] = useState();
+	const [productQuotes, setProductQuotes] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState();
 
-	useEffect(() => {
-		_loadProductQuotes();
-	}, []);
-
-	const _loadProductQuotes = async () => {
+	const getProductQuotes = async () => {
 		try {
 			const response = await LiferayService.getProductQuotes();
-			setData(response);
+
+			setProductQuotes(response);
 		}
 		catch (error) {
 			setError(error);
 		}
+		setLoading(false);
 	};
 
+	useEffect(() => {
+		getProductQuotes();
+	}, []);
+
 	return {
-		isError: error,
-		isLoading: !data && !error,
-		productQuotes: data || [],
+		error,
+		loading,
+		productQuotes,
 	};
 }

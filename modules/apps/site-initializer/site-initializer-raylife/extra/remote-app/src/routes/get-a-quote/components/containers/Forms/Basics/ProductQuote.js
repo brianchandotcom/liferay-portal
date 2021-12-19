@@ -29,12 +29,14 @@ export function FormBasicProductQuote({form}) {
 
 	useEffect(() => {
 		const productQuoteId = form?.basics?.productQuote;
+
 		if (productQuotes.length && productQuoteId) {
 			const productQuote = productQuotes.find(
 				({id}) => id === productQuoteId
 			);
 			setValue('basics.productQuoteName', productQuote.title);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form?.basics?.productQuote, productQuotes]);
 
 	const goToPreviousPage = () => {

@@ -161,7 +161,7 @@ const ProductComparison = ({
 					{purchasable && (
 						<div className="bg-transparent d-flex justify-content-center">
 							<ClayButton
-								className={classNames('btn px-4 py-3', {
+								className={classNames('px-4 py-3', {
 									'btn-outline-primary': !mostPopular,
 									'btn-primary': mostPopular,
 								})}

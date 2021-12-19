@@ -192,8 +192,9 @@ const PaymentMethod = () => {
 								</div>
 								<div className="c-mb-2 c-mt-10 d-flex justify-content-end payment-button">
 									<ClayButton
-										className="btn btn-solid btn-variant-secondary c-px-5 display-4 text-link-md text-uppercase"
+										className="btn-solid c-px-5 display-4 text-link-md text-uppercase"
 										disabled={!agree}
+										displayType="style-secondary"
 										onClick={() =>
 											onClickPayNow(checkedMethod)
 										}

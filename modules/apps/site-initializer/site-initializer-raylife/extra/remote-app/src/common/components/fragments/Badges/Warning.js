@@ -4,7 +4,7 @@ import React from 'react';
 
 export function WarningBadge({children}) {
 	return (
-		<ClayLabel className="label-inverse-danger mt-1 mx-0 p-0 rounded w-100">
+		<ClayLabel className="label-tonal-danger mt-1 mx-0 p-0 rounded w-100">
 			<div className="align-items-center badge d-flex m-0 warning">
 				<span className="inline-item inline-item-before">
 					<ClayIcon

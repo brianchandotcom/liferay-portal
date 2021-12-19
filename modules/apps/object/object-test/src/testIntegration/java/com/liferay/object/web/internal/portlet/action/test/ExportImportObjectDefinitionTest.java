@@ -93,6 +93,9 @@ public class ExportImportObjectDefinitionTest {
 				JSONFactoryUtil.createJSONObject(json),
 				JSONFactoryUtil.createJSONObject(
 					byteArrayOutputStream.toString())));
+
+		_objectDefinitionResource.deleteObjectDefinition(
+			objectDefinition.getId());
 	}
 
 	private MockLiferayPortletActionRequest

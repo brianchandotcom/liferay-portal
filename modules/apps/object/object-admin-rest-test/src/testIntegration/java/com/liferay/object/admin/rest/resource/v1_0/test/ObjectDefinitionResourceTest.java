@@ -141,6 +141,7 @@ public class ObjectDefinitionResourceTest
 				}
 			});
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
+		objectDefinition.setTitleObjectFieldId(Long.valueOf(0));
 
 		return objectDefinition;
 	}

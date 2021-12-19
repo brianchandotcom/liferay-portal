@@ -9,6 +9,7 @@
 		"update": {
 		}
 	},
+	"active": false,
 	"label": {
 		"en-US": "Object Definition"
 	},
@@ -95,6 +96,7 @@
 			]
 		}
 	],
+	"panelCategoryKey": "",
 	"pluralLabel": {
 		"en-US": "Object Definitions"
 	},
@@ -105,5 +107,6 @@
 		"label": "draft",
 		"label_i18n": "Draft"
 	},
-	"system": false
+	"system": false,
+	"titleObjectFieldName": "textField1"
 }

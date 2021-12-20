@@ -454,6 +454,19 @@ definition {
 		}
 	}
 
+	macro getFriendlyURL {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var key_friendlyURL = "";
+		var friendlyURL = selenium.getElementValue("SitePages#FRIENDLY_URL");
+
+		return "${baseURL}/web/guest${friendlyURL}";
+	}
+
 	@summary = "Go to the page creation form through the empty-result-message taglib"
 	macro gotoAddFirstPage {
 		var key_menuItem = "${pageType}";

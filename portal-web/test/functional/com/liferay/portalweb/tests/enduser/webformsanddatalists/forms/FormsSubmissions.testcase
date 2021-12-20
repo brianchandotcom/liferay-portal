@@ -389,7 +389,7 @@ definition {
 			pageName = "Form Page 1",
 			sitePageType = "Widget Page");
 
-		var friendlyURL = SitePages.getFriendlyURL();
+		var friendlyURL = PagesAdmin.getFriendlyURL();
 
 		FormsAdmin.addForm();
 

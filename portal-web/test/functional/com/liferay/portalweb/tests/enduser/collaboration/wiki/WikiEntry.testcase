@@ -41,29 +41,28 @@ definition {
 	@description = "This is a test for LPS-136983. It checks that an external link can be accessed from a wiki page."
 	@priority = "3"
 	test CanAccessExternalLink {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki");
-
-		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+		WikiNavigator.openToAddPage(
+			groupName = "Guest",
+			siteURLKey = "guest",
 			wikiNodeName = "Main");
 
-		WikiNode.addWikiPage(
-			wikiPageContent = "",
-			wikiPageTitle = "Wiki Page Name");
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		WikiEntry.addLinkInContent(link = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
+		WikiEntry.addLinkToContent(externalLink = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
 
 		PortletEntry.publish();
 
-		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Name");
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
 		Click(locator1 = "WikiEntry#BODY_LINK");
 
 		AssertVisible(
-			key_imageSourceURL = "Document_1",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+			key_contentImageName = "Document_1.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 
 	@description = "This is a test for LPS-136987. It checks that related assets can be added to a page."

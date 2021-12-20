@@ -222,8 +222,6 @@ public class ExportTranslationDisplayContext {
 				LanguageUtil.getAvailableLocales(
 					_themeDisplay.getSiteGroupId()))
 		).put(
-			"classPK", _classPK
-		).put(
 			"defaultSourceLanguageId", _getDefaultSourceLanguageId()
 		).put(
 			"experiences", getExperiences()

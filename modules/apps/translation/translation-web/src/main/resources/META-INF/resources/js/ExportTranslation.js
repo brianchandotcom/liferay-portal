@@ -357,7 +357,6 @@ ExportTranslation.propTypes = {
 			value: PropTypes.string.isRequired,
 		})
 	),
-	keys: PropTypes.array,
 };
 
 export default ExportTranslation;

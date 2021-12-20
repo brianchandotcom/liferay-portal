@@ -4554,7 +4554,7 @@ definition {
 	When: trying to create a new experience without filling the Experience Name input
 	Then: the modal does not hides away and the Experience Name input reports an error"
 	@priority = "4"
-	test RequiredField {
+	test RequiredExperienceNameField {
 		task ("Try to create new experience without name") {
 			ContentPages.gotoPageEditor();
 

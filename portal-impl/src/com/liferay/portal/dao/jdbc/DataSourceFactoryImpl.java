@@ -600,8 +600,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				PropsKeys.SETUP_DATABASE_JAR_URL, new Filter(driverClassName));
 			String name = PropsUtil.get(
 				PropsKeys.SETUP_DATABASE_JAR_NAME, new Filter(driverClassName));
+			String sha1 = PropsUtil.get(
+				PropsKeys.SETUP_DATABASE_JAR_SHA1, new Filter(driverClassName));
 
-			if (Validator.isNull(url) || Validator.isNull(name)) {
+			if (Validator.isNull(url) || Validator.isNull(name) ||
+				Validator.isNull(sha1)) {
+
 				throw classNotFoundException;
 			}
 
@@ -621,7 +625,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					Paths.get(
 						PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
 						name),
-					(URLClassLoader)classLoader);
+					(URLClassLoader)classLoader, sha1);
 			}
 			catch (Exception exception) {
 				_log.error(

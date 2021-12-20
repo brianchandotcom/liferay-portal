@@ -31,6 +31,7 @@ const props = {
 	],
 	portletNamespace:
 		'_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_',
+	totalItems: 1,
 };
 
 describe('index', () => {

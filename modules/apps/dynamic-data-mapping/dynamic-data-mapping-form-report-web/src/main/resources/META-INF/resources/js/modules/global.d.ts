@@ -12,6 +12,38 @@
  * details.
  */
 
-import {FormReport} from 'data-engine-js-components-web';
-
-export default FormReport;
+type FieldChangeEventHandler<T = any> = (event: {
+	target: {
+		value: T;
+	};
+}) => void;
+type Locale =
+	| 'ar_SA'
+	| 'ca_ES'
+	| 'de_DE'
+	| 'en_US'
+	| 'es_ES'
+	| 'fi_FI'
+	| 'fr_FR'
+	| 'hu_HU'
+	| 'nl_NL'
+	| 'ja_JP'
+	| 'pt_BR'
+	| 'sv_SE'
+	| 'zh_CN';
+type LocalizedTextKey =
+	| 'summary'
+	| 'there-are-no-entries'
+	| 'x-entries'
+	| 'x-entry';
+type LocalizedValue<T> = {
+	[key in Locale]?: T;
+};
+declare const Liferay: {
+	Language: {
+		get: (key: LocalizedTextKey) => string;
+	};
+	Util: {
+		sub: (string: string, data: any, ...others: string[]) => string;
+	};
+};

@@ -12,21 +12,20 @@
  * details.
  */
 
-import {useEffect} from 'react';
+/// <reference types="react" />
 
-/**
- * This is a fake component that only takes advantage of the React lifecycle to
- * manipulate the visibility of the report page, it is currently rendered via
- * JSP and it is necessary to control visibility via JavaScript.
- */
-export function Report() {
-	useEffect(() => {
-		const formReport = document.querySelector('.portlet-ddm-form-report');
-
-		formReport.classList.remove('hide');
-
-		return () => formReport.classList.add('hide');
-	}, []);
-
-	return null;
+import './index.scss';
+export default function Index({
+	lastModifiedDate,
+	totalItems,
+	...otherProps
+}: IProps): JSX.Element;
+interface IProps {
+	data?: string;
+	fields: unknown;
+	formReportRecordsFieldValuesURL: string;
+	lastModifiedDate: string;
+	portletNamespace: string;
+	totalItems: number;
 }
+export {};

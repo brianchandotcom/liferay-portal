@@ -14,105 +14,49 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<div class="hide portlet-ddm-form-report" id="container-portlet-ddm-form-report">
-	<div class="portlet-ddm-form-report__header">
-		<clay:container-fluid>
-			<clay:content-row
-				cssClass="align-items-center"
-			>
-				<h2 class="portlet-ddm-form-report__title text-truncate">
-					<c:choose>
-						<c:when test="<%= totalItems == 1 %>">
-							<liferay-ui:message arguments="<%= totalItems %>" key="x-entry" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message arguments="<%= totalItems %>" key="x-entries" />
-						</c:otherwise>
-					</c:choose>
-				</h2>
-			</clay:content-row>
+<%@ page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
+page import="com.liferay.dynamic.data.mapping.form.report.web.internal.display.context.DDMFormReportDisplayContext" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-			<clay:content-row
-				cssClass="align-items-center"
-			>
-				<span class="portlet-ddm-form-report__subtitle text-truncate">
-					<c:choose>
-						<c:when test="<%= totalItems > 0 %>">
-							<%= ddmFormReportDisplayContext.getLastModifiedDate() %>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="there-are-no-entries" />
-						</c:otherwise>
-					</c:choose>
-				</span>
-			</clay:content-row>
-		</clay:container-fluid>
-	</div>
+<liferay-frontend:defineObjects />
 
-	<clay:navigation-bar
-		cssClass="portlet-ddm-form-report__tabs"
-		navigationItems='<%=
-			new JSPNavigationItemList(pageContext) {
-				{
-					add(
-						navigationItem -> {
-							navigationItem.setActive(true);
-							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "summary"));
-						});
-				}
-			}
-		%>'
-	/>
+<liferay-theme:defineObjects />
 
-	<hr class="m-0" />
+<%
+DDMFormReportDisplayContext ddmFormReportDisplayContext = (DDMFormReportDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />summaryTabContent">
-		<react:component
-			module="js/index"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"data", ddmFormInstanceReportData
-				).put(
-					"fields", ddmFormReportDisplayContext.getFieldsJSONArray()
-				).put(
-					"formReportRecordsFieldValuesURL", ddmFormReportDisplayContext.getFormReportRecordsFieldValuesURL()
-				).put(
-					"portletNamespace", PortalUtil.getPortletNamespace(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_REPORT)
-				).build()
-			%>'
-		/>
-	</div>
-</div>
+String ddmFormInstanceReportData = StringPool.BLANK;
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-	var delegate = delegateModule.default;
+DDMFormInstanceReport ddmFormInstanceReport = ddmFormReportDisplayContext.getDDMFormInstanceReport();
 
-	delegate(
-		document.querySelector('.portlet-ddm-form-report__tabs'),
-		'click',
-		'li',
-		(event) => {
-			var navItem = event.delegateTarget.closest('.nav-item');
-			var navItemIndex = Number(navItem.dataset.navItemIndex);
-			var navLink = navItem.querySelector('.nav-link');
+if (ddmFormInstanceReport != null) {
+	ddmFormInstanceReportData = ddmFormInstanceReport.getData();
+}
+%>
 
-			document
-				.querySelector('.portlet-ddm-form-report__tabs li > .active')
-				.classList.remove('active');
-			navLink.classList.add('active');
-
-			var summaryTabContent = document.querySelector(
-				'#<portlet:namespace />summaryTabContent'
-			);
-
-			if (navItemIndex === 0) {
-				summaryTabContent.classList.remove('hide');
-			}
-			else {
-				summaryTabContent.classList.add('hide');
-			}
-		}
-	);
-</aui:script>
+<react:component
+	module="js/index"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"data", ddmFormInstanceReportData
+		).put(
+			"fields", ddmFormReportDisplayContext.getFieldsJSONArray()
+		).put(
+			"formReportRecordsFieldValuesURL", ddmFormReportDisplayContext.getFormReportRecordsFieldValuesURL()
+		).put(
+			"lastModifiedDate", ddmFormReportDisplayContext.getLastModifiedDate()
+		).put(
+			"portletNamespace", PortalUtil.getPortletNamespace(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_REPORT)
+		).put(
+			"totalItems", ddmFormReportDisplayContext.getTotalItems()
+		).build()
+	%>'
+/>

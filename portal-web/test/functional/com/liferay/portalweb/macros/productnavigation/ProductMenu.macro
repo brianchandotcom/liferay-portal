@@ -1,5 +1,26 @@
 definition {
 
+	@summary = "Change site default language in Site Settings."
+	macro changeDefaultLanguage {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Click(
+			key_itemName = "Localization",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Click(
+			key_fieldLabel = "Define a custom default language",
+			locator1 = "SystemSettings#LABEL");
+
+		Select(
+			locator1 = "Select#SITE_DEFAULT_LANGUAGE",
+			value1 = "${defaultPortalLanguage}");
+
+		Button.clickSave();
+	}
+
 	macro gotoHomePage {
 		ProductMenuHelper.openProductMenu();
 

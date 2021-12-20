@@ -16,19 +16,23 @@ package com.liferay.commerce.media.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -133,9 +137,22 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 					ActionKeys.VIEW);
 			}
 			else if (className.equals(CPDefinition.class.getName())) {
-				_commerceProductViewPermission.check(
-					PermissionThreadLocal.getPermissionChecker(),
-					commerceAccountId, cpAttachmentFileEntry.getClassPK());
+				if (commerceAccountId ==
+						CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
+
+					CPDefinition cpDefinition =
+						_cpDefinitionLocalService.getCPDefinition(
+							cpAttachmentFileEntry.getClassPK());
+
+					_commerceCatalogModelResourcePermission.check(
+						PermissionThreadLocal.getPermissionChecker(),
+						cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
+				}
+				else {
+					_commerceProductViewPermission.check(
+						PermissionThreadLocal.getPermissionChecker(),
+						commerceAccountId, cpAttachmentFileEntry.getClassPK());
+				}
 			}
 		}
 
@@ -167,6 +184,12 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
+	)
+	private ModelResourcePermission<CommerceCatalog>
+		_commerceCatalogModelResourcePermission;
+
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
@@ -176,6 +199,9 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private Portal _portal;

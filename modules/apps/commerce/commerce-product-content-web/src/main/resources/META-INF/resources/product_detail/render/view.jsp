@@ -32,7 +32,10 @@ long stockQuantity = 0;
 if (cpSku != null) {
 	hideCssClass = StringPool.BLANK;
 	skuId = cpSku.getCPInstanceId();
-	stockQuantity = Integer.valueOf(cpContentHelper.getStockQuantity(request));
+
+	if (!Validator.isBlank(cpContentHelper.getStockQuantity(request))) {
+		stockQuantity = Integer.valueOf(cpContentHelper.getStockQuantity(request));
+	}
 }
 %>
 

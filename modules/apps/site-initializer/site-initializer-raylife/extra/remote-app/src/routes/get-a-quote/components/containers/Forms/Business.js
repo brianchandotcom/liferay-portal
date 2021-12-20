@@ -4,7 +4,7 @@ import {NumberControlledInput} from '../../../../../common/components/connectors
 import {PercentageControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Percentage';
 import {LegalEntityControlledSelect} from '../../../../../common/components/connectors/Controlled/Select/LegalEntity';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
-import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {CardFormActions} from '../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../common/components/fragments/Card/FormCard';
 import {TIP_EVENT} from '../../../../../common/utils/events';
 import {PERCENTAGE_REGEX_MAX_100} from '../../../../../common/utils/patterns';
@@ -156,7 +156,7 @@ export function FormBusiness({form}) {
 				)}
 			</div>
 
-			<CardFormActionsWithSave
+			<CardFormActions
 				isValid={isValid}
 				onNext={onNext}
 				onPrevious={onPrevious}

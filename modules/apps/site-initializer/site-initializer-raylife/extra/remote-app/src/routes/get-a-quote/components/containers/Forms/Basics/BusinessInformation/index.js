@@ -5,7 +5,7 @@ import {ControlledInput} from '../../../../../../../common/components/connectors
 import {EmailControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Email';
 import {WebsiteControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Website';
 import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
-import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {CardFormActions} from '../../../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
 import {TIP_EVENT} from '../../../../../../../common/utils/events';
@@ -120,7 +120,7 @@ export function FormBasicBusinessInformation({form}) {
 				<BusinessInformationAddress />
 			</div>
 
-			<CardFormActionsWithSave
+			<CardFormActions
 				isValid={isValid}
 				onNext={onNext}
 				onPrevious={onPrevious}

@@ -585,6 +585,8 @@ definition {
 	@description = "This is a test for LPS-141750. Create Account in Masterclass"
 	@priority = "4"
 	test CreateAccountInMasterclass {
+		property test.name.skip.portal.instance = "Masterclass#CreateAccountInMasterclass";
+
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
 		}
@@ -619,7 +621,7 @@ definition {
 
 		task ("Sign In the New Account and Assert the User Name") {
 			Masterclass.signIn(
-				emailAddress = "user1@liferay.com",
+				emailAddress = "user@liferay.com",
 				password = "test");
 
 			JSONUser.setFirstPassword(
@@ -636,6 +638,8 @@ definition {
 	@description = "This is a test for LPS-141750. Forgot Password in Masterclass"
 	@priority = "4"
 	test ForgotPasswordInMasterclass {
+		property test.name.skip.portal.instance = "Masterclass#ForgotPasswordInMasterclass";
+
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
 		}

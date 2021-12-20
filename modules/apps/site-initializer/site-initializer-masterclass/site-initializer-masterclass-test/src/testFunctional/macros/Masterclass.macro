@@ -26,9 +26,9 @@ definition {
 	}
 
 	macro createAccount {
-		Click(
-			labelOption = "Create Account",
-			locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+		AssertClick(
+			locator1 = "Link#CREATE_ACCOUNT",
+			value1 = "Create Account");
 
 		Type(
 			labelTitle = "Screen Name",

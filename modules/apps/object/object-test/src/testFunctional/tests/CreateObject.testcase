@@ -2120,7 +2120,6 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject");
 
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.assertObjectStatus(
@@ -2207,7 +2206,6 @@ definition {
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject");
-
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 

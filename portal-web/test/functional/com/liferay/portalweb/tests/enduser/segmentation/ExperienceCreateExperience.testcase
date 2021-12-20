@@ -4553,14 +4553,13 @@ definition {
 	@description = "LPS-91946: Given: in the Site Editor => Page => Content Editor; Having at least on Segment created.
 	When: trying to create a new experience without filling the Experience Name input
 	Then: the modal does not hides away and the Experience Name input reports an error"
-	@ignore = "true"
 	@priority = "4"
 	test RequiredField {
 		task ("Try to create new experience without name") {
 			ContentPages.gotoPageEditor();
 
 			PageEditor.addExperience(
-				experienceName = "", 
+				experienceName = "",
 				segmentName = "Anyone");
 		}
 

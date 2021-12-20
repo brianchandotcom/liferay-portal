@@ -57,7 +57,7 @@ public class DispatchLogSearchContainerFactory {
 					"modified-date")));
 		dispatchLogSearchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
-				liferayPortletRequest, DispatchPortletKeys.DISPATCH, "asc"));
+				liferayPortletRequest, DispatchPortletKeys.DISPATCH, "desc"));
 
 		long dispatchTriggerId = ParamUtil.getLong(
 			liferayPortletRequest, "dispatchTriggerId");

@@ -690,15 +690,24 @@ definition {
 	@priority = "3"
 	test MasterclassApplyinDesktopSize {
 		task ("Go to Apply Page") {
-			Navigator.gotoSitePage(
-				pageName = "Apply",
-				siteName = "Test Masterclass Name");
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Apply",
+					siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "desktop",
-				elementsList = "navbar,heading,text-block,footer");
+		task ("Preview the Page with Desktop Size") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "heading,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -706,15 +715,24 @@ definition {
 	@priority = "3"
 	test MasterclassApplyinMobileSize {
 		task ("Go to Apply Page") {
-			Navigator.gotoSitePage(
-				pageName = "Apply",
-				siteName = "Test Masterclass Name");
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Apply",
+					siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "smartphone",
-				elementsList = "navbar,heading,text-block,footer");
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "heading,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -722,15 +740,24 @@ definition {
 	@priority = "3"
 	test MasterclassApplyinTabletSize {
 		task ("Go to Apply Page") {
-			Navigator.gotoSitePage(
-				pageName = "Apply",
-				siteName = "Test Masterclass Name");
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Apply",
+					siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "tablet",
-				elementsList = "navbar,heading,text-block,footer");
+		task ("Preview the Page with Tablet Size") {
+			MobileDevice.previewPG(deviceType = "tablet");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "heading,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -738,15 +765,24 @@ definition {
 	@priority = "4"
 	test MasterclassBloginDesktopSize {
 		task ("Go to Blog Page") {
-			Navigator.gotoSitePage(
-				pageName = "Blog",
-				siteName = "Test Masterclass Name");
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Blog",
+					siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "desktop",
-				elementsList = "navbar,heading,text-block,footer");
+		task ("Preview the Page with Desktop Size") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "heading,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -754,15 +790,24 @@ definition {
 	@priority = "4"
 	test MasterclassBloginMobileSize {
 		task ("Go to Blog Page") {
-			Navigator.gotoSitePage(
-				pageName = "Blog",
-				siteName = "Test Masterclass Name");
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Blog",
+					siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "smartphone",
-				elementsList = "navbar,heading,text-block,footer");
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "heading,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -770,9 +815,9 @@ definition {
 	@priority = "4"
 	test MasterclassBloginTabletSize {
 		task ("Go to Blog Page") {
-			Navigator.gotoSitePage(
-				pageName = "Blog",
-				siteName = "Test Masterclass Name");
+			ContentPagesNavigator.openViewContentPage(
+					pageName = "Blog",
+					siteName = "Test Masterclass Name");
 		}
 
 		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
@@ -786,42 +831,75 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test MasterclassHomeinDesktopSize {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		task ("Go to Home Page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "desktop",
-				elementsList = "navbar,hero,align-items-lg-start,footer");
+		task ("Preview the Page with Desktop Size") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "hero,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Mobile size"
 	@priority = "4"
 	test MasterclassHomeinMobileSize {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		task ("Go to Home Page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "smartphone",
-				elementsList = "navbar,hero,align-items-lg-start,footer");
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "hero,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Tablet size"
 	@priority = "4"
 	test MasterclassHomeinTabletSize {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+		task ("Go to Home Page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "tablet",
-				elementsList = "navbar,hero,align-items-lg-start,footer");
+		task ("Preview the Page with Tablet Size") {
+			MobileDevice.previewPG(deviceType = "tablet");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "hero,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -829,19 +907,24 @@ definition {
 	@priority = "4"
 	test MasterclassMyLearninginDesktopSize {
 		task ("Go to My Learning Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "My Learning");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "My Learning",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "desktop",
-				elementsList = "navbar,private-header,portlet-body,footer");
+		task ("Preview the Page with Desktop Size") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "header,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -849,19 +932,24 @@ definition {
 	@priority = "4"
 	test MasterclassMyLearninginMobileSize {
 		task ("Go to My Learning Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "My Learning");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "My Learning",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "smartphone",
-				elementsList = "navbar,private-header,footer");
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "header,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -869,19 +957,24 @@ definition {
 	@priority = "4"
 	test MasterclassMyLearninginTabletSize {
 		task ("Go to My Learning Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "My Learning");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "My Learning",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "tablet",
-				elementsList = "navbar,private-header,footer");
+		task ("Preview the Page with Tablet Size") {
+			MobileDevice.previewPG(deviceType = "tablet");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "header,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -914,72 +1007,75 @@ definition {
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Desktop size"
 	@priority = "4"
 	test MasterclassSignIninDesktopSize {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
-		}
-
 		task ("Go to Sign In Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Sign In");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Sign In",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "desktop",
-				elementsList = "sign-in-logo,sign-in-form");
+		task ("Preview the Page with Desktop Size") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "logo,form") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Mobile size"
 	@priority = "4"
 	test MasterclassSignIninMobileSize {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
-		}
-
 		task ("Go to Sign In Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Sign In");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Sign In",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "smartphone",
-				elementsList = "sign-in-logo,sign-in-form");
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "logo,form") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Tablet size"
 	@priority = "4"
 	test MasterclassSignIninTabletSize {
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
-		}
-
 		task ("Go to Sign In Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Sign In");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Sign In",
+				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "tablet",
-				elementsList = "sign-in-logo,sign-in-form");
+		task ("Preview the Page with Tablet Size") {
+			MobileDevice.previewPG(deviceType = "tablet");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "logo,form") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 

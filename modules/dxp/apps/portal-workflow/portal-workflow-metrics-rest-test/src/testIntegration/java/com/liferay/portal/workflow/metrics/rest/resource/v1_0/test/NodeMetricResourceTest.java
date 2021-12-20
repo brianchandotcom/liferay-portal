@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -384,6 +385,56 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 		page = nodeMetricResource.getProcessNodeMetricsPage(
 			_process.getId(), true, null, null, node5.getName(), "3.0",
 			Pagination.of(1, 2), null);
+
+		assertEquals(
+			Arrays.asList(
+				new NodeMetric() {
+					{
+						breachedInstanceCount =
+							nodeMetric5.getBreachedInstanceCount();
+						breachedInstancePercentage =
+							nodeMetric5.getBreachedInstancePercentage();
+						durationAvg = nodeMetric5.getDurationAvg();
+						instanceCount = nodeMetric5.getInstanceCount();
+						node = new Node() {
+							{
+								label = node5.getLabel();
+								name = node5.getName();
+							}
+						};
+					}
+				}),
+			(List<NodeMetric>)page.getItems());
+
+		page = nodeMetricResource.getProcessNodeMetricsPage(
+			_process.getId(), true, null, null,
+			StringUtil.toLowerCase(node5.getName()), "3.0", Pagination.of(1, 2),
+			null);
+
+		assertEquals(
+			Arrays.asList(
+				new NodeMetric() {
+					{
+						breachedInstanceCount =
+							nodeMetric5.getBreachedInstanceCount();
+						breachedInstancePercentage =
+							nodeMetric5.getBreachedInstancePercentage();
+						durationAvg = nodeMetric5.getDurationAvg();
+						instanceCount = nodeMetric5.getInstanceCount();
+						node = new Node() {
+							{
+								label = node5.getLabel();
+								name = node5.getName();
+							}
+						};
+					}
+				}),
+			(List<NodeMetric>)page.getItems());
+
+		page = nodeMetricResource.getProcessNodeMetricsPage(
+			_process.getId(), true, null, null,
+			StringUtil.toUpperCase(node5.getName()), "3.0", Pagination.of(1, 2),
+			null);
 
 		assertEquals(
 			Arrays.asList(

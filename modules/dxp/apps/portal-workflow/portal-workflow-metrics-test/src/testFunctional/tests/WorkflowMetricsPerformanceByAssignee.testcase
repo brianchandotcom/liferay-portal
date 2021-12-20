@@ -352,7 +352,7 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK_NEW_LANGUAGE");
 
 		AssertElementPresent(
-			key_allItemsFilterName = "Papel",
+			key_allItemsFilterName = "Função",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
 
 		AssertElementPresent(

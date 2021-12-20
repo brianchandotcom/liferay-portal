@@ -1,8 +1,0 @@
-{
-  "cssPath": "index.css",
-  "configurationPath": "index.json",
-  "htmlPath": "index.html",
-  "jsPath": "index.js",
-  "name": "Select Project",
-  "type": "react"
-}

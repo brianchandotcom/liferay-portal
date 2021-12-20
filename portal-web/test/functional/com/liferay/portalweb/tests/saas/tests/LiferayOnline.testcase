@@ -58,7 +58,7 @@ definition {
 	@description = "This is a test for LPS-135077. I can create a New Virtual Instance with the initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithInitializer {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,raylife";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.raylife.com";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
 
 		task ("Add virtual instance raylife.com with the Raylife Initializer") {
@@ -66,13 +66,13 @@ definition {
 
 			LiferayOnline.addVirtualInstanceWithInitializer(
 				initializerName = "Raylife",
-				mailDomain = "raylife.com",
-				virtualHost = "raylife",
-				webId = "raylife");
+				mailDomain = "www.raylife.com",
+				virtualHost = "www.raylife.com",
+				webId = "www.raylife.com");
 		}
 
 		task ("Go to the new Virtual Instance") {
-			Navigator.openSpecificURL(url = "http://raylife:8080");
+			Navigator.openSpecificURL(url = "http://www.raylife.com:8080");
 		}
 
 		task ("Assert the Raylife logo is present") {

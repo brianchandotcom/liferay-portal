@@ -591,6 +591,7 @@ definition {
 	@description = "This is a test for LPS-141750. Create Account in Masterclass"
 	@priority = "4"
 	test CreateAccountInMasterclass {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "Masterclass#CreateAccountInMasterclass";
 
 		task ("Disable Captcha to Create a New User") {
@@ -623,6 +624,11 @@ definition {
 				lastName = "User",
 				password = "test",
 				screenName = "User");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user@liferay.com");
 		}
 
 		task ("Sign In the New Account and Assert the User Name") {

@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("View child page in Pages admin") {
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				depth = "2",
 				pageName = "Test Child Page",
 				privacy = "Public Pages");
@@ -106,7 +106,7 @@ definition {
 
 		task ("View pages in Pages admin") {
 			for (var i : list "1,2,3") {
-				Page.view(
+				PagesAdmin.viewPageItemPresent(
 					pageName = "Test Page Name ${i}",
 					privacy = "Public Pages");
 			}
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("View private page in Pages admin") {
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				pageName = "Test Private Page",
 				privacy = "Private Pages");
 		}

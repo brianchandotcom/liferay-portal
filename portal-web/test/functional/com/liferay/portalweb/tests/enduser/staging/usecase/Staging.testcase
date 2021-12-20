@@ -2225,7 +2225,7 @@ definition {
 			pageName = "Staging Page Edit",
 			siteName = "Site Name");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Staging Page Edit",
 			privacy = "Public Pages");
 
@@ -2233,7 +2233,7 @@ definition {
 			pageName = "Staging Page Edit",
 			siteName = "Site Name");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Staging Page Edit",
 			privacy = "Public Pages");
 
@@ -2321,7 +2321,7 @@ definition {
 			pageName = "Staging Page Edit",
 			siteName = "Site Name");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Staging Page Edit",
 			privacy = "Public Pages");
 	}

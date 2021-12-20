@@ -200,7 +200,7 @@ definition {
 				pageName = "Test Page Name Edit",
 				siteName = "Test Site Name");
 
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				pageName = "Test Page Name Edit",
 				privacy = "Public Pages");
 		}

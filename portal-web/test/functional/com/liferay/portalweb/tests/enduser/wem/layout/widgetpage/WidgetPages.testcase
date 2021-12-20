@@ -115,14 +115,14 @@ definition {
 		task ("View parent page is shown") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				pageName = "Test Page Name",
 				privacy = "Public Pages");
 		}
 
 		task ("View children pages are shwon") {
 			for (var i : list "1,2,3") {
-				Page.view(
+				PagesAdmin.viewPageItemPresent(
 					depth = "2",
 					pageName = "Test Child Page ${i}",
 					privacy = "Public Pages");
@@ -149,7 +149,7 @@ definition {
 		task ("View child page is shown") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				depth = "2",
 				pageName = "Test Child Page",
 				privacy = "Private Pages");
@@ -381,7 +381,7 @@ definition {
 		}
 
 		task ("View first widget page is not shown") {
-			Page.viewNoPage(
+			PagesAdmin.viewPageItemNotPresent(
 				pageName = "Test Page Name 1",
 				privacy = "Public Pages");
 		}
@@ -412,7 +412,7 @@ definition {
 		}
 
 		task ("View the edited name is shown") {
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				pageName = "Test Page Name 1 Edited",
 				privacy = "Public Pages");
 		}
@@ -437,7 +437,7 @@ definition {
 		}
 
 		task ("View the edited name is shown") {
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				pageName = "Test Page Name 2 Edited",
 				privacy = "Public Pages");
 		}

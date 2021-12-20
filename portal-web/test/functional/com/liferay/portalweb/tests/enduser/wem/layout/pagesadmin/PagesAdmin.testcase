@@ -201,7 +201,7 @@ definition {
 
 		task ("View collection pages are shown in pages admin") {
 			for (var collectionType : list "Manual,Dynamic") {
-				Page.view(
+				PagesAdmin.viewPageItemPresent(
 					pageName = "${collectionType} Collection Page Name",
 					privacy = "Public Pages");
 			}
@@ -272,7 +272,7 @@ definition {
 			var n = "2";
 
 			for (var i : list "1,2,3,4") {
-				Page.view(
+				PagesAdmin.viewPageItemPresent(
 					depth = "${n}",
 					pageName = "Child Page Name ${i}",
 					privacy = "Public Pages");
@@ -453,7 +453,7 @@ definition {
 		task ("View child page is shown under parent page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				depth = "2",
 				pageName = "Child Page Name",
 				privacy = "Public Pages");
@@ -467,7 +467,7 @@ definition {
 
 		task ("View child and parent page are in the same level") {
 			for (var name : list "Test,Child") {
-				Page.view(
+				PagesAdmin.viewPageItemPresent(
 					pageName = "${name} Page Name",
 					privacy = "Public Pages");
 			}
@@ -695,7 +695,7 @@ definition {
 		task ("View child page in Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Page.view(
+			PagesAdmin.viewPageItemPresent(
 				depth = "2",
 				pageName = "Child Page Name 1",
 				privacy = "Public Pages");
@@ -711,7 +711,7 @@ definition {
 			var n = "1";
 
 			for (var name : list "Child,Test") {
-				Page.view(
+				PagesAdmin.viewPageItemPresent(
 					depth = "2",
 					pageName = "${name} Page Name ${n}",
 					privacy = "Public Pages");

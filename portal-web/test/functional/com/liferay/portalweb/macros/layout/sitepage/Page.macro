@@ -662,24 +662,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro view {
-		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-		}
-
-		PagesAdmin.togglePrivacy(privacy = "${privacy}");
-
-		if (isSet(depth)) {
-			PagesAdmin.expandPageTree(depth = "${depth}");
-		}
-
-		AssertElementPresent(
-			key_itemName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
-	}
-
 	macro viewActiveURL {
 		AssertVisible(
 			key_activeURL = "${activeURL}",
@@ -875,18 +857,6 @@ definition {
 				key_oldFriendlyURL = "${oldFriendlyURL}",
 				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
 		}
-	}
-
-	macro viewNoPage {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.togglePrivacy(privacy = "${privacy}");
-
-		AssertElementNotPresent(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
 	}
 
 	macro viewNoPG {

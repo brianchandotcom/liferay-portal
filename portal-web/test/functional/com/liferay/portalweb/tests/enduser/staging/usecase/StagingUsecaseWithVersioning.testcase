@@ -93,7 +93,7 @@ definition {
 			sitePagesVariationMenulistName = "Main Variation",
 			sitePagesVariationName = "Summer");
 
-		Page.viewNoPage(
+		PagesAdmin.viewPageItemNotPresent(
 			pageName = "Page 1",
 			privacy = "Public Pages");
 	}
@@ -137,7 +137,7 @@ definition {
 			pageName = "Test Page Edit",
 			siteName = "Site Name");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Test Page Edit",
 			privacy = "Public Pages");
 	}
@@ -175,7 +175,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		Page.viewNoPage(
+		PagesAdmin.viewPageItemNotPresent(
 			pageName = "Test Page Name",
 			privacy = "Public Pages");
 	}
@@ -199,7 +199,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Page.viewNoPage(
+		PagesAdmin.viewPageItemNotPresent(
 			pageName = "Staging Test Page 2",
 			privacy = "Public Pages");
 

@@ -592,7 +592,7 @@ definition {
 			pageName = "Private Staging Page",
 			siteName = "Site Name");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Private Staging Page",
 			privacy = "Private Pages");
 	}

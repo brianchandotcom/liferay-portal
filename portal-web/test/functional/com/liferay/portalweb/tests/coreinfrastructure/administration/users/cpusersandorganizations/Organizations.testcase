@@ -325,7 +325,7 @@ definition {
 			pageName = "Private Page",
 			url = "${portalURL}/group/organization-name/private-page");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Private Page",
 			privacy = "Private Pages");
 	}
@@ -364,7 +364,7 @@ definition {
 			pageName = "Public Page",
 			url = "${portalURL}/web/organization-name/public-page");
 
-		Page.view(
+		PagesAdmin.viewPageItemPresent(
 			pageName = "Public Page",
 			privacy = "Public Pages");
 	}

@@ -117,9 +117,7 @@ public abstract class BaseWorkspace implements Workspace {
 
 		String workspaceDirNameListToString = workspaceDirNameList.toString();
 
-		workspaceDirNameListToString.replaceAll("\\[(.*?)\\]", "$1");
-
-		return workspaceDirNameListToString;
+		return workspaceDirNameListToString.replaceAll("\\[(.*?)\\]", "$1");
 	}
 
 	@Override

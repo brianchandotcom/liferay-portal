@@ -16,10 +16,12 @@ package com.liferay.commerce.media.internal.servlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -193,9 +196,18 @@ public class CommerceMediaServlet extends HttpServlet {
 				_cpDefinitionLocalService.getCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
-			_commerceProductViewPermission.check(
-				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
-				cpDefinition.getCPDefinitionId());
+			if (commerceAccountId ==
+					CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
+
+				_commerceCatalogModelResourcePermission.check(
+					PermissionThreadLocal.getPermissionChecker(),
+					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
+			}
+			else {
+				_commerceProductViewPermission.check(
+					PermissionThreadLocal.getPermissionChecker(),
+					commerceAccountId, cpDefinition.getCPDefinitionId());
+			}
 
 			return cpDefinition.getGroupId();
 		}
@@ -300,6 +312,12 @@ public class CommerceMediaServlet extends HttpServlet {
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
+	)
+	private ModelResourcePermission<CommerceCatalog>
+		_commerceCatalogModelResourcePermission;
 
 	@Reference
 	private CommerceMediaProvider _commerceMediaProvider;

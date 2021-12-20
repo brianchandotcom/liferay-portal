@@ -21,7 +21,13 @@
 									}
 								}
 							}
-						]
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "keywords",
+								"value": "${configuration.keywords}"
+							}
+						}
 					}
 				]
 			}

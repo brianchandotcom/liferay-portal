@@ -79,14 +79,13 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 				ExportTranslationDisplayContext.class.getName(),
 				new ExportTranslationDisplayContext(
 					translationRequestHelper.getClassNameId(),
-					translationRequestHelper.getModelClassPK(),
+					translationRequestHelper.getModelClassPKs(),
 					_ffLayoutExperienceSelectorConfiguration,
 					translationRequestHelper.getGroupId(),
 					_portal.getHttpServletRequest(renderRequest),
 					_infoItemServiceTracker,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse),
-					models.get(0),
+					_portal.getLiferayPortletResponse(renderResponse), models,
 					_getTitle(
 						translationRequestHelper.getModelClassName(),
 						models.get(0), themeDisplay.getLocale()),

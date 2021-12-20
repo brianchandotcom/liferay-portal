@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -69,26 +70,26 @@ import javax.servlet.http.HttpServletRequest;
 public class ExportTranslationDisplayContext {
 
 	public ExportTranslationDisplayContext(
-		long classNameId, long classPK,
+		long classNameId, long[] classPKs,
 		FFLayoutExperienceSelectorConfiguration
 			ffLayoutExperienceSelectorConfiguration,
 		long groupId, HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, Object model,
+		LiferayPortletResponse liferayPortletResponse, List<Object> models,
 		String title,
 		TranslationInfoItemFieldValuesExporterTracker
 			translationInfoItemFieldValuesExporterTracker) {
 
 		_classNameId = classNameId;
-		_classPK = classPK;
+		_classPKs = classPKs;
 		_ffLayoutExperienceSelectorConfiguration =
 			ffLayoutExperienceSelectorConfiguration;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceTracker = infoItemServiceTracker;
 		_liferayPortletResponse = liferayPortletResponse;
-		_model = model;
+		_models = models;
 		_title = title;
 		_translationInfoItemFieldValuesExporterTracker =
 			translationInfoItemFieldValuesExporterTracker;
@@ -141,9 +142,7 @@ public class ExportTranslationDisplayContext {
 		}
 
 		List<SegmentsExperience> segmentsExperiences =
-			SegmentsExperienceServiceUtil.getSegmentsExperiences(
-				_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-				_classPK, true);
+			_getSegmentsExperiences();
 
 		boolean addedDefault = false;
 
@@ -256,8 +255,16 @@ public class ExportTranslationDisplayContext {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, _className);
 
-		Stream<String> stream = Arrays.stream(
-			infoItemLanguagesProvider.getAvailableLanguageIds(_model));
+		List<String> languageIds = new ArrayList<>();
+
+		for (Object model : _models) {
+			_intersect(
+				languageIds,
+				Arrays.asList(
+					infoItemLanguagesProvider.getAvailableLanguageIds(model)));
+		}
+
+		Stream<String> stream = languageIds.stream();
 
 		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
 
@@ -284,7 +291,7 @@ public class ExportTranslationDisplayContext {
 				_themeDisplay.getSiteDefaultLocale());
 		}
 
-		return infoItemLanguagesProvider.getDefaultLanguageId(_model);
+		return infoItemLanguagesProvider.getDefaultLanguageId(_models.get(0));
 	}
 
 	private JSONObject _getExportFileFormatJSONObject(
@@ -318,7 +325,7 @@ public class ExportTranslationDisplayContext {
 		).setParameter(
 			"classNameId", _classNameId
 		).setParameter(
-			"classPK", _classPK
+			"classPK", ArrayUtil.toStringArray(_classPKs)
 		).setParameter(
 			"groupId", _groupId
 		).buildString();
@@ -352,16 +359,41 @@ public class ExportTranslationDisplayContext {
 		return segmentsEntry.getName(locale);
 	}
 
+	private List<SegmentsExperience> _getSegmentsExperiences()
+		throws PortalException {
+
+		List<SegmentsExperience> segmentsExperiences = new ArrayList<>();
+
+		for (long classPK : _classPKs) {
+			_intersect(
+				segmentsExperiences,
+				SegmentsExperienceServiceUtil.getSegmentsExperiences(
+					_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					classPK, true));
+		}
+
+		return segmentsExperiences;
+	}
+
+	private <T> void _intersect(List<T> list1, List<T> list2) {
+		if (list1.isEmpty()) {
+			list1.addAll(list2);
+		}
+		else {
+			list1.retainAll(list2);
+		}
+	}
+
 	private final String _className;
 	private final long _classNameId;
-	private final long _classPK;
+	private final long[] _classPKs;
 	private final FFLayoutExperienceSelectorConfiguration
 		_ffLayoutExperienceSelectorConfiguration;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final Object _model;
+	private final List<Object> _models;
 	private String _redirect;
 	private final ThemeDisplay _themeDisplay;
 	private final String _title;

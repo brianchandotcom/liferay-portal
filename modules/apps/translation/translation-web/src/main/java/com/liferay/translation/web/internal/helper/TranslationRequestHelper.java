@@ -86,7 +86,7 @@ public class TranslationRequestHelper {
 			 (segmentsExperienceIds[0] ==
 				 SegmentsExperienceConstants.ID_DEFAULT))) {
 
-			return new long[] {getModelClassPK()};
+			return getModelClassPKs();
 		}
 
 		return segmentsExperienceIds;

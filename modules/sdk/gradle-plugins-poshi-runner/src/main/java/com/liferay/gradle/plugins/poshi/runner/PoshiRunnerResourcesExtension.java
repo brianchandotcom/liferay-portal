@@ -126,7 +126,7 @@ public class PoshiRunnerResourcesExtension {
 
 	private Object _artifactAppendix;
 	private Object _artifactVersion;
-	private Object _baseName;
+	private Object _baseName = "default";
 	private final Set<Object> _dirs = new HashSet<>();
 	private final Project _project;
 	private Object _rootDirName;

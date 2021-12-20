@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.test.util.DepotTestUtil;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
@@ -27,10 +29,12 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
@@ -180,6 +184,53 @@ public class DepotEntrySearchTest {
 			});
 	}
 
+	@Ignore
+	@Test
+	public void testSearchWithDepotEntryMembershipAndOrganizationMembership()
+		throws Exception {
+
+		User adminUser = TestPropsValues.getUser();
+
+		DepotEntry depotEntry = _addDepotEntry(adminUser, "Depot Entry 1");
+
+		Organization organization = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), true);
+
+		DepotTestUtil.withAssetLibraryMember(
+			depotEntry,
+			user -> {
+				_userService.addOrganizationUsers(
+					organization.getOrganizationId(),
+					new long[] {user.getUserId()});
+
+				Indexer<DepotEntry> indexer = IndexerRegistryUtil.getIndexer(
+					DepotEntry.class);
+
+				SearchContext searchContext =
+					SearchContextTestUtil.getSearchContext(
+						TestPropsValues.getGroupId());
+
+				searchContext.setGroupIds(null);
+				searchContext.setKeywords(null);
+
+				Hits hits = indexer.search(searchContext);
+
+				Assert.assertEquals(hits.toString(), 1, hits.getLength());
+
+				List<SearchResult> searchResults =
+					SearchResultUtil.getSearchResults(
+						hits, LocaleUtil.getDefault());
+
+				SearchResult searchResult = searchResults.get(0);
+
+				Assert.assertEquals(
+					depotEntry,
+					_depotEntryService.getDepotEntry(
+						searchResult.getClassPK()));
+			});
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -201,5 +252,8 @@ public class DepotEntrySearchTest {
 
 	@Inject
 	private DepotEntryService _depotEntryService;
+
+	@Inject
+	private UserService _userService;
 
 }

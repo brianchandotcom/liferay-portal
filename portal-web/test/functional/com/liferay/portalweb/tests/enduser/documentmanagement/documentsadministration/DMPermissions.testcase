@@ -800,6 +800,8 @@ definition {
 	@description = "This is a test for LPS-136836. It checks that a guest cannot update comments in a file without permissions."
 	@priority = "3"
 	test GuestCannotUpdateComments {
+		property testray.component.names = "Comment";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -1507,6 +1509,7 @@ definition {
 	@priority = "3"
 	test SiteMemberCannotUpdateComments {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.component.names = "Comment";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

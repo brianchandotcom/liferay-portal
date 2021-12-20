@@ -37,6 +37,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddCommentToDocument {
+		property testray.component.names = "Comment";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		JSONDocument.addFileWithUploadedFile(

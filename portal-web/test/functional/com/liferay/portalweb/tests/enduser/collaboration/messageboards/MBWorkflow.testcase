@@ -32,6 +32,7 @@ definition {
 	@priority = "3"
 	test CanModifyCommentInThreadSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.component.names = "Comment";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

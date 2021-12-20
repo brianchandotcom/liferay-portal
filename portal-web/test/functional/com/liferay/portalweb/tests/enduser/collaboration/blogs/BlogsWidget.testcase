@@ -55,6 +55,8 @@ definition {
 	@description = "This is a test for LPS-136766. It checks that comments can be disabled from the widget."
 	@priority = "3"
 	test CanDisableComments {
+		property testray.component.names = "Comment";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

@@ -523,6 +523,8 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test CommentDMDocumentOnLiveSite {
+		property testray.component.names = "Comment";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");

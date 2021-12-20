@@ -1160,6 +1160,7 @@ definition {
 	@priority = "3"
 	test CannotEditOwnComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.component.names = "Comment";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

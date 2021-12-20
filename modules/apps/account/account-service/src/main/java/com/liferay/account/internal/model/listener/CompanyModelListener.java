@@ -17,7 +17,6 @@ package com.liferay.account.internal.model.listener;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -38,9 +37,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Override
 	public void onAfterRemove(Company company) throws ModelListenerException {
 		try {
-			_accountRoleLocalService.deleteAccountRolesByCompanyId(
-				company.getCompanyId());
-
 			_deleteAccountGroups(company);
 		}
 		catch (PortalException portalException) {
@@ -74,8 +70,5 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
-
-	@Reference
-	private AccountRoleLocalService _accountRoleLocalService;
 
 }

@@ -92,6 +92,17 @@ published to current user's local maven repository `USER_HOME/.m2`:
 * `USER_HOME/.m2/repository/com/liferay/com.liferay.talend.definition`
 * `USER_HOME/.m2/repository/com/liferay/com.liferay.talend.runtime`
 
+If you get an error of a missing artifact, this could be the result of a failed test. 
+Since the installation will not finish successfully without the missing artifact, you may need to do the following:
+
+Navigate to each of the talend subfolders and run Maven clean install task with the skip test flag
+```sh
+$ cd modules/etl/talend/..
+$ mvn clean install -DskipTests
+```
+
+Once all artifacts are in place, you can run Maven clean install in the parent folder
+
 ## Registering components in Talend Studio
 
 Detailed steps of adding new components are described in the Talend Wiki:
@@ -101,68 +112,64 @@ Detailed steps of adding new components are described in the Talend Wiki:
 Here is a brief summary:
 
 1. From the root folder of the project, `liferay-portal/modules/etl/talend/` in this example,
-	execute `mvn clean install` to build the component.
+    execute `mvn clean install` to build the component.
 
 2. Let's assume that Studio has been extracted like this:
 
-	```sh
-	$ cd $HOME/tmp
-	... download distribution archive ...
-	$ unzip TOS_ESB-Version.zip
-	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-Version
-	```
+    ```sh
+    $ cd $HOME/tmp
+    ... download distribution archive ...
+    $ unzip TOS_ESB-Version.zip
+    $ STUDIO_ROOT=$HOME/tmp/TOS_ESB-Version
+    ```
 
 3. Now copy the component definition bundle latest version into
 `$STUDIO_ROOT/plugins`
 
-	```sh
-	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
-		 $STUDIO_ROOT/plugins
-	```
+    ```sh
+    $ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
+         $STUDIO_ROOT/plugins
+    ```
 
 4. Edit `$STUDIO_ROOT/configuration/config.ini` as it described in wiki page above.
-	The diff should look like this:
+    The diff should look like this:
 
-	```diff
-	--- config.ini
-	+++ config.ini
-	@@ -5,7 +5,7 @@
-	 eclipse.product=org.talend.rcp.branding.tos.product
-	 #The following osgi.framework key is required for the p2 update feature not to override the osgi.bundles values.
-	 osgi.framework=file\:plugins/org.eclipse.osgi_3.10.100.v20150521-1310.jar
-	-osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start
-	+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start,com.liferay.talend.definition-x.y.z-SNAPSHOT.jar@start
-	 osgi.bundles.defaultStartLevel=4
-	 osgi.bundlefile.limit=200
-	 osgi.framework.extensions=org.talend.osgi.lib.loader
-	```
+    ```diff
+    --- config.ini
+    +++ config.ini
+    @@ -5,7 +5,7 @@
+     eclipse.product=org.talend.rcp.branding.tos.product
+     #The following osgi.framework key is required for the p2 update feature not to override the osgi.bundles values.
+     osgi.framework=file\:plugins/org.eclipse.osgi_3.10.100.v20150521-1310.jar
+    -osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start
+    +osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start,com.liferay.talend.definition-x.y.z-SNAPSHOT.jar@start
+     osgi.bundles.defaultStartLevel=4
+     osgi.bundlefile.limit=200
+     osgi.framework.extensions=org.talend.osgi.lib.loader
 
-5. In the `configuration` folder, remove any folders which start their names
-    with `org.eclipse`.
-
-6. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
+5. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
 `com.liferay.talend.runtime` folders from your local
 
-	`$USER_HOME/.m2/repository/com/liferay/` to
+    `$USER_HOME/.m2/repository/com/liferay/` to
 
-	`$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
+    `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
-	Now start the Studio, and you should be able to see new components on palette
-	under `Business/Liferay` category.
+    Now start the Studio, and you should be able to see new components on palette
+    under `Business/Liferay` category.
 
-7. There is a bug in Talend Open Studio which requires you to manually add
-	the component dependency and runtime artifacts to the job's classpath in
-	order to be able to run the job with a custom component.
+6. There is a bug in Talend Open Studio which requires you to manually add
+    the component dependency and runtime artifacts to the job's classpath in
+    order to be able to run the job with a custom component.
 
-	See bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736
+    See bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736
 
-	Alternative workaround:
-	```
-	1. Right mouse click on `.Java` project or if you use TOS 7.0.1+ the project
-		called `LOCAL_PROJECT_$ActualJobName$` in `Navigator` view
-	2. Maven -> Update Project
-	3. Uncheck "Offline" and run Update
-	```
+    Alternative workaround:
+    ```
+    1. Right mouse click on `.Java` project or if you use TOS 7.0.1+ the project
+        called `LOCAL_PROJECT_$ActualJobName$` in `Navigator` view
+    2. Maven -> Update Project
+    3. Uncheck "Offline" and run Update
+    ```
 
 ## Reloading components in Talend Studio after codebase changed
 

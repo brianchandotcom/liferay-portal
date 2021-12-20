@@ -124,27 +124,22 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 						if (target.value.trim() === '') {
 							setErrors({
 								...errors,
-								id: {...errors.id, empty: true},
+								id: {duplicated: false, empty: true},
 							});
 						}
 						else {
-							setErrors({
-								...errors,
-								id: {...errors.id, empty: false},
-							});
-						}
-
-						if (isIdDuplicated(elements, target.value.trim())) {
-							setErrors({
-								...errors,
-								id: {...errors.id, duplicated: true},
-							});
-						}
-						else {
-							setErrors({
-								...errors,
-								id: {...errors.id, duplicated: false},
-							});
+							if (isIdDuplicated(elements, target.value.trim())) {
+								setErrors({
+									...errors,
+									id: {duplicated: true, empty: false},
+								});
+							}
+							else {
+								setErrors({
+									...errors,
+									id: {duplicated: false, empty: false},
+								});
+							}
 						}
 
 						setSelectedNodeNewId(target.value);

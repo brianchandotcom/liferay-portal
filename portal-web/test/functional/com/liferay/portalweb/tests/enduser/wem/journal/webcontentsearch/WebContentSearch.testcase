@@ -39,7 +39,7 @@ definition {
 
 			Tag.tearDownCP();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

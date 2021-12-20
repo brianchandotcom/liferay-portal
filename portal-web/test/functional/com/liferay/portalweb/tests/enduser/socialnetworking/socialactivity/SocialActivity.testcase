@@ -22,7 +22,7 @@ definition {
 
 			BlogsEntry.tearDownCP();
 
-			Page.tearDownPG();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

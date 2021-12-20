@@ -40,7 +40,7 @@ definition {
 
 			KaleoFormsAdmin.deleteFieldSet();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 
 			Workflow.tearDownWorkflowDefinitions();
 		}

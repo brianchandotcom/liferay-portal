@@ -20,7 +20,7 @@ definition {
 		else {
 			PortalInstances.tearDownCP();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

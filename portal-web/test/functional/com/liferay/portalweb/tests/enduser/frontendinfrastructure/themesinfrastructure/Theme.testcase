@@ -17,7 +17,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 
 			FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
 		}

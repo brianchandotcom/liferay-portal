@@ -31,7 +31,7 @@ definition {
 
 			FormsAdmin.teardownElementSets();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

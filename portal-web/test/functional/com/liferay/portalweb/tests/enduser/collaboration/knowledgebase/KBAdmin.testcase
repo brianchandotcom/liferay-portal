@@ -34,7 +34,7 @@ definition {
 
 			KBArticle.tearDownCP();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

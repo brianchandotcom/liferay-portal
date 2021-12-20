@@ -80,7 +80,7 @@ definition {
 
 			Calendar.tearDown();
 
-			Page.tearDownPG();
+			PagesAdmin.tearDownCP();
 
 			Workflow.tearDownSiteWorkflow();
 		}

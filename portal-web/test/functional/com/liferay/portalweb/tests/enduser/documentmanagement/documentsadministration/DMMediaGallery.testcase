@@ -37,7 +37,7 @@ definition {
 		else {
 			DMFolder.tearDownPGViaMG(pageName = "Media Gallery Page");
 
-			Page.tearDownCP(pageName = "Media Gallery Page");
+			PagesAdmin.tearDownCP(pageName = "Media Gallery Page");
 		}
 	}
 

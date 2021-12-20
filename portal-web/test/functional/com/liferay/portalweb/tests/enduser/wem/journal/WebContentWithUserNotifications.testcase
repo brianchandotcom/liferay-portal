@@ -44,7 +44,7 @@ definition {
 
 			WebContentStructures.tearDownCP(siteScopeName = "${globalSiteName}");
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

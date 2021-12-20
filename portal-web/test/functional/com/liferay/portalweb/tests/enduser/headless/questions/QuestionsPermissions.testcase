@@ -36,7 +36,7 @@ definition {
 				Questions.tearDown();
 			}
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

@@ -28,7 +28,7 @@ definition {
 
 			ServerAdministration.tearDownMailServerSettings();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

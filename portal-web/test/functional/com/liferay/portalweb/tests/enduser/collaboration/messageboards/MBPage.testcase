@@ -35,7 +35,7 @@ definition {
 
 			MessageboardsThread.tearDownCP();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 
 			ServerAdministration.tearDownDMFileUploadSettings();
 		}

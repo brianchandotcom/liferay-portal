@@ -34,7 +34,7 @@ definition {
 
 			Workflow.tearDownWorkflowDefinitions();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

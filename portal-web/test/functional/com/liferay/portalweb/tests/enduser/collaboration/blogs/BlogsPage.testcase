@@ -42,7 +42,7 @@ definition {
 				pageName = "Blogs Page",
 				portletName = "Blogs");
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 
 			Site.tearDownCP();
 

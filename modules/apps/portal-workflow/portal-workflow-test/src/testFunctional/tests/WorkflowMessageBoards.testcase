@@ -58,7 +58,7 @@ definition {
 
 			MessageboardsPortlet.tearDownConfigurationGeneralCP();
 
-			Page.tearDownPG();
+			PagesAdmin.tearDownCP();
 
 			Workflow.tearDownPortalWorkflow();
 

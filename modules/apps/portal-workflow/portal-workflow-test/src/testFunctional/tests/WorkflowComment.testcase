@@ -46,7 +46,7 @@ definition {
 		else {
 			PageComment.tearDownPG(pageName = "Page Comments Page");
 
-			Page.tearDownPG();
+			PagesAdmin.tearDownCP();
 
 			Workflow.tearDownPortalWorkflow();
 

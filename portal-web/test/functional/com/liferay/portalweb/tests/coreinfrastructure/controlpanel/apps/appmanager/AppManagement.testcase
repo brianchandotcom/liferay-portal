@@ -10,7 +10,7 @@ definition {
 	}
 
 	tearDown {
-		Page.tearDownCP();
+		PagesAdmin.tearDownCP();
 	}
 
 	@description = "This test asserts that apps in App Management do not display in non default instances"

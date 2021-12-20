@@ -55,7 +55,7 @@ definition {
 
 			NotificationsPortlet.tearDownUserDeliveries();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 
 			JSONUser.tearDownNonAdminUsers();
 		}

@@ -29,7 +29,7 @@ definition {
 
 			DMMetadataSet.tearDownCP();
 
-			Page.tearDownPG();
+			PagesAdmin.tearDownCP();
 
 			JSONUser.tearDownNonAdminUsers();
 

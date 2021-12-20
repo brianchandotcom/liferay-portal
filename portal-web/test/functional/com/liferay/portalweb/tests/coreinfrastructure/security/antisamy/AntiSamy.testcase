@@ -20,7 +20,7 @@ definition {
 		else {
 			WikiPage.tearDownCP();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

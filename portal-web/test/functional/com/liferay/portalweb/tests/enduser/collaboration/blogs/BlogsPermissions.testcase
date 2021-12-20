@@ -31,7 +31,7 @@ definition {
 
 			BlogsEntry.tearDownCP();
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 

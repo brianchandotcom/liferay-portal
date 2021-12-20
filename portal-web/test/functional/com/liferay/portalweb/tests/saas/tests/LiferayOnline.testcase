@@ -31,6 +31,9 @@ definition {
 	@description = "This is a test for LPS-135077. I can create a Virtual Instance with Default Initializer"
 	@priority = "4"
 	test AddVirtualInstanceWithDefaultInitializer {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
+		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithDefaultInitializer";
+
 		task ("Add virtual instance able.com with a blank Initializer") {
 			PortalInstances.openVirtualInstancesAdmin();
 
@@ -55,6 +58,9 @@ definition {
 	@description = "This is a test for LPS-135077. I can create a New Virtual Instance with the initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithInitializer {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,raylife";
+		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
+
 		task ("Add virtual instance raylife.com with the Raylife Initializer") {
 			PortalInstances.openVirtualInstancesAdmin();
 
@@ -77,6 +83,9 @@ definition {
 	@description = "This is a test for LPS-135077. Raylife initializer is not deployed and is not shown on inicializer list"
 	@priority = "4"
 	test CannotSelectInitializerWithoutDeploy {
+		property osgi.app.includes = "gogo-shell";
+		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeploy";
+
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
 

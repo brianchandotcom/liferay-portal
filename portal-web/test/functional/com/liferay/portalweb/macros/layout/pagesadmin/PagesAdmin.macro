@@ -354,6 +354,29 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro changeCurrentTheme {
+		if (isSet(privacy)) {
+			PagesAdmin.togglePrivacy(privacy = "${privacy}");
+
+			Click(
+				key_pageName = "${privacy}",
+				locator1 = "Icon#COG_PAGE");
+		}
+		else {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "${pageName}");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Theme.configureLookAndFeelSpecificLook();
+		}
+
+		Theme.changeCurrentTheme(themeName = "${themeName}");
+
+		PortletEntry.save();
+	}
+
 	macro changeLogo {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

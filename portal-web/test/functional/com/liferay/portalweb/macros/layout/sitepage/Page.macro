@@ -123,30 +123,6 @@ definition {
 			value1 = "${nodePort}");
 	}
 
-	macro changeCurrentTheme {
-		Click.waitForMenuToggleJSClick(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
-
-		MenuItem.click(menuItem = "Configure");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
-		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
-
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		LexiconCard.viewCardTitle(card = "${themeName}");
-
-		LexiconCard.clickCardTitle(card = "${themeName}");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		PortletEntry.save();
-	}
-
 	macro changeSinglePageTheme {
 		ContentPages.gotoPageEditor();
 

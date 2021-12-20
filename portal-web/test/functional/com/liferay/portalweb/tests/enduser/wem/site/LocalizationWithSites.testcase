@@ -74,11 +74,10 @@ definition {
 		}
 	}
 
-	@description = "Can not remove a default language in portal settings."
+	@description = "Can not remove the site default language in instance settings."
 	@priority = "5"
-	test AvailableSiteLocalesSubsetNotAllowed {
+	test CannotRemoveSiteDefaultLanguageInInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LocalizationWithSites#AvailableSiteLocalesSubsetNotAllowed";
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -95,7 +94,7 @@ definition {
 				displaySettings = "Display Settings");
 		}
 
-		task ("View cannot remove default language") {
+		task ("View cannot remove site default language in instance settings") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Localization",
 				configurationName = "Language",
@@ -174,9 +173,9 @@ definition {
 		}
 	}
 
-	@description = "The site's url will not change when its locale match with User's preferred localization."
+	@description = "The locale won't be prepended when it matches with user's preferred locale."
 	@priority = "3"
-	test NoLocalePrependedWhenLocaleMatchMyPreferredLocalization {
+	test NoLocalePrependedWhenItMatchUserPreferredLocale {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Get portal URL") {
@@ -229,7 +228,7 @@ definition {
 			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 		}
 
-		task ("View site's url as new user") {
+		task ("View locale is not shown in URL when it matches with user's preferred locale") {
 			for (var i : list "1,2") {
 				Page.openURLLocale(localizationPageURL = "${portalURL}/web/test-site-name-${i}");
 
@@ -241,7 +240,7 @@ definition {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 		}
 
-		task ("View localization option is shown when user's locale does not match") {
+		task ("View locale is shown in URL when it doesn't match with user's preferred locale") {
 			Page.openURLLocale(localizationPageURL = "${portalURL}/es/web/test-site-name-2");
 
 			Page.viewURLLocale(
@@ -250,11 +249,9 @@ definition {
 		}
 	}
 
-	@description = "View portlets interaction with localized site."
+	@description = "View portlets interact with localization."
 	@priority = "4"
-	test PortletInteractionLocalization {
-		property test.name.skip.portal.instance = "LocalizationWithSites#PortletInteractionLocalization";
-
+	test ViewPortletInteractWithLocalization {
 		task ("Add a localized site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
@@ -322,18 +319,12 @@ definition {
 				localizationTranslation = "Localización");
 		}
 
-		task ("Go to page via localized product menu") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name 1",
-				siteName = "Test Site Name 1");
-
+		task ("Define Spanish, German and English as current site languages") {
 			ProductMenu.gotoLocalizedSite(
 				displayStyle = "tabla",
 				navItem = "Todos los sitios",
 				site = "Nombre del Sitio");
-		}
 
-		task ("Define Spanish, German and English as current site languages") {
 			ProductMenu.gotoPortlet(
 				category = "Configuración",
 				portlet = "Ajustes del sitio");
@@ -397,6 +388,10 @@ definition {
 				locale = "de-DE",
 				textIcon = "deutsch-Deutschland");
 		}
+
+		task ("View Web Content is shown via WCD") {
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		}
 	}
 
 	@description = "This is a use case for LPS-59345. The user must be redirected when the friendly url does not match."
@@ -446,9 +441,9 @@ definition {
 		}
 	}
 
-	@description = "The user can configure a current language in a site created from a site template."
+	@description = "The user can configure languages of a site created from a site template."
 	@priority = "5"
-	test SiteTemplateLocalization {
+	test ConfigureLanguagesOfSiteBasedOnSiteTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site and Page Templates";
 
@@ -544,9 +539,9 @@ definition {
 		}
 	}
 
-	@description = "View edited URL locale as non logged user and for virtual host."
+	@description = "View page is shown when access to unavailable locale if set locale.use.default.if.not.available to true."
 	@priority = "4"
-	test ViewEditedURLLocaleForVirtualHost {
+	test ViewPageShownWhenAccessToUnavailableLocaleIfSetNotAvailableToTrue {
 		property custom.properties = "locale.use.default.if.not.available=true";
 
 		task ("Get portal url") {
@@ -571,7 +566,7 @@ definition {
 			}
 		}
 
-		task ("View page is shown in second site as non logged user") {
+		task ("View pages are shown in fr-FR to guest") {
 			User.logoutPG();
 
 			Navigator.openSpecificURL(url = "${portalURL}/fr/web/test-site-name-2/test-page-name-2");
@@ -581,9 +576,7 @@ definition {
 			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
 			Page.viewSpecificPG(pageNameList = "Test Page Name 2");
-		}
 
-		task ("View page is shown in first site as non logged user") {
 			Navigator.openSpecificURL(url = "${portalURL}/fr/web/test-site-name-1");
 
 			AssertTextNotPresent(value1 = "The requested resource could not be found.");
@@ -591,7 +584,7 @@ definition {
 			Page.viewSpecificPG(pageNameList = "Test Page Name 1");
 		}
 
-		task ("View page locale as Test Test") {
+		task ("Sign in as Test Test") {
 			User.firstLoginUI(
 				password = "test",
 				specificURL = "${portalURL}/fr/web/test-site-name-1",
@@ -600,7 +593,7 @@ definition {
 			AssertLocation(value1 = "${portalURL}/web/test-site-name-1");
 		}
 
-		task ("Add a virtual host in second site") {
+		task ("Add a virtual host for the second site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-2");
 
 			Site.addVirtualHostsURLCP(
@@ -608,7 +601,7 @@ definition {
 				publicVirtualHosts = "true");
 		}
 
-		task ("View page is shown via virtual host") {
+		task ("View page is shown in fr-FR via virtual host") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/fr/");
 
 			Site.viewVirtualHostsURLPG(
@@ -622,11 +615,10 @@ definition {
 		}
 	}
 
-	@description = "The user can add a site localization."
+	@description = "The user can configure the site default language."
 	@priority = "5"
-	test ViewSiteLocalizationAfterDeletingOriginalLocale {
+	test ConfigureSiteDefaultLanguage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LocalizationWithSites#ViewSiteLocalizationAfterDeletingOriginalLocale";
 		property testray.component.names = "Site Localization";
 
 		task ("View default site language in Portal Settings") {
@@ -674,9 +666,9 @@ definition {
 		}
 	}
 
-	@description = "View site's url in differents languages when locale style is set to zero."
+	@description = "View URLs in different languages when set locale.prepend.friendly.url.style to 0."
 	@priority = "3"
-	test ViewSiteUrlWhenStyle0 {
+	test ViewURLInDifferentLanguagesWhenSetStyle0 {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 
 		task ("Get portal URL") {
@@ -696,7 +688,7 @@ definition {
 				widgetName = "Language Selector");
 		}
 
-		task ("View site's URL after translate to es-ES via Language Selector") {
+		task ("View site's URL after switch to es-ES via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
@@ -708,7 +700,7 @@ definition {
 			AssertLocation(value1 = "${portalURL}/web/test-site-name-1/");
 		}
 
-		task ("View site's URL after translate to ja-JP via Language Selector") {
+		task ("View site's URL after switch to ja-JP via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
@@ -721,9 +713,9 @@ definition {
 		}
 	}
 
-	@description = "View site's url in differents languages when locale style is set to one."
+	@description = "View URLs in different languages when set locale.prepend.friendly.url.style to 1."
 	@priority = "3"
-	test ViewSiteUrlWhenStyle1 {
+	test ViewURLInDifferentLanguagesWhenSetStyle1 {
 		property custom.properties = "locale.prepend.friendly.url.style=1";
 
 		task ("Get portal URL") {
@@ -743,7 +735,7 @@ definition {
 				widgetName = "Language Selector");
 		}
 
-		task ("View site's URL after translate to es-ES via Language Selector") {
+		task ("View site's URL after switch to es-ES via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
@@ -755,7 +747,7 @@ definition {
 			AssertLocation(value1 = "${portalURL}/es/web/test-site-name-1/");
 		}
 
-		task ("View site's URL after translate to ja-JP via Language Selector") {
+		task ("View site's URL after switch to ja-JP via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
@@ -768,9 +760,9 @@ definition {
 		}
 	}
 
-	@description = "View site's url in differents languages when locale style is set to two."
+	@description = "View URLs in different languages when set locale.prepend.friendly.url.style to 2."
 	@priority = "3"
-	test ViewSiteUrlWhenStyle2 {
+	test ViewURLInDifferentLanguagesWhenSetStyle2 {
 		property custom.properties = "locale.prepend.friendly.url.style=2";
 
 		task ("Get portal URL") {
@@ -790,7 +782,7 @@ definition {
 				widgetName = "Language Selector");
 		}
 
-		task ("View site's URL after translate to es-ES via Language Selector") {
+		task ("View site's URL after switch to es-ES via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");
@@ -802,7 +794,7 @@ definition {
 			AssertLocation(value1 = "${portalURL}/es/web/test-site-name-1/");
 		}
 
-		task ("View site's URL after translate to ja-JP via Language Selector") {
+		task ("View site's URL after switch to ja-JP via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name 1");

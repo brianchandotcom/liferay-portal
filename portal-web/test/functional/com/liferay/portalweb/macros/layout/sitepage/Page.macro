@@ -644,52 +644,6 @@ definition {
 			locator1 = "Home#PAGE_ACTIVE");
 	}
 
-	macro viewCurrentTheme {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		Click.waitForMenuToggleJSClick(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
-
-		MenuItem.click(menuItem = "Configure");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
-		AssertTextPresent(
-			locator1 = "SitePagesEditPage#VIEW_THEME",
-			value1 = "${themeName}");
-	}
-
-	macro viewCurrentThemeSettings {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "${pageName}");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
-		if (isSet(checkThemeSettingList)) {
-			for (var themeSetting : list "${checkThemeSettingList}") {
-				AssertChecked.assertCheckedNotVisible(
-					key_toggleSwitchLabel = "${themeSetting}",
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-			}
-		}
-
-		if (isSet(uncheckThemeSettingList)) {
-			for (var themeSetting : list "${uncheckThemeSettingList}") {
-				AssertNotChecked.assertNotCheckedNotVisible(
-					key_toggleSwitchLabel = "${themeSetting}",
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-			}
-		}
-	}
-
 	macro viewCustomLogoPG {
 		AssertElementPresent(locator1 = "Home#CUSTOM_LOGO");
 

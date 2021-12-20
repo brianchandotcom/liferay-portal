@@ -29,11 +29,21 @@ public class JobFactory {
 	public static Job newJob(Build build) {
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
+		String upstreamBranchName = topLevelBuild.getBranchName();
+
+		String portalUpstreamBranchName = topLevelBuild.getParameterValue(
+			"PORTAL_UPSTREAM_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			upstreamBranchName = portalUpstreamBranchName;
+		}
+
 		return _newJob(
 			topLevelBuild.getJobName(), topLevelBuild.getTestSuiteName(),
 			topLevelBuild.getBranchName(),
 			topLevelBuild.getBaseGitRepositoryName(),
-			topLevelBuild.getBuildProfile(), topLevelBuild.getProjectNames());
+			topLevelBuild.getBuildProfile(), upstreamBranchName,
+			topLevelBuild.getProjectNames());
 	}
 
 	public static Job newJob(BuildData buildData) {
@@ -104,13 +114,17 @@ public class JobFactory {
 
 		return _newJob(
 			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			null);
+			null, null);
 	}
 
 	private static Job _newJob(
 		String jobName, String testSuiteName, String branchName,
 		String repositoryName, Job.BuildProfile buildProfile,
-		List<String> projectNames) {
+		String upstreamBranchName, List<String> projectNames) {
+
+		if (upstreamBranchName == null) {
+			upstreamBranchName = branchName;
+		}
 
 		if (buildProfile == null) {
 			buildProfile = Job.BuildProfile.PORTAL;
@@ -392,7 +406,8 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new SubrepositoryAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName, repositoryName));
+					jobName, buildProfile, testSuiteName, repositoryName,
+					upstreamBranchName));
 
 			return _jobs.get(jobKey);
 		}

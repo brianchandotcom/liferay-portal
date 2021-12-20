@@ -87,10 +87,12 @@ definition {
 	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
 	@priority = "3"
 	test CanDeleteRateIntoAEvent {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		Calendar.chooseSiteCalendarMenulistOption(
 			menuListOption = "Calendar Settings",
-			siteCalendarName = "Liferay DXP",
-			siteName = "Liferay DXP");
+			siteCalendarName = "${siteName}",
+			siteName = "${siteName}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -147,10 +149,12 @@ definition {
 	@description = "LRQA-71888 - Verify that the user can rate a event"
 	@priority = "3"
 	test CanRateAEvent {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		Calendar.chooseSiteCalendarMenulistOption(
 			menuListOption = "Calendar Settings",
-			siteCalendarName = "Liferay DXP",
-			siteName = "Liferay DXP");
+			siteCalendarName = "${siteName}",
+			siteName = "${siteName}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

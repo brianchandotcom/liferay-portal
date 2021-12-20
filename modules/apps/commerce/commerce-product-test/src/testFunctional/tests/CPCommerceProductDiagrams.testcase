@@ -264,6 +264,55 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a pin can be removed from a diagram product image"
+	@priority = "3"
+	test RemovePin {
+		task ("Given a diagram product with an image") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given a pin on the product") {
+			CPCommerceCatalog.addPin(
+				label = "Test",
+				position = "1",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+		}
+
+		task ("When I delete the pin") {
+			Click(
+				key_positionNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_IMAGE_PIN");
+
+			Button.clickDelete();
+
+			Refresh();
+		}
+
+		task ("Then the pin should no longer be present") {
+			AssertElementNotPresent(
+				key_positionNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_IMAGE_PIN");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
 	@priority = "3"
 	test UploadANotMappedNewImage {

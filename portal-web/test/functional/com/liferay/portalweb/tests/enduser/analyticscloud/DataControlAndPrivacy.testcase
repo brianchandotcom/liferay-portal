@@ -103,7 +103,8 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Access",
-				key_emailAdress = "${userEmail}");
+				key_emailAdress = "${userEmail}",
+				searchUser = "${userName}");
 		}
 	}
 
@@ -133,7 +134,9 @@ definition {
 		task ("Create Delete Request") {
 			ACNavigation.goToSettings();
 
-			var email = ACSettings.createRequestLogByEmail(jobType = "Delete");
+			ACSettings.createRequestLogByEmail(
+				email = "${userEmail}",
+				jobType = "Delete");
 		}
 
 		task ("Assert that Delete Request was created and is on the list") {
@@ -145,7 +148,8 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Delete",
-				key_emailAdress = "${email}");
+				key_emailAdress = "${userEmail}",
+				searchUser = "${userName}");
 		}
 	}
 
@@ -175,7 +179,9 @@ definition {
 		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
 
-			var email = ACSettings.createRequestLogByEmail(jobType = "Suppress");
+			ACSettings.createRequestLogByEmail(
+				email = "${userEmail}",
+				jobType = "Suppress");
 		}
 
 		task ("Assert that the suppress request was created") {
@@ -187,7 +193,8 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Suppress",
-				key_emailAdress = "${email}");
+				key_emailAdress = "${userEmail}",
+				searchUser = "${userName}");
 		}
 	}
 
@@ -222,8 +229,8 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "test@liferay.com",
-				jobTypes = "Suppress");
+				email = "${userEmail}",
+				jobType = "Suppress");
 		}
 
 		task ("Wait for the suppress request be completed") {
@@ -231,8 +238,10 @@ definition {
 
 			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
 
-			while (IsElementNotPresent(itemName = "test@liferay.com", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
-				Refresh();
+			while (IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
+				ACUtils.searchBar(searchItem = "${userName}");
+
+				ACUtils.clearSearchBar();
 			}
 		}
 
@@ -244,20 +253,22 @@ definition {
 
 		task ("Assert that the user was unsuppressed") {
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "test@liferay.com",
-				jobTypes = "Access");
+				emailAdresses = "${userEmail}",
+				jobType = "Access");
 
 			ACSettings.goToDataControlAndPrivacy();
 
 			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "test@liferay.com",
-				jobType = "Unsuppress");
+				jobType = "Unsuppress",
+				key_emailAdress = "${userEmail}",
+				searchUser = "${userName}");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "test@liferay.com",
-				jobType = "Access");
+				jobType = "Access",
+				key_emailAdress = "${userEmail}",
+				searchUser = "${userName}");
 		}
 	}
 
@@ -292,8 +303,8 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "test@liferay.com",
-				jobTypes = "Suppress");
+				emailAdresses = "${userEmail}",
+				jobType = "Suppress");
 		}
 
 		task ("Assert that the user is in the suppressed user list") {
@@ -301,13 +312,13 @@ definition {
 
 			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
 
-			while (IsElementNotPresent(itemName = "test@liferay.com", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
+			while (IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
 				Refresh();
 			}
 
 			// Couldn't assert the list due to missing data.
 
-			ACUtils.assertItemsName(itemList = "test@liferay.com");
+			ACUtils.assertItemsName(itemList = "${userEmail}");
 		}
 	}
 

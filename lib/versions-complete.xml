@@ -1926,6 +1926,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.image.impl.jar!im4java.jar</file-name>
+				<version>1.2.0</version>
+				<project-name>im4java</project-name>
+				<project-url>http://sourceforge.net/projects/im4java/</project-url>
+				<licenses>
+					<license>
+						<license-name>GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.imageio.plugins.jar!common-image.jar</file-name>
 				<version>3.3.2</version>
 				<project-name>TwelveMonkeys :: Common :: Image</project-name>
@@ -6585,19 +6597,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/im4java.jar</file-name>
-				<version>1.2.0</version>
-				<project-name>im4java</project-name>
-				<project-url>http://im4java.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-						<copyright-notice>Copyright (c) Bernhard Bablok 2008-2010</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/istack-commons-runtime.jar</file-name>
 				<version>3.0.7</version>
 				<project-name>Jaxb Istack Commons</project-name>
@@ -7204,18 +7203,6 @@
 					<license>
 						<license-name>CDDL 1.1</license-name>
 						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/monte-cc.jar</file-name>
-				<version>0.7.7</version>
-				<project-name>Monte Media Library</project-name>
-				<project-url>http://www.randelshofer.ch/monte</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
 					</license>
 				</licenses>
 			</library>

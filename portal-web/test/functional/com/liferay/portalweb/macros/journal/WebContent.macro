@@ -2021,13 +2021,13 @@ definition {
 	macro viewAvailableLanguages {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		for (var availableLanguage : list "${availableLanguagesList}") {
+		for (var availableLanguage : list "${availableLanguageList}") {
 			AssertElementPresent(
 				key_locale = "${availableLanguage}",
 				locator1 = "Translation#LOCALIZATION_NAME");
 		}
 
-		for (var unavailableLanguage : list "${unavailableLanguagesList}") {
+		for (var unavailableLanguage : list "${unavailableLanguageList}") {
 			AssertElementNotPresent(
 				key_locale = "${unavailableLanguage}",
 				locator1 = "Translation#LOCALIZATION_NAME");

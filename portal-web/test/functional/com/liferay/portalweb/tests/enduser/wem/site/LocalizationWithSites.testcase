@@ -370,9 +370,9 @@ definition {
 				webContentTitle = "Web Content Title");
 
 			WebContent.viewAvailableLanguages(
-				availableLanguagesList = "de-DE,en-US",
+				availableLanguageList = "de-DE,en-US",
 				fieldName = "Título",
-				unavailableLanguagesList = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,hu-HU,ja-JP,pt-BR,sv-SE");
+				unavailableLanguageList = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,hu-HU,ja-JP,pt-BR,sv-SE");
 		}
 
 		task ("Define Spanish and German as current site languages") {

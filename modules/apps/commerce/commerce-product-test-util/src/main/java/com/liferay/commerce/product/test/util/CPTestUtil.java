@@ -386,6 +386,26 @@ public class CPTestUtil {
 		return addCPDefinitionWithChildCPDefinitions(groupId, 1, priceType);
 	}
 
+	public static CPDefinition addCPDefinitionWithPrice(
+			long groupId, BigDecimal price)
+		throws PortalException {
+
+		String sku = "default";
+
+		CPDefinition cpDefinition = _addCPDefinitionWithSku(
+			SimpleCPTypeConstants.NAME, true,
+			ServiceContextTestUtil.getServiceContext(groupId), sku);
+
+		CPInstance cpInstance = CPInstanceLocalServiceUtil.getCPInstance(
+			cpDefinition.getCPDefinitionId(), sku);
+
+		cpInstance.setPrice(price);
+
+		_addCommercePriceEntry(cpInstance);
+
+		return cpDefinition;
+	}
+
 	public static CPInstance addCPInstance() throws PortalException {
 		CPDefinition cpDefinition = _addCPDefinition(
 			SimpleCPTypeConstants.NAME, true, true,

@@ -42,7 +42,7 @@ AUI.add(
 				strings: {
 					validator: Lang.isObject,
 					value: {
-						placeholder: 'Search',
+						placeholder: Liferay.Language.get('search'),
 					},
 				},
 			},

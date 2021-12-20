@@ -97,8 +97,6 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"defaultUserId", _themeDisplay.getDefaultUserId()
-		).put(
 			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
 		).put(
 			"frontendTokensValues",

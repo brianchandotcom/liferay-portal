@@ -92,7 +92,6 @@ const StyleBookEditor = ({
 };
 
 export default function ({
-	defaultUserId,
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
 	initialPreviewLayout,
@@ -108,7 +107,6 @@ export default function ({
 	themeName,
 } = {}) {
 	initializeConfig({
-		defaultUserId,
 		frontendTokenDefinition,
 		initialPreviewLayout,
 		isPrivateLayoutsEnabled,

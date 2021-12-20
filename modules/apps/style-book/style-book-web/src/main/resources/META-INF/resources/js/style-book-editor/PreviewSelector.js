@@ -23,11 +23,6 @@ import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import openItemSelector from './openItemSelector';
 
-const DISPLAY_PAGE_PP_ID =
-	'com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet';
-const DISPLAY_PAGE_RESOURCE_ID = '/layout_content_page_editor/get_page_preview';
-const DISPLAY_PAGE_LIFECYCLE = 2;
-
 const LAYOUT_TYPES_OPTIONS = [
 	{
 		label: Liferay.Language.get('masters'),

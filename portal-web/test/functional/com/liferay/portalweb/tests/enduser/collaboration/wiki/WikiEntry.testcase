@@ -134,37 +134,32 @@ definition {
 	@description = "This is a test for LPS-136996. It checks that a minor change can be created for a page."
 	@priority = "3"
 	test CanCreateMinorChange {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki");
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
-		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+		WikiPage.editPagePG(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			minorEdit = "true",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			tabURLKey = "all_pages",
 			wikiNodeName = "Main");
 
-		WikiNode.addWikiPage(
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Name");
-
-		PortletEntry.publish();
-
-		WikiPortlet.goToWikiPageMenu(
-			menuItem = "Edit",
-			wikiTitle = "Wiki Page Name");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		Check(locator1 = "Checkbox#THIS_IS_A_MINOR_EDIT");
-
-		PortletEntry.publish();
-
-		var key_wikiPageRevision = "1.1";
-		var key_wikiPageTitle = "Wiki Page Name";
-		var key_wikiVersionSummary = "1.1";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "1.1 (Minor Edit)");
+		WikiTable.viewEntry(
+			entryStatus = "APPROVED",
+			revision = "1.1 (Minor Edit)",
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."

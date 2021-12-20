@@ -79,19 +79,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/pagina-de-prueba");
-
-		PortletEntry.inputName(name = "Pagina de prueba");
-
-		Button.clickSave();
-
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/nueva-pagina-de-prueba");
-
-		Button.clickSave();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "es-ES,es-ES",
+			localizedFriendlyURLList = "/pagina-de-prueba,/nueva-pagina-de-prueba",
+			localizedNameList = "Pagina de prueba,-");
 
 		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/pagina-de-prueba");
 
@@ -207,13 +198,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/pagina-de-prueba");
-
-		PortletEntry.inputName(name = "Pagina de prueba");
-
-		Button.clickSave();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/pagina-de-prueba",
+			localizedNameList = "Pagina de prueba");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Source Page",
@@ -229,11 +217,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/nueva-pagina-de-prueba");
-
-		Button.clickSave();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/nueva-pagina-de-prueba",
+			localizedNameList = "-");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Source Page",
@@ -317,13 +304,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/^_^");
-
-		PortletEntry.inputName(name = "Página de prueba");
-
-		Button.clickSave();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/^_^",
+			localizedNameList = "Pagina de prueba");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -341,11 +325,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/página-de-prueba");
-
-		Button.clickSave();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/página-de-prueba",
+			localizedNameList = "-");
 
 		Page.gotoFriendlyURLHistory();
 
@@ -379,19 +362,10 @@ definition {
 
 		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/pagina-de-prueba");
-
-		PortletEntry.inputName(name = "Pagina de prueba");
-
-		Button.clickSave();
-
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "es-ES",
-			localizedFriendlyURL = "/nueva-pagina-de-prueba");
-
-		Button.clickSave();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "es-ES,es-ES",
+			localizedFriendlyURLList = "/pagina-de-prueba,/nueva-pagina-de-prueba",
+			localizedNameList = "Pagina de prueba,-");
 
 		Page.gotoFriendlyURLHistory();
 

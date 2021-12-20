@@ -54,16 +54,6 @@ definition {
 			vocabularyName = "${vocabularyName}");
 	}
 
-	macro addFriendlyURLLocalizedPG {
-		PortletEntry.changeLocale(
-			fieldName = "Friendly URL",
-			locale = "${friendlyUrlLocalized}");
-
-		Type(
-			locator1 = "TextInput#FRIENDLY_URL",
-			value1 = "${localizedFriendlyURL}");
-	}
-
 	macro addPageTranslations {
 		PortletEntry.changeLocale(
 			fieldName = "Name",
@@ -941,17 +931,6 @@ definition {
 		AssertElementPresent(
 			key_columnName = "${columnName}",
 			locator1 = "SitePagesEditPage#LAYOUT_CARD");
-	}
-
-	macro viewPageLocalization {
-		AssertElementPresent(
-			key_text = "${fieldName}",
-			locator1 = "TextInput#ANY");
-
-		AssertTextEquals.assertPartialText(
-			key_fieldName = "${fieldName}",
-			locator1 = "Button#LOCALIZATION",
-			value1 = "${defaultSiteLanguageKey}");
 	}
 
 	macro viewPageLockCheck {

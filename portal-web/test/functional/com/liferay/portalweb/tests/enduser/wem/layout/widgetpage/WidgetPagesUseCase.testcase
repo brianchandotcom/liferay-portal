@@ -248,9 +248,11 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name");
 
-			Page.addFriendlyURLLocalizedPG(
-				friendlyUrlLocalized = "de-DE",
-				localizedFriendlyURL = "/german");
+			PagesAdmin.addLocalizedFriendlyURL(
+				configureWithoutSave = "true",
+				friendlyUrlLocalizedList = "de-DE",
+				localizedFriendlyURLList = "/german",
+				localizedNameList = "-");
 		}
 
 		task ("Delete default friendly url") {

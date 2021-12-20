@@ -91,13 +91,10 @@ definition {
 				menuItem = "Configure",
 				pageName = "Content Page");
 
-			Page.addFriendlyURLLocalizedPG(
-				friendlyUrlLocalized = "fr-FR",
-				localizedFriendlyURL = "");
-
-			PortletEntry.inputName(name = "Principal");
-
-			Button.clickSave();
+			PagesAdmin.addLocalizedFriendlyURL(
+				friendlyUrlLocalizedList = "fr-FR",
+				localizedFriendlyURLList = "",
+				localizedNameList = "Principal");
 		}
 
 		task ("Open Page Audit panel and run it") {

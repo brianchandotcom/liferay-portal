@@ -192,6 +192,39 @@ definition {
 			value1 = "Save");
 	}
 
+	macro addLocalizedFriendlyURL {
+		var list1 = ListUtil.newListFromString("${friendlyUrlLocalizedList}");
+		var list2 = ListUtil.newListFromString("${localizedFriendlyURLList}");
+		var list3 = ListUtil.newListFromString("${localizedNameList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var friendlyUrlLocalized = ListUtil.get("${list1}", "${i}");
+			var localizedFriendlyURL = ListUtil.get("${list2}", "${i}");
+			var localizedName = ListUtil.get("${list3}", "${i}");
+
+			PortletEntry.changeLocale(
+				fieldName = "Friendly URL",
+				locale = "${friendlyUrlLocalized}");
+
+			Type(
+				locator1 = "TextInput#FRIENDLY_URL",
+				value1 = "${localizedFriendlyURL}");
+
+			if ("${localizedName}" != "-") {
+				PortletEntry.inputName(name = "${localizedName}");
+			}
+
+			if (!(isSet(configureWithoutSave))) {
+				PortletEntry.save();
+			}
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
 	macro addPrivateChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -492,6 +525,19 @@ definition {
 				key_itemName = "${privacy}",
 				locator1 = "SitePages#LIST_GROUP_ITEM");
 		}
+	}
+
+	macro viewPageLocalization {
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		AssertElementPresent(
+			key_text = "${fieldName}",
+			locator1 = "TextInput#ANY");
+
+		AssertTextEquals.assertPartialText(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION",
+			value1 = "${defaultSiteLanguageKey}");
 	}
 
 	macro viewPagesOrder {

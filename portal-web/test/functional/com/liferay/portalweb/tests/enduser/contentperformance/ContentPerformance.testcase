@@ -267,13 +267,10 @@ definition {
 				menuItem = "Configure",
 				pageName = "Content Page");
 
-			Page.addFriendlyURLLocalizedPG(
-				friendlyUrlLocalized = "pt-BR",
-				localizedFriendlyURL = "");
-
-			PortletEntry.inputName(name = "Pagina principal");
-
-			Button.clickSave();
+			PagesAdmin.addLocalizedFriendlyURL(
+				friendlyUrlLocalizedList = "pt-BR",
+				localizedFriendlyURLList = "",
+				localizedNameList = "Pagina principal");
 		}
 
 		task ("Set a custom page as canonical URL and go to Content Performance") {

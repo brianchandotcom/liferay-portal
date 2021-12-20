@@ -68,15 +68,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "de-DE",
-			localizedFriendlyURL = "/german");
-
-		PortletEntry.inputName(name = "German Staging Test Page");
-
-		Button.click(button = "Save");
-
-		Alert.viewSuccessMessage();
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyUrlLocalizedList = "de-DE",
+			localizedFriendlyURLList = "/german",
+			localizedNameList = "German Staging Test Page");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 

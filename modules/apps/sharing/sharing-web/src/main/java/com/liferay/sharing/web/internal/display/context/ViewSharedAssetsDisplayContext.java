@@ -317,36 +317,28 @@ public class ViewSharedAssetsDisplayContext {
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
-		long classNameId = 0;
-
-		String className = ParamUtil.getString(
-			_httpServletRequest, "className");
-
-		if (Validator.isNotNull(className)) {
-			classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
-		}
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			ParamUtil.getString(_httpServletRequest, "className"));
 
 		if (_isIncoming()) {
-			searchContainer.setTotal(
+			searchContainer.setResultsAndTotal(
+				() -> _sharingEntryLocalService.getToUserSharingEntries(
+					_themeDisplay.getUserId(), classNameId,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					new SharingEntryModifiedDateComparator(
+						Objects.equals(getSortingOrder(), "asc"))),
 				_sharingEntryLocalService.getToUserSharingEntriesCount(
 					_themeDisplay.getUserId(), classNameId));
-			searchContainer.setResults(
-				_sharingEntryLocalService.getToUserSharingEntries(
-					_themeDisplay.getUserId(), classNameId,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					new SharingEntryModifiedDateComparator(
-						Objects.equals(getSortingOrder(), "asc"))));
 		}
 		else {
-			searchContainer.setTotal(
-				_sharingEntryLocalService.getFromUserSharingEntriesCount(
-					_themeDisplay.getUserId(), classNameId));
-			searchContainer.setResults(
-				_sharingEntryLocalService.getFromUserSharingEntries(
+			searchContainer.setResultsAndTotal(
+				() -> _sharingEntryLocalService.getFromUserSharingEntries(
 					_themeDisplay.getUserId(), classNameId,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					new SharingEntryModifiedDateComparator(
-						Objects.equals(getSortingOrder(), "asc"))));
+						Objects.equals(getSortingOrder(), "asc"))),
+				_sharingEntryLocalService.getFromUserSharingEntriesCount(
+					_themeDisplay.getUserId(), classNameId));
 		}
 	}
 

@@ -224,10 +224,12 @@ public class SelectRolesDisplayContext {
 				themeDisplay.getPermissionChecker(), getGroupId(), roles);
 		}
 
-		roleSearch.setTotal(roles.size());
-		roleSearch.setResults(
-			ListUtil.subList(
-				roles, roleSearch.getStart(), roleSearch.getEnd()));
+		List<Role> filteredRoles = roles;
+
+		roleSearch.setResultsAndTotal(
+			() -> ListUtil.subList(
+				filteredRoles, roleSearch.getStart(), roleSearch.getEnd()),
+			filteredRoles.size());
 
 		_roleSearch = roleSearch;
 

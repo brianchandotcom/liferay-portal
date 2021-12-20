@@ -219,15 +219,14 @@ public class SelectUsersDisplayContext {
 				PermissionThreadLocal.setPermissionChecker(null);
 			}
 
-			userSearch.setTotal(
+			userSearch.setResultsAndTotal(
+				() -> UserLocalServiceUtil.search(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					searchTerms.getStatus(), userParams, userSearch.getStart(),
+					userSearch.getEnd(), userSearch.getOrderByComparator()),
 				UserLocalServiceUtil.searchCount(
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					searchTerms.getStatus(), userParams));
-			userSearch.setResults(
-				UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), userParams, userSearch.getStart(),
-					userSearch.getEnd(), userSearch.getOrderByComparator()));
 			userSearch.setRowChecker(
 				new UserSiteMembershipChecker(
 					_renderResponse,

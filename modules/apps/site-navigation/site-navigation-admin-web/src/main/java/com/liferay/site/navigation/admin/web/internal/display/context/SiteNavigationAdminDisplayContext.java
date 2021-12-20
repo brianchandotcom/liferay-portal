@@ -224,30 +224,27 @@ public class SiteNavigationAdminDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
-		List<SiteNavigationMenu> menus = null;
-		int menusCount = 0;
-
 		if (Validator.isNotNull(getKeywords())) {
-			menus = _siteNavigationMenuService.getSiteNavigationMenus(
-				themeDisplay.getScopeGroupId(), getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-			menusCount = _siteNavigationMenuService.getSiteNavigationMenusCount(
-				themeDisplay.getScopeGroupId(), getKeywords());
+			searchContainer.setResultsAndTotal(
+				() -> _siteNavigationMenuService.getSiteNavigationMenus(
+					themeDisplay.getScopeGroupId(), getKeywords(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				_siteNavigationMenuService.getSiteNavigationMenusCount(
+					themeDisplay.getScopeGroupId(), getKeywords()));
 		}
 		else {
-			menus = _siteNavigationMenuService.getSiteNavigationMenus(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-			menusCount = _siteNavigationMenuService.getSiteNavigationMenusCount(
-				themeDisplay.getScopeGroupId());
+			searchContainer.setResultsAndTotal(
+				() -> _siteNavigationMenuService.getSiteNavigationMenus(
+					themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				_siteNavigationMenuService.getSiteNavigationMenusCount(
+					themeDisplay.getScopeGroupId()));
 		}
 
-		searchContainer.setResults(menus);
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
-		searchContainer.setTotal(menusCount);
 
 		_searchContainer = searchContainer;
 

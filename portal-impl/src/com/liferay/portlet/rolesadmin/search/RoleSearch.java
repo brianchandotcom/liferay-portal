@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.rolesadmin.search;
 
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -37,7 +37,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RoleSearch extends SearchContainer<Role> {
+public class RoleSearch extends BaseModelSearchContainer<Role> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-roles-were-found";
 

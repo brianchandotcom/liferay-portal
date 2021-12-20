@@ -232,16 +232,15 @@ public class SelectUsersDisplayContext {
 				}
 			).build();
 
-		userSearchContainer.setTotal(
-			UserLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				searchTerms.getStatus(), userParams));
-		userSearchContainer.setResults(
-			UserLocalServiceUtil.search(
+		userSearchContainer.setResultsAndTotal(
+			() -> UserLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams,
 				userSearchContainer.getStart(), userSearchContainer.getEnd(),
-				userSearchContainer.getOrderByComparator()));
+				userSearchContainer.getOrderByComparator()),
+			UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams));
 
 		userSearchContainer.setRowChecker(
 			new UserTeamChecker(_renderResponse, getTeam()));

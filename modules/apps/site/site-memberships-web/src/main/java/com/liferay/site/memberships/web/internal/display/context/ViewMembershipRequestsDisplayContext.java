@@ -218,14 +218,13 @@ public class ViewMembershipRequestsDisplayContext {
 		siteMembershipSearch.setOrderByComparator(
 			new MembershipRequestCreateDateComparator(orderByAsc));
 		siteMembershipSearch.setOrderByType(getOrderByType());
-		siteMembershipSearch.setTotal(
-			MembershipRequestLocalServiceUtil.searchCount(
-				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId()));
-		siteMembershipSearch.setResults(
-			MembershipRequestLocalServiceUtil.search(
+		siteMembershipSearch.setResultsAndTotal(
+			() -> MembershipRequestLocalServiceUtil.search(
 				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId(),
 				siteMembershipSearch.getStart(), siteMembershipSearch.getEnd(),
-				siteMembershipSearch.getOrderByComparator()));
+				siteMembershipSearch.getOrderByComparator()),
+			MembershipRequestLocalServiceUtil.searchCount(
+				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId()));
 
 		_siteMembershipSearch = siteMembershipSearch;
 

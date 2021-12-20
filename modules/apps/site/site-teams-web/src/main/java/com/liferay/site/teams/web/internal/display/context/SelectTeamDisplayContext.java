@@ -176,16 +176,15 @@ public class SelectTeamDisplayContext {
 		TeamDisplayTerms searchTerms =
 			(TeamDisplayTerms)teamSearchContainer.getSearchTerms();
 
-		teamSearchContainer.setTotal(
-			TeamLocalServiceUtil.searchCount(
-				themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
-				searchTerms.getKeywords(), new LinkedHashMap<>()));
-		teamSearchContainer.setResults(
-			TeamLocalServiceUtil.search(
+		teamSearchContainer.setResultsAndTotal(
+			() -> TeamLocalServiceUtil.search(
 				themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
 				searchTerms.getKeywords(), new LinkedHashMap<>(),
 				teamSearchContainer.getStart(), teamSearchContainer.getEnd(),
-				teamSearchContainer.getOrderByComparator()));
+				teamSearchContainer.getOrderByComparator()),
+			TeamLocalServiceUtil.searchCount(
+				themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
+				searchTerms.getKeywords(), new LinkedHashMap<>()));
 
 		_teamSearchContainer = teamSearchContainer;
 

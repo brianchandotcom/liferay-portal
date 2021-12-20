@@ -231,16 +231,15 @@ public class SelectUserGroupsDisplayContext {
 				}
 			).build();
 
-		userGroupSearchContainer.setTotal(
-			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				userGroupParams));
-		userGroupSearchContainer.setResults(
-			UserGroupLocalServiceUtil.search(
+		userGroupSearchContainer.setResultsAndTotal(
+			() -> UserGroupLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				userGroupParams, userGroupSearchContainer.getStart(),
 				userGroupSearchContainer.getEnd(),
-				userGroupSearchContainer.getOrderByComparator()));
+				userGroupSearchContainer.getOrderByComparator()),
+			UserGroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams));
 
 		userGroupSearchContainer.setRowChecker(
 			new UserGroupTeamChecker(_renderResponse, getTeam()));

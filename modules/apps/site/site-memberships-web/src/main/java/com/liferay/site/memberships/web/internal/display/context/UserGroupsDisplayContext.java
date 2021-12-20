@@ -276,16 +276,15 @@ public class UserGroupsDisplayContext {
 				}
 			).build();
 
-		userGroupSearch.setTotal(
-			UserGroupServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				userGroupParams));
-		userGroupSearch.setResults(
-			UserGroupServiceUtil.search(
+		userGroupSearch.setResultsAndTotal(
+			() -> UserGroupServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				userGroupParams, userGroupSearch.getStart(),
 				userGroupSearch.getEnd(),
-				userGroupSearch.getOrderByComparator()));
+				userGroupSearch.getOrderByComparator()),
+			UserGroupServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams));
 
 		userGroupSearch.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

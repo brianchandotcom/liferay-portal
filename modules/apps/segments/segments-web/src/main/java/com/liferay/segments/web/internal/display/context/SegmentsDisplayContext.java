@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -175,45 +175,39 @@ public class SegmentsDisplayContext {
 			return _searchContainer;
 		}
 
-		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-segments");
+		BaseModelSearchContainer<SegmentsEntry> baseModelSearchContainer =
+			new BaseModelSearchContainer(
+				_renderRequest, _getPortletURL(), null,
+				"there-are-no-segments");
 
-		searchContainer.setId("segmentsEntries");
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByComparator(_getOrderByComparator());
-		searchContainer.setOrderByType(getOrderByType());
-
-		List<SegmentsEntry> segmentsEntries = null;
-
-		int segmentsEntriesCount = 0;
+		baseModelSearchContainer.setId("segmentsEntries");
+		baseModelSearchContainer.setOrderByCol(_getOrderByCol());
+		baseModelSearchContainer.setOrderByComparator(_getOrderByComparator());
+		baseModelSearchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
-			BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+			baseModelSearchContainer.setResultsAndTotal(
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
 					_themeDisplay.getScopeGroupId(), _getKeywords(), true,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					_getSort());
-
-			segmentsEntries = baseModelSearchResult.getBaseModels();
-			segmentsEntriesCount = baseModelSearchResult.getLength();
+					baseModelSearchContainer.getStart(),
+					baseModelSearchContainer.getEnd(), _getSort()));
 		}
 		else {
-			segmentsEntries = _segmentsEntryService.getSegmentsEntries(
-				_themeDisplay.getScopeGroupId(), true,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-			segmentsEntriesCount =
+			baseModelSearchContainer.setResultsAndTotal(
+				() -> _segmentsEntryService.getSegmentsEntries(
+					_themeDisplay.getScopeGroupId(), true,
+					baseModelSearchContainer.getStart(),
+					baseModelSearchContainer.getEnd(),
+					baseModelSearchContainer.getOrderByComparator()),
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId(), true);
+					_themeDisplay.getScopeGroupId(), true));
 		}
 
-		searchContainer.setResults(segmentsEntries);
-		searchContainer.setRowChecker(
+		baseModelSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(segmentsEntriesCount);
 
-		_searchContainer = searchContainer;
+		_searchContainer = baseModelSearchContainer;
 
 		return _searchContainer;
 	}

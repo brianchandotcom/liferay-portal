@@ -153,15 +153,14 @@ public class SiteMySitesDisplayContext {
 			groupParams.put("active", Boolean.TRUE);
 		}
 
-		groupSearch.setTotal(
+		groupSearch.setResultsAndTotal(
+			() -> GroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				groupParams, groupSearch.getStart(), groupSearch.getEnd(),
+				groupSearch.getOrderByComparator()),
 			GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				groupParams));
-		groupSearch.setResults(
-			GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				groupParams, groupSearch.getStart(), groupSearch.getEnd(),
-				groupSearch.getOrderByComparator()));
 
 		_groupSearch = groupSearch;
 

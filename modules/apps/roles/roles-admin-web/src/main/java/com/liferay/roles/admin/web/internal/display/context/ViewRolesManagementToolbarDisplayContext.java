@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -211,17 +210,14 @@ public class ViewRolesManagementToolbarDisplayContext {
 		RoleSearchTerms roleSearchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		BaseModelSearchResult<Role> baseModelSearchResult =
+		roleSearch.setResultsAndTotal(
 			_currentRoleTypeContributor.searchRoles(
 				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
 				roleSearch.getStart(), roleSearch.getEnd(),
-				roleSearch.getOrderByComparator());
-
-		roleSearch.setResults(baseModelSearchResult.getBaseModels());
+				roleSearch.getOrderByComparator()));
 
 		roleSearch.setRowChecker(
 			new RoleChecker(_renderRequest, _renderResponse));
-		roleSearch.setTotal(baseModelSearchResult.getLength());
 
 		_roleSearch = roleSearch;
 

@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -174,27 +175,40 @@ public class SiteBrowserDisplayContext {
 
 		total += additionalSites;
 
-		groupSearch.setTotal(total);
-
-		int start = groupSearch.getStart();
-
-		if (groupSearch.getStart() > additionalSites) {
-			start = groupSearch.getStart() - additionalSites;
-		}
-
-		List<Group> groups = null;
-
 		if (Objects.equals(type, "layoutScopes")) {
-			groups = GroupLocalServiceUtil.getGroups(
-				company.getCompanyId(), Layout.class.getName(), _getGroupId(),
-				start, groupSearch.getResultEnd() - additionalSites);
+			int additionalSitesCount = additionalSites;
 
-			groups = _filterLayoutGroups(groups, _isPrivateLayout());
+			groupSearch.setResultsAndTotal(
+				() -> {
+					int start = groupSearch.getStart();
+
+					if (groupSearch.getStart() > additionalSitesCount) {
+						start = groupSearch.getStart() - additionalSitesCount;
+					}
+
+					try {
+						results.addAll(
+							_filterLayoutGroups(
+								GroupLocalServiceUtil.getGroups(
+									company.getCompanyId(),
+									Layout.class.getName(), _getGroupId(),
+									start,
+									groupSearch.getResultEnd() -
+										additionalSitesCount),
+								_isPrivateLayout()));
+					}
+					catch (Exception exception) {
+						throw new SystemException(exception);
+					}
+
+					return results;
+				},
+				total);
 		}
 		else if (Objects.equals(type, "parent-sites")) {
 			Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
 
-			groups = group.getAncestors();
+			List<Group> groups = group.getAncestors();
 
 			String filter = _getFilter();
 
@@ -206,10 +220,12 @@ public class SiteBrowserDisplayContext {
 
 			total += additionalSites;
 
-			groupSearch.setTotal(total);
+			results.addAll(groups);
+
+			groupSearch.setResultsAndTotal(() -> results, total);
 		}
 		else {
-			groups = GroupLocalServiceUtil.search(
+			List<Group> groups = GroupLocalServiceUtil.search(
 				company.getCompanyId(), classNameIds,
 				groupSearchTerms.getKeywords(), _getGroupParams(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -219,15 +235,25 @@ public class SiteBrowserDisplayContext {
 
 			total += additionalSites;
 
-			groupSearch.setTotal(total);
+			int additionalSitesCount = additionalSites;
 
-			groups = groups.subList(
-				start, groupSearch.getResultEnd() - additionalSites);
+			groupSearch.setResultsAndTotal(
+				() -> {
+					int start = groupSearch.getStart();
+
+					if (groupSearch.getStart() > additionalSitesCount) {
+						start = groupSearch.getStart() - additionalSitesCount;
+					}
+
+					results.addAll(
+						groups.subList(
+							start,
+							groupSearch.getResultEnd() - additionalSitesCount));
+
+					return results;
+				},
+				total);
 		}
-
-		results.addAll(groups);
-
-		groupSearch.setResults(results);
 
 		_groupSearch = groupSearch;
 

@@ -14,12 +14,12 @@
 
 package com.liferay.roles.admin.web.internal.dao.search;
 
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -51,16 +51,17 @@ public class SegmentsEntrySearchContainerFactory {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer(
-			renderRequest,
-			PortletURLUtil.getCurrent(renderRequest, renderResponse), null,
-			"no-segments-were-found");
+		BaseModelSearchContainer<SegmentsEntry> baseModelSearchContainer =
+			new BaseModelSearchContainer(
+				renderRequest,
+				PortletURLUtil.getCurrent(renderRequest, renderResponse), null,
+				"no-segments-were-found");
 
-		searchContainer.setId("segmentsEntries");
-		searchContainer.setOrderByCol(
+		baseModelSearchContainer.setId("segmentsEntries");
+		baseModelSearchContainer.setOrderByCol(
 			SearchOrderByUtil.getOrderByCol(
 				renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "name"));
-		searchContainer.setOrderByType(
+		baseModelSearchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
 				renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "asc"));
 
@@ -84,23 +85,22 @@ public class SegmentsEntrySearchContainerFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+		baseModelSearchContainer.setResultsAndTotal(
 			SegmentsEntryLocalServiceUtil.searchSegmentsEntries(
 				_buildSearchContext(
 					themeDisplay.getCompanyId(),
 					themeDisplay.getCompanyGroupId(),
 					ParamUtil.getString(renderRequest, "keywords"), params,
-					searchContainer.getStart(), searchContainer.getEnd(),
+					baseModelSearchContainer.getStart(),
+					baseModelSearchContainer.getEnd(),
 					_getSort(
-						searchContainer.getOrderByCol(),
-						searchContainer.getOrderByType(), themeDisplay)));
+						baseModelSearchContainer.getOrderByCol(),
+						baseModelSearchContainer.getOrderByType(),
+						themeDisplay))));
 
-		searchContainer.setResults(baseModelSearchResult.getBaseModels());
+		baseModelSearchContainer.setRowChecker(rowChecker);
 
-		searchContainer.setRowChecker(rowChecker);
-		searchContainer.setTotal(baseModelSearchResult.getLength());
-
-		return searchContainer;
+		return baseModelSearchContainer;
 	}
 
 	private static SearchContext _buildSearchContext(

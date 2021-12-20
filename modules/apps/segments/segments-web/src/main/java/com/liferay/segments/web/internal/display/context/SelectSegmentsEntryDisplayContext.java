@@ -18,13 +18,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -152,15 +152,16 @@ public class SelectSegmentsEntryDisplayContext {
 			return _searchContainer;
 		}
 
-		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-segments");
+		BaseModelSearchContainer<SegmentsEntry> baseModelSearchContainer =
+			new BaseModelSearchContainer(
+				_renderRequest, _getPortletURL(), null,
+				"there-are-no-segments");
 
-		searchContainer.setId("selectSegmentsEntry");
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByComparator(_getOrderByComparator());
-		searchContainer.setOrderByType(getOrderByType());
-
-		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+		baseModelSearchContainer.setId("selectSegmentsEntry");
+		baseModelSearchContainer.setOrderByCol(_getOrderByCol());
+		baseModelSearchContainer.setOrderByComparator(_getOrderByComparator());
+		baseModelSearchContainer.setOrderByType(getOrderByType());
+		baseModelSearchContainer.setResultsAndTotal(
 			_segmentsEntryLocalService.searchSegmentsEntries(
 				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 				_getKeywords(), true,
@@ -169,13 +170,10 @@ public class SelectSegmentsEntryDisplayContext {
 				).put(
 					"excludedSources", _getExcludedSources()
 				).build(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				_getSort());
+				baseModelSearchContainer.getStart(),
+				baseModelSearchContainer.getEnd(), _getSort()));
 
-		searchContainer.setResults(baseModelSearchResult.getBaseModels());
-		searchContainer.setTotal(baseModelSearchResult.getLength());
-
-		_searchContainer = searchContainer;
+		_searchContainer = baseModelSearchContainer;
 
 		return _searchContainer;
 	}

@@ -42,7 +42,6 @@ import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -289,25 +288,24 @@ public class UsersDisplayContext {
 				}
 			).build();
 
-		int usersCount = 0;
-		List<User> users = Collections.emptyList();
-
 		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), getGroupId(),
 				ActionKeys.VIEW_MEMBERS)) {
 
-			usersCount = UserLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				searchTerms.getStatus(), userParams);
-			users = UserLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				searchTerms.getStatus(), userParams, userSearch.getStart(),
-				userSearch.getEnd(), userSearch.getOrderByComparator());
+			userSearch.setResultsAndTotal(
+				() -> UserLocalServiceUtil.search(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					searchTerms.getStatus(), userParams, userSearch.getStart(),
+					userSearch.getEnd(), userSearch.getOrderByComparator()),
+				UserLocalServiceUtil.searchCount(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					searchTerms.getStatus(), userParams));
+		}
+		else {
+			userSearch.setResultsAndTotal(Collections::emptyList, 0);
 		}
 
-		userSearch.setResults(users);
 		userSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
-		userSearch.setTotal(usersCount);
 
 		_userSearch = userSearch;
 

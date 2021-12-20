@@ -104,16 +104,15 @@ public class SiteTeamsDisplayContext {
 		searchContainer.setId("teams");
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setTotal(
-			TeamServiceUtil.searchCount(
-				themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
-				new LinkedHashMap<>()));
-		searchContainer.setResults(
-			TeamServiceUtil.search(
+		searchContainer.setResultsAndTotal(
+			() -> TeamServiceUtil.search(
 				themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
 				new LinkedHashMap<>(), searchContainer.getStart(),
 				searchContainer.getEnd(),
-				searchContainer.getOrderByComparator()));
+				searchContainer.getOrderByComparator()),
+			TeamServiceUtil.searchCount(
+				themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
+				new LinkedHashMap<>()));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 

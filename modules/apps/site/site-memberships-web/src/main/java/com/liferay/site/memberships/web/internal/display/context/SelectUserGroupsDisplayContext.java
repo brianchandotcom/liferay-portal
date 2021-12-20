@@ -201,16 +201,15 @@ public class SelectUserGroupsDisplayContext {
 
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
-		userGroupSearch.setTotal(
-			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				userGroupParams));
-		userGroupSearch.setResults(
-			UserGroupLocalServiceUtil.search(
+		userGroupSearch.setResultsAndTotal(
+			() -> UserGroupLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				userGroupParams, userGroupSearch.getStart(),
 				userGroupSearch.getEnd(),
-				userGroupSearch.getOrderByComparator()));
+				userGroupSearch.getOrderByComparator()),
+			UserGroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				userGroupParams));
 
 		userGroupSearch.setRowChecker(
 			new UserGroupSiteMembershipChecker(

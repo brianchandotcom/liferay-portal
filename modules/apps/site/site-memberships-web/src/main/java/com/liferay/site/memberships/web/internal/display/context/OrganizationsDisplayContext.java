@@ -152,22 +152,21 @@ public class OrganizationsDisplayContext {
 				"organizationsGroups", Long.valueOf(getGroupId())
 			).build();
 
-		organizationSearch.setTotal(
-			OrganizationLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				searchTerms.getKeywords(), searchTerms.getType(),
-				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-				organizationParams));
-		organizationSearch.setResults(
-			OrganizationLocalServiceUtil.search(
+		organizationSearch.setResultsAndTotal(
+			() -> OrganizationLocalServiceUtil.search(
 				themeDisplay.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 				searchTerms.getKeywords(), searchTerms.getType(),
 				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
 				organizationParams, organizationSearch.getStart(),
 				organizationSearch.getEnd(),
-				organizationSearch.getOrderByComparator()));
+				organizationSearch.getOrderByComparator()),
+			OrganizationLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				searchTerms.getKeywords(), searchTerms.getType(),
+				searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
+				organizationParams));
 
 		organizationSearch.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

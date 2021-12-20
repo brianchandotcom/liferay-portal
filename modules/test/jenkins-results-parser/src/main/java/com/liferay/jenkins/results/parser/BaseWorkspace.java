@@ -68,7 +68,7 @@ public abstract class BaseWorkspace implements Workspace {
 					@Override
 					public WorkspaceGitRepository call() {
 						return GitRepositoryFactory.getWorkspaceGitRepository(
-							workspaceRepositoryDirName);
+							workspaceRepositoryDirName.trim());
 					}
 
 				};
@@ -102,6 +102,24 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 
 		return _workspaceGitRepositories.get(repositoryDirName);
+	}
+
+	public String removeDuplicateWorkspaces(String workspaceRepositories) {
+		String[] dirNameList = workspaceRepositories.split(",");
+
+		ArrayList<String> workspaceDirNameList = new ArrayList<>();
+
+		for (String dirName : dirNameList) {
+			if (!workspaceDirNameList.contains(dirName)) {
+				workspaceDirNameList.add(dirName);
+			}
+		}
+
+		String workspaceDirNameListToString = workspaceDirNameList.toString();
+
+		workspaceDirNameListToString.replaceAll("\\[(.*?)\\]", "$1");
+
+		return workspaceDirNameListToString;
 	}
 
 	@Override
@@ -260,14 +278,18 @@ public abstract class BaseWorkspace implements Workspace {
 			_primaryWorkspaceGitRepository.getUpstreamBranchName());
 
 		try {
+			String workspaceRepoString = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"workspace.repository.dir.names",
+				_primaryWorkspaceGitRepository.getName(),
+				_primaryWorkspaceGitRepository.getUpstreamBranchName(),
+				jobName);
+
+			String updatedWorkspaceRepoString = removeDuplicateWorkspaces(
+				workspaceRepoString);
+
 			jsonObject.put(
-				"workspace_repository_dir_names",
-				JenkinsResultsParserUtil.getProperty(
-					JenkinsResultsParserUtil.getBuildProperties(),
-					"workspace.repository.dir.names",
-					_primaryWorkspaceGitRepository.getName(),
-					_primaryWorkspaceGitRepository.getUpstreamBranchName(),
-					jobName));
+				"workspace_repository_dir_names", updatedWorkspaceRepoString);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

@@ -13,12 +13,11 @@
  */
 
 import {
-	cleanup,
 	fireEvent,
 	queryAllByRole,
 	queryAllByText,
 	render,
-	waitForElement,
+	waitFor,
 } from '@testing-library/react';
 import React from 'react';
 
@@ -47,8 +46,6 @@ const defaultProps = {
 const renderLanguagesComponent = (props) => render(<Languages {...props} />);
 
 describe('Languages', () => {
-	afterEach(cleanup);
-
 	it('renders a radio group with the first option checked', () => {
 		const {getAllByRole} = renderLanguagesComponent(defaultProps);
 
@@ -245,8 +242,6 @@ describe('Languages', () => {
 	describe('ManageLanguages', () => {
 		let result;
 
-		afterEach(cleanup);
-
 		beforeEach(() => {
 			result = renderLanguagesComponent({
 				...defaultProps,
@@ -257,16 +252,13 @@ describe('Languages', () => {
 		});
 
 		it('renders a modal when user clicks on Edit button', async () => {
-			const title = await waitForElement(() =>
-				result.getByText('language-selection')
-			);
+			const title = await result.findByText('language-selection');
+
 			expect(title).toBeTruthy();
 		});
 
 		it('renders custom locales checked', async () => {
-			const checkboxes = await waitForElement(() =>
-				result.getAllByRole('checkbox')
-			);
+			const checkboxes = await result.findAllByRole('checkbox');
 
 			expect(checkboxes).toHaveLength(4);
 
@@ -277,23 +269,19 @@ describe('Languages', () => {
 		});
 
 		it('custom locale check is disabled', async () => {
-			const checkboxes = await waitForElement(() =>
-				result.getAllByRole('checkbox')
-			);
+			const checkboxes = await result.findAllByRole('checkbox');
 
 			expect(checkboxes[1]).toHaveProperty('disabled', true);
 		});
 
 		it('uncheck custom locale and save', async () => {
-			const checkboxes = await waitForElement(() =>
-				result.getAllByRole('checkbox')
-			);
+			const checkboxes = await result.findAllByRole('checkbox');
 
 			fireEvent.click(checkboxes[0]);
 
 			fireEvent.click(result.getByText('done'));
 
-			const languagesList = await waitForElement(() =>
+			const languagesList = await waitFor(() =>
 				result.container.querySelectorAll('tbody > tr')
 			);
 
@@ -302,15 +290,13 @@ describe('Languages', () => {
 		});
 
 		it('add custom locale and save', async () => {
-			const checkboxes = await waitForElement(() =>
-				result.getAllByRole('checkbox')
-			);
+			const checkboxes = await result.findAllByRole('checkbox');
 
 			fireEvent.click(checkboxes[2]);
 
 			fireEvent.click(result.getByText('done'));
 
-			const languagesList = await waitForElement(() =>
+			const languagesList = await waitFor(() =>
 				result.container.querySelectorAll('tbody > tr')
 			);
 

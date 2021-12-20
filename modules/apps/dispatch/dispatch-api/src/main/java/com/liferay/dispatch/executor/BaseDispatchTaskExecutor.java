@@ -67,7 +67,7 @@ public abstract class BaseDispatchTaskExecutor implements DispatchTaskExecutor {
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
 				dispatchTaskExecutorOutput.getError(),
-				truncateOutput(dispatchTaskExecutorOutput.getOutput()),
+				dispatchTaskExecutorOutput.getOutput(),
 				DispatchTaskStatus.SUCCESSFUL);
 		}
 		catch (Throwable throwable) {
@@ -90,17 +90,9 @@ public abstract class BaseDispatchTaskExecutor implements DispatchTaskExecutor {
 
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(), error,
-				truncateOutput(dispatchTaskExecutorOutput.getOutput()),
+				dispatchTaskExecutorOutput.getOutput(),
 				DispatchTaskStatus.FAILED);
 		}
-	}
-
-	protected String truncateOutput(String output) {
-		return DispatchOutputUtil.truncate(
-			10, 5,
-			"Output was truncated for performance reasons. Check the portal " +
-				"log for details.",
-			output);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

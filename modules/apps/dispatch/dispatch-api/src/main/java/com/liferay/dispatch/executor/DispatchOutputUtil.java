@@ -15,12 +15,25 @@
 package com.liferay.dispatch.executor;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Igor Beslic
  */
 public class DispatchOutputUtil {
+
+	public static String truncate(
+		int beginningLinesCount, int endingLinesCount, String output) {
+
+		return truncate(
+			beginningLinesCount, endingLinesCount,
+			StringBundler.concat(
+				"-----------------", StringPool.NEW_LINE,
+				"Output was truncated for performance reasons.",
+				StringPool.NEW_LINE, "-----------------"),
+			output);
+	}
 
 	public static String truncate(
 		int beginningLinesCount, int endingLinesCount, String message,

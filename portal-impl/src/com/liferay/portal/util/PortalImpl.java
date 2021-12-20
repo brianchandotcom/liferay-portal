@@ -8575,6 +8575,20 @@ public class PortalImpl implements Portal {
 			}
 		}
 
+		String friendlyURL = null;
+
+		if (privateLayoutSet) {
+			if (group.isUser()) {
+				friendlyURL = _PRIVATE_USER_SERVLET_MAPPING;
+			}
+			else {
+				friendlyURL = _PRIVATE_GROUP_SERVLET_MAPPING;
+			}
+		}
+		else {
+			friendlyURL = _PUBLIC_GROUP_SERVLET_MAPPING;
+		}
+
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(portalURL);
@@ -8591,23 +8605,8 @@ public class PortalImpl implements Portal {
 			sb.append(PropsValues.WIDGET_SERVLET_MAPPING);
 		}
 
-		if (privateLayoutSet) {
-			if (group.isUser()) {
-				sb.append(_PRIVATE_USER_SERVLET_MAPPING);
-			}
-			else {
-				sb.append(_PRIVATE_GROUP_SERVLET_MAPPING);
-			}
-
-			sb.append(group.getFriendlyURL());
-		}
-		else if (!StringUtil.equals(
-					group.getGroupKey(),
-					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
-
-			sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
-			sb.append(group.getFriendlyURL());
-		}
+		sb.append(friendlyURL);
+		sb.append(group.getFriendlyURL());
 
 		return sb.toString();
 	}

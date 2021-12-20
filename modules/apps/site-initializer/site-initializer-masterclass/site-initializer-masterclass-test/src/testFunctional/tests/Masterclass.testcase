@@ -1216,13 +1216,19 @@ definition {
 		}
 
 		task ("Go to Blog Entry and Assert the List of Blogs Presence") {
-			Click(
-				key_assetType = "Blog Entry",
-				locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE");
+			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 
-			AssertElementPresent(
-				key_colummnsNumber = "3",
-				locator1 = "Masterclass#COLUMNS_NUMBER");
+			PageEditor.openPreviewMode();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var n : list "1,2,3") {
+				AssertVisible(
+					key_entryContent = "//div[contains(text(),'Category')]",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "Masterclass#COLUMNS_NUMBER");
+			}
 		}
 	}
 
@@ -1233,16 +1239,20 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
 
-		task ("Go to Blog and Assert the List of Blogs Presence") {
+		task ("Go to Blog and Assert the List of Blogs in Blog Detail View") {
 			Navigator.gotoSitePage(
 				pageName = "Blog",
 				siteName = "Test Masterclass Name");
 
 			Click(locator1 = "Experience#FRAGMENT_HEADING");
 
-			AssertElementPresent(
-				key_colummnsNumber = "3",
-				locator1 = "Masterclass#COLUMNS_NUMBER");
+			for (var n : list "1,2,3") {
+				AssertVisible(
+					key_entryContent = "//div[contains(text(),'Category')]",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "Masterclass#COLUMNS_NUMBER");
+			}
 		}
 	}
 

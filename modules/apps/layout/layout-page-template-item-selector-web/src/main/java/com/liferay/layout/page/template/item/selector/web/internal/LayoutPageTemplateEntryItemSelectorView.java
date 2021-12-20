@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
@@ -31,6 +32,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
+import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,12 +41,17 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -182,6 +189,50 @@ public class LayoutPageTemplateEntryItemSelectorView
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 			).put(
 				"name", _layoutPageTemplateEntry.getName()
+			).put(
+				"previewURL",
+				() -> {
+					try {
+						Layout layout = _layoutLocalService.getLayout(
+							_layoutPageTemplateEntry.getPlid());
+
+						if (_layoutPageTemplateEntry.getType() ==
+								LayoutPageTemplateEntryTypeConstants.
+									TYPE_DISPLAY_PAGE) {
+
+							String url = ResourceURLBuilder.createResourceURL(
+								PortletURLFactoryUtil.create(
+									_httpServletRequest,
+									ContentPageEditorPortletKeys.
+										CONTENT_PAGE_EDITOR_PORTLET,
+									layout, PortletRequest.RESOURCE_PHASE)
+							).setResourceID(
+								"/layout_content_page_editor/get_page_preview"
+							).buildString();
+
+							url = HttpUtil.addParameter(
+								url, "doAsUserId",
+								_themeDisplay.getDefaultUserId());
+
+							return HttpUtil.addParameter(
+								url, "p_l_mode", Constants.PREVIEW);
+						}
+
+						String layoutURL = HttpUtil.addParameter(
+							PortalUtil.getLayoutFullURL(layout, _themeDisplay),
+							"p_l_mode", Constants.PREVIEW);
+
+						return HttpUtil.addParameter(
+							layoutURL, "p_p_auth",
+							AuthTokenUtil.getToken(_httpServletRequest));
+					}
+					catch (PortalException portalException) {
+						_log.error(
+							portalException.getMessage(), portalException);
+					}
+
+					return StringPool.BLANK;
+				}
 			).put(
 				"url",
 				() -> {

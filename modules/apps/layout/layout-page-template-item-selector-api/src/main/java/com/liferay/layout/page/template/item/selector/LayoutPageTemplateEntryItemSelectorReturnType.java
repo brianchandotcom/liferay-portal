@@ -29,6 +29,10 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * <code>name</code>: The name of the selected layout page template entry
  * </li>
  * <li>
+ * <code>previewURL</code>: The URL to preview the selected layout page template
+ * entry
+ * </li>
+ * <li>
  * <code>url</code>: The URL of the selected layout page template entry
  * </li>
  * <li>

@@ -31,6 +31,8 @@ import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSele
 import com.liferay.translation.web.internal.display.context.ExportTranslationDisplayContext;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -69,9 +71,9 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 				new TranslationRequestHelper(
 					_infoItemServiceTracker, renderRequest);
 
-			Object model = _getModel(
+			List<Object> models = _getModels(
 				translationRequestHelper.getModelClassName(),
-				translationRequestHelper.getModelClassPK());
+				translationRequestHelper.getModelClassPKs());
 
 			renderRequest.setAttribute(
 				ExportTranslationDisplayContext.class.getName(),
@@ -83,10 +85,11 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 					_portal.getHttpServletRequest(renderRequest),
 					_infoItemServiceTracker,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse), model,
+					_portal.getLiferayPortletResponse(renderResponse),
+					models.get(0),
 					_getTitle(
-						translationRequestHelper.getModelClassName(), model,
-						themeDisplay.getLocale()),
+						translationRequestHelper.getModelClassName(),
+						models.get(0), themeDisplay.getLocale()),
 					_translationInfoItemFieldValuesExporterTracker));
 
 			return "/export_translation.jsp";
@@ -104,14 +107,20 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 				FFLayoutExperienceSelectorConfiguration.class, properties);
 	}
 
-	private Object _getModel(String className, long classPK)
+	private List<Object> _getModels(String className, long[] classPKs)
 		throws PortalException {
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
-		return infoItemObjectProvider.getInfoItem(classPK);
+		List<Object> models = new ArrayList<>(classPKs.length);
+
+		for (long classPK : classPKs) {
+			models.add(infoItemObjectProvider.getInfoItem(classPK));
+		}
+
+		return models;
 	}
 
 	private String _getTitle(String className, Object model, Locale locale) {

@@ -113,38 +113,50 @@ public class TranslationRequestHelper {
 	}
 
 	public long getModelClassPK() throws PortalException {
-		if (_modelClassPK != null) {
-			return _modelClassPK;
+		long[] modelClassPKs = getModelClassPKs();
+
+		return modelClassPKs[0];
+	}
+
+	public long[] getModelClassPKs() throws PortalException {
+		if (_modelClassPKs != null) {
+			return _modelClassPKs;
 		}
 
-		_modelClassPK = ParamUtil.getLong(_portletRequest, "classPK");
+		_modelClassPKs = ParamUtil.getLongValues(_portletRequest, "classPK");
 
-		if (_modelClassPK != 0) {
-			return _modelClassPK;
+		if (_modelClassPKs.length != 0) {
+			return _modelClassPKs;
 		}
 
 		InfoItemIdentifierTranslator infoItemIdentifierTranslator =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemIdentifierTranslator.class, getModelClassName());
 
-		String key = ParamUtil.getString(_portletRequest, "key");
+		String[] keys = ParamUtil.getStringValues(_portletRequest, "key");
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemIdentifierTranslator.translateInfoItemIdentifier(
-					new GroupKeyInfoItemIdentifier(getGroupId(), key),
-					ClassPKInfoItemIdentifier.class);
+		long[] modelClassPKs = new long[keys.length];
 
-		_modelClassPK = classPKInfoItemIdentifier.getClassPK();
+		for (int i = 0; i < keys.length; i++) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemIdentifierTranslator.translateInfoItemIdentifier(
+						new GroupKeyInfoItemIdentifier(getGroupId(), keys[i]),
+						ClassPKInfoItemIdentifier.class);
 
-		return _modelClassPK;
+			modelClassPKs[i] = classPKInfoItemIdentifier.getClassPK();
+		}
+
+		_modelClassPKs = modelClassPKs;
+
+		return _modelClassPKs;
 	}
 
 	private Long _classNameId;
 	private Long _groupId;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private String _modelClassName;
-	private Long _modelClassPK;
+	private long[] _modelClassPKs;
 	private final PortletRequest _portletRequest;
 
 }

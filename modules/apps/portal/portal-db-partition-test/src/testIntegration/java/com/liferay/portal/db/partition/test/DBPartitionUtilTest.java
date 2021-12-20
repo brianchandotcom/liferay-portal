@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -112,6 +115,30 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(
 				"select 1 from " + getSchemaName(COMPANY_ID) + ".CompanyInfo");
+		}
+	}
+
+	@Test
+	public void testAddDBPartitionUsesDBCharacterSetEncoding()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.db.partition.DBPartitionUtil",
+				LoggerTestUtil.INFO)) {
+
+			addDBPartition();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			String message = String.valueOf(logEntries.get(0));
+
+			Assert.assertTrue(
+				message,
+				message.contains(
+					"Obtained character set encoding" +
+						" from session with value:"));
 		}
 	}
 

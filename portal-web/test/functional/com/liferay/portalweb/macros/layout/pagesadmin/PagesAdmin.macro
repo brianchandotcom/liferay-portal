@@ -354,6 +354,22 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro changeLogo {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Page.uploadFileForLogo(logoFile = "${logoFile}");
+	}
+
 	macro configureChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -397,6 +413,34 @@ definition {
 			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
 			sitePageType = "${sitePageType}");
+
+		PortletEntry.save();
+	}
+
+	macro deleteLogo {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		if (isSet(pageName)) {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "${pageName}");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+		else {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			Panel.expandPanel(panel = "Logo");
+		}
+
+		AssertClick(
+			key_text = "Delete",
+			locator1 = "Button#ANY",
+			value1 = "Delete");
 
 		PortletEntry.save();
 	}

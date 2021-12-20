@@ -525,7 +525,7 @@ definition {
 
 		Navigator.gotoStagedView();
 
-		Page.changeLayoutLogo(
+		PagesAdmin.changeLogo(
 			logoFile = "Document_3.png",
 			pageName = "Staging Test Page");
 
@@ -541,7 +541,7 @@ definition {
 
 		ProductMenu.gotoStagingSite(site = "Site Name");
 
-		Page.deleteLogoPG(page = "Staging Test Page");
+		PagesAdmin.deleteLogo(pageName = "Staging Test Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

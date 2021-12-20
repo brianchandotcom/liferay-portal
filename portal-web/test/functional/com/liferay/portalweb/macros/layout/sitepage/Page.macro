@@ -147,20 +147,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro changeLayoutLogo {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "${pageName}");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		Page.uploadFileForLogo(logoFile = "${logoFile}");
-	}
-
 	macro changeSinglePageTheme {
 		ContentPages.gotoPageEditor();
 
@@ -226,31 +212,6 @@ definition {
 			value1 = " ");
 
 		Button.clickSave();
-	}
-
-	macro deleteLogoPG {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		if (isSet(page)) {
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "${page}");
-
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-		else {
-			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
-
-			Panel.expandPanel(panel = "Logo");
-		}
-
-		AssertClick(
-			locator1 = "Button#DELETE_LAYOUT_LOGO",
-			value1 = "Delete");
-
-		PortletEntry.save();
 	}
 
 	macro disableMobileDeviceRulesAreInheritedFromPublicPages {

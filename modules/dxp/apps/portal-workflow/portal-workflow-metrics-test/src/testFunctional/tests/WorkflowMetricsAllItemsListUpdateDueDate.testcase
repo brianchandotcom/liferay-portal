@@ -174,6 +174,8 @@ definition {
 	@description = "LPS-105498 - Verify that the user cannot update the due date of unassigned tasks that are also not assigned to its current role"
 	@priority = "4"
 	test CanNotUpdateDueDateOfUnassignedTasks {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListUpdateDueDate#CanNotUpdateDueDateOfUnassignedTasks";
+
 		JSONUser.addUser(
 			userEmailAddress = "user@liferay.com",
 			userFirstName = "userfn",

@@ -19,6 +19,12 @@ package com.liferay.frontend.data.set.view.table;
  */
 public interface FDSTableSchemaBuilder {
 
+	public <T extends FDSTableSchemaField> T addFDSTableSchemaField(
+		Class<T> clazz, String fieldName);
+
+	public <T extends FDSTableSchemaField> T addFDSTableSchemaField(
+		Class<T> clazz, String fieldName, String label);
+
 	public void addFDSTableSchemaField(FDSTableSchemaField fdsTableSchemaField);
 
 	public FDSTableSchemaField addFDSTableSchemaField(String fieldName);

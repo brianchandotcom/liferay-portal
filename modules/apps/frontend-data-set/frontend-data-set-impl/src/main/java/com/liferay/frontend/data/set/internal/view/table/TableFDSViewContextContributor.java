@@ -23,10 +23,10 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -80,46 +80,11 @@ public class TableFDSViewContextContributor
 				label = StringPool.BLANK;
 			}
 
+			JSONObject fdsTableSchemaFieldJSONObject =
+				fdsTableSchemaField.toJSONObject();
+
 			fieldsJSONArray.put(
-				JSONUtil.put(
-					"actionId", fdsTableSchemaField.getActionId()
-				).put(
-					"contentRenderer", fdsTableSchemaField.getContentRenderer()
-				).put(
-					"contentRendererModuleURL",
-					fdsTableSchemaField.getContentRendererModuleURL()
-				).put(
-					"expand", fdsTableSchemaField.isExpand()
-				).put(
-					"fieldName",
-					() -> {
-						String fieldName = fdsTableSchemaField.getFieldName();
-
-						if (fieldName.contains(StringPool.PERIOD)) {
-							return StringUtil.split(
-								fieldName, StringPool.PERIOD);
-						}
-
-						return fieldName;
-					}
-				).put(
-					"label", label
-				).put(
-					"sortable", fdsTableSchemaField.isSortable()
-				).put(
-					"sortingOrder",
-					() -> {
-						FDSTableSchemaField.SortingOrder sortingOrder =
-							fdsTableSchemaField.getSortingOrder();
-
-						if (sortingOrder != null) {
-							return StringUtil.toLowerCase(
-								sortingOrder.toString());
-						}
-
-						return null;
-					}
-				));
+				fdsTableSchemaFieldJSONObject.put("label", label));
 		}
 
 		return HashMapBuilder.<String, Object>put(

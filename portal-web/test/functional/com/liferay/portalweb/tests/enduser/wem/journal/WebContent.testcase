@@ -1303,6 +1303,12 @@ definition {
 				userEmailAddress = "userea1@liferay.com");
 		}
 
+		task ("Assign the user the site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea1@liferay.com");
+		}
+
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -85,9 +85,19 @@ const ValidationTextAndNumeric = ({
 					label={Liferay.Language.get('value')}
 					name={`${name}_parameter`}
 					onChange={(event) => {
+						let parameter = event.target.value;
+
+						if (dataType === 'double') {
+							const decimalSymbol = parameter.match(/[\D]/g);
+
+							parameter = decimalSymbol
+								? parameter.replace(decimalSymbol[0], '.')
+								: parameter;
+						}
+
 						dispatch({
 							payload: {
-								parameter: event.target.value,
+								parameter,
 							},
 							type: EVENT_TYPES.SET_PARAMETER,
 						});

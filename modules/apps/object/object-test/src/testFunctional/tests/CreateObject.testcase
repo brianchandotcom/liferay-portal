@@ -3781,12 +3781,56 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed for Object entries on workflow pages (My Workflow Tasks, My Submissions, and Submissions)"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnWorkflowPages {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141624 CanViewObjectEntryTitleOnWorkflowPages pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test Entry");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openMyWorkflowTasks();
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Test Entry");
+
+		ObjectAdmin.openMySubmissions();
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Test Entry");
+
+		ObjectAdmin.openSubmissions();
+
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Test Entry");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Picklist type is displayed on the Relationship field when adding an entry"

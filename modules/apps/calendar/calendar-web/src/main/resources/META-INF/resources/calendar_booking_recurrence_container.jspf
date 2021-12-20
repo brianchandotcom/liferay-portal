@@ -210,7 +210,7 @@ if (recurrence != null) {
 							<liferay-ui:input-date
 								dayParam="untilDateDay"
 								dayValue="<%= untilJCalendar.get(java.util.Calendar.DATE) %>"
-								disabled="<%= !onChecked %>"
+								disabled="<%= onChecked %>"
 								monthParam="untilDateMonth"
 								monthValue="<%= untilJCalendar.get(java.util.Calendar.MONTH) %>"
 								name="untilDate"

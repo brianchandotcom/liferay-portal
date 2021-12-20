@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -483,8 +484,19 @@ public class SearchContainer<R> {
 		_orderByTypeParam = orderByTypeParam;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setResultsAndTotal(BiFunction, int)}
+	 */
+	@Deprecated
 	public void setResults(List<R> results) {
-		_results = results;
+		_setResults(results);
+	}
+
+	public void setResultsAndTotal(
+		Supplier<List<R>> getResultsSupplier, int total) {
+
+		_setTotal(total);
+		_setResults(getResultsSupplier.get());
 	}
 
 	public void setRowChecker(RowChecker rowChecker) {
@@ -503,11 +515,12 @@ public class SearchContainer<R> {
 		_summary = summary;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setResultsAndTotal(BiFunction, int)}
+	 */
+	@Deprecated
 	public void setTotal(int total) {
-		_total = total;
-
-		_calculateCur();
-		_calculateStartAndEnd();
+		_setTotal(total);
 	}
 
 	public void setTotalVar(String totalVar) {
@@ -565,6 +578,17 @@ public class SearchContainer<R> {
 		if (value != null) {
 			_iteratorURL.setParameter(name, value);
 		}
+	}
+
+	private void _setResults(List<R> results) {
+		_results = results;
+	}
+
+	private void _setTotal(int total) {
+		_total = total;
+
+		_calculateCur();
+		_calculateStartAndEnd();
 	}
 
 	private String _className;

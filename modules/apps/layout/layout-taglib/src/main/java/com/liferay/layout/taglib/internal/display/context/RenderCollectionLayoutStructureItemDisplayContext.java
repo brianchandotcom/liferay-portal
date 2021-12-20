@@ -277,7 +277,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				"none")) {
 
 			numberOfItemsToDisplay = Math.min(
-				_numberOfItemsToDisplay,
+				numberOfItemsToDisplay,
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
 		}
 

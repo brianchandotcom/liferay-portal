@@ -103,8 +103,6 @@ public class PortalImplGroupFriendlyURLTest {
 
 		_testGroupFriendlyURL(
 			_PUBLIC_LAYOUT_HOSTNAME, expectedURL, _group, _publicLayout);
-
-		_testGroupFriendlyURL("localhost", expectedURL, _group, _publicLayout);
 	}
 
 	private static void _updateLayoutSetVirtualHostname(

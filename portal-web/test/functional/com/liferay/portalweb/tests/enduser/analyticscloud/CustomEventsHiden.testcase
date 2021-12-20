@@ -78,6 +78,8 @@ definition {
 	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10223 | Test Summary: Able to access hidden event"
 	@priority = "4"
 	test CanAccessHiddenEvent {
+		property test.name.skip.portal.instance = "CustomEventsHiden#CanAccessHiddenEvent";
+
 		var defaultEventName = "assetDepthReached";
 		var attributeList = "assetId,canonicalUrl,category,depth,pageDescription,pageKeywords,pageTitle,referrer,sessionId,title,url";
 
@@ -255,6 +257,8 @@ definition {
 	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10222 | Test Summary: Check if some default events are set as hidden"
 	@priority = "5"
 	test ViewIfDefaultEventsAreHidden {
+		property test.name.skip.portal.instance = "CustomEventsHiden#ViewIfDefaultEventsAreHidden";
+
 		var defaultEventNameList = "assetDepthReached,blogDepthReached,fieldBlurred,fieldFocused,pageDepthReached,pageLoaded,pageUnloaded,posted,shared,tabBlurred,tabFocused,VOTE";
 
 		task ("Close sessions") {

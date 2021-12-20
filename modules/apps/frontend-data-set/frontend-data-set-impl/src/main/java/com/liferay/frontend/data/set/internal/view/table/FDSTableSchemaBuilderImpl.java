@@ -27,6 +27,38 @@ import java.util.Map;
 public class FDSTableSchemaBuilderImpl implements FDSTableSchemaBuilder {
 
 	@Override
+	public <T extends FDSTableSchemaField> T addFDSTableSchemaField(
+		Class<T> clazz, String fieldName) {
+
+		FDSTableSchemaField fdsTableSchemaField = null;
+
+		try {
+			fdsTableSchemaField = clazz.newInstance();
+
+			fdsTableSchemaField.setFieldName(fieldName);
+
+			_fdsTableSchemaFieldsMap.put(fieldName, fdsTableSchemaField);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+
+		return clazz.cast(fdsTableSchemaField);
+	}
+
+	@Override
+	public <T extends FDSTableSchemaField> T addFDSTableSchemaField(
+		Class<T> clazz, String fieldName, String label) {
+
+		FDSTableSchemaField fdsTableSchemaField = addFDSTableSchemaField(
+			clazz, fieldName);
+
+		fdsTableSchemaField.setLabel(label);
+
+		return clazz.cast(fdsTableSchemaField);
+	}
+
+	@Override
 	public void addFDSTableSchemaField(
 		FDSTableSchemaField fdsTableSchemaField) {
 

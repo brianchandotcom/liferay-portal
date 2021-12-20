@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -70,6 +71,12 @@ public class CommercePricingUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.2.0", "2.3.0",
+			new CTModelUpgradeProcess(
+				"CPricingClassCPDefinitionRel", "CommercePriceModifier",
+				"CommercePriceModifierRel", "CommercePricingClass"));
 	}
 
 	@Reference

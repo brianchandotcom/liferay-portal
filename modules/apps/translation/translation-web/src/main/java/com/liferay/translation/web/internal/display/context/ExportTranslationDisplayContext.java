@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -59,8 +58,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -181,17 +178,6 @@ public class ExportTranslationDisplayContext {
 	public Map<String, Object> getExportTranslationData()
 		throws PortalException {
 
-		ResourceURL getExportTranslationAvailableLocalesURL =
-			_liferayPortletResponse.createResourceURL(
-				TranslationPortletKeys.TRANSLATION);
-
-		getExportTranslationAvailableLocalesURL.setParameter(
-			"groupId", String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
-		getExportTranslationAvailableLocalesURL.setParameter(
-			"classNameId", String.valueOf(_classNameId));
-		getExportTranslationAvailableLocalesURL.setResourceID(
-			"/translation/get_export_translation_available_locales");
-
 		return HashMapBuilder.<String, Object>put(
 			"availableExportFileFormats",
 			() -> {
@@ -226,9 +212,6 @@ public class ExportTranslationDisplayContext {
 			"experiences", getExperiences()
 		).put(
 			"exportTranslationURL", _getExportTranslationURLString()
-		).put(
-			"getExportTranslationAvailableLocalesURL",
-			getExportTranslationAvailableLocalesURL.toString()
 		).put(
 			"pathModule", PortalUtil.getPathModule()
 		).put(

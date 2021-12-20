@@ -18,6 +18,9 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -37,7 +40,7 @@ import java.nio.file.StandardCopyOption;
  */
 public class JarUtil {
 
-	public static void downloadAndInstallJar(URL url, Path path)
+	public static void downloadAndInstallJar(URL url, Path path, String sha1)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -48,16 +51,28 @@ public class JarUtil {
 			Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
 		}
 
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			String digest = DigesterUtil.digestHex(Digester.SHA_1, inputStream);
+
+			if (!StringUtil.equalsIgnoreCase(sha1, digest)) {
+				throw new Exception(
+					StringBundler.concat(
+						"Failed to download ", url, " to ", path, " due to ",
+						"integrity check failure: expected ", sha1, " actual ",
+						digest));
+			}
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info(StringBundler.concat("Downloaded ", url, " to ", path));
 		}
 	}
 
 	public static void downloadAndInstallJar(
-			URL url, Path path, URLClassLoader urlClassLoader)
+			URL url, Path path, URLClassLoader urlClassLoader, String sha1)
 		throws Exception {
 
-		downloadAndInstallJar(url, path);
+		downloadAndInstallJar(url, path, sha1);
 
 		URI uri = path.toUri();
 
@@ -78,7 +93,7 @@ public class JarUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #downloadAndInstallJar(URL, Path)}
+	 *             #downloadAndInstallJar(URL, Path, String)}
 	 */
 	@Deprecated
 	public static Path downloadAndInstallJar(
@@ -89,14 +104,14 @@ public class JarUtil {
 
 		Path path = file.toPath();
 
-		downloadAndInstallJar(url, path);
+		downloadAndInstallJar(url, path, null);
 
 		return path;
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #downloadAndInstallJar(URL, Path, URLClassLoader)}
+	 *             #downloadAndInstallJar(URL, Path, URLClassLoader, String)}
 	 */
 	@Deprecated
 	public static void downloadAndInstallJar(
@@ -107,7 +122,7 @@ public class JarUtil {
 
 		Path path = file.toPath();
 
-		downloadAndInstallJar(url, path, urlClassLoader);
+		downloadAndInstallJar(url, path, urlClassLoader, null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JarUtil.class);

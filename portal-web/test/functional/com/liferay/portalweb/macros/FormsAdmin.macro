@@ -58,6 +58,12 @@ definition {
 				fieldValue = "${password}");
 		}
 
+		if (isSet(timeout)) {
+			FormFields.editText(
+				fieldName = "$timeout",
+				fieldValue = "${timeout}");
+		}
+
 		if (isSet(inputParameterLabel)) {
 			FormsAdmin.editDataProviderInputParameter(
 				inputParameterLabel = "${inputParameterLabel}",

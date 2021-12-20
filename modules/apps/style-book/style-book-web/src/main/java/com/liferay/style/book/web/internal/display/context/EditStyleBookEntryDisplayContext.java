@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -360,6 +361,10 @@ public class EditStyleBookEntryDisplayContext {
 			String layoutURL = HttpUtil.addParameter(
 				PortalUtil.getLayoutFullURL(layout, _themeDisplay), "p_l_mode",
 				Constants.PREVIEW);
+
+			layoutURL = HttpUtil.addParameter(
+				layoutURL, "p_p_auth",
+				AuthTokenUtil.getToken(_httpServletRequest));
 
 			return HttpUtil.addParameter(
 				layoutURL, "styleBookEntryPreview", true);

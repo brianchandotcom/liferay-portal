@@ -254,42 +254,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10222 | Test Summary: Check if some default events are set as hidden"
-	@priority = "5"
-	test ViewIfDefaultEventsAreHidden {
-		property test.name.skip.portal.instance = "CustomEventsHiden#ViewIfDefaultEventsAreHidden";
-
-		var defaultEventNameList = "assetDepthReached,blogDepthReached,fieldBlurred,fieldFocused,pageDepthReached,pageLoaded,pageUnloaded,posted,shared,tabBlurred,tabFocused,VOTE";
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigation to default events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Default Events");
-		}
-
-		task ("Change the pagination to "75"") {
-			ACUtils.changePagination(itemsPerPage = "75");
-		}
-
-		task ("Assert certain events hidden by default") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10228 | Test Summary: Hidden default event and custom event should not be visible on the Event Analysis list"
 	@priority = "5"
 	test CheckDefaultAndCustomEventIsNotVisibleOnEventAnalysisList {
@@ -373,6 +337,42 @@ definition {
 			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
 
 			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10222 | Test Summary: Check if some default events are set as hidden"
+	@priority = "5"
+	test ViewIfDefaultEventsAreHidden {
+		property test.name.skip.portal.instance = "CustomEventsHiden#ViewIfDefaultEventsAreHidden";
+
+		var defaultEventNameList = "assetDepthReached,blogDepthReached,fieldBlurred,fieldFocused,pageDepthReached,pageLoaded,pageUnloaded,posted,shared,tabBlurred,tabFocused,VOTE";
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to default events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Default Events");
+		}
+
+		task ("Change the pagination to "75"") {
+			ACUtils.changePagination(itemsPerPage = "75");
+		}
+
+		task ("Assert certain events hidden by default") {
+			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
 		}
 	}
 

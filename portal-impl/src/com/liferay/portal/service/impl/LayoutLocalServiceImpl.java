@@ -3325,7 +3325,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setStatusDate(statusDate);
 
 		if (layout.isDraftLayout() &&
-			(status == WorkflowConstants.STATUS_APPROVED)) {
+			(status == WorkflowConstants.STATUS_APPROVED) &&
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("published"), true)) {
 
 			UnicodeProperties typeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();

@@ -665,11 +665,62 @@ definition {
 			value1 = "${status}");
 	}
 
+	macro viewPageTemplate {
+		Click(locator1 = "ControlMenu#INFO");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
+			value1 = "This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications.");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section.");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC");
+	}
+
 	macro viewPageType {
 		AssertElementPresent(
 			key_pageName = "${pageName}",
 			key_pageType = "${pageType}",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+	}
+
+	macro viewPanelPortletList {
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
+
+		var key_componentName = "${componentName}";
+
+		if (IsElementPresent(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW")) {
+			Click(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW");
+		}
+
+		AssertElementPresent(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED");
+
+		for (var portletName : list "${portletNameList}") {
+			if ("${portletName}" == "Portal Directory") {
+				var key_componentOrPortletName = "Directory";
+			}
+			else {
+				var key_componentOrPortletName = StringUtil.extractChars("${portletName}");
+			}
+
+			AssertElementPresent(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+		}
 	}
 
 	macro viewSelectedPageItem {

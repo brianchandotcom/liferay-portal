@@ -22,6 +22,15 @@ definition {
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_STATUS",
 			value1 = "${entryStatus}");
+
+		if (isSet(revision)) {
+			AssertTextEquals.assertPartialText(
+				key_wikiPageRevision = "${revision}",
+				key_wikiPageTitle = "${wikiPageTitle}",
+				key_wikiVersionSummary = "${revision}",
+				locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
+				value1 = "${revision}");
+		}
 	}
 
 	macro viewNoEntry {

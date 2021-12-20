@@ -32,6 +32,8 @@ public class CommerceAccountConstants {
 		ACCOUNT_GROUP_TYPE_STATIC, ACCOUNT_GROUP_TYPE_DYNAMIC
 	};
 
+	public static final long ACCOUNT_ID_ADMIN = Long.MIN_VALUE;
+
 	public static final long ACCOUNT_ID_GUEST = -1;
 
 	public static final int ACCOUNT_TYPE_BUSINESS = 2;

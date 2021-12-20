@@ -14,6 +14,8 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 
+const MAX_ITEM = 10;
+
 const spritemap =
 	Liferay.ThemeDisplay.getCDNBaseURL() +
 	'/o/admin-theme/images/clay/icons.svg';
@@ -33,8 +35,6 @@ const handleClickHome = () => {
 	const urlHome = `${window.location.origin}${getLiferaySiteName()}`;
 	window.location.href = urlHome;
 };
-
-const MAX_ITEM = 10;
 
 export default function () {
 	const [items, setItems] = useState([]);
@@ -105,9 +105,7 @@ export default function () {
 						</p>
 					)}
 
-					<a
-						onClick={handleClickHome}
-					>
+					<a onClick={handleClickHome}>
 						<p className="c-pl-4 my-0 py-2">
 							<ClayIcon
 								className="mr-2"
@@ -135,7 +133,7 @@ export default function () {
 			trigger={
 				<ClayButton className="shadow-none" displayType="unstyled">
 					<h5 className="m-0">
-						{itemName}{' '}
+						<>{`${itemName} `}</>
 
 						<ClayIcon
 							className="arrow-down-item"

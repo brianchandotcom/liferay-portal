@@ -87,11 +87,6 @@
 			<bean class="com.liferay.portal.image.GhostscriptImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.image.ImageMagickUtil" destroy-method="destroy" id="com.liferay.portal.kernel.image.ImageMagickUtil">
-		<property name="imageMagick">
-			<bean class="com.liferay.portal.image.ImageMagickImpl" factory-method="getInstance" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.image.ImageToolUtil" id="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool">
 			<bean class="com.liferay.portal.image.ImageToolImpl" factory-method="getInstance" />

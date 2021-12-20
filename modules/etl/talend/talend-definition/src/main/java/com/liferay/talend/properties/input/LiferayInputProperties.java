@@ -151,7 +151,7 @@ public class LiferayInputProperties extends FixedConnectorsComponentProperties {
 	}
 
 	private String _getVersion() {
-		return "0.6.1";
+		return "0.7.0-SNAPSHOT";
 	}
 
 }

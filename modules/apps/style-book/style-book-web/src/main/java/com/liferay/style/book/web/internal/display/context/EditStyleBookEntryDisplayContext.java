@@ -170,6 +170,9 @@ public class EditStyleBookEntryDisplayContext {
 			FFStyleBookConfigurationUtil.templatesPreviewEnabled()
 		).put(
 			"themeName", _getThemeName()
+		).put(
+			"tokenReuseEnabled",
+			FFStyleBookConfigurationUtil.tokenReuseEnabled()
 		).build();
 	}
 

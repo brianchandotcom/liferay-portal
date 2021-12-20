@@ -30,4 +30,7 @@ public interface FFStyleBookConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean templatesPreviewEnabled();
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean tokenReuseEnabled();
+
 }

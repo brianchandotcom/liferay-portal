@@ -105,6 +105,7 @@ export default function ({
 	styleBookEntryId,
 	templatesPreviewEnabled,
 	themeName,
+	tokenReuseEnabled,
 } = {}) {
 	initializeConfig({
 		frontendTokenDefinition,
@@ -119,6 +120,7 @@ export default function ({
 		styleBookEntryId,
 		templatesPreviewEnabled,
 		themeName,
+		tokenReuseEnabled,
 	});
 
 	return (

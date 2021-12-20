@@ -548,13 +548,15 @@ definition {
 
 		Click(locator1 = "Button#SAVE");
 
-		AssertClick(
-			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
-			value1 = "${experienceName}");
+		if ("${experienceName}" != "") {
+			AssertClick(
+				locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
+				value1 = "${experienceName}");
 
-		AssertElementPresent(
-			key_experienceName = "${experienceName}",
-			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+			AssertElementPresent(
+				key_experienceName = "${experienceName}",
+				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+		}
 	}
 
 	macro addFragment {

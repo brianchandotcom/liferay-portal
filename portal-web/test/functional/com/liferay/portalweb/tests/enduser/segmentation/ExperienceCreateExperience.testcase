@@ -4556,9 +4556,19 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test RequiredField {
+		task ("Try to create new experience without name") {
+			ContentPages.gotoPageEditor();
 
-		// TODO LPS-91946 RequiredField pending implementation
+			PageEditor.addExperience(
+				experienceName = "", 
+				segmentName = "Anyone");
+		}
 
+		task ("Check if the warning message appears") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "An experience name is required.");
+		}
 	}
 
 }

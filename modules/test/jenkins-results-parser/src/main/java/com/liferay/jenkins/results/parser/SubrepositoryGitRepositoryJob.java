@@ -35,6 +35,11 @@ public class SubrepositoryGitRepositoryJob
 	implements BatchDependentJob, SubrepositoryTestClassJob {
 
 	@Override
+	public String getBranchName() {
+		return _portalUpstreamBranchName;
+	}
+
+	@Override
 	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
 
@@ -136,13 +141,16 @@ public class SubrepositoryGitRepositoryJob
 	}
 
 	protected SubrepositoryGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String repositoryName) {
+		String jobName, BuildProfile buildProfile, String repositoryName,
+		String upstreamBranchName) {
 
 		super(jobName, buildProfile);
 
+		_portalUpstreamBranchName = upstreamBranchName;
+
 		gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newSubrepositoryGitWorkingDirectory(
-				jobName, repositoryName);
+				upstreamBranchName, repositoryName);
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
@@ -199,5 +207,7 @@ public class SubrepositoryGitRepositoryJob
 
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected boolean validationRequired;
+
+	private final String _portalUpstreamBranchName;
 
 }

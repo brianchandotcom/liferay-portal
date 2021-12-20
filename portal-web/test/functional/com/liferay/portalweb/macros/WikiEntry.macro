@@ -1,11 +1,14 @@
 definition {
 
-	macro addLinkInContent {
+	macro addLinkToContent {
 		Click(locator1 = "CKEditor#TOOLBAR_LINK_BUTTON_BALLOON");
 
-		Type(
-			locator1 = "CKEditor#WIKI_LINK",
-			value1 = "${link}");
+		if (isSet(externalLink)) {
+			Type(
+				key_text = "URL",
+				locator1 = "TextInput#ANY",
+				value1 = "${externalLink}");
+		}
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}

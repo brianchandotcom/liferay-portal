@@ -130,7 +130,6 @@
 /portal/httpclient.jar
 /portal/httpcore.jar
 /portal/httpmime.jar
-/portal/im4java.jar
 /portal/isoparser.jar
 /portal/istack-commons-runtime.jar
 /portal/jabsorb.jar
@@ -186,7 +185,6 @@
 /portal/mime4j-core.jar
 /portal/mime4j-dom.jar
 /portal/mimepull.jar
-/portal/monte-cc.jar
 /portal/mp4parser.jar
 /portal/nekohtml.jar
 /portal/netcdf.jar

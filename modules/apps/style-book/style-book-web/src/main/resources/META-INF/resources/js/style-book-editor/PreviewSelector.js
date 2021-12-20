@@ -171,7 +171,7 @@ export function LayoutSelector({layoutType}) {
 				const layout = {
 					name: data.name,
 					private: data.private,
-					url: urlWithPreviewParameter(data.previewURL, layoutType),
+					url: urlWithPreviewParameter(data.previewURL),
 				};
 
 				selectPreviewLayout(layout);
@@ -285,18 +285,10 @@ function getNextRecentLayouts(recentLayouts, selectedLayout) {
 	return nextRecentLayouts;
 }
 
-function urlWithPreviewParameter(url, layoutType) {
+function urlWithPreviewParameter(url) {
 	const nextURL = new URL(url);
 
-	nextURL.searchParams.set('p_l_mode', 'preview');
 	nextURL.searchParams.set('styleBookEntryPreview', true);
-
-	if (layoutType === LAYOUT_TYPES.displayPageTemplate) {
-		nextURL.searchParams.set('p_p_id', DISPLAY_PAGE_PP_ID);
-		nextURL.searchParams.set('p_p_lifecycle', DISPLAY_PAGE_LIFECYCLE);
-		nextURL.searchParams.set('p_p_resource_id', DISPLAY_PAGE_RESOURCE_ID);
-		nextURL.searchParams.set('doAsUserId', config.defaultUserId);
-	}
 
 	return nextURL.href;
 }

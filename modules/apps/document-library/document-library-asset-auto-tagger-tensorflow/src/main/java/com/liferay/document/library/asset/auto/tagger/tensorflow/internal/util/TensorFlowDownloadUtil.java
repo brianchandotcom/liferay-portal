@@ -56,12 +56,16 @@ public class TensorFlowDownloadUtil {
 			_downloadFile(
 				_getModelFileName(),
 				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-					modelDownloadURL());
+					modelDownloadURL(),
+				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+					modelDownloadSHA1());
 
 			_downloadFile(
 				_getNativeLibraryFileName(),
 				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-					nativeLibraryDownloadURL());
+					nativeLibraryDownloadURL(),
+				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+					nativeLibraryDownloadSHA1());
 		}
 		catch (Exception exception) {
 			_downloadFailed = true;
@@ -106,12 +110,12 @@ public class TensorFlowDownloadUtil {
 		return _downloadFailed;
 	}
 
-	private static void _downloadFile(String fileName, String url)
+	private static void _downloadFile(String fileName, String url, String sha1)
 		throws Exception {
 
 		File tempFile = FileUtil.createTempFile();
 
-		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath());
+		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath(), sha1);
 
 		DLStoreUtil.addFile(
 			DLStoreRequest.builder(

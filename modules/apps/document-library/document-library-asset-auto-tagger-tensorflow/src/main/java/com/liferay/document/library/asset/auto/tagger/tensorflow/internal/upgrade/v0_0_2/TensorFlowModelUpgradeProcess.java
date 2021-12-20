@@ -90,21 +90,27 @@ public class TensorFlowModelUpgradeProcess extends UpgradeProcess {
 					_downloadFile(
 						"org.tensorflow.models.inception-5h.jar",
 						tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-							modelDownloadURL());
+							modelDownloadURL(),
+						tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+							modelDownloadSHA1());
 					_downloadFile(
 						"libtensorflow_jni-1.15.0.jar",
 						tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-							nativeLibraryDownloadURL());
+							nativeLibraryDownloadURL(),
+						tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+							nativeLibraryDownloadSHA1());
 
 					return;
 				}
 			});
 	}
 
-	private void _downloadFile(String fileName, String url) throws Exception {
+	private void _downloadFile(String fileName, String url, String sha1)
+		throws Exception {
+
 		File tempFile = FileUtil.createTempFile();
 
-		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath());
+		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath(), sha1);
 
 		_store.addFile(
 			0, CompanyConstants.SYSTEM,

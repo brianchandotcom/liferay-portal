@@ -39,15 +39,14 @@ import org.im4java.process.ArrayListOutputConsumer;
 import org.im4java.process.ProcessExecutor;
 import org.im4java.process.ProcessTask;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alexander Chow
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = ImageMagick.class)
 public class ImageMagickImpl implements ImageMagick {
-
-	public static ImageMagickImpl getInstance() {
-		return _imageMagickImpl;
-	}
 
 	@Override
 	public Future<?> convert(List<String> arguments) throws Exception {
@@ -242,9 +241,6 @@ public class ImageMagickImpl implements ImageMagick {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageMagickImpl.class);
-
-	private static final ImageMagickImpl _imageMagickImpl =
-		new ImageMagickImpl();
 
 	private String _globalSearchPath;
 	private volatile ProcessExecutor _processExecutor;

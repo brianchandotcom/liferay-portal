@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.image;
 
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -134,10 +135,6 @@ public class ImageToolUtil {
 		throws IOException {
 
 		return _imageTool.getBytes(renderedImage, contentType);
-	}
-
-	public static CMYKImageTool getCMYKImageTool() {
-		return _cmykImageTool;
 	}
 
 	public static Image getDefaultCompanyLogo() {
@@ -289,15 +286,13 @@ public class ImageToolUtil {
 		_imageTool.write(renderedImage, contentType, outputStream);
 	}
 
-	public void setCMYKImageTool(CMYKImageTool cmykImageTool) {
-		_cmykImageTool = cmykImageTool;
-	}
-
 	public void setImageTool(ImageTool imageTool) {
 		_imageTool = imageTool;
 	}
 
-	private static CMYKImageTool _cmykImageTool;
+	private static volatile CMYKImageTool _cmykImageTool =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			CMYKImageTool.class, ImageToolUtil.class, "_cmykImageTool", true);
 	private static ImageTool _imageTool;
 
 }

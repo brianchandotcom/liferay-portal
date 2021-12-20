@@ -44,22 +44,20 @@ import org.im4java.core.IMOperation;
 
 import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Guilherme Camacho
  */
+@Component(immediate = true, service = CMYKImageTool.class)
 public class CMYKImageToolImpl implements CMYKImageTool {
-
-	public static CMYKImageTool getInstance() {
-		return _instance;
-	}
 
 	@Override
 	public Future<RenderedImage> convertCMYKtoRGB(
 		byte[] bytes, final String type) {
 
-		ImageMagick imageMagick = getImageMagick();
-
-		if (!imageMagick.isEnabled()) {
+		if (!_imageMagick.isEnabled()) {
 			return null;
 		}
 
@@ -74,7 +72,7 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 			imOperation.addRawArgs("-format", "%[colorspace]");
 			imOperation.addImage(inputFile.getPath());
 
-			String[] output = imageMagick.identify(imOperation.getCmdArgs());
+			String[] output = _imageMagick.identify(imOperation.getCmdArgs());
 
 			if ((output.length == 1) &&
 				StringUtil.equalsIgnoreCase(output[0], "CMYK")) {
@@ -89,7 +87,7 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 				imOperation.addImage(inputFile.getPath());
 				imOperation.addImage(outputFile.getPath());
 
-				Future<Object> future = (Future<Object>)imageMagick.convert(
+				Future<Object> future = (Future<Object>)_imageMagick.convert(
 					imOperation.getCmdArgs());
 
 				return new FutureConverter<RenderedImage, Object>(future) {
@@ -128,16 +126,6 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 		}
 
 		return null;
-	}
-
-	protected ImageMagick getImageMagick() {
-		if (_imageMagick == null) {
-			_imageMagick = ImageMagickImpl.getInstance();
-
-			_imageMagick.reset();
-		}
-
-		return _imageMagick;
 	}
 
 	protected void orderImageReaderSpis() {
@@ -183,9 +171,9 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CMYKImageToolImpl.class);
 
-	private static final CMYKImageTool _instance = new CMYKImageToolImpl();
-
 	private static final FileImpl _fileImpl = FileImpl.getInstance();
-	private static ImageMagick _imageMagick;
+
+	@Reference
+	private ImageMagick _imageMagick;
 
 }

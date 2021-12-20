@@ -84,12 +84,27 @@ definition {
 	and I have connected my DXP instance with AC
 	when I create an Individual Segment in AC and it shows in the DXP Segments administration
 	then I don't see the edit action"
-	@ignore = "true"
 	@priority = "3"
 	test CheckNotEditableSegmentFromACAtDXP {
+		task ("Update Segments Analytics Cloud in System Settings") {
+			Segmentation.updateACSegmentSystemSettings();
+		}
 
-		// TODO LPS-96574 CheckNotEditableSegmentFromACAtDXP pending implementation
+		task ("Go to segmentats page and assert that not possible Edit/Delete ") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Static Segment Test",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			AssertElementNotPresent(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
 	}
 
 	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
@@ -115,12 +130,89 @@ definition {
 	when I create an Individual Segment in AC and it shows in the DXP Segments administration
 	and I delete the segment
 	Then in the next sync time, the segment will appear again"
-	@ignore = "true"
 	@priority = "4"
 	test PersistSegmentFromACAtDXP {
+		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
 
-		// TODO LPS-96574 PersistSegmentFromACAtDXP pending implementation
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Analytics Cloud",
+				configurationScope = "System Scope");
 
+			if (IsElementPresent(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC")) {
+				Click(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC");
+			}
+
+			Type(
+				locator1 = "SystemSettings#CHECK_INTERVAL_SEGMENTS_INPUT",
+				value1 = "1");
+
+			AssertClick(
+				key_text = "Update",
+				locator1 = "Button#ANY",
+				value1 = "Update");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to segmentats page and assert that the segment created is preset") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			AssertElementPresent(
+				key_tableEntry = "Static Segment Test",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Delete Static Segment Test") {
+			Segmentation.deleteSegment(entry = "Static Segment Test");
+
+			AssertElementNotPresent(
+				key_tableEntry = "Static Segment Test",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Assert that 'Check Interval' it's one at Segment Analytics Cloud in System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Analytics Cloud",
+				configurationScope = "System Scope");
+
+			AssertElementPresent(
+				key_value = "1",
+				locator1 = "SystemSettings#CHECK_INTERVAL_SEGMENTS_VALUE");
+
+			AssertClick(
+				key_text = "Update",
+				locator1 = "Button#ANY",
+				value1 = "Update");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to segmentats page and assert that the segment created is preset again") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			AssertElementPresent(
+				key_tableEntry = "Static Segment Test",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
 	}
 
 	@description = "LPS-94938 Validate if the user is redirected to the segment page details when he tries to see the detail of the imported segment from Analytics Cloud into DXP	"

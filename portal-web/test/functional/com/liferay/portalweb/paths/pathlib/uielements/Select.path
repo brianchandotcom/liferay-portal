@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_DEFAULT_LANGUAGE</td>
+	<td>//select[contains(@name,'languageId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_STYLE</td>
 	<td>//div[label[contains(.,'Display Style')]]/select</td>
 	<td></td>

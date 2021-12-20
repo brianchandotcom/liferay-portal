@@ -57,6 +57,9 @@ module.exports = {
 					'@liferay/frontend-taglib': {
 						'/': '*',
 					},
+					'@liferay/layout-content-page-editor-web': {
+						'/': '*',
+					},
 					'@liferay/map-common': {
 						'/': '*',
 					},

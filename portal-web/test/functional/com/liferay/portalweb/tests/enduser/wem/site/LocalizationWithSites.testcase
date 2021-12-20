@@ -34,768 +34,785 @@ definition {
 		}
 	}
 
+	@description = "Add site name translation in site settings."
 	@priority = "4"
 	test AddSiteNameTranslations {
 		property testray.component.names = "Localization,Site Administration";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add two localized site names") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.addLocalizedName(
+				localeList = "es-ES,zh-CN",
+				localizedNameList = "Nombre del Sitio,站点名称");
+		}
 
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
 
-		PortletEntry.inputLocalizedName(
-			language = "es-ES",
-			localizedName = "Nombre del Sitio");
+		task ("Add a Language Selector widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+		}
 
-		PortletEntry.inputLocalizedName(
-			language = "zh-CN",
-			localizedName = "站点名称");
+		task ("View site name translations are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
 
-		PortletEntry.save();
+			Page.viewSiteNameTranslationsPG(
+				localeList = "en-US,es-ES,zh-CN",
+				siteNameList = "Test Site Name 1,Nombre del Sitio,站点名称",
+				textIconList = "english-United States,español-España,中文-中国");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Language Selector");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Page.viewSiteNameTranslationsPG(
-			locale = "en-US",
-			siteName = "Site Name",
-			textIcon = "english-United States");
-
-		Page.viewSiteNameTranslationsPG(
-			locale = "es-ES",
-			siteName = "Nombre del Sitio",
-			textIcon = "español-España");
-
-		Page.viewSiteNameTranslationsPG(
-			locale = "zh-CN",
-			siteName = "站点名称",
-			textIcon = "中文-中国");
-
-		LanguagePortlet.tearDownLanguagePG();
+			LanguagePortlet.tearDownLanguagePG();
+		}
 	}
 
+	@description = "Can not remove a default language in portal settings."
 	@priority = "5"
 	test AvailableSiteLocalesSubsetNotAllowed {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LocalizationWithSites#AvailableSiteLocalesSubsetOfAvailablePortalLocales";
-		property testray.component.names = "Site Localization";
+		property test.name.skip.portal.instance = "LocalizationWithSites#AvailableSiteLocalesSubsetNotAllowed";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		task ("Configure site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
-			defaultSiteLanguage = "Spanish (Spain)",
-			displaySettings = "Display Settings");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
+				defaultSiteLanguage = "Spanish (Spain)",
+				displaySettings = "Display Settings");
+		}
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
+		task ("View cannot remove default language") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureCurrentLanguagesCP(
-			currentPortalLanguages = "Arabic (Saudi Arabia),Czech (Czech Republic),French (France)",
-			errorMessage = "Error: You cannot remove a language that is the current default language.",
-			failExpected = "true");
+			PortalSettings.configureCurrentLanguagesCP(
+				currentPortalLanguages = "Arabic (Saudi Arabia),Czech (Czech Republic),French (France)",
+				errorMessage = "Error: You cannot remove a language that is the current default language.",
+				failExpected = "true");
+		}
 	}
 
-	@priority = "3"
-	test LocalizationStyle0 {
-		property custom.properties = "locale.prepend.friendly.url.style=0";
-		property test.name.skip.portal.instance = "LocalizationWithSites#LocalizationStyle0";
-		property testray.component.names = "Site Localization";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page",
-			widgetName = "Language Selector");
-
-		Navigator.gotoPage(pageName = "Language Test Page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "es_ES",
-			textIcon = "español-España");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/language-test-page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "ja_JP",
-			textIcon = "日本語-日本");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/language-test-page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "en_US",
-			textIcon = "english-United States");
-
-		Navigator.gotoPage(pageName = "Language Test Page");
-	}
-
-	@priority = "3"
-	test LocalizationStyle1 {
-		property custom.properties = "locale.prepend.friendly.url.style=1";
-		property test.name.skip.portal.instance = "LocalizationWithSites#LocalizationStyle1";
-		property testray.component.names = "Site Localization";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page",
-			widgetName = "Language Selector");
-
-		Navigator.gotoPage(pageName = "Language Test Page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "es_ES",
-			textIcon = "español-España");
-
-		AssertLocation(value1 = "${portalURL}/es/web/guest/language-test-page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "ja_JP",
-			textIcon = "日本語-日本");
-
-		AssertLocation(value1 = "${portalURL}/ja/web/guest/language-test-page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "en_US",
-			textIcon = "english-United States");
-
-		Navigator.gotoPage(pageName = "Language Test Page");
-	}
-
-	@priority = "3"
-	test LocalizationStyle2 {
-		property custom.properties = "locale.prepend.friendly.url.style=2";
-		property test.name.skip.portal.instance = "LocalizationWithSites#LOcalizationStyle2";
-		property testray.component.names = "Site Localization";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Language Test Page",
-			widgetName = "Language Selector");
-
-		Navigator.gotoPage(pageName = "Language Test Page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "es_ES",
-			textIcon = "español-España");
-
-		AssertLocation(value1 = "${portalURL}/es/web/guest/language-test-page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "ja_JP",
-			textIcon = "日本語-日本");
-
-		AssertLocation(value1 = "${portalURL}/ja/web/guest/language-test-page");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "en_US",
-			textIcon = "english-United States");
-
-		Navigator.gotoPage(pageName = "Language Test Page");
-	}
-
+	@description = "A new user can add an organization with localized country name."
 	@priority = "3"
 	test LocalizeCountryName {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Localization,Users and Organizations";
+		property testray.component.names = "Users and Organizations";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				preferredLocale = "es_ES",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("Assign the administrator role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.editDisplaySettingsCP(
-			languageName = "español (España)",
-			userScreenName = "usersn");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("Add an organization with localized country") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Usuarios",
+				panel = "Panel de control",
+				portlet = "Usuarios y organizaciones");
 
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			Organization.addWithLocalizedCountryCP(
+				countryName = "Estados Unidos",
+				localizedOption = "Organización",
+				navItem = "Organizaciones",
+				orgName = "Organization Name",
+				saveButton = "Guardar");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		task ("Sign out and sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Usuarios",
-			panel = "Panel de control",
-			portlet = "Usuarios y organizaciones");
+		task ("View localized country organization is shown") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Usuarios",
+				panel = "Panel de control",
+				portlet = "Usuarios y organizaciones");
 
-		Organization.addWithLocalizedCountryCP(
-			countryName = "Estados Unidos",
-			localizedOption = "Organización",
-			navItem = "Organizaciones",
-			orgName = "Organization Name",
-			saveButton = "Guardar");
+			Organization.viewLocalizedCountryCP(
+				countryName = "Estados Unidos",
+				editLocalized = "Editar",
+				navItem = "Organizaciones",
+				orgName = "Organization Name");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Usuarios",
-			panel = "Panel de control",
-			portlet = "Usuarios y organizaciones");
-
-		Organization.viewLocalizedCountryCP(
-			countryName = "Estados Unidos",
-			editLocalized = "Editar",
-			navItem = "Organizaciones",
-			orgName = "Organization Name");
+		task ("Delete organization") {
+			JSONOrganization.deleteOrganizationByName(organizationName = "Organization Name");
+		}
 	}
 
+	@description = "The site's url will not change when its locale match with User's preferred localization."
 	@priority = "3"
 	test NoLocalePrependedWhenLocaleMatchMyPreferredLocalization {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "LocalizationWithSites#NoLocalePrependedWhenLocaleMatchMyPreferredLocalization";
-		property testray.component.names = "Site Localization";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Get portal URL") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a widget page to each site") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name ${i}",
+					layoutName = "Test Page Name");
+			}
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page Name");
+		task ("Configure default custom language for each site") {
+			var i = "1";
 
-		JSONGroup.addGroup(groupName = "Site2 Name");
+			for (var language : list "English (United States),Spanish (Spain)") {
+				Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-${i}");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site2 Name",
-			layoutName = "Site Page Name");
+				Site.configureCurrentLanguagesCP(defaultSiteLanguage = "${language}");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+				var i = ${i} + 1;
+			}
+		}
 
-		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "English (United States)");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				preferredLocale = "es_ES",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
+		task ("Assign the new user to sites") {
+			for (var i : list "1,2") {
+				JSONUser.addUserToSite(
+					groupName = "Test Site Name ${i}",
+					userEmailAddress = "userea@liferay.com");
+			}
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("View site's url as new user") {
+			for (var i : list "1,2") {
+				Page.openURLLocale(localizationPageURL = "${portalURL}/web/test-site-name-${i}");
 
-		User.openUsersAdmin();
+				Page.viewURLLocale(localizationPageURL = "${portalURL}/web/test-site-name-${i}");
+			}
+		}
 
-		User.editUserSiteCP(
-			siteName = "Site Name",
-			userScreenName = "usersn");
+		task ("Sign in as Test Test") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("View localization option is shown when user's locale does not match") {
+			Page.openURLLocale(localizationPageURL = "${portalURL}/es/web/test-site-name-2");
 
-		User.editUserSiteCP(
-			siteName = "Site2 Name",
-			userScreenName = "usersn");
-
-		User.openUsersAdmin();
-
-		User.editDisplaySettingsCP(
-			languageName = "español (España)",
-			userScreenName = "usersn");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Page.openURLLocale(localizationPageURL = "${portalURL}/web/site2-name");
-
-		Page.viewURLLocale(localizationPageURL = "${portalURL}/web/site2-name");
-
-		Page.openURLLocale(localizationPageURL = "${portalURL}/web/site-name");
-
-		Page.viewURLLocale(localizationPageURL = "${portalURL}/web/site-name");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Page.openURLLocale(localizationPageURL = "${portalURL}/es/web/site2-name");
-
-		Page.viewURLLocale(
-			localizationOption = "Display the page in English (United States).",
-			localizationPageURL = "${portalURL}/web/site2-name/");
+			Page.viewURLLocale(
+				localizationOption = "Display the page in English (United States).",
+				localizationPageURL = "${portalURL}/web/test-site-name-2/");
+		}
 	}
 
+	@description = "View portlets interaction with localized site."
 	@priority = "4"
 	test PortletInteractionLocalization {
 		property test.name.skip.portal.instance = "LocalizationWithSites#PortletInteractionLocalization";
-		property testray.component.names = "Site Localization";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a localized site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.addLocalizedName(
+				localeList = "es-ES",
+				localizedNameList = "Nombre del Sitio");
+		}
 
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+		task ("Add two widget pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name 1",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
 
-		PortletEntry.inputLocalizedName(
-			language = "es-ES",
-			localizedName = "Nombre del Sitio");
+		task ("Add a Language Selector and Web Content Display widget to page") {
+			for (var widgetName : list "Language Selector,Web Content Display") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name 1",
+					layoutName = "Test Page Name 1",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		PortletEntry.save();
+		task ("Define Spanish and German as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 1");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "Spanish (Spain),German (Germany)",
+				defaultSiteLanguage = "Spanish (Spain)",
+				displaySettings = "Display Settings");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 2");
+		task ("View pages are translated") {
+			for (var i : list "1,2") {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name ${i}",
+					siteName = "Test Site Name 1");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 1",
-			widgetName = "Language Selector");
+				Alert.closePortalLocalizationWarning();
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 1",
-			widgetName = "Web Content Display");
+				ProductMenu.gotoPortlet(
+					category = "Generador del sitio",
+					portlet = "Páginas del sitio web");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Configurar",
+					pageName = "Test Page Name ${i}");
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "Spanish (Spain),German (Germany)",
-			defaultSiteLanguage = "Spanish (Spain)",
-			displaySettings = "Display Settings");
+				PagesAdmin.viewPageLocalization(
+					defaultSiteLanguageKey = "es-ES",
+					fieldName = "Título HTML");
+			}
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
+		task ("View current default language in instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuración",
+				panel = "Panel de control",
+				portlet = "Configuración de instancia");
 
-		Alert.closePortalLocalizationWarning();
+			PortalSettings.viewCurrentDefaultPortalLanguageCP(
+				defaultPortalLanguage = "inglés (Estados Unidos)",
+				localizationTranslation = "Localización");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Generador del sitio",
-			portlet = "Páginas del sitio web");
+		task ("Go to page via localized product menu") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name 1");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configurar",
-			pageName = "Site Page 1");
+			ProductMenu.gotoLocalizedSite(
+				displayStyle = "tabla",
+				navItem = "Todos los sitios",
+				site = "Nombre del Sitio");
+		}
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		task ("Define Spanish, German and English as current site languages") {
+			ProductMenu.gotoPortlet(
+				category = "Configuración",
+				portlet = "Ajustes del sitio");
 
-		Page.viewPageLocalization(
-			defaultSiteLanguageKey = "es-ES",
-			fieldName = "Título HTML");
+			Site.configureCurrentLanguagesCP(
+				category = "Localización",
+				currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",
+				defaultSiteLanguage = "español (España)",
+				displaySettings = "Display Settings",
+				localizedLanguageTab = "Idiomas",
+				localizedSaveButton = "Guardar",
+				localizedSuccessMessage = "Su petición ha terminado con éxito.");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page 2",
-			siteName = "Site Name");
+		task ("Add a localized web content via page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name 1");
 
-		Alert.closePortalLocalizationWarning();
+			WebContent.addLocalizedPGViaWCD(
+				localizedBasicWebContent = "Contenido web básico",
+				portletNameTranslation = "Visor de contenido web",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Generador del sitio",
-			portlet = "Páginas del sitio web");
+		task ("View Web Content is shown via WCD") {
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		}
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configurar",
-			pageName = "Site Page 2");
+		task ("View available languages when editing a Web Content") {
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Editar contenido web",
+				webContentTitle = "Web Content Title");
 
-		Navigator.gotoNavTab(navTab = "SEO");
+			WebContent.viewAvailableLanguages(
+				availableLanguagesList = "de-DE,en-US",
+				fieldName = "Título",
+				unavailableLanguagesList = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,hu-HU,ja-JP,pt-BR,sv-SE");
+		}
 
-		Page.viewPageLocalization(
-			defaultSiteLanguageKey = "es-ES",
-			fieldName = "Título HTML");
+		task ("Define Spanish and German as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
+			Site.configureCurrentLanguagesCP(
+				category = "Localización",
+				currentSiteLanguages = "español (España),alemán (Alemania)",
+				defaultSiteLanguage = "español (España)",
+				displaySettings = "Display Settings",
+				localizedLanguageTab = "Idiomas",
+				localizedSaveButton = "Guardar",
+				localizedSuccessMessage = "Su petición ha terminado con éxito.");
+		}
 
-		ProductMenuHelper.closeProductMenu();
+		task ("Select German via Language Selector widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuración",
-			panel = "Panel de control",
-			portlet = "Configuración de instancia");
-
-		PortalSettings.viewCurrentDefaultPortalLanguageCP(
-			defaultPortalLanguage = "inglés (Estados Unidos)",
-			localizationTranslation = "Localización");
-
-		ProductMenu.gotoLocalizedSite(
-			displayStyle = "tabla",
-			navItem = "Todos los sitios",
-			site = "Nombre del Sitio");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuración",
-			portlet = "Ajustes del sitio");
-
-		Site.configureCurrentLanguagesCP(
-			category = "Localización",
-			currentSiteLanguages = "español (España),alemán (Alemania)",
-			defaultSiteLanguage = "español (España)",
-			displaySettings = "Display Settings",
-			localizedLanguageTab = "Idiomas",
-			localizedSaveButton = "Guardar",
-			localizedSuccessMessage = "Su petición ha terminado con éxito.");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
-
-		WebContent.addLocalizedPGViaWCD(
-			localizedBasicWebContent = "Contenido web básico",
-			portletNameTranslation = "Visor de contenido web",
-			webContentContent = "Web Content1 Content",
-			webContentTitle = "Web Content1 Title");
-
-		WebContent.viewPGViaWCD(webContentContent = "Web Content1 Content");
-
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Editar contenido web",
-			webContentTitle = "Web Content1 Title");
-
-		WebContent.viewAvailableLanguagesPGViaWCD(
-			fieldName = "Título",
-			locale1 = "de-DE",
-			locale2 = "en-US");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuración",
-			portlet = "Ajustes del sitio");
-
-		Site.configureCurrentLanguagesCP(
-			category = "Localización",
-			currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",
-			defaultSiteLanguage = "español (España)",
-			displaySettings = "Display Settings",
-			localizedLanguageTab = "Idiomas",
-			localizedSaveButton = "Guardar",
-			localizedSuccessMessage = "Su petición ha terminado con éxito.");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "de-DE",
-			textIcon = "deutsch-Deutschland");
+			LanguagePortlet.selectLanguagePG(
+				locale = "de-DE",
+				textIcon = "deutsch-Deutschland");
+		}
 	}
 
-	@description = "This is a use case for LPS-59345"
+	@description = "This is a use case for LPS-59345. The user must be redirected when the friendly url does not match."
 	@priority = "4"
 	test RedirectLocalizedFriendlyURL {
 		property test.name.skip.portal.instance = "LocalizationWithSites#RedirectLocalizedFriendlyURL";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Get portal url") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Define English and Hungarian as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States),Hungarian (Hungary)",
+				defaultSiteLanguage = "English (United States)");
+		}
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
-			defaultSiteLanguage = "English (United States)");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		task ("Add new friendly url") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name 1");
 
-		PagesAdmin.addPublicPage(pageName = "Dummy Page");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
 
-		PagesAdmin.addPublicPage(pageName = "Language Page");
+			PagesAdmin.addLocalizedFriendlyURL(
+				friendlyUrlLocalizedList = "hu-HU,en-US",
+				localizedFriendlyURLList = "/friendlyhu,/friendlyen",
+				localizedNameList = "-,-");
+		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		task ("View non logged user will be redirected to friendly url") {
+			User.logoutPG();
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Language Page");
+			Navigator.openSpecificURL(url = "${portalURL}/hu/web/test-site-name-1/friendlyen");
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "hu-HU",
-			localizedFriendlyURL = "/teszt");
+			Alert.closePortalLocalizationWarning();
 
-		Page.addFriendlyURLLocalizedPG(
-			friendlyUrlLocalized = "en-US",
-			localizedFriendlyURL = "/test");
-
-		Button.clickSave();
-
-		User.logoutPG();
-
-		Navigator.openSpecificURL(url = "${portalURL}/hu/web/site-name/test");
-
-		Alert.closePortalLocalizationWarning();
-
-		AssertLocation(value1 = "${portalURL}/hu/web/site-name/teszt");
+			AssertLocation(value1 = "${portalURL}/hu/web/test-site-name-1/friendlyhu");
+		}
 	}
 
+	@description = "The user can configure a current language in a site created from a site template."
 	@priority = "5"
 	test SiteTemplateLocalization {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LocalizationWithSites#SiteTemplateLocalization";
-		property testray.component.names = "Site and Page Templates,Site Localization";
+		property testray.component.names = "Site and Page Templates";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Add a site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("View workflow is not shown in site template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		SiteTemplates.viewNoSiteOrWorkflowLinksCP();
+			SiteTemplates.viewNoSiteOrWorkflowLinksCP();
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("Add a site based in site template") {
+			Site.openSitesAdmin();
 
-		Site.addCP(
-			portletNames = "Site Settings,Social Activities,Workflow Configuration",
-			siteName = "Site Name from Template",
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template",
-			uncheckPropagation = "true");
+			Site.addCP(
+				portletNames = "Site Settings,Social Activities,Workflow Configuration",
+				siteName = "Test Site Name",
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template",
+				uncheckPropagation = "true");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-from-template");
+		task ("Define English, Germand and Spanish as current site language") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
-			defaultSiteLanguage = "Spanish (Spain)",
-			displaySettings = "Display Settings");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
+				defaultSiteLanguage = "Spanish (Spain)",
+				displaySettings = "Display Settings");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-from-template");
+		task ("View site is cloned from site template") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
-		Site.viewSiteClonedFromSiteTemplateCP(
-			clonedFromTemplate = "true",
-			siteTemplateName = "Site Template Name");
+			Site.viewSiteClonedFromSiteTemplateCP(
+				clonedFromTemplate = "true",
+				siteTemplateName = "Site Template Name");
+		}
 	}
 
+	@description = "An alert localization message will be shown for user with different language from the site."
 	@priority = "4"
 	test ViewAvailableSiteLocaleAlternatives {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "LocalizationWithSites#ViewAvailableSiteLocaleAlternatives";
-		property testray.component.names = "Site Localization";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				preferredLocale = "es_ES",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.openUsersAdmin();
+		task ("Define English as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		User.editDisplaySettingsCP(
-			languageName = "español (España)",
-			userScreenName = "usersn");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States)",
+				defaultSiteLanguage = "English (United States)",
+				displaySettings = "Display Settings");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States)",
-			defaultSiteLanguage = "English (United States)",
-			displaySettings = "Display Settings");
+		task ("View alert localization message is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		PagesAdmin.addPublicPage(pageName = "Site Page Name");
-
-		User.logoutPG();
-
-		User.loginPG(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
-
-		Alert.viewLocalizationMessage(
-			preferredLanguageLocalizationMessage = "Set English (United States) as your preferred language.",
-			translationLanguageLocalizationMessage = "Esta página se muestra en inglés (Estados Unidos).");
-
-		User.logoutPG();
-
-		User.loginPG();
+			Alert.viewLocalizationMessage(
+				preferredLanguageLocalizationMessage = "Set English (United States) as your preferred language.",
+				translationLanguageLocalizationMessage = "Esta página se muestra en inglés (Estados Unidos).");
+		}
 	}
 
+	@description = "View edited URL locale as non logged user and for virtual host."
 	@priority = "4"
-	test ViewEditURLLocale {
+	test ViewEditedURLLocaleForVirtualHost {
 		property custom.properties = "locale.use.default.if.not.available=true";
-		property testray.component.names = "Site Localization";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Get portal url") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		task ("Define English and Hungarian as current language for both sites") {
+			for (var i : list "1,2") {
+				Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-${i}");
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
-			defaultSiteLanguage = "English (United States)");
+				Site.configureCurrentLanguagesCP(
+					currentSiteLanguages = "English (United States),Hungarian (Hungary)",
+					defaultSiteLanguage = "English (United States)");
+			}
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a widget page to each site") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name ${i}",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		task ("View page is shown in second site as non logged user") {
+			User.logoutPG();
 
-		PagesAdmin.addPublicPage(pageName = "Language Page");
+			Navigator.openSpecificURL(url = "${portalURL}/fr/web/test-site-name-2/test-page-name-2");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			AssertLocation(value1 = "${portalURL}/fr/web/test-site-name-2/test-page-name-2");
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
-			defaultSiteLanguage = "English (United States)");
+			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		User.logoutPG();
+			Page.viewSpecificPG(pageNameList = "Test Page Name 2");
+		}
 
-		Navigator.openSpecificURL(url = "${portalURL}/fr/web/site-name/language-page");
+		task ("View page is shown in first site as non logged user") {
+			Navigator.openSpecificURL(url = "${portalURL}/fr/web/test-site-name-1");
 
-		AssertLocation(value1 = "${portalURL}/fr/web/site-name/language-page");
+			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+			Page.viewSpecificPG(pageNameList = "Test Page Name 1");
+		}
 
-		AssertTextEquals(
-			key_pageName = "Language Page",
-			locator1 = "Home#PAGE",
-			value1 = "Language Page");
+		task ("View page locale as Test Test") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${portalURL}/fr/web/test-site-name-1",
+				userEmailAddress = "test@liferay.com");
 
-		Navigator.openSpecificURL(url = "${portalURL}/fr");
+			AssertLocation(value1 = "${portalURL}/web/test-site-name-1");
+		}
 
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+		task ("Add a virtual host in second site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-2");
 
-		AssertTextEquals(
-			key_pageName = "Home",
-			locator1 = "Home#PAGE",
-			value1 = "Home");
+			Site.addVirtualHostsURLCP(
+				publicPageVirtualHostURL = "www.able.com",
+				publicVirtualHosts = "true");
+		}
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "${portalURL}/fr",
-			userEmailAddress = "test@liferay.com");
+		task ("View page is shown via virtual host") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/fr/");
 
-		AssertLocation(value1 = "${portalURL}/web/guest");
+			Site.viewVirtualHostsURLPG(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name 2",
+				sitePageURL = "http://www.able.com:8080/fr/");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
-		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/fr/");
-
-		Site.viewVirtualHostsURLPG(
-			pageName = "Language Page",
-			siteName = "Site Name",
-			sitePageURL = "http://www.able.com:8080/fr/");
-
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
-
-		AssertTextEquals(
-			key_pageName = "Language Page",
-			locator1 = "Home#PAGE",
-			value1 = "Language Page");
+			Page.viewSpecificPG(pageNameList = "Test Page Name 2");
+		}
 	}
 
+	@description = "The user can add a site localization."
 	@priority = "5"
 	test ViewSiteLocalizationAfterDeletingOriginalLocale {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithSites#ViewSiteLocalizationAfterDeletingOriginalLocale";
 		property testray.component.names = "Site Localization";
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
+		task ("View default site language in Portal Settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "English (United States)");
+			PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "English (United States)");
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Define Portuguese and Spanish as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",
+				defaultSiteLanguage = "Spanish (Spain)",
+				displaySettings = "Display Settings");
+		}
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",
-			defaultSiteLanguage = "Spanish (Spain)",
-			displaySettings = "Display Settings");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		task ("View current languages are shown in Pages admin") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
 
-		PagesAdmin.addPublicPage(pageName = "Site Page Name");
+			ProductMenu.gotoPortlet(
+				category = "Generador del sitio",
+				portlet = "Páginas del sitio web");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configurar",
+				pageName = "Test Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Generador del sitio",
-			portlet = "Páginas del sitio web");
+			Page.viewFriendlyURLLanguageOptionsPG(
+				assertUnavailableLanguages = "true",
+				currentLanguageList = "es-ES,pt-BR",
+				fieldName = "Nombre",
+				unavailableLanguageList = "en-US");
+		}
+	}
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configurar",
-			pageName = "Site Page Name");
+	@description = "View site's url in differents languages when locale style is set to zero."
+	@priority = "3"
+	test ViewSiteUrlWhenStyle0 {
+		property custom.properties = "locale.prepend.friendly.url.style=0";
 
-		Page.viewFriendlyURLLanguageOptionsPG(
-			assertUnavailableLanguages = "true",
-			currentLanguageList = "es-ES,pt-BR",
-			fieldName = "Nombre",
-			unavailableLanguageList = "en-US");
+		task ("Get portal URL") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Language Selector widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+		}
+
+		task ("View site's URL after translate to es-ES via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "es_ES",
+				textIcon = "español-España");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name-1/");
+		}
+
+		task ("View site's URL after translate to ja-JP via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "ja_JP",
+				textIcon = "日本語-日本");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name-1/");
+		}
+	}
+
+	@description = "View site's url in differents languages when locale style is set to one."
+	@priority = "3"
+	test ViewSiteUrlWhenStyle1 {
+		property custom.properties = "locale.prepend.friendly.url.style=1";
+
+		task ("Get portal URL") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Language Selector widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+		}
+
+		task ("View site's URL after translate to es-ES via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "es_ES",
+				textIcon = "español-España");
+
+			AssertLocation(value1 = "${portalURL}/es/web/test-site-name-1/");
+		}
+
+		task ("View site's URL after translate to ja-JP via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "ja_JP",
+				textIcon = "日本語-日本");
+
+			AssertLocation(value1 = "${portalURL}/ja/web/test-site-name-1/");
+		}
+	}
+
+	@description = "View site's url in differents languages when locale style is set to two."
+	@priority = "3"
+	test ViewSiteUrlWhenStyle2 {
+		property custom.properties = "locale.prepend.friendly.url.style=2";
+
+		task ("Get portal URL") {
+			var portalURL = PropsUtil.get("portal.url");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Language Selector widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+		}
+
+		task ("View site's URL after translate to es-ES via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "es_ES",
+				textIcon = "español-España");
+
+			AssertLocation(value1 = "${portalURL}/es/web/test-site-name-1/");
+		}
+
+		task ("View site's URL after translate to ja-JP via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "ja_JP",
+				textIcon = "日本語-日本");
+
+			AssertLocation(value1 = "${portalURL}/ja/web/test-site-name-1/");
+		}
 	}
 
 }

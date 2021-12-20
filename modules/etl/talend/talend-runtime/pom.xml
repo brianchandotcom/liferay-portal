@@ -16,12 +16,12 @@
 	<parent>
 		<groupId>com.liferay</groupId>
 		<artifactId>com.liferay.talend</artifactId>
-		<version>0.5.0</version>
+		<version>0.7.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.runtime</artifactId>
-	<version>0.6.1</version>
+	<version>0.7.0-SNAPSHOT</version>
 	<name>Liferay Talend Runtime</name>
 	<packaging>jar</packaging>
 	<repositories>
@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.talend.definition</artifactId>
-			<version>0.6.1</version>
+			<version>0.7.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>

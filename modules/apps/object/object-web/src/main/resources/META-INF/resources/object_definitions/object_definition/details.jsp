@@ -94,7 +94,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= true %>">
+						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
+							<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="" />
 
 							<%
 							for (ObjectField objectField : objectFields) {
@@ -162,7 +163,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="panelCategoryKey" showEmptyOption="<%= true %>">
+						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="panelCategoryKey" showEmptyOption="<%= false %>">
+							<aui:option label='<%= LanguageUtil.get(request, "choose-an-option") %>' selected="<%= true %>" value="" />
 
 							<%
 							for (KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {

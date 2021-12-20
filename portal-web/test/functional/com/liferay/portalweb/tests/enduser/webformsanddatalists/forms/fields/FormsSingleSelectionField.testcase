@@ -788,6 +788,46 @@ definition {
 			key_fieldReferenceValue = "SingleSelection1234");
 	}
 
+	@description = "LPS-90435 This is a test verify that the Single Selection Form field added before default site language toggle can be loaded"
+	@priority = "4"
+	test SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded {
+		property test.name.skip.portal.instance = "FormsSingleSelectionField#SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ApplicationsMenu.gotoSite(site = "Site Name");
+
+		FormsAdmin.addForm(groupName = "Site Name");
+
+		Form.editName(formName = "Form");
+
+		Form.editDescription(formDescription = "description");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
+			optionValue = "2");
+
+		Form.save();
+
+		ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "German (Germany)");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form");
+
+		Form.editName(formName = "New Form");
+	}
+
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
 	@priority = "5"

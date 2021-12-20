@@ -92,7 +92,7 @@ published to current user's local maven repository `USER_HOME/.m2`:
 * `USER_HOME/.m2/repository/com/liferay/com.liferay.talend.definition`
 * `USER_HOME/.m2/repository/com/liferay/com.liferay.talend.runtime`
 
-If you get an error of a missing artifact, this could be the result of a failed test. 
+If you get an error of a missing artifact, this could be the result of a failed test.
 Since the installation will not finish successfully without the missing artifact, you may need to do the following:
 
 Navigate to each of the talend subfolders and run Maven clean install task with the skip test flag

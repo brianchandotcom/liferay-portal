@@ -185,7 +185,7 @@ definition {
 			key_threadBody = "MB Body Reply",
 			locator1 = "MessageBoardsThread#THREAD_BODY");
 
-		Alert.viewErrorMessage(errorMessage = "You do not have the roles required to access this portlet.");
+		Alert.viewErrorMessage(errorMessage = "Close Error:You do not have the required permissions.");
 	}
 
 	@priority = "3"

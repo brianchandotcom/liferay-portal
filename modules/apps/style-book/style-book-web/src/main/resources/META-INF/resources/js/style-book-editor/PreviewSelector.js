@@ -171,7 +171,7 @@ export function LayoutSelector({layoutType}) {
 				const layout = {
 					name: data.name,
 					private: data.private,
-					url: urlWithPreviewParameter(data.url, layoutType),
+					url: urlWithPreviewParameter(data.previewURL, layoutType),
 				};
 
 				selectPreviewLayout(layout);

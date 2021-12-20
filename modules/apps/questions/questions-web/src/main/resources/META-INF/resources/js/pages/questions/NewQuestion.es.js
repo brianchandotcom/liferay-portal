@@ -49,6 +49,7 @@ export default withRouter(
 		const [hasEnoughContent, setHasEnoughContent] = useState(false);
 		const [headline, setHeadline] = useState('');
 		const [error, setError] = useState({});
+		const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
 		const [sectionId, setSectionId] = useState();
 		const [sections, setSections] = useState([]);
 		const [tags, setTags] = useState([]);
@@ -78,6 +79,12 @@ export default withRouter(
 				},
 			}
 		);
+
+		useEffect(() => {
+			setIsPostButtonDisable(
+				hasEnoughContent || !headline || !tagsLoaded
+			);
+		}, [hasEnoughContent, headline, tagsLoaded]);
 
 		useEffect(() => {
 			getSectionBySectionTitle().then(({data}) => {
@@ -131,6 +138,7 @@ export default withRouter(
 			error ? processError(error.graphQLErrors[0]) : debounceCallback();
 
 		const createQuestion = () => {
+			setIsPostButtonDisable(true);
 			deleteCache();
 			if (
 				sectionTitle === context.rootTopicId &&
@@ -246,9 +254,7 @@ export default withRouter(
 						<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 							<ClayButton
 								className="c-mt-4 c-mt-sm-0"
-								disabled={
-									hasEnoughContent || !headline || !tagsLoaded
-								}
+								disabled={isPostButtonDisable}
 								displayType="primary"
 								onClick={() => {
 									createQuestion();

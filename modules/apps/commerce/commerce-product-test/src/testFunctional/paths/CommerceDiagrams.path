@@ -47,6 +47,21 @@
 	<td>//div[contains(@class,'view-wrapper')]//*[contains(@class,'pin') and text()='${key_pinNumber}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DIAGRAM_PIN_INPUT_FIELD</td>
+	<td>//label[contains(.,'${key_inputField}')]//..//input[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PIN_TYPE_SELECT</td>
+	<td>//label[contains(.,'Type')]/../select[contains(@id,'typeInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_IMAGE_PIN</td>
+	<td>//*[contains(@class,'pin-node')]//*[contains(@class,'pin-node-text') and text()='${key_positionNumber}']</td>
+	<td></td>
+</tr>
 <!--DIAGRAM_SETTINGS-->
 <tr>
 	<td>DIAGRAM_SETTINGS_TYPE_OPTION</td>

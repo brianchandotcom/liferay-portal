@@ -828,6 +828,47 @@ definition {
 		Form.editName(formName = "New Form");
 	}
 
+	@description = "LPS-90435 This is a test verify that the Single Selection Form field name and options can be added to non-English default site language site"
+	test SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite {
+		property test.name.skip.portal.instance = "FormsSingleSelectionField#SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ApplicationsMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "German (Germany)");
+
+		FormsAdmin.addForm(groupName = "Site Name");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
+			optionValue = "2");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Unbenanntes Formular");
+
+		FormFields.viewSingleSelectionOption(
+			key_optionLabel = "Option 1",
+			key_position = "1");
+
+		FormFields.viewSingleSelectionOption(
+			key_optionLabel = "Option 2",
+			key_position = "2");
+	}
+
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
 	@priority = "5"

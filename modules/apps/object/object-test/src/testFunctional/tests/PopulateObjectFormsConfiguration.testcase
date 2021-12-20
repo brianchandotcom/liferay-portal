@@ -297,6 +297,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field in a Field Group"
+	@ignore = "true"
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
@@ -399,6 +400,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"
+	@ignore = "true"
 	@priority = "5"
 	test CanSelectObjectStorageType {
 		property portal.acceptance = "true";
@@ -407,6 +409,13 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 

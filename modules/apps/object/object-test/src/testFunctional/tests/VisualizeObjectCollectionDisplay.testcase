@@ -129,6 +129,7 @@ definition {
 	}
 
 	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"
+	@ignore = "true"
 	@priority = "5"
 	test ObjectDisplayedToCollectionProdiver {
 		property portal.acceptance = "true";
@@ -137,6 +138,13 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 

@@ -602,8 +602,6 @@ definition {
 				configurationCategory = "User Authentication",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
 		task ("Go to Masterclass Site") {
@@ -820,10 +818,19 @@ definition {
 				siteName = "Test Masterclass Name");
 		}
 
-		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
-			Masterclass.simulateAndViewPageElements(
-				deviceType = "tablet",
-				elementsList = "navbar,heading,text-block,footer");
+		task ("Preview the Page with Tablet Size") {
+			MobileDevice.previewPG(deviceType = "tablet");
+		}
+
+		task ("Assert the Page Elements are Present in Frame") {
+			WaitForPageLoad();
+
+			for (var fragmentName : list "heading,navbar,footer") {
+				AssertElementPresent(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 

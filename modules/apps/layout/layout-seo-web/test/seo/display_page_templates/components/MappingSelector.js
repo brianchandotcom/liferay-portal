@@ -173,7 +173,10 @@ describe('MappingSelector', () => {
 				selectedFieldKey: undefined,
 			});
 			inputFeedback = result.getAllByRole('textbox')[0];
-			inputValue = result.getAllByRole('textbox')[1];
+
+			inputValue = result.container.querySelector(
+				`[name="${baseProps.name}"]`
+			);
 		});
 
 		it('has a hidden input with unmapped key', () => {

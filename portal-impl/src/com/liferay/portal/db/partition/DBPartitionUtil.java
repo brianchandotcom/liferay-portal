@@ -429,6 +429,13 @@ public class DBPartitionUtil {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Obtained character set encoding from session" +
+							" with value: " +
+								resultSet.getString("variable_value"));
+				}
+
 				return resultSet.getString("variable_value");
 			}
 

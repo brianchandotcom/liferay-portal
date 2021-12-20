@@ -6,9 +6,17 @@ definition {
 	property testray.main.component.name = "Site Localization";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
+
+		task ("Add two sites") {
+			for (var i : list "1,2") {
+				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
+			}
+		}
 	}
 
 	tearDown {
@@ -18,9 +26,11 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Page.tearDownCP();
+			for (var i : list "1,2") {
+				JSONGroup.deleteGroupByName(groupName = "Test Site Name ${i}");
+			}
 
-			Site.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

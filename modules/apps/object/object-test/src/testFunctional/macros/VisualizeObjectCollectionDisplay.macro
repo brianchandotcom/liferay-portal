@@ -40,6 +40,16 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 	}
 
+	macro viewEntryPreviewOnPageTemplate {
+		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
+
+		DropdownMenuItem.click(menuItem = "Select Other Item");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
+	}
+
 	macro viewMappedFragment {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",

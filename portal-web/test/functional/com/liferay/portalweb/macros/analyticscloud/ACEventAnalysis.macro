@@ -1,6 +1,12 @@
 definition {
 
 	macro clickToAddEventButton {
+		var key_DefinitionsOptions = "event-analysis/create";
+
+		if (IsElementPresent(locator1 = "ACSettings#DEFINITIONS_OPTIONS")) {
+			Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
+		}
+
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 

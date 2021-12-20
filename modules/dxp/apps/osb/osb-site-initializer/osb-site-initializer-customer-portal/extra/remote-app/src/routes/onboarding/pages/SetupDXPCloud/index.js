@@ -132,7 +132,7 @@ const SetupDXPCloud = () => {
 				<div className="flex-fill">
 					<label>Project Name</label>
 
-					<p className="text-neutral-3 text-paragraph-lg">
+					<p className="text-neutral-6 text-paragraph-lg">
 						<strong>{projectBrief ? projectBrief.code : ''}</strong>
 					</p>
 				</div>
@@ -140,7 +140,7 @@ const SetupDXPCloud = () => {
 				<div className="flex-fill">
 					<label>Liferay DXP Version</label>
 
-					<p className="text-neutral-3 text-paragraph-lg">
+					<p className="text-neutral-6 text-paragraph-lg">
 						<strong>
 							{projectBrief ? projectBrief.dxpVersion : ''}
 						</strong>

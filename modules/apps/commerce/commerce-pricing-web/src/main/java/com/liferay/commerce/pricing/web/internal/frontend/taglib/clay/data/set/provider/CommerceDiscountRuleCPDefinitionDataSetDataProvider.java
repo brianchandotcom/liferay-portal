@@ -141,7 +141,7 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 					new ImageField(
 						cpDefinitionName, "rounded", "lg",
 						cpDefinition.getDefaultImageThumbnailSrc(
-							CommerceAccountConstants.ACCOUNT_ID_GUEST))));
+							CommerceAccountConstants.ACCOUNT_ID_ADMIN))));
 		}
 
 		return discountRuleCPDefinitions;

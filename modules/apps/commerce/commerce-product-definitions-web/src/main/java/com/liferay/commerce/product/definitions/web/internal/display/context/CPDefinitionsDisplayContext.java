@@ -293,7 +293,7 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return cpDefinition.getDefaultImageThumbnailSrc(
-			CommerceAccountConstants.ACCOUNT_ID_GUEST);
+			CommerceAccountConstants.ACCOUNT_ID_ADMIN);
 	}
 
 	public CProduct getCProduct() throws PortalException {

@@ -61,7 +61,7 @@ public class ProductDTOConverter
 					cpDefinition.getNameMap());
 				sku = _getSku(cpDefinition, dtoConverterContext.getLocale());
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
-					CommerceAccountConstants.ACCOUNT_ID_GUEST);
+					CommerceAccountConstants.ACCOUNT_ID_ADMIN);
 			}
 		};
 	}

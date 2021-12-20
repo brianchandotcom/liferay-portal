@@ -95,7 +95,7 @@ public class CommerceProductDefinitionLinkDataSetDataProvider
 						new ImageField(
 							name, "rounded", "lg",
 							cpDefinition.getDefaultImageThumbnailSrc(
-								CommerceAccountConstants.ACCOUNT_ID_GUEST)),
+								CommerceAccountConstants.ACCOUNT_ID_ADMIN)),
 						HtmlUtil.escape(name),
 						LanguageUtil.get(
 							httpServletRequest, cpDefinitionLink.getType()),

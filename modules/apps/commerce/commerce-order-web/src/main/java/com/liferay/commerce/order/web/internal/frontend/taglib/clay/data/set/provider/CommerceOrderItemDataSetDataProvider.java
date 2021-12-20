@@ -166,7 +166,7 @@ public class CommerceOrderItemDataSetDataProvider
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		return cpDefinition.getDefaultImageThumbnailSrc(
-			CommerceAccountConstants.ACCOUNT_ID_GUEST);
+			CommerceAccountConstants.ACCOUNT_ID_ADMIN);
 	}
 
 	private List<OrderItem> _getOrderItems(

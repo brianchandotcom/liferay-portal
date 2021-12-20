@@ -138,7 +138,7 @@ public class ProductDTOConverter
 					cpDefinition, dtoConverterContext.getLocale());
 				tags = _getTags(cpDefinition);
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
-					CommerceAccountConstants.ACCOUNT_ID_GUEST);
+					CommerceAccountConstants.ACCOUNT_ID_ADMIN);
 				urls = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));

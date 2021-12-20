@@ -68,7 +68,7 @@ public class AttachmentDTOConverter
 		String portalURL = company.getPortalURL(0);
 
 		String downloadURL = _commerceMediaResolver.getDownloadURL(
-			CommerceAccountConstants.ACCOUNT_ID_GUEST,
+			CommerceAccountConstants.ACCOUNT_ID_ADMIN,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
 		return new Attachment() {

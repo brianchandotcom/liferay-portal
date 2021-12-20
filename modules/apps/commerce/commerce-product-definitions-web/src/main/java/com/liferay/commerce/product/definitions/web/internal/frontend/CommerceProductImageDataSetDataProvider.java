@@ -115,7 +115,7 @@ public class CommerceProductImageDataSetDataProvider
 					new ImageField(
 						title, "rounded", "lg",
 						CommerceMediaResolverUtil.getThumbnailURL(
-							CommerceAccountConstants.ACCOUNT_ID_GUEST,
+							CommerceAccountConstants.ACCOUNT_ID_ADMIN,
 							cpAttachmentFileEntryId)),
 					title, extension, cpAttachmentFileEntry.getPriority(),
 					LanguageUtil.format(

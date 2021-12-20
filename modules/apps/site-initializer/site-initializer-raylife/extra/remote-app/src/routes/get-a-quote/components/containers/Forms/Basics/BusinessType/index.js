@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {CardFormActionsWithSave} from '../../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {CardFormActions} from '../../../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {smoothScroll} from '../../../../../../../common/utils/scroll';
 import {AppContext} from '../../../../../context/AppContext';
@@ -41,7 +41,7 @@ export function FormBasicBusinessType({form}) {
 				/>
 			</div>
 
-			<CardFormActionsWithSave
+			<CardFormActions
 				isValid={!!form?.basics?.businessCategoryId}
 				onNext={goToNextForm}
 				onPrevious={goToPreviousPage}

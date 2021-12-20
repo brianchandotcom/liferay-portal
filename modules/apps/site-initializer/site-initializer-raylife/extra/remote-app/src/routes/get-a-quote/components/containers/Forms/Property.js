@@ -4,7 +4,7 @@ import {NumberControlledInput} from '../../../../../common/components/connectors
 import {SquareFeatControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/SquareFeet';
 import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
-import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {CardFormActions} from '../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../common/components/fragments/Card/FormCard';
 import {TIP_EVENT} from '../../../../../common/utils/events';
 import useFormActions from '../../../hooks/useFormActions';
@@ -185,7 +185,7 @@ export function FormProperty({form}) {
 				)}
 			</div>
 
-			<CardFormActionsWithSave
+			<CardFormActions
 				isValid={isValid}
 				onNext={onNext}
 				onPrevious={onPrevious}

@@ -5,7 +5,7 @@ import {CurrencyControlledInput} from '../../../../../common/components/connecto
 import {FEINControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/FEIN';
 import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
-import {CardFormActionsWithSave} from '../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {CardFormActions} from '../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../common/components/fragments/Card/FormCard';
 import {TIP_EVENT} from '../../../../../common/utils/events';
 import useFormActions from '../../../hooks/useFormActions';
@@ -151,7 +151,7 @@ export function FormEmployees({form}) {
 				/>
 			</div>
 
-			<CardFormActionsWithSave
+			<CardFormActions
 				isValid={isValid}
 				onNext={onNext}
 				onPrevious={onPrevious}

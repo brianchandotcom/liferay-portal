@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {MoreInfoButton} from '../../../../../../common/components/fragments/Buttons/MoreInfo';
-import {CardFormActionsWithSave} from '../../../../../../common/components/fragments/Card/FormActionsWithSave';
+import {CardFormActions} from '../../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../../common/components/fragments/Card/FormCard';
 import {Radio} from '../../../../../../common/components/fragments/Forms/Radio';
 import {LiferayService} from '../../../../../../common/services/liferay';
@@ -21,7 +21,7 @@ export function FormBasicProductQuote({form}) {
 	const {control, setValue} = useFormContext();
 	const {selectedStep} = useStepWizard();
 	const {productQuotes} = useProductQuotes();
-	const {onNext, onSave} = useFormActions(
+	const {onNext} = useFormActions(
 		form,
 		null,
 		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE
@@ -111,11 +111,10 @@ export function FormBasicProductQuote({form}) {
 				</div>
 			</div>
 
-			<CardFormActionsWithSave
+			<CardFormActions
 				isValid={!!form?.basics?.productQuote}
 				onNext={onNext}
 				onPrevious={goToPreviousPage}
-				onSave={onSave}
 			/>
 		</FormCard>
 	);

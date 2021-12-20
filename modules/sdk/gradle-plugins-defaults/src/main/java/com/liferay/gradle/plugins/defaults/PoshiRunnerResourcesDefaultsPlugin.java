@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.defaults.internal.util.GitRepo;
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesPlugin;
@@ -52,6 +53,8 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradlePluginsDefaultsUtil.configureRepositories(project, null);
+
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 		GradleUtil.applyPlugin(project, PoshiRunnerResourcesPlugin.class);
 

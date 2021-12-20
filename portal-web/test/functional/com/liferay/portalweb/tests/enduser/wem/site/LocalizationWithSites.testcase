@@ -305,9 +305,9 @@ definition {
 					menuItem = "Configurar",
 					pageName = "Test Page Name ${i}");
 
-				PagesAdmin.viewPageLocalization(
-					defaultSiteLanguageKey = "es-ES",
-					fieldName = "Título HTML");
+				Navigator.gotoNavTab(navTab = "SEO");
+
+				PortletEntry.viewLocale(locale = "es-ES");
 			}
 		}
 

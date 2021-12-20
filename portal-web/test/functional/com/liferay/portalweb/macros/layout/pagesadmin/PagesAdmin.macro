@@ -527,19 +527,6 @@ definition {
 		}
 	}
 
-	macro viewPageLocalization {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		AssertElementPresent(
-			key_text = "${fieldName}",
-			locator1 = "TextInput#ANY");
-
-		AssertTextEquals.assertPartialText(
-			key_fieldName = "${fieldName}",
-			locator1 = "Button#LOCALIZATION",
-			value1 = "${defaultSiteLanguageKey}");
-	}
-
 	macro viewPagesOrder {
 		var index = "1";
 

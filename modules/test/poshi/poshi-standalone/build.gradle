@@ -15,39 +15,3 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 apply plugin: "com.liferay.poshi.runner.resources.defaults"
 apply plugin: "com.liferay.source.formatter"
-
-dependencies {
-	poshiRunnerResources group: "com.liferay", name: "com.liferay.poshi.runner.resources", version: "latest.release"
-}
-
-poshiRunner {
-	if (project.hasProperty("baseDir")) {
-		baseDir = project.getProperty("baseDir")
-	}
-
-	if (project.hasProperty("testNames")) {
-		testNames = project.getProperty("testNames")
-	}
-
-	if (project.hasProperty("poshiRunnerVersion")) {
-		version = project.getProperty("poshiRunnerVersion")
-	}
-}
-
-poshiRunnerResources {
-	baseName "default"
-}
-
-repositories {
-	mavenLocal()
-
-	maven {
-		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-	}
-}
-
-webdriverBinaries {
-	if (project.hasProperty("chromeDriverVersion")) {
-		chromedriver = project.getProperty("chromeDriverVersion")
-	}
-}

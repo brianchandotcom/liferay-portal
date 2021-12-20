@@ -153,7 +153,8 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 			if (commerceAccount == null) {
 				setCurrentCommerceAccount(
-					httpServletRequest, commerceChannelGroupId, -1);
+					httpServletRequest, commerceChannelGroupId,
+					CommerceAccountConstants.ACCOUNT_ID_GUEST);
 			}
 			else {
 				setCurrentCommerceAccount(

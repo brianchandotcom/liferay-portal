@@ -7,6 +7,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Translations Management";
 
+	// This testcase validates the workflow functionality for the Content Page translations feature for default and custom experiences.
+
 	setUp {
 		TestCase.setUpPortalInstance();
 

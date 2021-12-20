@@ -691,8 +691,8 @@ definition {
 	test MasterclassApplyinDesktopSize {
 		task ("Go to Apply Page") {
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Apply",
-					siteName = "Test Masterclass Name");
+				pageName = "Apply",
+				siteName = "Test Masterclass Name");
 		}
 
 		task ("Preview the Page with Desktop Size") {
@@ -716,8 +716,8 @@ definition {
 	test MasterclassApplyinMobileSize {
 		task ("Go to Apply Page") {
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Apply",
-					siteName = "Test Masterclass Name");
+				pageName = "Apply",
+				siteName = "Test Masterclass Name");
 		}
 
 		task ("Preview the Page with Mobile Size") {
@@ -741,8 +741,8 @@ definition {
 	test MasterclassApplyinTabletSize {
 		task ("Go to Apply Page") {
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Apply",
-					siteName = "Test Masterclass Name");
+				pageName = "Apply",
+				siteName = "Test Masterclass Name");
 		}
 
 		task ("Preview the Page with Tablet Size") {
@@ -766,8 +766,8 @@ definition {
 	test MasterclassBloginDesktopSize {
 		task ("Go to Blog Page") {
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Blog",
-					siteName = "Test Masterclass Name");
+				pageName = "Blog",
+				siteName = "Test Masterclass Name");
 		}
 
 		task ("Preview the Page with Desktop Size") {
@@ -791,8 +791,8 @@ definition {
 	test MasterclassBloginMobileSize {
 		task ("Go to Blog Page") {
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Blog",
-					siteName = "Test Masterclass Name");
+				pageName = "Blog",
+				siteName = "Test Masterclass Name");
 		}
 
 		task ("Preview the Page with Mobile Size") {
@@ -816,8 +816,8 @@ definition {
 	test MasterclassBloginTabletSize {
 		task ("Go to Blog Page") {
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Blog",
-					siteName = "Test Masterclass Name");
+				pageName = "Blog",
+				siteName = "Test Masterclass Name");
 		}
 
 		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {

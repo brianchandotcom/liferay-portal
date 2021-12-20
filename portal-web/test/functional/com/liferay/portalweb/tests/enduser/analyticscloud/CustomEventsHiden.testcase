@@ -290,4 +290,90 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10228 | Test Summary: Hidden default event and custom event should not be visible on the Event Analysis list"
+	@priority = "5"
+	test CheckDefaultAndCustomEventIsNotVisibleOnEventAnalysisList {
+		var defaultEventName = "blogViewed";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add the default and custom event and check if it is present") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACNavigation.switchTabInCard(tabName = "Default");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
+
+			ACNavigation.switchTabInCard(tabName = "Custom");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+		}
+
+		task ("Navigation to default events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Default Events");
+		}
+
+		task ("Hide default event") {
+			ACCustomEvents.hideCustomEvent(customEventName = "${defaultEventName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Hide custom event") {
+			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Navigation to event analysis") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add the default and custom event and check if it is not present") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACNavigation.switchTabInCard(tabName = "Default");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${defaultEventName}");
+
+			ACNavigation.switchTabInCard(tabName = "Custom");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+		}
+	}
+
 }

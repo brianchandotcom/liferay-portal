@@ -13,6 +13,27 @@
 const BUFFER_ATTR = [null, '="', null, '" '];
 const BUFFER_CLOSE_NODE = ['</', null, '>'];
 const BUFFER_OPEN_NODE = ['<', null, null, '>'];
+const COL_TYPES_ASSIGNMENT = [
+	'address',
+	'receptionType',
+	'resourceActions',
+	'roleId',
+	'roleType',
+	'scriptedAssignment',
+	'scriptedRecipient',
+	'taskAssignees',
+	'user',
+	'userId',
+];
+const COL_TYPES_FIELD = [
+	'condition',
+	'fork',
+	'join',
+	'join-xor',
+	'state',
+	'task',
+];
+const DEFAULT_LANGUAGE = 'groovy';
 const STR_BLANK = '';
 const STR_CDATA_CLOSE = ']]>';
 const STR_CDATA_OPEN = '<![CDATA[';
@@ -34,6 +55,9 @@ export {
 	BUFFER_ATTR,
 	BUFFER_CLOSE_NODE,
 	BUFFER_OPEN_NODE,
+	COL_TYPES_ASSIGNMENT,
+	COL_TYPES_FIELD,
+	DEFAULT_LANGUAGE,
 	STR_BLANK,
 	STR_CDATA_CLOSE,
 	STR_CDATA_OPEN,

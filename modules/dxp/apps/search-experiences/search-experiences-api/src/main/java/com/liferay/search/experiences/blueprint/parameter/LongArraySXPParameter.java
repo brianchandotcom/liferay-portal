@@ -34,9 +34,9 @@ public class LongArraySXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateContains(Object value, Object[] values) {
-		if (values != null) {
-			for (Object object : values) {
+	public boolean evaluateContains(Object value) {
+		if (value instanceof Object[]) {
+			for (Object object : (Object[])value) {
 				if (ArrayUtil.contains(_value, GetterUtil.getLong(object))) {
 					return true;
 				}

@@ -40,9 +40,10 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateIn(Object[] values) {
+	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getDoubleValues(ArrayUtil.toStringArray(values)),
+			GetterUtil.getDoubleValues(
+				ArrayUtil.toStringArray((Object[])value)),
 			_value);
 	}
 

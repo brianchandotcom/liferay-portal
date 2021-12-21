@@ -37,7 +37,7 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
-	public boolean evaluateContains(Object value, Object[] values) {
+	public boolean evaluateContains(Object value) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -52,7 +52,7 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
-	public boolean evaluateIn(Object[] values) {
+	public boolean evaluateIn(Object value) {
 		throw new UnsupportedOperationException();
 	}
 

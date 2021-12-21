@@ -40,9 +40,10 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateIn(Object[] values) {
+	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getIntegerValues(ArrayUtil.toStringArray(values)),
+			GetterUtil.getIntegerValues(
+				ArrayUtil.toStringArray((Object[])value)),
 			_value);
 	}
 

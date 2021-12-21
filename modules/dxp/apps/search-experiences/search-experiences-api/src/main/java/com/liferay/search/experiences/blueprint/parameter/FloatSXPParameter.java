@@ -40,9 +40,10 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateIn(Object[] values) {
+	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getFloatValues(ArrayUtil.toStringArray(values)), _value);
+			GetterUtil.getFloatValues(ArrayUtil.toStringArray((Object[])value)),
+			_value);
 	}
 
 	@Override

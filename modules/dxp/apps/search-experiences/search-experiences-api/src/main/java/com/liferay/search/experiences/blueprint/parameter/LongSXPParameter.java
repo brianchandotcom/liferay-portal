@@ -38,9 +38,10 @@ public class LongSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateIn(Object[] values) {
+	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getLongValues(ArrayUtil.toStringArray(values)), _value);
+			GetterUtil.getLongValues(ArrayUtil.toStringArray((Object[])value)),
+			_value);
 	}
 
 	@Override

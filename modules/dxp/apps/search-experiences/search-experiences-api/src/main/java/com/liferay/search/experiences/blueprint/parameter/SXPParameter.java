@@ -21,13 +21,13 @@ import java.util.Map;
  */
 public interface SXPParameter {
 
-	public boolean evaluateContains(Object value, Object[] values);
+	public boolean evaluateContains(Object value);
 
 	public boolean evaluateEquals(Object object);
 
 	public boolean evaluateEquals(String format, Object object);
 
-	public boolean evaluateIn(Object[] values);
+	public boolean evaluateIn(Object value);
 
 	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte);
 

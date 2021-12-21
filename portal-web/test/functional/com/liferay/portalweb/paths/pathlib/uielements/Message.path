@@ -465,22 +465,6 @@
 	<td>//div[@class='portlet-body']/div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
-<!--IMPORT_LAR-->
-<tr>
-	<td>VALIDATION_ERROR</td>
-	<td>//span[@class='error-message']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VALIDATION_ERROR_HEADER</td>
-	<td>//h4[@class='upload-error-message']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VALIDATION_ERROR_LIST_ITEM</td>
-	<td>//ul[@class='error-list-items']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

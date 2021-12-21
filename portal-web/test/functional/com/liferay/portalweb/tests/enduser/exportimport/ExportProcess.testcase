@@ -27,7 +27,7 @@ definition {
 
 		LAR.deleteCurrentAndPreviousProcess(larFileName = "CustomExport");
 
-		AssertElementNotPresent(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS");
+		AssertElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1");
 	}
 
 	@priority = "4"

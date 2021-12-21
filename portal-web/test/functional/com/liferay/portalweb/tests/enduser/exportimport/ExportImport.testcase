@@ -271,8 +271,8 @@ definition {
 
 		var larFileName = LAR.getLarFileName();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
 		LAR.downloadLar();
@@ -592,13 +592,14 @@ definition {
 			uncheckContentNameList = "Documents and Media,Pages");
 
 		AssertClick(
-			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			key_text = "Export",
+			locator1 = "Button#ANY",
 			value1 = "Export");
 
 		var key_larFileName = "${larFileName}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();
@@ -643,13 +644,14 @@ definition {
 			uncheckContentNameList = "Documents and Media,Web Content");
 
 		AssertClick(
-			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			key_text = "Export",
+			locator1 = "Button#ANY",
 			value1 = "Export");
 
 		var key_larFileName = "${larFileName}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();
@@ -882,8 +884,8 @@ definition {
 
 		var key_larFileName = "${larFileName}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();
@@ -1078,8 +1080,8 @@ definition {
 
 		var key_larFileName = "${larFileName}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();
@@ -1244,11 +1246,12 @@ definition {
 			uncheckSiteTemplateSettings = "true");
 
 		AssertClick(
-			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			key_text = "Export",
+			locator1 = "Button#ANY",
 			value1 = "Export");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+		AssertTextEquals(
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 
 		var larFileName = LAR.getLarFileName();

@@ -703,8 +703,8 @@ definition {
 
 			var key_larFileName = "${larFileName}";
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			AssertTextEquals(
+				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 				value1 = "Successful");
 
 			var larFileName = LAR.getLarFileName();

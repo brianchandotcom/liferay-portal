@@ -1094,7 +1094,7 @@ definition {
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			Click(locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD");
+			Click(locator1 = "Icon#EXPORT");
 
 			DownloadTempFile();
 		}

@@ -1441,8 +1441,7 @@ definition {
 			for (var columnHeader : list "Title,Author,Subtype,Site or Asset Library,Status,Audience,Stage,Modified Date") {
 				AssertElementPresent(
 					key_tableHeader = "${columnHeader}",
-					locator1 = "LexiconTable#TABLE_HEADER"
-				);
+					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 	}

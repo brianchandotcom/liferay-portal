@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import SegmentEdit from '../../../../src/main/resources/META-INF/resources/js/components/segment_edit/SegmentEdit.es';
@@ -74,8 +74,6 @@ function _renderSegmentEditComponent({
 }
 
 describe('SegmentEdit', () => {
-	afterEach(cleanup);
-
 	it('renders', () => {
 		const {asFragment} = _renderSegmentEditComponent();
 
@@ -174,7 +172,7 @@ describe('SegmentEdit', () => {
 
 		fireEvent.change(localizedInput, {target: {value: 'A'}});
 
-		wait(() => expect(localizedInput.value).toBe('A')).then(() => {
+		waitFor(() => expect(localizedInput.value).toBe('A')).then(() => {
 			expect(cancelButton).not.toBe(null);
 
 			fireEvent.click(cancelButton);

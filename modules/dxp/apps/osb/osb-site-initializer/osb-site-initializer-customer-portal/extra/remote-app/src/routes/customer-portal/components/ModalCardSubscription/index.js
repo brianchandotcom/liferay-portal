@@ -14,6 +14,15 @@ const dateFormat = {
 	year: 'numeric',
 };
 
+const provisionedRequiredGroups = [
+	'Commerce',
+	'DXP',
+	'Portal',
+	'Social Office',
+];
+
+const provisionedIndex = 1;
+
 const columns = [
 	{
 		accessor: 'start-end-date',
@@ -76,6 +85,13 @@ const ModalCardSubscription = ({
 	const totalCount =
 		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
 
+	const removeProvisionedColumn = () => {
+		const customColumns = [...columns];
+		customColumns.splice(provisionedIndex, 1);
+
+		return customColumns;
+	};
+
 	return (
 		<ClayModal center observer={observer} size="lg">
 			<div className="pt-4 px-4">
@@ -100,7 +116,13 @@ const ModalCardSubscription = ({
 				<div>
 					<Table
 						activePage={activePage}
-						columns={columns}
+						columns={
+							provisionedRequiredGroups.includes(
+								subscriptionGroup
+							)
+								? columns
+								: removeProvisionedColumn(columns)
+						}
 						hasPagination={totalCount >= 5}
 						itemsPerPage={5}
 						rows={dataAccountSubscriptionTerms.map(

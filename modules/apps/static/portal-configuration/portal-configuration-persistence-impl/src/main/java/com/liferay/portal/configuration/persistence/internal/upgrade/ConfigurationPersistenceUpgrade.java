@@ -22,12 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sam Ziemer
  */
-@Component(
-	immediate = true,
-	service = {
-		ConfigurationPersistenceUpgrade.class, UpgradeStepRegistrator.class
-	}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ConfigurationPersistenceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

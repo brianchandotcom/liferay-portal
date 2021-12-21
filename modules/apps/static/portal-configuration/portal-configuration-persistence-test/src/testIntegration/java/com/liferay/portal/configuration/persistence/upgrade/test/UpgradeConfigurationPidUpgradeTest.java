@@ -273,7 +273,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 	private static UpgradeProcess _upgradeConfigurationPidUpgradeProcess;
 
 	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.configuration.persistence.internal.upgrade.ConfigurationPersistenceUpgrade))"
+		filter = "component.name=com.liferay.portal.configuration.persistence.internal.upgrade.ConfigurationPersistenceUpgrade"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

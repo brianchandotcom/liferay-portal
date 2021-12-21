@@ -142,7 +142,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.concurrent.Callable;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -1263,24 +1262,18 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		final Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = companyPersistence.findByPrimaryKey(companyId);
 
 		if (DBPartitionUtil.removeDBPartition(companyId)) {
 			_clearCompanyCache(companyId);
 			_clearVirtualHostCache(companyId);
 
-			Callable<Void> callable = new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
 					PortalInstances.removeCompany(company.getCompanyId());
 
 					return null;
-				}
-
-			};
-
-			TransactionCommitCallbackUtil.registerCallback(callable);
+				});
 
 			return company;
 		}
@@ -2106,20 +2099,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Portal instance
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
 				PortalInstances.removeCompany(company.getCompanyId());
 
 				unregisterCompany(company);
 
 				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+			});
 	}
 
 	private void _updateGroupLanguageIds(

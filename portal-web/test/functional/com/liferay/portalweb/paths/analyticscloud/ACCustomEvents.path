@@ -62,14 +62,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BLOCK_HIDE_BUTTON</td>
+	<td>BLOCK_UNBLOCK_EVENT_BUTTON</td>
 	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'${key_actionButton}')]</td>
-	<td></td>
-</tr>
-<!-- HIDE_CUSTOM_EVENT -->
-<tr>
-	<td>HIDE_BUTTON_ICON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//td//*[contains(@class,'secondary-color')]</td>
 	<td></td>
 </tr>
 </tbody>

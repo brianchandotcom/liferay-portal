@@ -858,6 +858,94 @@ definition {
 		}
 	}
 
+	@description = "LPS-143338. Assert SSO reject assertion when nameId value is null."
+	@priority = "4"
+	test AssertSSORejectAssertionWithoutANameIDValue {
+		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#AssertSSORejectAssertionWithoutANameIDValue";
+
+		var identityProviderEntityId = "samlidp";
+		var serviceProviderEntityId = "samlsp";
+
+		task ("Add virtual instance able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Setup IdP at localhost:8080 and SP at able.com:8080") {
+			SAML.setupIDP(
+				idpURL = "http://localhost:8080",
+				samlEntityID = "${identityProviderEntityId}",
+				userEmailAddress = "test@liferay.com");
+
+			SAML.setupSP(
+				encryptionCertificate = "true",
+				samlEntityID = "${serviceProviderEntityId}",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Add IdP configurations to SP and enable SP roles") {
+			SAML.addIDPConfigurationsToServiceProvider(
+				idpAttributeMapping = "emailAddress",
+				idpAttributeMappingText = "emailAddress",
+				idpEntityID = "${identityProviderEntityId}",
+				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+				idpURL = "http://localhost:8080",
+				nameIdentifierFormat = "Unspecified",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+
+			SAML.enableSPRoles(
+				samlEntityID = "${serviceProviderEntityId}",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Add SP configurations to IdP") {
+			SAML.addSPConfigurationsToIdentityProvider(
+				idpURL = "http://localhost:8080",
+				nameIdentifierAttributeName = "expando:inputField",
+				nameIdentifierFormat = "Unspecified",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName''',
+				spEntityID = "${serviceProviderEntityId}",
+				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+				spURL = "http://www.able.com:8080");
+		}
+
+		task ("Add new user") {
+			JSONUser.addUser(
+				userEmailAddress = "usera@liferay.com",
+				userFirstName = "user",
+				userLastName = "a",
+				userScreenName = "usera");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "usera@liferay.com");
+		}
+
+		task ("SSO with new user to SP and assert authentication failed error message") {
+			User.firstLoginUI(
+				emailPassword = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "usera@liferay.com");
+
+			SAML.viewUnableToProcessSAMLRequest();
+		}
+	}
+
 	@description = "This is a use case for LRQA-35784. Assert SSO session existis after SP session timeout."
 	@priority = "4"
 	test AssertSSOSessionExistsAfterSPSessionTimeout {

@@ -85,8 +85,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
 
-	public static final String START_LEVEL = "file.install.start.level";
-
 	public static final String START_NEW_BUNDLES =
 		"file.install.bundles.new.start";
 
@@ -97,8 +95,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String USE_START_TRANSIENT =
 		"file.install.bundles.startTransient";
-
-	public static final String WEB_START_LEVEL = "file.install.web.start.level";
 
 	public DirectoryWatcher(BundleContext bundleContext) {
 		super("fileinstall-directory-watcher");
@@ -115,8 +111,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_poll = PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL;
 		_startBundles = GetterUtil.getBoolean(
 			bundleContext.getProperty(START_NEW_BUNDLES), true);
-		_startLevel = GetterUtil.getInteger(
-			bundleContext.getProperty(START_LEVEL));
+		_startLevel = PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL;
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
 		_useStartActivationPolicy = GetterUtil.getBoolean(
@@ -136,8 +131,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			_watchedDirs.add(new File(dir));
 		}
 
-		_webStartLevel = GetterUtil.getInteger(
-			bundleContext.getProperty(WEB_START_LEVEL), _startLevel);
+		_webStartLevel = PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL;
 
 		_fileInstallers = ServiceTrackerListFactory.open(
 			_bundleContext, FileInstaller.class, null,

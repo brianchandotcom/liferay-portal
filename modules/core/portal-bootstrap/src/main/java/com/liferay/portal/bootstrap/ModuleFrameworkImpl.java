@@ -399,15 +399,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		// Fileinstall. See LPS-56385.
 
 		properties.put(
-			FrameworkPropsKeys.FILE_INSTALL_START_LEVEL,
-			String.valueOf(
-				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
-		properties.put(
 			FrameworkPropsKeys.FILE_INSTALL_TMPDIR,
 			SystemProperties.get(SystemProperties.TMP_DIR));
-		properties.put(
-			FrameworkPropsKeys.FILE_INSTALL_WEB_START_LEVEL,
-			String.valueOf(PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL));
 
 		// Framework
 

@@ -10,6 +10,7 @@
  *
  */
 
+import {defaultLanguageId} from '../constants';
 import {removeNewLine, replaceTabSpaces} from '../util/utils';
 import {DEFAULT_LANGUAGE} from './constants';
 import XMLDefinition from './deserializeUtil';
@@ -69,13 +70,17 @@ DefinitionDiagramController.prototype = {
 				position.x = metadata.xy[0];
 				position.y = metadata.xy[1];
 
-				const label = {};
+				let label = {};
 
-				item.labels.map((itemLabel) => {
+				item.labels?.map((itemLabel) => {
 					Object.entries(itemLabel).map(([key, value]) => {
 						label[key] = replaceTabSpaces(removeNewLine(value));
 					});
 				});
+
+				if (!item.labels) {
+					label = {[defaultLanguageId]: item.name};
+				}
 
 				const data = {
 					description: item.description,
@@ -84,9 +89,24 @@ DefinitionDiagramController.prototype = {
 					scriptLanguage: item.scriptLanguage || DEFAULT_LANGUAGE,
 				};
 
+				let id;
+
+				if (item.id) {
+					id = item.id;
+				}
+				else {
+					id = item.name;
+				}
+
+				// To be removed after next stories
+
+				if (type !== 'start' && type !== 'end' && type !== 'state') {
+					type = 'state';
+				}
+
 				nodes.push({
 					data,
-					id: item.id,
+					id,
 					position,
 					type,
 				});

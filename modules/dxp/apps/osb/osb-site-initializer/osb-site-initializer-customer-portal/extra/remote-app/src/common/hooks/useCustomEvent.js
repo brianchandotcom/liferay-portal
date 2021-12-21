@@ -4,7 +4,7 @@ export function useCustomEvent(event) {
 			new CustomEvent(event, {
 				bubbles: true,
 				composed: true,
-				detail: {data},
+				detail: {...data},
 			})
 		);
 	};

@@ -9,8 +9,8 @@ const Pages = () => {
 	const [{page, project, userAccount}] = useContext(AppContext);
 
 	if (page === pages.OVERVIEW) {
-		if (userAccount) {
-			return <Overview userAccount={userAccount} />;
+		if (userAccount && project) {
+			return <Overview project={project} userAccount={userAccount} />;
 		}
 
 		return <ActivationKeys.Skeleton />;

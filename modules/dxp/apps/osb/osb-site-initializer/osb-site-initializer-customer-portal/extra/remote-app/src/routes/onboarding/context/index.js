@@ -1,5 +1,6 @@
-import {useLazyQuery, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import {createContext, useEffect, useReducer} from 'react';
+import client from '../../../apolloClient';
 import FormProvider from '../../../common/providers/FormProvider';
 import {LiferayTheme} from '../../../common/services/liferay';
 import {
@@ -38,7 +39,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
 		koroneikiAccount: {},
-		project: {},
+		project: undefined,
 		step: steps.welcome,
 		userAccount: undefined,
 	});
@@ -47,22 +48,30 @@ const AppContextProvider = ({assetsPath, children}) => {
 		variables: {id: LiferayTheme.getUserId()},
 	});
 
-	const [fetchKoroneikiAccount, {data: dataKoroneikiAccount}] = useLazyQuery(
-		getKoroneikiAccounts
-	);
+	const getProject = async (projectExternalReferenceCode) => {
+		const {data: projects} = await client.query({
+			query: getKoroneikiAccounts,
+			variables: {
+				filter: `accountKey eq '${projectExternalReferenceCode}'`,
+			}
+		});
+
+		if (projects) {
+			dispatch({
+				payload: projects.c.koroneikiAccounts.items[0],
+				type: actionTypes.UPDATE_PROJECT,
+			});
+		}
+	}
 
 	useEffect(() => {
 		const projectExternalReferenceCode = SearchParams.get(
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		);
 
-		fetchKoroneikiAccount({
-			variables: {
-				filter: `accountKey eq '${projectExternalReferenceCode}'`,
-			},
-		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		if (projectExternalReferenceCode) {
+			getProject(projectExternalReferenceCode);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -72,14 +81,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
 		}
-
-		if (dataKoroneikiAccount) {
-			dispatch({
-				payload: dataKoroneikiAccount.c.koroneikiAccounts.items[0],
-				type: actionTypes.UPDATE_PROJECT,
-			});
-		}
-	}, [data, dataKoroneikiAccount]);
+	}, [data]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

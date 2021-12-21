@@ -9,9 +9,9 @@ import {actionTypes} from '../../context/reducer';
 import {steps} from '../../utils/constants';
 import WelcomeSkeleton from './Skeleton';
 
-const Welcome = ({userAccount}) => {
-	const [{assetsPath, project}, dispatch] = useContext(AppContext);
-	const {isLoading} = usePageGuard(
+const Welcome = ({project, userAccount}) => {
+	const [{assetsPath}, dispatch] = useContext(AppContext);
+	const {loading} = usePageGuard(
 		userAccount,
 		project.accountKey,
 		'onboarding'
@@ -23,7 +23,7 @@ const Welcome = ({userAccount}) => {
 	] = useMutation(addAccountFlag);
 
 	useEffect(() => {
-		if (!isLoading && !called) {
+		if (!loading && !called) {
 			createAccountFlag({
 				variables: {
 					accountFlag: {
@@ -36,9 +36,9 @@ const Welcome = ({userAccount}) => {
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [called, isLoading, project, userAccount]);
+	}, [called, loading, project, userAccount]);
 
-	if (isLoading || addAccountFlagLoading) {
+	if (loading || addAccountFlagLoading) {
 		return <WelcomeSkeleton />;
 	}
 

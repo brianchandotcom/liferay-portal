@@ -7,7 +7,7 @@ import SuccessDXPCloud from './SuccessDXPCloud';
 import Welcome from './Welcome';
 
 const Pages = () => {
-	const [{step, userAccount}] = useContext(AppContext);
+	const [{project, step, userAccount}] = useContext(AppContext);
 
 	if (step === steps.invites) {
 		return <Invites />;
@@ -21,8 +21,8 @@ const Pages = () => {
 		return <SuccessDXPCloud />;
 	}
 
-	if (userAccount) {
-		return <Welcome userAccount={userAccount} />;
+	if (userAccount && project) {
+		return <Welcome project={project} userAccount={userAccount} />;
 	}
 
 	return <Welcome.Skeleton />;

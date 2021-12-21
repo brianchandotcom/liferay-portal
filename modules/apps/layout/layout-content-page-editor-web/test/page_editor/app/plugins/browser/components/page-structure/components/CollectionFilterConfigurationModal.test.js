@@ -141,6 +141,15 @@ describe('CollectionFilterConfigurationModal', () => {
 		});
 
 		userEvent.click(getByLabelText('Tag'));
+
+		// Hackily work around:
+		//
+		//      "TypeError: Cannot read property '_defaultView' of undefined"
+		//
+		// Caused by: https://github.com/jsdom/jsdom/issues/2499
+
+		document.activeElement.blur = () => {};
+
 		userEvent.click(getByLabelText('tag1'));
 
 		act(() => {

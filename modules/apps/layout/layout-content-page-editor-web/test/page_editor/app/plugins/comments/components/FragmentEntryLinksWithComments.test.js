@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
@@ -98,8 +98,6 @@ const renderComponent = (state, dispatch) =>
 	);
 
 describe('FragmentEntryLinksWithComments', () => {
-	afterEach(cleanup);
-
 	it('shows a NoCommentsMessage if there are no comments', () => {
 		const {getByText} = renderComponent(NO_COMMENTS_STATE);
 		expect(getByText('no-comments-message')).toBeInTheDocument();
@@ -136,7 +134,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		sandroFragment.focus();
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
 			expect(sandroFragment).toHaveFocus();
 			expect(hoverItem).toHaveBeenCalledWith('sandro-item');
@@ -155,7 +153,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		fireEvent.mouseOver(sandroFragment);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
 			expect(hoverItem).toHaveBeenCalledWith('sandro-item');
 		});
@@ -173,7 +171,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		fireEvent.mouseOut(sandroFragment);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
 			expect(hoverItem).toHaveBeenCalledWith(null);
 		});
@@ -191,7 +189,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		fireEvent.click(sandroFragment);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(sandroFragment).toHaveTextContent('Sandro Fragment');
 			expect(selectItem).toHaveBeenCalledWith('sandro-item');
 		});

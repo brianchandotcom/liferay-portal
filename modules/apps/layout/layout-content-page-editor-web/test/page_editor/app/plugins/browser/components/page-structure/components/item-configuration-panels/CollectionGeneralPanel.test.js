@@ -13,14 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	wait,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import React, {useEffect} from 'react';
 
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
@@ -108,7 +101,6 @@ const renderComponent = ({
 
 describe('CollectionGeneralPanel', () => {
 	afterEach(() => {
-		cleanup();
 		CollectionSelector.mockClear();
 		updateItemConfig.mockClear();
 	});
@@ -153,7 +145,6 @@ describe('CollectionGeneralPanel', () => {
 
 	describe('Number of Items Input', () => {
 		afterEach(() => {
-			cleanup();
 			updateItemConfig.mockClear();
 		});
 
@@ -161,11 +152,13 @@ describe('CollectionGeneralPanel', () => {
 			const {getByLabelText} = renderComponent({});
 			const input = getByLabelText('maximum-number-of-items');
 
-			await wait(() => {
+			await act(async () => {
 				fireEvent.change(input, {
 					target: {value: '3'},
 				});
+			});
 
+			await act(async () => {
 				fireEvent.blur(input);
 			});
 
@@ -179,7 +172,7 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a warning message when the value is 0', async () => {
-			const {getByText} = renderComponent({
+			const {findByText} = renderComponent({
 				config: {
 					...ITEM_CONFIG,
 					...{numberOfItems: '0', paginationType: 'numeric'},
@@ -187,16 +180,14 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				await waitForElement(() =>
-					getByText(
-						'you-need-at-least-one-item-to-use-this-configuration'
-					)
+				await findByText(
+					'you-need-at-least-one-item-to-use-this-configuration'
 				)
 			).toBeInTheDocument();
 		});
 
 		it('shows a warning message when the number of items is bigger than the total items of the collection', async () => {
-			const {getByText} = renderComponent({
+			const {findByText} = renderComponent({
 				config: {
 					...ITEM_CONFIG,
 					...{numberOfItems: '33', paginationType: 'numeric'},
@@ -204,10 +195,8 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				await waitForElement(() =>
-					getByText(
-						'the-current-number-of-items-in-this-collection-is-x-32'
-					)
+				await findByText(
+					'the-current-number-of-items-in-this-collection-is-x-32'
 				)
 			).toBeInTheDocument();
 		});
@@ -215,7 +204,6 @@ describe('CollectionGeneralPanel', () => {
 
 	describe('Number of Items per Page Input', () => {
 		afterEach(() => {
-			cleanup();
 			updateItemConfig.mockClear();
 		});
 
@@ -225,11 +213,13 @@ describe('CollectionGeneralPanel', () => {
 			});
 			const input = getByLabelText('maximum-number-of-items-per-page');
 
-			await wait(async () => {
+			await act(async () => {
 				fireEvent.change(input, {
 					target: {value: '2'},
 				});
+			});
 
+			await act(async () => {
 				fireEvent.blur(input);
 			});
 
@@ -243,7 +233,7 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a warning message in the the value is 0', async () => {
-			const {getByText} = renderComponent({
+			const {findByText} = renderComponent({
 				config: {
 					...ITEM_CONFIG,
 					...{numberOfItemsPerPage: '0', paginationType: 'numeric'},
@@ -251,16 +241,14 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				await waitForElement(() =>
-					getByText(
-						'you-need-at-least-one-item-to-use-this-configuration'
-					)
+				await findByText(
+					'you-need-at-least-one-item-to-use-this-configuration'
 				)
 			).toBeInTheDocument();
 		});
 
 		it('shows a warning message when the number of items per page is bigger than searchContainerPageMaxDelta', async () => {
-			const {getByText} = renderComponent({
+			const {findByText} = renderComponent({
 				config: {
 					...ITEM_CONFIG,
 					...{numberOfItemsPerPage: '53', paginationType: 'numeric'},
@@ -268,10 +256,8 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				await waitForElement(() =>
-					getByText(
-						'you-can-only-display-a-maximum-of-x-items-per-page-50'
-					)
+				await findByText(
+					'you-can-only-display-a-maximum-of-x-items-per-page-50'
 				)
 			).toBeInTheDocument();
 		});

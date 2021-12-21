@@ -30,7 +30,6 @@ export function SelectField({
 	onValueSelect,
 	value,
 }) {
-	const inputId = useId();
 	const {tokenValues} = useStyleBook();
 
 	const validValues = field.typeOptions
@@ -62,13 +61,10 @@ export function SelectField({
 
 	return (
 		<ClayForm.Group className={className} small>
-			<label htmlFor={inputId}>{field.label}</label>
-
 			{multiSelect ? (
 				<MultiSelect
 					disabled={disabled}
 					field={field}
-					inputId={inputId}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
 					value={
@@ -83,7 +79,6 @@ export function SelectField({
 				<SingleSelect
 					disabled={disabled}
 					field={field}
-					inputId={inputId}
 					onValueSelect={onValueSelect}
 					options={getOptions(validValues)}
 					value={value || field.defaultValue}
@@ -101,6 +96,8 @@ const MultiSelect = ({
 	options,
 	value,
 }) => {
+	const labelId = useId();
+
 	const [nextValue, setNextValue] = useControlledState(value);
 
 	let label = Liferay.Language.get('select');
@@ -143,58 +140,60 @@ const MultiSelect = ({
 	const [active, setActive] = useState(false);
 
 	return (
-		<ClayDropDown
-			active={active}
-			disabled={!!disabled}
-			id={inputId}
-			onActiveChange={setActive}
-			trigger={
-				<ClayButton
-					className="form-control-select form-control-sm text-left w-100"
-					displayType="secondary"
-					small
-				>
-					{label}
-				</ClayButton>
-			}
-		>
-			{items.map(({checked, label, onChange}) => (
-				<ClayDropDown.Section key={label}>
-					<ClayCheckbox
-						checked={checked}
-						label={label}
-						onChange={() => onChange(!checked)}
-					/>
-				</ClayDropDown.Section>
-			))}
-		</ClayDropDown>
+		<>
+			<label id={labelId}>{field.label}</label>
+			<ClayDropDown
+				active={active}
+				disabled={!!disabled}
+				id={inputId}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButton
+						aria-labelledby={labelId}
+						className="form-control-select form-control-sm text-left w-100"
+						displayType="secondary"
+						small
+					>
+						{label}
+					</ClayButton>
+				}
+			>
+				{items.map(({checked, label, onChange}) => (
+					<ClayDropDown.Section key={label}>
+						<ClayCheckbox
+							checked={checked}
+							label={label}
+							onChange={() => onChange(!checked)}
+						/>
+					</ClayDropDown.Section>
+				))}
+			</ClayDropDown>
+		</>
 	);
 };
 
-const SingleSelect = ({
-	disabled,
-	field,
-	inputId,
-	onValueSelect,
-	options,
-	value,
-}) => {
+const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
+	const inputId = useId();
+
 	const [nextValue, setNextValue] = useControlledState(value);
 
 	return (
-		<ClaySelectWithOption
-			disabled={!!disabled}
-			id={inputId}
-			onChange={(event) => {
-				const nextValue =
-					event.target.options[event.target.selectedIndex].value;
+		<>
+			<label htmlFor={inputId}>{field.label}</label>
+			<ClaySelectWithOption
+				disabled={!!disabled}
+				id={inputId}
+				onChange={(event) => {
+					const nextValue =
+						event.target.options[event.target.selectedIndex].value;
 
-				setNextValue(nextValue);
-				onValueSelect(field.name, nextValue);
-			}}
-			options={options}
-			value={nextValue}
-		/>
+					setNextValue(nextValue);
+					onValueSelect(field.name, nextValue);
+				}}
+				options={options}
+				value={nextValue}
+			/>
+		</>
 	);
 };
 

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -52,6 +53,9 @@ public class NumericDDMFormFieldTypeUtil {
 			}
 
 			return HashMapBuilder.<String, Object>put(
+				"localizedSymbols",
+				_getLocalizedSymbols(ddmFormFieldRenderingContext.isViewMode())
+			).put(
 				"symbols", _getSymbols(locale)
 			).build();
 		}
@@ -78,6 +82,24 @@ public class NumericDDMFormFieldTypeUtil {
 		).putAll(
 			_getNumericInputMaskParameters(numericInputMask)
 		).build();
+	}
+
+	private static Map<String, Map<String, Object>> _getLocalizedSymbols(
+		boolean viewMode) {
+
+		if (viewMode) {
+			return null;
+		}
+
+		Map<String, Map<String, Object>> localizedSymbols = new HashMap<>();
+
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+			localizedSymbols.put(
+				LanguageUtil.getLanguageId(availableLocale),
+				_getSymbols(availableLocale));
+		}
+
+		return localizedSymbols;
 	}
 
 	private static Map<String, Object> _getNumericInputMaskParameters(

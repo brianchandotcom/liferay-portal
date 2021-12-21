@@ -29,6 +29,7 @@ const ValidationTextAndNumeric = ({
 	inputMask,
 	inputMaskFormat,
 	localizationMode,
+	localizedSymbols,
 	localizedValue,
 	name,
 	onBlur,
@@ -79,6 +80,7 @@ const ValidationTextAndNumeric = ({
 						decimalPlaces,
 						inputMask,
 						inputMaskFormat,
+						localizedSymbols,
 						symbols,
 					})}
 					dataType={dataType}

@@ -166,6 +166,7 @@ const Numeric: React.FC<IProps> = ({
 	id,
 	inputMask,
 	inputMaskFormat,
+	localizedSymbols,
 	localizedValue,
 	name,
 	onBlur,
@@ -181,16 +182,18 @@ const Numeric: React.FC<IProps> = ({
 	const {editingLanguageId}: {editingLanguageId: Locale} = useFormState();
 
 	const symbols = useMemo<ISymbols>(() => {
-		return inputMask
-			? {
-					decimalSymbol: symbolsProp.decimalSymbol,
-					thousandsSeparator:
-						symbolsProp.thousandsSeparator === 'none'
-							? null
-							: symbolsProp.thousandsSeparator,
-			  }
-			: symbolsProp;
-	}, [inputMask, symbolsProp]);
+		if (inputMask) {
+			return {
+				decimalSymbol: symbolsProp.decimalSymbol,
+				thousandsSeparator:
+					symbolsProp.thousandsSeparator === 'none'
+						? null
+						: symbolsProp.thousandsSeparator,
+			};
+		}
+
+		return localizedSymbols?.[editingLanguageId] || symbolsProp;
+	}, [editingLanguageId, inputMask, localizedSymbols, symbolsProp]);
 
 	const inputValue = useMemo<IMaskedNumber>(() => {
 		let newValue =
@@ -363,6 +366,7 @@ interface IProps {
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;
+	localizedSymbols?: LocalizedValue<ISymbols>;
 	localizedValue?: LocalizedValue<string>;
 	name: string;
 	onBlur: FocusEventHandler<HTMLInputElement>;

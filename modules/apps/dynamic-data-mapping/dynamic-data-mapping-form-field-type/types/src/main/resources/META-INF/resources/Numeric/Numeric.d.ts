@@ -28,6 +28,7 @@ interface IProps {
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;
+	localizedSymbols?: LocalizedValue<ISymbols>;
 	localizedValue?: LocalizedValue<string>;
 	name: string;
 	onBlur: FocusEventHandler<HTMLInputElement>;

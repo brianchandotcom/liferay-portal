@@ -132,7 +132,7 @@ describe('FragmentEntryLinksWithComments', () => {
 			showResolvedComments: true,
 		});
 
-		const [sandroFragment] = getAllByRole('link');
+		const [sandroFragment] = getAllByRole('button');
 
 		sandroFragment.focus();
 
@@ -151,7 +151,7 @@ describe('FragmentEntryLinksWithComments', () => {
 			showResolvedComments: true,
 		});
 
-		const [sandroFragment] = getAllByRole('link');
+		const [sandroFragment] = getAllByRole('button');
 
 		fireEvent.mouseOver(sandroFragment);
 
@@ -169,7 +169,7 @@ describe('FragmentEntryLinksWithComments', () => {
 			showResolvedComments: true,
 		});
 
-		const [sandroFragment] = getAllByRole('link');
+		const [sandroFragment] = getAllByRole('button');
 
 		fireEvent.mouseOut(sandroFragment);
 
@@ -187,7 +187,7 @@ describe('FragmentEntryLinksWithComments', () => {
 			showResolvedComments: true,
 		});
 
-		const [sandroFragment] = getAllByRole('link');
+		const [sandroFragment] = getAllByRole('button');
 
 		fireEvent.click(sandroFragment);
 

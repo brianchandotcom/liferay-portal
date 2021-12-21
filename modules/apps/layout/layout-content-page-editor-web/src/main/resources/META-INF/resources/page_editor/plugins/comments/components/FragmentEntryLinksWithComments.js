@@ -81,13 +81,14 @@ function FragmentEntryLinkWithComments({fragmentEntryLink, item}) {
 	const hoverItem = useHoverItem();
 
 	return (
-		<a
+		<button
+			aria-label={Liferay.Language.get('show-comments')}
 			className="border-0 list-group-item list-group-item-action"
-			href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
 			onClick={() => selectItem(item.itemId)}
 			onFocus={() => hoverItem(item.itemId)}
 			onMouseOut={() => hoverItem(null)}
 			onMouseOver={() => hoverItem(item.itemId)}
+			type="button"
 		>
 			<strong className="d-block text-dark">
 				{fragmentEntryLink.name}
@@ -101,6 +102,6 @@ function FragmentEntryLinkWithComments({fragmentEntryLink, item}) {
 					fragmentEntryLink.comments.length
 				)}
 			</span>
-		</a>
+		</button>
 	);
 }

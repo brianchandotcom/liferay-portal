@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -27,8 +28,10 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
+import {defaultLanguageId} from '../constants';
 import DefinitionDiagramController from '../source-builder/definitionDiagramController';
 import {singleEventObserver} from '../util/EventObserver';
+import {baseURL, headers} from '../util/fetchUtil';
 import {getCollidingElements} from '../util/utils';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
 import {nodeTypes} from './components/nodes/utils';
@@ -45,7 +48,7 @@ const definitionDiagramController = new DefinitionDiagramController();
 export default function DiagramBuilder({version}) {
 	const {
 		currentEditor,
-		defaultLanguageId,
+		definitionTitle,
 		deserialize,
 		elements,
 		selectedLanguageId,
@@ -141,10 +144,6 @@ export default function DiagramBuilder({version}) {
 	);
 
 	const onLoad = (reactFlowInstance) => {
-		if (version !== '0') {
-			reactFlowInstance.fitView();
-		}
-
 		setReactFlowInstance(reactFlowInstance);
 	};
 
@@ -214,7 +213,33 @@ export default function DiagramBuilder({version}) {
 
 			setDeserialize(false);
 		}
-	}, [currentEditor, deserialize, setDeserialize, setElements]);
+	}, [
+		currentEditor,
+		definitionTitle,
+		deserialize,
+		setDeserialize,
+		setElements,
+		version,
+	]);
+
+	useEffect(() => {
+		if (version !== '0' && !deserialize) {
+			fetch(
+				`${baseURL}/workflow-definitions/by-name/${definitionTitle}`,
+				{headers, method: 'GET'}
+			)
+				.then((response) => response.json())
+				.then(({content}) => {
+					definitionDiagramController.updateXMLDefinition(content);
+
+					const nodes = definitionDiagramController.getNodes();
+
+					setElements(nodes);
+				});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [version]);
 
 	const contextProps = {
 		collidingElements,

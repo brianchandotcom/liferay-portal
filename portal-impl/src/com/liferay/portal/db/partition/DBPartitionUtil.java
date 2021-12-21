@@ -138,7 +138,11 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		return _migrateDBPartition(companyId);
+		if (_DATABASE_PARTITION_MIGRATE_ENABLED) {
+			return _migrateDBPartition(companyId);
+		}
+
+		return true;
 	}
 
 	public static void setDefaultCompanyId(Connection connection)
@@ -599,6 +603,10 @@ public class DBPartitionUtil {
 
 	private static final boolean _DATABASE_PARTITION_ENABLED =
 		GetterUtil.getBoolean(PropsUtil.get("database.partition.enabled"));
+
+	private static final boolean _DATABASE_PARTITION_MIGRATE_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get("database.partition.migrate.enabled"));
 
 	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
 		GetterUtil.get(

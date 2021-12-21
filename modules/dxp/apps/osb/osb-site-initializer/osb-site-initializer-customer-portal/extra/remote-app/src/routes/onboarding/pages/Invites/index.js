@@ -110,7 +110,7 @@ const Invites = () => {
 	const disableAdminOptions = (isDisabled) => {
 		setAccountRoles((prevAccountRoles) => {
 			const requestorRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === roles.REQUESTOR.id
+				({value}) => value === roles.REQUESTOR.key
 			);
 
 			if (requestorRoleIndex !== -1) {
@@ -121,7 +121,7 @@ const Invites = () => {
 			}
 
 			const adminRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === roles.ADMIN.id
+				({value}) => value === roles.ADMIN.key
 			);
 
 			if (adminRoleIndex !== -1) {
@@ -149,53 +149,51 @@ const Invites = () => {
 			!SLA_CURRENT.includes(SLA.platinum)
 		) {
 			filterRoles = filterRoles.filter(
-				(label) => label !== roles.REQUESTOR.id
+				(label) => label !== roles.REQUESTOR.key
 			);
 		}
 
 		if (!isPartner) {
 			filterRoles = filterRoles.filter(
 				(label) =>
-					label !== roles.PARTNER_MANAGER.id &&
-					label !== roles.PARTNER_MEMBER.id
+					label !== roles.PARTNER_MANAGER.key &&
+					label !== roles.PARTNER_MEMBER.key
 			);
 		}
 		setFieldValue(
 			'invites[0].roleId',
-			filterRoles.find((role) => role === roles.REQUESTOR.id) ||
-				roles.ADMIN.id
+			filterRoles.find((role) => role === roles.REQUESTOR.key) ||
+				roles.ADMIN.key
 		);
 
 		const mapRolesName = filterRoles.map((role) => {
+			const roleProperty = Object.values(roles).find(
+				({key}) => key === role
+			);
+
 			return {
 				disabled: false,
-				label:
-					Object.values(roles).find(({id}) => id === role)?.name ||
-					role,
-				value:
-					Object.values(roles).find(({id}) => id === role)?.id ||
-					role,
+				label: roleProperty?.name || role,
+				value: roleProperty?.key || role,
 			};
 		});
-
 		setAccountRoles(mapRolesName);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [project, rolesData]);
-
 	useEffect(() => {
 		if (values) {
 			const totalAdmins = values.invites.reduce(
-				(invitesTotal, currentInvite) => {
+				(totalInvites, currentInvite) => {
 					if (
-						currentInvite.roleId === roles.REQUESTOR.id ||
-						currentInvite.roleId === roles.ADMIN.id
+						currentInvite.roleId === roles.REQUESTOR.key ||
+						currentInvite.roleId === roles.ADMIN.key
 					) {
-						const total = invitesTotal + 1;
+						const total = totalInvites + 1;
 
 						return total;
 					}
 
-					return invitesTotal;
+					return totalInvites;
 				},
 				1
 			);
@@ -282,7 +280,7 @@ const Invites = () => {
 							setBaseButtonDisabled(false);
 							setFieldValue('invites', [
 								...values.invites,
-								getInitialInvite(roles.MEMBER.id),
+								getInitialInvite(roles.MEMBER.key),
 							]);
 						}}
 						prependIcon="plus"

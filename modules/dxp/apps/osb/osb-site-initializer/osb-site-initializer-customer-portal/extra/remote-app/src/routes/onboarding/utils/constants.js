@@ -7,23 +7,23 @@ const steps = {
 
 const roles = {
 	ADMIN: {
-		id: 'Account Administrator',
+		key: 'Account Administrator',
 		name: 'Administrator',
 	},
 	MEMBER: {
-		id: 'Account Member',
+		key: 'Account Member',
 		name: 'User',
 	},
 	PARTNER_MANAGER: {
-		id: 'Partner Manager',
+		key: 'Partner Manager',
 		name: 'Partner Manager',
 	},
 	PARTNER_MEMBER: {
-		id: 'Partner Member',
+		key: 'Partner Member',
 		name: 'Partner Member',
 	},
 	REQUESTOR: {
-		id: 'Requestor',
+		key: 'Requestor',
 		name: 'Requestor',
 	},
 };

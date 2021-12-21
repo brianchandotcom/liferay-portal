@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useContext, useEffect} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
@@ -6,8 +5,7 @@ import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 import {calculatePercentage, countCompletedFields} from '../../../common/utils';
 import {TIP_EVENT} from '../../../common/utils/events';
 
-import {AppContext} from '../context/AppContext';
-import {setSelectedStep} from '../context/actions';
+import {ActionTypes, AppContext} from '../context/AppContextProvider';
 import {businessTotalFields} from '../utils/businessFields';
 import {AVAILABLE_STEPS, TOTAL_OF_FIELD} from '../utils/constants';
 import {propertyTotalFields} from '../utils/propertyFields';
@@ -21,24 +19,34 @@ export function useStepWizard() {
 
 	const loadInitialData = applicationId || backToEdit;
 
+	const dispatchSelectedStep = (payload) => {
+		dispatch({
+			payload,
+			type: ActionTypes.SET_SELECTED_STEP,
+		});
+	};
+
 	const {
 		control: {_fields},
 	} = useFormContext();
 
 	useEffect(() => {
 		_updateStepPercentage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form]);
 
 	useEffect(() => {
 		dispatchEvent({
 			hide: true,
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.selectedStep.section]);
 
 	useEffect(() => {
 		if (loadInitialData) {
 			calculateAllSteps();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loadInitialData]);
 
 	const calculateAllSteps = () => {
@@ -99,8 +107,7 @@ export function useStepWizard() {
 							state.selectedStep.percentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
-					}
-					else {
+					} else {
 						if (form?.basics?.businessCategoryId) {
 							return setPercentage(
 								100,
@@ -165,37 +172,31 @@ export function useStepWizard() {
 	};
 
 	const setSection = (step) =>
-		dispatch(
-			setSelectedStep({
-				...state.selectedStep,
-				...step,
-			})
-		);
+		dispatchSelectedStep({
+			...state.selectedStep,
+			...step,
+		});
 
 	const setPercentage = (
 		percentage = 0,
 		step = AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 	) => {
-		dispatch(
-			setSelectedStep({
-				...state.selectedStep,
-				percentage: {
-					...state.selectedStep.percentage,
-					[step]: percentage,
-				},
-			})
-		);
+		dispatchSelectedStep({
+			...state.selectedStep,
+			percentage: {
+				...state.selectedStep.percentage,
+				[step]: percentage,
+			},
+		});
 	};
 
 	const setAllPercentages = (
 		step = {basics: 0, business: 0, employees: 0, property: 0}
 	) => {
-		dispatch(
-			setSelectedStep({
-				...state.selectedStep,
-				percentage: step,
-			})
-		);
+		dispatchSelectedStep({
+			...state.selectedStep,
+			percentage: step,
+		});
 	};
 
 	return {

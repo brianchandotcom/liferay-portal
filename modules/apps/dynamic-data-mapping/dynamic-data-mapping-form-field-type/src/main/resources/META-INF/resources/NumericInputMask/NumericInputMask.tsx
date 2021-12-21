@@ -271,6 +271,7 @@ const NumericInputMask: React.FC<IProps> = ({
 			)}
 			<Text
 				label={Liferay.Language.get('prefix-or-suffix')}
+				locale={editingLanguageId}
 				maxLength={10}
 				name="append"
 				onBlur={onBlur}
@@ -293,6 +294,7 @@ const NumericInputMask: React.FC<IProps> = ({
 			/>
 			{append !== '' && (
 				<Radio
+					editingLanguageId={editingLanguageId}
 					inline={false}
 					name="appendType"
 					onBlur={onBlur}

@@ -4,7 +4,11 @@
 	width: 100%;
 
 	.version {
+		background: #f7f8f9;
+		border: none;
+		border-radius: 12px;
 		font-size: 12px;
+		padding: 4px 8px;
 
 		&-text {
 			font-weight: 400;

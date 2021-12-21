@@ -13,7 +13,7 @@
  */
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -39,8 +39,6 @@ const renderComponent = (props) =>
 	render(<DLVideoExternalShortcutURLItemSelectorView {...props} />);
 
 describe('DLVideoExternalShortcutURLItemSelectorView', () => {
-	afterEach(cleanup);
-
 	describe('when rendered with the default props', () => {
 		let result;
 
@@ -104,7 +102,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 
 		describe('when the form is submitted', () => {
 			beforeEach(async () => {
-				fireEvent.submit(result.getByRole('form'));
+				fireEvent.submit(result.container.querySelector('form'));
 			});
 
 			it('fires an event in the opener', () => {
@@ -165,7 +163,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 
 		describe('when the form is submitted', () => {
 			beforeEach(async () => {
-				fireEvent.submit(result.getByRole('form'));
+				fireEvent.submit(result.container.querySelector('form'));
 			});
 
 			it('does not fire an event in the opener', () => {

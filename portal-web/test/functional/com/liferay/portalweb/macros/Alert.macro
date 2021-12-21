@@ -47,7 +47,8 @@ definition {
 
 	macro viewExpireContentFailedMessage {
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_1",
+			key_alertMessage = "Please enter a valid expiration date.",
+			locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 			value1 = "Please enter a valid expiration date.");
 	}
 

@@ -399,7 +399,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		// Fileinstall. See LPS-56385.
 
 		properties.put(
-			FrameworkPropsKeys.FILE_INSTALL_DIR, _getFileInstallDir());
+			FrameworkPropsKeys.FILE_INSTALL_DIR,
+			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
+				StringUtil.merge(
+					PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS));
 		properties.put(
 			FrameworkPropsKeys.FILE_INSTALL_POLL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
@@ -714,11 +717,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private String _getFileInstallDir() {
-		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
-			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
-	}
-
 	private String _getFragmentHost(Bundle bundle) {
 		Dictionary<String, String> dictionary = bundle.getHeaders(
 			StringPool.BLANK);
@@ -851,7 +849,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Initializing required startup directories");
 		}
 
-		String[] dirNames = StringUtil.split(_getFileInstallDir());
+		String autoDeployDirs = StringUtil.merge(
+			PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+
+		String[] dirNames = StringUtil.split(
+			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
+				autoDeployDirs);
 
 		for (String dirName : dirNames) {
 			FileUtil.mkdirs(dirName);

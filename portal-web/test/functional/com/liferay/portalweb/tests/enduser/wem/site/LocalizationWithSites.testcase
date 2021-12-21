@@ -397,8 +397,6 @@ definition {
 	@description = "This is a use case for LPS-59345. The user must be redirected when the friendly url does not match."
 	@priority = "4"
 	test RedirectLocalizedFriendlyURL {
-		property test.name.skip.portal.instance = "LocalizationWithSites#RedirectLocalizedFriendlyURL";
-
 		task ("Get portal url") {
 			var portalURL = PropsUtil.get("portal.url");
 		}
@@ -493,7 +491,6 @@ definition {
 	@priority = "4"
 	test ViewAvailableSiteLocaleAlternatives {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "LocalizationWithSites#ViewAvailableSiteLocaleAlternatives";
 
 		task ("Add a new user") {
 			JSONUser.addUser(

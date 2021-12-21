@@ -58,7 +58,7 @@ public class ObjectDefinitionsTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaBuilder.addFDSTableSchemaField(
 				"dateModified", "modified-date");
 
-		dateFDSTableSchemaField.setContentRenderer("date");
+		dateFDSTableSchemaField.setContentRenderer("dateTime");
 
 		FDSTableSchemaField statusFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");

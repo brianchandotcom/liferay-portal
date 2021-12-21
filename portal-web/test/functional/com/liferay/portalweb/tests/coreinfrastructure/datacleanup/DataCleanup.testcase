@@ -15,6 +15,81 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
+	@priority = "3"
+	test CanCleanupShoppingDataAfterUpgrade {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mysql";
+		property portal.version = "6.2.10.21";
+
+		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.portlet.shopping%';";
+		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%com.liferay.shopping.service%';";
+		var resourceActionQuery = "SELECT * FROM ResourceAction WHERE name LIKE '%com.liferay.portlet.shopping%';";
+
+		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ShoppingUpgradeProcess");
+
+		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = "${classNameQuery}");
+
+		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
+
+		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
+
+		if (!(contains("${classNameTable}", "com.liferay.portlet.shopping"))) {
+			echo("${classNameTable}");
+
+			fail("Failed to find shopping in ClassName_ table.");
+		}
+		else if (!(contains("${releaseTable}", "com.liferay.shopping.service"))) {
+			echo("${releaseTable}");
+
+			fail("Failed to find shopping in Release_ table.");
+		}
+		else if (!(contains("${resourceActionTable}", "com.liferay.portlet.shopping"))) {
+			echo("${resourceActionTable}");
+
+			fail("Failed to find shopping in ResourceAction table.");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Cleanup",
+			configurationScope = "System Scope");
+
+		var key_settingFieldName = "Clean up shopping module data.";
+
+		Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ShoppingUpgradeProcess");
+
+		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = "${classNameQuery}");
+
+		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
+
+		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
+
+		if (contains("${classNameTable}", "com.liferay.portlet.shopping")) {
+			echo("${classNameTable}");
+
+			fail("Failed: Shopping data still present in ClassName_ table.");
+		}
+		else if (contains("${releaseTable}", "com.liferay.shopping.service")) {
+			echo("${releaseTable}");
+
+			fail("Failed: Shopping data still present in Release_ table.");
+		}
+		else if (contains("${resourceActionTable}", "com.liferay.portlet.shopping")) {
+			echo("${resourceActionTable}");
+
+			fail("Failed: Shopping data still present in ResourceAction table.");
+		}
+	}
+
 	@priority = "4"
 	test FileConfigsWillTriggerDataCleanup {
 		property data.archive.type = "data-archive-portal";

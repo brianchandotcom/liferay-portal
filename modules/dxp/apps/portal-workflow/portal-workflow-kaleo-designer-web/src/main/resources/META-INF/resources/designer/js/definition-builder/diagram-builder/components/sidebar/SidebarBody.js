@@ -21,7 +21,7 @@ const onDragStart = (event, nodeType) => {
 };
 
 export default function SidebarBody({children, displayDefaultContent = true}) {
-	const {setAvailableArea} = useContext(DiagramBuilderContext);
+	const {setCollidingElements} = useContext(DiagramBuilderContext);
 
 	return (
 		<div className="sidebar-body">
@@ -31,7 +31,7 @@ export default function SidebarBody({children, displayDefaultContent = true}) {
 							descriptionSidebar={nodeDescription[key]}
 							draggable
 							key={index}
-							onDragEnd={() => setAvailableArea(null)}
+							onDragEnd={() => setCollidingElements(null)}
 							onDragStart={(event) => onDragStart(event, key)}
 						/>
 				  ))

@@ -39,7 +39,8 @@ export default function BaseNode({
 	const {defaultLanguageId, selectedLanguageId} = useContext(
 		DefinitionBuilderContext
 	);
-	const {availableArea, selectedNode, setSelectedNode} = useContext(
+
+	const {collidingElements, selectedNode, setSelectedNode} = useContext(
 		DiagramBuilderContext
 	);
 
@@ -76,8 +77,13 @@ export default function BaseNode({
 		}
 	});
 
-	const borderAreaColor = availableArea ? 'blue' : 'red';
-	const displayBorderArea = !descriptionSidebar && availableArea !== null;
+	let borderAreaColor = 'blue';
+	let displayBorderArea = false;
+
+	if (collidingElements !== null && collidingElements.includes(id)) {
+		borderAreaColor = 'red';
+		displayBorderArea = true;
+	}
 
 	const descriptionColor = descriptionSidebar
 		? 'text-secondary'

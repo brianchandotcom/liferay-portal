@@ -51,19 +51,19 @@ const isOverlapping = (elementPosition, newElementPosition) => {
 	return isOverlapping;
 };
 
-const isPositionAvailable = (elements, newElementPosition) => {
-	let available = true;
+const getCollidingElements = (elements, newElementPosition) => {
+	const collidingElements = [];
 
 	elements.forEach((element) => {
 		if (
 			isNode(element) &&
 			isOverlapping(element.position, newElementPosition)
 		) {
-			available = false;
+			collidingElements.push(element.id);
 		}
 	});
 
-	return available;
+	return collidingElements;
 };
 
 export default function DiagramBuilder({version}) {
@@ -74,7 +74,7 @@ export default function DiagramBuilder({version}) {
 		setElements,
 	} = useContext(DefinitionBuilderContext);
 	const reactFlowWrapperRef = useRef(null);
-	const [availableArea, setAvailableArea] = useState(null);
+	const [collidingElements, setCollidingElements] = useState(null);
 	const [reactFlowInstance, setReactFlowInstance] = useState(null);
 	const [selectedNode, setSelectedNode] = useState(null);
 	const [selectedNodeNewId, setSelectedNodeNewId] = useState(null);
@@ -111,12 +111,7 @@ export default function DiagramBuilder({version}) {
 			y: event.clientY - reactFlowBounds.top,
 		});
 
-		if (isPositionAvailable(elements, position)) {
-			setAvailableArea(true);
-		}
-		else {
-			setAvailableArea(false);
-		}
+		setCollidingElements(getCollidingElements(elements, position));
 
 		event.preventDefault();
 
@@ -132,7 +127,7 @@ export default function DiagramBuilder({version}) {
 				y: event.clientY - reactFlowBounds.top,
 			});
 
-			if (isPositionAvailable(elements, position)) {
+			if (getCollidingElements(elements, position).length === 0) {
 				event.preventDefault();
 
 				const type = event.dataTransfer.getData(
@@ -150,8 +145,7 @@ export default function DiagramBuilder({version}) {
 
 				setElements((elements) => elements.concat(newNode));
 			}
-
-			setAvailableArea(null);
+			setCollidingElements(null);
 		},
 		[elements, reactFlowInstance, setElements]
 	);
@@ -219,11 +213,11 @@ export default function DiagramBuilder({version}) {
 	}, [selectedNode, selectedNodeNewId]);
 
 	const contextProps = {
-		availableArea,
+		collidingElements,
 		elements,
 		selectedNode,
 		selectedNodeNewId,
-		setAvailableArea,
+		setCollidingElements,
 		setElements,
 		setSelectedNode,
 		setSelectedNodeNewId,

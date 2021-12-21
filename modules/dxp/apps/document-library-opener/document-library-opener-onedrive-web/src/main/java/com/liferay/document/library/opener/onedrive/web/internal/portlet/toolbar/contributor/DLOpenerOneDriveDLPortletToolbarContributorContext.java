@@ -20,7 +20,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -139,14 +139,14 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 				"/document_library/create_in_one_drive");
 			liferayPortletURL.setParameter(Constants.CMD, Constants.ADD);
 
-			long repositoryId = BeanPropertiesUtil.getLong(
+			long repositoryId = _beanProperties.getLong(
 				folder, "repositoryId",
 				_portal.getScopeGroupId(portletRequest));
 
 			liferayPortletURL.setParameter(
 				"repositoryId", String.valueOf(repositoryId));
 
-			long folderId = BeanPropertiesUtil.getLong(
+			long folderId = _beanProperties.getLong(
 				folder, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 			liferayPortletURL.setParameter(
@@ -180,6 +180,9 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLOpenerOneDriveDLPortletToolbarContributorContext.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;

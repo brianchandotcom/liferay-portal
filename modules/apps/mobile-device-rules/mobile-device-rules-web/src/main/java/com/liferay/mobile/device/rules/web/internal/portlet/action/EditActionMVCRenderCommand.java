@@ -21,7 +21,7 @@ import com.liferay.mobile.device.rules.service.MDRActionService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.web.internal.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +59,7 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION, action);
 
-			String type = BeanPropertiesUtil.getString(action, "type");
+			String type = _beanProperties.getString(action, "type");
 
 			renderRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE, type);
@@ -113,6 +113,9 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditActionMVCRenderCommand.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private MDRActionService _mdrActionService;
 	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;

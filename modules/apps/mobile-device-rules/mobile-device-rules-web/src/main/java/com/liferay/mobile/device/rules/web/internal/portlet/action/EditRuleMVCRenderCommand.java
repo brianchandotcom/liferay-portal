@@ -20,7 +20,7 @@ import com.liferay.mobile.device.rules.service.MDRRuleGroupService;
 import com.liferay.mobile.device.rules.service.MDRRuleService;
 import com.liferay.mobile.device.rules.web.internal.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,7 +58,7 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
 
-			String type = BeanPropertiesUtil.getString(rule, "type");
+			String type = _beanProperties.getString(rule, "type");
 
 			renderRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_TYPE, type);
@@ -102,6 +102,9 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditRuleMVCRenderCommand.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private MDRRuleGroupService _mdrRuleGroupService;
 	private MDRRuleService _mdrRuleService;

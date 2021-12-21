@@ -54,7 +54,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -1606,7 +1606,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		Map<String, String> emailKBArticleDiffs = new HashMap<>();
 
 		for (String param : new String[] {"content", "title"}) {
-			String value = BeanPropertiesUtil.getString(kbArticle, param);
+			String value = _beanProperties.getString(kbArticle, param);
 
 			try {
 				value = KBArticleDiffUtil.getKBArticleDiff(
@@ -2083,6 +2083,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

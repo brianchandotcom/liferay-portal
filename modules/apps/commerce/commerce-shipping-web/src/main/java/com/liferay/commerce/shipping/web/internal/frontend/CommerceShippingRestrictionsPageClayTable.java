@@ -28,7 +28,7 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -104,12 +104,12 @@ public class CommerceShippingRestrictionsPageClayTable
 			_commerceShippingMethodService.getCommerceShippingMethods(
 				commerceChannel.getGroupId());
 
-		String orderByFieldName = BeanPropertiesUtil.getString(
+		String orderByFieldName = _beanProperties.getString(
 			sort, "fieldName", StringPool.BLANK);
 
 		String orderByType = "asc";
 
-		boolean reverse = BeanPropertiesUtil.getBooleanSilent(
+		boolean reverse = _beanProperties.getBooleanSilent(
 			sort, "reverse", false);
 
 		if (reverse) {
@@ -173,6 +173,9 @@ public class CommerceShippingRestrictionsPageClayTable
 
 		return restrictionFields;
 	}
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	@Reference
 	private CommerceAddressRestrictionLocalService

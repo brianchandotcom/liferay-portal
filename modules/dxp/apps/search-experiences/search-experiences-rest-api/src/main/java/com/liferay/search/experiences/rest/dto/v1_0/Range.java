@@ -223,64 +223,6 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parameterName;
 
-	@Schema
-	@Valid
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
-
-	@Schema
-	@Valid
-	public Object[] getValues() {
-		return values;
-	}
-
-	public void setValues(Object[] values) {
-		this.values = values;
-	}
-
-	@JsonIgnore
-	public void setValues(
-		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
-
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object[] values;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -414,50 +356,6 @@ public class Range implements Serializable {
 			sb.append(_escape(parameterName));
 
 			sb.append("\"");
-		}
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			if (value instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)value));
-				sb.append("\"");
-			}
-			else {
-				sb.append(value);
-			}
-		}
-
-		if (values != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"values\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < values.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(values[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < values.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		sb.append("}");

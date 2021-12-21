@@ -116,35 +116,6 @@ public class Contains implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object value;
 
-	@Schema
-	@Valid
-	public Object[] getValues() {
-		return values;
-	}
-
-	public void setValues(Object[] values) {
-		this.values = values;
-	}
-
-	@JsonIgnore
-	public void setValues(
-		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
-
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object[] values;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -204,30 +175,6 @@ public class Contains implements Serializable {
 			else {
 				sb.append(value);
 			}
-		}
-
-		if (values != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"values\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < values.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(values[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < values.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		sb.append("}");

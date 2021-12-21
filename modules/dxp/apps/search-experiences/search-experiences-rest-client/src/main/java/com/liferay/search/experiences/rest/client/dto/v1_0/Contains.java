@@ -76,27 +76,6 @@ public class Contains implements Cloneable, Serializable {
 
 	protected Object value;
 
-	public Object[] getValues() {
-		return values;
-	}
-
-	public void setValues(Object[] values) {
-		this.values = values;
-	}
-
-	public void setValues(
-		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
-
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object[] values;
-
 	@Override
 	public Contains clone() throws CloneNotSupportedException {
 		return (Contains)super.clone();

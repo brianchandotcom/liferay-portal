@@ -15,6 +15,7 @@
 package com.liferay.asset.list.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration"
+	id = "com.liferay.asset.list.configuration.FFCollectionsVariationsPrioritizationConfiguration"
 )
 public interface FFCollectionsVariationsPrioritizationConfiguration {
 

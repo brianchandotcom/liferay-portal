@@ -4,8 +4,8 @@ Bundle-Version: 5.2.0
 Export-Package:\
 	com.liferay.asset.list.asset.entry.provider,\
 	com.liferay.asset.list.asset.entry.query.processor,\
-	com.liferay.asset.list.constants,\
 	com.liferay.asset.list.configuration,\
+	com.liferay.asset.list.constants,\
 	com.liferay.asset.list.exception,\
 	com.liferay.asset.list.model,\
 	com.liferay.asset.list.service,\

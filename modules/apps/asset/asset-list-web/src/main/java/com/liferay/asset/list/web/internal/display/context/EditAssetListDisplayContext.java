@@ -605,6 +605,7 @@ public class EditAssetListDisplayContext {
 			"assetListEntryValid",
 			() -> {
 				AssetListEntry assetListEntry = getAssetListEntry();
+
 				return Validator.isNotNull(assetListEntry.getAssetEntryType());
 			}
 		).put(
@@ -1236,9 +1237,8 @@ public class EditAssetListDisplayContext {
 	}
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
-		List<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRels =
-				getAssetListEntrySegmentsEntryRels();
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			getAssetListEntrySegmentsEntryRels();
 
 		Stream<AssetListEntrySegmentsEntryRel> stream =
 			assetListEntrySegmentsEntryRels.stream();

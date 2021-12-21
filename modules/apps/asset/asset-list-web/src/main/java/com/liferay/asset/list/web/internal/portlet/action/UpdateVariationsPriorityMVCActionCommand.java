@@ -15,7 +15,6 @@
 package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
-import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -49,7 +48,8 @@ public class UpdateVariationsPriorityMVCActionCommand
 		long[] variationsPriority = ParamUtil.getLongValues(
 			actionRequest, "variationsPriority");
 
-		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(variationsPriority);
+		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(
+			variationsPriority);
 	}
 
 	@Reference

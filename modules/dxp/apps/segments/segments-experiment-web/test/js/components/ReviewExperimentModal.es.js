@@ -10,13 +10,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import {
-	act,
-	cleanup,
-	render,
-	wait,
-	waitForElement,
-} from '@testing-library/react';
+import {act, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -136,21 +130,13 @@ const getEstimatedTimeMockFactory = (days) => () => {
 };
 
 describe('ReviewExperimentModal', () => {
-	afterEach(cleanup);
-
 	describe('Estimated days', () => {
 		afterEach(() => {
 			jest.clearAllTimers();
-
-			cleanup();
 		});
 
 		beforeAll(() => {
 			jest.useFakeTimers();
-		});
-
-		afterEach(() => {
-			cleanup();
 		});
 
 		it('Triggers on first render', async () => {
@@ -164,7 +150,7 @@ describe('ReviewExperimentModal', () => {
 
 			act(() => jest.runAllTimers());
 
-			await wait(() =>
+			await waitFor(() =>
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(1)
 			);
 
@@ -179,13 +165,16 @@ describe('ReviewExperimentModal', () => {
 			const getEstimatedTimeMock = jest.fn(
 				getEstimatedTimeMockFactory(10)
 			);
-			const {getByDisplayValue} = renderReviewExperimentModal({
+			const {
+				findByDisplayValue,
+				getByDisplayValue,
+			} = renderReviewExperimentModal({
 				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
 
-			await waitForElement(() => getByDisplayValue('95'));
+			await findByDisplayValue('95');
 
 			expect(getEstimatedTimeMock).toHaveBeenCalledTimes(1);
 
@@ -193,7 +182,7 @@ describe('ReviewExperimentModal', () => {
 
 			act(() => jest.runAllTimers());
 
-			await wait(() =>
+			await waitFor(() =>
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(2)
 			);
 
@@ -220,7 +209,7 @@ describe('ReviewExperimentModal', () => {
 
 			act(() => jest.runAllTimers());
 
-			await wait(() =>
+			await waitFor(() =>
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(2)
 			);
 
@@ -228,7 +217,7 @@ describe('ReviewExperimentModal', () => {
 
 			act(() => jest.runAllTimers());
 
-			await wait(() =>
+			await waitFor(() =>
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(3)
 			);
 		});
@@ -236,17 +225,17 @@ describe('ReviewExperimentModal', () => {
 		it('Informs user about an error', async () => {
 			const getEstimatedTimeMock = jest.fn(() => Promise.reject());
 
-			const {getByText} = renderReviewExperimentModal({
+			const {findByText} = renderReviewExperimentModal({
 				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
 
-			await wait(() =>
+			await waitFor(() =>
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(1)
 			);
 
-			await waitForElement(() => getByText('not-available'));
+			await findByText('not-available');
 		});
 
 		it('Informs user about estimation', async () => {
@@ -254,17 +243,17 @@ describe('ReviewExperimentModal', () => {
 				getEstimatedTimeMockFactory(20)
 			);
 
-			const {getByText} = renderReviewExperimentModal({
+			const {findByText} = renderReviewExperimentModal({
 				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
 
-			await wait(() =>
+			await waitFor(() =>
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(1)
 			);
 
-			await waitForElement(() => getByText('20-days'));
+			await findByText('20-days');
 		});
 	});
 });

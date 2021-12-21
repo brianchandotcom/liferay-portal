@@ -455,6 +455,12 @@ definition {
 			value1 = "${description}");
 	}
 
+	macro assertRelationshipTabPresent {
+		AssertElementPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+	}
+
 	macro assertTypeFieldRequired {
 		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
 	}
@@ -593,7 +599,9 @@ definition {
 	}
 
 	macro goToLayoutTabOnLayouts {
-		SelectFrame(locator1 = "IFrame#IFRAME");
+		if (!(IsElementPresent(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB"))) {
+			SelectFrame(locator1 = "IFrame#IFRAME");
+		}
 
 		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
 	}

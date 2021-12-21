@@ -1,5 +1,13 @@
 definition {
 
+	macro activeCustomObject {
+		ObjectPortlet.selectCustomObject(label = "${objectName}");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.saveObject();
+	}
+
 	macro addRelationshipAndSelectEntry {
 		LexiconEntry.gotoAdd();
 
@@ -196,6 +204,14 @@ definition {
 		Select(
 			locator1 = "CreateObject#FIELD_TYPE",
 			value1 = "${fieldType}");
+	}
+
+	macro inactiveCustomObject {
+		ObjectPortlet.selectCustomObject(label = "${objectName}");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
 	}
 
 	macro saveObject {

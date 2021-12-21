@@ -334,10 +334,6 @@ definition {
 			fieldName = "${fieldTextField}",
 			fieldValue = "Single Line Text");
 
-		FormFields.editTextMultilineOnPages(
-			fieldName = "${fieldMultilineTextField}",
-			fieldValue = "Multiline Text");
-
 		FormFields.selectSelectOption(
 			fieldName = "${fieldSelectFromListField}",
 			selectOption = "Select 1");
@@ -353,6 +349,10 @@ definition {
 		FormFields.selectCheckboxOption(
 			checkboxOption = "Checkbox 1",
 			fieldName = "${fieldMultipleSelectionField}");
+
+		FormFields.editTextMultilineOnPages(
+			fieldName = "${fieldMultilineTextField}",
+			fieldValue = "Multiline Text");
 
 		FormPortlet.nextPage(
 			formPageCurrent = "Page 1",

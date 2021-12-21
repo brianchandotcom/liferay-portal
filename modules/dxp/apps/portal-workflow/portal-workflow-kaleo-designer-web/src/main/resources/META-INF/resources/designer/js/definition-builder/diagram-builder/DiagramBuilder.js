@@ -29,6 +29,7 @@ import ReactFlow, {
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import DefinitionDiagramController from '../source-builder/definitionDiagramController';
 import {singleEventObserver} from '../util/EventObserver';
+import {getCollidingElements} from '../util/utils';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
 import {nodeTypes} from './components/nodes/utils';
 import Sidebar from './components/sidebar/Sidebar';
@@ -38,35 +39,6 @@ import FloatingConnectionLine from './components/transitions/FloatingConnectionL
 
 let id = 2;
 const getId = () => `item_${id++}`;
-
-const isOverlapping = (elementPosition, newElementPosition) => {
-	const isInHorizontalBounds =
-		newElementPosition.x < elementPosition.x + 280 &&
-		newElementPosition.x + 280 > elementPosition.x;
-
-	const isInVerticalBounds =
-		newElementPosition.y < elementPosition.y + 100 &&
-		newElementPosition.y + 100 > elementPosition.y;
-
-	const isOverlapping = isInHorizontalBounds && isInVerticalBounds;
-
-	return isOverlapping;
-};
-
-const getCollidingElements = (elements, newElementPosition) => {
-	const collidingElements = [];
-
-	elements.forEach((element) => {
-		if (
-			isNode(element) &&
-			isOverlapping(element.position, newElementPosition)
-		) {
-			collidingElements.push(element.id);
-		}
-	});
-
-	return collidingElements;
-};
 
 const definitionDiagramController = new DefinitionDiagramController();
 
@@ -117,7 +89,7 @@ export default function DiagramBuilder({version}) {
 		singleEventObserver.notify('handle-connect-end', true);
 	};
 
-	const onConnectStart = (event, {nodeId}) => {
+	const onConnectStart = (_, {nodeId}) => {
 		singleEventObserver.notify('handle-connect-start', nodeId);
 	};
 

@@ -10,6 +10,23 @@
  *
  */
 
+import {isNode} from 'react-flow-renderer';
+
+function getCollidingElements(elements, newElementPosition) {
+	const collidingElements = [];
+
+	elements.forEach((element) => {
+		if (
+			isNode(element) &&
+			isOverlapping(element.position, newElementPosition)
+		) {
+			collidingElements.push(element.id);
+		}
+	});
+
+	return collidingElements;
+}
+
 function isObject(value) {
 	if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
 		return true;
@@ -24,6 +41,20 @@ function isObjectEmpty(object) {
 	}
 
 	return false;
+}
+
+function isOverlapping(elementPosition, newElementPosition) {
+	const isInHorizontalBounds =
+		newElementPosition.x < elementPosition.x + 280 &&
+		newElementPosition.x + 280 > elementPosition.x;
+
+	const isInVerticalBounds =
+		newElementPosition.y < elementPosition.y + 100 &&
+		newElementPosition.y + 100 > elementPosition.y;
+
+	const isOverlapping = isInHorizontalBounds && isInVerticalBounds;
+
+	return isOverlapping;
 }
 
 function removeNewLine(string) {
@@ -56,6 +87,7 @@ function uncamelize(string, separator) {
 }
 
 export {
+	getCollidingElements,
 	isObject,
 	isObjectEmpty,
 	removeNewLine,

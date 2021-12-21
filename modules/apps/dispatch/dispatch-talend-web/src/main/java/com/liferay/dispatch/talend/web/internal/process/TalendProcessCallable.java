@@ -30,6 +30,7 @@ import java.lang.reflect.Method;
 import java.security.Permission;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -182,7 +183,7 @@ public class TalendProcessCallable
 		}
 
 		private final int _beginningLinesCount;
-		private final LinkedList<String> _lines = new LinkedList<>();
+		private final List<String> _lines = new LinkedList<>();
 		private StringBundler _sb = new StringBundler();
 		private final int _totalLinesCount;
 

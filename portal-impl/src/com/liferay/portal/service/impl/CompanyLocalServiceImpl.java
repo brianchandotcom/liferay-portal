@@ -1264,7 +1264,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (DBPartitionUtil.removeDBPartition(companyId)) {
+		if (DBPartitionUtil.isPartitionEnabled()) {
 			_clearCompanyCache(companyId);
 			_clearVirtualHostCache(companyId);
 
@@ -1274,6 +1274,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					return null;
 				});
+
+			DBPartitionUtil.removeDBPartition(companyId);
 
 			return company;
 		}

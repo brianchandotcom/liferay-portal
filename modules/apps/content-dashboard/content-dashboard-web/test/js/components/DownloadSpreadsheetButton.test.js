@@ -12,12 +12,7 @@
  * details.
  */
 
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -78,7 +73,7 @@ describe('DownloadSpreadsheetButton', () => {
 	});
 
 	it('...with the proper loading UI state', async () => {
-		const {container, getByText} = render(getComponent());
+		const {container, findByText, getByText} = render(getComponent());
 		const exportButton = getByText('export-xls');
 
 		expect(getByText('export-xls')).toBeInTheDocument();
@@ -91,7 +86,7 @@ describe('DownloadSpreadsheetButton', () => {
 			})
 		);
 
-		await waitForElement(() => getByText('generating-xls'));
+		await findByText('generating-xls');
 		expect(getByText('generating-xls')).toBeInTheDocument();
 		expect(
 			container.getElementsByClassName('loading-animation').length
@@ -105,7 +100,9 @@ describe('DownloadSpreadsheetButton', () => {
 	});
 
 	it('...with the proper restored UI state after cancel', async () => {
-		const {container, getByText, getByTitle} = render(getComponent());
+		const {container, findByText, getByText, getByTitle} = render(
+			getComponent()
+		);
 		const exportButton = getByText('export-xls');
 
 		fireEvent(
@@ -122,7 +119,7 @@ describe('DownloadSpreadsheetButton', () => {
 			container.getElementsByClassName('lexicon-icon-times-circle').length
 		).toBe(1);
 
-		await waitForElement(() => getByText('generating-xls'));
+		await findByText('generating-xls');
 		expect(getByText('generating-xls')).toBeInTheDocument();
 
 		fireEvent(
@@ -137,7 +134,7 @@ describe('DownloadSpreadsheetButton', () => {
 			jest.runAllTimers();
 		});
 
-		await waitForElement(() => getByText('export-xls'));
+		await findByText('export-xls');
 		expect(getByText('export-xls')).toBeInTheDocument();
 
 		expect(
@@ -148,7 +145,7 @@ describe('DownloadSpreadsheetButton', () => {
 	it('...that calls the proper functions on events', async () => {
 		/* eslint-disable no-import-assign */
 		const fileURL = 'demo-file-url';
-		const {getByText} = render(getComponent(fileURL));
+		const {findByText, getByText} = render(getComponent(fileURL));
 		const exportButton = getByText('export-xls');
 
 		utils.downloadFileFromBlob = jest.fn();
@@ -170,7 +167,7 @@ describe('DownloadSpreadsheetButton', () => {
 			})
 		);
 
-		await waitForElement(() => getByText('generating-xls'));
+		await findByText('generating-xls');
 		expect(getByText('generating-xls')).toBeInTheDocument();
 
 		act(() => {

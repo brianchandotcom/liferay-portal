@@ -14,7 +14,7 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -37,7 +37,6 @@ describe('FileUrlCopyButton', () => {
 		jest.useRealTimers();
 
 		jest.restoreAllMocks();
-		cleanup();
 	});
 
 	it('matches the snapshot', () => {

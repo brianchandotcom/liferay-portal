@@ -1426,9 +1426,25 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test DocumentMetadata {
+		task ("Create a Document using JSONWS") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
 
-		// TODO LPS-144036 DocumentMetadata pending implementation
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
+		task ("Assert columns displayed") {
+			for (var columnHeader : list "Title,Author,Subtype,Site or Asset Library,Status,Audience,Stage,Modified Date") {
+				AssertElementPresent(
+					key_tableHeader = "${columnHeader}",
+					locator1 = "LexiconTable#TABLE_HEADER"
+				);
+			}
+		}
 	}
 
 	@description = "Given a document created in site A in the instance, and another one created in the site B

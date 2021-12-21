@@ -9,13 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {
-	act,
-	fireEvent,
-	render,
-	waitForElement,
-	within,
-} from '@testing-library/react';
+import {act, fireEvent, render, waitFor, within} from '@testing-library/react';
 import React from 'react';
 
 import ResultRankingsForm from '../../../src/main/resources/META-INF/resources/js/components/ResultRankingsForm.es';
@@ -72,11 +66,15 @@ describe('ResultRankingsForm', () => {
 	`(
 		'renders the results ranking items after loading in the $tab tab',
 		async ({expected, tab}) => {
-			const {getByTestId, getByText} = renderTestResultRankingsForm();
+			const {
+				findByTestId,
+				getByTestId,
+				getByText,
+			} = renderTestResultRankingsForm();
 
 			fireEvent.click(getByText(tab));
 
-			await waitForElement(() => getByTestId(expected[0]));
+			await findByTestId(expected[0]);
 
 			expected.forEach((id) => {
 				expect(getByTestId(id)).toBeInTheDocument();
@@ -146,7 +144,7 @@ describe('ResultRankingsForm', () => {
 			fireEvent.click(getByText('hidden'));
 		}
 
-		await waitForElement(() => getByTestId(id));
+		await waitFor(() => getByTestId(id));
 
 		fireEvent.click(within(getByTestId(id)).getByTitle(button));
 
@@ -162,6 +160,7 @@ describe('ResultRankingsForm', () => {
 		async ({button, id, newButton, selector}) => {
 			const {
 				container,
+				findByTestId,
 				getByTestId,
 				getByText,
 			} = renderTestResultRankingsForm();
@@ -172,7 +171,7 @@ describe('ResultRankingsForm', () => {
 
 			fireEvent.click(getByText(order[0]));
 
-			await waitForElement(() => getByTestId(id));
+			await findByTestId(id);
 
 			fireEvent.click(within(getByTestId(id)).getByTitle(button));
 
@@ -189,9 +188,13 @@ describe('ResultRankingsForm', () => {
 		${'105'} | ${PIN_BUTTON_LABEL}   | ${'100,101,102,103,104,105'}
 		${'100'} | ${UNPIN_BUTTON_LABEL} | ${'101,102,103,104'}
 	`('updates the pinnedIds by $button', async ({button, expected, id}) => {
-		const {container, getByTestId} = renderTestResultRankingsForm();
+		const {
+			container,
+			findByTestId,
+			getByTestId,
+		} = renderTestResultRankingsForm();
 
-		await waitForElement(() => getByTestId(id));
+		await findByTestId(id);
 
 		fireEvent.click(within(getByTestId(id)).getByTitle(button));
 
@@ -199,13 +202,17 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('fetches more results after clicking on load more button', async () => {
-		const {container, getByTestId} = renderTestResultRankingsForm();
+		const {
+			container,
+			findByTestId,
+			getByTestId,
+		} = renderTestResultRankingsForm();
 
-		await waitForElement(() => getByTestId('100'));
+		await findByTestId('100');
 
 		fireEvent.click(container.querySelector('.load-more-button'));
 
-		await waitForElement(() => getByTestId('110'));
+		await findByTestId('110');
 
 		expect(getByTestId('110')).toHaveTextContent(
 			'This is a Document Example'
@@ -216,19 +223,19 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('has the same pinned end index if there are no additional pinned items loaded', async () => {
-		const {container, getByTestId} = renderTestResultRankingsForm();
+		const {container, findByTestId} = renderTestResultRankingsForm();
 
 		const pinnedIdsEndIndexInput = container.querySelector(
 			'#pinnedIdsEndIndex'
 		);
 
-		await waitForElement(() => getByTestId('100'));
+		await findByTestId('100');
 
 		expect(pinnedIdsEndIndexInput.value).toBe('4');
 
 		fireEvent.click(container.querySelector('.load-more-button'));
 
-		await waitForElement(() => getByTestId('110'));
+		await findByTestId('110');
 
 		expect(pinnedIdsEndIndexInput.value).toBe('4');
 	});

@@ -102,13 +102,37 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136985. It checks that a summary can be added to a page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddSummary {
-		property portal.acceptance = "false";
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
-		// TODO LPS-136985 CanAddSummary pending implementation
+		WikiNavigator.openToEditPage(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
+		WikiEntry.addPageSummary(wikiPageSummary = "Wiki Page Summary");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewSummary(
+			wikiPageRevision = "1.1",
+			wikiPageTitle = "Wiki Page Title",
+			wikiVersionSummary = "Wiki Page Summary");
 	}
 
 	@description = "This is a test for LPS-136988. It checks that a table of contents can be added to a page."

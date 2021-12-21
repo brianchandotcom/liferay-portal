@@ -315,6 +315,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7021. Upload an already mapped new image"
+	@priority = "3"
+	test UploadAlreadyMappedNewImage {
+		task ("Given a diagram product with a svg diagram image.") {
+			property portal.acceptance = "false";
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Title",
+				imageType = "svg",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the Diagram Settings Type is put to SVG and on pin 1") {
+			CommerceDiagram.changeSettingsType(settingsType = "SVG");
+
+			CommerceDiagram.viewPin(pinNumber = "1");
+		}
+
+		task ("Then verify position is 1 and type is "Linked to a SKU"") {
+			CommerceDiagram.assertPinToolTipInfo(
+				pinType = "SKU",
+				positionNumber = "1",
+				quantity = "1");
+
+			Click(
+				key_text = "Cancel",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
 	@priority = "3"
 	test UploadANotMappedNewImage {

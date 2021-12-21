@@ -354,29 +354,6 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	macro changeCurrentTheme {
-		if (isSet(privacy)) {
-			PagesAdmin.togglePrivacy(privacy = "${privacy}");
-
-			Click(
-				key_pageName = "${privacy}",
-				locator1 = "Icon#COG_PAGE");
-		}
-		else {
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "${pageName}");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
-			Theme.configureLookAndFeelSpecificLook();
-		}
-
-		Theme.changeCurrentTheme(themeName = "${themeName}");
-
-		PortletEntry.save();
-	}
-
 	macro changeLogo {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -391,6 +368,34 @@ definition {
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Page.uploadFileForLogo(logoFile = "${logoFile}");
+	}
+
+	macro changeSiteCurrentTheme {
+		PagesAdmin.togglePrivacy(privacy = "${privacy}");
+
+		Click(
+			key_pageName = "${privacy}",
+			locator1 = "Icon#COG_PAGE");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		Theme.changeCurrentTheme(themeName = "${themeName}");
+
+		PortletEntry.save();
+	}
+
+	macro changeWidgetPageCurrentTheme {
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		Theme.configureLookAndFeelSpecificLook();
+
+		Theme.changeCurrentTheme(themeName = "${themeName}");
+
+		PortletEntry.save();
 	}
 
 	macro configureChildPage {

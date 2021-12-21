@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import Translation from '../../../src/main/resources/META-INF/resources/js/components/Translation';
@@ -39,7 +39,6 @@ const noop = () => {};
 describe('Translation', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
-		cleanup();
 	});
 
 	it('renders', () => {

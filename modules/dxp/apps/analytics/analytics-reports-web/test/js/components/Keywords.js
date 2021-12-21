@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import Keywords from '../../../src/main/resources/META-INF/resources/js/components/Keywords';
@@ -17,8 +17,6 @@ import Keywords from '../../../src/main/resources/META-INF/resources/js/componen
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Keywords', () => {
-	afterEach(cleanup);
-
 	it('renders message no best keywords when content was published today', () => {
 		const mockCurrentPage = {
 			data: {

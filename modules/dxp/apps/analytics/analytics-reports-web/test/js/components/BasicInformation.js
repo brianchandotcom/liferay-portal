@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import BasicInformation from '../../../src/main/resources/META-INF/resources/js/components/BasicInformation';
@@ -17,8 +17,6 @@ import BasicInformation from '../../../src/main/resources/META-INF/resources/js/
 import '@testing-library/jest-dom/extend-expect';
 
 describe('BasicInformation', () => {
-	afterEach(cleanup);
-
 	it('renders author, publish date and title', () => {
 		const testProps = {
 			author: {

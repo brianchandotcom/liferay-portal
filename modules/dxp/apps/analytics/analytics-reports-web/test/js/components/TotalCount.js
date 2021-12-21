@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import TotalCount from '../../../src/main/resources/META-INF/resources/js/components/TotalCount';
@@ -17,8 +17,6 @@ import TotalCount from '../../../src/main/resources/META-INF/resources/js/compon
 import '@testing-library/jest-dom/extend-expect';
 
 describe('TotalCount', () => {
-	afterEach(cleanup);
-
 	it('renders text, help text and total count number', async () => {
 		const mockDataProvider = jest.fn(() => {
 			return Promise.resolve(9999);
@@ -41,7 +39,7 @@ describe('TotalCount', () => {
 			/>
 		);
 
-		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
+		await waitFor(() => expect(mockDataProvider).toHaveBeenCalled());
 
 		expect(getByText('9,999')).toBeInTheDocument();
 
@@ -83,7 +81,7 @@ describe('TotalCount', () => {
 			/>
 		);
 
-		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
+		await waitFor(() => expect(mockDataProvider).toHaveBeenCalled());
 
 		expect(getByText('-')).toBeInTheDocument();
 

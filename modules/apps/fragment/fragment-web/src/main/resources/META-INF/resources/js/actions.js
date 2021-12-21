@@ -83,6 +83,7 @@ export const ACTIONS = {
 
 				input.name = `${portletNamespace}rowIds`;
 				input.value = selectedItems.map((item) => item.value);
+				input.setAttribute('type', 'hidden');
 
 				form.appendChild(input);
 

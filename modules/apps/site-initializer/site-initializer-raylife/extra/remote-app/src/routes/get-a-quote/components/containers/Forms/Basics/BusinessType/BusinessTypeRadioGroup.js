@@ -1,13 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {Radio} from '../../../../../../../common/components/fragments/Forms/Radio';
 
-export function BusinessTypeRadioGroup({
+const BusinessTypeRadioGroup = ({
 	businessTypes = [],
 	form,
 	setNewSelectedProduct,
-}) {
+}) => {
 	const {control, setValue} = useFormContext();
 
 	const selectedBusinessType = businessTypes.find(
@@ -17,9 +16,10 @@ export function BusinessTypeRadioGroup({
 	useEffect(() => {
 		if (form?.basics?.businessCategoryId) {
 			setCategoryProperties();
-			setValue('basics.product', selectedBusinessType?.title);
+			setValue('basics.product', selectedBusinessType?.name);
 			setNewSelectedProduct(form.basics.businessCategoryId);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form?.basics?.businessCategoryId]);
 
 	const setCategoryProperties = async () => {
@@ -39,8 +39,7 @@ export function BusinessTypeRadioGroup({
 				'basics.properties.segment',
 				categoryProperties.find(({key}) => key === 'Segment')?.value
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			console.warn(error);
 		}
 	};
@@ -57,7 +56,7 @@ export function BusinessTypeRadioGroup({
 							{...field}
 							description={businessType.description}
 							key={businessType.id}
-							label={businessType.title}
+							label={businessType.name}
 							selected={
 								businessType.id ===
 								form?.basics?.businessCategoryId
@@ -70,4 +69,6 @@ export function BusinessTypeRadioGroup({
 			/>
 		</fieldset>
 	);
-}
+};
+
+export default BusinessTypeRadioGroup;

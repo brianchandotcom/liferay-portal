@@ -40,6 +40,8 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
@@ -172,6 +174,7 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
+		AccountResource.Factory accountResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		CommerceReferencesHolder commerceReferencesHolder,
@@ -220,6 +223,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"Commerce references holder " + commerceReferencesHolder);
 		}
 
+		_accountResourceFactory = accountResourceFactory;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
@@ -331,6 +335,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addPermissions(serviceContext));
 
+			_invoke(() -> _addAccounts(serviceContext));
 			_invoke(() -> _addDDMStructures(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
@@ -405,6 +410,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
+	}
+
+	private void _addAccounts(ServiceContext serviceContext) throws Exception {
+		String json = _read("/site-initializer/accounts.json");
+
+		if (json == null) {
+			return;
+		}
+
+		AccountResource.Builder accountResourceBuilder =
+			_accountResourceFactory.create();
+
+		AccountResource accountResource = accountResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			Account account = Account.toDTO(
+				String.valueOf(jsonArray.getJSONObject(i)));
+
+			accountResource.postAccount(account);
+		}
 	}
 
 	private Map<String, String> _addAssetListEntries(
@@ -2638,6 +2667,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
+	private final AccountResource.Factory _accountResourceFactory;
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;

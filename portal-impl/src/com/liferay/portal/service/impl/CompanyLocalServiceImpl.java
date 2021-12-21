@@ -1272,6 +1272,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				() -> {
 					PortalInstances.removeCompany(company.getCompanyId());
 
+					unregisterCompany(company);
+
 					return null;
 				});
 

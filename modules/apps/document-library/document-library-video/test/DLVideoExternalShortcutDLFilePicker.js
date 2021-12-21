@@ -13,7 +13,7 @@
  */
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -33,8 +33,6 @@ const renderComponent = (props) =>
 	render(<DLVideoExternalShortcutDLFilePicker {...props} />);
 
 describe('DLVideoExternalShortcutDLFilePicker', () => {
-	afterEach(cleanup);
-
 	describe('when rendered with the default props', () => {
 		let result;
 

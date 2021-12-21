@@ -155,7 +155,7 @@ definition {
 		task ("Unblock all custom events") {
 			ACCustomEvents.unblockAllCustomEvents();
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no views on the selected period.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "No blocked events to report.");
 		}
 
 		task ("Navigation to custom events tab") {

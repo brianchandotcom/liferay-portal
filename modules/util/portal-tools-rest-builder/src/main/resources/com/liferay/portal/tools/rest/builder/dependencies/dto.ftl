@@ -52,6 +52,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -229,6 +230,9 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				access = JsonProperty.Access.READ_WRITE
 			</#if>
 		)
+		<#if propertySchema.xml??>
+			@XmlElement(name="${propertySchema.xml.name}")
+		</#if>
 		<#if schema.requiredPropertySchemaNames?? && schema.requiredPropertySchemaNames?seq_contains(propertyName)>
 			<#if stringUtil.equals(propertyType, "String")>
 				@NotEmpty

@@ -48,7 +48,10 @@ const CheckinModal = ({
 				{Liferay.Language.get('describe-your-changes')}
 			</ClayModal.Header>
 
-			<form onSubmit={handleSubmit}>
+			<form
+				aria-label={Liferay.Language.get('increment-version')}
+				onSubmit={handleSubmit}
+			>
 				<ClayModal.Body>
 					<fieldset className="fieldset">
 						<div className="h5">

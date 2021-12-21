@@ -29,7 +29,7 @@
 </tr>
 <!-- EDIT_ATTRIBUTE -->
 <tr>
-	<td>CONDITION_BUTTON</td>
+	<td>FILTER_BUTTON</td>
 	<td>//button[contains(@class,'btn-secondary')]//*</td>
 	<td></td>
 </tr>

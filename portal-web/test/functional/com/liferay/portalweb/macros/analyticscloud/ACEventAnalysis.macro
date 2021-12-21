@@ -1,55 +1,5 @@
 definition {
 
-	macro clickToAddEventButton {
-		var key_DefinitionsOptions = "event-analysis/create";
-
-		if (IsElementPresent(locator1 = "ACSettings#DEFINITIONS_OPTIONS")) {
-			Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
-		}
-
-		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
-	}
-
-	macro clickToAddBreakdownButton {
-		var key_sectionType = "breakdown";
-
-		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
-	}
-
-	macro clickToAddFilterButton {
-		var key_sectionType = "filter";
-
-		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
-	}
-
-	macro searchEventAnalysis {
-		Type(
-			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
-			value1 = "${searchItem}");
-	}
-
-	macro viewEventAnalysisList {
-		for (var name : list "${eventList}") {
-			var key_buttonName = "${name}";
-
-			while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
-				ACEventAnalysis.searchEventAnalysis(searchItem = "${name}");
-			}
-
-			AssertTextEquals(
-				locator1 = "ACUtils#GENERIC_BUTTON",
-				value1 = "${name}");
-		}
-	}
-
-	macro viewEventAnalysisListNotPresent {
-		for (var name : list "${eventList}") {
-			var key_buttonName = "${name}";
-
-			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
-		}
-	}
-
 	macro addBreakdown {
 		var key_buttonName = "${attributeName}";
 
@@ -90,7 +40,7 @@ definition {
 		}
 
 		if ("${editOption}" == "Filter") {
-			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
+			Click(locator1 = "ACEventAnalysis#FILTER_BUTTON");
 
 			Click(locator1 = "ACEventAnalysis#EDIT_PENCIL");
 
@@ -105,6 +55,12 @@ definition {
 	}
 
 	macro clickToAddEventButton {
+		var key_DefinitionsOptions = "event-analysis/create";
+
+		if (IsElementPresent(locator1 = "ACSettings#DEFINITIONS_OPTIONS")) {
+			Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
+		}
+
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 
@@ -142,7 +98,7 @@ definition {
 		ACCustomEvents.viewDataType(typeValue = "${newDataType}");
 
 		if (("${newDataType}" != "STRING") && ("${newDataType}" != "BOOLEAN")) {
-			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
+			Click(locator1 = "ACEventAnalysis#FILTER_BUTTON");
 		}
 
 		if (("${newDataType}" == "NUMBER") || ("${newDataType}" == "DURATION")) {

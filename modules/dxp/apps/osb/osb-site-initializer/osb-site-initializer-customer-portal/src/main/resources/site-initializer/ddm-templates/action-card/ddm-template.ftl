@@ -3,7 +3,7 @@
 </style>
 
 <a href="${friendlyURLs[themeDisplay.getLanguageId()]!""}">
-<a href="${ActionUrl.getData()}">
+<a href="${ActionUrl.getData()}" rel="noopener noreferrer" target="_blank">
 	<div>
 		<h5 class="font-weight-bold text-neutral-10">
 			${ActionTitle.getData()}

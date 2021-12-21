@@ -107,7 +107,7 @@ export default function UpperToolbar({
 								displayType="secondary"
 							>
 								<div>
-									{Liferay.Language.get('version') + ':'}
+									{`${Liferay.Language.get('version')}:`}
 
 									<span className="version-text">
 										{version}

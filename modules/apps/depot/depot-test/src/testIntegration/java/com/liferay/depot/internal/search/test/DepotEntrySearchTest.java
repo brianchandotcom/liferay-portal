@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -46,7 +46,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +59,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 @Sync
 public class DepotEntrySearchTest {
@@ -235,20 +235,13 @@ public class DepotEntrySearchTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private DepotEntry _addDepotEntry(User user, String name) throws Exception {
-		DepotEntry depotEntry = _depotEntryService.addDepotEntry(
+		return _depotEntryService.addDepotEntry(
 			Collections.singletonMap(LocaleUtil.getDefault(), name),
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), user.getUserId()));
-
-		_depotEntries.add(depotEntry);
-
-		return depotEntry;
 	}
-
-	@DeleteAfterTestRun
-	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
 	@Inject
 	private DepotEntryService _depotEntryService;

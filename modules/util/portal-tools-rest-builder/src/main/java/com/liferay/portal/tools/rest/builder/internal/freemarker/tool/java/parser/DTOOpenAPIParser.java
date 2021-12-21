@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -193,6 +194,15 @@ public class DTOOpenAPIParser {
 		if (propertySchemas == null) {
 			return Collections.emptyMap();
 		}
+
+		Set<Map.Entry<String, Schema>> entries = propertySchemas.entrySet();
+
+		entries.forEach(
+			entry -> {
+				Schema propertySchema = entry.getValue();
+
+				propertySchema.setName(entry.getKey());
+			});
 
 		return propertySchemas;
 	}

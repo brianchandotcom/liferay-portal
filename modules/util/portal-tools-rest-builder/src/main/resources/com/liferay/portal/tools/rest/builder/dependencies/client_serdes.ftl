@@ -73,7 +73,10 @@ public class ${schemaName}SerDes {
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#assign capitalizedPropertyName = propertyName?cap_first />
+			<#assign
+				capitalizedPropertyName = propertyName?cap_first
+				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+			/>
 
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
 				<#assign capitalizedPropertyName = properties[propertyName] />
@@ -84,7 +87,13 @@ public class ${schemaName}SerDes {
 					sb.append(", ");
 				}
 
-				sb.append("\"${propertyName}\": ");
+				<#if propertySchema.name??>
+					<#assign key = propertySchema.name />
+				<#else>
+					<#assign key = propertyName />
+				</#if>
+
+				sb.append("\"${key}\": ");
 
 				<#assign propertyType = properties[propertyName] />
 
@@ -182,22 +191,31 @@ public class ${schemaName}SerDes {
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#assign capitalizedPropertyName = propertyName?cap_first />
+			<#assign
+				capitalizedPropertyName = propertyName?cap_first
+				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+			/>
 
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
 				<#assign capitalizedPropertyName = properties[propertyName] />
 			</#if>
 
+			<#if propertySchema.name??>
+				<#assign key = propertySchema.name />
+			<#else>
+				<#assign key = propertyName />
+			</#if>
+
 			if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
-				map.put("${propertyName}", null);
+				map.put("${key}", null);
 			}
 			else {
 				<#if allSchemas[properties[propertyName]]??>
-					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
+					map.put("${key}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
 				<#elseif stringUtil.equals(properties[propertyName], "Date")>
-					map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()));
+					map.put("${key}", liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()));
 				<#else>
-					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
+					map.put("${key}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
 				</#if>
 			}
 		</#list>
@@ -220,11 +238,19 @@ public class ${schemaName}SerDes {
 		@Override
 		protected void setField(${schemaName} ${schemaVarName}, String jsonParserFieldName, Object jsonParserFieldValue) {
 			<#list properties?keys as propertyName>
+				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema) />
+
 				<#if !propertyName?is_first>
 					else
 				</#if>
 
-				if (Objects.equals(jsonParserFieldName, "${propertyName}")) {
+				<#if propertySchema.name??>
+					<#assign fieldName = propertySchema.name />
+				<#else>
+					<#assign fieldName = propertyName />
+				</#if>
+
+				if (Objects.equals(jsonParserFieldName, "${fieldName}")) {
 					if (jsonParserFieldValue != null) {
 						<#assign capitalizedPropertyName = propertyName?cap_first />
 

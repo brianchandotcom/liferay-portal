@@ -82,6 +82,10 @@ public class Schema {
 		return _minimum;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
 	public List<Schema> getOneOfSchemas() {
 		return _oneOfSchemas;
 	}
@@ -179,6 +183,10 @@ public class Schema {
 		_minimum = minimum;
 	}
 
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public void setOneOfSchemas(List<Schema> oneOfSchemas) {
 		_oneOfSchemas = oneOfSchemas;
 	}
@@ -226,6 +234,7 @@ public class Schema {
 	private boolean _jsonMap;
 	private Double _maximum;
 	private Double _minimum;
+	private String _name;
 	private List<Schema> _oneOfSchemas;
 	private Map<String, Schema> _propertySchemas;
 	private boolean _readOnly;

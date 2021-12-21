@@ -14,9 +14,12 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.service.SXPElementLocalService;
@@ -65,7 +68,7 @@ public class SXPElementDTOConverter
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpElement.getDescriptionMap());
-				elementDefinition = ElementDefinitionUtil.toElementDefinition(
+				elementDefinition = _toElementDefinition(
 					sxpElement.getElementDefinitionJSON());
 				id = sxpElement.getSXPElementId();
 				modifiedDate = sxpElement.getModifiedDate();
@@ -78,6 +81,22 @@ public class SXPElementDTOConverter
 			}
 		};
 	}
+
+	private ElementDefinition _toElementDefinition(String json) {
+		try {
+			return ElementDefinitionUtil.toElementDefinition(json);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SXPElementDTOConverter.class);
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;

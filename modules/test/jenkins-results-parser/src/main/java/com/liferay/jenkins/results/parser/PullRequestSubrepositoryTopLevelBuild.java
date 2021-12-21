@@ -142,7 +142,7 @@ public class PullRequestSubrepositoryTopLevelBuild
 
 	private String _getPortalUpstreamBranchName() {
 		String portalUpstreamBranchName = getParameterValue(
-			"PORTAL_GITHUB_UPSTREAM_BRANCH_NAME");
+			"PORTAL_UPSTREAM_BRANCH_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
 			return portalUpstreamBranchName;

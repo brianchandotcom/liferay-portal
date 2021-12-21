@@ -527,34 +527,35 @@ public class AssetListAssetEntryProviderImpl
 		int end) {
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			if (!FFCollectionsVariationsPrioritizationConfigurationUtil.prioritizationEnabled()) {
+			if (!FFCollectionsVariationsPrioritizationConfigurationUtil.
+					prioritizationEnabled()) {
+
 				return _assetListEntryAssetEntryRelLocalService.
 					getAssetListEntryAssetEntryRels(
 						assetListEntry.getAssetListEntryId(),
 						_getCombinedSegmentsEntryIds(segmentsEntryIds), start,
 						end);
-
-			} else {
-				List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-					new ArrayList<>();
-
-				segmentsEntryIds = _sortSegmentsByPriority(
-					assetListEntry, segmentsEntryIds);
-
-				for (long segmentId : segmentsEntryIds) {
-					assetListEntryAssetEntryRels.addAll(
-						ListUtil.sort(
-							_assetListEntryAssetEntryRelLocalService.
-								getAssetListEntryAssetEntryRels(
-									assetListEntry.getAssetListEntryId(),
-									new long[]{segmentId}, QueryUtil.ALL_POS,
-									QueryUtil.ALL_POS),
-							Comparator.comparing(
-								AssetListEntryAssetEntryRelModel::getPosition)));
-				}
-
-				return assetListEntryAssetEntryRels;
 			}
+
+			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+				new ArrayList<>();
+
+			segmentsEntryIds = _sortSegmentsByPriority(
+				assetListEntry, segmentsEntryIds);
+
+			for (long segmentId : segmentsEntryIds) {
+				assetListEntryAssetEntryRels.addAll(
+					ListUtil.sort(
+						_assetListEntryAssetEntryRelLocalService.
+							getAssetListEntryAssetEntryRels(
+								assetListEntry.getAssetListEntryId(),
+								new long[] {segmentId}, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS),
+						Comparator.comparing(
+							AssetListEntryAssetEntryRelModel::getPosition)));
+			}
+
+			return assetListEntryAssetEntryRels;
 		}
 
 		return _assetListEntryAssetEntryRelLocalService.
@@ -866,7 +867,9 @@ public class AssetListAssetEntryProviderImpl
 	private long _getFirstSegmentsEntryId(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
-		if (!FFCollectionsVariationsPrioritizationConfigurationUtil.prioritizationEnabled()){
+		if (!FFCollectionsVariationsPrioritizationConfigurationUtil.
+				prioritizationEnabled()) {
+
 			LongStream longStream = Arrays.stream(segmentsEntryIds);
 
 			return longStream.filter(
@@ -875,11 +878,12 @@ public class AssetListAssetEntryProviderImpl
 						return false;
 					}
 
-					AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-						_assetListEntrySegmentsEntryRelLocalService.
-							fetchAssetListEntrySegmentsEntryRel(
-								assetListEntry.getAssetListEntryId(),
-								segmentsEntryId);
+					AssetListEntrySegmentsEntryRel
+						assetListEntrySegmentsEntryRel =
+							_assetListEntrySegmentsEntryRelLocalService.
+								fetchAssetListEntrySegmentsEntryRel(
+									assetListEntry.getAssetListEntryId(),
+									segmentsEntryId);
 
 					return assetListEntrySegmentsEntryRel != null;
 				}
@@ -887,29 +891,28 @@ public class AssetListAssetEntryProviderImpl
 			).orElse(
 				SegmentsEntryConstants.ID_DEFAULT
 			);
-		} else {
-			if (segmentsEntryIds.length == 0) {
-				return SegmentsEntryConstants.ID_DEFAULT;
-			}
+		}
 
-			LongStream longStream = Arrays.stream(segmentsEntryIds);
+		if (segmentsEntryIds.length == 0) {
+			return SegmentsEntryConstants.ID_DEFAULT;
+		}
 
-			Stream<AssetListEntrySegmentsEntryRel>
-				assetListEntrySegmentsEntryRelStream = longStream.mapToObj(
+		LongStream longStream = Arrays.stream(segmentsEntryIds);
+
+		Stream<AssetListEntrySegmentsEntryRel>
+			assetListEntrySegmentsEntryRelStream = longStream.mapToObj(
 				segmentsEntryId ->
 					_assetListEntrySegmentsEntryRelLocalService.
 						fetchAssetListEntrySegmentsEntryRel(
 							assetListEntry.getAssetListEntryId(),
 							segmentsEntryId));
 
-			return assetListEntrySegmentsEntryRelStream.filter(
-				Objects::nonNull
-			).min(
-				Comparator.comparing(
-					AssetListEntrySegmentsEntryRel::getPriority)
-			).get(
-			).getSegmentsEntryId();
-		}
+		return assetListEntrySegmentsEntryRelStream.filter(
+			Objects::nonNull
+		).min(
+			Comparator.comparing(AssetListEntrySegmentsEntryRel::getPriority)
+		).get(
+		).getSegmentsEntryId();
 	}
 
 	private String[] _getKeywords(UnicodeProperties unicodeProperties) {

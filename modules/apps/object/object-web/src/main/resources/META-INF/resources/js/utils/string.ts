@@ -53,3 +53,12 @@ export function toCamelCase(str: string): string {
 
 	return firstLetterLowercase(removeAllSpecialCharacters(join));
 }
+
+/**
+ * Separate CamelCase string
+ */
+export function separateCamelCase(str: string): string {
+	const separetedCamelCaseString = str.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+	return separetedCamelCaseString;
+}

@@ -37,3 +37,8 @@ export declare function normalizeLanguageId(languageId: string): string;
  * Normalize string in camel case pattern.
  */
 export declare function toCamelCase(str: string): string;
+
+/**
+ * Separate CamelCase string
+ */
+export declare function separateCamelCase(str: string): string;

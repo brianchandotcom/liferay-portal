@@ -568,12 +568,10 @@ public class DBPartitionUtil {
 		_copyData(
 			tableName, fromSchemaName, toSchemaName, statement, whereClause);
 
-		if (!whereClause.isEmpty()) {
-			statement.executeUpdate(
-				StringBundler.concat(
-					"delete from ", fromSchemaName, StringPool.PERIOD,
-					tableName, whereClause));
-		}
+		statement.executeUpdate(
+			StringBundler.concat(
+				"delete from ", fromSchemaName, StringPool.PERIOD, tableName,
+				whereClause));
 	}
 
 	private static void _restoreTable(

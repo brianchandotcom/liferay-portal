@@ -620,7 +620,7 @@ definition {
 				emailAddress = "user@liferay.com",
 				firstName = "User",
 				lastName = "User",
-				password = "test",
+				password = "user",
 				screenName = "User");
 		}
 

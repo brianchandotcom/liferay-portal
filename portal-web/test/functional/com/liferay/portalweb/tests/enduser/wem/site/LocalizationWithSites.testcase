@@ -107,6 +107,105 @@ definition {
 		}
 	}
 
+	@description = "The user can configure languages of a site created from a site template."
+	@priority = "5"
+	test ConfigureLanguagesOfSiteBasedOnSiteTemplate {
+		property portal.acceptance = "true";
+		property testray.component.names = "Site and Page Templates";
+
+		task ("Add a site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
+		}
+
+		task ("View workflow is not shown in site template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewNoSiteOrWorkflowLinksCP();
+		}
+
+		task ("Add a site based in site template") {
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				portletNames = "Site Settings,Social Activities,Workflow Configuration",
+				siteName = "Test Site Name",
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template",
+				uncheckPropagation = "true");
+		}
+
+		task ("Define English, Germand and Spanish as current site language") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
+				defaultSiteLanguage = "Spanish (Spain)",
+				displaySettings = "Display Settings");
+		}
+
+		task ("View site is cloned from site template") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+			Site.viewSiteClonedFromSiteTemplateCP(
+				clonedFromTemplate = "true",
+				siteTemplateName = "Site Template Name");
+		}
+	}
+
+	@description = "The user can configure the site default language."
+	@priority = "5"
+	test ConfigureSiteDefaultLanguage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Site Localization";
+
+		task ("View default site language in Portal Settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "English (United States)");
+		}
+
+		task ("Define Portuguese and Spanish as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",
+				defaultSiteLanguage = "Spanish (Spain)",
+				displaySettings = "Display Settings");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1",
+				layoutName = "Test Page Name");
+		}
+
+		task ("View current languages are shown in Pages admin") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name 1");
+
+			ProductMenu.gotoPortlet(
+				category = "Generador del sitio",
+				portlet = "Páginas del sitio web");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configurar",
+				pageName = "Test Page Name");
+
+			Page.viewFriendlyURLLanguageOptionsPG(
+				assertUnavailableLanguages = "true",
+				currentLanguageList = "es-ES,pt-BR",
+				fieldName = "Nombre",
+				unavailableLanguageList = "en-US");
+		}
+	}
+
 	@description = "A new user can add an organization with localized country name."
 	@priority = "3"
 	test LocalizeCountryName {
@@ -249,151 +348,6 @@ definition {
 		}
 	}
 
-	@description = "View portlets interact with localization."
-	@priority = "4"
-	test ViewPortletInteractWithLocalization {
-		task ("Add a localized site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
-
-			Site.addLocalizedName(
-				localeList = "es-ES",
-				localizedNameList = "Nombre del Sitio");
-		}
-
-		task ("Add two widget pages") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name 1",
-					layoutName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("Add a Language Selector and Web Content Display widget to page") {
-			for (var widgetName : list "Language Selector,Web Content Display") {
-				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name 1",
-					layoutName = "Test Page Name 1",
-					widgetName = "${widgetName}");
-			}
-		}
-
-		task ("Define Spanish and German as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
-
-			Site.configureCurrentLanguagesCP(
-				currentSiteLanguages = "Spanish (Spain),German (Germany)",
-				defaultSiteLanguage = "Spanish (Spain)",
-				displaySettings = "Display Settings");
-		}
-
-		task ("View pages are translated") {
-			for (var i : list "1,2") {
-				Navigator.gotoSitePage(
-					pageName = "Test Page Name ${i}",
-					siteName = "Test Site Name 1");
-
-				Alert.closePortalLocalizationWarning();
-
-				ProductMenu.gotoPortlet(
-					category = "Generador del sitio",
-					portlet = "Páginas del sitio web");
-
-				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "Configurar",
-					pageName = "Test Page Name ${i}");
-
-				Navigator.gotoNavTab(navTab = "SEO");
-
-				PortletEntry.viewLocale(locale = "es-ES");
-			}
-		}
-
-		task ("View current default language in instance settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuración",
-				panel = "Panel de control",
-				portlet = "Configuración de instancia");
-
-			PortalSettings.viewCurrentDefaultPortalLanguageCP(
-				defaultPortalLanguage = "inglés (Estados Unidos)",
-				localizationTranslation = "Localización");
-		}
-
-		task ("Define Spanish, German and English as current site languages") {
-			ProductMenu.gotoLocalizedSite(
-				displayStyle = "tabla",
-				navItem = "Todos los sitios",
-				site = "Nombre del Sitio");
-
-			ProductMenu.gotoPortlet(
-				category = "Configuración",
-				portlet = "Ajustes del sitio");
-
-			Site.configureCurrentLanguagesCP(
-				category = "Localización",
-				currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",
-				defaultSiteLanguage = "español (España)",
-				displaySettings = "Display Settings",
-				localizedLanguageTab = "Idiomas",
-				localizedSaveButton = "Guardar",
-				localizedSuccessMessage = "Su petición ha terminado con éxito.");
-		}
-
-		task ("Add a localized web content via page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name 1",
-				siteName = "Test Site Name 1");
-
-			WebContent.addLocalizedPGViaWCD(
-				localizedBasicWebContent = "Contenido web básico",
-				portletNameTranslation = "Visor de contenido web",
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("View Web Content is shown via WCD") {
-			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
-		}
-
-		task ("View available languages when editing a Web Content") {
-			WebContentDisplayPortletNavigator.gotoEdit(
-				menuItem = "Editar contenido web",
-				webContentTitle = "Web Content Title");
-
-			WebContent.viewAvailableLanguages(
-				availableLanguageList = "de-DE,en-US",
-				fieldName = "Título",
-				unavailableLanguageList = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,hu-HU,ja-JP,pt-BR,sv-SE");
-		}
-
-		task ("Define Spanish and German as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
-
-			Site.configureCurrentLanguagesCP(
-				category = "Localización",
-				currentSiteLanguages = "español (España),alemán (Alemania)",
-				defaultSiteLanguage = "español (España)",
-				displaySettings = "Display Settings",
-				localizedLanguageTab = "Idiomas",
-				localizedSaveButton = "Guardar",
-				localizedSuccessMessage = "Su petición ha terminado con éxito.");
-		}
-
-		task ("Select German via Language Selector widget") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name 1",
-				siteName = "Test Site Name 1");
-
-			LanguagePortlet.selectLanguagePG(
-				locale = "de-DE",
-				textIcon = "deutsch-Deutschland");
-		}
-
-		task ("View Web Content is shown via WCD") {
-			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
-		}
-	}
-
 	@description = "This is a use case for LPS-59345. The user must be redirected when the friendly url does not match."
 	@priority = "4"
 	test RedirectLocalizedFriendlyURL {
@@ -436,54 +390,6 @@ definition {
 			Alert.closePortalLocalizationWarning();
 
 			AssertLocation(value1 = "${portalURL}/hu/web/test-site-name-1/friendlyhu");
-		}
-	}
-
-	@description = "The user can configure languages of a site created from a site template."
-	@priority = "5"
-	test ConfigureLanguagesOfSiteBasedOnSiteTemplate {
-		property portal.acceptance = "true";
-		property testray.component.names = "Site and Page Templates";
-
-		task ("Add a site template") {
-			SiteTemplates.addCP(
-				siteTemplateActive = "Yes",
-				siteTemplateName = "Site Template Name");
-		}
-
-		task ("View workflow is not shown in site template") {
-			SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
-			SiteTemplates.viewNoSiteOrWorkflowLinksCP();
-		}
-
-		task ("Add a site based in site template") {
-			Site.openSitesAdmin();
-
-			Site.addCP(
-				portletNames = "Site Settings,Social Activities,Workflow Configuration",
-				siteName = "Test Site Name",
-				siteTemplateActive = "Yes",
-				siteTemplateName = "Site Template Name",
-				siteType = "Site Template",
-				uncheckPropagation = "true");
-		}
-
-		task ("Define English, Germand and Spanish as current site language") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
-
-			Site.configureCurrentLanguagesCP(
-				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
-				defaultSiteLanguage = "Spanish (Spain)",
-				displaySettings = "Display Settings");
-		}
-
-		task ("View site is cloned from site template") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
-
-			Site.viewSiteClonedFromSiteTemplateCP(
-				clonedFromTemplate = "true",
-				siteTemplateName = "Site Template Name");
 		}
 	}
 
@@ -612,54 +518,145 @@ definition {
 		}
 	}
 
-	@description = "The user can configure the site default language."
-	@priority = "5"
-	test ConfigureSiteDefaultLanguage {
-		property portal.acceptance = "true";
-		property testray.component.names = "Site Localization";
+	@description = "View portlets interact with localization."
+	@priority = "4"
+	test ViewPortletInteractWithLocalization {
+		task ("Add a localized site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
-		task ("View default site language in Portal Settings") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Localization",
-				configurationName = "Language",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "English (United States)");
+			Site.addLocalizedName(
+				localeList = "es-ES",
+				localizedNameList = "Nombre del Sitio 1");
 		}
 
-		task ("Define Portuguese and Spanish as current site languages") {
+		task ("Add two widget pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name 1",
+					layoutName = "Test Page Name ${i}");
+			}
+		}
+
+		task ("Add a Language Selector and Web Content Display widget to page") {
+			for (var widgetName : list "Language Selector,Web Content Display") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name 1",
+					layoutName = "Test Page Name 1",
+					widgetName = "${widgetName}");
+			}
+		}
+
+		task ("Define Spanish and German as current site languages") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
-				currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",
+				currentSiteLanguages = "Spanish (Spain),German (Germany)",
 				defaultSiteLanguage = "Spanish (Spain)",
 				displaySettings = "Display Settings");
 		}
 
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 1",
-				layoutName = "Test Page Name");
+		task ("View pages are translated") {
+			for (var i : list "1,2") {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name ${i}",
+					siteName = "Test Site Name 1");
+
+				Alert.closePortalLocalizationWarning();
+
+				ProductMenu.gotoPortlet(
+					category = "Generador del sitio",
+					portlet = "Páginas del sitio web");
+
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Configurar",
+					pageName = "Test Page Name ${i}");
+
+				Navigator.gotoNavTab(navTab = "SEO");
+
+				PortletEntry.viewLocale(locale = "es-ES");
+			}
 		}
 
-		task ("View current languages are shown in Pages admin") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name 1");
+		task ("View current default language in instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuración",
+				panel = "Panel de control",
+				portlet = "Configuración de instancia");
+
+			PortalSettings.viewCurrentDefaultPortalLanguageCP(
+				defaultPortalLanguage = "inglés (Estados Unidos)",
+				localizationTranslation = "Localización");
+		}
+
+		task ("Define Spanish, German and English as current site languages") {
+			ApplicationsMenu.gotoSite(site = "Nombre del Sitio 1");
 
 			ProductMenu.gotoPortlet(
-				category = "Generador del sitio",
-				portlet = "Páginas del sitio web");
+				category = "Configuración",
+				portlet = "Ajustes del sitio");
 
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configurar",
-				pageName = "Test Page Name");
+			Site.configureCurrentLanguagesCP(
+				category = "Localización",
+				currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",
+				defaultSiteLanguage = "español (España)",
+				displaySettings = "Display Settings",
+				localizedLanguageTab = "Idiomas",
+				localizedSaveButton = "Guardar",
+				localizedSuccessMessage = "Su petición ha terminado con éxito.");
+		}
 
-			Page.viewFriendlyURLLanguageOptionsPG(
-				assertUnavailableLanguages = "true",
-				currentLanguageList = "es-ES,pt-BR",
-				fieldName = "Nombre",
-				unavailableLanguageList = "en-US");
+		task ("Add a localized web content via page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name 1");
+
+			WebContent.addLocalizedPGViaWCD(
+				localizedBasicWebContent = "Contenido web básico",
+				portletNameTranslation = "Visor de contenido web",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View Web Content is shown via WCD") {
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		}
+
+		task ("View available languages when editing a Web Content") {
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Editar contenido web",
+				webContentTitle = "Web Content Title");
+
+			WebContent.viewAvailableLanguages(
+				availableLanguageList = "de-DE,en-US",
+				fieldName = "Título",
+				unavailableLanguageList = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,hu-HU,ja-JP,pt-BR,sv-SE");
+		}
+
+		task ("Define Spanish and German as current site languages") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+
+			Site.configureCurrentLanguagesCP(
+				category = "Localización",
+				currentSiteLanguages = "español (España),alemán (Alemania)",
+				defaultSiteLanguage = "español (España)",
+				displaySettings = "Display Settings",
+				localizedLanguageTab = "Idiomas",
+				localizedSaveButton = "Guardar",
+				localizedSuccessMessage = "Su petición ha terminado con éxito.");
+		}
+
+		task ("Select German via Language Selector widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name 1");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "de-DE",
+				textIcon = "deutsch-Deutschland");
+		}
+
+		task ("View Web Content is shown via WCD") {
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 		}
 	}
 

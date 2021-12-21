@@ -505,7 +505,7 @@ definition {
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.changeCurrentTheme(
+			PagesAdmin.changeSiteCurrentTheme(
 				privacy = "Public Pages",
 				themeName = "Minium");
 		}
@@ -517,7 +517,7 @@ definition {
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.changeCurrentTheme(
+			PagesAdmin.changeSiteCurrentTheme(
 				privacy = "Private Pages",
 				themeName = "Speedwell");
 		}

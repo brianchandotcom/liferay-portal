@@ -37,6 +37,7 @@ interface IProps {
 	placeholder?: string;
 	predefinedValue?: string;
 	readOnly: boolean;
+	settingsContext?: any;
 	symbols: ISymbols;
 	value?: string;
 }

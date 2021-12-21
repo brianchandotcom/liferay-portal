@@ -98,16 +98,19 @@ components:
             properties:
                 advancedConfiguration:
                     properties:
-                        excludes:
-                            items:
-                                type: string
-                            type: array
-                        fetchSource:
-                            type: boolean
-                        includes:
-                            items:
-                                type: string
-                            type: array
+                        source:
+                            properties:
+                                excludes:
+                                    items:
+                                        type: string
+                                    type: array
+                                fetchSource:
+                                    type: boolean
+                                includes:
+                                    items:
+                                        type: string
+                                    type: array
+                            type: object
                     type: object
                 aggregationConfiguration:
                     properties:

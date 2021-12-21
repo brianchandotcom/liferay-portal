@@ -25,7 +25,7 @@ import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -36,7 +36,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -79,8 +78,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	public static final String ACTIVE_LEVEL = "file.install.active.level";
 
 	public static final String CONFIG_ENCODING = "file.install.configEncoding";
-
-	public static final String DIR = "file.install.dir";
 
 	public static final String FILENAME = "felix.fileinstall.filename";
 
@@ -129,10 +126,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_useStartTransient = GetterUtil.getBoolean(
 			bundleContext.getProperty(USE_START_TRANSIENT));
 
-		Set<String> dirs = new LinkedHashSet<>(
-			Arrays.asList(
-				StringUtil.split(
-					bundleContext.getProperty(DirectoryWatcher.DIR))));
+		Set<String> dirs = new LinkedHashSet<>();
+
+		dirs.add(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
+
+		Collections.addAll(dirs, PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 
 		_watchedDirs = new ArrayList<>(dirs.size());
 

@@ -11,6 +11,7 @@ const Table = ({
 	itemsPerPage = 5,
 	rows,
 	setActivePage,
+	totalCount,
 	...props
 }) => {
 	return (
@@ -65,7 +66,7 @@ const Table = ({
 					activePage={activePage}
 					itemsPerPage={itemsPerPage}
 					setActivePage={setActivePage}
-					totalItems={rows.length}
+					totalItems={totalCount}
 				/>
 			)}
 		</>

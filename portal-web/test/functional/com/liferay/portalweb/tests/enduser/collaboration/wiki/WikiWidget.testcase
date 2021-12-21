@@ -12,13 +12,13 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Wiki Display Test Page");
+			layoutName = "Wiki Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Wiki Display Test Page",
-			widgetName = "Wiki Display");
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki");
 
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 	}
@@ -39,13 +39,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewPagesViaTreeMenu {
-		property portal.acceptance = "false";
+		for (var num : list "1,2") {
+			JSONWiki.addWikiPage(
+				groupName = "Guest",
+				wikiNodeName = "Main",
+				wikiPageContent = "Wiki Page Content${num}",
+				wikiPageName = "Wiki Page Title${num}");
+		}
 
-		// TODO LPS-136997 CanViewPagesViaTreeMenu pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Tree Menu");
 
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		for (var num : list "1,2") {
+			Click(
+				key_nodeName = "Wiki Page Title${num}",
+				locator1 = "Treeview#NODE_ITEM_LIST");
+
+			WikiPage.viewPagePG(
+				wikiPageContent = "Wiki Page Content${num}",
+				wikiPageTitle = "Wiki Page Title${num}");
+		}
 	}
 
 }

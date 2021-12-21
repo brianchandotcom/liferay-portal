@@ -10,49 +10,72 @@
  */
 
 import React, {useContext, useEffect, useState} from 'react';
+import {isNode} from 'react-flow-renderer';
 
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import SelectedNodeInfo from './SelectedNodeInfo';
 import SidebarBody from './SidebarBody';
 import SidebarHeader from './SidebarHeader';
 
+const contents = {
+	end: {
+		component: SelectedNodeInfo,
+		title: Liferay.Language.get('end'),
+	},
+	start: {
+		component: SelectedNodeInfo,
+		title: Liferay.Language.get('start'),
+	},
+	state: {
+		component: SelectedNodeInfo,
+		title: Liferay.Language.get('state'),
+	},
+};
+
+const errorsDefaultValues = {
+	id: {duplicated: false, empty: false},
+	label: false,
+};
+
 export default function Sidebar() {
-	const {selectedNode, setSelectedNode, setSelectedNodeNewId} = useContext(
+	const {selectedItem, setSelectedItem, setSelectedItemNewId} = useContext(
 		DiagramBuilderContext
 	);
-	const [errors, setErrors] = useState({
-		id: {duplicated: false, empty: false},
-		label: false,
-	});
+	const [errors, setErrors] = useState(errorsDefaultValues);
+
+	const clearErrors = () => {
+		setErrors(errorsDefaultValues);
+	};
 
 	useEffect(() => {
-		setSelectedNodeNewId(null);
-		setErrors({
-			id: {duplicated: false, empty: false},
-			label: false,
-		});
-	}, [selectedNode?.id, setSelectedNodeNewId]);
+		setSelectedItemNewId(null);
+		clearErrors();
+	}, [selectedItem?.id, setSelectedItemNewId]);
+
+	let contentKey = '';
+
+	if (selectedItem?.id) {
+		contentKey = isNode(selectedItem) ? selectedItem?.type : 'transition';
+	}
+
+	const content = contents[contentKey];
+	const ContentComponent = content?.component;
+	const title = content?.title ?? Liferay.Language.get('nodes');
 
 	return (
 		<div className="sidebar">
 			<SidebarHeader
 				backButtonFunction={() => {
-					setSelectedNode(null);
-					setSelectedNodeNewId(null);
-					setErrors({
-						id: {duplicated: false, empty: false},
-						label: false,
-					});
+					setSelectedItem(null);
+					setSelectedItemNewId(null);
+					clearErrors();
 				}}
-				title={
-					selectedNode
-						? selectedNode.type
-						: Liferay.Language.get('nodes')
-				}
+				showHeaderButtons={!!content}
+				title={title}
 			/>
 
-			<SidebarBody displayDefaultContent={!selectedNode}>
-				<SelectedNodeInfo errors={errors} setErrors={setErrors} />
+			<SidebarBody displayDefaultContent={!content}>
+				<ContentComponent errors={errors} setErrors={setErrors} />
 			</SidebarBody>
 		</div>
 	);

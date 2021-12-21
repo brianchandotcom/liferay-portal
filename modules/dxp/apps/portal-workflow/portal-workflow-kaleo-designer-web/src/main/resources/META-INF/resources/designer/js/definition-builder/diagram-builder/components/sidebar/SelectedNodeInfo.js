@@ -25,10 +25,10 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 	);
 	const {
 		elements,
-		selectedNode,
-		selectedNodeNewId,
-		setSelectedNode,
-		setSelectedNodeNewId,
+		selectedItem,
+		selectedItemNewId,
+		setSelectedItem,
+		setSelectedItemNewId,
 	} = useContext(DiagramBuilderContext);
 
 	return (
@@ -62,12 +62,12 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 								? selectedLanguageId
 								: defaultLanguageId;
 
-						setSelectedNode({
-							...selectedNode,
+						setSelectedItem({
+							...selectedItem,
 							data: {
-								...selectedNode.data,
+								...selectedItem.data,
 								label: {
-									...selectedNode.data.label,
+									...selectedItem.data.label,
 									[key]: target.value,
 								},
 							},
@@ -76,8 +76,8 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 					type="text"
 					value={
 						(selectedLanguageId
-							? selectedNode?.data.label[selectedLanguageId]
-							: selectedNode?.data.label[defaultLanguageId]) || ''
+							? selectedItem?.data.label[selectedLanguageId]
+							: selectedItem?.data.label[defaultLanguageId]) || ''
 					}
 				/>
 
@@ -142,10 +142,10 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 							}
 						}
 
-						setSelectedNodeNewId(target.value);
+						setSelectedItemNewId(target.value);
 					}}
 					type="text"
-					value={(selectedNodeNewId ?? selectedNode?.id) || ''}
+					value={(selectedItemNewId ?? selectedItem?.id) || ''}
 				/>
 
 				<ClayForm.FeedbackItem>
@@ -174,16 +174,16 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 					component="textarea"
 					id="nodeDescription"
 					onChange={({target}) =>
-						setSelectedNode({
-							...selectedNode,
+						setSelectedItem({
+							...selectedItem,
 							data: {
-								...selectedNode.data,
+								...selectedItem.data,
 								description: target.value,
 							},
 						})
 					}
 					type="text"
-					value={selectedNode?.data.description || ''}
+					value={selectedItem?.data.description || ''}
 				/>
 			</ClayForm.Group>
 		</SidebarPanel>

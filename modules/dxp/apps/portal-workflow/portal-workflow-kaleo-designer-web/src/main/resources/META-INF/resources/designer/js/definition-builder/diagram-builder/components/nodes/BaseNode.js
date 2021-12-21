@@ -40,7 +40,7 @@ export default function BaseNode({
 		DefinitionBuilderContext
 	);
 
-	const {collidingElements, selectedNode, setSelectedNode} = useContext(
+	const {collidingElements, selectedItem, setSelectedItem} = useContext(
 		DiagramBuilderContext
 	);
 
@@ -93,7 +93,7 @@ export default function BaseNode({
 		description = nodeDescription[type];
 	}
 
-	if (selectedNode?.id === id) {
+	if (selectedItem?.id === id) {
 		className = `${className} selected`;
 	}
 
@@ -128,7 +128,7 @@ export default function BaseNode({
 	};
 
 	if (newNode) {
-		setSelectedNode({
+		setSelectedItem({
 			data: {
 				description,
 				label,
@@ -186,7 +186,7 @@ export default function BaseNode({
 				className={`node ${className}`}
 				onClick={() => {
 					if (!descriptionSidebar) {
-						setSelectedNode({
+						setSelectedItem({
 							data: {
 								description,
 								label,

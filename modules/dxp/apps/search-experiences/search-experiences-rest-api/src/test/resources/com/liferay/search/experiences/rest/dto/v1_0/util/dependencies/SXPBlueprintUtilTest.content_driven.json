@@ -1,25 +1,27 @@
 {
 	"configuration": {
 		"advancedConfiguration": {
-			"excludes": [
-			],
-			"fetchSource": true,
-			"includes": [
-				"articleId",
-				"content",
-				"content${context.language_id}",
-				"createDate",
-				"description",
-				"description{context.language_id}",
-				"entryClassName",
-				"entryClassPK",
-				"fullName",
-				"localized_title${context.language_id}",
-				"name",
-				"name{context.language_id}",
-				"title${context.language_id}",
-				"modified"
-			]
+			"source": {
+				"excludes": [
+				],
+				"fetchSource": true,
+				"includes": [
+					"articleId",
+					"content",
+					"content${context.language_id}",
+					"createDate",
+					"description",
+					"description{context.language_id}",
+					"entryClassName",
+					"entryClassPK",
+					"fullName",
+					"localized_title${context.language_id}",
+					"name",
+					"name{context.language_id}",
+					"title${context.language_id}",
+					"modified"
+				]
+			}
 		},
 		"aggregationConfiguration": {
 		},

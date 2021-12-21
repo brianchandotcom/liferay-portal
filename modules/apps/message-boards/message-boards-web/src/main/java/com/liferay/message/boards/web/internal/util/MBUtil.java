@@ -57,8 +57,8 @@ public class MBUtil {
 		return StringBundler.concat(
 			"[quote=",
 			StringUtil.replace(
-				parentAuthor, new String[] {"[", "]", "(", ")"},
-				new String[] {"&#91;", "&#93;", "&#40;", "&#41;"}),
+				parentAuthor, new String[] {"[", "]"},
+				new String[] {"&#91;", "&#93;"}),
 			"]\n", parentMessage.getBody(false), "[/quote]\n\n\n");
 	}
 

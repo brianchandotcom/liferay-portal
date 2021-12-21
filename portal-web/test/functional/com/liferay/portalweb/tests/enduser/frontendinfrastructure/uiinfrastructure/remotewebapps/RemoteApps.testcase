@@ -57,8 +57,8 @@ definition {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.viewTableEntries(
-					entryName = "Vanilla Counter",
-					entryType = "Custom Element");
+				entryName = "Vanilla Counter",
+				entryType = "Custom Element");
 		}
 	}
 

@@ -133,6 +133,9 @@ definition {
 		else if ("${widgetName}" == "Profile") {
 			var portletId = "com_liferay_contacts_web_portlet_ProfilePortlet";
 		}
+		else if ("${widgetName}" == "Product Details") {
+			var portletId = "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet";
+		}
 		else if ("${widgetName}" == "Questions") {
 			var portletId = "com_liferay_questions_web_internal_portlet_QuestionsPortlet";
 		}

@@ -14,7 +14,7 @@ import BusinessTypeRadioGroup from './BusinessTypeRadioGroup';
 
 import InfoPanelButton from './InfoPanelButton';
 
-const MAX_LENGTH_TO_TRUNCATE = 28;
+const MAX_LENGTH_TO_TRUNCATE = 18;
 
 export function BusinessTypeSearch({
 	form,
@@ -51,7 +51,8 @@ export function BusinessTypeSearch({
 			setError('');
 
 			setTaxonomyCategories(taxonomyCategories);
-		} catch (error) {
+		}
+		catch (error) {
 			setError('Unable to make the request. Please try again later.');
 		}
 	};

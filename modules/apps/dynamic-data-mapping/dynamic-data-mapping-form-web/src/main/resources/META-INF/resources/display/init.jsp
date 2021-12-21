@@ -63,8 +63,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.util.Locale" %>
 
-<%@ page import="org.apache.commons.lang.StringUtils" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

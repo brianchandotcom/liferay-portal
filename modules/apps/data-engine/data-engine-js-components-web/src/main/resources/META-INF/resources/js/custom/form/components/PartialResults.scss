@@ -6,20 +6,6 @@
 		min-height: 100%;
 	}
 
-	&-back-button {
-		padding-left: 0;
-		position: relative;
-		top: -10rem;
-
-		&:hover {
-			text-decoration: none;
-		}
-
-		&--description {
-			top: -12rem;
-		}
-	}
-
 	&-entries {
 		height: 124px;
 		padding-top: 24px;

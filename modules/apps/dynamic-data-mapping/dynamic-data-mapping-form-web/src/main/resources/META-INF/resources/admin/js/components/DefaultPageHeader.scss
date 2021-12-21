@@ -3,6 +3,14 @@
 .lfr-ddm__default-page-header {
 	margin-bottom: 2rem;
 
+	&-back-button {
+		padding-left: 0;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 	&-description {
 		color: $secondary;
 		font-size: 1rem;

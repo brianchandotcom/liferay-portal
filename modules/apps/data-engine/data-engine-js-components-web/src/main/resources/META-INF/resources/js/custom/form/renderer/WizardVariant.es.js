@@ -13,8 +13,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import classnames from 'classnames';
-import React, {useState} from 'react';
+import classNames from 'classnames';
+import React, {useEffect, useState} from 'react';
 
 import * as DefaultVariant from '../../../core/components/PageRenderer/DefaultVariant.es';
 import {useConfig} from '../../../core/hooks/useConfig.es';
@@ -29,7 +29,7 @@ export function Column({children, column, columnRef, editable, ...otherProps}) {
 		<DefaultVariant.Column
 			{...otherProps}
 			column={column}
-			columnClassName={classnames({
+			columnClassName={classNames({
 				hide: firstField?.hideField && !editable,
 			})}
 			ref={columnRef}
@@ -52,32 +52,40 @@ export function Container({
 }) {
 	const [showReport, setShowReport] = useState(false);
 
-	const {
-		formReportDataURL,
-		hasDescription,
-		showSubmitButton,
-		submitLabel,
-	} = useConfig();
+	const {formReportDataURL, showSubmitButton, submitLabel} = useConfig();
 
 	const onClick = () => {
 		setShowReport(true);
 	};
 
-	if (showReport) {
+	useEffect(() => {
+		const backButton = document.querySelector(
+			'.lfr-ddm__default-page-header-back-button'
+		);
 		const alertElement = document.querySelector(
 			'.lfr-ddm__show-partial-results-alert'
 		);
+		if (showReport) {
+			backButton?.classList.remove('hide');
+			backButton.addEventListener('click', () => setShowReport(false));
 
-		alertElement.classList.add(
-			'lfr-ddm__show-partial-results-alert--hidden'
-		);
-	}
+			alertElement.classList.add(
+				'lfr-ddm__show-partial-results-alert--hidden'
+			);
+		}
+
+		return () => {
+			backButton?.classList.add('hide');
+			alertElement.classList.remove(
+				'lfr-ddm__show-partial-results-alert--hidden'
+			);
+		};
+	}, [showReport]);
 
 	return (
 		<>
 			{showReport ? (
 				<PartialResults
-					hasDescription={hasDescription}
 					onShow={() => setShowReport(false)}
 					reportDataURL={formReportDataURL}
 				/>
@@ -92,7 +100,7 @@ export function Container({
 					)}
 
 					<div
-						className={classnames(
+						className={classNames(
 							'ddm-layout-builder ddm-page-container-layout',
 							{
 								hide: activePage !== pageIndex,

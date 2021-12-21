@@ -25,8 +25,6 @@ declare module 'data-engine-js-components-web' {
 	export const FormView: React.FC;
 
 	export const PartialResults: React.FC<{
-		hasDescription?: boolean;
-		onShow: () => void;
 		reportDataURL: string;
 	}>;
 }

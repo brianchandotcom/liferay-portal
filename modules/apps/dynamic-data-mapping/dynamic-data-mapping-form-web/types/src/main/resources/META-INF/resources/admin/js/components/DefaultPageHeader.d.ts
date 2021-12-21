@@ -12,11 +12,13 @@
  * details.
  */
 
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 import './DefaultPageHeader.scss';
 declare const DefaultPageHeader: React.FC<IProps>;
 export default DefaultPageHeader;
 interface IProps {
 	description?: string;
+	hideBackButton?: boolean;
+	onClickBack?: MouseEventHandler<HTMLButtonElement>;
 	title: string;
 }

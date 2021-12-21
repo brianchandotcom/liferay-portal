@@ -12,10 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 // @ts-ignore
@@ -24,11 +21,7 @@ import FormReport from '../../form-report/index';
 
 import './PartialResults.scss';
 
-const PartialResults: React.FC<IProps> = ({
-	hasDescription,
-	onShow,
-	reportDataURL,
-}) => {
+const PartialResults: React.FC<IProps> = ({reportDataURL}) => {
 	const [resourceState, setResourceState] = useState(() => 'loading');
 	const {resource} = useResource({
 		fetch,
@@ -72,17 +65,6 @@ const PartialResults: React.FC<IProps> = ({
 
 	return (
 		<>
-			<ClayButton
-				className={classNames('lfr-de__partial-results-back-button', {
-					'lfr-de__partial-results-back-button--description': hasDescription,
-				})}
-				displayType="link"
-				onClick={onShow}
-			>
-				<ClayIcon symbol="order-arrow-left" />
-
-				{Liferay.Language.get('back')}
-			</ClayButton>
 			{resourceState !== 'loading' && (
 				<>
 					<div className="lfr-de__partial-results-entries">
@@ -128,8 +110,6 @@ const PartialResults: React.FC<IProps> = ({
 export default PartialResults;
 
 interface IProps {
-	hasDescription?: boolean;
-	onShow: () => void;
 	reportDataURL: string;
 }
 

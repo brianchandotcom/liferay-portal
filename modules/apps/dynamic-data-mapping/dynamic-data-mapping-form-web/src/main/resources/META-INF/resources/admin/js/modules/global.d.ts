@@ -36,6 +36,7 @@ type Locale =
 	| 'zh_CN';
 
 type LocalizedTextKey =
+	| 'back'
 	| 'error'
 	| 'please-add-at-least-one-field'
 	| 'see-partial-results'

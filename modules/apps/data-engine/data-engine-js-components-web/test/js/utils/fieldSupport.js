@@ -12,7 +12,10 @@
  * details.
  */
 
-import {localizeField} from '../../../src/main/resources/META-INF/resources/js/utils/fieldSupport';
+import {
+	localizeField,
+	updateInputMaskProperties,
+} from '../../../src/main/resources/META-INF/resources/js/utils/fieldSupport';
 
 describe('Field Support Utilities', () => {
 	describe('localizeField', () => {
@@ -201,6 +204,82 @@ describe('Field Support Utilities', () => {
 			]['pt-BR'];
 
 			expect(firstLocalizedOption.label).toBe('Portuguese Option');
+		});
+	});
+
+	describe('updateInputMaskProperties', () => {
+		it('updates input mask properties for predefinedValue and validation fields', () => {
+			const field = {
+				fieldName: 'numeric',
+				settingsContext: {
+					pages: [
+						{
+							rows: [
+								{
+									columns: [
+										{
+											fields: [
+												{
+													fieldName:
+														'inputMaskFormat',
+													localizedValue: {
+														'en-US':
+															'(99) 9999-9999',
+														'pt-BR':
+															'999.999.999.99',
+													},
+												},
+												{
+													fieldName:
+														'numericInputMask',
+													localizedValue: {
+														'en-US':
+															'{"append":"%","appendType":"suffix"}',
+														'pt-BR':
+															'{"append":"R$","appendType":"prefix"}',
+													},
+												},
+												{
+													fieldName:
+														'predefinedValue',
+												},
+												{
+													fieldName: 'validation',
+												},
+											],
+											size: 12,
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+				type: 'numeric',
+			};
+
+			updateInputMaskProperties('pt-BR', field);
+
+			expect(field.append).toBe('R$');
+			expect(field.appendType).toBe('prefix');
+			expect(field.inputMaskFormat).toBe('999.999.999.99');
+
+			const settingsContextFields =
+				field.settingsContext.pages[0].rows[0].columns[0].fields;
+
+			expect(settingsContextFields[2].append).toBe('R$');
+			expect(settingsContextFields[2].appendType).toBe('prefix');
+			expect(settingsContextFields[2].fieldName).toBe('predefinedValue');
+			expect(settingsContextFields[2].inputMaskFormat).toBe(
+				'999.999.999.99'
+			);
+
+			expect(settingsContextFields[3].append).toBe('R$');
+			expect(settingsContextFields[3].appendType).toBe('prefix');
+			expect(settingsContextFields[3].fieldName).toBe('validation');
+			expect(settingsContextFields[3].inputMaskFormat).toBe(
+				'999.999.999.99'
+			);
 		});
 	});
 });

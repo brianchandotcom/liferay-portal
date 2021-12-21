@@ -26,8 +26,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -84,7 +85,10 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase
 	}
 
 	protected void setUpLanguageUtil() {
-		Set<Locale> availableLocales = SetUtil.fromArray(LocaleUtil.US);
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Set<Locale> availableLocales = new HashSet<>(
+			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.US));
 
 		when(
 			language.getAvailableLocales()
@@ -92,7 +96,17 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase
 			availableLocales
 		);
 
-		LanguageUtil languageUtil = new LanguageUtil();
+		when(
+			language.getLanguageId(LocaleUtil.BRAZIL)
+		).thenReturn(
+			"pt_BR"
+		);
+
+		when(
+			language.getLanguageId(LocaleUtil.US)
+		).thenReturn(
+			"en_US"
+		);
 
 		languageUtil.setLanguage(language);
 	}

@@ -15,6 +15,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric';
@@ -158,6 +159,39 @@ describe('Field Numeric', () => {
 		expect(container.querySelector('input').value).toBe('2282');
 	});
 
+	it('updates decimal symbol using the current value of symbols', () => {
+		const {container} = render(
+			<Numeric
+				dataType="double"
+				symbols={{decimalSymbol: ','}}
+				value="1.2"
+			/>
+		);
+
+		expect(container.querySelector('input').value).toBe('1,2');
+	});
+
+	it('updates decimal symbol using the localizedSymbols based on current editing language', () => {
+		const {container} = render(
+			<FormProvider initialState={{editingLanguageId: 'pt_BR'}}>
+				<Numeric
+					dataType="double"
+					localizedSymbols={{
+						en_US: {
+							decimalSymbol: '.',
+						},
+						pt_BR: {
+							decimalSymbol: ',',
+						},
+					}}
+					value="1.2"
+				/>
+			</FormProvider>
+		);
+
+		expect(container.querySelector('input').value).toBe('1,2');
+	});
+
 	describe('Confirmation Field', () => {
 		it('renders the confirmation field with the same data type as the original field', () => {
 			render(
@@ -295,6 +329,16 @@ describe('Field Numeric', () => {
 			const input = container.querySelector('input[name="LPS-134259"]');
 
 			expect(input.value).toBe('1234');
+		});
+
+		it('allows input mask format to have only numbers', () => {
+			const {container} = render(
+				<Numeric inputMask inputMaskFormat={99} value="1234" />
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input.value).toBe('12');
 		});
 
 		/**

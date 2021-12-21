@@ -174,11 +174,6 @@ definition {
 					columnNumber = "${n}",
 					navTab = "Widgets",
 					portletName = "Vanilla Counter");
-
-				AssertElementPresent(
-					key_columnNumber = "${n}",
-					key_position = "1",
-					locator1 = "PageEditor#GRID_COLUMN");
 			}
 
 			PageEditor.clickPublish();
@@ -187,9 +182,11 @@ definition {
 		task ("Assert Vanilla Counter is instanceable") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_1");
-
-			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_2");
+			for (var n : list "1,2") {
+				AssertElementPresent(
+					column_number = "${n}",
+					locator1 = "RemoteApps#VANILLA_COUNTER_PAGE_COLUMN_N");
+			}
 		}
 	}
 

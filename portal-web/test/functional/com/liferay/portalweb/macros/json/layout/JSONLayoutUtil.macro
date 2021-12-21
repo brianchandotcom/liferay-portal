@@ -172,6 +172,9 @@ definition {
 		else if ("${widgetName}" == "Tags Navigation") {
 			var portletId = "com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet";
 		}
+		else if ("${widgetName}" == "Tree Menu") {
+			var portletId = "com_liferay_wiki_navigation_web_portlet_WikiNavigationTreeMenuPortlet";
+		}
 		else if ("${widgetName}" == "Type Facet") {
 			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
 		}

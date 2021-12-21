@@ -1423,7 +1423,6 @@ definition {
 	@description = "LPS-119966 Given the Content Dashboard
 	When a document is listed in the assets list
 	Then the following metadata are shown: Title, Author (Owner), Subtype, Site or Asset Library, Status, Category 1, Category 2, Modified Date"
-	@ignore = "true"
 	@priority = "3"
 	test DocumentMetadata {
 		task ("Create a Document using JSONWS") {

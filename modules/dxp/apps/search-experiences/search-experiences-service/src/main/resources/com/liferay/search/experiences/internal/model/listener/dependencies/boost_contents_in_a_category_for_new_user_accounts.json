@@ -25,11 +25,9 @@
 						"condition": {
 							"range": {
 								"format": "yyyyMMdd",
-								"parameterName": "user.create_date",
-								"values": [
-									"${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
-									"${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}"
-								]
+								"gte": "${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
+								"lte": "${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}",
+								"parameterName": "user.create_date"
 							}
 						}
 					}

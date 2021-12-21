@@ -40,9 +40,12 @@
 						}
 					],
 					"condition": {
-						"equals": {
+						"in": {
 							"parameterName": "product.code",
-							"value": "dxp"
+							"value": [
+								"dxp",
+								"les"
+							]
 						}
 					}
 				},

@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.condition;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.rest.dto.v1_0.Condition;
@@ -90,8 +92,7 @@ public class SXPConditionEvaluator {
 		SXPParameter sxpParameter = _getSXPParameter(
 			contains.getParameterName());
 
-		return sxpParameter.evaluateContains(
-			contains.getValue(), contains.getValues());
+		return sxpParameter.evaluateContains(_getValue(contains.getValue()));
 	}
 
 	private boolean _evaluateEquals(Equals equals) {
@@ -103,10 +104,10 @@ public class SXPConditionEvaluator {
 
 		if (equals.getFormat() != null) {
 			return sxpParameter.evaluateEquals(
-				equals.getFormat(), equals.getValue());
+				equals.getFormat(), _getValue(equals.getValue()));
 		}
 
-		return sxpParameter.evaluateEquals(equals.getValue());
+		return sxpParameter.evaluateEquals(_getValue(equals.getValue()));
 	}
 
 	private boolean _evaluateExists(Exists exists) {
@@ -131,7 +132,7 @@ public class SXPConditionEvaluator {
 
 		SXPParameter sxpParameter = _getSXPParameter(in.getParameterName());
 
-		return sxpParameter.evaluateIn(in.getValues());
+		return sxpParameter.evaluateIn(_getValue(in.getValue()));
 	}
 
 	private boolean _evaluateNot(Condition condition) {
@@ -173,6 +174,14 @@ public class SXPConditionEvaluator {
 		}
 
 		return sxpParameter;
+	}
+
+	private Object _getValue(Object value) {
+		if (value instanceof JSONArray) {
+			return JSONUtil.toObjectArray((JSONArray)value);
+		}
+
+		return value;
 	}
 
 	private final SXPParameterData _sxpParameterData;

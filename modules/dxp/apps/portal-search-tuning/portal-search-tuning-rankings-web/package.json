@@ -25,7 +25,6 @@
 	},
 	"jest": {
 		"setupFilesAfterEnv": [
-			"@testing-library/react/cleanup-after-each",
 			"<rootDir>/test/js/setup.es.js"
 		],
 		"testPathIgnorePatterns": [

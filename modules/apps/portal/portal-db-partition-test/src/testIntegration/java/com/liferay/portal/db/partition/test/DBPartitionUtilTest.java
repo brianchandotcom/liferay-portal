@@ -181,6 +181,23 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 	}
 
+	@Test
+	public void testRemoveDBPartition() throws Exception {
+		addDBPartition();
+
+		_removeDBPartition(false);
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		try (ResultSet resultSet = databaseMetaData.getCatalogs()) {
+			while (resultSet.next()) {
+				String schemaName = resultSet.getString("TABLE_CAT");
+
+				Assert.assertNotEquals(getSchemaName(COMPANY_ID), schemaName);
+			}
+		}
+	}
+
 	private int _getCount(String tableName, boolean defaultSchema)
 		throws Exception {
 

@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -200,7 +200,7 @@ public class PortletTracker
 			return;
 		}
 
-		BeanPropertiesUtil.copyProperties(newPortletModel, portletModel);
+		_beanProperties.copyProperties(newPortletModel, portletModel);
 	}
 
 	@Override
@@ -1464,6 +1464,9 @@ public class PortletTracker
 				String.valueOf(WindowState.MAXIMIZED),
 				String.valueOf(WindowState.MINIMIZED),
 				String.valueOf(WindowState.NORMAL)));
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private BundleContext _bundleContext;
 

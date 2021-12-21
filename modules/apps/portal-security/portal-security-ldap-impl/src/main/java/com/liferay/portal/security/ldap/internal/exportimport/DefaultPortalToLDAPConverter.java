@@ -18,7 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -436,7 +436,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			GetterUtil.getString(
 				userMappings.getProperty(_userDNFieldName), _DEFAULT_DN),
 			StringPool.EQUAL,
-			BeanPropertiesUtil.getStringSilent(user, _userDNFieldName),
+			_beanProperties.getStringSilent(user, _userDNFieldName),
 			StringPool.COMMA,
 			_safePortalLDAP.getUsersDNSafeLdapName(
 				ldapServerId, user.getCompanyId()));
@@ -457,7 +457,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		String rdnType = GetterUtil.getString(
 			userMappings.getProperty(_userDNFieldName), _DEFAULT_DN);
-		String rdnValue = BeanPropertiesUtil.getStringSilent(
+		String rdnValue = _beanProperties.getStringSilent(
 			user, _userDNFieldName);
 		SafeLdapName usersDNSafeLdapName =
 			_safePortalLDAP.getUsersDNSafeLdapName(
@@ -572,7 +572,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			listTypeFieldName = true;
 		}
 
-		Object attributeValue = BeanPropertiesUtil.getObjectSilent(
+		Object attributeValue = _beanProperties.getObjectSilent(
 			object, fieldName);
 
 		if ((attributeValue != null) && listTypeFieldName) {
@@ -744,6 +744,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private ImageLocalService _imageLocalService;
 	private ConfigurationProvider<LDAPAuthConfiguration>

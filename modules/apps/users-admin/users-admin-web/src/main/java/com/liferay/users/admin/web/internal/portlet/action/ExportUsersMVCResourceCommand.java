@@ -17,7 +17,7 @@ package com.liferay.users.admin.web.internal.portlet.action;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -129,7 +129,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				}
 			}
 			else if (field.contains("Date")) {
-				Date date = (Date)BeanPropertiesUtil.getObject(user, field);
+				Date date = (Date)_beanProperties.getObject(user, field);
 
 				if (date instanceof Timestamp) {
 					date = new Date(date.getTime());
@@ -142,7 +142,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 			else {
 				sb.append(
-					CSVUtil.encode(BeanPropertiesUtil.getString(user, field)));
+					CSVUtil.encode(_beanProperties.getString(user, field)));
 			}
 
 			if ((i + 1) < PropsValues.USERS_EXPORT_CSV_FIELDS.length) {
@@ -274,6 +274,9 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportUsersMVCResourceCommand.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	@Reference
 	private Portal _portal;

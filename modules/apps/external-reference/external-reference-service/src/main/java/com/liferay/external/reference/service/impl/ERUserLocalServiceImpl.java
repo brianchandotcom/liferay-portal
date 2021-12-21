@@ -16,7 +16,7 @@ package com.liferay.external.reference.service.impl;
 
 import com.liferay.external.reference.service.base.ERUserLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
@@ -70,7 +70,7 @@ public class ERUserLocalServiceImpl extends ERUserLocalServiceBaseImpl {
 		else {
 			Contact contact = user.getContact();
 
-			long imageId = BeanPropertiesUtil.getLong(user, "portraitId");
+			long imageId = _beanProperties.getLong(user, "portraitId");
 
 			boolean hasPortrait = false;
 
@@ -93,6 +93,9 @@ public class ERUserLocalServiceImpl extends ERUserLocalServiceBaseImpl {
 
 		return user;
 	}
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	@Reference
 	private UserLocalService _userLocalService;

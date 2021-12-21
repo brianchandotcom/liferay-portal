@@ -17,7 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -253,7 +253,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			return;
 		}
 
-		String attributeValue = BeanPropertiesUtil.getString(user, values[1]);
+		String attributeValue = _beanProperties.getString(user, values[1]);
 
 		if (namespaceEnabled) {
 			attributePublisher.publish(
@@ -644,7 +644,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		User user, AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
-		Serializable value = (Serializable)BeanPropertiesUtil.getObject(
+		Serializable value = (Serializable)_beanProperties.getObject(
 			user, attributeName);
 
 		if (!namespaceEnabled) {
@@ -725,6 +725,9 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultAttributeResolver.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private GroupLocalService _groupLocalService;
 	private MetadataManager _metadataManager;

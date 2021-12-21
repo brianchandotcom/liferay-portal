@@ -20,7 +20,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
@@ -1723,9 +1723,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	private void _setProperty(Object bean1, Object bean2, String propertyName) {
-		Object value = BeanPropertiesUtil.getObject(bean2, propertyName);
+		Object value = _beanProperties.getObject(bean2, propertyName);
 
-		BeanPropertiesUtil.setProperty(bean1, propertyName, value);
+		_beanProperties.setProperty(bean1, propertyName, value);
 	}
 
 	private void _updateLDAPUser(
@@ -2037,6 +2037,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile AttributesTransformer _attributesTransformer;
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private CompanyLocalService _companyLocalService;
 	private String _companySecurityAuthType;

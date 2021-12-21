@@ -46,7 +46,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.dynamic.data.mapping.validator.internal.util.DDMFormRuleValidatorUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -458,7 +458,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		throws DDMFormValidationException {
 
 		LocalizedValue propertyValue =
-			(LocalizedValue)BeanPropertiesUtil.getObject(
+			(LocalizedValue)_beanProperties.getObject(
 				ddmFormField, propertyName);
 
 		if ((propertyValue == null) ||
@@ -495,6 +495,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		"([^\\p{Punct}|\\p{Space}$]|_)+");
 	private static final Pattern _ddmFormFieldTypePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|[-_])+");
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private DDMExpressionFactory _ddmExpressionFactory;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

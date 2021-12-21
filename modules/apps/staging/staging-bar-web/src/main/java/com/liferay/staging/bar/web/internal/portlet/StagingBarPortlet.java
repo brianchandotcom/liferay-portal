@@ -21,7 +21,7 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.LayoutBranchNameException;
@@ -570,11 +570,11 @@ public class StagingBarPortlet extends MVCPortlet {
 			return;
 		}
 
-		long layoutRevisionIconImageId = BeanPropertiesUtil.getLong(
+		long layoutRevisionIconImageId = _beanProperties.getLong(
 			layoutRevision, "iconImageId");
 
 		if (layoutRevisionIconImageId == GetterUtil.DEFAULT_LONG) {
-			layoutRevisionIconImageId = BeanPropertiesUtil.getLong(
+			layoutRevisionIconImageId = _beanProperties.getLong(
 				layout, "iconImageId");
 		}
 
@@ -684,6 +684,9 @@ public class StagingBarPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private LayoutLocalService _layoutLocalService;
 	private LayoutRevisionLocalService _layoutRevisionLocalService;

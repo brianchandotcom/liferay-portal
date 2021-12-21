@@ -2187,7 +2187,13 @@ export default function ChangeTrackingChangesView({
 	};
 
 	const renderPaginationBar = () => {
-		if (!renderState.changes || renderState.changes.length <= 5) {
+		let items = renderState.changes;
+
+		if (renderState.nav === NAVIGATION_RELATIONSHIPS) {
+			items = ctMappingInfos;
+		}
+
+		if (!items || items.length <= 5) {
 			return '';
 		}
 
@@ -2197,7 +2203,7 @@ export default function ChangeTrackingChangesView({
 				activePage={calculatePage(
 					renderState.delta,
 					renderState.page,
-					renderState.changes.length
+					items.length
 				)}
 				deltas={[4, 8, 20, 40, 60].map((size) => ({
 					label: size,
@@ -2211,7 +2217,7 @@ export default function ChangeTrackingChangesView({
 					const page = calculatePage(
 						delta,
 						renderState.page,
-						renderState.changes.length
+						items.length
 					);
 
 					pushState(
@@ -2267,7 +2273,7 @@ export default function ChangeTrackingChangesView({
 						showHideable: renderState.showHideable,
 					});
 				}}
-				totalItems={renderState.changes.length}
+				totalItems={items.length}
 			/>
 		);
 	};
@@ -2441,9 +2447,38 @@ export default function ChangeTrackingChangesView({
 
 	const renderTableBody = () => {
 		if (renderState.nav === NAVIGATION_RELATIONSHIPS) {
+			let items = ctMappingInfos.slice(0);
+
+			items.sort((a, b) => {
+				if (a.name < b.name) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.name > b.name) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
+
+			if (items.length > 5) {
+				items = items.slice(
+					renderState.delta * (renderState.page - 1),
+					renderState.delta * renderState.page
+				);
+			}
+
 			return (
 				<ClayTable.Body>
-					{ctMappingInfos.map((ctMappingInfo) => (
+					{items.map((ctMappingInfo) => (
 						<ClayTable.Row key={ctMappingInfo.tableName}>
 							<ClayTable.Cell>
 								<strong>{ctMappingInfo.name}</strong>
@@ -2469,7 +2504,39 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell headingCell>
-							{Liferay.Language.get('name')}
+							<ClayButton
+								displayType="unstyled"
+								onClick={() => {
+									pushState(
+										getPath(
+											!ascendingState,
+											columnState,
+											renderState.delta,
+											getEntryParam(renderState.node),
+											filtersState,
+											resultsKeywords,
+											renderState.nav,
+											renderState.page,
+											renderState.showHideable
+										)
+									);
+
+									setAscendingState(!ascendingState);
+								}}
+							>
+								{Liferay.Language.get('name')}
+
+								<span className="inline-item inline-item-after">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol={
+											ascendingState
+												? 'order-list-down'
+												: 'order-list-up'
+										}
+									/>
+								</span>
+							</ClayButton>
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				</ClayTable.Head>

@@ -10,6 +10,7 @@
  *
  */
 
+import {isObject, isObjectEmpty} from '../util/utils';
 import {
 	STR_CDATA_CLOSE,
 	STR_CDATA_OPEN,
@@ -26,39 +27,23 @@ function cdata(value) {
 	);
 }
 
-function isObject(value) {
-	if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-		return true;
-	}
-
-	return false;
-}
-
-function isObjectEmpty(object) {
-	if (Object.keys(object).length === 0) {
-		return true;
-	}
-
-	return false;
-}
-
 function isValidValue(array, index) {
 	return array && array[index] !== undefined;
 }
 
-var jsonStringify = function (val) {
-	var jsonString = null;
+function jsonStringify(value) {
+	let jsonString = null;
 
 	try {
 		jsonString =
 			STR_CHAR_CRLF +
-			JSON.stringify(val, null, STR_CHAR_TAB) +
+			JSON.stringify(value, null, STR_CHAR_TAB) +
 			STR_CHAR_CRLF;
 	}
 	catch (error) {}
 
 	return jsonString;
-};
+}
 
 function appendXMLActions(
 	buffer,

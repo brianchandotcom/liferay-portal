@@ -10,6 +10,26 @@
  *
  */
 
+function isObject(value) {
+	if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+		return true;
+	}
+
+	return false;
+}
+
+function isObjectEmpty(object) {
+	if (Object.keys(object).length === 0) {
+		return true;
+	}
+
+	return false;
+}
+
+function removeNewLine(string) {
+	return string.replace(/\r?\n|\r/g, '');
+}
+
 function repeatSymbol(symbol, repetionNumber) {
 	let string = '';
 
@@ -18,6 +38,10 @@ function repeatSymbol(symbol, repetionNumber) {
 	}
 
 	return string;
+}
+
+function replaceTabSpaces(string) {
+	return string.replace(/\t/g, ' ').trimStart().trimEnd();
 }
 
 function uncamelize(string, separator) {
@@ -31,4 +55,11 @@ function uncamelize(string, separator) {
 		.toLowerCase();
 }
 
-export {repeatSymbol, uncamelize};
+export {
+	isObject,
+	isObjectEmpty,
+	removeNewLine,
+	repeatSymbol,
+	replaceTabSpaces,
+	uncamelize,
+};

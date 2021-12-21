@@ -23,7 +23,9 @@ const CategoriesPopover = ({categories, vocabulary}) => {
 			alignPosition="top"
 			className="categories-popover"
 			disableScroll={true}
-			header={`${categories.length} ${vocabulary} Categories`}
+			header={`${categories.length} ${vocabulary} ${Liferay.Language.get(
+				'categories'
+			)}`}
 			trigger={
 				<ClayLabel className="category-label-see-more" large={true}>
 					{`+ ${categories.length}`}

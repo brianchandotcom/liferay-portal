@@ -25,6 +25,101 @@ definition {
 			PagesAdmin.tearDownCP();
 
 			WebContent.tearDownCP();
+
+			RemoteApps.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-143786. Verify Remote Apps presence in Liferay Online"
+	@priority = "5"
+	test VerifyRemoteAppsInLiferayOnline {
+		task ("Go to Remote Apps Portlet") {
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("Assert the Remote Apps Header Presence") {
+			AssertElementPresent(
+				key_header = "Remote Apps",
+				locator1 = "WorkflowSubmissions#DETAIL_PAGE_HEADER");
+		}
+	}
+
+	@description = "This is a test for LPS-143786. Verify Remote Apps can be created in Liferay Online"
+	@priority = "4"
+	test RemoteAppsCanBeCreatedInLiferayOnline {
+		task ("Go to Remote Apps Portlet") {
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("Go to Add and Create a New Remote App") {
+			RemoteApps.addCustomElement(
+				entryHTMLName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		}
+
+		task ("On Table Entries, Assert the New Remote App Presence") {
+			RemoteApps.viewTableEntries(
+				entryName = "Vanilla Counter",
+				entryType = "Custom Element");
+		}
+	}
+
+	@description = "This is a test for LPS-143786. Verify Remote Apps can be deleted in Liferay Online"
+	@priority = "4"
+	test RemoteAppsCanBeDeletedInLiferayOnline {
+		task ("Create a New Remote App with JSON") {
+			JSONRemoteApp.addIFrameRemoteAppEntry(
+				iFrameURL = "http://www.liferay.com/my_new_remote_app",
+				name = "My New Remote App");
+		}
+
+		task ("Go to Remote Apps Portlet") {
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("Delete the Remote App") {
+			RemoteApps.deleteRemoteApp(tableEntry = "My New Remote App");
+		}
+
+		task ("Assert the Remote App is Not Present") {
+			RemoteApps.assertTableEntryNameNotPresent(entryName = "My New Remote App");
+		}
+	}
+
+	@description = "This is a test for LPS-143786. Verify Remote Apps can be displayed in Liferay Online"
+	@priority = "4"
+	test RemoteAppsCanBeDisplayedInLiferayOnline {
+		task ("Add a public page with JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+		}
+
+		task ("Create Vanilla Counter as a Custom Element") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addCustomElement(
+				entryHTMLName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		}
+
+		task ("Add Vanilla Counter to Test Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.addWidget(portletName = "Vanilla Counter");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert Vanilla Counter is displayed") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
 		}
 	}
 

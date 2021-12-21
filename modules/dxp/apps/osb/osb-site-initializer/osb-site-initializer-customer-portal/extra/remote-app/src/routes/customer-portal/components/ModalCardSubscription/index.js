@@ -85,7 +85,7 @@ const ModalCardSubscription = ({
 	const totalCount =
 		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
 
-	const removeProvisionedColumn = () => {
+	const columnsWithoutProvisioned = () => {
 		const customColumns = [...columns];
 		customColumns.splice(provisionedIndex, 1);
 
@@ -121,7 +121,7 @@ const ModalCardSubscription = ({
 								subscriptionGroup
 							)
 								? columns
-								: removeProvisionedColumn(columns)
+								: columnsWithoutProvisioned(columns)
 						}
 						hasPagination={totalCount >= 5}
 						itemsPerPage={5}

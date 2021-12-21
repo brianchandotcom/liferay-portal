@@ -44,7 +44,10 @@ const ModalContentForm = ({
 	const {namespace} = useContext(ThemeContext);
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			aria-label={Liferay.Language.get('report-inappropriate-content')}
+			onSubmit={handleSubmit}
+		>
 			<ClayModal.Body>
 				{error && (
 					<ClayAlert

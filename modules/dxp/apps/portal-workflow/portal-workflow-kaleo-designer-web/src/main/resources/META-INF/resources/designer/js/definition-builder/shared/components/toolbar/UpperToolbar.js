@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef} from 'react';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import {defaultLanguageId} from '../../../constants';
 import XMLUtil from '../../../source-builder/xmlUtil';
 import {getAvailableLocalesObject} from '../../../util/availableLocales';
 
@@ -31,7 +32,6 @@ export default function UpperToolbar({
 }) {
 	const {
 		currentEditor,
-		defaultLanguageId,
 		definitionTitle,
 		selectedLanguageId,
 		setDefinitionTitle,

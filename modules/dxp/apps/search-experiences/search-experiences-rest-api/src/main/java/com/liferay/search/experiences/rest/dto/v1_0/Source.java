@@ -36,8 +36,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,36 +43,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdvancedConfiguration")
+@GraphQLName("Source")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AdvancedConfiguration")
-public class AdvancedConfiguration implements Serializable {
+@XmlRootElement(name = "Source")
+public class Source implements Serializable {
 
-	public static AdvancedConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(AdvancedConfiguration.class, json);
+	public static Source toDTO(String json) {
+		return ObjectMapperUtil.readValue(Source.class, json);
 	}
 
-	public static AdvancedConfiguration unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			AdvancedConfiguration.class, json);
+	public static Source unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Source.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Source getSource() {
-		return source;
+	public String[] getExcludes() {
+		return excludes;
 	}
 
-	public void setSource(Source source) {
-		this.source = source;
+	public void setExcludes(String[] excludes) {
+		this.excludes = excludes;
 	}
 
 	@JsonIgnore
-	public void setSource(
-		UnsafeSupplier<Source, Exception> sourceUnsafeSupplier) {
+	public void setExcludes(
+		UnsafeSupplier<String[], Exception> excludesUnsafeSupplier) {
 
 		try {
-			source = sourceUnsafeSupplier.get();
+			excludes = excludesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -86,7 +82,63 @@ public class AdvancedConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Source source;
+	protected String[] excludes;
+
+	@Schema
+	public Boolean getFetchSource() {
+		return fetchSource;
+	}
+
+	public void setFetchSource(Boolean fetchSource) {
+		this.fetchSource = fetchSource;
+	}
+
+	@JsonIgnore
+	public void setFetchSource(
+		UnsafeSupplier<Boolean, Exception> fetchSourceUnsafeSupplier) {
+
+		try {
+			fetchSource = fetchSourceUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean fetchSource;
+
+	@Schema
+	public String[] getIncludes() {
+		return includes;
+	}
+
+	public void setIncludes(String[] includes) {
+		this.includes = includes;
+	}
+
+	@JsonIgnore
+	public void setIncludes(
+		UnsafeSupplier<String[], Exception> includesUnsafeSupplier) {
+
+		try {
+			includes = includesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] includes;
 
 	@Override
 	public boolean equals(Object object) {
@@ -94,14 +146,13 @@ public class AdvancedConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AdvancedConfiguration)) {
+		if (!(object instanceof Source)) {
 			return false;
 		}
 
-		AdvancedConfiguration advancedConfiguration =
-			(AdvancedConfiguration)object;
+		Source source = (Source)object;
 
-		return Objects.equals(toString(), advancedConfiguration.toString());
+		return Objects.equals(toString(), source.toString());
 	}
 
 	@Override
@@ -116,14 +167,62 @@ public class AdvancedConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (source != null) {
+		if (excludes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"source\": ");
+			sb.append("\"excludes\": ");
 
-			sb.append(String.valueOf(source));
+			sb.append("[");
+
+			for (int i = 0; i < excludes.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(excludes[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < excludes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (fetchSource != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fetchSource\": ");
+
+			sb.append(fetchSource);
+		}
+
+		if (includes != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"includes\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < includes.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(includes[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < includes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -133,7 +232,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Source",
 		name = "x-class-name"
 	)
 	public String xClassName;

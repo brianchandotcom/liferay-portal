@@ -55,66 +55,14 @@ public class AdvancedConfigurationSerDes {
 
 		sb.append("{");
 
-		if (advancedConfiguration.getExcludes() != null) {
+		if (advancedConfiguration.getSource() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"excludes\": ");
+			sb.append("\"source\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < advancedConfiguration.getExcludes().length;
-				 i++) {
-
-				sb.append("\"");
-
-				sb.append(_escape(advancedConfiguration.getExcludes()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < advancedConfiguration.getExcludes().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (advancedConfiguration.getFetchSource() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fetchSource\": ");
-
-			sb.append(advancedConfiguration.getFetchSource());
-		}
-
-		if (advancedConfiguration.getIncludes() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"includes\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < advancedConfiguration.getIncludes().length;
-				 i++) {
-
-				sb.append("\"");
-
-				sb.append(_escape(advancedConfiguration.getIncludes()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < advancedConfiguration.getIncludes().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(advancedConfiguration.getSource()));
 		}
 
 		sb.append("}");
@@ -138,31 +86,12 @@ public class AdvancedConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (advancedConfiguration.getExcludes() == null) {
-			map.put("excludes", null);
+		if (advancedConfiguration.getSource() == null) {
+			map.put("source", null);
 		}
 		else {
 			map.put(
-				"excludes",
-				String.valueOf(advancedConfiguration.getExcludes()));
-		}
-
-		if (advancedConfiguration.getFetchSource() == null) {
-			map.put("fetchSource", null);
-		}
-		else {
-			map.put(
-				"fetchSource",
-				String.valueOf(advancedConfiguration.getFetchSource()));
-		}
-
-		if (advancedConfiguration.getIncludes() == null) {
-			map.put("includes", null);
-		}
-		else {
-			map.put(
-				"includes",
-				String.valueOf(advancedConfiguration.getIncludes()));
+				"source", String.valueOf(advancedConfiguration.getSource()));
 		}
 
 		return map;
@@ -186,22 +115,10 @@ public class AdvancedConfigurationSerDes {
 			AdvancedConfiguration advancedConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "excludes")) {
+			if (Objects.equals(jsonParserFieldName, "source")) {
 				if (jsonParserFieldValue != null) {
-					advancedConfiguration.setExcludes(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fetchSource")) {
-				if (jsonParserFieldValue != null) {
-					advancedConfiguration.setFetchSource(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "includes")) {
-				if (jsonParserFieldValue != null) {
-					advancedConfiguration.setIncludes(
-						toStrings((Object[])jsonParserFieldValue));
+					advancedConfiguration.setSource(
+						SourceSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}

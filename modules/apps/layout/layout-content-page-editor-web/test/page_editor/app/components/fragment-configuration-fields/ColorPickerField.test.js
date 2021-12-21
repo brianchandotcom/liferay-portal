@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import {ColorPickerField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-configuration-fields/ColorPickerField';
@@ -73,10 +73,6 @@ const renderColorPickerField = ({onValueSelect = () => {}, value = 'white'}) =>
 	);
 
 describe('ColorPickerField', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('renders the ColorPickerField', () => {
 		const {baseElement} = renderColorPickerField({});
 
@@ -94,7 +90,7 @@ describe('ColorPickerField', () => {
 
 		fireEvent.click(getByTitle('clear-selection'));
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(getByLabelText('default')).toBeInTheDocument();
 		});
 	});
@@ -116,7 +112,7 @@ describe('ColorPickerField', () => {
 
 			fireEvent.click(getByLabelText('Orange'));
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(
 					baseElement.querySelector(COLOR_PICKER_FIELD_CLASS)
 				).toHaveClass('hovered');
@@ -132,7 +128,7 @@ describe('ColorPickerField', () => {
 
 			fireEvent.click(getByTitle('detach-token'));
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
 				expect(getByRole('combobox').value).toBe('#ffb46e');
 				expect(
@@ -176,7 +172,7 @@ describe('ColorPickerField', () => {
 			fireEvent.click(getByTitle('value-from-stylebook'));
 			fireEvent.click(getByTitle('Blue'));
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(getByTitle('detach-token')).toBeInTheDocument();
 				expect(getByLabelText('Blue')).toBeInTheDocument();
 			});
@@ -195,7 +191,7 @@ describe('ColorPickerField', () => {
 
 			fireEvent.blur(input);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(
 					getByText('this-token-does-not-exist')
 				).toBeInTheDocument();
@@ -219,7 +215,7 @@ describe('ColorPickerField', () => {
 
 			fireEvent.blur(input);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(getByTitle('detach-token')).toBeInTheDocument();
 				expect(getByLabelText('Green')).toBeInTheDocument();
 			});
@@ -239,7 +235,7 @@ describe('ColorPickerField', () => {
 			});
 			fireEvent.click(getByRole('option'));
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(getByTitle('detach-token')).toBeInTheDocument();
 				expect(getByLabelText('Green')).toBeInTheDocument();
 			});
@@ -258,7 +254,7 @@ describe('ColorPickerField', () => {
 
 			fireEvent.blur(input);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(getByRole('combobox').value).toBe('#444444');
 			});
 		});
